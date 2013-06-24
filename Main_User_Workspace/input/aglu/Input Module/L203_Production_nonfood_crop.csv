@@ -3,311 +3,311 @@ Variable ID
 Production
 
 region,supplysector,subsector,technology,year,calOutputValue,share.weight.year,subs.share.weight,tech.share.weight
-Africa,NonFoodDemand_Crops,Corn,Corn,1990,9.8229,1990,1,1
-Africa,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.969464,1990,1,1
-Africa,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,4.363422,1990,1,1
-Africa,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,17.170653,1990,1,1
-Africa,NonFoodDemand_Crops,OilCrop,OilCrop,1990,5.980865,1990,1,1
-Africa,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,9.156438,1990,1,1
-Africa,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,12.105179,1990,1,1
-Africa,NonFoodDemand_Crops,Rice,Rice,1990,2.389626,1990,1,1
-Africa,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,26.55495,1990,1,1
-Africa,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,62.198634,1990,1,1
-Africa,NonFoodDemand_Crops,Wheat,Wheat,1990,3.927156,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,Corn,Corn,1990,0.198981,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.084391,1990,1,1
+Africa,NonFoodDemand_Crops,Corn,Corn,1990,9.9564029,1990,1,1
+Africa,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,2.4145117,1990,1,1
+Africa,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,5.999801,1990,1,1
+Africa,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,17.2073581,1990,1,1
+Africa,NonFoodDemand_Crops,OilCrop,OilCrop,1990,4.5785766,1990,1,1
+Africa,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,9.2249067,1990,1,1
+Africa,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,12.1080281,1990,1,1
+Africa,NonFoodDemand_Crops,Rice,Rice,1990,2.395342,1990,1,1
+Africa,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,26.7581473,1990,1,1
+Africa,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,62.2261323,1990,1,1
+Africa,NonFoodDemand_Crops,Wheat,Wheat,1990,3.9542567,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,Corn,Corn,1990,0.201402,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.284967,1990,1,1
 Australia_NZ,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,0,1990,0,0
-Australia_NZ,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,1.222659,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,OilCrop,OilCrop,1990,0.355979,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.509484,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.025855,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,Rice,Rice,1990,0.18551,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,0.237746,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,20.304977,1990,1,1
-Australia_NZ,NonFoodDemand_Crops,Wheat,Wheat,1990,0.741495,1990,1,1
-Canada,NonFoodDemand_Crops,Corn,Corn,1990,2.174432,1990,1,1
-Canada,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.045242,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,1.2257845,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,OilCrop,OilCrop,1990,0.1597928,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.5404034,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.025886,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,Rice,Rice,1990,0.1855097,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,0.2384043,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,20.3071999,1990,1,1
+Australia_NZ,NonFoodDemand_Crops,Wheat,Wheat,1990,0.7561284,1990,1,1
+Canada,NonFoodDemand_Crops,Corn,Corn,1990,2.383095,1990,1,1
+Canada,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.0532016,1990,1,1
 Canada,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,0,1990,0,0
-Canada,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,0.102777,1990,1,1
-Canada,NonFoodDemand_Crops,OilCrop,OilCrop,1990,0.649276,1990,1,1
-Canada,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.134451,1990,1,1
-Canada,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.036879,1990,1,1
-Canada,NonFoodDemand_Crops,Rice,Rice,1990,0.021246,1990,1,1
-Canada,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,0.520912,1990,1,1
-Canada,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,0.658838,1990,1,1
-Canada,NonFoodDemand_Crops,Wheat,Wheat,1990,2.932252,1990,1,1
-China,NonFoodDemand_Crops,Corn,Corn,1990,50.826289,1990,1,1
-China,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,6.340966,1990,1,1
+Canada,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,0.1059265,1990,1,1
+Canada,NonFoodDemand_Crops,OilCrop,OilCrop,1990,0.7352173,1990,1,1
+Canada,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.5428775,1990,1,1
+Canada,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.0368822,1990,1,1
+Canada,NonFoodDemand_Crops,Rice,Rice,1990,0.0212455,1990,1,1
+Canada,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,0.5209623,1990,1,1
+Canada,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,0.6658528,1990,1,1
+Canada,NonFoodDemand_Crops,Wheat,Wheat,1990,3.0603088,1990,1,1
+China,NonFoodDemand_Crops,Corn,Corn,1990,50.8561544,1990,1,1
+China,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,11.9585506,1990,1,1
 China,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,0,1990,0,0
-China,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,19.063172,1990,1,1
-China,NonFoodDemand_Crops,OilCrop,OilCrop,1990,14.151879,1990,1,1
-China,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,5.544839,1990,1,1
-China,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,1.285635,1990,1,1
-China,NonFoodDemand_Crops,Rice,Rice,1990,40.968409,1990,1,1
-China,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,39.824617,1990,1,1
-China,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,72.56156,1990,1,1
-China,NonFoodDemand_Crops,Wheat,Wheat,1990,17.688843,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,Corn,Corn,1990,11.61754,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.472371,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,31.197309,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,10.306001,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,OilCrop,OilCrop,1990,2.235899,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,10.329934,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.033857,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,Rice,Rice,1990,0.00678,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,18.569518,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,29.652751,1990,1,1
-Eastern Europe,NonFoodDemand_Crops,Wheat,Wheat,1990,13.16194,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,Corn,Corn,1990,12.246717,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,2.228264,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,108.254602,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,9.253141,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,OilCrop,OilCrop,1990,6.206591,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,29.336301,1990,1,1
+China,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,19.0643841,1990,1,1
+China,NonFoodDemand_Crops,OilCrop,OilCrop,1990,8.5466656,1990,1,1
+China,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,5.5473753,1990,1,1
+China,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,1.2856784,1990,1,1
+China,NonFoodDemand_Crops,Rice,Rice,1990,40.9765324,1990,1,1
+China,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,39.8511507,1990,1,1
+China,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,72.5651872,1990,1,1
+China,NonFoodDemand_Crops,Wheat,Wheat,1990,17.7240431,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,Corn,Corn,1990,12.0736213,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.486765,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,38.7721499,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,10.3421179,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,OilCrop,OilCrop,1990,2.3389958,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,10.937533,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.0341225,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,Rice,Rice,1990,0.006938,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,19.0496456,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,29.6893926,1990,1,1
+Eastern Europe,NonFoodDemand_Crops,Wheat,Wheat,1990,13.6030135,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,Corn,Corn,1990,12.6691611,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,5.3418966,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,130.4811926,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,9.5218568,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,OilCrop,OilCrop,1990,3.3756351,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,31.2419043,1990,1,1
 Former Soviet Union,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.247603,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,Rice,Rice,1990,0.325504,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,26.314843,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,66.972068,1990,1,1
-Former Soviet Union,NonFoodDemand_Crops,Wheat,Wheat,1990,30.774916,1990,1,1
-India,NonFoodDemand_Crops,Corn,Corn,1990,1.86177,1990,1,1
-India,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,3.288195,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,Rice,Rice,1990,0.3255082,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,26.8876672,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,67.1372792,1990,1,1
+Former Soviet Union,NonFoodDemand_Crops,Wheat,Wheat,1990,32.029312,1990,1,1
+India,NonFoodDemand_Crops,Corn,Corn,1990,1.8642432,1990,1,1
+India,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,5.2323354,1990,1,1
 India,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,0,1990,0,0
-India,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,9.169646,1990,1,1
-India,NonFoodDemand_Crops,OilCrop,OilCrop,1990,7.524469,1990,1,1
-India,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.392818,1990,1,1
-India,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,2.208987,1990,1,1
-India,NonFoodDemand_Crops,Rice,Rice,1990,8.08226,1990,1,1
-India,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,4.608687,1990,1,1
-India,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,200.922475,1990,1,1
-India,NonFoodDemand_Crops,Wheat,Wheat,1990,5.183429,1990,1,1
-Japan,NonFoodDemand_Crops,Corn,Corn,1990,4.334265,1990,1,1
-Japan,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.705816,1990,1,1
-Japan,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,0,1990,0,0
-Japan,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,2.246867,1990,1,1
-Japan,NonFoodDemand_Crops,OilCrop,OilCrop,1990,1.311935,1990,1,1
-Japan,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.319635,1990,1,1
-Japan,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.509041,1990,1,1
-Japan,NonFoodDemand_Crops,Rice,Rice,1990,0.722316,1990,1,1
-Japan,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,2.388046,1990,1,1
-Japan,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,5.303259,1990,1,1
-Japan,NonFoodDemand_Crops,Wheat,Wheat,1990,0.469632,1990,1,1
-Korea,NonFoodDemand_Crops,Corn,Corn,1990,1.764606,1990,1,1
-Korea,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.443651,1990,1,1
+India,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,9.1726587,1990,1,1
+India,NonFoodDemand_Crops,OilCrop,OilCrop,1990,5.6056904,1990,1,1
+India,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.394281,1990,1,1
+India,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,2.209481,1990,1,1
+India,NonFoodDemand_Crops,Rice,Rice,1990,8.0866467,1990,1,1
+India,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,4.6086875,1990,1,1
+India,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,200.9330105,1990,1,1
+India,NonFoodDemand_Crops,Wheat,Wheat,1990,5.1955259,1990,1,1
+Japan,NonFoodDemand_Crops,Corn,Corn,1990,4.3824285,1990,1,1
+Japan,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.7771002,1990,1,1
+Japan,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,0.55696,1990,1,1
+Japan,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,2.2469195,1990,1,1
+Japan,NonFoodDemand_Crops,OilCrop,OilCrop,1990,1.2619289,1990,1,1
+Japan,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.340873,1990,1,1
+Japan,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.5091157,1990,1,1
+Japan,NonFoodDemand_Crops,Rice,Rice,1990,0.7224429,1990,1,1
+Japan,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,2.3887382,1990,1,1
+Japan,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,5.3042288,1990,1,1
+Japan,NonFoodDemand_Crops,Wheat,Wheat,1990,0.4728714,1990,1,1
+Korea,NonFoodDemand_Crops,Corn,Corn,1990,1.7687289,1990,1,1
+Korea,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.4708875,1990,1,1
 Korea,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,0,1990,0,0
-Korea,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,1.640186,1990,1,1
-Korea,NonFoodDemand_Crops,OilCrop,OilCrop,1990,0.133392,1990,1,1
-Korea,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,0.285183,1990,1,1
-Korea,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.299855,1990,1,1
-Korea,NonFoodDemand_Crops,Rice,Rice,1990,1.063634,1990,1,1
-Korea,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,1.81811,1990,1,1
-Korea,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,0.159082,1990,1,1
-Korea,NonFoodDemand_Crops,Wheat,Wheat,1990,0.221301,1990,1,1
-Latin America,NonFoodDemand_Crops,Corn,Corn,1990,18.88272,1990,1,1
-Latin America,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,1.808223,1990,1,1
-Latin America,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,3.302572,1990,1,1
-Latin America,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,17.585953,1990,1,1
-Latin America,NonFoodDemand_Crops,OilCrop,OilCrop,1990,7.699219,1990,1,1
-Latin America,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,8.431977,1990,1,1
-Latin America,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,4.752188,1990,1,1
-Latin America,NonFoodDemand_Crops,Rice,Rice,1990,2.692016,1990,1,1
-Latin America,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,14.117069,1990,1,1
-Latin America,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,432.62762,1990,1,1
-Latin America,NonFoodDemand_Crops,Wheat,Wheat,1990,2.468157,1990,1,1
-Middle East,NonFoodDemand_Crops,Corn,Corn,1990,0.626348,1990,1,1
-Middle East,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.268291,1990,1,1
-Middle East,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,4.555644,1990,1,1
-Middle East,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,8.34155,1990,1,1
-Middle East,NonFoodDemand_Crops,OilCrop,OilCrop,1990,1.069999,1990,1,1
-Middle East,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,2.92715,1990,1,1
-Middle East,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.225554,1990,1,1
-Middle East,NonFoodDemand_Crops,Rice,Rice,1990,0.438481,1990,1,1
-Middle East,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,0.844298,1990,1,1
-Middle East,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,5.736651,1990,1,1
-Middle East,NonFoodDemand_Crops,Wheat,Wheat,1990,4.28038,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,Corn,Corn,1990,4.170842,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,3.038112,1990,1,1
+Korea,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,1.6401856,1990,1,1
+Korea,NonFoodDemand_Crops,OilCrop,OilCrop,1990,0.10811,1990,1,1
+Korea,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,0.2854898,1990,1,1
+Korea,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.2998806,1990,1,1
+Korea,NonFoodDemand_Crops,Rice,Rice,1990,1.0636344,1990,1,1
+Korea,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,1.8186764,1990,1,1
+Korea,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,0.1593405,1990,1,1
+Korea,NonFoodDemand_Crops,Wheat,Wheat,1990,0.2230147,1990,1,1
+Latin America,NonFoodDemand_Crops,Corn,Corn,1990,19.0897116,1990,1,1
+Latin America,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,3.8058279,1990,1,1
+Latin America,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,14.5745913,1990,1,1
+Latin America,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,17.594477,1990,1,1
+Latin America,NonFoodDemand_Crops,OilCrop,OilCrop,1990,5.7754715,1990,1,1
+Latin America,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,8.5192588,1990,1,1
+Latin America,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,4.7537653,1990,1,1
+Latin America,NonFoodDemand_Crops,Rice,Rice,1990,2.6941341,1990,1,1
+Latin America,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,14.2217606,1990,1,1
+Latin America,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,432.7657797,1990,1,1
+Latin America,NonFoodDemand_Crops,Wheat,Wheat,1990,2.4837494,1990,1,1
+Middle East,NonFoodDemand_Crops,Corn,Corn,1990,0.760704,1990,1,1
+Middle East,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,0.6979942,1990,1,1
+Middle East,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,5.8656231,1990,1,1
+Middle East,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,8.3520467,1990,1,1
+Middle East,NonFoodDemand_Crops,OilCrop,OilCrop,1990,0.7308284,1990,1,1
+Middle East,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,3.383923,1990,1,1
+Middle East,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.225555,1990,1,1
+Middle East,NonFoodDemand_Crops,Rice,Rice,1990,0.4435764,1990,1,1
+Middle East,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,0.865463,1990,1,1
+Middle East,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,5.7679033,1990,1,1
+Middle East,NonFoodDemand_Crops,Wheat,Wheat,1990,4.372771,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,Corn,Corn,1990,4.2011332,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,4.1826731,1990,1,1
 Southeast Asia,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,0,1990,0,0
-Southeast Asia,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,7.315216,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,OilCrop,OilCrop,1990,2.13811,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,0.684514,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,51.331233,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,Rice,Rice,1990,16.544159,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,3.334966,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,125.631178,1990,1,1
-Southeast Asia,NonFoodDemand_Crops,Wheat,Wheat,1990,4.553911,1990,1,1
-USA,NonFoodDemand_Crops,Corn,Corn,1990,34.152895,1990,1,1
-USA,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,1.944734,1990,1,1
-USA,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,30.269285,1990,1,1
-USA,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,3.50999,1990,1,1
-USA,NonFoodDemand_Crops,OilCrop,OilCrop,1990,7.707242,1990,1,1
-USA,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,3.376637,1990,1,1
-USA,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.539607,1990,1,1
-USA,NonFoodDemand_Crops,Rice,Rice,1990,1.943348,1990,1,1
-USA,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,3.544932,1990,1,1
-USA,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,45.039242,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,7.3171401,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,OilCrop,OilCrop,1990,1.016158,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,0.6860436,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,51.3325747,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,Rice,Rice,1990,16.5621056,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,3.3377225,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,125.6372519,1990,1,1
+Southeast Asia,NonFoodDemand_Crops,Wheat,Wheat,1990,4.5646723,1990,1,1
+USA,NonFoodDemand_Crops,Corn,Corn,1990,37.9191394,1990,1,1
+USA,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,3.7528616,1990,1,1
+USA,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,40.3304287,1990,1,1
+USA,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,3.5144397,1990,1,1
+USA,NonFoodDemand_Crops,OilCrop,OilCrop,1990,6.6849339,1990,1,1
+USA,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,4.0045877,1990,1,1
+USA,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,0.5396177,1990,1,1
+USA,NonFoodDemand_Crops,Rice,Rice,1990,1.9433481,1990,1,1
+USA,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,3.5665632,1990,1,1
+USA,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,45.0903588,1990,1,1
 USA,NonFoodDemand_Crops,Wheat,Wheat,1990,0,1990,0,0
-Western Europe,NonFoodDemand_Crops,Corn,Corn,1990,11.587418,1990,1,1
-Western Europe,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,2.232889,1990,1,1
-Western Europe,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,49.471925,1990,1,1
-Western Europe,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,45.45475,1990,1,1
-Western Europe,NonFoodDemand_Crops,OilCrop,OilCrop,1990,17.751333,1990,1,1
-Western Europe,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,27.543964,1990,1,1
-Western Europe,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,2.635496,1990,1,1
-Western Europe,NonFoodDemand_Crops,Rice,Rice,1990,0.540964,1990,1,1
-Western Europe,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,18.846972,1990,1,1
-Western Europe,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,110.440537,1990,1,1
-Western Europe,NonFoodDemand_Crops,Wheat,Wheat,1990,21.476106,1990,1,1
-Africa,NonFoodDemand_Crops,Corn,Corn,2005,14.503732,2005,1,1
-Africa,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.808878,2005,1,1
+Western Europe,NonFoodDemand_Crops,Corn,Corn,1990,12.3670492,1990,1,1
+Western Europe,NonFoodDemand_Crops,FiberCrop,FiberCrop,1990,3.3555709,1990,1,1
+Western Europe,NonFoodDemand_Crops,FodderHerb,FodderHerb,1990,71.8667702,1990,1,1
+Western Europe,NonFoodDemand_Crops,MiscCrop,MiscCrop,1990,45.7771555,1990,1,1
+Western Europe,NonFoodDemand_Crops,OilCrop,OilCrop,1990,17.7690206,1990,1,1
+Western Europe,NonFoodDemand_Crops,OtherGrain,OtherGrain,1990,29.1550313,1990,1,1
+Western Europe,NonFoodDemand_Crops,PalmFruit,PalmFruit,1990,2.7107579,1990,1,1
+Western Europe,NonFoodDemand_Crops,Rice,Rice,1990,0.5514719,1990,1,1
+Western Europe,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,1990,19.7886221,1990,1,1
+Western Europe,NonFoodDemand_Crops,SugarCrop,SugarCrop,1990,110.6022221,1990,1,1
+Western Europe,NonFoodDemand_Crops,Wheat,Wheat,1990,22.2861297,1990,1,1
+Africa,NonFoodDemand_Crops,Corn,Corn,2005,14.7348033,2005,1,1
+Africa,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,2.8079587,2005,1,1
 Africa,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Africa,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,22.97344,2005,1,1
-Africa,NonFoodDemand_Crops,OilCrop,OilCrop,2005,11.865685,2005,1,1
-Africa,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,14.410262,2005,1,1
-Africa,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,16.761471,2005,1,1
-Africa,NonFoodDemand_Crops,Rice,Rice,2005,4.55292,2005,1,1
-Africa,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,62.118481,2005,1,1
-Africa,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,80.74579,2005,1,1
-Africa,NonFoodDemand_Crops,Wheat,Wheat,2005,7.642186,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,Corn,Corn,2005,0.384894,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.006032,2005,1,1
+Africa,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,23.0333215,2005,1,1
+Africa,NonFoodDemand_Crops,OilCrop,OilCrop,2005,9.9810486,2005,1,1
+Africa,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,14.5180069,2005,1,1
+Africa,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,16.7722781,2005,1,1
+Africa,NonFoodDemand_Crops,Rice,Rice,2005,4.560778,2005,1,1
+Africa,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,62.7369272,2005,1,1
+Africa,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,80.7898477,2005,1,1
+Africa,NonFoodDemand_Crops,Wheat,Wheat,2005,7.6735895,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,Corn,Corn,2005,0.3881477,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.2780616,2005,1,1
 Australia_NZ,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Australia_NZ,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,2.469672,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,OilCrop,OilCrop,2005,0.944434,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,3.279501,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.146534,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,Rice,Rice,2005,0.167544,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,0.40485,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,32.279894,2005,1,1
-Australia_NZ,NonFoodDemand_Crops,Wheat,Wheat,2005,2.793178,2005,1,1
-Canada,NonFoodDemand_Crops,Corn,Corn,2005,2.303748,2005,1,1
-Canada,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.054848,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,2.4782882,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,OilCrop,OilCrop,2005,0.6832879,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,3.3333279,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.1492111,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,Rice,Rice,2005,0.1675439,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,0.4055852,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,32.284313,2005,1,1
+Australia_NZ,NonFoodDemand_Crops,Wheat,Wheat,2005,2.8258692,2005,1,1
+Canada,NonFoodDemand_Crops,Corn,Corn,2005,2.7304345,2005,1,1
+Canada,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.0700148,2005,1,1
 Canada,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Canada,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,0.724073,2005,1,1
-Canada,NonFoodDemand_Crops,OilCrop,OilCrop,2005,1.275958,2005,1,1
-Canada,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,1.395088,2005,1,1
-Canada,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.056253,2005,1,1
-Canada,NonFoodDemand_Crops,Rice,Rice,2005,0.062867,2005,1,1
-Canada,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,0.342397,2005,1,1
-Canada,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,0.601977,2005,1,1
-Canada,NonFoodDemand_Crops,Wheat,Wheat,2005,2.100519,2005,1,1
-China,NonFoodDemand_Crops,Corn,Corn,2005,70.223911,2005,1,1
-China,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,10.395715,2005,1,1
+Canada,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,0.7439075,2005,1,1
+Canada,NonFoodDemand_Crops,OilCrop,OilCrop,2005,1.4349729,2005,1,1
+Canada,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,1.8581356,2005,1,1
+Canada,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.0562967,2005,1,1
+Canada,NonFoodDemand_Crops,Rice,Rice,2005,0.0628668,2005,1,1
+Canada,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,0.3428231,2005,1,1
+Canada,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,0.6091579,2005,1,1
+Canada,NonFoodDemand_Crops,Wheat,Wheat,2005,2.2968284,2005,1,1
+China,NonFoodDemand_Crops,Corn,Corn,2005,70.3249978,2005,1,1
+China,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,19.7159801,2005,1,1
 China,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-China,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,62.704537,2005,1,1
-China,NonFoodDemand_Crops,OilCrop,OilCrop,2005,45.198493,2005,1,1
-China,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,6.582144,2005,1,1
-China,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,4.772181,2005,1,1
-China,NonFoodDemand_Crops,Rice,Rice,2005,28.001056,2005,1,1
-China,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,51.380013,2005,1,1
-China,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,108.420559,2005,1,1
-China,NonFoodDemand_Crops,Wheat,Wheat,2005,6.937652,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,Corn,Corn,2005,7.564967,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.181806,2005,1,1
+China,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,62.7317078,2005,1,1
+China,NonFoodDemand_Crops,OilCrop,OilCrop,2005,35.9239612,2005,1,1
+China,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,6.5859218,2005,1,1
+China,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,4.772402,2005,1,1
+China,NonFoodDemand_Crops,Rice,Rice,2005,28.0171465,2005,1,1
+China,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,51.4480791,2005,1,1
+China,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,108.4243094,2005,1,1
+China,NonFoodDemand_Crops,Wheat,Wheat,2005,6.9425044,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,Corn,Corn,2005,8.6777254,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.1904403,2005,1,1
 Eastern Europe,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Eastern Europe,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,5.112933,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,OilCrop,OilCrop,2005,2.99299,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,7.451046,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.141473,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,Rice,Rice,2005,0.008322,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,5.735853,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,20.258467,2005,1,1
-Eastern Europe,NonFoodDemand_Crops,Wheat,Wheat,2005,7.789197,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,Corn,Corn,2005,5.557422,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,1.037771,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,5.1594712,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,OilCrop,OilCrop,2005,3.3107249,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,8.2933123,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.1417096,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,Rice,Rice,2005,0.0097049,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,5.9742499,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,20.2987202,2005,1,1
+Eastern Europe,NonFoodDemand_Crops,Wheat,Wheat,2005,8.2461507,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,Corn,Corn,2005,5.7759906,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,3.1393059,2005,1,1
 Former Soviet Union,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Former Soviet Union,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,7.211957,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,OilCrop,OilCrop,2005,6.78076,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,19.594203,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.934774,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,Rice,Rice,2005,0.146803,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,28.728452,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,37.104407,2005,1,1
-Former Soviet Union,NonFoodDemand_Crops,Wheat,Wheat,2005,21.523913,2005,1,1
-India,NonFoodDemand_Crops,Corn,Corn,2005,5.798942,2005,1,1
-India,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,4.754129,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,7.4003324,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,OilCrop,OilCrop,2005,4.8547664,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,20.3383419,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.9347983,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,Rice,Rice,2005,0.1469387,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,29.2614405,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,37.3058255,2005,1,1
+Former Soviet Union,NonFoodDemand_Crops,Wheat,Wheat,2005,22.0844562,2005,1,1
+India,NonFoodDemand_Crops,Corn,Corn,2005,5.8257078,2005,1,1
+India,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,7.9138127,2005,1,1
 India,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-India,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,15.845934,2005,1,1
-India,NonFoodDemand_Crops,OilCrop,OilCrop,2005,10.359419,2005,1,1
-India,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,1.989747,2005,1,1
-India,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,5.16306,2005,1,1
-India,NonFoodDemand_Crops,Rice,Rice,2005,8.509847,2005,1,1
-India,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,7.671221,2005,1,1
-India,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,247.377628,2005,1,1
-India,NonFoodDemand_Crops,Wheat,Wheat,2005,0.995157,2005,1,1
-Japan,NonFoodDemand_Crops,Corn,Corn,2005,5.578337,2005,1,1
-Japan,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.187474,2005,1,1
+India,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,15.8538959,2005,1,1
+India,NonFoodDemand_Crops,OilCrop,OilCrop,2005,7.2868837,2005,1,1
+India,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,1.9922222,2005,1,1
+India,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,5.1648448,2005,1,1
+India,NonFoodDemand_Crops,Rice,Rice,2005,8.5268285,2005,1,1
+India,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,7.6712209,2005,1,1
+India,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,247.4097374,2005,1,1
+India,NonFoodDemand_Crops,Wheat,Wheat,2005,1.0004348,2005,1,1
+Japan,NonFoodDemand_Crops,Corn,Corn,2005,5.6461546,2005,1,1
+Japan,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.232521,2005,1,1
 Japan,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Japan,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,1.728014,2005,1,1
-Japan,NonFoodDemand_Crops,OilCrop,OilCrop,2005,1.501464,2005,1,1
-Japan,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,1.612019,2005,1,1
-Japan,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.464789,2005,1,1
-Japan,NonFoodDemand_Crops,Rice,Rice,2005,0.658441,2005,1,1
-Japan,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,1.463424,2005,1,1
-Japan,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,4.698636,2005,1,1
-Japan,NonFoodDemand_Crops,Wheat,Wheat,2005,0.122492,2005,1,1
-Korea,NonFoodDemand_Crops,Corn,Corn,2005,2.571624,2005,1,1
-Korea,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.266074,2005,1,1
+Japan,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,1.7280298,2005,1,1
+Japan,NonFoodDemand_Crops,OilCrop,OilCrop,2005,1.4890219,2005,1,1
+Japan,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,1.628531,2005,1,1
+Japan,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.4648977,2005,1,1
+Japan,NonFoodDemand_Crops,Rice,Rice,2005,0.6593884,2005,1,1
+Japan,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,1.4637058,2005,1,1
+Japan,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,4.6994589,2005,1,1
+Japan,NonFoodDemand_Crops,Wheat,Wheat,2005,0.1250691,2005,1,1
+Korea,NonFoodDemand_Crops,Corn,Corn,2005,2.5738368,2005,1,1
+Korea,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.311562,2005,1,1
 Korea,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Korea,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,1.938642,2005,1,1
-Korea,NonFoodDemand_Crops,OilCrop,OilCrop,2005,0.442105,2005,1,1
-Korea,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,0.308949,2005,1,1
-Korea,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.25164,2005,1,1
-Korea,NonFoodDemand_Crops,Rice,Rice,2005,1.157303,2005,1,1
-Korea,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,1.493956,2005,1,1
-Korea,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,1.000708,2005,1,1
-Korea,NonFoodDemand_Crops,Wheat,Wheat,2005,0.276736,2005,1,1
-Latin America,NonFoodDemand_Crops,Corn,Corn,2005,27.343444,2005,1,1
-Latin America,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,2.286675,2005,1,1
+Korea,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,1.9386423,2005,1,1
+Korea,NonFoodDemand_Crops,OilCrop,OilCrop,2005,0.397755,2005,1,1
+Korea,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,0.3089769,2005,1,1
+Korea,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.2519303,2005,1,1
+Korea,NonFoodDemand_Crops,Rice,Rice,2005,1.1573034,2005,1,1
+Korea,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,1.4940052,2005,1,1
+Korea,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,1.0007203,2005,1,1
+Korea,NonFoodDemand_Crops,Wheat,Wheat,2005,0.2771217,2005,1,1
+Latin America,NonFoodDemand_Crops,Corn,Corn,2005,27.744374,2005,1,1
+Latin America,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,4.48521,2005,1,1
 Latin America,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Latin America,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,21.270603,2005,1,1
-Latin America,NonFoodDemand_Crops,OilCrop,OilCrop,2005,15.744543,2005,1,1
-Latin America,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,11.113587,2005,1,1
-Latin America,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,9.847003,2005,1,1
-Latin America,NonFoodDemand_Crops,Rice,Rice,2005,5.182382,2005,1,1
-Latin America,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,13.578884,2005,1,1
-Latin America,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,520.350523,2005,1,1
-Latin America,NonFoodDemand_Crops,Wheat,Wheat,2005,5.210687,2005,1,1
-Middle East,NonFoodDemand_Crops,Corn,Corn,2005,1.991159,2005,1,1
-Middle East,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.324266,2005,1,1
+Latin America,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,21.2913313,2005,1,1
+Latin America,NonFoodDemand_Crops,OilCrop,OilCrop,2005,13.7493434,2005,1,1
+Latin America,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,11.2497356,2005,1,1
+Latin America,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,9.8497179,2005,1,1
+Latin America,NonFoodDemand_Crops,Rice,Rice,2005,5.1871703,2005,1,1
+Latin America,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,13.7126323,2005,1,1
+Latin America,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,520.4330543,2005,1,1
+Latin America,NonFoodDemand_Crops,Wheat,Wheat,2005,5.2184317,2005,1,1
+Middle East,NonFoodDemand_Crops,Corn,Corn,2005,2.4033455,2005,1,1
+Middle East,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,0.8974568,2005,1,1
 Middle East,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Middle East,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,10.084785,2005,1,1
-Middle East,NonFoodDemand_Crops,OilCrop,OilCrop,2005,2.608166,2005,1,1
-Middle East,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,4.002547,2005,1,1
-Middle East,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.839993,2005,1,1
-Middle East,NonFoodDemand_Crops,Rice,Rice,2005,1.291501,2005,1,1
-Middle East,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,1.678619,2005,1,1
-Middle East,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,11.646965,2005,1,1
-Middle East,NonFoodDemand_Crops,Wheat,Wheat,2005,6.797848,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,Corn,Corn,2005,7.496473,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,4.477255,2005,1,1
+Middle East,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,10.094166,2005,1,1
+Middle East,NonFoodDemand_Crops,OilCrop,OilCrop,2005,2.2640226,2005,1,1
+Middle East,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,4.5392221,2005,1,1
+Middle East,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.8403571,2005,1,1
+Middle East,NonFoodDemand_Crops,Rice,Rice,2005,1.3378295,2005,1,1
+Middle East,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,1.6803844,2005,1,1
+Middle East,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,11.6757927,2005,1,1
+Middle East,NonFoodDemand_Crops,Wheat,Wheat,2005,6.9449858,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,Corn,Corn,2005,7.5482953,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,6.1129694,2005,1,1
 Southeast Asia,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Southeast Asia,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,11.581226,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,OilCrop,OilCrop,2005,3.342703,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,0.994019,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,147.286733,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,Rice,Rice,2005,36.795787,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,17.16381,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,164.056598,2005,1,1
-Southeast Asia,NonFoodDemand_Crops,Wheat,Wheat,2005,7.987228,2005,1,1
-USA,NonFoodDemand_Crops,Corn,Corn,2005,59.48542,2005,1,1
-USA,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,1.661685,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,11.5861154,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,OilCrop,OilCrop,2005,1.7527055,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,0.9954522,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,147.290645,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,Rice,Rice,2005,36.8333726,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,17.1665042,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,164.0645827,2005,1,1
+Southeast Asia,NonFoodDemand_Crops,Wheat,Wheat,2005,7.9918794,2005,1,1
+USA,NonFoodDemand_Crops,Corn,Corn,2005,65.1557188,2005,1,1
+USA,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,3.2720343,2005,1,1
 USA,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-USA,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,4.232309,2005,1,1
-USA,NonFoodDemand_Crops,OilCrop,OilCrop,2005,5.427681,2005,1,1
-USA,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,5.00642,2005,1,1
-USA,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.988849,2005,1,1
-USA,NonFoodDemand_Crops,Rice,Rice,2005,2.076565,2005,1,1
-USA,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,2.863566,2005,1,1
-USA,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,51.863859,2005,1,1
-USA,NonFoodDemand_Crops,Wheat,Wheat,2005,1.069354,2005,1,1
-Western Europe,NonFoodDemand_Crops,Corn,Corn,2005,14.148279,2005,1,1
-Western Europe,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,2.295795,2005,1,1
+USA,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,4.2419265,2005,1,1
+USA,NonFoodDemand_Crops,OilCrop,OilCrop,2005,5.4043059,2005,1,1
+USA,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,5.2962023,2005,1,1
+USA,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,0.9888617,2005,1,1
+USA,NonFoodDemand_Crops,Rice,Rice,2005,2.0765653,2005,1,1
+USA,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,2.8769207,2005,1,1
+USA,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,51.9354175,2005,1,1
+USA,NonFoodDemand_Crops,Wheat,Wheat,2005,1.2358209,2005,1,1
+Western Europe,NonFoodDemand_Crops,Corn,Corn,2005,15.8753152,2005,1,1
+Western Europe,NonFoodDemand_Crops,FiberCrop,FiberCrop,2005,3.8006293,2005,1,1
 Western Europe,NonFoodDemand_Crops,FodderHerb,FodderHerb,2005,0,2005,0,0
-Western Europe,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,41.98365,2005,1,1
-Western Europe,NonFoodDemand_Crops,OilCrop,OilCrop,2005,26.664703,2005,1,1
-Western Europe,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,18.976992,2005,1,1
-Western Europe,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,5.55041,2005,1,1
-Western Europe,NonFoodDemand_Crops,Rice,Rice,2005,0.591928,2005,1,1
-Western Europe,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,11.452544,2005,1,1
-Western Europe,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,86.176853,2005,1,1
-Western Europe,NonFoodDemand_Crops,Wheat,Wheat,2005,24.971804,2005,1,1
+Western Europe,NonFoodDemand_Crops,MiscCrop,MiscCrop,2005,42.4118778,2005,1,1
+Western Europe,NonFoodDemand_Crops,OilCrop,OilCrop,2005,27.3423263,2005,1,1
+Western Europe,NonFoodDemand_Crops,OtherGrain,OtherGrain,2005,21.4966659,2005,1,1
+Western Europe,NonFoodDemand_Crops,PalmFruit,PalmFruit,2005,5.6781125,2005,1,1
+Western Europe,NonFoodDemand_Crops,Rice,Rice,2005,0.6072828,2005,1,1
+Western Europe,NonFoodDemand_Crops,Root_Tuber,Root_Tuber,2005,11.7589293,2005,1,1
+Western Europe,NonFoodDemand_Crops,SugarCrop,SugarCrop,2005,86.3104733,2005,1,1
+Western Europe,NonFoodDemand_Crops,Wheat,Wheat,2005,27.119822,2005,1,1

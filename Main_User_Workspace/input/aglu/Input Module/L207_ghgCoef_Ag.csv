@@ -4,19 +4,19 @@ ghgCoef_Ag
 
 region,AgSupplySector,AgSupplySubsector,AgProductionTechnology,year,generic.ghg,uncontrolled.emiss.coef
 Africa,Rice,RiceAEZ01,RiceAEZ01,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ01,CornAEZ01,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ01,FiberCropAEZ01,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ01,CornAEZ01,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ01,FiberCropAEZ01,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ01,FodderGrassAEZ01,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ01,FodderHerbAEZ01,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ01,MiscCropAEZ01,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ01,OilCropAEZ01,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ01,OtherGrainAEZ01,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ01,PalmFruitAEZ01,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ01,RiceAEZ01,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ01,SugarCropAEZ01,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ01,WheatAEZ01,1990,N2O_AGR,0.000801281
-Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ01,MiscCropAEZ01,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ01,OilCropAEZ01,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ01,OtherGrainAEZ01,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ01,PalmFruitAEZ01,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ01,RiceAEZ01,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ01,SugarCropAEZ01,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ01,WheatAEZ01,1990,N2O_AGR,0.00080162
+Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ01,CornAEZ01,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ01,FiberCropAEZ01,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ01,FodderGrassAEZ01,1990,NOx_AGR,7.81911e-05
@@ -478,19 +478,19 @@ India,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ01,SugarCropAEZ01,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ01,WheatAEZ01,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ01,RiceAEZ01,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ01,CornAEZ01,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ01,FiberCropAEZ01,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ01,FodderGrassAEZ01,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ01,FodderHerbAEZ01,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ01,MiscCropAEZ01,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ01,OilCropAEZ01,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ01,OtherGrainAEZ01,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ01,PalmFruitAEZ01,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ01,RiceAEZ01,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ01,SugarCropAEZ01,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ01,WheatAEZ01,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ01,CornAEZ01,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ01,FiberCropAEZ01,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ01,FodderGrassAEZ01,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ01,FodderHerbAEZ01,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ01,MiscCropAEZ01,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ01,OilCropAEZ01,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ01,OtherGrainAEZ01,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ01,PalmFruitAEZ01,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ01,RiceAEZ01,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ01,SugarCropAEZ01,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ01,WheatAEZ01,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ01,CornAEZ01,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ01,FiberCropAEZ01,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ01,FodderGrassAEZ01,1990,NOx_AGR,3.41385e-06
@@ -794,19 +794,19 @@ Middle East,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,SO2_3_AWB,2.98852e-0
 Middle East,SugarCrop,SugarCropAEZ01,SugarCropAEZ01,1990,SO2_3_AWB,2.55739e-05
 Middle East,Wheat,WheatAEZ01,WheatAEZ01,1990,SO2_3_AWB,0.000254172
 Southeast Asia,Rice,RiceAEZ01,RiceAEZ01,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ01,CornAEZ01,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ01,CornAEZ01,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ01,FiberCropAEZ01,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ01,FodderGrassAEZ01,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ01,FodderHerbAEZ01,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ01,MiscCropAEZ01,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ01,MiscCropAEZ01,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ01,OilCropAEZ01,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ01,OtherGrainAEZ01,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ01,PalmFruitAEZ01,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ01,RiceAEZ01,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ01,OtherGrainAEZ01,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ01,PalmFruitAEZ01,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ01,RiceAEZ01,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ01,SugarCropAEZ01,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ01,WheatAEZ01,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ01,CornAEZ01,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ01,FiberCropAEZ01,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ01,FodderGrassAEZ01,1990,NOx_AGR,0
@@ -952,19 +952,19 @@ Southeast Asia,Root_Tuber,Root_TuberAEZ01,Root_TuberAEZ01,1990,SO2_2_AWB,4.40475
 Southeast Asia,SugarCrop,SugarCropAEZ01,SugarCropAEZ01,1990,SO2_2_AWB,1.44533e-05
 Southeast Asia,Wheat,WheatAEZ01,WheatAEZ01,1990,SO2_2_AWB,7.26342e-05
 Africa,Rice,RiceAEZ02,RiceAEZ02,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ02,CornAEZ02,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ02,FiberCropAEZ02,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ02,CornAEZ02,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ02,FiberCropAEZ02,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ02,FodderGrassAEZ02,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ02,FodderHerbAEZ02,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ02,MiscCropAEZ02,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ02,OilCropAEZ02,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ02,OtherGrainAEZ02,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ02,PalmFruitAEZ02,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ02,RiceAEZ02,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ02,Root_TuberAEZ02,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ02,SugarCropAEZ02,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ02,WheatAEZ02,1990,N2O_AGR,0.000801281
-Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ02,MiscCropAEZ02,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ02,OilCropAEZ02,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ02,OtherGrainAEZ02,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ02,PalmFruitAEZ02,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ02,RiceAEZ02,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ02,Root_TuberAEZ02,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ02,SugarCropAEZ02,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ02,WheatAEZ02,1990,N2O_AGR,0.00080162
+Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ02,CornAEZ02,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ02,FiberCropAEZ02,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ02,FodderGrassAEZ02,1990,NOx_AGR,7.81911e-05
@@ -1426,19 +1426,19 @@ India,Root_Tuber,Root_TuberAEZ02,Root_TuberAEZ02,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ02,SugarCropAEZ02,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ02,WheatAEZ02,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ02,RiceAEZ02,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ02,CornAEZ02,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ02,FiberCropAEZ02,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ02,FodderGrassAEZ02,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ02,FodderHerbAEZ02,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ02,MiscCropAEZ02,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ02,OilCropAEZ02,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ02,OtherGrainAEZ02,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ02,PalmFruitAEZ02,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ02,RiceAEZ02,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ02,Root_TuberAEZ02,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ02,SugarCropAEZ02,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ02,WheatAEZ02,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ02,CornAEZ02,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ02,FiberCropAEZ02,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ02,FodderGrassAEZ02,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ02,FodderHerbAEZ02,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ02,MiscCropAEZ02,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ02,OilCropAEZ02,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ02,OtherGrainAEZ02,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ02,PalmFruitAEZ02,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ02,RiceAEZ02,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ02,Root_TuberAEZ02,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ02,SugarCropAEZ02,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ02,WheatAEZ02,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ02,CornAEZ02,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ02,FiberCropAEZ02,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ02,FodderGrassAEZ02,1990,NOx_AGR,3.41385e-06
@@ -1742,19 +1742,19 @@ Middle East,Root_Tuber,Root_TuberAEZ02,Root_TuberAEZ02,1990,SO2_3_AWB,2.98852e-0
 Middle East,SugarCrop,SugarCropAEZ02,SugarCropAEZ02,1990,SO2_3_AWB,2.55739e-05
 Middle East,Wheat,WheatAEZ02,WheatAEZ02,1990,SO2_3_AWB,0.000254172
 Africa,Rice,RiceAEZ03,RiceAEZ03,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ03,CornAEZ03,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ03,FiberCropAEZ03,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ03,CornAEZ03,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ03,FiberCropAEZ03,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ03,FodderGrassAEZ03,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ03,FodderHerbAEZ03,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ03,MiscCropAEZ03,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ03,OilCropAEZ03,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ03,OtherGrainAEZ03,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ03,PalmFruitAEZ03,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ03,RiceAEZ03,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ03,SugarCropAEZ03,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ03,WheatAEZ03,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ03,MiscCropAEZ03,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ03,OilCropAEZ03,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ03,OtherGrainAEZ03,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ03,PalmFruitAEZ03,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ03,RiceAEZ03,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ03,SugarCropAEZ03,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ03,WheatAEZ03,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ03,CornAEZ03,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ03,FiberCropAEZ03,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ03,FodderGrassAEZ03,1990,NOx_AGR,7.81911e-05
@@ -2216,19 +2216,19 @@ India,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ03,SugarCropAEZ03,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ03,WheatAEZ03,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ03,RiceAEZ03,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ03,CornAEZ03,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ03,FiberCropAEZ03,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ03,FodderGrassAEZ03,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ03,FodderHerbAEZ03,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ03,MiscCropAEZ03,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ03,OilCropAEZ03,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ03,OtherGrainAEZ03,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ03,PalmFruitAEZ03,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ03,RiceAEZ03,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ03,SugarCropAEZ03,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ03,WheatAEZ03,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ03,CornAEZ03,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ03,FiberCropAEZ03,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ03,FodderGrassAEZ03,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ03,FodderHerbAEZ03,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ03,MiscCropAEZ03,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ03,OilCropAEZ03,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ03,OtherGrainAEZ03,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ03,PalmFruitAEZ03,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ03,RiceAEZ03,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ03,SugarCropAEZ03,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ03,WheatAEZ03,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ03,CornAEZ03,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ03,FiberCropAEZ03,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ03,FodderGrassAEZ03,1990,NOx_AGR,3.41385e-06
@@ -2532,19 +2532,19 @@ Middle East,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,SO2_3_AWB,2.98852e-0
 Middle East,SugarCrop,SugarCropAEZ03,SugarCropAEZ03,1990,SO2_3_AWB,2.55739e-05
 Middle East,Wheat,WheatAEZ03,WheatAEZ03,1990,SO2_3_AWB,0.000254172
 Southeast Asia,Rice,RiceAEZ03,RiceAEZ03,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ03,CornAEZ03,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ03,CornAEZ03,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ03,FiberCropAEZ03,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ03,FodderGrassAEZ03,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ03,FodderHerbAEZ03,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ03,MiscCropAEZ03,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ03,MiscCropAEZ03,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ03,OilCropAEZ03,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ03,OtherGrainAEZ03,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ03,PalmFruitAEZ03,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ03,RiceAEZ03,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ03,OtherGrainAEZ03,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ03,PalmFruitAEZ03,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ03,RiceAEZ03,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ03,SugarCropAEZ03,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ03,WheatAEZ03,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ03,CornAEZ03,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ03,FiberCropAEZ03,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ03,FodderGrassAEZ03,1990,NOx_AGR,0
@@ -2690,19 +2690,19 @@ Southeast Asia,Root_Tuber,Root_TuberAEZ03,Root_TuberAEZ03,1990,SO2_2_AWB,4.40475
 Southeast Asia,SugarCrop,SugarCropAEZ03,SugarCropAEZ03,1990,SO2_2_AWB,1.44533e-05
 Southeast Asia,Wheat,WheatAEZ03,WheatAEZ03,1990,SO2_2_AWB,7.26342e-05
 Africa,Rice,RiceAEZ04,RiceAEZ04,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ04,CornAEZ04,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ04,FiberCropAEZ04,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ04,CornAEZ04,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ04,FiberCropAEZ04,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ04,FodderGrassAEZ04,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ04,FodderHerbAEZ04,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ04,MiscCropAEZ04,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ04,OilCropAEZ04,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ04,OtherGrainAEZ04,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ04,PalmFruitAEZ04,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ04,RiceAEZ04,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ04,SugarCropAEZ04,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ04,WheatAEZ04,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ04,MiscCropAEZ04,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ04,OilCropAEZ04,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ04,OtherGrainAEZ04,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ04,PalmFruitAEZ04,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ04,RiceAEZ04,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ04,SugarCropAEZ04,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ04,WheatAEZ04,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ04,CornAEZ04,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ04,FiberCropAEZ04,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ04,FodderGrassAEZ04,1990,NOx_AGR,7.81911e-05
@@ -3322,19 +3322,19 @@ India,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ04,SugarCropAEZ04,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ04,WheatAEZ04,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ04,RiceAEZ04,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ04,CornAEZ04,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ04,FiberCropAEZ04,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ04,FodderGrassAEZ04,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ04,FodderHerbAEZ04,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ04,MiscCropAEZ04,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ04,OilCropAEZ04,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ04,OtherGrainAEZ04,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ04,PalmFruitAEZ04,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ04,RiceAEZ04,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ04,SugarCropAEZ04,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ04,WheatAEZ04,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ04,CornAEZ04,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ04,FiberCropAEZ04,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ04,FodderGrassAEZ04,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ04,FodderHerbAEZ04,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ04,MiscCropAEZ04,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ04,OilCropAEZ04,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ04,OtherGrainAEZ04,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ04,PalmFruitAEZ04,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ04,RiceAEZ04,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ04,SugarCropAEZ04,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ04,WheatAEZ04,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ04,CornAEZ04,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ04,FiberCropAEZ04,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ04,FodderGrassAEZ04,1990,NOx_AGR,3.41385e-06
@@ -3480,19 +3480,19 @@ Latin America,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ04,SugarCropAEZ04,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ04,WheatAEZ04,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ04,RiceAEZ04,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ04,CornAEZ04,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ04,CornAEZ04,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ04,FiberCropAEZ04,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ04,FodderGrassAEZ04,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ04,FodderHerbAEZ04,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ04,MiscCropAEZ04,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ04,MiscCropAEZ04,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ04,OilCropAEZ04,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ04,OtherGrainAEZ04,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ04,PalmFruitAEZ04,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ04,RiceAEZ04,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ04,OtherGrainAEZ04,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ04,PalmFruitAEZ04,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ04,RiceAEZ04,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ04,SugarCropAEZ04,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ04,WheatAEZ04,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ04,CornAEZ04,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ04,FiberCropAEZ04,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ04,FodderGrassAEZ04,1990,NOx_AGR,0
@@ -3796,19 +3796,19 @@ Western Europe,Root_Tuber,Root_TuberAEZ04,Root_TuberAEZ04,1990,SO2_1_AWB,7.61095
 Western Europe,SugarCrop,SugarCropAEZ04,SugarCropAEZ04,1990,SO2_1_AWB,4.27305e-06
 Western Europe,Wheat,WheatAEZ04,WheatAEZ04,1990,SO2_1_AWB,6.47186e-05
 Africa,Rice,RiceAEZ05,RiceAEZ05,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ05,CornAEZ05,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ05,FiberCropAEZ05,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ05,CornAEZ05,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ05,FiberCropAEZ05,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ05,FodderGrassAEZ05,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ05,FodderHerbAEZ05,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ05,MiscCropAEZ05,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ05,OilCropAEZ05,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ05,OtherGrainAEZ05,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ05,PalmFruitAEZ05,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ05,RiceAEZ05,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ05,SugarCropAEZ05,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ05,WheatAEZ05,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ05,MiscCropAEZ05,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ05,OilCropAEZ05,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ05,OtherGrainAEZ05,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ05,PalmFruitAEZ05,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ05,RiceAEZ05,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ05,SugarCropAEZ05,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ05,WheatAEZ05,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ05,CornAEZ05,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ05,FiberCropAEZ05,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ05,FodderGrassAEZ05,1990,NOx_AGR,7.81911e-05
@@ -4428,19 +4428,19 @@ India,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ05,SugarCropAEZ05,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ05,WheatAEZ05,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ05,RiceAEZ05,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ05,CornAEZ05,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ05,FiberCropAEZ05,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ05,FodderGrassAEZ05,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ05,FodderHerbAEZ05,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ05,MiscCropAEZ05,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ05,OilCropAEZ05,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ05,OtherGrainAEZ05,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ05,PalmFruitAEZ05,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ05,RiceAEZ05,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ05,SugarCropAEZ05,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ05,WheatAEZ05,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ05,CornAEZ05,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ05,FiberCropAEZ05,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ05,FodderGrassAEZ05,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ05,FodderHerbAEZ05,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ05,MiscCropAEZ05,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ05,OilCropAEZ05,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ05,OtherGrainAEZ05,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ05,PalmFruitAEZ05,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ05,RiceAEZ05,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ05,SugarCropAEZ05,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ05,WheatAEZ05,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ05,CornAEZ05,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ05,FiberCropAEZ05,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ05,FodderGrassAEZ05,1990,NOx_AGR,3.41385e-06
@@ -4586,19 +4586,19 @@ Latin America,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ05,SugarCropAEZ05,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ05,WheatAEZ05,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ05,RiceAEZ05,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ05,CornAEZ05,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ05,CornAEZ05,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ05,FiberCropAEZ05,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ05,FodderGrassAEZ05,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ05,FodderHerbAEZ05,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ05,MiscCropAEZ05,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ05,MiscCropAEZ05,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ05,OilCropAEZ05,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ05,OtherGrainAEZ05,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ05,PalmFruitAEZ05,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ05,RiceAEZ05,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ05,OtherGrainAEZ05,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ05,PalmFruitAEZ05,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ05,RiceAEZ05,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ05,SugarCropAEZ05,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ05,WheatAEZ05,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ05,CornAEZ05,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ05,FiberCropAEZ05,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ05,FodderGrassAEZ05,1990,NOx_AGR,0
@@ -4744,19 +4744,19 @@ Southeast Asia,Root_Tuber,Root_TuberAEZ05,Root_TuberAEZ05,1990,SO2_2_AWB,4.40475
 Southeast Asia,SugarCrop,SugarCropAEZ05,SugarCropAEZ05,1990,SO2_2_AWB,1.44533e-05
 Southeast Asia,Wheat,WheatAEZ05,WheatAEZ05,1990,SO2_2_AWB,7.26342e-05
 Africa,Rice,RiceAEZ06,RiceAEZ06,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ06,CornAEZ06,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ06,FiberCropAEZ06,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ06,CornAEZ06,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ06,FiberCropAEZ06,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ06,FodderGrassAEZ06,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ06,FodderHerbAEZ06,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ06,MiscCropAEZ06,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ06,OilCropAEZ06,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ06,OtherGrainAEZ06,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ06,PalmFruitAEZ06,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ06,RiceAEZ06,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ06,SugarCropAEZ06,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ06,WheatAEZ06,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ06,MiscCropAEZ06,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ06,OilCropAEZ06,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ06,OtherGrainAEZ06,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ06,PalmFruitAEZ06,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ06,RiceAEZ06,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ06,SugarCropAEZ06,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ06,WheatAEZ06,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ06,CornAEZ06,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ06,FiberCropAEZ06,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ06,FodderGrassAEZ06,1990,NOx_AGR,7.81911e-05
@@ -5376,19 +5376,19 @@ India,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ06,SugarCropAEZ06,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ06,WheatAEZ06,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ06,RiceAEZ06,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ06,CornAEZ06,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ06,FiberCropAEZ06,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ06,FodderGrassAEZ06,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ06,FodderHerbAEZ06,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ06,MiscCropAEZ06,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ06,OilCropAEZ06,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ06,OtherGrainAEZ06,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ06,PalmFruitAEZ06,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ06,RiceAEZ06,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ06,SugarCropAEZ06,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ06,WheatAEZ06,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ06,CornAEZ06,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ06,FiberCropAEZ06,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ06,FodderGrassAEZ06,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ06,FodderHerbAEZ06,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ06,MiscCropAEZ06,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ06,OilCropAEZ06,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ06,OtherGrainAEZ06,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ06,PalmFruitAEZ06,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ06,RiceAEZ06,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ06,SugarCropAEZ06,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ06,WheatAEZ06,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ06,CornAEZ06,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ06,FiberCropAEZ06,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ06,FodderGrassAEZ06,1990,NOx_AGR,3.41385e-06
@@ -5534,19 +5534,19 @@ Latin America,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ06,SugarCropAEZ06,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ06,WheatAEZ06,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ06,RiceAEZ06,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ06,CornAEZ06,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ06,CornAEZ06,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ06,FiberCropAEZ06,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ06,FodderGrassAEZ06,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ06,FodderHerbAEZ06,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ06,MiscCropAEZ06,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ06,MiscCropAEZ06,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ06,OilCropAEZ06,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ06,OtherGrainAEZ06,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ06,PalmFruitAEZ06,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ06,RiceAEZ06,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ06,OtherGrainAEZ06,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ06,PalmFruitAEZ06,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ06,RiceAEZ06,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ06,SugarCropAEZ06,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ06,WheatAEZ06,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ06,CornAEZ06,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ06,FiberCropAEZ06,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ06,FodderGrassAEZ06,1990,NOx_AGR,0
@@ -5692,19 +5692,19 @@ Southeast Asia,Root_Tuber,Root_TuberAEZ06,Root_TuberAEZ06,1990,SO2_2_AWB,4.40475
 Southeast Asia,SugarCrop,SugarCropAEZ06,SugarCropAEZ06,1990,SO2_2_AWB,1.44533e-05
 Southeast Asia,Wheat,WheatAEZ06,WheatAEZ06,1990,SO2_2_AWB,7.26342e-05
 Africa,Rice,RiceAEZ07,RiceAEZ07,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ07,CornAEZ07,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ07,CornAEZ07,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ07,FodderHerbAEZ07,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ07,MiscCropAEZ07,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ07,OilCropAEZ07,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ07,OtherGrainAEZ07,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ07,PalmFruitAEZ07,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ07,RiceAEZ07,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ07,WheatAEZ07,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ07,MiscCropAEZ07,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ07,OilCropAEZ07,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ07,OtherGrainAEZ07,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ07,PalmFruitAEZ07,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ07,RiceAEZ07,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ07,WheatAEZ07,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ07,CornAEZ07,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,NOx_AGR,7.81911e-05
@@ -6324,19 +6324,19 @@ China,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ07,WheatAEZ07,1990,SO2_2_AWB,0.000154264
 Former Soviet Union,Rice,RiceAEZ07,RiceAEZ07,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ07,CornAEZ07,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ07,CornAEZ07,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ07,FodderHerbAEZ07,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ07,MiscCropAEZ07,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ07,OilCropAEZ07,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ07,OtherGrainAEZ07,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ07,FodderHerbAEZ07,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ07,MiscCropAEZ07,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ07,OilCropAEZ07,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ07,OtherGrainAEZ07,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ07,PalmFruitAEZ07,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ07,RiceAEZ07,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ07,WheatAEZ07,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ07,WheatAEZ07,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ07,CornAEZ07,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,NOx_AGR,0.00034078
@@ -6640,19 +6640,19 @@ India,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ07,WheatAEZ07,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ07,RiceAEZ07,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ07,CornAEZ07,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ07,FodderHerbAEZ07,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ07,MiscCropAEZ07,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ07,OilCropAEZ07,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ07,OtherGrainAEZ07,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ07,PalmFruitAEZ07,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ07,RiceAEZ07,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ07,WheatAEZ07,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ07,CornAEZ07,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ07,FodderHerbAEZ07,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ07,MiscCropAEZ07,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ07,OilCropAEZ07,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ07,OtherGrainAEZ07,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ07,PalmFruitAEZ07,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ07,RiceAEZ07,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ07,WheatAEZ07,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ07,CornAEZ07,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,NOx_AGR,3.41385e-06
@@ -6956,19 +6956,19 @@ Middle East,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,SO2_3_AWB,2.98852e-0
 Middle East,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,SO2_3_AWB,2.55739e-05
 Middle East,Wheat,WheatAEZ07,WheatAEZ07,1990,SO2_3_AWB,0.000254172
 Southeast Asia,Rice,RiceAEZ07,RiceAEZ07,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ07,CornAEZ07,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ07,CornAEZ07,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ07,FodderHerbAEZ07,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ07,MiscCropAEZ07,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ07,MiscCropAEZ07,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ07,OilCropAEZ07,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ07,OtherGrainAEZ07,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ07,PalmFruitAEZ07,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ07,RiceAEZ07,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ07,OtherGrainAEZ07,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ07,PalmFruitAEZ07,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ07,RiceAEZ07,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ07,WheatAEZ07,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ07,CornAEZ07,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ07,FiberCropAEZ07,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ07,FodderGrassAEZ07,1990,NOx_AGR,0
@@ -7430,19 +7430,19 @@ Western Europe,Root_Tuber,Root_TuberAEZ07,Root_TuberAEZ07,1990,SO2_1_AWB,7.61095
 Western Europe,SugarCrop,SugarCropAEZ07,SugarCropAEZ07,1990,SO2_1_AWB,4.27305e-06
 Western Europe,Wheat,WheatAEZ07,WheatAEZ07,1990,SO2_1_AWB,6.47186e-05
 Africa,Rice,RiceAEZ08,RiceAEZ08,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ08,FodderHerbAEZ08,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ08,PalmFruitAEZ08,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ08,RiceAEZ08,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ08,PalmFruitAEZ08,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ08,RiceAEZ08,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ08,CornAEZ08,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,NOx_AGR,7.81911e-05
@@ -8062,19 +8062,19 @@ China,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ08,WheatAEZ08,1990,SO2_2_AWB,0.000154264
 Eastern Europe,Rice,RiceAEZ08,RiceAEZ08,1990,CH4_AGR,0.046116826
-Eastern Europe,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.000518793
-Eastern Europe,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,N2O_AGR,0.0005707
+Eastern Europe,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.000571477
+Eastern Europe,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,N2O_AGR,0.000571477
 Eastern Europe,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,N2O_AGR,0.001034713
-Eastern Europe,FodderHerb,FodderHerbAEZ08,FodderHerbAEZ08,1990,N2O_AGR,0.000552455
-Eastern Europe,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.000544541
-Eastern Europe,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.000546745
-Eastern Europe,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.000566964
+Eastern Europe,FodderHerb,FodderHerbAEZ08,FodderHerbAEZ08,1990,N2O_AGR,0.000571477
+Eastern Europe,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.000571477
+Eastern Europe,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.000571477
+Eastern Europe,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.000571477
 Eastern Europe,PalmFruit,PalmFruitAEZ08,PalmFruitAEZ08,1990,N2O_AGR,0
 Eastern Europe,Rice,RiceAEZ08,RiceAEZ08,1990,N2O_AGR,0.00042949
-Eastern Europe,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.000561969
-Eastern Europe,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.000547282
-Eastern Europe,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.000554594
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,1990,N2O_AGR,0.006179854
+Eastern Europe,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.000571477
+Eastern Europe,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.000571477
+Eastern Europe,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.000571477
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,1990,N2O_AGR,0.006412916
 Eastern Europe,Corn,CornAEZ08,CornAEZ08,1990,NOx_AGR,0.000361008
 Eastern Europe,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,NOx_AGR,0.000397128
 Eastern Europe,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,NOx_AGR,0.000877307
@@ -8220,19 +8220,19 @@ Eastern Europe,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,SO2_1_AWB,4.54443
 Eastern Europe,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,SO2_1_AWB,2.47838e-06
 Eastern Europe,Wheat,WheatAEZ08,WheatAEZ08,1990,SO2_1_AWB,3.8091e-05
 Former Soviet Union,Rice,RiceAEZ08,RiceAEZ08,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ08,FodderHerbAEZ08,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ08,FodderHerbAEZ08,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ08,PalmFruitAEZ08,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ08,RiceAEZ08,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ08,CornAEZ08,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,NOx_AGR,0.00034078
@@ -8536,19 +8536,19 @@ India,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ08,WheatAEZ08,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ08,RiceAEZ08,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ08,FodderHerbAEZ08,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ08,PalmFruitAEZ08,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ08,RiceAEZ08,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ08,FodderHerbAEZ08,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ08,PalmFruitAEZ08,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ08,RiceAEZ08,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ08,CornAEZ08,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,NOx_AGR,3.41385e-06
@@ -8852,19 +8852,19 @@ Middle East,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,SO2_3_AWB,2.98852e-0
 Middle East,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,SO2_3_AWB,2.55739e-05
 Middle East,Wheat,WheatAEZ08,WheatAEZ08,1990,SO2_3_AWB,0.000254172
 Southeast Asia,Rice,RiceAEZ08,RiceAEZ08,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ08,CornAEZ08,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ08,FodderHerbAEZ08,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ08,MiscCropAEZ08,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ08,OilCropAEZ08,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ08,PalmFruitAEZ08,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ08,RiceAEZ08,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ08,OtherGrainAEZ08,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ08,PalmFruitAEZ08,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ08,RiceAEZ08,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ08,WheatAEZ08,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ08,CornAEZ08,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ08,FiberCropAEZ08,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ08,FodderGrassAEZ08,1990,NOx_AGR,0
@@ -9326,19 +9326,19 @@ Western Europe,Root_Tuber,Root_TuberAEZ08,Root_TuberAEZ08,1990,SO2_1_AWB,7.61095
 Western Europe,SugarCrop,SugarCropAEZ08,SugarCropAEZ08,1990,SO2_1_AWB,4.27305e-06
 Western Europe,Wheat,WheatAEZ08,WheatAEZ08,1990,SO2_1_AWB,6.47186e-05
 Africa,Rice,RiceAEZ09,RiceAEZ09,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ09,FodderHerbAEZ09,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ09,PalmFruitAEZ09,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ09,RiceAEZ09,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ09,PalmFruitAEZ09,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ09,RiceAEZ09,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ09,CornAEZ09,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,NOx_AGR,7.81911e-05
@@ -9958,19 +9958,19 @@ China,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ09,WheatAEZ09,1990,SO2_2_AWB,0.000154264
 Eastern Europe,Rice,RiceAEZ09,RiceAEZ09,1990,CH4_AGR,0.046116826
-Eastern Europe,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.000518793
-Eastern Europe,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,N2O_AGR,0.0005707
+Eastern Europe,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.000571477
+Eastern Europe,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,N2O_AGR,0.000571477
 Eastern Europe,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,N2O_AGR,0.001034713
-Eastern Europe,FodderHerb,FodderHerbAEZ09,FodderHerbAEZ09,1990,N2O_AGR,0.000552455
-Eastern Europe,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.000544541
-Eastern Europe,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.000546745
-Eastern Europe,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.000566964
+Eastern Europe,FodderHerb,FodderHerbAEZ09,FodderHerbAEZ09,1990,N2O_AGR,0.000571477
+Eastern Europe,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.000571477
+Eastern Europe,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.000571477
+Eastern Europe,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.000571477
 Eastern Europe,PalmFruit,PalmFruitAEZ09,PalmFruitAEZ09,1990,N2O_AGR,0
 Eastern Europe,Rice,RiceAEZ09,RiceAEZ09,1990,N2O_AGR,0.00042949
-Eastern Europe,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.000561969
-Eastern Europe,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.000547282
-Eastern Europe,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.000554594
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,1990,N2O_AGR,0.006179854
+Eastern Europe,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.000571477
+Eastern Europe,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.000571477
+Eastern Europe,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.000571477
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,1990,N2O_AGR,0.006412916
 Eastern Europe,Corn,CornAEZ09,CornAEZ09,1990,NOx_AGR,0.000361008
 Eastern Europe,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,NOx_AGR,0.000397128
 Eastern Europe,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,NOx_AGR,0.000877307
@@ -10116,19 +10116,19 @@ Eastern Europe,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,SO2_1_AWB,4.54443
 Eastern Europe,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,SO2_1_AWB,2.47838e-06
 Eastern Europe,Wheat,WheatAEZ09,WheatAEZ09,1990,SO2_1_AWB,3.8091e-05
 Former Soviet Union,Rice,RiceAEZ09,RiceAEZ09,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ09,FodderHerbAEZ09,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ09,FodderHerbAEZ09,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ09,PalmFruitAEZ09,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ09,RiceAEZ09,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ09,CornAEZ09,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,NOx_AGR,0.00034078
@@ -10590,19 +10590,19 @@ Japan,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,SO2_2_AWB,4.15147e-05
 Japan,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,SO2_2_AWB,3.74785e-05
 Japan,Wheat,WheatAEZ09,WheatAEZ09,1990,SO2_2_AWB,0.000381152
 Latin America,Rice,RiceAEZ09,RiceAEZ09,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ09,FodderHerbAEZ09,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ09,PalmFruitAEZ09,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ09,RiceAEZ09,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ09,FodderHerbAEZ09,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ09,PalmFruitAEZ09,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ09,RiceAEZ09,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ09,CornAEZ09,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,NOx_AGR,3.41385e-06
@@ -10906,19 +10906,19 @@ Middle East,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,SO2_3_AWB,2.98852e-0
 Middle East,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,SO2_3_AWB,2.55739e-05
 Middle East,Wheat,WheatAEZ09,WheatAEZ09,1990,SO2_3_AWB,0.000254172
 Southeast Asia,Rice,RiceAEZ09,RiceAEZ09,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ09,CornAEZ09,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ09,FodderHerbAEZ09,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ09,MiscCropAEZ09,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ09,OilCropAEZ09,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ09,PalmFruitAEZ09,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ09,RiceAEZ09,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ09,OtherGrainAEZ09,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ09,PalmFruitAEZ09,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ09,RiceAEZ09,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ09,WheatAEZ09,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ09,CornAEZ09,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ09,FiberCropAEZ09,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ09,FodderGrassAEZ09,1990,NOx_AGR,0
@@ -11380,19 +11380,19 @@ Western Europe,Root_Tuber,Root_TuberAEZ09,Root_TuberAEZ09,1990,SO2_1_AWB,7.61095
 Western Europe,SugarCrop,SugarCropAEZ09,SugarCropAEZ09,1990,SO2_1_AWB,4.27305e-06
 Western Europe,Wheat,WheatAEZ09,WheatAEZ09,1990,SO2_1_AWB,6.47186e-05
 Africa,Rice,RiceAEZ10,RiceAEZ10,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ10,FodderHerbAEZ10,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ10,PalmFruitAEZ10,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ10,RiceAEZ10,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ10,PalmFruitAEZ10,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ10,RiceAEZ10,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ10,CornAEZ10,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,NOx_AGR,7.81911e-05
@@ -12012,19 +12012,19 @@ China,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ10,WheatAEZ10,1990,SO2_2_AWB,0.000154264
 Eastern Europe,Rice,RiceAEZ10,RiceAEZ10,1990,CH4_AGR,0.046116826
-Eastern Europe,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.000518793
-Eastern Europe,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,N2O_AGR,0.0005707
+Eastern Europe,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.000571477
+Eastern Europe,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,N2O_AGR,0.000571477
 Eastern Europe,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,N2O_AGR,0.001034713
-Eastern Europe,FodderHerb,FodderHerbAEZ10,FodderHerbAEZ10,1990,N2O_AGR,0.000552455
-Eastern Europe,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.000544541
-Eastern Europe,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.000546745
-Eastern Europe,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.000566964
+Eastern Europe,FodderHerb,FodderHerbAEZ10,FodderHerbAEZ10,1990,N2O_AGR,0.000571477
+Eastern Europe,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.000571477
+Eastern Europe,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.000571477
+Eastern Europe,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.000571477
 Eastern Europe,PalmFruit,PalmFruitAEZ10,PalmFruitAEZ10,1990,N2O_AGR,0
 Eastern Europe,Rice,RiceAEZ10,RiceAEZ10,1990,N2O_AGR,0.00042949
-Eastern Europe,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.000561969
-Eastern Europe,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.000547282
-Eastern Europe,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.000554594
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,1990,N2O_AGR,0.006179854
+Eastern Europe,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.000571477
+Eastern Europe,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.000571477
+Eastern Europe,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.000571477
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,1990,N2O_AGR,0.006412916
 Eastern Europe,Corn,CornAEZ10,CornAEZ10,1990,NOx_AGR,0.000361008
 Eastern Europe,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,NOx_AGR,0.000397128
 Eastern Europe,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,NOx_AGR,0.000877307
@@ -12170,19 +12170,19 @@ Eastern Europe,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,SO2_1_AWB,4.54443
 Eastern Europe,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,SO2_1_AWB,2.47838e-06
 Eastern Europe,Wheat,WheatAEZ10,WheatAEZ10,1990,SO2_1_AWB,3.8091e-05
 Former Soviet Union,Rice,RiceAEZ10,RiceAEZ10,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ10,FodderHerbAEZ10,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ10,FodderHerbAEZ10,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ10,PalmFruitAEZ10,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ10,RiceAEZ10,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ10,CornAEZ10,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,NOx_AGR,0.00034078
@@ -12802,19 +12802,19 @@ Korea,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,SO2_2_AWB,0.000110756
 Korea,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,SO2_2_AWB,0
 Korea,Wheat,WheatAEZ10,WheatAEZ10,1990,SO2_2_AWB,0.00094143
 Latin America,Rice,RiceAEZ10,RiceAEZ10,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ10,FodderHerbAEZ10,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ10,PalmFruitAEZ10,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ10,RiceAEZ10,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ10,FodderHerbAEZ10,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ10,PalmFruitAEZ10,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ10,RiceAEZ10,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ10,CornAEZ10,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,NOx_AGR,3.41385e-06
@@ -13118,19 +13118,19 @@ Middle East,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,SO2_3_AWB,2.98852e-0
 Middle East,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,SO2_3_AWB,2.55739e-05
 Middle East,Wheat,WheatAEZ10,WheatAEZ10,1990,SO2_3_AWB,0.000254172
 Southeast Asia,Rice,RiceAEZ10,RiceAEZ10,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ10,CornAEZ10,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ10,FodderHerbAEZ10,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ10,MiscCropAEZ10,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ10,OilCropAEZ10,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ10,PalmFruitAEZ10,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ10,RiceAEZ10,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ10,OtherGrainAEZ10,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ10,PalmFruitAEZ10,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ10,RiceAEZ10,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ10,WheatAEZ10,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ10,CornAEZ10,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ10,FiberCropAEZ10,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ10,FodderGrassAEZ10,1990,NOx_AGR,0
@@ -13592,19 +13592,19 @@ Western Europe,Root_Tuber,Root_TuberAEZ10,Root_TuberAEZ10,1990,SO2_1_AWB,7.61095
 Western Europe,SugarCrop,SugarCropAEZ10,SugarCropAEZ10,1990,SO2_1_AWB,4.27305e-06
 Western Europe,Wheat,WheatAEZ10,WheatAEZ10,1990,SO2_1_AWB,6.47186e-05
 Africa,Rice,RiceAEZ11,RiceAEZ11,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ11,FodderHerbAEZ11,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ11,PalmFruitAEZ11,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ11,RiceAEZ11,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ11,PalmFruitAEZ11,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ11,RiceAEZ11,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ11,CornAEZ11,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,NOx_AGR,7.81911e-05
@@ -14224,19 +14224,19 @@ China,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ11,WheatAEZ11,1990,SO2_2_AWB,0.000154264
 Eastern Europe,Rice,RiceAEZ11,RiceAEZ11,1990,CH4_AGR,0.046116826
-Eastern Europe,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.000518793
-Eastern Europe,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,N2O_AGR,0.0005707
+Eastern Europe,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.000571477
+Eastern Europe,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,N2O_AGR,0.000571477
 Eastern Europe,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,N2O_AGR,0.001034713
-Eastern Europe,FodderHerb,FodderHerbAEZ11,FodderHerbAEZ11,1990,N2O_AGR,0.000552455
-Eastern Europe,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.000544541
-Eastern Europe,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.000546745
-Eastern Europe,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.000566964
+Eastern Europe,FodderHerb,FodderHerbAEZ11,FodderHerbAEZ11,1990,N2O_AGR,0.000571477
+Eastern Europe,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.000571477
+Eastern Europe,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.000571477
+Eastern Europe,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.000571477
 Eastern Europe,PalmFruit,PalmFruitAEZ11,PalmFruitAEZ11,1990,N2O_AGR,0
 Eastern Europe,Rice,RiceAEZ11,RiceAEZ11,1990,N2O_AGR,0.00042949
-Eastern Europe,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.000561969
-Eastern Europe,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.000547282
-Eastern Europe,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.000554594
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,1990,N2O_AGR,0.006179854
+Eastern Europe,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.000571477
+Eastern Europe,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.000571477
+Eastern Europe,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.000571477
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,1990,N2O_AGR,0.006412916
 Eastern Europe,Corn,CornAEZ11,CornAEZ11,1990,NOx_AGR,0.000361008
 Eastern Europe,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,NOx_AGR,0.000397128
 Eastern Europe,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,NOx_AGR,0.000877307
@@ -14382,19 +14382,19 @@ Eastern Europe,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,SO2_1_AWB,4.54443
 Eastern Europe,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,SO2_1_AWB,2.47838e-06
 Eastern Europe,Wheat,WheatAEZ11,WheatAEZ11,1990,SO2_1_AWB,3.8091e-05
 Former Soviet Union,Rice,RiceAEZ11,RiceAEZ11,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ11,FodderHerbAEZ11,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ11,FodderHerbAEZ11,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ11,PalmFruitAEZ11,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ11,RiceAEZ11,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ11,CornAEZ11,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,NOx_AGR,0.00034078
@@ -15014,19 +15014,19 @@ Korea,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,SO2_2_AWB,0.000110756
 Korea,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,SO2_2_AWB,0
 Korea,Wheat,WheatAEZ11,WheatAEZ11,1990,SO2_2_AWB,0.00094143
 Latin America,Rice,RiceAEZ11,RiceAEZ11,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ11,FodderHerbAEZ11,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ11,PalmFruitAEZ11,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ11,RiceAEZ11,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ11,FodderHerbAEZ11,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ11,PalmFruitAEZ11,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ11,RiceAEZ11,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ11,CornAEZ11,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,NOx_AGR,3.41385e-06
@@ -15172,19 +15172,19 @@ Latin America,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ11,WheatAEZ11,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ11,RiceAEZ11,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ11,CornAEZ11,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ11,FodderHerbAEZ11,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ11,MiscCropAEZ11,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ11,OilCropAEZ11,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ11,PalmFruitAEZ11,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ11,RiceAEZ11,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ11,OtherGrainAEZ11,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ11,PalmFruitAEZ11,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ11,RiceAEZ11,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ11,WheatAEZ11,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ11,CornAEZ11,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ11,FiberCropAEZ11,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ11,FodderGrassAEZ11,1990,NOx_AGR,0
@@ -15646,19 +15646,19 @@ Western Europe,Root_Tuber,Root_TuberAEZ11,Root_TuberAEZ11,1990,SO2_1_AWB,7.61095
 Western Europe,SugarCrop,SugarCropAEZ11,SugarCropAEZ11,1990,SO2_1_AWB,4.27305e-06
 Western Europe,Wheat,WheatAEZ11,WheatAEZ11,1990,SO2_1_AWB,6.47186e-05
 Africa,Rice,RiceAEZ12,RiceAEZ12,1990,CH4_AGR,0.05354825
-Africa,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.000782256
-Africa,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,N2O_AGR,0.00079534
+Africa,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.00080162
+Africa,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,N2O_AGR,0.00080162
 Africa,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,N2O_AGR,0.000628411
 Africa,FodderHerb,FodderHerbAEZ12,FodderHerbAEZ12,1990,N2O_AGR,0.00080162
-Africa,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.000779072
-Africa,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.000778583
-Africa,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.000800671
-Africa,PalmFruit,PalmFruitAEZ12,PalmFruitAEZ12,1990,N2O_AGR,0.000750521
-Africa,Rice,RiceAEZ12,RiceAEZ12,1990,N2O_AGR,0.002947705
-Africa,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.000723664
-Africa,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.000787868
-Africa,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.000801281
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1990,N2O_AGR,0.00906351
+Africa,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.00080162
+Africa,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.00080162
+Africa,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.00080162
+Africa,PalmFruit,PalmFruitAEZ12,PalmFruitAEZ12,1990,N2O_AGR,0.00080162
+Africa,Rice,RiceAEZ12,RiceAEZ12,1990,N2O_AGR,0.003005015
+Africa,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.00080162
+Africa,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.00080162
+Africa,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.00080162
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1990,N2O_AGR,0.009445905
 Africa,Corn,CornAEZ12,CornAEZ12,1990,NOx_AGR,0.000109281
 Africa,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,NOx_AGR,0.000111109
 Africa,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,NOx_AGR,7.81911e-05
@@ -16120,19 +16120,19 @@ China,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ12,WheatAEZ12,1990,SO2_2_AWB,0.000154264
 Eastern Europe,Rice,RiceAEZ12,RiceAEZ12,1990,CH4_AGR,0.046116826
-Eastern Europe,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.000518793
-Eastern Europe,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,N2O_AGR,0.0005707
+Eastern Europe,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.000571477
+Eastern Europe,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,N2O_AGR,0.000571477
 Eastern Europe,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,N2O_AGR,0.001034713
-Eastern Europe,FodderHerb,FodderHerbAEZ12,FodderHerbAEZ12,1990,N2O_AGR,0.000552455
-Eastern Europe,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.000544541
-Eastern Europe,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.000546745
-Eastern Europe,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.000566964
+Eastern Europe,FodderHerb,FodderHerbAEZ12,FodderHerbAEZ12,1990,N2O_AGR,0.000571477
+Eastern Europe,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.000571477
+Eastern Europe,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.000571477
+Eastern Europe,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.000571477
 Eastern Europe,PalmFruit,PalmFruitAEZ12,PalmFruitAEZ12,1990,N2O_AGR,0
 Eastern Europe,Rice,RiceAEZ12,RiceAEZ12,1990,N2O_AGR,0.00042949
-Eastern Europe,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.000561969
-Eastern Europe,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.000547282
-Eastern Europe,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.000554594
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,1990,N2O_AGR,0.006179854
+Eastern Europe,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.000571477
+Eastern Europe,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.000571477
+Eastern Europe,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.000571477
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,1990,N2O_AGR,0.006412916
 Eastern Europe,Corn,CornAEZ12,CornAEZ12,1990,NOx_AGR,0.000361008
 Eastern Europe,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,NOx_AGR,0.000397128
 Eastern Europe,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,NOx_AGR,0.000877307
@@ -16278,19 +16278,19 @@ Eastern Europe,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,SO2_1_AWB,4.54443
 Eastern Europe,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,SO2_1_AWB,2.47838e-06
 Eastern Europe,Wheat,WheatAEZ12,WheatAEZ12,1990,SO2_1_AWB,3.8091e-05
 Former Soviet Union,Rice,RiceAEZ12,RiceAEZ12,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ12,FodderHerbAEZ12,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ12,FodderHerbAEZ12,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ12,PalmFruitAEZ12,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ12,RiceAEZ12,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ12,CornAEZ12,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,NOx_AGR,0.00034078
@@ -16752,19 +16752,19 @@ Japan,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,SO2_2_AWB,4.15147e-05
 Japan,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,SO2_2_AWB,3.74785e-05
 Japan,Wheat,WheatAEZ12,WheatAEZ12,1990,SO2_2_AWB,0.000381152
 Latin America,Rice,RiceAEZ12,RiceAEZ12,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ12,FodderHerbAEZ12,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ12,PalmFruitAEZ12,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ12,RiceAEZ12,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.000719732
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ12,FodderHerbAEZ12,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ12,PalmFruitAEZ12,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ12,RiceAEZ12,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.001385002
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ12,CornAEZ12,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,NOx_AGR,3.41385e-06
@@ -16910,19 +16910,19 @@ Latin America,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ12,WheatAEZ12,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ12,RiceAEZ12,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ12,CornAEZ12,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ12,FodderHerbAEZ12,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ12,MiscCropAEZ12,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ12,OilCropAEZ12,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ12,PalmFruitAEZ12,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ12,RiceAEZ12,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ12,OtherGrainAEZ12,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ12,PalmFruitAEZ12,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ12,RiceAEZ12,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ12,Root_TuberAEZ12,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ12,SugarCropAEZ12,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ12,WheatAEZ12,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ12,CornAEZ12,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ12,FiberCropAEZ12,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ12,FodderGrassAEZ12,1990,NOx_AGR,0
@@ -17700,19 +17700,19 @@ China,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ13,SugarCropAEZ13,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ13,WheatAEZ13,1990,SO2_2_AWB,0.000154264
 Former Soviet Union,Rice,RiceAEZ13,RiceAEZ13,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ13,CornAEZ13,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ13,CornAEZ13,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ13,FiberCropAEZ13,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ13,FodderGrassAEZ13,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ13,FodderHerbAEZ13,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ13,MiscCropAEZ13,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ13,OilCropAEZ13,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ13,OtherGrainAEZ13,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ13,FodderGrassAEZ13,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ13,FodderHerbAEZ13,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ13,MiscCropAEZ13,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ13,OilCropAEZ13,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ13,OtherGrainAEZ13,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ13,PalmFruitAEZ13,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ13,RiceAEZ13,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ13,SugarCropAEZ13,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ13,WheatAEZ13,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ13,SugarCropAEZ13,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ13,WheatAEZ13,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ13,CornAEZ13,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ13,FiberCropAEZ13,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ13,FodderGrassAEZ13,1990,NOx_AGR,0.00034078
@@ -18016,19 +18016,19 @@ India,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ13,SugarCropAEZ13,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ13,WheatAEZ13,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ13,RiceAEZ13,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ13,CornAEZ13,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ13,FiberCropAEZ13,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ13,FodderGrassAEZ13,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ13,FodderHerbAEZ13,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ13,MiscCropAEZ13,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ13,OilCropAEZ13,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ13,OtherGrainAEZ13,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ13,PalmFruitAEZ13,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ13,RiceAEZ13,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ13,SugarCropAEZ13,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ13,WheatAEZ13,1990,N2O_AGR,0.000719732
-Latin America,biomass,biomassAEZ13,biomassAEZ13,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ13,CornAEZ13,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ13,FiberCropAEZ13,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ13,FodderGrassAEZ13,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ13,FodderHerbAEZ13,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ13,MiscCropAEZ13,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ13,OilCropAEZ13,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ13,OtherGrainAEZ13,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ13,PalmFruitAEZ13,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ13,RiceAEZ13,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ13,SugarCropAEZ13,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ13,WheatAEZ13,1990,N2O_AGR,0.001385002
+Latin America,biomass,biomassAEZ13,biomassAEZ13,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ13,CornAEZ13,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ13,FiberCropAEZ13,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ13,FodderGrassAEZ13,1990,NOx_AGR,3.41385e-06
@@ -18174,19 +18174,19 @@ Latin America,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ13,SugarCropAEZ13,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ13,WheatAEZ13,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ13,RiceAEZ13,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ13,CornAEZ13,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ13,CornAEZ13,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ13,FiberCropAEZ13,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ13,FodderGrassAEZ13,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ13,FodderHerbAEZ13,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ13,MiscCropAEZ13,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ13,MiscCropAEZ13,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ13,OilCropAEZ13,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ13,OtherGrainAEZ13,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ13,PalmFruitAEZ13,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ13,RiceAEZ13,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ13,OtherGrainAEZ13,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ13,PalmFruitAEZ13,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ13,RiceAEZ13,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ13,Root_TuberAEZ13,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ13,SugarCropAEZ13,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ13,WheatAEZ13,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ13,CornAEZ13,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ13,FiberCropAEZ13,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ13,FodderGrassAEZ13,1990,NOx_AGR,0
@@ -18964,19 +18964,19 @@ China,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ14,SugarCropAEZ14,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ14,WheatAEZ14,1990,SO2_2_AWB,0.000154264
 Former Soviet Union,Rice,RiceAEZ14,RiceAEZ14,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ14,CornAEZ14,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ14,CornAEZ14,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ14,FiberCropAEZ14,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ14,FodderGrassAEZ14,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ14,FodderHerbAEZ14,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ14,MiscCropAEZ14,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ14,OilCropAEZ14,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ14,OtherGrainAEZ14,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ14,FodderGrassAEZ14,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ14,FodderHerbAEZ14,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ14,MiscCropAEZ14,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ14,OilCropAEZ14,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ14,OtherGrainAEZ14,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ14,PalmFruitAEZ14,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ14,RiceAEZ14,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ14,SugarCropAEZ14,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ14,WheatAEZ14,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ14,SugarCropAEZ14,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ14,WheatAEZ14,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ14,CornAEZ14,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ14,FiberCropAEZ14,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ14,FodderGrassAEZ14,1990,NOx_AGR,0.00034078
@@ -19280,19 +19280,19 @@ India,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ14,SugarCropAEZ14,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ14,WheatAEZ14,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ14,RiceAEZ14,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ14,CornAEZ14,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ14,FiberCropAEZ14,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ14,FodderGrassAEZ14,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ14,FodderHerbAEZ14,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ14,MiscCropAEZ14,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ14,OilCropAEZ14,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ14,OtherGrainAEZ14,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ14,PalmFruitAEZ14,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ14,RiceAEZ14,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ14,SugarCropAEZ14,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ14,WheatAEZ14,1990,N2O_AGR,0.000719732
-Latin America,biomass,biomassAEZ14,biomassAEZ14,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ14,CornAEZ14,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ14,FiberCropAEZ14,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ14,FodderGrassAEZ14,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ14,FodderHerbAEZ14,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ14,MiscCropAEZ14,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ14,OilCropAEZ14,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ14,OtherGrainAEZ14,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ14,PalmFruitAEZ14,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ14,RiceAEZ14,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ14,SugarCropAEZ14,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ14,WheatAEZ14,1990,N2O_AGR,0.001385002
+Latin America,biomass,biomassAEZ14,biomassAEZ14,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ14,CornAEZ14,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ14,FiberCropAEZ14,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ14,FodderGrassAEZ14,1990,NOx_AGR,3.41385e-06
@@ -19438,19 +19438,19 @@ Latin America,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ14,SugarCropAEZ14,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ14,WheatAEZ14,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ14,RiceAEZ14,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ14,CornAEZ14,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ14,CornAEZ14,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ14,FiberCropAEZ14,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ14,FodderGrassAEZ14,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ14,FodderHerbAEZ14,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ14,MiscCropAEZ14,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ14,MiscCropAEZ14,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ14,OilCropAEZ14,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ14,OtherGrainAEZ14,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ14,PalmFruitAEZ14,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ14,RiceAEZ14,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ14,OtherGrainAEZ14,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ14,PalmFruitAEZ14,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ14,RiceAEZ14,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ14,Root_TuberAEZ14,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ14,SugarCropAEZ14,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ14,WheatAEZ14,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ14,CornAEZ14,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ14,FiberCropAEZ14,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ14,FodderGrassAEZ14,1990,NOx_AGR,0
@@ -20386,19 +20386,19 @@ China,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ15,WheatAEZ15,1990,SO2_2_AWB,0.000154264
 Eastern Europe,Rice,RiceAEZ15,RiceAEZ15,1990,CH4_AGR,0.046116826
-Eastern Europe,Corn,CornAEZ15,CornAEZ15,1990,N2O_AGR,0.000518793
-Eastern Europe,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,N2O_AGR,0.0005707
+Eastern Europe,Corn,CornAEZ15,CornAEZ15,1990,N2O_AGR,0.000571477
+Eastern Europe,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,N2O_AGR,0.000571477
 Eastern Europe,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,N2O_AGR,0.001034713
-Eastern Europe,FodderHerb,FodderHerbAEZ15,FodderHerbAEZ15,1990,N2O_AGR,0.000552455
-Eastern Europe,MiscCrop,MiscCropAEZ15,MiscCropAEZ15,1990,N2O_AGR,0.000544541
-Eastern Europe,OilCrop,OilCropAEZ15,OilCropAEZ15,1990,N2O_AGR,0.000546745
-Eastern Europe,OtherGrain,OtherGrainAEZ15,OtherGrainAEZ15,1990,N2O_AGR,0.000566964
+Eastern Europe,FodderHerb,FodderHerbAEZ15,FodderHerbAEZ15,1990,N2O_AGR,0.000571477
+Eastern Europe,MiscCrop,MiscCropAEZ15,MiscCropAEZ15,1990,N2O_AGR,0.000571477
+Eastern Europe,OilCrop,OilCropAEZ15,OilCropAEZ15,1990,N2O_AGR,0.000571477
+Eastern Europe,OtherGrain,OtherGrainAEZ15,OtherGrainAEZ15,1990,N2O_AGR,0.000571477
 Eastern Europe,PalmFruit,PalmFruitAEZ15,PalmFruitAEZ15,1990,N2O_AGR,0
 Eastern Europe,Rice,RiceAEZ15,RiceAEZ15,1990,N2O_AGR,0.00042949
-Eastern Europe,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,N2O_AGR,0.000561969
-Eastern Europe,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,N2O_AGR,0.000547282
-Eastern Europe,Wheat,WheatAEZ15,WheatAEZ15,1990,N2O_AGR,0.000554594
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,1990,N2O_AGR,0.006179854
+Eastern Europe,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,N2O_AGR,0.000571477
+Eastern Europe,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,N2O_AGR,0.000571477
+Eastern Europe,Wheat,WheatAEZ15,WheatAEZ15,1990,N2O_AGR,0.000571477
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,1990,N2O_AGR,0.006412916
 Eastern Europe,Corn,CornAEZ15,CornAEZ15,1990,NOx_AGR,0.000361008
 Eastern Europe,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,NOx_AGR,0.000397128
 Eastern Europe,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,NOx_AGR,0.000877307
@@ -20544,19 +20544,19 @@ Eastern Europe,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,SO2_1_AWB,4.54443
 Eastern Europe,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,SO2_1_AWB,2.47838e-06
 Eastern Europe,Wheat,WheatAEZ15,WheatAEZ15,1990,SO2_1_AWB,3.8091e-05
 Former Soviet Union,Rice,RiceAEZ15,RiceAEZ15,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ15,CornAEZ15,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ15,CornAEZ15,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ15,FodderHerbAEZ15,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ15,MiscCropAEZ15,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ15,OilCropAEZ15,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ15,OtherGrainAEZ15,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ15,FodderHerbAEZ15,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ15,MiscCropAEZ15,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ15,OilCropAEZ15,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ15,OtherGrainAEZ15,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ15,PalmFruitAEZ15,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ15,RiceAEZ15,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ15,WheatAEZ15,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ15,WheatAEZ15,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ15,CornAEZ15,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,NOx_AGR,0.00034078
@@ -21018,19 +21018,19 @@ Japan,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,SO2_2_AWB,4.15147e-05
 Japan,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,SO2_2_AWB,3.74785e-05
 Japan,Wheat,WheatAEZ15,WheatAEZ15,1990,SO2_2_AWB,0.000381152
 Latin America,Rice,RiceAEZ15,RiceAEZ15,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ15,CornAEZ15,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ15,FodderHerbAEZ15,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ15,MiscCropAEZ15,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ15,OilCropAEZ15,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ15,OtherGrainAEZ15,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ15,PalmFruitAEZ15,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ15,RiceAEZ15,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ15,WheatAEZ15,1990,N2O_AGR,0.000719732
-Latin America,biomass,biomassAEZ15,biomassAEZ15,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ15,CornAEZ15,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ15,FodderHerbAEZ15,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ15,MiscCropAEZ15,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ15,OilCropAEZ15,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ15,OtherGrainAEZ15,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ15,PalmFruitAEZ15,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ15,RiceAEZ15,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ15,WheatAEZ15,1990,N2O_AGR,0.001385002
+Latin America,biomass,biomassAEZ15,biomassAEZ15,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ15,CornAEZ15,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,NOx_AGR,3.41385e-06
@@ -21176,19 +21176,19 @@ Latin America,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ15,WheatAEZ15,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ15,RiceAEZ15,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ15,CornAEZ15,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ15,CornAEZ15,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ15,FodderHerbAEZ15,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ15,MiscCropAEZ15,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ15,MiscCropAEZ15,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ15,OilCropAEZ15,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ15,OtherGrainAEZ15,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ15,PalmFruitAEZ15,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ15,RiceAEZ15,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ15,OtherGrainAEZ15,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ15,PalmFruitAEZ15,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ15,RiceAEZ15,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ15,Root_TuberAEZ15,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ15,SugarCropAEZ15,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ15,WheatAEZ15,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ15,CornAEZ15,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ15,FiberCropAEZ15,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ15,FodderGrassAEZ15,1990,NOx_AGR,0
@@ -22124,19 +22124,19 @@ China,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ16,WheatAEZ16,1990,SO2_2_AWB,0.000154264
 Eastern Europe,Rice,RiceAEZ16,RiceAEZ16,1990,CH4_AGR,0.046116826
-Eastern Europe,Corn,CornAEZ16,CornAEZ16,1990,N2O_AGR,0.000518793
-Eastern Europe,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,N2O_AGR,0.0005707
+Eastern Europe,Corn,CornAEZ16,CornAEZ16,1990,N2O_AGR,0.000571477
+Eastern Europe,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,N2O_AGR,0.000571477
 Eastern Europe,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,N2O_AGR,0.001034713
-Eastern Europe,FodderHerb,FodderHerbAEZ16,FodderHerbAEZ16,1990,N2O_AGR,0.000552455
-Eastern Europe,MiscCrop,MiscCropAEZ16,MiscCropAEZ16,1990,N2O_AGR,0.000544541
-Eastern Europe,OilCrop,OilCropAEZ16,OilCropAEZ16,1990,N2O_AGR,0.000546745
-Eastern Europe,OtherGrain,OtherGrainAEZ16,OtherGrainAEZ16,1990,N2O_AGR,0.000566964
+Eastern Europe,FodderHerb,FodderHerbAEZ16,FodderHerbAEZ16,1990,N2O_AGR,0.000571477
+Eastern Europe,MiscCrop,MiscCropAEZ16,MiscCropAEZ16,1990,N2O_AGR,0.000571477
+Eastern Europe,OilCrop,OilCropAEZ16,OilCropAEZ16,1990,N2O_AGR,0.000571477
+Eastern Europe,OtherGrain,OtherGrainAEZ16,OtherGrainAEZ16,1990,N2O_AGR,0.000571477
 Eastern Europe,PalmFruit,PalmFruitAEZ16,PalmFruitAEZ16,1990,N2O_AGR,0
 Eastern Europe,Rice,RiceAEZ16,RiceAEZ16,1990,N2O_AGR,0.00042949
-Eastern Europe,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,N2O_AGR,0.000561969
-Eastern Europe,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,N2O_AGR,0.000547282
-Eastern Europe,Wheat,WheatAEZ16,WheatAEZ16,1990,N2O_AGR,0.000554594
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,1990,N2O_AGR,0.006179854
+Eastern Europe,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,N2O_AGR,0.000571477
+Eastern Europe,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,N2O_AGR,0.000571477
+Eastern Europe,Wheat,WheatAEZ16,WheatAEZ16,1990,N2O_AGR,0.000571477
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,1990,N2O_AGR,0.006412916
 Eastern Europe,Corn,CornAEZ16,CornAEZ16,1990,NOx_AGR,0.000361008
 Eastern Europe,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,NOx_AGR,0.000397128
 Eastern Europe,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,NOx_AGR,0.000877307
@@ -22282,19 +22282,19 @@ Eastern Europe,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,SO2_1_AWB,4.54443
 Eastern Europe,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,SO2_1_AWB,2.47838e-06
 Eastern Europe,Wheat,WheatAEZ16,WheatAEZ16,1990,SO2_1_AWB,3.8091e-05
 Former Soviet Union,Rice,RiceAEZ16,RiceAEZ16,1990,CH4_AGR,0
-Former Soviet Union,Corn,CornAEZ16,CornAEZ16,1990,N2O_AGR,0.000407547
+Former Soviet Union,Corn,CornAEZ16,CornAEZ16,1990,N2O_AGR,0.000437588
 Former Soviet Union,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,N2O_AGR,0.000437588
-Former Soviet Union,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,N2O_AGR,0.000601524
-Former Soviet Union,FodderHerb,FodderHerbAEZ16,FodderHerbAEZ16,1990,N2O_AGR,0.00043659
-Former Soviet Union,MiscCrop,MiscCropAEZ16,MiscCropAEZ16,1990,N2O_AGR,0.000427821
-Former Soviet Union,OilCrop,OilCropAEZ16,OilCropAEZ16,1990,N2O_AGR,0.000430401
-Former Soviet Union,OtherGrain,OtherGrainAEZ16,OtherGrainAEZ16,1990,N2O_AGR,0.000436509
+Former Soviet Union,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,N2O_AGR,0.000627755
+Former Soviet Union,FodderHerb,FodderHerbAEZ16,FodderHerbAEZ16,1990,N2O_AGR,0.000437588
+Former Soviet Union,MiscCrop,MiscCropAEZ16,MiscCropAEZ16,1990,N2O_AGR,0.000437588
+Former Soviet Union,OilCrop,OilCropAEZ16,OilCropAEZ16,1990,N2O_AGR,0.000437588
+Former Soviet Union,OtherGrain,OtherGrainAEZ16,OtherGrainAEZ16,1990,N2O_AGR,0.000437588
 Former Soviet Union,PalmFruit,PalmFruitAEZ16,PalmFruitAEZ16,1990,N2O_AGR,0
 Former Soviet Union,Rice,RiceAEZ16,RiceAEZ16,1990,N2O_AGR,0.000166423
-Former Soviet Union,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,N2O_AGR,0.00043619
-Former Soviet Union,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,N2O_AGR,0.000432234
-Former Soviet Union,Wheat,WheatAEZ16,WheatAEZ16,1990,N2O_AGR,0.000435162
-Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,1990,N2O_AGR,0.00487821
+Former Soviet Union,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,N2O_AGR,0.000437588
+Former Soviet Union,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,N2O_AGR,0.000437588
+Former Soviet Union,Wheat,WheatAEZ16,WheatAEZ16,1990,N2O_AGR,0.000437588
+Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,1990,N2O_AGR,0.004930186
 Former Soviet Union,Corn,CornAEZ16,CornAEZ16,1990,NOx_AGR,0.00019469
 Former Soviet Union,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,NOx_AGR,0.000209041
 Former Soviet Union,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,NOx_AGR,0.00034078
@@ -22598,19 +22598,19 @@ India,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,SO2_2_AWB,4.56796e-06
 India,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,SO2_2_AWB,4.44165e-06
 India,Wheat,WheatAEZ16,WheatAEZ16,1990,SO2_2_AWB,2.23048e-05
 Latin America,Rice,RiceAEZ16,RiceAEZ16,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ16,CornAEZ16,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ16,FodderHerbAEZ16,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ16,MiscCropAEZ16,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ16,OilCropAEZ16,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ16,OtherGrainAEZ16,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ16,PalmFruitAEZ16,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ16,RiceAEZ16,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ16,WheatAEZ16,1990,N2O_AGR,0.000719732
-Latin America,biomass,biomassAEZ16,biomassAEZ16,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ16,CornAEZ16,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ16,FodderHerbAEZ16,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ16,MiscCropAEZ16,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ16,OilCropAEZ16,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ16,OtherGrainAEZ16,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ16,PalmFruitAEZ16,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ16,RiceAEZ16,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ16,WheatAEZ16,1990,N2O_AGR,0.001385002
+Latin America,biomass,biomassAEZ16,biomassAEZ16,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ16,CornAEZ16,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,NOx_AGR,3.41385e-06
@@ -22756,19 +22756,19 @@ Latin America,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ16,WheatAEZ16,1990,SO2_3_AWB,0.000107753
 Southeast Asia,Rice,RiceAEZ16,RiceAEZ16,1990,CH4_AGR,0.086971406
-Southeast Asia,Corn,CornAEZ16,CornAEZ16,1990,N2O_AGR,0.00060216
+Southeast Asia,Corn,CornAEZ16,CornAEZ16,1990,N2O_AGR,0.000602161
 Southeast Asia,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,N2O_AGR,0.000602161
 Southeast Asia,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,N2O_AGR,0.000348704
 Southeast Asia,FodderHerb,FodderHerbAEZ16,FodderHerbAEZ16,1990,N2O_AGR,0
-Southeast Asia,MiscCrop,MiscCropAEZ16,MiscCropAEZ16,1990,N2O_AGR,0.000602125
+Southeast Asia,MiscCrop,MiscCropAEZ16,MiscCropAEZ16,1990,N2O_AGR,0.000602161
 Southeast Asia,OilCrop,OilCropAEZ16,OilCropAEZ16,1990,N2O_AGR,0.000602161
-Southeast Asia,OtherGrain,OtherGrainAEZ16,OtherGrainAEZ16,1990,N2O_AGR,0.000602158
-Southeast Asia,PalmFruit,PalmFruitAEZ16,PalmFruitAEZ16,1990,N2O_AGR,0.000601941
-Southeast Asia,Rice,RiceAEZ16,RiceAEZ16,1990,N2O_AGR,0.001742939
-Southeast Asia,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,N2O_AGR,0.000602026
+Southeast Asia,OtherGrain,OtherGrainAEZ16,OtherGrainAEZ16,1990,N2O_AGR,0.000602161
+Southeast Asia,PalmFruit,PalmFruitAEZ16,PalmFruitAEZ16,1990,N2O_AGR,0.000602161
+Southeast Asia,Rice,RiceAEZ16,RiceAEZ16,1990,N2O_AGR,0.00174294
+Southeast Asia,Root_Tuber,Root_TuberAEZ16,Root_TuberAEZ16,1990,N2O_AGR,0.000602161
 Southeast Asia,SugarCrop,SugarCropAEZ16,SugarCropAEZ16,1990,N2O_AGR,0.000602161
 Southeast Asia,Wheat,WheatAEZ16,WheatAEZ16,1990,N2O_AGR,0.000602161
-Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,1990,N2O_AGR,0.009528715
+Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,1990,N2O_AGR,0.0095297
 Southeast Asia,Corn,CornAEZ16,CornAEZ16,1990,NOx_AGR,0.000106091
 Southeast Asia,FiberCrop,FiberCropAEZ16,FiberCropAEZ16,1990,NOx_AGR,0.000106091
 Southeast Asia,FodderGrass,FodderGrassAEZ16,FodderGrassAEZ16,1990,NOx_AGR,0
@@ -23546,19 +23546,19 @@ China,Root_Tuber,Root_TuberAEZ17,Root_TuberAEZ17,1990,SO2_2_AWB,1.99593e-05
 China,SugarCrop,SugarCropAEZ17,SugarCropAEZ17,1990,SO2_2_AWB,2.86346e-05
 China,Wheat,WheatAEZ17,WheatAEZ17,1990,SO2_2_AWB,0.000154264
 Latin America,Rice,RiceAEZ17,RiceAEZ17,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ17,CornAEZ17,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ17,FiberCropAEZ17,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ17,FodderGrassAEZ17,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ17,FodderHerbAEZ17,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ17,MiscCropAEZ17,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ17,OilCropAEZ17,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ17,OtherGrainAEZ17,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ17,PalmFruitAEZ17,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ17,RiceAEZ17,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ17,Root_TuberAEZ17,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ17,SugarCropAEZ17,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ17,WheatAEZ17,1990,N2O_AGR,0.000719732
-Latin America,biomass,biomassAEZ17,biomassAEZ17,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ17,CornAEZ17,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ17,FiberCropAEZ17,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ17,FodderGrassAEZ17,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ17,FodderHerbAEZ17,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ17,MiscCropAEZ17,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ17,OilCropAEZ17,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ17,OtherGrainAEZ17,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ17,PalmFruitAEZ17,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ17,RiceAEZ17,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ17,Root_TuberAEZ17,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ17,SugarCropAEZ17,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ17,WheatAEZ17,1990,N2O_AGR,0.001385002
+Latin America,biomass,biomassAEZ17,biomassAEZ17,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ17,CornAEZ17,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ17,FiberCropAEZ17,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ17,FodderGrassAEZ17,1990,NOx_AGR,3.41385e-06
@@ -23704,19 +23704,19 @@ Latin America,Root_Tuber,Root_TuberAEZ17,Root_TuberAEZ17,1990,SO2_3_AWB,5.28213e
 Latin America,SugarCrop,SugarCropAEZ17,SugarCropAEZ17,1990,SO2_3_AWB,2.13587e-05
 Latin America,Wheat,WheatAEZ17,WheatAEZ17,1990,SO2_3_AWB,0.000107753
 Latin America,Rice,RiceAEZ18,RiceAEZ18,1990,CH4_AGR,0.038440448
-Latin America,Corn,CornAEZ18,CornAEZ18,1990,N2O_AGR,0.000719732
-Latin America,FiberCrop,FiberCropAEZ18,FiberCropAEZ18,1990,N2O_AGR,0.000719732
-Latin America,FodderGrass,FodderGrassAEZ18,FodderGrassAEZ18,1990,N2O_AGR,0.00025784
-Latin America,FodderHerb,FodderHerbAEZ18,FodderHerbAEZ18,1990,N2O_AGR,0.000719732
-Latin America,MiscCrop,MiscCropAEZ18,MiscCropAEZ18,1990,N2O_AGR,0.000719732
-Latin America,OilCrop,OilCropAEZ18,OilCropAEZ18,1990,N2O_AGR,0.000719732
-Latin America,OtherGrain,OtherGrainAEZ18,OtherGrainAEZ18,1990,N2O_AGR,0.000719732
-Latin America,PalmFruit,PalmFruitAEZ18,PalmFruitAEZ18,1990,N2O_AGR,0.000719732
-Latin America,Rice,RiceAEZ18,RiceAEZ18,1990,N2O_AGR,0.000345964
-Latin America,Root_Tuber,Root_TuberAEZ18,Root_TuberAEZ18,1990,N2O_AGR,0.000719732
-Latin America,SugarCrop,SugarCropAEZ18,SugarCropAEZ18,1990,N2O_AGR,0.000719732
-Latin America,Wheat,WheatAEZ18,WheatAEZ18,1990,N2O_AGR,0.000719732
-Latin America,biomass,biomassAEZ18,biomassAEZ18,1990,N2O_AGR,0.007329465
+Latin America,Corn,CornAEZ18,CornAEZ18,1990,N2O_AGR,0.001385002
+Latin America,FiberCrop,FiberCropAEZ18,FiberCropAEZ18,1990,N2O_AGR,0.001385002
+Latin America,FodderGrass,FodderGrassAEZ18,FodderGrassAEZ18,1990,N2O_AGR,0.000430245
+Latin America,FodderHerb,FodderHerbAEZ18,FodderHerbAEZ18,1990,N2O_AGR,0.001385002
+Latin America,MiscCrop,MiscCropAEZ18,MiscCropAEZ18,1990,N2O_AGR,0.001385002
+Latin America,OilCrop,OilCropAEZ18,OilCropAEZ18,1990,N2O_AGR,0.001385002
+Latin America,OtherGrain,OtherGrainAEZ18,OtherGrainAEZ18,1990,N2O_AGR,0.001385002
+Latin America,PalmFruit,PalmFruitAEZ18,PalmFruitAEZ18,1990,N2O_AGR,0.001385002
+Latin America,Rice,RiceAEZ18,RiceAEZ18,1990,N2O_AGR,0.00051837
+Latin America,Root_Tuber,Root_TuberAEZ18,Root_TuberAEZ18,1990,N2O_AGR,0.001385002
+Latin America,SugarCrop,SugarCropAEZ18,SugarCropAEZ18,1990,N2O_AGR,0.000218243
+Latin America,Wheat,WheatAEZ18,WheatAEZ18,1990,N2O_AGR,0.001385002
+Latin America,biomass,biomassAEZ18,biomassAEZ18,1990,N2O_AGR,0.008163204
 Latin America,Corn,CornAEZ18,CornAEZ18,1990,NOx_AGR,0.000141704
 Latin America,FiberCrop,FiberCropAEZ18,FiberCropAEZ18,1990,NOx_AGR,0.000141704
 Latin America,FodderGrass,FodderGrassAEZ18,FodderGrassAEZ18,1990,NOx_AGR,3.41385e-06

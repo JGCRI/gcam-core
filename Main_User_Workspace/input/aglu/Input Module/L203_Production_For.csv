@@ -4,30 +4,30 @@ Production
 
 region,supplysector,subsector,technology,year,calOutputValue,share.weight.year,subs.share.weight,tech.share.weight
 Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.493908,1990,1,1
-Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.030235,1990,1,1
-Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.175672,1990,1,1
-China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.435723,1990,1,1
-Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.072874,1990,1,1
-Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.338801,1990,1,1
-India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.301822,1990,1,1
-Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.056442,1990,1,1
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.0302346,1990,1,1
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.1756724,1990,1,1
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.4357227,1990,1,1
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.0728743,1990,1,1
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.3388008,1990,1,1
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.3018221,1990,1,1
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.0564415,1990,1,1
 Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.012319,1990,1,1
-Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.356372,1990,1,1
-Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.002346,1990,1,1
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.3563716,1990,1,1
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.0023455,1990,1,1
 Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.352681,1990,1,1
-USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.475412,1990,1,1
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.4754124,1990,1,1
 Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,0.319804,1990,1,1
-Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.637974,2005,1,1
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.6379743,2005,1,1
 Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.04478,2005,1,1
-Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.188162,2005,1,1
-China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.37938,2005,1,1
-Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.093869,2005,1,1
-Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.183693,2005,1,1
-India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.330259,2005,1,1
-Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.027564,2005,1,1
-Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.011132,2005,1,1
-Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.457741,2005,1,1
-Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.002304,2005,1,1
-Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.315543,2005,1,1
-USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.444281,2005,1,1
-Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.390162,2005,1,1
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.1881623,2005,1,1
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.3793802,2005,1,1
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.0938691,2005,1,1
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.1836934,2005,1,1
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.3302587,2005,1,1
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.0275639,2005,1,1
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.0111322,2005,1,1
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.4577411,2005,1,1
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.0023037,2005,1,1
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.3155426,2005,1,1
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.4442814,2005,1,1
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,0.3901617,2005,1,1

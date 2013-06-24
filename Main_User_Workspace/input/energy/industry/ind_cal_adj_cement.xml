@@ -35,12 +35,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.245083208</calibrated-value>
+                        <calibrated-value>3.240852574</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.409900587</calibrated-value>
+                        <calibrated-value>3.404437492</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -109,12 +109,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.673458381</calibrated-value>
+                        <calibrated-value>0.672425225</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.918875348</calibrated-value>
+                        <calibrated-value>0.917832559</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -155,12 +155,12 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.317713132</calibrated-value>
+                        <calibrated-value>0.316272873</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.266981562</calibrated-value>
+                        <calibrated-value>0.263678177</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -183,12 +183,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.490910852</calibrated-value>
+                        <calibrated-value>3.485378337</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.290513062</calibrated-value>
+                        <calibrated-value>4.285692943</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -229,12 +229,12 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.058607665</calibrated-value>
+                        <calibrated-value>0.057581899</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.063667395</calibrated-value>
+                        <calibrated-value>0.063081243</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -257,12 +257,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.202468389</calibrated-value>
+                        <calibrated-value>1.197329813</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.238646549</calibrated-value>
+                        <calibrated-value>1.234075006</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -331,12 +331,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.274731865</calibrated-value>
+                        <calibrated-value>0.274632345</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.421954436</calibrated-value>
+                        <calibrated-value>0.421888851</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -405,12 +405,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.933052521</calibrated-value>
+                        <calibrated-value>3.919133219</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>2.433724673</calibrated-value>
+                        <calibrated-value>2.429190264</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -470,7 +470,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.05158975</calibrated-value>
+                        <calibrated-value>0.032158811</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -493,12 +493,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.493714618</calibrated-value>
+                        <calibrated-value>1.490103218</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>5.171253477</calibrated-value>
+                        <calibrated-value>5.165428324</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -553,12 +553,12 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.004656503</calibrated-value>
+                        <calibrated-value>0.0001</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.001521261</calibrated-value>
+                        <calibrated-value>0.0001</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -581,12 +581,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.139014061</calibrated-value>
+                        <calibrated-value>0.129460827</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.423178392</calibrated-value>
+                        <calibrated-value>0.40346747</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -627,12 +627,12 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.303200604</calibrated-value>
+                        <calibrated-value>0.246850463</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>3.053829891</calibrated-value>
+                        <calibrated-value>2.505421893</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -655,12 +655,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.548041339</calibrated-value>
+                        <calibrated-value>0.54792458</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.794509422</calibrated-value>
+                        <calibrated-value>0.790577607</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -701,12 +701,12 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>2.027975641</calibrated-value>
+                        <calibrated-value>1.685369797</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>2.403663626</calibrated-value>
+                        <calibrated-value>2.040287067</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -729,12 +729,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.942428412</calibrated-value>
+                        <calibrated-value>0.941918519</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.685841713</calibrated-value>
+                        <calibrated-value>1.683145837</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -775,12 +775,12 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>1.226787703</calibrated-value>
+                        <calibrated-value>0.986289537</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>1.501690176</calibrated-value>
+                        <calibrated-value>1.297445511</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -803,12 +803,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.451013458</calibrated-value>
+                        <calibrated-value>0.449348577</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.074678086</calibrated-value>
+                        <calibrated-value>1.072790706</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -877,12 +877,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.759305982</calibrated-value>
+                        <calibrated-value>0.757882177</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.658181579</calibrated-value>
+                        <calibrated-value>0.657744434</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>

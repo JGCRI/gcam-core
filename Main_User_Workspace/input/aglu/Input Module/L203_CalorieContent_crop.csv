@@ -3,1011 +3,1123 @@ Variable ID
 CalorieContent
 
 region,supplysector,subsector,technology,year,minicam.energy.input,efficiency
-Africa,FoodDemand_Crops,Corn,Corn,1990,Corn,3.588339
-Africa,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.66137
-Africa,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,6.555313
-Africa,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.405009
-Africa,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.343682
+Africa,FoodDemand_Crops,Corn,Corn,1990,Corn,3.5883385
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Africa,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.6613697
+Africa,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,6.3822168
+Africa,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.4050095
+Africa,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.3436824
 Africa,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8
-Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,1.023643
-Africa,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,2.82552
+Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,1.0236431
+Africa,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,2.8255195
 Africa,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Australia_NZ,FoodDemand_Crops,Corn,Corn,1990,Corn,3.705974
-Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.457922
-Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.754465
-Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.618941
-Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,6.04156
+Australia_NZ,FoodDemand_Crops,Corn,Corn,1990,Corn,3.7059739
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.4579218
+Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.5765673
+Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.6189411
+Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,6.0415604
 Australia_NZ,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8
 Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.674344
 Australia_NZ,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.73
 Australia_NZ,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Canada,FoodDemand_Crops,Corn,Corn,1990,Corn,4.705474
-Canada,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.440573
-Canada,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.796573
-Canada,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.708995
-Canada,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,3.951414
+Canada,FoodDemand_Crops,Corn,Corn,1990,Corn,4.7054738
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Canada,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.4405728
+Canada,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.793155
+Canada,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.7089953
+Canada,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,3.9514145
 Canada,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8
-Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.671961
+Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.6719612
 Canada,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.73
 Canada,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-China,FoodDemand_Crops,Corn,Corn,1990,Corn,3.615888
-China,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.331259
-China,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,5.900673
+China,FoodDemand_Crops,Corn,Corn,1990,Corn,3.6158881
+China,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+China,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.3312594
+China,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,5.7433349
 China,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.398405
-China,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.704447
-China,FoodDemand_Crops,Rice,Rice,1990,Rice,2.803212
-China,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.87305
-China,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.473366
+China,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.7044466
+China,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8032118
+China,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.8730497
+China,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.4733658
 China,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Eastern Europe,FoodDemand_Crops,Corn,Corn,1990,Corn,3.59314
-Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.394815
-Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,8.496317
-Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.230903
-Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,5.460137
+Eastern Europe,FoodDemand_Crops,Corn,Corn,1990,Corn,3.5931398
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.3948153
+Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,8.4963123
+Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.2309033
+Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,5.4601366
 Eastern Europe,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8
-Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.670011
+Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.6700108
 Eastern Europe,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.73
 Eastern Europe,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Former Soviet Union,FoodDemand_Crops,Corn,Corn,1990,Corn,3.783997
-Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.368136
-Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.988356
-Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.359367
+Former Soviet Union,FoodDemand_Crops,Corn,Corn,1990,Corn,3.7839965
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.3681364
+Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.8653289
+Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.3593674
 Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,1.84
 Former Soviet Union,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8
 Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.67
 Former Soviet Union,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.73
 Former Soviet Union,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-India,FoodDemand_Crops,Corn,Corn,1990,Corn,3.563251
-India,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.793688
-India,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,8.143053
-India,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.409576
-India,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,2.51487
-India,FoodDemand_Crops,Rice,Rice,1990,Rice,2.814339
-India,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.808042
-India,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,2.228558
+India,FoodDemand_Crops,Corn,Corn,1990,Corn,3.5632512
+India,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+India,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.7936881
+India,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,8.0941145
+India,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.4095761
+India,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,2.5148704
+India,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8143386
+India,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.8080417
+India,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,2.2285576
 India,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Japan,FoodDemand_Crops,Corn,Corn,1990,Corn,3.776012
+Japan,FoodDemand_Crops,Corn,Corn,1990,Corn,3.7760117
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
 Japan,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.372696
-Japan,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,6.328201
-Japan,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.394732
-Japan,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.560047
-Japan,FoodDemand_Crops,Rice,Rice,1990,Rice,2.822004
-Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.751489
+Japan,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,6.3179142
+Japan,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.3947324
+Japan,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.5600469
+Japan,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8220035
+Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.7514885
 Japan,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.73
 Japan,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Korea,FoodDemand_Crops,Corn,Corn,1990,Corn,3.636841
-Korea,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.310745
-Korea,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,5.439889
-Korea,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.324143
-Korea,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,8.818791
-Korea,FoodDemand_Crops,Rice,Rice,1990,Rice,2.812684
-Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.76147
+Korea,FoodDemand_Crops,Corn,Corn,1990,Corn,3.6368414
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Korea,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.3107448
+Korea,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,5.2991974
+Korea,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.3241431
+Korea,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,8.8187908
+Korea,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8126836
+Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.7614701
 Korea,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.73
 Korea,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Latin America,FoodDemand_Crops,Corn,Corn,1990,Corn,3.590754
-Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.627706
-Latin America,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,8.119896
-Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.528897
-Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,4.73515
-Latin America,FoodDemand_Crops,Rice,Rice,1990,Rice,2.803463
-Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.90154
-Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.578372
+Latin America,FoodDemand_Crops,Corn,Corn,1990,Corn,3.5907536
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.6277055
+Latin America,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,8.0763838
+Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.5288969
+Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,4.7351498
+Latin America,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8034626
+Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.9015404
+Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.5783718
 Latin America,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Middle East,FoodDemand_Crops,Corn,Corn,1990,Corn,4.414049
-Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.4648
-Middle East,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.643364
-Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.416471
-Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.454026
+Middle East,FoodDemand_Crops,Corn,Corn,1990,Corn,4.4140492
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.4647999
+Middle East,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.5581306
+Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.4164711
+Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.4540263
 Middle East,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8
-Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.670783
-Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.726399
+Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.6707826
+Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.7263987
 Middle East,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Southeast Asia,FoodDemand_Crops,Corn,Corn,1990,Corn,3.570928
+Southeast Asia,FoodDemand_Crops,Corn,Corn,1990,Corn,3.5709276
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
 Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.606849
-Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,6.509744
-Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.391794
-Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,3.659403
-Southeast Asia,FoodDemand_Crops,Rice,Rice,1990,Rice,2.801152
-Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.985285
-Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,2.52866
+Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,6.2144949
+Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.3917935
+Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,3.6594025
+Southeast Asia,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8011518
+Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.9852853
+Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,2.5286596
 Southeast Asia,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-USA,FoodDemand_Crops,Corn,Corn,1990,Corn,4.222126
-USA,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.419939
-USA,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.805516
-USA,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.729512
+USA,FoodDemand_Crops,Corn,Corn,1990,Corn,4.2221256
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+USA,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.4199387
+USA,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.7489617
+USA,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.7295118
 USA,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,5.29723
 USA,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8
-USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.680823
+USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.6808234
 USA,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.73
 USA,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Western Europe,FoodDemand_Crops,Corn,Corn,1990,Corn,3.961992
-Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.443531
-Western Europe,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.914288
-Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.338001
-Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.018888
+Western Europe,FoodDemand_Crops,Corn,Corn,1990,Corn,3.9619923
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,1990,FiberCrop,8.84
+Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,1990,MiscCrop,0.4435309
+Western Europe,FoodDemand_Crops,OilCrop,OilCrop,1990,OilCrop,7.8893495
+Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,1990,OtherGrain,3.3380011
+Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,1990,PalmFruit,7.0188885
 Western Europe,FoodDemand_Crops,Rice,Rice,1990,Rice,2.8
-Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.670651
-Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.729969
+Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,1990,Root_Tuber,0.6706511
+Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,1990,SugarCrop,3.7299692
 Western Europe,FoodDemand_Crops,Wheat,Wheat,1990,Wheat,3.34
-Africa,FoodDemand_Crops,Corn,Corn,2005,Corn,3.594777
-Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.666943
-Africa,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.30002
-Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.408607
-Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.487854
+Africa,FoodDemand_Crops,Corn,Corn,2005,Corn,3.5947774
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.6669426
+Africa,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.1926413
+Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.4086069
+Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.4878537
 Africa,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8
 Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,1.001946
-Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,2.70944
+Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,2.7094404
 Africa,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Australia_NZ,FoodDemand_Crops,Corn,Corn,2005,Corn,3.771475
-Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.442664
-Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.635059
-Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.699588
-Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,6.785724
+Australia_NZ,FoodDemand_Crops,Corn,Corn,2005,Corn,3.7714753
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.4426644
+Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.3967413
+Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.6995877
+Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,6.7857244
 Australia_NZ,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8
-Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.676764
+Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.6767635
 Australia_NZ,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.73
 Australia_NZ,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Canada,FoodDemand_Crops,Corn,Corn,2005,Corn,3.906226
-Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.459673
-Canada,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.893264
-Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.445538
-Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.316916
+Canada,FoodDemand_Crops,Corn,Corn,2005,Corn,3.9062264
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.4596731
+Canada,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.8810859
+Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.4455376
+Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.3169158
 Canada,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8
 Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.674585
 Canada,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.73
 Canada,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-China,FoodDemand_Crops,Corn,Corn,2005,Corn,3.609433
+China,FoodDemand_Crops,Corn,Corn,2005,Corn,3.6094328
+China,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
 China,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.289244
-China,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.084731
-China,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.400368
-China,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.636135
-China,FoodDemand_Crops,Rice,Rice,2005,Rice,2.803155
+China,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,5.9511205
+China,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.4003684
+China,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.6361351
+China,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8031548
 China,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.80276
-China,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.379005
+China,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.3790055
 China,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Eastern Europe,FoodDemand_Crops,Corn,Corn,2005,Corn,3.658815
+Eastern Europe,FoodDemand_Crops,Corn,Corn,2005,Corn,3.6588148
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,1
 Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.412576
-Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,8.024056
-Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.241512
-Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.105325
+Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,8.0240564
+Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.2415116
+Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.1053247
 Eastern Europe,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8
-Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.670133
+Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.6701335
 Eastern Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.73
 Eastern Europe,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Former Soviet Union,FoodDemand_Crops,Corn,Corn,2005,Corn,3.771666
-Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.353802
-Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,8.326449
-Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.328893
-Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,2.524782
+Former Soviet Union,FoodDemand_Crops,Corn,Corn,2005,Corn,3.7716655
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.3538021
+Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,8.2626152
+Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.3288928
+Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,2.5247819
 Former Soviet Union,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8
-Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.670003
+Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.6700033
 Former Soviet Union,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.73
 Former Soviet Union,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-India,FoodDemand_Crops,Corn,Corn,2005,Corn,3.575451
-India,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.701389
-India,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.757422
-India,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.40647
-India,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.720995
-India,FoodDemand_Crops,Rice,Rice,2005,Rice,2.828882
-India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.7796
-India,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,2.602235
+India,FoodDemand_Crops,Corn,Corn,2005,Corn,3.5754514
+India,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+India,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.7013887
+India,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.6725609
+India,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.4064704
+India,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.7209949
+India,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8288816
+India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.7796003
+India,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,2.6022347
 India,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Japan,FoodDemand_Crops,Corn,Corn,2005,Corn,3.84164
-Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.404832
-Japan,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.559815
-Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.457157
-Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,8.439811
-Japan,FoodDemand_Crops,Rice,Rice,2005,Rice,2.83169
-Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.753358
+Japan,FoodDemand_Crops,Corn,Corn,2005,Corn,3.8416401
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.4048315
+Japan,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.5527526
+Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.4571566
+Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,8.4398106
+Japan,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8316901
+Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.7533578
 Japan,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.73
 Japan,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Korea,FoodDemand_Crops,Corn,Corn,2005,Corn,3.65279
+Korea,FoodDemand_Crops,Corn,Corn,2005,Corn,3.6527901
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
 Korea,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.32359
-Korea,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.103153
-Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.327328
+Korea,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.0248907
+Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.3273275
 Korea,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,8.752146
 Korea,FoodDemand_Crops,Rice,Rice,2005,Rice,2.813244
-Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.742759
+Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.7427588
 Korea,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.73
 Korea,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Latin America,FoodDemand_Crops,Corn,Corn,2005,Corn,3.603284
-Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.603932
-Latin America,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.802282
+Latin America,FoodDemand_Crops,Corn,Corn,2005,Corn,3.6032838
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.6039322
+Latin America,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.7535551
 Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.533312
-Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.765658
-Latin America,FoodDemand_Crops,Rice,Rice,2005,Rice,2.804125
-Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.884699
-Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.372316
+Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.7656577
+Latin America,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8041254
+Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.8846991
+Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.3723156
 Latin America,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
 Middle East,FoodDemand_Crops,Corn,Corn,2005,Corn,4.038984
-Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.486651
-Middle East,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.350662
-Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.425879
-Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.597216
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.4866515
+Middle East,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.2700423
+Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.4258789
+Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.5972162
 Middle East,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8
-Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.671524
-Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.728639
+Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.6715242
+Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.7286391
 Middle East,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Southeast Asia,FoodDemand_Crops,Corn,Corn,2005,Corn,3.568064
-Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.585767
-Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.421594
-Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.408407
-Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.928683
-Southeast Asia,FoodDemand_Crops,Rice,Rice,2005,Rice,2.801624
-Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.915615
-Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,2.467208
+Southeast Asia,FoodDemand_Crops,Corn,Corn,2005,Corn,3.5680644
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
+Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.5857672
+Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,6.227973
+Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.4084068
+Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.9286827
+Southeast Asia,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8016238
+Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.9156149
+Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,2.4672084
 Southeast Asia,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-USA,FoodDemand_Crops,Corn,Corn,2005,Corn,4.319424
+USA,FoodDemand_Crops,Corn,Corn,2005,Corn,4.3194244
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
 USA,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.447928
-USA,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.874486
-USA,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.680191
-USA,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.950462
+USA,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.8503526
+USA,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.6801908
+USA,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,3.9504616
 USA,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8
-USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.680555
+USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.6805552
 USA,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.73
 USA,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Western Europe,FoodDemand_Crops,Corn,Corn,2005,Corn,3.981875
+Western Europe,FoodDemand_Crops,Corn,Corn,2005,Corn,3.9818753
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2005,FiberCrop,8.84
 Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2005,MiscCrop,0.442726
-Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.764266
-Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.392459
-Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.292804
+Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2005,OilCrop,7.7349985
+Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2005,OtherGrain,3.3924592
+Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2005,PalmFruit,7.2928036
 Western Europe,FoodDemand_Crops,Rice,Rice,2005,Rice,2.8
-Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.670422
-Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.729986
+Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2005,Root_Tuber,0.6704223
+Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2005,SugarCrop,3.7299862
 Western Europe,FoodDemand_Crops,Wheat,Wheat,2005,Wheat,3.34
-Africa,FoodDemand_Crops,Corn,Corn,2020,Corn,3.594777
-Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.666943
-Africa,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.30002
-Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.408607
-Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.487854
+Africa,FoodDemand_Crops,Corn,Corn,2020,Corn,3.5947774
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.6669426
+Africa,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.1926413
+Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.4086069
+Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.4878537
 Africa,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8
 Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,1.001946
-Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,2.70944
+Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,2.7094404
 Africa,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Australia_NZ,FoodDemand_Crops,Corn,Corn,2020,Corn,3.771475
-Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.442664
-Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.635059
-Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.699588
-Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,6.785724
+Australia_NZ,FoodDemand_Crops,Corn,Corn,2020,Corn,3.7714753
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.4426644
+Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.3967413
+Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.6995877
+Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,6.7857244
 Australia_NZ,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8
-Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.676764
+Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.6767635
 Australia_NZ,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.73
 Australia_NZ,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Canada,FoodDemand_Crops,Corn,Corn,2020,Corn,3.906226
-Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.459673
-Canada,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.893264
-Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.445538
-Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.316916
+Canada,FoodDemand_Crops,Corn,Corn,2020,Corn,3.9062264
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.4596731
+Canada,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.8810859
+Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.4455376
+Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.3169158
 Canada,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8
 Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.674585
 Canada,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.73
 Canada,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-China,FoodDemand_Crops,Corn,Corn,2020,Corn,3.609433
+China,FoodDemand_Crops,Corn,Corn,2020,Corn,3.6094328
+China,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
 China,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.289244
-China,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.084731
-China,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.400368
-China,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.636135
-China,FoodDemand_Crops,Rice,Rice,2020,Rice,2.803155
+China,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,5.9511205
+China,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.4003684
+China,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.6361351
+China,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8031548
 China,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.80276
-China,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.379005
+China,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.3790055
 China,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Eastern Europe,FoodDemand_Crops,Corn,Corn,2020,Corn,3.658815
+Eastern Europe,FoodDemand_Crops,Corn,Corn,2020,Corn,3.6588148
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,1
 Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.412576
-Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,8.024056
-Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.241512
-Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.105325
+Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,8.0240564
+Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.2415116
+Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.1053247
 Eastern Europe,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8
-Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.670133
+Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.6701335
 Eastern Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.73
 Eastern Europe,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Former Soviet Union,FoodDemand_Crops,Corn,Corn,2020,Corn,3.771666
-Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.353802
-Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,8.326449
-Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.328893
-Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,2.524782
+Former Soviet Union,FoodDemand_Crops,Corn,Corn,2020,Corn,3.7716655
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.3538021
+Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,8.2626152
+Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.3288928
+Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,2.5247819
 Former Soviet Union,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8
-Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.670003
+Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.6700033
 Former Soviet Union,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.73
 Former Soviet Union,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-India,FoodDemand_Crops,Corn,Corn,2020,Corn,3.575451
-India,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.701389
-India,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.757422
-India,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.40647
-India,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.720995
-India,FoodDemand_Crops,Rice,Rice,2020,Rice,2.828882
-India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.7796
-India,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,2.602235
+India,FoodDemand_Crops,Corn,Corn,2020,Corn,3.5754514
+India,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+India,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.7013887
+India,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.6725609
+India,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.4064704
+India,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.7209949
+India,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8288816
+India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.7796003
+India,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,2.6022347
 India,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Japan,FoodDemand_Crops,Corn,Corn,2020,Corn,3.84164
-Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.404832
-Japan,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.559815
-Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.457157
-Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,8.439811
-Japan,FoodDemand_Crops,Rice,Rice,2020,Rice,2.83169
-Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.753358
+Japan,FoodDemand_Crops,Corn,Corn,2020,Corn,3.8416401
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.4048315
+Japan,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.5527526
+Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.4571566
+Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,8.4398106
+Japan,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8316901
+Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.7533578
 Japan,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.73
 Japan,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Korea,FoodDemand_Crops,Corn,Corn,2020,Corn,3.65279
+Korea,FoodDemand_Crops,Corn,Corn,2020,Corn,3.6527901
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
 Korea,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.32359
-Korea,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.103153
-Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.327328
+Korea,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.0248907
+Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.3273275
 Korea,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,8.752146
 Korea,FoodDemand_Crops,Rice,Rice,2020,Rice,2.813244
-Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.742759
+Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.7427588
 Korea,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.73
 Korea,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Latin America,FoodDemand_Crops,Corn,Corn,2020,Corn,3.603284
-Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.603932
-Latin America,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.802282
+Latin America,FoodDemand_Crops,Corn,Corn,2020,Corn,3.6032838
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.6039322
+Latin America,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.7535551
 Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.533312
-Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.765658
-Latin America,FoodDemand_Crops,Rice,Rice,2020,Rice,2.804125
-Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.884699
-Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.372316
+Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.7656577
+Latin America,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8041254
+Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.8846991
+Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.3723156
 Latin America,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
 Middle East,FoodDemand_Crops,Corn,Corn,2020,Corn,4.038984
-Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.486651
-Middle East,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.350662
-Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.425879
-Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.597216
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.4866515
+Middle East,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.2700423
+Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.4258789
+Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.5972162
 Middle East,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8
-Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.671524
-Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.728639
+Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.6715242
+Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.7286391
 Middle East,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Southeast Asia,FoodDemand_Crops,Corn,Corn,2020,Corn,3.568064
-Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.585767
-Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.421594
-Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.408407
-Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.928683
-Southeast Asia,FoodDemand_Crops,Rice,Rice,2020,Rice,2.801624
-Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.915615
-Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,2.467208
+Southeast Asia,FoodDemand_Crops,Corn,Corn,2020,Corn,3.5680644
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
+Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.5857672
+Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,6.227973
+Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.4084068
+Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.9286827
+Southeast Asia,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8016238
+Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.9156149
+Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,2.4672084
 Southeast Asia,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-USA,FoodDemand_Crops,Corn,Corn,2020,Corn,4.319424
+USA,FoodDemand_Crops,Corn,Corn,2020,Corn,4.3194244
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
 USA,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.447928
-USA,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.874486
-USA,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.680191
-USA,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.950462
+USA,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.8503526
+USA,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.6801908
+USA,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,3.9504616
 USA,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8
-USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.680555
+USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.6805552
 USA,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.73
 USA,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Western Europe,FoodDemand_Crops,Corn,Corn,2020,Corn,3.981875
+Western Europe,FoodDemand_Crops,Corn,Corn,2020,Corn,3.9818753
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2020,FiberCrop,8.84
 Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2020,MiscCrop,0.442726
-Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.764266
-Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.392459
-Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.292804
+Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2020,OilCrop,7.7349985
+Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2020,OtherGrain,3.3924592
+Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2020,PalmFruit,7.2928036
 Western Europe,FoodDemand_Crops,Rice,Rice,2020,Rice,2.8
-Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.670422
-Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.729986
+Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2020,Root_Tuber,0.6704223
+Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2020,SugarCrop,3.7299862
 Western Europe,FoodDemand_Crops,Wheat,Wheat,2020,Wheat,3.34
-Africa,FoodDemand_Crops,Corn,Corn,2035,Corn,3.594777
-Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.666943
-Africa,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.30002
-Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.408607
-Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.487854
+Africa,FoodDemand_Crops,Corn,Corn,2035,Corn,3.5947774
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.6669426
+Africa,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.1926413
+Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.4086069
+Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.4878537
 Africa,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8
 Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,1.001946
-Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,2.70944
+Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,2.7094404
 Africa,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Australia_NZ,FoodDemand_Crops,Corn,Corn,2035,Corn,3.771475
-Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.442664
-Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.635059
-Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.699588
-Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,6.785724
+Australia_NZ,FoodDemand_Crops,Corn,Corn,2035,Corn,3.7714753
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.4426644
+Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.3967413
+Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.6995877
+Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,6.7857244
 Australia_NZ,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8
-Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.676764
+Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.6767635
 Australia_NZ,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.73
 Australia_NZ,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Canada,FoodDemand_Crops,Corn,Corn,2035,Corn,3.906226
-Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.459673
-Canada,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.893264
-Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.445538
-Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.316916
+Canada,FoodDemand_Crops,Corn,Corn,2035,Corn,3.9062264
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.4596731
+Canada,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.8810859
+Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.4455376
+Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.3169158
 Canada,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8
 Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.674585
 Canada,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.73
 Canada,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-China,FoodDemand_Crops,Corn,Corn,2035,Corn,3.609433
+China,FoodDemand_Crops,Corn,Corn,2035,Corn,3.6094328
+China,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
 China,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.289244
-China,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.084731
-China,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.400368
-China,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.636135
-China,FoodDemand_Crops,Rice,Rice,2035,Rice,2.803155
+China,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,5.9511205
+China,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.4003684
+China,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.6361351
+China,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8031548
 China,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.80276
-China,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.379005
+China,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.3790055
 China,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Eastern Europe,FoodDemand_Crops,Corn,Corn,2035,Corn,3.658815
+Eastern Europe,FoodDemand_Crops,Corn,Corn,2035,Corn,3.6588148
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,1
 Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.412576
-Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,8.024056
-Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.241512
-Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.105325
+Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,8.0240564
+Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.2415116
+Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.1053247
 Eastern Europe,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8
-Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.670133
+Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.6701335
 Eastern Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.73
 Eastern Europe,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Former Soviet Union,FoodDemand_Crops,Corn,Corn,2035,Corn,3.771666
-Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.353802
-Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,8.326449
-Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.328893
-Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,2.524782
+Former Soviet Union,FoodDemand_Crops,Corn,Corn,2035,Corn,3.7716655
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.3538021
+Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,8.2626152
+Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.3288928
+Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,2.5247819
 Former Soviet Union,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8
-Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.670003
+Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.6700033
 Former Soviet Union,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.73
 Former Soviet Union,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-India,FoodDemand_Crops,Corn,Corn,2035,Corn,3.575451
-India,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.701389
-India,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.757422
-India,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.40647
-India,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.720995
-India,FoodDemand_Crops,Rice,Rice,2035,Rice,2.828882
-India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.7796
-India,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,2.602235
+India,FoodDemand_Crops,Corn,Corn,2035,Corn,3.5754514
+India,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+India,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.7013887
+India,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.6725609
+India,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.4064704
+India,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.7209949
+India,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8288816
+India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.7796003
+India,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,2.6022347
 India,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Japan,FoodDemand_Crops,Corn,Corn,2035,Corn,3.84164
-Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.404832
-Japan,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.559815
-Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.457157
-Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,8.439811
-Japan,FoodDemand_Crops,Rice,Rice,2035,Rice,2.83169
-Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.753358
+Japan,FoodDemand_Crops,Corn,Corn,2035,Corn,3.8416401
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.4048315
+Japan,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.5527526
+Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.4571566
+Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,8.4398106
+Japan,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8316901
+Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.7533578
 Japan,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.73
 Japan,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Korea,FoodDemand_Crops,Corn,Corn,2035,Corn,3.65279
+Korea,FoodDemand_Crops,Corn,Corn,2035,Corn,3.6527901
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
 Korea,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.32359
-Korea,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.103153
-Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.327328
+Korea,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.0248907
+Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.3273275
 Korea,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,8.752146
 Korea,FoodDemand_Crops,Rice,Rice,2035,Rice,2.813244
-Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.742759
+Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.7427588
 Korea,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.73
 Korea,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Latin America,FoodDemand_Crops,Corn,Corn,2035,Corn,3.603284
-Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.603932
-Latin America,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.802282
+Latin America,FoodDemand_Crops,Corn,Corn,2035,Corn,3.6032838
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.6039322
+Latin America,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.7535551
 Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.533312
-Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.765658
-Latin America,FoodDemand_Crops,Rice,Rice,2035,Rice,2.804125
-Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.884699
-Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.372316
+Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.7656577
+Latin America,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8041254
+Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.8846991
+Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.3723156
 Latin America,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
 Middle East,FoodDemand_Crops,Corn,Corn,2035,Corn,4.038984
-Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.486651
-Middle East,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.350662
-Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.425879
-Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.597216
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.4866515
+Middle East,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.2700423
+Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.4258789
+Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.5972162
 Middle East,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8
-Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.671524
-Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.728639
+Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.6715242
+Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.7286391
 Middle East,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Southeast Asia,FoodDemand_Crops,Corn,Corn,2035,Corn,3.568064
-Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.585767
-Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.421594
-Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.408407
-Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.928683
-Southeast Asia,FoodDemand_Crops,Rice,Rice,2035,Rice,2.801624
-Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.915615
-Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,2.467208
+Southeast Asia,FoodDemand_Crops,Corn,Corn,2035,Corn,3.5680644
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
+Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.5857672
+Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,6.227973
+Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.4084068
+Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.9286827
+Southeast Asia,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8016238
+Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.9156149
+Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,2.4672084
 Southeast Asia,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-USA,FoodDemand_Crops,Corn,Corn,2035,Corn,4.319424
+USA,FoodDemand_Crops,Corn,Corn,2035,Corn,4.3194244
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
 USA,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.447928
-USA,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.874486
-USA,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.680191
-USA,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.950462
+USA,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.8503526
+USA,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.6801908
+USA,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,3.9504616
 USA,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8
-USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.680555
+USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.6805552
 USA,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.73
 USA,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Western Europe,FoodDemand_Crops,Corn,Corn,2035,Corn,3.981875
+Western Europe,FoodDemand_Crops,Corn,Corn,2035,Corn,3.9818753
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2035,FiberCrop,8.84
 Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2035,MiscCrop,0.442726
-Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.764266
-Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.392459
-Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.292804
+Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2035,OilCrop,7.7349985
+Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2035,OtherGrain,3.3924592
+Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2035,PalmFruit,7.2928036
 Western Europe,FoodDemand_Crops,Rice,Rice,2035,Rice,2.8
-Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.670422
-Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.729986
+Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2035,Root_Tuber,0.6704223
+Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2035,SugarCrop,3.7299862
 Western Europe,FoodDemand_Crops,Wheat,Wheat,2035,Wheat,3.34
-Africa,FoodDemand_Crops,Corn,Corn,2050,Corn,3.594777
-Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.666943
-Africa,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.30002
-Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.408607
-Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.487854
+Africa,FoodDemand_Crops,Corn,Corn,2050,Corn,3.5947774
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.6669426
+Africa,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.1926413
+Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.4086069
+Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.4878537
 Africa,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8
 Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,1.001946
-Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,2.70944
+Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,2.7094404
 Africa,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Australia_NZ,FoodDemand_Crops,Corn,Corn,2050,Corn,3.771475
-Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.442664
-Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.635059
-Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.699588
-Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,6.785724
+Australia_NZ,FoodDemand_Crops,Corn,Corn,2050,Corn,3.7714753
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.4426644
+Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.3967413
+Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.6995877
+Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,6.7857244
 Australia_NZ,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8
-Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.676764
+Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.6767635
 Australia_NZ,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.73
 Australia_NZ,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Canada,FoodDemand_Crops,Corn,Corn,2050,Corn,3.906226
-Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.459673
-Canada,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.893264
-Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.445538
-Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.316916
+Canada,FoodDemand_Crops,Corn,Corn,2050,Corn,3.9062264
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.4596731
+Canada,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.8810859
+Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.4455376
+Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.3169158
 Canada,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8
 Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.674585
 Canada,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.73
 Canada,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-China,FoodDemand_Crops,Corn,Corn,2050,Corn,3.609433
+China,FoodDemand_Crops,Corn,Corn,2050,Corn,3.6094328
+China,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
 China,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.289244
-China,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.084731
-China,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.400368
-China,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.636135
-China,FoodDemand_Crops,Rice,Rice,2050,Rice,2.803155
+China,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,5.9511205
+China,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.4003684
+China,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.6361351
+China,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8031548
 China,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.80276
-China,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.379005
+China,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.3790055
 China,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Eastern Europe,FoodDemand_Crops,Corn,Corn,2050,Corn,3.658815
+Eastern Europe,FoodDemand_Crops,Corn,Corn,2050,Corn,3.6588148
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,1
 Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.412576
-Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,8.024056
-Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.241512
-Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.105325
+Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,8.0240564
+Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.2415116
+Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.1053247
 Eastern Europe,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8
-Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.670133
+Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.6701335
 Eastern Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.73
 Eastern Europe,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Former Soviet Union,FoodDemand_Crops,Corn,Corn,2050,Corn,3.771666
-Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.353802
-Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,8.326449
-Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.328893
-Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,2.524782
+Former Soviet Union,FoodDemand_Crops,Corn,Corn,2050,Corn,3.7716655
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.3538021
+Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,8.2626152
+Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.3288928
+Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,2.5247819
 Former Soviet Union,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8
-Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.670003
+Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.6700033
 Former Soviet Union,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.73
 Former Soviet Union,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-India,FoodDemand_Crops,Corn,Corn,2050,Corn,3.575451
-India,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.701389
-India,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.757422
-India,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.40647
-India,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.720995
-India,FoodDemand_Crops,Rice,Rice,2050,Rice,2.828882
-India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.7796
-India,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,2.602235
+India,FoodDemand_Crops,Corn,Corn,2050,Corn,3.5754514
+India,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+India,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.7013887
+India,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.6725609
+India,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.4064704
+India,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.7209949
+India,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8288816
+India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.7796003
+India,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,2.6022347
 India,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Japan,FoodDemand_Crops,Corn,Corn,2050,Corn,3.84164
-Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.404832
-Japan,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.559815
-Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.457157
-Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,8.439811
-Japan,FoodDemand_Crops,Rice,Rice,2050,Rice,2.83169
-Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.753358
+Japan,FoodDemand_Crops,Corn,Corn,2050,Corn,3.8416401
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.4048315
+Japan,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.5527526
+Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.4571566
+Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,8.4398106
+Japan,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8316901
+Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.7533578
 Japan,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.73
 Japan,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Korea,FoodDemand_Crops,Corn,Corn,2050,Corn,3.65279
+Korea,FoodDemand_Crops,Corn,Corn,2050,Corn,3.6527901
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
 Korea,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.32359
-Korea,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.103153
-Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.327328
+Korea,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.0248907
+Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.3273275
 Korea,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,8.752146
 Korea,FoodDemand_Crops,Rice,Rice,2050,Rice,2.813244
-Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.742759
+Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.7427588
 Korea,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.73
 Korea,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Latin America,FoodDemand_Crops,Corn,Corn,2050,Corn,3.603284
-Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.603932
-Latin America,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.802282
+Latin America,FoodDemand_Crops,Corn,Corn,2050,Corn,3.6032838
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.6039322
+Latin America,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.7535551
 Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.533312
-Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.765658
-Latin America,FoodDemand_Crops,Rice,Rice,2050,Rice,2.804125
-Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.884699
-Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.372316
+Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.7656577
+Latin America,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8041254
+Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.8846991
+Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.3723156
 Latin America,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
 Middle East,FoodDemand_Crops,Corn,Corn,2050,Corn,4.038984
-Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.486651
-Middle East,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.350662
-Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.425879
-Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.597216
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.4866515
+Middle East,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.2700423
+Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.4258789
+Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.5972162
 Middle East,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8
-Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.671524
-Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.728639
+Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.6715242
+Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.7286391
 Middle East,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Southeast Asia,FoodDemand_Crops,Corn,Corn,2050,Corn,3.568064
-Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.585767
-Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.421594
-Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.408407
-Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.928683
-Southeast Asia,FoodDemand_Crops,Rice,Rice,2050,Rice,2.801624
-Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.915615
-Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,2.467208
+Southeast Asia,FoodDemand_Crops,Corn,Corn,2050,Corn,3.5680644
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
+Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.5857672
+Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,6.227973
+Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.4084068
+Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.9286827
+Southeast Asia,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8016238
+Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.9156149
+Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,2.4672084
 Southeast Asia,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-USA,FoodDemand_Crops,Corn,Corn,2050,Corn,4.319424
+USA,FoodDemand_Crops,Corn,Corn,2050,Corn,4.3194244
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
 USA,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.447928
-USA,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.874486
-USA,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.680191
-USA,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.950462
+USA,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.8503526
+USA,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.6801908
+USA,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,3.9504616
 USA,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8
-USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.680555
+USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.6805552
 USA,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.73
 USA,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Western Europe,FoodDemand_Crops,Corn,Corn,2050,Corn,3.981875
+Western Europe,FoodDemand_Crops,Corn,Corn,2050,Corn,3.9818753
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2050,FiberCrop,8.84
 Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2050,MiscCrop,0.442726
-Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.764266
-Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.392459
-Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.292804
+Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2050,OilCrop,7.7349985
+Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2050,OtherGrain,3.3924592
+Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2050,PalmFruit,7.2928036
 Western Europe,FoodDemand_Crops,Rice,Rice,2050,Rice,2.8
-Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.670422
-Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.729986
+Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2050,Root_Tuber,0.6704223
+Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2050,SugarCrop,3.7299862
 Western Europe,FoodDemand_Crops,Wheat,Wheat,2050,Wheat,3.34
-Africa,FoodDemand_Crops,Corn,Corn,2065,Corn,3.594777
-Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.666943
-Africa,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.30002
-Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.408607
-Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.487854
+Africa,FoodDemand_Crops,Corn,Corn,2065,Corn,3.5947774
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.6669426
+Africa,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.1926413
+Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.4086069
+Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.4878537
 Africa,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8
 Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,1.001946
-Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,2.70944
+Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,2.7094404
 Africa,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Australia_NZ,FoodDemand_Crops,Corn,Corn,2065,Corn,3.771475
-Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.442664
-Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.635059
-Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.699588
-Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,6.785724
+Australia_NZ,FoodDemand_Crops,Corn,Corn,2065,Corn,3.7714753
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.4426644
+Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.3967413
+Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.6995877
+Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,6.7857244
 Australia_NZ,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8
-Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.676764
+Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.6767635
 Australia_NZ,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.73
 Australia_NZ,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Canada,FoodDemand_Crops,Corn,Corn,2065,Corn,3.906226
-Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.459673
-Canada,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.893264
-Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.445538
-Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.316916
+Canada,FoodDemand_Crops,Corn,Corn,2065,Corn,3.9062264
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.4596731
+Canada,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.8810859
+Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.4455376
+Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.3169158
 Canada,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8
 Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.674585
 Canada,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.73
 Canada,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-China,FoodDemand_Crops,Corn,Corn,2065,Corn,3.609433
+China,FoodDemand_Crops,Corn,Corn,2065,Corn,3.6094328
+China,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
 China,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.289244
-China,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.084731
-China,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.400368
-China,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.636135
-China,FoodDemand_Crops,Rice,Rice,2065,Rice,2.803155
+China,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,5.9511205
+China,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.4003684
+China,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.6361351
+China,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8031548
 China,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.80276
-China,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.379005
+China,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.3790055
 China,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Eastern Europe,FoodDemand_Crops,Corn,Corn,2065,Corn,3.658815
+Eastern Europe,FoodDemand_Crops,Corn,Corn,2065,Corn,3.6588148
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,1
 Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.412576
-Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,8.024056
-Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.241512
-Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.105325
+Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,8.0240564
+Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.2415116
+Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.1053247
 Eastern Europe,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8
-Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.670133
+Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.6701335
 Eastern Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.73
 Eastern Europe,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Former Soviet Union,FoodDemand_Crops,Corn,Corn,2065,Corn,3.771666
-Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.353802
-Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,8.326449
-Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.328893
-Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,2.524782
+Former Soviet Union,FoodDemand_Crops,Corn,Corn,2065,Corn,3.7716655
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.3538021
+Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,8.2626152
+Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.3288928
+Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,2.5247819
 Former Soviet Union,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8
-Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.670003
+Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.6700033
 Former Soviet Union,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.73
 Former Soviet Union,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-India,FoodDemand_Crops,Corn,Corn,2065,Corn,3.575451
-India,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.701389
-India,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.757422
-India,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.40647
-India,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.720995
-India,FoodDemand_Crops,Rice,Rice,2065,Rice,2.828882
-India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.7796
-India,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,2.602235
+India,FoodDemand_Crops,Corn,Corn,2065,Corn,3.5754514
+India,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+India,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.7013887
+India,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.6725609
+India,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.4064704
+India,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.7209949
+India,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8288816
+India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.7796003
+India,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,2.6022347
 India,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Japan,FoodDemand_Crops,Corn,Corn,2065,Corn,3.84164
-Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.404832
-Japan,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.559815
-Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.457157
-Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,8.439811
-Japan,FoodDemand_Crops,Rice,Rice,2065,Rice,2.83169
-Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.753358
+Japan,FoodDemand_Crops,Corn,Corn,2065,Corn,3.8416401
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.4048315
+Japan,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.5527526
+Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.4571566
+Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,8.4398106
+Japan,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8316901
+Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.7533578
 Japan,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.73
 Japan,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Korea,FoodDemand_Crops,Corn,Corn,2065,Corn,3.65279
+Korea,FoodDemand_Crops,Corn,Corn,2065,Corn,3.6527901
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
 Korea,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.32359
-Korea,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.103153
-Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.327328
+Korea,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.0248907
+Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.3273275
 Korea,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,8.752146
 Korea,FoodDemand_Crops,Rice,Rice,2065,Rice,2.813244
-Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.742759
+Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.7427588
 Korea,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.73
 Korea,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Latin America,FoodDemand_Crops,Corn,Corn,2065,Corn,3.603284
-Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.603932
-Latin America,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.802282
+Latin America,FoodDemand_Crops,Corn,Corn,2065,Corn,3.6032838
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.6039322
+Latin America,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.7535551
 Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.533312
-Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.765658
-Latin America,FoodDemand_Crops,Rice,Rice,2065,Rice,2.804125
-Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.884699
-Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.372316
+Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.7656577
+Latin America,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8041254
+Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.8846991
+Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.3723156
 Latin America,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
 Middle East,FoodDemand_Crops,Corn,Corn,2065,Corn,4.038984
-Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.486651
-Middle East,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.350662
-Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.425879
-Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.597216
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.4866515
+Middle East,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.2700423
+Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.4258789
+Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.5972162
 Middle East,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8
-Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.671524
-Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.728639
+Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.6715242
+Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.7286391
 Middle East,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Southeast Asia,FoodDemand_Crops,Corn,Corn,2065,Corn,3.568064
-Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.585767
-Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.421594
-Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.408407
-Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.928683
-Southeast Asia,FoodDemand_Crops,Rice,Rice,2065,Rice,2.801624
-Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.915615
-Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,2.467208
+Southeast Asia,FoodDemand_Crops,Corn,Corn,2065,Corn,3.5680644
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
+Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.5857672
+Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,6.227973
+Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.4084068
+Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.9286827
+Southeast Asia,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8016238
+Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.9156149
+Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,2.4672084
 Southeast Asia,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-USA,FoodDemand_Crops,Corn,Corn,2065,Corn,4.319424
+USA,FoodDemand_Crops,Corn,Corn,2065,Corn,4.3194244
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
 USA,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.447928
-USA,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.874486
-USA,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.680191
-USA,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.950462
+USA,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.8503526
+USA,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.6801908
+USA,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,3.9504616
 USA,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8
-USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.680555
+USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.6805552
 USA,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.73
 USA,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Western Europe,FoodDemand_Crops,Corn,Corn,2065,Corn,3.981875
+Western Europe,FoodDemand_Crops,Corn,Corn,2065,Corn,3.9818753
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2065,FiberCrop,8.84
 Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2065,MiscCrop,0.442726
-Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.764266
-Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.392459
-Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.292804
+Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2065,OilCrop,7.7349985
+Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2065,OtherGrain,3.3924592
+Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2065,PalmFruit,7.2928036
 Western Europe,FoodDemand_Crops,Rice,Rice,2065,Rice,2.8
-Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.670422
-Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.729986
+Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2065,Root_Tuber,0.6704223
+Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2065,SugarCrop,3.7299862
 Western Europe,FoodDemand_Crops,Wheat,Wheat,2065,Wheat,3.34
-Africa,FoodDemand_Crops,Corn,Corn,2080,Corn,3.594777
-Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.666943
-Africa,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.30002
-Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.408607
-Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.487854
+Africa,FoodDemand_Crops,Corn,Corn,2080,Corn,3.5947774
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.6669426
+Africa,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.1926413
+Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.4086069
+Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.4878537
 Africa,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8
 Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,1.001946
-Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,2.70944
+Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,2.7094404
 Africa,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Australia_NZ,FoodDemand_Crops,Corn,Corn,2080,Corn,3.771475
-Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.442664
-Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.635059
-Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.699588
-Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,6.785724
+Australia_NZ,FoodDemand_Crops,Corn,Corn,2080,Corn,3.7714753
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.4426644
+Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.3967413
+Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.6995877
+Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,6.7857244
 Australia_NZ,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8
-Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.676764
+Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.6767635
 Australia_NZ,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.73
 Australia_NZ,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Canada,FoodDemand_Crops,Corn,Corn,2080,Corn,3.906226
-Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.459673
-Canada,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.893264
-Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.445538
-Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.316916
+Canada,FoodDemand_Crops,Corn,Corn,2080,Corn,3.9062264
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.4596731
+Canada,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.8810859
+Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.4455376
+Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.3169158
 Canada,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8
 Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.674585
 Canada,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.73
 Canada,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-China,FoodDemand_Crops,Corn,Corn,2080,Corn,3.609433
+China,FoodDemand_Crops,Corn,Corn,2080,Corn,3.6094328
+China,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
 China,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.289244
-China,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.084731
-China,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.400368
-China,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.636135
-China,FoodDemand_Crops,Rice,Rice,2080,Rice,2.803155
+China,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,5.9511205
+China,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.4003684
+China,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.6361351
+China,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8031548
 China,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.80276
-China,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.379005
+China,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.3790055
 China,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Eastern Europe,FoodDemand_Crops,Corn,Corn,2080,Corn,3.658815
+Eastern Europe,FoodDemand_Crops,Corn,Corn,2080,Corn,3.6588148
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,1
 Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.412576
-Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,8.024056
-Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.241512
-Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.105325
+Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,8.0240564
+Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.2415116
+Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.1053247
 Eastern Europe,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8
-Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.670133
+Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.6701335
 Eastern Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.73
 Eastern Europe,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Former Soviet Union,FoodDemand_Crops,Corn,Corn,2080,Corn,3.771666
-Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.353802
-Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,8.326449
-Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.328893
-Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,2.524782
+Former Soviet Union,FoodDemand_Crops,Corn,Corn,2080,Corn,3.7716655
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.3538021
+Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,8.2626152
+Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.3288928
+Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,2.5247819
 Former Soviet Union,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8
-Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.670003
+Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.6700033
 Former Soviet Union,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.73
 Former Soviet Union,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-India,FoodDemand_Crops,Corn,Corn,2080,Corn,3.575451
-India,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.701389
-India,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.757422
-India,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.40647
-India,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.720995
-India,FoodDemand_Crops,Rice,Rice,2080,Rice,2.828882
-India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.7796
-India,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,2.602235
+India,FoodDemand_Crops,Corn,Corn,2080,Corn,3.5754514
+India,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+India,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.7013887
+India,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.6725609
+India,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.4064704
+India,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.7209949
+India,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8288816
+India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.7796003
+India,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,2.6022347
 India,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Japan,FoodDemand_Crops,Corn,Corn,2080,Corn,3.84164
-Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.404832
-Japan,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.559815
-Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.457157
-Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,8.439811
-Japan,FoodDemand_Crops,Rice,Rice,2080,Rice,2.83169
-Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.753358
+Japan,FoodDemand_Crops,Corn,Corn,2080,Corn,3.8416401
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.4048315
+Japan,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.5527526
+Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.4571566
+Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,8.4398106
+Japan,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8316901
+Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.7533578
 Japan,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.73
 Japan,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Korea,FoodDemand_Crops,Corn,Corn,2080,Corn,3.65279
+Korea,FoodDemand_Crops,Corn,Corn,2080,Corn,3.6527901
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
 Korea,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.32359
-Korea,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.103153
-Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.327328
+Korea,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.0248907
+Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.3273275
 Korea,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,8.752146
 Korea,FoodDemand_Crops,Rice,Rice,2080,Rice,2.813244
-Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.742759
+Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.7427588
 Korea,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.73
 Korea,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Latin America,FoodDemand_Crops,Corn,Corn,2080,Corn,3.603284
-Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.603932
-Latin America,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.802282
+Latin America,FoodDemand_Crops,Corn,Corn,2080,Corn,3.6032838
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.6039322
+Latin America,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.7535551
 Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.533312
-Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.765658
-Latin America,FoodDemand_Crops,Rice,Rice,2080,Rice,2.804125
-Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.884699
-Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.372316
+Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.7656577
+Latin America,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8041254
+Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.8846991
+Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.3723156
 Latin America,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
 Middle East,FoodDemand_Crops,Corn,Corn,2080,Corn,4.038984
-Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.486651
-Middle East,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.350662
-Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.425879
-Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.597216
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.4866515
+Middle East,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.2700423
+Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.4258789
+Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.5972162
 Middle East,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8
-Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.671524
-Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.728639
+Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.6715242
+Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.7286391
 Middle East,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Southeast Asia,FoodDemand_Crops,Corn,Corn,2080,Corn,3.568064
-Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.585767
-Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.421594
-Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.408407
-Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.928683
-Southeast Asia,FoodDemand_Crops,Rice,Rice,2080,Rice,2.801624
-Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.915615
-Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,2.467208
+Southeast Asia,FoodDemand_Crops,Corn,Corn,2080,Corn,3.5680644
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
+Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.5857672
+Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,6.227973
+Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.4084068
+Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.9286827
+Southeast Asia,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8016238
+Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.9156149
+Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,2.4672084
 Southeast Asia,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-USA,FoodDemand_Crops,Corn,Corn,2080,Corn,4.319424
+USA,FoodDemand_Crops,Corn,Corn,2080,Corn,4.3194244
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
 USA,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.447928
-USA,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.874486
-USA,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.680191
-USA,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.950462
+USA,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.8503526
+USA,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.6801908
+USA,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,3.9504616
 USA,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8
-USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.680555
+USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.6805552
 USA,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.73
 USA,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Western Europe,FoodDemand_Crops,Corn,Corn,2080,Corn,3.981875
+Western Europe,FoodDemand_Crops,Corn,Corn,2080,Corn,3.9818753
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2080,FiberCrop,8.84
 Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2080,MiscCrop,0.442726
-Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.764266
-Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.392459
-Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.292804
+Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2080,OilCrop,7.7349985
+Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2080,OtherGrain,3.3924592
+Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2080,PalmFruit,7.2928036
 Western Europe,FoodDemand_Crops,Rice,Rice,2080,Rice,2.8
-Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.670422
-Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.729986
+Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2080,Root_Tuber,0.6704223
+Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2080,SugarCrop,3.7299862
 Western Europe,FoodDemand_Crops,Wheat,Wheat,2080,Wheat,3.34
-Africa,FoodDemand_Crops,Corn,Corn,2095,Corn,3.594777
-Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.666943
-Africa,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.30002
-Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.408607
-Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.487854
+Africa,FoodDemand_Crops,Corn,Corn,2095,Corn,3.5947774
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+Africa,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.6669426
+Africa,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.1926413
+Africa,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.4086069
+Africa,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.4878537
 Africa,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8
 Africa,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,1.001946
-Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,2.70944
+Africa,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,2.7094404
 Africa,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Australia_NZ,FoodDemand_Crops,Corn,Corn,2095,Corn,3.771475
-Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.442664
-Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.635059
-Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.699588
-Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,6.785724
+Australia_NZ,FoodDemand_Crops,Corn,Corn,2095,Corn,3.7714753
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.4426644
+Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.3967413
+Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.6995877
+Australia_NZ,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,6.7857244
 Australia_NZ,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8
-Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.676764
+Australia_NZ,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.6767635
 Australia_NZ,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.73
 Australia_NZ,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Canada,FoodDemand_Crops,Corn,Corn,2095,Corn,3.906226
-Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.459673
-Canada,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.893264
-Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.445538
-Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.316916
+Canada,FoodDemand_Crops,Corn,Corn,2095,Corn,3.9062264
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+Canada,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.4596731
+Canada,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.8810859
+Canada,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.4455376
+Canada,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.3169158
 Canada,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8
 Canada,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.674585
 Canada,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.73
 Canada,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-China,FoodDemand_Crops,Corn,Corn,2095,Corn,3.609433
+China,FoodDemand_Crops,Corn,Corn,2095,Corn,3.6094328
+China,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
 China,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.289244
-China,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.084731
-China,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.400368
-China,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.636135
-China,FoodDemand_Crops,Rice,Rice,2095,Rice,2.803155
+China,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,5.9511205
+China,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.4003684
+China,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.6361351
+China,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8031548
 China,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.80276
-China,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.379005
+China,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.3790055
 China,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Eastern Europe,FoodDemand_Crops,Corn,Corn,2095,Corn,3.658815
+Eastern Europe,FoodDemand_Crops,Corn,Corn,2095,Corn,3.6588148
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,1
 Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.412576
-Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,8.024056
-Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.241512
-Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.105325
+Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,8.0240564
+Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.2415116
+Eastern Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.1053247
 Eastern Europe,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8
-Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.670133
+Eastern Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.6701335
 Eastern Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.73
 Eastern Europe,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Former Soviet Union,FoodDemand_Crops,Corn,Corn,2095,Corn,3.771666
-Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.353802
-Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,8.326449
-Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.328893
-Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,2.524782
+Former Soviet Union,FoodDemand_Crops,Corn,Corn,2095,Corn,3.7716655
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.3538021
+Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,8.2626152
+Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.3288928
+Former Soviet Union,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,2.5247819
 Former Soviet Union,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8
-Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.670003
+Former Soviet Union,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.6700033
 Former Soviet Union,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.73
 Former Soviet Union,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-India,FoodDemand_Crops,Corn,Corn,2095,Corn,3.575451
-India,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.701389
-India,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.757422
-India,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.40647
-India,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.720995
-India,FoodDemand_Crops,Rice,Rice,2095,Rice,2.828882
-India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.7796
-India,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,2.602235
+India,FoodDemand_Crops,Corn,Corn,2095,Corn,3.5754514
+India,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+India,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.7013887
+India,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.6725609
+India,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.4064704
+India,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.7209949
+India,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8288816
+India,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.7796003
+India,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,2.6022347
 India,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Japan,FoodDemand_Crops,Corn,Corn,2095,Corn,3.84164
-Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.404832
-Japan,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.559815
-Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.457157
-Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,8.439811
-Japan,FoodDemand_Crops,Rice,Rice,2095,Rice,2.83169
-Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.753358
+Japan,FoodDemand_Crops,Corn,Corn,2095,Corn,3.8416401
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+Japan,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.4048315
+Japan,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.5527526
+Japan,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.4571566
+Japan,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,8.4398106
+Japan,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8316901
+Japan,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.7533578
 Japan,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.73
 Japan,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Korea,FoodDemand_Crops,Corn,Corn,2095,Corn,3.65279
+Korea,FoodDemand_Crops,Corn,Corn,2095,Corn,3.6527901
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
 Korea,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.32359
-Korea,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.103153
-Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.327328
+Korea,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.0248907
+Korea,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.3273275
 Korea,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,8.752146
 Korea,FoodDemand_Crops,Rice,Rice,2095,Rice,2.813244
-Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.742759
+Korea,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.7427588
 Korea,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.73
 Korea,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Latin America,FoodDemand_Crops,Corn,Corn,2095,Corn,3.603284
-Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.603932
-Latin America,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.802282
+Latin America,FoodDemand_Crops,Corn,Corn,2095,Corn,3.6032838
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.6039322
+Latin America,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.7535551
 Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.533312
-Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.765658
-Latin America,FoodDemand_Crops,Rice,Rice,2095,Rice,2.804125
-Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.884699
-Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.372316
+Latin America,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.7656577
+Latin America,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8041254
+Latin America,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.8846991
+Latin America,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.3723156
 Latin America,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
 Middle East,FoodDemand_Crops,Corn,Corn,2095,Corn,4.038984
-Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.486651
-Middle East,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.350662
-Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.425879
-Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.597216
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.4866515
+Middle East,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.2700423
+Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.4258789
+Middle East,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.5972162
 Middle East,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8
-Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.671524
-Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.728639
+Middle East,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.6715242
+Middle East,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.7286391
 Middle East,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Southeast Asia,FoodDemand_Crops,Corn,Corn,2095,Corn,3.568064
-Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.585767
-Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.421594
-Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.408407
-Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.928683
-Southeast Asia,FoodDemand_Crops,Rice,Rice,2095,Rice,2.801624
-Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.915615
-Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,2.467208
+Southeast Asia,FoodDemand_Crops,Corn,Corn,2095,Corn,3.5680644
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
+Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.5857672
+Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,6.227973
+Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.4084068
+Southeast Asia,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.9286827
+Southeast Asia,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8016238
+Southeast Asia,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.9156149
+Southeast Asia,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,2.4672084
 Southeast Asia,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-USA,FoodDemand_Crops,Corn,Corn,2095,Corn,4.319424
+USA,FoodDemand_Crops,Corn,Corn,2095,Corn,4.3194244
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
 USA,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.447928
-USA,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.874486
-USA,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.680191
-USA,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.950462
+USA,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.8503526
+USA,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.6801908
+USA,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,3.9504616
 USA,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8
-USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.680555
+USA,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.6805552
 USA,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.73
 USA,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34
-Western Europe,FoodDemand_Crops,Corn,Corn,2095,Corn,3.981875
+Western Europe,FoodDemand_Crops,Corn,Corn,2095,Corn,3.9818753
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,2095,FiberCrop,8.84
 Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,2095,MiscCrop,0.442726
-Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.764266
-Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.392459
-Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.292804
+Western Europe,FoodDemand_Crops,OilCrop,OilCrop,2095,OilCrop,7.7349985
+Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,2095,OtherGrain,3.3924592
+Western Europe,FoodDemand_Crops,PalmFruit,PalmFruit,2095,PalmFruit,7.2928036
 Western Europe,FoodDemand_Crops,Rice,Rice,2095,Rice,2.8
-Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.670422
-Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.729986
+Western Europe,FoodDemand_Crops,Root_Tuber,Root_Tuber,2095,Root_Tuber,0.6704223
+Western Europe,FoodDemand_Crops,SugarCrop,SugarCrop,2095,SugarCrop,3.7299862
 Western Europe,FoodDemand_Crops,Wheat,Wheat,2095,Wheat,3.34

@@ -3,395 +3,423 @@ Variable ID
 Production
 
 region,supplysector,subsector,technology,year,calOutputValue,share.weight.year,subs.share.weight,tech.share.weight
-Africa,FodderHerb_Residue,FodderHerb,FodderHerb,1990,45.477972,1990,1,1
+Africa,FodderHerb_Residue,FodderHerb,FodderHerb,1990,43.7083466,1990,1,1
 Africa,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Africa,Pasture_FodderGrass,Pasture,Pasture,1990,313.440213,1990,1,1
+Africa,Pasture_FodderGrass,Pasture,Pasture,1990,306.3989711,1990,1,1
 Africa,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,7.9178,1990,1,1
-Africa,FeedCrops,Corn,Corn,1990,6.160212,1990,1,1
-Africa,FeedCrops,MiscCrop,MiscCrop,1990,1.693669,1990,1,1
-Africa,FeedCrops,OilCrop,OilCrop,1990,2.07386,1990,1,1
-Africa,FeedCrops,OtherGrain,OtherGrain,1990,3.159365,1990,1,1
-Africa,FeedCrops,PalmFruit,PalmFruit,1990,0.131469,1990,1,1
-Africa,FeedCrops,Rice,Rice,1990,0.263746,1990,1,1
-Africa,FeedCrops,Root_Tuber,Root_Tuber,1990,9.376114,1990,1,1
-Africa,FeedCrops,SugarCrop,SugarCrop,1990,1.268855,1990,1,1
-Africa,FeedCrops,Wheat,Wheat,1990,0.892801,1990,1,1
-Africa,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,21.584604,1990,1,1
-Australia_NZ,FodderHerb_Residue,FodderHerb,FodderHerb,1990,14.919346,1990,1,1
+Africa,FeedCrops,Corn,Corn,1990,6.0267095,1990,1,1
+Africa,FeedCrops,FiberCrop,FiberCrop,1990,0.4732095,1990,1,1
+Africa,FeedCrops,MiscCrop,MiscCrop,1990,1.6569646,1990,1,1
+Africa,FeedCrops,OilCrop,OilCrop,1990,1.5557064,1990,1,1
+Africa,FeedCrops,OtherGrain,OtherGrain,1990,3.0908963,1990,1,1
+Africa,FeedCrops,PalmFruit,PalmFruit,1990,0.1286202,1990,1,1
+Africa,FeedCrops,Rice,Rice,1990,0.2580299,1990,1,1
+Africa,FeedCrops,Root_Tuber,Root_Tuber,1990,9.1729169,1990,1,1
+Africa,FeedCrops,SugarCrop,SugarCrop,1990,1.2413562,1990,1,1
+Africa,FeedCrops,Wheat,Wheat,1990,0.8734524,1990,1,1
+Africa,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,21.0857585,1990,1,1
+Australia_NZ,FodderHerb_Residue,FodderHerb,FodderHerb,1990,14.4506468,1990,1,1
 Australia_NZ,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Australia_NZ,Pasture_FodderGrass,Pasture,Pasture,1990,119.818209,1990,1,1
-Australia_NZ,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,9.227,1990,1,1
-Australia_NZ,FeedCrops,Corn,Corn,1990,0.196786,1990,1,1
-Australia_NZ,FeedCrops,MiscCrop,MiscCrop,1990,0.254755,1990,1,1
-Australia_NZ,FeedCrops,OilCrop,OilCrop,1990,0.387749,1990,1,1
-Australia_NZ,FeedCrops,OtherGrain,OtherGrain,1990,2.513747,1990,1,1
-Australia_NZ,FeedCrops,PalmFruit,PalmFruit,1990,0.002521,1990,1,1
+Australia_NZ,Pasture_FodderGrass,Pasture,Pasture,1990,116.0344504,1990,1,1
+Australia_NZ,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,9.218,1990,1,1
+Australia_NZ,FeedCrops,Corn,Corn,1990,0.1943657,1990,1,1
+Australia_NZ,FeedCrops,FiberCrop,FiberCrop,1990,0.1751775,1990,1,1
+Australia_NZ,FeedCrops,MiscCrop,MiscCrop,1990,0.2516219,1990,1,1
+Australia_NZ,FeedCrops,OilCrop,OilCrop,1990,0.2078023,1990,1,1
+Australia_NZ,FeedCrops,OtherGrain,OtherGrain,1990,2.4828273,1990,1,1
+Australia_NZ,FeedCrops,PalmFruit,PalmFruit,1990,0.0024898,1990,1,1
 Australia_NZ,FeedCrops,Rice,Rice,1990,0,1990,0,0
-Australia_NZ,FeedCrops,Root_Tuber,Root_Tuber,1990,0.05352,1990,1,1
-Australia_NZ,FeedCrops,SugarCrop,SugarCrop,1990,0.180681,1990,1,1
-Australia_NZ,FeedCrops,Wheat,Wheat,1990,1.071494,1990,1,1
-Australia_NZ,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,4.124281,1990,1,1
-Canada,FodderHerb_Residue,FodderHerb,FodderHerb,1990,8.456191,1990,1,1
+Australia_NZ,FeedCrops,Root_Tuber,Root_Tuber,1990,0.0528616,1990,1,1
+Australia_NZ,FeedCrops,SugarCrop,SugarCrop,1990,0.1784582,1990,1,1
+Australia_NZ,FeedCrops,Wheat,Wheat,1990,1.0583144,1990,1,1
+Australia_NZ,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,4.119328,1990,1,1
+Canada,FodderHerb_Residue,FodderHerb,FodderHerb,1990,7.8605277,1990,1,1
 Canada,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Canada,Pasture_FodderGrass,Pasture,Pasture,1990,26.594231,1990,1,1
+Canada,Pasture_FodderGrass,Pasture,Pasture,1990,25.3700763,1990,1,1
 Canada,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,0,1990,0,0
-Canada,FeedCrops,Corn,Corn,1990,4.693434,1990,1,1
-Canada,FeedCrops,MiscCrop,MiscCrop,1990,0.070846,1990,1,1
-Canada,FeedCrops,OilCrop,OilCrop,1990,2.100032,1990,1,1
-Canada,FeedCrops,OtherGrain,OtherGrain,1990,9.186724,1990,1,1
-Canada,FeedCrops,PalmFruit,PalmFruit,1990,6.1e-05,1990,1,1
+Canada,FeedCrops,Corn,Corn,1990,4.4847716,1990,1,1
+Canada,FeedCrops,FiberCrop,FiberCrop,1990,0.0017534,1990,1,1
+Canada,FeedCrops,MiscCrop,MiscCrop,1990,0.0676967,1990,1,1
+Canada,FeedCrops,OilCrop,OilCrop,1990,2.0049147,1990,1,1
+Canada,FeedCrops,OtherGrain,OtherGrain,1990,8.7782973,1990,1,1
+Canada,FeedCrops,PalmFruit,PalmFruit,1990,5.83e-05,1990,1,1
 Canada,FeedCrops,Rice,Rice,1990,0,1990,0,0
-Canada,FeedCrops,Root_Tuber,Root_Tuber,1990,0.001137,1990,1,1
-Canada,FeedCrops,SugarCrop,SugarCrop,1990,0.157787,1990,1,1
-Canada,FeedCrops,Wheat,Wheat,1990,2.752789,1990,1,1
-Canada,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,0.047247,1990,1,1
-China,FodderHerb_Residue,FodderHerb,FodderHerb,1990,207.351,1990,1,1
+Canada,FeedCrops,Root_Tuber,Root_Tuber,1990,0.0010862,1990,1,1
+Canada,FeedCrops,SugarCrop,SugarCrop,1990,0.1507717,1990,1,1
+Canada,FeedCrops,Wheat,Wheat,1990,2.6304049,1990,1,1
+Canada,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,0.0448454,1990,1,1
+China,FodderHerb_Residue,FodderHerb,FodderHerb,1990,206.7569463,1990,1,1
 China,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-China,Pasture_FodderGrass,Pasture,Pasture,1990,158.940685,1990,1,1
+China,Pasture_FodderGrass,Pasture,Pasture,1990,157.2792116,1990,1,1
 China,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,42.335755,1990,1,1
-China,FeedCrops,Corn,Corn,1990,36.436961,1990,1,1
-China,FeedCrops,MiscCrop,MiscCrop,1990,1.47939,1990,1,1
-China,FeedCrops,OilCrop,OilCrop,1990,7.443826,1990,1,1
-China,FeedCrops,OtherGrain,OtherGrain,1990,3.0942,1990,1,1
-China,FeedCrops,PalmFruit,PalmFruit,1990,0.052534,1990,1,1
-China,FeedCrops,Rice,Rice,1990,9.910402,1990,1,1
-China,FeedCrops,Root_Tuber,Root_Tuber,1990,32.372554,1990,1,1
-China,FeedCrops,SugarCrop,SugarCrop,1990,4.425411,1990,1,1
-China,FeedCrops,Wheat,Wheat,1990,0.22902,1990,1,1
-China,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,12.9766,1990,1,1
-Eastern Europe,FodderHerb_Residue,FodderHerb,FodderHerb,1990,46.985244,1990,1,1
+China,FeedCrops,Corn,Corn,1990,36.4070959,1990,1,1
+China,FeedCrops,FiberCrop,FiberCrop,1990,2.0728168,1990,1,1
+China,FeedCrops,MiscCrop,MiscCrop,1990,1.4781776,1990,1,1
+China,FeedCrops,OilCrop,OilCrop,1990,5.3649075,1990,1,1
+China,FeedCrops,OtherGrain,OtherGrain,1990,3.0916638,1990,1,1
+China,FeedCrops,PalmFruit,PalmFruit,1990,0.0524913,1990,1,1
+China,FeedCrops,Rice,Rice,1990,9.9022793,1990,1,1
+China,FeedCrops,Root_Tuber,Root_Tuber,1990,32.3460205,1990,1,1
+China,FeedCrops,SugarCrop,SugarCrop,1990,4.4217841,1990,1,1
+China,FeedCrops,Wheat,Wheat,1990,0.2288328,1990,1,1
+China,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,12.8537709,1990,1,1
+Eastern Europe,FodderHerb_Residue,FodderHerb,FodderHerb,1990,43.1194874,1990,1,1
 Eastern Europe,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Eastern Europe,Pasture_FodderGrass,Pasture,Pasture,1990,42.598464,1990,1,1
-Eastern Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,12.192045,1990,1,1
-Eastern Europe,FeedCrops,Corn,Corn,1990,12.760835,1990,1,1
-Eastern Europe,FeedCrops,MiscCrop,MiscCrop,1990,1.010519,1990,1,1
-Eastern Europe,FeedCrops,OilCrop,OilCrop,1990,3.285558,1990,1,1
-Eastern Europe,FeedCrops,OtherGrain,OtherGrain,1990,17.000178,1990,1,1
-Eastern Europe,FeedCrops,PalmFruit,PalmFruit,1990,0.007425,1990,1,1
-Eastern Europe,FeedCrops,Rice,Rice,1990,0.004432,1990,1,1
-Eastern Europe,FeedCrops,Root_Tuber,Root_Tuber,1990,13.433635,1990,1,1
-Eastern Europe,FeedCrops,SugarCrop,SugarCrop,1990,1.025198,1990,1,1
-Eastern Europe,FeedCrops,Wheat,Wheat,1990,11.624491,1990,1,1
-Eastern Europe,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,5.544906,1990,1,1
-Former Soviet Union,FodderHerb_Residue,FodderHerb,FodderHerb,1990,108.105706,1990,1,1
+Eastern Europe,Pasture_FodderGrass,Pasture,Pasture,1990,39.0759861,1990,1,1
+Eastern Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,12.1818472,1990,1,1
+Eastern Europe,FeedCrops,Corn,Corn,1990,12.3047533,1990,1,1
+Eastern Europe,FeedCrops,FiberCrop,FiberCrop,1990,0.0169992,1990,1,1
+Eastern Europe,FeedCrops,MiscCrop,MiscCrop,1990,0.974402,1990,1,1
+Eastern Europe,FeedCrops,OilCrop,OilCrop,1990,3.1511306,1990,1,1
+Eastern Europe,FeedCrops,OtherGrain,OtherGrain,1990,16.3925797,1990,1,1
+Eastern Europe,FeedCrops,PalmFruit,PalmFruit,1990,0.0071594,1990,1,1
+Eastern Europe,FeedCrops,Rice,Rice,1990,0.0042739,1990,1,1
+Eastern Europe,FeedCrops,Root_Tuber,Root_Tuber,1990,12.9535075,1990,1,1
+Eastern Europe,FeedCrops,SugarCrop,SugarCrop,1990,0.9885564,1990,1,1
+Eastern Europe,FeedCrops,Wheat,Wheat,1990,11.2090234,1990,1,1
+Eastern Europe,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,5.0099579,1990,1,1
+Former Soviet Union,FodderHerb_Residue,FodderHerb,FodderHerb,1990,103.3092321,1990,1,1
 Former Soviet Union,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Former Soviet Union,Pasture_FodderGrass,Pasture,Pasture,1990,195.110586,1990,1,1
-Former Soviet Union,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,46.404246,1990,1,1
-Former Soviet Union,FeedCrops,Corn,Corn,1990,11.911224,1990,1,1
-Former Soviet Union,FeedCrops,MiscCrop,MiscCrop,1990,7.576694,1990,1,1
-Former Soviet Union,FeedCrops,OilCrop,OilCrop,1990,8.124604,1990,1,1
-Former Soviet Union,FeedCrops,OtherGrain,OtherGrain,1990,53.7303,1990,1,1
+Former Soviet Union,Pasture_FodderGrass,Pasture,Pasture,1990,185.2461124,1990,1,1
+Former Soviet Union,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,46.4042456,1990,1,1
+Former Soviet Union,FeedCrops,Corn,Corn,1990,11.4887795,1990,1,1
+Former Soviet Union,FeedCrops,FiberCrop,FiberCrop,1990,1.9382831,1990,1,1
+Former Soviet Union,FeedCrops,MiscCrop,MiscCrop,1990,7.3079778,1990,1,1
+Former Soviet Union,FeedCrops,OilCrop,OilCrop,1990,5.8981726,1990,1,1
+Former Soviet Union,FeedCrops,OtherGrain,OtherGrain,1990,51.8246968,1990,1,1
 Former Soviet Union,FeedCrops,PalmFruit,PalmFruit,1990,0,1990,0,0
-Former Soviet Union,FeedCrops,Rice,Rice,1990,0.000129,1990,1,1
-Former Soviet Union,FeedCrops,Root_Tuber,Root_Tuber,1990,16.151321,1990,1,1
-Former Soviet Union,FeedCrops,SugarCrop,SugarCrop,1990,4.658277,1990,1,1
-Former Soviet Union,FeedCrops,Wheat,Wheat,1990,33.687522,1990,1,1
-Former Soviet Union,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,7.075855,1990,1,1
-India,FodderHerb_Residue,FodderHerb,FodderHerb,1990,71.884643,1990,1,1
+Former Soviet Union,FeedCrops,Rice,Rice,1990,0.0001242,1990,1,1
+Former Soviet Union,FeedCrops,Root_Tuber,Root_Tuber,1990,15.5784964,1990,1,1
+Former Soviet Union,FeedCrops,SugarCrop,SugarCrop,1990,4.4930657,1990,1,1
+Former Soviet Union,FeedCrops,Wheat,Wheat,1990,32.4927575,1990,1,1
+Former Soviet Union,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,6.8444748,1990,1,1
+India,FodderHerb_Residue,FodderHerb,FodderHerb,1990,71.2020804,1990,1,1
 India,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-India,Pasture_FodderGrass,Pasture,Pasture,1990,51.606744,1990,1,1
+India,Pasture_FodderGrass,Pasture,Pasture,1990,51.3535739,1990,1,1
 India,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,75.907,1990,1,1
-India,FeedCrops,Corn,Corn,1990,0.572282,1990,1,1
-India,FeedCrops,MiscCrop,MiscCrop,1990,0.697037,1990,1,1
-India,FeedCrops,OilCrop,OilCrop,1990,5.862225,1990,1,1
-India,FeedCrops,OtherGrain,OtherGrain,1990,0.33859,1990,1,1
-India,FeedCrops,PalmFruit,PalmFruit,1990,0.114213,1990,1,1
-India,FeedCrops,Rice,Rice,1990,1.014854,1990,1,1
+India,FeedCrops,Corn,Corn,1990,0.5698084,1990,1,1
+India,FeedCrops,FiberCrop,FiberCrop,1990,1.1633331,1990,1,1
+India,FeedCrops,MiscCrop,MiscCrop,1990,0.6940244,1990,1,1
+India,FeedCrops,OilCrop,OilCrop,1990,4.6735551,1990,1,1
+India,FeedCrops,OtherGrain,OtherGrain,1990,0.3371266,1990,1,1
+India,FeedCrops,PalmFruit,PalmFruit,1990,0.1137197,1990,1,1
+India,FeedCrops,Rice,Rice,1990,1.0104673,1990,1,1
 India,FeedCrops,Root_Tuber,Root_Tuber,1990,0,1990,0,0
-India,FeedCrops,SugarCrop,SugarCrop,1990,2.437561,1990,1,1
-India,FeedCrops,Wheat,Wheat,1990,0.425398,1990,1,1
-India,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,202.091448,1990,1,1
-Japan,FodderHerb_Residue,FodderHerb,FodderHerb,1990,8.113613,1990,1,1
+India,FeedCrops,SugarCrop,SugarCrop,1990,2.4270254,1990,1,1
+India,FeedCrops,Wheat,Wheat,1990,0.423559,1990,1,1
+India,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,201.1025055,1990,1,1
+Japan,FodderHerb_Residue,FodderHerb,FodderHerb,1990,8.0917915,1990,1,1
 Japan,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Japan,Pasture_FodderGrass,Pasture,Pasture,1990,3.255556,1990,1,1
-Japan,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,12.3792,1990,1,1
-Japan,FeedCrops,Corn,Corn,1990,9.907918,1990,1,1
-Japan,FeedCrops,MiscCrop,MiscCrop,1990,0.010778,1990,1,1
-Japan,FeedCrops,OilCrop,OilCrop,1990,4.370756,1990,1,1
-Japan,FeedCrops,OtherGrain,OtherGrain,1990,4.369005,1990,1,1
-Japan,FeedCrops,PalmFruit,PalmFruit,1990,0.015298,1990,1,1
-Japan,FeedCrops,Rice,Rice,1990,0.026156,1990,1,1
-Japan,FeedCrops,Root_Tuber,Root_Tuber,1990,0.142434,1990,1,1
-Japan,FeedCrops,SugarCrop,SugarCrop,1990,0.199471,1990,1,1
-Japan,FeedCrops,Wheat,Wheat,1990,0.475711,1990,1,1
-Japan,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,0.196437,1990,1,1
-Korea,FodderHerb_Residue,FodderHerb,FodderHerb,1990,4.549945,1990,1,1
+Japan,Pasture_FodderGrass,Pasture,Pasture,1990,5.1925691,1990,1,1
+Japan,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,10.0864,1990,1,1
+Japan,FeedCrops,Corn,Corn,1990,9.8597552,1990,1,1
+Japan,FeedCrops,FiberCrop,FiberCrop,1990,0.1153255,1990,1,1
+Japan,FeedCrops,MiscCrop,MiscCrop,1990,0.010726,1990,1,1
+Japan,FeedCrops,OilCrop,OilCrop,1990,4.2341838,1990,1,1
+Japan,FeedCrops,OtherGrain,OtherGrain,1990,4.3477664,1990,1,1
+Japan,FeedCrops,PalmFruit,PalmFruit,1990,0.0152237,1990,1,1
+Japan,FeedCrops,Rice,Rice,1990,0.0260293,1990,1,1
+Japan,FeedCrops,Root_Tuber,Root_Tuber,1990,0.1417412,1990,1,1
+Japan,FeedCrops,SugarCrop,SugarCrop,1990,0.1985016,1990,1,1
+Japan,FeedCrops,Wheat,Wheat,1990,0.4733986,1990,1,1
+Japan,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,0.1945394,1990,1,1
+Korea,FodderHerb_Residue,FodderHerb,FodderHerb,1990,4.5339001,1990,1,1
 Korea,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Korea,Pasture_FodderGrass,Pasture,Pasture,1990,0.37086,1990,1,1
-Korea,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,2.981763,1990,1,1
-Korea,FeedCrops,Corn,Corn,1990,3.833719,1990,1,1
+Korea,Pasture_FodderGrass,Pasture,Pasture,1990,0.3536404,1990,1,1
+Korea,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,2.9817632,1990,1,1
+Korea,FeedCrops,Corn,Corn,1990,3.829596,1990,1,1
+Korea,FeedCrops,FiberCrop,FiberCrop,1990,0.2110426,1990,1,1
 Korea,FeedCrops,MiscCrop,MiscCrop,1990,0,1990,0,0
-Korea,FeedCrops,OilCrop,OilCrop,1990,1.819814,1990,1,1
-Korea,FeedCrops,OtherGrain,OtherGrain,1990,0.285664,1990,1,1
-Korea,FeedCrops,PalmFruit,PalmFruit,1990,0.023533,1990,1,1
+Korea,FeedCrops,OilCrop,OilCrop,1990,1.6068138,1990,1,1
+Korea,FeedCrops,OtherGrain,OtherGrain,1990,0.2853564,1990,1,1
+Korea,FeedCrops,PalmFruit,PalmFruit,1990,0.0235079,1990,1,1
 Korea,FeedCrops,Rice,Rice,1990,0,1990,0,0
-Korea,FeedCrops,Root_Tuber,Root_Tuber,1990,0.526294,1990,1,1
-Korea,FeedCrops,SugarCrop,SugarCrop,1990,0.240509,1990,1,1
-Korea,FeedCrops,Wheat,Wheat,1990,1.187237,1990,1,1
-Korea,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,0.488441,1990,1,1
-Latin America,FodderHerb_Residue,FodderHerb,FodderHerb,1990,102.484297,1990,1,1
+Korea,FeedCrops,Root_Tuber,Root_Tuber,1990,0.525728,1990,1,1
+Korea,FeedCrops,SugarCrop,SugarCrop,1990,0.2402502,1990,1,1
+Korea,FeedCrops,Wheat,Wheat,1990,1.1859598,1990,1,1
+Korea,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,0.4861524,1990,1,1
+Latin America,FodderHerb_Residue,FodderHerb,FodderHerb,1990,98.4006442,1990,1,1
 Latin America,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Latin America,Pasture_FodderGrass,Pasture,Pasture,1990,535.506385,1990,1,1
-Latin America,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,143.409614,1990,1,1
-Latin America,FeedCrops,Corn,Corn,1990,18.390374,1990,1,1
-Latin America,FeedCrops,MiscCrop,MiscCrop,1990,0.757331,1990,1,1
-Latin America,FeedCrops,OilCrop,OilCrop,1990,5.96614,1990,1,1
-Latin America,FeedCrops,OtherGrain,OtherGrain,1990,7.754584,1990,1,1
-Latin America,FeedCrops,PalmFruit,PalmFruit,1990,0.140147,1990,1,1
-Latin America,FeedCrops,Rice,Rice,1990,0.1882,1990,1,1
-Latin America,FeedCrops,Root_Tuber,Root_Tuber,1990,9.301429,1990,1,1
-Latin America,FeedCrops,SugarCrop,SugarCrop,1990,12.274913,1990,1,1
-Latin America,FeedCrops,Wheat,Wheat,1990,0.952323,1990,1,1
-Latin America,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,41.253113,1990,1,1
-Middle East,FodderHerb_Residue,FodderHerb,FodderHerb,1990,6.841702,1990,1,1
+Latin America,Pasture_FodderGrass,Pasture,Pasture,1990,545.1602973,1990,1,1
+Latin America,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,124.61397,1990,1,1
+Latin America,FeedCrops,Corn,Corn,1990,18.1833824,1990,1,1
+Latin America,FeedCrops,FiberCrop,FiberCrop,1990,0.6686618,1990,1,1
+Latin America,FeedCrops,MiscCrop,MiscCrop,1990,0.7488065,1990,1,1
+Latin America,FeedCrops,OilCrop,OilCrop,1990,5.2303269,1990,1,1
+Latin America,FeedCrops,OtherGrain,OtherGrain,1990,7.6673024,1990,1,1
+Latin America,FeedCrops,PalmFruit,PalmFruit,1990,0.1385701,1990,1,1
+Latin America,FeedCrops,Rice,Rice,1990,0.1860821,1990,1,1
+Latin America,FeedCrops,Root_Tuber,Root_Tuber,1990,9.1967376,1990,1,1
+Latin America,FeedCrops,SugarCrop,SugarCrop,1990,12.1367537,1990,1,1
+Latin America,FeedCrops,Wheat,Wheat,1990,0.9416044,1990,1,1
+Latin America,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,40.5137102,1990,1,1
+Middle East,FodderHerb_Residue,FodderHerb,FodderHerb,1990,6.2885369,1990,1,1
 Middle East,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Middle East,Pasture_FodderGrass,Pasture,Pasture,1990,17.8905,1990,1,1
-Middle East,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,4.12647,1990,1,1
-Middle East,FeedCrops,Corn,Corn,1990,2.137023,1990,1,1
-Middle East,FeedCrops,MiscCrop,MiscCrop,1990,0.166962,1990,1,1
-Middle East,FeedCrops,OilCrop,OilCrop,1990,1.451488,1990,1,1
-Middle East,FeedCrops,OtherGrain,OtherGrain,1990,7.265278,1990,1,1
-Middle East,FeedCrops,PalmFruit,PalmFruit,1990,1e-06,1990,1,1
-Middle East,FeedCrops,Rice,Rice,1990,0.081043,1990,1,1
-Middle East,FeedCrops,Root_Tuber,Root_Tuber,1990,0.336642,1990,1,1
-Middle East,FeedCrops,SugarCrop,SugarCrop,1990,0.497088,1990,1,1
-Middle East,FeedCrops,Wheat,Wheat,1990,1.336216,1990,1,1
-Middle East,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,2.459446,1990,1,1
-Southeast Asia,FodderHerb_Residue,FodderHerb,FodderHerb,1990,60.24994,1990,1,1
+Middle East,Pasture_FodderGrass,Pasture,Pasture,1990,17.8288142,1990,1,1
+Middle East,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,3.7064824,1990,1,1
+Middle East,FeedCrops,Corn,Corn,1990,2.0026668,1990,1,1
+Middle East,FeedCrops,FiberCrop,FiberCrop,1990,0.2664365,1990,1,1
+Middle East,FeedCrops,MiscCrop,MiscCrop,1990,0.1564649,1990,1,1
+Middle East,FeedCrops,OilCrop,OilCrop,1990,1.0937957,1990,1,1
+Middle East,FeedCrops,OtherGrain,OtherGrain,1990,6.8085043,1990,1,1
+Middle East,FeedCrops,PalmFruit,PalmFruit,1990,0,1990,0,0
+Middle East,FeedCrops,Rice,Rice,1990,0.0759479,1990,1,1
+Middle East,FeedCrops,Root_Tuber,Root_Tuber,1990,0.3154774,1990,1,1
+Middle East,FeedCrops,SugarCrop,SugarCrop,1990,0.4658357,1990,1,1
+Middle East,FeedCrops,Wheat,Wheat,1990,1.2522074,1990,1,1
+Middle East,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,2.3512624,1990,1,1
+Southeast Asia,FodderHerb_Residue,FodderHerb,FodderHerb,1990,59.8077055,1990,1,1
 Southeast Asia,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Southeast Asia,Pasture_FodderGrass,Pasture,Pasture,1990,127.928424,1990,1,1
-Southeast Asia,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,3.732778,1990,1,1
-Southeast Asia,FeedCrops,Corn,Corn,1990,7.425582,1990,1,1
-Southeast Asia,FeedCrops,MiscCrop,MiscCrop,1990,0.471701,1990,1,1
-Southeast Asia,FeedCrops,OilCrop,OilCrop,1990,6.845118,1990,1,1
-Southeast Asia,FeedCrops,OtherGrain,OtherGrain,1990,0.375008,1990,1,1
-Southeast Asia,FeedCrops,PalmFruit,PalmFruit,1990,0.328838,1990,1,1
-Southeast Asia,FeedCrops,Rice,Rice,1990,4.399397,1990,1,1
-Southeast Asia,FeedCrops,Root_Tuber,Root_Tuber,1990,0.67567,1990,1,1
-Southeast Asia,FeedCrops,SugarCrop,SugarCrop,1990,1.488869,1990,1,1
-Southeast Asia,FeedCrops,Wheat,Wheat,1990,0.428907,1990,1,1
-Southeast Asia,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,39.132705,1990,1,1
-USA,FodderHerb_Residue,FodderHerb,FodderHerb,1990,78.2325,1990,1,1
+Southeast Asia,Pasture_FodderGrass,Pasture,Pasture,1990,127.5969394,1990,1,1
+Southeast Asia,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,3.7327778,1990,1,1
+Southeast Asia,FeedCrops,Corn,Corn,1990,7.3952905,1990,1,1
+Southeast Asia,FeedCrops,FiberCrop,FiberCrop,1990,1.9329257,1990,1,1
+Southeast Asia,FeedCrops,MiscCrop,MiscCrop,1990,0.469777,1990,1,1
+Southeast Asia,FeedCrops,OilCrop,OilCrop,1990,4.8842691,1990,1,1
+Southeast Asia,FeedCrops,OtherGrain,OtherGrain,1990,0.3734783,1990,1,1
+Southeast Asia,FeedCrops,PalmFruit,PalmFruit,1990,0.3274965,1990,1,1
+Southeast Asia,FeedCrops,Rice,Rice,1990,4.3814505,1990,1,1
+Southeast Asia,FeedCrops,Root_Tuber,Root_Tuber,1990,0.6729138,1990,1,1
+Southeast Asia,FeedCrops,SugarCrop,SugarCrop,1990,1.4827957,1990,1,1
+Southeast Asia,FeedCrops,Wheat,Wheat,1990,0.4271575,1990,1,1
+Southeast Asia,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,38.9191899,1990,1,1
+USA,FodderHerb_Residue,FodderHerb,FodderHerb,1990,73.528009,1990,1,1
 USA,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-USA,Pasture_FodderGrass,Pasture,Pasture,1990,70.281973,1990,1,1
-USA,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,157.429495,1990,1,1
-USA,FeedCrops,Corn,Corn,1990,107.157088,1990,1,1
-USA,FeedCrops,MiscCrop,MiscCrop,1990,0.126604,1990,1,1
-USA,FeedCrops,OilCrop,OilCrop,1990,22.381835,1990,1,1
-USA,FeedCrops,OtherGrain,OtherGrain,1990,17.86644,1990,1,1
-USA,FeedCrops,PalmFruit,PalmFruit,1990,0.000302,1990,1,1
+USA,Pasture_FodderGrass,Pasture,Pasture,1990,66.430233,1990,1,1
+USA,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,152.6053122,1990,1,1
+USA,FeedCrops,Corn,Corn,1990,103.390844,1990,1,1
+USA,FeedCrops,FiberCrop,FiberCrop,1990,3.0043446,1990,1,1
+USA,FeedCrops,MiscCrop,MiscCrop,1990,0.1221542,1990,1,1
+USA,FeedCrops,OilCrop,OilCrop,1990,18.590837,1990,1,1
+USA,FeedCrops,OtherGrain,OtherGrain,1990,17.2384896,1990,1,1
+USA,FeedCrops,PalmFruit,PalmFruit,1990,0.0002915,1990,1,1
 USA,FeedCrops,Rice,Rice,1990,0,1990,0,0
-USA,FeedCrops,Root_Tuber,Root_Tuber,1990,0.615454,1990,1,1
-USA,FeedCrops,SugarCrop,SugarCrop,1990,1.454383,1990,1,1
-USA,FeedCrops,Wheat,Wheat,1990,5.994882,1990,1,1
-USA,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,0.401169,1990,1,1
-Western Europe,FodderHerb_Residue,FodderHerb,FodderHerb,1990,228.035701,1990,1,1
+USA,FeedCrops,Root_Tuber,Root_Tuber,1990,0.5938223,1990,1,1
+USA,FeedCrops,SugarCrop,SugarCrop,1990,1.403266,1990,1,1
+USA,FeedCrops,Wheat,Wheat,1990,5.7841801,1990,1,1
+USA,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,0.3841852,1990,1,1
+Western Europe,FodderHerb_Residue,FodderHerb,FodderHerb,1990,200.6041193,1990,1,1
 Western Europe,FodderHerb_Residue,Residue,Residue,1990,0,1990,0,0
-Western Europe,Pasture_FodderGrass,Pasture,Pasture,1990,167.429154,1990,1,1
-Western Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,77.268981,1990,1,1
-Western Europe,FeedCrops,Corn,Corn,1990,19.427102,1990,1,1
-Western Europe,FeedCrops,MiscCrop,MiscCrop,1990,8.033815,1990,1,1
-Western Europe,FeedCrops,OilCrop,OilCrop,1990,28.379852,1990,1,1
-Western Europe,FeedCrops,OtherGrain,OtherGrain,1990,40.145114,1990,1,1
-Western Europe,FeedCrops,PalmFruit,PalmFruit,1990,1.875405,1990,1,1
-Western Europe,FeedCrops,Rice,Rice,1990,0.261845,1990,1,1
-Western Europe,FeedCrops,Root_Tuber,Root_Tuber,1990,23.464336,1990,1,1
-Western Europe,FeedCrops,SugarCrop,SugarCrop,1990,4.028932,1990,1,1
-Western Europe,FeedCrops,Wheat,Wheat,1990,19.145747,1990,1,1
-Western Europe,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,4.670835,1990,1,1
-Africa,FodderHerb_Residue,FodderHerb,FodderHerb,2005,63.877523,2005,1,1
-Africa,FodderHerb_Residue,Residue,Residue,2005,9.029832,2005,1,1
-Africa,Pasture_FodderGrass,Pasture,Pasture,2005,413.141842,2005,1,1
+Western Europe,Pasture_FodderGrass,Pasture,Pasture,1990,147.793014,1990,1,1
+Western Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,1990,75.679661,1990,1,1
+Western Europe,FeedCrops,Corn,Corn,1990,18.6474705,1990,1,1
+Western Europe,FeedCrops,FiberCrop,FiberCrop,1990,1.1842783,1990,1,1
+Western Europe,FeedCrops,MiscCrop,MiscCrop,1990,7.7114089,1990,1,1
+Western Europe,FeedCrops,OilCrop,OilCrop,1990,26.0566591,1990,1,1
+Western Europe,FeedCrops,OtherGrain,OtherGrain,1990,38.5340458,1990,1,1
+Western Europe,FeedCrops,PalmFruit,PalmFruit,1990,1.8001433,1990,1,1
+Western Europe,FeedCrops,Rice,Rice,1990,0.2513369,1990,1,1
+Western Europe,FeedCrops,Root_Tuber,Root_Tuber,1990,22.5226868,1990,1,1
+Western Europe,FeedCrops,SugarCrop,SugarCrop,1990,3.8672464,1990,1,1
+Western Europe,FeedCrops,Wheat,Wheat,1990,18.3774066,1990,1,1
+Western Europe,Scavenging_Other,Scavenging_Other,Scavenging_Other,1990,4.3186388,1990,1,1
+Africa,FodderHerb_Residue,FodderHerb,FodderHerb,2005,63.6564129,2005,1,1
+Africa,FodderHerb_Residue,Residue,Residue,2005,5.9594831,2005,1,1
+Africa,Pasture_FodderGrass,Pasture,Pasture,2005,401.8712344,2005,1,1
 Africa,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,8.93,2005,1,1
-Africa,FeedCrops,Corn,Corn,2005,8.250418,2005,1,1
-Africa,FeedCrops,MiscCrop,MiscCrop,2005,2.138081,2005,1,1
-Africa,FeedCrops,OilCrop,OilCrop,2005,4.052324,2005,1,1
-Africa,FeedCrops,OtherGrain,OtherGrain,2005,3.847048,2005,1,1
-Africa,FeedCrops,PalmFruit,PalmFruit,2005,0.385855,2005,1,1
-Africa,FeedCrops,Rice,Rice,2005,0.280573,2005,1,1
-Africa,FeedCrops,Root_Tuber,Root_Tuber,2005,22.081629,2005,1,1
-Africa,FeedCrops,SugarCrop,SugarCrop,2005,1.573075,2005,1,1
-Africa,FeedCrops,Wheat,Wheat,2005,1.121261,2005,1,1
-Africa,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,29.690619,2005,1,1
-Australia_NZ,FodderHerb_Residue,FodderHerb,FodderHerb,2005,6.740304,2005,1,1
+Africa,FeedCrops,Corn,Corn,2005,8.0193464,2005,1,1
+Africa,FeedCrops,FiberCrop,FiberCrop,2005,0.5405456,2005,1,1
+Africa,FeedCrops,MiscCrop,MiscCrop,2005,2.0781995,2005,1,1
+Africa,FeedCrops,OilCrop,OilCrop,2005,3.3982993,2005,1,1
+Africa,FeedCrops,OtherGrain,OtherGrain,2005,3.7393031,2005,1,1
+Africa,FeedCrops,PalmFruit,PalmFruit,2005,0.3750478,2005,1,1
+Africa,FeedCrops,Rice,Rice,2005,0.2727146,2005,1,1
+Africa,FeedCrops,Root_Tuber,Root_Tuber,2005,21.4631829,2005,1,1
+Africa,FeedCrops,SugarCrop,SugarCrop,2005,1.5290172,2005,1,1
+Africa,FeedCrops,Wheat,Wheat,2005,1.0898574,2005,1,1
+Africa,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,28.8432016,2005,1,1
+Australia_NZ,FodderHerb_Residue,FodderHerb,FodderHerb,2005,6.5863868,2005,1,1
 Australia_NZ,FodderHerb_Residue,Residue,Residue,2005,0,2005,0,0
-Australia_NZ,Pasture_FodderGrass,Pasture,Pasture,2005,166.75676,2005,1,1
-Australia_NZ,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,7.2376,2005,1,1
-Australia_NZ,FeedCrops,Corn,Corn,2005,0.210507,2005,1,1
-Australia_NZ,FeedCrops,MiscCrop,MiscCrop,2005,0.558074,2005,1,1
-Australia_NZ,FeedCrops,OilCrop,OilCrop,2005,0.673733,2005,1,1
-Australia_NZ,FeedCrops,OtherGrain,OtherGrain,2005,3.482011,2005,1,1
-Australia_NZ,FeedCrops,PalmFruit,PalmFruit,2005,0.173192,2005,1,1
+Australia_NZ,Pasture_FodderGrass,Pasture,Pasture,2005,159.2783862,2005,1,1
+Australia_NZ,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,7.2296,2005,1,1
+Australia_NZ,FeedCrops,Corn,Corn,2005,0.2072527,2005,1,1
+Australia_NZ,FeedCrops,FiberCrop,FiberCrop,2005,0.1528745,2005,1,1
+Australia_NZ,FeedCrops,MiscCrop,MiscCrop,2005,0.5494466,2005,1,1
+Australia_NZ,FeedCrops,OilCrop,OilCrop,2005,0.5104437,2005,1,1
+Australia_NZ,FeedCrops,OtherGrain,OtherGrain,2005,3.4281837,2005,1,1
+Australia_NZ,FeedCrops,PalmFruit,PalmFruit,2005,0.1705145,2005,1,1
 Australia_NZ,FeedCrops,Rice,Rice,2005,0,2005,0,0
-Australia_NZ,FeedCrops,Root_Tuber,Root_Tuber,2005,0.047535,2005,1,1
-Australia_NZ,FeedCrops,SugarCrop,SugarCrop,2005,0.285844,2005,1,1
-Australia_NZ,FeedCrops,Wheat,Wheat,2005,2.114783,2005,1,1
-Australia_NZ,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,4.193237,2005,1,1
-Canada,FodderHerb_Residue,FodderHerb,FodderHerb,2005,8.612188,2005,1,1
-Canada,FodderHerb_Residue,Residue,Residue,2005,0.814973,2005,1,1
-Canada,Pasture_FodderGrass,Pasture,Pasture,2005,32.924702,2005,1,1
+Australia_NZ,FeedCrops,Root_Tuber,Root_Tuber,2005,0.0468002,2005,1,1
+Australia_NZ,FeedCrops,SugarCrop,SugarCrop,2005,0.2814256,2005,1,1
+Australia_NZ,FeedCrops,Wheat,Wheat,2005,2.0820912,2005,1,1
+Australia_NZ,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,4.187715,2005,1,1
+Canada,FodderHerb_Residue,FodderHerb,FodderHerb,2005,8.4266119,2005,1,1
+Canada,FodderHerb_Residue,Residue,Residue,2005,0.3607381,2005,1,1
+Canada,Pasture_FodderGrass,Pasture,Pasture,2005,31.3554534,2005,1,1
 Canada,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,0,2005,0,0
-Canada,FeedCrops,Corn,Corn,2005,9.16737,2005,1,1
-Canada,FeedCrops,MiscCrop,MiscCrop,2005,0.426139,2005,1,1
-Canada,FeedCrops,OilCrop,OilCrop,2005,3.706656,2005,1,1
-Canada,FeedCrops,OtherGrain,OtherGrain,2005,9.948588,2005,1,1
-Canada,FeedCrops,PalmFruit,PalmFruit,2005,0.000947,2005,1,1
+Canada,FeedCrops,Corn,Corn,2005,8.7406829,2005,1,1
+Canada,FeedCrops,FiberCrop,FiberCrop,2005,0.0006704,2005,1,1
+Canada,FeedCrops,MiscCrop,MiscCrop,2005,0.4063045,2005,1,1
+Canada,FeedCrops,OilCrop,OilCrop,2005,3.5334623,2005,1,1
+Canada,FeedCrops,OtherGrain,OtherGrain,2005,9.4855403,2005,1,1
+Canada,FeedCrops,PalmFruit,PalmFruit,2005,0.000903,2005,1,1
 Canada,FeedCrops,Rice,Rice,2005,0,2005,0,0
-Canada,FeedCrops,Root_Tuber,Root_Tuber,2005,0.009155,2005,1,1
-Canada,FeedCrops,SugarCrop,SugarCrop,2005,0.154287,2005,1,1
-Canada,FeedCrops,Wheat,Wheat,2005,4.217712,2005,1,1
-Canada,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.062405,2005,1,1
-China,FodderHerb_Residue,FodderHerb,FodderHerb,2005,151.474088,2005,1,1
-China,FodderHerb_Residue,Residue,Residue,2005,235.358882,2005,1,1
-China,Pasture_FodderGrass,Pasture,Pasture,2005,270.531722,2005,1,1
+Canada,FeedCrops,Root_Tuber,Root_Tuber,2005,0.008729,2005,1,1
+Canada,FeedCrops,SugarCrop,SugarCrop,2005,0.1471062,2005,1,1
+Canada,FeedCrops,Wheat,Wheat,2005,4.0214026,2005,1,1
+Canada,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.0591895,2005,1,1
+China,FodderHerb_Residue,FodderHerb,FodderHerb,2005,186.7990831,2005,1,1
+China,FodderHerb_Residue,Residue,Residue,2005,199.2738711,2005,1,1
+China,Pasture_FodderGrass,Pasture,Pasture,2005,268.6213974,2005,1,1
 China,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,55.91042,2005,1,1
-China,FeedCrops,Corn,Corn,2005,60.526189,2005,1,1
-China,FeedCrops,MiscCrop,MiscCrop,2005,16.268761,2005,1,1
-China,FeedCrops,OilCrop,OilCrop,2005,26.823959,2005,1,1
-China,FeedCrops,OtherGrain,OtherGrain,2005,2.262182,2005,1,1
-China,FeedCrops,PalmFruit,PalmFruit,2005,0.13249,2005,1,1
-China,FeedCrops,Rice,Rice,2005,9.634466,2005,1,1
-China,FeedCrops,Root_Tuber,Root_Tuber,2005,40.755047,2005,1,1
-China,FeedCrops,SugarCrop,SugarCrop,2005,2.24526,2005,1,1
-China,FeedCrops,Wheat,Wheat,2005,2.90515,2005,1,1
-China,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,21.319969,2005,1,1
-Eastern Europe,FodderHerb_Residue,FodderHerb,FodderHerb,2005,29.175839,2005,1,1
+China,FeedCrops,Corn,Corn,2005,60.4251022,2005,1,1
+China,FeedCrops,FiberCrop,FiberCrop,2005,2.3273013,2005,1,1
+China,FeedCrops,MiscCrop,MiscCrop,2005,16.2415899,2005,1,1
+China,FeedCrops,OilCrop,OilCrop,2005,24.4518582,2005,1,1
+China,FeedCrops,OtherGrain,OtherGrain,2005,2.2584038,2005,1,1
+China,FeedCrops,PalmFruit,PalmFruit,2005,0.1322687,2005,1,1
+China,FeedCrops,Rice,Rice,2005,9.618375,2005,1,1
+China,FeedCrops,Root_Tuber,Root_Tuber,2005,40.6869807,2005,1,1
+China,FeedCrops,SugarCrop,SugarCrop,2005,2.2415102,2005,1,1
+China,FeedCrops,Wheat,Wheat,2005,2.9002985,2005,1,1
+China,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,21.1652243,2005,1,1
+Eastern Europe,FodderHerb_Residue,FodderHerb,FodderHerb,2005,26.1524236,2005,1,1
 Eastern Europe,FodderHerb_Residue,Residue,Residue,2005,0,2005,0,0
-Eastern Europe,Pasture_FodderGrass,Pasture,Pasture,2005,27.234066,2005,1,1
-Eastern Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,7.300606,2005,1,1
-Eastern Europe,FeedCrops,Corn,Corn,2005,18.34357,2005,1,1
-Eastern Europe,FeedCrops,MiscCrop,MiscCrop,2005,0.767167,2005,1,1
-Eastern Europe,FeedCrops,OilCrop,OilCrop,2005,5.365567,2005,1,1
-Eastern Europe,FeedCrops,OtherGrain,OtherGrain,2005,13.884568,2005,1,1
-Eastern Europe,FeedCrops,PalmFruit,PalmFruit,2005,0.003894,2005,1,1
-Eastern Europe,FeedCrops,Rice,Rice,2005,0.022795,2005,1,1
-Eastern Europe,FeedCrops,Root_Tuber,Root_Tuber,2005,3.929924,2005,1,1
-Eastern Europe,FeedCrops,SugarCrop,SugarCrop,2005,0.663566,2005,1,1
-Eastern Europe,FeedCrops,Wheat,Wheat,2005,7.532773,2005,1,1
-Eastern Europe,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.538112,2005,1,1
-Former Soviet Union,FodderHerb_Residue,FodderHerb,FodderHerb,2005,62.313686,2005,1,1
+Eastern Europe,Pasture_FodderGrass,Pasture,Pasture,2005,23.202092,2005,1,1
+Eastern Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,7.2468842,2005,1,1
+Eastern Europe,FeedCrops,Corn,Corn,2005,17.2308117,2005,1,1
+Eastern Europe,FeedCrops,FiberCrop,FiberCrop,2005,0.0014135,2005,1,1
+Eastern Europe,FeedCrops,MiscCrop,MiscCrop,2005,0.7206291,2005,1,1
+Eastern Europe,FeedCrops,OilCrop,OilCrop,2005,5.038667,2005,1,1
+Eastern Europe,FeedCrops,OtherGrain,OtherGrain,2005,13.0423014,2005,1,1
+Eastern Europe,FeedCrops,PalmFruit,PalmFruit,2005,0.0036574,2005,1,1
+Eastern Europe,FeedCrops,Rice,Rice,2005,0.0214125,2005,1,1
+Eastern Europe,FeedCrops,Root_Tuber,Root_Tuber,2005,3.6915272,2005,1,1
+Eastern Europe,FeedCrops,SugarCrop,SugarCrop,2005,0.623313,2005,1,1
+Eastern Europe,FeedCrops,Wheat,Wheat,2005,7.0758198,2005,1,1
+Eastern Europe,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.4972552,2005,1,1
+Former Soviet Union,FodderHerb_Residue,FodderHerb,FodderHerb,2005,59.1348271,2005,1,1
 Former Soviet Union,FodderHerb_Residue,Residue,Residue,2005,0,2005,0,0
-Former Soviet Union,Pasture_FodderGrass,Pasture,Pasture,2005,70.692809,2005,1,1
-Former Soviet Union,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,42.595492,2005,1,1
-Former Soviet Union,FeedCrops,Corn,Corn,2005,5.763345,2005,1,1
-Former Soviet Union,FeedCrops,MiscCrop,MiscCrop,2005,4.967183,2005,1,1
-Former Soviet Union,FeedCrops,OilCrop,OilCrop,2005,4.861581,2005,1,1
-Former Soviet Union,FeedCrops,OtherGrain,OtherGrain,2005,19.621902,2005,1,1
-Former Soviet Union,FeedCrops,PalmFruit,PalmFruit,2005,0.000633,2005,1,1
-Former Soviet Union,FeedCrops,Rice,Rice,2005,0.003588,2005,1,1
-Former Soviet Union,FeedCrops,Root_Tuber,Root_Tuber,2005,14.054172,2005,1,1
-Former Soviet Union,FeedCrops,SugarCrop,SugarCrop,2005,5.311112,2005,1,1
-Former Soviet Union,FeedCrops,Wheat,Wheat,2005,14.780737,2005,1,1
-Former Soviet Union,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,3.742748,2005,1,1
-India,FodderHerb_Residue,FodderHerb,FodderHerb,2005,37.144632,2005,1,1
-India,FodderHerb_Residue,Residue,Residue,2005,57.894171,2005,1,1
-India,Pasture_FodderGrass,Pasture,Pasture,2005,32.80299,2005,1,1
+Former Soviet Union,Pasture_FodderGrass,Pasture,Pasture,2005,64.8951181,2005,1,1
+Former Soviet Union,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,42.5954922,2005,1,1
+Former Soviet Union,FeedCrops,Corn,Corn,2005,5.5447766,2005,1,1
+Former Soviet Union,FeedCrops,FiberCrop,FiberCrop,2005,1.1305309,2005,1,1
+Former Soviet Union,FeedCrops,MiscCrop,MiscCrop,2005,4.7788079,2005,1,1
+Former Soviet Union,FeedCrops,OilCrop,OilCrop,2005,3.5466798,2005,1,1
+Former Soviet Union,FeedCrops,OtherGrain,OtherGrain,2005,18.877763,2005,1,1
+Former Soviet Union,FeedCrops,PalmFruit,PalmFruit,2005,0.0006094,2005,1,1
+Former Soviet Union,FeedCrops,Rice,Rice,2005,0.0034521,2005,1,1
+Former Soviet Union,FeedCrops,Root_Tuber,Root_Tuber,2005,13.5211827,2005,1,1
+Former Soviet Union,FeedCrops,SugarCrop,SugarCrop,2005,5.1096941,2005,1,1
+Former Soviet Union,FeedCrops,Wheat,Wheat,2005,14.2201942,2005,1,1
+Former Soviet Union,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,3.596234,2005,1,1
+India,FodderHerb_Residue,FodderHerb,FodderHerb,2005,45.1113905,2005,1,1
+India,FodderHerb_Residue,Residue,Residue,2005,48.2451219,2005,1,1
+India,Pasture_FodderGrass,Pasture,Pasture,2005,32.1726844,2005,1,1
 India,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,94,2005,1,1
-India,FeedCrops,Corn,Corn,2005,2.773837,2005,1,1
-India,FeedCrops,MiscCrop,MiscCrop,2005,0.825178,2005,1,1
-India,FeedCrops,OilCrop,OilCrop,2005,9.750447,2005,1,1
-India,FeedCrops,OtherGrain,OtherGrain,2005,0.256555,2005,1,1
-India,FeedCrops,PalmFruit,PalmFruit,2005,0.184977,2005,1,1
-India,FeedCrops,Rice,Rice,2005,1.759917,2005,1,1
+India,FeedCrops,Corn,Corn,2005,2.7470716,2005,1,1
+India,FeedCrops,FiberCrop,FiberCrop,2005,2.8578075,2005,1,1
+India,FeedCrops,MiscCrop,MiscCrop,2005,0.8172154,2005,1,1
+India,FeedCrops,OilCrop,OilCrop,2005,6.798555,2005,1,1
+India,FeedCrops,OtherGrain,OtherGrain,2005,0.2540792,2005,1,1
+India,FeedCrops,PalmFruit,PalmFruit,2005,0.1831921,2005,1,1
+India,FeedCrops,Rice,Rice,2005,1.7429353,2005,1,1
 India,FeedCrops,Root_Tuber,Root_Tuber,2005,0,2005,0,0
-India,FeedCrops,SugarCrop,SugarCrop,2005,3.327661,2005,1,1
-India,FeedCrops,Wheat,Wheat,2005,0.54699,2005,1,1
-India,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,225.760772,2005,1,1
-Japan,FodderHerb_Residue,FodderHerb,FodderHerb,2005,5.769214,2005,1,1
-Japan,FodderHerb_Residue,Residue,Residue,2005,1.551311,2005,1,1
-Japan,Pasture_FodderGrass,Pasture,Pasture,2005,3.203978,2005,1,1
-Japan,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,11.8766,2005,1,1
-Japan,FeedCrops,Corn,Corn,2005,9.594062,2005,1,1
-Japan,FeedCrops,MiscCrop,MiscCrop,2005,0.002271,2005,1,1
-Japan,FeedCrops,OilCrop,OilCrop,2005,4.610847,2005,1,1
-Japan,FeedCrops,OtherGrain,OtherGrain,2005,2.335886,2005,1,1
-Japan,FeedCrops,PalmFruit,PalmFruit,2005,0.015314,2005,1,1
-Japan,FeedCrops,Rice,Rice,2005,0.134061,2005,1,1
-Japan,FeedCrops,Root_Tuber,Root_Tuber,2005,0.039854,2005,1,1
-Japan,FeedCrops,SugarCrop,SugarCrop,2005,0.116418,2005,1,1
-Japan,FeedCrops,Wheat,Wheat,2005,0.364507,2005,1,1
-Japan,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.159032,2005,1,1
-Korea,FodderHerb_Residue,FodderHerb,FodderHerb,2005,2.249633,2005,1,1
-Korea,FodderHerb_Residue,Residue,Residue,2005,3.506311,2005,1,1
-Korea,Pasture_FodderGrass,Pasture,Pasture,2005,0.90554,2005,1,1
-Korea,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,0.228184,2005,1,1
-Korea,FeedCrops,Corn,Corn,2005,5.396549,2005,1,1
+India,FeedCrops,SugarCrop,SugarCrop,2005,3.2955518,2005,1,1
+India,FeedCrops,Wheat,Wheat,2005,0.5417122,2005,1,1
+India,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,223.2466756,2005,1,1
+Japan,FodderHerb_Residue,FodderHerb,FodderHerb,2005,6.6172894,2005,1,1
+Japan,FodderHerb_Residue,Residue,Residue,2005,0.6752498,2005,1,1
+Japan,Pasture_FodderGrass,Pasture,Pasture,2005,3.9596982,2005,1,1
+Japan,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,10.6646,2005,1,1
+Japan,FeedCrops,Corn,Corn,2005,9.5262451,2005,1,1
+Japan,FeedCrops,FiberCrop,FiberCrop,2005,0.1145406,2005,1,1
+Japan,FeedCrops,MiscCrop,MiscCrop,2005,0.0022547,2005,1,1
+Japan,FeedCrops,OilCrop,OilCrop,2005,4.4637138,2005,1,1
+Japan,FeedCrops,OtherGrain,OtherGrain,2005,2.3193745,2005,1,1
+Japan,FeedCrops,PalmFruit,PalmFruit,2005,0.0152057,2005,1,1
+Japan,FeedCrops,Rice,Rice,2005,0.1331131,2005,1,1
+Japan,FeedCrops,Root_Tuber,Root_Tuber,2005,0.039572,2005,1,1
+Japan,FeedCrops,SugarCrop,SugarCrop,2005,0.1155951,2005,1,1
+Japan,FeedCrops,Wheat,Wheat,2005,0.3619302,2005,1,1
+Japan,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.1565983,2005,1,1
+Korea,FodderHerb_Residue,FodderHerb,FodderHerb,2005,2.7646383,2005,1,1
+Korea,FodderHerb_Residue,Residue,Residue,2005,2.9566881,2005,1,1
+Korea,Pasture_FodderGrass,Pasture,Pasture,2005,0.8957731,2005,1,1
+Korea,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,0.2281842,2005,1,1
+Korea,FeedCrops,Corn,Corn,2005,5.3943363,2005,1,1
+Korea,FeedCrops,FiberCrop,FiberCrop,2005,0.1013637,2005,1,1
 Korea,FeedCrops,MiscCrop,MiscCrop,2005,0,2005,0,0
-Korea,FeedCrops,OilCrop,OilCrop,2005,2.775108,2005,1,1
-Korea,FeedCrops,OtherGrain,OtherGrain,2005,0.068124,2005,1,1
-Korea,FeedCrops,PalmFruit,PalmFruit,2005,0.708121,2005,1,1
+Korea,FeedCrops,OilCrop,OilCrop,2005,2.6726063,2005,1,1
+Korea,FeedCrops,OtherGrain,OtherGrain,2005,0.0680965,2005,1,1
+Korea,FeedCrops,PalmFruit,PalmFruit,2005,0.7078304,2005,1,1
 Korea,FeedCrops,Rice,Rice,2005,0,2005,0,0
-Korea,FeedCrops,Root_Tuber,Root_Tuber,2005,0.120193,2005,1,1
-Korea,FeedCrops,SugarCrop,SugarCrop,2005,0.029226,2005,1,1
-Korea,FeedCrops,Wheat,Wheat,2005,0.940651,2005,1,1
-Korea,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.378487,2005,1,1
-Latin America,FodderHerb_Residue,FodderHerb,FodderHerb,2005,133.396295,2005,1,1
-Latin America,FodderHerb_Residue,Residue,Residue,2005,49.671713,2005,1,1
-Latin America,Pasture_FodderGrass,Pasture,Pasture,2005,770.347593,2005,1,1
-Latin America,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,106.152029,2005,1,1
-Latin America,FeedCrops,Corn,Corn,2005,42.539002,2005,1,1
-Latin America,FeedCrops,MiscCrop,MiscCrop,2005,2.199325,2005,1,1
-Latin America,FeedCrops,OilCrop,OilCrop,2005,19.772396,2005,1,1
-Latin America,FeedCrops,OtherGrain,OtherGrain,2005,12.180147,2005,1,1
-Latin America,FeedCrops,PalmFruit,PalmFruit,2005,0.288067,2005,1,1
-Latin America,FeedCrops,Rice,Rice,2005,0.50801,2005,1,1
-Latin America,FeedCrops,Root_Tuber,Root_Tuber,2005,14.190823,2005,1,1
-Latin America,FeedCrops,SugarCrop,SugarCrop,2005,8.756646,2005,1,1
-Latin America,FeedCrops,Wheat,Wheat,2005,0.821721,2005,1,1
-Latin America,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,54.853325,2005,1,1
-Middle East,FodderHerb_Residue,FodderHerb,FodderHerb,2005,12.382145,2005,1,1
+Korea,FeedCrops,Root_Tuber,Root_Tuber,2005,0.1201436,2005,1,1
+Korea,FeedCrops,SugarCrop,SugarCrop,2005,0.029214,2005,1,1
+Korea,FeedCrops,Wheat,Wheat,2005,0.9402652,2005,1,1
+Korea,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.3757896,2005,1,1
+Latin America,FodderHerb_Residue,FodderHerb,FodderHerb,2005,147.1751193,2005,1,1
+Latin America,FodderHerb_Residue,Residue,Residue,2005,31.4741471,2005,1,1
+Latin America,Pasture_FodderGrass,Pasture,Pasture,2005,776.8909954,2005,1,1
+Latin America,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,89.749089,2005,1,1
+Latin America,FeedCrops,Corn,Corn,2005,42.1380721,2005,1,1
+Latin America,FeedCrops,FiberCrop,FiberCrop,2005,1.0437887,2005,1,1
+Latin America,FeedCrops,MiscCrop,MiscCrop,2005,2.1785967,2005,1,1
+Latin America,FeedCrops,OilCrop,OilCrop,2005,18.5422529,2005,1,1
+Latin America,FeedCrops,OtherGrain,OtherGrain,2005,12.0653489,2005,1,1
+Latin America,FeedCrops,PalmFruit,PalmFruit,2005,0.2853524,2005,1,1
+Latin America,FeedCrops,Rice,Rice,2005,0.5032219,2005,1,1
+Latin America,FeedCrops,Root_Tuber,Root_Tuber,2005,14.0570746,2005,1,1
+Latin America,FeedCrops,SugarCrop,SugarCrop,2005,8.6741151,2005,1,1
+Latin America,FeedCrops,Wheat,Wheat,2005,0.8139764,2005,1,1
+Latin America,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,54.037288,2005,1,1
+Middle East,FodderHerb_Residue,FodderHerb,FodderHerb,2005,11.4940147,2005,1,1
 Middle East,FodderHerb_Residue,Residue,Residue,2005,0,2005,0,0
-Middle East,Pasture_FodderGrass,Pasture,Pasture,2005,18.462883,2005,1,1
-Middle East,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,12.068877,2005,1,1
-Middle East,FeedCrops,Corn,Corn,2005,7.367433,2005,1,1
-Middle East,FeedCrops,MiscCrop,MiscCrop,2005,0.167682,2005,1,1
-Middle East,FeedCrops,OilCrop,OilCrop,2005,4.100689,2005,1,1
-Middle East,FeedCrops,OtherGrain,OtherGrain,2005,9.592533,2005,1,1
-Middle East,FeedCrops,PalmFruit,PalmFruit,2005,0.006506,2005,1,1
-Middle East,FeedCrops,Rice,Rice,2005,0.828067,2005,1,1
-Middle East,FeedCrops,Root_Tuber,Root_Tuber,2005,0.031557,2005,1,1
-Middle East,FeedCrops,SugarCrop,SugarCrop,2005,0.51526,2005,1,1
-Middle East,FeedCrops,Wheat,Wheat,2005,2.629949,2005,1,1
-Middle East,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,3.521393,2005,1,1
-Southeast Asia,FodderHerb_Residue,FodderHerb,FodderHerb,2005,36.613106,2005,1,1
-Southeast Asia,FodderHerb_Residue,Residue,Residue,2005,57.065728,2005,1,1
-Southeast Asia,Pasture_FodderGrass,Pasture,Pasture,2005,159.293898,2005,1,1
+Middle East,Pasture_FodderGrass,Pasture,Pasture,2005,19.0251368,2005,1,1
+Middle East,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,10.81332,2005,1,1
+Middle East,FeedCrops,Corn,Corn,2005,6.955246,2005,1,1
+Middle East,FeedCrops,FiberCrop,FiberCrop,2005,0.34921,2005,1,1
+Middle East,FeedCrops,MiscCrop,MiscCrop,2005,0.1583009,2005,1,1
+Middle East,FeedCrops,OilCrop,OilCrop,2005,3.5223929,2005,1,1
+Middle East,FeedCrops,OtherGrain,OtherGrain,2005,9.055858,2005,1,1
+Middle East,FeedCrops,PalmFruit,PalmFruit,2005,0.0061421,2005,1,1
+Middle East,FeedCrops,Rice,Rice,2005,0.7817394,2005,1,1
+Middle East,FeedCrops,Root_Tuber,Root_Tuber,2005,0.0297919,2005,1,1
+Middle East,FeedCrops,SugarCrop,SugarCrop,2005,0.4864327,2005,1,1
+Middle East,FeedCrops,Wheat,Wheat,2005,2.4828109,2005,1,1
+Middle East,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,3.3486314,2005,1,1
+Southeast Asia,FodderHerb_Residue,FodderHerb,FodderHerb,2005,45.0581215,2005,1,1
+Southeast Asia,FodderHerb_Residue,Residue,Residue,2005,48.1881524,2005,1,1
+Southeast Asia,Pasture_FodderGrass,Pasture,Pasture,2005,158.5205144,2005,1,1
 Southeast Asia,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,6.644273,2005,1,1
-Southeast Asia,FeedCrops,Corn,Corn,2005,14.898901,2005,1,1
-Southeast Asia,FeedCrops,MiscCrop,MiscCrop,2005,1.405715,2005,1,1
-Southeast Asia,FeedCrops,OilCrop,OilCrop,2005,14.966264,2005,1,1
-Southeast Asia,FeedCrops,OtherGrain,OtherGrain,2005,0.412093,2005,1,1
-Southeast Asia,FeedCrops,PalmFruit,PalmFruit,2005,1.124817,2005,1,1
-Southeast Asia,FeedCrops,Rice,Rice,2005,10.805886,2005,1,1
-Southeast Asia,FeedCrops,Root_Tuber,Root_Tuber,2005,0.774535,2005,1,1
-Southeast Asia,FeedCrops,SugarCrop,SugarCrop,2005,2.295611,2005,1,1
-Southeast Asia,FeedCrops,Wheat,Wheat,2005,1.337281,2005,1,1
-Southeast Asia,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,51.599267,2005,1,1
-USA,FodderHerb_Residue,FodderHerb,FodderHerb,2005,85.593689,2005,1,1
+Southeast Asia,FeedCrops,Corn,Corn,2005,14.8470797,2005,1,1
+Southeast Asia,FeedCrops,FiberCrop,FiberCrop,2005,2.2908158,2005,1,1
+Southeast Asia,FeedCrops,MiscCrop,MiscCrop,2005,1.400826,2005,1,1
+Southeast Asia,FeedCrops,OilCrop,OilCrop,2005,12.6233922,2005,1,1
+Southeast Asia,FeedCrops,OtherGrain,OtherGrain,2005,0.4106593,2005,1,1
+Southeast Asia,FeedCrops,PalmFruit,PalmFruit,2005,1.1209045,2005,1,1
+Southeast Asia,FeedCrops,Rice,Rice,2005,10.7683002,2005,1,1
+Southeast Asia,FeedCrops,Root_Tuber,Root_Tuber,2005,0.7718412,2005,1,1
+Southeast Asia,FeedCrops,SugarCrop,SugarCrop,2005,2.287626,2005,1,1
+Southeast Asia,FeedCrops,Wheat,Wheat,2005,1.3326294,2005,1,1
+Southeast Asia,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,51.2688301,2005,1,1
+USA,FodderHerb_Residue,FodderHerb,FodderHerb,2005,79.4773615,2005,1,1
 USA,FodderHerb_Residue,Residue,Residue,2005,0,2005,0,0
-USA,Pasture_FodderGrass,Pasture,Pasture,2005,117.493097,2005,1,1
-USA,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,112.241232,2005,1,1
-USA,FeedCrops,Corn,Corn,2005,140.834464,2005,1,1
-USA,FeedCrops,MiscCrop,MiscCrop,2005,0.238879,2005,1,1
-USA,FeedCrops,OilCrop,OilCrop,2005,39.563811,2005,1,1
-USA,FeedCrops,OtherGrain,OtherGrain,2005,7.197394,2005,1,1
-USA,FeedCrops,PalmFruit,PalmFruit,2005,0.000325,2005,1,1
+USA,Pasture_FodderGrass,Pasture,Pasture,2005,109.9460806,2005,1,1
+USA,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,108.1732336,2005,1,1
+USA,FeedCrops,Corn,Corn,2005,135.1641651,2005,1,1
+USA,FeedCrops,FiberCrop,FiberCrop,2005,4.4418484,2005,1,1
+USA,FeedCrops,MiscCrop,MiscCrop,2005,0.2292615,2005,1,1
+USA,FeedCrops,OilCrop,OilCrop,2005,33.5290384,2005,1,1
+USA,FeedCrops,OtherGrain,OtherGrain,2005,6.9076115,2005,1,1
+USA,FeedCrops,PalmFruit,PalmFruit,2005,0.0003122,2005,1,1
 USA,FeedCrops,Rice,Rice,2005,0,2005,0,0
-USA,FeedCrops,Root_Tuber,Root_Tuber,2005,0.331689,2005,1,1
-USA,FeedCrops,SugarCrop,SugarCrop,2005,1.777312,2005,1,1
-USA,FeedCrops,Wheat,Wheat,2005,4.13457,2005,1,1
-USA,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.226717,2005,1,1
-Western Europe,FodderHerb_Residue,FodderHerb,FodderHerb,2005,215.521586,2005,1,1
+USA,FeedCrops,Root_Tuber,Root_Tuber,2005,0.3183346,2005,1,1
+USA,FeedCrops,SugarCrop,SugarCrop,2005,1.7057536,2005,1,1
+USA,FeedCrops,Wheat,Wheat,2005,3.9681037,2005,1,1
+USA,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,0.2034611,2005,1,1
+Western Europe,FodderHerb_Residue,FodderHerb,FodderHerb,2005,185.6718805,2005,1,1
 Western Europe,FodderHerb_Residue,Residue,Residue,2005,0,2005,0,0
-Western Europe,Pasture_FodderGrass,Pasture,Pasture,2005,117.107935,2005,1,1
-Western Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,114.261018,2005,1,1
-Western Europe,FeedCrops,Corn,Corn,2005,30.92705,2005,1,1
-Western Europe,FeedCrops,MiscCrop,MiscCrop,2005,7.668526,2005,1,1
-Western Europe,FeedCrops,OilCrop,OilCrop,2005,38.9816,2005,1,1
-Western Europe,FeedCrops,OtherGrain,OtherGrain,2005,45.121316,2005,1,1
-Western Europe,FeedCrops,PalmFruit,PalmFruit,2005,2.286851,2005,1,1
-Western Europe,FeedCrops,Rice,Rice,2005,0.27497,2005,1,1
-Western Europe,FeedCrops,Root_Tuber,Root_Tuber,2005,5.486622,2005,1,1
-Western Europe,FeedCrops,SugarCrop,SugarCrop,2005,2.392813,2005,1,1
-Western Europe,FeedCrops,Wheat,Wheat,2005,38.465822,2005,1,1
-Western Europe,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,4.636386,2005,1,1
+Western Europe,Pasture_FodderGrass,Pasture,Pasture,2005,93.5603764,2005,1,1
+Western Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,2005,113.1306688,2005,1,1
+Western Europe,FeedCrops,Corn,Corn,2005,29.2000137,2005,1,1
+Western Europe,FeedCrops,FiberCrop,FiberCrop,2005,0.8201879,2005,1,1
+Western Europe,FeedCrops,MiscCrop,MiscCrop,2005,7.2402979,2005,1,1
+Western Europe,FeedCrops,OilCrop,OilCrop,2005,35.9845922,2005,1,1
+Western Europe,FeedCrops,OtherGrain,OtherGrain,2005,42.6016399,2005,1,1
+Western Europe,FeedCrops,PalmFruit,PalmFruit,2005,2.1591485,2005,1,1
+Western Europe,FeedCrops,Rice,Rice,2005,0.2596154,2005,1,1
+Western Europe,FeedCrops,Root_Tuber,Root_Tuber,2005,5.1802363,2005,1,1
+Western Europe,FeedCrops,SugarCrop,SugarCrop,2005,2.259193,2005,1,1
+Western Europe,FeedCrops,Wheat,Wheat,2005,36.317804,2005,1,1
+Western Europe,Scavenging_Other,Scavenging_Other,Scavenging_Other,2005,4.2047234,2005,1,1

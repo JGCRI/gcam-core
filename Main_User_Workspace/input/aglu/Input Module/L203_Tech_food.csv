@@ -4,6 +4,7 @@ Tech
 
 region,supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,CO2,share.weight,input.cost
 Africa,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Africa,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Africa,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Africa,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Africa,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -19,6 +20,7 @@ Africa,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,0
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Australia_NZ,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Australia_NZ,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Australia_NZ,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Australia_NZ,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Australia_NZ,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -34,6 +36,7 @@ Australia_NZ,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Canada,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Canada,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Canada,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Canada,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Canada,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -49,6 +52,7 @@ Canada,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,0
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 China,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+China,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 China,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 China,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 China,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -64,6 +68,7 @@ China,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,0
 China,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Eastern Europe,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Eastern Europe,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Eastern Europe,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Eastern Europe,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Eastern Europe,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -79,6 +84,7 @@ Eastern Europe,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Former Soviet Union,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Former Soviet Union,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Former Soviet Union,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Former Soviet Union,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Former Soviet Union,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -94,6 +100,7 @@ Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 India,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+India,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 India,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 India,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 India,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -109,6 +116,7 @@ India,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,0
 India,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Japan,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Japan,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Japan,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Japan,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Japan,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -124,6 +132,7 @@ Japan,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,0
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Korea,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Korea,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Korea,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Korea,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Korea,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -139,6 +148,7 @@ Korea,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,0
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Latin America,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Latin America,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Latin America,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Latin America,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Latin America,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -154,6 +164,7 @@ Latin America,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Middle East,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Middle East,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Middle East,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Middle East,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Middle East,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -169,6 +180,7 @@ Middle East,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,0
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Southeast Asia,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Southeast Asia,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Southeast Asia,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Southeast Asia,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Southeast Asia,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -184,6 +196,7 @@ Southeast Asia,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 USA,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+USA,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 USA,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 USA,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 USA,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0
@@ -199,6 +212,7 @@ USA,FoodDemand_Meat,Poultry,Poultry,share-weight,2005,9999,fixed,CO2,1,0
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,share-weight,2005,9999,fixed,CO2,1,0
 USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,share-weight,2005,9999,fixed,CO2,1,0
 Western Europe,FoodDemand_Crops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,0
+Western Europe,FoodDemand_Crops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,0
 Western Europe,FoodDemand_Crops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,0
 Western Europe,FoodDemand_Crops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,0
 Western Europe,FoodDemand_Crops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,0

@@ -6,170 +6,170 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ08">
                <AgProductionTechnology name="biomassAEZ08">
                   <period year="1990">
-                     <yield>0.022335</yield>
+                     <yield>0.0223348</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022335</yield>
+                     <yield>0.0223348</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.025825</yield>
+                     <yield>0.025827</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025825</yield>
+                     <yield>0.025827</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ12">
                <AgProductionTechnology name="biomassAEZ12">
                   <period year="1990">
-                     <yield>0.032906</yield>
+                     <yield>0.0329061</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.032906</yield>
+                     <yield>0.0329061</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.013318</yield>
+                     <yield>0.0133134</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013318</yield>
+                     <yield>0.0133134</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ14">
                <AgProductionTechnology name="willowAEZ14">
                   <period year="1990">
-                     <yield>0.012483</yield>
+                     <yield>0.0124814</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.012483</yield>
+                     <yield>0.0124814</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ15">
                <AgProductionTechnology name="willowAEZ15">
                   <period year="1990">
-                     <yield>0.019677</yield>
+                     <yield>0.0197127</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.019677</yield>
+                     <yield>0.0197127</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ16">
                <AgProductionTechnology name="willowAEZ16">
                   <period year="1990">
-                     <yield>0.029715</yield>
+                     <yield>0.0297688</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.029715</yield>
+                     <yield>0.0297688</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -192,12 +192,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -458,12 +458,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -477,12 +477,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -534,70 +534,70 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.033018</yield>
+                     <yield>0.0329821</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.033018</yield>
+                     <yield>0.0329821</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.009351</yield>
+                     <yield>0.0093511</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009351</yield>
+                     <yield>0.0093511</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.014178</yield>
+                     <yield>0.0141777</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014178</yield>
+                     <yield>0.0141777</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.01276</yield>
+                     <yield>0.0127606</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.01276</yield>
+                     <yield>0.0127606</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.013159</yield>
+                     <yield>0.0131598</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013159</yield>
+                     <yield>0.0131598</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.014918</yield>
+                     <yield>0.0149198</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014918</yield>
+                     <yield>0.0149198</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.021974</yield>
+                     <yield>0.0219662</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.021974</yield>
+                     <yield>0.0219662</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -614,30 +614,30 @@
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.02237</yield>
+                     <yield>0.0223719</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.02237</yield>
+                     <yield>0.0223719</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.030625</yield>
+                     <yield>0.0306276</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.030625</yield>
+                     <yield>0.0306276</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.030625</yield>
+                     <yield>0.0306276</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.030625</yield>
+                     <yield>0.0306276</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -654,50 +654,50 @@
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.011536</yield>
+                     <yield>0.0115324</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.011536</yield>
+                     <yield>0.0115324</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.014757</yield>
+                     <yield>0.0147559</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014757</yield>
+                     <yield>0.0147559</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.01968</yield>
+                     <yield>0.0197154</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.01968</yield>
+                     <yield>0.0197154</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.029719</yield>
+                     <yield>0.029773</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.029719</yield>
+                     <yield>0.029773</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.02233</yield>
+                     <yield>0.0223305</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.02233</yield>
+                     <yield>0.0223305</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -720,12 +720,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.917</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.916</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.917</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.916</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -986,12 +986,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.546</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.547</above-ground-carbon-density>
                            <below-ground-carbon-density>9.9</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.546</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.547</above-ground-carbon-density>
                            <below-ground-carbon-density>9.9</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -1005,12 +1005,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.825</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.826</above-ground-carbon-density>
                            <below-ground-carbon-density>9.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.825</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.826</above-ground-carbon-density>
                            <below-ground-carbon-density>9.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -1062,170 +1062,170 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="miscanthusAEZ04">
                <AgProductionTechnology name="miscanthusAEZ04">
                   <period year="1990">
-                     <yield>0.018481</yield>
+                     <yield>0.0184821</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.018481</yield>
+                     <yield>0.0184821</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="miscanthusAEZ07">
                <AgProductionTechnology name="miscanthusAEZ07">
                   <period year="1990">
-                     <yield>0.026924</yield>
+                     <yield>0.0269148</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.026924</yield>
+                     <yield>0.0269148</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="miscanthusAEZ08">
                <AgProductionTechnology name="miscanthusAEZ08">
                   <period year="1990">
-                     <yield>0.023706</yield>
+                     <yield>0.0237057</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.023706</yield>
+                     <yield>0.0237057</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="miscanthusAEZ09">
                <AgProductionTechnology name="miscanthusAEZ09">
                   <period year="1990">
-                     <yield>0.0324</yield>
+                     <yield>0.0324032</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.0324</yield>
+                     <yield>0.0324032</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="miscanthusAEZ10">
                <AgProductionTechnology name="miscanthusAEZ10">
                   <period year="1990">
-                     <yield>0.044357</yield>
+                     <yield>0.0443606</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.044357</yield>
+                     <yield>0.0443606</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="miscanthusAEZ11">
                <AgProductionTechnology name="miscanthusAEZ11">
                   <period year="1990">
-                     <yield>0.044357</yield>
+                     <yield>0.0443606</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.044357</yield>
+                     <yield>0.0443606</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="miscanthusAEZ12">
                <AgProductionTechnology name="miscanthusAEZ12">
                   <period year="1990">
-                     <yield>0.041284</yield>
+                     <yield>0.0412848</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.041284</yield>
+                     <yield>0.0412848</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ13">
                <AgProductionTechnology name="willowAEZ13">
                   <period year="1990">
-                     <yield>0.009758</yield>
+                     <yield>0.0097547</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009758</yield>
+                     <yield>0.0097547</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ14">
                <AgProductionTechnology name="willowAEZ14">
                   <period year="1990">
-                     <yield>0.012483</yield>
+                     <yield>0.0124814</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.012483</yield>
+                     <yield>0.0124814</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ15">
                <AgProductionTechnology name="willowAEZ15">
                   <period year="1990">
-                     <yield>0.019677</yield>
+                     <yield>0.0197127</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.019677</yield>
+                     <yield>0.0197127</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ16">
                <AgProductionTechnology name="willowAEZ16">
                   <period year="1990">
-                     <yield>0.029715</yield>
+                     <yield>0.0297688</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.029715</yield>
+                     <yield>0.0297688</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -1248,12 +1248,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -1514,12 +1514,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>13.6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>13.6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -1533,12 +1533,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.1</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.1</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -1590,170 +1590,170 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ08">
                <AgProductionTechnology name="biomassAEZ08">
                   <period year="1990">
-                     <yield>0.022335</yield>
+                     <yield>0.0223348</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022335</yield>
+                     <yield>0.0223348</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.025825</yield>
+                     <yield>0.025827</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025825</yield>
+                     <yield>0.025827</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ12">
                <AgProductionTechnology name="biomassAEZ12">
                   <period year="1990">
-                     <yield>0.032906</yield>
+                     <yield>0.0329061</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.032906</yield>
+                     <yield>0.0329061</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.013318</yield>
+                     <yield>0.0133134</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013318</yield>
+                     <yield>0.0133134</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.017036</yield>
+                     <yield>0.0170348</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017036</yield>
+                     <yield>0.0170348</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.022719</yield>
+                     <yield>0.0227602</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022719</yield>
+                     <yield>0.0227602</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.034309</yield>
+                     <yield>0.034371</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.034309</yield>
+                     <yield>0.034371</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -1776,12 +1776,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -2042,12 +2042,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>9.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>9.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -2061,12 +2061,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -2118,20 +2118,20 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.02072</yield>
+                     <yield>0.0206973</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.02072</yield>
+                     <yield>0.0206973</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.005868</yield>
+                     <yield>0.0058681</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.005868</yield>
+                     <yield>0.0058681</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -2148,140 +2148,140 @@
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.008007</yield>
+                     <yield>0.0080076</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.008007</yield>
+                     <yield>0.0080076</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.008257</yield>
+                     <yield>0.0082582</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.008257</yield>
+                     <yield>0.0082582</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.009361</yield>
+                     <yield>0.0093626</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009361</yield>
+                     <yield>0.0093626</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.013789</yield>
+                     <yield>0.0137844</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013789</yield>
+                     <yield>0.0137844</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ08">
                <AgProductionTechnology name="biomassAEZ08">
                   <period year="1990">
-                     <yield>0.012141</yield>
+                     <yield>0.0121408</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.012141</yield>
+                     <yield>0.0121408</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.014038</yield>
+                     <yield>0.0140391</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014038</yield>
+                     <yield>0.0140391</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.019218</yield>
+                     <yield>0.0192197</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.019218</yield>
+                     <yield>0.0192197</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.019218</yield>
+                     <yield>0.0192197</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.019218</yield>
+                     <yield>0.0192197</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ12">
                <AgProductionTechnology name="biomassAEZ12">
                   <period year="1990">
-                     <yield>0.017887</yield>
+                     <yield>0.0178871</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017887</yield>
+                     <yield>0.0178871</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.007239</yield>
+                     <yield>0.0072369</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.007239</yield>
+                     <yield>0.0072369</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.00926</yield>
+                     <yield>0.0092598</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.00926</yield>
+                     <yield>0.0092598</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.01235</yield>
+                     <yield>0.012372</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.01235</yield>
+                     <yield>0.012372</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.01865</yield>
+                     <yield>0.0186834</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.01865</yield>
+                     <yield>0.0186834</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.014013</yield>
+                     <yield>0.0140131</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014013</yield>
+                     <yield>0.0140131</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -2475,12 +2475,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.533</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.534</above-ground-carbon-density>
                            <below-ground-carbon-density>9.7</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.533</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.534</above-ground-carbon-density>
                            <below-ground-carbon-density>9.7</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -2494,12 +2494,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.533</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.534</above-ground-carbon-density>
                            <below-ground-carbon-density>11</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.533</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.534</above-ground-carbon-density>
                            <below-ground-carbon-density>11</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -2589,12 +2589,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.518</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.519</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.518</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.519</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -2646,110 +2646,110 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.023785</yield>
+                     <yield>0.02376</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.023785</yield>
+                     <yield>0.02376</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.006736</yield>
+                     <yield>0.0067364</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.006736</yield>
+                     <yield>0.0067364</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.010213</yield>
+                     <yield>0.0102135</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010213</yield>
+                     <yield>0.0102135</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.009192</yield>
+                     <yield>0.0091926</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009192</yield>
+                     <yield>0.0091926</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.009479</yield>
+                     <yield>0.0094802</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009479</yield>
+                     <yield>0.0094802</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.010747</yield>
+                     <yield>0.010748</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010747</yield>
+                     <yield>0.010748</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.01583</yield>
+                     <yield>0.0158242</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.01583</yield>
+                     <yield>0.0158242</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ08">
                <AgProductionTechnology name="biomassAEZ08">
                   <period year="1990">
-                     <yield>0.013937</yield>
+                     <yield>0.0139373</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013937</yield>
+                     <yield>0.0139373</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.016115</yield>
+                     <yield>0.0161165</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016115</yield>
+                     <yield>0.0161165</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.022062</yield>
+                     <yield>0.0220638</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022062</yield>
+                     <yield>0.0220638</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.022062</yield>
+                     <yield>0.0220638</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022062</yield>
+                     <yield>0.0220638</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -2766,50 +2766,50 @@
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.008311</yield>
+                     <yield>0.0083078</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.008311</yield>
+                     <yield>0.0083078</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.010631</yield>
+                     <yield>0.01063</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010631</yield>
+                     <yield>0.01063</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.014177</yield>
+                     <yield>0.0142028</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014177</yield>
+                     <yield>0.0142028</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.021409</yield>
+                     <yield>0.0214481</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.021409</yield>
+                     <yield>0.0214481</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.016087</yield>
+                     <yield>0.0160866</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016087</yield>
+                     <yield>0.0160866</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -3117,12 +3117,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.594</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.595</above-ground-carbon-density>
                            <below-ground-carbon-density>13.1</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.594</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.595</above-ground-carbon-density>
                            <below-ground-carbon-density>13.1</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -3174,170 +3174,170 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ08">
                <AgProductionTechnology name="biomassAEZ08">
                   <period year="1990">
-                     <yield>0.022335</yield>
+                     <yield>0.0223348</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022335</yield>
+                     <yield>0.0223348</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.025825</yield>
+                     <yield>0.025827</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025825</yield>
+                     <yield>0.025827</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ12">
                <AgProductionTechnology name="biomassAEZ12">
                   <period year="1990">
-                     <yield>0.032906</yield>
+                     <yield>0.0329061</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.032906</yield>
+                     <yield>0.0329061</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ13">
                <AgProductionTechnology name="willowAEZ13">
                   <period year="1990">
-                     <yield>0.009758</yield>
+                     <yield>0.0097547</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009758</yield>
+                     <yield>0.0097547</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ14">
                <AgProductionTechnology name="willowAEZ14">
                   <period year="1990">
-                     <yield>0.012483</yield>
+                     <yield>0.0124814</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.012483</yield>
+                     <yield>0.0124814</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ15">
                <AgProductionTechnology name="willowAEZ15">
                   <period year="1990">
-                     <yield>0.019677</yield>
+                     <yield>0.0197127</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.019677</yield>
+                     <yield>0.0197127</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ16">
                <AgProductionTechnology name="willowAEZ16">
                   <period year="1990">
-                     <yield>0.029715</yield>
+                     <yield>0.0297688</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.029715</yield>
+                     <yield>0.0297688</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ17">
                <AgProductionTechnology name="willowAEZ17">
                   <period year="1990">
-                     <yield>0.022328</yield>
+                     <yield>0.0223273</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022328</yield>
+                     <yield>0.0223273</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -3360,12 +3360,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -3626,12 +3626,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>12.6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>12.6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -3645,12 +3645,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -3702,20 +3702,20 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.026996</yield>
+                     <yield>0.0269669</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.026996</yield>
+                     <yield>0.0269669</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.007646</yield>
+                     <yield>0.0076456</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.007646</yield>
+                     <yield>0.0076456</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -3732,140 +3732,140 @@
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.010433</yield>
+                     <yield>0.0104333</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010433</yield>
+                     <yield>0.0104333</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.010759</yield>
+                     <yield>0.0107598</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010759</yield>
+                     <yield>0.0107598</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.012197</yield>
+                     <yield>0.0121987</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.012197</yield>
+                     <yield>0.0121987</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.017966</yield>
+                     <yield>0.01796</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017966</yield>
+                     <yield>0.01796</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ08">
                <AgProductionTechnology name="biomassAEZ08">
                   <period year="1990">
-                     <yield>0.015819</yield>
+                     <yield>0.0158185</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015819</yield>
+                     <yield>0.0158185</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.01829</yield>
+                     <yield>0.0182918</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.01829</yield>
+                     <yield>0.0182918</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.02504</yield>
+                     <yield>0.0250418</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.02504</yield>
+                     <yield>0.0250418</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.02504</yield>
+                     <yield>0.0250418</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.02504</yield>
+                     <yield>0.0250418</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ12">
                <AgProductionTechnology name="biomassAEZ12">
                   <period year="1990">
-                     <yield>0.023305</yield>
+                     <yield>0.0233055</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.023305</yield>
+                     <yield>0.0233055</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.009432</yield>
+                     <yield>0.0094291</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009432</yield>
+                     <yield>0.0094291</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.012066</yield>
+                     <yield>0.0120648</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.012066</yield>
+                     <yield>0.0120648</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.01609</yield>
+                     <yield>0.0161197</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.01609</yield>
+                     <yield>0.0161197</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.024299</yield>
+                     <yield>0.024343</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.024299</yield>
+                     <yield>0.024343</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.018258</yield>
+                     <yield>0.0182579</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.018258</yield>
+                     <yield>0.0182579</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -4173,12 +4173,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.675</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.676</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.675</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.676</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -4230,20 +4230,20 @@
             <AgSupplySubsector name="JatrophaAEZ01">
                <AgProductionTechnology name="JatrophaAEZ01">
                   <period year="1990">
-                     <yield>0.002333</yield>
+                     <yield>0.0023303</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.002333</yield>
+                     <yield>0.0023303</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="JatrophaAEZ02">
                <AgProductionTechnology name="JatrophaAEZ02">
                   <period year="1990">
-                     <yield>0.000661</yield>
+                     <yield>0.0006607</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.000661</yield>
+                     <yield>0.0006607</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -4252,140 +4252,140 @@
             <AgSupplySubsector name="eucalyptusAEZ03">
                <AgProductionTechnology name="eucalyptusAEZ03">
                   <period year="1990">
-                     <yield>0.007384</yield>
+                     <yield>0.0073838</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.007384</yield>
+                     <yield>0.0073838</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ04">
                <AgProductionTechnology name="eucalyptusAEZ04">
                   <period year="1990">
-                     <yield>0.006646</yield>
+                     <yield>0.0066457</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.006646</yield>
+                     <yield>0.0066457</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ05">
                <AgProductionTechnology name="eucalyptusAEZ05">
                   <period year="1990">
-                     <yield>0.006853</yield>
+                     <yield>0.0068535</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.006853</yield>
+                     <yield>0.0068535</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ06">
                <AgProductionTechnology name="eucalyptusAEZ06">
                   <period year="1990">
-                     <yield>0.007769</yield>
+                     <yield>0.0077702</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.007769</yield>
+                     <yield>0.0077702</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ07">
                <AgProductionTechnology name="eucalyptusAEZ07">
                   <period year="1990">
-                     <yield>0.009682</yield>
+                     <yield>0.0096778</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009682</yield>
+                     <yield>0.0096778</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ08">
                <AgProductionTechnology name="eucalyptusAEZ08">
                   <period year="1990">
-                     <yield>0.008523</yield>
+                     <yield>0.0085239</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.008523</yield>
+                     <yield>0.0085239</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ09">
                <AgProductionTechnology name="eucalyptusAEZ09">
                   <period year="1990">
-                     <yield>0.01165</yield>
+                     <yield>0.0116512</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.01165</yield>
+                     <yield>0.0116512</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ10">
                <AgProductionTechnology name="eucalyptusAEZ10">
                   <period year="1990">
-                     <yield>0.015949</yield>
+                     <yield>0.0159509</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015949</yield>
+                     <yield>0.0159509</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ11">
                <AgProductionTechnology name="eucalyptusAEZ11">
                   <period year="1990">
-                     <yield>0.015949</yield>
+                     <yield>0.0159509</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015949</yield>
+                     <yield>0.0159509</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ12">
                <AgProductionTechnology name="eucalyptusAEZ12">
                   <period year="1990">
-                     <yield>0.014845</yield>
+                     <yield>0.0148448</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014845</yield>
+                     <yield>0.0148448</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.005662</yield>
+                     <yield>0.0056597</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.005662</yield>
+                     <yield>0.0056597</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.007242</yield>
+                     <yield>0.0072417</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.007242</yield>
+                     <yield>0.0072417</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.009658</yield>
+                     <yield>0.0096756</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.009658</yield>
+                     <yield>0.0096756</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.014585</yield>
+                     <yield>0.0146114</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014585</yield>
+                     <yield>0.0146114</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -4418,12 +4418,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.45</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.449</above-ground-carbon-density>
                            <below-ground-carbon-density>7.1</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.45</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.449</above-ground-carbon-density>
                            <below-ground-carbon-density>7.1</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -4684,12 +4684,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.268</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.269</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.268</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.269</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -4703,12 +4703,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.405</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.406</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.405</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.406</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -4760,170 +4760,170 @@
             <AgSupplySubsector name="eucalyptusAEZ01">
                <AgProductionTechnology name="eucalyptusAEZ01">
                   <period year="1990">
-                     <yield>0.03079</yield>
+                     <yield>0.0307694</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.03079</yield>
+                     <yield>0.0307694</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ02">
                <AgProductionTechnology name="eucalyptusAEZ02">
                   <period year="1990">
-                     <yield>0.008721</yield>
+                     <yield>0.0087237</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.008721</yield>
+                     <yield>0.0087237</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ03">
                <AgProductionTechnology name="eucalyptusAEZ03">
                   <period year="1990">
-                     <yield>0.015628</yield>
+                     <yield>0.0156348</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015628</yield>
+                     <yield>0.0156348</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ04">
                <AgProductionTechnology name="eucalyptusAEZ04">
                   <period year="1990">
-                     <yield>0.014065</yield>
+                     <yield>0.014072</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014065</yield>
+                     <yield>0.014072</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ05">
                <AgProductionTechnology name="eucalyptusAEZ05">
                   <period year="1990">
-                     <yield>0.014506</yield>
+                     <yield>0.0145123</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014506</yield>
+                     <yield>0.0145123</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ06">
                <AgProductionTechnology name="eucalyptusAEZ06">
                   <period year="1990">
-                     <yield>0.016444</yield>
+                     <yield>0.016453</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016444</yield>
+                     <yield>0.016453</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ07">
                <AgProductionTechnology name="eucalyptusAEZ07">
                   <period year="1990">
-                     <yield>0.02049</yield>
+                     <yield>0.0204924</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.02049</yield>
+                     <yield>0.0204924</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ08">
                <AgProductionTechnology name="eucalyptusAEZ08">
                   <period year="1990">
-                     <yield>0.018042</yield>
+                     <yield>0.018049</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.018042</yield>
+                     <yield>0.018049</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ09">
                <AgProductionTechnology name="eucalyptusAEZ09">
                   <period year="1990">
-                     <yield>0.024659</yield>
+                     <yield>0.0246712</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.024659</yield>
+                     <yield>0.0246712</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ10">
                <AgProductionTechnology name="eucalyptusAEZ10">
                   <period year="1990">
-                     <yield>0.033759</yield>
+                     <yield>0.0337752</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.033759</yield>
+                     <yield>0.0337752</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ11">
                <AgProductionTechnology name="eucalyptusAEZ11">
                   <period year="1990">
-                     <yield>0.033759</yield>
+                     <yield>0.0337752</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.033759</yield>
+                     <yield>0.0337752</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="eucalyptusAEZ12">
                <AgProductionTechnology name="eucalyptusAEZ12">
                   <period year="1990">
-                     <yield>0.03142</yield>
+                     <yield>0.0314333</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.03142</yield>
+                     <yield>0.0314333</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.011983</yield>
+                     <yield>0.0119841</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.011983</yield>
+                     <yield>0.0119841</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.015329</yield>
+                     <yield>0.0153339</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015329</yield>
+                     <yield>0.0153339</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.020442</yield>
+                     <yield>0.0204877</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.020442</yield>
+                     <yield>0.0204877</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.03087</yield>
+                     <yield>0.0309392</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.03087</yield>
+                     <yield>0.0309392</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.023196</yield>
+                     <yield>0.0232052</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.023196</yield>
+                     <yield>0.0232052</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -4946,12 +4946,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.951</above-ground-carbon-density>
                            <below-ground-carbon-density>6.2</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.951</above-ground-carbon-density>
                            <below-ground-carbon-density>6.2</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -5022,12 +5022,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.379</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.38</above-ground-carbon-density>
                            <below-ground-carbon-density>9.7</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.379</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.38</above-ground-carbon-density>
                            <below-ground-carbon-density>9.7</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -5212,12 +5212,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.567</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.569</above-ground-carbon-density>
                            <below-ground-carbon-density>13.9</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.567</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.569</above-ground-carbon-density>
                            <below-ground-carbon-density>13.9</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -5231,12 +5231,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.857</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.859</above-ground-carbon-density>
                            <below-ground-carbon-density>15.4</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.857</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.859</above-ground-carbon-density>
                            <below-ground-carbon-density>15.4</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -5288,170 +5288,170 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.029656</yield>
+                     <yield>0.0296246</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.029656</yield>
+                     <yield>0.0296246</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.008399</yield>
+                     <yield>0.0083991</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.008399</yield>
+                     <yield>0.0083991</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.012734</yield>
+                     <yield>0.0127345</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.012734</yield>
+                     <yield>0.0127345</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.011461</yield>
+                     <yield>0.0114616</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.011461</yield>
+                     <yield>0.0114616</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.011819</yield>
+                     <yield>0.0118202</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.011819</yield>
+                     <yield>0.0118202</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.013399</yield>
+                     <yield>0.013401</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013399</yield>
+                     <yield>0.013401</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.019737</yield>
+                     <yield>0.01973</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.019737</yield>
+                     <yield>0.01973</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ08">
                <AgProductionTechnology name="biomassAEZ08">
                   <period year="1990">
-                     <yield>0.017378</yield>
+                     <yield>0.0173775</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017378</yield>
+                     <yield>0.0173775</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.020093</yield>
+                     <yield>0.0200945</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.020093</yield>
+                     <yield>0.0200945</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.027507</yield>
+                     <yield>0.0275097</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.027507</yield>
+                     <yield>0.0275097</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.027507</yield>
+                     <yield>0.0275097</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.027507</yield>
+                     <yield>0.0275097</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ12">
                <AgProductionTechnology name="biomassAEZ12">
                   <period year="1990">
-                     <yield>0.025602</yield>
+                     <yield>0.0256023</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025602</yield>
+                     <yield>0.0256023</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.010362</yield>
+                     <yield>0.0103584</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010362</yield>
+                     <yield>0.0103584</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.013255</yield>
+                     <yield>0.0132538</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013255</yield>
+                     <yield>0.0132538</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.017676</yield>
+                     <yield>0.0177084</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017676</yield>
+                     <yield>0.0177084</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.026694</yield>
+                     <yield>0.0267421</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.026694</yield>
+                     <yield>0.0267421</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.020057</yield>
+                     <yield>0.0200573</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.020057</yield>
+                     <yield>0.0200573</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -5474,12 +5474,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.823</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.822</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.823</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.822</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -5740,12 +5740,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.491</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.492</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.491</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.492</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -5759,12 +5759,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.741</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.742</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.741</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.742</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -5816,110 +5816,110 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ08">
                <AgProductionTechnology name="willowAEZ08">
                   <period year="1990">
-                     <yield>0.016365</yield>
+                     <yield>0.0163647</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016365</yield>
+                     <yield>0.0163647</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ09">
                <AgProductionTechnology name="willowAEZ09">
                   <period year="1990">
-                     <yield>0.022366</yield>
+                     <yield>0.0223688</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022366</yield>
+                     <yield>0.0223688</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ10">
                <AgProductionTechnology name="willowAEZ10">
                   <period year="1990">
-                     <yield>0.030621</yield>
+                     <yield>0.0306233</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.030621</yield>
+                     <yield>0.0306233</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ11">
                <AgProductionTechnology name="willowAEZ11">
                   <period year="1990">
-                     <yield>0.030621</yield>
+                     <yield>0.0306233</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.030621</yield>
+                     <yield>0.0306233</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -5936,50 +5936,50 @@
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.013318</yield>
+                     <yield>0.0133134</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013318</yield>
+                     <yield>0.0133134</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.017036</yield>
+                     <yield>0.0170348</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017036</yield>
+                     <yield>0.0170348</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ15">
                <AgProductionTechnology name="willowAEZ15">
                   <period year="1990">
-                     <yield>0.019677</yield>
+                     <yield>0.0197127</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.019677</yield>
+                     <yield>0.0197127</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="willowAEZ16">
                <AgProductionTechnology name="willowAEZ16">
                   <period year="1990">
-                     <yield>0.029715</yield>
+                     <yield>0.0297688</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.029715</yield>
+                     <yield>0.0297688</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -6002,12 +6002,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -6268,12 +6268,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -6287,12 +6287,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -6344,170 +6344,170 @@
             <AgSupplySubsector name="biomassAEZ01">
                <AgProductionTechnology name="biomassAEZ01">
                   <period year="1990">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.038117</yield>
+                     <yield>0.0380758</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ02">
                <AgProductionTechnology name="biomassAEZ02">
                   <period year="1990">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010795</yield>
+                     <yield>0.0107952</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ03">
                <AgProductionTechnology name="biomassAEZ03">
                   <period year="1990">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.016367</yield>
+                     <yield>0.0163673</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ04">
                <AgProductionTechnology name="biomassAEZ04">
                   <period year="1990">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.014731</yield>
+                     <yield>0.0147313</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ05">
                <AgProductionTechnology name="biomassAEZ05">
                   <period year="1990">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.015191</yield>
+                     <yield>0.0151922</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ06">
                <AgProductionTechnology name="biomassAEZ06">
                   <period year="1990">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017222</yield>
+                     <yield>0.0172239</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025367</yield>
+                     <yield>0.0253586</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ08">
                <AgProductionTechnology name="biomassAEZ08">
                   <period year="1990">
-                     <yield>0.022335</yield>
+                     <yield>0.0223348</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022335</yield>
+                     <yield>0.0223348</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.025825</yield>
+                     <yield>0.025827</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025825</yield>
+                     <yield>0.025827</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.035355</yield>
+                     <yield>0.0353576</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ12">
                <AgProductionTechnology name="biomassAEZ12">
                   <period year="1990">
-                     <yield>0.032906</yield>
+                     <yield>0.0329061</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.032906</yield>
+                     <yield>0.0329061</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.013318</yield>
+                     <yield>0.0133134</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013318</yield>
+                     <yield>0.0133134</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.017036</yield>
+                     <yield>0.0170348</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.017036</yield>
+                     <yield>0.0170348</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.022719</yield>
+                     <yield>0.0227602</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.022719</yield>
+                     <yield>0.0227602</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.034309</yield>
+                     <yield>0.034371</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.034309</yield>
+                     <yield>0.034371</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.025779</yield>
+                     <yield>0.0257791</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -6530,12 +6530,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>1.058</above-ground-carbon-density>
+                           <above-ground-carbon-density>1.057</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -6796,12 +6796,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.631</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.632</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -6815,12 +6815,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.952</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.954</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -6872,60 +6872,60 @@
             <AgSupplySubsector name="JatrophaAEZ01">
                <AgProductionTechnology name="JatrophaAEZ01">
                   <period year="1990">
-                     <yield>0.004365</yield>
+                     <yield>0.0043606</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.004365</yield>
+                     <yield>0.0043606</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="JatrophaAEZ02">
                <AgProductionTechnology name="JatrophaAEZ02">
                   <period year="1990">
-                     <yield>0.001236</yield>
+                     <yield>0.0012363</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.001236</yield>
+                     <yield>0.0012363</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="JatrophaAEZ03">
                <AgProductionTechnology name="JatrophaAEZ03">
                   <period year="1990">
-                     <yield>0.002216</yield>
+                     <yield>0.0022158</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.002216</yield>
+                     <yield>0.0022158</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="JatrophaAEZ04">
                <AgProductionTechnology name="JatrophaAEZ04">
                   <period year="1990">
-                     <yield>0.001994</yield>
+                     <yield>0.0019943</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.001994</yield>
+                     <yield>0.0019943</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="JatrophaAEZ05">
                <AgProductionTechnology name="JatrophaAEZ05">
                   <period year="1990">
-                     <yield>0.002056</yield>
+                     <yield>0.0020567</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.002056</yield>
+                     <yield>0.0020567</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="JatrophaAEZ06">
                <AgProductionTechnology name="JatrophaAEZ06">
                   <period year="1990">
-                     <yield>0.002331</yield>
+                     <yield>0.0023317</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.002331</yield>
+                     <yield>0.0023317</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -6934,10 +6934,10 @@
             <AgSupplySubsector name="biomassAEZ07">
                <AgProductionTechnology name="biomassAEZ07">
                   <period year="1990">
-                     <yield>0.020179</yield>
+                     <yield>0.0201723</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.020179</yield>
+                     <yield>0.0201723</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -6954,90 +6954,90 @@
             <AgSupplySubsector name="biomassAEZ09">
                <AgProductionTechnology name="biomassAEZ09">
                   <period year="1990">
-                     <yield>0.020543</yield>
+                     <yield>0.0205449</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.020543</yield>
+                     <yield>0.0205449</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ10">
                <AgProductionTechnology name="biomassAEZ10">
                   <period year="1990">
-                     <yield>0.028124</yield>
+                     <yield>0.0281264</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.028124</yield>
+                     <yield>0.0281264</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ11">
                <AgProductionTechnology name="biomassAEZ11">
                   <period year="1990">
-                     <yield>0.028124</yield>
+                     <yield>0.0281264</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.028124</yield>
+                     <yield>0.0281264</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ12">
                <AgProductionTechnology name="biomassAEZ12">
                   <period year="1990">
-                     <yield>0.026176</yield>
+                     <yield>0.0261762</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.026176</yield>
+                     <yield>0.0261762</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ13">
                <AgProductionTechnology name="biomassAEZ13">
                   <period year="1990">
-                     <yield>0.010594</yield>
+                     <yield>0.0105906</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.010594</yield>
+                     <yield>0.0105906</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ14">
                <AgProductionTechnology name="biomassAEZ14">
                   <period year="1990">
-                     <yield>0.013552</yield>
+                     <yield>0.0135509</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.013552</yield>
+                     <yield>0.0135509</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ15">
                <AgProductionTechnology name="biomassAEZ15">
                   <period year="1990">
-                     <yield>0.018072</yield>
+                     <yield>0.0181053</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.018072</yield>
+                     <yield>0.0181053</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ16">
                <AgProductionTechnology name="biomassAEZ16">
                   <period year="1990">
-                     <yield>0.027292</yield>
+                     <yield>0.0273415</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.027292</yield>
+                     <yield>0.0273415</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
             <AgSupplySubsector name="biomassAEZ17">
                <AgProductionTechnology name="biomassAEZ17">
                   <period year="1990">
-                     <yield>0.020507</yield>
+                     <yield>0.0205069</yield>
                   </period>
                   <period year="2005">
-                     <yield>0.020507</yield>
+                     <yield>0.0205069</yield>
                   </period>
                </AgProductionTechnology>
             </AgSupplySubsector>
@@ -7060,12 +7060,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.842</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.841</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.842</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.841</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -7326,12 +7326,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.502</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.503</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.502</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.503</above-ground-carbon-density>
                            <below-ground-carbon-density>14</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>
@@ -7345,12 +7345,12 @@
                         <minAboveGroundCDensity>0</minAboveGroundCDensity>
                         <minBelowGroundCDensity>0</minBelowGroundCDensity>
                         <land-carbon-densities>
-                           <above-ground-carbon-density>0.758</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.759</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                            <mature-age fillout="1" year="1975">10</mature-age>
                         </land-carbon-densities>
                         <land-use-history>
-                           <above-ground-carbon-density>0.758</above-ground-carbon-density>
+                           <above-ground-carbon-density>0.759</above-ground-carbon-density>
                            <below-ground-carbon-density>15.5</below-ground-carbon-density>
                         </land-use-history>
                      </LandLeaf>

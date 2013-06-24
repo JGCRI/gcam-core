@@ -14,14 +14,14 @@
 			     csv files which you want to convert with the given 
 			     header file
 			  -->
-		 <headerFile>../Workspaces/Main User Workspace/input/energy/calibration_minicam/Input Module/header_cal_2005.txt</headerFile>
-			<outFile>../Workspaces/Main User Workspace/input/energy/calibration_minicam/Input Module/cal_1990_2005.xml</outFile>
-			<csvFile>../Workspaces/Main User Workspace/input/energy/calibration_minicam/Input Module/gas_cal.csv</csvFile>
-			<csvFile>../Workspaces/Main User Workspace/input/energy/calibration_minicam/Input Module/ref_liquids_cal.csv</csvFile>
-			<csvFile>../Workspaces/Main User Workspace/input/energy/calibration_minicam/Input Module/elec_supply_cal.csv</csvFile>
-			<csvFile>../Workspaces/Main User Workspace/input/energy/calibration_minicam/Input Module/elec_td_ownuse.csv</csvFile>
-			<csvFile>../Workspaces/Main User Workspace/input/energy/calibration_minicam/Input Module/final_enduse_cal.csv</csvFile>
-			<csvFile>../Workspaces/Main User Workspace/input/energy/calibration_minicam/Input Module/heat_cal.csv</csvFile>
+		 <headerFile>../Workspaces/UCD_Workspace/input/energy/calibration_minicam/Input Module/header_cal_2005.txt</headerFile>
+			<outFile>../Workspaces/UCD_Workspace/input/energy/calibration_minicam/Input Module/cal_1990_2005.xml</outFile>
+			<csvFile>../Workspaces/UCD_Workspace/input/energy/calibration_minicam/Input Module/gas_cal.csv</csvFile>
+			<csvFile>../Workspaces/UCD_Workspace/input/energy/calibration_minicam/Input Module/ref_liquids_cal.csv</csvFile>
+			<csvFile>../Workspaces/UCD_Workspace/input/energy/calibration_minicam/Input Module/elec_supply_cal.csv</csvFile>
+			<csvFile>../Workspaces/UCD_Workspace/input/energy/calibration_minicam/Input Module/elec_td_ownuse.csv</csvFile>
+			<csvFile>../Workspaces/UCD_Workspace/input/energy/calibration_minicam/Input Module/final_enduse_cal.csv</csvFile>
+			<csvFile>../Workspaces/UCD_Workspace/input/energy/calibration_minicam/Input Module/heat_cal.csv</csvFile>
 		</command>
 	</class>
 </ModelInterfaceBatch>

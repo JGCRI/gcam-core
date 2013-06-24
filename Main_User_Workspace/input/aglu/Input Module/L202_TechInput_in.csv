@@ -8,6 +8,7 @@ Africa,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2,1,Res
 Africa,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Africa,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Africa,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Africa,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Africa,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Africa,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Africa,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -22,6 +23,7 @@ Australia_NZ,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2
 Australia_NZ,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Australia_NZ,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Australia_NZ,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Australia_NZ,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Australia_NZ,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Australia_NZ,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Australia_NZ,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -36,6 +38,7 @@ Canada,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2,1,Res
 Canada,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Canada,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Canada,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Canada,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Canada,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Canada,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Canada,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -50,6 +53,7 @@ China,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2,1,Resi
 China,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 China,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 China,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+China,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 China,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 China,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 China,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -64,6 +68,7 @@ Eastern Europe,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,C
 Eastern Europe,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Eastern Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Eastern Europe,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Eastern Europe,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Eastern Europe,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Eastern Europe,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Eastern Europe,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -78,6 +83,7 @@ Former Soviet Union,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fi
 Former Soviet Union,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Former Soviet Union,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Former Soviet Union,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Former Soviet Union,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Former Soviet Union,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Former Soviet Union,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Former Soviet Union,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -92,6 +98,7 @@ India,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2,1,Resi
 India,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 India,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 India,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+India,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 India,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 India,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 India,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -106,6 +113,7 @@ Japan,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2,1,Resi
 Japan,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Japan,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Japan,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Japan,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Japan,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Japan,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Japan,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -120,6 +128,7 @@ Korea,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2,1,Resi
 Korea,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Korea,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Korea,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Korea,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Korea,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Korea,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Korea,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -134,6 +143,7 @@ Latin America,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO
 Latin America,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Latin America,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Latin America,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Latin America,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Latin America,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Latin America,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Latin America,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -148,6 +158,7 @@ Middle East,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2,
 Middle East,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Middle East,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Middle East,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Middle East,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Middle East,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Middle East,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Middle East,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -162,6 +173,7 @@ Southeast Asia,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,C
 Southeast Asia,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Southeast Asia,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Southeast Asia,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Southeast Asia,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Southeast Asia,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Southeast Asia,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Southeast Asia,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -176,6 +188,7 @@ USA,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,CO2,1,Residu
 USA,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 USA,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 USA,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+USA,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 USA,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 USA,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 USA,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0
@@ -190,6 +203,7 @@ Western Europe,FodderHerb_Residue,Residue,Residue,share-weight,2005,9999,fixed,C
 Western Europe,Pasture_FodderGrass,Pasture,Pasture,share-weight,2005,9999,fixed,CO2,1,Pasture,1,0
 Western Europe,Pasture_FodderGrass,FodderGrass,FodderGrass,share-weight,2005,9999,fixed,CO2,1,FodderGrass,1,0
 Western Europe,FeedCrops,Corn,Corn,share-weight,2005,9999,fixed,CO2,1,Corn,1,0
+Western Europe,FeedCrops,FiberCrop,FiberCrop,share-weight,2005,9999,fixed,CO2,1,FiberCrop,1,0
 Western Europe,FeedCrops,MiscCrop,MiscCrop,share-weight,2005,9999,fixed,CO2,1,MiscCrop,1,0
 Western Europe,FeedCrops,OilCrop,OilCrop,share-weight,2005,9999,fixed,CO2,1,OilCrop,1,0
 Western Europe,FeedCrops,OtherGrain,OtherGrain,share-weight,2005,9999,fixed,CO2,1,OtherGrain,1,0

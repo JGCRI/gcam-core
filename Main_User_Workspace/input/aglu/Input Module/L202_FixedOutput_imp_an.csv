@@ -3,11 +3,11 @@ Variable ID
 FixedOutput
 
 region,supplysector,subsector,technology,year,fixedOutput
-Africa,Beef,Imports,Imports,1990,0.281328
-Africa,Dairy,Imports,Imports,1990,4.774932
-Africa,Pork,Imports,Imports,1990,0.021788
-Africa,Poultry,Imports,Imports,1990,0.130494
-Africa,SheepGoat,Imports,Imports,1990,0.01675
+Africa,Beef,Imports,Imports,1990,0.2813276
+Africa,Dairy,Imports,Imports,1990,4.491446
+Africa,Pork,Imports,Imports,1990,0.0217875
+Africa,Poultry,Imports,Imports,1990,0.1304945
+Africa,SheepGoat,Imports,Imports,1990,0.0167496
 Australia_NZ,Beef,Imports,Imports,1990,0
 Australia_NZ,Dairy,Imports,Imports,1990,0
 Australia_NZ,Pork,Imports,Imports,1990,0
@@ -16,550 +16,550 @@ Australia_NZ,SheepGoat,Imports,Imports,1990,0
 Canada,Beef,Imports,Imports,1990,0.089351
 Canada,Dairy,Imports,Imports,1990,0
 Canada,Pork,Imports,Imports,1990,0
-Canada,Poultry,Imports,Imports,1990,0.048366
+Canada,Poultry,Imports,Imports,1990,0.0483656
 Canada,SheepGoat,Imports,Imports,1990,0.012615
 China,Beef,Imports,Imports,1990,0
-China,Dairy,Imports,Imports,1990,1.564872
+China,Dairy,Imports,Imports,1990,1.2349392
 China,Pork,Imports,Imports,1990,0
 China,Poultry,Imports,Imports,1990,0.172021
-China,SheepGoat,Imports,Imports,1990,0.004001
+China,SheepGoat,Imports,Imports,1990,0.0040013
 Eastern Europe,Beef,Imports,Imports,1990,0
 Eastern Europe,Dairy,Imports,Imports,1990,0
 Eastern Europe,Pork,Imports,Imports,1990,0
 Eastern Europe,Poultry,Imports,Imports,1990,0
 Eastern Europe,SheepGoat,Imports,Imports,1990,0
-Former Soviet Union,Beef,Imports,Imports,1990,0.443072
-Former Soviet Union,Dairy,Imports,Imports,1990,0.665127
-Former Soviet Union,Pork,Imports,Imports,1990,0.277415
-Former Soviet Union,Poultry,Imports,Imports,1990,0.163459
-Former Soviet Union,SheepGoat,Imports,Imports,1990,0.073742
+Former Soviet Union,Beef,Imports,Imports,1990,0.4430721
+Former Soviet Union,Dairy,Imports,Imports,1990,0.3867768
+Former Soviet Union,Pork,Imports,Imports,1990,0.2774146
+Former Soviet Union,Poultry,Imports,Imports,1990,0.1634587
+Former Soviet Union,SheepGoat,Imports,Imports,1990,0.0737425
 India,Beef,Imports,Imports,1990,0
-India,Dairy,Imports,Imports,1990,0.13159
+India,Dairy,Imports,Imports,1990,0.1292989
 India,Pork,Imports,Imports,1990,0
 India,Poultry,Imports,Imports,1990,0
 India,SheepGoat,Imports,Imports,1990,0
-Japan,Beef,Imports,Imports,1990,0.474079
-Japan,Dairy,Imports,Imports,1990,2.702702
-Japan,Pork,Imports,Imports,1990,0.410887
+Japan,Beef,Imports,Imports,1990,0.4740788
+Japan,Dairy,Imports,Imports,1990,2.3414498
+Japan,Pork,Imports,Imports,1990,0.4108868
 Japan,Poultry,Imports,Imports,1990,0.36647
-Japan,SheepGoat,Imports,Imports,1990,0.068568
-Korea,Beef,Imports,Imports,1990,0.12204
-Korea,Dairy,Imports,Imports,1990,0.312154
-Korea,Pork,Imports,Imports,1990,0.003162
-Korea,Poultry,Imports,Imports,1990,0.010897
-Korea,SheepGoat,Imports,Imports,1990,0.011493
+Japan,SheepGoat,Imports,Imports,1990,0.0685675
+Korea,Beef,Imports,Imports,1990,0.1220403
+Korea,Dairy,Imports,Imports,1990,0.1033943
+Korea,Pork,Imports,Imports,1990,0.0031622
+Korea,Poultry,Imports,Imports,1990,0.0108966
+Korea,SheepGoat,Imports,Imports,1990,0.0114932
 Latin America,Beef,Imports,Imports,1990,0
-Latin America,Dairy,Imports,Imports,1990,5.551704
-Latin America,Pork,Imports,Imports,1990,0.094387
+Latin America,Dairy,Imports,Imports,1990,5.2111343
+Latin America,Pork,Imports,Imports,1990,0.0943874
 Latin America,Poultry,Imports,Imports,1990,0
-Latin America,SheepGoat,Imports,Imports,1990,0.001561
-Middle East,Beef,Imports,Imports,1990,0.231884
-Middle East,Dairy,Imports,Imports,1990,3.142212
-Middle East,Pork,Imports,Imports,1990,0.003601
+Latin America,SheepGoat,Imports,Imports,1990,0.0015609
+Middle East,Beef,Imports,Imports,1990,0.2318843
+Middle East,Dairy,Imports,Imports,1990,2.8707112
+Middle East,Pork,Imports,Imports,1990,0.0036011
 Middle East,Poultry,Imports,Imports,1990,0.312955
-Middle East,SheepGoat,Imports,Imports,1990,0.115708
-Southeast Asia,Beef,Imports,Imports,1990,0.076666
-Southeast Asia,Dairy,Imports,Imports,1990,4.328622
-Southeast Asia,Pork,Imports,Imports,1990,0.015077
+Middle East,SheepGoat,Imports,Imports,1990,0.1157077
+Southeast Asia,Beef,Imports,Imports,1990,0.0766661
+Southeast Asia,Dairy,Imports,Imports,1990,3.963162
+Southeast Asia,Pork,Imports,Imports,1990,0.0150775
 Southeast Asia,Poultry,Imports,Imports,1990,0
-Southeast Asia,SheepGoat,Imports,Imports,1990,0.021963
-USA,Beef,Imports,Imports,1990,0.675147
-USA,Dairy,Imports,Imports,1990,2.043384
-USA,Pork,Imports,Imports,1990,0.284954
+Southeast Asia,SheepGoat,Imports,Imports,1990,0.0219631
+USA,Beef,Imports,Imports,1990,0.6751465
+USA,Dairy,Imports,Imports,1990,2.7905255
+USA,Pork,Imports,Imports,1990,0.2849541
 USA,Poultry,Imports,Imports,1990,0
-USA,SheepGoat,Imports,Imports,1990,0.01801
+USA,SheepGoat,Imports,Imports,1990,0.0180097
 Western Europe,Beef,Imports,Imports,1990,0
 Western Europe,Dairy,Imports,Imports,1990,0
 Western Europe,Pork,Imports,Imports,1990,0
 Western Europe,Poultry,Imports,Imports,1990,0
-Western Europe,SheepGoat,Imports,Imports,1990,0.213803
-Africa,Beef,Imports,Imports,2005,0.403557
-Africa,Dairy,Imports,Imports,2005,6.203385
-Africa,Pork,Imports,Imports,2005,0.099683
-Africa,Poultry,Imports,Imports,2005,0.65929
-Africa,SheepGoat,Imports,Imports,2005,0.042606
+Western Europe,SheepGoat,Imports,Imports,1990,0.2138034
+Africa,Beef,Imports,Imports,2005,0.4035566
+Africa,Dairy,Imports,Imports,2005,5.7045643
+Africa,Pork,Imports,Imports,2005,0.0996835
+Africa,Poultry,Imports,Imports,2005,0.6592899
+Africa,SheepGoat,Imports,Imports,2005,0.0426065
 Australia_NZ,Beef,Imports,Imports,2005,0
 Australia_NZ,Dairy,Imports,Imports,2005,0
-Australia_NZ,Pork,Imports,Imports,2005,0.084974
+Australia_NZ,Pork,Imports,Imports,2005,0.0849744
 Australia_NZ,Poultry,Imports,Imports,2005,0
 Australia_NZ,SheepGoat,Imports,Imports,2005,0
 Canada,Beef,Imports,Imports,2005,0
-Canada,Dairy,Imports,Imports,2005,0.64306
+Canada,Dairy,Imports,Imports,2005,0.3175353
 Canada,Pork,Imports,Imports,2005,0
-Canada,Poultry,Imports,Imports,2005,0.058632
-Canada,SheepGoat,Imports,Imports,2005,0.019769
-China,Beef,Imports,Imports,2005,0.098602
-China,Dairy,Imports,Imports,2005,5.323304
+Canada,Poultry,Imports,Imports,2005,0.0586319
+Canada,SheepGoat,Imports,Imports,2005,0.0197686
+China,Beef,Imports,Imports,2005,0.0986021
+China,Dairy,Imports,Imports,2005,2.5132092
 China,Pork,Imports,Imports,2005,0
-China,Poultry,Imports,Imports,2005,0.617902
-China,SheepGoat,Imports,Imports,2005,0.05091
-Eastern Europe,Beef,Imports,Imports,2005,0.012006
+China,Poultry,Imports,Imports,2005,0.6179022
+China,SheepGoat,Imports,Imports,2005,0.0509096
+Eastern Europe,Beef,Imports,Imports,2005,0.0120056
 Eastern Europe,Dairy,Imports,Imports,2005,0
-Eastern Europe,Pork,Imports,Imports,2005,0.348133
+Eastern Europe,Pork,Imports,Imports,2005,0.3481326
 Eastern Europe,Poultry,Imports,Imports,2005,0.069057
 Eastern Europe,SheepGoat,Imports,Imports,2005,0
-Former Soviet Union,Beef,Imports,Imports,2005,0.667412
+Former Soviet Union,Beef,Imports,Imports,2005,0.6674125
 Former Soviet Union,Dairy,Imports,Imports,2005,0
-Former Soviet Union,Pork,Imports,Imports,2005,0.741795
-Former Soviet Union,Poultry,Imports,Imports,2005,1.661985
-Former Soviet Union,SheepGoat,Imports,Imports,2005,0.007762
+Former Soviet Union,Pork,Imports,Imports,2005,0.7417953
+Former Soviet Union,Poultry,Imports,Imports,2005,1.6619848
+Former Soviet Union,SheepGoat,Imports,Imports,2005,0.0077617
 India,Beef,Imports,Imports,2005,0
 India,Dairy,Imports,Imports,2005,0
 India,Pork,Imports,Imports,2005,0
 India,Poultry,Imports,Imports,2005,0
 India,SheepGoat,Imports,Imports,2005,0
-Japan,Beef,Imports,Imports,2005,0.631108
-Japan,Dairy,Imports,Imports,2005,2.800887
-Japan,Pork,Imports,Imports,2005,1.332647
-Japan,Poultry,Imports,Imports,2005,0.875543
-Japan,SheepGoat,Imports,Imports,2005,0.027722
-Korea,Beef,Imports,Imports,2005,0.332979
-Korea,Dairy,Imports,Imports,2005,1.060089
-Korea,Pork,Imports,Imports,2005,0.313228
-Korea,Poultry,Imports,Imports,2005,0.068216
-Korea,SheepGoat,Imports,Imports,2005,0.003049
+Japan,Beef,Imports,Imports,2005,0.6311083
+Japan,Dairy,Imports,Imports,2005,1.9795518
+Japan,Pork,Imports,Imports,2005,1.3326473
+Japan,Poultry,Imports,Imports,2005,0.8755429
+Japan,SheepGoat,Imports,Imports,2005,0.0277221
+Korea,Beef,Imports,Imports,2005,0.3329787
+Korea,Dairy,Imports,Imports,2005,0.4308068
+Korea,Pork,Imports,Imports,2005,0.3132284
+Korea,Poultry,Imports,Imports,2005,0.0682162
+Korea,SheepGoat,Imports,Imports,2005,0.0030492
 Latin America,Beef,Imports,Imports,2005,0
-Latin America,Dairy,Imports,Imports,2005,4.207475
+Latin America,Dairy,Imports,Imports,2005,2.7159527
 Latin America,Pork,Imports,Imports,2005,0
 Latin America,Poultry,Imports,Imports,2005,0
-Latin America,SheepGoat,Imports,Imports,2005,0.036576
-Middle East,Beef,Imports,Imports,2005,0.327611
-Middle East,Dairy,Imports,Imports,2005,3.466803
-Middle East,Pork,Imports,Imports,2005,0.016612
-Middle East,Poultry,Imports,Imports,2005,0.816333
-Middle East,SheepGoat,Imports,Imports,2005,0.10403
-Southeast Asia,Beef,Imports,Imports,2005,0.259383
-Southeast Asia,Dairy,Imports,Imports,2005,8.701642
-Southeast Asia,Pork,Imports,Imports,2005,0.04897
+Latin America,SheepGoat,Imports,Imports,2005,0.0365759
+Middle East,Beef,Imports,Imports,2005,0.3276107
+Middle East,Dairy,Imports,Imports,2005,3.1014488
+Middle East,Pork,Imports,Imports,2005,0.0166121
+Middle East,Poultry,Imports,Imports,2005,0.8163332
+Middle East,SheepGoat,Imports,Imports,2005,0.1040297
+Southeast Asia,Beef,Imports,Imports,2005,0.2593828
+Southeast Asia,Dairy,Imports,Imports,2005,6.4196886
+Southeast Asia,Pork,Imports,Imports,2005,0.0489702
 Southeast Asia,Poultry,Imports,Imports,2005,0
-Southeast Asia,SheepGoat,Imports,Imports,2005,0.027357
-USA,Beef,Imports,Imports,2005,1.039132
-USA,Dairy,Imports,Imports,2005,0
+Southeast Asia,SheepGoat,Imports,Imports,2005,0.0273571
+USA,Beef,Imports,Imports,2005,1.0391321
+USA,Dairy,Imports,Imports,2005,1.1445222
 USA,Pork,Imports,Imports,2005,0
 USA,Poultry,Imports,Imports,2005,0
-USA,SheepGoat,Imports,Imports,2005,0.078755
-Western Europe,Beef,Imports,Imports,2005,0.600074
+USA,SheepGoat,Imports,Imports,2005,0.0787554
+Western Europe,Beef,Imports,Imports,2005,0.6000735
 Western Europe,Dairy,Imports,Imports,2005,0
 Western Europe,Pork,Imports,Imports,2005,0
-Western Europe,Poultry,Imports,Imports,2005,0.006656
-Western Europe,SheepGoat,Imports,Imports,2005,0.232293
-Africa,Beef,Imports,Imports,2020,0.403557
-Africa,Dairy,Imports,Imports,2020,6.203385
-Africa,Pork,Imports,Imports,2020,0.099683
-Africa,Poultry,Imports,Imports,2020,0.65929
-Africa,SheepGoat,Imports,Imports,2020,0.042606
+Western Europe,Poultry,Imports,Imports,2005,0.0066563
+Western Europe,SheepGoat,Imports,Imports,2005,0.2322927
+Africa,Beef,Imports,Imports,2020,0.4035566
+Africa,Dairy,Imports,Imports,2020,5.7045643
+Africa,Pork,Imports,Imports,2020,0.0996835
+Africa,Poultry,Imports,Imports,2020,0.6592899
+Africa,SheepGoat,Imports,Imports,2020,0.0426065
 Australia_NZ,Beef,Imports,Imports,2020,0
 Australia_NZ,Dairy,Imports,Imports,2020,0
-Australia_NZ,Pork,Imports,Imports,2020,0.084974
+Australia_NZ,Pork,Imports,Imports,2020,0.0849744
 Australia_NZ,Poultry,Imports,Imports,2020,0
 Australia_NZ,SheepGoat,Imports,Imports,2020,0
 Canada,Beef,Imports,Imports,2020,0
-Canada,Dairy,Imports,Imports,2020,0.64306
+Canada,Dairy,Imports,Imports,2020,0.3175353
 Canada,Pork,Imports,Imports,2020,0
-Canada,Poultry,Imports,Imports,2020,0.058632
-Canada,SheepGoat,Imports,Imports,2020,0.019769
-China,Beef,Imports,Imports,2020,0.098602
-China,Dairy,Imports,Imports,2020,5.323304
+Canada,Poultry,Imports,Imports,2020,0.0586319
+Canada,SheepGoat,Imports,Imports,2020,0.0197686
+China,Beef,Imports,Imports,2020,0.0986021
+China,Dairy,Imports,Imports,2020,2.5132092
 China,Pork,Imports,Imports,2020,0
-China,Poultry,Imports,Imports,2020,0.617902
-China,SheepGoat,Imports,Imports,2020,0.05091
-Eastern Europe,Beef,Imports,Imports,2020,0.012006
+China,Poultry,Imports,Imports,2020,0.6179022
+China,SheepGoat,Imports,Imports,2020,0.0509096
+Eastern Europe,Beef,Imports,Imports,2020,0.0120056
 Eastern Europe,Dairy,Imports,Imports,2020,0
-Eastern Europe,Pork,Imports,Imports,2020,0.348133
+Eastern Europe,Pork,Imports,Imports,2020,0.3481326
 Eastern Europe,Poultry,Imports,Imports,2020,0.069057
 Eastern Europe,SheepGoat,Imports,Imports,2020,0
-Former Soviet Union,Beef,Imports,Imports,2020,0.667412
+Former Soviet Union,Beef,Imports,Imports,2020,0.6674125
 Former Soviet Union,Dairy,Imports,Imports,2020,0
-Former Soviet Union,Pork,Imports,Imports,2020,0.741795
-Former Soviet Union,Poultry,Imports,Imports,2020,1.661985
-Former Soviet Union,SheepGoat,Imports,Imports,2020,0.007762
+Former Soviet Union,Pork,Imports,Imports,2020,0.7417953
+Former Soviet Union,Poultry,Imports,Imports,2020,1.6619848
+Former Soviet Union,SheepGoat,Imports,Imports,2020,0.0077617
 India,Beef,Imports,Imports,2020,0
 India,Dairy,Imports,Imports,2020,0
 India,Pork,Imports,Imports,2020,0
 India,Poultry,Imports,Imports,2020,0
 India,SheepGoat,Imports,Imports,2020,0
-Japan,Beef,Imports,Imports,2020,0.631108
-Japan,Dairy,Imports,Imports,2020,2.800887
-Japan,Pork,Imports,Imports,2020,1.332647
-Japan,Poultry,Imports,Imports,2020,0.875543
-Japan,SheepGoat,Imports,Imports,2020,0.027722
-Korea,Beef,Imports,Imports,2020,0.332979
-Korea,Dairy,Imports,Imports,2020,1.060089
-Korea,Pork,Imports,Imports,2020,0.313228
-Korea,Poultry,Imports,Imports,2020,0.068216
-Korea,SheepGoat,Imports,Imports,2020,0.003049
+Japan,Beef,Imports,Imports,2020,0.6311083
+Japan,Dairy,Imports,Imports,2020,1.9795518
+Japan,Pork,Imports,Imports,2020,1.3326473
+Japan,Poultry,Imports,Imports,2020,0.8755429
+Japan,SheepGoat,Imports,Imports,2020,0.0277221
+Korea,Beef,Imports,Imports,2020,0.3329787
+Korea,Dairy,Imports,Imports,2020,0.4308068
+Korea,Pork,Imports,Imports,2020,0.3132284
+Korea,Poultry,Imports,Imports,2020,0.0682162
+Korea,SheepGoat,Imports,Imports,2020,0.0030492
 Latin America,Beef,Imports,Imports,2020,0
-Latin America,Dairy,Imports,Imports,2020,4.207475
+Latin America,Dairy,Imports,Imports,2020,2.7159527
 Latin America,Pork,Imports,Imports,2020,0
 Latin America,Poultry,Imports,Imports,2020,0
-Latin America,SheepGoat,Imports,Imports,2020,0.036576
-Middle East,Beef,Imports,Imports,2020,0.327611
-Middle East,Dairy,Imports,Imports,2020,3.466803
-Middle East,Pork,Imports,Imports,2020,0.016612
-Middle East,Poultry,Imports,Imports,2020,0.816333
-Middle East,SheepGoat,Imports,Imports,2020,0.10403
-Southeast Asia,Beef,Imports,Imports,2020,0.259383
-Southeast Asia,Dairy,Imports,Imports,2020,8.701642
-Southeast Asia,Pork,Imports,Imports,2020,0.04897
+Latin America,SheepGoat,Imports,Imports,2020,0.0365759
+Middle East,Beef,Imports,Imports,2020,0.3276107
+Middle East,Dairy,Imports,Imports,2020,3.1014488
+Middle East,Pork,Imports,Imports,2020,0.0166121
+Middle East,Poultry,Imports,Imports,2020,0.8163332
+Middle East,SheepGoat,Imports,Imports,2020,0.1040297
+Southeast Asia,Beef,Imports,Imports,2020,0.2593828
+Southeast Asia,Dairy,Imports,Imports,2020,6.4196886
+Southeast Asia,Pork,Imports,Imports,2020,0.0489702
 Southeast Asia,Poultry,Imports,Imports,2020,0
-Southeast Asia,SheepGoat,Imports,Imports,2020,0.027357
-USA,Beef,Imports,Imports,2020,1.039132
-USA,Dairy,Imports,Imports,2020,0
+Southeast Asia,SheepGoat,Imports,Imports,2020,0.0273571
+USA,Beef,Imports,Imports,2020,1.0391321
+USA,Dairy,Imports,Imports,2020,1.1445222
 USA,Pork,Imports,Imports,2020,0
 USA,Poultry,Imports,Imports,2020,0
-USA,SheepGoat,Imports,Imports,2020,0.078755
-Western Europe,Beef,Imports,Imports,2020,0.600074
+USA,SheepGoat,Imports,Imports,2020,0.0787554
+Western Europe,Beef,Imports,Imports,2020,0.6000735
 Western Europe,Dairy,Imports,Imports,2020,0
 Western Europe,Pork,Imports,Imports,2020,0
-Western Europe,Poultry,Imports,Imports,2020,0.006656
-Western Europe,SheepGoat,Imports,Imports,2020,0.232293
-Africa,Beef,Imports,Imports,2035,0.403557
-Africa,Dairy,Imports,Imports,2035,6.203385
-Africa,Pork,Imports,Imports,2035,0.099683
-Africa,Poultry,Imports,Imports,2035,0.65929
-Africa,SheepGoat,Imports,Imports,2035,0.042606
+Western Europe,Poultry,Imports,Imports,2020,0.0066563
+Western Europe,SheepGoat,Imports,Imports,2020,0.2322927
+Africa,Beef,Imports,Imports,2035,0.4035566
+Africa,Dairy,Imports,Imports,2035,5.7045643
+Africa,Pork,Imports,Imports,2035,0.0996835
+Africa,Poultry,Imports,Imports,2035,0.6592899
+Africa,SheepGoat,Imports,Imports,2035,0.0426065
 Australia_NZ,Beef,Imports,Imports,2035,0
 Australia_NZ,Dairy,Imports,Imports,2035,0
-Australia_NZ,Pork,Imports,Imports,2035,0.084974
+Australia_NZ,Pork,Imports,Imports,2035,0.0849744
 Australia_NZ,Poultry,Imports,Imports,2035,0
 Australia_NZ,SheepGoat,Imports,Imports,2035,0
 Canada,Beef,Imports,Imports,2035,0
-Canada,Dairy,Imports,Imports,2035,0.64306
+Canada,Dairy,Imports,Imports,2035,0.3175353
 Canada,Pork,Imports,Imports,2035,0
-Canada,Poultry,Imports,Imports,2035,0.058632
-Canada,SheepGoat,Imports,Imports,2035,0.019769
-China,Beef,Imports,Imports,2035,0.098602
-China,Dairy,Imports,Imports,2035,5.323304
+Canada,Poultry,Imports,Imports,2035,0.0586319
+Canada,SheepGoat,Imports,Imports,2035,0.0197686
+China,Beef,Imports,Imports,2035,0.0986021
+China,Dairy,Imports,Imports,2035,2.5132092
 China,Pork,Imports,Imports,2035,0
-China,Poultry,Imports,Imports,2035,0.617902
-China,SheepGoat,Imports,Imports,2035,0.05091
-Eastern Europe,Beef,Imports,Imports,2035,0.012006
+China,Poultry,Imports,Imports,2035,0.6179022
+China,SheepGoat,Imports,Imports,2035,0.0509096
+Eastern Europe,Beef,Imports,Imports,2035,0.0120056
 Eastern Europe,Dairy,Imports,Imports,2035,0
-Eastern Europe,Pork,Imports,Imports,2035,0.348133
+Eastern Europe,Pork,Imports,Imports,2035,0.3481326
 Eastern Europe,Poultry,Imports,Imports,2035,0.069057
 Eastern Europe,SheepGoat,Imports,Imports,2035,0
-Former Soviet Union,Beef,Imports,Imports,2035,0.667412
+Former Soviet Union,Beef,Imports,Imports,2035,0.6674125
 Former Soviet Union,Dairy,Imports,Imports,2035,0
-Former Soviet Union,Pork,Imports,Imports,2035,0.741795
-Former Soviet Union,Poultry,Imports,Imports,2035,1.661985
-Former Soviet Union,SheepGoat,Imports,Imports,2035,0.007762
+Former Soviet Union,Pork,Imports,Imports,2035,0.7417953
+Former Soviet Union,Poultry,Imports,Imports,2035,1.6619848
+Former Soviet Union,SheepGoat,Imports,Imports,2035,0.0077617
 India,Beef,Imports,Imports,2035,0
 India,Dairy,Imports,Imports,2035,0
 India,Pork,Imports,Imports,2035,0
 India,Poultry,Imports,Imports,2035,0
 India,SheepGoat,Imports,Imports,2035,0
-Japan,Beef,Imports,Imports,2035,0.631108
-Japan,Dairy,Imports,Imports,2035,2.800887
-Japan,Pork,Imports,Imports,2035,1.332647
-Japan,Poultry,Imports,Imports,2035,0.875543
-Japan,SheepGoat,Imports,Imports,2035,0.027722
-Korea,Beef,Imports,Imports,2035,0.332979
-Korea,Dairy,Imports,Imports,2035,1.060089
-Korea,Pork,Imports,Imports,2035,0.313228
-Korea,Poultry,Imports,Imports,2035,0.068216
-Korea,SheepGoat,Imports,Imports,2035,0.003049
+Japan,Beef,Imports,Imports,2035,0.6311083
+Japan,Dairy,Imports,Imports,2035,1.9795518
+Japan,Pork,Imports,Imports,2035,1.3326473
+Japan,Poultry,Imports,Imports,2035,0.8755429
+Japan,SheepGoat,Imports,Imports,2035,0.0277221
+Korea,Beef,Imports,Imports,2035,0.3329787
+Korea,Dairy,Imports,Imports,2035,0.4308068
+Korea,Pork,Imports,Imports,2035,0.3132284
+Korea,Poultry,Imports,Imports,2035,0.0682162
+Korea,SheepGoat,Imports,Imports,2035,0.0030492
 Latin America,Beef,Imports,Imports,2035,0
-Latin America,Dairy,Imports,Imports,2035,4.207475
+Latin America,Dairy,Imports,Imports,2035,2.7159527
 Latin America,Pork,Imports,Imports,2035,0
 Latin America,Poultry,Imports,Imports,2035,0
-Latin America,SheepGoat,Imports,Imports,2035,0.036576
-Middle East,Beef,Imports,Imports,2035,0.327611
-Middle East,Dairy,Imports,Imports,2035,3.466803
-Middle East,Pork,Imports,Imports,2035,0.016612
-Middle East,Poultry,Imports,Imports,2035,0.816333
-Middle East,SheepGoat,Imports,Imports,2035,0.10403
-Southeast Asia,Beef,Imports,Imports,2035,0.259383
-Southeast Asia,Dairy,Imports,Imports,2035,8.701642
-Southeast Asia,Pork,Imports,Imports,2035,0.04897
+Latin America,SheepGoat,Imports,Imports,2035,0.0365759
+Middle East,Beef,Imports,Imports,2035,0.3276107
+Middle East,Dairy,Imports,Imports,2035,3.1014488
+Middle East,Pork,Imports,Imports,2035,0.0166121
+Middle East,Poultry,Imports,Imports,2035,0.8163332
+Middle East,SheepGoat,Imports,Imports,2035,0.1040297
+Southeast Asia,Beef,Imports,Imports,2035,0.2593828
+Southeast Asia,Dairy,Imports,Imports,2035,6.4196886
+Southeast Asia,Pork,Imports,Imports,2035,0.0489702
 Southeast Asia,Poultry,Imports,Imports,2035,0
-Southeast Asia,SheepGoat,Imports,Imports,2035,0.027357
-USA,Beef,Imports,Imports,2035,1.039132
-USA,Dairy,Imports,Imports,2035,0
+Southeast Asia,SheepGoat,Imports,Imports,2035,0.0273571
+USA,Beef,Imports,Imports,2035,1.0391321
+USA,Dairy,Imports,Imports,2035,1.1445222
 USA,Pork,Imports,Imports,2035,0
 USA,Poultry,Imports,Imports,2035,0
-USA,SheepGoat,Imports,Imports,2035,0.078755
-Western Europe,Beef,Imports,Imports,2035,0.600074
+USA,SheepGoat,Imports,Imports,2035,0.0787554
+Western Europe,Beef,Imports,Imports,2035,0.6000735
 Western Europe,Dairy,Imports,Imports,2035,0
 Western Europe,Pork,Imports,Imports,2035,0
-Western Europe,Poultry,Imports,Imports,2035,0.006656
-Western Europe,SheepGoat,Imports,Imports,2035,0.232293
-Africa,Beef,Imports,Imports,2050,0.403557
-Africa,Dairy,Imports,Imports,2050,6.203385
-Africa,Pork,Imports,Imports,2050,0.099683
-Africa,Poultry,Imports,Imports,2050,0.65929
-Africa,SheepGoat,Imports,Imports,2050,0.042606
+Western Europe,Poultry,Imports,Imports,2035,0.0066563
+Western Europe,SheepGoat,Imports,Imports,2035,0.2322927
+Africa,Beef,Imports,Imports,2050,0.4035566
+Africa,Dairy,Imports,Imports,2050,5.7045643
+Africa,Pork,Imports,Imports,2050,0.0996835
+Africa,Poultry,Imports,Imports,2050,0.6592899
+Africa,SheepGoat,Imports,Imports,2050,0.0426065
 Australia_NZ,Beef,Imports,Imports,2050,0
 Australia_NZ,Dairy,Imports,Imports,2050,0
-Australia_NZ,Pork,Imports,Imports,2050,0.084974
+Australia_NZ,Pork,Imports,Imports,2050,0.0849744
 Australia_NZ,Poultry,Imports,Imports,2050,0
 Australia_NZ,SheepGoat,Imports,Imports,2050,0
 Canada,Beef,Imports,Imports,2050,0
-Canada,Dairy,Imports,Imports,2050,0.64306
+Canada,Dairy,Imports,Imports,2050,0.3175353
 Canada,Pork,Imports,Imports,2050,0
-Canada,Poultry,Imports,Imports,2050,0.058632
-Canada,SheepGoat,Imports,Imports,2050,0.019769
-China,Beef,Imports,Imports,2050,0.098602
-China,Dairy,Imports,Imports,2050,5.323304
+Canada,Poultry,Imports,Imports,2050,0.0586319
+Canada,SheepGoat,Imports,Imports,2050,0.0197686
+China,Beef,Imports,Imports,2050,0.0986021
+China,Dairy,Imports,Imports,2050,2.5132092
 China,Pork,Imports,Imports,2050,0
-China,Poultry,Imports,Imports,2050,0.617902
-China,SheepGoat,Imports,Imports,2050,0.05091
-Eastern Europe,Beef,Imports,Imports,2050,0.012006
+China,Poultry,Imports,Imports,2050,0.6179022
+China,SheepGoat,Imports,Imports,2050,0.0509096
+Eastern Europe,Beef,Imports,Imports,2050,0.0120056
 Eastern Europe,Dairy,Imports,Imports,2050,0
-Eastern Europe,Pork,Imports,Imports,2050,0.348133
+Eastern Europe,Pork,Imports,Imports,2050,0.3481326
 Eastern Europe,Poultry,Imports,Imports,2050,0.069057
 Eastern Europe,SheepGoat,Imports,Imports,2050,0
-Former Soviet Union,Beef,Imports,Imports,2050,0.667412
+Former Soviet Union,Beef,Imports,Imports,2050,0.6674125
 Former Soviet Union,Dairy,Imports,Imports,2050,0
-Former Soviet Union,Pork,Imports,Imports,2050,0.741795
-Former Soviet Union,Poultry,Imports,Imports,2050,1.661985
-Former Soviet Union,SheepGoat,Imports,Imports,2050,0.007762
+Former Soviet Union,Pork,Imports,Imports,2050,0.7417953
+Former Soviet Union,Poultry,Imports,Imports,2050,1.6619848
+Former Soviet Union,SheepGoat,Imports,Imports,2050,0.0077617
 India,Beef,Imports,Imports,2050,0
 India,Dairy,Imports,Imports,2050,0
 India,Pork,Imports,Imports,2050,0
 India,Poultry,Imports,Imports,2050,0
 India,SheepGoat,Imports,Imports,2050,0
-Japan,Beef,Imports,Imports,2050,0.631108
-Japan,Dairy,Imports,Imports,2050,2.800887
-Japan,Pork,Imports,Imports,2050,1.332647
-Japan,Poultry,Imports,Imports,2050,0.875543
-Japan,SheepGoat,Imports,Imports,2050,0.027722
-Korea,Beef,Imports,Imports,2050,0.332979
-Korea,Dairy,Imports,Imports,2050,1.060089
-Korea,Pork,Imports,Imports,2050,0.313228
-Korea,Poultry,Imports,Imports,2050,0.068216
-Korea,SheepGoat,Imports,Imports,2050,0.003049
+Japan,Beef,Imports,Imports,2050,0.6311083
+Japan,Dairy,Imports,Imports,2050,1.9795518
+Japan,Pork,Imports,Imports,2050,1.3326473
+Japan,Poultry,Imports,Imports,2050,0.8755429
+Japan,SheepGoat,Imports,Imports,2050,0.0277221
+Korea,Beef,Imports,Imports,2050,0.3329787
+Korea,Dairy,Imports,Imports,2050,0.4308068
+Korea,Pork,Imports,Imports,2050,0.3132284
+Korea,Poultry,Imports,Imports,2050,0.0682162
+Korea,SheepGoat,Imports,Imports,2050,0.0030492
 Latin America,Beef,Imports,Imports,2050,0
-Latin America,Dairy,Imports,Imports,2050,4.207475
+Latin America,Dairy,Imports,Imports,2050,2.7159527
 Latin America,Pork,Imports,Imports,2050,0
 Latin America,Poultry,Imports,Imports,2050,0
-Latin America,SheepGoat,Imports,Imports,2050,0.036576
-Middle East,Beef,Imports,Imports,2050,0.327611
-Middle East,Dairy,Imports,Imports,2050,3.466803
-Middle East,Pork,Imports,Imports,2050,0.016612
-Middle East,Poultry,Imports,Imports,2050,0.816333
-Middle East,SheepGoat,Imports,Imports,2050,0.10403
-Southeast Asia,Beef,Imports,Imports,2050,0.259383
-Southeast Asia,Dairy,Imports,Imports,2050,8.701642
-Southeast Asia,Pork,Imports,Imports,2050,0.04897
+Latin America,SheepGoat,Imports,Imports,2050,0.0365759
+Middle East,Beef,Imports,Imports,2050,0.3276107
+Middle East,Dairy,Imports,Imports,2050,3.1014488
+Middle East,Pork,Imports,Imports,2050,0.0166121
+Middle East,Poultry,Imports,Imports,2050,0.8163332
+Middle East,SheepGoat,Imports,Imports,2050,0.1040297
+Southeast Asia,Beef,Imports,Imports,2050,0.2593828
+Southeast Asia,Dairy,Imports,Imports,2050,6.4196886
+Southeast Asia,Pork,Imports,Imports,2050,0.0489702
 Southeast Asia,Poultry,Imports,Imports,2050,0
-Southeast Asia,SheepGoat,Imports,Imports,2050,0.027357
-USA,Beef,Imports,Imports,2050,1.039132
-USA,Dairy,Imports,Imports,2050,0
+Southeast Asia,SheepGoat,Imports,Imports,2050,0.0273571
+USA,Beef,Imports,Imports,2050,1.0391321
+USA,Dairy,Imports,Imports,2050,1.1445222
 USA,Pork,Imports,Imports,2050,0
 USA,Poultry,Imports,Imports,2050,0
-USA,SheepGoat,Imports,Imports,2050,0.078755
-Western Europe,Beef,Imports,Imports,2050,0.600074
+USA,SheepGoat,Imports,Imports,2050,0.0787554
+Western Europe,Beef,Imports,Imports,2050,0.6000735
 Western Europe,Dairy,Imports,Imports,2050,0
 Western Europe,Pork,Imports,Imports,2050,0
-Western Europe,Poultry,Imports,Imports,2050,0.006656
-Western Europe,SheepGoat,Imports,Imports,2050,0.232293
-Africa,Beef,Imports,Imports,2065,0.403557
-Africa,Dairy,Imports,Imports,2065,6.203385
-Africa,Pork,Imports,Imports,2065,0.099683
-Africa,Poultry,Imports,Imports,2065,0.65929
-Africa,SheepGoat,Imports,Imports,2065,0.042606
+Western Europe,Poultry,Imports,Imports,2050,0.0066563
+Western Europe,SheepGoat,Imports,Imports,2050,0.2322927
+Africa,Beef,Imports,Imports,2065,0.4035566
+Africa,Dairy,Imports,Imports,2065,5.7045643
+Africa,Pork,Imports,Imports,2065,0.0996835
+Africa,Poultry,Imports,Imports,2065,0.6592899
+Africa,SheepGoat,Imports,Imports,2065,0.0426065
 Australia_NZ,Beef,Imports,Imports,2065,0
 Australia_NZ,Dairy,Imports,Imports,2065,0
-Australia_NZ,Pork,Imports,Imports,2065,0.084974
+Australia_NZ,Pork,Imports,Imports,2065,0.0849744
 Australia_NZ,Poultry,Imports,Imports,2065,0
 Australia_NZ,SheepGoat,Imports,Imports,2065,0
 Canada,Beef,Imports,Imports,2065,0
-Canada,Dairy,Imports,Imports,2065,0.64306
+Canada,Dairy,Imports,Imports,2065,0.3175353
 Canada,Pork,Imports,Imports,2065,0
-Canada,Poultry,Imports,Imports,2065,0.058632
-Canada,SheepGoat,Imports,Imports,2065,0.019769
-China,Beef,Imports,Imports,2065,0.098602
-China,Dairy,Imports,Imports,2065,5.323304
+Canada,Poultry,Imports,Imports,2065,0.0586319
+Canada,SheepGoat,Imports,Imports,2065,0.0197686
+China,Beef,Imports,Imports,2065,0.0986021
+China,Dairy,Imports,Imports,2065,2.5132092
 China,Pork,Imports,Imports,2065,0
-China,Poultry,Imports,Imports,2065,0.617902
-China,SheepGoat,Imports,Imports,2065,0.05091
-Eastern Europe,Beef,Imports,Imports,2065,0.012006
+China,Poultry,Imports,Imports,2065,0.6179022
+China,SheepGoat,Imports,Imports,2065,0.0509096
+Eastern Europe,Beef,Imports,Imports,2065,0.0120056
 Eastern Europe,Dairy,Imports,Imports,2065,0
-Eastern Europe,Pork,Imports,Imports,2065,0.348133
+Eastern Europe,Pork,Imports,Imports,2065,0.3481326
 Eastern Europe,Poultry,Imports,Imports,2065,0.069057
 Eastern Europe,SheepGoat,Imports,Imports,2065,0
-Former Soviet Union,Beef,Imports,Imports,2065,0.667412
+Former Soviet Union,Beef,Imports,Imports,2065,0.6674125
 Former Soviet Union,Dairy,Imports,Imports,2065,0
-Former Soviet Union,Pork,Imports,Imports,2065,0.741795
-Former Soviet Union,Poultry,Imports,Imports,2065,1.661985
-Former Soviet Union,SheepGoat,Imports,Imports,2065,0.007762
+Former Soviet Union,Pork,Imports,Imports,2065,0.7417953
+Former Soviet Union,Poultry,Imports,Imports,2065,1.6619848
+Former Soviet Union,SheepGoat,Imports,Imports,2065,0.0077617
 India,Beef,Imports,Imports,2065,0
 India,Dairy,Imports,Imports,2065,0
 India,Pork,Imports,Imports,2065,0
 India,Poultry,Imports,Imports,2065,0
 India,SheepGoat,Imports,Imports,2065,0
-Japan,Beef,Imports,Imports,2065,0.631108
-Japan,Dairy,Imports,Imports,2065,2.800887
-Japan,Pork,Imports,Imports,2065,1.332647
-Japan,Poultry,Imports,Imports,2065,0.875543
-Japan,SheepGoat,Imports,Imports,2065,0.027722
-Korea,Beef,Imports,Imports,2065,0.332979
-Korea,Dairy,Imports,Imports,2065,1.060089
-Korea,Pork,Imports,Imports,2065,0.313228
-Korea,Poultry,Imports,Imports,2065,0.068216
-Korea,SheepGoat,Imports,Imports,2065,0.003049
+Japan,Beef,Imports,Imports,2065,0.6311083
+Japan,Dairy,Imports,Imports,2065,1.9795518
+Japan,Pork,Imports,Imports,2065,1.3326473
+Japan,Poultry,Imports,Imports,2065,0.8755429
+Japan,SheepGoat,Imports,Imports,2065,0.0277221
+Korea,Beef,Imports,Imports,2065,0.3329787
+Korea,Dairy,Imports,Imports,2065,0.4308068
+Korea,Pork,Imports,Imports,2065,0.3132284
+Korea,Poultry,Imports,Imports,2065,0.0682162
+Korea,SheepGoat,Imports,Imports,2065,0.0030492
 Latin America,Beef,Imports,Imports,2065,0
-Latin America,Dairy,Imports,Imports,2065,4.207475
+Latin America,Dairy,Imports,Imports,2065,2.7159527
 Latin America,Pork,Imports,Imports,2065,0
 Latin America,Poultry,Imports,Imports,2065,0
-Latin America,SheepGoat,Imports,Imports,2065,0.036576
-Middle East,Beef,Imports,Imports,2065,0.327611
-Middle East,Dairy,Imports,Imports,2065,3.466803
-Middle East,Pork,Imports,Imports,2065,0.016612
-Middle East,Poultry,Imports,Imports,2065,0.816333
-Middle East,SheepGoat,Imports,Imports,2065,0.10403
-Southeast Asia,Beef,Imports,Imports,2065,0.259383
-Southeast Asia,Dairy,Imports,Imports,2065,8.701642
-Southeast Asia,Pork,Imports,Imports,2065,0.04897
+Latin America,SheepGoat,Imports,Imports,2065,0.0365759
+Middle East,Beef,Imports,Imports,2065,0.3276107
+Middle East,Dairy,Imports,Imports,2065,3.1014488
+Middle East,Pork,Imports,Imports,2065,0.0166121
+Middle East,Poultry,Imports,Imports,2065,0.8163332
+Middle East,SheepGoat,Imports,Imports,2065,0.1040297
+Southeast Asia,Beef,Imports,Imports,2065,0.2593828
+Southeast Asia,Dairy,Imports,Imports,2065,6.4196886
+Southeast Asia,Pork,Imports,Imports,2065,0.0489702
 Southeast Asia,Poultry,Imports,Imports,2065,0
-Southeast Asia,SheepGoat,Imports,Imports,2065,0.027357
-USA,Beef,Imports,Imports,2065,1.039132
-USA,Dairy,Imports,Imports,2065,0
+Southeast Asia,SheepGoat,Imports,Imports,2065,0.0273571
+USA,Beef,Imports,Imports,2065,1.0391321
+USA,Dairy,Imports,Imports,2065,1.1445222
 USA,Pork,Imports,Imports,2065,0
 USA,Poultry,Imports,Imports,2065,0
-USA,SheepGoat,Imports,Imports,2065,0.078755
-Western Europe,Beef,Imports,Imports,2065,0.600074
+USA,SheepGoat,Imports,Imports,2065,0.0787554
+Western Europe,Beef,Imports,Imports,2065,0.6000735
 Western Europe,Dairy,Imports,Imports,2065,0
 Western Europe,Pork,Imports,Imports,2065,0
-Western Europe,Poultry,Imports,Imports,2065,0.006656
-Western Europe,SheepGoat,Imports,Imports,2065,0.232293
-Africa,Beef,Imports,Imports,2080,0.403557
-Africa,Dairy,Imports,Imports,2080,6.203385
-Africa,Pork,Imports,Imports,2080,0.099683
-Africa,Poultry,Imports,Imports,2080,0.65929
-Africa,SheepGoat,Imports,Imports,2080,0.042606
+Western Europe,Poultry,Imports,Imports,2065,0.0066563
+Western Europe,SheepGoat,Imports,Imports,2065,0.2322927
+Africa,Beef,Imports,Imports,2080,0.4035566
+Africa,Dairy,Imports,Imports,2080,5.7045643
+Africa,Pork,Imports,Imports,2080,0.0996835
+Africa,Poultry,Imports,Imports,2080,0.6592899
+Africa,SheepGoat,Imports,Imports,2080,0.0426065
 Australia_NZ,Beef,Imports,Imports,2080,0
 Australia_NZ,Dairy,Imports,Imports,2080,0
-Australia_NZ,Pork,Imports,Imports,2080,0.084974
+Australia_NZ,Pork,Imports,Imports,2080,0.0849744
 Australia_NZ,Poultry,Imports,Imports,2080,0
 Australia_NZ,SheepGoat,Imports,Imports,2080,0
 Canada,Beef,Imports,Imports,2080,0
-Canada,Dairy,Imports,Imports,2080,0.64306
+Canada,Dairy,Imports,Imports,2080,0.3175353
 Canada,Pork,Imports,Imports,2080,0
-Canada,Poultry,Imports,Imports,2080,0.058632
-Canada,SheepGoat,Imports,Imports,2080,0.019769
-China,Beef,Imports,Imports,2080,0.098602
-China,Dairy,Imports,Imports,2080,5.323304
+Canada,Poultry,Imports,Imports,2080,0.0586319
+Canada,SheepGoat,Imports,Imports,2080,0.0197686
+China,Beef,Imports,Imports,2080,0.0986021
+China,Dairy,Imports,Imports,2080,2.5132092
 China,Pork,Imports,Imports,2080,0
-China,Poultry,Imports,Imports,2080,0.617902
-China,SheepGoat,Imports,Imports,2080,0.05091
-Eastern Europe,Beef,Imports,Imports,2080,0.012006
+China,Poultry,Imports,Imports,2080,0.6179022
+China,SheepGoat,Imports,Imports,2080,0.0509096
+Eastern Europe,Beef,Imports,Imports,2080,0.0120056
 Eastern Europe,Dairy,Imports,Imports,2080,0
-Eastern Europe,Pork,Imports,Imports,2080,0.348133
+Eastern Europe,Pork,Imports,Imports,2080,0.3481326
 Eastern Europe,Poultry,Imports,Imports,2080,0.069057
 Eastern Europe,SheepGoat,Imports,Imports,2080,0
-Former Soviet Union,Beef,Imports,Imports,2080,0.667412
+Former Soviet Union,Beef,Imports,Imports,2080,0.6674125
 Former Soviet Union,Dairy,Imports,Imports,2080,0
-Former Soviet Union,Pork,Imports,Imports,2080,0.741795
-Former Soviet Union,Poultry,Imports,Imports,2080,1.661985
-Former Soviet Union,SheepGoat,Imports,Imports,2080,0.007762
+Former Soviet Union,Pork,Imports,Imports,2080,0.7417953
+Former Soviet Union,Poultry,Imports,Imports,2080,1.6619848
+Former Soviet Union,SheepGoat,Imports,Imports,2080,0.0077617
 India,Beef,Imports,Imports,2080,0
 India,Dairy,Imports,Imports,2080,0
 India,Pork,Imports,Imports,2080,0
 India,Poultry,Imports,Imports,2080,0
 India,SheepGoat,Imports,Imports,2080,0
-Japan,Beef,Imports,Imports,2080,0.631108
-Japan,Dairy,Imports,Imports,2080,2.800887
-Japan,Pork,Imports,Imports,2080,1.332647
-Japan,Poultry,Imports,Imports,2080,0.875543
-Japan,SheepGoat,Imports,Imports,2080,0.027722
-Korea,Beef,Imports,Imports,2080,0.332979
-Korea,Dairy,Imports,Imports,2080,1.060089
-Korea,Pork,Imports,Imports,2080,0.313228
-Korea,Poultry,Imports,Imports,2080,0.068216
-Korea,SheepGoat,Imports,Imports,2080,0.003049
+Japan,Beef,Imports,Imports,2080,0.6311083
+Japan,Dairy,Imports,Imports,2080,1.9795518
+Japan,Pork,Imports,Imports,2080,1.3326473
+Japan,Poultry,Imports,Imports,2080,0.8755429
+Japan,SheepGoat,Imports,Imports,2080,0.0277221
+Korea,Beef,Imports,Imports,2080,0.3329787
+Korea,Dairy,Imports,Imports,2080,0.4308068
+Korea,Pork,Imports,Imports,2080,0.3132284
+Korea,Poultry,Imports,Imports,2080,0.0682162
+Korea,SheepGoat,Imports,Imports,2080,0.0030492
 Latin America,Beef,Imports,Imports,2080,0
-Latin America,Dairy,Imports,Imports,2080,4.207475
+Latin America,Dairy,Imports,Imports,2080,2.7159527
 Latin America,Pork,Imports,Imports,2080,0
 Latin America,Poultry,Imports,Imports,2080,0
-Latin America,SheepGoat,Imports,Imports,2080,0.036576
-Middle East,Beef,Imports,Imports,2080,0.327611
-Middle East,Dairy,Imports,Imports,2080,3.466803
-Middle East,Pork,Imports,Imports,2080,0.016612
-Middle East,Poultry,Imports,Imports,2080,0.816333
-Middle East,SheepGoat,Imports,Imports,2080,0.10403
-Southeast Asia,Beef,Imports,Imports,2080,0.259383
-Southeast Asia,Dairy,Imports,Imports,2080,8.701642
-Southeast Asia,Pork,Imports,Imports,2080,0.04897
+Latin America,SheepGoat,Imports,Imports,2080,0.0365759
+Middle East,Beef,Imports,Imports,2080,0.3276107
+Middle East,Dairy,Imports,Imports,2080,3.1014488
+Middle East,Pork,Imports,Imports,2080,0.0166121
+Middle East,Poultry,Imports,Imports,2080,0.8163332
+Middle East,SheepGoat,Imports,Imports,2080,0.1040297
+Southeast Asia,Beef,Imports,Imports,2080,0.2593828
+Southeast Asia,Dairy,Imports,Imports,2080,6.4196886
+Southeast Asia,Pork,Imports,Imports,2080,0.0489702
 Southeast Asia,Poultry,Imports,Imports,2080,0
-Southeast Asia,SheepGoat,Imports,Imports,2080,0.027357
-USA,Beef,Imports,Imports,2080,1.039132
-USA,Dairy,Imports,Imports,2080,0
+Southeast Asia,SheepGoat,Imports,Imports,2080,0.0273571
+USA,Beef,Imports,Imports,2080,1.0391321
+USA,Dairy,Imports,Imports,2080,1.1445222
 USA,Pork,Imports,Imports,2080,0
 USA,Poultry,Imports,Imports,2080,0
-USA,SheepGoat,Imports,Imports,2080,0.078755
-Western Europe,Beef,Imports,Imports,2080,0.600074
+USA,SheepGoat,Imports,Imports,2080,0.0787554
+Western Europe,Beef,Imports,Imports,2080,0.6000735
 Western Europe,Dairy,Imports,Imports,2080,0
 Western Europe,Pork,Imports,Imports,2080,0
-Western Europe,Poultry,Imports,Imports,2080,0.006656
-Western Europe,SheepGoat,Imports,Imports,2080,0.232293
-Africa,Beef,Imports,Imports,2095,0.403557
-Africa,Dairy,Imports,Imports,2095,6.203385
-Africa,Pork,Imports,Imports,2095,0.099683
-Africa,Poultry,Imports,Imports,2095,0.65929
-Africa,SheepGoat,Imports,Imports,2095,0.042606
+Western Europe,Poultry,Imports,Imports,2080,0.0066563
+Western Europe,SheepGoat,Imports,Imports,2080,0.2322927
+Africa,Beef,Imports,Imports,2095,0.4035566
+Africa,Dairy,Imports,Imports,2095,5.7045643
+Africa,Pork,Imports,Imports,2095,0.0996835
+Africa,Poultry,Imports,Imports,2095,0.6592899
+Africa,SheepGoat,Imports,Imports,2095,0.0426065
 Australia_NZ,Beef,Imports,Imports,2095,0
 Australia_NZ,Dairy,Imports,Imports,2095,0
-Australia_NZ,Pork,Imports,Imports,2095,0.084974
+Australia_NZ,Pork,Imports,Imports,2095,0.0849744
 Australia_NZ,Poultry,Imports,Imports,2095,0
 Australia_NZ,SheepGoat,Imports,Imports,2095,0
 Canada,Beef,Imports,Imports,2095,0
-Canada,Dairy,Imports,Imports,2095,0.64306
+Canada,Dairy,Imports,Imports,2095,0.3175353
 Canada,Pork,Imports,Imports,2095,0
-Canada,Poultry,Imports,Imports,2095,0.058632
-Canada,SheepGoat,Imports,Imports,2095,0.019769
-China,Beef,Imports,Imports,2095,0.098602
-China,Dairy,Imports,Imports,2095,5.323304
+Canada,Poultry,Imports,Imports,2095,0.0586319
+Canada,SheepGoat,Imports,Imports,2095,0.0197686
+China,Beef,Imports,Imports,2095,0.0986021
+China,Dairy,Imports,Imports,2095,2.5132092
 China,Pork,Imports,Imports,2095,0
-China,Poultry,Imports,Imports,2095,0.617902
-China,SheepGoat,Imports,Imports,2095,0.05091
-Eastern Europe,Beef,Imports,Imports,2095,0.012006
+China,Poultry,Imports,Imports,2095,0.6179022
+China,SheepGoat,Imports,Imports,2095,0.0509096
+Eastern Europe,Beef,Imports,Imports,2095,0.0120056
 Eastern Europe,Dairy,Imports,Imports,2095,0
-Eastern Europe,Pork,Imports,Imports,2095,0.348133
+Eastern Europe,Pork,Imports,Imports,2095,0.3481326
 Eastern Europe,Poultry,Imports,Imports,2095,0.069057
 Eastern Europe,SheepGoat,Imports,Imports,2095,0
-Former Soviet Union,Beef,Imports,Imports,2095,0.667412
+Former Soviet Union,Beef,Imports,Imports,2095,0.6674125
 Former Soviet Union,Dairy,Imports,Imports,2095,0
-Former Soviet Union,Pork,Imports,Imports,2095,0.741795
-Former Soviet Union,Poultry,Imports,Imports,2095,1.661985
-Former Soviet Union,SheepGoat,Imports,Imports,2095,0.007762
+Former Soviet Union,Pork,Imports,Imports,2095,0.7417953
+Former Soviet Union,Poultry,Imports,Imports,2095,1.6619848
+Former Soviet Union,SheepGoat,Imports,Imports,2095,0.0077617
 India,Beef,Imports,Imports,2095,0
 India,Dairy,Imports,Imports,2095,0
 India,Pork,Imports,Imports,2095,0
 India,Poultry,Imports,Imports,2095,0
 India,SheepGoat,Imports,Imports,2095,0
-Japan,Beef,Imports,Imports,2095,0.631108
-Japan,Dairy,Imports,Imports,2095,2.800887
-Japan,Pork,Imports,Imports,2095,1.332647
-Japan,Poultry,Imports,Imports,2095,0.875543
-Japan,SheepGoat,Imports,Imports,2095,0.027722
-Korea,Beef,Imports,Imports,2095,0.332979
-Korea,Dairy,Imports,Imports,2095,1.060089
-Korea,Pork,Imports,Imports,2095,0.313228
-Korea,Poultry,Imports,Imports,2095,0.068216
-Korea,SheepGoat,Imports,Imports,2095,0.003049
+Japan,Beef,Imports,Imports,2095,0.6311083
+Japan,Dairy,Imports,Imports,2095,1.9795518
+Japan,Pork,Imports,Imports,2095,1.3326473
+Japan,Poultry,Imports,Imports,2095,0.8755429
+Japan,SheepGoat,Imports,Imports,2095,0.0277221
+Korea,Beef,Imports,Imports,2095,0.3329787
+Korea,Dairy,Imports,Imports,2095,0.4308068
+Korea,Pork,Imports,Imports,2095,0.3132284
+Korea,Poultry,Imports,Imports,2095,0.0682162
+Korea,SheepGoat,Imports,Imports,2095,0.0030492
 Latin America,Beef,Imports,Imports,2095,0
-Latin America,Dairy,Imports,Imports,2095,4.207475
+Latin America,Dairy,Imports,Imports,2095,2.7159527
 Latin America,Pork,Imports,Imports,2095,0
 Latin America,Poultry,Imports,Imports,2095,0
-Latin America,SheepGoat,Imports,Imports,2095,0.036576
-Middle East,Beef,Imports,Imports,2095,0.327611
-Middle East,Dairy,Imports,Imports,2095,3.466803
-Middle East,Pork,Imports,Imports,2095,0.016612
-Middle East,Poultry,Imports,Imports,2095,0.816333
-Middle East,SheepGoat,Imports,Imports,2095,0.10403
-Southeast Asia,Beef,Imports,Imports,2095,0.259383
-Southeast Asia,Dairy,Imports,Imports,2095,8.701642
-Southeast Asia,Pork,Imports,Imports,2095,0.04897
+Latin America,SheepGoat,Imports,Imports,2095,0.0365759
+Middle East,Beef,Imports,Imports,2095,0.3276107
+Middle East,Dairy,Imports,Imports,2095,3.1014488
+Middle East,Pork,Imports,Imports,2095,0.0166121
+Middle East,Poultry,Imports,Imports,2095,0.8163332
+Middle East,SheepGoat,Imports,Imports,2095,0.1040297
+Southeast Asia,Beef,Imports,Imports,2095,0.2593828
+Southeast Asia,Dairy,Imports,Imports,2095,6.4196886
+Southeast Asia,Pork,Imports,Imports,2095,0.0489702
 Southeast Asia,Poultry,Imports,Imports,2095,0
-Southeast Asia,SheepGoat,Imports,Imports,2095,0.027357
-USA,Beef,Imports,Imports,2095,1.039132
-USA,Dairy,Imports,Imports,2095,0
+Southeast Asia,SheepGoat,Imports,Imports,2095,0.0273571
+USA,Beef,Imports,Imports,2095,1.0391321
+USA,Dairy,Imports,Imports,2095,1.1445222
 USA,Pork,Imports,Imports,2095,0
 USA,Poultry,Imports,Imports,2095,0
-USA,SheepGoat,Imports,Imports,2095,0.078755
-Western Europe,Beef,Imports,Imports,2095,0.600074
+USA,SheepGoat,Imports,Imports,2095,0.0787554
+Western Europe,Beef,Imports,Imports,2095,0.6000735
 Western Europe,Dairy,Imports,Imports,2095,0
 Western Europe,Pork,Imports,Imports,2095,0
-Western Europe,Poultry,Imports,Imports,2095,0.006656
-Western Europe,SheepGoat,Imports,Imports,2095,0.232293
+Western Europe,Poultry,Imports,Imports,2095,0.0066563
+Western Europe,SheepGoat,Imports,Imports,2095,0.2322927

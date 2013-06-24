@@ -1033,7 +1033,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>4.360817384</calibrated-value>
+                        <calibrated-value>5.293502646</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -3247,13 +3247,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.590479497</calibrated-value>
+                        <calibrated-value>0.589039238</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.537060845</calibrated-value>
+                        <calibrated-value>0.533757459</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -4403,13 +4403,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.108145044</calibrated-value>
+                        <calibrated-value>0.107119278</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.101630383</calibrated-value>
+                        <calibrated-value>0.101044231</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8409,7 +8409,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.05158975</calibrated-value>
+                        <calibrated-value>0.032158811</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -9985,13 +9985,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.01423512</calibrated-value>
+                        <calibrated-value>0.009495662</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.018974578</calibrated-value>
+                        <calibrated-value>0.013900176</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -11159,13 +11159,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.313809034</calibrated-value>
+                        <calibrated-value>0.257458892</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>3.072667399</calibrated-value>
+                        <calibrated-value>2.524259401</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -12339,13 +12339,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>2.067914948</calibrated-value>
+                        <calibrated-value>1.725309104</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>2.451300224</calibrated-value>
+                        <calibrated-value>2.087923666</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -13513,13 +13513,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>1.230086027</calibrated-value>
+                        <calibrated-value>0.989587861</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>1.508001624</calibrated-value>
+                        <calibrated-value>1.30375696</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>

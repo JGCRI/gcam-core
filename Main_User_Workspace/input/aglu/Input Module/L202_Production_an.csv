@@ -4,898 +4,898 @@ Production
 
 region,supplysector,subsector,technology,year,calOutputValue,share.weight.year,subs.share.weight,tech.share.weight
 Africa,Beef,Mixed,FodderHerb_Residue,1990,0.470577,1990,1,1
-Africa,Beef,Mixed,Pasture_FodderGrass,1990,0.837805,1990,1,1
-Africa,Beef,Mixed,FeedCrops,1990,0.142397,1990,1,1
-Africa,Beef,Mixed,Scavenging_Other,1990,0.078033,1990,1,1
-Africa,Beef,Pastoral,FodderHerb_Residue,1990,0.018443,1990,1,1
+Africa,Beef,Mixed,Pasture_FodderGrass,1990,0.8378054,1990,1,1
+Africa,Beef,Mixed,FeedCrops,1990,0.1423965,1990,1,1
+Africa,Beef,Mixed,Scavenging_Other,1990,0.0780331,1990,1,1
+Africa,Beef,Pastoral,FodderHerb_Residue,1990,0.0184432,1990,1,1
 Africa,Beef,Pastoral,Pasture_FodderGrass,1990,1.804681,1990,1,1
 Africa,Beef,Pastoral,FeedCrops,1990,0.003513,1990,1,1
-Africa,Beef,Pastoral,Scavenging_Other,1990,0.096139,1990,1,1
-Africa,Dairy,Mixed,FodderHerb_Residue,1990,4.937928,1990,1,1
-Africa,Dairy,Mixed,Pasture_FodderGrass,1990,5.142903,1990,1,1
-Africa,Dairy,Mixed,FeedCrops,1990,1.528102,1990,1,1
-Africa,Dairy,Mixed,Scavenging_Other,1990,0.629832,1990,1,1
-Africa,Dairy,Pastoral,FodderHerb_Residue,1990,0.070497,1990,1,1
-Africa,Dairy,Pastoral,Pasture_FodderGrass,1990,8.143909,1990,1,1
-Africa,Dairy,Pastoral,FeedCrops,1990,0.013428,1990,1,1
-Africa,Dairy,Pastoral,Scavenging_Other,1990,0.433044,1990,1,1
-Africa,Pork,Mixed,FodderHerb_Residue,1990,0.229562,1990,1,1
+Africa,Beef,Pastoral,Scavenging_Other,1990,0.0961388,1990,1,1
+Africa,Dairy,Mixed,FodderHerb_Residue,1990,4.3925848,1990,1,1
+Africa,Dairy,Mixed,Pasture_FodderGrass,1990,4.5749224,1990,1,1
+Africa,Dairy,Mixed,FeedCrops,1990,1.3593389,1990,1,1
+Africa,Dairy,Mixed,Scavenging_Other,1990,0.5602737,1990,1,1
+Africa,Dairy,Pastoral,FodderHerb_Residue,1990,0.0627111,1990,1,1
+Africa,Dairy,Pastoral,Pasture_FodderGrass,1990,7.2444981,1990,1,1
+Africa,Dairy,Pastoral,FeedCrops,1990,0.011945,1990,1,1
+Africa,Dairy,Pastoral,Scavenging_Other,1990,0.3852186,1990,1,1
+Africa,Pork,Mixed,FodderHerb_Residue,1990,0.2295617,1990,1,1
 Africa,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Africa,Pork,Mixed,FeedCrops,1990,0.327465,1990,1,1
-Africa,Pork,Mixed,Scavenging_Other,1990,0.001077,1990,1,1
-Africa,Poultry,Mixed,FodderHerb_Residue,1990,0.904306,1990,1,1
+Africa,Pork,Mixed,FeedCrops,1990,0.3274652,1990,1,1
+Africa,Pork,Mixed,Scavenging_Other,1990,0.0010773,1990,1,1
+Africa,Poultry,Mixed,FodderHerb_Residue,1990,0.9043057,1990,1,1
 Africa,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Africa,Poultry,Mixed,FeedCrops,1990,2.444484,1990,1,1
+Africa,Poultry,Mixed,FeedCrops,1990,2.4444845,1990,1,1
 Africa,Poultry,Mixed,Scavenging_Other,1990,0.009202,1990,1,1
-Africa,SheepGoat,Mixed,FodderHerb_Residue,1990,0.123469,1990,1,1
-Africa,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.561832,1990,1,1
-Africa,SheepGoat,Mixed,FeedCrops,1990,0.053249,1990,1,1
-Africa,SheepGoat,Mixed,Scavenging_Other,1990,0.082536,1990,1,1
+Africa,SheepGoat,Mixed,FodderHerb_Residue,1990,0.1234688,1990,1,1
+Africa,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.5618323,1990,1,1
+Africa,SheepGoat,Mixed,FeedCrops,1990,0.0532495,1990,1,1
+Africa,SheepGoat,Mixed,Scavenging_Other,1990,0.0825363,1990,1,1
 Africa,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Africa,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.598488,1990,1,1
+Africa,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.5984875,1990,1,1
 Africa,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
-Africa,SheepGoat,Pastoral,Scavenging_Other,1990,0.066499,1990,1,1
+Africa,SheepGoat,Pastoral,Scavenging_Other,1990,0.0664986,1990,1,1
 Australia_NZ,Beef,Mixed,FodderHerb_Residue,1990,0.126759,1990,1,1
-Australia_NZ,Beef,Mixed,Pasture_FodderGrass,1990,0.42824,1990,1,1
-Australia_NZ,Beef,Mixed,FeedCrops,1990,0.014846,1990,1,1
+Australia_NZ,Beef,Mixed,Pasture_FodderGrass,1990,0.4282399,1990,1,1
+Australia_NZ,Beef,Mixed,FeedCrops,1990,0.0148457,1990,1,1
 Australia_NZ,Beef,Mixed,Scavenging_Other,1990,0.001142,1990,1,1
-Australia_NZ,Beef,Pastoral,FodderHerb_Residue,1990,0.144635,1990,1,1
+Australia_NZ,Beef,Pastoral,FodderHerb_Residue,1990,0.1446353,1990,1,1
 Australia_NZ,Beef,Pastoral,Pasture_FodderGrass,1990,1.462604,1990,1,1
-Australia_NZ,Beef,Pastoral,FeedCrops,1990,0.017876,1990,1,1
-Australia_NZ,Beef,Pastoral,Scavenging_Other,1990,0.001625,1990,1,1
-Australia_NZ,Dairy,Mixed,FodderHerb_Residue,1990,0.892051,1990,1,1
-Australia_NZ,Dairy,Mixed,Pasture_FodderGrass,1990,1.507691,1990,1,1
-Australia_NZ,Dairy,Mixed,FeedCrops,1990,0.105538,1990,1,1
-Australia_NZ,Dairy,Mixed,Scavenging_Other,1990,0.007538,1990,1,1
-Australia_NZ,Dairy,Pastoral,FodderHerb_Residue,1990,1.267298,1990,1,1
-Australia_NZ,Dairy,Pastoral,Pasture_FodderGrass,1990,12.815375,1990,1,1
-Australia_NZ,Dairy,Pastoral,FeedCrops,1990,0.156632,1990,1,1
-Australia_NZ,Dairy,Pastoral,Scavenging_Other,1990,0.014239,1990,1,1
-Australia_NZ,Pork,Mixed,FodderHerb_Residue,1990,0.143587,1990,1,1
+Australia_NZ,Beef,Pastoral,FeedCrops,1990,0.0178763,1990,1,1
+Australia_NZ,Beef,Pastoral,Scavenging_Other,1990,0.0016251,1990,1,1
+Australia_NZ,Dairy,Mixed,FodderHerb_Residue,1990,0.7579978,1990,1,1
+Australia_NZ,Dairy,Mixed,Pasture_FodderGrass,1990,1.281123,1990,1,1
+Australia_NZ,Dairy,Mixed,FeedCrops,1990,0.0896786,1990,1,1
+Australia_NZ,Dairy,Mixed,Scavenging_Other,1990,0.0064056,1990,1,1
+Australia_NZ,Dairy,Pastoral,FodderHerb_Residue,1990,1.0768551,1990,1,1
+Australia_NZ,Dairy,Pastoral,Pasture_FodderGrass,1990,10.8895459,1990,1,1
+Australia_NZ,Dairy,Pastoral,FeedCrops,1990,0.1330944,1990,1,1
+Australia_NZ,Dairy,Pastoral,Scavenging_Other,1990,0.0120995,1990,1,1
+Australia_NZ,Pork,Mixed,FodderHerb_Residue,1990,0.1435873,1990,1,1
 Australia_NZ,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Australia_NZ,Pork,Mixed,FeedCrops,1990,0.207843,1990,1,1
-Australia_NZ,Pork,Mixed,Scavenging_Other,1990,0.007538,1990,1,1
+Australia_NZ,Pork,Mixed,FeedCrops,1990,0.2078426,1990,1,1
+Australia_NZ,Pork,Mixed,Scavenging_Other,1990,0.0075383,1990,1,1
 Australia_NZ,Poultry,Mixed,FodderHerb_Residue,1990,0.175681,1990,1,1
 Australia_NZ,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Australia_NZ,Poultry,Mixed,FeedCrops,1990,0.512286,1990,1,1
-Australia_NZ,Poultry,Mixed,Scavenging_Other,1990,0.014757,1990,1,1
-Australia_NZ,SheepGoat,Mixed,FodderHerb_Residue,1990,0.023547,1990,1,1
-Australia_NZ,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.21166,1990,1,1
-Australia_NZ,SheepGoat,Mixed,FeedCrops,1990,0.00291,1990,1,1
-Australia_NZ,SheepGoat,Mixed,Scavenging_Other,1990,0.026722,1990,1,1
+Australia_NZ,Poultry,Mixed,FeedCrops,1990,0.5122857,1990,1,1
+Australia_NZ,Poultry,Mixed,Scavenging_Other,1990,0.0147572,1990,1,1
+Australia_NZ,SheepGoat,Mixed,FodderHerb_Residue,1990,0.0235472,1990,1,1
+Australia_NZ,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.2116603,1990,1,1
+Australia_NZ,SheepGoat,Mixed,FeedCrops,1990,0.0029103,1990,1,1
+Australia_NZ,SheepGoat,Mixed,Scavenging_Other,1990,0.0267221,1990,1,1
 Australia_NZ,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
 Australia_NZ,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.844236,1990,1,1
 Australia_NZ,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
 Australia_NZ,SheepGoat,Pastoral,Scavenging_Other,1990,0.093804,1990,1,1
-Canada,Beef,Mixed,FodderHerb_Residue,1990,0.128025,1990,1,1
-Canada,Beef,Mixed,Pasture_FodderGrass,1990,0.465544,1990,1,1
-Canada,Beef,Mixed,FeedCrops,1990,0.181562,1990,1,1
-Canada,Beef,Mixed,Scavenging_Other,1990,0.000776,1990,1,1
+Canada,Beef,Mixed,FodderHerb_Residue,1990,0.1280247,1990,1,1
+Canada,Beef,Mixed,Pasture_FodderGrass,1990,0.4655443,1990,1,1
+Canada,Beef,Mixed,FeedCrops,1990,0.1815623,1990,1,1
+Canada,Beef,Mixed,Scavenging_Other,1990,0.0007759,1990,1,1
 Canada,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Canada,Beef,Pastoral,Pasture_FodderGrass,1990,0.136925,1990,1,1
+Canada,Beef,Pastoral,Pasture_FodderGrass,1990,0.1369248,1990,1,1
 Canada,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
 Canada,Beef,Pastoral,Scavenging_Other,1990,0,1990,1,0
-Canada,Dairy,Mixed,FodderHerb_Residue,1990,2.416184,1990,1,1
-Canada,Dairy,Mixed,Pasture_FodderGrass,1990,3.897072,1990,1,1
-Canada,Dairy,Mixed,FeedCrops,1990,3.41968,1990,1,1
-Canada,Dairy,Mixed,Scavenging_Other,1990,0.009743,1990,1,1
+Canada,Dairy,Mixed,FodderHerb_Residue,1990,1.8279091,1990,1,1
+Canada,Dairy,Mixed,Pasture_FodderGrass,1990,2.9482404,1990,1,1
+Canada,Dairy,Mixed,FeedCrops,1990,2.587081,1990,1,1
+Canada,Dairy,Mixed,Scavenging_Other,1990,0.0073706,1990,1,1
 Canada,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Canada,Dairy,Pastoral,Pasture_FodderGrass,1990,0.621873,1990,1,1
+Canada,Dairy,Pastoral,Pasture_FodderGrass,1990,0.4704639,1990,1,1
 Canada,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
 Canada,Dairy,Pastoral,Scavenging_Other,1990,0,1990,1,0
 Canada,Pork,Mixed,FodderHerb_Residue,1990,0.173596,1990,1,1
 Canada,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Canada,Pork,Mixed,FeedCrops,1990,0.982553,1990,1,1
-Canada,Pork,Mixed,Scavenging_Other,1990,0.001157,1990,1,1
+Canada,Pork,Mixed,FeedCrops,1990,0.9825533,1990,1,1
+Canada,Pork,Mixed,Scavenging_Other,1990,0.0011573,1990,1,1
 Canada,Poultry,Mixed,FodderHerb_Residue,1990,0.155828,1990,1,1
 Canada,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Canada,Poultry,Mixed,FeedCrops,1990,0.881987,1990,1,1
-Canada,Poultry,Mixed,Scavenging_Other,1990,0.001039,1990,1,1
-Canada,SheepGoat,Mixed,FodderHerb_Residue,1990,0.000193,1990,1,1
-Canada,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.004245,1990,1,1
-Canada,SheepGoat,Mixed,FeedCrops,1990,0.000278,1990,1,1
+Canada,Poultry,Mixed,FeedCrops,1990,0.8819865,1990,1,1
+Canada,Poultry,Mixed,Scavenging_Other,1990,0.0010389,1990,1,1
+Canada,SheepGoat,Mixed,FodderHerb_Residue,1990,0.0001934,1990,1,1
+Canada,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.0042451,1990,1,1
+Canada,SheepGoat,Mixed,FeedCrops,1990,0.0002783,1990,1,1
 Canada,SheepGoat,Mixed,Scavenging_Other,1990,0,1990,1,0
 Canada,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Canada,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.004949,1990,1,1
+Canada,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.0049488,1990,1,1
 Canada,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
 Canada,SheepGoat,Pastoral,Scavenging_Other,1990,0,1990,1,0
 China,Beef,Mixed,FodderHerb_Residue,1990,0.356012,1990,1,1
-China,Beef,Mixed,Pasture_FodderGrass,1990,0.554693,1990,1,1
+China,Beef,Mixed,Pasture_FodderGrass,1990,0.5546928,1990,1,1
 China,Beef,Mixed,FeedCrops,1990,0.047401,1990,1,1
-China,Beef,Mixed,Scavenging_Other,1990,0.050427,1990,1,1
+China,Beef,Mixed,Scavenging_Other,1990,0.0504266,1990,1,1
 China,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-China,Beef,Pastoral,Pasture_FodderGrass,1990,0.638737,1990,1,1
+China,Beef,Pastoral,Pasture_FodderGrass,1990,0.6387372,1990,1,1
 China,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
-China,Beef,Pastoral,Scavenging_Other,1990,0.033618,1990,1,1
-China,Dairy,Mixed,FodderHerb_Residue,1990,2.058543,1990,1,1
-China,Dairy,Mixed,Pasture_FodderGrass,1990,1.694274,1990,1,1
-China,Dairy,Mixed,FeedCrops,1990,0.271084,1990,1,1
-China,Dairy,Mixed,Scavenging_Other,1990,0.211784,1990,1,1
+China,Beef,Pastoral,Scavenging_Other,1990,0.0336177,1990,1,1
+China,Dairy,Mixed,FodderHerb_Residue,1990,1.8456138,1990,1,1
+China,Dairy,Mixed,Pasture_FodderGrass,1990,1.5190237,1990,1,1
+China,Dairy,Mixed,FeedCrops,1990,0.2430438,1990,1,1
+China,Dairy,Mixed,Scavenging_Other,1990,0.189878,1990,1,1
 China,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-China,Dairy,Pastoral,Pasture_FodderGrass,1990,4.0239,1990,1,1
+China,Dairy,Pastoral,Pasture_FodderGrass,1990,3.6076812,1990,1,1
 China,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
-China,Dairy,Pastoral,Scavenging_Other,1990,0.211784,1990,1,1
-China,Pork,Mixed,FodderHerb_Residue,1990,16.405277,1990,1,1
+China,Dairy,Pastoral,Scavenging_Other,1990,0.189878,1990,1,1
+China,Pork,Mixed,FodderHerb_Residue,1990,16.4052769,1990,1,1
 China,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-China,Pork,Mixed,FeedCrops,1990,8.833611,1990,1,1
+China,Pork,Mixed,FeedCrops,1990,8.8336107,1990,1,1
 China,Pork,Mixed,Scavenging_Other,1990,0,1990,1,0
-China,Poultry,Mixed,FodderHerb_Residue,1990,8.457838,1990,1,1
+China,Poultry,Mixed,FodderHerb_Residue,1990,8.4578381,1990,1,1
 China,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-China,Poultry,Mixed,FeedCrops,1990,4.554221,1990,1,1
+China,Poultry,Mixed,FeedCrops,1990,4.5542205,1990,1,1
 China,Poultry,Mixed,Scavenging_Other,1990,0,1990,1,0
-China,SheepGoat,Mixed,FodderHerb_Residue,1990,0.013034,1990,1,1
-China,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.266611,1990,1,1
-China,SheepGoat,Mixed,FeedCrops,1990,0.001777,1990,1,1
-China,SheepGoat,Mixed,Scavenging_Other,1990,0.014812,1990,1,1
+China,SheepGoat,Mixed,FodderHerb_Residue,1990,0.0130343,1990,1,1
+China,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.2666113,1990,1,1
+China,SheepGoat,Mixed,FeedCrops,1990,0.0017774,1990,1,1
+China,SheepGoat,Mixed,Scavenging_Other,1990,0.0148117,1990,1,1
 China,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
 China,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.844269,1990,1,1
 China,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
-China,SheepGoat,Pastoral,Scavenging_Other,1990,0.044435,1990,1,1
-Eastern Europe,Beef,Mixed,FodderHerb_Residue,1990,0.475523,1990,1,1
-Eastern Europe,Beef,Mixed,Pasture_FodderGrass,1990,1.025637,1990,1,1
-Eastern Europe,Beef,Mixed,FeedCrops,1990,0.264801,1990,1,1
-Eastern Europe,Beef,Mixed,Scavenging_Other,1990,0.096969,1990,1,1
+China,SheepGoat,Pastoral,Scavenging_Other,1990,0.0444352,1990,1,1
+Eastern Europe,Beef,Mixed,FodderHerb_Residue,1990,0.4755228,1990,1,1
+Eastern Europe,Beef,Mixed,Pasture_FodderGrass,1990,1.0256374,1990,1,1
+Eastern Europe,Beef,Mixed,FeedCrops,1990,0.2648009,1990,1,1
+Eastern Europe,Beef,Mixed,Scavenging_Other,1990,0.0969694,1990,1,1
 Eastern Europe,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,0,0
 Eastern Europe,Beef,Pastoral,Pasture_FodderGrass,1990,0,1990,0,0
 Eastern Europe,Beef,Pastoral,FeedCrops,1990,0,1990,0,0
 Eastern Europe,Beef,Pastoral,Scavenging_Other,1990,0,1990,0,0
-Eastern Europe,Dairy,Mixed,FodderHerb_Residue,1990,16.746562,1990,1,1
-Eastern Europe,Dairy,Mixed,Pasture_FodderGrass,1990,15.303647,1990,1,1
-Eastern Europe,Dairy,Mixed,FeedCrops,1990,9.313362,1990,1,1
-Eastern Europe,Dairy,Mixed,Scavenging_Other,1990,2.317409,1990,1,1
+Eastern Europe,Dairy,Mixed,FodderHerb_Residue,1990,13.620822,1990,1,1
+Eastern Europe,Dairy,Mixed,Pasture_FodderGrass,1990,12.4472264,1990,1,1
+Eastern Europe,Dairy,Mixed,FeedCrops,1990,7.5750263,1990,1,1
+Eastern Europe,Dairy,Mixed,Scavenging_Other,1990,1.8848657,1990,1,1
 Eastern Europe,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,0,0
 Eastern Europe,Dairy,Pastoral,Pasture_FodderGrass,1990,0,1990,0,0
 Eastern Europe,Dairy,Pastoral,FeedCrops,1990,0,1990,0,0
 Eastern Europe,Dairy,Pastoral,Scavenging_Other,1990,0,1990,0,0
-Eastern Europe,Pork,Mixed,FodderHerb_Residue,1990,1.429001,1990,1,1
+Eastern Europe,Pork,Mixed,FodderHerb_Residue,1990,1.4290008,1990,1,1
 Eastern Europe,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Eastern Europe,Pork,Mixed,FeedCrops,1990,4.252706,1990,1,1
+Eastern Europe,Pork,Mixed,FeedCrops,1990,4.2527064,1990,1,1
 Eastern Europe,Pork,Mixed,Scavenging_Other,1990,0.034296,1990,1,1
 Eastern Europe,Poultry,Mixed,FodderHerb_Residue,1990,0.864677,1990,1,1
 Eastern Europe,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Eastern Europe,Poultry,Mixed,FeedCrops,1990,2.573279,1990,1,1
-Eastern Europe,Poultry,Mixed,Scavenging_Other,1990,0.020752,1990,1,1
-Eastern Europe,SheepGoat,Mixed,FodderHerb_Residue,1990,0.017858,1990,1,1
-Eastern Europe,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.251131,1990,1,1
-Eastern Europe,SheepGoat,Mixed,FeedCrops,1990,0.010045,1990,1,1
+Eastern Europe,Poultry,Mixed,FeedCrops,1990,2.5732788,1990,1,1
+Eastern Europe,Poultry,Mixed,Scavenging_Other,1990,0.0207522,1990,1,1
+Eastern Europe,SheepGoat,Mixed,FodderHerb_Residue,1990,0.0178582,1990,1,1
+Eastern Europe,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.2511307,1990,1,1
+Eastern Europe,SheepGoat,Mixed,FeedCrops,1990,0.0100452,1990,1,1
 Eastern Europe,SheepGoat,Mixed,Scavenging_Other,1990,0.000279,1990,1,1
 Eastern Europe,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,0,0
 Eastern Europe,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0,1990,0,0
 Eastern Europe,SheepGoat,Pastoral,FeedCrops,1990,0,1990,0,0
 Eastern Europe,SheepGoat,Pastoral,Scavenging_Other,1990,0,1990,0,0
-Former Soviet Union,Beef,Mixed,FodderHerb_Residue,1990,1.538709,1990,1,1
-Former Soviet Union,Beef,Mixed,Pasture_FodderGrass,1990,4.416194,1990,1,1
-Former Soviet Union,Beef,Mixed,FeedCrops,1990,1.541416,1990,1,1
-Former Soviet Union,Beef,Mixed,Scavenging_Other,1990,0.052859,1990,1,1
+Former Soviet Union,Beef,Mixed,FodderHerb_Residue,1990,1.5387092,1990,1,1
+Former Soviet Union,Beef,Mixed,Pasture_FodderGrass,1990,4.4161938,1990,1,1
+Former Soviet Union,Beef,Mixed,FeedCrops,1990,1.5414158,1990,1,1
+Former Soviet Union,Beef,Mixed,Scavenging_Other,1990,0.0528593,1990,1,1
 Former Soviet Union,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Former Soviet Union,Beef,Pastoral,Pasture_FodderGrass,1990,0.799667,1990,1,1
+Former Soviet Union,Beef,Pastoral,Pasture_FodderGrass,1990,0.7996665,1990,1,1
 Former Soviet Union,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
-Former Soviet Union,Beef,Pastoral,Scavenging_Other,1990,0.042088,1990,1,1
-Former Soviet Union,Dairy,Mixed,FodderHerb_Residue,1990,28.973029,1990,1,1
-Former Soviet Union,Dairy,Mixed,Pasture_FodderGrass,1990,52.857097,1990,1,1
-Former Soviet Union,Dairy,Mixed,FeedCrops,1990,29.101343,1990,1,1
-Former Soviet Union,Dairy,Mixed,Scavenging_Other,1990,1.043482,1990,1,1
+Former Soviet Union,Beef,Pastoral,Scavenging_Other,1990,0.0420877,1990,1,1
+Former Soviet Union,Dairy,Mixed,FodderHerb_Residue,1990,25.6872658,1990,1,1
+Former Soviet Union,Dairy,Mixed,Pasture_FodderGrass,1990,46.8626969,1990,1,1
+Former Soviet Union,Dairy,Mixed,FeedCrops,1990,25.8010278,1990,1,1
+Former Soviet Union,Dairy,Mixed,Scavenging_Other,1990,0.9251436,1990,1,1
 Former Soviet Union,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Former Soviet Union,Dairy,Pastoral,Pasture_FodderGrass,1990,4.227506,1990,1,1
+Former Soviet Union,Dairy,Pastoral,Pasture_FodderGrass,1990,3.7480747,1990,1,1
 Former Soviet Union,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
-Former Soviet Union,Dairy,Pastoral,Scavenging_Other,1990,0.2225,1990,1,1
-Former Soviet Union,Pork,Mixed,FodderHerb_Residue,1990,2.272603,1990,1,1
+Former Soviet Union,Dairy,Pastoral,Scavenging_Other,1990,0.1972671,1990,1,1
+Former Soviet Union,Pork,Mixed,FodderHerb_Residue,1990,2.2726031,1990,1,1
 Former Soviet Union,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Former Soviet Union,Pork,Mixed,FeedCrops,1990,3.863735,1990,1,1
-Former Soviet Union,Pork,Mixed,Scavenging_Other,1990,0.069669,1990,1,1
-Former Soviet Union,Poultry,Mixed,FodderHerb_Residue,1990,1.79931,1990,1,1
+Former Soviet Union,Pork,Mixed,FeedCrops,1990,3.8637353,1990,1,1
+Former Soviet Union,Pork,Mixed,Scavenging_Other,1990,0.0696686,1990,1,1
+Former Soviet Union,Poultry,Mixed,FodderHerb_Residue,1990,1.7993104,1990,1,1
 Former Soviet Union,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Former Soviet Union,Poultry,Mixed,FeedCrops,1990,5.72011,1990,1,1
+Former Soviet Union,Poultry,Mixed,FeedCrops,1990,5.7201102,1990,1,1
 Former Soviet Union,Poultry,Mixed,Scavenging_Other,1990,0.084241,1990,1,1
-Former Soviet Union,SheepGoat,Mixed,FodderHerb_Residue,1990,0.10906,1990,1,1
-Former Soviet Union,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.673209,1990,1,1
-Former Soviet Union,SheepGoat,Mixed,FeedCrops,1990,0.098154,1990,1,1
+Former Soviet Union,SheepGoat,Mixed,FodderHerb_Residue,1990,0.1090597,1990,1,1
+Former Soviet Union,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.6732089,1990,1,1
+Former Soviet Union,SheepGoat,Mixed,FeedCrops,1990,0.0981538,1990,1,1
 Former Soviet Union,SheepGoat,Mixed,Scavenging_Other,1990,0.047708,1990,1,1
 Former Soviet Union,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Former Soviet Union,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.024261,1990,1,1
+Former Soviet Union,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.0242611,1990,1,1
 Former Soviet Union,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
-Former Soviet Union,SheepGoat,Pastoral,Scavenging_Other,1990,0.002696,1990,1,1
-India,Beef,Mixed,FodderHerb_Residue,1990,0.265673,1990,1,1
-India,Beef,Mixed,Pasture_FodderGrass,1990,0.190446,1990,1,1
-India,Beef,Mixed,FeedCrops,1990,0.019045,1990,1,1
-India,Beef,Mixed,Scavenging_Other,1990,0.477068,1990,1,1
+Former Soviet Union,SheepGoat,Pastoral,Scavenging_Other,1990,0.0026957,1990,1,1
+India,Beef,Mixed,FodderHerb_Residue,1990,0.2656729,1990,1,1
+India,Beef,Mixed,Pasture_FodderGrass,1990,0.1904465,1990,1,1
+India,Beef,Mixed,FeedCrops,1990,0.0190446,1990,1,1
+India,Beef,Mixed,Scavenging_Other,1990,0.4770685,1990,1,1
 India,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-India,Beef,Pastoral,Pasture_FodderGrass,1990,0.58192,1990,1,1
+India,Beef,Pastoral,Pasture_FodderGrass,1990,0.5819199,1990,1,1
 India,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
-India,Beef,Pastoral,Scavenging_Other,1990,0.58192,1990,1,1
-India,Dairy,Mixed,FodderHerb_Residue,1990,19.205967,1990,1,1
-India,Dairy,Mixed,Pasture_FodderGrass,1990,5.162894,1990,1,1
-India,Dairy,Mixed,FeedCrops,1990,1.393981,1990,1,1
-India,Dairy,Mixed,Scavenging_Other,1990,25.866101,1990,1,1
+India,Beef,Pastoral,Scavenging_Other,1990,0.5819199,1990,1,1
+India,Dairy,Mixed,FodderHerb_Residue,1990,18.8525791,1990,1,1
+India,Dairy,Mixed,Pasture_FodderGrass,1990,5.0678976,1990,1,1
+India,Dairy,Mixed,FeedCrops,1990,1.3683324,1990,1,1
+India,Dairy,Mixed,Scavenging_Other,1990,25.390167,1990,1,1
 India,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-India,Dairy,Pastoral,Pasture_FodderGrass,1990,1.075603,1990,1,1
+India,Dairy,Pastoral,Pasture_FodderGrass,1990,1.055812,1990,1,1
 India,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
-India,Dairy,Pastoral,Scavenging_Other,1990,1.075603,1990,1,1
+India,Dairy,Pastoral,Scavenging_Other,1990,1.055812,1990,1,1
 India,Pork,Mixed,FodderHerb_Residue,1990,0.16492,1990,1,1
 India,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-India,Pork,Mixed,FeedCrops,1990,0.246968,1990,1,1
-India,Pork,Mixed,Scavenging_Other,1990,0.000412,1990,1,1
+India,Pork,Mixed,FeedCrops,1990,0.2469677,1990,1,1
+India,Pork,Mixed,Scavenging_Other,1990,0.0004123,1990,1,1
 India,Poultry,Mixed,FodderHerb_Residue,1990,0.370739,1990,1,1
 India,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
 India,Poultry,Mixed,FeedCrops,1990,1.110734,1990,1,1
 India,Poultry,Mixed,Scavenging_Other,1990,0.001483,1990,1,1
-India,SheepGoat,Mixed,FodderHerb_Residue,1990,0.025871,1990,1,1
+India,SheepGoat,Mixed,FodderHerb_Residue,1990,0.0258707,1990,1,1
 India,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.247698,1990,1,1
-India,SheepGoat,Mixed,FeedCrops,1990,0.001651,1990,1,1
+India,SheepGoat,Mixed,FeedCrops,1990,0.0016513,1990,1,1
 India,SheepGoat,Mixed,Scavenging_Other,1990,0.27522,1990,1,1
 India,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
 India,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.03058,1990,1,1
 India,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
 India,SheepGoat,Pastoral,Scavenging_Other,1990,0.03058,1990,1,1
-Japan,Beef,Mixed,FodderHerb_Residue,1990,0.026073,1990,1,1
+Japan,Beef,Mixed,FodderHerb_Residue,1990,0.0260734,1990,1,1
 Japan,Beef,Mixed,Pasture_FodderGrass,1990,0.425109,1990,1,1
-Japan,Beef,Mixed,FeedCrops,1990,0.113362,1990,1,1
-Japan,Beef,Mixed,Scavenging_Other,1990,0.002267,1990,1,1
+Japan,Beef,Mixed,FeedCrops,1990,0.1133624,1990,1,1
+Japan,Beef,Mixed,Scavenging_Other,1990,0.0022672,1990,1,1
 Japan,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,0,0
 Japan,Beef,Pastoral,Pasture_FodderGrass,1990,0,1990,0,0
 Japan,Beef,Pastoral,FeedCrops,1990,0,1990,0,0
 Japan,Beef,Pastoral,Scavenging_Other,1990,0,1990,0,0
-Japan,Dairy,Mixed,FodderHerb_Residue,1990,0.392492,1990,1,1
-Japan,Dairy,Mixed,Pasture_FodderGrass,1990,6.39933,1990,1,1
-Japan,Dairy,Mixed,FeedCrops,1990,1.706488,1990,1,1
-Japan,Dairy,Mixed,Scavenging_Other,1990,0.03413,1990,1,1
+Japan,Dairy,Mixed,FodderHerb_Residue,1990,0.3743539,1990,1,1
+Japan,Dairy,Mixed,Pasture_FodderGrass,1990,6.1035966,1990,1,1
+Japan,Dairy,Mixed,FeedCrops,1990,1.6276258,1990,1,1
+Japan,Dairy,Mixed,Scavenging_Other,1990,0.0325525,1990,1,1
 Japan,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,0,0
 Japan,Dairy,Pastoral,Pasture_FodderGrass,1990,0,1990,0,0
 Japan,Dairy,Pastoral,FeedCrops,1990,0,1990,0,0
 Japan,Dairy,Pastoral,Scavenging_Other,1990,0,1990,0,0
-Japan,Pork,Mixed,FodderHerb_Residue,1990,0.6116,1990,1,1
+Japan,Pork,Mixed,FodderHerb_Residue,1990,0.6116005,1990,1,1
 Japan,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Japan,Pork,Mixed,FeedCrops,1990,0.909756,1990,1,1
+Japan,Pork,Mixed,FeedCrops,1990,0.9097557,1990,1,1
 Japan,Pork,Mixed,Scavenging_Other,1990,0.007645,1990,1,1
-Japan,Poultry,Mixed,FodderHerb_Residue,1990,0.9646,1990,1,1
+Japan,Poultry,Mixed,FodderHerb_Residue,1990,0.9646002,1990,1,1
 Japan,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Japan,Poultry,Mixed,FeedCrops,1990,2.874509,1990,1,1
+Japan,Poultry,Mixed,FeedCrops,1990,2.8745087,1990,1,1
 Japan,Poultry,Mixed,Scavenging_Other,1990,0.019292,1990,1,1
-Japan,SheepGoat,Mixed,FodderHerb_Residue,1990,4.2e-05,1990,1,1
-Japan,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.000313,1990,1,1
-Japan,SheepGoat,Mixed,FeedCrops,1990,3.6e-05,1990,1,1
-Japan,SheepGoat,Mixed,Scavenging_Other,1990,0,1990,1,0
+Japan,SheepGoat,Mixed,FodderHerb_Residue,1990,4.23e-05,1990,1,1
+Japan,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.0003131,1990,1,1
+Japan,SheepGoat,Mixed,FeedCrops,1990,3.56e-05,1990,1,1
+Japan,SheepGoat,Mixed,Scavenging_Other,1990,4e-07,1990,1,1
 Japan,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,0,0
 Japan,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0,1990,0,0
 Japan,SheepGoat,Pastoral,FeedCrops,1990,0,1990,0,0
 Japan,SheepGoat,Pastoral,Scavenging_Other,1990,0,1990,0,0
-Korea,Beef,Mixed,FodderHerb_Residue,1990,0.065325,1990,1,1
-Korea,Beef,Mixed,Pasture_FodderGrass,1990,0.010304,1990,1,1
-Korea,Beef,Mixed,FeedCrops,1990,0.02205,1990,1,1
-Korea,Beef,Mixed,Scavenging_Other,1990,0.005358,1990,1,1
+Korea,Beef,Mixed,FodderHerb_Residue,1990,0.0653248,1990,1,1
+Korea,Beef,Mixed,Pasture_FodderGrass,1990,0.0103036,1990,1,1
+Korea,Beef,Mixed,FeedCrops,1990,0.0220497,1990,1,1
+Korea,Beef,Mixed,Scavenging_Other,1990,0.0053579,1990,1,1
 Korea,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Korea,Beef,Pastoral,Pasture_FodderGrass,1990,0.04195,1990,1,1
+Korea,Beef,Pastoral,Pasture_FodderGrass,1990,0.0419503,1990,1,1
 Korea,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
-Korea,Beef,Pastoral,Scavenging_Other,1990,0.002208,1990,1,1
-Korea,Dairy,Mixed,FodderHerb_Residue,1990,0.692443,1990,1,1
-Korea,Dairy,Mixed,Pasture_FodderGrass,1990,0.12499,1990,1,1
-Korea,Dairy,Mixed,FeedCrops,1990,0.36747,1990,1,1
-Korea,Dairy,Mixed,Scavenging_Other,1990,0.066245,1990,1,1
+Korea,Beef,Pastoral,Scavenging_Other,1990,0.0022079,1990,1,1
+Korea,Dairy,Mixed,FodderHerb_Residue,1990,0.675654,1990,1,1
+Korea,Dairy,Mixed,Pasture_FodderGrass,1990,0.1219592,1990,1,1
+Korea,Dairy,Mixed,FeedCrops,1990,0.3585601,1990,1,1
+Korea,Dairy,Mixed,Scavenging_Other,1990,0.0646384,1990,1,1
 Korea,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Korea,Dairy,Pastoral,Pasture_FodderGrass,1990,0.508887,1990,1,1
+Korea,Dairy,Pastoral,Pasture_FodderGrass,1990,0.4965482,1990,1,1
 Korea,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
-Korea,Dairy,Pastoral,Scavenging_Other,1990,0.026784,1990,1,1
+Korea,Dairy,Pastoral,Scavenging_Other,1990,0.0261341,1990,1,1
 Korea,Pork,Mixed,FodderHerb_Residue,1990,0.05474,1990,1,1
 Korea,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Korea,Pork,Mixed,FeedCrops,1990,0.491018,1990,1,1
-Korea,Pork,Mixed,Scavenging_Other,1990,0.001642,1990,1,1
-Korea,Poultry,Mixed,FodderHerb_Residue,1990,0.06907,1990,1,1
+Korea,Pork,Mixed,FeedCrops,1990,0.4910178,1990,1,1
+Korea,Pork,Mixed,Scavenging_Other,1990,0.0016422,1990,1,1
+Korea,Poultry,Mixed,FodderHerb_Residue,1990,0.0690699,1990,1,1
 Korea,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Korea,Poultry,Mixed,FeedCrops,1990,0.619557,1990,1,1
-Korea,Poultry,Mixed,Scavenging_Other,1990,0.002072,1990,1,1
-Korea,SheepGoat,Mixed,FodderHerb_Residue,1990,7e-06,1990,1,1
-Korea,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.000279,1990,1,1
-Korea,SheepGoat,Mixed,FeedCrops,1990,8e-06,1990,1,1
-Korea,SheepGoat,Mixed,Scavenging_Other,1990,1.5e-05,1990,1,1
+Korea,Poultry,Mixed,FeedCrops,1990,0.6195568,1990,1,1
+Korea,Poultry,Mixed,Scavenging_Other,1990,0.0020721,1990,1,1
+Korea,SheepGoat,Mixed,FodderHerb_Residue,1990,7.1e-06,1990,1,1
+Korea,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.0002786,1990,1,1
+Korea,SheepGoat,Mixed,FeedCrops,1990,8.4e-06,1990,1,1
+Korea,SheepGoat,Mixed,Scavenging_Other,1990,1.55e-05,1990,1,1
 Korea,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Korea,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.000882,1990,1,1
+Korea,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.0008821,1990,1,1
 Korea,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
-Korea,SheepGoat,Pastoral,Scavenging_Other,1990,4.6e-05,1990,1,1
-Latin America,Beef,Mixed,FodderHerb_Residue,1990,0.983552,1990,1,1
-Latin America,Beef,Mixed,Pasture_FodderGrass,1990,3.088468,1990,1,1
-Latin America,Beef,Mixed,FeedCrops,1990,0.116777,1990,1,1
-Latin America,Beef,Mixed,Scavenging_Other,1990,0.222972,1990,1,1
+Korea,SheepGoat,Pastoral,Scavenging_Other,1990,4.64e-05,1990,1,1
+Latin America,Beef,Mixed,FodderHerb_Residue,1990,0.9835518,1990,1,1
+Latin America,Beef,Mixed,Pasture_FodderGrass,1990,3.0884678,1990,1,1
+Latin America,Beef,Mixed,FeedCrops,1990,0.1167769,1990,1,1
+Latin America,Beef,Mixed,Scavenging_Other,1990,0.2229717,1990,1,1
 Latin America,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
 Latin America,Beef,Pastoral,Pasture_FodderGrass,1990,6.214046,1990,1,1
 Latin America,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
-Latin America,Beef,Pastoral,Scavenging_Other,1990,0.327055,1990,1,1
-Latin America,Dairy,Mixed,FodderHerb_Residue,1990,16.064622,1990,1,1
-Latin America,Dairy,Mixed,Pasture_FodderGrass,1990,16.697813,1990,1,1
-Latin America,Dairy,Mixed,FeedCrops,1990,2.467393,1990,1,1
-Latin America,Dairy,Mixed,Scavenging_Other,1990,1.894793,1990,1,1
+Latin America,Beef,Pastoral,Scavenging_Other,1990,0.3270551,1990,1,1
+Latin America,Dairy,Mixed,FodderHerb_Residue,1990,14.2622418,1990,1,1
+Latin America,Dairy,Mixed,Pasture_FodderGrass,1990,14.8243919,1990,1,1
+Latin America,Dairy,Mixed,FeedCrops,1990,2.1905623,1990,1,1
+Latin America,Dairy,Mixed,Scavenging_Other,1990,1.6822051,1990,1,1
 Latin America,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Latin America,Dairy,Pastoral,Pasture_FodderGrass,1990,9.575298,1990,1,1
+Latin America,Dairy,Pastoral,Pasture_FodderGrass,1990,8.5009919,1990,1,1
 Latin America,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
-Latin America,Dairy,Pastoral,Scavenging_Other,1990,0.503963,1990,1,1
-Latin America,Pork,Mixed,FodderHerb_Residue,1990,0.874482,1990,1,1
+Latin America,Dairy,Pastoral,Scavenging_Other,1990,0.4474206,1990,1,1
+Latin America,Pork,Mixed,FodderHerb_Residue,1990,0.8744818,1990,1,1
 Latin America,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Latin America,Pork,Mixed,FeedCrops,1990,2.156769,1990,1,1
-Latin America,Pork,Mixed,Scavenging_Other,1990,0.006798,1990,1,1
-Latin America,Poultry,Mixed,FodderHerb_Residue,1990,2.294224,1990,1,1
+Latin America,Pork,Mixed,FeedCrops,1990,2.1567692,1990,1,1
+Latin America,Pork,Mixed,Scavenging_Other,1990,0.0067976,1990,1,1
+Latin America,Poultry,Mixed,FodderHerb_Residue,1990,2.2942238,1990,1,1
 Latin America,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
 Latin America,Poultry,Mixed,FeedCrops,1990,6.823502,1990,1,1
 Latin America,Poultry,Mixed,Scavenging_Other,1990,0.020671,1990,1,1
-Latin America,SheepGoat,Mixed,FodderHerb_Residue,1990,0.007907,1990,1,1
-Latin America,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.159574,1990,1,1
-Latin America,SheepGoat,Mixed,FeedCrops,1990,0.000833,1990,1,1
-Latin America,SheepGoat,Mixed,Scavenging_Other,1990,0.008865,1990,1,1
+Latin America,SheepGoat,Mixed,FodderHerb_Residue,1990,0.0079065,1990,1,1
+Latin America,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.1595738,1990,1,1
+Latin America,SheepGoat,Mixed,FeedCrops,1990,0.0008334,1990,1,1
+Latin America,SheepGoat,Mixed,Scavenging_Other,1990,0.0088652,1990,1,1
 Latin America,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Latin America,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.243392,1990,1,1
+Latin America,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.2433924,1990,1,1
 Latin America,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
-Latin America,SheepGoat,Pastoral,Scavenging_Other,1990,0.01281,1990,1,1
-Middle East,Beef,Mixed,FodderHerb_Residue,1990,0.030889,1990,1,1
-Middle East,Beef,Mixed,Pasture_FodderGrass,1990,0.045616,1990,1,1
-Middle East,Beef,Mixed,FeedCrops,1990,0.046659,1990,1,1
-Middle East,Beef,Mixed,Scavenging_Other,1990,0.007038,1990,1,1
+Latin America,SheepGoat,Pastoral,Scavenging_Other,1990,0.0128101,1990,1,1
+Middle East,Beef,Mixed,FodderHerb_Residue,1990,0.0308886,1990,1,1
+Middle East,Beef,Mixed,Pasture_FodderGrass,1990,0.0456161,1990,1,1
+Middle East,Beef,Mixed,FeedCrops,1990,0.0466588,1990,1,1
+Middle East,Beef,Mixed,Scavenging_Other,1990,0.0070379,1990,1,1
 Middle East,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Middle East,Beef,Pastoral,Pasture_FodderGrass,1990,0.229942,1990,1,1
+Middle East,Beef,Pastoral,Pasture_FodderGrass,1990,0.2299424,1990,1,1
 Middle East,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
-Middle East,Beef,Pastoral,Scavenging_Other,1990,0.012102,1990,1,1
-Middle East,Dairy,Mixed,FodderHerb_Residue,1990,2.562112,1990,1,1
-Middle East,Dairy,Mixed,Pasture_FodderGrass,1990,1.725328,1990,1,1
-Middle East,Dairy,Mixed,FeedCrops,1990,3.864735,1990,1,1
-Middle East,Dairy,Mixed,Scavenging_Other,1990,0.474465,1990,1,1
+Middle East,Beef,Pastoral,Scavenging_Other,1990,0.0121022,1990,1,1
+Middle East,Dairy,Mixed,FodderHerb_Residue,1990,2.0381999,1990,1,1
+Middle East,Dairy,Mixed,Pasture_FodderGrass,1990,1.3725252,1990,1,1
+Middle East,Dairy,Mixed,FeedCrops,1990,3.0744564,1990,1,1
+Middle East,Dairy,Mixed,Scavenging_Other,1990,0.3774444,1990,1,1
 Middle East,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Middle East,Dairy,Pastoral,Pasture_FodderGrass,1990,0.244762,1990,1,1
+Middle East,Dairy,Pastoral,Pasture_FodderGrass,1990,0.194712,1990,1,1
 Middle East,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
-Middle East,Dairy,Pastoral,Scavenging_Other,1990,0.012882,1990,1,1
+Middle East,Dairy,Pastoral,Scavenging_Other,1990,0.010248,1990,1,1
 Middle East,Pork,Mixed,FodderHerb_Residue,1990,0.005186,1990,1,1
 Middle East,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Middle East,Pork,Mixed,FeedCrops,1990,0.007649,1990,1,1
-Middle East,Pork,Mixed,Scavenging_Other,1990,0.00013,1990,1,1
-Middle East,Poultry,Mixed,FodderHerb_Residue,1990,0.466396,1990,1,1
+Middle East,Pork,Mixed,FeedCrops,1990,0.0076494,1990,1,1
+Middle East,Pork,Mixed,Scavenging_Other,1990,0.0001296,1990,1,1
+Middle East,Poultry,Mixed,FodderHerb_Residue,1990,0.4663964,1990,1,1
 Middle East,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Middle East,Poultry,Mixed,FeedCrops,1990,1.387996,1990,1,1
-Middle East,Poultry,Mixed,Scavenging_Other,1990,0.011194,1990,1,1
-Middle East,SheepGoat,Mixed,FodderHerb_Residue,1990,0.084804,1990,1,1
-Middle East,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.337989,1990,1,1
-Middle East,SheepGoat,Mixed,FeedCrops,1990,0.128436,1990,1,1
-Middle East,SheepGoat,Mixed,Scavenging_Other,1990,0.062682,1990,1,1
+Middle East,Poultry,Mixed,FeedCrops,1990,1.3879958,1990,1,1
+Middle East,Poultry,Mixed,Scavenging_Other,1990,0.0111935,1990,1,1
+Middle East,SheepGoat,Mixed,FodderHerb_Residue,1990,0.0848044,1990,1,1
+Middle East,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.3379886,1990,1,1
+Middle East,SheepGoat,Mixed,FeedCrops,1990,0.1284357,1990,1,1
+Middle East,SheepGoat,Mixed,Scavenging_Other,1990,0.0626815,1990,1,1
 Middle East,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Middle East,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.032189,1990,1,1
+Middle East,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.0321894,1990,1,1
 Middle East,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
-Middle East,SheepGoat,Pastoral,Scavenging_Other,1990,0.003577,1990,1,1
-Southeast Asia,Beef,Mixed,FodderHerb_Residue,1990,0.247,1990,1,1
-Southeast Asia,Beef,Mixed,Pasture_FodderGrass,1990,0.981026,1990,1,1
-Southeast Asia,Beef,Mixed,FeedCrops,1990,0.129885,1990,1,1
-Southeast Asia,Beef,Mixed,Scavenging_Other,1990,0.15136,1990,1,1
+Middle East,SheepGoat,Pastoral,Scavenging_Other,1990,0.0035766,1990,1,1
+Southeast Asia,Beef,Mixed,FodderHerb_Residue,1990,0.2470004,1990,1,1
+Southeast Asia,Beef,Mixed,Pasture_FodderGrass,1990,0.9810263,1990,1,1
+Southeast Asia,Beef,Mixed,FeedCrops,1990,0.1298846,1990,1,1
+Southeast Asia,Beef,Mixed,Scavenging_Other,1990,0.1513599,1990,1,1
 Southeast Asia,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Southeast Asia,Beef,Pastoral,Pasture_FodderGrass,1990,0.218473,1990,1,1
+Southeast Asia,Beef,Pastoral,Pasture_FodderGrass,1990,0.2184732,1990,1,1
 Southeast Asia,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
-Southeast Asia,Beef,Pastoral,Scavenging_Other,1990,0.145649,1990,1,1
-Southeast Asia,Dairy,Mixed,FodderHerb_Residue,1990,8.090397,1990,1,1
-Southeast Asia,Dairy,Mixed,Pasture_FodderGrass,1990,5.77694,1990,1,1
-Southeast Asia,Dairy,Mixed,FeedCrops,1990,1.674581,1990,1,1
-Southeast Asia,Dairy,Mixed,Scavenging_Other,1990,3.714548,1990,1,1
+Southeast Asia,Beef,Pastoral,Scavenging_Other,1990,0.1456488,1990,1,1
+Southeast Asia,Dairy,Mixed,FodderHerb_Residue,1990,7.8582508,1990,1,1
+Southeast Asia,Dairy,Mixed,Pasture_FodderGrass,1990,5.611176,1990,1,1
+Southeast Asia,Dairy,Mixed,FeedCrops,1990,1.6265308,1990,1,1
+Southeast Asia,Dairy,Mixed,Scavenging_Other,1990,3.6079625,1990,1,1
 Southeast Asia,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Southeast Asia,Dairy,Pastoral,Pasture_FodderGrass,1990,0.116706,1990,1,1
+Southeast Asia,Dairy,Pastoral,Pasture_FodderGrass,1990,0.1133571,1990,1,1
 Southeast Asia,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
-Southeast Asia,Dairy,Pastoral,Scavenging_Other,1990,0.077804,1990,1,1
+Southeast Asia,Dairy,Pastoral,Scavenging_Other,1990,0.0755714,1990,1,1
 Southeast Asia,Pork,Mixed,FodderHerb_Residue,1990,1.447769,1990,1,1
 Southeast Asia,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Southeast Asia,Pork,Mixed,FeedCrops,1990,0.507101,1990,1,1
-Southeast Asia,Pork,Mixed,Scavenging_Other,1990,0.001957,1990,1,1
-Southeast Asia,Poultry,Mixed,FodderHerb_Residue,1990,3.361752,1990,1,1
+Southeast Asia,Pork,Mixed,FeedCrops,1990,0.5071006,1990,1,1
+Southeast Asia,Pork,Mixed,Scavenging_Other,1990,0.0019568,1990,1,1
+Southeast Asia,Poultry,Mixed,FodderHerb_Residue,1990,3.3617516,1990,1,1
 Southeast Asia,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Southeast Asia,Poultry,Mixed,FeedCrops,1990,1.191162,1990,1,1
-Southeast Asia,Poultry,Mixed,Scavenging_Other,1990,0.001075,1990,1,1
+Southeast Asia,Poultry,Mixed,FeedCrops,1990,1.1911616,1990,1,1
+Southeast Asia,Poultry,Mixed,Scavenging_Other,1990,0.0010748,1990,1,1
 Southeast Asia,SheepGoat,Mixed,FodderHerb_Residue,1990,0.021403,1990,1,1
-Southeast Asia,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.46334,1990,1,1
-Southeast Asia,SheepGoat,Mixed,FeedCrops,1990,0.005852,1990,1,1
-Southeast Asia,SheepGoat,Mixed,Scavenging_Other,1990,0.054511,1990,1,1
+Southeast Asia,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.4633401,1990,1,1
+Southeast Asia,SheepGoat,Mixed,FeedCrops,1990,0.0058523,1990,1,1
+Southeast Asia,SheepGoat,Mixed,Scavenging_Other,1990,0.0545106,1990,1,1
 Southeast Asia,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Southeast Asia,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.163532,1990,1,1
+Southeast Asia,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.1635318,1990,1,1
 Southeast Asia,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
-Southeast Asia,SheepGoat,Pastoral,Scavenging_Other,1990,0.01817,1990,1,1
-USA,Beef,Mixed,FodderHerb_Residue,1990,1.708543,1990,1,1
-USA,Beef,Mixed,Pasture_FodderGrass,1990,5.54122,1990,1,1
+Southeast Asia,SheepGoat,Pastoral,Scavenging_Other,1990,0.0181702,1990,1,1
+USA,Beef,Mixed,FodderHerb_Residue,1990,1.7085429,1990,1,1
+USA,Beef,Mixed,Pasture_FodderGrass,1990,5.5412203,1990,1,1
 USA,Beef,Mixed,FeedCrops,1990,1.985604,1990,1,1
-USA,Beef,Mixed,Scavenging_Other,1990,0.009235,1990,1,1
+USA,Beef,Mixed,Scavenging_Other,1990,0.0092354,1990,1,1
 USA,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-USA,Beef,Pastoral,Pasture_FodderGrass,1990,1.379997,1990,1,1
+USA,Beef,Pastoral,Pasture_FodderGrass,1990,1.3799974,1990,1,1
 USA,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
 USA,Beef,Pastoral,Scavenging_Other,1990,0,1990,1,0
-USA,Dairy,Mixed,FodderHerb_Residue,1990,22.125697,1990,1,1
-USA,Dairy,Mixed,Pasture_FodderGrass,1990,31.950465,1990,1,1
-USA,Dairy,Mixed,FeedCrops,1990,25.720124,1990,1,1
-USA,Dairy,Mixed,Scavenging_Other,1990,0.079876,1990,1,1
+USA,Dairy,Mixed,FodderHerb_Residue,1990,17.3662003,1990,1,1
+USA,Dairy,Mixed,Pasture_FodderGrass,1990,25.0775456,1990,1,1
+USA,Dairy,Mixed,FeedCrops,1990,20.1874242,1990,1,1
+USA,Dairy,Mixed,Scavenging_Other,1990,0.0626939,1990,1,1
 USA,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-USA,Dairy,Pastoral,Pasture_FodderGrass,1990,5.098478,1990,1,1
+USA,Dairy,Pastoral,Pasture_FodderGrass,1990,4.001736,1990,1,1
 USA,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
 USA,Dairy,Pastoral,Scavenging_Other,1990,0,1990,1,0
 USA,Pork,Mixed,FodderHerb_Residue,1990,1.089735,1990,1,1
 USA,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-USA,Pork,Mixed,FeedCrops,1990,6.1679,1990,1,1
-USA,Pork,Mixed,Scavenging_Other,1990,0.007265,1990,1,1
-USA,Poultry,Mixed,FodderHerb_Residue,1990,2.21751,1990,1,1
+USA,Pork,Mixed,FeedCrops,1990,6.1679001,1990,1,1
+USA,Pork,Mixed,Scavenging_Other,1990,0.0072649,1990,1,1
+USA,Poultry,Mixed,FodderHerb_Residue,1990,2.2175099,1990,1,1
 USA,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-USA,Poultry,Mixed,FeedCrops,1990,12.551106,1990,1,1
-USA,Poultry,Mixed,Scavenging_Other,1990,0.014783,1990,1,1
-USA,SheepGoat,Mixed,FodderHerb_Residue,1990,0.003576,1990,1,1
+USA,Poultry,Mixed,FeedCrops,1990,12.5511063,1990,1,1
+USA,Poultry,Mixed,Scavenging_Other,1990,0.0147834,1990,1,1
+USA,SheepGoat,Mixed,FodderHerb_Residue,1990,0.0035762,1990,1,1
 USA,SheepGoat,Mixed,Pasture_FodderGrass,1990,0.069969,1990,1,1
-USA,SheepGoat,Mixed,FeedCrops,1990,0.004198,1990,1,1
+USA,SheepGoat,Mixed,FeedCrops,1990,0.0041981,1990,1,1
 USA,SheepGoat,Mixed,Scavenging_Other,1990,0,1990,1,0
 USA,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-USA,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.081567,1990,1,1
+USA,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.0815667,1990,1,1
 USA,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
 USA,SheepGoat,Pastoral,Scavenging_Other,1990,0,1990,1,0
-Western Europe,Beef,Mixed,FodderHerb_Residue,1990,3.147285,1990,1,1
-Western Europe,Beef,Mixed,Pasture_FodderGrass,1990,5.544754,1990,1,1
-Western Europe,Beef,Mixed,FeedCrops,1990,0.64825,1990,1,1
-Western Europe,Beef,Mixed,Scavenging_Other,1990,0.034811,1990,1,1
+Western Europe,Beef,Mixed,FodderHerb_Residue,1990,3.1472851,1990,1,1
+Western Europe,Beef,Mixed,Pasture_FodderGrass,1990,5.5447539,1990,1,1
+Western Europe,Beef,Mixed,FeedCrops,1990,0.6482497,1990,1,1
+Western Europe,Beef,Mixed,Scavenging_Other,1990,0.0348114,1990,1,1
 Western Europe,Beef,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
 Western Europe,Beef,Pastoral,Pasture_FodderGrass,1990,0.033907,1990,1,1
 Western Europe,Beef,Pastoral,FeedCrops,1990,0,1990,1,0
-Western Europe,Beef,Pastoral,Scavenging_Other,1990,0.001785,1990,1,1
-Western Europe,Dairy,Mixed,FodderHerb_Residue,1990,95.704835,1990,1,1
-Western Europe,Dairy,Mixed,Pasture_FodderGrass,1990,73.832782,1990,1,1
-Western Europe,Dairy,Mixed,FeedCrops,1990,20.268385,1990,1,1
-Western Europe,Dairy,Mixed,Scavenging_Other,1990,1.217194,1990,1,1
+Western Europe,Beef,Pastoral,Scavenging_Other,1990,0.0017846,1990,1,1
+Western Europe,Dairy,Mixed,FodderHerb_Residue,1990,72.6518518,1990,1,1
+Western Europe,Dairy,Mixed,Pasture_FodderGrass,1990,56.0482483,1990,1,1
+Western Europe,Dairy,Mixed,FeedCrops,1990,15.3862204,1990,1,1
+Western Europe,Dairy,Mixed,Scavenging_Other,1990,0.924001,1990,1,1
 Western Europe,Dairy,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Western Europe,Dairy,Pastoral,Pasture_FodderGrass,1990,0.12362,1990,1,1
+Western Europe,Dairy,Pastoral,Pasture_FodderGrass,1990,0.0938427,1990,1,1
 Western Europe,Dairy,Pastoral,FeedCrops,1990,0,1990,1,0
-Western Europe,Dairy,Pastoral,Scavenging_Other,1990,0.006506,1990,1,1
+Western Europe,Dairy,Pastoral,Scavenging_Other,1990,0.0049391,1990,1,1
 Western Europe,Pork,Mixed,FodderHerb_Residue,1990,4.732292,1990,1,1
 Western Europe,Pork,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Western Europe,Pork,Mixed,FeedCrops,1990,10.884272,1990,1,1
-Western Europe,Pork,Mixed,Scavenging_Other,1990,0.157743,1990,1,1
-Western Europe,Poultry,Mixed,FodderHerb_Residue,1990,2.608645,1990,1,1
+Western Europe,Pork,Mixed,FeedCrops,1990,10.8842716,1990,1,1
+Western Europe,Pork,Mixed,Scavenging_Other,1990,0.1577431,1990,1,1
+Western Europe,Poultry,Mixed,FodderHerb_Residue,1990,2.6086453,1990,1,1
 Western Europe,Poultry,Mixed,Pasture_FodderGrass,1990,0,1990,1,0
-Western Europe,Poultry,Mixed,FeedCrops,1990,10.114372,1990,1,1
-Western Europe,Poultry,Mixed,Scavenging_Other,1990,0.124563,1990,1,1
-Western Europe,SheepGoat,Mixed,FodderHerb_Residue,1990,0.185504,1990,1,1
-Western Europe,SheepGoat,Mixed,Pasture_FodderGrass,1990,1.30377,1990,1,1
-Western Europe,SheepGoat,Mixed,FeedCrops,1990,0.056869,1990,1,1
+Western Europe,Poultry,Mixed,FeedCrops,1990,10.1143724,1990,1,1
+Western Europe,Poultry,Mixed,Scavenging_Other,1990,0.1245629,1990,1,1
+Western Europe,SheepGoat,Mixed,FodderHerb_Residue,1990,0.1855038,1990,1,1
+Western Europe,SheepGoat,Mixed,Pasture_FodderGrass,1990,1.3037697,1990,1,1
+Western Europe,SheepGoat,Mixed,FeedCrops,1990,0.0568693,1990,1,1
 Western Europe,SheepGoat,Mixed,Scavenging_Other,1990,0.034644,1990,1,1
 Western Europe,SheepGoat,Pastoral,FodderHerb_Residue,1990,0,1990,1,0
-Western Europe,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.017967,1990,1,1
+Western Europe,SheepGoat,Pastoral,Pasture_FodderGrass,1990,0.0179672,1990,1,1
 Western Europe,SheepGoat,Pastoral,FeedCrops,1990,0,1990,1,0
-Western Europe,SheepGoat,Pastoral,Scavenging_Other,1990,0.001996,1990,1,1
-Africa,Beef,Mixed,FodderHerb_Residue,2005,0.751618,2005,1,1
-Africa,Beef,Mixed,Pasture_FodderGrass,2005,1.447756,2005,1,1
-Africa,Beef,Mixed,FeedCrops,2005,0.268427,2005,1,1
-Africa,Beef,Mixed,Scavenging_Other,2005,0.133406,2005,1,1
-Africa,Beef,Pastoral,FodderHerb_Residue,2005,0.018318,2005,1,1
+Western Europe,SheepGoat,Pastoral,Scavenging_Other,1990,0.0019964,1990,1,1
+Africa,Beef,Mixed,FodderHerb_Residue,2005,0.7516184,2005,1,1
+Africa,Beef,Mixed,Pasture_FodderGrass,2005,1.4477562,2005,1,1
+Africa,Beef,Mixed,FeedCrops,2005,0.2684274,2005,1,1
+Africa,Beef,Mixed,Scavenging_Other,2005,0.1334062,2005,1,1
+Africa,Beef,Pastoral,FodderHerb_Residue,2005,0.0183185,2005,1,1
 Africa,Beef,Pastoral,Pasture_FodderGrass,2005,2.061218,2005,1,1
-Africa,Beef,Pastoral,FeedCrops,2005,0.00458,2005,1,1
-Africa,Beef,Pastoral,Scavenging_Other,2005,0.10969,2005,1,1
-Africa,Dairy,Mixed,FodderHerb_Residue,2005,9.380861,2005,1,1
-Africa,Dairy,Mixed,Pasture_FodderGrass,2005,9.334633,2005,1,1
-Africa,Dairy,Mixed,FeedCrops,2005,3.512666,2005,1,1
-Africa,Dairy,Mixed,Scavenging_Other,2005,1.217927,2005,1,1
-Africa,Dairy,Pastoral,FodderHerb_Residue,2005,0.086691,2005,1,1
-Africa,Dairy,Pastoral,Pasture_FodderGrass,2005,11.23361,2005,1,1
-Africa,Dairy,Pastoral,FeedCrops,2005,0.021673,2005,1,1
-Africa,Dairy,Pastoral,Scavenging_Other,2005,0.596946,2005,1,1
-Africa,Pork,Mixed,FodderHerb_Residue,2005,0.386335,2005,1,1
+Africa,Beef,Pastoral,FeedCrops,2005,0.0045796,2005,1,1
+Africa,Beef,Pastoral,Scavenging_Other,2005,0.1096903,2005,1,1
+Africa,Dairy,Mixed,FodderHerb_Residue,2005,8.2592315,2005,1,1
+Africa,Dairy,Mixed,Pasture_FodderGrass,2005,8.2185306,2005,1,1
+Africa,Dairy,Mixed,FeedCrops,2005,3.0926716,2005,1,1
+Africa,Dairy,Mixed,Scavenging_Other,2005,1.072305,2005,1,1
+Africa,Dairy,Pastoral,FodderHerb_Residue,2005,0.0763256,2005,1,1
+Africa,Dairy,Pastoral,Pasture_FodderGrass,2005,9.8904544,2005,1,1
+Africa,Dairy,Pastoral,FeedCrops,2005,0.0190814,2005,1,1
+Africa,Dairy,Pastoral,Scavenging_Other,2005,0.5255717,2005,1,1
+Africa,Pork,Mixed,FodderHerb_Residue,2005,0.3863349,2005,1,1
 Africa,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Africa,Pork,Mixed,FeedCrops,2005,0.50359,2005,1,1
+Africa,Pork,Mixed,FeedCrops,2005,0.5035905,2005,1,1
 Africa,Pork,Mixed,Scavenging_Other,2005,0.001486,2005,1,1
-Africa,Poultry,Mixed,FodderHerb_Residue,2005,1.587609,2005,1,1
+Africa,Poultry,Mixed,FodderHerb_Residue,2005,1.5876087,2005,1,1
 Africa,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Africa,Poultry,Mixed,FeedCrops,2005,4.100051,2005,1,1
-Africa,Poultry,Mixed,Scavenging_Other,2005,0.01975,2005,1,1
-Africa,SheepGoat,Mixed,FodderHerb_Residue,2005,0.173119,2005,1,1
-Africa,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.917588,2005,1,1
-Africa,SheepGoat,Mixed,FeedCrops,2005,0.085789,2005,1,1
-Africa,SheepGoat,Mixed,Scavenging_Other,2005,0.131954,2005,1,1
+Africa,Poultry,Mixed,FeedCrops,2005,4.1000512,2005,1,1
+Africa,Poultry,Mixed,Scavenging_Other,2005,0.0197496,2005,1,1
+Africa,SheepGoat,Mixed,FodderHerb_Residue,2005,0.1731188,2005,1,1
+Africa,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.9175884,2005,1,1
+Africa,SheepGoat,Mixed,FeedCrops,2005,0.0857892,2005,1,1
+Africa,SheepGoat,Mixed,Scavenging_Other,2005,0.1319542,2005,1,1
 Africa,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Africa,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.792749,2005,1,1
+Africa,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.7927489,2005,1,1
 Africa,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-Africa,SheepGoat,Pastoral,Scavenging_Other,2005,0.088083,2005,1,1
-Australia_NZ,Beef,Mixed,FodderHerb_Residue,2005,0.116489,2005,1,1
-Australia_NZ,Beef,Mixed,Pasture_FodderGrass,2005,0.624047,2005,1,1
-Australia_NZ,Beef,Mixed,FeedCrops,2005,0.087367,2005,1,1
-Australia_NZ,Beef,Mixed,Scavenging_Other,2005,0.00416,2005,1,1
+Africa,SheepGoat,Pastoral,Scavenging_Other,2005,0.0880832,2005,1,1
+Australia_NZ,Beef,Mixed,FodderHerb_Residue,2005,0.1164888,2005,1,1
+Australia_NZ,Beef,Mixed,Pasture_FodderGrass,2005,0.6240473,2005,1,1
+Australia_NZ,Beef,Mixed,FeedCrops,2005,0.0873666,2005,1,1
+Australia_NZ,Beef,Mixed,Scavenging_Other,2005,0.0041603,2005,1,1
 Australia_NZ,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Australia_NZ,Beef,Pastoral,Pasture_FodderGrass,2005,1.94148,2005,1,1
+Australia_NZ,Beef,Pastoral,Pasture_FodderGrass,2005,1.9414804,2005,1,1
 Australia_NZ,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
 Australia_NZ,Beef,Pastoral,Scavenging_Other,2005,0,2005,1,0
-Australia_NZ,Dairy,Mixed,FodderHerb_Residue,2005,1.0134,2005,1,1
-Australia_NZ,Dairy,Mixed,Pasture_FodderGrass,2005,2.726636,2005,1,1
-Australia_NZ,Dairy,Mixed,FeedCrops,2005,0.768002,2005,1,1
-Australia_NZ,Dairy,Mixed,Scavenging_Other,2005,0.036355,2005,1,1
+Australia_NZ,Dairy,Mixed,FodderHerb_Residue,2005,0.8363212,2005,1,1
+Australia_NZ,Dairy,Mixed,Pasture_FodderGrass,2005,2.2501915,2005,1,1
+Australia_NZ,Dairy,Mixed,FeedCrops,2005,0.6338039,2005,1,1
+Australia_NZ,Dairy,Mixed,Scavenging_Other,2005,0.0300026,2005,1,1
 Australia_NZ,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Australia_NZ,Dairy,Pastoral,Pasture_FodderGrass,2005,25.751561,2005,1,1
+Australia_NZ,Dairy,Pastoral,Pasture_FodderGrass,2005,21.2518088,2005,1,1
 Australia_NZ,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
 Australia_NZ,Dairy,Pastoral,Scavenging_Other,2005,0,2005,1,0
-Australia_NZ,Pork,Mixed,FodderHerb_Residue,2005,0.186939,2005,1,1
+Australia_NZ,Pork,Mixed,FodderHerb_Residue,2005,0.1869392,2005,1,1
 Australia_NZ,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Australia_NZ,Pork,Mixed,FeedCrops,2005,0.248362,2005,1,1
-Australia_NZ,Pork,Mixed,Scavenging_Other,2005,0.009792,2005,1,1
-Australia_NZ,Poultry,Mixed,FodderHerb_Residue,2005,0.295194,2005,1,1
+Australia_NZ,Pork,Mixed,FeedCrops,2005,0.2483621,2005,1,1
+Australia_NZ,Pork,Mixed,Scavenging_Other,2005,0.0097921,2005,1,1
+Australia_NZ,Poultry,Mixed,FodderHerb_Residue,2005,0.2951937,2005,1,1
 Australia_NZ,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Australia_NZ,Poultry,Mixed,FeedCrops,2005,0.803645,2005,1,1
+Australia_NZ,Poultry,Mixed,FeedCrops,2005,0.8036451,2005,1,1
 Australia_NZ,Poultry,Mixed,Scavenging_Other,2005,0.024693,2005,1,1
-Australia_NZ,SheepGoat,Mixed,FodderHerb_Residue,2005,0.016468,2005,1,1
-Australia_NZ,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.23526,2005,1,1
-Australia_NZ,SheepGoat,Mixed,FeedCrops,2005,0.012351,2005,1,1
-Australia_NZ,SheepGoat,Mixed,Scavenging_Other,2005,0.029996,2005,1,1
+Australia_NZ,SheepGoat,Mixed,FodderHerb_Residue,2005,0.0164682,2005,1,1
+Australia_NZ,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.2352601,2005,1,1
+Australia_NZ,SheepGoat,Mixed,FeedCrops,2005,0.0123512,2005,1,1
+Australia_NZ,SheepGoat,Mixed,Scavenging_Other,2005,0.0299957,2005,1,1
 Australia_NZ,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Australia_NZ,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.794003,2005,1,1
+Australia_NZ,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.7940028,2005,1,1
 Australia_NZ,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-Australia_NZ,SheepGoat,Pastoral,Scavenging_Other,2005,0.088223,2005,1,1
-Canada,Beef,Mixed,FodderHerb_Residue,2005,0.158636,2005,1,1
-Canada,Beef,Mixed,Pasture_FodderGrass,2005,0.715653,2005,1,1
+Australia_NZ,SheepGoat,Pastoral,Scavenging_Other,2005,0.0882225,2005,1,1
+Canada,Beef,Mixed,FodderHerb_Residue,2005,0.1586365,2005,1,1
+Canada,Beef,Mixed,Pasture_FodderGrass,2005,0.7156533,2005,1,1
 Canada,Beef,Mixed,FeedCrops,2005,0.317273,2005,1,1
-Canada,Beef,Mixed,Scavenging_Other,2005,0.001193,2005,1,1
+Canada,Beef,Mixed,Scavenging_Other,2005,0.0011928,2005,1,1
 Canada,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Canada,Beef,Pastoral,Pasture_FodderGrass,2005,0.162648,2005,1,1
+Canada,Beef,Pastoral,Pasture_FodderGrass,2005,0.1626485,2005,1,1
 Canada,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
 Canada,Beef,Pastoral,Scavenging_Other,2005,0,2005,1,0
-Canada,Dairy,Mixed,FodderHerb_Residue,2005,2.124308,2005,1,1
-Canada,Dairy,Mixed,Pasture_FodderGrass,2005,4.269965,2005,1,1
-Canada,Dairy,Mixed,FeedCrops,2005,4.269965,2005,1,1
-Canada,Dairy,Mixed,Scavenging_Other,2005,0.010675,2005,1,1
+Canada,Dairy,Mixed,FodderHerb_Residue,2005,1.482675,2005,1,1
+Canada,Dairy,Mixed,Pasture_FodderGrass,2005,2.9802512,2005,1,1
+Canada,Dairy,Mixed,FeedCrops,2005,2.9802512,2005,1,1
+Canada,Dairy,Mixed,Scavenging_Other,2005,0.0074506,2005,1,1
 Canada,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Canada,Dairy,Pastoral,Pasture_FodderGrass,2005,0.681377,2005,1,1
+Canada,Dairy,Pastoral,Pasture_FodderGrass,2005,0.475572,2005,1,1
 Canada,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
 Canada,Dairy,Pastoral,Scavenging_Other,2005,0,2005,1,0
 Canada,Pork,Mixed,FodderHerb_Residue,2005,0.301305,2005,1,1
 Canada,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Canada,Pork,Mixed,FeedCrops,2005,1.603781,2005,1,1
+Canada,Pork,Mixed,FeedCrops,2005,1.6037814,2005,1,1
 Canada,Pork,Mixed,Scavenging_Other,2005,0.001907,2005,1,1
-Canada,Poultry,Mixed,FodderHerb_Residue,2005,0.244605,2005,1,1
+Canada,Poultry,Mixed,FodderHerb_Residue,2005,0.2446052,2005,1,1
 Canada,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Canada,Poultry,Mixed,FeedCrops,2005,1.301981,2005,1,1
-Canada,Poultry,Mixed,Scavenging_Other,2005,0.001548,2005,1,1
-Canada,SheepGoat,Mixed,FodderHerb_Residue,2005,0.00029,2005,1,1
-Canada,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.007914,2005,1,1
-Canada,SheepGoat,Mixed,FeedCrops,2005,0.000589,2005,1,1
+Canada,Poultry,Mixed,FeedCrops,2005,1.3019809,2005,1,1
+Canada,Poultry,Mixed,Scavenging_Other,2005,0.0015481,2005,1,1
+Canada,SheepGoat,Mixed,FodderHerb_Residue,2005,0.0002902,2005,1,1
+Canada,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.0079139,2005,1,1
+Canada,SheepGoat,Mixed,FeedCrops,2005,0.0005891,2005,1,1
 Canada,SheepGoat,Mixed,Scavenging_Other,2005,0,2005,1,0
 Canada,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
 Canada,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.008215,2005,1,1
 Canada,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
 Canada,SheepGoat,Pastoral,Scavenging_Other,2005,0,2005,1,0
-China,Beef,Mixed,FodderHerb_Residue,2005,1.175012,2005,1,1
-China,Beef,Mixed,Pasture_FodderGrass,2005,2.190701,2005,1,1
-China,Beef,Mixed,FeedCrops,2005,0.418225,2005,1,1
-China,Beef,Mixed,Scavenging_Other,2005,0.199155,2005,1,1
+China,Beef,Mixed,FodderHerb_Residue,2005,1.1750124,2005,1,1
+China,Beef,Mixed,Pasture_FodderGrass,2005,2.1907011,2005,1,1
+China,Beef,Mixed,FeedCrops,2005,0.4182248,2005,1,1
+China,Beef,Mixed,Scavenging_Other,2005,0.1991546,2005,1,1
 China,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-China,Beef,Pastoral,Pasture_FodderGrass,2005,2.037505,2005,1,1
+China,Beef,Pastoral,Pasture_FodderGrass,2005,2.0375052,2005,1,1
 China,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
-China,Beef,Pastoral,Scavenging_Other,2005,0.107237,2005,1,1
-China,Dairy,Mixed,FodderHerb_Residue,2005,9.933162,2005,1,1
-China,Dairy,Mixed,Pasture_FodderGrass,2005,12.113612,2005,1,1
-China,Dairy,Mixed,FeedCrops,2005,3.526407,2005,1,1
-China,Dairy,Mixed,Scavenging_Other,2005,1.345957,2005,1,1
+China,Beef,Pastoral,Scavenging_Other,2005,0.1072371,2005,1,1
+China,Dairy,Mixed,FodderHerb_Residue,2005,9.4928517,2005,1,1
+China,Dairy,Mixed,Pasture_FodderGrass,2005,11.5766484,2005,1,1
+China,Dairy,Mixed,FeedCrops,2005,3.370091,2005,1,1
+China,Dairy,Mixed,Scavenging_Other,2005,1.2862943,2005,1,1
 China,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-China,Dairy,Pastoral,Pasture_FodderGrass,2005,6.393295,2005,1,1
+China,Dairy,Pastoral,Pasture_FodderGrass,2005,6.1098978,2005,1,1
 China,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
-China,Dairy,Pastoral,Scavenging_Other,2005,0.336489,2005,1,1
+China,Dairy,Pastoral,Scavenging_Other,2005,0.3215736,2005,1,1
 China,Pork,Mixed,FodderHerb_Residue,2005,33.416234,2005,1,1
 China,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-China,Pork,Mixed,FeedCrops,2005,14.321243,2005,1,1
+China,Pork,Mixed,FeedCrops,2005,14.3212432,2005,1,1
 China,Pork,Mixed,Scavenging_Other,2005,0,2005,1,0
-China,Poultry,Mixed,FodderHerb_Residue,2005,27.56129,2005,1,1
+China,Poultry,Mixed,FodderHerb_Residue,2005,27.5612896,2005,1,1
 China,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-China,Poultry,Mixed,FeedCrops,2005,11.811981,2005,1,1
+China,Poultry,Mixed,FeedCrops,2005,11.8119812,2005,1,1
 China,Poultry,Mixed,Scavenging_Other,2005,0,2005,1,0
-China,SheepGoat,Mixed,FodderHerb_Residue,2005,0.035918,2005,1,1
-China,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.873675,2005,1,1
-China,SheepGoat,Mixed,FeedCrops,2005,0.01262,2005,1,1
-China,SheepGoat,Mixed,Scavenging_Other,2005,0.048538,2005,1,1
+China,SheepGoat,Mixed,FodderHerb_Residue,2005,0.0359178,2005,1,1
+China,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.8736752,2005,1,1
+China,SheepGoat,Mixed,FeedCrops,2005,0.0126198,2005,1,1
+China,SheepGoat,Mixed,Scavenging_Other,2005,0.0485375,2005,1,1
 China,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-China,SheepGoat,Pastoral,Pasture_FodderGrass,2005,2.49339,2005,1,1
+China,SheepGoat,Pastoral,Pasture_FodderGrass,2005,2.4933899,2005,1,1
 China,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
 China,SheepGoat,Pastoral,Scavenging_Other,2005,0.131231,2005,1,1
-Eastern Europe,Beef,Mixed,FodderHerb_Residue,2005,0.192867,2005,1,1
-Eastern Europe,Beef,Mixed,Pasture_FodderGrass,2005,0.584445,2005,1,1
-Eastern Europe,Beef,Mixed,FeedCrops,2005,0.194815,2005,1,1
-Eastern Europe,Beef,Mixed,Scavenging_Other,2005,0.001948,2005,1,1
+Eastern Europe,Beef,Mixed,FodderHerb_Residue,2005,0.1928667,2005,1,1
+Eastern Europe,Beef,Mixed,Pasture_FodderGrass,2005,0.5844446,2005,1,1
+Eastern Europe,Beef,Mixed,FeedCrops,2005,0.1948149,2005,1,1
+Eastern Europe,Beef,Mixed,Scavenging_Other,2005,0.0019481,2005,1,1
 Eastern Europe,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,0,0
 Eastern Europe,Beef,Pastoral,Pasture_FodderGrass,2005,0,2005,0,0
 Eastern Europe,Beef,Pastoral,FeedCrops,2005,0,2005,0,0
 Eastern Europe,Beef,Pastoral,Scavenging_Other,2005,0,2005,0,0
-Eastern Europe,Dairy,Mixed,FodderHerb_Residue,2005,11.696865,2005,1,1
-Eastern Europe,Dairy,Mixed,Pasture_FodderGrass,2005,15.806575,2005,1,1
-Eastern Europe,Dairy,Mixed,FeedCrops,2005,11.854931,2005,1,1
-Eastern Europe,Dairy,Mixed,Scavenging_Other,2005,0.158066,2005,1,1
+Eastern Europe,Dairy,Mixed,FodderHerb_Residue,2005,8.9969335,2005,1,1
+Eastern Europe,Dairy,Mixed,Pasture_FodderGrass,2005,12.1580182,2005,1,1
+Eastern Europe,Dairy,Mixed,FeedCrops,2005,9.1185137,2005,1,1
+Eastern Europe,Dairy,Mixed,Scavenging_Other,2005,0.1215802,2005,1,1
 Eastern Europe,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,0,0
 Eastern Europe,Dairy,Pastoral,Pasture_FodderGrass,2005,0,2005,0,0
 Eastern Europe,Dairy,Pastoral,FeedCrops,2005,0,2005,0,0
 Eastern Europe,Dairy,Pastoral,Scavenging_Other,2005,0,2005,0,0
-Eastern Europe,Pork,Mixed,FodderHerb_Residue,2005,1.145652,2005,1,1
+Eastern Europe,Pork,Mixed,FodderHerb_Residue,2005,1.1456518,2005,1,1
 Eastern Europe,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
 Eastern Europe,Pork,Mixed,FeedCrops,2005,3.184302,2005,1,1
-Eastern Europe,Pork,Mixed,Scavenging_Other,2005,0.030493,2005,1,1
+Eastern Europe,Pork,Mixed,Scavenging_Other,2005,0.0304926,2005,1,1
 Eastern Europe,Poultry,Mixed,FodderHerb_Residue,2005,0.98888,2005,1,1
 Eastern Europe,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
 Eastern Europe,Poultry,Mixed,FeedCrops,2005,2.74856,2005,1,1
 Eastern Europe,Poultry,Mixed,Scavenging_Other,2005,0.02632,2005,1,1
-Eastern Europe,SheepGoat,Mixed,FodderHerb_Residue,2005,0.006973,2005,1,1
-Eastern Europe,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.128069,2005,1,1
+Eastern Europe,SheepGoat,Mixed,FodderHerb_Residue,2005,0.0069727,2005,1,1
+Eastern Europe,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.1280695,2005,1,1
 Eastern Europe,SheepGoat,Mixed,FeedCrops,2005,0.007115,2005,1,1
-Eastern Europe,SheepGoat,Mixed,Scavenging_Other,2005,0.000142,2005,1,1
+Eastern Europe,SheepGoat,Mixed,Scavenging_Other,2005,0.0001423,2005,1,1
 Eastern Europe,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,0,0
 Eastern Europe,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0,2005,0,0
 Eastern Europe,SheepGoat,Pastoral,FeedCrops,2005,0,2005,0,0
 Eastern Europe,SheepGoat,Pastoral,Scavenging_Other,2005,0,2005,0,0
-Former Soviet Union,Beef,Mixed,FodderHerb_Residue,2005,0.75839,2005,1,1
-Former Soviet Union,Beef,Mixed,Pasture_FodderGrass,2005,1.957698,2005,1,1
-Former Soviet Union,Beef,Mixed,FeedCrops,2005,0.657318,2005,1,1
-Former Soviet Union,Beef,Mixed,Scavenging_Other,2005,0.027374,2005,1,1
+Former Soviet Union,Beef,Mixed,FodderHerb_Residue,2005,0.7583897,2005,1,1
+Former Soviet Union,Beef,Mixed,Pasture_FodderGrass,2005,1.9576983,2005,1,1
+Former Soviet Union,Beef,Mixed,FeedCrops,2005,0.6573182,2005,1,1
+Former Soviet Union,Beef,Mixed,Scavenging_Other,2005,0.0273737,2005,1,1
 Former Soviet Union,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Former Soviet Union,Beef,Pastoral,Pasture_FodderGrass,2005,0.582718,2005,1,1
+Former Soviet Union,Beef,Pastoral,Pasture_FodderGrass,2005,0.5827184,2005,1,1
 Former Soviet Union,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
-Former Soviet Union,Beef,Pastoral,Scavenging_Other,2005,0.030669,2005,1,1
-Former Soviet Union,Dairy,Mixed,FodderHerb_Residue,2005,21.545728,2005,1,1
-Former Soviet Union,Dairy,Mixed,Pasture_FodderGrass,2005,34.011053,2005,1,1
-Former Soviet Union,Dairy,Mixed,FeedCrops,2005,17.829474,2005,1,1
-Former Soviet Union,Dairy,Mixed,Scavenging_Other,2005,0.714904,2005,1,1
+Former Soviet Union,Beef,Pastoral,Scavenging_Other,2005,0.0306694,2005,1,1
+Former Soviet Union,Dairy,Mixed,FodderHerb_Residue,2005,19.336719,2005,1,1
+Former Soviet Union,Dairy,Mixed,Pasture_FodderGrass,2005,30.5240167,2005,1,1
+Former Soviet Union,Dairy,Mixed,FeedCrops,2005,16.0014793,2005,1,1
+Former Soviet Union,Dairy,Mixed,Scavenging_Other,2005,0.6416073,2005,1,1
 Former Soviet Union,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Former Soviet Union,Dairy,Pastoral,Pasture_FodderGrass,2005,3.549,2005,1,1
+Former Soviet Union,Dairy,Pastoral,Pasture_FodderGrass,2005,3.1851329,2005,1,1
 Former Soviet Union,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
-Former Soviet Union,Dairy,Pastoral,Scavenging_Other,2005,0.186789,2005,1,1
-Former Soviet Union,Pork,Mixed,FodderHerb_Residue,2005,1.16211,2005,1,1
+Former Soviet Union,Dairy,Pastoral,Scavenging_Other,2005,0.1676386,2005,1,1
+Former Soviet Union,Pork,Mixed,FodderHerb_Residue,2005,1.1621099,2005,1,1
 Former Soviet Union,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Former Soviet Union,Pork,Mixed,FeedCrops,2005,1.891978,2005,1,1
-Former Soviet Union,Pork,Mixed,Scavenging_Other,2005,0.028697,2005,1,1
-Former Soviet Union,Poultry,Mixed,FodderHerb_Residue,2005,1.435928,2005,1,1
+Former Soviet Union,Pork,Mixed,FeedCrops,2005,1.8919776,2005,1,1
+Former Soviet Union,Pork,Mixed,Scavenging_Other,2005,0.0286973,2005,1,1
+Former Soviet Union,Poultry,Mixed,FodderHerb_Residue,2005,1.4359284,2005,1,1
 Former Soviet Union,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Former Soviet Union,Poultry,Mixed,FeedCrops,2005,4.325166,2005,1,1
-Former Soviet Union,Poultry,Mixed,Scavenging_Other,2005,0.052871,2005,1,1
-Former Soviet Union,SheepGoat,Mixed,FodderHerb_Residue,2005,0.125661,2005,1,1
-Former Soviet Union,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.380155,2005,1,1
-Former Soviet Union,SheepGoat,Mixed,FeedCrops,2005,0.026358,2005,1,1
-Former Soviet Union,SheepGoat,Mixed,Scavenging_Other,2005,0.032694,2005,1,1
+Former Soviet Union,Poultry,Mixed,FeedCrops,2005,4.3251662,2005,1,1
+Former Soviet Union,Poultry,Mixed,Scavenging_Other,2005,0.0528712,2005,1,1
+Former Soviet Union,SheepGoat,Mixed,FodderHerb_Residue,2005,0.1256606,2005,1,1
+Former Soviet Union,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.3801555,2005,1,1
+Former Soviet Union,SheepGoat,Mixed,FeedCrops,2005,0.0263577,2005,1,1
+Former Soviet Union,SheepGoat,Mixed,Scavenging_Other,2005,0.0326938,2005,1,1
 Former Soviet Union,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Former Soviet Union,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.016829,2005,1,1
+Former Soviet Union,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.0168293,2005,1,1
 Former Soviet Union,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-Former Soviet Union,SheepGoat,Pastoral,Scavenging_Other,2005,0.00187,2005,1,1
-India,Beef,Mixed,FodderHerb_Residue,2005,0.293612,2005,1,1
-India,Beef,Mixed,Pasture_FodderGrass,2005,0.218299,2005,1,1
-India,Beef,Mixed,FeedCrops,2005,0.032745,2005,1,1
-India,Beef,Mixed,Scavenging_Other,2005,0.546838,2005,1,1
+Former Soviet Union,SheepGoat,Pastoral,Scavenging_Other,2005,0.0018699,2005,1,1
+India,Beef,Mixed,FodderHerb_Residue,2005,0.2936115,2005,1,1
+India,Beef,Mixed,Pasture_FodderGrass,2005,0.2182985,2005,1,1
+India,Beef,Mixed,FeedCrops,2005,0.0327448,2005,1,1
+India,Beef,Mixed,Scavenging_Other,2005,0.5468378,2005,1,1
 India,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-India,Beef,Pastoral,Pasture_FodderGrass,2005,0.591225,2005,1,1
+India,Beef,Pastoral,Pasture_FodderGrass,2005,0.5912252,2005,1,1
 India,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
-India,Beef,Pastoral,Scavenging_Other,2005,0.591225,2005,1,1
-India,Dairy,Mixed,FodderHerb_Residue,2005,33.752015,2005,1,1
-India,Dairy,Mixed,Pasture_FodderGrass,2005,9.401675,2005,1,1
-India,Dairy,Mixed,FeedCrops,2005,3.76067,2005,1,1
-India,Dairy,Mixed,Scavenging_Other,2005,47.196411,2005,1,1
+India,Beef,Pastoral,Scavenging_Other,2005,0.5912252,2005,1,1
+India,Dairy,Mixed,FodderHerb_Residue,2005,32.776195,2005,1,1
+India,Dairy,Mixed,Pasture_FodderGrass,2005,9.1298593,2005,1,1
+India,Dairy,Mixed,FeedCrops,2005,3.6519437,2005,1,1
+India,Dairy,Mixed,Scavenging_Other,2005,45.8318939,2005,1,1
 India,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-India,Dairy,Pastoral,Pasture_FodderGrass,2005,1.958682,2005,1,1
+India,Dairy,Pastoral,Pasture_FodderGrass,2005,1.902054,2005,1,1
 India,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
-India,Dairy,Pastoral,Scavenging_Other,2005,1.958682,2005,1,1
-India,Pork,Mixed,FodderHerb_Residue,2005,0.21277,2005,1,1
+India,Dairy,Pastoral,Scavenging_Other,2005,1.902054,2005,1,1
+India,Pork,Mixed,FodderHerb_Residue,2005,0.2127699,2005,1,1
 India,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-India,Pork,Mixed,FeedCrops,2005,0.259579,2005,1,1
-India,Pork,Mixed,Scavenging_Other,2005,0.000473,2005,1,1
-India,Poultry,Mixed,FodderHerb_Residue,2005,1.266825,2005,1,1
+India,Pork,Mixed,FeedCrops,2005,0.2595793,2005,1,1
+India,Pork,Mixed,Scavenging_Other,2005,0.0004728,2005,1,1
+India,Poultry,Mixed,FodderHerb_Residue,2005,1.2668248,2005,1,1
 India,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-India,Poultry,Mixed,FeedCrops,2005,1.89707,2005,1,1
-India,Poultry,Mixed,Scavenging_Other,2005,0.003167,2005,1,1
-India,SheepGoat,Mixed,FodderHerb_Residue,2005,0.028686,2005,1,1
-India,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.286859,2005,1,1
-India,SheepGoat,Mixed,FeedCrops,2005,0.003187,2005,1,1
-India,SheepGoat,Mixed,Scavenging_Other,2005,0.318732,2005,1,1
+India,Poultry,Mixed,FeedCrops,2005,1.8970701,2005,1,1
+India,Poultry,Mixed,Scavenging_Other,2005,0.0031671,2005,1,1
+India,SheepGoat,Mixed,FodderHerb_Residue,2005,0.0286859,2005,1,1
+India,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.2868589,2005,1,1
+India,SheepGoat,Mixed,FeedCrops,2005,0.0031873,2005,1,1
+India,SheepGoat,Mixed,Scavenging_Other,2005,0.3187321,2005,1,1
 India,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-India,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.035415,2005,1,1
+India,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.0354147,2005,1,1
 India,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-India,SheepGoat,Pastoral,Scavenging_Other,2005,0.035415,2005,1,1
-Japan,Beef,Mixed,FodderHerb_Residue,2005,0.023092,2005,1,1
-Japan,Beef,Mixed,Pasture_FodderGrass,2005,0.376495,2005,1,1
-Japan,Beef,Mixed,FeedCrops,2005,0.100399,2005,1,1
+India,SheepGoat,Pastoral,Scavenging_Other,2005,0.0354147,2005,1,1
+Japan,Beef,Mixed,FodderHerb_Residue,2005,0.0230917,2005,1,1
+Japan,Beef,Mixed,Pasture_FodderGrass,2005,0.3764946,2005,1,1
+Japan,Beef,Mixed,FeedCrops,2005,0.1003986,2005,1,1
 Japan,Beef,Mixed,Scavenging_Other,2005,0.002008,2005,1,1
 Japan,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,0,0
 Japan,Beef,Pastoral,Pasture_FodderGrass,2005,0,2005,0,0
 Japan,Beef,Pastoral,FeedCrops,2005,0,2005,0,0
 Japan,Beef,Pastoral,Scavenging_Other,2005,0,2005,0,0
-Japan,Dairy,Mixed,FodderHerb_Residue,2005,0.403664,2005,1,1
-Japan,Dairy,Mixed,Pasture_FodderGrass,2005,6.581478,2005,1,1
-Japan,Dairy,Mixed,FeedCrops,2005,1.755061,2005,1,1
-Japan,Dairy,Mixed,Scavenging_Other,2005,0.035101,2005,1,1
+Japan,Dairy,Mixed,FodderHerb_Residue,2005,0.3786657,2005,1,1
+Japan,Dairy,Mixed,Pasture_FodderGrass,2005,6.1738972,2005,1,1
+Japan,Dairy,Mixed,FeedCrops,2005,1.6463726,2005,1,1
+Japan,Dairy,Mixed,Scavenging_Other,2005,0.0329275,2005,1,1
 Japan,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,0,0
 Japan,Dairy,Pastoral,Pasture_FodderGrass,2005,0,2005,0,0
 Japan,Dairy,Pastoral,FeedCrops,2005,0,2005,0,0
 Japan,Dairy,Pastoral,Scavenging_Other,2005,0,2005,0,0
-Japan,Pork,Mixed,FodderHerb_Residue,2005,0.527377,2005,1,1
+Japan,Pork,Mixed,FodderHerb_Residue,2005,0.5273771,2005,1,1
 Japan,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
 Japan,Pork,Mixed,FeedCrops,2005,0.72326,2005,1,1
-Japan,Pork,Mixed,Scavenging_Other,2005,0.005023,2005,1,1
-Japan,Poultry,Mixed,FodderHerb_Residue,2005,1.001614,2005,1,1
+Japan,Pork,Mixed,Scavenging_Other,2005,0.0050226,2005,1,1
+Japan,Poultry,Mixed,FodderHerb_Residue,2005,1.0016144,2005,1,1
 Japan,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Japan,Poultry,Mixed,FeedCrops,2005,2.79538,2005,1,1
-Japan,Poultry,Mixed,Scavenging_Other,2005,0.015234,2005,1,1
-Japan,SheepGoat,Mixed,FodderHerb_Residue,2005,1.9e-05,2005,1,1
+Japan,Poultry,Mixed,FeedCrops,2005,2.7953801,2005,1,1
+Japan,Poultry,Mixed,Scavenging_Other,2005,0.0152337,2005,1,1
+Japan,SheepGoat,Mixed,FodderHerb_Residue,2005,1.87e-05,2005,1,1
 Japan,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.00014,2005,1,1
-Japan,SheepGoat,Mixed,FeedCrops,2005,1.6e-05,2005,1,1
-Japan,SheepGoat,Mixed,Scavenging_Other,2005,0,2005,1,0
+Japan,SheepGoat,Mixed,FeedCrops,2005,1.61e-05,2005,1,1
+Japan,SheepGoat,Mixed,Scavenging_Other,2005,2e-07,2005,1,1
 Japan,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,0,0
 Japan,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0,2005,0,0
 Japan,SheepGoat,Pastoral,FeedCrops,2005,0,2005,0,0
 Japan,SheepGoat,Pastoral,Scavenging_Other,2005,0,2005,0,0
-Korea,Beef,Mixed,FodderHerb_Residue,2005,0.145621,2005,1,1
-Korea,Beef,Mixed,Pasture_FodderGrass,2005,0.01879,2005,1,1
-Korea,Beef,Mixed,FeedCrops,2005,0.013529,2005,1,1
-Korea,Beef,Mixed,Scavenging_Other,2005,0.009771,2005,1,1
+Korea,Beef,Mixed,FodderHerb_Residue,2005,0.1456213,2005,1,1
+Korea,Beef,Mixed,Pasture_FodderGrass,2005,0.0187899,2005,1,1
+Korea,Beef,Mixed,FeedCrops,2005,0.0135287,2005,1,1
+Korea,Beef,Mixed,Scavenging_Other,2005,0.0097707,2005,1,1
 Korea,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Korea,Beef,Pastoral,Pasture_FodderGrass,2005,0.009395,2005,1,1
+Korea,Beef,Pastoral,Pasture_FodderGrass,2005,0.0093949,2005,1,1
 Korea,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
-Korea,Beef,Pastoral,Scavenging_Other,2005,0.000494,2005,1,1
-Korea,Dairy,Mixed,FodderHerb_Residue,2005,1.659654,2005,1,1
-Korea,Dairy,Mixed,Pasture_FodderGrass,2005,0.219241,2005,1,1
-Korea,Dairy,Mixed,FeedCrops,2005,0.197317,2005,1,1
-Korea,Dairy,Mixed,Scavenging_Other,2005,0.116198,2005,1,1
+Korea,Beef,Pastoral,Scavenging_Other,2005,0.0004945,2005,1,1
+Korea,Dairy,Mixed,FodderHerb_Residue,2005,1.6177407,2005,1,1
+Korea,Dairy,Mixed,Pasture_FodderGrass,2005,0.2137042,2005,1,1
+Korea,Dairy,Mixed,FeedCrops,2005,0.1923338,2005,1,1
+Korea,Dairy,Mixed,Scavenging_Other,2005,0.1132632,2005,1,1
 Korea,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Korea,Dairy,Pastoral,Pasture_FodderGrass,2005,0.10962,2005,1,1
+Korea,Dairy,Pastoral,Pasture_FodderGrass,2005,0.1068521,2005,1,1
 Korea,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
-Korea,Dairy,Pastoral,Scavenging_Other,2005,0.005769,2005,1,1
-Korea,Pork,Mixed,FodderHerb_Residue,2005,0.106073,2005,1,1
+Korea,Dairy,Pastoral,Scavenging_Other,2005,0.0056238,2005,1,1
+Korea,Pork,Mixed,FodderHerb_Residue,2005,0.1060727,2005,1,1
 Korea,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
 Korea,Pork,Mixed,FeedCrops,2005,0.901113,2005,1,1
-Korea,Pork,Mixed,Scavenging_Other,2005,0.003031,2005,1,1
+Korea,Pork,Mixed,Scavenging_Other,2005,0.0030306,2005,1,1
 Korea,Poultry,Mixed,FodderHerb_Residue,2005,0.111462,2005,1,1
 Korea,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Korea,Poultry,Mixed,FeedCrops,2005,0.945835,2005,1,1
-Korea,Poultry,Mixed,Scavenging_Other,2005,0.004246,2005,1,1
-Korea,SheepGoat,Mixed,FodderHerb_Residue,2005,3.1e-05,2005,1,1
-Korea,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.000682,2005,1,1
-Korea,SheepGoat,Mixed,FeedCrops,2005,7e-06,2005,1,1
-Korea,SheepGoat,Mixed,Scavenging_Other,2005,3.8e-05,2005,1,1
+Korea,Poultry,Mixed,FeedCrops,2005,0.9458346,2005,1,1
+Korea,Poultry,Mixed,Scavenging_Other,2005,0.0042462,2005,1,1
+Korea,SheepGoat,Mixed,FodderHerb_Residue,2005,3.11e-05,2005,1,1
+Korea,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.0006822,2005,1,1
+Korea,SheepGoat,Mixed,FeedCrops,2005,6.8e-06,2005,1,1
+Korea,SheepGoat,Mixed,Scavenging_Other,2005,3.79e-05,2005,1,1
 Korea,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Korea,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.001947,2005,1,1
+Korea,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.0019469,2005,1,1
 Korea,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-Korea,SheepGoat,Pastoral,Scavenging_Other,2005,0.000102,2005,1,1
-Latin America,Beef,Mixed,FodderHerb_Residue,2005,1.650406,2005,1,1
-Latin America,Beef,Mixed,Pasture_FodderGrass,2005,5.359058,2005,1,1
-Latin America,Beef,Mixed,FeedCrops,2005,0.260832,2005,1,1
-Latin America,Beef,Mixed,Scavenging_Other,2005,0.386177,2005,1,1
+Korea,SheepGoat,Pastoral,Scavenging_Other,2005,0.0001025,2005,1,1
+Latin America,Beef,Mixed,FodderHerb_Residue,2005,1.6504061,2005,1,1
+Latin America,Beef,Mixed,Pasture_FodderGrass,2005,5.3590579,2005,1,1
+Latin America,Beef,Mixed,FeedCrops,2005,0.2608322,2005,1,1
+Latin America,Beef,Mixed,Scavenging_Other,2005,0.3861772,2005,1,1
 Latin America,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Latin America,Beef,Pastoral,Pasture_FodderGrass,2005,8.063826,2005,1,1
+Latin America,Beef,Pastoral,Pasture_FodderGrass,2005,8.0638259,2005,1,1
 Latin America,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
-Latin America,Beef,Pastoral,Scavenging_Other,2005,0.424412,2005,1,1
-Latin America,Dairy,Mixed,FodderHerb_Residue,2005,24.839674,2005,1,1
-Latin America,Dairy,Mixed,Pasture_FodderGrass,2005,27.243407,2005,1,1
-Latin America,Dairy,Mixed,FeedCrops,2005,5.364755,2005,1,1
-Latin America,Dairy,Mixed,Scavenging_Other,2005,3.104071,2005,1,1
+Latin America,Beef,Pastoral,Scavenging_Other,2005,0.4244119,2005,1,1
+Latin America,Dairy,Mixed,FodderHerb_Residue,2005,22.5670609,2005,1,1
+Latin America,Dairy,Mixed,Pasture_FodderGrass,2005,24.7508738,2005,1,1
+Latin America,Dairy,Mixed,FeedCrops,2005,4.8739264,2005,1,1
+Latin America,Dairy,Mixed,Scavenging_Other,2005,2.8200753,2005,1,1
 Latin America,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Latin America,Dairy,Pastoral,Pasture_FodderGrass,2005,13.609907,2005,1,1
+Latin America,Dairy,Pastoral,Pasture_FodderGrass,2005,12.3647199,2005,1,1
 Latin America,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
-Latin America,Dairy,Pastoral,Scavenging_Other,2005,0.716311,2005,1,1
-Latin America,Pork,Mixed,FodderHerb_Residue,2005,2.381335,2005,1,1
+Latin America,Dairy,Pastoral,Scavenging_Other,2005,0.6507747,2005,1,1
+Latin America,Pork,Mixed,FodderHerb_Residue,2005,2.3813347,2005,1,1
 Latin America,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Latin America,Pork,Mixed,FeedCrops,2005,3.46833,2005,1,1
-Latin America,Pork,Mixed,Scavenging_Other,2005,0.013502,2005,1,1
-Latin America,Poultry,Mixed,FodderHerb_Residue,2005,9.033766,2005,1,1
+Latin America,Pork,Mixed,FeedCrops,2005,3.4683296,2005,1,1
+Latin America,Pork,Mixed,Scavenging_Other,2005,0.0135023,2005,1,1
+Latin America,Poultry,Mixed,FodderHerb_Residue,2005,9.0337662,2005,1,1
 Latin America,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Latin America,Poultry,Mixed,FeedCrops,2005,13.26483,2005,1,1
-Latin America,Poultry,Mixed,Scavenging_Other,2005,0.057399,2005,1,1
+Latin America,Poultry,Mixed,FeedCrops,2005,13.2648301,2005,1,1
+Latin America,Poultry,Mixed,Scavenging_Other,2005,0.0573985,2005,1,1
 Latin America,SheepGoat,Mixed,FodderHerb_Residue,2005,0.007878,2005,1,1
-Latin America,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.171392,2005,1,1
-Latin America,SheepGoat,Mixed,FeedCrops,2005,0.001644,2005,1,1
-Latin America,SheepGoat,Mixed,Scavenging_Other,2005,0.009522,2005,1,1
+Latin America,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.1713916,2005,1,1
+Latin America,SheepGoat,Mixed,FeedCrops,2005,0.0016437,2005,1,1
+Latin America,SheepGoat,Mixed,Scavenging_Other,2005,0.0095218,2005,1,1
 Latin America,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Latin America,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.220225,2005,1,1
+Latin America,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.2202249,2005,1,1
 Latin America,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-Latin America,SheepGoat,Pastoral,Scavenging_Other,2005,0.011591,2005,1,1
-Middle East,Beef,Mixed,FodderHerb_Residue,2005,0.056019,2005,1,1
-Middle East,Beef,Mixed,Pasture_FodderGrass,2005,0.085247,2005,1,1
-Middle East,Beef,Mixed,FeedCrops,2005,0.089144,2005,1,1
-Middle East,Beef,Mixed,Scavenging_Other,2005,0.013152,2005,1,1
+Latin America,SheepGoat,Pastoral,Scavenging_Other,2005,0.0115908,2005,1,1
+Middle East,Beef,Mixed,FodderHerb_Residue,2005,0.0560194,2005,1,1
+Middle East,Beef,Mixed,Pasture_FodderGrass,2005,0.0852469,2005,1,1
+Middle East,Beef,Mixed,FeedCrops,2005,0.0891439,2005,1,1
+Middle East,Beef,Mixed,Scavenging_Other,2005,0.0131524,2005,1,1
 Middle East,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Middle East,Beef,Pastoral,Pasture_FodderGrass,2005,0.429714,2005,1,1
+Middle East,Beef,Pastoral,Pasture_FodderGrass,2005,0.4297138,2005,1,1
 Middle East,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
-Middle East,Beef,Pastoral,Scavenging_Other,2005,0.022617,2005,1,1
-Middle East,Dairy,Mixed,FodderHerb_Residue,2005,4.706265,2005,1,1
-Middle East,Dairy,Mixed,Pasture_FodderGrass,2005,2.299478,2005,1,1
-Middle East,Dairy,Mixed,FeedCrops,2005,7.480968,2005,1,1
-Middle East,Dairy,Mixed,Scavenging_Other,2005,0.843142,2005,1,1
+Middle East,Beef,Pastoral,Scavenging_Other,2005,0.0226165,2005,1,1
+Middle East,Dairy,Mixed,FodderHerb_Residue,2005,3.8589583,2005,1,1
+Middle East,Dairy,Mixed,Pasture_FodderGrass,2005,1.8854845,2005,1,1
+Middle East,Dairy,Mixed,FeedCrops,2005,6.1341096,2005,1,1
+Middle East,Dairy,Mixed,Scavenging_Other,2005,0.6913443,2005,1,1
 Middle East,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Middle East,Dairy,Pastoral,Pasture_FodderGrass,2005,0.575268,2005,1,1
+Middle East,Dairy,Pastoral,Pasture_FodderGrass,2005,0.4716978,2005,1,1
 Middle East,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
-Middle East,Dairy,Pastoral,Scavenging_Other,2005,0.030277,2005,1,1
-Middle East,Pork,Mixed,FodderHerb_Residue,2005,0.00802,2005,1,1
+Middle East,Dairy,Pastoral,Scavenging_Other,2005,0.0248262,2005,1,1
+Middle East,Pork,Mixed,FodderHerb_Residue,2005,0.0080199,2005,1,1
 Middle East,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Middle East,Pork,Mixed,FeedCrops,2005,0.010903,2005,1,1
-Middle East,Pork,Mixed,Scavenging_Other,2005,0.000172,2005,1,1
-Middle East,Poultry,Mixed,FodderHerb_Residue,2005,1.125104,2005,1,1
+Middle East,Pork,Mixed,FeedCrops,2005,0.0109032,2005,1,1
+Middle East,Pork,Mixed,Scavenging_Other,2005,0.0001719,2005,1,1
+Middle East,Poultry,Mixed,FodderHerb_Residue,2005,1.1251037,2005,1,1
 Middle East,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Middle East,Poultry,Mixed,FeedCrops,2005,3.131467,2005,1,1
-Middle East,Poultry,Mixed,Scavenging_Other,2005,0.02139,2005,1,1
-Middle East,SheepGoat,Mixed,FodderHerb_Residue,2005,0.134234,2005,1,1
-Middle East,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.438672,2005,1,1
+Middle East,Poultry,Mixed,FeedCrops,2005,3.1314673,2005,1,1
+Middle East,Poultry,Mixed,Scavenging_Other,2005,0.0213898,2005,1,1
+Middle East,SheepGoat,Mixed,FodderHerb_Residue,2005,0.1342337,2005,1,1
+Middle East,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.4386721,2005,1,1
 Middle East,SheepGoat,Mixed,FeedCrops,2005,0.214072,2005,1,1
-Middle East,SheepGoat,Mixed,Scavenging_Other,2005,0.089489,2005,1,1
+Middle East,SheepGoat,Mixed,Scavenging_Other,2005,0.0894891,2005,1,1
 Middle East,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Middle East,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.045956,2005,1,1
+Middle East,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.0459561,2005,1,1
 Middle East,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-Middle East,SheepGoat,Pastoral,Scavenging_Other,2005,0.005106,2005,1,1
+Middle East,SheepGoat,Pastoral,Scavenging_Other,2005,0.0051062,2005,1,1
 Southeast Asia,Beef,Mixed,FodderHerb_Residue,2005,0.422452,2005,1,1
-Southeast Asia,Beef,Mixed,Pasture_FodderGrass,2005,1.198766,2005,1,1
-Southeast Asia,Beef,Mixed,FeedCrops,2005,0.338856,2005,1,1
-Southeast Asia,Beef,Mixed,Scavenging_Other,2005,0.219501,2005,1,1
+Southeast Asia,Beef,Mixed,Pasture_FodderGrass,2005,1.1987661,2005,1,1
+Southeast Asia,Beef,Mixed,FeedCrops,2005,0.3388559,2005,1,1
+Southeast Asia,Beef,Mixed,Scavenging_Other,2005,0.2195007,2005,1,1
 Southeast Asia,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Southeast Asia,Beef,Pastoral,Pasture_FodderGrass,2005,0.317578,2005,1,1
+Southeast Asia,Beef,Pastoral,Pasture_FodderGrass,2005,0.3175783,2005,1,1
 Southeast Asia,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
-Southeast Asia,Beef,Pastoral,Scavenging_Other,2005,0.211719,2005,1,1
-Southeast Asia,Dairy,Mixed,FodderHerb_Residue,2005,9.779231,2005,1,1
-Southeast Asia,Dairy,Mixed,Pasture_FodderGrass,2005,16.865108,2005,1,1
-Southeast Asia,Dairy,Mixed,FeedCrops,2005,3.776142,2005,1,1
-Southeast Asia,Dairy,Mixed,Scavenging_Other,2005,7.057537,2005,1,1
+Southeast Asia,Beef,Pastoral,Scavenging_Other,2005,0.2117189,2005,1,1
+Southeast Asia,Dairy,Mixed,FodderHerb_Residue,2005,9.51918,2005,1,1
+Southeast Asia,Dairy,Mixed,Pasture_FodderGrass,2005,16.4166279,2005,1,1
+Southeast Asia,Dairy,Mixed,FeedCrops,2005,3.675726,2005,1,1
+Southeast Asia,Dairy,Mixed,Scavenging_Other,2005,6.8698614,2005,1,1
 Southeast Asia,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Southeast Asia,Dairy,Pastoral,Pasture_FodderGrass,2005,0.22714,2005,1,1
+Southeast Asia,Dairy,Pastoral,Pasture_FodderGrass,2005,0.2210994,2005,1,1
 Southeast Asia,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
-Southeast Asia,Dairy,Pastoral,Scavenging_Other,2005,0.151426,2005,1,1
-Southeast Asia,Pork,Mixed,FodderHerb_Residue,2005,2.500944,2005,1,1
+Southeast Asia,Dairy,Pastoral,Scavenging_Other,2005,0.1473996,2005,1,1
+Southeast Asia,Pork,Mixed,FodderHerb_Residue,2005,2.5009445,2005,1,1
 Southeast Asia,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Southeast Asia,Pork,Mixed,FeedCrops,2005,0.863558,2005,1,1
-Southeast Asia,Pork,Mixed,Scavenging_Other,2005,0.002876,2005,1,1
-Southeast Asia,Poultry,Mixed,FodderHerb_Residue,2005,6.825224,2005,1,1
+Southeast Asia,Pork,Mixed,FeedCrops,2005,0.8635581,2005,1,1
+Southeast Asia,Pork,Mixed,Scavenging_Other,2005,0.0028756,2005,1,1
+Southeast Asia,Poultry,Mixed,FodderHerb_Residue,2005,6.8252236,2005,1,1
 Southeast Asia,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Southeast Asia,Poultry,Mixed,FeedCrops,2005,2.41557,2005,1,1
-Southeast Asia,Poultry,Mixed,Scavenging_Other,2005,0.007035,2005,1,1
-Southeast Asia,SheepGoat,Mixed,FodderHerb_Residue,2005,0.023151,2005,1,1
-Southeast Asia,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.586404,2005,1,1
-Southeast Asia,SheepGoat,Mixed,FeedCrops,2005,0.011343,2005,1,1
-Southeast Asia,SheepGoat,Mixed,Scavenging_Other,2005,0.068989,2005,1,1
+Southeast Asia,Poultry,Mixed,FeedCrops,2005,2.4155697,2005,1,1
+Southeast Asia,Poultry,Mixed,Scavenging_Other,2005,0.0070349,2005,1,1
+Southeast Asia,SheepGoat,Mixed,FodderHerb_Residue,2005,0.0231511,2005,1,1
+Southeast Asia,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.5864038,2005,1,1
+Southeast Asia,SheepGoat,Mixed,FeedCrops,2005,0.0113432,2005,1,1
+Southeast Asia,SheepGoat,Mixed,Scavenging_Other,2005,0.0689887,2005,1,1
 Southeast Asia,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Southeast Asia,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.177171,2005,1,1
+Southeast Asia,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.1771715,2005,1,1
 Southeast Asia,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-Southeast Asia,SheepGoat,Pastoral,Scavenging_Other,2005,0.019686,2005,1,1
-USA,Beef,Mixed,FodderHerb_Residue,2005,1.794508,2005,1,1
-USA,Beef,Mixed,Pasture_FodderGrass,2005,6.152599,2005,1,1
-USA,Beef,Mixed,FeedCrops,2005,2.29697,2005,1,1
+Southeast Asia,SheepGoat,Pastoral,Scavenging_Other,2005,0.0196857,2005,1,1
+USA,Beef,Mixed,FodderHerb_Residue,2005,1.7945082,2005,1,1
+USA,Beef,Mixed,Pasture_FodderGrass,2005,6.1525994,2005,1,1
+USA,Beef,Mixed,FeedCrops,2005,2.2969704,2005,1,1
 USA,Beef,Mixed,Scavenging_Other,2005,0,2005,1,0
 USA,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
 USA,Beef,Pastoral,Pasture_FodderGrass,2005,1.398318,2005,1,1
 USA,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
 USA,Beef,Pastoral,Scavenging_Other,2005,0,2005,1,0
-USA,Dairy,Mixed,FodderHerb_Residue,2005,26.364848,2005,1,1
-USA,Dairy,Mixed,Pasture_FodderGrass,2005,40.098628,2005,1,1
-USA,Dairy,Mixed,FeedCrops,2005,33.682848,2005,1,1
-USA,Dairy,Mixed,Scavenging_Other,2005,0.100247,2005,1,1
+USA,Dairy,Mixed,FodderHerb_Residue,2005,19.8631927,2005,1,1
+USA,Dairy,Mixed,Pasture_FodderGrass,2005,30.210179,2005,1,1
+USA,Dairy,Mixed,FeedCrops,2005,25.3765504,2005,1,1
+USA,Dairy,Mixed,Scavenging_Other,2005,0.0755254,2005,1,1
 USA,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-USA,Dairy,Pastoral,Pasture_FodderGrass,2005,6.398717,2005,1,1
+USA,Dairy,Pastoral,Pasture_FodderGrass,2005,4.8207732,2005,1,1
 USA,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
 USA,Dairy,Pastoral,Scavenging_Other,2005,0,2005,1,0
-USA,Pork,Mixed,FodderHerb_Residue,2005,1.49288,2005,1,1
+USA,Pork,Mixed,FodderHerb_Residue,2005,1.4928801,2005,1,1
 USA,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-USA,Pork,Mixed,FeedCrops,2005,7.946279,2005,1,1
-USA,Pork,Mixed,Scavenging_Other,2005,0.009449,2005,1,1
-USA,Poultry,Mixed,FodderHerb_Residue,2005,3.741266,2005,1,1
+USA,Pork,Mixed,FeedCrops,2005,7.9462793,2005,1,1
+USA,Pork,Mixed,Scavenging_Other,2005,0.0094486,2005,1,1
+USA,Poultry,Mixed,FodderHerb_Residue,2005,3.7412657,2005,1,1
 USA,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-USA,Poultry,Mixed,FeedCrops,2005,19.913952,2005,1,1
-USA,Poultry,Mixed,Scavenging_Other,2005,0.023679,2005,1,1
-USA,SheepGoat,Mixed,FodderHerb_Residue,2005,0.002158,2005,1,1
-USA,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.044138,2005,1,1
-USA,SheepGoat,Mixed,FeedCrops,2005,0.002746,2005,1,1
+USA,Poultry,Mixed,FeedCrops,2005,19.9139524,2005,1,1
+USA,Poultry,Mixed,Scavenging_Other,2005,0.0236789,2005,1,1
+USA,SheepGoat,Mixed,FodderHerb_Residue,2005,0.0021579,2005,1,1
+USA,SheepGoat,Mixed,Pasture_FodderGrass,2005,0.0441384,2005,1,1
+USA,SheepGoat,Mixed,FeedCrops,2005,0.0027464,2005,1,1
 USA,SheepGoat,Mixed,Scavenging_Other,2005,0,2005,1,0
 USA,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-USA,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.045817,2005,1,1
+USA,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.0458174,2005,1,1
 USA,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
 USA,SheepGoat,Pastoral,Scavenging_Other,2005,0,2005,1,0
-Western Europe,Beef,Mixed,FodderHerb_Residue,2005,2.429284,2005,1,1
-Western Europe,Beef,Mixed,Pasture_FodderGrass,2005,4.63895,2005,1,1
-Western Europe,Beef,Mixed,FeedCrops,2005,0.778931,2005,1,1
-Western Europe,Beef,Mixed,Scavenging_Other,2005,0.032242,2005,1,1
+Western Europe,Beef,Mixed,FodderHerb_Residue,2005,2.4292837,2005,1,1
+Western Europe,Beef,Mixed,Pasture_FodderGrass,2005,4.6389504,2005,1,1
+Western Europe,Beef,Mixed,FeedCrops,2005,0.7789314,2005,1,1
+Western Europe,Beef,Mixed,Scavenging_Other,2005,0.0322416,2005,1,1
 Western Europe,Beef,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Western Europe,Beef,Pastoral,Pasture_FodderGrass,2005,0.03554,2005,1,1
+Western Europe,Beef,Pastoral,Pasture_FodderGrass,2005,0.0355396,2005,1,1
 Western Europe,Beef,Pastoral,FeedCrops,2005,0,2005,1,0
-Western Europe,Beef,Pastoral,Scavenging_Other,2005,0.001871,2005,1,1
-Western Europe,Dairy,Mixed,FodderHerb_Residue,2005,91.918036,2005,1,1
-Western Europe,Dairy,Mixed,Pasture_FodderGrass,2005,75.712427,2005,1,1
-Western Europe,Dairy,Mixed,FeedCrops,2005,29.509031,2005,1,1
-Western Europe,Dairy,Mixed,Scavenging_Other,2005,1.314521,2005,1,1
+Western Europe,Beef,Pastoral,Scavenging_Other,2005,0.0018705,2005,1,1
+Western Europe,Dairy,Mixed,FodderHerb_Residue,2005,65.5447843,2005,1,1
+Western Europe,Dairy,Mixed,Pasture_FodderGrass,2005,53.9889113,2005,1,1
+Western Europe,Dairy,Mixed,FeedCrops,2005,21.0422588,2005,1,1
+Western Europe,Dairy,Mixed,Scavenging_Other,2005,0.9373569,2005,1,1
 Western Europe,Dairy,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Western Europe,Dairy,Pastoral,Pasture_FodderGrass,2005,0.140837,2005,1,1
+Western Europe,Dairy,Pastoral,Pasture_FodderGrass,2005,0.100428,2005,1,1
 Western Europe,Dairy,Pastoral,FeedCrops,2005,0,2005,1,0
-Western Europe,Dairy,Pastoral,Scavenging_Other,2005,0.007412,2005,1,1
+Western Europe,Dairy,Pastoral,Scavenging_Other,2005,0.0052857,2005,1,1
 Western Europe,Pork,Mixed,FodderHerb_Residue,2005,5.83508,2005,1,1
 Western Europe,Pork,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Western Europe,Pork,Mixed,FeedCrops,2005,12.540791,2005,1,1
-Western Europe,Pork,Mixed,Scavenging_Other,2005,0.148193,2005,1,1
+Western Europe,Pork,Mixed,FeedCrops,2005,12.5407911,2005,1,1
+Western Europe,Pork,Mixed,Scavenging_Other,2005,0.1481925,2005,1,1
 Western Europe,Poultry,Mixed,FodderHerb_Residue,2005,3.403204,2005,1,1
 Western Europe,Poultry,Mixed,Pasture_FodderGrass,2005,0,2005,1,0
-Western Europe,Poultry,Mixed,FeedCrops,2005,12.28127,2005,1,1
-Western Europe,Poultry,Mixed,Scavenging_Other,2005,0.120039,2005,1,1
-Western Europe,SheepGoat,Mixed,FodderHerb_Residue,2005,0.175679,2005,1,1
-Western Europe,SheepGoat,Mixed,Pasture_FodderGrass,2005,1.112987,2005,1,1
-Western Europe,SheepGoat,Mixed,FeedCrops,2005,0.06168,2005,1,1
-Western Europe,SheepGoat,Mixed,Scavenging_Other,2005,0.033435,2005,1,1
+Western Europe,Poultry,Mixed,FeedCrops,2005,12.2812703,2005,1,1
+Western Europe,Poultry,Mixed,Scavenging_Other,2005,0.1200391,2005,1,1
+Western Europe,SheepGoat,Mixed,FodderHerb_Residue,2005,0.1756787,2005,1,1
+Western Europe,SheepGoat,Mixed,Pasture_FodderGrass,2005,1.1129874,2005,1,1
+Western Europe,SheepGoat,Mixed,FeedCrops,2005,0.0616801,2005,1,1
+Western Europe,SheepGoat,Mixed,Scavenging_Other,2005,0.0334349,2005,1,1
 Western Europe,SheepGoat,Pastoral,FodderHerb_Residue,2005,0,2005,1,0
-Western Europe,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.01734,2005,1,1
+Western Europe,SheepGoat,Pastoral,Pasture_FodderGrass,2005,0.0173401,2005,1,1
 Western Europe,SheepGoat,Pastoral,FeedCrops,2005,0,2005,1,0
-Western Europe,SheepGoat,Pastoral,Scavenging_Other,2005,0.001927,2005,1,1
+Western Europe,SheepGoat,Pastoral,Scavenging_Other,2005,0.0019267,2005,1,1

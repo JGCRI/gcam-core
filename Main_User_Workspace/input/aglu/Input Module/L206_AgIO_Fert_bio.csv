@@ -12,7 +12,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,1975,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,1975,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,1975,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,1975,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,1975,N fertilizer,0.36
@@ -26,7 +26,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,1975,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,1975,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,1975,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,1975,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,1975,N fertilizer,0.36
@@ -39,8 +39,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,1975,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,1975,N fertilizer,0.36
@@ -53,8 +53,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,1975,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,1975,N fertilizer,0.36
@@ -67,8 +67,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,1975,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,1975,N fertilizer,0.36
@@ -81,8 +81,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,1975,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,1975,N fertilizer,0.36
@@ -95,8 +95,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,1975,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,1975,N fertilizer,0.36
@@ -109,10 +109,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,1975,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,1975,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,1975,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,1975,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,1975,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,1975,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,1975,N fertilizer,0.36
@@ -123,10 +123,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,1975,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,1975,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,1975,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,1975,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,1975,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,1975,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,1975,N fertilizer,0.36
@@ -137,10 +137,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,1975,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,1975,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,1975,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,1975,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,1975,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,1975,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,1975,N fertilizer,0.36
@@ -151,10 +151,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,1975,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,1975,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,1975,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,1975,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,1975,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,1975,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,1975,N fertilizer,0.36
@@ -165,19 +165,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,1975,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,1975,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,1975,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1975,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1975,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1975,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1975,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,1975,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,1975,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,1975,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,1975,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,1975,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,1975,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,1975,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,1975,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,1975,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
@@ -185,13 +185,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,1975,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,1975,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,1975,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,1975,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,1975,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,1975,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,1975,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
@@ -199,32 +199,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,1975,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,1975,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,1975,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,1975,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,1975,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,1975,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,1975,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,1975,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,1975,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,1975,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,1975,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,1975,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,1975,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,1975,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,1975,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,1975,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,1975,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,1975,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,1975,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,1975,N fertilizer,0.36
@@ -233,7 +233,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,1975,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,1975,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,1975,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,1975,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,1975,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,1975,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,1975,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,1975,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,1975,N fertilizer,0.36
@@ -264,7 +264,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,1990,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,1990,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,1990,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,1990,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,1990,N fertilizer,0.36
@@ -278,7 +278,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,1990,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,1990,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,1990,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,1990,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,1990,N fertilizer,0.36
@@ -291,8 +291,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,1990,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,1990,N fertilizer,0.36
@@ -305,8 +305,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,1990,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,1990,N fertilizer,0.36
@@ -319,8 +319,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,1990,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,1990,N fertilizer,0.36
@@ -333,8 +333,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,1990,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,1990,N fertilizer,0.36
@@ -347,8 +347,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,1990,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,1990,N fertilizer,0.36
@@ -361,10 +361,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,1990,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,1990,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,1990,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,1990,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,1990,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,1990,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,1990,N fertilizer,0.36
@@ -375,10 +375,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,1990,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,1990,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,1990,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,1990,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,1990,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,1990,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,1990,N fertilizer,0.36
@@ -389,10 +389,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,1990,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,1990,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,1990,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,1990,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,1990,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,1990,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,1990,N fertilizer,0.36
@@ -403,10 +403,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,1990,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,1990,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,1990,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,1990,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,1990,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,1990,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,1990,N fertilizer,0.36
@@ -417,19 +417,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,1990,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,1990,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,1990,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1990,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1990,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1990,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,1990,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,1990,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,1990,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,1990,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,1990,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,1990,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,1990,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,1990,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,1990,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,1990,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
@@ -437,13 +437,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,1990,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,1990,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,1990,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,1990,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,1990,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,1990,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,1990,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
@@ -451,32 +451,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,1990,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,1990,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,1990,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,1990,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,1990,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,1990,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,1990,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,1990,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,1990,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,1990,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,1990,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,1990,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,1990,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,1990,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,1990,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,1990,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,1990,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,1990,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,1990,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,1990,N fertilizer,0.36
@@ -485,7 +485,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,1990,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,1990,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,1990,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,1990,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,1990,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,1990,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,1990,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,1990,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,1990,N fertilizer,0.36
@@ -516,7 +516,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,2005,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,2005,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,2005,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2005,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,2005,N fertilizer,0.36
@@ -530,7 +530,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,2005,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,2005,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,2005,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2005,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,2005,N fertilizer,0.36
@@ -543,8 +543,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,2005,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,2005,N fertilizer,0.36
@@ -557,8 +557,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,2005,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,2005,N fertilizer,0.36
@@ -571,8 +571,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,2005,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,2005,N fertilizer,0.36
@@ -585,8 +585,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,2005,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,2005,N fertilizer,0.36
@@ -599,8 +599,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,2005,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,2005,N fertilizer,0.36
@@ -613,10 +613,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,2005,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,2005,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,2005,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,2005,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,2005,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,2005,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,2005,N fertilizer,0.36
@@ -627,10 +627,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,2005,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,2005,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,2005,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,2005,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,2005,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,2005,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,2005,N fertilizer,0.36
@@ -641,10 +641,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,2005,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,2005,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,2005,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,2005,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,2005,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,2005,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,2005,N fertilizer,0.36
@@ -655,10 +655,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,2005,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,2005,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,2005,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,2005,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,2005,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,2005,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,2005,N fertilizer,0.36
@@ -669,19 +669,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,2005,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,2005,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,2005,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2005,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2005,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2005,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2005,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,2005,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,2005,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,2005,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,2005,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,2005,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,2005,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,2005,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,2005,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,2005,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
@@ -689,13 +689,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,2005,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,2005,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,2005,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,2005,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,2005,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,2005,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,2005,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
@@ -703,32 +703,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,2005,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,2005,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,2005,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,2005,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,2005,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,2005,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,2005,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,2005,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,2005,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,2005,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,2005,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,2005,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,2005,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,2005,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,2005,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,2005,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,2005,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,2005,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,2005,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,2005,N fertilizer,0.36
@@ -737,7 +737,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,2005,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,2005,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,2005,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,2005,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,2005,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,2005,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,2005,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,2005,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,2005,N fertilizer,0.36
@@ -768,7 +768,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,2020,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,2020,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,2020,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2020,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,2020,N fertilizer,0.36
@@ -782,7 +782,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,2020,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,2020,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,2020,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2020,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,2020,N fertilizer,0.36
@@ -795,8 +795,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,2020,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,2020,N fertilizer,0.36
@@ -809,8 +809,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,2020,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,2020,N fertilizer,0.36
@@ -823,8 +823,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,2020,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,2020,N fertilizer,0.36
@@ -837,8 +837,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,2020,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,2020,N fertilizer,0.36
@@ -851,8 +851,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,2020,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,2020,N fertilizer,0.36
@@ -865,10 +865,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,2020,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,2020,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,2020,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,2020,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,2020,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,2020,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,2020,N fertilizer,0.36
@@ -879,10 +879,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,2020,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,2020,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,2020,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,2020,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,2020,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,2020,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,2020,N fertilizer,0.36
@@ -893,10 +893,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,2020,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,2020,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,2020,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,2020,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,2020,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,2020,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,2020,N fertilizer,0.36
@@ -907,10 +907,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,2020,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,2020,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,2020,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,2020,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,2020,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,2020,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,2020,N fertilizer,0.36
@@ -921,19 +921,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,2020,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,2020,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,2020,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2020,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2020,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2020,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2020,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,2020,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,2020,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,2020,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,2020,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,2020,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,2020,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,2020,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,2020,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,2020,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
@@ -941,13 +941,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,2020,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,2020,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,2020,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,2020,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,2020,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,2020,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,2020,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
@@ -955,32 +955,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,2020,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,2020,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,2020,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,2020,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,2020,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,2020,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,2020,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,2020,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,2020,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,2020,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,2020,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,2020,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,2020,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,2020,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,2020,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,2020,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,2020,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,2020,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,2020,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,2020,N fertilizer,0.36
@@ -989,7 +989,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,2020,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,2020,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,2020,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,2020,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,2020,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,2020,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,2020,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,2020,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,2020,N fertilizer,0.36
@@ -1020,7 +1020,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,2035,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,2035,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,2035,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2035,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,2035,N fertilizer,0.36
@@ -1034,7 +1034,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,2035,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,2035,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,2035,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2035,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,2035,N fertilizer,0.36
@@ -1047,8 +1047,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,2035,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,2035,N fertilizer,0.36
@@ -1061,8 +1061,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,2035,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,2035,N fertilizer,0.36
@@ -1075,8 +1075,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,2035,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,2035,N fertilizer,0.36
@@ -1089,8 +1089,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,2035,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,2035,N fertilizer,0.36
@@ -1103,8 +1103,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,2035,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,2035,N fertilizer,0.36
@@ -1117,10 +1117,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,2035,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,2035,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,2035,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,2035,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,2035,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,2035,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,2035,N fertilizer,0.36
@@ -1131,10 +1131,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,2035,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,2035,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,2035,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,2035,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,2035,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,2035,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,2035,N fertilizer,0.36
@@ -1145,10 +1145,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,2035,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,2035,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,2035,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,2035,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,2035,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,2035,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,2035,N fertilizer,0.36
@@ -1159,10 +1159,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,2035,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,2035,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,2035,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,2035,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,2035,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,2035,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,2035,N fertilizer,0.36
@@ -1173,19 +1173,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,2035,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,2035,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,2035,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2035,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2035,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2035,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2035,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,2035,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,2035,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,2035,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,2035,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,2035,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,2035,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,2035,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,2035,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,2035,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
@@ -1193,13 +1193,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,2035,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,2035,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,2035,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,2035,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,2035,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,2035,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,2035,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
@@ -1207,32 +1207,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,2035,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,2035,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,2035,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,2035,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,2035,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,2035,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,2035,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,2035,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,2035,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,2035,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,2035,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,2035,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,2035,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,2035,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,2035,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,2035,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,2035,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,2035,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,2035,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,2035,N fertilizer,0.36
@@ -1241,7 +1241,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,2035,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,2035,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,2035,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,2035,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,2035,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,2035,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,2035,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,2035,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,2035,N fertilizer,0.36
@@ -1272,7 +1272,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,2050,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,2050,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,2050,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2050,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,2050,N fertilizer,0.36
@@ -1286,7 +1286,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,2050,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,2050,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,2050,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2050,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,2050,N fertilizer,0.36
@@ -1299,8 +1299,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,2050,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,2050,N fertilizer,0.36
@@ -1313,8 +1313,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,2050,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,2050,N fertilizer,0.36
@@ -1327,8 +1327,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,2050,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,2050,N fertilizer,0.36
@@ -1341,8 +1341,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,2050,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,2050,N fertilizer,0.36
@@ -1355,8 +1355,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,2050,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,2050,N fertilizer,0.36
@@ -1369,10 +1369,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,2050,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,2050,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,2050,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,2050,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,2050,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,2050,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,2050,N fertilizer,0.36
@@ -1383,10 +1383,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,2050,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,2050,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,2050,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,2050,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,2050,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,2050,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,2050,N fertilizer,0.36
@@ -1397,10 +1397,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,2050,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,2050,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,2050,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,2050,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,2050,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,2050,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,2050,N fertilizer,0.36
@@ -1411,10 +1411,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,2050,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,2050,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,2050,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,2050,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,2050,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,2050,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,2050,N fertilizer,0.36
@@ -1425,19 +1425,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,2050,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,2050,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,2050,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2050,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2050,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2050,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2050,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,2050,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,2050,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,2050,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,2050,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,2050,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,2050,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,2050,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,2050,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,2050,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
@@ -1445,13 +1445,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,2050,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,2050,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,2050,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,2050,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,2050,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,2050,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,2050,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
@@ -1459,32 +1459,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,2050,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,2050,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,2050,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,2050,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,2050,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,2050,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,2050,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,2050,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,2050,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,2050,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,2050,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,2050,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,2050,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,2050,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,2050,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,2050,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,2050,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,2050,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,2050,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,2050,N fertilizer,0.36
@@ -1493,7 +1493,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,2050,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,2050,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,2050,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,2050,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,2050,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,2050,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,2050,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,2050,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,2050,N fertilizer,0.36
@@ -1524,7 +1524,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,2065,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,2065,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,2065,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2065,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,2065,N fertilizer,0.36
@@ -1538,7 +1538,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,2065,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,2065,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,2065,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2065,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,2065,N fertilizer,0.36
@@ -1551,8 +1551,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,2065,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,2065,N fertilizer,0.36
@@ -1565,8 +1565,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,2065,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,2065,N fertilizer,0.36
@@ -1579,8 +1579,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,2065,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,2065,N fertilizer,0.36
@@ -1593,8 +1593,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,2065,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,2065,N fertilizer,0.36
@@ -1607,8 +1607,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,2065,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,2065,N fertilizer,0.36
@@ -1621,10 +1621,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,2065,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,2065,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,2065,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,2065,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,2065,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,2065,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,2065,N fertilizer,0.36
@@ -1635,10 +1635,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,2065,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,2065,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,2065,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,2065,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,2065,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,2065,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,2065,N fertilizer,0.36
@@ -1649,10 +1649,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,2065,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,2065,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,2065,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,2065,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,2065,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,2065,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,2065,N fertilizer,0.36
@@ -1663,10 +1663,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,2065,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,2065,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,2065,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,2065,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,2065,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,2065,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,2065,N fertilizer,0.36
@@ -1677,19 +1677,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,2065,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,2065,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,2065,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2065,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2065,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2065,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2065,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,2065,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,2065,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,2065,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,2065,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,2065,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,2065,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,2065,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,2065,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,2065,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
@@ -1697,13 +1697,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,2065,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,2065,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,2065,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,2065,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,2065,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,2065,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,2065,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
@@ -1711,32 +1711,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,2065,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,2065,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,2065,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,2065,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,2065,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,2065,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,2065,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,2065,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,2065,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,2065,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,2065,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,2065,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,2065,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,2065,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,2065,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,2065,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,2065,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,2065,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,2065,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,2065,N fertilizer,0.36
@@ -1745,7 +1745,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,2065,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,2065,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,2065,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,2065,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,2065,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,2065,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,2065,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,2065,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,2065,N fertilizer,0.36
@@ -1776,7 +1776,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,2080,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,2080,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,2080,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2080,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,2080,N fertilizer,0.36
@@ -1790,7 +1790,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,2080,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,2080,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,2080,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2080,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,2080,N fertilizer,0.36
@@ -1803,8 +1803,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,2080,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,2080,N fertilizer,0.36
@@ -1817,8 +1817,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,2080,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,2080,N fertilizer,0.36
@@ -1831,8 +1831,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,2080,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,2080,N fertilizer,0.36
@@ -1845,8 +1845,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,2080,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,2080,N fertilizer,0.36
@@ -1859,8 +1859,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,2080,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,2080,N fertilizer,0.36
@@ -1873,10 +1873,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,2080,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,2080,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,2080,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,2080,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,2080,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,2080,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,2080,N fertilizer,0.36
@@ -1887,10 +1887,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,2080,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,2080,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,2080,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,2080,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,2080,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,2080,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,2080,N fertilizer,0.36
@@ -1901,10 +1901,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,2080,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,2080,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,2080,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,2080,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,2080,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,2080,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,2080,N fertilizer,0.36
@@ -1915,10 +1915,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,2080,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,2080,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,2080,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,2080,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,2080,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,2080,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,2080,N fertilizer,0.36
@@ -1929,19 +1929,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,2080,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,2080,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,2080,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2080,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2080,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2080,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2080,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,2080,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,2080,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,2080,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,2080,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,2080,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,2080,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,2080,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,2080,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,2080,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
@@ -1949,13 +1949,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,2080,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,2080,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,2080,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,2080,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,2080,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,2080,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,2080,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
@@ -1963,32 +1963,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,2080,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,2080,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,2080,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,2080,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,2080,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,2080,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,2080,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,2080,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,2080,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,2080,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,2080,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,2080,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,2080,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,2080,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,2080,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,2080,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,2080,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,2080,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,2080,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,2080,N fertilizer,0.36
@@ -1997,7 +1997,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,2080,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,2080,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,2080,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,2080,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,2080,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,2080,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,2080,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,2080,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,2080,N fertilizer,0.36
@@ -2028,7 +2028,7 @@ Former Soviet Union,biomass,biomassAEZ01,biomassAEZ01,2095,N fertilizer,0.36
 China,biomass,biomassAEZ01,biomassAEZ01,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ01,biomassAEZ01,2095,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ01,JatrophaAEZ01,2095,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2095,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ01,eucalyptusAEZ01,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ01,biomassAEZ01,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ01,biomassAEZ01,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ01,biomassAEZ01,2095,N fertilizer,0.36
@@ -2042,7 +2042,7 @@ Former Soviet Union,biomass,biomassAEZ02,biomassAEZ02,2095,N fertilizer,0.36
 China,biomass,biomassAEZ02,biomassAEZ02,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ02,biomassAEZ02,2095,N fertilizer,0.36
 Africa,biomassOil,JatrophaAEZ02,JatrophaAEZ02,2095,N fertilizer,0.36
-Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2095,N fertilizer,0.21287
+Latin America,biomass,eucalyptusAEZ02,eucalyptusAEZ02,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ02,biomassAEZ02,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ02,biomassAEZ02,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ02,biomassAEZ02,2095,N fertilizer,0.36
@@ -2055,8 +2055,8 @@ Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ03,biomassAEZ03,2095,N fertilizer,0.36
 China,biomass,biomassAEZ03,biomassAEZ03,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ03,biomassAEZ03,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ03,eucalyptusAEZ03,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ03,biomassAEZ03,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ03,biomassAEZ03,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ03,biomassAEZ03,2095,N fertilizer,0.36
@@ -2069,8 +2069,8 @@ Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ04,biomassAEZ04,2095,N fertilizer,0.36
 China,biomass,biomassAEZ04,biomassAEZ04,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ04,biomassAEZ04,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ04,eucalyptusAEZ04,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ04,biomassAEZ04,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ04,biomassAEZ04,2095,N fertilizer,0.36
@@ -2083,8 +2083,8 @@ Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ05,biomassAEZ05,2095,N fertilizer,0.36
 China,biomass,biomassAEZ05,biomassAEZ05,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ05,biomassAEZ05,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ05,eucalyptusAEZ05,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ05,biomassAEZ05,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ05,biomassAEZ05,2095,N fertilizer,0.36
@@ -2097,8 +2097,8 @@ Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ06,biomassAEZ06,2095,N fertilizer,0.36
 China,biomass,biomassAEZ06,biomassAEZ06,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ06,biomassAEZ06,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ06,eucalyptusAEZ06,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ06,biomassAEZ06,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ06,biomassAEZ06,2095,N fertilizer,0.36
@@ -2111,8 +2111,8 @@ Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ07,biomassAEZ07,2095,N fertilizer,0.36
 China,biomass,biomassAEZ07,biomassAEZ07,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ07,biomassAEZ07,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ07,eucalyptusAEZ07,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ07,biomassAEZ07,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ07,biomassAEZ07,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ07,biomassAEZ07,2095,N fertilizer,0.36
@@ -2125,10 +2125,10 @@ Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ08,biomassAEZ08,2095,N fertilizer,0.36
 China,biomass,biomassAEZ08,biomassAEZ08,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ08,biomassAEZ08,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ08,eucalyptusAEZ08,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ08,biomassAEZ08,2095,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ08,willowAEZ08,2095,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ08,willowAEZ08,2095,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ08,biomassAEZ08,2095,N fertilizer,0.36
 India,biomass,biomassAEZ08,biomassAEZ08,2095,N fertilizer,0.36
 USA,biomass,biomassAEZ09,biomassAEZ09,2095,N fertilizer,0.36
@@ -2139,10 +2139,10 @@ Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ09,biomassAEZ09,2095,N fertilizer,0.36
 China,biomass,biomassAEZ09,biomassAEZ09,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ09,biomassAEZ09,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ09,eucalyptusAEZ09,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,2095,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ09,willowAEZ09,2095,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ09,willowAEZ09,2095,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ09,biomassAEZ09,2095,N fertilizer,0.36
 India,biomass,biomassAEZ09,biomassAEZ09,2095,N fertilizer,0.36
 USA,biomass,biomassAEZ10,biomassAEZ10,2095,N fertilizer,0.36
@@ -2153,10 +2153,10 @@ Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ10,biomassAEZ10,2095,N fertilizer,0.36
 China,biomass,biomassAEZ10,biomassAEZ10,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ10,biomassAEZ10,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ10,eucalyptusAEZ10,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,2095,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ10,willowAEZ10,2095,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ10,willowAEZ10,2095,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ10,biomassAEZ10,2095,N fertilizer,0.36
 India,biomass,biomassAEZ10,biomassAEZ10,2095,N fertilizer,0.36
 USA,biomass,biomassAEZ11,biomassAEZ11,2095,N fertilizer,0.36
@@ -2167,10 +2167,10 @@ Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ11,biomassAEZ11,2095,N fertilizer,0.36
 China,biomass,biomassAEZ11,biomassAEZ11,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ11,biomassAEZ11,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ11,eucalyptusAEZ11,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,2095,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ11,willowAEZ11,2095,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ11,willowAEZ11,2095,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ11,biomassAEZ11,2095,N fertilizer,0.36
 India,biomass,biomassAEZ11,biomassAEZ11,2095,N fertilizer,0.36
 USA,biomass,biomassAEZ12,biomassAEZ12,2095,N fertilizer,0.36
@@ -2181,19 +2181,19 @@ Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ12,biomassAEZ12,2095,N fertilizer,0.36
 China,biomass,biomassAEZ12,biomassAEZ12,2095,N fertilizer,0.36
 Middle East,biomass,biomassAEZ12,biomassAEZ12,2095,N fertilizer,0.36
-Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2095,N fertilizer,0.21287
-Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2095,N fertilizer,0.21287
+Africa,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2095,N fertilizer,0.21286957
+Latin America,biomass,eucalyptusAEZ12,eucalyptusAEZ12,2095,N fertilizer,0.21286957
 Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,2095,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ12,willowAEZ12,2095,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ12,willowAEZ12,2095,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ12,biomassAEZ12,2095,N fertilizer,0.36
 India,biomass,biomassAEZ12,biomassAEZ12,2095,N fertilizer,0.36
 USA,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
 Canada,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
-Western Europe,biomass,willowAEZ13,willowAEZ13,2095,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ13,willowAEZ13,2095,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
-China,biomass,willowAEZ13,willowAEZ13,2095,N fertilizer,0.21287
+China,biomass,willowAEZ13,willowAEZ13,2095,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
 Africa,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
 Latin America,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
@@ -2201,13 +2201,13 @@ Southeast Asia,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
 India,biomass,biomassAEZ13,biomassAEZ13,2095,N fertilizer,0.36
-USA,biomass,willowAEZ14,willowAEZ14,2095,N fertilizer,0.21287
+USA,biomass,willowAEZ14,willowAEZ14,2095,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
-Western Europe,biomass,willowAEZ14,willowAEZ14,2095,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ14,willowAEZ14,2095,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
-China,biomass,willowAEZ14,willowAEZ14,2095,N fertilizer,0.21287
+China,biomass,willowAEZ14,willowAEZ14,2095,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
 Africa,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
 Latin America,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
@@ -2215,32 +2215,32 @@ Southeast Asia,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
 Eastern Europe,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
 Korea,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
 India,biomass,biomassAEZ14,biomassAEZ14,2095,N fertilizer,0.36
-USA,biomass,willowAEZ15,willowAEZ15,2095,N fertilizer,0.21287
+USA,biomass,willowAEZ15,willowAEZ15,2095,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
-Western Europe,biomass,willowAEZ15,willowAEZ15,2095,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ15,willowAEZ15,2095,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
-China,biomass,willowAEZ15,willowAEZ15,2095,N fertilizer,0.21287
+China,biomass,willowAEZ15,willowAEZ15,2095,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
 Africa,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
 Latin America,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ15,willowAEZ15,2095,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ15,willowAEZ15,2095,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
 India,biomass,biomassAEZ15,biomassAEZ15,2095,N fertilizer,0.36
-USA,biomass,willowAEZ16,willowAEZ16,2095,N fertilizer,0.21287
+USA,biomass,willowAEZ16,willowAEZ16,2095,N fertilizer,0.21286957
 Canada,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
-Western Europe,biomass,willowAEZ16,willowAEZ16,2095,N fertilizer,0.21287
+Western Europe,biomass,willowAEZ16,willowAEZ16,2095,N fertilizer,0.21286957
 Japan,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
-China,biomass,willowAEZ16,willowAEZ16,2095,N fertilizer,0.21287
+China,biomass,willowAEZ16,willowAEZ16,2095,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
 Africa,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
 Latin America,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
 Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
-Eastern Europe,biomass,willowAEZ16,willowAEZ16,2095,N fertilizer,0.21287
+Eastern Europe,biomass,willowAEZ16,willowAEZ16,2095,N fertilizer,0.21286957
 Korea,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
 India,biomass,biomassAEZ16,biomassAEZ16,2095,N fertilizer,0.36
 USA,biomass,biomassAEZ17,biomassAEZ17,2095,N fertilizer,0.36
@@ -2249,7 +2249,7 @@ Western Europe,biomass,biomassAEZ17,biomassAEZ17,2095,N fertilizer,0.36
 Japan,biomass,biomassAEZ17,biomassAEZ17,2095,N fertilizer,0.36
 Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,2095,N fertilizer,0.36
 Former Soviet Union,biomass,biomassAEZ17,biomassAEZ17,2095,N fertilizer,0.36
-China,biomass,willowAEZ17,willowAEZ17,2095,N fertilizer,0.21287
+China,biomass,willowAEZ17,willowAEZ17,2095,N fertilizer,0.21286957
 Middle East,biomass,biomassAEZ17,biomassAEZ17,2095,N fertilizer,0.36
 Africa,biomass,biomassAEZ17,biomassAEZ17,2095,N fertilizer,0.36
 Latin America,biomass,biomassAEZ17,biomassAEZ17,2095,N fertilizer,0.36

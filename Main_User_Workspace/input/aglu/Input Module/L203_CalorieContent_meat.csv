@@ -4,674 +4,674 @@ CalorieContent
 
 region,supplysector,subsector,technology,year,minicam.energy.input,efficiency
 Africa,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Africa,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.671133
+Africa,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Africa,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Africa,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.286294
+Africa,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.2862942
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.15818
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.1581798
 Australia_NZ,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.72012
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Australia_NZ,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
 Australia_NZ,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.271407
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.905276
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.9052756
 Canada,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Canada,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.762233
+Canada,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Canada,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Canada,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.267609
+Canada,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.2676087
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
 Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,2.384466
 China,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-China,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.645769
+China,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 China,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-China,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.330234
+China,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.3302342
 China,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.286898
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.2868976
 Eastern Europe,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.822398
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Eastern Europe,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.307569
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.3075688
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,4.36788
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,4.3678799
 Former Soviet Union,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.944132
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.315615
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.3156149
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.06245
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.0624501
 India,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-India,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.656859
+India,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 India,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-India,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.348604
+India,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.3486041
 India,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,0.822526
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,0.8225261
 Japan,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Japan,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.623145
+Japan,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Japan,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Japan,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.318887
+Japan,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.3188871
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,0.790242
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,0.7902419
 Korea,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Korea,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.878919
+Korea,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Korea,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Korea,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.314923
+Korea,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.3149228
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,0.70036
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,0.7003604
 Latin America,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Latin America,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.591308
+Latin America,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Latin America,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Latin America,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.28595
+Latin America,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.2859501
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,2.011331
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,2.0113313
 Middle East,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Middle East,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.830419
+Middle East,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Middle East,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Middle East,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.270359
+Middle East,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.2703594
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.202831
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.2028308
 Southeast Asia,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.652937
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Southeast Asia,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.29738
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.2973804
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,0.939099
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,0.9390992
 USA,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-USA,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.666348
+USA,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 USA,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-USA,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.263615
+USA,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.2636148
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.635456
+USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.6354559
 Western Europe,FoodDemand_Meat,Beef,Beef,1990,Beef,1.5
-Western Europe,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.82378
+Western Europe,FoodDemand_Meat,Dairy,Dairy,1990,Dairy,0.48
 Western Europe,FoodDemand_Meat,Pork,Pork,1990,Pork,3.26
-Western Europe,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.294137
+Western Europe,FoodDemand_Meat,Poultry,Poultry,1990,Poultry,1.2941372
 Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,1990,SheepGoat,2.63
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.956684
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,OtherMeat_Fish,1.9566836
 Africa,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Africa,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.647577
+Africa,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Africa,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Africa,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.275121
+Africa,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2751208
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.061221
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.0612211
 Australia_NZ,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.808353
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Australia_NZ,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.245183
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2451832
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.554198
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.5541982
 Canada,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Canada,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.797403
+Canada,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Canada,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Canada,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.259493
+Canada,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2594925
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,2.472585
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,2.4725853
 China,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-China,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.546532
+China,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 China,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-China,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.322259
+China,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.3222592
 China,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.113029
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.1130292
 Eastern Europe,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.733084
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Eastern Europe,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.283374
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2833739
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,3.722518
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,3.7225181
 Former Soviet Union,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.671847
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.296985
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2969847
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.563149
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.5631486
 India,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-India,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.784308
+India,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 India,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-India,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.353639
+India,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.3536385
 India,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,0.776054
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,0.7760541
 Japan,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Japan,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.661201
+Japan,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Japan,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Japan,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.311573
+Japan,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.3115725
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,0.721904
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,0.7219041
 Korea,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Korea,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.967774
+Korea,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Korea,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Korea,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.298185
+Korea,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2981854
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,0.818438
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,0.8184377
 Latin America,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Latin America,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.573581
+Latin America,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Latin America,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Latin America,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.264354
+Latin America,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2643539
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.970259
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.9702592
 Middle East,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Middle East,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.847243
+Middle East,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Middle East,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Middle East,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.257809
+Middle East,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2578091
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.083082
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.0830824
 Southeast Asia,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.637791
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Southeast Asia,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.286429
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2864292
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.014783
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.0147828
 USA,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-USA,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.716089
+USA,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 USA,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-USA,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.257598
+USA,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2575977
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
 USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.558472
 Western Europe,FoodDemand_Meat,Beef,Beef,2005,Beef,1.5
-Western Europe,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.832234
+Western Europe,FoodDemand_Meat,Dairy,Dairy,2005,Dairy,0.48
 Western Europe,FoodDemand_Meat,Pork,Pork,2005,Pork,3.26
-Western Europe,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.28475
+Western Europe,FoodDemand_Meat,Poultry,Poultry,2005,Poultry,1.2847503
 Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2005,SheepGoat,2.63
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.793633
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,OtherMeat_Fish,1.7936331
 Africa,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Africa,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.647577
+Africa,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Africa,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Africa,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.275121
+Africa,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2751208
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.061221
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.0612211
 Australia_NZ,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.808353
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Australia_NZ,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.245183
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2451832
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.554198
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.5541982
 Canada,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Canada,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.797403
+Canada,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Canada,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Canada,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.259493
+Canada,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2594925
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,2.472585
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,2.4725853
 China,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-China,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.546532
+China,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 China,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-China,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.322259
+China,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.3222592
 China,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.113029
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.1130292
 Eastern Europe,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.733084
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Eastern Europe,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.283374
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2833739
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,3.722518
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,3.7225181
 Former Soviet Union,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.671847
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.296985
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2969847
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.563149
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.5631486
 India,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-India,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.784308
+India,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 India,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-India,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.353639
+India,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.3536385
 India,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,0.776054
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,0.7760541
 Japan,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Japan,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.661201
+Japan,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Japan,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Japan,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.311573
+Japan,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.3115725
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,0.721904
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,0.7219041
 Korea,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Korea,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.967774
+Korea,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Korea,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Korea,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.298185
+Korea,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2981854
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,0.818438
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,0.8184377
 Latin America,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Latin America,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.573581
+Latin America,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Latin America,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Latin America,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.264354
+Latin America,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2643539
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.970259
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.9702592
 Middle East,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Middle East,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.847243
+Middle East,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Middle East,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Middle East,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.257809
+Middle East,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2578091
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.083082
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.0830824
 Southeast Asia,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.637791
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Southeast Asia,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.286429
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2864292
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.014783
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.0147828
 USA,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-USA,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.716089
+USA,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 USA,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-USA,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.257598
+USA,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2575977
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
 USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.558472
 Western Europe,FoodDemand_Meat,Beef,Beef,2020,Beef,1.5
-Western Europe,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.832234
+Western Europe,FoodDemand_Meat,Dairy,Dairy,2020,Dairy,0.48
 Western Europe,FoodDemand_Meat,Pork,Pork,2020,Pork,3.26
-Western Europe,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.28475
+Western Europe,FoodDemand_Meat,Poultry,Poultry,2020,Poultry,1.2847503
 Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2020,SheepGoat,2.63
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.793633
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2020,OtherMeat_Fish,1.7936331
 Africa,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Africa,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.647577
+Africa,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Africa,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Africa,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.275121
+Africa,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2751208
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.061221
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.0612211
 Australia_NZ,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.808353
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Australia_NZ,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.245183
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2451832
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.554198
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.5541982
 Canada,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Canada,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.797403
+Canada,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Canada,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Canada,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.259493
+Canada,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2594925
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,2.472585
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,2.4725853
 China,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-China,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.546532
+China,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 China,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-China,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.322259
+China,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.3222592
 China,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.113029
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.1130292
 Eastern Europe,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.733084
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Eastern Europe,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.283374
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2833739
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,3.722518
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,3.7225181
 Former Soviet Union,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.671847
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.296985
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2969847
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.563149
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.5631486
 India,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-India,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.784308
+India,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 India,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-India,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.353639
+India,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.3536385
 India,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,0.776054
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,0.7760541
 Japan,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Japan,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.661201
+Japan,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Japan,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Japan,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.311573
+Japan,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.3115725
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,0.721904
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,0.7219041
 Korea,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Korea,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.967774
+Korea,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Korea,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Korea,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.298185
+Korea,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2981854
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,0.818438
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,0.8184377
 Latin America,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Latin America,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.573581
+Latin America,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Latin America,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Latin America,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.264354
+Latin America,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2643539
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.970259
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.9702592
 Middle East,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Middle East,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.847243
+Middle East,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Middle East,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Middle East,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.257809
+Middle East,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2578091
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.083082
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.0830824
 Southeast Asia,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.637791
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Southeast Asia,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.286429
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2864292
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.014783
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.0147828
 USA,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-USA,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.716089
+USA,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 USA,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-USA,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.257598
+USA,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2575977
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
 USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.558472
 Western Europe,FoodDemand_Meat,Beef,Beef,2035,Beef,1.5
-Western Europe,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.832234
+Western Europe,FoodDemand_Meat,Dairy,Dairy,2035,Dairy,0.48
 Western Europe,FoodDemand_Meat,Pork,Pork,2035,Pork,3.26
-Western Europe,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.28475
+Western Europe,FoodDemand_Meat,Poultry,Poultry,2035,Poultry,1.2847503
 Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2035,SheepGoat,2.63
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.793633
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2035,OtherMeat_Fish,1.7936331
 Africa,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Africa,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.647577
+Africa,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Africa,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Africa,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.275121
+Africa,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2751208
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.061221
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.0612211
 Australia_NZ,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.808353
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Australia_NZ,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.245183
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2451832
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.554198
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.5541982
 Canada,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Canada,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.797403
+Canada,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Canada,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Canada,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.259493
+Canada,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2594925
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,2.472585
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,2.4725853
 China,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-China,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.546532
+China,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 China,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-China,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.322259
+China,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.3222592
 China,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.113029
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.1130292
 Eastern Europe,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.733084
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Eastern Europe,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.283374
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2833739
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,3.722518
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,3.7225181
 Former Soviet Union,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.671847
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.296985
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2969847
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.563149
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.5631486
 India,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-India,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.784308
+India,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 India,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-India,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.353639
+India,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.3536385
 India,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,0.776054
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,0.7760541
 Japan,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Japan,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.661201
+Japan,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Japan,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Japan,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.311573
+Japan,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.3115725
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,0.721904
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,0.7219041
 Korea,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Korea,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.967774
+Korea,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Korea,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Korea,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.298185
+Korea,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2981854
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,0.818438
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,0.8184377
 Latin America,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Latin America,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.573581
+Latin America,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Latin America,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Latin America,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.264354
+Latin America,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2643539
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.970259
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.9702592
 Middle East,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Middle East,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.847243
+Middle East,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Middle East,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Middle East,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.257809
+Middle East,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2578091
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.083082
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.0830824
 Southeast Asia,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.637791
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Southeast Asia,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.286429
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2864292
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.014783
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.0147828
 USA,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-USA,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.716089
+USA,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 USA,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-USA,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.257598
+USA,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2575977
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
 USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.558472
 Western Europe,FoodDemand_Meat,Beef,Beef,2050,Beef,1.5
-Western Europe,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.832234
+Western Europe,FoodDemand_Meat,Dairy,Dairy,2050,Dairy,0.48
 Western Europe,FoodDemand_Meat,Pork,Pork,2050,Pork,3.26
-Western Europe,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.28475
+Western Europe,FoodDemand_Meat,Poultry,Poultry,2050,Poultry,1.2847503
 Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2050,SheepGoat,2.63
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.793633
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2050,OtherMeat_Fish,1.7936331
 Africa,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Africa,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.647577
+Africa,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Africa,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Africa,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.275121
+Africa,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2751208
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.061221
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.0612211
 Australia_NZ,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.808353
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Australia_NZ,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.245183
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2451832
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.554198
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.5541982
 Canada,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Canada,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.797403
+Canada,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Canada,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Canada,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.259493
+Canada,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2594925
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,2.472585
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,2.4725853
 China,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-China,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.546532
+China,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 China,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-China,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.322259
+China,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.3222592
 China,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.113029
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.1130292
 Eastern Europe,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.733084
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Eastern Europe,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.283374
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2833739
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,3.722518
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,3.7225181
 Former Soviet Union,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.671847
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.296985
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2969847
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.563149
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.5631486
 India,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-India,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.784308
+India,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 India,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-India,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.353639
+India,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.3536385
 India,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,0.776054
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,0.7760541
 Japan,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Japan,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.661201
+Japan,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Japan,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Japan,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.311573
+Japan,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.3115725
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,0.721904
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,0.7219041
 Korea,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Korea,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.967774
+Korea,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Korea,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Korea,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.298185
+Korea,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2981854
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,0.818438
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,0.8184377
 Latin America,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Latin America,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.573581
+Latin America,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Latin America,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Latin America,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.264354
+Latin America,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2643539
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.970259
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.9702592
 Middle East,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Middle East,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.847243
+Middle East,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Middle East,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Middle East,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.257809
+Middle East,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2578091
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.083082
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.0830824
 Southeast Asia,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.637791
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Southeast Asia,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.286429
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2864292
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.014783
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.0147828
 USA,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-USA,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.716089
+USA,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 USA,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-USA,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.257598
+USA,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2575977
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
 USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.558472
 Western Europe,FoodDemand_Meat,Beef,Beef,2065,Beef,1.5
-Western Europe,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.832234
+Western Europe,FoodDemand_Meat,Dairy,Dairy,2065,Dairy,0.48
 Western Europe,FoodDemand_Meat,Pork,Pork,2065,Pork,3.26
-Western Europe,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.28475
+Western Europe,FoodDemand_Meat,Poultry,Poultry,2065,Poultry,1.2847503
 Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2065,SheepGoat,2.63
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.793633
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2065,OtherMeat_Fish,1.7936331
 Africa,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Africa,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.647577
+Africa,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Africa,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Africa,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.275121
+Africa,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2751208
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.061221
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.0612211
 Australia_NZ,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.808353
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Australia_NZ,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.245183
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2451832
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.554198
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.5541982
 Canada,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Canada,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.797403
+Canada,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Canada,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Canada,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.259493
+Canada,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2594925
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,2.472585
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,2.4725853
 China,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-China,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.546532
+China,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 China,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-China,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.322259
+China,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.3222592
 China,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.113029
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.1130292
 Eastern Europe,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.733084
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Eastern Europe,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.283374
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2833739
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,3.722518
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,3.7225181
 Former Soviet Union,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.671847
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.296985
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2969847
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.563149
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.5631486
 India,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-India,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.784308
+India,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 India,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-India,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.353639
+India,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.3536385
 India,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,0.776054
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,0.7760541
 Japan,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Japan,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.661201
+Japan,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Japan,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Japan,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.311573
+Japan,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.3115725
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,0.721904
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,0.7219041
 Korea,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Korea,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.967774
+Korea,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Korea,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Korea,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.298185
+Korea,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2981854
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,0.818438
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,0.8184377
 Latin America,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Latin America,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.573581
+Latin America,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Latin America,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Latin America,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.264354
+Latin America,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2643539
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.970259
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.9702592
 Middle East,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Middle East,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.847243
+Middle East,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Middle East,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Middle East,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.257809
+Middle East,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2578091
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.083082
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.0830824
 Southeast Asia,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.637791
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Southeast Asia,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.286429
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2864292
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.014783
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.0147828
 USA,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-USA,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.716089
+USA,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 USA,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-USA,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.257598
+USA,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2575977
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
 USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.558472
 Western Europe,FoodDemand_Meat,Beef,Beef,2080,Beef,1.5
-Western Europe,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.832234
+Western Europe,FoodDemand_Meat,Dairy,Dairy,2080,Dairy,0.48
 Western Europe,FoodDemand_Meat,Pork,Pork,2080,Pork,3.26
-Western Europe,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.28475
+Western Europe,FoodDemand_Meat,Poultry,Poultry,2080,Poultry,1.2847503
 Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2080,SheepGoat,2.63
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.793633
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2080,OtherMeat_Fish,1.7936331
 Africa,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Africa,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.647577
+Africa,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Africa,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Africa,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.275121
+Africa,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2751208
 Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.061221
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.0612211
 Australia_NZ,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.808353
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Australia_NZ,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.245183
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2451832
 Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.554198
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.5541982
 Canada,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Canada,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.797403
+Canada,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Canada,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Canada,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.259493
+Canada,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2594925
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,2.472585
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,2.4725853
 China,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-China,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.546532
+China,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 China,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-China,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.322259
+China,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.3222592
 China,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.113029
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.1130292
 Eastern Europe,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.733084
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Eastern Europe,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.283374
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2833739
 Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,3.722518
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,3.7225181
 Former Soviet Union,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.671847
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.296985
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2969847
 Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.563149
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.5631486
 India,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-India,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.784308
+India,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 India,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-India,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.353639
+India,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.3536385
 India,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,0.776054
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,0.7760541
 Japan,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Japan,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.661201
+Japan,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Japan,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Japan,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.311573
+Japan,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.3115725
 Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,0.721904
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,0.7219041
 Korea,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Korea,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.967774
+Korea,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Korea,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Korea,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.298185
+Korea,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2981854
 Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,0.818438
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,0.8184377
 Latin America,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Latin America,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.573581
+Latin America,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Latin America,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Latin America,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.264354
+Latin America,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2643539
 Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.970259
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.9702592
 Middle East,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Middle East,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.847243
+Middle East,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Middle East,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Middle East,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.257809
+Middle East,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2578091
 Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.083082
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.0830824
 Southeast Asia,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.637791
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Southeast Asia,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.286429
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2864292
 Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.014783
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.0147828
 USA,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-USA,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.716089
+USA,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 USA,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-USA,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.257598
+USA,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2575977
 USA,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
 USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.558472
 Western Europe,FoodDemand_Meat,Beef,Beef,2095,Beef,1.5
-Western Europe,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.832234
+Western Europe,FoodDemand_Meat,Dairy,Dairy,2095,Dairy,0.48
 Western Europe,FoodDemand_Meat,Pork,Pork,2095,Pork,3.26
-Western Europe,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.28475
+Western Europe,FoodDemand_Meat,Poultry,Poultry,2095,Poultry,1.2847503
 Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2095,SheepGoat,2.63
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.793633
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2095,OtherMeat_Fish,1.7936331

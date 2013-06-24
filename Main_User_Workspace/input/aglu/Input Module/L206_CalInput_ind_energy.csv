@@ -3,149 +3,149 @@ Variable ID
 CalInput
 
 region,supplysector,subsector,technology,year,minicam.energy.input,calibrated.value
-USA,industrial energy use,biomass,biomass,1990,delivered biomass,0.405091
-USA,industrial energy use,coal,coal,1990,delivered coal,1.947132
-USA,industrial energy use,electricity,electricity,1990,elect_td_ind,3.245083
-USA,industrial energy use,gas,gas,1990,wholesale gas,5.225274
-USA,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,2.572735
-Canada,industrial energy use,biomass,biomass,1990,delivered biomass,0.225402
-Canada,industrial energy use,coal,coal,1990,delivered coal,0.106057
-Canada,industrial energy use,electricity,electricity,1990,elect_td_ind,0.673458
-Canada,industrial energy use,gas,gas,1990,wholesale gas,1.030215
-Canada,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.387862
-Western Europe,industrial energy use,biomass,biomass,1990,delivered biomass,0.317713
-Western Europe,industrial energy use,coal,coal,1990,delivered coal,2.999079
-Western Europe,industrial energy use,electricity,electricity,1990,elect_td_ind,3.490911
-Western Europe,industrial energy use,gas,gas,1990,wholesale gas,3.166525
-Western Europe,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,2.655628
-Japan,industrial energy use,biomass,biomass,1990,delivered biomass,0.058608
-Japan,industrial energy use,coal,coal,1990,delivered coal,1.593047
-Japan,industrial energy use,electricity,electricity,1990,elect_td_ind,1.202468
-Japan,industrial energy use,gas,gas,1990,wholesale gas,0.340506
-Japan,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,2.012684
-Australia_NZ,industrial energy use,biomass,biomass,1990,delivered biomass,0.09312
-Australia_NZ,industrial energy use,coal,coal,1990,delivered coal,0.232505
-Australia_NZ,industrial energy use,electricity,electricity,1990,elect_td_ind,0.274732
-Australia_NZ,industrial energy use,gas,gas,1990,wholesale gas,0.420621
-Australia_NZ,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.192601
+USA,industrial energy use,biomass,biomass,1990,delivered biomass,0.4050908
+USA,industrial energy use,coal,coal,1990,delivered coal,1.9471319
+USA,industrial energy use,electricity,electricity,1990,elect_td_ind,3.2408526
+USA,industrial energy use,gas,gas,1990,wholesale gas,5.2252739
+USA,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,2.5727355
+Canada,industrial energy use,biomass,biomass,1990,delivered biomass,0.2254025
+Canada,industrial energy use,coal,coal,1990,delivered coal,0.1060567
+Canada,industrial energy use,electricity,electricity,1990,elect_td_ind,0.6724252
+Canada,industrial energy use,gas,gas,1990,wholesale gas,1.0302151
+Canada,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.3878622
+Western Europe,industrial energy use,biomass,biomass,1990,delivered biomass,0.3162729
+Western Europe,industrial energy use,coal,coal,1990,delivered coal,2.9990793
+Western Europe,industrial energy use,electricity,electricity,1990,elect_td_ind,3.4853783
+Western Europe,industrial energy use,gas,gas,1990,wholesale gas,3.1665252
+Western Europe,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,2.6556279
+Japan,industrial energy use,biomass,biomass,1990,delivered biomass,0.0575819
+Japan,industrial energy use,coal,coal,1990,delivered coal,1.5930469
+Japan,industrial energy use,electricity,electricity,1990,elect_td_ind,1.1973298
+Japan,industrial energy use,gas,gas,1990,wholesale gas,0.3405059
+Japan,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,2.0126842
+Australia_NZ,industrial energy use,biomass,biomass,1990,delivered biomass,0.0931198
+Australia_NZ,industrial energy use,coal,coal,1990,delivered coal,0.2325051
+Australia_NZ,industrial energy use,electricity,electricity,1990,elect_td_ind,0.2746323
+Australia_NZ,industrial energy use,gas,gas,1990,wholesale gas,0.4206212
+Australia_NZ,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.1926012
 Former Soviet Union,industrial energy use,biomass,biomass,1990,delivered biomass,0.034106
-Former Soviet Union,industrial energy use,coal,coal,1990,delivered coal,3.89362
-Former Soviet Union,industrial energy use,electricity,electricity,1990,elect_td_ind,3.933053
-Former Soviet Union,industrial energy use,gas,gas,1990,wholesale gas,2.966189
-Former Soviet Union,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,3.333786
-China,industrial energy use,biomass,biomass,1990,delivered biomass,0.000184
-China,industrial energy use,coal,coal,1990,delivered coal,8.784391
-China,industrial energy use,electricity,electricity,1990,elect_td_ind,1.493715
-China,industrial energy use,gas,gas,1990,wholesale gas,0.383177
-China,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,1.403775
-Middle East,industrial energy use,biomass,biomass,1990,delivered biomass,0.004657
+Former Soviet Union,industrial energy use,coal,coal,1990,delivered coal,3.8936196
+Former Soviet Union,industrial energy use,electricity,electricity,1990,elect_td_ind,3.9191332
+Former Soviet Union,industrial energy use,gas,gas,1990,wholesale gas,2.9661891
+Former Soviet Union,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,3.3337861
+China,industrial energy use,biomass,biomass,1990,delivered biomass,0.0001842
+China,industrial energy use,coal,coal,1990,delivered coal,8.7843908
+China,industrial energy use,electricity,electricity,1990,elect_td_ind,1.4901032
+China,industrial energy use,gas,gas,1990,wholesale gas,0.3831772
+China,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,1.4037751
+Middle East,industrial energy use,biomass,biomass,1990,delivered biomass,1e-04
 Middle East,industrial energy use,coal,coal,1990,delivered coal,0.027792
-Middle East,industrial energy use,electricity,electricity,1990,elect_td_ind,0.139014
-Middle East,industrial energy use,gas,gas,1990,wholesale gas,0.845945
-Middle East,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.96459
-Africa,industrial energy use,biomass,biomass,1990,delivered biomass,0.303201
-Africa,industrial energy use,coal,coal,1990,delivered coal,0.722722
-Africa,industrial energy use,electricity,electricity,1990,elect_td_ind,0.548041
+Middle East,industrial energy use,electricity,electricity,1990,elect_td_ind,0.1294608
+Middle East,industrial energy use,gas,gas,1990,wholesale gas,0.8459449
+Middle East,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.9645903
+Africa,industrial energy use,biomass,biomass,1990,delivered biomass,0.2468505
+Africa,industrial energy use,coal,coal,1990,delivered coal,0.7227218
+Africa,industrial energy use,electricity,electricity,1990,elect_td_ind,0.5479246
 Africa,industrial energy use,gas,gas,1990,wholesale gas,0.529135
-Africa,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.604163
-Latin America,industrial energy use,biomass,biomass,1990,delivered biomass,2.027976
-Latin America,industrial energy use,coal,coal,1990,delivered coal,0.470763
-Latin America,industrial energy use,electricity,electricity,1990,elect_td_ind,0.942428
-Latin America,industrial energy use,gas,gas,1990,wholesale gas,1.6717
-Latin America,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,1.527479
-Southeast Asia,industrial energy use,biomass,biomass,1990,delivered biomass,1.226788
-Southeast Asia,industrial energy use,coal,coal,1990,delivered coal,0.161862
-Southeast Asia,industrial energy use,electricity,electricity,1990,elect_td_ind,0.451013
-Southeast Asia,industrial energy use,gas,gas,1990,wholesale gas,0.632501
-Southeast Asia,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,1.153731
-Eastern Europe,industrial energy use,biomass,biomass,1990,delivered biomass,0.048878
-Eastern Europe,industrial energy use,coal,coal,1990,delivered coal,1.621005
-Eastern Europe,industrial energy use,electricity,electricity,1990,elect_td_ind,0.759306
+Africa,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.6041627
+Latin America,industrial energy use,biomass,biomass,1990,delivered biomass,1.6853698
+Latin America,industrial energy use,coal,coal,1990,delivered coal,0.4707626
+Latin America,industrial energy use,electricity,electricity,1990,elect_td_ind,0.9419185
+Latin America,industrial energy use,gas,gas,1990,wholesale gas,1.6717003
+Latin America,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,1.5274785
+Southeast Asia,industrial energy use,biomass,biomass,1990,delivered biomass,0.9862895
+Southeast Asia,industrial energy use,coal,coal,1990,delivered coal,0.1618615
+Southeast Asia,industrial energy use,electricity,electricity,1990,elect_td_ind,0.4493486
+Southeast Asia,industrial energy use,gas,gas,1990,wholesale gas,0.6325013
+Southeast Asia,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,1.1537309
+Eastern Europe,industrial energy use,biomass,biomass,1990,delivered biomass,0.0488782
+Eastern Europe,industrial energy use,coal,coal,1990,delivered coal,1.6210052
+Eastern Europe,industrial energy use,electricity,electricity,1990,elect_td_ind,0.7578822
 Eastern Europe,industrial energy use,gas,gas,1990,wholesale gas,1.171951
-Eastern Europe,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.7778
+Eastern Europe,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.7778002
 Korea,industrial energy use,biomass,biomass,1990,delivered biomass,1e-04
-Korea,industrial energy use,coal,coal,1990,delivered coal,0.36604
-Korea,industrial energy use,electricity,electricity,1990,elect_td_ind,0.199357
-Korea,industrial energy use,gas,gas,1990,wholesale gas,0.004162
-Korea,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.479064
+Korea,industrial energy use,coal,coal,1990,delivered coal,0.3660396
+Korea,industrial energy use,electricity,electricity,1990,elect_td_ind,0.1993566
+Korea,industrial energy use,gas,gas,1990,wholesale gas,0.0041617
+Korea,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.4790643
 India,industrial energy use,biomass,biomass,1990,delivered biomass,0
-India,industrial energy use,coal,coal,1990,delivered coal,1.301083
-India,industrial energy use,electricity,electricity,1990,elect_td_ind,0.533936
-India,industrial energy use,gas,gas,1990,wholesale gas,0.005593
-India,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.339861
-Former Soviet Union,industrial energy use,district heat,district heat,1990,district heat,5.51356
-China,industrial energy use,district heat,district heat,1990,district heat,0.532964
-Eastern Europe,industrial energy use,district heat,district heat,1990,district heat,0.610756
-USA,industrial energy use,biomass,biomass,2005,delivered biomass,0.853589
+India,industrial energy use,coal,coal,1990,delivered coal,1.3010832
+India,industrial energy use,electricity,electricity,1990,elect_td_ind,0.5339359
+India,industrial energy use,gas,gas,1990,wholesale gas,0.0055929
+India,industrial energy use,refined liquids,refined liquids,1990,refined liquids industrial,0.3398614
+Former Soviet Union,industrial energy use,district heat,district heat,1990,district heat,5.5135595
+China,industrial energy use,district heat,district heat,1990,district heat,0.5329645
+Eastern Europe,industrial energy use,district heat,district heat,1990,district heat,0.6107561
+USA,industrial energy use,biomass,biomass,2005,delivered biomass,0.8535892
 USA,industrial energy use,coal,coal,2005,delivered coal,1.077391
-USA,industrial energy use,electricity,electricity,2005,elect_td_ind,3.409901
-USA,industrial energy use,gas,gas,2005,wholesale gas,5.112631
+USA,industrial energy use,electricity,electricity,2005,elect_td_ind,3.4044375
+USA,industrial energy use,gas,gas,2005,wholesale gas,5.1126314
 USA,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,2.154178
 Canada,industrial energy use,biomass,biomass,2005,delivered biomass,0.336188
-Canada,industrial energy use,coal,coal,2005,delivered coal,0.124878
-Canada,industrial energy use,electricity,electricity,2005,elect_td_ind,0.918875
-Canada,industrial energy use,gas,gas,2005,wholesale gas,1.04713
-Canada,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.3917
-Western Europe,industrial energy use,biomass,biomass,2005,delivered biomass,0.266982
-Western Europe,industrial energy use,coal,coal,2005,delivered coal,1.874835
-Western Europe,industrial energy use,electricity,electricity,2005,elect_td_ind,4.290513
+Canada,industrial energy use,coal,coal,2005,delivered coal,0.1248781
+Canada,industrial energy use,electricity,electricity,2005,elect_td_ind,0.9178326
+Canada,industrial energy use,gas,gas,2005,wholesale gas,1.0471298
+Canada,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.3917004
+Western Europe,industrial energy use,biomass,biomass,2005,delivered biomass,0.2636782
+Western Europe,industrial energy use,coal,coal,2005,delivered coal,1.8748346
+Western Europe,industrial energy use,electricity,electricity,2005,elect_td_ind,4.2856929
 Western Europe,industrial energy use,gas,gas,2005,wholesale gas,4.027406
-Western Europe,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,2.540034
-Japan,industrial energy use,biomass,biomass,2005,delivered biomass,0.063667
-Japan,industrial energy use,coal,coal,2005,delivered coal,1.551989
-Japan,industrial energy use,electricity,electricity,2005,elect_td_ind,1.238647
-Japan,industrial energy use,gas,gas,2005,wholesale gas,0.457842
-Japan,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.739186
+Western Europe,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,2.5400337
+Japan,industrial energy use,biomass,biomass,2005,delivered biomass,0.0630812
+Japan,industrial energy use,coal,coal,2005,delivered coal,1.5519893
+Japan,industrial energy use,electricity,electricity,2005,elect_td_ind,1.234075
+Japan,industrial energy use,gas,gas,2005,wholesale gas,0.4578419
+Japan,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.7391863
 Australia_NZ,industrial energy use,biomass,biomass,2005,delivered biomass,0.140353
-Australia_NZ,industrial energy use,coal,coal,2005,delivered coal,0.186642
-Australia_NZ,industrial energy use,electricity,electricity,2005,elect_td_ind,0.421954
-Australia_NZ,industrial energy use,gas,gas,2005,wholesale gas,0.401363
-Australia_NZ,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.312109
-Former Soviet Union,industrial energy use,biomass,biomass,2005,delivered biomass,0.098562
+Australia_NZ,industrial energy use,coal,coal,2005,delivered coal,0.1866416
+Australia_NZ,industrial energy use,electricity,electricity,2005,elect_td_ind,0.4218889
+Australia_NZ,industrial energy use,gas,gas,2005,wholesale gas,0.4013631
+Australia_NZ,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.3121092
+Former Soviet Union,industrial energy use,biomass,biomass,2005,delivered biomass,0.0985619
 Former Soviet Union,industrial energy use,coal,coal,2005,delivered coal,2.23339
-Former Soviet Union,industrial energy use,electricity,electricity,2005,elect_td_ind,2.433725
-Former Soviet Union,industrial energy use,gas,gas,2005,wholesale gas,3.058527
-Former Soviet Union,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.350635
-China,industrial energy use,biomass,biomass,2005,delivered biomass,0.05159
-China,industrial energy use,coal,coal,2005,delivered coal,12.924565
-China,industrial energy use,electricity,electricity,2005,elect_td_ind,5.171253
-China,industrial energy use,gas,gas,2005,wholesale gas,1.068396
-China,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,3.006352
-Middle East,industrial energy use,biomass,biomass,2005,delivered biomass,0.001521
-Middle East,industrial energy use,coal,coal,2005,delivered coal,0.051477
-Middle East,industrial energy use,electricity,electricity,2005,elect_td_ind,0.423178
+Former Soviet Union,industrial energy use,electricity,electricity,2005,elect_td_ind,2.4291903
+Former Soviet Union,industrial energy use,gas,gas,2005,wholesale gas,3.0585272
+Former Soviet Union,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.3506352
+China,industrial energy use,biomass,biomass,2005,delivered biomass,0.0321588
+China,industrial energy use,coal,coal,2005,delivered coal,12.9245645
+China,industrial energy use,electricity,electricity,2005,elect_td_ind,5.1654283
+China,industrial energy use,gas,gas,2005,wholesale gas,1.0683963
+China,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,3.0063524
+Middle East,industrial energy use,biomass,biomass,2005,delivered biomass,1e-04
+Middle East,industrial energy use,coal,coal,2005,delivered coal,0.0514767
+Middle East,industrial energy use,electricity,electricity,2005,elect_td_ind,0.4034675
 Middle East,industrial energy use,gas,gas,2005,wholesale gas,1.813868
-Middle East,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.393348
-Africa,industrial energy use,biomass,biomass,2005,delivered biomass,3.05383
-Africa,industrial energy use,coal,coal,2005,delivered coal,0.607483
-Africa,industrial energy use,electricity,electricity,2005,elect_td_ind,0.794509
-Africa,industrial energy use,gas,gas,2005,wholesale gas,0.912117
-Africa,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.63804
-Latin America,industrial energy use,biomass,biomass,2005,delivered biomass,2.403664
-Latin America,industrial energy use,coal,coal,2005,delivered coal,0.546346
-Latin America,industrial energy use,electricity,electricity,2005,elect_td_ind,1.685842
-Latin America,industrial energy use,gas,gas,2005,wholesale gas,2.324328
-Latin America,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.830053
-Southeast Asia,industrial energy use,biomass,biomass,2005,delivered biomass,1.50169
-Southeast Asia,industrial energy use,coal,coal,2005,delivered coal,0.787872
-Southeast Asia,industrial energy use,electricity,electricity,2005,elect_td_ind,1.074678
-Southeast Asia,industrial energy use,gas,gas,2005,wholesale gas,1.635044
-Southeast Asia,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.558808
-Eastern Europe,industrial energy use,biomass,biomass,2005,delivered biomass,0.118379
-Eastern Europe,industrial energy use,coal,coal,2005,delivered coal,0.736265
-Eastern Europe,industrial energy use,electricity,electricity,2005,elect_td_ind,0.658182
-Eastern Europe,industrial energy use,gas,gas,2005,wholesale gas,0.439216
-Eastern Europe,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.418037
-Korea,industrial energy use,biomass,biomass,2005,delivered biomass,0.050996
-Korea,industrial energy use,coal,coal,2005,delivered coal,0.338928
-Korea,industrial energy use,electricity,electricity,2005,elect_td_ind,0.666054
+Middle East,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.3933482
+Africa,industrial energy use,biomass,biomass,2005,delivered biomass,2.5054219
+Africa,industrial energy use,coal,coal,2005,delivered coal,0.6074827
+Africa,industrial energy use,electricity,electricity,2005,elect_td_ind,0.7905776
+Africa,industrial energy use,gas,gas,2005,wholesale gas,0.9121171
+Africa,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.6380403
+Latin America,industrial energy use,biomass,biomass,2005,delivered biomass,2.0402871
+Latin America,industrial energy use,coal,coal,2005,delivered coal,0.5463465
+Latin America,industrial energy use,electricity,electricity,2005,elect_td_ind,1.6831458
+Latin America,industrial energy use,gas,gas,2005,wholesale gas,2.3243282
+Latin America,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.8300527
+Southeast Asia,industrial energy use,biomass,biomass,2005,delivered biomass,1.2974455
+Southeast Asia,industrial energy use,coal,coal,2005,delivered coal,0.7878722
+Southeast Asia,industrial energy use,electricity,electricity,2005,elect_td_ind,1.0727907
+Southeast Asia,industrial energy use,gas,gas,2005,wholesale gas,1.6350441
+Southeast Asia,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,1.5588077
+Eastern Europe,industrial energy use,biomass,biomass,2005,delivered biomass,0.1183794
+Eastern Europe,industrial energy use,coal,coal,2005,delivered coal,0.7362651
+Eastern Europe,industrial energy use,electricity,electricity,2005,elect_td_ind,0.6577444
+Eastern Europe,industrial energy use,gas,gas,2005,wholesale gas,0.4392161
+Eastern Europe,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.4180375
+Korea,industrial energy use,biomass,biomass,2005,delivered biomass,0.0509964
+Korea,industrial energy use,coal,coal,2005,delivered coal,0.3389283
+Korea,industrial energy use,electricity,electricity,2005,elect_td_ind,0.6660542
 Korea,industrial energy use,gas,gas,2005,wholesale gas,0.207782
-Korea,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.368197
-India,industrial energy use,biomass,biomass,2005,delivered biomass,1.134749
-India,industrial energy use,coal,coal,2005,delivered coal,1.439379
-India,industrial energy use,electricity,electricity,2005,elect_td_ind,1.049577
-India,industrial energy use,gas,gas,2005,wholesale gas,0.204213
-India,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.859265
-Former Soviet Union,industrial energy use,district heat,district heat,2005,district heat,3.072724
-China,industrial energy use,district heat,district heat,2005,district heat,1.854661
-Eastern Europe,industrial energy use,district heat,district heat,2005,district heat,0.250025
+Korea,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.3681971
+India,industrial energy use,biomass,biomass,2005,delivered biomass,1.1347487
+India,industrial energy use,coal,coal,2005,delivered coal,1.4393795
+India,industrial energy use,electricity,electricity,2005,elect_td_ind,1.0495769
+India,industrial energy use,gas,gas,2005,wholesale gas,0.2042127
+India,industrial energy use,refined liquids,refined liquids,2005,refined liquids industrial,0.8592653
+Former Soviet Union,industrial energy use,district heat,district heat,2005,district heat,3.0727235
+China,industrial energy use,district heat,district heat,2005,district heat,1.8546608
+Eastern Europe,industrial energy use,district heat,district heat,2005,district heat,0.2500247

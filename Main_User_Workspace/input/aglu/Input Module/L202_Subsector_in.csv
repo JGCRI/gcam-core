@@ -8,6 +8,7 @@ Africa,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Africa,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Africa,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Africa,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Africa,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Africa,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Africa,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -22,6 +23,7 @@ Australia_NZ,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Australia_NZ,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Australia_NZ,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Australia_NZ,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Australia_NZ,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Australia_NZ,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Australia_NZ,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -36,6 +38,7 @@ Canada,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Canada,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Canada,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Canada,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Canada,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Canada,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Canada,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -50,6 +53,7 @@ China,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 China,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 China,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 China,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 China,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 China,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 China,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -64,6 +68,7 @@ Eastern Europe,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Eastern Europe,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Eastern Europe,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Eastern Europe,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Eastern Europe,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Eastern Europe,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Eastern Europe,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -78,6 +83,7 @@ Former Soviet Union,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,
 Former Soviet Union,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Former Soviet Union,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Former Soviet Union,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Former Soviet Union,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Former Soviet Union,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Former Soviet Union,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -92,6 +98,7 @@ India,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 India,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 India,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 India,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 India,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 India,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 India,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -106,6 +113,7 @@ Japan,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Japan,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Japan,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Japan,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Japan,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Japan,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Japan,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -120,6 +128,7 @@ Korea,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Korea,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Korea,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Korea,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Korea,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Korea,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Korea,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -134,6 +143,7 @@ Latin America,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Latin America,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Latin America,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Latin America,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Latin America,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Latin America,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Latin America,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -148,6 +158,7 @@ Middle East,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Middle East,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Middle East,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Middle East,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Middle East,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Middle East,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Middle East,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -162,6 +173,7 @@ Southeast Asia,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Southeast Asia,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Southeast Asia,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Southeast Asia,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Southeast Asia,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Southeast Asia,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Southeast Asia,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -176,6 +188,7 @@ USA,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 USA,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 USA,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 USA,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 USA,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 USA,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 USA,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
@@ -190,6 +203,7 @@ Western Europe,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
 Western Europe,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
 Western Europe,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
 Western Europe,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
 Western Europe,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
 Western Europe,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
 Western Europe,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed

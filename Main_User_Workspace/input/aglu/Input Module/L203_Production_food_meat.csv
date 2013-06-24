@@ -3,171 +3,171 @@ Variable ID
 Production
 
 region,supplysector,subsector,technology,year,calOutputValue,share.weight.year,subs.share.weight,tech.share.weight
-Africa,FoodDemand_Meat,Beef,Beef,1990,5.588062,1990,1,1
-Africa,FoodDemand_Meat,Dairy,Dairy,1990,14.855055,1990,1,1
-Africa,FoodDemand_Meat,Pork,Pork,1990,1.886766,1990,1,1
-Africa,FoodDemand_Meat,Poultry,Poultry,1990,4.186122,1990,1,1
-Africa,FoodDemand_Meat,SheepGoat,SheepGoat,1990,3.952423,1990,1,1
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,8.705931,1990,1,1
-Australia_NZ,FoodDemand_Meat,Beef,Beef,1990,1.327747,1990,1,1
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,1990,3.802022,1990,1,1
-Australia_NZ,FoodDemand_Meat,Pork,Pork,1990,1.161672,1990,1,1
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,1990,0.848585,1990,1,1
-Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,1990,1.248983,1990,1,1
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,1.358707,1990,1,1
-Canada,FoodDemand_Meat,Beef,Beef,1990,1.487276,1990,1,1
-Canada,FoodDemand_Meat,Dairy,Dairy,1990,5.246748,1990,1,1
-Canada,FoodDemand_Meat,Pork,Pork,1990,2.614013,1990,1,1
-Canada,FoodDemand_Meat,Poultry,Poultry,1990,1.335495,1990,1,1
+Africa,FoodDemand_Meat,Beef,Beef,1990,5.5880616,1990,1,1
+Africa,FoodDemand_Meat,Dairy,Dairy,1990,10.1922869,1990,1,1
+Africa,FoodDemand_Meat,Pork,Pork,1990,1.8867661,1990,1,1
+Africa,FoodDemand_Meat,Poultry,Poultry,1990,4.1861217,1990,1,1
+Africa,FoodDemand_Meat,SheepGoat,SheepGoat,1990,3.9524234,1990,1,1
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,8.7059315,1990,1,1
+Australia_NZ,FoodDemand_Meat,Beef,Beef,1990,1.3277472,1990,1,1
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,1990,2.4114226,1990,1,1
+Australia_NZ,FoodDemand_Meat,Pork,Pork,1990,1.1616723,1990,1,1
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,1990,0.8485851,1990,1,1
+Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,1990,1.2489833,1990,1,1
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,1.3587073,1990,1,1
+Canada,FoodDemand_Meat,Beef,Beef,1990,1.4872755,1990,1,1
+Canada,FoodDemand_Meat,Dairy,Dairy,1990,2.9121916,1990,1,1
+Canada,FoodDemand_Meat,Pork,Pork,1990,2.6140127,1990,1,1
+Canada,FoodDemand_Meat,Poultry,Poultry,1990,1.3354945,1990,1,1
 Canada,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.057769,1990,1,1
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,2.147498,1990,1,1
-China,FoodDemand_Meat,Beef,Beef,1990,2.387276,1990,1,1
-China,FoodDemand_Meat,Dairy,Dairy,1990,4.987018,1990,1,1
-China,FoodDemand_Meat,Pork,Pork,1990,81.300876,1990,1,1
-China,FoodDemand_Meat,Poultry,Poultry,1990,16.433797,1990,1,1
-China,FoodDemand_Meat,SheepGoat,SheepGoat,1990,3.123761,1990,1,1
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,23.702584,1990,1,1
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,2.1474977,1990,1,1
+China,FoodDemand_Meat,Beef,Beef,1990,2.3872764,1990,1,1
+China,FoodDemand_Meat,Dairy,Dairy,1990,3.5874491,1990,1,1
+China,FoodDemand_Meat,Pork,Pork,1990,81.3008759,1990,1,1
+China,FoodDemand_Meat,Poultry,Poultry,1990,16.4337972,1990,1,1
+China,FoodDemand_Meat,SheepGoat,SheepGoat,1990,3.1237615,1990,1,1
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,23.7025842,1990,1,1
 Eastern Europe,FoodDemand_Meat,Beef,Beef,1990,2.298855,1990,1,1
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,1990,17.775685,1990,1,1
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,1990,9.5532882,1990,1,1
 Eastern Europe,FoodDemand_Meat,Pork,Pork,1990,15.112545,1990,1,1
-Eastern Europe,FoodDemand_Meat,Poultry,Poultry,1990,3.346341,1990,1,1
-Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.549753,1990,1,1
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,8.913355,1990,1,1
-Former Soviet Union,FoodDemand_Meat,Beef,Beef,1990,12.996671,1990,1,1
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,1990,49.932371,1990,1,1
+Eastern Europe,FoodDemand_Meat,Poultry,Poultry,1990,3.3463411,1990,1,1
+Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.5497531,1990,1,1
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,8.9133552,1990,1,1
+Former Soviet Union,FoodDemand_Meat,Beef,Beef,1990,12.9966714,1990,1,1
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,1990,22.8043407,1990,1,1
 Former Soviet Union,FoodDemand_Meat,Pork,Pork,1990,20.559175,1990,1,1
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,1990,9.705241,1990,1,1
-Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,1990,2.678202,1990,1,1
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,8.441485,1990,1,1
-India,FoodDemand_Meat,Beef,Beef,1990,3.072898,1990,1,1
-India,FoodDemand_Meat,Dairy,Dairy,1990,30.386498,1990,1,1
-India,FoodDemand_Meat,Pork,Pork,1990,1.344089,1990,1,1
-India,FoodDemand_Meat,Poultry,Poultry,1990,1.801332,1990,1,1
-India,FoodDemand_Meat,SheepGoat,SheepGoat,1990,1.588703,1990,1,1
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,3.176052,1990,1,1
-Japan,FoodDemand_Meat,Beef,Beef,1990,1.528445,1990,1,1
-Japan,FoodDemand_Meat,Dairy,Dairy,1990,6.286228,1990,1,1
-Japan,FoodDemand_Meat,Pork,Pork,1990,6.188984,1990,1,1
-Japan,FoodDemand_Meat,Poultry,Poultry,1990,5.352272,1990,1,1
-Japan,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.177761,1990,1,1
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,7.355091,1990,1,1
-Korea,FoodDemand_Meat,Beef,Beef,1990,0.403833,1990,1,1
-Korea,FoodDemand_Meat,Dairy,Dairy,1990,0.793228,1990,1,1
-Korea,FoodDemand_Meat,Pork,Pork,1990,1.793345,1990,1,1
-Korea,FoodDemand_Meat,Poultry,Poultry,1990,0.86863,1990,1,1
-Korea,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.030576,1990,1,1
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,1.51298,1990,1,1
-Latin America,FoodDemand_Meat,Beef,Beef,1990,14.794273,1990,1,1
-Latin America,FoodDemand_Meat,Dairy,Dairy,1990,25.102763,1990,1,1
-Latin America,FoodDemand_Meat,Pork,Pork,1990,10.141871,1990,1,1
-Latin America,FoodDemand_Meat,Poultry,Poultry,1990,10.816473,1990,1,1
-Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,1990,1.116444,1990,1,1
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,12.941854,1990,1,1
-Middle East,FoodDemand_Meat,Beef,Beef,1990,0.886783,1990,1,1
-Middle East,FoodDemand_Meat,Dairy,Dairy,1990,7.433954,1990,1,1
-Middle East,FoodDemand_Meat,Pork,Pork,1990,0.052858,1990,1,1
-Middle East,FoodDemand_Meat,Poultry,Poultry,1990,2.604502,1990,1,1
-Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,1990,2.000564,1990,1,1
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,1.16285,1990,1,1
-Southeast Asia,FoodDemand_Meat,Beef,Beef,1990,2.91865,1990,1,1
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,1990,13.158485,1990,1,1
-Southeast Asia,FoodDemand_Meat,Pork,Pork,1990,6.426263,1990,1,1
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,1990,5.185613,1990,1,1
-Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,1990,1.968817,1990,1,1
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,9.551342,1990,1,1
-USA,FoodDemand_Meat,Beef,Beef,1990,16.837723,1990,1,1
-USA,FoodDemand_Meat,Dairy,Dairy,1990,49.379239,1990,1,1
-USA,FoodDemand_Meat,Pork,Pork,1990,24.378431,1990,1,1
-USA,FoodDemand_Meat,Poultry,Poultry,1990,16.99407,1990,1,1
-USA,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.463909,1990,1,1
-USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,11.146548,1990,1,1
-Western Europe,FoodDemand_Meat,Beef,Beef,1990,13.333409,1990,1,1
-Western Europe,FoodDemand_Meat,Dairy,Dairy,1990,89.092062,1990,1,1
-Western Europe,FoodDemand_Meat,Pork,Pork,1990,49.642902,1990,1,1
-Western Europe,FoodDemand_Meat,Poultry,Poultry,1990,15.627254,1990,1,1
-Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,1990,4.610485,1990,1,1
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,27.961091,1990,1,1
-Africa,FoodDemand_Meat,Beef,Beef,2005,7.781518,2005,1,1
-Africa,FoodDemand_Meat,Dairy,Dairy,2005,22.813189,2005,1,1
-Africa,FoodDemand_Meat,Pork,Pork,2005,3.228917,2005,1,1
-Africa,FoodDemand_Meat,Poultry,Poultry,2005,7.63917,2005,1,1
-Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2005,5.864683,2005,1,1
-Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,11.371981,2005,1,1
-Australia_NZ,FoodDemand_Meat,Beef,Beef,2005,1.410861,2005,1,1
-Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2005,4.308921,2005,1,1
-Australia_NZ,FoodDemand_Meat,Pork,Pork,2005,1.724792,2005,1,1
-Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2005,1.313383,2005,1,1
-Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.97779,2005,1,1
-Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,1.512647,2005,1,1
-Canada,FoodDemand_Meat,Beef,Beef,2005,1.598823,2005,1,1
-Canada,FoodDemand_Meat,Dairy,Dairy,2005,6.026418,2005,1,1
-Canada,FoodDemand_Meat,Pork,Pork,2005,2.819506,2005,1,1
-Canada,FoodDemand_Meat,Poultry,Poultry,2005,1.945708,2005,1,1
-Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.092695,2005,1,1
-Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,2.608346,2005,1,1
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,1990,9.7052406,1990,1,1
+Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,1990,2.6782016,1990,1,1
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,8.4414849,1990,1,1
+India,FoodDemand_Meat,Beef,Beef,1990,3.0728982,1990,1,1
+India,FoodDemand_Meat,Dairy,Dairy,1990,21.7289231,1990,1,1
+India,FoodDemand_Meat,Pork,Pork,1990,1.3440889,1990,1,1
+India,FoodDemand_Meat,Poultry,Poultry,1990,1.8013316,1990,1,1
+India,FoodDemand_Meat,SheepGoat,SheepGoat,1990,1.5887025,1990,1,1
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,3.1760516,1990,1,1
+Japan,FoodDemand_Meat,Beef,Beef,1990,1.5284451,1990,1,1
+Japan,FoodDemand_Meat,Dairy,Dairy,1990,4.7007069,1990,1,1
+Japan,FoodDemand_Meat,Pork,Pork,1990,6.1889842,1990,1,1
+Japan,FoodDemand_Meat,Poultry,Poultry,1990,5.3522718,1990,1,1
+Japan,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.1777612,1990,1,1
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,7.3550913,1990,1,1
+Korea,FoodDemand_Meat,Beef,Beef,1990,0.4038327,1990,1,1
+Korea,FoodDemand_Meat,Dairy,Dairy,1990,0.4122252,1990,1,1
+Korea,FoodDemand_Meat,Pork,Pork,1990,1.7933449,1990,1,1
+Korea,FoodDemand_Meat,Poultry,Poultry,1990,0.8686296,1990,1,1
+Korea,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.0305764,1990,1,1
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,1.5129804,1990,1,1
+Latin America,FoodDemand_Meat,Beef,Beef,1990,14.7942726,1990,1,1
+Latin America,FoodDemand_Meat,Dairy,Dairy,1990,19.8638421,1990,1,1
+Latin America,FoodDemand_Meat,Pork,Pork,1990,10.1418711,1990,1,1
+Latin America,FoodDemand_Meat,Poultry,Poultry,1990,10.8164727,1990,1,1
+Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,1990,1.1164439,1990,1,1
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,12.9418539,1990,1,1
+Middle East,FoodDemand_Meat,Beef,Beef,1990,0.8867826,1990,1,1
+Middle East,FoodDemand_Meat,Dairy,Dairy,1990,3.9703541,1990,1,1
+Middle East,FoodDemand_Meat,Pork,Pork,1990,0.0528583,1990,1,1
+Middle East,FoodDemand_Meat,Poultry,Poultry,1990,2.6045023,1990,1,1
+Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,1990,2.0005637,1990,1,1
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,1.1628502,1990,1,1
+Southeast Asia,FoodDemand_Meat,Beef,Beef,1990,2.9186502,1990,1,1
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,1990,9.4545125,1990,1,1
+Southeast Asia,FoodDemand_Meat,Pork,Pork,1990,6.4262633,1990,1,1
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,1990,5.1856128,1990,1,1
+Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,1990,1.9688169,1990,1,1
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,9.5513422,1990,1,1
+USA,FoodDemand_Meat,Beef,Beef,1990,16.8377226,1990,1,1
+USA,FoodDemand_Meat,Dairy,Dairy,1990,31.2585516,1990,1,1
+USA,FoodDemand_Meat,Pork,Pork,1990,24.3784306,1990,1,1
+USA,FoodDemand_Meat,Poultry,Poultry,1990,16.9940705,1990,1,1
+USA,FoodDemand_Meat,SheepGoat,SheepGoat,1990,0.4639094,1990,1,1
+USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,11.1465478,1990,1,1
+Western Europe,FoodDemand_Meat,Beef,Beef,1990,13.3334091,1990,1,1
+Western Europe,FoodDemand_Meat,Dairy,Dairy,1990,47.7117037,1990,1,1
+Western Europe,FoodDemand_Meat,Pork,Pork,1990,49.6429025,1990,1,1
+Western Europe,FoodDemand_Meat,Poultry,Poultry,1990,15.6272544,1990,1,1
+Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,1990,4.6104847,1990,1,1
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,1990,27.9610907,1990,1,1
+Africa,FoodDemand_Meat,Beef,Beef,2005,7.7815185,2005,1,1
+Africa,FoodDemand_Meat,Dairy,Dairy,2005,16.1481894,2005,1,1
+Africa,FoodDemand_Meat,Pork,Pork,2005,3.2289166,2005,1,1
+Africa,FoodDemand_Meat,Poultry,Poultry,2005,7.6391695,2005,1,1
+Africa,FoodDemand_Meat,SheepGoat,SheepGoat,2005,5.8646833,2005,1,1
+Africa,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,11.3719809,2005,1,1
+Australia_NZ,FoodDemand_Meat,Beef,Beef,2005,1.4108607,2005,1,1
+Australia_NZ,FoodDemand_Meat,Dairy,Dairy,2005,2.3909646,2005,1,1
+Australia_NZ,FoodDemand_Meat,Pork,Pork,2005,1.7247917,2005,1,1
+Australia_NZ,FoodDemand_Meat,Poultry,Poultry,2005,1.3133833,2005,1,1
+Australia_NZ,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.9777903,2005,1,1
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,1.5126474,2005,1,1
+Canada,FoodDemand_Meat,Beef,Beef,2005,1.5988233,2005,1,1
+Canada,FoodDemand_Meat,Dairy,Dairy,2005,3.1420693,2005,1,1
+Canada,FoodDemand_Meat,Pork,Pork,2005,2.8195062,2005,1,1
+Canada,FoodDemand_Meat,Poultry,Poultry,2005,1.9457084,2005,1,1
+Canada,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.0926954,2005,1,1
+Canada,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,2.6083456,2005,1,1
 China,FoodDemand_Meat,Beef,Beef,2005,9.317403,2005,1,1
-China,FoodDemand_Meat,Dairy,Dairy,2005,17.978983,2005,1,1
+China,FoodDemand_Meat,Dairy,Dairy,2005,15.4615854,2005,1,1
 China,FoodDemand_Meat,Pork,Pork,2005,155.278158,2005,1,1
-China,FoodDemand_Meat,Poultry,Poultry,2005,49.759084,2005,1,1
-China,FoodDemand_Meat,SheepGoat,SheepGoat,2005,9.589719,2005,1,1
-China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,51.052149,2005,1,1
-Eastern Europe,FoodDemand_Meat,Beef,Beef,2005,1.421513,2005,1,1
-Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2005,18.174249,2005,1,1
-Eastern Europe,FoodDemand_Meat,Pork,Pork,2005,15.149448,2005,1,1
+China,FoodDemand_Meat,Poultry,Poultry,2005,49.7590836,2005,1,1
+China,FoodDemand_Meat,SheepGoat,SheepGoat,2005,9.5897185,2005,1,1
+China,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,51.0521495,2005,1,1
+Eastern Europe,FoodDemand_Meat,Beef,Beef,2005,1.4215131,2005,1,1
+Eastern Europe,FoodDemand_Meat,Dairy,Dairy,2005,11.1111268,2005,1,1
+Eastern Europe,FoodDemand_Meat,Pork,Pork,2005,15.1494482,2005,1,1
 Eastern Europe,FoodDemand_Meat,Poultry,Poultry,2005,4.627878,2005,1,1
-Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.34932,2005,1,1
-Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,7.514737,2005,1,1
-Former Soviet Union,FoodDemand_Meat,Beef,Beef,2005,6.86995,2005,1,1
-Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2005,32.693273,2005,1,1
-Former Soviet Union,FoodDemand_Meat,Pork,Pork,2005,12.369384,2005,1,1
-Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2005,9.282015,2005,1,1
-Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2005,1.537869,2005,1,1
-Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,9.179717,2005,1,1
+Eastern Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.3493198,2005,1,1
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,7.5147374,2005,1,1
+Former Soviet Union,FoodDemand_Meat,Beef,Beef,2005,6.8699505,2005,1,1
+Former Soviet Union,FoodDemand_Meat,Dairy,Dairy,2005,22.3307839,2005,1,1
+Former Soviet Union,FoodDemand_Meat,Pork,Pork,2005,12.3693841,2005,1,1
+Former Soviet Union,FoodDemand_Meat,Poultry,Poultry,2005,9.2820148,2005,1,1
+Former Soviet Union,FoodDemand_Meat,SheepGoat,SheepGoat,2005,1.5378694,2005,1,1
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,9.1797175,2005,1,1
 India,FoodDemand_Meat,Beef,Beef,2005,2.779599,2005,1,1
-India,FoodDemand_Meat,Dairy,Dairy,2005,60.256686,2005,1,1
-India,FoodDemand_Meat,Pork,Pork,2005,1.539115,2005,1,1
-India,FoodDemand_Meat,Poultry,Poultry,2005,3.752748,2005,1,1
-India,FoodDemand_Meat,SheepGoat,SheepGoat,2005,1.838463,2005,1,1
-India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,4.859473,2005,1,1
-Japan,FoodDemand_Meat,Beef,Beef,2005,1.66271,2005,1,1
-Japan,FoodDemand_Meat,Dairy,Dairy,2005,6.7971,2005,1,1
-Japan,FoodDemand_Meat,Pork,Pork,2005,8.284122,2005,1,1
-Japan,FoodDemand_Meat,Poultry,Poultry,2005,5.941303,2005,1,1
-Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.071906,2005,1,1
-Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,6.101585,2005,1,1
-Korea,FoodDemand_Meat,Beef,Beef,2005,0.793385,2005,1,1
-Korea,FoodDemand_Meat,Dairy,Dairy,2005,1.293013,2005,1,1
+India,FoodDemand_Meat,Dairy,Dairy,2005,35.5171044,2005,1,1
+India,FoodDemand_Meat,Pork,Pork,2005,1.5391151,2005,1,1
+India,FoodDemand_Meat,Poultry,Poultry,2005,3.7527476,2005,1,1
+India,FoodDemand_Meat,SheepGoat,SheepGoat,2005,1.8384626,2005,1,1
+India,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,4.8594733,2005,1,1
+Japan,FoodDemand_Meat,Beef,Beef,2005,1.6627098,2005,1,1
+Japan,FoodDemand_Meat,Dairy,Dairy,2005,4.7316828,2005,1,1
+Japan,FoodDemand_Meat,Pork,Pork,2005,8.2841223,2005,1,1
+Japan,FoodDemand_Meat,Poultry,Poultry,2005,5.9413032,2005,1,1
+Japan,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.0719063,2005,1,1
+Japan,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,6.1015847,2005,1,1
+Korea,FoodDemand_Meat,Beef,Beef,2005,0.7933851,2005,1,1
+Korea,FoodDemand_Meat,Dairy,Dairy,2005,0.5902755,2005,1,1
 Korea,FoodDemand_Meat,Pork,Pork,2005,4.31443,2005,1,1
-Korea,FoodDemand_Meat,Poultry,Poultry,2005,1.370626,2005,1,1
-Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.015403,2005,1,1
-Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,2.302346,2005,1,1
-Latin America,FoodDemand_Meat,Beef,Beef,2005,20.111503,2005,1,1
-Latin America,FoodDemand_Meat,Dairy,Dairy,2005,35.190926,2005,1,1
-Latin America,FoodDemand_Meat,Pork,Pork,2005,17.742624,2005,1,1
-Latin America,FoodDemand_Meat,Poultry,Poultry,2005,23.851525,2005,1,1
-Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2005,1.160732,2005,1,1
-Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,16.931356,2005,1,1
-Middle East,FoodDemand_Meat,Beef,Beef,2005,1.521551,2005,1,1
-Middle East,FoodDemand_Meat,Dairy,Dairy,2005,11.32936,2005,1,1
-Middle East,FoodDemand_Meat,Pork,Pork,2005,0.090008,2005,1,1
-Middle East,FoodDemand_Meat,Poultry,Poultry,2005,5.992452,2005,1,1
-Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2005,2.693916,2005,1,1
-Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,1.930808,2005,1,1
-Southeast Asia,FoodDemand_Meat,Beef,Beef,2005,4.446159,2005,1,1
-Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2005,24.345062,2005,1,1
-Southeast Asia,FoodDemand_Meat,Pork,Pork,2005,11.123886,2005,1,1
-Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2005,10.496922,2005,1,1
-Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2005,2.40267,2005,1,1
-Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,17.732829,2005,1,1
-USA,FoodDemand_Meat,Beef,Beef,2005,18.902594,2005,1,1
-USA,FoodDemand_Meat,Dairy,Dairy,2005,60.665311,2005,1,1
+Korea,FoodDemand_Meat,Poultry,Poultry,2005,1.3706259,2005,1,1
+Korea,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.0154029,2005,1,1
+Korea,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,2.3023464,2005,1,1
+Latin America,FoodDemand_Meat,Beef,Beef,2005,20.1115029,2005,1,1
+Latin America,FoodDemand_Meat,Dairy,Dairy,2005,28.7725548,2005,1,1
+Latin America,FoodDemand_Meat,Pork,Pork,2005,17.7426237,2005,1,1
+Latin America,FoodDemand_Meat,Poultry,Poultry,2005,23.8515254,2005,1,1
+Latin America,FoodDemand_Meat,SheepGoat,SheepGoat,2005,1.1607316,2005,1,1
+Latin America,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,16.9313555,2005,1,1
+Middle East,FoodDemand_Meat,Beef,Beef,2005,1.5215508,2005,1,1
+Middle East,FoodDemand_Meat,Dairy,Dairy,2005,5.9394912,2005,1,1
+Middle East,FoodDemand_Meat,Pork,Pork,2005,0.0900079,2005,1,1
+Middle East,FoodDemand_Meat,Poultry,Poultry,2005,5.9924521,2005,1,1
+Middle East,FoodDemand_Meat,SheepGoat,SheepGoat,2005,2.6939158,2005,1,1
+Middle East,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,1.9308081,2005,1,1
+Southeast Asia,FoodDemand_Meat,Beef,Beef,2005,4.4461587,2005,1,1
+Southeast Asia,FoodDemand_Meat,Dairy,Dairy,2005,17.9288701,2005,1,1
+Southeast Asia,FoodDemand_Meat,Pork,Pork,2005,11.1238861,2005,1,1
+Southeast Asia,FoodDemand_Meat,Poultry,Poultry,2005,10.4969219,2005,1,1
+Southeast Asia,FoodDemand_Meat,SheepGoat,SheepGoat,2005,2.4026702,2005,1,1
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,17.7328287,2005,1,1
+USA,FoodDemand_Meat,Beef,Beef,2005,18.9025938,2005,1,1
+USA,FoodDemand_Meat,Dairy,Dairy,2005,36.8650438,2005,1,1
 USA,FoodDemand_Meat,Pork,Pork,2005,29.048631,2005,1,1
-USA,FoodDemand_Meat,Poultry,Poultry,2005,24.911501,2005,1,1
-USA,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.406579,2005,1,1
-USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,13.925496,2005,1,1
-Western Europe,FoodDemand_Meat,Beef,Beef,2005,12.373136,2005,1,1
-Western Europe,FoodDemand_Meat,Dairy,Dairy,2005,100.32272,2005,1,1
-Western Europe,FoodDemand_Meat,Pork,Pork,2005,55.398906,2005,1,1
-Western Europe,FoodDemand_Meat,Poultry,Poultry,2005,18.927642,2005,1,1
-Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2005,4.153183,2005,1,1
-Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,27.770272,2005,1,1
+USA,FoodDemand_Meat,Poultry,Poultry,2005,24.9115011,2005,1,1
+USA,FoodDemand_Meat,SheepGoat,SheepGoat,2005,0.4065791,2005,1,1
+USA,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,13.9254959,2005,1,1
+Western Europe,FoodDemand_Meat,Beef,Beef,2005,12.3731364,2005,1,1
+Western Europe,FoodDemand_Meat,Dairy,Dairy,2005,52.7051999,2005,1,1
+Western Europe,FoodDemand_Meat,Pork,Pork,2005,55.3989058,2005,1,1
+Western Europe,FoodDemand_Meat,Poultry,Poultry,2005,18.9276417,2005,1,1
+Western Europe,FoodDemand_Meat,SheepGoat,SheepGoat,2005,4.1531829,2005,1,1
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,2005,27.7702724,2005,1,1

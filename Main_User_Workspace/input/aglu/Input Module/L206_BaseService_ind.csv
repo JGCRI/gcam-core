@@ -3,31 +3,31 @@ Variable ID
 BaseService
 
 region,energy.final.demand,year,base.service
-Africa,industry,1990,2.88183
-Australia_NZ,industry,1990,1.31048
-Canada,industry,1990,2.794965
-China,industry,1990,12.54991
-Eastern Europe,industry,1990,5.21241
-Former Soviet Union,industry,1990,20.220098
-India,industry,1990,2.261228
-Japan,industry,1990,6.334875
-Korea,industry,1990,1.309213
-Latin America,industry,1990,7.015591
-Middle East,industry,1990,2.620329
-Southeast Asia,industry,1990,4.039409
-USA,industry,1990,18.613422
-Western Europe,industry,1990,15.750939
-Africa,industry,2005,5.717865
-Australia_NZ,industry,2005,1.63346
-Canada,industry,2005,3.515144
-China,industry,2005,25.235842
-Eastern Europe,industry,2005,3.237675
-Former Soviet Union,industry,2005,13.723162
-India,industry,2005,5.294238
-Japan,industry,2005,6.463424
-Korea,industry,2005,3.147462
-Latin America,industry,2005,9.42393
-Middle East,industry,2005,5.234787
-Southeast Asia,industry,2005,7.761112
-USA,industry,2005,19.419808
-Western Europe,industry,2005,17.804581
+Africa,industry,1990,2.8337632
+Australia_NZ,industry,1990,1.3103804
+Canada,industry,1990,2.7939323
+China,industry,1990,12.546299
+Eastern Europe,industry,1990,5.2109873
+Former Soviet Union,industry,1990,20.2061782
+India,industry,1990,2.2612288
+Japan,industry,1990,6.3288646
+Korea,industry,1990,1.3092127
+Latin America,industry,1990,6.7235524
+Middle East,industry,1990,2.6068988
+Southeast Asia,industry,1990,3.8331012
+USA,industry,1990,18.6091911
+Western Europe,industry,1990,15.7441814
+Africa,industry,2005,5.275998
+Australia_NZ,industry,2005,1.6333943
+Canada,industry,2005,3.5141031
+China,industry,2005,25.2144999
+Eastern Europe,industry,2005,3.2372375
+Former Soviet Union,industry,2005,13.7186275
+India,industry,2005,5.2942384
+Japan,industry,2005,6.4583849
+Korea,industry,2005,3.1474624
+Latin America,industry,2005,9.1310563
+Middle East,industry,2005,5.2139415
+Southeast Asia,industry,2005,7.5961238
+USA,industry,2005,19.4143453
+Western Europe,industry,2005,17.7971217

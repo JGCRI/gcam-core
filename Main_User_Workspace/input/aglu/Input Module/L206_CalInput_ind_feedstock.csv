@@ -6,112 +6,112 @@ region,supplysector,subsector,technology,year,minicam.energy.input,calibrated.va
 USA,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
 USA,industrial feedstocks,coal,coal,1990,delivered coal,0
 USA,industrial feedstocks,gas,gas,1990,wholesale gas,0.266188
-USA,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,4.250448
+USA,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,4.2504477
 Canada,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
 Canada,industrial feedstocks,coal,coal,1990,delivered coal,0.013649
-Canada,industrial feedstocks,gas,gas,1990,wholesale gas,0.072676
-Canada,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.466615
+Canada,industrial feedstocks,gas,gas,1990,wholesale gas,0.0726758
+Canada,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.4666147
 Western Europe,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
-Western Europe,industrial feedstocks,coal,coal,1990,delivered coal,0.051657
-Western Europe,industrial feedstocks,gas,gas,1990,wholesale gas,0.234059
+Western Europe,industrial feedstocks,coal,coal,1990,delivered coal,0.0516567
+Western Europe,industrial feedstocks,gas,gas,1990,wholesale gas,0.2340593
 Western Europe,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,3.236403
 Japan,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
-Japan,industrial feedstocks,coal,coal,1990,delivered coal,0.015901
-Japan,industrial feedstocks,gas,gas,1990,wholesale gas,0.001365
-Japan,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,1.460527
+Japan,industrial feedstocks,coal,coal,1990,delivered coal,0.0159015
+Japan,industrial feedstocks,gas,gas,1990,wholesale gas,0.0013649
+Japan,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,1.4605275
 Australia_NZ,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
 Australia_NZ,industrial feedstocks,coal,coal,1990,delivered coal,0
-Australia_NZ,industrial feedstocks,gas,gas,1990,wholesale gas,0.033999
-Australia_NZ,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.156009
+Australia_NZ,industrial feedstocks,gas,gas,1990,wholesale gas,0.0339992
+Australia_NZ,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.1560085
 Former Soviet Union,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
-Former Soviet Union,industrial feedstocks,coal,coal,1990,delivered coal,0.000946
-Former Soviet Union,industrial feedstocks,gas,gas,1990,wholesale gas,0.677657
-Former Soviet Union,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.84629
+Former Soviet Union,industrial feedstocks,coal,coal,1990,delivered coal,0.0009462
+Former Soviet Union,industrial feedstocks,gas,gas,1990,wholesale gas,0.6776567
+Former Soviet Union,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.8462904
 China,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
-China,industrial feedstocks,coal,coal,1990,delivered coal,0.541695
+China,industrial feedstocks,coal,coal,1990,delivered coal,0.5416947
 China,industrial feedstocks,gas,gas,1990,wholesale gas,0.117005
-China,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.756735
+China,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.7567351
 Middle East,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
 Middle East,industrial feedstocks,coal,coal,1990,delivered coal,0
-Middle East,industrial feedstocks,gas,gas,1990,wholesale gas,0.288901
+Middle East,industrial feedstocks,gas,gas,1990,wholesale gas,0.2889009
 Middle East,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.478053
 Africa,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
-Africa,industrial feedstocks,coal,coal,1990,delivered coal,0.116569
+Africa,industrial feedstocks,coal,coal,1990,delivered coal,0.1165689
 Africa,industrial feedstocks,gas,gas,1990,wholesale gas,0.054053
-Africa,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.240268
-Latin America,industrial feedstocks,biomass,biomass,1990,delivered biomass,0.019356
-Latin America,industrial feedstocks,coal,coal,1990,delivered coal,0.004534
-Latin America,industrial feedstocks,gas,gas,1990,wholesale gas,0.164286
-Latin America,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.798176
+Africa,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.2402679
+Latin America,industrial feedstocks,biomass,biomass,1990,delivered biomass,0.0193556
+Latin America,industrial feedstocks,coal,coal,1990,delivered coal,0.0045343
+Latin America,industrial feedstocks,gas,gas,1990,wholesale gas,0.1642855
+Latin America,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.7981757
 Southeast Asia,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
 Southeast Asia,industrial feedstocks,coal,coal,1990,delivered coal,0
-Southeast Asia,industrial feedstocks,gas,gas,1990,wholesale gas,0.232597
-Southeast Asia,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.492569
+Southeast Asia,industrial feedstocks,gas,gas,1990,wholesale gas,0.2325972
+Southeast Asia,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.4925686
 Eastern Europe,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
 Eastern Europe,industrial feedstocks,coal,coal,1990,delivered coal,0.008562
-Eastern Europe,industrial feedstocks,gas,gas,1990,wholesale gas,0.030257
-Eastern Europe,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.39768
+Eastern Europe,industrial feedstocks,gas,gas,1990,wholesale gas,0.0302566
+Eastern Europe,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.3976805
 Korea,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
 Korea,industrial feedstocks,coal,coal,1990,delivered coal,0
 Korea,industrial feedstocks,gas,gas,1990,wholesale gas,0
-Korea,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.277863
+Korea,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.2778632
 India,industrial feedstocks,biomass,biomass,1990,delivered biomass,0
 India,industrial feedstocks,coal,coal,1990,delivered coal,0
-India,industrial feedstocks,gas,gas,1990,wholesale gas,0.112233
-India,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.182632
+India,industrial feedstocks,gas,gas,1990,wholesale gas,0.1122334
+India,industrial feedstocks,refined liquids,refined liquids,1990,refined liquids industrial,0.1826323
 USA,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
 USA,industrial feedstocks,coal,coal,2005,delivered coal,0
-USA,industrial feedstocks,gas,gas,2005,wholesale gas,0.407344
-USA,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,6.04594
+USA,industrial feedstocks,gas,gas,2005,wholesale gas,0.4073439
+USA,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,6.0459402
 Canada,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
-Canada,industrial feedstocks,coal,coal,2005,delivered coal,0.010475
-Canada,industrial feedstocks,gas,gas,2005,wholesale gas,0.067944
+Canada,industrial feedstocks,coal,coal,2005,delivered coal,0.0104754
+Canada,industrial feedstocks,gas,gas,2005,wholesale gas,0.0679445
 Canada,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.830904
 Western Europe,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
 Western Europe,industrial feedstocks,coal,coal,2005,delivered coal,0.026783
-Western Europe,industrial feedstocks,gas,gas,2005,wholesale gas,0.267337
-Western Europe,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,3.860231
+Western Europe,industrial feedstocks,gas,gas,2005,wholesale gas,0.2673373
+Western Europe,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,3.8602307
 Japan,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
-Japan,industrial feedstocks,coal,coal,2005,delivered coal,0.016345
-Japan,industrial feedstocks,gas,gas,2005,wholesale gas,0.004938
-Japan,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.697157
+Japan,industrial feedstocks,coal,coal,2005,delivered coal,0.0163453
+Japan,industrial feedstocks,gas,gas,2005,wholesale gas,0.0049377
+Japan,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.6971571
 Australia_NZ,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
 Australia_NZ,industrial feedstocks,coal,coal,2005,delivered coal,0
-Australia_NZ,industrial feedstocks,gas,gas,2005,wholesale gas,0.061519
-Australia_NZ,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.14586
+Australia_NZ,industrial feedstocks,gas,gas,2005,wholesale gas,0.0615189
+Australia_NZ,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.1458597
 Former Soviet Union,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
-Former Soviet Union,industrial feedstocks,coal,coal,2005,delivered coal,0.108706
-Former Soviet Union,industrial feedstocks,gas,gas,2005,wholesale gas,1.020056
-Former Soviet Union,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.681887
+Former Soviet Union,industrial feedstocks,coal,coal,2005,delivered coal,0.1087061
+Former Soviet Union,industrial feedstocks,gas,gas,2005,wholesale gas,1.0200555
+Former Soviet Union,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.6818874
 China,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
 China,industrial feedstocks,coal,coal,2005,delivered coal,0.38422
-China,industrial feedstocks,gas,gas,2005,wholesale gas,0.154829
-China,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,2.55442
+China,industrial feedstocks,gas,gas,2005,wholesale gas,0.1548289
+China,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,2.5544195
 Middle East,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
 Middle East,industrial feedstocks,coal,coal,2005,delivered coal,0
-Middle East,industrial feedstocks,gas,gas,2005,wholesale gas,0.667371
-Middle East,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.126195
+Middle East,industrial feedstocks,gas,gas,2005,wholesale gas,0.6673708
+Middle East,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.1261948
 Africa,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
-Africa,industrial feedstocks,coal,coal,2005,delivered coal,0.059285
-Africa,industrial feedstocks,gas,gas,2005,wholesale gas,0.15542
-Africa,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.311498
-Latin America,industrial feedstocks,biomass,biomass,2005,delivered biomass,0.012272
-Latin America,industrial feedstocks,coal,coal,2005,delivered coal,0.005242
-Latin America,industrial feedstocks,gas,gas,2005,wholesale gas,0.396214
+Africa,industrial feedstocks,coal,coal,2005,delivered coal,0.0592851
+Africa,industrial feedstocks,gas,gas,2005,wholesale gas,0.1554197
+Africa,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.3114979
+Latin America,industrial feedstocks,biomass,biomass,2005,delivered biomass,0.0122715
+Latin America,industrial feedstocks,coal,coal,2005,delivered coal,0.0052419
+Latin America,industrial feedstocks,gas,gas,2005,wholesale gas,0.3962138
 Latin America,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.079826
 Southeast Asia,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
-Southeast Asia,industrial feedstocks,coal,coal,2005,delivered coal,0.010425
-Southeast Asia,industrial feedstocks,gas,gas,2005,wholesale gas,0.411176
+Southeast Asia,industrial feedstocks,coal,coal,2005,delivered coal,0.0104251
+Southeast Asia,industrial feedstocks,gas,gas,2005,wholesale gas,0.4111758
 Southeast Asia,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.40751
 Eastern Europe,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
-Eastern Europe,industrial feedstocks,coal,coal,2005,delivered coal,0.01985
-Eastern Europe,industrial feedstocks,gas,gas,2005,wholesale gas,0.119911
-Eastern Europe,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.442039
+Eastern Europe,industrial feedstocks,coal,coal,2005,delivered coal,0.0198496
+Eastern Europe,industrial feedstocks,gas,gas,2005,wholesale gas,0.1199107
+Eastern Europe,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.4420391
 Korea,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
 Korea,industrial feedstocks,coal,coal,2005,delivered coal,0
 Korea,industrial feedstocks,gas,gas,2005,wholesale gas,0
-Korea,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.399296
+Korea,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,1.3992955
 India,industrial feedstocks,biomass,biomass,2005,delivered biomass,0
 India,industrial feedstocks,coal,coal,2005,delivered coal,0
-India,industrial feedstocks,gas,gas,2005,wholesale gas,0.176147
-India,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.892889
+India,industrial feedstocks,gas,gas,2005,wholesale gas,0.1761467
+India,industrial feedstocks,refined liquids,refined liquids,2005,refined liquids industrial,0.8928892
