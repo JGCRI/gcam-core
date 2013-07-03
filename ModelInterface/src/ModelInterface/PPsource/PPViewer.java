@@ -415,11 +415,14 @@ public class PPViewer implements ActionListener, MenuAdder, BatchRunner
     }
     
     log.log(Level.INFO, "creating DataBuilder to run preprocessing");
+    throw new UnsupportedOperationException("This feature is not available in this version.");
+    /*
     DataBuilder mainRun = new DataBuilder(dSource, rSource, dOutput);
     log.log(Level.INFO, "calling runAll in DataBuilder");
     mainRun.runAll();
     JOptionPane.showMessageDialog(parentFrame, "The Preprocessor has completed running.", "Preprocessor Completed",
         JOptionPane.PLAIN_MESSAGE);
+    */
   }
 
   public void runBatch(Node command) {
@@ -472,12 +475,15 @@ public class PPViewer implements ActionListener, MenuAdder, BatchRunner
 	  if(dataFilename == null || regionDefFilename == null || outputFilename == null) {
 		  log.severe("Not enough information to run data manipulator");
 	  } else {
+          throw new UnsupportedOperationException("This feature is not available in this version.");
+          /*
 		  log.log(Level.INFO, "creating DataBuilder to run preprocessing");
 		  DataBuilder mainRun = new DataBuilder(dataFilename, regionDefFilename, outputFilename);
 		  log.log(Level.INFO, "calling runAll in DataBuilder");
 		  mainRun.runAll();
 		  // TODO: maybe we should let the user know this batch finished however we
 		  // don't want to stop and wait for user input such as with a pop-up dialog
+          */
 	  }
 
   }

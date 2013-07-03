@@ -352,7 +352,6 @@ public class XMLDB {
 			// didn't open sucessfully
 			return;
 		}
-		System.out.println("Hits: "+hits+", misses: "+misses);
 		myContainer.close();
 		manager.close();
 	}
@@ -403,10 +402,14 @@ public class XMLDB {
 			attrRes.delete();
 		}
 	}
-	private static Map<String, Map<String, String>> attrCache = Collections.synchronizedMap(new LRUCacheMap<String, Map<String, String>>(500));
+	private static ThreadLocal<Map<String, Map<String, String>>> attrCache = 
+        new ThreadLocal<Map<String, Map<String, String>>>() {
+            protected Map<String, Map<String, String>> initialValue() {
+                final int cacheSize = 500;
+                return new LRUCacheMap<String, Map<String, String>>(cacheSize);
+            }
+        };
 	//private static Map<String, Map<String, String>> attrCache = new TreeMap<String, Map<String, String>>();
-	private static int misses = 0;
-	private static int hits = 0;
 	public static Map<String, String> getAttrMap(XmlValue node) throws XmlException {
 		final XmlResults attrRes = node.getAttributes();
 		try {
@@ -422,15 +425,12 @@ public class XMLDB {
 	}
 	public static Map<String, String> getAttrMapWithCache(XmlValue node) throws XmlException {
 		String nodeId = node.getNodeHandle();
-		Map<String, String> ret = attrCache.get(nodeId);
-		++hits;
+		Map<String, String> ret = attrCache.get().get(nodeId);
 		// null means a cahce miss so we will need to go back to the database
 		if(ret == null) {
-			++misses;
-			--hits;
 			ret = getAttrMap(node);
 			// put the result in the cache for the next time
-			attrCache.put(nodeId, ret);
+			attrCache.get().put(nodeId, ret);
 		}
 		return ret;
 	}

@@ -86,7 +86,7 @@ public class TableTransferHandler extends TransferHandler {
 				throw new UnsupportedFlavorException(flavor);
 			}
 			// only string for now..
-			return bt.exportToText();
+			return bt.exportToText('\t');
 		}
 	}
 }

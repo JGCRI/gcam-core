@@ -656,19 +656,47 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	/**
 	 * Used to export a table to text. There is a newline between rows and
 	 * a tab between columns.
+     * @param delimiter The text delimiter to use to sperate values.
 	 * @return A String which represents this table.
 	 */
-       public String exportToText() {
+       public String exportToText(char delimiter) {
 	       String lineEnding = System.getProperty("line.separator");
+           final int regionColNumber = 1;
+           boolean isGlobal = true;
+           String value;
 	       StringBuilder ret = new StringBuilder();
-	       ret.append(title).append(lineEnding);
+           value = title;
+           if(value.indexOf(delimiter) != -1) {
+               value = '"'+value+'"';
+           }
+	       ret.append(value).append(lineEnding);
+	       for(int i = 0; i < getColumnCount() && isGlobal; ++i) {
+               value = getColumnName(i);
+               if(value.equals("region")) {
+                   isGlobal = false;
+               }
+           }
 	       for(int i = 0; i < getColumnCount(); ++i) {
-		       ret.append(getColumnName(i)).append("\t");
+               value = getColumnName(i);
+               if(isGlobal && i == regionColNumber) {
+                   ret.append("region").append(delimiter);
+               }
+               if(value.indexOf(delimiter) != -1) {
+                   value = '"'+value+'"';
+               }
+		       ret.append(value).append(delimiter);
 	       }
 	       ret.append(lineEnding);
 	       for(int row = 0; row < getRowCount(); ++row) {
 		       for(int col = 0; col < getColumnCount(); ++col) {
-			       ret.append(sortedTable.getValueAt(row, col).toString()).append("\t");
+                   if(isGlobal && col == regionColNumber) {
+                       ret.append("Global").append(delimiter);
+                   }
+                   value = sortedTable.getValueAt(row, col).toString();
+                   if(value.indexOf(delimiter) != -1) {
+                       value = '"'+value+'"';
+                   }
+			       ret.append(value).append(delimiter);
 		       }
 		       ret.append(lineEnding);
 	       }

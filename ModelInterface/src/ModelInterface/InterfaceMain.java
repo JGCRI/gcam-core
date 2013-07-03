@@ -148,6 +148,22 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			}
 		});
 
+        if(args.length > 0 && args.length != 2) {
+            System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
+            return;
+        } else if(args.length == 2) {
+            if(args[0].equals("-b")) {
+                File batchFile = new File(args[1]);
+                main  = new InterfaceMain("Model Interface");
+                main.initialize();
+                main.runBatch(batchFile, true);
+                main.dispose();
+            } else {
+                System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
+            }
+            return;
+        }
+
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();
@@ -357,7 +373,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
                 public void run() {
                     if(result != null) {
                         for(File file : result) {
-                            runBatch(file);
+                            runBatch(file, false);
                         }
                     }
                     // TODO: message that all were run
@@ -547,9 +563,10 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 * and if any of the class implements BatchRunner it will pass
 	 * it off the command to that class. 
 	 * @param file The batch file to run.
+	 * @param suppressMessages Boolean to indicate to avoid popping up dialog boxes which require user intervention.
 	 * @see BatchRunner 
 	 */
-	private void runBatch(File file) {
+	private void runBatch(File file, boolean suppressMessages) {
 		// don't really care about document element's name
 		Node doc = FileUtils.loadDocument(this, file, null).getDocumentElement();
 
@@ -571,15 +588,19 @@ public class InterfaceMain extends JFrame implements ActionListener {
 					((BatchRunner)runner).runBatch(currClass);
 				} else {
 					System.out.println("could not find batch runner for class "+className);
+                    if(!suppressMessages) {
 					JOptionPane.showMessageDialog(this,
 							"Could not find batch runner for class "+className,
 							"Batch File Error", JOptionPane.ERROR_MESSAGE);
+                    }
 				}
 			}
 		}
 		System.out.println("Finished running "+file);
+        if(!suppressMessages) {
 		JOptionPane.showMessageDialog(this,
 				"Finished running batch file "+file.getName(),
 				"Batch File Complete", JOptionPane.INFORMATION_MESSAGE);
+        }
 	}
 }

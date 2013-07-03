@@ -149,9 +149,11 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 	public InputViewer(JFrame parentFrameIn) {
 		try {
+            /*
 			System.setProperty(DOMImplementationRegistry.PROPERTY,
 					//"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
 					"org.apache.xerces.dom.DOMImplementationSourceImpl");
+                    */
 			DOMImplementationRegistry reg = DOMImplementationRegistry
 					.newInstance();
 			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");

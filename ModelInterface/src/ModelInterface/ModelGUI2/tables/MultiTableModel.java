@@ -653,7 +653,7 @@ public class MultiTableModel extends BaseTableModel{
 	  JTable jTable = (JTable)((JScrollPane)getValueAt(rows[0], cols[0])).getViewport().getView();
 	  ((BaseTableModel)jTable.getModel()).annotate(jTable.getSelectedRows(), jTable.getSelectedColumns(), documentation);
   }
-  public String exportToText() {
+  public String exportToText(char delimiter) {
 	  String lineEnding = System.getProperty("line.separator");
 	  StringBuilder ret = new StringBuilder();
 	  // excel doesn't handle html properly so we will have 
@@ -670,10 +670,17 @@ public class MultiTableModel extends BaseTableModel{
 	  } else {
 		  tempTitle += " (1 Table)";
 	  }
+      if(tempTitle.indexOf(delimiter) != -1) {
+          tempTitle = '"'+tempTitle+'"';
+      }
 	  ret.append(tempTitle).append(lineEnding);
 	  for(int i = 0; i < getRowCount(); i += 2) {
-		  ret.append(getValueAt(i, 0).toString()).append(lineEnding)
-					  .append(getModelAt(i+1).exportToText());
+          String value = getValueAt(i, 0).toString();
+          if(value.indexOf(delimiter) != -1) {
+              value = '"'+value+'"';
+          }
+		  ret.append(value).append(lineEnding)
+					  .append(getModelAt(i+1).exportToText(delimiter));
 	  }
 	  return ret.toString();
   }

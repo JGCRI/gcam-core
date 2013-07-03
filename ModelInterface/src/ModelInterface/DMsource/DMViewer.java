@@ -429,11 +429,14 @@ public class DMViewer implements ActionListener, MenuAdder, BatchRunner
       cSource = currFile.getName();
       
       log.log(Level.INFO, "creating ManipulationDriver to run datamanipulation");
+      throw new UnsupportedOperationException("This feature is not available in this version.");
+      /*
       ManipulationDriver mainRun = new ManipulationDriver(dSource, rSource, cSource);
       log.log(Level.INFO, "calling runAll in DataBuilder");
       mainRun.runAll();
       JOptionPane.showMessageDialog(parentFrame, "The DataManipulator has completed running.", "DataManipulator Completed",
           JOptionPane.PLAIN_MESSAGE);
+      */
     } catch(NullPointerException e)
     {
       e.printStackTrace();
@@ -492,9 +495,12 @@ public class DMViewer implements ActionListener, MenuAdder, BatchRunner
 	  if(dataFilename == null || regionDefFilename == null || commandFilename == null) {
 		  log.severe("Not enough information to run data manipulator");
 	  } else {
+          throw new UnsupportedOperationException("This feature is not available in this version.");
+          /*
 		  ManipulationDriver mainRun = new ManipulationDriver(dataFilename, regionDefFilename, commandFilename);
 		  log.log(Level.INFO, "calling runAll in DataBuilder");
 		  mainRun.runAll();
+          */
 	  }
 
   }
