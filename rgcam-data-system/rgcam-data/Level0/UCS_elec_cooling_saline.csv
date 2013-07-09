@@ -1,0 +1,978 @@
+# UCS 2005 cooling technology (using saline water) by generation technology and state,,,,,,,
+region,fuel,UCS_technology,Dry_Cooled,Once_Through,Cooling_Pond,Recirculating,No_Cooling_Needed
+AK,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+AK,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+AK,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+AK,Oil and others,Combined cycle (oil),0,0,0,0,0
+AK,Oil and others,Combustion turbine (oil),0,0,0,0,102232
+AK,Oil and others,Generic steam plant (oil),0,0,0,0,0
+AK,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+AK,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+AK,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+AK,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+AK,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+AK,Hydropower,Hydropower,0,0,0,0,0
+AK,Hydropower,Pumped Storage,0,0,0,0,0
+AK,PV,PV,0,0,0,0,0
+AK,Coal,Generic steam plant (coal),0,0,0,0,0
+AK,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+AK,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+AK,Wind,Wind,0,0,0,0,0
+AK,,,0,0,0,0,0
+AL,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+AL,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,15841
+AL,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+AL,Oil and others,Combined cycle (oil),0,0,0,0,0
+AL,Oil and others,Combustion turbine (oil),0,0,0,0,0
+AL,Oil and others,Generic steam plant (oil),0,0,0,0,0
+AL,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+AL,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+AL,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+AL,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+AL,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+AL,Hydropower,Hydropower,0,0,0,0,0
+AL,Hydropower,Pumped Storage,0,0,0,0,0
+AL,PV,PV,0,0,0,0,0
+AL,Coal,Generic steam plant (coal),0,321152,0,0,0
+AL,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+AL,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+AL,Wind,Wind,0,0,0,0,0
+AL,,,0,0,0,0,0
+AR,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+AR,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+AR,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+AR,Oil and others,Combined cycle (oil),0,0,0,0,0
+AR,Oil and others,Combustion turbine (oil),0,0,0,0,0
+AR,Oil and others,Generic steam plant (oil),0,0,0,0,0
+AR,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+AR,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+AR,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+AR,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+AR,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+AR,Hydropower,Hydropower,0,0,0,0,0
+AR,Hydropower,Pumped Storage,0,0,0,0,0
+AR,PV,PV,0,0,0,0,0
+AR,Coal,Generic steam plant (coal),0,0,0,0,0
+AR,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+AR,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+AR,Wind,Wind,0,0,0,0,0
+AR,,,0,0,0,0,0
+AZ,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+AZ,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+AZ,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+AZ,Oil and others,Combined cycle (oil),0,0,0,0,0
+AZ,Oil and others,Combustion turbine (oil),0,0,0,0,0
+AZ,Oil and others,Generic steam plant (oil),0,0,0,0,0
+AZ,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+AZ,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+AZ,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+AZ,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+AZ,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+AZ,Hydropower,Hydropower,0,0,0,0,0
+AZ,Hydropower,Pumped Storage,0,0,0,0,0
+AZ,PV,PV,0,0,0,0,0
+AZ,Coal,Generic steam plant (coal),0,0,0,0,0
+AZ,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+AZ,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+AZ,Wind,Wind,0,0,0,0,0
+AZ,,,0,0,0,0,0
+CA,Natural Gas,Combined cycle (natural gas),893384,9497384.275,0,199853,0
+CA,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,375457.0227
+CA,Natural Gas,Generic steam plant (natural gas),0,13717533,0,13325.86,0
+CA,Oil and others,Combined cycle (oil),0,0,0,0,0
+CA,Oil and others,Combustion turbine (oil),0,0,0,0,9531
+CA,Oil and others,Generic steam plant (oil),0,0,0,0,0
+CA,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,51364.54237
+CA,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+CA,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+CA,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+CA,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+CA,Hydropower,Hydropower,0,0,0,0,159047
+CA,Hydropower,Pumped Storage,0,0,0,0,0
+CA,PV,PV,0,0,0,0,0
+CA,Coal,Generic steam plant (coal),0,0,0,0,0
+CA,Nuclear,Generic steam plant (nuclear),0,32482351,0,0,0
+CA,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+CA,Wind,Wind,0,0,0,0,0
+CA,,,0,0,0,0,0
+CO,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+CO,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+CO,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+CO,Oil and others,Combined cycle (oil),0,0,0,0,0
+CO,Oil and others,Combustion turbine (oil),0,0,0,0,0
+CO,Oil and others,Generic steam plant (oil),0,0,0,0,0
+CO,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+CO,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+CO,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+CO,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+CO,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+CO,Hydropower,Hydropower,0,0,0,0,0
+CO,Hydropower,Pumped Storage,0,0,0,0,0
+CO,PV,PV,0,0,0,0,0
+CO,Coal,Generic steam plant (coal),0,0,0,0,0
+CO,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+CO,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+CO,Wind,Wind,0,0,0,0,0
+CO,,,0,0,0,0,0
+CT,Natural Gas,Combined cycle (natural gas),0,0,0,1949339,0
+CT,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+CT,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+CT,Oil and others,Combined cycle (oil),0,0,0,0,0
+CT,Oil and others,Combustion turbine (oil),0,0,0,0,1766.784609
+CT,Oil and others,Generic steam plant (oil),0,331807,0,0,0
+CT,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+CT,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+CT,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+CT,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+CT,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+CT,Hydropower,Hydropower,0,0,0,0,0
+CT,Hydropower,Pumped Storage,0,0,0,0,0
+CT,PV,PV,0,0,0,0,0
+CT,Coal,Generic steam plant (coal),0,2879907,0,0,0
+CT,Nuclear,Generic steam plant (nuclear),0,15432946,0,0,0
+CT,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+CT,Wind,Wind,0,0,0,0,0
+CT,,,0,0,0,0,0
+DC,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+DC,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+DC,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+DC,Oil and others,Combined cycle (oil),0,0,0,0,0
+DC,Oil and others,Combustion turbine (oil),0,0,0,0,0
+DC,Oil and others,Generic steam plant (oil),0,0,0,0,0
+DC,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+DC,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+DC,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+DC,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+DC,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+DC,Hydropower,Hydropower,0,0,0,0,0
+DC,Hydropower,Pumped Storage,0,0,0,0,0
+DC,PV,PV,0,0,0,0,0
+DC,Coal,Generic steam plant (coal),0,0,0,0,0
+DC,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+DC,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+DC,Wind,Wind,0,0,0,0,0
+DC,,,0,0,0,0,0
+DE,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+DE,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+DE,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+DE,Oil and others,Combined cycle (oil),0,0,0,0,0
+DE,Oil and others,Combustion turbine (oil),0,0,0,0,266
+DE,Oil and others,Generic steam plant (oil),0,0,0,0,0
+DE,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+DE,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+DE,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+DE,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+DE,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+DE,Hydropower,Hydropower,0,0,0,0,0
+DE,Hydropower,Pumped Storage,0,0,0,0,0
+DE,PV,PV,0,0,0,0,0
+DE,Coal,Generic steam plant (coal),0,0,0,0,0
+DE,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+DE,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+DE,Wind,Wind,0,0,0,0,0
+DE,,,0,0,0,0,0
+FL,Natural Gas,Combined cycle (natural gas),0,7365702,0,2236336.681,0
+FL,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,201281.6225
+FL,Natural Gas,Generic steam plant (natural gas),0,28031,0,0,0
+FL,Oil and others,Combined cycle (oil),0,0,0,0,0
+FL,Oil and others,Combustion turbine (oil),0,0,0,0,263248.1205
+FL,Oil and others,Generic steam plant (oil),0,3832473,1037543,0,0
+FL,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+FL,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+FL,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+FL,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+FL,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+FL,Hydropower,Hydropower,0,0,0,0,0
+FL,Hydropower,Pumped Storage,0,0,0,0,0
+FL,PV,PV,0,0,0,0,0
+FL,Coal,Generic steam plant (coal),0,16078941,0,9274559,0
+FL,Nuclear,Generic steam plant (nuclear),0,20760411,9691221.788,0,0
+FL,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+FL,Wind,Wind,0,0,0,0,0
+FL,,,0,0,0,0,0
+GA,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+GA,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+GA,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+GA,Oil and others,Combined cycle (oil),0,0,0,0,0
+GA,Oil and others,Combustion turbine (oil),0,0,0,0,0
+GA,Oil and others,Generic steam plant (oil),0,0,0,0,0
+GA,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+GA,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+GA,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+GA,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+GA,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+GA,Hydropower,Hydropower,0,0,0,0,0
+GA,Hydropower,Pumped Storage,0,0,0,0,0
+GA,PV,PV,0,0,0,0,0
+GA,Coal,Generic steam plant (coal),0,0,0,0,0
+GA,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+GA,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+GA,Wind,Wind,0,0,0,0,0
+GA,,,0,0,0,0,0
+HI,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+HI,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+HI,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+HI,Oil and others,Combined cycle (oil),0,0,0,0,0
+HI,Oil and others,Combustion turbine (oil),0,0,0,0,234750
+HI,Oil and others,Generic steam plant (oil),0,4659853,0,0,0
+HI,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+HI,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+HI,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+HI,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+HI,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+HI,Hydropower,Hydropower,0,0,0,0,0
+HI,Hydropower,Pumped Storage,0,0,0,0,0
+HI,PV,PV,0,0,0,0,0
+HI,Coal,Generic steam plant (coal),0,0,0,0,0
+HI,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+HI,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+HI,Wind,Wind,0,0,0,0,0
+HI,,,0,0,0,0,0
+IA,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+IA,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+IA,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+IA,Oil and others,Combined cycle (oil),0,0,0,0,0
+IA,Oil and others,Combustion turbine (oil),0,0,0,0,0
+IA,Oil and others,Generic steam plant (oil),0,0,0,0,0
+IA,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+IA,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+IA,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+IA,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+IA,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+IA,Hydropower,Hydropower,0,0,0,0,0
+IA,Hydropower,Pumped Storage,0,0,0,0,0
+IA,PV,PV,0,0,0,0,0
+IA,Coal,Generic steam plant (coal),0,0,0,0,0
+IA,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+IA,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+IA,Wind,Wind,0,0,0,0,0
+IA,,,0,0,0,0,0
+ID,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+ID,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+ID,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+ID,Oil and others,Combined cycle (oil),0,0,0,0,0
+ID,Oil and others,Combustion turbine (oil),0,0,0,0,0
+ID,Oil and others,Generic steam plant (oil),0,0,0,0,0
+ID,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+ID,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+ID,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+ID,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+ID,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+ID,Hydropower,Hydropower,0,0,0,0,0
+ID,Hydropower,Pumped Storage,0,0,0,0,0
+ID,PV,PV,0,0,0,0,0
+ID,Coal,Generic steam plant (coal),0,0,0,0,0
+ID,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+ID,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+ID,Wind,Wind,0,0,0,0,0
+ID,,,0,0,0,0,0
+IL,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+IL,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+IL,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+IL,Oil and others,Combined cycle (oil),0,0,0,0,0
+IL,Oil and others,Combustion turbine (oil),0,0,0,0,0
+IL,Oil and others,Generic steam plant (oil),0,0,0,0,0
+IL,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+IL,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+IL,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+IL,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+IL,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+IL,Hydropower,Hydropower,0,0,0,0,0
+IL,Hydropower,Pumped Storage,0,0,0,0,0
+IL,PV,PV,0,0,0,0,0
+IL,Coal,Generic steam plant (coal),0,0,0,0,0
+IL,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+IL,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+IL,Wind,Wind,0,0,0,0,0
+IL,,,0,0,0,0,0
+IN,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+IN,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+IN,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+IN,Oil and others,Combined cycle (oil),0,0,0,0,0
+IN,Oil and others,Combustion turbine (oil),0,0,0,0,0
+IN,Oil and others,Generic steam plant (oil),0,0,0,0,0
+IN,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+IN,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+IN,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+IN,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+IN,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+IN,Hydropower,Hydropower,0,0,0,0,0
+IN,Hydropower,Pumped Storage,0,0,0,0,0
+IN,PV,PV,0,0,0,0,0
+IN,Coal,Generic steam plant (coal),0,0,0,0,0
+IN,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+IN,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+IN,Wind,Wind,0,0,0,0,0
+IN,,,0,0,0,0,0
+KS,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+KS,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+KS,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+KS,Oil and others,Combined cycle (oil),0,0,0,0,0
+KS,Oil and others,Combustion turbine (oil),0,0,0,0,0
+KS,Oil and others,Generic steam plant (oil),0,0,0,0,0
+KS,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+KS,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+KS,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+KS,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+KS,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+KS,Hydropower,Hydropower,0,0,0,0,0
+KS,Hydropower,Pumped Storage,0,0,0,0,0
+KS,PV,PV,0,0,0,0,0
+KS,Coal,Generic steam plant (coal),0,0,0,0,0
+KS,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+KS,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+KS,Wind,Wind,0,0,0,0,0
+KS,,,0,0,0,0,0
+KY,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+KY,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+KY,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+KY,Oil and others,Combined cycle (oil),0,0,0,0,0
+KY,Oil and others,Combustion turbine (oil),0,0,0,0,0
+KY,Oil and others,Generic steam plant (oil),0,0,0,0,0
+KY,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+KY,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+KY,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+KY,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+KY,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+KY,Hydropower,Hydropower,0,0,0,0,0
+KY,Hydropower,Pumped Storage,0,0,0,0,0
+KY,PV,PV,0,0,0,0,0
+KY,Coal,Generic steam plant (coal),0,0,0,0,0
+KY,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+KY,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+KY,Wind,Wind,0,0,0,0,0
+KY,,,0,0,0,0,0
+LA,Natural Gas,Combined cycle (natural gas),0,2019680,0,2210853,0
+LA,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,6355.3
+LA,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+LA,Oil and others,Combined cycle (oil),0,0,0,0,0
+LA,Oil and others,Combustion turbine (oil),0,0,0,0,0
+LA,Oil and others,Generic steam plant (oil),0,0,0,0,0
+LA,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+LA,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+LA,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+LA,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+LA,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+LA,Hydropower,Hydropower,0,0,0,0,0
+LA,Hydropower,Pumped Storage,0,0,0,0,0
+LA,PV,PV,0,0,0,0,0
+LA,Coal,Generic steam plant (coal),0,0,0,0,0
+LA,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+LA,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+LA,Wind,Wind,0,0,0,0,0
+LA,,,0,0,0,0,0
+MA,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+MA,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,175076.8
+MA,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+MA,Oil and others,Combined cycle (oil),0,0,0,0,0
+MA,Oil and others,Combustion turbine (oil),0,0,0,0,0
+MA,Oil and others,Generic steam plant (oil),0,1784409,0,0,0
+MA,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+MA,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+MA,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+MA,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+MA,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+MA,Hydropower,Hydropower,0,0,0,0,0
+MA,Hydropower,Pumped Storage,0,0,0,0,0
+MA,PV,PV,0,0,0,0,0
+MA,Coal,Generic steam plant (coal),0,9025872,0,0,0
+MA,Nuclear,Generic steam plant (nuclear),0,5868639,0,0,0
+MA,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+MA,Wind,Wind,0,0,0,0,0
+MA,,,0,0,0,0,0
+MD,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+MD,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,51728.48071
+MD,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+MD,Oil and others,Combined cycle (oil),0,0,0,0,0
+MD,Oil and others,Combustion turbine (oil),0,0,0,0,39221.51929
+MD,Oil and others,Generic steam plant (oil),0,0,0,0,0
+MD,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+MD,Biopower and Biogas,Generic steam plant (biopower),0,313486,0,0,0
+MD,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+MD,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+MD,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+MD,Hydropower,Hydropower,0,0,0,0,0
+MD,Hydropower,Pumped Storage,0,0,0,0,0
+MD,PV,PV,0,0,0,0,0
+MD,Coal,Generic steam plant (coal),0,0,0,0,0
+MD,Nuclear,Generic steam plant (nuclear),0,14678695,0,0,0
+MD,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+MD,Wind,Wind,0,0,0,0,0
+MD,,,0,0,0,0,0
+ME,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+ME,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+ME,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+ME,Oil and others,Combined cycle (oil),0,0,0,0,0
+ME,Oil and others,Combustion turbine (oil),0,0,0,0,605
+ME,Oil and others,Generic steam plant (oil),0,0,0,0,0
+ME,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+ME,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+ME,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+ME,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+ME,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+ME,Hydropower,Hydropower,0,0,0,0,0
+ME,Hydropower,Pumped Storage,0,0,0,0,0
+ME,PV,PV,0,0,0,0,0
+ME,Coal,Generic steam plant (coal),0,0,0,0,0
+ME,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+ME,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+ME,Wind,Wind,0,0,0,0,0
+ME,,,0,0,0,0,0
+MI,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+MI,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+MI,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+MI,Oil and others,Combined cycle (oil),0,0,0,0,0
+MI,Oil and others,Combustion turbine (oil),0,0,0,0,0
+MI,Oil and others,Generic steam plant (oil),0,0,0,0,0
+MI,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+MI,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+MI,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+MI,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+MI,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+MI,Hydropower,Hydropower,0,0,0,0,0
+MI,Hydropower,Pumped Storage,0,0,0,0,0
+MI,PV,PV,0,0,0,0,0
+MI,Coal,Generic steam plant (coal),0,3947123,0,0,0
+MI,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+MI,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+MI,Wind,Wind,0,0,0,0,0
+MI,,,0,0,0,0,0
+MN,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+MN,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+MN,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+MN,Oil and others,Combined cycle (oil),0,0,0,0,0
+MN,Oil and others,Combustion turbine (oil),0,0,0,0,0
+MN,Oil and others,Generic steam plant (oil),0,0,0,0,0
+MN,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+MN,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+MN,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+MN,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+MN,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+MN,Hydropower,Hydropower,0,0,0,0,0
+MN,Hydropower,Pumped Storage,0,0,0,0,0
+MN,PV,PV,0,0,0,0,0
+MN,Coal,Generic steam plant (coal),0,0,0,0,0
+MN,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+MN,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+MN,Wind,Wind,0,0,0,0,0
+MN,,,0,0,0,0,0
+MO,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+MO,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+MO,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+MO,Oil and others,Combined cycle (oil),0,0,0,0,0
+MO,Oil and others,Combustion turbine (oil),0,0,0,0,0
+MO,Oil and others,Generic steam plant (oil),0,0,0,0,0
+MO,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+MO,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+MO,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+MO,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+MO,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+MO,Hydropower,Hydropower,0,0,0,0,0
+MO,Hydropower,Pumped Storage,0,0,0,0,0
+MO,PV,PV,0,0,0,0,0
+MO,Coal,Generic steam plant (coal),0,0,0,0,0
+MO,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+MO,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+MO,Wind,Wind,0,0,0,0,0
+MO,,,0,0,0,0,0
+MS,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+MS,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+MS,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+MS,Oil and others,Combined cycle (oil),0,0,0,0,0
+MS,Oil and others,Combustion turbine (oil),0,0,0,0,0
+MS,Oil and others,Generic steam plant (oil),0,0,0,0,0
+MS,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+MS,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+MS,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+MS,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+MS,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+MS,Hydropower,Hydropower,0,0,0,0,0
+MS,Hydropower,Pumped Storage,0,0,0,0,0
+MS,PV,PV,0,0,0,0,0
+MS,Coal,Generic steam plant (coal),0,0,0,0,0
+MS,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+MS,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+MS,Wind,Wind,0,0,0,0,0
+MS,,,0,0,0,0,0
+MT,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+MT,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+MT,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+MT,Oil and others,Combined cycle (oil),0,0,0,0,0
+MT,Oil and others,Combustion turbine (oil),0,0,0,0,0
+MT,Oil and others,Generic steam plant (oil),0,0,0,0,0
+MT,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+MT,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+MT,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+MT,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+MT,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+MT,Hydropower,Hydropower,0,0,0,0,0
+MT,Hydropower,Pumped Storage,0,0,0,0,0
+MT,PV,PV,0,0,0,0,0
+MT,Coal,Generic steam plant (coal),0,0,0,0,0
+MT,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+MT,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+MT,Wind,Wind,0,0,0,0,0
+MT,,,0,0,0,0,0
+NC,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+NC,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+NC,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+NC,Oil and others,Combined cycle (oil),0,0,0,0,0
+NC,Oil and others,Combustion turbine (oil),0,0,0,0,0
+NC,Oil and others,Generic steam plant (oil),0,0,0,0,0
+NC,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+NC,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+NC,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+NC,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+NC,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+NC,Hydropower,Hydropower,0,0,0,0,0
+NC,Hydropower,Pumped Storage,0,0,0,0,0
+NC,PV,PV,0,0,0,0,0
+NC,Coal,Generic steam plant (coal),0,0,0,0,0
+NC,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+NC,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+NC,Wind,Wind,0,0,0,0,0
+NC,,,0,0,0,0,0
+ND,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+ND,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+ND,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+ND,Oil and others,Combined cycle (oil),0,0,0,0,0
+ND,Oil and others,Combustion turbine (oil),0,0,0,0,0
+ND,Oil and others,Generic steam plant (oil),0,0,0,0,0
+ND,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+ND,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+ND,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+ND,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+ND,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+ND,Hydropower,Hydropower,0,0,0,0,0
+ND,Hydropower,Pumped Storage,0,0,0,0,0
+ND,PV,PV,0,0,0,0,0
+ND,Coal,Generic steam plant (coal),0,0,0,0,0
+ND,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+ND,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+ND,Wind,Wind,0,0,0,0,0
+ND,,,0,0,0,0,0
+NE,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+NE,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+NE,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+NE,Oil and others,Combined cycle (oil),0,0,0,0,0
+NE,Oil and others,Combustion turbine (oil),0,0,0,0,0
+NE,Oil and others,Generic steam plant (oil),0,0,0,0,0
+NE,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+NE,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+NE,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+NE,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+NE,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+NE,Hydropower,Hydropower,0,0,0,0,0
+NE,Hydropower,Pumped Storage,0,0,0,0,0
+NE,PV,PV,0,0,0,0,0
+NE,Coal,Generic steam plant (coal),0,0,0,0,0
+NE,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+NE,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+NE,Wind,Wind,0,0,0,0,0
+NE,,,0,0,0,0,0
+NH,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+NH,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+NH,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+NH,Oil and others,Combined cycle (oil),0,0,0,0,0
+NH,Oil and others,Combustion turbine (oil),0,0,0,0,0
+NH,Oil and others,Generic steam plant (oil),0,0,0,0,0
+NH,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+NH,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+NH,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+NH,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+NH,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+NH,Hydropower,Hydropower,0,0,0,0,0
+NH,Hydropower,Pumped Storage,0,0,0,0,0
+NH,PV,PV,0,0,0,0,0
+NH,Coal,Generic steam plant (coal),0,0,0,0,0
+NH,Nuclear,Generic steam plant (nuclear),0,9350314,0,0,0
+NH,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+NH,Wind,Wind,0,0,0,0,0
+NH,,,0,0,0,0,0
+NJ,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+NJ,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,372110
+NJ,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+NJ,Oil and others,Combined cycle (oil),0,0,0,0,0
+NJ,Oil and others,Combustion turbine (oil),0,0,0,0,0
+NJ,Oil and others,Generic steam plant (oil),0,0,0,0,0
+NJ,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+NJ,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+NJ,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+NJ,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+NJ,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+NJ,Hydropower,Hydropower,0,0,0,0,0
+NJ,Hydropower,Pumped Storage,0,0,0,0,0
+NJ,PV,PV,0,0,0,0,0
+NJ,Coal,Generic steam plant (coal),0,0,0,1954227,0
+NJ,Nuclear,Generic steam plant (nuclear),0,4664005,0,0,0
+NJ,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+NJ,Wind,Wind,0,0,0,0,0
+NJ,,,0,0,0,0,0
+NM,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+NM,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+NM,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+NM,Oil and others,Combined cycle (oil),0,0,0,0,0
+NM,Oil and others,Combustion turbine (oil),0,0,0,0,0
+NM,Oil and others,Generic steam plant (oil),0,0,0,0,0
+NM,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+NM,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+NM,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+NM,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+NM,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+NM,Hydropower,Hydropower,0,0,0,0,0
+NM,Hydropower,Pumped Storage,0,0,0,0,0
+NM,PV,PV,0,0,0,0,0
+NM,Coal,Generic steam plant (coal),0,0,0,0,0
+NM,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+NM,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+NM,Wind,Wind,0,0,0,0,0
+NM,,,0,0,0,0,0
+NV,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+NV,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+NV,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+NV,Oil and others,Combined cycle (oil),0,0,0,0,0
+NV,Oil and others,Combustion turbine (oil),0,0,0,0,0
+NV,Oil and others,Generic steam plant (oil),0,0,0,0,0
+NV,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+NV,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+NV,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+NV,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+NV,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+NV,Hydropower,Hydropower,0,0,0,0,0
+NV,Hydropower,Pumped Storage,0,0,0,0,0
+NV,PV,PV,0,0,0,0,0
+NV,Coal,Generic steam plant (coal),0,0,0,0,0
+NV,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+NV,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+NV,Wind,Wind,0,0,0,0,0
+NV,,,0,0,0,0,0
+NY,Natural Gas,Combined cycle (natural gas),0,2652811,0,0,0
+NY,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,540503.0128
+NY,Natural Gas,Generic steam plant (natural gas),0,7922621,0,0,0
+NY,Oil and others,Combined cycle (oil),0,0,0,0,0
+NY,Oil and others,Combustion turbine (oil),0,0,0,0,30020.98717
+NY,Oil and others,Generic steam plant (oil),0,0,0,0,0
+NY,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+NY,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+NY,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+NY,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+NY,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+NY,Hydropower,Hydropower,0,0,0,0,0
+NY,Hydropower,Pumped Storage,0,0,0,0,0
+NY,PV,PV,0,0,0,0,0
+NY,Coal,Generic steam plant (coal),0,0,0,0,0
+NY,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+NY,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+NY,Wind,Wind,0,0,0,0,0
+NY,,,0,0,0,0,0
+OH,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+OH,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+OH,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+OH,Oil and others,Combined cycle (oil),0,0,0,0,0
+OH,Oil and others,Combustion turbine (oil),0,0,0,0,0
+OH,Oil and others,Generic steam plant (oil),0,0,0,0,0
+OH,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+OH,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+OH,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+OH,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+OH,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+OH,Hydropower,Hydropower,0,0,0,0,0
+OH,Hydropower,Pumped Storage,0,0,0,0,0
+OH,PV,PV,0,0,0,0,0
+OH,Coal,Generic steam plant (coal),0,0,0,0,0
+OH,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+OH,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+OH,Wind,Wind,0,0,0,0,0
+OH,,,0,0,0,0,0
+OK,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+OK,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+OK,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+OK,Oil and others,Combined cycle (oil),0,0,0,0,0
+OK,Oil and others,Combustion turbine (oil),0,0,0,0,0
+OK,Oil and others,Generic steam plant (oil),0,0,0,0,0
+OK,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+OK,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+OK,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+OK,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+OK,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+OK,Hydropower,Hydropower,0,0,0,0,0
+OK,Hydropower,Pumped Storage,0,0,0,0,0
+OK,PV,PV,0,0,0,0,0
+OK,Coal,Generic steam plant (coal),0,0,0,0,0
+OK,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+OK,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+OK,Wind,Wind,0,0,0,0,0
+OK,,,0,0,0,0,0
+OR,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+OR,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+OR,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+OR,Oil and others,Combined cycle (oil),0,0,0,0,0
+OR,Oil and others,Combustion turbine (oil),0,0,0,0,0
+OR,Oil and others,Generic steam plant (oil),0,0,0,0,0
+OR,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+OR,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+OR,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+OR,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+OR,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+OR,Hydropower,Hydropower,0,0,0,0,0
+OR,Hydropower,Pumped Storage,0,0,0,0,0
+OR,PV,PV,0,0,0,0,0
+OR,Coal,Generic steam plant (coal),0,0,0,0,0
+OR,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+OR,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+OR,Wind,Wind,0,0,0,0,0
+OR,,,0,0,0,0,0
+PA,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+PA,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,78258
+PA,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+PA,Oil and others,Combined cycle (oil),0,0,0,0,0
+PA,Oil and others,Combustion turbine (oil),0,0,0,0,0
+PA,Oil and others,Generic steam plant (oil),0,0,0,0,0
+PA,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+PA,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+PA,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+PA,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+PA,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+PA,Hydropower,Hydropower,0,0,0,0,0
+PA,Hydropower,Pumped Storage,0,0,0,0,0
+PA,PV,PV,0,0,0,0,0
+PA,Coal,Generic steam plant (coal),0,0,0,0,0
+PA,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+PA,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+PA,Wind,Wind,0,0,0,0,0
+PA,,,0,0,0,0,0
+RI,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+RI,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+RI,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+RI,Oil and others,Combined cycle (oil),0,0,0,0,0
+RI,Oil and others,Combustion turbine (oil),0,0,0,0,7883.2
+RI,Oil and others,Generic steam plant (oil),0,0,0,0,0
+RI,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+RI,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+RI,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+RI,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+RI,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+RI,Hydropower,Hydropower,0,0,0,0,0
+RI,Hydropower,Pumped Storage,0,0,0,0,0
+RI,PV,PV,0,0,0,0,0
+RI,Coal,Generic steam plant (coal),0,0,0,0,0
+RI,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+RI,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+RI,Wind,Wind,0,0,0,0,0
+RI,,,0,0,0,0,0
+SC,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+SC,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,21062
+SC,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+SC,Oil and others,Combined cycle (oil),0,0,0,0,0
+SC,Oil and others,Combustion turbine (oil),0,0,0,0,388.08
+SC,Oil and others,Generic steam plant (oil),0,0,0,0,0
+SC,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+SC,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+SC,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+SC,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+SC,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+SC,Hydropower,Hydropower,0,0,0,0,0
+SC,Hydropower,Pumped Storage,0,0,0,0,0
+SC,PV,PV,0,0,0,0,0
+SC,Coal,Generic steam plant (coal),0,0,0,0,0
+SC,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+SC,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+SC,Wind,Wind,0,0,0,0,0
+SC,,,0,0,0,0,0
+SD,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+SD,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+SD,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+SD,Oil and others,Combined cycle (oil),0,0,0,0,0
+SD,Oil and others,Combustion turbine (oil),0,0,0,0,0
+SD,Oil and others,Generic steam plant (oil),0,0,0,0,0
+SD,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+SD,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+SD,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+SD,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+SD,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+SD,Hydropower,Hydropower,0,0,0,0,0
+SD,Hydropower,Pumped Storage,0,0,0,0,0
+SD,PV,PV,0,0,0,0,0
+SD,Coal,Generic steam plant (coal),0,0,0,0,0
+SD,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+SD,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+SD,Wind,Wind,0,0,0,0,0
+SD,,,0,0,0,0,0
+TN,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+TN,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+TN,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+TN,Oil and others,Combined cycle (oil),0,0,0,0,0
+TN,Oil and others,Combustion turbine (oil),0,0,0,0,0
+TN,Oil and others,Generic steam plant (oil),0,0,0,0,0
+TN,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+TN,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+TN,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+TN,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+TN,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+TN,Hydropower,Hydropower,0,0,0,0,0
+TN,Hydropower,Pumped Storage,0,0,0,0,0
+TN,PV,PV,0,0,0,0,0
+TN,Coal,Generic steam plant (coal),0,0,0,0,0
+TN,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+TN,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+TN,Wind,Wind,0,0,0,0,0
+TN,,,0,0,0,0,0
+TX,Natural Gas,Combined cycle (natural gas),0,305228,0,2418654,0
+TX,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,204945
+TX,Natural Gas,Generic steam plant (natural gas),0,2448003,0,0,0
+TX,Oil and others,Combined cycle (oil),0,0,0,0,0
+TX,Oil and others,Combustion turbine (oil),0,0,0,0,0
+TX,Oil and others,Generic steam plant (oil),0,0,0,974764,0
+TX,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+TX,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+TX,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+TX,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+TX,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+TX,Hydropower,Hydropower,0,0,0,0,0
+TX,Hydropower,Pumped Storage,0,0,0,0,0
+TX,PV,PV,0,0,0,0,0
+TX,Coal,Generic steam plant (coal),0,0,0,0,0
+TX,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+TX,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+TX,Wind,Wind,0,0,0,0,0
+TX,,,0,0,0,0,0
+UT,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+UT,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+UT,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+UT,Oil and others,Combined cycle (oil),0,0,0,0,0
+UT,Oil and others,Combustion turbine (oil),0,0,0,0,0
+UT,Oil and others,Generic steam plant (oil),0,0,0,0,0
+UT,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+UT,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+UT,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+UT,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+UT,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+UT,Hydropower,Hydropower,0,0,0,0,0
+UT,Hydropower,Pumped Storage,0,0,0,0,0
+UT,PV,PV,0,0,0,0,0
+UT,Coal,Generic steam plant (coal),0,0,0,0,0
+UT,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+UT,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+UT,Wind,Wind,0,0,0,0,0
+UT,,,0,0,0,0,0
+VA,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+VA,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,43771.17881
+VA,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+VA,Oil and others,Combined cycle (oil),0,0,0,0,0
+VA,Oil and others,Combustion turbine (oil),0,0,0,0,5293.821192
+VA,Oil and others,Generic steam plant (oil),0,0,0,0,0
+VA,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+VA,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+VA,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+VA,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+VA,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+VA,Hydropower,Hydropower,0,0,0,0,0
+VA,Hydropower,Pumped Storage,0,0,0,0,0
+VA,PV,PV,0,0,0,0,0
+VA,Coal,Generic steam plant (coal),0,0,0,0,0
+VA,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+VA,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+VA,Wind,Wind,0,0,0,0,0
+VA,,,0,0,0,0,0
+VT,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+VT,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+VT,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+VT,Oil and others,Combined cycle (oil),0,0,0,0,0
+VT,Oil and others,Combustion turbine (oil),0,0,0,0,0
+VT,Oil and others,Generic steam plant (oil),0,0,0,0,0
+VT,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+VT,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+VT,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+VT,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+VT,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+VT,Hydropower,Hydropower,0,0,0,0,0
+VT,Hydropower,Pumped Storage,0,0,0,0,0
+VT,PV,PV,0,0,0,0,0
+VT,Coal,Generic steam plant (coal),0,0,0,0,0
+VT,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+VT,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+VT,Wind,Wind,0,0,0,0,0
+VT,,,0,0,0,0,0
+WA,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+WA,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+WA,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+WA,Oil and others,Combined cycle (oil),0,0,0,0,0
+WA,Oil and others,Combustion turbine (oil),0,0,0,0,0
+WA,Oil and others,Generic steam plant (oil),0,0,0,0,0
+WA,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+WA,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+WA,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+WA,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+WA,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+WA,Hydropower,Hydropower,0,0,0,0,0
+WA,Hydropower,Pumped Storage,0,0,0,0,0
+WA,PV,PV,0,0,0,0,0
+WA,Coal,Generic steam plant (coal),0,0,0,0,0
+WA,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+WA,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+WA,Wind,Wind,0,0,0,0,0
+WA,,,0,0,0,0,0
+WI,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+WI,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,34980
+WI,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+WI,Oil and others,Combined cycle (oil),0,0,0,0,0
+WI,Oil and others,Combustion turbine (oil),0,0,0,0,0
+WI,Oil and others,Generic steam plant (oil),0,0,0,0,0
+WI,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+WI,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+WI,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+WI,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+WI,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+WI,Hydropower,Hydropower,0,0,0,0,0
+WI,Hydropower,Pumped Storage,0,0,0,0,0
+WI,PV,PV,0,0,0,0,0
+WI,Coal,Generic steam plant (coal),0,2110983,0,0,0
+WI,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+WI,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+WI,Wind,Wind,0,0,0,0,0
+WI,,,0,0,0,0,0
+WV,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+WV,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+WV,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+WV,Oil and others,Combined cycle (oil),0,0,0,0,0
+WV,Oil and others,Combustion turbine (oil),0,0,0,0,0
+WV,Oil and others,Generic steam plant (oil),0,0,0,0,0
+WV,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+WV,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+WV,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+WV,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+WV,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+WV,Hydropower,Hydropower,0,0,0,0,0
+WV,Hydropower,Pumped Storage,0,0,0,0,0
+WV,PV,PV,0,0,0,0,0
+WV,Coal,Generic steam plant (coal),0,0,0,0,0
+WV,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+WV,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+WV,Wind,Wind,0,0,0,0,0
+WV,,,0,0,0,0,0
+WY,Natural Gas,Combined cycle (natural gas),0,0,0,0,0
+WY,Natural Gas,Combustion Turbine (natural gas),0,0,0,0,0
+WY,Natural Gas,Generic steam plant (natural gas),0,0,0,0,0
+WY,Oil and others,Combined cycle (oil),0,0,0,0,0
+WY,Oil and others,Combustion turbine (oil),0,0,0,0,0
+WY,Oil and others,Generic steam plant (oil),0,0,0,0,0
+WY,Biopower and Biogas,Combustion Turbine (biopower),0,0,0,0,0
+WY,Biopower and Biogas,Generic steam plant (biopower),0,0,0,0,0
+WY,Geothermal Dry Steam,Geothermal EGS,0,0,0,0,0
+WY,Geothermal Dry Steam,Geothermal Dry Steam,0,0,0,0,0
+WY,Geothermal Dry Steam,Geothermal Binary,0,0,0,0,0
+WY,Hydropower,Hydropower,0,0,0,0,0
+WY,Hydropower,Pumped Storage,0,0,0,0,0
+WY,PV,PV,0,0,0,0,0
+WY,Coal,Generic steam plant (coal),0,0,0,0,0
+WY,Nuclear,Generic steam plant (nuclear),0,0,0,0,0
+WY,Concentrated Solar Power (CSP),CSP Trough,0,0,0,0,0
+WY,Wind,Wind,0,0,0,0,0
+WY,,,0,0,0,0,0
+,,,893384,194480360.3,10728764.79,21231911.54,3026987.473
+USA,Coal,Combined cycle (coal),0,0,0,0,0
+USA,Coal,Combined cycle (coal)_CCS,0,0,0,0,0
+USA,Oil and others,Combined cycle (oil)_CCS,0,0,0,0,0
+USA,Biopower and Biogas,Combined cycle (biopower),0,0,0,0,0
+USA,Biopower and Biogas,Combined cycle (biopower)_CCS,0,0,0,0,0
+USA,Natural Gas,Combined cycle (natural gas)_CCS,0,0,0,0,0

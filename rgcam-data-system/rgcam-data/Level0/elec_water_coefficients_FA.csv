@@ -1,0 +1,75 @@
+# TODO: source,,,,,,,,,,
+# water withdrawals and consumption coefficients by cooling technology and generation technology,,,,,,,,,,
+# Full adoption scenario (Data source: Water Use Reductions Calculations.xlsx),,,,,,,,,,
+fuel,UCS_technology,withdrawal_type,cooling_tech,2005,2020,2035,2050,2065,2080,2095
+Coal,Generic steam plant (coal),water consumption,Once_Through,0.946352946,0.899035299,0.854083534,0.854083534,0.854083534,0.854083534,0.854083534
+Coal,Generic steam plant (coal),water consumption,Recirculating,2.600577896,2.73060679,1.751820786,1.751820786,1.751820786,1.751820786,1.751820786
+Coal,Generic steam plant (coal),water consumption,Cooling_Pond,2.063049422,2.063049422,2.063049422,2.063049422,2.063049422,2.063049422,2.063049422
+Coal,Generic steam plant (coal)_CCS,water consumption,Recirculating,3.565857901,3.565857901,3.20927211,2.85268632,2.49610053,2.49610053,2.49610053
+Coal,Combined cycle (coal),water consumption,Recirculating,1.408173184,1.408173184,0.729297434,0.729297434,0.729297434,0.729297434,0.729297434
+Coal,Combined cycle (coal)_CCS,water consumption,Recirculating,2.044122363,2.044122363,1.839710127,1.635297891,1.430885654,1.430885654,1.430885654
+Oil and others,Generic steam plant (oil),water consumption,Once_Through,0.908498828,0.908498828,0.908498828,0.908498828,0.908498828,0.908498828,0.908498828
+Oil and others,Generic steam plant (oil),water consumption,Recirculating,3.126750134,3.126750134,1.838529079,1.838529079,1.838529079,1.838529079,1.838529079
+Oil and others,Generic steam plant (oil),water consumption,Cooling_Pond,3.126750134,3.126750134,3.126750134,3.126750134,3.126750134,3.126750134,3.126750134
+Oil and others,Combined cycle (oil),water consumption,Recirculating,1.408173184,1.408173184,0.729297434,0.729297434,0.729297434,0.729297434,0.729297434
+Oil and others,Combined cycle (oil)_CCS,water consumption,Recirculating,2.044122363,2.044122363,1.839710127,1.635297891,1.430885654,1.430885654,1.430885654
+Oil and others,Combustion turbine (oil),water consumption,No_Cooling_Needed,0,0,0,0,0,0,0
+Nuclear,Generic steam plant (nuclear),water consumption,Once_Through,1.01827577,1.01827577,1.01827577,1.01827577,1.01827577,1.01827577,1.01827577
+Nuclear,Generic steam plant (nuclear),water consumption,Recirculating,2.543796719,2.543796719,1.495752471,1.495752471,1.495752471,1.495752471,1.495752471
+Nuclear,Generic steam plant (nuclear),water consumption,Cooling_Pond,2.309101188,2.309101188,2.309101188,2.309101188,2.309101188,2.309101188,2.309101188
+Natural Gas,Generic steam plant (natural gas),water consumption,Once_Through,1.135623535,1.135623535,1.135623535,1.135623535,1.135623535,1.135623535,1.135623535
+Natural Gas,Generic steam plant (natural gas),water consumption,Recirculating,2.093332717,2.093332717,1.230879637,1.230879637,1.230879637,1.230879637,1.230879637
+Natural Gas,Generic steam plant (natural gas),water consumption,Cooling_Pond,1.476310596,1.476310596,1.476310596,1.476310596,1.476310596,1.476310596,1.476310596
+Natural Gas,Combined cycle (natural gas),water consumption,Once_Through,0.378541178,0.378541178,0.378541178,0.378541178,0.378541178,0.378541178,0.378541178
+Natural Gas,Combined cycle (natural gas),water consumption,Recirculating,0.749511533,0.749511533,0.415978901,0.415978901,0.415978901,0.415978901,0.415978901
+Natural Gas,Combined cycle (natural gas),water consumption,Cooling_Pond,0.908498828,0.908498828,0.908498828,0.908498828,0.908498828,0.908498828,0.908498828
+Natural Gas,Combined cycle (natural gas)_CCS,water consumption,Recirculating,1.430885654,1.430885654,1.287797089,1.144708523,1.001619958,1.001619958,1.001619958
+Natural Gas,Combustion Turbine (natural gas),water consumption,No_Cooling_Needed,0,0,0,0,0,0,0
+Geothermal Dry Steam,Geothermal EGS,water consumption,Recirculating,18.1,18.1,18.1,18.1,18.1,18.1,18.1
+Geothermal Dry Steam,Geothermal Dry Steam,water consumption,Recirculating,6.8,6.8,6.8,6.8,6.8,6.8,6.8
+Geothermal Dry Steam,Geothermal Binary,water consumption,Recirculating,13.6,13.6,13.6,13.6,13.6,13.6,13.6
+Concentrated Solar Power (CSP),CSP Trough,water consumption,Recirculating,3.35,3.35,1.9698,1.9698,1.9698,1.9698,1.9698
+PV,PV,water consumption,No_Cooling_Needed,0.016655812,0.016655812,0.016655812,0.016655812,0.016655812,0.016655812,0.016655812
+Wind,Wind,water consumption,No_Cooling_Needed,0,0,0,0,0,0,0
+Hydropower,Hydropower,water consumption,No_Cooling_Needed,17.00028432,17.00028432,17.00028432,17.00028432,17.00028432,17.00028432,17.00028432
+Hydropower,Pumped Storage,water consumption,No_Cooling_Needed,0,0,0,0,0,0,0
+Biopower and Biogas,Generic steam plant (biopower),water consumption,Once_Through,1.135623535,1.135623535,1.135623535,1.135623535,1.135623535,1.135623535,1.135623535
+Biopower and Biogas,Generic steam plant (biopower),water consumption,Recirculating,2.093332717,2.093332717,1.230879637,1.230879637,1.230879637,1.230879637,1.230879637
+Biopower and Biogas,Combined cycle (biopower),water consumption,Recirculating,1.408173184,1.408173184,0.729297434,0.729297434,0.729297434,0.729297434,0.729297434
+Biopower and Biogas,Combined cycle (biopower)_CCS,water consumption,Recirculating,2.044122363,2.044122363,1.839710127,1.635297891,1.430885654,1.430885654,1.430885654
+Biopower and Biogas,Combustion Turbine (biopower),water consumption,No_Cooling_Needed,0,0,0,0,0,0,0
+Coal,Generic steam plant (coal),water withdrawals,Once_Through,158.2396761,150.3276923,142.8113077,142.8113077,142.8113077,142.8113077,142.8113077
+Coal,Generic steam plant (coal),water withdrawals,Recirculating,3.804338843,3.994555785,2.277495981,2.277495981,2.277495981,2.277495981,2.277495981
+Coal,Generic steam plant (coal),water withdrawals,Cooling_Pond,53.21815792,53.21815792,53.21815792,53.21815792,53.21815792,53.21815792,53.21815792
+Coal,Generic steam plant (coal)_CCS,water withdrawals,Recirculating,4.833970848,4.833970848,4.350573763,3.867176679,3.383779594,3.383779594,3.383779594
+Coal,Combined cycle (coal),water withdrawals,Recirculating,1.476310596,1.476310596,0.729297434,0.729297434,0.729297434,0.729297434,0.729297434
+Coal,Combined cycle (coal)_CCS,water withdrawals,Recirculating,2.218251305,2.218251305,1.996426175,1.774601044,1.552775914,1.552775914,1.552775914
+Oil and others,Generic steam plant (oil),water withdrawals,Once_Through,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243
+Oil and others,Generic steam plant (oil),water withdrawals,Recirculating,4.553850376,4.553850376,2.381663747,2.381663747,2.381663747,2.381663747,2.381663747
+Oil and others,Generic steam plant (oil),water withdrawals,Cooling_Pond,4.553850376,4.553850376,4.553850376,4.553850376,4.553850376,4.553850376,4.553850376
+Oil and others,Combined cycle (oil),water withdrawals,Recirculating,1.476310596,1.476310596,0.729297434,0.729297434,0.729297434,0.729297434,0.729297434
+Oil and others,Combined cycle (oil)_CCS,water withdrawals,Recirculating,2.218251305,2.218251305,1.996426175,1.774601044,1.552775914,1.552775914,1.552775914
+Oil and others,Combustion turbine (oil),water withdrawals,No_Cooling_Needed,0,0,0,0,0,0,0
+Nuclear,Generic steam plant (nuclear),water withdrawals,Once_Through,193.0654645,193.0654645,193.0654645,193.0654645,193.0654645,193.0654645,193.0654645
+Nuclear,Generic steam plant (nuclear),water withdrawals,Recirculating,4.167738374,4.167738374,2.17972717,2.17972717,2.17972717,2.17972717,2.17972717
+Nuclear,Generic steam plant (nuclear),water withdrawals,Cooling_Pond,30.69022604,30.69022604,30.69022604,30.69022604,30.69022604,30.69022604,30.69022604
+Natural Gas,Generic steam plant (natural gas),water withdrawals,Once_Through,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243
+Natural Gas,Generic steam plant (natural gas),water withdrawals,Recirculating,3.323591546,3.323591546,1.738238379,1.738238379,1.738238379,1.738238379,1.738238379
+Natural Gas,Generic steam plant (natural gas),water withdrawals,Cooling_Pond,1.703435303,1.703435303,1.703435303,1.703435303,1.703435303,1.703435303,1.703435303
+Natural Gas,Combined cycle (natural gas),water withdrawals,Once_Through,49.53968402,49.53968402,49.53968402,49.53968402,49.53968402,49.53968402,49.53968402
+Natural Gas,Combined cycle (natural gas),water withdrawals,Recirculating,0.957709181,0.957709181,0.472150626,0.472150626,0.472150626,0.472150626,0.472150626
+Natural Gas,Combined cycle (natural gas),water withdrawals,Cooling_Pond,25.90168013,25.90168013,25.90168013,25.90168013,25.90168013,25.90168013,25.90168013
+Natural Gas,Combined cycle (natural gas)_CCS,water withdrawals,Recirculating,1.877564245,1.877564245,1.68980782,1.502051396,1.314294971,1.314294971,1.314294971
+Natural Gas,Combustion Turbine (natural gas),water withdrawals,No_Cooling_Needed,0,0,0,0,0,0,0
+Geothermal Dry Steam,Geothermal Dry Steam,water withdrawals,Recirculating,6.8,6.8,6.8,6.8,6.8,6.8,6.8
+Geothermal Dry Steam,Geothermal Binary,water withdrawals,Recirculating,13.6,13.6,13.6,13.6,13.6,13.6,13.6
+Concentrated Solar Power (CSP),CSP Trough,water withdrawals,Recirculating,3.35,3.35,1.9698,1.9698,1.9698,1.9698,1.9698
+PV,PV,water withdrawals,No_Cooling_Needed,0.016655812,0.016655812,0.016655812,0.016655812,0.016655812,0.016655812,0.016655812
+Wind,Wind,water withdrawals,No_Cooling_Needed,0,0,0,0,0,0,0
+Hydropower,Hydropower,water withdrawals,No_Cooling_Needed,0,0,0,0,0,0,0
+Hydropower,Pumped Storage,water withdrawals,No_Cooling_Needed,0,0,0,0,0,0,0
+Biopower and Biogas,Generic steam plant (biopower),water withdrawals,Once_Through,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243,152.3628243
+Biopower and Biogas,Generic steam plant (biopower),water withdrawals,Recirculating,3.323591546,3.323591546,1.738238379,1.738238379,1.738238379,1.738238379,1.738238379
+Biopower and Biogas,Combined cycle (biopower),water withdrawals,Recirculating,1.476310596,1.476310596,0.729297434,0.729297434,0.729297434,0.729297434,0.729297434
+Biopower and Biogas,Combined cycle (biopower)_CCS,water withdrawals,Recirculating,2.218251305,2.218251305,1.996426175,1.774601044,1.552775914,1.552775914,1.552775914
+Biopower and Biogas,Combustion Turbine (biopower),water withdrawals,No_Cooling_Needed,0,0,0,0,0,0,0

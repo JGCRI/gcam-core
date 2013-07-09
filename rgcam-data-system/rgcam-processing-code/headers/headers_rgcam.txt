@@ -178,3 +178,5 @@ ChangeInputMarketAddCost,world/+{name}region,region/+{name}supplysector,supplyse
 
 CO2Coefs,world/+{name}region,region/+{name}PrimaryFuelCO2Coef,region/+PrimaryFuelCO2Coef,scenario,scenario/world
 
+WaterInputs,world/+{name}region,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1}stub-technology,stub-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+coefficient,minicam-energy-input/+market-name,scenario,scenario/world
+
