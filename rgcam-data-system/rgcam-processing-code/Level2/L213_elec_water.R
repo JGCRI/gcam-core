@@ -17,7 +17,6 @@ A_elecS_tech_input <- readdata( "A_elecS_tech_input" )
 
 elec_water_coefficients <- readdata( "elec_water_coefficients" )
 elec_water_coefficients_FA <- readdata( "elec_water_coefficients_FA" )
-#base_elec_cooling_shares <- readdata( "elec_cooling_shares" )
 UCS_elec_cooling_fresh <- readdata( "UCS_elec_cooling_fresh" )
 UCS_elec_cooling_saline <- readdata( "UCS_elec_cooling_saline" )
 UCS_elec_cooling_fresh_refs <- readdata( "UCS_elec_cooling_fresh_refs" )
@@ -44,6 +43,7 @@ L213_UCS_elec_cooling.refs$water_type <- "fresh"
 L213_UCS_elec_cooling.refs <- rbind( L213_UCS_elec_cooling.refs, data.frame(
     melt( UCS_elec_cooling_saline_refs, variable_name="cooling_tech" ), water_type="saline" ) )
 L213_UCS_elec_cooling.refs <- subset( L213_UCS_elec_cooling.refs, UCS_technology != "" )
+L213_refs_error_flags <- subset( UCS_elec_cooling_fresh_refs, error_flag != "", select=c("region", "fuel", "UCS_technology", "error_flag"))
 
 calc_shares <- function(data, aggr_formula) {
     agg <- aggregate( aggr_formula, data, FUN=sum )
@@ -122,6 +122,26 @@ L213_UCS_elec_cooling.refs[  L213_UCS_cooling_nuclear, "share" ] <- L213_UCS_ele
 		          L213_UCS_elec_cooling.refs[ L213_UCS_cooling_coal, "cooling_tech" ],
 				  L213_UCS_elec_cooling.refs[ L213_UCS_cooling_coal, "water_type" ] ) ), "share" ]
 
+# Adjust reference shares based on error flags to which guard against too few data points
+# First find region/technologies that should be replaced with the reference share national averages
+L213_error_filter <- paste( L213_UCS_elec_cooling.refs$region, L213_UCS_elec_cooling.refs$UCS_technology ) %in%
+    paste( subset( L213_refs_error_flags, error_flag == "National average")$region, subset( L213_refs_error_flags, error_flag == "National average" )$UCS_technology )
+L213_UCS_elec_cooling.refs[ L213_error_filter, "share" ] <- L213_UCS_elec_cooling_by_region.refs[
+    match( paste( L213_UCS_elec_cooling.refs[ L213_error_filter, "UCS_technology" ],
+                  L213_UCS_elec_cooling.refs[ L213_error_filter, "cooling_tech" ],
+				  L213_UCS_elec_cooling.refs[ L213_error_filter, "water_type" ] ),
+           paste( L213_UCS_elec_cooling_by_region.refs$UCS_technology, L213_UCS_elec_cooling_by_region.refs$cooling_tech, L213_UCS_elec_cooling_by_region.refs$water_type ) ), "share" ]
+
+# Next find region/technologies that should be replace with the historical national averages
+L213_error_filter <- paste( L213_UCS_elec_cooling.refs$region, L213_UCS_elec_cooling.refs$UCS_technology ) %in%
+    paste( subset( L213_refs_error_flags, error_flag == "Historical")$region, subset( L213_refs_error_flags, error_flag == "Historical" )$UCS_technology )
+L213_UCS_elec_cooling.refs[ L213_error_filter, "share" ] <- L213_UCS_elec_cooling_by_region[
+    match( paste( L213_UCS_elec_cooling.refs[ L213_error_filter, "UCS_technology" ],
+                  L213_UCS_elec_cooling.refs[ L213_error_filter, "cooling_tech" ],
+				  L213_UCS_elec_cooling.refs[ L213_error_filter, "water_type" ] ),
+           paste( L213_UCS_elec_cooling_by_region$UCS_technology, L213_UCS_elec_cooling_by_region$cooling_tech, L213_UCS_elec_cooling_by_region$water_type ) ), "share" ]
+
+# For the rest of the missing values just use national average
 L213_UCS_elec_cooling.refs[ is.na( L213_UCS_elec_cooling.refs$share ), "share" ] <- L213_UCS_elec_cooling_by_region.refs[
     match( paste( L213_UCS_elec_cooling.refs[ is.na( L213_UCS_elec_cooling.refs$share ), "UCS_technology" ],
                   L213_UCS_elec_cooling.refs[ is.na( L213_UCS_elec_cooling.refs$share ), "cooling_tech" ],
@@ -150,7 +170,6 @@ L213_CC_shares <- subset( L213_UCS_elec_cooling.refs, region == "USA" & share > 
 L213_CC_shares <- merge( data.frame( region=unique( L213_UCS_elec_cooling.refs$region ) ), L213_CC_shares )
 L213_UCS_elec_cooling.refs <- rbind( L213_UCS_elec_cooling.refs, L213_CC_shares )
 L213_UCS_elec_cooling.refs <- subset( L213_UCS_elec_cooling.refs, region != "USA" )
-
 
 # The reference scenarios are by regions map them back to states
 L213_states_subregions <- subset( states_subregions, state != "US", select=c( "state", "subregion_FERC" ) )
