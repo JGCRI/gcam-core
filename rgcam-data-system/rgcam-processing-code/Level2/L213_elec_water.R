@@ -27,6 +27,8 @@ UCS_fuel_names <- readdata( "UCS_fuel_names" )
 # -----------------------------------------------------------------------------
 # 2. Perform computations and build model input files
 
+L213_states_subregions <- subset( states_subregions, state != "US", select=c( "state", "subregion_FERC" ) )
+
 # Calculate cooling technology shares.  This is done twice, first shares by fuel for existing
 # plants since they do not differentiate generation technology.  Second by generation technology
 # to use as a bassis for future shares.  We will also calculate total region shares by generation
@@ -60,6 +62,9 @@ L213_UCS_elec_cooling_by_fuel_region <- aggregate( value ~ fuel + UCS_technology
 L213_UCS_elec_cooling_by_region <- aggregate( value ~ UCS_technology + cooling_tech + water_type, subset( L213_UCS_elec_cooling, region != "USA" ), FUN=sum )
 L213_UCS_elec_cooling_by_region.refs <- aggregate( value ~ UCS_technology + cooling_tech + water_type, subset( L213_UCS_elec_cooling.refs, region != "USA" ), FUN=sum )
 L213_UCS_elec_cooling_by_fuel_region.refs <- aggregate( value ~ fuel + UCS_technology + cooling_tech + water_type, subset( L213_UCS_elec_cooling.refs, region != "USA" ), FUN=sum )
+names( L213_states_subregions ) <- c( "region", "subregion" )
+L213_UCS_elec_cooling_by_subregion <- merge( L213_UCS_elec_cooling, L213_states_subregions )
+L213_UCS_elec_cooling_by_subregion <- aggregate( value ~ subregion + UCS_technology + cooling_tech + water_type, L213_UCS_elec_cooling_by_subregion, FUN=sum )
 
 L213_UCS_elec_cooling <- calc_shares( L213_UCS_elec_cooling, value ~ region + UCS_technology )
 L213_UCS_elec_cooling.refs <- calc_shares( L213_UCS_elec_cooling.refs, value ~ region + UCS_technology )
@@ -86,6 +91,7 @@ L213_UCS_elec_cooling_by_region[  grepl( 'Geothermal', L213_UCS_elec_cooling_by_
 L213_UCS_elec_cooling_by_region.refs <- calc_shares( L213_UCS_elec_cooling_by_region.refs, value ~ UCS_technology )
 L213_UCS_elec_cooling_by_region.refs[  grepl( 'Geothermal', L213_UCS_elec_cooling_by_region.refs$UCS_technology ), ] <- L213_UCS_elec_cooling_by_fuel_region.refs[
 	grepl( 'Geothermal', L213_UCS_elec_cooling_by_fuel_region.refs$UCS_technology ), names( L213_UCS_elec_cooling_by_region.refs ) ]
+L213_UCS_elec_cooling_by_subregion <- calc_shares( L213_UCS_elec_cooling_by_subregion, value ~ subregion + UCS_technology )
 
 # We no longer care to keep track of saline
 L213_UCS_elec_cooling <- subset( L213_UCS_elec_cooling, water_type != "saline" )
@@ -132,14 +138,18 @@ L213_UCS_elec_cooling.refs[ L213_error_filter, "share" ] <- L213_UCS_elec_coolin
 				  L213_UCS_elec_cooling.refs[ L213_error_filter, "water_type" ] ),
            paste( L213_UCS_elec_cooling_by_region.refs$UCS_technology, L213_UCS_elec_cooling_by_region.refs$cooling_tech, L213_UCS_elec_cooling_by_region.refs$water_type ) ), "share" ]
 
-# Next find region/technologies that should be replace with the historical national averages
+# Next find region/technologies that should be replace with the historical subregional averages
 L213_error_filter <- paste( L213_UCS_elec_cooling.refs$region, L213_UCS_elec_cooling.refs$UCS_technology ) %in%
     paste( subset( L213_refs_error_flags, error_flag == "Historical")$region, subset( L213_refs_error_flags, error_flag == "Historical" )$UCS_technology )
-L213_UCS_elec_cooling.refs[ L213_error_filter, "share" ] <- L213_UCS_elec_cooling_by_region[
-    match( paste( L213_UCS_elec_cooling.refs[ L213_error_filter, "UCS_technology" ],
+L213_UCS_elec_cooling.refs[ L213_error_filter, "share" ] <- L213_UCS_elec_cooling_by_subregion[
+    match( paste( L213_UCS_elec_cooling.refs[ L213_error_filter, "region" ],
+                  L213_UCS_elec_cooling.refs[ L213_error_filter, "UCS_technology" ],
                   L213_UCS_elec_cooling.refs[ L213_error_filter, "cooling_tech" ],
 				  L213_UCS_elec_cooling.refs[ L213_error_filter, "water_type" ] ),
-           paste( L213_UCS_elec_cooling_by_region$UCS_technology, L213_UCS_elec_cooling_by_region$cooling_tech, L213_UCS_elec_cooling_by_region$water_type ) ), "share" ]
+           paste( L213_UCS_elec_cooling_by_subregion$subregion,
+                  L213_UCS_elec_cooling_by_subregion$UCS_technology,
+                  L213_UCS_elec_cooling_by_subregion$cooling_tech,
+                  L213_UCS_elec_cooling_by_subregion$water_type ) ), "share" ]
 
 # For the rest of the missing values just use national average
 L213_UCS_elec_cooling.refs[ is.na( L213_UCS_elec_cooling.refs$share ), "share" ] <- L213_UCS_elec_cooling_by_region.refs[
@@ -172,7 +182,6 @@ L213_UCS_elec_cooling.refs <- rbind( L213_UCS_elec_cooling.refs, L213_CC_shares 
 L213_UCS_elec_cooling.refs <- subset( L213_UCS_elec_cooling.refs, region != "USA" )
 
 # The reference scenarios are by regions map them back to states
-L213_states_subregions <- subset( states_subregions, state != "US", select=c( "state", "subregion_FERC" ) )
 names( L213_states_subregions ) <- c( "state", "region" )
 L213_UCS_elec_cooling.refs <- merge( L213_UCS_elec_cooling.refs, L213_states_subregions )
 L213_UCS_elec_cooling.refs$region <- L213_UCS_elec_cooling.refs$state
