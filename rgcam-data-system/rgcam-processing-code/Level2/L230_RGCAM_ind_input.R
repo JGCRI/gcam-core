@@ -28,6 +28,8 @@ L102_in_EJ_state_indfeed_F <- readdata( "L102_in_EJ_state_indfeed_F" )
 L102_in_EJ_state_indchp_F <- readdata( "L102_in_EJ_state_indchp_F" )
 L102_out_EJ_state_indchp_F <- readdata( "L102_out_EJ_state_indchp_F" )
 
+USGS_ind_water <- readdata( "USGS_ind_water" )
+
 # -----------------------------------------------------------------------------
 # 2. Perform computations and build model input files
 L230_subregions <- unique( L102_in_EJ_state_indnochp_F$state )
@@ -165,6 +167,30 @@ L230_FDElasticities <- data.frame( region=L230_subregions, L230_FDElasticities )
 L230_FDElasticities <- L230_FDElasticities[, c( "region", "energy_final_demand", "year", "price_elast",
     "income_year", "income_elast", "aeei_year", "aeei" ) ]
 
+# Calculate water use coefficients which are done for industry as a whole.
+printlog( "L230_WaterInput: WATER TECH INPUTS" )
+L230_WaterCalc <- cast( L230_FDBaseService, region ~ year, value="service" )
+L230_WaterCalc <- merge( L230_WaterCalc, USGS_ind_water )
+L230_WaterCalc$coef_1990_with <- L230_WaterCalc$X1990_withdrawal / L230_WaterCalc[, "1990" ]
+L230_WaterCalc$coef_1990_cons <- L230_WaterCalc$X1990_consumption / L230_WaterCalc[, "1990" ]
+L230_WaterCalc$coef_1975_with <- L230_WaterCalc$coef_1990_with
+L230_WaterCalc$coef_1975_cons <- L230_WaterCalc$coef_1990_cons
+L230_WaterCalc$coef_2005_with <- L230_WaterCalc$X2005_withdrawal / L230_WaterCalc[, "2005" ]
+# Use 1990 water consumption to calculate the 2005 coefficient
+#L230_WaterCalc$coef_2005_cons <- L230_WaterCalc$X1990_consumption / L230_WaterCalc[, "2005" ]
+# Use the US level consumption to withdrawal ratio to calculate the 2005 consumption coefficient
+L230_WaterCalc$coef_2005_cons <- L230_WaterCalc$coef_2005_with * L230_WaterCalc$X2005_us_with_cons_ratio
+
+# Get the calculated coefficient into the proper format to read into the industry sector
+L230_WaterInput <- L230_WaterCalc[, grepl( "region|^coef", names( L230_WaterCalc ) ) ]
+L230_WaterInput <- melt( L230_WaterInput, c( "region" ) )
+L230_WaterInput$year <- gsub( "coef_|_with|_cons", "", L230_WaterInput$variable )
+L230_WaterInput$minicam_energy_input <- ifelse( grepl( "_with$", L230_WaterInput$variable ), "water withdrawals", "water consumption" )
+L230_WaterInput <- merge( L230_WaterInput, subset( A_ind_tech_input, market == "*" & minicam_energy_input == "industrial energy use",
+    select=c( "supplysector", "subsector", "technology", "year", "share_weight" ) ) )
+L230_WaterInput <- L230_WaterInput[, c( "region", "supplysector", "subsector", "technology", "minicam_energy_input", "year", 
+    "value", "share_weight" ) ]
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
@@ -184,7 +210,9 @@ write_mi_data( L230_FDBaseService, "FDBaseSerivce", "L230_FDBaseService", "batch
 write_mi_data( L230_FDPercapitaBased, "FDPercapitaBased", "L230_FDPercapitaBased", "batch_rgcam_ind_base_input.xml" )
 write_mi_data( L230_FDElasticities, "FDElasticitiesAEEI", "L230_FDElasticities", "batch_rgcam_ind_base_input.xml" )
 
+write_mi_data( L230_WaterInput, "IndustrySector", "L230_WaterInput", "batch_rgcam_ind_water_input.xml" )
 
 insert_file_into_batchxml( "batch_rgcam_ind_base_input.xml", "rgcam_ind_base_input.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "batch_rgcam_ind_water_input.xml", "rgcam_ind_water_input.xml", "", xml_tag="outFile" )
 
 logstop()

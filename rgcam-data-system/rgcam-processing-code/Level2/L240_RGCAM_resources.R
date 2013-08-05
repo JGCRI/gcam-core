@@ -131,8 +131,9 @@ L240_WindResource <- data.frame( L240_WindResource, market=L240_WindResource$reg
 
 # Create a table for wind smooth renewable subresource parameters
 printlog( "L240_SmoothRenewSubRes: SMOOTH RENEW SUBRESOURCE" )
+# Prices are in 2007$/kWh  we need them in 1975$/GJ (same as TWh to EJ)
 L240_wind_func_params <- us_state_wind[, names( us_state_wind ) %!in% c( "base_cost" ) ]
-L240_wind_func_params$mid_price <- L240_wind_func_params$mid_price * conv_2007_1975_USD
+L240_wind_func_params$mid_price <- L240_wind_func_params$mid_price * conv_2007_1975_USD / conv_TWh_EJ
 L240_SmoothRenewSubRes <- subset( A_res_other, resource == "large onshore windresource" )
 L240_SmoothRenewSubRes <- L240_SmoothRenewSubRes[ rep( 1:nrow( L240_SmoothRenewSubRes ),
     times = nrow( L240_wind_func_params ) ), ]
@@ -152,7 +153,7 @@ L240_ChangeMarketAddCost <- data.frame( region=us_state_wind$region, L240_wind_t
     sort( rep( 1:nrow( L240_wind_tech_name ), times=nrow( us_state_wind ) ) ), ],
     market=us_state_wind$region, base_cost_adj=us_state_wind$base_cost )
 L240_ChangeMarketAddCost$base_cost_adj <- L240_ChangeMarketAddCost$base_cost_adj - mean( us_state_wind$base_cost )
-L240_ChangeMarketAddCost$base_cost_adj <- L240_ChangeMarketAddCost$base_cost_adj * conv_2007_1975_USD
+L240_ChangeMarketAddCost$base_cost_adj <- L240_ChangeMarketAddCost$base_cost_adj * conv_2007_1975_USD / conv_TWh_EJ
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
