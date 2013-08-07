@@ -1,0 +1,9 @@
+# File: A_LandNode1.csv
+# Description: Top level land nodes
+# Original source: Land_nesting_structure.xls
+# ----------
+LandNode1
+Tundra
+RockIceDesert
+UrbanLand
+AgroForestLand

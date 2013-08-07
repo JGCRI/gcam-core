@@ -1,0 +1,52 @@
+Documentation of intentional changes
+1) Changing names of biofuels to be more clear
+2) Revised assignments of first-generation biofuel production based on actual (2010) production in all regions
+3) refined liquids enduse and refined liquids industrial are now pass-through sectors, with only one refining sector. In the future, biofuels could be moved from a subsector in "refining" to a subsector in "refined liquids enduse"
+4) all technologies are now in the global technology database, with stub-technologies used only for region-specific calibration and adjustments to parameters
+5) Additional CCS costs and intensity penalties are captured in the "non-energy" or "capital-cost" input-cost parameters rather than the standard capture component or the power plant capture component (this is less confusing)
+6) removing "exotics" as an electric technology
+7) adjusting 2015 shareweight paths for electricity techs now that 2010 is a calibration year
+8) no detailed electric sector in the US
+9) existing vintages in the power sector are not broken out as separate technologies
+10) natural gas combined cycle is disaggregated from steam/combustion turbines in the historical time period, using exogenous assumptions about the efficiencies of each technology. This works well for all regions except those with high shares of CHP.
+11) Equal rounding of decimals for all elements of any nest. Electric sector CCS tech efficiencies had been rounded to 2 decimal places whereas corresponding non-CCS techs were rounded to 3.
+12) nuclear electric efficiencies set to 0.333 in all periods (not varying between 0.333 and 0.34)
+13) reading in all electric technology costs as capital, fixed om, and variable om (incl. rooftop pv and geothermal)
+14) using a fixed capacity factor over time for wind
+15) Not decreasing ownuse IO coefs over time. The only reason we did before was a mis-understanding of what ownuse was. It isn't an inefficiency or loss; it simply reflects the share of AUTOELEC as opposed to MAINELEC and MAINCHP, which aren't being modeled.
+16) Hydrogen technologies adjusted efficiencies. Old efficiencies didn't take into account secondary inputs/outputs of electricity and as such CCS techs had higher efficiencies
+17) Got rid of solar_no_backup and wind_no_backup because they are useless and antediluvian
+
+*Note that "heat output" used to be reported in TJ but now seems to be reported in ktoe
+
+
+Notes for documentation:
+Possible approaches for doing the n-region breakout:
+1) Keep all additional regions contained within existing GCAM regions
+2) Downscale all data to country, including data from GCAM 3.0 that is not built up from less aggregated data
+3) Generate an "intermediate" set of regions, where all are contained within one and only one current GCAM region, but then these are later aggregated into a new set
+
+The data that is input at the region level and not available at smaller scales (but ultimately should be) includes resource curves (all), future hydropower, near-term shareweights for nuclear that consider plants being constructed, capacity factors of solar technologies, selection of crops used for first-gen biofuel production, characteristics of cement production technologies, non-co2 assumptions
+
+Conceptual issues
+*How to handle changes to the IEA energy balances
+	transportation energy in China and India
+	international shipping energy everywhere)
+*How to handle historical time series of FSU constituents
+*Is the approach for refining OK?
+*Not clear how to handle nuclear and hydro in the historical years
+*Not clear how to handle disaggregation of former soviet union, where data on individual SSRs prior to 1990 isn't available
+
+Technical questions
+*Do we want two uranium transformation sectors when both have the same conversion ratio? Would this be helpful in the future, to do more life-cycle-type assessment?
+*For any pass-through sector, should the subsector and technology names always match the supplysector name?
+
+Discussion questions
+*Do we want to maintain multiple scenarios (e.g. _adv) in the core scenario set, or should the core scenario set simply be that one scenario?
+*How do we want to go about making allowances for people to run individual scenarios? In the current set-up it will be easy to run one-off alternate scenarios (e.g. change an input file, rebuild), but to generate large numbers of alternate scenarios people will have to become versatile with the code.
+
+
+As with prior versions, oil refining output is set equal to TPES of liquid fuels in any region, minus the sum of net refinery energy use, CTL output, and GTL output. This means that the equality between supply and demand of liquid fuels is enforced by scaling the refinery output. Note that this sort of step would be unnecessary if inter-regional trade of refined liquid products were being modeled. Several notes that may be useful for different approaches to modeling the refinery sector.
+a) "Other Hydrocarbons" in the IEA energy balances are a refinery input for oil refining, and a refinery output for ctl and gtl. The fuel mapping would need a sector-specific adjustment.
+b) Some fuels (e.g. "Refinery Gas") are produced by TREFINER and consumed by EREFINER, so using  positive/negative to distinguish inputs from outputs would result in double counting for assessment of net energy flows. These two rows would need to be aggregated prior to the assignment of input vs output.
+Note that this is different from the approach for electricity, where the output of all producers is first aggregated, then ownuse and distribution losses are deducted, and the balancing between supply and demand is achieved by scaling demands. The reasons for the differences in the approaches used in these sectors are that (a) inter-regional trade of refined liquid products is high, and scaling demands to be equal to refinery output would result in a mis-allocation of energy demand in many regions; (b) the data on electricity output from electricity generators is likely among the most reliable information in the whole dataset; (c) we're interested in the efficiciencies of the power sector, so we shouldn't adjust the output (or also adjust the fuel inputs, which would be a mess). In contrast, the refinery average efficiency across all fuels (which is adjusted from the IEA data by our approach) doesn't really mean much, because refineries aren't producing a homogeneous product. Nevertheless, if GCAM is expanded to include inter-regional trade in either of these sectors, then none of the steps described above would be necessary.

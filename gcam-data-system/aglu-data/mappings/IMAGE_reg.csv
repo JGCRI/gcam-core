@@ -1,0 +1,28 @@
+# File: reg_IMAGE.csv,,,
+# Description: Maps IMAGE regions to GCAM regions,,,
+# ----------,,,
+IMAGE_region_ID,IMAGE_region_name,GCAM_region_ID,GCAM_region_name
+1,Canada,2,Canada
+2,USA,1,USA
+3,Mexico,10,Latin America
+4,Rest Central America,10,Latin America
+5,Brazil,10,Latin America
+6,Rest South America,10,Latin America
+7,Northern Africa,9,Africa
+8,Western Africa,9,Africa
+9,Eastern Africa,9,Africa
+10,Southern Africa,9,Africa
+11,OECD Europe,3,Western Europe
+12,Eastern Europe,12,Eastern Europe
+13,Turkey,3,Western Europe
+14,Ukraine +,6,Former Soviet Union
+15,Asia-Stan,6,Former Soviet Union
+16,Russia +,6,Former Soviet Union
+17,Middle East,8,Middle East
+18,India +,14,India
+19,Korea,13,Korea
+20,China +,7,China
+21,South East Asia,11,Southeast Asia
+22,Indonesia +,11,Southeast Asia
+23,Japan,4,Japan
+24,Oceania,5,Australia_NZ

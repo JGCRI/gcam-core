@@ -1,0 +1,22 @@
+# File: SAGE_LT.csv,
+# Description: Maps SAGE 14 land cover types and HYDE 3 types to GCAM land cover types,
+# ----------,
+LT_SAGE,Land_Type
+Tropical Evergreen Forest/Woodland,Forest
+Tropical Deciduous Forest/Woodland,Forest
+Temperate Broadleaf Evergreen Forest/Woodland,Forest
+Temperate Needleleaf Evergreen Forest/Woodland,Forest
+Temperate Deciduous Forest/Woodland,Forest
+Boreal Evergreen Forest/Woodland,Forest
+Boreal Deciduous Forest/Woodland,Forest
+Evergreen/Deciduous Mixed Forest/Woodland,Forest
+Savanna,Grassland
+Grassland/Steppe,Grassland
+Dense Shrubland,Shrubland
+Open Shrubland,Shrubland
+Tundra,Tundra
+Desert,RockIceDesert
+Polar Desert/Rock/Ice,RockIceDesert
+Pasture,Pasture
+Cropland,Cropland
+Urbanland,Urbanland

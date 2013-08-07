@@ -1,0 +1,456 @@
+setwd("~/Documents/gcam-data-system")
+ROOT_DIR <- "."
+if( !exists( "ROOT_DIR" ) ){#
+    if( Sys.getenv( "ROOT_DIR" ) != "" ){#
+        ROOT_DIR <- Sys.getenv( "ROOT_DIR" )#
+    } else {#
+        stop("Could not determine location of gcam data system. Please set the R var ROOT_DIR to the appropriate location")#
+    }#
+}#
+#
+# Universal header file - provides logging, file support, etc.#
+#TODO: NEED TO DEFINE A FUNCTION TO READ IN .R FILES AND TRACK THE DEPENDENCIES (e.g. readcode() )#
+source(paste(ROOT_DIR,"/_common/headers/GCAM_header.R",sep=""))#
+source(paste(ROOT_DIR,"/energy-processing-code/headers/ENERGY_header.R",sep=""))#
+logstart( "L101_enbal_IEA_R_Si_Fi_Yh.R" )#
+adddep(paste(ROOT_DIR,"/_common/GCAM_header.R",sep=""))#
+printlog( "Historical energy balances from IEA, aggregated to GCAM regions, intermediate sectors, and intermediate fuels" )
+MODULE_PROC_ROOT
+logstop()
+if( !exists( "ROOT_DIR" ) ){#
+    if( Sys.getenv( "ROOT_DIR" ) != "" ){#
+        ROOT_DIR <- Sys.getenv( "ROOT_DIR" )#
+    } else {#
+        stop("Could not determine location of gcam data system. Please set the R var ROOT_DIR to the appropriate location")#
+    }#
+}#
+#
+# Universal header file - provides logging, file support, etc.#
+#TODO: NEED TO DEFINE A FUNCTION TO READ IN .R FILES AND TRACK THE DEPENDENCIES (e.g. readcode() )#
+source(paste(ROOT_DIR,"/_common/headers/GCAM_header.R",sep=""))#
+source(paste(ROOT_DIR,"/energy-processing-code/headers/ENERGY_header.R",sep=""))#
+logstart( "L101_enbal_IEA_R_Si_Fi_Yh.R" )#
+adddep(paste(ROOT_DIR,"/_common/GCAM_header.R",sep=""))#
+printlog( "Historical energy balances from IEA, aggregated to GCAM regions, intermediate sectors, and intermediate fuels" )
+date()
+help(date)
+readcode
+readcode()
+sourcedata()
+sourcedata
+logstop()
+logstop()
+if( !exists( "ROOT_DIR" ) ){#
+    if( Sys.getenv( "ROOT_DIR" ) != "" ){#
+        ROOT_DIR <- Sys.getenv( "ROOT_DIR" )#
+    } else {#
+        stop("Could not determine location of gcam data system. Please set the R var ROOT_DIR to the appropriate location")#
+    }#
+}#
+#
+# Universal header file - provides logging, file support, etc.#
+source(paste(ROOT_DIR,"/_common/headers/GCAM_header.R",sep=""))#
+source(paste(ROOT_DIR,"/_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L101_enbal_IEA_R_Si_Fi_Yh.R" )#
+adddep(paste(ROOT_DIR,"/_common/GCAM_header.R",sep=""))#
+printlog( "Historical energy balances from IEA, aggregated to GCAM regions, intermediate sectors, and intermediate fuels" )
+sourcedata( "COMMON_ASSUMPTIONS", "assumptions", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
+logstop()
+source(paste(ROOT_DIR,"/_common/headers/GCAM_header.R",sep=""))#
+source(paste(ROOT_DIR,"/_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L101_enbal_IEA_R_Si_Fi_Yh.R" )#
+adddep(paste(ROOT_DIR,"/_common/GCAM_header.R",sep=""))#
+printlog( "Historical energy balances from IEA, aggregated to GCAM regions, intermediate sectors, and intermediate fuels" )#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "assumptions", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
+conv_1996_1975_USD
+logstop()
+logstop()
+source("energy-processing-code/level1/L101_enbal_IEA_R_Si_Fi_Yh.R")
+if( !exists( "ROOT_DIR" ) ){#
+    if( Sys.getenv( "ROOT_DIR" ) != "" ){#
+        ROOT_DIR <- Sys.getenv( "ROOT_DIR" )#
+    } else {#
+        stop("Could not determine location of gcam data system. Please set the R var ROOT_DIR to the appropriate location")#
+    }#
+}#
+#
+# Universal header file - provides logging, file support, etc.#
+source(paste(ROOT_DIR,"/_common/headers/GCAM_header.R",sep=""))#
+source(paste(ROOT_DIR,"/_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L102_en_prod_R_F_Yh.R" )#
+adddep(paste(ROOT_DIR,"/_common/GCAM_header.R",sep=""))#
+printlog( "Historical energy production by GCAM region and fuel" )
+sourcedata( "COMMON_ASSUMPTIONS", "assumptions", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+L101_enbal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L101_enbal_EJ_R_Si_Fi_Yh" )
+L101_enbal_EJ_R_Si_Fi_Yh[1:10,]
+unique(L101_enbal_EJ_R_Si_Fi_Yh$fuel)
+dim(L101_enbal_EJ_R_Si_Fi_Yh)
+unique(L101_enbal_EJ_R_Si_Fi_Yh$sector)
+subset(L101_enbal_EJ_R_Si_Fi_Yh, GCAM_region_ID==1 & fuel == "refined liquids",)
+L102_TPES_EJ_F_Yh <- subset( L101_enbal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel %in% resource_fuels )
+resource_fuels <- c( "coal", "gas", "refined liquids" )#
+L102_TPES_EJ_F_Yh <- subset( L101_enbal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel %in% resource_fuels )
+dim(L102_TPES_EJ_F_Yh)
+L102_TPES_EJ_F_Yh[1:5,]
+L102_TPES_EJ_R_F_Yh <- subset( L101_enbal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel %in% resource_fuels )
+L102_TPES_EJ_F_Yh <- aggregate( L102_TPES_EJ_F_Yh[ X_historical_years ],#
+      by=list( sector = L102_TPES_EJ_F_Yh$sector, fuel = L102_TPES_EJ_F_Yh$fuel ), sum )
+L102_TPES_EJ_F_Yh
+L102_Prod_EJ_R_F_Yh <- subset( L101_enbal_EJ_R_Si_Fi_Yh, sector == "production" & fuel %in% resource_fuels )
+L102_Prod_EJ_R_F_Yh[1:10,]
+unique(L101_enbal_EJ_R_Si_Fi_Yh$sector)
+L102_Prod_EJ_R_F_Yh <- subset( L101_enbal_EJ_R_Si_Fi_Yh, sector == "resource_prod" & fuel %in% resource_fuels )
+L102_Prod_EJ_R_F_Yh[1:10,]
+L102_Prod_EJ_F_Yh <- aggregate( L102_Prod_EJ_R_F_Yh[ X_historical_years ],#
+      by=list( sector = L102_Prod_EJ_R_F_Yh$sector, fuel = L102_Prod_EJ_R_F_Yh$fuel ), sum )
+L102_Prod_EJ_F_Yh
+match( L102_Prod_share_R_F_Yh$fuel, L102_Prod_EJ_F_Yh$fuel )
+L102_Prod_share_R_F_Yh <- L102_Prod_EJ_R_F_Yh
+match( L102_Prod_share_R_F_Yh$fuel, L102_Prod_EJ_F_Yh$fuel )
+L102_Prod_share_R_F_Yh <- L102_Prod_EJ_R_F_Yh#
+L102_Prod_share_R_F_Yh[ X_historical_years ] <- L102_Prod_EJ_R_F_Yh[ X_historical_years ] /#
+      L102_Prod_EJ_F_Yh[ match( L102_Prod_EJ_R_F_Yh$fuel, L102_Prod_EJ_F_Yh$fuel ) X_historical_years ]
+L102_Prod_share_R_F_Yh[ X_historical_years ] <- L102_Prod_EJ_R_F_Yh[ X_historical_years ] /#
+      L102_Prod_EJ_F_Yh[ match( L102_Prod_EJ_R_F_Yh$fuel, L102_Prod_EJ_F_Yh$fuel ), X_historical_years ]
+L102_Prod_share_R_F_Yh[1:10,]
+aggregate(L102_Prod_share_R_F_Yh[ X_historical_years],by=list(L102_Prod_share_R_F_Yh$fuel),sum)
+sourcedata( "ENERGY_ASSUMPTIONS", "assumptions", extension = ".R" )
+L102_Prod_EJ_R_F_Yh_IEA <- subset( L101_enbal_EJ_R_Si_Fi_Yh, sector == "resource_prod" & fuel %in% resource_fuels )#
+L102_Prod_EJ_F_Yh <- aggregate( L102_Prod_EJ_R_F_Yh_IEA[ X_historical_years ],#
+      by=list( sector = L102_Prod_EJ_R_F_Yh_IEA$sector, fuel = L102_Prod_EJ_R_F_Yh_IEA$fuel ), sum )#
+L102_Prod_share_R_F_Yh <- L102_Prod_EJ_R_F_Yh_IEA#
+L102_Prod_share_R_F_Yh[ X_historical_years ] <- L102_Prod_EJ_R_F_Yh_IEA[ X_historical_years ] /#
+      L102_Prod_EJ_F_Yh[ match( L102_Prod_EJ_R_F_Yh_IEA$fuel, L102_Prod_EJ_F_Yh$fuel ), X_historical_years ]#
+#
+printlog( "Multiplying through to calculate production by fuel")#
+L102_Prod_EJ_R_F_Yh_IEA_adj <- L102_Prod_EJ_R_F_Yh_IEA
+L102_Prod_EJ_R_F_Yh_IEA_adj[1:10,]
+match( L102_Prod_EJ_R_F_Yh_IEA_adj$fuel, L102_TPES_EJ_F_Yh$fuel )
+L102_Prod_EJ_R_F_Yh_IEA_adj <- L102_Prod_EJ_R_F_Yh_IEA#
+L102_Prod_EJ_R_F_Yh_IEA_adj[ X_historical_years ] <- L102_Prod_share_R_F_Yh[ X_historical_years ] *#
+      L102_TPES_EJ_F_Yh[ match( L102_Prod_EJ_R_F_Yh_IEA_adj$fuel, L102_TPES_EJ_F_Yh$fuel ), X_historical_years ]
+L102_Prod_EJ_R_F_Yh_IEA_adj[1:10,]
+L102_Prod_EJ_R_F_Yh_IEA_adj[L102_Prod_EJ_R_F_Yh_IEA_adj$GCAM_region_ID==2 & L102_Prod_EJ_R_F_Yh_IEA_adj$fuel=="refined liquids"]
+L102_Prod_EJ_R_F_Yh_IEA_adj[L102_Prod_EJ_R_F_Yh_IEA_adj$GCAM_region_ID==2 & L102_Prod_EJ_R_F_Yh_IEA_adj$fuel=="refined liquids",]
+conv_bbl_GJ <- 6.19932#
+conv_bbld_EJyr <- 365.25 * conv_bbl_GJ * 1e-3
+1.1*conv_bbld_EJyr
+sourcedata( "ENERGY_ASSUMPTIONS", "assumptions", extension = ".R" )
+iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
+iso_GCAM_regID
+0.66*conv_bbld_EJyr
+0.6*conv_bbld_EJyr
+unconv_oil_prod_bbld <- readdata( "ENERGY_LEVEL0_DATA", "unconv_oil_prod_bbld")
+unconv_oil_prod_bbld
+unconv_oil_prod_bbld <- readdata( "ENERGY_LEVEL0_DATA", "unconv_oil_prod_bbld")
+read.csv("./energy-data/level0/unconv_oil_prod_bbld.csv")
+read.csv("./energy-data/level0/unconv_oil_prod_bbld.csv", header=T,comment.char="#")
+read.csv("./energy-data/level0/unconv_oil_prod_bbld.csv", header=T,comment.char="#")
+read.csv("./energy-data/level0/unconv_oil_prod_bbld.csv", header=T,comment.char="#")
+read.csv("./energy-data/level0/unconv_oil_prod_bbld.csv", header=T,comment.char="#")
+read.csv("./energy-data/level0/unconv_oil_prod_bbld.csv", header=T,comment.char="#")
+unconv_oil_prod_bbld <- readdata( "ENERGY_LEVEL0_DATA", "unconv_oil_prod_bbld")
+unconv_oil_prod_bbld
+historical_years
+L102_unconv_oil_prod_bbld <- gcam_interp( unconv_oil_prod_bbld, historical_years )
+L102_unconv_oil_prod_bbld
+L102_unconv_oil_prod_bbld$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L102_unconv_oil_prod_bbld$iso, iso_GCAM_regID$iso ) ]
+L102_unconv_oil_prod_bbld
+conv_bbld_EJyr
+L102_Prod_EJ_ctry_unconvOil_Yh <- aggregate( L102_unconv_oil_prod_bbld [X_historical_years ] * conv_bbld_EJyr,#
+      by=list( GCAM_region_ID = L102_unconv_oil_prod_bbld$GCAM_region_ID ), sum )
+L102_Prod_EJ_ctry_unconvOil_Yh
+L102_Prod_EJ_R_F_Yh[ L102_Prod_EJ_R_F_Yh$GCAM_region_ID %in% L102_Prod_EJ_ctry_unconvOil_Yh$GCAM_region_ID &#
+                     L102_Prod_EJ_R_F_Yh$fuel == "refined liquids", X_historical_years ]
+L102_Prod_EJ_ctry_unconvOil_Yh[ X_historical_years ]
+L102_Prod_EJ_R_F_Yh[ L102_Prod_EJ_R_F_Yh$GCAM_region_ID %in% L102_Prod_EJ_ctry_unconvOil_Yh$GCAM_region_ID &#
+                     L102_Prod_EJ_R_F_Yh$fuel == "refined liquids", ]
+R_S_F <- c( "GCAM_region_ID", "sector", "fuel")
+L102_Prod_EJ_ctry_unconvOil_Yh$sector <- "resource_prod"#
+L102_Prod_EJ_ctry_unconvOil_Yh$fuel <- "refined liquids"
+L102_Prod_EJ_ctry_unconvOil_Yh[ c( R_S_F, X_historical_years ) ]
+L102_Prod_EJ_ctry_unconvOil_Yh <- aggregate( L102_unconv_oil_prod_bbld [X_historical_years ] * conv_bbld_EJyr,#
+      by=list( GCAM_region_ID = L102_unconv_oil_prod_bbld$GCAM_region_ID ), sum )#
+L102_Prod_EJ_ctry_unconvOil_Yh$sector <- "resource_prod"#
+L102_Prod_EJ_ctry_unconvOil_Yh$fuel <- "unconventional oil"#
+#
+#Subtract the unconventional oil, append the unconventional oil to the table, and write it out#
+L102_Prod_EJ_R_F_Yh <- L102_Prod_EJ_R_F_Yh_IEA_adj#
+L102_Prod_EJ_R_F_Yh[ L102_Prod_EJ_R_F_Yh$GCAM_region_ID %in% L102_Prod_EJ_ctry_unconvOil_Yh$GCAM_region_ID &#
+                     L102_Prod_EJ_R_F_Yh$fuel == "refined liquids", X_historical_years ] <-#
+      L102_Prod_EJ_R_F_Yh_IEA_adj[ L102_Prod_EJ_R_F_Yh_IEA_adj$GCAM_region_ID %in% L102_Prod_EJ_ctry_unconvOil_Yh$GCAM_region_ID &#
+                                   L102_Prod_EJ_R_F_Yh_IEA_adj$fuel == "refined liquids", X_historical_years ] -#
+      L102_Prod_EJ_ctry_unconvOil_Yh[ X_historical_years ]#
+L102_Prod_EJ_R_F_Yh$fuel[ L102_Prod_EJ_R_F_Yh$fuel == "refined liquids" ] <- "crude oil"#
+L102_Prod_EJ_R_F_Yh <- rbind( L102_Prod_EJ_R_F_Yh, L102_Prod_EJ_ctry_unconvOil_Yh[ c( R_S_F, X_historical_years ) ] )
+L102_Prod_EJ_R_F_Yh[L102_Prod_EJ_R_F_Yh$fuel %in% c( "crude oil", "unconventional oil")]
+L102_Prod_EJ_R_F_Yh[L102_Prod_EJ_R_F_Yh$fuel %in% c( "crude oil", "unconventional oil"),]
+tmp<-melt(L102_Prod_EJ_R_F_Yh, id.vars = R_S_Y)
+tmp<-melt(L102_Prod_EJ_R_F_Yh, id.vars = R_S_F)
+tmp[1:10,]
+qplot(variable, value, data=tmp[ tmp$fuel%in%c("crude oil", "unconventional oil"),color=fuel])
+qplot(variable, value, data=tmp[ tmp$fuel%in%c("crude oil", "unconventional oil"),color=="fuel"])
+qplot(variable, value, data=tmp[ tmp$fuel%in%c("crude oil", "unconventional oil"),color="fuel"])
+qplot(variable, value, data=tmp[ tmp$fuel%in%c("crude oil", "unconventional oil")],color=fuel])
+qplot(variable, value, data=tmp[ tmp$fuel%in%c("crude oil", "unconventional oil"),],color=fuel])
+qplot(variable, value, data=tmp[ tmp$fuel%in%c("crude oil", "unconventional oil"),])
+qplot(variable, value, data=tmp[ tmp$fuel%in%c("crude oil", "unconventional oil"),],color=fuel)
+logstop()
+logstop()
+source("energy-processing-code/level1/L102_en_prod_R_F_Yh.R")
+source("energy-processing-code/level1/L102_en_prod_R_F_Yh.R")
+source("energy-processing-code/level1/L102_en_prod_R_F_Yh.R")
+source("energy-processing-code/level1/L111_en_Prod_R_F_Yh.R")
+source("energy-processing-code/level1/L111_en_Prod_R_F_Yh.R")
+L111_TPES_EJ_R_F_Yh <- subset( L101_enbal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel %in% resource_fuels )
+L111_TPES_EJ_F_Yh <- aggregate( L111_TPES_EJ_F_Yh[ X_historical_years ],#
+      by=list( sector = L111_TPES_EJ_F_Yh$sector, fuel = L111_TPES_EJ_F_Yh$fuel ), sum )
+L111_TPES_EJ_F_Yh <- aggregate( L111_TPES_EJ_R_F_Yh[ X_historical_years ],#
+      by=list( sector = L111_TPES_EJ_R_F_Yh$sector, fuel = L111_TPES_EJ_R_F_Yh$fuel ), sum )
+L111_TPES_EJ_F_Yh[1:10,]
+L111_TPES_EJ_F_Yh
+source("energy-processing-code/level1/L111_en_Prod_R_F_Yh.R")
+Rogner_supplycurves_gtoe <- readdata( "ENERGY_LEVEL0_DATA", "Rogner_supplycurves_gtoe")
+Rogner_supplycurves_gtoe
+Rogner_supplycurves_gtoe <- readdata( "ENERGY_LEVEL0_DATA", "Rogner_supplycurves_gtoe")
+Rogner_supplycurves_gtoe
+IIASA_GCAM_reg <- readdata( "ENERGY_MAPPINGS", "IIASA_GCAM_reg")
+IIASA_GCAM_reg
+grades <- paste( "grade", 1:5, sep = "" )
+grades
+Rogner_grades <- paste( "grade", 1:5, sep = "" )
+Rogner_resource_mapping <- data.frame(#
+      Rogner_resource = c( "crude oil", "unconventional oil", "conventional natural gas", "unconventional natural gas", "hard coal", "brown coal" ),#
+      GCAM_resouce = c( "crude oil", "unconventional oil", "natural gas", "natural gas", "coal", "coal" ) )
+Rogner_resource_mapping
+Rogner_resource_mapping <- data.frame(#
+      Rogner_resource = c( "crude oil", "unconventional oil", "conventional natural gas", "unconventional natural gas", "hard coal", "brown coal" ),#
+      GCAM_resource = c( "crude oil", "unconventional oil", "natural gas", "natural gas", "coal", "coal" ) )
+L111_Rogner_supplycurves_gtoe$GCAM_resource <- Rogner_resource_mapping$GCAM_resource[ match( L111_Rogner_supplycurves_gtoe$resource, Roger_resource_mapping$Rogner_resource ) ]
+Rogner_grades <- paste( "grade", 1:5, sep = "" )#
+Rogner_resource_mapping <- data.frame(#
+      Rogner_resource = c( "crude oil", "unconventional oil", "conventional natural gas", "unconventional natural gas", "hard coal", "brown coal" ),#
+      GCAM_resource = c( "crude oil", "unconventional oil", "natural gas", "natural gas", "coal", "coal" ) )#
+L111_Rogner_supplycurves_gtoe <- Rogner_supplycurves_gtoe#
+L111_Rogner_supplycurves_gtoe$GCAM_resource <- Rogner_resource_mapping$GCAM_resource[ match( L111_Rogner_supplycurves_gtoe$resource, Roger_resource_mapping$Rogner_resource ) ]
+L111_Rogner_supplycurves_gtoe$GCAM_resource <- Rogner_resource_mapping$GCAM_resource[ match( L111_Rogner_supplycurves_gtoe$resource, Rogner_resource_mapping$Rogner_resource ) ]
+L111_Rogner_supplycurves_gtoe[1:10,]
+L111_supplycurves_EJ <- aggregate( L111_Rogner_supplycurves_gtoe[ Rogner_grades ] * conv_gtoe_EJ,#
+      by=list( IIASA_region = L111_Rogner_supplycurves_gtoe$IIASA_region, resource = L111_Rogner_supplycurves_gtoe$GCAM_resource ), sum )
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
+L111_supplycurves_EJ <- aggregate( L111_Rogner_supplycurves_gtoe[ Rogner_grades ] * conv_gtoe_EJ,#
+      by=list( IIASA_region = L111_Rogner_supplycurves_gtoe$IIASA_region, resource = L111_Rogner_supplycurves_gtoe$GCAM_resource ), sum )
+L111_supplycurves_EJ
+L111_Prod_EJ_R_F_Yh[1:10,]
+source("energy-processing-code/level1/L101_enbal_IEA_R_Si_Fi_Yh.R")
+source("energy-processing-code/level1/L111_en_Prod_R_F_Yh.R")
+A1_markets <- readdata( "ENERGY_ASSUMPTIONS", "A1_markets")
+A1_markets
+A11_curves <- readdata( "LEVEL0_ENERGY_DATA", "A11_curves" )
+A11_curves <- readdata( "ENERGY_ASSUMPTIONS", "A11_curves" )
+A11_curves
+A1_markets <- readdata( "ENERGY_ASSUMPTIONS", "A1_markets")#
+A1_units <- readdata( "ENERGY_ASSUMPTIONS", "A1_units")#
+A11_curves <- readdata( "ENERGY_ASSUMPTIONS", "A11_curves" )#
+A11_prices <- readdata( "ENERGY_ASSUMPTIONS", "A11_prices" )#
+A12_curves <- readdata( "ENERGY_ASSUMPTIONS", "A12_curves" )#
+A13_curves <- readdata( "ENERGY_ASSUMPTIONS", "A13_curves" )#
+A14_curves <- readdata( "ENERGY_ASSUMPTIONS", "A14_curves" )#
+A15_curves <- readdata( "ENERGY_ASSUMPTIONS", "A15_curves" )#
+A16_curves <- readdata( "ENERGY_ASSUMPTIONS", "A16_curves" )#
+L111_Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111_Prod_EJ_R_F_Yh" )
+A11_prices <- readdata( "ENERGY_ASSUMPTIONS", "A11_prices" )
+A11_prices
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
+GCAM_region_names
+A1_markets
+A1_resources <- readdata( "ENERGY_ASSUMPTIONS", "A1_resources")
+A1_resources
+A1_resources_dep <- subset( A1_resources, type = "depresource" )
+A1_resources_dep
+A1_resources_dep <- subset( A1_resources, type == "depresource" )
+A1_resources_dep
+L210_units <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A1_resources_dep ) ),#
+      depresource = A1_resources_dep$resource, times = length( GCAM_region_names$region) )
+L210_units
+L210_units <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A1_resources_dep ) ),#
+      depresource = rep( A1_resources_dep$resource, times = length( GCAM_region_names$region) ) )
+L210_units
+L210_units <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A1_resources_dep ) ),#
+      depresource = sort( rep( A1_resources_dep$resource, times = length( GCAM_region_names$region ) ) ) )
+L210_units
+A1_resources_dep_repR <- A1_resources_dep_repR[ rep( 1:nrow( A1_resources_dep_repR ), times = nrow( GCAM_region_names ) ]
+A1_resources_dep_repR <- A1_resources_dep_repR[ rep( 1:nrow( A1_resources_dep_repR ), times = nrow( GCAM_region_names ), ]
+nrow( GCAM_region_names )
+A1_resources_dep_repR <- A1_resources_dep_repR[ rep( 1:nrow( A1_resources_dep_repR ), times = nrow( GCAM_region_names ) ), ]
+A1_resources_dep_repR <- A1_resources_dep[ rep( 1:nrow( A1_resources_dep ), times = nrow( GCAM_region_names ) ), ]
+A1_resources_dep_repR
+GCAM_regions
+GCAM_regions <- 1:14
+L210_resources <- repeat_and_add_vector( A1_resources, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
+L210_resources[1:20,]
+L210_resources <- add_region_name( L210_resources )
+L210_resources[1:20,]
+L210_resources$market[ L210_resources$market == "regional" ] <- L210_resources$region[ L210_resources$market == "regional" ]
+L210_resources[1:10,]
+L210_depresource <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output-unit", "price.unit", "market" ) ]
+L210_depresource <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output.unit", "price.unit", "market" ) ]
+dim(L210_depresource)
+L210_depresource[1:10,]
+A1_resources
+A1_resources <- readdata( "ENERGY_ASSUMPTIONS", "A1_resources")
+L210_resources <- repeat_and_add_vector( A1_resources, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
+L210_resources <- add_region_name( L210_resources )#
+#
+#Reset regional markets to the names of the specific regions#
+L210_resources$market[ L210_resources$market == "regional" ] <- L210_resources$region[ L210_resources$market == "regional" ]#
+#
+printlog( "L210_depresource: output unit, price unit, and market for depletable resources" )#
+L210_depresource <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output.unit", "price.unit", "market" ) ]
+L210_depresource[1:10,]
+A1_resources <- readdata( "ENERGY_ASSUMPTIONS", "A1_resources")
+L210_resources <- repeat_and_add_vector( A1_resources, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
+L210_resources <- add_region_name( L210_resources )#
+#
+#Reset regional markets to the names of the specific regions#
+L210_resources$market[ L210_resources$market == "regional" ] <- L210_resources$region[ L210_resources$market == "regional" ]#
+#
+printlog( "L210_depresource: output unit, price unit, and market for depletable resources" )#
+L210_depresource <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output.unit", "price.unit", "market" ) ]
+L210_depresource[1:10,]
+names( L210_depresource )[ names( L210_depresource ) == "resource" ] <- "depresource"
+L210_depresource[1:10,]
+printlog( "L210_DepRsrc: output unit, price unit, and market for depletable resources" )#
+L210_DepRsrc <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output.unit", "price.unit", "market" ) ]#
+names( L210_DepRsrc )[ names( L210_DepRsrc ) == "resource" ] <- "depresource"
+A1_resources
+A1_prices <- readdata( "ENERGY_ASSUMPTIONS", "A1_prices" )
+A1_prices
+A1_resources <- readdata( "ENERGY_ASSUMPTIONS", "A1_resources")
+L210_resources <- repeat_and_add_vector( A1_resources, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
+L210_resources <- add_region_name( L210_resources )#
+#
+#Reset regional markets to the names of the specific regions#
+L210_resources$market[ L210_resources$market == "regional" ] <- L210_resources$region[ L210_resources$market == "regional" ]
+L210_resources[1:10,]
+A1_resources <- readdata( "ENERGY_ASSUMPTIONS", "A1_resources")
+L210_resources <- repeat_and_add_vector( A1_resources, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
+L210_resources <- add_region_name( L210_resources )#
+#
+#Reset regional markets to the names of the specific regions#
+L210_resources$market[ L210_resources$market == "regional" ] <- L210_resources$region[ L210_resources$market == "regional" ]#
+#
+printlog( "L210_DepRsrc: output unit, price unit, and market for depletable resources" )#
+L210_DepRsrc <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output.unit", "price.unit", "market" ) ]#
+names( L210_DepRsrc )[ names( L210_DepRsrc ) == "resource" ] <- "depresource"
+L210_DepRsrc[1:10,]
+L210_resources[1:10,]
+resource_price_years <- c( 1975, 1990, 2005 )#
+X_resource_price_years <- paste( "X", resource_price_years, sep = "" )
+L210_DepRsrc <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output.unit", "price.unit", "market", X_resource_price_years ) ]#
+names( L210_DepRsrc )[ names( L210_DepRsrc ) == "resource" ] <- "depresource"
+L210_DepRsrc[1:10,]
+write_mi_data( L210_DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L210_DepRsrc", batch_XML_file="batch_resources.xml" )
+MODULE_PROC_ROOT
+source(paste(ROOT_DIR,"/_common/headers/GCAM_header.R",sep=""))#
+source(paste(ROOT_DIR,"/_common/headers/ENERGY_header.R",sep=""))
+write_mi_data( L210_DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L210_DepRsrc", batch_XML_file="batch_resources.xml" )
+source(paste(ROOT_DIR,"/_common/headers/GCAM_header.R",sep=""))#
+source(paste(ROOT_DIR,"/_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L111_en_Prod_R_F_Yh.R" )#
+adddep(paste(ROOT_DIR,"/_common/GCAM_header.R",sep=""))#
+printlog( "Historical fossil energy production, supply curves, and price adjustments by GCAM region and fuel" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
+sourcedata( "COMMON_ASSUMPTIONS", "assumptions", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "assumptions", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
+A1_resources <- readdata( "ENERGY_ASSUMPTIONS", "A1_resources")#
+A11_curves <- readdata( "ENERGY_ASSUMPTIONS", "A11_curves" )#
+A12_curves <- readdata( "ENERGY_ASSUMPTIONS", "A12_curves" )#
+A13_curves <- readdata( "ENERGY_ASSUMPTIONS", "A13_curves" )#
+A14_curves <- readdata( "ENERGY_ASSUMPTIONS", "A14_curves" )#
+A15_curves <- readdata( "ENERGY_ASSUMPTIONS", "A15_curves" )#
+A16_curves <- readdata( "ENERGY_ASSUMPTIONS", "A16_curves" )#
+L111_Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111_Prod_EJ_R_F_Yh" )#
+#
+# -----------------------------------------------------------------------------#
+# 2. Build tables for CSVs#
+#Repeat and add region vectors to table of resource assumptions#
+L210_resources <- repeat_and_add_vector( A1_resources, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
+L210_resources <- add_region_name( L210_resources )#
+#
+#Reset regional markets to the names of the specific regions#
+L210_resources$market[ L210_resources$market == "regional" ] <- L210_resources$region[ L210_resources$market == "regional" ]#
+#
+printlog( "L210_DepRsrc: output unit, price unit, and market for depletable resources" )#
+L210_DepRsrc <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output.unit", "price.unit", "market", X_resource_price_years ) ]#
+names( L210_DepRsrc )[ names( L210_DepRsrc ) == "resource" ] <- "depresource"#
+# -----------------------------------------------------------------------------#
+# 3. Write all csvs as tables, and paste csv filenames into a single batch XML file#
+#
+write_mi_data( L210_DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L210_DepRsrc", batch_XML_file="batch_resources.xml" )
+source(paste(ROOT_DIR,"/_common/headers/GCAM_header.R",sep=""))#
+source(paste(ROOT_DIR,"/_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L111_en_Prod_R_F_Yh.R" )#
+adddep(paste(ROOT_DIR,"/_common/GCAM_header.R",sep=""))#
+printlog( "Historical fossil energy production, supply curves, and price adjustments by GCAM region and fuel" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
+sourcedata( "COMMON_ASSUMPTIONS", "assumptions", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "assumptions", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
+A1_resources <- readdata( "ENERGY_ASSUMPTIONS", "A1_resources")#
+A11_curves <- readdata( "ENERGY_ASSUMPTIONS", "A11_curves" )#
+A12_curves <- readdata( "ENERGY_ASSUMPTIONS", "A12_curves" )#
+A13_curves <- readdata( "ENERGY_ASSUMPTIONS", "A13_curves" )#
+A14_curves <- readdata( "ENERGY_ASSUMPTIONS", "A14_curves" )#
+A15_curves <- readdata( "ENERGY_ASSUMPTIONS", "A15_curves" )#
+A16_curves <- readdata( "ENERGY_ASSUMPTIONS", "A16_curves" )#
+L111_Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111_Prod_EJ_R_F_Yh" )#
+#
+# -----------------------------------------------------------------------------#
+# 2. Build tables for CSVs#
+#Repeat and add region vectors to table of resource assumptions#
+L210_resources <- repeat_and_add_vector( A1_resources, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
+L210_resources <- add_region_name( L210_resources )#
+#
+#Reset regional markets to the names of the specific regions#
+L210_resources$market[ L210_resources$market == "regional" ] <- L210_resources$region[ L210_resources$market == "regional" ]#
+#
+printlog( "L210_DepRsrc: output unit, price unit, and market for depletable resources" )#
+L210_DepRsrc <- L210_resources[ L210_resources$type == "depresource", c( "region", "resource", "output.unit", "price.unit", "market", X_resource_price_years ) ]#
+names( L210_DepRsrc )[ names( L210_DepRsrc ) == "resource" ] <- "depresource"#
+# -----------------------------------------------------------------------------#
+# 3. Write all csvs as tables, and paste csv filenames into a single batch XML file#
+#
+write_mi_data( L210_DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L210_DepRsrc", batch_XML_file="batch_resources.xml" )
+write_mi_data( L210_DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L210_DepRsrc", batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_resources.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources.xml", "ENERGY_XML_FINAL", "resources.xml", "", xml_tag="outFile" )
+L210_resources <- gcam_interp( A1_resources, resource_price_years )
+L210_resources
+source("energy-processing-code/level2/L210_Resources.R")
+logstop()
+logstop()
+logstop()
+sink()
+source("energy-processing-code/level2/L210_Resources.R")
+logstop()
+source("energy-processing-code/level2/L210_Resources.R")
+logstop()
+source("energy-processing-code/level2/L210_Resources.R")
+q()

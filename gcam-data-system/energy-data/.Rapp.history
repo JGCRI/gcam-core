@@ -1,0 +1,816 @@
+library("ggplot2")
+help(melt)
+library("ggplot2")
+help(melt)
+melt(5,5)
+help(library)
+install.package("ggplot2")
+library("reshape2")
+help(melt)
+library("plyr")
+library("reshape2")
+help(cast)
+install.packages("reshape")
+q()
+ENERGYPROC_DIR <- "../energy-processing-code/"
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L1011.en_bal_adj.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical energy balances from IEA, aggregated to GCAM regions, intermediate sectors, and intermediate fuels" )
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")#
+EIA_RFO_intlship_kbbld <- readdata( "ENERGY_LEVEL0_DATA", "EIA_RFO_intlship_kbbld" )#
+EIA_TOT_intlship_kbbld <- readdata( "ENERGY_LEVEL0_DATA", "EIA_TOT_intlship_kbbld" )#
+EIA_ctry <- readdata( "ENERGY_MAPPINGS", "EIA_ctry" )#
+L101.en_bal_EJ_R_Si_Fi_Yh_full <- readdata( "ENERGY_LEVEL1_DATA", "L101.en_bal_EJ_R_Si_Fi_Yh_full" )#
+# -----------------------------------------------------------------------------#
+# 2. Perform computations#
+# subset only the relevant years and combine OECD with non-OECD#
+###MODIFICATIONS TO IEA ENERGY BALANCES#
+printlog( "NOTE: Replacing IEA estimates of international shipping fuel consumption with EIA estimates")#
+#First, convert available data to EJ per year of total refined liquid products#
+EIA_yearcols <- names( EIA_RFO_intlship_kbbld )[ names( EIA_RFO_intlship_kbbld ) %in% X_historical_years ]#
+L1011.in_EJ_ctry_intlship_RFO_Yh <- data.frame(#
+      EIA_RFO_intlship_kbbld[ "Country" ],#
+      EIA_RFO_intlship_kbbld[ EIA_yearcols ] *#
+         conv_kbbl_bbl * conv_bbl_tonne_RFO * conv_tonne_GJ_RFO * conv_GJ_EJ / conv_days_year )#
+EIA_distillate_intlship_kbbld <- data.frame(#
+      EIA_RFO_intlship_kbbld[ "Country" ],#
+      EIA_TOT_intlship_kbbld[ EIA_yearcols ] - EIA_RFO_intlship_kbbld[ EIA_yearcols ] )#
+L1011.in_EJ_ctry_intlship_distillate_Yh <- data.frame(#
+      EIA_distillate_intlship_kbbld[ "Country" ],#
+      EIA_distillate_intlship_kbbld[ EIA_yearcols ] *#
+         conv_kbbl_bbl * conv_bbl_tonne_distillate * conv_tonne_GJ_RFO * conv_GJ_EJ / conv_days_year )#
+L1011.in_EJ_ctry_intlship_TOT_Yh <- data.frame(#
+      L1011.in_EJ_ctry_intlship_distillate_Yh[ "Country" ],#
+      L1011.in_EJ_ctry_intlship_distillate_Yh[ EIA_yearcols ] + L1011.in_EJ_ctry_intlship_RFO_Yh[ EIA_yearcols ] )#
+#
+#Several countries blink in and out of the time series. Only changing Russia because it's the only one that is a really large amount of fuel#
+L1011.in_EJ_ctry_intlship_TOT_Yh[ is.na( L1011.in_EJ_ctry_intlship_TOT_Yh ) ] <- 0#
+L1011.in_EJ_ctry_intlship_TOT_Yh[ L1011.in_EJ_ctry_intlship_TOT_Yh$Country=="Russia", paste( "X", 2006:2010, sep = "" ) ] <-#
+      L1011.in_EJ_ctry_intlship_TOT_Yh$X2005[ L1011.in_EJ_ctry_intlship_TOT_Yh$Country=="Russia" ]#
+#
+#Match in the countries and aggregate by region#
+L1011.in_EJ_ctry_intlship_TOT_Yh$iso <- EIA_ctry$iso[ match( L1011.in_EJ_ctry_intlship_TOT_Yh$Country, EIA_ctry$EIA_ctry ) ]#
+L1011.in_EJ_ctry_intlship_TOT_Yh$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L1011.in_EJ_ctry_intlship_TOT_Yh$iso, iso_GCAM_regID$iso)]#
+L1011.in_EJ_R_intlship_Yh <- aggregate( L1011.in_EJ_ctry_intlship_TOT_Yh[ EIA_yearcols ],#
+      by=list( GCAM_region_ID = L1011.in_EJ_ctry_intlship_TOT_Yh$GCAM_region_ID ), sum )
+source("../energy-processing-code/level1/L1011.en_bal_adj.R")
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+source("../energy-processing-code/level1/L1011.en_bal_adj.R")
+source("../energy-processing-code/level1/L102.en_emiss_CDIAC.R")
+source("../energy-processing-code/level1/L111.rsrc_fos_Prod.R")
+dim(L111.RsrcCurves_EJ_R_Ffos)
+L111.RsrcCurves_EJ_R_Ffos[1:10,]
+L111.RsrcCurves_EJ_R_Ffos <- data.frame(#
+      GCAM_region_ID = rep( GCAM_region_names$GCAM_region_ID, times = length( unique( A11.fos_curves$subresource ) ) ),#
+      subresource = sort( rep( unique( A11.fos_curves$subresource ), times = length( GCAM_region_names$GCAM_region_ID ) ) ) )#
+L111.RsrcCurves_EJ_R_Ffos$resource <- A11.fos_curves$resource[ match( L111.RsrcCurves_EJ_R_Ffos$subresource, A11.fos_curves$subresource) ]#
+L111.RsrcCurves_EJ_R_Ffos <- repeat_and_add_vector( L111.RsrcCurves_EJ_R_Ffos, "grade", unique( A11.fos_curves$grade ) )#
+#
+#Remove non-existent grades#
+L111.RsrcCurves_EJ_R_Ffos <- subset( L111.RsrcCurves_EJ_R_Ffos, paste( subresource, grade ) %in% paste( A11.fos_curves$subresource, A11.fos_curves$grade ) )#
+#
+#Match in GCAM3 region, along with available and extraction cost#
+L111.RsrcCurves_EJ_R_Ffos$region_GCAM3 <- GCAM_region_names$region_GCAM3[ match( L111.RsrcCurves_EJ_R_Ffos$GCAM_region_ID, GCAM_region_names$GCAM_region_ID ) ]#
+L111.RsrcCurves_EJ_R_Ffos$available_region_GCAM3 <- A11.fos_curves$available[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ RG3_subrsrc_grd ] ), vecpaste( A11.fos_curves[ RG3_subrsrc_grd ] ) ) ]#
+L111.RsrcCurves_EJ_R_Ffos$extractioncost <- A11.fos_curves$extractioncost[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ RG3_subrsrc_grd ] ), vecpaste( A11.fos_curves[ RG3_subrsrc_grd ] ) ) ]#
+#
+#Calculate the portion of each fuel that is produced by GCAM region within GCAM3 regions#
+printlog( "NOTE: Using total oil production as a proxy for disaggregation of crude and unconventional oil resources" )#
+L111.CumulProd_EJ_R_F_Yh <- cbind( L111.Prod_EJ_R_F_Yh[ c( "GCAM_region_ID", "fuel" ) ], CumulProd = rowSums( L111.Prod_EJ_R_F_Yh[ X_historical_years ] ) )#
+L111.CumulProd_EJ_R_F_Yh$fuel[ L111.CumulProd_EJ_R_F_Yh$fuel == "unconventional oil" ] <- "crude oil"#
+L111.CumulProd_EJ_R_F_Yh <- aggregate( L111.CumulProd_EJ_R_F_Yh[ "CumulProd" ],#
+      by=as.list( L111.CumulProd_EJ_R_F_Yh[ R_F ] ), sum )#
+L111.CumulProd_EJ_R_F_Yh$region_GCAM3 <- GCAM_region_names$region_GCAM3[ match( L111.CumulProd_EJ_R_F_Yh$GCAM_region_ID, GCAM_region_names$GCAM_region_ID ) ]#
+L111.CumulProd_EJ_RG3_F_Yh <- aggregate( L111.CumulProd_EJ_R_F_Yh[ "CumulProd" ], by=as.list( L111.CumulProd_EJ_R_F_Yh[ RG3_F ] ), sum )#
+#
+#Match in the production by GCAM3 region, and calculate shares by GCAM region#
+L111.CumulProd_EJ_R_F_Yh$CumulProd_region_GCAM3 <- L111.CumulProd_EJ_RG3_F_Yh$CumulProd[#
+      match( vecpaste( L111.CumulProd_EJ_R_F_Yh[ RG3_F ] ), vecpaste( L111.CumulProd_EJ_RG3_F_Yh[ RG3_F ] ) ) ]#
+L111.CumulProd_EJ_R_F_Yh$ProdShare <- L111.CumulProd_EJ_R_F_Yh$CumulProd / L111.CumulProd_EJ_R_F_Yh$CumulProd_region_GCAM3#
+#
+#Match these production shares back into the resource curves#
+L111.RsrcCurves_EJ_R_Ffos$ProdShare <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ),#
+             vecpaste( L111.CumulProd_EJ_R_F_Yh[ R_F ] ) ) ]
+L111.RsrcCurves_EJ_R_Ffos[1:10,]
+subset(L111.RsrcCurves_EJ_R_Ffos, subresource=="unconventional oil",)
+dim(L111.CumulProd_EJ_R_F_Yh)
+L111.CumulProd_EJ_R_F_Yh
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ] <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+         match( with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ), paste( GCAM_region_ID, "crude oil" ) ),#
+                paste( L111.CumulProd_EJ_R_F_Yh$GCAM_region_ID, L111.CumulProd_EJ_R_F_Yh$fuel ) ) ]
+tmp<-L111.RsrcCurves_EJ_R_Ffos
+tmp
+L111.RsrcCurves_EJ_R_Ffos$ProdShare <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ),#
+             vecpaste( L111.CumulProd_EJ_R_F_Yh[ R_F ] ) ) ]#
+#
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ] <-#
+      L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "crude oil" ]
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "crude oil" ]
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ]
+L111.RsrcCurves_EJ_R_Ffos$ProdShare <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ),#
+             vecpaste( L111.CumulProd_EJ_R_F_Yh[ R_F ] ) ) ]
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ]
+L111.RsrcCurves_EJ_R_Ffos[ R_F ]
+R_F
+R_subrsrc
+L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ]
+L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil", R_subrsrc ]
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil", R_subrsrc ] )
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ]
+length(L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ])
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ] <- L111.RsrcCurves_EJ_R_Ffos$ProdShare[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil", R_subrsrc ] ),#
+             vecpaste( L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "crude oil", R_subrsrc ] ) )
+"hello world"
+"hello world"
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ] <- L111.RsrcCurves_EJ_R_Ffos$ProdShare[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil", R_subrsrc ] ),#
+             vecpaste( L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "crude oil", R_subrsrc ] ) ) ]
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ]
+vecpaste( L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil", R_subrsrc ] )
+vecpaste( L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "crude oil", R_subrsrc ] )
+with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare <- L111.RsrcCurves_EJ_R_Ffos$Prodshare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+L111.RsrcCurves_EJ_R_Ffos$ProdShare
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ]
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] )
+L111.RsrcCurves_EJ_R_Ffos$Prodshare
+with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare <- L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ]
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare <<- L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+?<<0
+?<<-
+?
+?objects
+?with
+with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare = L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare = L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+within( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare <- L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+within( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare <- L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare <- L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ) <- #
+with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare <- L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+L111.RsrcCurves_EJ_R_Ffos[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil", ] <- #
+with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ),#
+      ProdShare <- L111.RsrcCurves_EJ_R_Ffos$ProdShare[ match( paste( GCAM_region_ID, "crude oil" ), vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ) ) ] )
+L111.RsrcCurves_EJ_R_Ffos$ProdShare <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ),#
+             vecpaste( L111.CumulProd_EJ_R_F_Yh[ R_F ] ) ) ]#
+#
+#Set unconventional oil production shares equal to oil production shares#
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil", ] <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+      match( with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ), paste( GCAM_region_ID, "crude oil" ) ),#
+         paste( L111.CumulProd_EJ_R_F_Yh$GCAM_region_ID, L111.CumulProd_EJ_R_F_Yh$fuel ) ) ]
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ] <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+      match( with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ), paste( GCAM_region_ID, "crude oil" ) ),#
+         paste( L111.CumulProd_EJ_R_F_Yh$GCAM_region_ID, L111.CumulProd_EJ_R_F_Yh$fuel ) ) ]
+subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" )
+L111.RsrcCurves_EJ_R_Ffos
+L111.RsrcCurves_EJ_R_Ffos <- subset( L111.RsrcCurves_EJ_R_Ffos, paste( subresource, grade ) %in% paste( A11.fos_curves$subresource, A11.fos_curves$grade ) )#
+#
+#Match in GCAM3 region, along with available and extraction cost#
+L111.RsrcCurves_EJ_R_Ffos$region_GCAM3 <- GCAM_region_names$region_GCAM3[ match( L111.RsrcCurves_EJ_R_Ffos$GCAM_region_ID, GCAM_region_names$GCAM_region_ID ) ]#
+L111.RsrcCurves_EJ_R_Ffos$available_region_GCAM3 <- A11.fos_curves$available[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ RG3_subrsrc_grd ] ), vecpaste( A11.fos_curves[ RG3_subrsrc_grd ] ) ) ]#
+L111.RsrcCurves_EJ_R_Ffos$extractioncost <- A11.fos_curves$extractioncost[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ RG3_subrsrc_grd ] ), vecpaste( A11.fos_curves[ RG3_subrsrc_grd ] ) ) ]#
+#
+#Calculate the portion of each fuel that is produced by GCAM region within GCAM3 regions#
+printlog( "NOTE: Using total oil production as a proxy for disaggregation of crude and unconventional oil resources" )#
+L111.CumulProd_EJ_R_F_Yh <- cbind( L111.Prod_EJ_R_F_Yh[ c( "GCAM_region_ID", "fuel" ) ], CumulProd = rowSums( L111.Prod_EJ_R_F_Yh[ X_historical_years ] ) )#
+L111.CumulProd_EJ_R_F_Yh$fuel[ L111.CumulProd_EJ_R_F_Yh$fuel == "unconventional oil" ] <- "crude oil"#
+L111.CumulProd_EJ_R_F_Yh <- aggregate( L111.CumulProd_EJ_R_F_Yh[ "CumulProd" ],#
+      by=as.list( L111.CumulProd_EJ_R_F_Yh[ R_F ] ), sum )#
+L111.CumulProd_EJ_R_F_Yh$region_GCAM3 <- GCAM_region_names$region_GCAM3[ match( L111.CumulProd_EJ_R_F_Yh$GCAM_region_ID, GCAM_region_names$GCAM_region_ID ) ]#
+L111.CumulProd_EJ_RG3_F_Yh <- aggregate( L111.CumulProd_EJ_R_F_Yh[ "CumulProd" ], by=as.list( L111.CumulProd_EJ_R_F_Yh[ RG3_F ] ), sum )#
+#
+#Match in the production by GCAM3 region, and calculate shares by GCAM region#
+L111.CumulProd_EJ_R_F_Yh$CumulProd_region_GCAM3 <- L111.CumulProd_EJ_RG3_F_Yh$CumulProd[#
+      match( vecpaste( L111.CumulProd_EJ_R_F_Yh[ RG3_F ] ), vecpaste( L111.CumulProd_EJ_RG3_F_Yh[ RG3_F ] ) ) ]#
+L111.CumulProd_EJ_R_F_Yh$ProdShare <- L111.CumulProd_EJ_R_F_Yh$CumulProd / L111.CumulProd_EJ_R_F_Yh$CumulProd_region_GCAM3#
+#
+#Match these production shares back into the resource curves#
+L111.RsrcCurves_EJ_R_Ffos$ProdShare <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+      match( vecpaste( L111.RsrcCurves_EJ_R_Ffos[ R_subrsrc ] ),#
+             vecpaste( L111.CumulProd_EJ_R_F_Yh[ R_F ] ) ) ]#
+#
+#Set unconventional oil production shares equal to oil production shares#
+L111.RsrcCurves_EJ_R_Ffos$ProdShare[ L111.RsrcCurves_EJ_R_Ffos$subresource == "unconventional oil" ] <- L111.CumulProd_EJ_R_F_Yh$ProdShare[#
+      match( with( subset( L111.RsrcCurves_EJ_R_Ffos, subresource == "unconventional oil" ), paste( GCAM_region_ID, "crude oil" ) ),#
+         paste( L111.CumulProd_EJ_R_F_Yh$GCAM_region_ID, L111.CumulProd_EJ_R_F_Yh$fuel ) ) ]
+L111.RsrcCurves_EJ_R_Ffos
+S_F
+names_Supplysector
+names_s_s_t_i <- c( "supplysector", "subsector", "technology", "minicam.energy.input" )
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L121.oil.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical consumption of conventional and unconventional oil" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+A21.unoil_demandshares <- readdata( "ENERGY_ASSUMPTIONS", "A21.unoil_demandshares")#
+A21.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_coef")#
+L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )#
+L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )#
+#
+# -----------------------------------------------------------------------------#
+# 2. Perform computations#
+#Calculate the energy inputs to unconventional oil production in the base years (gas)#
+L121.globaltech_coef <- subset( A21.globaltech_coef, paste( supplysector, subsector, technology, minicam.energy.input ) %in%#
+      paste( calibrated_techs$supplysector, calibrated_techs$subsector, calibrated_techs$technology, calibrated_techs$minicam.energy.input ) )
+dim(L121.globaltech_coef)
+L121.globaltech_coef
+A21.globaltech_coef
+L121.globaltech_coef <- subset( A21.globaltech_coef, vecpaste( names_s_s_t_i ) %in%#
+      paste( calibrated_techs$supplysector, calibrated_techs$subsector, calibrated_techs$technology, calibrated_techs$minicam.energy.input ) )
+L121.globaltech_coef
+L121.globaltech_coef <- A21.globaltech_coef[ vecpaste( A21.globaltech_coef[ names_s_s_t_i ] ) %in%#
+      vecpaste( calibrated_techs[ s_s_t_i ] ), ]
+L121.globaltech_coef <- A21.globaltech_coef[ vecpaste( A21.globaltech_coef[ names_s_s_t_i ] ) %in%#
+      vecpaste( calibrated_techs[ names_s_s_t_i ] ), ]
+L121.globaltech_coef
+s_s_t_i <- c( "supplysector", "subsector", "technology", "minicam.energy.input" )
+L121.globaltech_coef_interp[ S_F ] <- calibrated_techs[#
+      match( vecpaste( L121.globaltech_coef_interp[ s_s_t_i ] ), vecpaste( calibrated_techs[ s_s_t_i ] ) ),#
+      S_F ]
+L121.globaltech_coef <- A21.globaltech_coef[ vecpaste( A21.globaltech_coef[ s_s_t_i ] ) %in% vecpaste( calibrated_techs[ s_s_t_i ] ), ]#
+L121.globaltech_coef_interp <- gcam_interp( L121.globaltech_coef, historical_years )#
+L121.globaltech_coef_interp[ S_F ] <- calibrated_techs[#
+      match( vecpaste( L121.globaltech_coef_interp[ s_s_t_i ] ), vecpaste( calibrated_techs[ s_s_t_i ] ) ),#
+      S_F ]
+L121.globaltech_coef_interp
+L121.in_EJ_R_unoil_F_Yh <- L111.Prod_EJ_R_F_Yh[ vecpaste( L111.Prod_EJ_R_F_Yh[ S_F ] ) %in% vecpaste( L121.globaltech_coef_interp[ S_F ] ), ]
+L121.in_EJ_R_unoil_F_Yh
+source("../energy-processing-code/level1/L121.oil.R")
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L122.gasproc_refining.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical inputs, outputs, and IO coefficients of gas processing and refining" )
+logstop()
+logstop()
+logstop()
+logstop()
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L122.gasproc_refining.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical inputs, outputs, and IO coefficients of gas processing and refining" )
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+A22.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_coef" )#
+L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )
+printlog( "Gas processing output: coal specified in energy balance tables; biogas and natural gas equal to regional TPES" )#
+L122.out_EJ_R_gasproc_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh,#
+      sector == "out_gas processing" & fuel == "coal" |#
+      sector == "TPES" & fuel == "gasified biomass" |#
+      sector == "TPES" & fuel == "gas" )#
+L122.out_EJ_R_gasproc_F_Yh$sector <- "gas processing"#
+L122.out_EJ_R_gasproc_F_Yh$fuel[ L122.out_EJ_R_gasproc_F_Yh$fuel == "gasified biomass" ] <- "biomass"#
+#
+printlog( "Gas processing inputs: derived as output times exogenous input-output coefficients" )#
+# Interpolate gas processing IO coefs to all historical years and match in the fuel name#
+L122.gasproc_coef <- gcam_interp( subset( A22.globaltech_coef, supplysector == "gas processing" ), historical_years )
+s_s_t <- c( "supplysector", "subsector", "technology" )
+R_S
+R_S <- c( "GCAM_region_ID", "sector" )
+source("../energy-processing-code/level1/L122.gasproc_refining.R")
+source("../energy-processing-code/level1/L122.gasproc_refining.R")
+R_S_Felec <- c( R_S, "fuel_electricity" )
+R_S
+R_S_Felec
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )#
+A23.chp_elecratio <- readdata( "ENERGY_ASSUMPTIONS", "A23.chp_elecratio" )#
+L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )#
+#
+# -----------------------------------------------------------------------------#
+# 2. Perform computations#
+# 2a. CENTRAL ELECTRICITY#
+printlog( "Electricity output (central only): aggregating intermediate fuels as specified in ", file_fqn( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" ) )#
+L123.out_EJ_R_elec_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "out_electricity generation" )#
+L123.out_EJ_R_elec_F_Yh$sector <- gsub2( "out_", "", L123.out_EJ_R_elec_F_Yh$sector )#
+L123.out_EJ_R_elec_F_Yh$fuel_init <- L123.out_EJ_R_elec_F_Yh$fuel#
+L123.out_EJ_R_elec_F_Yh$fuel <- enduse_fuel_aggregation$electricity[ match( L123.out_EJ_R_elec_F_Yh$fuel_init, enduse_fuel_aggregation$fuel ) ]#
+L123.out_EJ_R_elec_F_Yh <- aggregate( L123.out_EJ_R_elec_F_Yh[ X_historical_years ],#
+      by=as.list( L123.out_EJ_R_elec_F_Yh[ R_S_F ] ), sum )
+printlog( "Electricity output (central only): aggregating intermediate fuels as specified in ", file_fqn( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" ) )#
+L123.out_EJ_R_elec_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "out_electricity generation" )#
+L123.out_EJ_R_elec_F_Yh$sector <- gsub2( "out_", "", L123.out_EJ_R_elec_F_Yh$sector )#
+L123.out_EJ_R_elec_F_Yh$fuel_init <- L123.out_EJ_R_elec_F_Yh$fuel#
+L123.out_EJ_R_elec_F_Yh$fuel <- enduse_fuel_aggregation$electricity[ match( L123.out_EJ_R_elec_F_Yh$fuel_init, enduse_fuel_aggregation$fuel ) ]#
+L123.out_EJ_R_elec_F_Yh <- aggregate( L123.out_EJ_R_elec_F_Yh[ X_historical_years ], by=as.list( L123.out_EJ_R_elec_F_Yh[ R_S_F ] ), sum )#
+#
+printlog( "Fuel inputs to electricity: aggregating intermediate fuels" )#
+L123.in_EJ_R_elec_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_electricity generation" & fuel %in% electricity_input_fuels )#
+L123.in_EJ_R_elec_F_Yh$sector <- gsub2( "in_", "", L123.in_EJ_R_elec_F_Yh$sector )#
+L123.in_EJ_R_elec_F_Yh$fuel_init <- L123.in_EJ_R_elec_F_Yh$fuel#
+L123.in_EJ_R_elec_F_Yh$fuel <- enduse_fuel_aggregation$electricity[ match( L123.in_EJ_R_elec_F_Yh$fuel_init, enduse_fuel_aggregation$fuel ) ]#
+L123.in_EJ_R_elec_F_Yh <- aggregate( L123.in_EJ_R_elec_F_Yh[ X_historical_years ], by=as.list( L123.in_EJ_R_elec_F_Yh[ R_S_F ] ), sum )#
+#
+printlog( "Calculating efficiencies whose inputs are considered")#
+L123.eff_R_elec_F_Yh <- L123.in_EJ_R_elec_F_Yh#
+L123.eff_R_elec_F_Yh[ X_historical_years ] <- L123.out_EJ_R_elec_F_Yh[#
+      match( vecpaste( L123.eff_R_elec_F_Yh[ R_F ] ), vecpaste( L123.out_EJ_R_elec_F_Yh[ R_F ] ) ), X_historical_years ] /#
+      L123.in_EJ_R_elec_F_Yh[ X_historical_years ]#
+#
+#Re-set NaN (no input or output), 0 (input but no output), and "Inf" (output but no input) to default electric efficiency#
+##Only the change to the 0 efficiencies will have any impacts#
+L123.eff_R_elec_F_Yh[ is.na( L123.eff_R_elec_F_Yh ) ] <- default_electric_efficiency#
+L123.eff_R_elec_F_Yh[ L123.eff_R_elec_F_Yh == 0 ] <- default_electric_efficiency#
+L123.eff_R_elec_F_Yh[ L123.eff_R_elec_F_Yh == Inf ] <- default_electric_efficiency#
+#
+#Re-calculate the output to take into account these changes in selected efficiencies#
+L123.out_EJ_R_elec_F_Yh[ vecpaste( L123.out_EJ_R_elec_F_Yh[ R_F ] ) %in% vecpaste( L123.eff_R_elec_F_Yh[ R_F ] ), X_historical_years ] <- #
+      L123.eff_R_elec_F_Yh[ X_historical_years ] * L123.in_EJ_R_elec_F_Yh[ X_historical_years ]
+L123.out_EJ_R_indchp_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "out_chp_elec" )#
+L123.out_EJ_R_indchp_F_Yh$sector <- gsub2( "out_", "", L123.out_EJ_R_indchp_F_Yh$sector )#
+L123.out_EJ_R_indchp_F_Yh$fuel_electricity <- enduse_fuel_aggregation$electricity[ match( L123.out_EJ_R_indchp_F_Yh$fuel, enduse_fuel_aggregation$fuel ) ]#
+L123.out_EJ_R_indchp_F_Yh$fuel_industry <- enduse_fuel_aggregation$industry[ match( L123.out_EJ_R_indchp_F_Yh$fuel, enduse_fuel_aggregation$fuel ) ]#
+L123.out_EJ_R_indchp_F_Yh$fuel_chp <- ifelse( L123.out_EJ_R_indchp_F_Yh$fuel_industry == L123.out_EJ_R_indchp_F_Yh$fuel_electricity,#
+      L123.out_EJ_R_indchp_F_Yh$fuel_industry, NA )
+head(L123.out_EJ_R_indchp_F_Yh)
+L123.out_EJ_R_indchp_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "out_chp_elec" )#
+L123.out_EJ_R_indchp_F_Yh$sector <- gsub2( "out_", "", L123.out_EJ_R_indchp_F_Yh$sector )#
+L123.out_EJ_R_indchp_F_Yh$fuel_electricity <- enduse_fuel_aggregation$electricity[ match( L123.out_EJ_R_indchp_F_Yh$fuel, enduse_fuel_aggregation$fuel ) ]#
+L123.out_EJ_R_indchp_F_Yh$fuel_industry <- enduse_fuel_aggregation$industry[ match( L123.out_EJ_R_indchp_F_Yh$fuel, enduse_fuel_aggregation$fuel ) ]
+L123.out_EJ_R_indchp_F_Yh[c(1:4,40:ncol(L123.out_EJ_R_indchp_F_Yh))]
+enduse_fuel_aggregation
+L123.out_EJ_R_indchp_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "out_chp_elec" )#
+L123.out_EJ_R_indchp_F_Yh$sector <- gsub2( "out_", "", L123.out_EJ_R_indchp_F_Yh$sector )#
+L123.out_EJ_R_indchp_F_Yh$fuel_init <- L123.out_EJ_R_indchp_F_Yh$fuel#
+L123.out_EJ_R_indchp_F_Yh$fuel <- enduse_fuel_aggregation$industry[ match( L123.out_EJ_R_indchp_F_Yh$fuel_init, enduse_fuel_aggregation$fuel ) ]#
+L123.out_EJ_R_indchp_F_Yh$fuel[ L123.out_EJ_R_indchp_F_Yh$fuel %!in% enduse_fuel_aggregation$electricity ] <- NA
+L123.out_EJ_R_indchp_F_Yh[c(1:5,40:ncol(L123.out_EJ_R_indchp_F_Yh))]
+source("../energy-processing-code/level1/L123.electricity.R")
+source("../energy-processing-code/level1/L123.electricity.R")
+logstop()
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )#
+L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )#
+L1231.out_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.out_EJ_R_elec_F_tech_Yh" )
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L124.heat.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical energy consumption for district heat production" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )#
+L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )#
+L1231.out_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.out_EJ_R_elec_F_tech_Yh" )
+heat_regionIDs <- A_regions$GCAM_region_ID[ A_regions$heat == 1]
+heat_regionIDs
+L124.in_EJ_R_heat_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_heat" )#
+L124.in_EJ_R_heat_F_Yh$sector <- gsub2( "in_", "", L124.in_EJ_R_heat_F_Yh$sector )
+L124.in_EJ_R_heat_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_heat" )#
+L124.in_EJ_R_heat_F_Yh$sector <- gsub2( "in_", "", L124.in_EJ_R_heat_F_Yh$sector )#
+L124.in_EJ_R_heat_F_Yh$fuel_init <- L124.in_EJ_R_heat_F_Yh$fuel#
+L124.in_EJ_R_heat_F_Yh$fuel <- enduse_fuel_aggregation$heat[ match( L124.in_EJ_R_heat_F_Yh$fuel_init, enduse_fuel_aggregation$fuel ) ]#
+L124.in_EJ_R_heat_F_Yh <- aggregate( L124.in_EJ_R_heat_F_Yh[ X_historical_years ], by=as.list( L124.in_EJ_R_heat_F_Yh[ R_S_F ] ), sum )
+L124.in_EJ_R_heat_F_Yh
+source("../energy-processing-code/level1/L124.heat.R")
+source("../energy-processing-code/level1/L123.electricity.R")
+source("../energy-processing-code/level1/L131.enduse.R")
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L131.enduse.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical energy consumption by end-use sectors" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+enduse_sector_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_sector_aggregation" )#
+L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )#
+L121.in_EJ_R_unoil_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_unoil_F_Yh" )#
+L122.in_EJ_R_refining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.in_EJ_R_refining_F_Yh" )#
+L126.out_EJ_R_electd_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L126.out_EJ_R_electd_F_Yh" )#
+#
+# -----------------------------------------------------------------------------#
+# 2. Perform computations#
+# ELECTRICITY SCALING#
+# First, subset and aggregate the "upstream" electricity demands by the energy system that are not being scaled#
+L131.in_EJ_R_Sen_elec_Yh <- rbind(#
+      subset( L121.in_EJ_R_unoil_F_Yh, fuel == "electricity" ),#
+      subset( L122.in_EJ_R_refining_F_Yh, fuel == "electricity" ) )#
+L131.in_EJ_R_en_elec_Yh <- aggregate( L131.in_EJ_R_Sen_elec_Yh[ X_historical_years ], by=as.list( L131.in_EJ_R_Sen_elec_Yh[ R_F ] ), sum )
+L131.in_EJ_R_Sen_elec_Yh[ X_historical_years ][1:20,]
+L131.in_EJ_R_Sen_elec_Yh <- rbind(#
+      subset( L121.in_EJ_R_unoil_F_Yh, fuel == "electricity" ),#
+      subset( L122.in_EJ_R_refining_F_Yh, fuel == "electricity" ) )
+summary(L131.in_EJ_R_Sen_elec_Yh)
+summary(L121.in_EJ_R_unoil_F_Yh)
+summary(L122.in_EJ_R_refining_F_Yh)
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+A22.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_coef" )#
+L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )#
+#
+# -----------------------------------------------------------------------------#
+# 2. Perform computations#
+# 2a. GAS PROCESSING#
+printlog( "Gas processing output: coal specified in energy balance tables; biogas and natural gas equal to regional TPES" )#
+L122.out_EJ_R_gasproc_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh,#
+      sector == "out_gas processing" & fuel == "coal" |#
+      sector == "TPES" & fuel == "gasified biomass" |#
+      sector == "TPES" & fuel == "gas" )#
+L122.out_EJ_R_gasproc_F_Yh$sector <- "gas processing"#
+L122.out_EJ_R_gasproc_F_Yh$fuel[ L122.out_EJ_R_gasproc_F_Yh$fuel == "gasified biomass" ] <- "biomass"#
+#
+printlog( "Gas processing inputs: derived as output times exogenous input-output coefficients" )#
+# Interpolate gas processing IO coefs to all historical years and match in the fuel name#
+L122.gasproc_coef <- gcam_interp( subset( A22.globaltech_coef, supplysector == "gas processing" ), historical_years )#
+L122.gasproc_coef[ S_F ] <- calibrated_techs[ match( vecpaste( L122.gasproc_coef[ s_s_t ] ), vecpaste( calibrated_techs[ s_s_t ] ) ), S_F ]#
+#
+L122.in_EJ_R_gasproc_F_Yh <- L122.out_EJ_R_gasproc_F_Yh#
+L122.in_EJ_R_gasproc_F_Yh[ X_historical_years ] <- L122.out_EJ_R_gasproc_F_Yh[ X_historical_years ] * L122.gasproc_coef[#
+      match( vecpaste( L122.in_EJ_R_gasproc_F_Yh[ S_F ] ), vecpaste( L122.gasproc_coef[ S_F ] ) ),#
+      X_historical_years ]#
+#
+# 2b. REFINING#
+##For most technologies, inputs are derived from outputs based on exogenous IO coefficients. Subset the relevant IO coefs#
+L122.globaltech_coef <- subset( A22.globaltech_coef, paste( supplysector, subsector, technology ) %in% vecpaste( calibrated_techs[ s_s_t ] ) )#
+L122.globaltech_coef[ S_F ] <- calibrated_techs[#
+      match( vecpaste( L122.globaltech_coef[ s_s_t_i ] ), vecpaste( calibrated_techs[ s_s_t_i ] ) ),#
+      S_F ]#
+L122.globaltech_coef <- gcam_interp( L122.globaltech_coef, historical_years )#
+#
+## BIOMASS LIQUIDS#
+printlog( "Ethanol and biodiesel output: equal to regional TPES")#
+L122.out_EJ_R_biofuel_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel %in% c( "refined biofuels_ethanol", "refined biofuels_FT" ) )#
+L122.out_EJ_R_biofuel_Yh$sector[ L122.out_EJ_R_biofuel_Yh$fuel == "refined biofuels_ethanol" ] <- A_regions$ethanol[#
+      match( L122.out_EJ_R_biofuel_Yh$GCAM_region_ID[ L122.out_EJ_R_biofuel_Yh$fuel == "refined biofuels_ethanol" ],#
+             A_regions$GCAM_region_ID ) ]#
+L122.out_EJ_R_biofuel_Yh$sector[ L122.out_EJ_R_biofuel_Yh$fuel == "refined biofuels_FT" ] <- A_regions$biodiesel[#
+      match( L122.out_EJ_R_biofuel_Yh$GCAM_region_ID[ L122.out_EJ_R_biofuel_Yh$fuel == "refined biofuels_FT" ],#
+             A_regions$GCAM_region_ID ) ]#
+L122.out_EJ_R_biofuel_Yh$fuel <- calibrated_techs$fuel[ match( L122.out_EJ_R_biofuel_Yh$sector, calibrated_techs$sector ) ]#
+#
+#Inputs to biofuel production are region-specific#
+printlog( "Inputs to ethanol and biodiesel: equal to output times exogenous input-output coefficients" )#
+L122.biofuel_coef <- subset( L122.globaltech_coef, sector %in% L122.out_EJ_R_biofuel_Yh$sector )#
+#
+#Because some have multiple inputs, repeat coefficient table by number of regions and then subset only the applicable combinations#
+L122.biofuel_coef_repR <- repeat_and_add_vector( L122.biofuel_coef, "GCAM_region_ID", A_regions$GCAM_region_ID )#
+L122.biofuel_coef_R <- subset( L122.biofuel_coef_repR, paste( GCAM_region_ID, sector ) %in%#
+      c( vecpaste( A_regions[ c( "GCAM_region_ID", "ethanol" ) ] ),#
+         vecpaste( A_regions[ c( "GCAM_region_ID", "biodiesel" ) ] ) ) )#
+#
+#Build table of inputs to biofuel production (IO coefs times output)#
+L122.in_EJ_R_biofuel_F_Yh <- L122.biofuel_coef_R[ c( R_S_F ) ]#
+L122.in_EJ_R_biofuel_F_Yh[ X_historical_years ] <- L122.biofuel_coef_R[ X_historical_years ] * L122.out_EJ_R_biofuel_Yh[#
+      match( vecpaste( L122.in_EJ_R_biofuel_F_Yh[ R_S ] ), vecpaste( L122.out_EJ_R_biofuel_Yh[ R_S ] ) ),#
+      X_historical_years ]#
+#
+## GAS AND COAL TO LIQUIDS#
+printlog( "Output of GTL and CTL: subset from energy balance table")#
+L122.out_EJ_R_gtlctl_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector %in% c( "out_gtl", "out_ctl" ) )#
+L122.out_EJ_R_gtlctl_Yh$sector <- gsub2( "out_", "", L122.out_EJ_R_gtlctl_Yh$sector )#
+#
+printlog( "GTL and CTL inputs: derived as output times exogenous input-output coefficients" )#
+# Interpolate gas processing IO coefs to all historical years and match in the fuel name#
+L122.gtlctl_coef <- subset( L122.globaltech_coef, paste( sector, fuel ) %in% paste( L122.out_EJ_R_gtlctl_Yh$sector, L122.out_EJ_R_gtlctl_Yh$fuel ) )#
+#
+#Assuming only one input per technology#
+L122.in_EJ_R_gtlctl_F_Yh <- L122.out_EJ_R_gtlctl_Yh#
+L122.in_EJ_R_gtlctl_F_Yh[ X_historical_years ] <- L122.out_EJ_R_gtlctl_Yh[ X_historical_years ] * L122.gtlctl_coef[#
+      match( vecpaste( L122.in_EJ_R_gtlctl_F_Yh[ S_F ] ), paste( L122.gtlctl_coef[ S_F ] ) ),#
+      X_historical_years ]#
+##CRUDE OIL REFINING#
+printlog( "Oil refining: output is equal to TPES minus net refinery energy use" )#
+L122.out_EJ_R_oilrefining_Yh <- data.frame( GCAM_region_ID = GCAM_region_names$GCAM_region_ID, sector = "oil refining", fuel = "oil" )#
+L122.out_EJ_R_oilrefining_Yh[ X_historical_years ] <-#
+      subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel == "refined liquids", select = X_historical_years ) - #
+      subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "net_oil refining" & fuel == "refined liquids", select = X_historical_years )#
+#
+printlog( "Oil refining: input of oil is equal to TPES, and input of other fuels is from net refinery energy use")#
+L122.in_EJ_R_oilrefining_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "net_oil refining" )#
+L122.in_EJ_R_oilrefining_F_Yh[ L122.in_EJ_R_oilrefining_F_Yh$fuel == "refined liquids", X_historical_years ] <-#
+      subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel == "refined liquids", select = X_historical_years )#
+L122.in_EJ_R_oilrefining_F_Yh$sector <- gsub2( "net_", "", L122.in_EJ_R_oilrefining_F_Yh$sector )#
+L122.in_EJ_R_oilrefining_F_Yh$fuel[ L122.in_EJ_R_oilrefining_F_Yh$fuel == "refined liquids" ] <- "oil"      #
+printlog( "Calculating region- and fuel-specific coefficients of crude oil refining" )#
+L122.IO_R_oilrefining_F_Yh <- L122.in_EJ_R_oilrefining_F_Yh#
+L122.IO_R_oilrefining_F_Yh[ X_historical_years ] <- L122.in_EJ_R_oilrefining_F_Yh[ X_historical_years ] / L122.out_EJ_R_oilrefining_Yh[#
+      match( L122.IO_R_oilrefining_F_Yh$GCAM_region_ID, L122.out_EJ_R_oilrefining_Yh$GCAM_region_ID ),#
+      X_historical_years ]#
+#
+#COMBINE (RBIND) ALL CALIBRATED REFINERY INPUT AND OUTPUT TABLES#
+L122.out_EJ_R_refining_F_Yh <- rbind( L122.out_EJ_R_oilrefining_Yh, L122.out_EJ_R_gtlctl_Yh, L122.out_EJ_R_biofuel_Yh )#
+L122.in_EJ_R_refining_F_Yh <- rbind( L122.in_EJ_R_oilrefining_F_Yh, L122.in_EJ_R_gtlctl_F_Yh, L122.in_EJ_R_biofuel_F_Yh )
+summary(L122.out_EJ_R_gasproc_F_Yh)
+summary(L122.IO_R_oilrefining_F_Yh)
+summary(L122.out_EJ_R_refining_F_Yh)
+summary(L122.in_EJ_R_refining_F_Yh)
+source("../energy-processing-code/level1/L122.gasproc_refining.R")
+source("../energy-processing-code/level1/L131.enduse.R")
+summary(L122.in_EJ_R_refining_F_Yh)
+source("../energy-processing-code/level1/L122.gasproc_refining.R")
+summary(L122.in_EJ_R_refining_F_Yh)
+L122.in_EJ_R_refining_F_Yh
+L122.out_EJ_R_gtlctl_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector %in% c( "out_gtl", "out_ctl" ) )#
+L122.out_EJ_R_gtlctl_Yh$sector <- gsub2( "out_", "", L122.out_EJ_R_gtlctl_Yh$sector )
+L122.out_EJ_R_gtlctl_Yh
+L122.gtlctl_coef <- subset( L122.globaltech_coef, paste( sector, fuel ) %in% vecpaste( L122.out_EJ_R_gtlctl_Yh[ S_F ] ) )
+L122.gtlctl_coef
+L122.in_EJ_R_gtlctl_F_Yh <- L122.out_EJ_R_gtlctl_Yh#
+L122.in_EJ_R_gtlctl_F_Yh[ X_historical_years ] <- L122.out_EJ_R_gtlctl_Yh[ X_historical_years ] * L122.gtlctl_coef[#
+      match( vecpaste( L122.in_EJ_R_gtlctl_F_Yh[ S_F ] ), vecpaste( L122.gtlctl_coef[ S_F ] ) ),#
+      X_historical_years ]
+L122.in_EJ_R_gtlctl_F_Yh
+source("../energy-processing-code/level1/L122.gasproc_refining.R")
+source("../energy-processing-code/level1/L131.enduse.R")
+L131.in_EJ_R_Senduse_F_Yh
+any(is.na(L131.in_EJ_R_Senduse_F_Yh))
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L132.industry.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical industrial sector energy consumption (general energy use and feedstocks, not including cogen)" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )#
+enduse_sector_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_sector_aggregation" )#
+L121.in_EJ_R_unoil_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_unoil_F_Yh" )#
+L122.in_EJ_R_refining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.in_EJ_R_refining_F_Yh" )#
+L122.in_EJ_R_gasproc_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.in_EJ_R_gasproc_F_Yh" )#
+L122.out_EJ_R_gasproc_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_gasproc_F_Yh" )#
+L131.in_EJ_R_Senduse_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L131.in_EJ_R_Senduse_F_Yh" )
+L132.in_EJ_R_ind_F_Yh <- subset( L131.in_EJ_R_Senduse_F_Yh, grepl( "industry", sector ) )#
+L132.in_EJ_R_ind_F_Yh$sector <- enduse_sector_aggregation$sector_agg[ match( L132.in_EJ_R_ind_F_Yh$sector, enduse_sector_aggregation$sector ) ]#
+L132.in_EJ_R_ind_F_Yh$fuel <- enduse_fuel_aggregation$industry[ match( L132.in_EJ_R_ind_F_Yh$fuel, enduse_fuel_aggregation$fuel ) ]#
+L132.in_EJ_R_ind_F_Yh <- aggregate( L132.in_EJ_R_ind_F_Yh[ X_historical_years ], by=as.list( L132.in_EJ_R_ind_F_Yh[ R_S_F ] ), sum )
+L132.in_EJ_R_ind_F_Yh
+L132.in_EJ_R_indfeed_F_Yh <- subset( L132.in_EJ_R_ind_F_Yh, grepl( "feedstocks", sector ) )#
+L132.in_EJ_R_indenergy_F_Yh <- subset( L132.in_EJ_R_ind_F_Yh, grepl( "energy", sector ) )
+L132.in_EJ_R_indunoil_F_Yh <- subset( L121.in_EJ_R_unoil_F_Yh, fuel == "gas" )
+L132.in_EJ_R_indgasproc_F_Yh <- subset( L122.in_EJ_R_gasproc_F_Yh, fuel %in% c( "coal", "gas" ) )#
+L132.in_EJ_R_indgasproc_F_Yh[ L132.in_EJ_R_indgasproc_F_Yh$fuel == "gas", X_historical_years ] <-#
+      L122.in_EJ_R_gasproc_F_Yh[ L122.in_EJ_R_gasproc_F_Yh$fuel == "gas", X_historical_years ] - #
+      L122.out_EJ_R_gasproc_F_Yh[ L122.out_EJ_R_gasproc_F_Yh$fuel == "gas", X_historical_years ]
+L132.in_EJ_R_indrefining_F_Yh <- subset( L122.in_EJ_R_refining_F_Yh, !grepl( "oil refining", sector ) & fuel %in% c( "gas", "coal" ) )
+source("../energy-processing-code/level1/L132.industry.R")
+logstop()
+logstop()
+logstop()
+logstop()
+logstop()
+logstop()
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L1231.elec_tech.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Disaggregation of historical electricity production into specific technologies" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+L123.out_EJ_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.out_EJ_R_elec_F_Yh" )#
+L123.in_EJ_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_elec_F_Yh" )#
+L123.eff_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.eff_R_elec_F_Yh" )
+s_s_t
+L1231.eff_R_elec_gas_Yh.melt <- interpolate_and_melt( subset( L123.eff_R_elec_F_Yh, fuel == "gas" ), historical_years, value.name = "efficiency" )#
+#
+#Subset and melt the assumed efficiencies of gas technologies#
+L1231.eff_R_elec_gas_tech <- A23.globaltech_eff[ A23.globaltech_eff$subsector == "gas" &#
+      vecpaste( A23.globaltech_eff[ s_s_t] ) %in% vecpaste( calibrated_techs[ s_s_t ] ), ]
+L1231.eff_R_elec_gas_tech
+L1231.eff_R_elec_gas_tech.melt <- interpolate_and_melt( L1231.eff_R_elec_gas_tech, historical_years, value.name = "efficiency_tech" )
+paste( L1231.eff_R_elec_gas_Yh.melt$year, unique( L1231.eff_R_elec_gas_tech.melt$technology[1]
+paste( L1231.eff_R_elec_gas_Yh.melt$year, unique( L1231.eff_R_elec_gas_tech.melt$technology[1] ) )
+paste( L1231.eff_R_elec_gas_tech.melt$year, L1231.eff_R_elec_gas_tech.melt$technology ) )
+paste( L1231.eff_R_elec_gas_tech.melt$year, L1231.eff_R_elec_gas_tech.melt$technology )
+L1231.in_EJ_R_elec_F_tech_Yh[1:5,]
+2. Perform computations#
+# 2a. Natural gas: Disaggregate to CC and CT/steam on the basis of assumed efficiencies#
+#Subset and melt the actual efficiencies of gas -> electricity#
+L1231.eff_R_elec_gas_Yh.melt <- interpolate_and_melt( subset( L123.eff_R_elec_F_Yh, fuel == "gas" ), historical_years, value.name = "efficiency" )#
+#
+#Subset and melt the assumed efficiencies of gas technologies#
+L1231.eff_R_elec_gas_tech <- A23.globaltech_eff[ A23.globaltech_eff$subsector == "gas" &#
+      vecpaste( A23.globaltech_eff[ s_s_t] ) %in% vecpaste( calibrated_techs[ s_s_t ] ), ]#
+L1231.eff_R_elec_gas_tech.melt <- interpolate_and_melt( L1231.eff_R_elec_gas_tech, historical_years, value.name = "efficiency_tech" )#
+#
+#Match the assumed tech efficiencies into the table of actual historical efficiencies#
+L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1 <- L1231.eff_R_elec_gas_tech.melt$efficiency_tech[#
+      match( paste( L1231.eff_R_elec_gas_Yh.melt$year, unique( L1231.eff_R_elec_gas_tech.melt$technology[1] ) ),#
+             paste( L1231.eff_R_elec_gas_tech.melt$year, L1231.eff_R_elec_gas_tech.melt$technology ) ) ]#
+L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 <- L1231.eff_R_elec_gas_tech.melt$efficiency_tech[#
+      match( paste( L1231.eff_R_elec_gas_Yh.melt$year, unique( L1231.eff_R_elec_gas_tech.melt$technology[2] ) ),#
+             paste( L1231.eff_R_elec_gas_tech.melt$year, L1231.eff_R_elec_gas_tech.melt$technology ) ) ]#
+#
+#Reset upper and lower bound efficiencies, as needed#
+##Where avg efficiency is outside of the range of the two technologies, set the upper or lower one to the average. This will take 100% of the market share.#
+L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1[ L1231.eff_R_elec_gas_Yh.melt$efficiency < L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1 ] <-#
+      L1231.eff_R_elec_gas_Yh.melt$efficiency[ L1231.eff_R_elec_gas_Yh.melt$efficiency < L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1 ]#
+L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2[ L1231.eff_R_elec_gas_Yh.melt$efficiency > L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 ] <-#
+      L1231.eff_R_elec_gas_Yh.melt$efficiency[ L1231.eff_R_elec_gas_Yh.melt$efficiency > L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 ]#
+#Cast efficiency table to final format#
+L1231.eff_R_elec_gas_tech1_Yh <- cast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "efficiency_tech1")#
+L1231.eff_R_elec_gas_tech1_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[1] )#
+L1231.eff_R_elec_gas_tech2_Yh <- cast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "efficiency_tech2")#
+L1231.eff_R_elec_gas_tech2_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[2] )#
+L1231.eff_R_elec_gas_tech_Yh <- rbind( L1231.eff_R_elec_gas_tech1_Yh, L1231.eff_R_elec_gas_tech2_Yh )[ c( R_S_F_tech, X_historical_years ) ]#
+#
+#Solve for share of first technology#
+L1231.eff_R_elec_gas_Yh.melt$share_tech1 <- with( L1231.eff_R_elec_gas_Yh.melt,#
+      (efficiency - efficiency_tech2) / ( efficiency_tech1 - efficiency_tech2 ) )#
+#
+#Multiply share by output#
+L1231.out_EJ_R_elec_gas_Yh.melt <- interpolate_and_melt( subset( L123.out_EJ_R_elec_F_Yh, fuel == "gas" ), historical_years, value.name = "out_EJ" )#
+L1231.out_EJ_R_elec_gas_Yh.melt$share_tech1 <- L1231.eff_R_elec_gas_Yh.melt$share_tech1[#
+      match( vecpaste( L1231.out_EJ_R_elec_gas_Yh.melt[ R_Y ] ), vecpaste( L1231.eff_R_elec_gas_Yh.melt[ R_Y ] ) ) ]#
+L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech1 <- L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ * L1231.out_EJ_R_elec_gas_Yh.melt$share_tech1#
+L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech2 <- L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ - L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech1#
+#
+#Cast to final format#
+L1231.out_EJ_R_elec_gas_tech1_Yh <- cast( L1231.out_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "out_EJ_tech1" )#
+L1231.out_EJ_R_elec_gas_tech1_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[1] )#
+L1231.out_EJ_R_elec_gas_tech2_Yh <- cast( L1231.out_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "out_EJ_tech2" )#
+L1231.out_EJ_R_elec_gas_tech2_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[2] )#
+L1231.out_EJ_R_elec_gas_tech_Yh <- rbind( L1231.out_EJ_R_elec_gas_tech1_Yh, L1231.out_EJ_R_elec_gas_tech2_Yh)[ c( R_S_F_tech, X_historical_years ) ]#
+#
+#2b. All other (non-gas) technologies are not disaggregated further (only one tech per fuel type)#
+L1231.eff_R_elec_Fnogas_tech_Yh <- subset( L123.eff_R_elec_F_Yh, fuel != "gas" )#
+L1231.eff_R_elec_Fnogas_tech_Yh$technology <- calibrated_techs$technology[#
+      match( vecpaste( L1231.eff_R_elec_Fnogas_tech_Yh[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ) ]#
+L1231.eff_R_elec_F_tech_Yh <- rbind( L1231.eff_R_elec_gas_tech_Yh, L1231.eff_R_elec_Fnogas_tech_Yh[ c( R_S_F_tech, X_historical_years ) ] )#
+L1231.eff_R_elec_F_tech_Yh <- L1231.eff_R_elec_F_tech_Yh[#
+      order( L1231.eff_R_elec_F_tech_Yh$fuel, L1231.eff_R_elec_F_tech_Yh$technology, L1231.eff_R_elec_F_tech_Yh$GCAM_region_ID ), ]#
+#
+L1231.out_EJ_R_elec_Fnogas_tech_Yh <- subset( L123.out_EJ_R_elec_F_Yh, fuel != "gas" )#
+L1231.out_EJ_R_elec_Fnogas_tech_Yh$technology <- calibrated_techs$technology[#
+      match( vecpaste( L1231.out_EJ_R_elec_Fnogas_tech_Yh[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ) ]#
+L1231.out_EJ_R_elec_F_tech_Yh <- rbind( L1231.out_EJ_R_elec_gas_tech_Yh, L1231.out_EJ_R_elec_Fnogas_tech_Yh[ c( R_S_F_tech, X_historical_years ) ] )#
+L1231.out_EJ_R_elec_F_tech_Yh <- L1231.out_EJ_R_elec_F_tech_Yh[ order( L1231.out_EJ_R_elec_F_tech_Yh$fuel, L1231.out_EJ_R_elec_F_tech_Yh$technology ), ]
+R_Y <- c( "GCAM_region_ID", "year" )
+2. Perform computations#
+# 2a. Natural gas: Disaggregate to CC and CT/steam on the basis of assumed efficiencies#
+#Subset and melt the actual efficiencies of gas -> electricity#
+L1231.eff_R_elec_gas_Yh.melt <- interpolate_and_melt( subset( L123.eff_R_elec_F_Yh, fuel == "gas" ), historical_years, value.name = "efficiency" )#
+#
+#Subset and melt the assumed efficiencies of gas technologies#
+L1231.eff_R_elec_gas_tech <- A23.globaltech_eff[ A23.globaltech_eff$subsector == "gas" &#
+      vecpaste( A23.globaltech_eff[ s_s_t] ) %in% vecpaste( calibrated_techs[ s_s_t ] ), ]#
+L1231.eff_R_elec_gas_tech.melt <- interpolate_and_melt( L1231.eff_R_elec_gas_tech, historical_years, value.name = "efficiency_tech" )#
+#
+#Match the assumed tech efficiencies into the table of actual historical efficiencies#
+L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1 <- L1231.eff_R_elec_gas_tech.melt$efficiency_tech[#
+      match( paste( L1231.eff_R_elec_gas_Yh.melt$year, unique( L1231.eff_R_elec_gas_tech.melt$technology[1] ) ),#
+             paste( L1231.eff_R_elec_gas_tech.melt$year, L1231.eff_R_elec_gas_tech.melt$technology ) ) ]#
+L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 <- L1231.eff_R_elec_gas_tech.melt$efficiency_tech[#
+      match( paste( L1231.eff_R_elec_gas_Yh.melt$year, unique( L1231.eff_R_elec_gas_tech.melt$technology[2] ) ),#
+             paste( L1231.eff_R_elec_gas_tech.melt$year, L1231.eff_R_elec_gas_tech.melt$technology ) ) ]#
+#
+#Reset upper and lower bound efficiencies, as needed#
+##Where avg efficiency is outside of the range of the two technologies, set the upper or lower one to the average. This will take 100% of the market share.#
+L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1[ L1231.eff_R_elec_gas_Yh.melt$efficiency < L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1 ] <-#
+      L1231.eff_R_elec_gas_Yh.melt$efficiency[ L1231.eff_R_elec_gas_Yh.melt$efficiency < L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1 ]#
+L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2[ L1231.eff_R_elec_gas_Yh.melt$efficiency > L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 ] <-#
+      L1231.eff_R_elec_gas_Yh.melt$efficiency[ L1231.eff_R_elec_gas_Yh.melt$efficiency > L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 ]#
+#Cast efficiency table to final format#
+L1231.eff_R_elec_gas_tech1_Yh <- cast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "efficiency_tech1")#
+L1231.eff_R_elec_gas_tech1_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[1] )#
+L1231.eff_R_elec_gas_tech2_Yh <- cast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "efficiency_tech2")#
+L1231.eff_R_elec_gas_tech2_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[2] )#
+L1231.eff_R_elec_gas_tech_Yh <- rbind( L1231.eff_R_elec_gas_tech1_Yh, L1231.eff_R_elec_gas_tech2_Yh )[ c( R_S_F_tech, X_historical_years ) ]#
+#
+#Solve for share of first technology#
+L1231.eff_R_elec_gas_Yh.melt$share_tech1 <- with( L1231.eff_R_elec_gas_Yh.melt,#
+      (efficiency - efficiency_tech2) / ( efficiency_tech1 - efficiency_tech2 ) )#
+#
+#Multiply share by output#
+L1231.out_EJ_R_elec_gas_Yh.melt <- interpolate_and_melt( subset( L123.out_EJ_R_elec_F_Yh, fuel == "gas" ), historical_years, value.name = "out_EJ" )#
+L1231.out_EJ_R_elec_gas_Yh.melt$share_tech1 <- L1231.eff_R_elec_gas_Yh.melt$share_tech1[#
+      match( vecpaste( L1231.out_EJ_R_elec_gas_Yh.melt[ R_Y ] ), vecpaste( L1231.eff_R_elec_gas_Yh.melt[ R_Y ] ) ) ]#
+L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech1 <- L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ * L1231.out_EJ_R_elec_gas_Yh.melt$share_tech1#
+L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech2 <- L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ - L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech1#
+#
+#Cast to final format#
+L1231.out_EJ_R_elec_gas_tech1_Yh <- cast( L1231.out_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "out_EJ_tech1" )#
+L1231.out_EJ_R_elec_gas_tech1_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[1] )#
+L1231.out_EJ_R_elec_gas_tech2_Yh <- cast( L1231.out_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "out_EJ_tech2" )#
+L1231.out_EJ_R_elec_gas_tech2_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[2] )#
+L1231.out_EJ_R_elec_gas_tech_Yh <- rbind( L1231.out_EJ_R_elec_gas_tech1_Yh, L1231.out_EJ_R_elec_gas_tech2_Yh)[ c( R_S_F_tech, X_historical_years ) ]#
+#
+#2b. All other (non-gas) technologies are not disaggregated further (only one tech per fuel type)#
+L1231.eff_R_elec_Fnogas_tech_Yh <- subset( L123.eff_R_elec_F_Yh, fuel != "gas" )#
+L1231.eff_R_elec_Fnogas_tech_Yh$technology <- calibrated_techs$technology[#
+      match( vecpaste( L1231.eff_R_elec_Fnogas_tech_Yh[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ) ]#
+L1231.eff_R_elec_F_tech_Yh <- rbind( L1231.eff_R_elec_gas_tech_Yh, L1231.eff_R_elec_Fnogas_tech_Yh[ c( R_S_F_tech, X_historical_years ) ] )#
+L1231.eff_R_elec_F_tech_Yh <- L1231.eff_R_elec_F_tech_Yh[#
+      order( L1231.eff_R_elec_F_tech_Yh$fuel, L1231.eff_R_elec_F_tech_Yh$technology, L1231.eff_R_elec_F_tech_Yh$GCAM_region_ID ), ]#
+#
+L1231.out_EJ_R_elec_Fnogas_tech_Yh <- subset( L123.out_EJ_R_elec_F_Yh, fuel != "gas" )#
+L1231.out_EJ_R_elec_Fnogas_tech_Yh$technology <- calibrated_techs$technology[#
+      match( vecpaste( L1231.out_EJ_R_elec_Fnogas_tech_Yh[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ) ]#
+L1231.out_EJ_R_elec_F_tech_Yh <- rbind( L1231.out_EJ_R_elec_gas_tech_Yh, L1231.out_EJ_R_elec_Fnogas_tech_Yh[ c( R_S_F_tech, X_historical_years ) ] )#
+L1231.out_EJ_R_elec_F_tech_Yh <- L1231.out_EJ_R_elec_F_tech_Yh[ order( L1231.out_EJ_R_elec_F_tech_Yh$fuel, L1231.out_EJ_R_elec_F_tech_Yh$technology ), ]
+L1231.in_EJ_R_elec_F_tech_Yh <- L1231.eff_R_elec_F_tech_Yh
+L1231.in_EJ_R_elec_F_tech_Yh[1:10,]
+R_S_F_tech
+names(L1231.in_EJ_R_elec_F_tech_Yh)
+names(L1231.out_EJ_R_elec_F_tech_Yh)
+L1231.in_EJ_R_elec_F_tech_Yh <- L1231.eff_R_elec_F_tech_Yh#
+L1231.in_EJ_R_elec_F_tech_Yh[ X_historical_years ] <- L1231.out_EJ_R_elec_F_tech_Yh[#
+      match( vecpaste( L1231.in_EJ_R_elec_F_tech_Yh[ R_S_F_tech ] ), vecpaste( L1231.out_EJ_R_elec_F_tech_Yh[ R_S_F_tech ] ) ), X_historical_years ] /#
+      L1231.eff_R_elec_F_tech_Yh[ X_historical_years ]
+L1231.in_EJ_R_elec_F_tech_Yh[1:5,]
+source("../energy-processing-code/level1/L1231.elec_tech.R")
+logstop()
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L1321.cement.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical inputs and outputs of cement manufacturing" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )#
+A_PrimaryFuelCCoef <- readdata( "EMISSIONS_ASSUMPTIONS", "A_PrimaryFuelCCoef" )#
+cement_regions <- readdata( "ENERGY_MAPPINGS", "cement_regions" )#
+Worrell_1994_cement <- readdata( "ENERGY_LEVEL0_DATA", "Worrell_1994_cement" )#
+IEA_cement_elec_kwht <- readdata( "ENERGY_LEVEL0_DATA", "IEA_cement_elec_kwht" )#
+IEA_cement_TPE_GJt <- readdata( "ENERGY_LEVEL0_DATA", "IEA_cement_TPE_GJt" )#
+IEA_cement_fuelshares <- readdata( "ENERGY_LEVEL0_DATA", "IEA_cement_fuelshares" )#
+L100.CDIAC_CO2_ctry_hist <- readdata( "ENERGY_LEVEL1_DATA", "L100.CDIAC_CO2_ctry_hist" )#
+L102.CO2_Mt_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L102.CO2_Mt_R_F_Yh" )#
+L123.in_EJ_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_elec_F_Yh" )#
+L123.out_EJ_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.out_EJ_R_elec_F_Yh" )
+source("../energy-processing-code/level1/L1321.cement.R")

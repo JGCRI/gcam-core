@@ -1,0 +1,13 @@
+#Fat Jar Configuration File
+#Wed Jan 25 10:32:27 EST 2006
+onejar.license.required=false
+manifest.classpath=
+onejar.checkbox=true
+jarname=DM_preprocessor.jar
+manifest.mergeall=true
+manifest.mainclass=ModelInterface.PPsource.Preprocess
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=

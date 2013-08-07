@@ -1,0 +1,136 @@
+digraph GCAM{
+subgraph cluster_11{
+	color = "white";
+	coal[color=red,style=filled];
+	natural_gas[color=red,style=filled];
+	crude_oil[color=red,style=filled];
+	unconventional_oil[color=red,style=filled];
+	uranium[color=red,style=filled];
+	biomass[color=red,style=filled];
+	renewables[color=red,style=filled];
+}
+subgraph cluster_21{
+	color = "white";
+	regional_coal[color=orange,style=filled];
+	regional_natural_gas[color=orange,style=filled];
+	unconventional_oil_production[color=orange,style=filled];
+	regional_biomass[color=orange,style=filled];
+	regional_oil[color=orange,style=filled];
+	traded_unconventional_oil[color=orange,style=filled];
+}
+subgraph cluster_22{
+	color = "white";
+	gas_processing[color=yellow,style=filled];
+	nuclearFuelGenX[color=yellow,style=filled];
+	refining[color=yellow,style=filled];
+}
+subgraph cluster_23{
+	color = "white";
+	electricity[color=green,style=filled];
+}
+subgraph cluster_24{
+	color = "white";
+	heat[color=blue,style=filled;fontcolor=white];
+}
+subgraph cluster_25{
+	color = "white";
+	h2_central_production[color=indigo,style=filled;fontcolor=white];
+	h2_distribution[color=indigo,style=filled;fontcolor=white];
+	h2_forecourt_production[color=indigo,style=filled;fontcolor=white];
+	h2_enduse[color=indigo,style=filled;fontcolor=white];
+}
+subgraph cluster_26{
+	color = "white";
+	delivered_coal[color=violet;style=filled];
+	delivered_biomass[color=violet;style=filled];
+	electricity_net_ownuse[color=violet;style=filled];
+	elect_td_bld[color=violet;style=filled];
+	elect_td_ind[color=violet;style=filled];
+	elect_td_trn[color=violet;style=filled];
+	gas_pipeline[color=violet;style=filled];
+	wholesale_gas[color=violet;style=filled];
+	delivered_gas[color=violet;style=filled];
+	refined_liquids_enduse[color=violet;style=filled];
+	refined_liquids_industrial[color=violet;style=filled];
+}
+	buildings[color=steelblue1;style=filled;fontcolor=white];
+	industry[color=steelblue1;style=filled;fontcolor=white];
+	transportation[color=steelblue1;style=filled;fontcolor=white];
+
+	coal->regional_coal;
+	natural_gas->regional_natural_gas;
+	crude_oil->regional_oil;
+	unconventional_oil->unconventional_oil_production;
+	regional_natural_gas->unconventional_oil_production[style=dotted];
+	elect_td_ind->unconventional_oil_production[style=dotted];
+	unconventional_oil_production->traded_unconventional_oil;
+	traded_unconventional_oil->regional_oil;
+	biomass->regional_biomass;
+
+	regional_natural_gas->gas_processing;
+	regional_coal->gas_processing;
+	regional_biomass->gas_processing;
+	uranium->nuclearFuelGenX;
+	regional_oil->refining;
+	regional_natural_gas->refining;
+	regional_biomass->refining;
+	regional_coal->refining;
+	elect_td_ind->refining[style=dotted];
+	wholesale_gas->refining[style=dotted];
+
+	regional_coal->electricity;
+	wholesale_gas->electricity;
+	refined_liquids_industrial->electricity;
+	regional_biomass->electricity;
+	nuclearFuelGenX->electricity;
+	renewables->electricity;
+
+	delivered_biomass->heat;
+	delivered_coal->heat;
+	wholesale_gas->heat;
+	refined_liquids_industrial->heat;
+
+	regional_biomass->h2_central_production[style=dotted];
+	regional_coal->h2_central_production[style=dotted];
+	regional_natural_gas->h2_central_production[style=dotted];
+	elect_td_ind->h2_central_production[style=dotted];
+	nuclearFuelGenX->h2_central_production[style=dotted];
+	renewables->h2_central_production[style=dotted];
+	h2_central_production->h2_distribution[style=dotted];
+	h2_distribution->h2_enduse[style=dotted];
+	h2_forecourt_production->h2_enduse[style=dotted];
+	
+	regional_biomass->delivered_biomass;
+	regional_coal->delivered_coal;
+	electricity->electricity_net_ownuse;
+	renewables->elect_td_bld[style=dotted];
+	electricity_net_ownuse->elect_td_bld;
+	electricity_net_ownuse->elect_td_ind;
+	electricity_net_ownuse->elect_td_trn;
+	gas_processing->gas_pipeline;
+	gas_pipeline->wholesale_gas;
+	gas_pipeline->delivered_gas;
+	refining->refined_liquids_enduse;
+	refining->refined_liquids_industrial;
+
+	delivered_biomass->industry;
+	delivered_coal->industry;
+	wholesale_gas->industry;
+	elect_td_ind->industry;
+	heat->industry;
+	refined_liquids_industrial->industry;
+	h2_enduse->industry[style=dotted];
+
+	delivered_biomass->buildings;
+	delivered_coal->buildings;
+	delivered_gas->buildings;
+	elect_td_bld->buildings;
+	heat->buildings;
+	refined_liquids_enduse->buildings;
+	
+	delivered_coal->transportation;
+	delivered_gas->transportation;
+	elect_td_trn->transportation;
+	refined_liquids_enduse->transportation;
+	h2_enduse->transportation[style=dotted];
+}

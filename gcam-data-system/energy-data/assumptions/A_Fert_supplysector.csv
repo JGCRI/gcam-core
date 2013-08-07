@@ -1,0 +1,7 @@
+# File: A_Fert_supplysector.csv,,,
+# Description: Supplysectors of fertilizer production,,,
+# Original source: NA,,,
+# ----------,,,
+supplysector,output.unit,input.unit,price.unit
+N fertilizer,Mt N,EJ,1975$/kgN
+Exports_fertilizer,Mt N,Mt N,1975$/kgN

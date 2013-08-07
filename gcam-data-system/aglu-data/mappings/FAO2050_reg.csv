@@ -1,0 +1,18 @@
+# File: FAO2050_reg,
+# Description: Maps GCAM regions to FAO2050 report regions,
+# ----------,
+GCAM_region_ID,FAO2050_region
+1,Industrial countries
+2,Industrial countries
+3,Industrial countries
+4,Industrial countries
+5,Industrial countries
+6,Transition countries
+7,East Asia
+8,Near East / North Africa
+9,sub-Saharan Africa
+10,Latin America and Caribbean
+11,South Asia
+12,Transition countries
+13,Industrial countries
+14,South Asia

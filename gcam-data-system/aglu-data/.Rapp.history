@@ -1,0 +1,578 @@
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+A_LandLeaf_Unmgd1
+land_history_years
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:5,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[ L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] %in% c( land_history_years, model_base_years ) ]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[ L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] %in% c( land_history_years, model_base_years ), ]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+unique(L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$year)
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnManagedLandLeaf <- paste( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[AEZ]], sep = AEZ_delimiter )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+A_LandLeaf_Unmgd1
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnManagedLandLeaf1 <- paste( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[AEZ]], sep = AEZ_delimiter )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnManagedLandLeaf1, A_LandLeaf_Unmgd1$UnManagedLandLeaf1 ) ]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+A_LandLeaf_Unmgd1
+A_LandLeaf_Unmgd1$UnManagedLandLeaf1
+A_LandLeaf_Unmgd1
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf1 <- paste( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[AEZ]], sep = AEZ_delimiter )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf1, A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+A_LandLeaf_Unmgd1
+A_LandLeaf_Unmgd1$LandNode1[
+A_LandLeaf_Unmgd1$LandNode1
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf1
+A_LandLeaf_Unmgd1$UnmanagedLandLeaf1
+L211.LC_bm2_R_Unmgd1_Yh_AEZ <- L125.LC_bm2_R_LT_Yh_AEZ[ L125.LC_bm2_R_LT_Yh_AEZ[[LT]] %in% A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, ]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf <- paste( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[AEZ]], sep = AEZ_delimiter )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ <- L125.LC_bm2_R_LT_Yh_AEZ[ L125.LC_bm2_R_LT_Yh_AEZ[[LT]] %in% A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, ]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1_noAEZ <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- paste( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1_noAEZ, L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[AEZ]], sep = AEZ_delimiter )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf <- paste( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[AEZ]], sep = AEZ_delimiter )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+any(is.na(L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt))
+A_LandNode_logit
+A_LandNode1
+A_LandLeaf_Unmgd1
+append_AEZ <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA, var5 = NA ){#
+	data[[var1]] <- paste( data[[var1]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var2 ) ) data[[var2]] <- paste( data[[var2]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var3 ) ) data[[var3]] <- paste( data[[var3]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var4 ) ) data[[var4]] <- paste( data[[var4]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var5 ) ) data[[var5]] <- paste( data[[var5]], data[[AEZ]], sep = AEZ_delimiter )#
+}
+?Cat
+?cat
+L211.LV_USD75_m2_R_AEZ.melt <- melt( L131.LV_USD75_m2_R_AEZ, id.vars = R, variable_name = AEZ )#
+L211.LV_USD75_m2_R_AEZ.melt <- add_region_name( L211.LV_USD75_m2_R_AEZ.melt )#
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode1 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode1 = sort( rep( A_LandNode1$LandNode1, times = length( GCAM_region_names$region ) ) ) )#
+L211.LN1_ValueLogit <- repeat_and_add_vector( L211.LN1_ValueLogit, AEZ, AEZs )
+L211.LV_USD75_m2_R_AEZ.melt <- melt( L131.LV_USD75_m2_R_AEZ, id.vars = R, variable_name = AEZ )#
+L211.LV_USD75_m2_R_AEZ.melt <- add_region_name( L211.LV_USD75_m2_R_AEZ.melt )#
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode1 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode1 = sort( rep( A_LandNode1$LandNode1, times = length( GCAM_region_names$region ) ) ) )#
+L211.LN1_ValueLogit <- repeat_and_add_vector( L211.LN1_ValueLogit, AEZ, AEZs )#
+#Paste in values for unManagedLandValue using AEZ identifier, and set logit exponents using land type identifier#
+L211.LN1_ValueLogit$unManagedLandValue <- round( L211.LV_USD75_m2_R_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),#
+             vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,#
+      digits_land_value )#
+L211.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[#
+      match( L211.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]#
+L211.LN1_ValueLogit$logit.exponent[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L211.LN1_ValueLogit$LandNode1[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
+L211.LN1_ValueLogit$LandNode1 <- append_AEZ( L211.LN1_ValueLogit, "LandNode1" )#
+L211.LN1_ValueLogit <- L211.LN1_ValueLogit[ names_LN1_ValueLogit ]
+L211.LN1_ValueLogit[1:10,]
+names_LN1_ValueLogit
+L211.LN1_ValueLogit$unManagedLandValue <- round( L211.LV_USD75_m2_R_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),#
+             vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,#
+      digits_land_value )#
+L211.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[#
+      match( L211.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]#
+L211.LN1_ValueLogit$logit.exponent[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L211.LN1_ValueLogit$LandNode1[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
+L211.LV_USD75_m2_R_AEZ.melt <- melt( L131.LV_USD75_m2_R_AEZ, id.vars = R, variable_name = AEZ )#
+L211.LV_USD75_m2_R_AEZ.melt <- add_region_name( L211.LV_USD75_m2_R_AEZ.melt )#
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode1 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode1 = sort( rep( A_LandNode1$LandNode1, times = length( GCAM_region_names$region ) ) ) )#
+L211.LN1_ValueLogit <- repeat_and_add_vector( L211.LN1_ValueLogit, AEZ, AEZs )
+L211.LN1_ValueLogit[1:10,]
+L211.LV_USD75_m2_R_AEZ.melt[1:10,]
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode1 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode1 = sort( rep( A_LandNode1$LandNode1, times = length( GCAM_region_names$region ) ) ) )#
+L211.LN1_ValueLogit <- repeat_and_add_vector( L211.LN1_ValueLogit, AEZ, AEZs )#
+#Paste in values for unManagedLandValue using AEZ identifier, and set logit exponents using land type identifier#
+L211.LN1_ValueLogit$unManagedLandValue <- round( L211.LV_USD75_m2_R_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),#
+             vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,#
+      digits_land_value )
+L211.LN1_ValueLogit[1:10,]
+L211.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[#
+      match( L211.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]#
+L211.LN1_ValueLogit$logit.exponent[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L211.LN1_ValueLogit$LandNode1[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
+L211.LN1_ValueLogit[1:10,]
+subset( L211.LN1_ValueLogit, region=="USA")[1:20,]
+L211.LN1_ValueLogit$LandNode1 <- append_AEZ( L211.LN1_ValueLogit, "LandNode1" )
+L211.LN1_ValueLogit[1:10,]
+append_AEZ <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA, var5 = NA ){#
+	data[[var1]] <- paste( data[[var1]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var2 ) ) data[[var2]] <- paste( data[[var2]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var3 ) ) data[[var3]] <- paste( data[[var3]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var4 ) ) data[[var4]] <- paste( data[[var4]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var5 ) ) data[[var5]] <- paste( data[[var5]], data[[AEZ]], sep = AEZ_delimiter )#
+	return( data )#
+}
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode1 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode1 = sort( rep( A_LandNode1$LandNode1, times = length( GCAM_region_names$region ) ) ) )#
+L211.LN1_ValueLogit <- repeat_and_add_vector( L211.LN1_ValueLogit, AEZ, AEZs )#
+#Paste in values for unManagedLandValue using AEZ identifier, and set logit exponents using land type identifier#
+L211.LN1_ValueLogit$unManagedLandValue <- round( L211.LV_USD75_m2_R_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),#
+             vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,#
+      digits_land_value )#
+L211.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[#
+      match( L211.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]#
+L211.LN1_ValueLogit$logit.exponent[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L211.LN1_ValueLogit$LandNode1[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]#
+#Append AEZ to the LandNode name and only write out the columns specified in the header#
+L211.LN1_ValueLogit$LandNode1 <- append_AEZ( L211.LN1_ValueLogit, "LandNode1" )
+L211.LN1_ValueLogit[1:10,]
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode1 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode1 = sort( rep( A_LandNode1$LandNode1, times = length( GCAM_region_names$region ) ) ) )#
+L211.LN1_ValueLogit <- repeat_and_add_vector( L211.LN1_ValueLogit, AEZ, AEZs )#
+#Paste in values for unManagedLandValue using AEZ identifier, and set logit exponents using land type identifier#
+L211.LN1_ValueLogit$unManagedLandValue <- round( L211.LV_USD75_m2_R_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),#
+             vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,#
+      digits_land_value )#
+L211.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[#
+      match( L211.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]#
+L211.LN1_ValueLogit$logit.exponent[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L211.LN1_ValueLogit$LandNode1[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
+data<-L211.LN1_ValueLogit
+var1 <- "LandNode1"
+paste( data[[var1]], data[[AEZ]], sep = AEZ_delimiter )
+data[[var1]] <- paste( data[[var1]], data[[AEZ]], sep = AEZ_delimiter )
+data[1:10,]
+if( !is.na( var2 ) ) data[[var2]] <- paste( data[[var2]], data[[AEZ]], sep = AEZ_delimiter )
+var2 <- NA
+if( !is.na( var2 ) ) data[[var2]] <- paste( data[[var2]], data[[AEZ]], sep = AEZ_delimiter )
+data[1:10,]
+append_AEZ <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA, var5 = NA ){#
+	data[[var1]] <- paste( data[[var1]], data[[AEZ]], sep = AEZ_delimiter )#
+	if( !is.na( var2 ) ){ data[[var2]] <- paste( data[[var2]], data[[AEZ]], sep = AEZ_delimiter ) }#
+	if( !is.na( var3 ) ){ data[[var3]] <- paste( data[[var3]], data[[AEZ]], sep = AEZ_delimiter ) }#
+	if( !is.na( var4 ) ){ data[[var4]] <- paste( data[[var4]], data[[AEZ]], sep = AEZ_delimiter ) }#
+	if( !is.na( var5 ) ){ data[[var5]] <- paste( data[[var5]], data[[AEZ]], sep = AEZ_delimiter ) }#
+	return( data )#
+}
+L211.LV_USD75_m2_R_AEZ.melt <- melt( L131.LV_USD75_m2_R_AEZ, id.vars = R, variable_name = AEZ )#
+L211.LV_USD75_m2_R_AEZ.melt <- add_region_name( L211.LV_USD75_m2_R_AEZ.melt )#
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode1 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode1 = sort( rep( A_LandNode1$LandNode1, times = length( GCAM_region_names$region ) ) ) )#
+L211.LN1_ValueLogit <- repeat_and_add_vector( L211.LN1_ValueLogit, AEZ, AEZs )#
+#Paste in values for unManagedLandValue using AEZ identifier, and set logit exponents using land type identifier#
+L211.LN1_ValueLogit$unManagedLandValue <- round( L211.LV_USD75_m2_R_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),#
+             vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,#
+      digits_land_value )#
+L211.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[#
+      match( L211.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]#
+L211.LN1_ValueLogit$logit.exponent[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L211.LN1_ValueLogit$LandNode1[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]#
+#Append AEZ to the LandNode name and only write out the columns specified in the header#
+L211.LN1_ValueLogit <- append_AEZ( L211.LN1_ValueLogit, "LandNode1" )#
+L211.LN1_ValueLogit <- L211.LN1_ValueLogit[ names_LN1_ValueLogit ]
+L211.LN1_ValueLogit[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ <- L125.LC_bm2_R_LT_Yh_AEZ[ L125.LC_bm2_R_LT_Yh_AEZ[[LT]] %in% A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, ]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ <- L125.LC_bm2_R_LT_Yh_AEZ[ L125.LC_bm2_R_LT_Yh_AEZ[[LT]] %in% A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, ]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]
+dim(L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt)
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear", value_name = "allocation" )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear", value = "allocation" )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear", value.name = "allocation" )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+?melt.data.frame
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$allocation <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$value
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- append_AEZ( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt, var1 = "LandNode1", var2 = "UnmanagedLandLeaf" )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:10,]
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandAllocatorRoot <- "root"#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$allocation <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$value#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- append_AEZ( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt, var1 = "LandNode1", var2 = "UnmanagedLandLeaf" )
+names_LN1_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "unManagedLandLeaf", "year", "allocation" )
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- melt( L211.LC_bm2_R_Unmgd1_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- add_region_name( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandAllocatorRoot <- "root"#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]]#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] <- sub( "X", "", L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$Xyear )#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$allocation <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt$value#
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt <- append_AEZ( L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt, var1 = "LandNode1", var2 = "UnmanagedLandLeaf" )#
+printlog( "L211.LN1_HistUnmgdAllocation: Historical land cover, unmanaged land in the first nest" )#
+L211.LN1_HistUnmgdAllocation <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[ L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] %in% land_history_years, names_LN1_HistUnmgdAllocation ]
+names_LN1_HistUnmgdAllocation
+L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[1:5,]
+names_LN1_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "UnmanagedLandLeaf", "year", "allocation" )
+L211.LN1_HistUnmgdAllocation <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[ L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] %in% land_history_years, names_LN1_HistUnmgdAllocation ]
+L211.LN1_HistUnmgdAllocation[1:10,]
+model_base_years
+names_LN1_UnmgdAllocation <- names_LN1_HistUnmgdAllocation
+L211.LN1_UnmgdAllocation <- L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[ L211.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[Y]] %in% model_base_years, names_LN1_UnmgdAllocation ]
+dim(L211.LN1_UnmgdAllocation)
+unique(L211.LN1_UnmgdAllocation$year)
+subset(L211.LN1_UnmgdAllocation, region=="USA" & LandNode1 = "UrbanLandAEZ11")
+subset(L211.LN1_UnmgdAllocation, region=="USA" & LandNode1 == "UrbanLandAEZ11")
+head(L121.VegC_kgm2_R_LT_AEZ)
+L211.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT )
+head(L211.VegC_kgm2_R_LT_AEZ.melt)
+L211.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L211.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L211.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
+L211.SoilC_kgm2_R_LT_AEZ.melt[1:10,]
+L211.VegC_kgm2_R_LT_AEZ.melt <- add_region_name( L211.VegC_kgm2_R_LT_AEZ.melt )#
+L211.SoilC_kgm2_R_LT_AEZ.melt <- add_region_name( L211.SoilC_kgm2_R_LT_AEZ.melt )#
+L211.MatureAge_R_LT_AEZ.melt <- add_region_name( L211.MatureAge_R_LT_AEZ.melt )
+L211.VegC_kgm2_R_LT_AEZ.melt[1:10,]
+L211.LN1_HistUnmgdAllocation[1:10,]
+L211.VegC_kgm2_R_LT_AEZ.melt[1:5,]
+L211.SoilC_kgm2_R_LT_AEZ.melt[1:5,]
+L211.MatureAge_R_LT_AEZ.melt[1:5,]
+L211.LN1_ValueLogit[1:10,]
+L211.LN1_UnmgdAllocation[1:10,]
+A_LandLeaf_Unmgd1
+A_LandLeaf_Unmgd1[ rep( 1:nrow( A_LandLeaf_Unmgd1 ), times = length( GCAM_region_names$region ) ) ]
+A_LandLeaf_Unmgd1[ rep( 1:nrow( A_LandLeaf_Unmgd1 ), times = length( GCAM_region_names$region ) ), ]
+names_LN1_UnmgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",#
+      "veg.carbon.density", "soil.carbon.density", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+names_LN1_UnmgdCarbon
+L211.LN1_UnmgdCarbon <- L211.LN1_UnmgdAllocation[ L211.LN1_UnmgdAllocation[[Y]] == max( L211.LN1_UnmgdAllocation[[Y]] ),#
+      names( L211.LN1_UnmgdAllocation %in% names_LN1_UnmgdCarbon ) ]
+L211.LN1_UnmgdCarbon[1:10,]
+L211.LN1_UnmgdAllocation[ L211.LN1_UnmgdAllocation[[Y]] == max( L211.LN1_UnmgdAllocation[[Y]] ),]
+L211.LN1_UnmgdCarbon <- L211.LN1_UnmgdAllocation[ L211.LN1_UnmgdAllocation[[Y]] == max( L211.LN1_UnmgdAllocation[[Y]] ),#
+      names( L211.LN1_UnmgdAllocation ) %in% names_LN1_UnmgdCarbon ]
+L211.LN1_UnmgdCarbon[1:10,]
+L211.VegC_kgm2_R_LT_AEZ.melt[1:10,]
+L211.VegC_kgm2_R_LT_AEZ.melt <- append_AEZ( L211.VegC_kgm2_R_LT_AEZ.melt, LT )
+L211.VegC_kgm2_R_LT_AEZ.melt[1:10,]
+L211.VegC_kgm2_R_LT_AEZ.melt <- append_AEZ( L211.VegC_kgm2_R_LT_AEZ.melt, LT )#
+L211.SoilC_kgm2_R_LT_AEZ.melt <- append_AEZ( L211.SoilC_kgm2_R_LT_AEZ.melt, LT )#
+L211.MatureAge_R_LT_AEZ.melt <- append_AEZ( L211.MatureAge_R_LT_AEZ.melt, LT )
+L211.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L211.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L211.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+#Add region vector#
+L211.VegC_kgm2_R_LT_AEZ.melt <- add_region_name( L211.VegC_kgm2_R_LT_AEZ.melt )#
+L211.SoilC_kgm2_R_LT_AEZ.melt <- add_region_name( L211.SoilC_kgm2_R_LT_AEZ.melt )#
+L211.MatureAge_R_LT_AEZ.melt <- add_region_name( L211.MatureAge_R_LT_AEZ.melt )#
+#Append AEZ name to land type#
+L211.VegC_kgm2_R_LT_AEZ.melt <- append_AEZ( L211.VegC_kgm2_R_LT_AEZ.melt, LT )#
+L211.SoilC_kgm2_R_LT_AEZ.melt <- append_AEZ( L211.SoilC_kgm2_R_LT_AEZ.melt, LT )#
+L211.MatureAge_R_LT_AEZ.melt <- append_AEZ( L211.MatureAge_R_LT_AEZ.melt, LT )
+L211.VegC_kgm2_R_LT_AEZ.melt[1:10,]
+A_LandLeaf_Unmgd1
+L211.LN1_UnmgdCarbon <- data.frame(#
+      region = rep( GCAM_region_names$GCAM_region, times = nrow( A_LandLeaf_Unmgd1 ) ),#
+      UnmanagedLandLeaf1 = sort( rep( A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, times = nrow( GCAM_region_names ) ) ) )
+L211.LN1_UnmgdCarbon
+L211.LN1_UnmgdCarbon <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandLeaf_Unmgd1 ) ),#
+      UnmanagedLandLeaf1 = sort( rep( A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, times = nrow( GCAM_region_names ) ) ) )
+L211.LN1_UnmgdCarbon[1:10,]
+L211.LN1_UnmgdCarbon$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[ match( L211.LN1_UnmgdCarbon$UnmanagedLandLeaf1, A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]
+L211.LN1_UnmgdCarbon <- repeat_and_add_vector( L211.LN1_UnmgdCarbon, AEZ, AEZs )
+dim(L211.LN1_UnmgdCarbon)
+L211.LN1_UnmgdCarbon[1:10,]
+GCAMLandLeaf_CdensityLT
+L211.LN1_UnmgdCarbon <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandLeaf_Unmgd1 ) ),#
+      UnmanagedLandLeaf = sort( rep( A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, times = nrow( GCAM_region_names ) ) ) )#
+L211.LN1_UnmgdCarbon$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[ match( L211.LN1_UnmgdCarbon$UnmanagedLandLeaf, A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]
+L211.LN1_UnmgdCarbon[1:10,]
+L211.LN1_UnmgdCarbon <- repeat_and_add_vector( L211.LN1_UnmgdCarbon, AEZ, AEZs )
+L211.LN1_UnmgdCarbon$Cdensity_LT <- GCAMLandLeaf_CdensityLT[[LT]][#
+      match( L211.LN1_UnmgdCarbon$UnmanagedLandLeaf, GCAMLandLeaf_CdensityLT$LandLeaf) ]
+L211.LN1_UnmgdCarbon[1:20,]
+vecpaste( L211.VegC_kgm2_R_LT_AEZ.melt[ c( "region", LT, AEZ ) ] )[1:10]
+vecpaste( L211.LN1_UnmgdCarbon[ c( "region", "Cdensity_LT", AEZ ) ] )[1:10]
+L211.LN1_UnmgdCarbon$hist.veg.carbon.density <- L211.VegC_kgm2_R_LT_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_UnmgdCarbon[ c( "region", "Cdensity_LT", AEZ ) ] ),#
+             vecpaste( L211.VegC_kgm2_R_LT_AEZ.melt[ c( "region", LT, AEZ ) ] ) ) ]
+L211.LN1_UnmgdCarbon[1:10,]
+L211.VegC_kgm2_R_LT_AEZ.melt[1:10,]
+unique(L211.VegC_kgm2_R_LT_AEZ.melt[[LT]])
+L211.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L211.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L211.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+#Add region vector#
+L211.VegC_kgm2_R_LT_AEZ.melt <- add_region_name( L211.VegC_kgm2_R_LT_AEZ.melt )#
+L211.SoilC_kgm2_R_LT_AEZ.melt <- add_region_name( L211.SoilC_kgm2_R_LT_AEZ.melt )#
+L211.MatureAge_R_LT_AEZ.melt <- add_region_name( L211.MatureAge_R_LT_AEZ.melt )
+L211.LN1_UnmgdCarbon <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandLeaf_Unmgd1 ) ),#
+      UnmanagedLandLeaf = sort( rep( A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, times = nrow( GCAM_region_names ) ) ) )#
+L211.LN1_UnmgdCarbon$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[ match( L211.LN1_UnmgdCarbon$UnmanagedLandLeaf, A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]#
+L211.LN1_UnmgdCarbon <- repeat_and_add_vector( L211.LN1_UnmgdCarbon, AEZ, AEZs )#
+L211.LN1_UnmgdCarbon$Cdensity_LT <- GCAMLandLeaf_CdensityLT[[LT]][#
+      match( L211.LN1_UnmgdCarbon$UnmanagedLandLeaf, GCAMLandLeaf_CdensityLT$LandLeaf) ]
+L211.LN1_UnmgdCarbon$hist.veg.carbon.density <- L211.VegC_kgm2_R_LT_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_UnmgdCarbon[ c( "region", "Cdensity_LT", AEZ ) ] ),#
+             vecpaste( L211.VegC_kgm2_R_LT_AEZ.melt[ c( "region", LT, AEZ ) ] ) ) ]
+L211.LN1_UnmgdCarbon[1:15,]
+any(is.na(L211.LN1_UnmgdCarbon))
+L211.LN1_UnmgdCarbon$hist.soil.carbon.density <- L211.SoilC_kgm2_R_LT_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_UnmgdCarbon[ c( "region", "Cdensity_LT", AEZ ) ] ),#
+             vecpaste( L211.SoilC_kgm2_R_LT_AEZ.melt[ c( "region", LT, AEZ ) ] ) ) ]
+any(is.na(L211.LN1_UnmgdCarbon))
+L211.LN1_UnmgdCarbon[1:15,]
+L211.LN1_UnmgdCarbon$veg.carbon.density <- L211.LN1_UnmgdCarbon$hist.veg.carbon.density#
+L211.LN1_UnmgdCarbon$soil.carbon.density <- L211.LN1_UnmgdCarbon$hist.soil.carbon.density
+L211.LN1_UnmgdCarbon$mature.age <- L211.MatureAge_R_LT_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_UnmgdCarbon[ c( "region", "Cdensity_LT", AEZ ) ] ),#
+             vecpaste( L211.MatureAge_R_LT_AEZ.melt[ c( "region", LT, AEZ ) ] ) ) ]
+L211.LN1_UnmgdCarbon[1:10,]
+names_LN1_UnmgdCarbon
+L211.LN1_UnmgdCarbon <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandLeaf_Unmgd1 ) ),#
+      LandAllocatorRoot = "root",#
+      UnmanagedLandLeaf = sort( rep( A_LandLeaf_Unmgd1$UnmanagedLandLeaf1, times = nrow( GCAM_region_names ) ) ) )#
+L211.LN1_UnmgdCarbon$LandNode1 <- A_LandLeaf_Unmgd1$LandNode1[ match( L211.LN1_UnmgdCarbon$UnmanagedLandLeaf, A_LandLeaf_Unmgd1$UnmanagedLandLeaf1 ) ]#
+L211.LN1_UnmgdCarbon <- repeat_and_add_vector( L211.LN1_UnmgdCarbon, AEZ, AEZs )#
+L211.LN1_UnmgdCarbon$Cdensity_LT <- GCAMLandLeaf_CdensityLT[[LT]][#
+      match( L211.LN1_UnmgdCarbon$UnmanagedLandLeaf, GCAMLandLeaf_CdensityLT$LandLeaf) ]#
+#
+#Match in carbon densities and mature age#
+L211.LN1_UnmgdCarbon$hist.veg.carbon.density <- L211.VegC_kgm2_R_LT_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_UnmgdCarbon[ c( "region", "Cdensity_LT", AEZ ) ] ),#
+             vecpaste( L211.VegC_kgm2_R_LT_AEZ.melt[ c( "region", LT, AEZ ) ] ) ) ]#
+L211.LN1_UnmgdCarbon$hist.soil.carbon.density <- L211.SoilC_kgm2_R_LT_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_UnmgdCarbon[ c( "region", "Cdensity_LT", AEZ ) ] ),#
+             vecpaste( L211.SoilC_kgm2_R_LT_AEZ.melt[ c( "region", LT, AEZ ) ] ) ) ]#
+L211.LN1_UnmgdCarbon$veg.carbon.density <- L211.LN1_UnmgdCarbon$hist.veg.carbon.density#
+L211.LN1_UnmgdCarbon$soil.carbon.density <- L211.LN1_UnmgdCarbon$hist.soil.carbon.density#
+L211.LN1_UnmgdCarbon$mature.age <- L211.MatureAge_R_LT_AEZ.melt$value[#
+      match( vecpaste( L211.LN1_UnmgdCarbon[ c( "region", "Cdensity_LT", AEZ ) ] ),#
+             vecpaste( L211.MatureAge_R_LT_AEZ.melt[ c( "region", LT, AEZ ) ] ) ) ]#
+#Append AEZ names and only write out the correct columns#
+L211.LN1_UnmgdCarbon <- append_AEZ( L211.LN1_UnmgdCarbon, var1 = "LandNode1", var2 = "UnmanagedLandLeaf" )#
+L211.LN1_UnmgdCarbon <- L211.LN1_UnmgdCarbon[ names_LN1_UnmgdCarbon ]
+names(L211.LN1_UnmgdCarbon)
+names_LN1_UnmgdCarbon
+L211.LN1_UnmgdCarbon[ c( "min.veg.carbon.density", "min.soil.carbon.density" ) ] <- 0
+head(L211.LN1_UnmgdCarbon)
+L211.LN1_UnmgdCarbon <- L211.LN1_UnmgdCarbon[ names_LN1_UnmgdCarbon ]
+L211.LN1_UnmgdCarbon[1:10,]
+rm(list=ls())
+AGLUPROC_DIR <- "../aglu-processing-code/"
+source("../aglu-processing-code/level2/L211.land_input_1.R")
+logstop()
+logstop()
+source("../aglu-processing-code/level2/L211.land_input_1.R")
+names(L211.LN1_UnmgdCarbon)
+names_LN1_UnmgdCarbon
+logstop()
+source("../aglu-processing-code/level2/L211.land_input_1.R")
+source(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))#
+logstart( "L212.land_input_2.R" )#
+adddep(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))#
+printlog( "Land cover and characteristics, node level 2" )
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )#
+sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
+GCAM_region_names <- readdata( "AGLU_MAPPINGS", "GCAM_region_names" )#
+GCAMLandLeaf_CdensityLT <- readdata( "AGLU_MAPPINGS", "GCAMLandLeaf_CdensityLT" )#
+A_LandNode_logit <- readdata( "AGLU_ASSUMPTIONS", "A_LandNode_logit" )#
+A_LandNode2 <- readdata( "AGLU_ASSUMPTIONS", "A_LandNode2" )#
+A_LandLeaf_Unmgd2 <- readdata( "AGLU_ASSUMPTIONS", "A_LandLeaf_Unmgd2" )#
+A_LandLeaf2 <- readdata( "AGLU_ASSUMPTIONS", "A_LandLeaf2" )#
+L121.VegC_kgm2_R_LT_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L121.VegC_kgm2_R_LT_AEZ" )#
+L121.SoilC_kgm2_R_LT_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L121.SoilC_kgm2_R_LT_AEZ" )#
+L121.MatureAge_R_LT_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L121.MatureAge_R_LT_AEZ" )#
+L125.LC_bm2_R_LT_Yh_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R_LT_Yh_AEZ" )
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
+A_LandNode2
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode2 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode2 = sort( rep( A_LandNode1$LandNode2, times = length( GCAM_region_names$region ) ) ) )#
+L211.LN1_ValueLogit$LandNode1 <- A_LandNode2$LandNode1[ match( L211.LN1_ValueLogit$LandNode2, A_LandNode2$LandNode2 ) ]
+L211.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode2 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode2 = sort( rep( A_LandNode1$LandNode2, times = length( GCAM_region_names$region ) ) ) )
+L212.LN1_ValueLogit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode2 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode2 = sort( rep( A_LandNode2$LandNode2, times = length( GCAM_region_names$region ) ) ) )
+L212.LN1_ValueLogit
+L212.LN1_ValueLogit$LandNode1 <- A_LandNode2$LandNode1[ match( L212.LN1_ValueLogit$LandNode2, A_LandNode2$LandNode2 ) ]
+L212.LN1_ValueLogit
+L212.LN1_ValueLogit <- repeat_and_add_vector( L212.LN1_ValueLogit, AEZ, AEZs )
+L212.LN1_ValueLogit[1:10,]
+L212.LN2_Logit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode2 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode2 = sort( rep( A_LandNode2$LandNode2, times = length( GCAM_region_names$region ) ) ) )#
+L212.LN2_Logit$LandNode1 <- A_LandNode2$LandNode1[ match( L212.LN2_Logit$LandNode2, A_LandNode2$LandNode2 ) ]#
+L212.LN2_Logit <- repeat_and_add_vector( L212.LN2_Logit, AEZ, AEZs )
+L212.LN2_Logit$logit.exponent <- A_LandNode_logit$logit.exponent[ match( L212.LN2_Logit$LandNode2, A_LandNode_logit$LandNode ) ]
+L212.LN2_Logit[1:10,]
+L212.LN2_Logit$logit.exponent[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L212.LN2_Logit$LandNode2[ L212.LN2_Logit$ID_AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
+L212.LN2_Logit$LandNode2
+L212.LN2_Logit$logit.exponent[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L212.LN2_Logit$LandNode2[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
+L212.LN2_Logit[1:10,]
+L212.LN2_Logit <- data.frame(#
+      region = rep( GCAM_region_names$region, times = nrow( A_LandNode2 ) ),#
+      LandAllocatorRoot = "root",#
+      LandNode2 = sort( rep( A_LandNode2$LandNode2, times = length( GCAM_region_names$region ) ) ) )#
+L212.LN2_Logit$LandNode1 <- A_LandNode2$LandNode1[ match( L212.LN2_Logit$LandNode2, A_LandNode2$LandNode2 ) ]#
+L212.LN2_Logit <- repeat_and_add_vector( L212.LN2_Logit, AEZ, AEZs )#
+#
+#Match in logit exponents based on the land node 2#
+L212.LN2_Logit$logit.exponent <- A_LandNode_logit$logit.exponent[ match( L212.LN2_Logit$LandNode2, A_LandNode_logit$LandNode ) ]#
+L212.LN2_Logit$logit.exponent[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[#
+      match( L212.LN2_Logit$LandNode2[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
+head(L212.LN2_Logit)
+names_LN2_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "logit.exponent" )
+L212.LN2_Logit <- append_AEZ( L212.LN2_Logit )#
+L212.LN2_Logit <- L212.LN2_Logit[ names_LN2_Logit ]
+L212.LN2_Logit[1:10,]
+A_LandLeaf_Unmgd2
+A_LandLeaf_Unmgd2
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Unmgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+L212.LC_bm2_R_Unmgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 )#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Unmgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+dim(L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt)
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[1:10,]
+unique(L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$Land)
+L212.LC_bm2_R_Unmgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 )
+A_LandLeaf_Unmgd2
+L212.LC_bm2_R_Unmgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 )
+L212.LC_bm2_R_Unmgd2_Yh_AEZ[1:10,]
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Unmgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- add_region_name( L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt )
+L212.LC_bm2_R_Unmgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 )#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Unmgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- add_region_name( L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt )#
+L211.LC_bm2_R_Unmgd2_Yh_AEZ.melt$LandAllocatorRoot <- "root"#
+L211.LC_bm2_R_Unmgd2_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd2$LandNode1[#
+      match( L211.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 ) ]#
+L211.LC_bm2_R_Unmgd2_Yh_AEZ.melt$LandNode2 <- A_LandLeaf_Unmgd2$LandNode2[#
+      match( L211.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 ) ]
+L212.LC_bm2_R_Unmgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 )#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Unmgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- add_region_name( L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt )#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$LandAllocatorRoot <- "root"#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$LandNode1 <- A_LandLeaf_Unmgd2$LandNode1[#
+      match( L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 ) ]
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[1:5,]
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$LandNode2 <- A_LandLeaf_Unmgd2$LandNode2[#
+      match( L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[LT]], A_LandLeaf_Unmgd2$UnmanagedLandLeaf2 ) ]
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[1:5,]
+L212.LC_bm2_R_Unmgd1_Yh_AEZ.melt$UnmanagedLandLeaf <- L212.LC_bm2_R_Unmgd1_Yh_AEZ.melt[[LT]]
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$UnmanagedLandLeaf <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[LT]]#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[Y]] <- sub( "X", "", L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$Xyear )#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$allocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$value#
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- append_AEZ( L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt, var1 = "LandNode1", var2 = "LandNode2", var3 = "UnmanagedLandLeaf" )
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[1:10,]
+names_LN2_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "UnmanagedLandLeaf", "year", "allocation" )
+L212.LN2_HistUnmgdAllocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[ L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[Y]] %in% land_history_years, names_LN2_HistUnmgdAllocation ]
+L212.LN2_HistUnmgdAllocation[1:10,]
+names_LN2_UnmgdAllocation <- names_LN2_HistUnmgdAllocation
+printlog( "L212.LN2_UnmgdAllocation: Model base period land cover, unmanaged land in the second nest" )#
+L212.LN2_UnmgdAllocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[ L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[Y]] %in% model_base_years, names_LN2_UnmgdAllocation ]
+head(L212.LN2_UnmgdAllocation)
+L212.LC_bm2_R_Mgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf2$LandLeaf2 )#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Mgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt <- add_region_name( L212.LC_bm2_R_Mgd2_Yh_AEZ.melt )#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$LandAllocatorRoot <- "root"#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$LandNode1 <- A_LandLeaf2$LandNode1[#
+      match( L212.LC_bm2_R_Mgd2_Yh_AEZ.melt[[LT]], A_LandLeaf2$LandLeaf2 ) ]#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$LandNode2 <- A_LandLeaf2$LandNode2[#
+      match( L212.LC_bm2_R_Mgd2_Yh_AEZ.melt[[LT]], A_LandLeaf2$LandLeaf2 ) ]#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$LandLeaf <- L212.LC_bm2_R_Mgd2_Yh_AEZ.melt[[LT]]#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt[[Y]] <- sub( "X", "", L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$Xyear )#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$allocation <- L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$value#
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt <- append_AEZ( L212.LC_bm2_R_Mgd2_Yh_AEZ.melt, var1 = "LandNode1", var2 = "LandNode2", var3 = "LandLeaf" )
+head(L212.LC_bm2_R_Mgd2_Yh_AEZ.melt)
+names_LN2_HistMgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandLeaf", "year", "allocation" )#
+names_LN2_MgdAllocation <- names_LN2_HistMgdAllocation
+L212.LN2_HistMgdAllocation <- L212.LC_bm2_R_Mgd2_Yh_AEZ.melt[ L212.LC_bm2_R_Mgd2_Yh_AEZ.melt[[Y]] %in% land_history_years, names_LN2_HistMgdAllocation ]
+head(L212.LN2_HistMgdAllocation)
+dim(L212.LN2_HistMgdAllocation)
+remove_AEZ_nonexist
+head(L211.LN1_UnmgdCarbon)
+head(L211.LN0_Logit)
+head(L211.LN1_ValueLogit)
+L211.LN1_ValueLogit <- remove_AEZ_nonexist( L211.LN1_ValueLogit, AEZcol = "LandNode1" )
+head(L211.LN1_ValueLogit)
+L211.LN1_HistUnmgdAllocation <- remove_AEZ_nonexist( L211.LN1_HistUnmgdAllocation, AEZcol = "LandNode1" )#
+L211.LN1_UnmgdAllocation <- remove_AEZ_nonexist( L211.LN1_UnmgdAllocation, AEZcol = "LandNode1" )#
+L211.LN1_UnmgdCarbon <- remove_AEZ_nonexist( L211.LN1_UnmgdCarbon, AEZcol = "LandNode1" )
+L211.LN1_UnmgdCarbon[1:10,]
+head(L212.LN2_Logit)
+L212.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L212.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L212.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
+L212.VegC_kgm2_R_LT_AEZ.melt[1:10,]
+L212.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L212.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+L212.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )#
+#Add region vector#
+L212.VegC_kgm2_R_LT_AEZ.melt <- add_region_name( L212.VegC_kgm2_R_LT_AEZ.melt )#
+L212.SoilC_kgm2_R_LT_AEZ.melt <- add_region_name( L212.SoilC_kgm2_R_LT_AEZ.melt )#
+L212.MatureAge_R_LT_AEZ.melt <- add_region_name( L212.MatureAge_R_LT_AEZ.melt )
