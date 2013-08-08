@@ -29,7 +29,7 @@ L110.For_ALL_bm3_R_Y <- readdata( "AGLU_LEVEL1_DATA", "L110.For_ALL_bm3_R_Y" )
 L120.LC_bm2_R_LT_Yh_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L120.LC_bm2_R_LT_Yh_AEZ" )
 L121.VegC_kgm2_R_LT_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L121.VegC_kgm2_R_LT_AEZ" )
 L121.MatureAge_R_LT_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L121.MatureAge_R_LT_AEZ" )
-L101.Pop_mil_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_mil_R_Yh" )
+L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -164,8 +164,8 @@ L123.LC_bm2_R_MgdFor_Y_AEZ[ is.na( L123.LC_bm2_R_MgdFor_Y_AEZ ) ] <- 0
 #Use historical population ratios to estimate managed forest in the pre-AGLU years
 printlog( "Building managed forest land use history" )
 printlog( "NOTE: Scaling historical managed forest land area with historical population" )
-L123.PopRatio_R_Yhh <- L101.Pop_mil_R_Yh[ c( R, X_preAGLU_years ) ]
-L123.PopRatio_R_Yhh[ X_preAGLU_years ] <- L101.Pop_mil_R_Yh[ X_preAGLU_years ] / L101.Pop_mil_R_Yh[[ X_AGLU_historical_years[1] ]]
+L123.PopRatio_R_Yhh <- L101.Pop_thous_R_Yh[ c( R, X_preAGLU_years ) ]
+L123.PopRatio_R_Yhh[ X_preAGLU_years ] <- L101.Pop_thous_R_Yh[ X_preAGLU_years ] / L101.Pop_thous_R_Yh[[ X_AGLU_historical_years[1] ]]
 
 L123.LC_bm2_R_MgdFor_Yh_AEZ <- L123.LC_bm2_R_MgdFor_Y_AEZ
 L123.LC_bm2_R_MgdFor_Yh_AEZ[ X_preAGLU_years ] <- L123.LC_bm2_R_MgdFor_Y_AEZ[[ X_AGLU_historical_years[1] ]] * L123.PopRatio_R_Yhh[

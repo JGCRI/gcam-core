@@ -45,13 +45,13 @@ L110.FAO_For_ALL_m3$GCAM_commodity <- "Forest"
 #Convert units in the aggregation step
 L110.FAO_For_ALL_bm3_prelim <- aggregate( L110.FAO_For_ALL_m3[ X_AGLU_historical_years ] * conv_m3_bm3,
       by=as.list( L110.FAO_For_ALL_m3[ c( R_C, "flow" ) ] ), sum )
-L110.FAO_For_ALL_bm3_prelim$flow <- gsub2( "_m3", "_bm3", L110.FAO_For_ALL_bm3_prelim$flow )
+L110.FAO_For_ALL_bm3_prelim$flow <- sub( "_m3", "_bm3", L110.FAO_For_ALL_bm3_prelim$flow )
 
 #Build volumetric balance table
 printlog( "Building mass balance" )
 L110.For_ALL_bm3_R_Y <- recast( L110.FAO_For_ALL_bm3_prelim, GCAM_region_ID + GCAM_commodity +variable ~ flow, id.var = c( R_C, "flow" ) )
 names( L110.For_ALL_bm3_R_Y )[ names( L110.For_ALL_bm3_R_Y ) == "variable" ] <- Y
-L110.For_ALL_bm3_R_Y$year <- as.numeric( gsub2( "X", "", L110.For_ALL_bm3_R_Y$year ) )
+L110.For_ALL_bm3_R_Y$year <- as.numeric( sub( "X", "", L110.For_ALL_bm3_R_Y$year ) )
 L110.For_ALL_bm3_R_Y$Cons_bm3 <- L110.For_ALL_bm3_R_Y$Prod_bm3 - L110.For_ALL_bm3_R_Y$NetExp_bm3
 
 #Re-order columns

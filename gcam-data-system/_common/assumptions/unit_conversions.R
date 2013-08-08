@@ -36,6 +36,7 @@ conv_t_metric_short <- 1000/908
 #calorie conversions
 conv_Mcal_Pcal <- 1e-9
 conv_Pcal_Gcal <- 1e6
+conv_Pcal_Mcal <- 1e9
 
 #volume conversions
 conv_m3_bm3 <- 1e-9

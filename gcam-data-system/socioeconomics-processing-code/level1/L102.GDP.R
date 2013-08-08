@@ -77,10 +77,10 @@ L102.Pop_thous_SSP_R_Y[ X_historical_years ] <- L101.Pop_thous_R_Yh[
 L102.Pop_thous_SSP_R_Y <- L102.Pop_thous_SSP_R_Y[ c( Scen_R, X_historical_years, X_future_years ) ]
 
 #Calculate per-capita GDP
-L102.pcgdp_90usd_SSP_R_Y <- L102.gdp_mil90usd_SSP_R_Y
-L102.pcgdp_90usd_SSP_R_Y[ c( X_historical_years, X_future_years ) ] <-
-      L102.gdp_mil90usd_SSP_R_Y[ c( X_historical_years, X_future_years ) ] * conv_mil_thous / L102.Pop_thous_SSP_R_Y[
-         match( vecpaste( L102.pcgdp_90usd_SSP_R_Y[ Scen_R ] ), vecpaste( L102.Pop_thous_SSP_R_Y[ Scen_R ] ) ),
+L102.pcgdp_thous90USD_SSP_R_Y <- L102.gdp_mil90usd_SSP_R_Y
+L102.pcgdp_thous90USD_SSP_R_Y[ c( X_historical_years, X_future_years ) ] <-
+      L102.gdp_mil90usd_SSP_R_Y[ c( X_historical_years, X_future_years ) ] / L102.Pop_thous_SSP_R_Y[
+         match( vecpaste( L102.pcgdp_thous90USD_SSP_R_Y[ Scen_R ] ), vecpaste( L102.Pop_thous_SSP_R_Y[ Scen_R ] ) ),
          c( X_historical_years, X_future_years ) ]
          
 #GDP by GCAM region from GCAM 3.0 GDPs.
@@ -141,12 +141,12 @@ L102.gdp_mil90usd_GCAM3_ctry_Y <- L102.gdp_mil90usd_GCAM3_ctry_Y[ c( "iso", X_hi
 # 3. Output
 #Add comments to tables
 comments.L102.gdp_mil90usd_SSP_R_Y <- c( "GDP by SSP scenario and GCAM region (including historical time series)","Unit = billion 2005 USD" )
-comments.L102.pcgdp_90usd_SSP_R_Y <- c( "per-capita GDP by SSP scenario and GCAM region (including historical time series)","Unit = 2005 USD" )
+comments.L102.pcgdp_thous90USD_SSP_R_Y <- c( "per-capita GDP by SSP scenario and GCAM region (including historical time series)","Unit = 2005 USD" )
 comments.L102.gdp_mil90usd_GCAM3_R_Y <- c( "Total GDP from GCAM 3.0 by GCAM region (including historical time series)","Unit = 1990 USD" )
 comments.L102.gdp_mil90usd_GCAM3_ctry_Y <- c( "Total GDP from GCAM 3.0 by country (including historical time series)","Unit = 1990 USD" )
 
 writedata( L102.gdp_mil90usd_SSP_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_SSP_R_Y", comments=comments.L102.gdp_mil90usd_SSP_R_Y )
-writedata( L102.pcgdp_90usd_SSP_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.pcgdp_90usd_SSP_R_Y", comments=comments.L102.pcgdp_90usd_SSP_R_Y )
+writedata( L102.pcgdp_thous90USD_SSP_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.pcgdp_thous90USD_SSP_R_Y", comments=comments.L102.pcgdp_thous90USD_SSP_R_Y )
 writedata( L102.gdp_mil90usd_GCAM3_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_GCAM3_R_Y", comments=comments.L102.gdp_mil90usd_GCAM3_R_Y )
 writedata( L102.gdp_mil90usd_GCAM3_ctry_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_GCAM3_ctry_Y", comments=comments.L102.gdp_mil90usd_GCAM3_ctry_Y )
 

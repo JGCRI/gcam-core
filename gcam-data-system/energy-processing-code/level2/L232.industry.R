@@ -34,6 +34,7 @@ A32.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_eff" )
 A32.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_shrwt" )
 A32.nonenergy_Cseq <- readdata( "ENERGY_ASSUMPTIONS", "A32.nonenergy_Cseq" )
 A32.fuelprefElasticity <- readdata( "ENERGY_ASSUMPTIONS", "A32.fuelprefElasticity" )
+A32.demand <- readdata( "ENERGY_ASSUMPTIONS", "A32.demand" )
 L123.in_EJ_R_indchp_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_indchp_F_Yh")
 L124.in_EJ_R_heat_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.in_EJ_R_heat_F_Yh" )
 L132.share_R_indenergy_heat_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L132.share_R_indenergy_heat_Yh" )
@@ -152,31 +153,31 @@ L232.StubTechCalInput_indfeed$share.weight.year <- L232.StubTechCalInput_indfeed
 L232.StubTechCalInput_indfeed <- set_subsector_shrwt( L232.StubTechCalInput_indfeed, value.name = "calibrated.value" )
 L232.StubTechCalInput_indfeed$tech.share.weight <- ifelse( L232.StubTechCalInput_indfeed$calibrated.value > 0, 1, 0 )
 
-printlog( "L232.StubProduction_industry: calibrated output of industrial sector" )
+printlog( "L232.StubTechProd_industry: calibrated output of industrial sector" )
 #First, calculate service output by technology, for energy-use and feedstocks
 L232.out_EJ_R_ind_serv_F_Yh <- rbind( L232.in_EJ_R_indenergy_F_Yh, L232.in_EJ_R_indfeed_F_Yh )
 L232.out_EJ_R_ind_serv_F_Yh$efficiency <- L232.globaltech_eff.melt$efficiency[
       match( vecpaste( L232.out_EJ_R_ind_serv_F_Yh[ c( supp, subs, "stub.technology", Y ) ] ),
              vecpaste( L232.globaltech_eff.melt[ c( s_s_t, Y ) ] ) ) ]
-L232.out_EJ_R_ind_serv_F_Yh$calOutputValue <- L232.out_EJ_R_ind_serv_F_Yh$value * L232.out_EJ_R_ind_serv_F_Yh$efficiency
+L232.out_EJ_R_ind_serv_F_Yh$calOutputValue <- round( L232.out_EJ_R_ind_serv_F_Yh$value * L232.out_EJ_R_ind_serv_F_Yh$efficiency, digits_calproduction )
 
 #Aggregate service output by region. This is the output of the industrial sector in each region.
-L232.StubProduction_industry <- aggregate( L232.out_EJ_R_ind_serv_F_Yh[ "calOutputValue" ],
+L232.StubTechProd_industry <- aggregate( L232.out_EJ_R_ind_serv_F_Yh[ "calOutputValue" ],
       by=as.list( L232.out_EJ_R_ind_serv_F_Yh[ c( "region", R, Y ) ] ), sum )
 L232.industry_names <- A32.globaltech_shrwt[ A32.globaltech_shrwt[[supp]] == "industry", s_s_t ]
-L232.StubProduction_industry[ c( supp, subs, "stub.technology" ) ] <- L232.industry_names[ rep( 1, times = nrow( L232.StubProduction_industry ) ), ]
-L232.StubProduction_industry$share.weight.year <- L232.StubProduction_industry[[Y]]
-L232.StubProduction_industry$subs.share.weight <- ifelse( L232.StubProduction_industry$calOutputValue > 0, 1, 0 )
-L232.StubProduction_industry$tech.share.weight <- L232.StubProduction_industry$subs.share.weight
-L232.StubProduction_industry <- L232.StubProduction_industry[ names_StubProduction ]
+L232.StubTechProd_industry[ c( supp, subs, "stub.technology" ) ] <- L232.industry_names[ rep( 1, times = nrow( L232.StubTechProd_industry ) ), ]
+L232.StubTechProd_industry$share.weight.year <- L232.StubTechProd_industry[[Y]]
+L232.StubTechProd_industry$subs.share.weight <- ifelse( L232.StubTechProd_industry$calOutputValue > 0, 1, 0 )
+L232.StubTechProd_industry$tech.share.weight <- L232.StubTechProd_industry$subs.share.weight
+L232.StubTechProd_industry <- L232.StubTechProd_industry[ names_StubTechProd ]
 
 printlog( "L232.StubTechCoef_industry: calibrated output of industrial sector" )
 #Next, aggregate service output by sector to calculate the portion of each input
 L232.StubTechCoef_industry_base <- aggregate( L232.out_EJ_R_ind_serv_F_Yh[ "calOutputValue" ],
       by=as.list( L232.out_EJ_R_ind_serv_F_Yh[ c( "region", R, supp, Y ) ] ), sum )
-L232.StubTechCoef_industry_base$output_tot <- L232.StubProduction_industry$calOutputValue[
+L232.StubTechCoef_industry_base$output_tot <- L232.StubTechProd_industry$calOutputValue[
       match( vecpaste( L232.StubTechCoef_industry_base[ c( "region", Y ) ] ),
-             vecpaste( L232.StubProduction_industry[ c( "region", Y ) ] ) ) ]
+             vecpaste( L232.StubTechProd_industry[ c( "region", Y ) ] ) ) ]
 L232.StubTechCoef_industry_base$coefficient <- L232.StubTechCoef_industry_base$calOutputValue / L232.StubTechCoef_industry_base$output_tot
 names( L232.StubTechCoef_industry_base )[ names( L232.StubTechCoef_industry_base ) == supp ] <- input
 L232.StubTechCoef_industry_base[ c( supp, subs, "stub.technology" ) ] <- L232.industry_names[ rep( 1, times = nrow( L232.StubTechCoef_industry_base ) ), ]
@@ -197,6 +198,7 @@ L232.StubTechCoef_industry_fut$market.name <- L232.StubTechCoef_industry_fut$reg
 
 #Combine the base year and future year coefficients
 L232.StubTechCoef_industry <- rbind( L232.StubTechCoef_industry_base[ names_StubTechCoef ], L232.StubTechCoef_industry_fut[ names_StubTechCoef ] )
+L232.StubTechCoef_industry$coefficient <- round( L232.StubTechCoef_industry$coefficient, digits_coefficient )
 
 printlog( "L232.FuelPrefElast_indenergy: fuel preference elasticities of industrial energy use" )
 #First, calculate the fuel shares allocated to each fuel
@@ -210,7 +212,54 @@ L232.indenergy_fuel_shares$total <- L232.indenergy_fuel_totals$value[
 L232.indenergy_fuel_shares$share <- L232.indenergy_fuel_shares$value / L232.indenergy_fuel_shares$total
 L232.indenergy_fuel_shares <- subset( L232.indenergy_fuel_shares, year == max( model_base_years ) )
 
-#Subset only those that meet specified criteria for being assigned a fuel preference elasticity
+#Set fuel preference elasticities as indicated by exogenous rules
+L232.indenergy_fuel_shares$fuelprefElasticity <- 0
+for( j in 1:nrow( L232.indenergy_fuel_shares ) ){
+	for( i in 1:nrow( A32.fuelprefElasticity ) ){
+		L232.indenergy_fuel_shares$fuelprefElasticity[j][
+		    L232.indenergy_fuel_shares$subsector[j] == A32.fuelprefElasticity$subsector[i] &
+		    A32.fuelprefElasticity$criteria[i] == "greater than" &
+		    L232.indenergy_fuel_shares$share[j] > A32.fuelprefElasticity$share[i] ] <-
+		    	A32.fuelprefElasticity$fuelprefElasticity[i]
+	}
+}
+
+for( j in 1:nrow( L232.indenergy_fuel_shares ) ){
+	for( i in 1:nrow( A32.fuelprefElasticity ) ){
+		L232.indenergy_fuel_shares$fuelprefElasticity[j][
+		    L232.indenergy_fuel_shares$subsector[j] == A32.fuelprefElasticity$subsector[i] &
+		    A32.fuelprefElasticity$criteria[i] == "lesser than" &
+		    L232.indenergy_fuel_shares$share[j] < A32.fuelprefElasticity$share[i] ] <-
+		    	A32.fuelprefElasticity$fuelprefElasticity[i]
+	}
+}
+
+#The fuel preference elasticities only matter in future periods. Fill out from the first future model time period
+L232.indenergy_fuel_shares$year.fillout <- min( model_future_years )
+L232.FuelPrefElast_indenergy <- L232.indenergy_fuel_shares[
+      L232.indenergy_fuel_shares$fuelprefElasticity !=0, names_FuelPrefElasticity ]
+
+printlog( "L232.PerCapitaBased_ind: per-capita based flag for industry final demand" )
+L232.PerCapitaBased_ind <- data.frame(
+      region = GCAM_region_names$region, energy.final.demand = A32.demand$energy.final.demand, perCapitaBased = A32.demand$perCapitaBased )
+
+printlog( "L232.PriceElasticity_ind: price elasticity of industry final demand" )
+#Price elasticities are only applied to future periods. Application in base years will cause solution failure
+L232.PriceElasticity_ind <- data.frame(
+      region = rep( GCAM_region_names$region, times = length( model_future_years ) ),
+      energy.final.demand = A32.demand$energy.final.demand,
+      year = sort( rep( model_future_years, times = nrow( GCAM_region_names ) ) ),
+      price.elasticity = A32.demand$price.elasticity )
+
+printlog( "L232.BaseService_ind: base-year service output of industry final demand" )
+#Base service is equal to the output of the industry supplysector
+L232.BaseService_ind <- data.frame(
+      region = L232.StubTechProd_industry$region,
+      energy.final.demand = A32.demand$energy.final.demand,
+      year = L232.StubTechProd_industry$year,
+      base.service = L232.StubTechProd_industry$calOutputValue )
+
+##NOTE: income elasticities are GDP-dependent and are set in the socioeconomics module
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -239,8 +288,12 @@ write_mi_data( L232.GlobalTechSecOut_ind, "GlobalTechSecOut", "ENERGY_LEVEL2_DAT
 write_mi_data( L232.GlobalTechCSeq_ind, "GlobalTechCSeq", "ENERGY_LEVEL2_DATA", "L232.GlobalTechCSeq_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.StubTechCalInput_indenergy, "StubTechCalInput", "ENERGY_LEVEL2_DATA", "L232.StubTechCalInput_indenergy", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.StubTechCalInput_indfeed, "StubTechCalInput", "ENERGY_LEVEL2_DATA", "L232.StubTechCalInput_indfeed", "ENERGY_XML_BATCH", "batch_industry.xml" )
-write_mi_data( L232.StubProduction_industry, "StubProduction", "ENERGY_LEVEL2_DATA", "L232.StubProduction_industry", "ENERGY_XML_BATCH", "batch_industry.xml" )
+write_mi_data( L232.StubTechProd_industry, "StubTechProd", "ENERGY_LEVEL2_DATA", "L232.StubTechProd_industry", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.StubTechCoef_industry, "StubTechCoef", "ENERGY_LEVEL2_DATA", "L232.StubTechCoef_industry", "ENERGY_XML_BATCH", "batch_industry.xml" )
+write_mi_data( L232.FuelPrefElast_indenergy, "FuelPrefElast", "ENERGY_LEVEL2_DATA", "L232.FuelPrefElast_indenergy", "ENERGY_XML_BATCH", "batch_industry.xml" )
+write_mi_data( L232.PerCapitaBased_ind, "PerCapitaBased", "ENERGY_LEVEL2_DATA", "L232.PerCapitaBased_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
+write_mi_data( L232.PriceElasticity_ind, "PriceElasticity", "ENERGY_LEVEL2_DATA", "L232.PriceElasticity_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
+write_mi_data( L232.BaseService_ind, "BaseService", "ENERGY_LEVEL2_DATA", "L232.BaseService_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_industry.xml", "ENERGY_XML_FINAL", "industry.xml", "", xml_tag="outFile" )
 

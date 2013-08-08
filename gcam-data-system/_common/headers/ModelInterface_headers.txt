@@ -1,5 +1,5 @@
 
-Regions,world/+{name}region,scenario,scenario/world
+InterestRate,world/+{name}region,region/+interest-rate,scenario,scenario/world
 
 Pop,world/+{name}region,demographics/+{year}populationMiniCAM,populationMiniCAM/+totalPop,scenario,scenario/world,region/demographics
 
@@ -88,6 +88,8 @@ SubsectorShrwtFllt,world/+{name}region,region/+{name}supplysector,supplysector/+
 SubsectorInterp,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
 
 SubsectorInterpTo,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+to-value,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
+
+FuelPrefElast,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year;fillout=1}fuelprefElasticity,subsector/+fuelprefElasticity,scenario/world,scenario
 
 Tech,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,scenario,scenario/world
 
@@ -245,7 +247,7 @@ GlobalTechSecOut,global-technology-database/+{sector-name}location-info,global-t
 
 GlobalTechCapture,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,standard-capture-component/+remove-fraction, standard-capture-component/+storage-market,scenario,scenario/world,world/global-technology-database,period/standard-capture-component
 
-GlobalTechCseq,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,non-energy-use-capture-component/+remove-fraction, non-energy-use-capture-component/+target-gas,scenario,scenario/world,world/global-technology-database,period/non-energy-use-capture-component
+GlobalTechCSeq,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,non-energy-use-capture-component/+remove-fraction, non-energy-use-capture-component/+target-gas,scenario,scenario/world,world/global-technology-database,period/non-energy-use-capture-component
 
 GlobalIntTechEff,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2
 

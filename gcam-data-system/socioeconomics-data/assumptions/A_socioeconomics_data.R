@@ -13,7 +13,9 @@ gdp_model <- "OECD Env-Linkages"
 base_pop_scen <- "SSP2"
 base_gdp_scen <- "SSP2"
 
+default_interest.rate <- 0.05
 default_laborforce <- 0.5
 
 digits_Pop <- 0
 digits_LaborProductivity <- 5
+digits_IncElas_ind <- 3

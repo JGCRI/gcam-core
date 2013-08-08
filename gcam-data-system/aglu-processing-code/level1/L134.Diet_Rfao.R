@@ -30,7 +30,7 @@ L100.FAO_ag_Food_t <- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_ag_Food_t" )
 L100.FAO_an_Food_t <- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_an_Food_t" )
 L101.ag_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_Food_Pcal_R_C_Y" )
 L105.an_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L105.an_Food_Pcal_R_C_Y" )
-L101.Pop_mil_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_mil_R_Yh" )
+L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -45,9 +45,9 @@ L134.Food_Pcal_R_Dmnd_Y <- rbind( L134.ag_Food_Pcal_R_Y[ c( R, "GCAM_demand", X_
 
 #Divide by population to calculate the historical per-capita food demands, in kcal per person per day
 L134.pcFood_kcald_R_Dmnd_Y <- L134.Food_Pcal_R_Dmnd_Y
-L134.pcFood_kcald_R_Dmnd_Y[ X_AGLU_historical_years ] <- L134.Food_Pcal_R_Dmnd_Y[ X_AGLU_historical_years ] * conv_days_year * conv_Pcal_Gcal /
-      L101.Pop_mil_R_Yh[
-         match( L134.pcFood_kcald_R_Dmnd_Y[[R]], L101.Pop_mil_R_Yh[[R]] ),
+L134.pcFood_kcald_R_Dmnd_Y[ X_AGLU_historical_years ] <- L134.Food_Pcal_R_Dmnd_Y[ X_AGLU_historical_years ] * conv_days_year * conv_Pcal_Mcal /
+      L101.Pop_thous_R_Yh[
+         match( L134.pcFood_kcald_R_Dmnd_Y[[R]], L101.Pop_thous_R_Yh[[R]] ),
          X_AGLU_historical_years ]
 
 #Extrapolate this to the future periods based on the FAO projections

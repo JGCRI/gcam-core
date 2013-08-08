@@ -30,12 +30,12 @@ L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
 L101.Pop_thous_SSP_R_Yfut <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_SSP_R_Yfut" )
 L102.gdp_mil90usd_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_R_Y" )
 L102.gdp_mil90usd_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_SSP_R_Y" )
-L102.pcgdp_90usd_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_90usd_SSP_R_Y" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
 printlog( "L201.Regions: Create a base input file with the region names" )
-L201.Regions <- data.frame( region = GCAM_region_names$region )
+L201.InterestRate <- data.frame( region = GCAM_region_names$region, interest.rate = default_interest.rate )
 
 printlog( "L201.Pop_GCAM3: Population by region from the GCAM 3.0 core scenario" )
 L201.Pop_GCAM3 <- interpolate_and_melt( L101.Pop_thous_GCAM3_R_Y, c( model_base_years, model_future_years ), value.name = "totalPop" )
@@ -99,11 +99,11 @@ L201.pcgdpRatio_GCAM3_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
       L201.pcgdp_GCAM3_R_Y[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
 
 #SSPs
-L201.pcgdp_90usd_SSP_R_Y <- add_region_name( L102.pcgdp_90usd_SSP_R_Y )
-L201.pcgdpRatio_SSP_R_Y <- L201.pcgdp_90usd_SSP_R_Y[ c( Scen, "region", X_model_years[ 2:length( X_model_years ) ] ) ]
+L201.pcgdp_thous90USD_SSP_R_Y <- add_region_name( L102.pcgdp_thous90USD_SSP_R_Y )
+L201.pcgdpRatio_SSP_R_Y <- L201.pcgdp_thous90USD_SSP_R_Y[ c( Scen, "region", X_model_years[ 2:length( X_model_years ) ] ) ]
 L201.pcgdpRatio_SSP_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
-      L201.pcgdp_90usd_SSP_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] /
-      L201.pcgdp_90usd_SSP_R_Y[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+      L201.pcgdp_thous90USD_SSP_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] /
+      L201.pcgdp_thous90USD_SSP_R_Y[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
 
 #Build a table with timesteps to derive annual growth rates from the ratios
 timesteps <- model_years[ 2:length( model_years ) ] - model_years[ 1:( length( model_years ) - 1 ) ]
@@ -154,7 +154,7 @@ L201.LaborProductivity_SSP5 <- L201.LaborProductivity_SSP5[ names_LaborProductiv
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L201.Regions, "Regions", "SOCIO_LEVEL2_DATA", "L201.Regions", "SOCIO_XML_BATCH", "batch_base_input.xml" ) 
+write_mi_data( L201.InterestRate, "InterestRate", "SOCIO_LEVEL2_DATA", "L201.InterestRate", "SOCIO_XML_BATCH", "batch_socioeconomics_base.xml" ) 
 
 write_mi_data( L201.Pop_GCAM3, "Pop", "SOCIO_LEVEL2_DATA", "L201.Pop_GCAM3", "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml" ) 
 write_mi_data( L201.BaseGDP_GCAM3, "BaseGDP", "SOCIO_LEVEL2_DATA", "L201.BaseGDP_GCAM3", "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml" ) 
@@ -186,7 +186,7 @@ write_mi_data( L201.BaseGDP_SSP, "BaseGDP", "SOCIO_LEVEL2_DATA", "L201.BaseGDP_S
 write_mi_data( L201.LaborForceFillout, "LaborForceFillout", "SOCIO_LEVEL2_DATA", "L201.LaborForceFillout", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP5.xml" ) 
 write_mi_data( L201.LaborProductivity_SSP5, "LaborProductivity", "SOCIO_LEVEL2_DATA", "L201.LaborProductivity_SSP5", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP5.xml" ) 
 
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_base_input.xml", "SOCIO_XML_FINAL", "base_input.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_socioeconomics_base.xml", "SOCIO_XML_FINAL", "socioeconomics_base.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml", "SOCIO_XML_FINAL", "socioeconomics_GCAM3.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_socioeconomics_SSP1.xml", "SOCIO_XML_FINAL", "socioeconomics_SSP1.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_socioeconomics_SSP2.xml", "SOCIO_XML_FINAL", "socioeconomics_SSP2.xml", "", xml_tag="outFile" )

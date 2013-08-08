@@ -109,19 +109,19 @@ L202.GlobalTechCoef_in <- repeat_and_add_vector( A_an_input_technology, Y, c( mo
 L202.GlobalTechCoef_in[ c( "sector.name", "subsector.name" ) ] <- L202.GlobalTechCoef_in[ c( supp, subs ) ]
 L202.GlobalTechCoef_in <- L202.GlobalTechCoef_in[ names_GlobalTechCoef ]
 
-printlog( "L202.StubProduction_in: base year output of the inputs (feed types) to animal production" )
-L202.StubProduction_in <- write_to_all_regions_ag( A_an_input_technology, names_Tech )
-L202.StubProduction_in$stub.technology <- L202.StubProduction_in$technology
-L202.StubProduction_in <- repeat_and_add_vector( L202.StubProduction_in, Y, model_base_years )
-L202.StubProduction_in$calOutputValue <- round( L202.ag_Feed_Mt_R_C_Y.melt$value[
-      match( vecpaste( L202.StubProduction_in[ c( reg, tech, Y ) ] ),
+printlog( "L202.StubTechProd_in: base year output of the inputs (feed types) to animal production" )
+L202.StubTechProd_in <- write_to_all_regions_ag( A_an_input_technology, names_Tech )
+L202.StubTechProd_in$stub.technology <- L202.StubTechProd_in$technology
+L202.StubTechProd_in <- repeat_and_add_vector( L202.StubTechProd_in, Y, model_base_years )
+L202.StubTechProd_in$calOutputValue <- round( L202.ag_Feed_Mt_R_C_Y.melt$value[
+      match( vecpaste( L202.StubTechProd_in[ c( reg, tech, Y ) ] ),
              vecpaste( L202.ag_Feed_Mt_R_C_Y.melt[ c( reg, C, Y ) ] ) ) ],
       digits_calOutput )
 #Subsector and technology shareweights (subsector requires the year as well)
-L202.StubProduction_in$share.weight.year <- L202.StubProduction_in$year
-L202.StubProduction_in$subs.share.weight <- ifelse( L202.StubProduction_in$calOutputValue > 0, 1, 0 )
-L202.StubProduction_in$tech.share.weight <- ifelse( L202.StubProduction_in$calOutputValue > 0, 1, 0 )
-L202.StubProduction_in <- L202.StubProduction_in[ names_StubProduction]
+L202.StubTechProd_in$share.weight.year <- L202.StubTechProd_in$year
+L202.StubTechProd_in$subs.share.weight <- ifelse( L202.StubTechProd_in$calOutputValue > 0, 1, 0 )
+L202.StubTechProd_in$tech.share.weight <- ifelse( L202.StubTechProd_in$calOutputValue > 0, 1, 0 )
+L202.StubTechProd_in <- L202.StubTechProd_in[ names_StubTechProd]
 
 printlog( "L202.Supplysector_an: generic animal production supplysector info" )
 L202.Supplysector_an <- write_to_all_regions_ag( A_an_supplysector, names_Supplysector )
@@ -137,28 +137,28 @@ printlog( "L202.StubTechInterp_an: shareweight interpolation for animal producti
 L202.StubTechInterp_an <- write_to_all_regions_ag( A_an_technology, names_TechInterp )
 names( L202.StubTechInterp_an ) <- gsub( "technology", "stub.technology", names( L202.StubTechInterp_an ) )
 
-printlog( "L202.StubProduction_an: animal production by technology and region" )
-L202.StubProduction_an <- write_to_all_regions_ag( A_an_technology, names_Tech )
-L202.StubProduction_an$stub.technology <- L202.StubProduction_an$technology
-L202.StubProduction_an <- repeat_and_add_vector( L202.StubProduction_an, Y, model_base_years )
-L202.StubProduction_an$calOutputValue <- round( L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt$value[
-      match( vecpaste( L202.StubProduction_an[ c( reg, supp, subs, tech, Y ) ] ),
+printlog( "L202.StubTechProd_an: animal production by technology and region" )
+L202.StubTechProd_an <- write_to_all_regions_ag( A_an_technology, names_Tech )
+L202.StubTechProd_an$stub.technology <- L202.StubTechProd_an$technology
+L202.StubTechProd_an <- repeat_and_add_vector( L202.StubTechProd_an, Y, model_base_years )
+L202.StubTechProd_an$calOutputValue <- round( L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt$value[
+      match( vecpaste( L202.StubTechProd_an[ c( reg, supp, subs, tech, Y ) ] ),
              vecpaste( L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt[ c( reg, C, Sys, Fd, Y ) ] ) ) ],
       digits_calOutput )
 #Subsector and technology shareweights (subsector requires the year as well)
-L202.StubProduction_an$share.weight.year <- L202.StubProduction_an$year
-L202.StubProduction_an$subs.share.weight <- ifelse( L202.StubProduction_an$calOutputValue > 0, 1, 0 )
-L202.StubProduction_an$tech.share.weight <- ifelse( L202.StubProduction_an$calOutputValue > 0, 1, 0 )
-L202.StubProduction_an <- L202.StubProduction_an[ names_StubProduction]
+L202.StubTechProd_an$share.weight.year <- L202.StubTechProd_an$year
+L202.StubTechProd_an$subs.share.weight <- ifelse( L202.StubTechProd_an$calOutputValue > 0, 1, 0 )
+L202.StubTechProd_an$tech.share.weight <- ifelse( L202.StubTechProd_an$calOutputValue > 0, 1, 0 )
+L202.StubTechProd_an <- L202.StubTechProd_an[ names_StubTechProd]
 
 #Note that some subsectors here have multiple technologies, so shareweights should be derived from aggregation
-L202.an_subs_sw <- aggregate( L202.StubProduction_an[ "calOutputValue" ],
-      by=as.list( L202.StubProduction_an[ c( reg, supp, subs, Y ) ] ), sum)
+L202.an_subs_sw <- aggregate( L202.StubTechProd_an[ "calOutputValue" ],
+      by=as.list( L202.StubTechProd_an[ c( reg, supp, subs, Y ) ] ), sum)
 L202.an_subs_sw$share.weight <- ifelse( L202.an_subs_sw$calOutputValue > 0, 1, 0 )
 
 #Over-ride the shareweights in the production table
-L202.StubProduction_an$subs.share.weight <- L202.an_subs_sw$share.weight[
-      match( vecpaste( L202.StubProduction_an[ c( reg, supp, subs, Y ) ] ),
+L202.StubTechProd_an$subs.share.weight <- L202.an_subs_sw$share.weight[
+      match( vecpaste( L202.StubTechProd_an[ c( reg, supp, subs, Y ) ] ),
              vecpaste( L202.an_subs_sw[ c( reg, supp, subs, Y ) ] ) ) ]
 
 printlog( "L202.StubTechCoef_an: animal production input-output coefficients by technology and region" )
@@ -179,8 +179,8 @@ L202.StubTechCoef_an <- L202.StubTechCoef_an[ names_StubTechCoef ]
 #Supplemental calculation of non-input cost of animal production
 printlog( "Calculating non-feed costs of animal production based on US commodity prices and feed costs" )
 #First, calculate the weighted average price across the different feed types (supplysectors)
-L202.ag_Feed_P_share_R_C <- L202.StubProduction_in[
-      L202.StubProduction_in$region == "USA" & L202.StubProduction_in$year == max( model_base_years ),
+L202.ag_Feed_P_share_R_C <- L202.StubTechProd_in[
+      L202.StubTechProd_in$region == "USA" & L202.StubTechProd_in$year == max( model_base_years ),
       c( names_StubTech, "calOutputValue" ) ]
 L202.ag_Feed_Mt_R_F <- aggregate( L202.ag_Feed_P_share_R_C[ "calOutputValue" ],
       by=as.list( L202.ag_Feed_P_share_R_C[ c( reg, supp ) ] ), sum )
@@ -266,12 +266,12 @@ write_mi_data( L202.SubsectorAll_in, "SubsectorAll", "AGLU_LEVEL2_DATA", "L202.S
 write_mi_data( L202.StubTech_in, "StubTech", "AGLU_LEVEL2_DATA", "L202.StubTech_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTechInterp_in, "StubTechInterp", "AGLU_LEVEL2_DATA", "L202.StubTechInterp_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.GlobalTechCoef_in, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L202.GlobalTechCoef_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
-write_mi_data( L202.StubProduction_in, "StubProduction", "AGLU_LEVEL2_DATA", "L202.StubProduction_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+write_mi_data( L202.StubTechProd_in, "StubTechProd", "AGLU_LEVEL2_DATA", "L202.StubTechProd_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.Supplysector_an, "Supplysector", "AGLU_LEVEL2_DATA", "L202.Supplysector_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.SubsectorAll_an, "SubsectorAll", "AGLU_LEVEL2_DATA", "L202.SubsectorAll_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTech_an, "StubTech", "AGLU_LEVEL2_DATA", "L202.StubTech_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTechInterp_an, "StubTechInterp", "AGLU_LEVEL2_DATA", "L202.StubTechInterp_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
-write_mi_data( L202.StubProduction_an, "StubProduction", "AGLU_LEVEL2_DATA", "L202.StubProduction_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+write_mi_data( L202.StubTechProd_an, "StubTechProd", "AGLU_LEVEL2_DATA", "L202.StubTechProd_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTechCoef_an, "StubTechCoef", "AGLU_LEVEL2_DATA", "L202.StubTechCoef_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.GlobalTechCost_an, "GlobalTechCost", "AGLU_LEVEL2_DATA", "L202.GlobalTechCost_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.GlobalRenewTech_imp_an, "GlobalRenewTech", "AGLU_LEVEL2_DATA", "L202.GlobalRenewTech_imp_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 

@@ -26,7 +26,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
-L100.gdp_bilusd_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.gdp_bilusd_ctry_Yh" )
+L100.gdp_mil90usd_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.gdp_mil90usd_ctry_Yh" )
 A13.MSW_curves <- readdata( "ENERGY_ASSUMPTIONS", "A13.MSW_curves" )
 
 # -----------------------------------------------------------------------------
@@ -34,7 +34,7 @@ A13.MSW_curves <- readdata( "ENERGY_ASSUMPTIONS", "A13.MSW_curves" )
 # 2a. Municipal solid waste supply curves
 printlog( "Downscaling GCAM 3.0 MSW supply curves to countries on the basis of GDP" )
 #Calculate GDP shares of GCAM regions within region_GCAM3
-L113.GDP_ctry <- L100.gdp_bilusd_ctry_Yh[ c( "iso", X_final_historical_year ) ]
+L113.GDP_ctry <- L100.gdp_mil90usd_ctry_Yh[ c( "iso", X_final_historical_year ) ]
 L113.GDP_ctry$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L113.GDP_ctry$iso, iso_GCAM_regID$iso ) ]
 L113.GDP_RG3 <- aggregate( L113.GDP_ctry[ X_final_historical_year ], by=as.list( L113.GDP_ctry[ "region_GCAM3" ] ), sum )
 L113.GDP_ctry$share <- L113.GDP_ctry[[X_final_historical_year]] / L113.GDP_RG3[[X_final_historical_year]][
