@@ -28,6 +28,7 @@ heat_price <- 2.8
 
 digits_CO2coef <- 1
 digits_calproduction <- 6
+digits_calOutput <- 6
 digits_depresource <- 0
 digits_maxSubResource <- 5
 digits_mid.price <- 3

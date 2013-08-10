@@ -108,7 +108,7 @@ L224.in_EJ_R_heat_F_Yh <- subset( L224.in_EJ_R_heat_F_Yh, region %in% heat_regio
 
 printlog( "L224.StubTechCalInput_heat: calibrated input to district heat")
 L224.StubTechCalInput_heat <- L224.in_EJ_R_heat_F_Yh[ c( names_StubTechYr, "minicam.energy.input" ) ]
-L224.StubTechCalInput_heat$calibrated.value <- round( L224.in_EJ_R_heat_F_Yh$value, digits_calproduction )
+L224.StubTechCalInput_heat$calibrated.value <- round( L224.in_EJ_R_heat_F_Yh$value, digits_calOutput )
 L224.StubTechCalInput_heat$year.share.weight <- L224.StubTechCalInput_heat$year
 L224.StubTechCalInput_heat <- set_subsector_shrwt( L224.StubTechCalInput_heat, value.name = "calibrated.value" )
 L224.StubTechCalInput_heat$share.weight <- ifelse( L224.StubTechCalInput_heat$calibrated.value > 0, 1, 0 )
@@ -124,7 +124,7 @@ L224.heatoutratio_R_elec_F_tech_Yh$secondary.output.name <- A24.sector$supplysec
 
 printlog( "L224.StubTechSecOut_elec: secondary output of district heat from electricity technologies")
 L224.StubTechSecOut_elec <- L224.heatoutratio_R_elec_F_tech_Yh[ c( names_StubTechYr, "secondary.output.name" ) ]
-L224.StubTechSecOut_elec$secondary.output <- round( L224.heatoutratio_R_elec_F_tech_Yh$value, digits_calproduction )
+L224.StubTechSecOut_elec$secondary.output <- round( L224.heatoutratio_R_elec_F_tech_Yh$value, digits_calOutput )
 
 #Calculate cost adjustment, equal to the output of heat multiplied by the heat price (to minimize the distortion of including the secondary output)
 L224.StubTechCost_elec <- L224.StubTechSecOut_elec[ names_StubTechYr ]

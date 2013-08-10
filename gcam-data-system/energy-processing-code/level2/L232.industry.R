@@ -23,6 +23,7 @@ sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )
 calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 A23.chp_elecratio <- readdata( "ENERGY_ASSUMPTIONS", "A23.chp_elecratio" )
 A32.sector <- readdata( "ENERGY_ASSUMPTIONS", "A32.sector" )
 A32.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A32.subsector_interp" )
@@ -36,15 +37,13 @@ A32.nonenergy_Cseq <- readdata( "ENERGY_ASSUMPTIONS", "A32.nonenergy_Cseq" )
 A32.fuelprefElasticity <- readdata( "ENERGY_ASSUMPTIONS", "A32.fuelprefElasticity" )
 A32.demand <- readdata( "ENERGY_ASSUMPTIONS", "A32.demand" )
 L123.in_EJ_R_indchp_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_indchp_F_Yh")
-L124.in_EJ_R_heat_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.in_EJ_R_heat_F_Yh" )
-L132.share_R_indenergy_heat_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L132.share_R_indenergy_heat_Yh" )
 L1322.in_EJ_R_indenergy_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indenergy_F_Yh" )
 L1322.in_EJ_R_indfeed_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indfeed_F_Yh" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 # 2a. Supplysector information
-printlog( "L232.Supplysector_elec: Supply sector information for industry sector" )
+printlog( "L232.Supplysector_ind: Supply sector information for industry sector" )
 L232.Supplysector_ind <- write_to_all_regions( A32.sector, names_Supplysector )
 
 # 2b. Subsector information
@@ -72,6 +71,13 @@ printlog( "L232.StubTech_ind: Identification of stub technologies of industrial 
 #Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
 L232.StubTech_ind <- write_to_all_regions( A32.globaltech_shrwt, names_Tech )
 names( L232.StubTech_ind ) <- names_StubTech
+
+#Drop non-existent heat technologies in regions where heat is not modeled as a separate fuel
+L232.heat_techs <- unique( calibrated_techs[ grepl( "industry", calibrated_techs$sector ) & calibrated_techs$fuel == "heat", s_s_t ] )
+L232.rm_heat_techs_R <- repeat_and_add_vector( L232.heat_techs, R, A_regions[[R]][ A_regions$heat == 0 ] )
+L232.rm_heat_techs_R <- add_region_name( L232.rm_heat_techs_R )
+L232.StubTech_ind <- L232.StubTech_ind[
+      vecpaste( L232.StubTech_ind[ c( "region", "stub.technology" ) ] ) %!in% vecpaste( L232.rm_heat_techs_R[ c( "region", "technology" ) ] ), ]
 
 printlog( "L232.GlobalTechShrwt_ind: Shareweights of global industrial sector technologies" )
 L232.globaltech_shrwt.melt <- interpolate_and_melt( A32.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )
@@ -130,7 +136,7 @@ L232.StubTechCalInput_indenergy <- L232.in_EJ_R_indenergy_F_Yh[ names_StubTechYr
 L232.StubTechCalInput_indenergy$minicam.energy.input <- A32.globaltech_eff$minicam.energy.input[ 
       match( vecpaste( L232.StubTechCalInput_indenergy[ c( "subsector", "stub.technology" ) ] ),
              vecpaste( A32.globaltech_eff[ c( "subsector", "technology" ) ] ) ) ]
-L232.StubTechCalInput_indenergy$calibrated.value <- round( L232.in_EJ_R_indenergy_F_Yh$value, digits_calproduction )
+L232.StubTechCalInput_indenergy$calibrated.value <- round( L232.in_EJ_R_indenergy_F_Yh$value, digits_calOutput )
 L232.StubTechCalInput_indenergy$share.weight.year <- L232.StubTechCalInput_indenergy$year
 L232.StubTechCalInput_indenergy <- set_subsector_shrwt( L232.StubTechCalInput_indenergy, value.name = "calibrated.value" )
 L232.StubTechCalInput_indenergy$tech.share.weight <- ifelse( L232.StubTechCalInput_indenergy$calibrated.value > 0, 1, 0 )
@@ -148,7 +154,7 @@ L232.StubTechCalInput_indfeed <- L232.in_EJ_R_indfeed_F_Yh[ names_StubTechYr ]
 L232.StubTechCalInput_indfeed$minicam.energy.input <- A32.globaltech_eff$minicam.energy.input[ 
       match( vecpaste( L232.StubTechCalInput_indfeed[ c( "subsector", "stub.technology" ) ] ),
              vecpaste( A32.globaltech_eff[ c( "subsector", "technology" ) ] ) ) ]
-L232.StubTechCalInput_indfeed$calibrated.value <- round( L232.in_EJ_R_indfeed_F_Yh$value, digits_calproduction )
+L232.StubTechCalInput_indfeed$calibrated.value <- round( L232.in_EJ_R_indfeed_F_Yh$value, digits_calOutput )
 L232.StubTechCalInput_indfeed$share.weight.year <- L232.StubTechCalInput_indfeed$year
 L232.StubTechCalInput_indfeed <- set_subsector_shrwt( L232.StubTechCalInput_indfeed, value.name = "calibrated.value" )
 L232.StubTechCalInput_indfeed$tech.share.weight <- ifelse( L232.StubTechCalInput_indfeed$calibrated.value > 0, 1, 0 )
@@ -159,7 +165,7 @@ L232.out_EJ_R_ind_serv_F_Yh <- rbind( L232.in_EJ_R_indenergy_F_Yh, L232.in_EJ_R_
 L232.out_EJ_R_ind_serv_F_Yh$efficiency <- L232.globaltech_eff.melt$efficiency[
       match( vecpaste( L232.out_EJ_R_ind_serv_F_Yh[ c( supp, subs, "stub.technology", Y ) ] ),
              vecpaste( L232.globaltech_eff.melt[ c( s_s_t, Y ) ] ) ) ]
-L232.out_EJ_R_ind_serv_F_Yh$calOutputValue <- round( L232.out_EJ_R_ind_serv_F_Yh$value * L232.out_EJ_R_ind_serv_F_Yh$efficiency, digits_calproduction )
+L232.out_EJ_R_ind_serv_F_Yh$calOutputValue <- round( L232.out_EJ_R_ind_serv_F_Yh$value * L232.out_EJ_R_ind_serv_F_Yh$efficiency, digits_calOutput )
 
 #Aggregate service output by region. This is the output of the industrial sector in each region.
 L232.StubTechProd_industry <- aggregate( L232.out_EJ_R_ind_serv_F_Yh[ "calOutputValue" ],

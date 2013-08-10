@@ -174,7 +174,7 @@ L222.StubTechProd_gasproc$calOutputValue <- round(
                        L222.StubTechProd_gasproc$stub.technology, L222.StubTechProd_gasproc$year ),
                 paste( L222.out_EJ_R_gasproc_F_Yh$region, L222.out_EJ_R_gasproc_F_Yh$supplysector, L222.out_EJ_R_gasproc_F_Yh$subsector,
                        L222.out_EJ_R_gasproc_F_Yh$stub.technology, L222.out_EJ_R_gasproc_F_Yh$year ) ) ],
-      digits_calproduction )
+      digits_calOutput )
 #Coal to gas isn't included in all regions so replace missing values
 L222.StubTechProd_gasproc$calOutputValue[ is.na( L222.StubTechProd_gasproc$calOutputValue ) ] <- 0
 L222.StubTechProd_gasproc <- L222.StubTechProd_gasproc[ c( names_StubTechYr, "calOutputValue" ) ]
@@ -192,7 +192,7 @@ L222.out_EJ_R_refining_F_Yh[ c( "supplysector", "subsector", "stub.technology" )
 
 printlog( "L222.StubTechProd_refining: calibrated output of refining technologies")
 L222.StubTechProd_refining <- L222.out_EJ_R_refining_F_Yh[ names_StubTechYr ]
-L222.StubTechProd_refining$calOutputValue <- round( L222.out_EJ_R_refining_F_Yh$value, digits_calproduction )
+L222.StubTechProd_refining$calOutputValue <- round( L222.out_EJ_R_refining_F_Yh$value, digits_calOutput )
 L222.StubTechProd_refining$year.share.weight <- L222.StubTechProd_refining$year
 L222.StubTechProd_refining <- set_subsector_shrwt( L222.StubTechProd_refining )
 L222.StubTechProd_refining$share.weight <- ifelse( L222.StubTechProd_refining$calOutputValue > 0, 1, 0 )

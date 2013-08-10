@@ -120,7 +120,7 @@ L221.Production_unoil$calOutputValue <- round(
       L221.Prod_EJ_R_unoil_Yh.melt$value[
          match( paste( L221.Production_unoil$market.name, L221.Production_unoil$year ),
                 paste( L221.Prod_EJ_R_unoil_Yh.melt$region, L221.Prod_EJ_R_unoil_Yh.melt$year ) ) ],
-      digits_calproduction )
+      digits_calOutput )
 L221.Production_unoil <- L221.Production_unoil[ c( names_TechYr, "calOutputValue" ) ]
 L221.Production_unoil$calOutputValue[ is.na( L221.Production_unoil$calOutputValue ) ] <- 0             
 L221.Production_unoil$year.share.weight <- L221.Production_unoil$year
@@ -139,7 +139,7 @@ L221.StubTechProd_oil_unoil$calOutputValue <- round(
       L221.in_EJ_R_TPES_unoil_Yh.melt$value[
          match( paste( L221.StubTechProd_oil_unoil$region, L221.StubTechProd_oil_unoil$year ),
                 paste( L221.in_EJ_R_TPES_unoil_Yh.melt$region, L221.in_EJ_R_TPES_unoil_Yh.melt$year ) ) ],
-      digits_calproduction )
+      digits_calOutput )
 L221.StubTechProd_oil_unoil$year.share.weight <- L221.StubTechProd_oil_unoil$year
 L221.StubTechProd_oil_unoil$subsector.share.weight <- ifelse( L221.StubTechProd_oil_unoil$calOutputValue > 0, 1, 0 )
 L221.StubTechProd_oil_unoil$share.weight <- ifelse( L221.StubTechProd_oil_unoil$calOutputValue > 0, 1, 0 )
@@ -156,7 +156,7 @@ L221.StubTechProd_oil_crude$calOutputValue <- round(
       L221.in_EJ_R_TPES_crude_Yh.melt$value[
          match( paste( L221.StubTechProd_oil_crude$region, L221.StubTechProd_oil_crude$year ),
                 paste( L221.in_EJ_R_TPES_crude_Yh.melt$region, L221.in_EJ_R_TPES_crude_Yh.melt$year ) ) ],
-      digits_calproduction )
+      digits_calOutput )
 L221.StubTechProd_oil_crude$year.share.weight <- L221.StubTechProd_oil_crude$year
 L221.StubTechProd_oil_crude$subsector.share.weight <- ifelse( L221.StubTechProd_oil_crude$calOutputValue > 0, 1, 0 )
 L221.StubTechProd_oil_crude$share.weight <- ifelse( L221.StubTechProd_oil_crude$calOutputValue > 0, 1, 0 )

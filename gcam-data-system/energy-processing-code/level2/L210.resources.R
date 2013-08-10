@@ -14,7 +14,7 @@ if( !exists( "ENERGYPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
-logstart( "L210.rsrc.R" )
+logstart( "L210.resources.R" )
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 printlog( "Resource supply information" )
@@ -141,8 +141,8 @@ L210.DepRsrcTechChange <- data.frame(
       year.fillout = substr( L210.dep_rsrc_TechChange.melt$variable, 2, 5 ),
       techChange = L210.dep_rsrc_TechChange.melt$value )
 
-printlog( "L210.RenewRsrcTechChange: technological change for smooth renewable subresources" )
-L210.RenewRsrcTechChange <- data.frame(
+printlog( "L210.SmthRenewRsrcTechChange: technological change for smooth renewable subresources" )
+L210.SmthRenewRsrcTechChange <- data.frame(
       region = L210.renew_rsrc_TechChange.melt$region,
       renewresource = L210.renew_rsrc_TechChange.melt$resource,
       smooth.renewable.subresource = L210.renew_rsrc_TechChange.melt$subresource,
@@ -195,24 +195,24 @@ L210.GrdRenewRsrcCurves_EGS <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_EGS, "re
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
-write_mi_data( L210.DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L210.DepRsrc", batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_rsrc.xml" ) 
-write_mi_data( L210.RenewRsrc, "RenewRsrc", "ENERGY_LEVEL2_DATA", "L210.RenewRsrc", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.UnlimitRsrc, "UnlimitRsrc", "ENERGY_LEVEL2_DATA", "L210.UnlimitRsrc", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.DepRsrcPrice, "DepRsrcPrice", "ENERGY_LEVEL2_DATA", "L210.DepRsrcPrice", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.RenewRsrcPrice, "RenewRsrcPrice", "ENERGY_LEVEL2_DATA", "L210.RenewRsrcPrice", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.UnlimitRsrcPrice, "UnlimitRsrcPrice", "ENERGY_LEVEL2_DATA", "L210.UnlimitRsrcPrice", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.DepRsrcTechChange, "DepRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.DepRsrcTechChange", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.RenewRsrcTechChange, "RenewRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.RenewRsrcTechChange", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.DepRsrcCalProd, "DepRsrcCalProd", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCalProd", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.DepRsrcCurves_fos, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCurves_fos", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.DepRsrcCurves_U, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCurves_U", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.SmthRenewRsrcCurves_MSW, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_MSW", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.SmthRenewRsrcCurves_wind, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_wind", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.SmthRenewRsrcCurves_roofPV, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_roofPV", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
-write_mi_data( L210.GrdRenewRsrcCurves_geo, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_geo", "ENERGY_XML_BATCH", "batch_rsrc.xml" ) 
+write_mi_data( L210.DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L210.DepRsrc", batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_resources.xml" ) 
+write_mi_data( L210.RenewRsrc, "RenewRsrc", "ENERGY_LEVEL2_DATA", "L210.RenewRsrc", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.UnlimitRsrc, "UnlimitRsrc", "ENERGY_LEVEL2_DATA", "L210.UnlimitRsrc", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.DepRsrcPrice, "DepRsrcPrice", "ENERGY_LEVEL2_DATA", "L210.DepRsrcPrice", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.RenewRsrcPrice, "RenewRsrcPrice", "ENERGY_LEVEL2_DATA", "L210.RenewRsrcPrice", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.UnlimitRsrcPrice, "UnlimitRsrcPrice", "ENERGY_LEVEL2_DATA", "L210.UnlimitRsrcPrice", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.DepRsrcTechChange, "DepRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.DepRsrcTechChange", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.SmthRenewRsrcTechChange, "SmthRenewRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcTechChange", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.DepRsrcCalProd, "DepRsrcCalProd", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCalProd", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.DepRsrcCurves_fos, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCurves_fos", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.DepRsrcCurves_U, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCurves_U", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.SmthRenewRsrcCurves_MSW, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_MSW", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.SmthRenewRsrcCurves_wind, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_wind", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.SmthRenewRsrcCurves_roofPV, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_roofPV", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.GrdRenewRsrcCurves_geo, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_geo", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.GrdRenewRsrcCurves_EGS, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_EGS", "ENERGY_XML_BATCH", "batch_geo_adv.xml" ) 
 
-insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_rsrc.xml", "ENERGY_XML_FINAL", "rsrc.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources.xml", "ENERGY_XML_FINAL", "resources.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_adv.xml", "ENERGY_XML_FINAL", "geo_adv.xml", "", xml_tag="outFile" )
 
 logstop()

@@ -131,8 +131,11 @@ L204.AgResBio_ag$water.content <- round( L204.ag_resbio_R_C$WaterContent[
       match( vecpaste( L204.AgResBio_ag[ c( reg, agsupp ) ] ), vecpaste( L204.ag_resbio_R_C[ c( reg, C ) ] ) ) ],
       digits_water_content )
 
+#Calcs return missing values where crops x regions do not exist. Drop these
+L204.AgResBio_ag <- na.omit( L204.AgResBio_ag )
+
 printlog( "L204.AgResBioCurve_ag: Agricultural residue biomass supply curves" )
-L204.AgResBioCurve_ag <- repeat_and_add_vector( L204.R_Ag_technology_year, "price", unique (A_resbio_curves$price) )
+L204.AgResBioCurve_ag <- repeat_and_add_vector( L204.AgResBio_ag[ c( names_AgTechYr, "residue.biomass.production" ) ], "price", unique (A_resbio_curves$price) )
 L204.AgResBioCurve_ag$fract.harvested <- A_resbio_curves$ag[ match( L204.AgResBioCurve_ag$price, A_resbio_curves$price ) ]
 
 #JATROPHA
