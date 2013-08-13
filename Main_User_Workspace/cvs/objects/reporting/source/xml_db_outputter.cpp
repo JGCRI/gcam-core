@@ -1529,15 +1529,7 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
     for( int aYear = startingYear; 
              aYear <= modeltime->getper_to_yr( modeltime->getmaxper() - 1 ) || aYear == modeltime->getper_to_yr( modeltime->getmaxper() - 1 ); 
              aYear += outputInterval ){
-        // TODO -- need ability to write out units for non-period based items.
-        XMLWriteElement( aCarbonCalc->getNetLandUseChangeEmission( aYear ),
-                         "land-use-change-emission", mBuffer, mTabs.get(), aYear );
-        /* TODO: do we want to calculate these?
-        XMLWriteElement( aCarbonCalc->getBelowGroundCarbonStock( aYear ),
-                         "below-ground-carbon-stock", mBuffer, mTabs.get(), aYear );
-        XMLWriteElement( aCarbonCalc->getAboveGroundCarbonStock( aYear ),
-                         "above-ground-carbon-stock", mBuffer, mTabs.get(), aYear );*/
-
+        writeItemUsingYear( "land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmission( aYear ), aYear );
      }
     
     for( int aYear = modeltime->getStartYear(); 
