@@ -207,12 +207,6 @@ Ccontent_cellulose <- 0.45
 #Conversion from peak biomass to average biomass integrated over the course of the year
 Cconv_peak_avg <- 0.5
 
-#Fertilizer characteristics
-Fert_name <- "N fertilizer"
-Fert_Cost_07USDtNH3 <- 363
-conv_NH3_N <- 14/17
-conv_elec_primary <- 2.5
-
 #Fertilizer application rate for biomass
 swgr_Fert_IO_gNm2 <- 5.6
 swgr_Yield_kgCm2 <- 0.34

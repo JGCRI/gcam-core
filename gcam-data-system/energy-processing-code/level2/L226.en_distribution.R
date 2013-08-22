@@ -30,7 +30,7 @@ A26.sector <- readdata( "ENERGY_ASSUMPTIONS", "A26.sector" )
 A26.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A26.subsector_logit" )
 A26.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A26.subsector_shrwt" )
 A26.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A26.subsector_interp" )
-A26.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A26.globaltech_coef" )
+A26.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A26.globaltech_eff" )
 A26.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A26.globaltech_cost" )
 A26.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A26.globaltech_shrwt" )
 L126.IO_R_elecownuse_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L126.IO_R_elecownuse_F_Yh" )
@@ -69,13 +69,13 @@ printlog( "L226.StubTech_en: Identification of stub technologies of energy distr
 L226.StubTech_en <- write_to_all_regions( A26.globaltech_shrwt, names_Tech )
 names( L226.StubTech_en ) <- names_StubTech
 
-#Coefficients of global technologies
-printlog( "L226.GlobalTechCoef_en: Energy inputs and coefficients of global technologies for energy distribution" )
-L226.globaltech_coef.melt <- interpolate_and_melt( A26.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )
+#Efficiencies of global technologies
+printlog( "L226.GlobalTechEff_en: Energy inputs and efficiencies of global technologies for energy distribution" )
+L226.globaltech_coef.melt <- interpolate_and_melt( A26.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L226.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L226.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
-L226.GlobalTechCoef_en <- L226.globaltech_coef.melt[ names_GlobalTechCoef ]
-L226.GlobalTechCoef_en$coefficient <- round( L226.GlobalTechCoef_en$coefficient, digits_coefficient )
+L226.GlobalTechEff_en <- L226.globaltech_coef.melt[ names_GlobalTechEff ]
+L226.GlobalTechEff_en$efficiency <- round( L226.GlobalTechEff_en$efficiency, digits_efficiency )
 
 #Costs of global technologies
 printlog( "L226.GlobalTechCost_en: Costs of global technologies for energy distribution" )
@@ -171,7 +171,7 @@ if( exists( "L226.SubsectorInterpTo_en" ) ) {
 	write_mi_data( L226.SubsectorInterpTo_en, "SubsectorInterpTo", "ENERGY_LEVEL2_DATA", "L226.SubsectorInterpTo_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )
 	}
 write_mi_data( L226.StubTech_en, "StubTech", "ENERGY_LEVEL2_DATA", "L226.StubTech_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )
-write_mi_data( L226.GlobalTechCoef_en, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L226.GlobalTechCoef_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )
+write_mi_data( L226.GlobalTechEff_en, "GlobalTechEff", "ENERGY_LEVEL2_DATA", "L226.GlobalTechEff_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )
 write_mi_data( L226.GlobalTechCost_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L226.GlobalTechCost_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )
 write_mi_data( L226.GlobalTechShrwt_en, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L226.GlobalTechShrwt_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )
 write_mi_data( L226.StubTechCoef_elecownuse, "StubTechCoef", "ENERGY_LEVEL2_DATA", "L226.StubTechCoef_elecownuse", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )

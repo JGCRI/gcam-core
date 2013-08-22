@@ -45,7 +45,8 @@ names_GlobalTechCost <- c( names_GlobalTechYr, "minicam.non.energy.input", "inpu
 names_GlobalTechCapital <- c( names_GlobalTechYr, "input.capital", "capital.overnight", "fixed.charge.rate", "capacity.factor" )
 names_GlobalTechOMfixed <- c( names_GlobalTechYr, "input.OM.fixed", "OM.fixed", "capacity.factor" )
 names_GlobalTechOMvar <- c( names_GlobalTechYr, "input.OM.var", "OM.var" )
-names_GlobalTechBackup <- c( names_GlobalTechYr, "electric.sector.name", "trial.market.name", "backup.capital.cost", "backup.capacity.factor", "capacity.limit" )
+names_GlobalTechBackup <- c( names_GlobalTechYr, "electric.sector.name", "trial.market.name", "backup.capital.cost",
+                             "backup.capacity.factor", "capacity.limit", "minicam.energy.input", "minicam.non.energy.input" )
 names_GlobalCarbonCapture <- c( names_GlobalTechYr, "storage.market", "remove.fraction" )
 names_GlobalRenewTech <- c( names_GlobalTechYr, "renewable.input" )
 names_GlobalTechSecOut <- c( names_GlobalTechYr, "secondary.output", "output.ratio" )

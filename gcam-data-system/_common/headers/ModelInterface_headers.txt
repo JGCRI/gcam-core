@@ -271,7 +271,7 @@ GlobalIntTechLifetime,global-technology-database/+{sector-name}location-info,glo
 
 GlobalIntTechLifetimeProfit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+lifetime,scenario,scenario/world,world/global-technology-database,period/profit-shutdown-decider
 
-GlobalIntTechBackup,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+electric-sector-name,period/+trial-market-name,period/+backup-capital-cost,period/+backup-capacity-factor,capacity-limit-backup-calculator/+capacity-limit,scenario,scenario/world,world/global-technology-database,period/capacity-limit-backup-calculator
+GlobalIntTechBackup,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+electric-sector-name,period/+trial-market-name,period/+backup-capital-cost,period/+backup-capacity-factor,capacity-limit-backup-calculator/+capacity-limit,period/+{name}minicam-energy-input,period/+{name}minicam-non-energy-input,scenario,scenario/world,world/global-technology-database,period/capacity-limit-backup-calculator
 
 GlobalRenewTech,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}renewable-input,scenario/world,scenario,world/global-technology-database
 

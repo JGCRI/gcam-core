@@ -257,14 +257,14 @@ writedata <- function( x, domain="none", fn=GCAM_SOURCE_FN, fn_sfx=NULL, comment
 # -----------------------------------------------------------------------------
 #Interpolation function
 
-gcam_interp <- function( d, years, pattern= "X[0-9]{4}" ) {
+gcam_interp <- function( d, years, pattern= "X[0-9]{4}", rule = 1 ) {
 	
 	yearcols <- grep( pattern, names( d ) )
 	x<-as.numeric( substr( names( d )[ yearcols ], 2, 5 ) )
 	
 	for( i in 1:nrow( d ) ) {
 		y <- d[ i, yearcols ]
-		li <- approx( x, y, xout=years )
+		li <- approx( x, y, xout=years, rule = rule )
 		for( j in 1:length( years ) ) {
 			d[ i, paste( "X", years[ j ], sep="" ) ] <- li$y[ j ]
 		}

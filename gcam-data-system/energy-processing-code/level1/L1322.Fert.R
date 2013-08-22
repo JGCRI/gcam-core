@@ -180,6 +180,8 @@ L1322.in_EJ_R_indfeed_F_Yh[
                  vecpaste( L1322.in_EJ_R_indfeed_Ffert_Yh[ R_F ] ) ),      
       X_historical_years ]
 
+#Base year costs of fertilizer manufacturing
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table

@@ -42,6 +42,11 @@ L1322.in_EJ_R_indfeed_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_ind
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
+#Create tables to delete technologies and subsectors in regions where heat is not modeled as a fuel
+L232.heat_techs <- unique( calibrated_techs[ grepl( "industry", calibrated_techs$sector ) & calibrated_techs$fuel == "heat", s_s_t ] )
+L232.rm_heat_techs_R <- repeat_and_add_vector( L232.heat_techs, R, A_regions[[R]][ A_regions$heat == 0 ] )
+L232.rm_heat_techs_R <- add_region_name( L232.rm_heat_techs_R )
+
 # 2a. Supplysector information
 printlog( "L232.Supplysector_ind: Supply sector information for industry sector" )
 L232.Supplysector_ind <- write_to_all_regions( A32.sector, names_Supplysector )
@@ -49,21 +54,36 @@ L232.Supplysector_ind <- write_to_all_regions( A32.sector, names_Supplysector )
 # 2b. Subsector information
 printlog( "L232.SubsectorLogit_ind: Subsector logit exponents of industry sector" )
 L232.SubsectorLogit_ind <- write_to_all_regions( A32.subsector_logit, names_SubsectorLogit )
+#Remove non-existent heat subsectors from each region
+L232.SubsectorLogit_ind <- L232.SubsectorLogit_ind[
+      vecpaste( L232.SubsectorLogit_ind[ c( "region", "subsector" ) ] ) %!in% vecpaste( L232.rm_heat_techs_R[ c( "region", "subsector" ) ] ), ]
 
 printlog( "L232.SubsectorShrwt_ind and L232.SubsectorShrwtFllt_ind: Subsector shareweights of industry sector" )
 if( any( !is.na( A32.subsector_shrwt$year ) ) ){
 	L232.SubsectorShrwt_ind <- write_to_all_regions( A32.subsector_shrwt[ !is.na( A32.subsector_shrwt$year ), ], names_SubsectorShrwt )
+	#Remove non-existent heat subsectors from each region
+	L232.SubsectorShrwt_ind <- L232.SubsectorShrwt_ind[
+      vecpaste( L232.SubsectorShrwt_ind[ c( "region", "subsector" ) ] ) %!in% vecpaste( L232.rm_heat_techs_R[ c( "region", "subsector" ) ] ), ]
 	}
 if( any( !is.na( A32.subsector_shrwt$year.fillout ) ) ){
 	L232.SubsectorShrwtFllt_ind <- write_to_all_regions( A32.subsector_shrwt[ !is.na( A32.subsector_shrwt$year.fillout ), ], names_SubsectorShrwtFllt )
+	#Remove non-existent heat technologies from each region
+	L232.SubsectorShrwtFllt_ind <- L232.SubsectorShrwtFllt_ind[
+      vecpaste( L232.SubsectorShrwtFllt_ind[ c( "region", "subsector" ) ] ) %!in% vecpaste( L232.rm_heat_techs_R[ c( "region", "subsector" ) ] ), ]
 	}
 
 printlog( "L232.SubsectorInterp_ind and L232.SubsectorInterpTo_ind: Subsector shareweight interpolation of industry sector" )
 if( any( is.na( A32.subsector_interp$to.value ) ) ){
 	L232.SubsectorInterp_ind <- write_to_all_regions( A32.subsector_interp[ is.na( A32.subsector_interp$to.value ), ], names_SubsectorInterp )
+	#Remove non-existent heat technologies from each region
+	L232.SubsectorInterp_ind <- L232.SubsectorInterp_ind[
+      vecpaste( L232.SubsectorInterp_ind[ c( "region", "subsector" ) ] ) %!in% vecpaste( L232.rm_heat_techs_R[ c( "region", "subsector" ) ] ), ]
 	}
 if( any( !is.na( A32.subsector_interp$to.value ) ) ){
 	L232.SubsectorInterpTo_ind <- write_to_all_regions( A32.subsector_interp[ !is.na( A32.subsector_interp$to.value ), ], names_SubsectorInterpTo )
+	#Remove non-existent heat technologies from each region
+	L232.SubsectorInterpTo_ind <- L232.SubsectorInterpTo_ind[
+      vecpaste( L232.SubsectorInterpTo_ind[ c( "region", "subsector" ) ] ) %!in% vecpaste( L232.rm_heat_techs_R[ c( "region", "subsector" ) ] ), ]
 	}
 
 # 2c. Technology information
@@ -71,11 +91,7 @@ printlog( "L232.StubTech_ind: Identification of stub technologies of industrial 
 #Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
 L232.StubTech_ind <- write_to_all_regions( A32.globaltech_shrwt, names_Tech )
 names( L232.StubTech_ind ) <- names_StubTech
-
-#Drop non-existent heat technologies in regions where heat is not modeled as a separate fuel
-L232.heat_techs <- unique( calibrated_techs[ grepl( "industry", calibrated_techs$sector ) & calibrated_techs$fuel == "heat", s_s_t ] )
-L232.rm_heat_techs_R <- repeat_and_add_vector( L232.heat_techs, R, A_regions[[R]][ A_regions$heat == 0 ] )
-L232.rm_heat_techs_R <- add_region_name( L232.rm_heat_techs_R )
+#Remove non-existent heat technologies from each region
 L232.StubTech_ind <- L232.StubTech_ind[
       vecpaste( L232.StubTech_ind[ c( "region", "stub.technology" ) ] ) %!in% vecpaste( L232.rm_heat_techs_R[ c( "region", "technology" ) ] ), ]
 

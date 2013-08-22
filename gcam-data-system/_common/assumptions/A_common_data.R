@@ -29,3 +29,11 @@ SubRenewRsrc <- "sub.renewable.resource"
 agsupp <- "AgSupplySector"
 agsubs <- "AgSupplySubsector"
 agtech <- "AgProductionTechnology"
+
+#Fertilizer characteristics
+Fert_name <- "N fertilizer"
+Fert_Cost_07USDtNH3 <- 363
+conv_NH3_N <- 14/17
+conv_elec_primary <- 2.5
+
+

@@ -64,12 +64,10 @@ printlog( "Aggregating country-level supplies by GCAM regions")
 #Hydrothermal
 L116.Available_EJ_ctry_geo[[R]]<- iso_GCAM_regID[[R]][ match( L116.Available_EJ_ctry_geo$iso, iso_GCAM_regID$iso ) ]
 L116.Available_EJ_R_geo <- aggregate( L116.Available_EJ_ctry_geo[ "available" ], by=as.list( L116.Available_EJ_ctry_geo[ c( R, "grade" ) ] ), sum )
-L116.Available_EJ_R_geo$available[ is.na( L116.Available_EJ_R_geo$available ) ] <- 0
 
 #EGS
 L116.Available_EJ_ctry_EGS[[R]]<- iso_GCAM_regID[[R]][ match( L116.Available_EJ_ctry_EGS$iso, iso_GCAM_regID$iso ) ]
 L116.Available_EJ_R_EGS <- aggregate( L116.Available_EJ_ctry_EGS[ "available" ], by=as.list( L116.Available_EJ_ctry_EGS[ c( R, "grade" ) ] ), sum )
-L116.Available_EJ_R_EGS$available[ is.na( L116.Available_EJ_R_EGS$available ) ] <- 0
 
 printlog( "Building hydrothermal supply curves")
 L116.RsrcCurves_EJ_R_geo <- data.frame(

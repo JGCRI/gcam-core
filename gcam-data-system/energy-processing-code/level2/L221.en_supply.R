@@ -1,5 +1,3 @@
-# L221.en_supply.R
-
 # Before we can load headers we need some paths defined.  They
 # may be provided by a system environment variable or just
 # having already been set in the workspace
@@ -73,6 +71,14 @@ if( any( !is.na( A21.subsector_interp$to.value ) ) ){
 printlog( "L221.StubTech_en: Identification of stub technologies of upstream energy handling sectors" )
 L221.StubTech_en <- write_to_all_regions( A21.globaltech_shrwt, names_Tech, has.traded=F )
 names( L221.StubTech_en ) <- names_StubTech
+
+#Drop stub technologies for biomassOil techs that do not exist
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]
+L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs, R, GCAM_region_names[[R]] )
+L221.rm_biomassOil_techs_R <- add_region_name( L221.rm_biomassOil_techs_R )
+L221.rm_biomassOil_techs_R <- subset( L221.rm_biomassOil_techs_R, paste( region, technology ) %!in% paste( A_regions$region, A_regions$biomassOil_tech ) )
+L221.StubTech_en <- L221.StubTech_en[
+      vecpaste( L221.StubTech_en[ c( "region", "stub.technology" ) ] ) %!in% vecpaste( L221.rm_biomassOil_techs_R[ c( "region", "technology" ) ] ), ]
 
 #Coefficients of global technologies
 printlog( "L221.GlobalTechCoef_en: Energy inputs and coefficients of global technologies for upstream energy handling" )
