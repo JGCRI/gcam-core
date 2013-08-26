@@ -81,7 +81,8 @@ L210.UnlimitRsrc <- data.frame(
       unlimited.resource = L210.unlim_rsrc_info$resource,
       output.unit = L210.unlim_rsrc_info$output.unit,
       price.unit = L210.unlim_rsrc_info$price.unit,
-      market = L210.unlim_rsrc_info$market)
+      market = L210.unlim_rsrc_info$market,
+      capacity.factor = L210.unlim_rsrc_info$capacity.factor )
 
 printlog( "L210.DepRsrcPrice: historical prices for depletable resources" )
 L210.dep_rsrc_price.melt <- melt( L210.dep_rsrc_info[ c( "region", "resource", X_model_base_years ) ], id.vars = c( "region", "resource" ) )

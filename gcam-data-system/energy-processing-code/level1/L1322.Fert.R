@@ -28,6 +28,9 @@ IEA_ctry <- readdata( "ENERGY_MAPPINGS", "IEA_ctry" )
 IEA_Fert_fuel_data <- readdata( "ENERGY_LEVEL0_DATA", "IEA_Fert_fuel_data" )
 H2A_Prod_Tech <- readdata( "ENERGY_LEVEL0_DATA", "H2A_Prod_Tech" )
 L142.ag_Fert_Prod_MtN_ctry_Y <- readdata( "AGLU_LEVEL1_DATA", "L142.ag_Fert_Prod_MtN_ctry_Y" )
+A10.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.rsrc_info" )
+A21.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_cost" )
+A22.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_cost" )
 L1321.in_EJ_R_indenergy_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1321.in_EJ_R_indenergy_F_Yh" )
 L132.in_EJ_R_indfeed_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L132.in_EJ_R_indfeed_F_Yh" )
 
@@ -181,6 +184,67 @@ L1322.in_EJ_R_indfeed_F_Yh[
       X_historical_years ]
 
 #Base year costs of fertilizer manufacturing
+#Calculate gas cost per kg N
+printlog( "Calculating non-energy costs for gas technology as USA market fertilizer price minus GCAM fuel costs" )
+#First, calculate the gas price as the sum of resource costs plus intermediate sectoral mark-ups
+#2005 is used as the fertilizer base price. Interpolate cost tables to make sure this year is included
+A10.rsrc_info <- gcam_interp( A10.rsrc_info, 2005 )
+A21.globaltech_cost <- gcam_interp( A21.globaltech_cost, 2005 )
+A22.globaltech_cost <- gcam_interp( A22.globaltech_cost, 2005 )
+
+L1322.P_gas_75USDGJ <- sum( A10.rsrc_info$X2005[ A10.rsrc_info$resource == "natural gas" ],
+                       A21.globaltech_cost$X2005[ A21.globaltech_cost$technology == "regional natural gas" ],
+                       A22.globaltech_cost$X2005[ A22.globaltech_cost$technology == "natural gas" ] )
+
+L1322.IO_GJkgN_Fert_gas <- L1322.IO_R_Fert_F_Yh$X2005[
+      L1322.IO_R_Fert_F_Yh$GCAM_region_ID == 1 &
+      L1322.IO_R_Fert_F_Yh$fuel == "gas" ]
+L1322.Fert_Fuelcost_75USDGJ_gas <- L1322.P_gas_75USDGJ * L1322.IO_GJkgN_Fert_gas
+
+#Convert total NH3 cost (2007$/tNH3) to N cost (1975$/kgN)
+Fert_Cost_75USDkgN <- Fert_Cost_07USDtNH3 * conv_2007_1975_USD * conv_kg_t / conv_NH3_N
+
+#Calculate non-fuel cost of natural gas steam reforming (includes delivery charges)
+L1322.Fert_NEcost_75USDkgN_gas <- Fert_Cost_75USDkgN - L1322.Fert_Fuelcost_75USDGJ_gas
+
+#Use H2A technology characteristics to derive characteristics of other technologies
+printlog( "Deriving costs for gas with CCS, coal, and coal with CCS using H2A model inputs" )
+#NOTE: Because our NGSR NEcosts were calculated as a residual from mkt prices, and include delivery costs,
+#not using a ratio of costs, but rather an arithmetic adder. H2A costs are in $/kgH; convert to N-equivalent
+printlog( "NOTE: Using arithmetic cost adders based on costs of natural gas steam reforming" )
+#Gas with CCS
+#First, calculate costs in 1975USD per kg N
+H2A_Prod_Tech$NEcost_75USDkgN <- H2A_Prod_Tech$NEcost * conv_2005_1975_USD * NH3_H_frac / conv_NH3_N
+
+#Derive costs as the cost of NGSR plus the specified cost adder
+L1322.Fert_NEcost_75USDkgN_gasCCS <- L1322.Fert_NEcost_75USDkgN_gas +
+      H2A_Prod_Tech$NEcost_75USDkgN[ H2A_Prod_Tech$Technology == "Central Natural Gas Sequestration" ] -
+      H2A_Prod_Tech$NEcost_75USDkgN[ H2A_Prod_Tech$Technology == "Central Natural Gas" ]
+
+#Coal
+L1322.Fert_NEcost_75USDkgN_coal <- L1322.Fert_NEcost_75USDkgN_gas +
+      H2A_Prod_Tech$NEcost_75USDkgN[ H2A_Prod_Tech$Technology == "Central Coal" ] -
+      H2A_Prod_Tech$NEcost_75USDkgN[ H2A_Prod_Tech$Technology == "Central Natural Gas" ]
+
+#Coal CCS
+L1322.Fert_NEcost_75USDkgN_coalCCS <- L1322.Fert_NEcost_75USDkgN_gas +
+      H2A_Prod_Tech$NEcost_75USDkgN[ H2A_Prod_Tech$Technology == "Central Coal Sequestration" ] -
+      H2A_Prod_Tech$NEcost_75USDkgN[ H2A_Prod_Tech$Technology == "Central Natural Gas" ]
+
+#Oil
+#For oil, the lack of differentiation in oil-derived products means that the fuel costs are too high
+# Fertilizer is made from relatively low-cost by-products of oil refining
+#Also, the technology is being phased out where it is currently used (primarily India)
+# To minimize price distortions from this phase-out, set the NE cost to 0
+printlog( "Setting NE costs for oil technology to 0" )
+L1322.Fert_NEcost_75USDkgN_oil <- 0
+
+# Build output table with NE costs by technology
+L1322.Fert_NEcost_75USDkgN_F <- data.frame(
+      fuel = c( "gas", "gas CCS", "coal", "coal CCS", "refined liquids" ),
+      NEcost_75USDkgN = c( L1322.Fert_NEcost_75USDkgN_gas, L1322.Fert_NEcost_75USDkgN_gasCCS,
+                           L1322.Fert_NEcost_75USDkgN_coal, L1322.Fert_NEcost_75USDkgN_coalCCS,
+                           L1322.Fert_NEcost_75USDkgN_oil ) )
 
 # -----------------------------------------------------------------------------
 # 3. Output
@@ -189,12 +253,14 @@ comments.L1322.Fert_Prod_MtN_R_F_Y <- c( "Fertilizer production by GCAM region /
 comments.L1322.IO_R_Fert_F_Yh <- c( "Fertilizer input-output coefs by GCAM region / fuel (base year techs only) / year","GJ per kg N" )
 comments.L1322.in_EJ_R_indenergy_F_Yh <- c( "Adjusted industrial energy use by GCAM region / fuel / year","EJ" )
 comments.L1322.in_EJ_R_indfeed_F_Yh <- c( "Adjusted industrial feedstock use by GCAM region / fuel / year","EJ" )
+comments.L1322.Fert_NEcost_75USDkgN_F <- c( "Fertilizer non-energy costs by technology","75USD/kgN" )
 
 #write tables as CSV files
 writedata( L1322.Fert_Prod_MtN_R_F_Y, domain="ENERGY_LEVEL1_DATA", fn="L1322.Fert_Prod_MtN_R_F_Y", comments=comments.L1322.Fert_Prod_MtN_R_F_Y )
 writedata( L1322.IO_R_Fert_F_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1322.IO_R_Fert_F_Yh", comments=comments.L1322.IO_R_Fert_F_Yh )
 writedata( L1322.in_EJ_R_indenergy_F_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1322.in_EJ_R_indenergy_F_Yh", comments=comments.L1322.in_EJ_R_indenergy_F_Yh )
 writedata( L1322.in_EJ_R_indfeed_F_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1322.in_EJ_R_indfeed_F_Yh", comments=comments.L1322.in_EJ_R_indfeed_F_Yh )
+writedata( L1322.Fert_NEcost_75USDkgN_F, domain="ENERGY_LEVEL1_DATA", fn="L1322.Fert_NEcost_75USDkgN_F", comments=comments.L1322.Fert_NEcost_75USDkgN_F )
 
 # Every script should finish with this line
 logstop()

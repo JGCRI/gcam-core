@@ -115,6 +115,12 @@ L221.tradedtech_shrwt.melt <- interpolate_and_melt( A21.tradedtech_shrwt, c( mod
 L221.TechShrwt_en_Traded <- write_to_all_regions( L221.tradedtech_shrwt.melt, c( names_TechYr, "share.weight" ), has.traded = T, apply.to = "all", set.market = F )
 
 #2b. Calibration and region-specific data
+printlog( "L221.StubTechCoef_unoil: Coefficient and market name of stub technologies for importing traded unconventional oil" )
+L221.StubTechCoef_unoil <- subset( L221.globaltech_coef.melt, minicam.energy.input %in% L221.TechShrwt_en_Traded$supplysector )
+L221.StubTechCoef_unoil$stub.technology <- L221.StubTechCoef_unoil$technology
+L221.StubTechCoef_unoil <- write_to_all_regions( L221.StubTechCoef_unoil, names_StubTechCoef[ names_StubTechCoef != "market.name" ] )
+L221.StubTechCoef_unoil$market.name <- GCAM_region_names$region[1]
+
 L221.Prod_EJ_R_unoil_Yh.melt <- melt( L111.Prod_EJ_R_F_Yh[ grep( "unconventional", L111.Prod_EJ_R_F_Yh$fuel ),
       c( "GCAM_region_ID", X_model_base_years ) ], id.vars = "GCAM_region_ID" )
 L221.Prod_EJ_R_unoil_Yh.melt <- add_region_name( L221.Prod_EJ_R_unoil_Yh.melt )
@@ -204,6 +210,7 @@ write_mi_data( L221.GlobalTechShrwt_en, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA",
 write_mi_data( L221.TechCoef_en_Traded, "TechCoef", "ENERGY_LEVEL2_DATA", "L221.TechCoef_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechCost_en_Traded, "TechCost", "ENERGY_LEVEL2_DATA", "L221.TechCost_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechShrwt_en_Traded, "TechShrwt", "ENERGY_LEVEL2_DATA", "L221.TechShrwt_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
+write_mi_data( L221.StubTechCoef_unoil, "StubTechCoef", "ENERGY_LEVEL2_DATA", "L221.StubTechCoef_unoil", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.Production_unoil, "Production", "ENERGY_LEVEL2_DATA", "L221.Production_unoil", "ENERGY_XML_BATCH", "batch_en_supply.xml" ) 
 write_mi_data( L221.StubTechProd_oil_unoil, "StubTechProd", "ENERGY_LEVEL2_DATA", "L221.StubTechProd_oil_unoil", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.StubTechProd_oil_crude, "StubTechProd", "ENERGY_LEVEL2_DATA", "L221.StubTechProd_oil_crude", "ENERGY_XML_BATCH", "batch_en_supply.xml" )

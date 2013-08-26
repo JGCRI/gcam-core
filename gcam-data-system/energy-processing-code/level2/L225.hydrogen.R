@@ -86,6 +86,15 @@ L225.globaltech_shrwt.melt <- interpolate_and_melt( A25.globaltech_shrwt, c( mod
 L225.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L225.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]
 L225.GlobalTechShrwt_h2 <- L225.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
 
+printlog( "L225.GlobalTechCapture_h2: CO2 capture fractions from global fertilizer production technologies with CCS" )
+## No need to consider historical periods or intermittent technologies here
+L225.globaltech_co2capture.melt <- interpolate_and_melt( A25.globaltech_co2capture, model_future_years, value.name="remove.fraction" )
+L225.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L225.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]
+L225.GlobalTechCapture_h2 <- data.frame(
+      L225.globaltech_co2capture.melt[ names_GlobalTechYr ],
+      remove.fraction = round( L225.globaltech_co2capture.melt$remove.fraction, digits = digits_remove.fraction ) )
+L225.GlobalTechCapture_h2$storage.market <- CO2.storage.market
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L225.Supplysector_h2, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L225.Supplysector_h2",
@@ -108,6 +117,7 @@ write_mi_data( L225.StubTech_h2, "StubTech", "ENERGY_LEVEL2_DATA", "L225.StubTec
 write_mi_data( L225.GlobalTechEff_h2, "GlobalTechEff", "ENERGY_LEVEL2_DATA", "L225.GlobalTechEff_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
 write_mi_data( L225.GlobalTechCost_h2, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L225.GlobalTechCost_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
 write_mi_data( L225.GlobalTechShrwt_h2, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L225.GlobalTechShrwt_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
+write_mi_data( L225.GlobalTechCapture_h2, "GlobalTechCapture", "ENERGY_LEVEL2_DATA", "L225.GlobalTechCapture_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_hydrogen.xml", "ENERGY_XML_FINAL", "hydrogen.xml", "", xml_tag="outFile" )
 

@@ -22,6 +22,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )
 calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
@@ -66,15 +67,27 @@ if( any( !is.na( A23.subsector_shrwt$year.fillout ) ) ){
 	}
 
 printlog( "L223.SubsectorShrwt_nuc: Subsector shareweights of nuclear electricity" )
-L223.SubsectorShrwt_nuc <- interpolate_and_melt( A23.subsector_shrwt_nuc_R, model_future_years[model_future_years >= 2020 & model_future_years <= 2065])
-names( L223.SubsectorShrwt_nuc )[ names( L223.SubsectorShrwt_nuc ) == "value" ] <- "share.weight"
-L223.SubsectorShrwt_nuc <- L223.SubsectorShrwt_nuc[ names_SubsectorShrwt ]
+L223.SubsectorShrwt_nuc_GCAM3 <- interpolate_and_melt(
+      A23.subsector_shrwt_nuc_R, model_future_years[model_future_years >= 2020 & model_future_years <= 2065 ], value.name = "share.weight" )
+L223.SubsectorShrwt_nuc <- repeat_and_add_vector( subset( L223.SubsectorShrwt_nuc_GCAM3, region_GCAM3 == region_GCAM3[1] ), R, GCAM_region_names[[R]] )
+L223.SubsectorShrwt_nuc$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L223.SubsectorShrwt_nuc[[R]], iso_GCAM_regID[[R]] ) ]
+L223.SubsectorShrwt_nuc$share.weight <- L223.SubsectorShrwt_nuc_GCAM3$share.weight[
+      match( vecpaste( L223.SubsectorShrwt_nuc[ c( "region_GCAM3", "subsector", "year" ) ] ),
+             vecpaste( L223.SubsectorShrwt_nuc_GCAM3[ c( "region_GCAM3", "subsector", "year" ) ] ) ) ]
+L223.SubsectorShrwt_nuc <- add_region_name( L223.SubsectorShrwt_nuc )
+L223.SubsectorShrwt_nuc <- na.omit( L223.SubsectorShrwt_nuc[ names_SubsectorShrwt ] )
 
 printlog( "L223.SubsectorShrwt_renew: Near term subsector shareweights of renewable technologies" )
-L223.SubsectorShrwt_renew <- melt( A23.subsector_shrwt_renew_R, id.vars = names_Subsector )
-L223.SubsectorShrwt_renew$year <- substring( L223.SubsectorShrwt_renew$variable, 2, 5 )
-names( L223.SubsectorShrwt_renew )[ names( L223.SubsectorShrwt_renew ) == "value" ] <- "share.weight"
-L223.SubsectorShrwt_renew <- L223.SubsectorShrwt_renew[ names_SubsectorShrwt ]
+L223.SubsectorShrwt_renew_GCAM3 <- melt( A23.subsector_shrwt_renew_R, id.vars = grep( "X[0-9]{4}", names( A23.subsector_shrwt_renew_R ), invert = T ) )
+L223.SubsectorShrwt_renew_GCAM3$year <- substring( L223.SubsectorShrwt_renew_GCAM3$variable, 2, 5 )
+names( L223.SubsectorShrwt_renew_GCAM3 )[ names( L223.SubsectorShrwt_renew_GCAM3 ) == "value" ] <- "share.weight"
+L223.SubsectorShrwt_renew <- repeat_and_add_vector( subset( L223.SubsectorShrwt_renew_GCAM3, region_GCAM3 == region_GCAM3[1] ), R, GCAM_region_names[[R]] )
+L223.SubsectorShrwt_renew$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L223.SubsectorShrwt_renew[[R]], iso_GCAM_regID[[R]] ) ]
+L223.SubsectorShrwt_renew$share.weight <- L223.SubsectorShrwt_renew_GCAM3$share.weight[
+      match( vecpaste( L223.SubsectorShrwt_renew[ c( "region_GCAM3", "subsector", "year" ) ] ),
+             vecpaste( L223.SubsectorShrwt_renew_GCAM3[ c( "region_GCAM3", "subsector", "year" ) ] ) ) ]
+L223.SubsectorShrwt_renew <- add_region_name( L223.SubsectorShrwt_renew )
+L223.SubsectorShrwt_renew <- na.omit( L223.SubsectorShrwt_renew[ names_SubsectorShrwt ] )
 
 printlog( "L223.SubsectorInterp_elec and L223.SubsectorInterpTo_elec: Subsector shareweight interpolation of electricity sector" )
 if( any( is.na( A23.subsector_interp$to.value ) ) ){
