@@ -1,81 +1,384 @@
+ENERGYPROC_DIR <- "../energy-processing-code/"
 source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
 source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-logstart( "L117.tradbio" )#
+logstart( "L223.electricity.R" )#
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-printlog( "Traditional biomass resource supply curves" )
-ENERGYPROC_DIR <- "../energy-processing-code"
-source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-logstart( "L117.tradbio" )#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-printlog( "Traditional biomass resource supply curves" )
+printlog( "Electricity sector" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
-sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
+sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
-iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )#
-L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )#
-A17.tradbio_curves <- readdata( "ENERGY_ASSUMPTIONS", "A17.tradbio_curves" )
-A17.tradbio_curves
-A17.tradbio_curves <- readdata( "ENERGY_ASSUMPTIONS", "A17.tradbio_curves" )
-A17.tradbio_curves
-dim(L1011.en_bal_EJ_R_Si_Fi_Yh)
-subset(L1011.en_bal_EJ_R_Si_Fi_Yh, fuel=="traditaional biomass")[1:10,]
-unique(L1011.en_bal_EJ_R_Si_Fi_Yh$fuel)
-subset(L1011.en_bal_EJ_R_Si_Fi_Yh, fuel=="biomass_tradbio")[1:10,]
-tmp<-subset(L1011.en_bal_EJ_R_Si_Fi_Yh, fuel=="biomass_tradbio")
-unique(L1011.en_bal_EJ_R_Si_Fi_Yh$fuel)
-unique(tmp$fuel)
-unique(tmp$sector)
-L117.TPES_EJ_R_bld_tradbio_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, fuel == "biomass_tradbio" & sector == "TPES" )
-dim(L117.TPES_EJ_R_bld_tradbio_Yh)
-L117.TPES_EJ_R_bld_tradbio_Yh.melt <- melt( L117.TPES_EJ_R_bld_tradbio_Yh, id.vars = R_S_F )
-head(L117.TPES_EJ_R_bld_tradbio_Yh.melt)
-L117.TPES_EJ_R_bld_tradbio_Yh.melt <- melt( L117.TPES_EJ_R_bld_tradbio_Yh, id.vars = R_S_F, variable_name = "Xyear" )
-head(L117.TPES_EJ_R_bld_tradbio_Yh.melt)
-L117.maxSubResource_tradbio <- aggregate( L117.TPES_EJ_R_bld_tradbio_Yh.melt[ "value" ],#
-      by=as.list( L117.TPES_EJ_R_bld_tradbio_Yh.melt[ c( R_S_F ) ] ), max )
-dim(L117.maxSubResource_tradbio)
-L117.maxSubResource_tradbio
-L117.RsrcCurves_EJ_R_tradbio <- data.frame(#
-      GCAM_region_ID = sort( unique( iso_GCAM_regID[[R]] ) ),#
-      resource = unique( A17.tradbio_curves$resource ),#
-      subresource = unique( A17.tradbio_curves$subresource) )#
-L117.RsrcCurves_EJ_R_tradbio <- repeat_and_add_vector( L117.RsrcCurves_EJ_R_tradbio, "grade", unique(  A17.tradbio_curves$grade ) )
-head(L117.RsrcCurves_EJ_R_tradbio)
-A17.tradbio_curves
-write_to_all_regions
-L117.RsrcCurves_EJ_R_tradbio <- write_to_all_regions( A17.tradbio_curves )
-L117.RsrcCurves_EJ_R_tradbio <- repeat_and_add_vector( A17.tradbio_curves, R, sort( unique( iso_GCAM_regID[[R]] ) ) )
-L117.RsrcCurves_EJ_R_tradbio
-head(L117.maxSubResource_tradbio)
-L117.maxSubResource_tradbio
-L117.RsrcCurves_EJ_R_tradbio$available <- L117.RsrcCurves_EJ_R_tradbio$available * L117.maxSubResource_tradbio$value[#
-      match( L117.RsrcCurves_EJ_R_tradbio[[R]], L117.maxSubResource_tradbio[[R]] ) ]
-L117.RsrcCurves_EJ_R_tradbio
-L117.RsrcCurves_EJ_R_tradbio <- repeat_and_add_vector( A17.tradbio_curves, R, sort( unique( iso_GCAM_regID[[R]] ) ) )[#
-      c( R, names( A17.tradbio_curves ) ) ]
-L117.RsrcCurves_EJ_R_tradbio
-L117.TPES_EJ_R_bld_tradbio_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, fuel == "biomass_tradbio" & sector == "TPES" )#
-L117.TPES_EJ_R_bld_tradbio_Yh.melt <- melt( L117.TPES_EJ_R_bld_tradbio_Yh, id.vars = R_S_F, variable_name = "Xyear" )#
-L117.maxSubResource_tradbio <- aggregate( L117.TPES_EJ_R_bld_tradbio_Yh.melt[ "value" ],#
-      by=as.list( L117.TPES_EJ_R_bld_tradbio_Yh.melt[ c( R_S_F ) ] ), max )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
+fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+A23.sector <- readdata( "ENERGY_ASSUMPTIONS", "A23.sector" )#
+A23.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_logit" )#
+A23.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt" )#
+A23.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_interp" )#
+A23.subsector_shrwt_nuc_R <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt_nuc_R" )#
+A23.subsector_shrwt_renew_R <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt_renew_R" )#
+A23.globalinttech <- readdata( "ENERGY_ASSUMPTIONS", "A23.globalinttech" )#
+A23.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_shrwt" )#
+A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )#
+A23.globaltech_capital <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital" )#
+A23.globaltech_OMfixed <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMfixed" )#
+A23.globaltech_OMvar <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMvar" )#
+A23.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_retirement" )#
+A23.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_co2capture" )#
+L1231.in_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.in_EJ_R_elec_F_tech_Yh" )#
+L1231.out_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.out_EJ_R_elec_F_tech_Yh" )#
+L1231.eff_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.eff_R_elec_F_tech_Yh" )#
+##TODO: ADD HEAT OUTPUT#
 #
-printlog( "Setting a minimum quantity for regions where the fuel does not apply" )#
-#Any number will work as demand in these regions will always be 0, but setting 0 available may cause solution problems#
-L117.maxSubResource_tradbio$value[ L117.maxSubResource_tradbio$value == 0 ] <- 0.1#
+# -----------------------------------------------------------------------------#
+# 2. Build tables for CSVs#
+# 2a. Supplysector information#
+printlog( "L223.Supplysector_elec: Supply sector information for electricity sector" )#
+L223.Supplysector_elec <- write_to_all_regions( A23.sector, names_Supplysector )#
 #
-printlog( "Writing the supply curves to all regions, multiplying maxSubResouce by quantity available at each grade")#
-L117.RsrcCurves_EJ_R_tradbio <- repeat_and_add_vector( A17.tradbio_curves, R, sort( unique( iso_GCAM_regID[[R]] ) ) )[ c( R, names( A17.tradbio_curves ) ) ]#
-L117.RsrcCurves_EJ_R_tradbio$available <- L117.RsrcCurves_EJ_R_tradbio$available * L117.maxSubResource_tradbio$value[#
-      match( L117.RsrcCurves_EJ_R_tradbio[[R]], L117.maxSubResource_tradbio[[R]] ) ]
-L117.RsrcCurves_EJ_R_tradbio
-comments.L117.RsrcCurves_EJ_R_tradbio <- c( "Traditional biomass resources by GCAM region","Unit = EJ" )
-writedata( L117.RsrcCurves_EJ_R_tradbio, domain="ENERGY_LEVEL1_DATA", fn="L117.RsrcCurves_EJ_R_tradbio", comments=comments.L117.RsrcCurves_EJ_R_geo )
-writedata( L117.RsrcCurves_EJ_R_tradbio, domain="ENERGY_LEVEL1_DATA", fn="L117.RsrcCurves_EJ_R_tradbio", comments=comments.L117.RsrcCurves_EJ_R_tradbio )
+printlog( "L223.ElecReserve: Electricity reserve margin and average grid capacity factor" )#
+L223.ElecReserve <- write_to_all_regions( A23.sector, names_ElecReserve )#
+#
+# 2b. Subsector information#
+printlog( "L223.SubsectorLogit_elec: Subsector logit exponents of electricity sector" )#
+L223.SubsectorLogit_elec <- write_to_all_regions( A23.subsector_logit, names_SubsectorLogit )#
+#
+printlog( "L223.SubsectorShrwt_elec and L223.SubsectorShrwtFllt_elec: Subsector shareweights of electricity sector" )#
+if( any( !is.na( A23.subsector_shrwt$year ) ) ){#
+	L223.SubsectorShrwt_elec <- write_to_all_regions( A23.subsector_shrwt[ !is.na( A23.subsector_shrwt$year ), ], names_SubsectorShrwt )#
+	}#
+if( any( !is.na( A23.subsector_shrwt$year.fillout ) ) ){#
+	L223.SubsectorShrwtFllt_elec <- write_to_all_regions( A23.subsector_shrwt[ !is.na( A23.subsector_shrwt$year.fillout ), ], names_SubsectorShrwtFllt )#
+	}#
+#
+printlog( "L223.SubsectorShrwt_nuc: Subsector shareweights of nuclear electricity" )#
+L223.SubsectorShrwt_nuc <- interpolate_and_melt( A23.subsector_shrwt_nuc_R, model_future_years[model_future_years >= 2020 & model_future_years <= 2065])#
+names( L223.SubsectorShrwt_nuc )[ names( L223.SubsectorShrwt_nuc ) == "value" ] <- "share.weight"#
+L223.SubsectorShrwt_nuc <- L223.SubsectorShrwt_nuc[ names_SubsectorShrwt ]#
+#
+printlog( "L223.SubsectorShrwt_renew: Near term subsector shareweights of renewable technologies" )#
+L223.SubsectorShrwt_renew <- melt( A23.subsector_shrwt_renew_R, id.vars = names_Subsector )#
+L223.SubsectorShrwt_renew$year <- substring( L223.SubsectorShrwt_renew$variable, 2, 5 )#
+names( L223.SubsectorShrwt_renew )[ names( L223.SubsectorShrwt_renew ) == "value" ] <- "share.weight"#
+L223.SubsectorShrwt_renew <- L223.SubsectorShrwt_renew[ names_SubsectorShrwt ]#
+#
+printlog( "L223.SubsectorInterp_elec and L223.SubsectorInterpTo_elec: Subsector shareweight interpolation of electricity sector" )#
+if( any( is.na( A23.subsector_interp$to.value ) ) ){#
+	L223.SubsectorInterp_elec <- write_to_all_regions( A23.subsector_interp[ is.na( A23.subsector_interp$to.value ), ], names_SubsectorInterp )#
+	}#
+if( any( !is.na( A23.subsector_interp$to.value ) ) ){#
+	L223.SubsectorInterpTo_elec <- write_to_all_regions( A23.subsector_interp[ !is.na( A23.subsector_interp$to.value ), ], names_SubsectorInterpTo )#
+	}#
+#
+# 2c. Technology information#
+printlog( "L223.StubTech_elec: Identification of stub technologies of electricity generation" )#
+#Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)#
+L223.StubTech_elec <- write_to_all_regions( A23.globaltech_shrwt, names_Tech )#
+names( L223.StubTech_elec ) <- names_StubTech#
+#
+#Efficiencies of global technologies#
+printlog( "L223.GlobalTechEff_elec: Energy inputs and coefficients of global electricity generation technologies" )#
+L223.globaltech_eff.melt <- interpolate_and_melt( A23.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )#
+#Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology#
+L223.globaltech_eff.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_eff.melt[ c( "supplysector", "subsector" ) ]#
+L223.GlobalTechEff_elec <- L223.globaltech_eff.melt[ names_GlobalTechEff ]#
+L223.GlobalTechEff_elec$efficiency <- round( L223.GlobalTechEff_elec$efficiency, digits_efficiency )#
+#
+L223.GlobalIntTechEff_elec <- subset_inttechs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+L223.GlobalTechEff_elec <- subset_techs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+#
+#Costs of global technologies#
+printlog( "L223.GlobalTechCapital_elec: Capital costs of global electricity generation technologies" )#
+L223.globaltech_capital.melt <- interpolate_and_melt( A23.globaltech_capital, c( model_base_years, model_future_years ), value.name="capital.overnight" )#
+L223.globaltech_capital.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_capital.melt[ c( "supplysector", "subsector" ) ]#
+L223.GlobalTechCapital_elec <- L223.globaltech_capital.melt[ names_GlobalTechCapital ]#
+L223.GlobalTechCapital_elec$capital.overnight <- round( L223.GlobalTechCapital_elec$capital.overnight, digits_capital )#
+L223.GlobalIntTechCapital_elec <- subset_inttechs( L223.GlobalTechCapital_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+L223.GlobalTechCapital_elec <- subset_techs( L223.GlobalTechCapital_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+#
+printlog( "L223.GlobalTechOMfixed_elec: Fixed O&M costs of global electricity generation technologies" )#
+L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed" )#
+L223.globaltech_OMfixed.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_OMfixed.melt[ c( "supplysector", "subsector" ) ]#
+L223.GlobalTechOMfixed_elec <- L223.globaltech_OMfixed.melt[ names_GlobalTechOMfixed ]#
+L223.GlobalTechOMfixed_elec$OM.fixed <- round( L223.GlobalTechOMfixed_elec$OM.fixed, digits_OM )#
+L223.GlobalIntTechOMfixed_elec <- subset_inttechs( L223.GlobalTechOMfixed_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+L223.GlobalTechOMfixed_elec <- subset_techs( L223.GlobalTechOMfixed_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+#
+printlog( "L223.GlobalTechOMvar_elec: Variable O&M costs of global electricity generation technologies" )#
+L223.globaltech_OMvar.melt <- interpolate_and_melt( A23.globaltech_OMvar, c( model_base_years, model_future_years ), value.name="OM.var" )#
+L223.globaltech_OMvar.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_OMvar.melt[ c( "supplysector", "subsector" ) ]#
+L223.GlobalTechOMvar_elec <- L223.globaltech_OMvar.melt[ names_GlobalTechOMvar ]#
+L223.GlobalTechOMvar_elec$OM.var <- round( L223.GlobalTechOMvar_elec$OM.var, digits_OM )#
+L223.GlobalIntTechOMvar_elec <- subset_inttechs( L223.GlobalTechOMvar_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+L223.GlobalTechOMvar_elec <- subset_techs( L223.GlobalTechOMvar_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+#
+#Shareweights of global technologies#
+printlog( "L223.GlobalTechShrwt_elec: Shareweights of global electricity generation technologies" )#
+L223.globaltech_shrwt.melt <- interpolate_and_melt( A23.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )#
+L223.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]#
+L223.GlobalTechShrwt_elec <- L223.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]#
+L223.GlobalIntTechShrwt_elec <- subset_inttechs( L223.GlobalTechShrwt_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+L223.GlobalTechShrwt_elec <- subset_techs( L223.GlobalTechShrwt_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )#
+#
+#CO2 capture rates of global technologies#
+printlog( "L223.GlobalTechCapture_elec: CO2 capture fractions from global electricity generation technologies" )#
+## No need to consider historical periods or intermittent technologies here#
+L223.globaltech_co2capture.melt <- interpolate_and_melt( A23.globaltech_co2capture, model_future_years, value.name="remove.fraction" )#
+L223.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]#
+L223.GlobalTechCapture_elec <- data.frame(#
+      L223.globaltech_co2capture.melt[ names_GlobalTechYr ],#
+      remove.fraction = round( L223.globaltech_co2capture.melt$remove.fraction, digits = digits_remove.fraction ) )#
+L223.GlobalTechCapture_elec$storage.market <- CO2.storage.market#
+#
+#Backup parameters for intermittent technologies#
+printlog( "L223.GlobalIntTechBackup_elec: Backup-related information for global electricity generation technologies" )
+A23.sector <- readdata( "ENERGY_ASSUMPTIONS", "A23.sector" )
+A23.globalinttech <- readdata( "ENERGY_ASSUMPTIONS", "A23.globalinttech" )
+A23.globalinttech
+L223.globalinttech_repY <- repeat_and_add_vector( A23.globalinttech, "year", c( model_base_years, model_future_years ) )#
+L223.globalinttech_repY[ c( "sector.name", "subsector.name" ) ] <- L223.globalinttech_repY[ c( "supplysector", "subsector" ) ]
+head(L223.globalinttech_repY)
+names_GlobalTechBackup
+sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
+L223.globalinttech_repY <- repeat_and_add_vector( A23.globalinttech, "year", c( model_base_years, model_future_years ) )#
+L223.globalinttech_repY[ c( "sector.name", "subsector.name" ) ] <- L223.globalinttech_repY[ c( "supplysector", "subsector" ) ]#
+L223.GlobalIntTechBackup_elec <- L223.globalinttech_repY[ names_GlobalTechBackup ]
+head(L223.GlobalIntTechBackup_elec)
 logstop()
-logstart( "L210.resources.R" )
+source("../energy-processing-code/level2/L223.electricity.R")
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L226.en_distribution.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Final energy distribution" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
+sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
+fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+A26.sector <- readdata( "ENERGY_ASSUMPTIONS", "A26.sector" )#
+A26.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A26.subsector_logit" )#
+A26.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A26.subsector_shrwt" )#
+A26.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A26.subsector_interp" )#
+A26.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A26.globaltech_coef" )#
+A26.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A26.globaltech_cost" )#
+A26.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A26.globaltech_shrwt" )#
+L126.IO_R_elecownuse_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L126.IO_R_elecownuse_F_Yh" )#
+L126.IO_R_electd_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L126.IO_R_electd_F_Yh" )#
+L126.IO_R_gaspipe_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L126.IO_R_gaspipe_F_Yh" )
+A26.globaltech_cost
+L226.Supplysector_en <- write_to_all_regions( A26.sector, names_Supplysector )#
+#
+# 2b. Subsector information#
+printlog( "L226.SubsectorLogit_en: Subsector logit exponents of energy distribution sectors" )#
+L226.SubsectorLogit_en <- write_to_all_regions( A26.subsector_logit, names_SubsectorLogit )#
+#
+printlog( "L226.SubsectorShrwt_en and L226.SubsectorShrwtFllt_en: Subsector shareweights of energy distribution sectors" )#
+if( any( !is.na( A26.subsector_shrwt$year ) ) ){#
+	L226.SubsectorShrwt_en <- write_to_all_regions( A26.subsector_shrwt[ !is.na( A26.subsector_shrwt$year ), ], names_SubsectorShrwt )#
+	}#
+if( any( !is.na( A26.subsector_shrwt$year.fillout ) ) ){#
+	L226.SubsectorShrwtFllt_en <- write_to_all_regions( A26.subsector_shrwt[ !is.na( A26.subsector_shrwt$year.fillout ), ], names_SubsectorShrwtFllt )#
+	}#
+#
+printlog( "L226.SubsectorInterp_en and L226.SubsectorInterpTo_en: Subsector shareweight interpolation of energy distribution sectors" )#
+if( any( is.na( A26.subsector_interp$to.value ) ) ){#
+	L226.SubsectorInterp_en <- write_to_all_regions( A26.subsector_interp[ is.na( A26.subsector_interp$to.value ), ], names_SubsectorInterp )#
+	}#
+if( any( !is.na( A26.subsector_interp$to.value ) ) ){#
+	L226.SubsectorInterpTo_en <- write_to_all_regions( A26.subsector_interp[ !is.na( A26.subsector_interp$to.value ), ], names_SubsectorInterpTo )#
+	}#
+#
+# 2c. Technology information#
+printlog( "L226.StubTech_en: Identification of stub technologies of energy distribution" )#
+#Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)#
+L226.StubTech_en <- write_to_all_regions( A26.globaltech_shrwt, names_Tech )#
+names( L226.StubTech_en ) <- names_StubTech#
+#
+#Coefficients of global technologies#
+printlog( "L226.GlobalTechCoef_en: Energy inputs and coefficients of global technologies for energy distribution" )#
+L226.globaltech_coef.melt <- interpolate_and_melt( A26.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )#
+#Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology#
+L226.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L226.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]#
+L226.GlobalTechCoef_en <- L226.globaltech_coef.melt[ names_GlobalTechCoef ]#
+L226.GlobalTechCoef_en$coefficient <- round( L226.GlobalTechCoef_en$coefficient, digits_coefficient )#
+#
+#Costs of global technologies#
+printlog( "L226.GlobalTechCost_en: Costs of global technologies for energy distribution" )#
+L226.globaltech_cost.melt <- interpolate_and_melt( A26.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )#
+L226.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L226.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]#
+L226.GlobalTechCost_en <- L226.globaltech_cost.melt[ names_GlobalTechCost ]#
+L226.GlobalTechCost_en$input.cost <- round( L226.GlobalTechCost_en$input.cost, digits_cost )#
+#
+#Shareweights of global technologies#
+printlog( "L226.GlobalTechShrwt_en: Shareweights of global technologies for energy distribution" )#
+L226.globaltech_shrwt.melt <- interpolate_and_melt( A26.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )#
+L226.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L226.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]#
+L226.GlobalTechShrwt_en <- L226.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]#
+#
+#2d. Calibration and region-specific data#
+# Electricity ownuse IO coefs#
+L226.IO_R_elecownuse_F_Yh <- interpolate_and_melt( L126.IO_R_elecownuse_F_Yh, model_base_years )#
+L226.IO_R_elecownuse_F_Yh <- add_region_name( L226.IO_R_elecownuse_F_Yh )#
+L226.IO_R_elecownuse_F_Yh[ c( "supplysector", "subsector", "stub.technology", "minicam.energy.input" ) ] <- calibrated_techs[#
+      match( paste( L226.IO_R_elecownuse_F_Yh$sector, L226.IO_R_elecownuse_F_Yh$fuel ),#
+             paste( calibrated_techs$sector, calibrated_techs$fuel ) ),#
+      c( "supplysector", "subsector", "technology", "minicam.energy.input" ) ]#
+#Ownuse ratios are held constant in the future (could perhaps be tied to industrial CHP...but also AUTOELEC)#
+L226.IO_R_elecownuse_F_Yfut <- repeat_and_add_vector( subset( L226.IO_R_elecownuse_F_Yh, year == max( model_base_years ) ), "year", model_future_years )#
+L226.IO_R_elecownuse_F_Y <- rbind( L226.IO_R_elecownuse_F_Yh, L226.IO_R_elecownuse_F_Yfut )#
+#
+printlog( "L226.StubTechCoef_elecownuse: calibrated coefficients on electricity net ownuse")#
+L226.StubTechCoef_elecownuse <- L226.IO_R_elecownuse_F_Y[ c( names_StubTechYr, "minicam.energy.input" ) ]#
+L226.StubTechCoef_elecownuse$coefficient <- round( L226.IO_R_elecownuse_F_Y$value, digits_coefficient )#
+L226.StubTechCoef_elecownuse$market.name <- L226.IO_R_elecownuse_F_Y$region#
+#
+#Electricity transmission and distribution#
+L226.IO_R_electd_F_Yh <- interpolate_and_melt( L126.IO_R_electd_F_Yh, model_base_years )#
+#
+#Copy to future periods and apply assumed techchange#
+L226.IO_R_electd_F_Yfut <- repeat_and_add_vector( subset( L226.IO_R_electd_F_Yh, year == max( model_base_years ) ), "year", model_future_years )#
+L226.IO_R_electd_F_Yfut$value <- L226.IO_R_electd_F_Yfut$value * ( 1 - A_regions$elect_td_techchange[#
+      match( L226.IO_R_electd_F_Yfut$GCAM_region_ID, A_regions$GCAM_region_ID ) ] ) ^ ( L226.IO_R_electd_F_Yfut$year - max( model_base_years ) )#
+L226.IO_R_electd_F_Y <- rbind( L226.IO_R_electd_F_Yh, L226.IO_R_electd_F_Yfut )#
+#
+#Electricity T&D: Because this is written out to multiple sectors, need to start with the list in calibrated_techs#
+L226.calibrated_techs_electd <- subset( calibrated_techs, paste( sector, fuel ) %in% paste( L226.IO_R_electd_F_Y$sector, L226.IO_R_electd_F_Y$fuel ) )#
+L226.calibrated_techs_electd_repR <- repeat_and_add_vector( L226.calibrated_techs_electd, "GCAM_region_ID", unique( L226.IO_R_electd_F_Y$GCAM_region_ID ) )#
+L226.calibrated_techs_electd_repR <- add_region_name( L226.calibrated_techs_electd_repR )#
+L226.calibrated_techs_electd_repR$market.name <- L226.calibrated_techs_electd_repR$region#
+L226.calibrated_techs_electd_repR_repY <- repeat_and_add_vector( L226.calibrated_techs_electd_repR, "year", unique( L226.IO_R_electd_F_Y$year ) )#
+L226.calibrated_techs_electd_repR_repY$stub.technology <- L226.calibrated_techs_electd_repR_repY$technology#
+L226.calibrated_techs_electd_repR_repY$coefficient <- round(#
+    L226.IO_R_electd_F_Y$value[#
+      match( paste( L226.calibrated_techs_electd_repR_repY$sector, L226.calibrated_techs_electd_repR_repY$fuel,#
+                    L226.calibrated_techs_electd_repR_repY$GCAM_region_ID, L226.calibrated_techs_electd_repR_repY$year ),#
+             paste( L226.IO_R_electd_F_Y$sector, L226.IO_R_electd_F_Y$fuel,#
+                    L226.IO_R_electd_F_Y$GCAM_region_ID, L226.IO_R_electd_F_Y$year ) ) ],#
+    digits_coefficient )#
+#
+printlog( "L226.StubTechCoef_electd: calibrated coefficients on electricity transmission and distribution")#
+L226.StubTechCoef_electd <- L226.calibrated_techs_electd_repR_repY[ names_StubTechCoef ]#
+#
+# Gas pipeline IO coefs#
+L226.IO_R_gaspipe_F_Yh <- interpolate_and_melt( L126.IO_R_gaspipe_F_Yh, model_base_years )#
+L226.IO_R_gaspipe_F_Yh <- add_region_name( L226.IO_R_gaspipe_F_Yh )#
+L226.IO_R_gaspipe_F_Yh[ c( "supplysector", "subsector", "stub.technology", "minicam.energy.input" ) ] <- calibrated_techs[#
+      match( paste( L226.IO_R_gaspipe_F_Yh$sector, L226.IO_R_gaspipe_F_Yh$fuel ),#
+             paste( calibrated_techs$sector, calibrated_techs$fuel ) ),#
+      c( "supplysector", "subsector", "technology", "minicam.energy.input" ) ]#
+#
+#Gas pipeline energy use ratios are held constant in the future#
+L226.IO_R_gaspipe_F_Yfut <- repeat_and_add_vector( subset( L226.IO_R_gaspipe_F_Yh, year == max( model_base_years ) ), "year", model_future_years )#
+L226.IO_R_gaspipe_F_Y <- rbind( L226.IO_R_gaspipe_F_Yh, L226.IO_R_gaspipe_F_Yfut )#
+#
+printlog( "L226.StubTechCoef_gaspipe: calibrated coefficients on gas pipeline energy use")#
+L226.StubTechCoef_gaspipe <- L226.IO_R_gaspipe_F_Y[ c( names_StubTechYr, "minicam.energy.input" ) ]#
+L226.StubTechCoef_gaspipe$coefficient <- round( L226.IO_R_gaspipe_F_Y$value, digits_coefficient )#
+L226.StubTechCoef_gaspipe$market.name <- L226.IO_R_gaspipe_F_Y$region#
+#
+# -----------------------------------------------------------------------------#
+# 3. Write all csvs as tables, and paste csv filenames into a single batch XML file#
+write_mi_data( L226.Supplysector_en, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L226.Supplysector_en",#
+               batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_en_distribution.xml" ) #
+write_mi_data( L226.SubsectorLogit_en, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L226.SubsectorLogit_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" ) #
+if( exists( "L226.SubsectorShrwt_en" ) ){#
+	write_mi_data( L226.SubsectorShrwt_en, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L226.SubsectorShrwt_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+	}#
+if( exists( "L226.SubsectorShrwtFllt_en" ) ){#
+	write_mi_data( L226.SubsectorShrwtFllt_en, "SubsectorShrwtFllt", "ENERGY_LEVEL2_DATA", "L226.SubsectorShrwtFllt_en",#
+	               "ENERGY_XML_BATCH", "batch_en_distribution.xml" ) #
+	}#
+if( exists( "L226.SubsectorInterp_en" ) ) {#
+	write_mi_data( L226.SubsectorInterp_en, "SubsectorInterp", "ENERGY_LEVEL2_DATA", "L226.SubsectorInterp_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+	}#
+if( exists( "L226.SubsectorInterpTo_en" ) ) {#
+	write_mi_data( L226.SubsectorInterpTo_en, "SubsectorInterpTo", "ENERGY_LEVEL2_DATA", "L226.SubsectorInterpTo_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+	}#
+write_mi_data( L226.StubTech_en, "StubTech", "ENERGY_LEVEL2_DATA", "L226.StubTech_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+write_mi_data( L226.GlobalTechCoef_en, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L226.GlobalTechCoef_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+write_mi_data( L226.GlobalTechCost_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L226.GlobalTechCost_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+write_mi_data( L226.GlobalTechShrwt_en, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L226.GlobalTechShrwt_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+write_mi_data( L226.StubTechCoef_elecownuse, "StubTechCoef", "ENERGY_LEVEL2_DATA", "L226.StubTechCoef_elecownuse", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+write_mi_data( L226.StubTechCoef_electd, "StubTechCoef", "ENERGY_LEVEL2_DATA", "L226.StubTechCoef_electd", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+write_mi_data( L226.StubTechCoef_gaspipe, "StubTechCoef", "ENERGY_LEVEL2_DATA", "L226.StubTechCoef_gaspipe", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )#
+#
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_en_distribution.xml", "ENERGY_XML_FINAL", "en_distribution.xml", "", xml_tag="outFile" )#
+#
+logstop()
+names_GlobalTechEff
+digits_coefficient
+digits_efficiency
+if( !exists( "ENERGYPROC_DIR" ) ){#
+    if( Sys.getenv( "ENERGYPROC" ) != "" ){#
+        ENERGYPROC_DIR <- Sys.getenv( "ENERGYPROC" )#
+    } else {#
+        stop("Could not determine location of energy data system. Please set the R var ENERGYPROC_DIR to the appropriate location")#
+    }#
+}#
+#
+# Universal header file - provides logging, file support, etc.#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L232.industry.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Model input for aggregate industrial sectors" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
+sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
+fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+A23.chp_elecratio <- readdata( "ENERGY_ASSUMPTIONS", "A23.chp_elecratio" )#
+A32.sector <- readdata( "ENERGY_ASSUMPTIONS", "A32.sector" )#
+A32.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A32.subsector_interp" )#
+A32.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A32.subsector_logit" )#
+A32.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A32.subsector_shrwt" )#
+A32.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_coef" )#
+A32.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_cost" )#
+A32.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_eff" )#
+A32.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_shrwt" )#
+A32.nonenergy_Cseq <- readdata( "ENERGY_ASSUMPTIONS", "A32.nonenergy_Cseq" )#
+A32.fuelprefElasticity <- readdata( "ENERGY_ASSUMPTIONS", "A32.fuelprefElasticity" )#
+A32.demand <- readdata( "ENERGY_ASSUMPTIONS", "A32.demand" )#
+L123.in_EJ_R_indchp_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_indchp_F_Yh")#
+L1322.in_EJ_R_indenergy_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indenergy_F_Yh" )#
+L1322.in_EJ_R_indfeed_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indfeed_F_Yh" )
+L232.heat_techs <- unique( calibrated_techs[ grepl( "industry", calibrated_techs$sector ) & calibrated_techs$fuel == "heat", s_s_t ] )
+L232.heat_techs
+L232.rm_heat_techs_R <- repeat_and_add_vector( L232.heat_techs, R, A_regions[[R]][ A_regions$heat == 0 ] )#
+L232.rm_heat_techs_R <- add_region_name( L232.rm_heat_techs_R )
+L232.rm_heat_techs_R
+logstop()
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L210.resources.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Resource supply information" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
 sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
@@ -93,9 +396,12 @@ L114.RsrcCurves_EJ_R_wind <- readdata( "ENERGY_LEVEL1_DATA", "L114.RsrcCurves_EJ
 L115.RsrcCurves_EJ_R_roofPV <- readdata( "ENERGY_LEVEL1_DATA", "L115.RsrcCurves_EJ_R_roofPV" )#
 L116.RsrcCurves_EJ_R_geo <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_geo" )#
 L116.RsrcCurves_EJ_R_EGS <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_EGS" )#
-L117.RsrcCurves_EJ_R_tradbio <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_tradbio" )
-L117.RsrcCurves_EJ_R_tradbio <- readdata( "ENERGY_LEVEL1_DATA", "L117.RsrcCurves_EJ_R_tradbio" )
-head(L117.RsrcCurves_EJ_R_tradbio)
+L117.RsrcCurves_EJ_R_tradbio <- readdata( "ENERGY_LEVEL1_DATA", "L117.RsrcCurves_EJ_R_tradbio" )#
+#
+# -----------------------------------------------------------------------------#
+# 2. Build tables for CSVs#
+# 2a. Output unit, price unit, market#
+#Interpolate to specified historical years, as necessary#
 L210.rsrc_info <- gcam_interp( A10.rsrc_info, model_base_years )#
 #
 #Repeat and add region vector to resource assumptions table (use ID to ensure correct region ordering)#
@@ -183,7 +489,8 @@ L210.roofPV_TechChange.melt$subresource_type <- A10.subrsrc_info$subresource_typ
 #Combine (rbind) these two tables#
 L210.rsrc_TechChange.melt <- rbind( L210.rsrc_TechChange.melt, L210.roofPV_TechChange.melt )#
 L210.dep_rsrc_TechChange.melt <- subset( L210.rsrc_TechChange.melt, subresource_type == "subresource" )#
-L210.renew_rsrc_TechChange.melt <- subset( L210.rsrc_TechChange.melt, subresource_type == "smooth-renewable-subresource" )
+L210.renew_rsrc_TechChange.melt <- subset( L210.rsrc_TechChange.melt, subresource_type == "smooth-renewable-subresource" )#
+#
 printlog( "L210.DepRsrcTechChange: technological change for depletable resources" )#
 L210.DepRsrcTechChange <- data.frame(#
       region = L210.dep_rsrc_TechChange.melt$region,#
@@ -236,23 +543,73 @@ L210.SmthRenewRsrcCurves_roofPV <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_roof
 #
 printlog( "L210.GrdRenewRsrcCurves_geo: graded supply curves of geothermal (hydrothermal) resources")#
 L210.RsrcCurves_EJ_R_geo <- add_region_name( L116.RsrcCurves_EJ_R_geo )#
-L210.GrdRenewRsrcCurves_geo <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_geo, "renewresource", "sub-renewable-resource" )#
-#
-printlog( "L210.GrdRenewRsrcCurves_EGS: graded supply curves of geothermal (EGS) resources")#
-L210.RsrcCurves_EJ_R_EGS <- add_region_name( L116.RsrcCurves_EJ_R_EGS )#
-L210.GrdRenewRsrcCurves_EGS <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_EGS, "renewresource", "sub-renewable-resource" )
-L210.RsrcCurves_EJ_R_tradbio <- add_region_name( L117.RsrcCurves_EJ_R_tradbio )#
-L210.GrdRenewRsrcCurves_geo <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_tradbio, "renewresource", "sub-renewable-resource" )
-L210.RsrcCurves_EJ_R_tradbio <- add_region_name( L117.RsrcCurves_EJ_R_tradbio )#
-L210.GrdRenewRsrcCurves_tradbio <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_tradbio, "renewresource", "sub-renewable-resource" )
-head(L210.GrdRenewRsrcCurves_tradbio)
+L210.GrdRenewRsrcCurves_geo <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_geo, "renewresource", "sub-renewable-resource" )
+head()
+head(L210.GrdRenewRsrcCurves_geo)
+subset(L116.RsrcCurves_EJ_R_geo, GCAM_region_ID==13)
 logstop()
 source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
 source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-logstart( "L223.electricity.R" )#
+logstart( "L116.geo.R" )#
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-printlog( "Electricity sector" )#
+printlog( "Geothermal resource supply curves" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )#
+GIS_ctry_AEZ <- readdata( "AGLU_MAPPINGS", "GIS_ctry_AEZ" )#
+Sage_Hyde15_Area <- readdata( "AGLU_GIS_DATA", "Sage_Hyde15_Area" )#
+A16.geo_curves <- readdata( "ENERGY_ASSUMPTIONS", "A16.geo_curves" )#
+A16.EGS_curves <- readdata( "ENERGY_ASSUMPTIONS", "A16.EGS_curves" )
+L116.LC_km2_ctry_LT_AEZ <- subset( Sage_Hyde15_Area, Year == max( Year ) )#
+L116.LC_km2_ctry_LT_AEZ$iso <- GIS_ctry_AEZ$iso[ match( L116.LC_km2_ctry_LT_AEZ$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]#
+L116.LC_km2_ctry <- aggregate( L116.LC_km2_ctry_LT_AEZ[ "Area.km2." ],#
+      by=as.list( L116.LC_km2_ctry_LT_AEZ[ "iso" ] ), sum )#
+#
+#Match in the GCAM 3.0 region and aggregate to compute shares of countries within GCAM 3.0 region#
+L116.LC_km2_ctry$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L116.LC_km2_ctry$iso, iso_GCAM_regID$iso ) ]#
+L116.LC_km2_RG3 <- aggregate( L116.LC_km2_ctry[ "Area.km2." ], by=as.list( L116.LC_km2_ctry[ "region_GCAM3" ] ), sum )#
+L116.LC_km2_ctry$area_RG3 <- L116.LC_km2_RG3$Area.km2.[ match( L116.LC_km2_ctry$region_GCAM3, L116.LC_km2_RG3$region_GCAM3 ) ]#
+L116.LC_km2_ctry$share <- L116.LC_km2_ctry$Area.km2. / L116.LC_km2_ctry$area_RG3#
+#
+#Repeat by number of grades, and match in the available quantities#
+#Hydrothermal#
+L116.Available_EJ_ctry_geo <- repeat_and_add_vector( L116.LC_km2_ctry, "grade", unique( A16.geo_curves$grade ) )#
+L116.Available_EJ_ctry_geo$available_RG3 <- A16.geo_curves$available[#
+      match( vecpaste( L116.Available_EJ_ctry_geo[ c( "region_GCAM3", "grade" ) ] ), vecpaste( A16.geo_curves[ c( "region_GCAM3", "grade" ) ] ) ) ]#
+L116.Available_EJ_ctry_geo$available <- L116.Available_EJ_ctry_geo$share * L116.Available_EJ_ctry_geo$available_RG3#
+#
+#EGS#
+L116.Available_EJ_ctry_EGS <- repeat_and_add_vector( L116.LC_km2_ctry, "grade", unique( A16.EGS_curves$grade ) )#
+L116.Available_EJ_ctry_EGS$available_RG3 <- A16.EGS_curves$available[#
+      match( vecpaste( L116.Available_EJ_ctry_EGS[ c( "region_GCAM3", "grade" ) ] ), vecpaste( A16.EGS_curves[ c( "region_GCAM3", "grade" ) ] ) ) ]#
+L116.Available_EJ_ctry_EGS$available <- L116.Available_EJ_ctry_EGS$share * L116.Available_EJ_ctry_EGS$available_RG3#
+#
+printlog( "Aggregating country-level supplies by GCAM regions")#
+#Hydrothermal#
+L116.Available_EJ_ctry_geo[[R]]<- iso_GCAM_regID[[R]][ match( L116.Available_EJ_ctry_geo$iso, iso_GCAM_regID$iso ) ]#
+L116.Available_EJ_R_geo <- aggregate( L116.Available_EJ_ctry_geo[ "available" ], by=as.list( L116.Available_EJ_ctry_geo[ c( R, "grade" ) ] ), sum )
+head(L116.Available_EJ_R_geo)
+dim(L116.Available_EJ_R_geo)
+L116.Available_EJ_R_geo
+dim(L116.Available_EJ_ctry_geo)
+head(L116.Available_EJ_ctry_geo)
+subset(L116.Available_EJ_ctry_geo, iso=="kor")
+L116.Available_EJ_ctry_geo[is.na(L116.Available_EJ_ctry_geo$available)]
+L116.Available_EJ_ctry_geo[is.na(L116.Available_EJ_ctry_geo$available),]
+logstop()
+logstop()
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L221.en_supply.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Primary fuel handling sectors" )#
 #
 # -----------------------------------------------------------------------------#
 # 1. Read files#
@@ -262,27 +619,502 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
-fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )#
-calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
-A23.sector <- readdata( "ENERGY_ASSUMPTIONS", "A23.sector" )#
-A23.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_logit" )#
-A23.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt" )#
-A23.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_interp" )#
-A23.subsector_shrwt_nuc_R <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt_nuc_R" )#
-A23.subsector_shrwt_renew_R <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt_renew_R" )#
-A23.globalinttech <- readdata( "ENERGY_ASSUMPTIONS", "A23.globalinttech" )#
-A23.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_shrwt" )#
-A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )#
-A23.globaltech_capital <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital" )#
-A23.globaltech_OMfixed <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMfixed" )#
-A23.globaltech_OMvar <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMvar" )#
-A23.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_retirement" )#
-A23.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_co2capture" )#
-L1231.in_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.in_EJ_R_elec_F_tech_Yh" )#
-L1231.out_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.out_EJ_R_elec_F_tech_Yh" )#
-L1231.eff_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.eff_R_elec_F_tech_Yh" )
-A23.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_co2capture" )
-A23.globalinttech
-A23.globaltech_shrwt
-subset_inttechs
-names_GlobalTechBackup
+A21.sector <- readdata( "ENERGY_ASSUMPTIONS", "A21.sector" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+A21.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A21.subsector_logit" )#
+A21.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.subsector_shrwt" )#
+A21.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A21.subsector_interp" )#
+A21.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_coef" )#
+A21.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_cost" )#
+A21.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_shrwt" )#
+A21.tradedtech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_coef" )#
+A21.tradedtech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_cost" )#
+A21.tradedtech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_shrwt" )#
+L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )#
+L121.in_EJ_R_TPES_unoil_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_unoil_Yh" )#
+L121.in_EJ_R_TPES_crude_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_crude_Yh" )
+L221.Supplysector_en <- write_to_all_regions( A21.sector, names_Supplysector, has.traded=T )#
+#
+# 2b. Subsector information#
+printlog( "L221.SubsectorLogit_en: Subsector logit exponents of upstream energy handling sectors" )#
+L221.SubsectorLogit_en <- write_to_all_regions( A21.subsector_logit, names_SubsectorLogit, has.traded=T )#
+#
+printlog( "L221.SubsectorShrwt_en and L221.SubsectorShrwtFllt_en: Subsector shareweights of upstream energy handling sectors" )#
+if( any( !is.na( A21.subsector_shrwt$year ) ) ){#
+	L221.SubsectorShrwt_en <- write_to_all_regions( A21.subsector_shrwt[ !is.na( A21.subsector_shrwt$year ), ], names_SubsectorShrwt, has.traded=T )#
+	}#
+if( any( !is.na( A21.subsector_shrwt$year.fillout ) ) ){#
+	L221.SubsectorShrwtFllt_en <- write_to_all_regions( A21.subsector_shrwt[ !is.na( A21.subsector_shrwt$year.fillout ), ], names_SubsectorShrwtFllt, has.traded=T )#
+	}#
+#
+printlog( "L221.SubsectorInterp_en and L221.SubsectorInterpTo_en: Subsector shareweight interpolation of upstream energy handling sectors" )#
+if( any( is.na( A21.subsector_interp$to.value ) ) ){#
+	L221.SubsectorInterp_en <- write_to_all_regions( A21.subsector_interp[ is.na( A21.subsector_interp$to.value ), ], names_SubsectorInterp, has.traded=T )#
+	}#
+if( any( !is.na( A21.subsector_interp$to.value ) ) ){#
+	L221.SubsectorInterpTo_en <- write_to_all_regions( A21.subsector_interp[ !is.na( A21.subsector_interp$to.value ), ], names_SubsectorInterpTo, has.traded=T )#
+	}#
+#
+# 2c. Technology information#
+#Identification of stub technologies (assume those in global tech shareweight table include all techs)#
+printlog( "L221.StubTech_en: Identification of stub technologies of upstream energy handling sectors" )#
+L221.StubTech_en <- write_to_all_regions( A21.globaltech_shrwt, names_Tech, has.traded=F )#
+names( L221.StubTech_en ) <- names_StubTech
+dim(L221.StubTech_en)
+subset(L221.StubTech_en, supplysector == "regional biomassOil")
+A_regions
+head(A21.globaltech_shrwt)
+L221.rm_biomassOil_techs_R <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]
+L221.rm_biomassOil_techs_R
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]#
+L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs_R, "region", GCAM_region_names$region )
+L221.rm_biomassOil_techs_R
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]#
+L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs_R, R, GCAM_region_names[[R]] )#
+L221.rm_biomassOil_techs_R <- add_region_name( L221.rm_biomassOil_techs_R )
+L221.rm_biomassOil_techs_R
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]#
+L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs, R, GCAM_region_names[[R]] )#
+L221.rm_biomassOil_techs_R <- add_region_name( L221.rm_biomassOil_techs_R )
+L221.rm_biomassOil_techs_R[1:20,]
+head(A21.globaltech_shrwt)
+A_regions
+A_regions
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]#
+L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs, R, GCAM_region_names[[R]] )#
+L221.rm_biomassOil_techs_R <- add_region_name( L221.rm_biomassOil_techs_R )#
+L221.rm_biomassOil_techs_R <- subset( L221.rm_biomassOil_techs_R, paste( region, stub.technology ) %!in% paste( A_regions$region, A_regions$technology ) )
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]#
+L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs, R, GCAM_region_names[[R]] )#
+L221.rm_biomassOil_techs_R <- add_region_name( L221.rm_biomassOil_techs_R )#
+L221.rm_biomassOil_techs_R <- subset( L221.rm_biomassOil_techs_R, paste( region, technology ) %!in% paste( A_regions$region, A_regions$technology ) )
+L221.rm_biomassOil_techs_R
+paste( A_regions$region, A_regions$technology )
+A_regions
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]#
+L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs, R, GCAM_region_names[[R]] )#
+L221.rm_biomassOil_techs_R <- add_region_name( L221.rm_biomassOil_techs_R )#
+L221.rm_biomassOil_techs_R <- subset( L221.rm_biomassOil_techs_R, paste( region, technology ) %!in% paste( A_regions$region, A_regions$biomassOil_tech ) )
+L221.rm_biomassOil_techs_R
+L221.StubTech_en <- write_to_all_regions( A21.globaltech_shrwt, names_Tech, has.traded=F )#
+names( L221.StubTech_en ) <- names_StubTech
+L221.StubTech_en <- L221.StubTech_en[#
+      vecpaste( L221.StubTech_en[ c( "region", "stub.technology" ) ] ) %!in% vecpaste( L221.rm_biomassOil_techs_R[ c( "region", "technology" ) ] ), ]
+head(L221.StubTech_en)
+subset(L221.StubTech_en, supplysector == "regional biomassOil")
+logstop()
+source("../energy-processing-code/level2/L221.en_supply.R")
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L221.en_supply.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Primary fuel handling sectors" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
+sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
+A21.sector <- readdata( "ENERGY_ASSUMPTIONS", "A21.sector" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+A21.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A21.subsector_logit" )#
+A21.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.subsector_shrwt" )#
+A21.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A21.subsector_interp" )#
+A21.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_coef" )#
+A21.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_cost" )#
+A21.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_shrwt" )#
+A21.tradedtech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_coef" )#
+A21.tradedtech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_cost" )#
+A21.tradedtech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_shrwt" )#
+L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )#
+L121.in_EJ_R_TPES_unoil_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_unoil_Yh" )#
+L121.in_EJ_R_TPES_crude_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_crude_Yh" )#
+#
+# -----------------------------------------------------------------------------#
+# 2. Build tables for CSVs#
+# 2a. Supplysector information#
+printlog( "L221.Supplysector_en: Supply sector information for upstream energy handling sectors" )#
+L221.Supplysector_en <- write_to_all_regions( A21.sector, names_Supplysector, has.traded=T )#
+#
+# 2b. Subsector information#
+printlog( "L221.SubsectorLogit_en: Subsector logit exponents of upstream energy handling sectors" )#
+L221.SubsectorLogit_en <- write_to_all_regions( A21.subsector_logit, names_SubsectorLogit, has.traded=T )#
+#
+printlog( "L221.SubsectorShrwt_en and L221.SubsectorShrwtFllt_en: Subsector shareweights of upstream energy handling sectors" )#
+if( any( !is.na( A21.subsector_shrwt$year ) ) ){#
+	L221.SubsectorShrwt_en <- write_to_all_regions( A21.subsector_shrwt[ !is.na( A21.subsector_shrwt$year ), ], names_SubsectorShrwt, has.traded=T )#
+	}#
+if( any( !is.na( A21.subsector_shrwt$year.fillout ) ) ){#
+	L221.SubsectorShrwtFllt_en <- write_to_all_regions( A21.subsector_shrwt[ !is.na( A21.subsector_shrwt$year.fillout ), ], names_SubsectorShrwtFllt, has.traded=T )#
+	}#
+#
+printlog( "L221.SubsectorInterp_en and L221.SubsectorInterpTo_en: Subsector shareweight interpolation of upstream energy handling sectors" )#
+if( any( is.na( A21.subsector_interp$to.value ) ) ){#
+	L221.SubsectorInterp_en <- write_to_all_regions( A21.subsector_interp[ is.na( A21.subsector_interp$to.value ), ], names_SubsectorInterp, has.traded=T )#
+	}#
+if( any( !is.na( A21.subsector_interp$to.value ) ) ){#
+	L221.SubsectorInterpTo_en <- write_to_all_regions( A21.subsector_interp[ !is.na( A21.subsector_interp$to.value ), ], names_SubsectorInterpTo, has.traded=T )#
+	}#
+#
+# 2c. Technology information#
+#Identification of stub technologies (assume those in global tech shareweight table include all techs)#
+printlog( "L221.StubTech_en: Identification of stub technologies of upstream energy handling sectors" )#
+L221.StubTech_en <- write_to_all_regions( A21.globaltech_shrwt, names_Tech, has.traded=F )#
+names( L221.StubTech_en ) <- names_StubTech#
+#
+#Drop stub technologies for biomassOil techs that do not exist#
+L221.rm_biomassOil_techs <- A21.globaltech_shrwt[ A21.globaltech_shrwt$supplysector == "regional biomassOil", s_s_t ]#
+L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs, R, GCAM_region_names[[R]] )#
+L221.rm_biomassOil_techs_R <- add_region_name( L221.rm_biomassOil_techs_R )#
+L221.rm_biomassOil_techs_R <- subset( L221.rm_biomassOil_techs_R, paste( region, technology ) %!in% paste( A_regions$region, A_regions$biomassOil_tech ) )#
+L221.StubTech_en <- L221.StubTech_en[#
+      vecpaste( L221.StubTech_en[ c( "region", "stub.technology" ) ] ) %!in% vecpaste( L221.rm_biomassOil_techs_R[ c( "region", "technology" ) ] ), ]
+L221.StubTech_en <- write_to_all_regions( A21.globaltech_shrwt, names_Tech, has.traded=F )#
+names( L221.StubTech_en ) <- names_StubTech
+head(L221.rm_biomassOil_techs_R)
+subset(L221.StubTech_en, region=="USA")
+L221.StubTech_en <- L221.StubTech_en[#
+      vecpaste( L221.StubTech_en[ c( "region", "stub.technology" ) ] ) %!in% vecpaste( L221.rm_biomassOil_techs_R[ c( "region", "technology" ) ] ), ]
+subset(L221.StubTech_en, region=="USA")
+source("../energy-processing-code/level2/L221.en_supply.R")
+subset(L221.StubTech_en, region=="USA")
+head(L221.StubTechShrwt_bio)
+RemoveFrac_CCS
+?approx
+gcam_interp
+getwd()
+list.files("assumptions")
+if( !exists( "ENERGYPROC_DIR" ) ){#
+    if( Sys.getenv( "ENERGYPROC" ) != "" ){#
+        ENERGYPROC_DIR <- Sys.getenv( "ENERGYPROC" )#
+    } else {#
+        stop("Could not determine location of energy data system. Please set the R var ENERGYPROC_DIR to the appropriate location")#
+    }#
+}#
+#
+# Universal header file - provides logging, file support, etc.#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L144.det_glbl_bld.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Historical building sector data" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+A_regions
+enduse_fuel_aggregation
+enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )
+enduse_fuel_aggregation
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+A44.HouseholdSize <- readdata( "ENERGY_ASSUMPTIONS", "A44.HouseholdSize" )#
+flsp_mapping <- readdata( "ENERGY_MAPPINGS", "flsp_mapping" )#
+IEA_PCResFloorspace <- readdata( "ENERGY_LEVEL0_DATA", "IEA_PCResFloorspace" )#
+Odyssee_ResFloorspacePerHouse <- readdata( "ENERGY_LEVEL0_DATA", "Odyssee_ResFloorspacePerHouse" )#
+L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )
+A44.HouseholdSize <- readdata( "ENERGY_ASSUMPTIONS", "A44.HouseholdSize" )
+options()
+?read.table
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
+A44.HouseholdSize <- readdata( "ENERGY_ASSUMPTIONS", "A44.HouseholdSize" )#
+flsp_mapping <- readdata( "ENERGY_MAPPINGS", "flsp_mapping" )#
+IEA_PCResFloorspace <- readdata( "ENERGY_LEVEL0_DATA", "IEA_PCResFloorspace" )#
+Odyssee_ResFloorspacePerHouse <- readdata( "ENERGY_LEVEL0_DATA", "Odyssee_ResFloorspacePerHouse" )#
+L100.Pop_thous_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.Pop_thous_ctry_Yh" )#
+L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )
+IEA_PCResFloorspace
+flsp_interp_years <- 1981:1989#
+L144.IEA_pcflsp_Yh <- gcam_interp( IEA_PCResFloorspace, flsp_interp_years )
+L144.IEA_pcflsp_Yh
+?approx
+gcam_interp
+IEA_flsp_years <- 1980:2004#
+L144.IEA_pcflsp_Yh <- gcam_interp( IEA_PCResFloorspace, flsp_interp_years )
+L144.IEA_pcflsp_Yh
+dim(IEA_PCResFloorspace)
+IEA_PCResFloorspace[3:27]]/L144.IEA_pcflsp_Yh[3:27]
+IEA_PCResFloorspace[3:27]/L144.IEA_pcflsp_Yh[3:27]
+subset(L100.Pop_thous_ctry_Yh, iso=="USA")
+subset(L100.Pop_thous_ctry_Yh, iso=="usa")
+11.393/229825
+11393/229825
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nzl" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "aus" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "aus" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nzl" ]
+L144.IEA_pcflsp_Yh <- IEA_PCResFloorspace#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nzl" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "aus" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "aus" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nzl" ]
+L144.IEA_pcflsp_Yh
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nld" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "dnk" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "dnk" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nld" ]
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nld" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "dnk" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "dnk" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nld" ]
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu " ) ]
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu" ) ]
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "fra" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "fra" ]
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu" ) ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "fra" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "fra" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso  %in% c( "aut", "deu" ) ]
+L144.IEA_pcflsp_Yh
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu", "esp" ) ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "fra" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "fra" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso  %in% c( "aut", "deu", "esp" ) ]
+L144.IEA_pcflsp_Yh <- IEA_PCResFloorspace#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nzl" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "aus" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "aus" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nzl" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nld" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "dnk" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "dnk" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nld" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu", "esp" ) ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "fra" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "fra" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso  %in% c( "aut", "deu", "esp" ) ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "jpn" ] <- ( L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "jpn" ] ) ^ 2 /#
+      L144.IEA_pcflsp_Yh$X2000[ L144.IEA_pcflsp_Yh$iso == "jpn" ]
+L144.IEA_pcflsp_Yh
+22.73715/27.1
+L144.IEA_pcflsp_Yh <- IEA_PCResFloorspace#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nzl" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "aus" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "aus" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nzl" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nld" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "dnk" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "dnk" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nld" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu", "esp" ) ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "fra" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "fra" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso  %in% c( "aut", "deu", "esp" ) ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "jpn" ] <- ( L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "jpn" ] ) ^ 2 /#
+      L144.IEA_pcflsp_Yh$X2000[ L144.IEA_pcflsp_Yh$iso == "jpn" ]#
+#
+#Interpolate and extrapolate the IEA time series to all historical years#
+IEA_flsp_years <- 1980:2004#
+L144.IEA_pcflsp_Yh <- gcam_interp( IEA_PCResFloorspace, flsp_interp_years )
+L144.IEA_pcflsp_Yh
+L144.IEA_pcflsp_Yh <- IEA_PCResFloorspace#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nzl" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "aus" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "aus" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nzl" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nld" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "dnk" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "dnk" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nld" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu", "esp" ) ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "fra" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "fra" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso  %in% c( "aut", "deu", "esp" ) ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "jpn" ] <- ( L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "jpn" ] ) ^ 2 /#
+      L144.IEA_pcflsp_Yh$X2000[ L144.IEA_pcflsp_Yh$iso == "jpn" ]#
+#
+#Interpolate and extrapolate the IEA time series to all historical years#
+IEA_flsp_years <- 1980:2004#
+L144.IEA_pcflsp_Yh <- gcam_interp( L144.IEA_pcflsp_Yh, flsp_interp_years )
+L144.IEA_pcflsp_Yh
+L144.IEA_pcflsp_Yh <- IEA_PCResFloorspace#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nzl" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "aus" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "aus" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nzl" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nld" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "dnk" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "dnk" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nld" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu", "esp" ) ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "fra" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "fra" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso  %in% c( "aut", "deu", "esp" ) ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "jpn" ] <- ( L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "jpn" ] ) ^ 2 /#
+      L144.IEA_pcflsp_Yh$X2000[ L144.IEA_pcflsp_Yh$iso == "jpn" ]#
+L144.IEA_pcflsp_Yh$X2004[ L144.IEA_pcflsp_Yh$iso == "aus" ] <- L144.IEA_pcflsp_Yh$X2004[ L144.IEA_pcflsp_Yh$iso == "usa" ] / #
+      L144.IEA_pcflsp_Yh$X1998[ L144.IEA_pcflsp_Yh$iso == "usa" ] * L144.IEA_pcflsp_Yh$X1998[ L144.IEA_pcflsp_Yh$iso == "aus" ]#
+#
+#Interpolate and extrapolate the IEA time series to all historical years#
+IEA_flsp_years <- 1980:2004#
+L144.IEA_pcflsp_Yh <- gcam_interp( L144.IEA_pcflsp_Yh, flsp_interp_years )
+L144.IEA_pcflsp_Yh
+aus_fillout_years <- c( 1991:1997, 1999:2003)
+aus_fillout_years
+L144.IEA_pcflsp_Yh[ L144.IEA_pcflsp_Yh$iso == "aus", ]
+aus_missing_years <- c( 1991:1997, 1999:2003)
+L144.IEA_pcflsp_Yh[ L144.IEA_pcflsp_Yh$iso == "aus",] <- gcam_interp( L144.IEA_pcflsp_Yh[ L144.IEA_pcflsp_Yh$iso == "aus", ], aus_missing_years )
+L144.IEA_pcflsp_Yh
+historical_years
+tmp<- melt( L144.IEA_pcflsp_Yh, is.vars = c( "country", "iso"))
+tmp<- melt( L144.IEA_pcflsp_Yh, id.vars = c( "country", "iso"))
+tmp[1:20,]
+qplot(variable, value, data = tmp, color = "country")
+qplot(variable, value, data = tmp, color = country)
+Odyssee_ResFloorspacePerHouse
+L144.IEA_pcflsp_Yh <- IEA_PCResFloorspace[ names( IEA_PCResFloorspace ) != "country" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nzl" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "aus" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "aus" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nzl" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "nld" ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "dnk" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "dnk" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "nld" ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso %in% c( "aut", "deu", "esp" ) ] <- L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "fra" ] / #
+      L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "fra" ] * L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso  %in% c( "aut", "deu", "esp" ) ]#
+L144.IEA_pcflsp_Yh$X1980[ L144.IEA_pcflsp_Yh$iso == "jpn" ] <- ( L144.IEA_pcflsp_Yh$X1990[ L144.IEA_pcflsp_Yh$iso == "jpn" ] ) ^ 2 /#
+      L144.IEA_pcflsp_Yh$X2000[ L144.IEA_pcflsp_Yh$iso == "jpn" ]#
+L144.IEA_pcflsp_Yh$X2004[ L144.IEA_pcflsp_Yh$iso == "aus" ] <- L144.IEA_pcflsp_Yh$X2004[ L144.IEA_pcflsp_Yh$iso == "usa" ] / #
+      L144.IEA_pcflsp_Yh$X1998[ L144.IEA_pcflsp_Yh$iso == "usa" ] * L144.IEA_pcflsp_Yh$X1998[ L144.IEA_pcflsp_Yh$iso == "aus" ]#
+#
+#Interpolate and extrapolate the IEA time series to all historical years#
+IEA_flsp_years <- 1980:2004#
+L144.IEA_pcflsp_Yh <- gcam_interp( L144.IEA_pcflsp_Yh, flsp_interp_years )#
+#
+#This still misses some values in australia between 1991 and 1997, and 1999 to 2003#
+aus_missing_years <- c( 1991:1997, 1999:2003)#
+L144.IEA_pcflsp_Yh[ L144.IEA_pcflsp_Yh$iso == "aus",] <- gcam_interp( L144.IEA_pcflsp_Yh[ L144.IEA_pcflsp_Yh$iso == "aus", ], aus_missing_years )
+L144.IEA_pcflsp_Yh
+A44.HouseholdSize
+L144.HouseholdSize <- gcam_interp( A44.HouseholdSize, Odyssee_flsp_years )
+Odyssee_flsp_years <- 1980:2009#
+L144.HouseholdSize <- gcam_interp( A44.HouseholdSize, Odyssee_flsp_years )
+L144.HouseholdSize
+approx
+gcam_interp <- function( d, years, pattern= "X[0-9]{4}", rule = 1 ) {#
+	yearcols <- grep( pattern, names( d ) )#
+	x<-as.numeric( substr( names( d )[ yearcols ], 2, 5 ) )#
+	for( i in 1:nrow( d ) ) {#
+		y <- d[ i, yearcols ]#
+		li <- approx( x, y, xout=years, rule = rule )#
+		for( j in 1:length( years ) ) {#
+			d[ i, paste( "X", years[ j ], sep="" ) ] <- li$y[ j ]#
+		}#
+	}#
+	return( d )#
+}
+Odyssee_flsp_years <- 1980:2009#
+L144.HouseholdSize <- gcam_interp( A44.HouseholdSize, Odyssee_flsp_years, rule = 2 )
+L144.HouseholdSize
+Odyssee_ResFloorspacePerHouse
+asdf <- "iso"
+Odyssee_ResFloorspacePerHouse["iso"]
+Odyssee_ResFloorspacePerHouse[asdf]
+Odyssee_ResFloorspacePerHouse[Odyssee_ResFloorspacePerHouse$iso==aus,]
+Odyssee_ResFloorspacePerHouse[Odyssee_ResFloorspacePerHouse$iso=="aus",]
+Odyssee_ResFloorspacePerHouse[Odyssee_ResFloorspacePerHouse$iso=="aut",]
+Odyssee_ResFloorspacePerHouse[Odyssee_ResFloorspacePerHouse[[asdf]]=="aut",]
+subset(Odyssee_ResFloorspacePerHouse, iso=="aut")
+subset(Odyssee_ResFloorspacePerHouse, asdf=="aut")
+L144.Odyssee_phflsp_Yh <- subset( Odyssee_ResFloorspacePerHouse, !iso %in% L144.IEA_pcflsp_Yh$iso )
+L144.Odyssee_phflsp_Yh
+Odyssee_flsp_years <- 1980:2009#
+L144.HouseholdSize <- gcam_interp( A44.HouseholdSize, Odyssee_flsp_years, rule = 2 )    #use rule = 2 to fill out #
+#
+#Drop the countries that we already have estimates for in the IEA dataset#
+L144.Odyssee_phflsp_Yh <- subset( Odyssee_ResFloorspacePerHouse, !iso %in% IEA_PCResFloorspace$iso )
+X_Odyssee_flsp_years <- paste0( "X", Odyssee_flsp_years )
+X_Odyssee_flsp_years
+L144.HouseholdSize
+L144.HouseholdSize[X_Odyssee_flsp_years]
+L144.Odyssee_phflsp_Yh <- subset( Odyssee_ResFloorspacePerHouse, !iso %in% IEA_PCResFloorspace$iso )#
+L144.Odyssee_pcflsp_Yh <- L144.Odyssee_phflsp_Yh#
+L144.Odyssee_pcflsp_Yh[ X_Odyssee_flsp_years ] <- L144.Odyssee_phflsp_Yh[ X_Odyssee_flsp_years ] / L144.HouseholdSize[ X_Odyssee_flsp_years ]
+L144.Odyssee_phflsp_Yh[ X_Odyssee_flsp_years ]
+L144.HouseholdSize[ X_Odyssee_flsp_years ]
+L144.HouseholdSize[rep( 1, times = nrow( L144.Odyssee_phflsp_Yh ) ), X_Odyssee_flsp_years ]
+L144.Odyssee_phflsp_Yh <- subset( Odyssee_ResFloorspacePerHouse, !iso %in% IEA_PCResFloorspace$iso )#
+L144.Odyssee_pcflsp_Yh <- L144.Odyssee_phflsp_Yh#
+L144.Odyssee_pcflsp_Yh[ X_Odyssee_flsp_years ] <- L144.Odyssee_phflsp_Yh[ X_Odyssee_flsp_years ] /#
+      L144.HouseholdSize[rep( 1, times = nrow( L144.Odyssee_phflsp_Yh ) ), X_Odyssee_flsp_years ]
+L144.Odyssee_pcflsp_Yh
+X_IEA_flsp_years <- paste0( "X", IEA_flsp_years )
+L144.OECD_pcflsp_Yh <- rbind( L144.Odyssee_pcflsp_Yh[ c( "iso", X_IEA_flsp_years ) ], IEA_PCResFloorspace[ c( "iso", X_IEA_flsp_years ) ] )
+L144.OECD_pcflsp_Yh
+L144.OECD_pcflsp_Yh <- L144.OECD_pcflsp_Yh[ order( L144.OECD_pcflsp_Yh$iso ), ]
+L144.OECD_pcflsp_Yh
+Fill out missing values in specified countries#
+L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "nzl" ] <- L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "aus" ] / #
+      L144.OECD_pcflsp_Yh$X1990[ L144.OECD_pcflsp_Yh$iso == "aus" ] * L144.OECD_pcflsp_Yh$X1990[ L144.OECD_pcflsp_Yh$iso == "nzl" ]#
+L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "nld" ] <- L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "dnk" ] / #
+      L144.OECD_pcflsp_Yh$X1990[ L144.OECD_pcflsp_Yh$iso == "dnk" ] * L144.OECD_pcflsp_Yh$X1990[ L144.OECD_pcflsp_Yh$iso == "nld" ]#
+L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso %in% c( "aut", "deu", "esp" ) ] <- L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "fra" ] / #
+      L144.OECD_pcflsp_Yh$X1990[ L144.OECD_pcflsp_Yh$iso == "fra" ] * L144.OECD_pcflsp_Yh$X1990[ L144.OECD_pcflsp_Yh$iso  %in% c( "aut", "deu", "esp" ) ]#
+L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "jpn" ] <- ( L144.OECD_pcflsp_Yh$X1990[ L144.OECD_pcflsp_Yh$iso == "jpn" ] ) ^ 2 /#
+      L144.OECD_pcflsp_Yh$X2000[ L144.OECD_pcflsp_Yh$iso == "jpn" ]#
+L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "aus" ] <- L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "usa" ] / #
+      L144.OECD_pcflsp_Yh$X1998[ L144.OECD_pcflsp_Yh$iso == "usa" ] * L144.OECD_pcflsp_Yh$X1998[ L144.OECD_pcflsp_Yh$iso == "aus" ]
+L144.OECD_pcflsp_Yh
+tmp<-melt( L144.OECD_pcflsp_Yh)
+qplot(variable, value, data=tmp,color=iso)
+X_IEA_flsp_years <- paste0( "X", IEA_flsp_years )#
+L144.OECD_pcflsp_Yh <- rbind( L144.Odyssee_pcflsp_Yh[ c( "iso", X_IEA_flsp_years ) ], IEA_PCResFloorspace[ c( "iso", X_IEA_flsp_years ) ] )#
+L144.OECD_pcflsp_Yh <- L144.OECD_pcflsp_Yh[ order( L144.OECD_pcflsp_Yh$iso ), ]
+L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation
+L144.OECD_pcflsp_Yh
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1991[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]#
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1992[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]
+L144.OECD_pcflsp_Yh
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1995[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]
+L144.OECD_pcflsp_Yh
+rowSums( L144.OECD_pcflsp_Yh[ X_IEA_flsp_years ])
+rowSums( L144.OECD_pcflsp_Yh[ X_IEA_flsp_years ], na.rm = T )
+rowSums( L144.OECD_pcflsp_Yh[ X_IEA_flsp_years ], na.rm = T ) == 0
+L144.OECD_pcflsp_Yh <- rbind( L144.Odyssee_pcflsp_Yh[ c( "iso", X_IEA_flsp_years ) ], IEA_PCResFloorspace[ c( "iso", X_IEA_flsp_years ) ] )#
+L144.OECD_pcflsp_Yh <- L144.OECD_pcflsp_Yh[ order( L144.OECD_pcflsp_Yh$iso ), ]#
+#Drop any countries with 100% missing values#
+L144.OECD_pcflsp_Yh <- subset( L144.OECD_pcflsp_Yh, rowSums( L144.OECD_pcflsp_Yh[ X_IEA_flsp_years ], na.rm = T ) == 0 )
+L144.OECD_pcflsp_Yh
+L144.OECD_pcflsp_Yh <- rbind( L144.Odyssee_pcflsp_Yh[ c( "iso", X_IEA_flsp_years ) ], IEA_PCResFloorspace[ c( "iso", X_IEA_flsp_years ) ] )#
+L144.OECD_pcflsp_Yh <- L144.OECD_pcflsp_Yh[ order( L144.OECD_pcflsp_Yh$iso ), ]#
+#Drop any countries with 100% missing values#
+L144.OECD_pcflsp_Yh <- subset( L144.OECD_pcflsp_Yh, rowSums( L144.OECD_pcflsp_Yh[ X_IEA_flsp_years ], na.rm = T ) != 0 )
+L144.OECD_pcflsp_Yh
+L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1991[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]#
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1992[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]#
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1995[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]
+L144.OECD_pcflsp_Yh
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1996[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]
+L144.OECD_pcflsp_Yh
+sum( L144.OECD_pcflsp_Yh$X1990[ !is.na( L144.OECD_pcflsp_Yh$X1980 ) ] )
+sum( L144.OECD_pcflsp_Yh$X1980[ !is.na( L144.OECD_pcflsp_Yh$X1980 ) ] )
+growthrate_1980_1990 <- sum( L144.OECD_pcflsp_Yh$X1990[ !is.na( L144.OECD_pcflsp_Yh$X1980 ) ] ) / sum( L144.OECD_pcflsp_Yh$X1980[ !is.na( L144.OECD_pcflsp_Yh$X1980 ) ] )
+growthrate_1980_1990
+L144.OECD_pcflsp_Yh$X1980[ is.na( L144.OECD_pcflsp_Yh$X1980 ) ] <- L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1980 ) ] / growthrate_1980_1990
+L144.OECD_pcflsp_Yh
+L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "aus" ] <- L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "usa" ] / #
+      L144.OECD_pcflsp_Yh$X1998[ L144.OECD_pcflsp_Yh$iso == "usa" ] * L144.OECD_pcflsp_Yh$X1998[ L144.OECD_pcflsp_Yh$iso == "aus" ]#
+L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "bel" ] <- L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "usa" ] / #
+      L144.OECD_pcflsp_Yh$X2001[ L144.OECD_pcflsp_Yh$iso == "fra" ] * L144.OECD_pcflsp_Yh$X2001[ L144.OECD_pcflsp_Yh$iso == "fra" ]
+L144.OECD_pcflsp_Yh
+flsp_interp_years
+L144.OECD_pcflsp_Yh <- gcam_interp( L144.OECD_pcflsp_Yh, flsp_interp_years )
+L144.OECD_pcflsp_Yh
+flsp_interp_years
+interp_years_early <- 1981:1989#
+L144.OECD_pcflsp_Yh <- gcam_interp( L144.OECD_pcflsp_Yh, interp_years_early )
+L144.OECD_pcflsp_Yh <- gcam_interp( L144.OECD_pcflsp_Yh, interp_years_later )
+interp_years_later <- 1991:2003#
+L144.OECD_pcflsp_Yh <- gcam_interp( L144.OECD_pcflsp_Yh, interp_years_later )
+L144.OECD_pcflsp_Yh
+tmp<- melt( L144.OECD_pcflsp_Yh)
+qplot(variable, value, data=tmp, color=iso)
+L144.OECD_pcflsp_Yh <- rbind( L144.Odyssee_pcflsp_Yh[ c( "iso", X_IEA_flsp_years ) ], IEA_PCResFloorspace[ c( "iso", X_IEA_flsp_years ) ] )#
+L144.OECD_pcflsp_Yh <- L144.OECD_pcflsp_Yh[ order( L144.OECD_pcflsp_Yh$iso ), ]#
+#Drop any countries with 100% missing values#
+L144.OECD_pcflsp_Yh <- subset( L144.OECD_pcflsp_Yh, rowSums( L144.OECD_pcflsp_Yh[ X_IEA_flsp_years ], na.rm = T ) != 0 )#
+#
+#Fill out missing values in specified countries#
+L144.OECD_pcflsp_Yh$X1980[ L144.OECD_pcflsp_Yh$iso == "usa" ] <- 49.5       #Derived from RECS; see RGCAM data system for documentation#
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1991[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]#
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1992[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]#
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1995[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]#
+L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ] <- L144.OECD_pcflsp_Yh$X1996[ is.na( L144.OECD_pcflsp_Yh$X1990 ) ]#
+#
+#Calculate average 1980-1990 growth rates for countries with 1980 data. Apply this to the 1990 data to return estimated 1980 floorspace#
+growthrate_1980_1990 <- sum( L144.OECD_pcflsp_Yh$X1990[ !is.na( L144.OECD_pcflsp_Yh$X1980 ) ] ) / sum( L144.OECD_pcflsp_Yh$X1980[ !is.na( L144.OECD_pcflsp_Yh$X1980 ) ] )#
+L144.OECD_pcflsp_Yh$X1980[ is.na( L144.OECD_pcflsp_Yh$X1980 ) ] <- L144.OECD_pcflsp_Yh$X1990[ is.na( L144.OECD_pcflsp_Yh$X1980 ) ] / growthrate_1980_1990#
+#
+#Fill out australia and belgium 2004 data#
+L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "aus" ] <- L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "usa" ] / #
+      L144.OECD_pcflsp_Yh$X1998[ L144.OECD_pcflsp_Yh$iso == "usa" ] * L144.OECD_pcflsp_Yh$X1998[ L144.OECD_pcflsp_Yh$iso == "aus" ]#
+L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "bel" ] <- L144.OECD_pcflsp_Yh$X2004[ L144.OECD_pcflsp_Yh$iso == "fra" ] / #
+      L144.OECD_pcflsp_Yh$X2001[ L144.OECD_pcflsp_Yh$iso == "fra" ] * L144.OECD_pcflsp_Yh$X2001[ L144.OECD_pcflsp_Yh$iso == "bel" ]#
+#
+#Interpolate and extrapolate the time series to all historical years#
+interp_years_early <- 1981:1989#
+L144.OECD_pcflsp_Yh <- gcam_interp( L144.OECD_pcflsp_Yh, interp_years_early )#
+interp_years_later <- 1991:2003#
+L144.OECD_pcflsp_Yh <- gcam_interp( L144.OECD_pcflsp_Yh, interp_years_later )
+tmp<- melt( L144.OECD_pcflsp_Yh)
+qplot(variable, value, data=tmp, color=iso)
+comments.L144.OECD_pcflsp_Yh <- c( "Building energy consumption by GCAM region / fuel / historical year","Unit = EJ" )
+writedata( L144.OECD_pcflsp_Yh, domain="ENERGY_LEVEL1_DATA", fn="L144.OECD_pcflsp_Yh", comments=comments.L144.OECD_pcflsp_Yh )
