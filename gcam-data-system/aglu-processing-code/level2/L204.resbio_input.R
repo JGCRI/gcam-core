@@ -75,32 +75,36 @@ L204.AgResBioCurve_For$fract.harvested[
            L204.AgResBioCurve_For$price == Price_bio_frac & L204.AgResBioCurve_For$year %in% model_base_years ],
       A_bio_frac_prod_R$region ) ]
 
-#MILL
+#MILL -- NOTE THAT THIS IS A TECHNOLOGY IN THE GLOBAL TECH DATABASE
 L204.Mill_tech <- A_demand_technology[ A_demand_technology$supplysector == "NonFoodDemand_Forest", c( supp, subs, tech ) ]
+L204.Mill_tech[ c( "sector.name", "subsector.name" ) ] <- L204.Mill_tech[ c( "supplysector", "subsector" ) ]
+L204.Mill_globaltech <- L204.Mill_tech[ c( "sector.name", "subsector.name", "technology" ) ]
 L204.R_Mill_tech <- data.frame(
       region = GCAM_region_names$region,
       L204.Mill_tech[ rep( 1:nrow( L204.Mill_tech ), times = length( GCAM_region_names$region ) ), ] )
+L204.R_Mill_tech <- L204.R_Mill_tech[ !names( L204.R_Mill_tech ) %in% c( "sector.name", "subsector.name" ) ]
 
-printlog( "L204.ResBio_Mill: Mill residue biomass parameters" )
-L204.ResBio_Mill <- repeat_and_add_vector( L204.R_Mill_tech, Y, c( model_base_years, model_future_years ) )
-L204.ResBio_Mill$residue.biomass.production <- "biomass"
-L204.ResBio_Mill$mass.conversion <- AvgWoodDensity_kgm3
-L204.ResBio_Mill$harvest.index <- ForestHarvestIndex
-L204.ResBio_Mill$eros.ctrl <- 0
-L204.ResBio_Mill$mass.to.energy <- WoodEnergyContent_GJkg
-L204.ResBio_Mill$water.content <- WoodWaterContent
+printlog( "L204.GlobalResBio_Mill: Mill residue biomass parameters" )
+L204.GlobalResBio_Mill <- repeat_and_add_vector( L204.Mill_globaltech, Y, c( model_base_years, model_future_years ) )
+L204.GlobalResBio_Mill$residue.biomass.production <- "biomass"
+L204.GlobalResBio_Mill$mass.conversion <- AvgWoodDensity_kgm3
+L204.GlobalResBio_Mill$harvest.index <- ForestHarvestIndex
+L204.GlobalResBio_Mill$eros.ctrl <- 0
+L204.GlobalResBio_Mill$mass.to.energy <- WoodEnergyContent_GJkg
+L204.GlobalResBio_Mill$water.content <- WoodWaterContent
 
-printlog( "L204.ResBioCurve_Mill: Mill residue biomass supply curves" )
+printlog( "L204.StubResBioCurve_Mill: Mill residue biomass supply curves" )
 L204.R_Mill_tech_year <- repeat_and_add_vector( L204.R_Mill_tech, "year", c( model_base_years, model_future_years ) )
 L204.R_Mill_tech_year$residue.biomass.production <- "biomass"
-L204.ResBioCurve_Mill <- repeat_and_add_vector( L204.R_Mill_tech_year, "price", unique( A_resbio_curves$price) )
-L204.ResBioCurve_Mill$fract.harvested <- A_resbio_curves$For[ match( L204.ResBioCurve_Mill$price, A_resbio_curves$price ) ]
+L204.StubResBioCurve_Mill <- repeat_and_add_vector( L204.R_Mill_tech_year, "price", unique( A_resbio_curves$price) )
+L204.StubResBioCurve_Mill$fract.harvested <- A_resbio_curves$For[ match( L204.StubResBioCurve_Mill$price, A_resbio_curves$price ) ]
+names( L204.StubResBioCurve_Mill )[ names( L204.StubResBioCurve_Mill ) == "technology" ] <- "stub.technology"
 
 #In base years, replace the "fraction produced" at specified prices in order to calibrate resbio production
-L204.ResBioCurve_Mill$fract.harvested[
-      L204.ResBioCurve_Mill$price == Price_bio_frac & L204.ResBioCurve_Mill$year %in% model_base_years ] <-
-         A_bio_frac_prod_R$Mill[ match( L204.ResBioCurve_Mill$region[
-             L204.ResBioCurve_Mill$price == Price_bio_frac & L204.ResBioCurve_Mill$year %in% model_base_years ],
+L204.StubResBioCurve_Mill$fract.harvested[
+      L204.StubResBioCurve_Mill$price == Price_bio_frac & L204.StubResBioCurve_Mill$year %in% model_base_years ] <-
+         A_bio_frac_prod_R$Mill[ match( L204.StubResBioCurve_Mill$region[
+             L204.StubResBioCurve_Mill$price == Price_bio_frac & L204.StubResBioCurve_Mill$year %in% model_base_years ],
       A_bio_frac_prod_R$region ) ]
 
 #AGRICULTURE
@@ -174,11 +178,11 @@ L204.AgResBioCurve_Jatr <- remove_AEZ_nonexist( L204.AgResBioCurve_Jatr )
 
 write_mi_data( L204.AgResBio_For, IDstring="AgResBio", domain="AGLU_LEVEL2_DATA", fn="L204.AgResBio_For",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_resbio_input.xml" )
-write_mi_data( L204.ResBio_Mill, "ResBio", "AGLU_LEVEL2_DATA", "L204.ResBio_Mill", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
+write_mi_data( L204.GlobalResBio_Mill, "GlobalResBio", "AGLU_LEVEL2_DATA", "L204.GlobalResBio_Mill", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.AgResBio_ag, "AgResBio", "AGLU_LEVEL2_DATA", "L204.AgResBio_ag", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.AgResBio_Jatr, "AgResBio", "AGLU_LEVEL2_DATA", "L204.AgResBio_Jatr", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.AgResBioCurve_For, "AgResBioCurve", "AGLU_LEVEL2_DATA", "L204.AgResBioCurve_For", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
-write_mi_data( L204.ResBioCurve_Mill, "ResBioCurve", "AGLU_LEVEL2_DATA", "L204.ResBioCurve_Mill", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
+write_mi_data( L204.StubResBioCurve_Mill, "StubResBioCurve", "AGLU_LEVEL2_DATA", "L204.StubResBioCurve_Mill", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.AgResBioCurve_ag, "AgResBioCurve", "AGLU_LEVEL2_DATA", "L204.AgResBioCurve_ag", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.AgResBioCurve_Jatr, "AgResBioCurve", "AGLU_LEVEL2_DATA", "L204.AgResBioCurve_Jatr", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 

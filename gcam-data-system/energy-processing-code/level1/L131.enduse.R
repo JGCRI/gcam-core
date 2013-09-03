@@ -68,12 +68,16 @@ L131.share_R_Senduse_heat_Yh[ X_historical_years ] <- L131.in_EJ_R_Senduse_heat_
       match( vecpaste( L131.in_EJ_R_Senduse_heat_Yh[ R_F ] ),
              vecpaste( L131.in_EJ_R_totenduse_F_Yh[R_F ] ) ),
       X_historical_years ]
+
+#Regions may have zero heat consumption by demand sectors while nevertheless having heat production. Assign this to industry
+L131.share_R_Senduse_heat_Yh[ L131.share_R_Senduse_heat_Yh$sector == "in_industry_general", X_historical_years ][
+      is.na( L131.share_R_Senduse_heat_Yh[ L131.share_R_Senduse_heat_Yh$sector == "in_industry_general", X_historical_years ] ) ] <- 1
 L131.share_R_Senduse_heat_Yh[ is.na( L131.share_R_Senduse_heat_Yh ) ] <- 0
 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L131.in_EJ_R_Senduse_F_Yh <- c( "Final (scaled) energy consumption by GCAM region / end-use sector / fuel / historical year","Unit = EJ" )
+comments.L131.in_EJ_R_Senduse_F_Yh <- c( "Final scaled energy input by GCAM region / end-use sector (incl CHP) / fuel / historical year","Unit = EJ" )
 comments.L131.share_R_Senduse_heat_Yh <- c( "Share of heat consumption by end-use sector within GCAM region / historical year","Unitless" )
 
 #write tables as CSV files

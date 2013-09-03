@@ -53,7 +53,7 @@ L212.LN2_Logit$logit.exponent[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ] <- A_Lan
       match( L212.LN2_Logit$LandNode2[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
 
 #Append AEZ names and keep only relevant columns
-L212.LN2_Logit <- append_AEZ( L212.LN2_Logit )
+L212.LN2_Logit <- append_AEZ( L212.LN2_Logit, var1 = "LandNode1", var2 = "LandNode2" )
 L212.LN2_Logit <- L212.LN2_Logit[ names_LN2_Logit ]
 
 #LAND ALLOCATION AND LAND USE HISTORY

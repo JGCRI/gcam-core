@@ -40,6 +40,7 @@ printlog( "Determining global total primary energy supply (TPES) for each fuel" 
 L111.TPES_EJ_R_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel %in% rsrc_fuels )
 L111.TPES_EJ_F_Yh <- aggregate( L111.TPES_EJ_R_F_Yh[ X_historical_years ], by=as.list( L111.TPES_EJ_R_F_Yh[ S_F] ), sum )
 
+
 printlog( "Determining regional shares of production for each primary fuel" )
 L111.Prod_EJ_R_F_Yh_IEA <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "out_resources" & fuel %in% rsrc_fuels )
 L111.Prod_EJ_F_Yh <- aggregate( L111.Prod_EJ_R_F_Yh_IEA[ X_historical_years ], by=as.list( L111.Prod_EJ_R_F_Yh_IEA[ S_F ] ), sum )

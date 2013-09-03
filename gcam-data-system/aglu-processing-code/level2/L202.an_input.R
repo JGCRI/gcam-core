@@ -60,6 +60,11 @@ printlog( "L202.RenewRsrc: generic resource attributes" )
 L202.RenewRsrc <- write_to_all_regions_ag( A_agRsrc, names_RenewRsrc )
 L202.RenewRsrc$market[ L202.RenewRsrc$market == "regional" ] <- L202.RenewRsrc$region[ L202.RenewRsrc$market == "regional" ]
 
+printlog( "L202.RenewRsrcPrice: resource prices" )
+L202.RenewRsrcPrice <- L202.RenewRsrc[ c( "region", "renewresource" ) ]
+L202.RenewRsrcPrice$year <- min( model_base_years )
+L202.RenewRsrcPrice$price <- 1
+
 printlog( "L202.RenewRsrcCalProd: Calibrated production of resources" )
 L202.RenewRsrcCalProd <- write_to_all_regions_ag( A_agSubRsrc, names = names_SubRenewRsrc )
 L202.RenewRsrcCalProd <- repeat_and_add_vector( L202.RenewRsrcCalProd, Y, model_base_years )
@@ -258,6 +263,7 @@ L202.StubTechFixOut_imp_an <- L202.StubTechFixOut_imp_an[ names_StubTechFixOut ]
 
 write_mi_data( L202.RenewRsrc, IDstring="RenewRsrc", domain="AGLU_LEVEL2_DATA", fn="L202.RenewRsrc",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_an_input.xml" ) 
+write_mi_data( L202.RenewRsrcPrice, "RenewRsrcPrice", "AGLU_LEVEL2_DATA", "L202.RenewRsrcPrice", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.RenewRsrcCalProd, "RenewRsrcCalProd", "AGLU_LEVEL2_DATA", "L202.RenewRsrcCalProd", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.maxSubResource, "maxSubResource", "AGLU_LEVEL2_DATA", "L202.maxSubResource", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.RenewRsrcCurves, "RenewRsrcCurves", "AGLU_LEVEL2_DATA", "L202.RenewRsrcCurves", "AGLU_XML_BATCH", "batch_an_input.xml" ) 

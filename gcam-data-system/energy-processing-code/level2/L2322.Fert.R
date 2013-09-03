@@ -12,7 +12,7 @@ source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 logstart( "L2322.Fert.R" )
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
-printlog( "Model input for aggregate industrial sectors" )
+printlog( "Model input for fertilizer sector" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -63,17 +63,17 @@ if( any( !is.na( A322.subsector_interp$to.value ) ) ){
 	}
 
 # 2c. Technology information
-printlog( "L2322.StubTech_Fert: Identification of stub technologies of industrial sector" )
+printlog( "L2322.StubTech_Fert: Identification of stub technologies of fertilizer sector" )
 #Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
 L2322.StubTech_Fert <- write_to_all_regions( A322.globaltech_shrwt, names_Tech )
 names( L2322.StubTech_Fert ) <- names_StubTech
 
-printlog( "L2322.GlobalTechShrwt_Fert: Shareweights of global industrial sector technologies" )
+printlog( "L2322.GlobalTechShrwt_Fert: Shareweights of global fertilizer sector technologies" )
 L2322.globaltech_shrwt.melt <- interpolate_and_melt( A322.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )
 L2322.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L2322.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]
 L2322.GlobalTechShrwt_Fert <- L2322.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
 
-printlog( "L2322.GlobalTechCoef_Fert: Energy inputs and coefficients of global industrial energy use and feedstocks technologies" )
+printlog( "L2322.GlobalTechCoef_Fert: Energy inputs and coefficients of global fertilizer energy use and feedstocks technologies" )
 L2322.globaltech_coef.melt <- interpolate_and_melt( A322.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L2322.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L2322.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
@@ -102,7 +102,6 @@ L2322.GlobalTechCapture_Fert$storage.market <- CO2.storage.market
 
 #Calibration and region-specific data
 printlog( "L2322.StubTechProd_Fert: calibrated output of fertilizer technologies" )
-#Aggregate service output by region. This is the output of the industrial sector in each region.
 L2322.StubTechProd_Fert <- interpolate_and_melt( L1322.Fert_Prod_MtN_R_F_Y, model_base_years, value.name = "calOutputValue" )
 L2322.StubTechProd_Fert <- add_region_name( L2322.StubTechProd_Fert )
 L2322.StubTechProd_Fert[ s_s_t ] <- calibrated_techs[ match( vecpaste( L2322.StubTechProd_Fert[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ), s_s_t ]

@@ -187,6 +187,8 @@ L201.AgSupplySubsector <- rename_biocrops( L201.AgSupplySubsector, lookup = A_bi
       lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector" )
 L201.AgTechInterp <- rename_biocrops( L201.AgTechInterp, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
       lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
+L201.AgTechShrwt <- rename_biocrops( L201.AgTechShrwt, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+      lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 L201.AgYield_bio_ref <- rename_biocrops( L201.AgYield_bio_ref, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
       lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 L201.AgYield_bio_hi <- rename_biocrops( L201.AgYield_bio_hi, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",

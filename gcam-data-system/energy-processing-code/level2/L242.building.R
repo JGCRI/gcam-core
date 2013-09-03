@@ -31,6 +31,7 @@ A42.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A42.subsector_shrwt" )
 A42.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A42.globaltech_cost" )
 A42.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A42.globaltech_eff" )
 A42.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A42.globaltech_shrwt" )
+A42.globaltech_interp <- readdata( "ENERGY_ASSUMPTIONS", "A42.globaltech_interp" )
 A42.fuelprefElasticity <- readdata( "ENERGY_ASSUMPTIONS", "A42.fuelprefElasticity" )
 A42.demand <- readdata( "ENERGY_ASSUMPTIONS", "A42.demand" )
 L124.in_EJ_R_heat_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.in_EJ_R_heat_F_Yh" )
@@ -94,6 +95,11 @@ printlog( "L242.GlobalTechShrwt_bld: Shareweights of global building sector tech
 L242.globaltech_shrwt.melt <- interpolate_and_melt( A42.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )
 L242.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L242.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]
 L242.GlobalTechShrwt_bld <- L242.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
+
+printlog( "L242.GlobalTechInterp_bld: Global technology shareweight interpolation of building sector" )
+L242.GlobalTechInterp_bld <- set_years( A42.globaltech_interp )
+L242.GlobalTechInterp_bld[ c( "sector.name", "subsector.name" ) ] <- L242.GlobalTechInterp_bld[ c( "supplysector", "subsector" ) ]
+L242.GlobalTechInterp_bld <- L242.GlobalTechInterp_bld[ names_GlobalTechInterp ]
 
 printlog( "L242.GlobalTechEff_bld: Energy inputs and coefficients of global building energy use and feedstocks technologies" )
 L242.globaltech_eff.melt <- interpolate_and_melt( A42.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )
@@ -179,6 +185,7 @@ if( exists( "L242.SubsectorInterpTo_bld" ) ) {
 	write_mi_data( L242.SubsectorInterpTo_bld, "SubsectorInterpTo", "ENERGY_LEVEL2_DATA", "L242.SubsectorInterpTo_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" )
 	}
 write_mi_data( L242.StubTech_bld, "StubTech", "ENERGY_LEVEL2_DATA", "L242.StubTech_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" )
+write_mi_data( L242.GlobalTechInterp_bld, "GlobalTechInterp", "ENERGY_LEVEL2_DATA", "L242.GlobalTechInterp_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" )
 write_mi_data( L242.GlobalTechShrwt_bld, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L242.GlobalTechShrwt_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" )
 write_mi_data( L242.GlobalTechEff_bld, "GlobalTechEff", "ENERGY_LEVEL2_DATA", "L242.GlobalTechEff_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" )
 write_mi_data( L242.GlobalTechCost_bld, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L242.GlobalTechCost_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" )

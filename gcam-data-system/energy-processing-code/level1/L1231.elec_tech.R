@@ -22,8 +22,8 @@ sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )
 calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
-L123.out_EJ_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.out_EJ_R_elec_F_Yh" )
 L123.in_EJ_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_elec_F_Yh" )
+L123.out_EJ_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.out_EJ_R_elec_F_Yh" )
 L123.eff_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.eff_R_elec_F_Yh" )
 
 # -----------------------------------------------------------------------------
@@ -63,19 +63,19 @@ L1231.eff_R_elec_gas_tech_Yh <- rbind( L1231.eff_R_elec_gas_tech1_Yh, L1231.eff_
 L1231.eff_R_elec_gas_Yh.melt$share_tech1 <- with( L1231.eff_R_elec_gas_Yh.melt,
       (efficiency - efficiency_tech2) / ( efficiency_tech1 - efficiency_tech2 ) )
 
-#Multiply share by output
-L1231.out_EJ_R_elec_gas_Yh.melt <- interpolate_and_melt( subset( L123.out_EJ_R_elec_F_Yh, fuel == "gas" ), historical_years, value.name = "out_EJ" )
-L1231.out_EJ_R_elec_gas_Yh.melt$share_tech1 <- L1231.eff_R_elec_gas_Yh.melt$share_tech1[
-      match( vecpaste( L1231.out_EJ_R_elec_gas_Yh.melt[ R_Y ] ), vecpaste( L1231.eff_R_elec_gas_Yh.melt[ R_Y ] ) ) ]
-L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech1 <- L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ * L1231.out_EJ_R_elec_gas_Yh.melt$share_tech1
-L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech2 <- L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ - L1231.out_EJ_R_elec_gas_Yh.melt$out_EJ_tech1
+#Multiply share by input
+L1231.in_EJ_R_elec_gas_Yh.melt <- interpolate_and_melt( subset( L123.in_EJ_R_elec_F_Yh, fuel == "gas" ), historical_years, value.name = "in_EJ" )
+L1231.in_EJ_R_elec_gas_Yh.melt$share_tech1 <- L1231.eff_R_elec_gas_Yh.melt$share_tech1[
+      match( vecpaste( L1231.in_EJ_R_elec_gas_Yh.melt[ R_Y ] ), vecpaste( L1231.eff_R_elec_gas_Yh.melt[ R_Y ] ) ) ]
+L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ_tech1 <- L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ * L1231.in_EJ_R_elec_gas_Yh.melt$share_tech1
+L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ_tech2 <- L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ - L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ_tech1
 
 #Cast to final format
-L1231.out_EJ_R_elec_gas_tech1_Yh <- cast( L1231.out_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "out_EJ_tech1" )
-L1231.out_EJ_R_elec_gas_tech1_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[1] )
-L1231.out_EJ_R_elec_gas_tech2_Yh <- cast( L1231.out_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "out_EJ_tech2" )
-L1231.out_EJ_R_elec_gas_tech2_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[2] )
-L1231.out_EJ_R_elec_gas_tech_Yh <- rbind( L1231.out_EJ_R_elec_gas_tech1_Yh, L1231.out_EJ_R_elec_gas_tech2_Yh)[ c( R_S_F_tech, X_historical_years ) ]
+L1231.in_EJ_R_elec_gas_tech1_Yh <- cast( L1231.in_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "in_EJ_tech1" )
+L1231.in_EJ_R_elec_gas_tech1_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[1] )
+L1231.in_EJ_R_elec_gas_tech2_Yh <- cast( L1231.in_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "in_EJ_tech2" )
+L1231.in_EJ_R_elec_gas_tech2_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[2] )
+L1231.in_EJ_R_elec_gas_tech_Yh <- rbind( L1231.in_EJ_R_elec_gas_tech1_Yh, L1231.in_EJ_R_elec_gas_tech2_Yh)[ c( R_S_F_tech, X_historical_years ) ]
 
 #2b. All other (non-gas) technologies are not disaggregated further (only one tech per fuel type)
 L1231.eff_R_elec_Fnogas_tech_Yh <- subset( L123.eff_R_elec_F_Yh, fuel != "gas" )
@@ -85,28 +85,35 @@ L1231.eff_R_elec_F_tech_Yh <- rbind( L1231.eff_R_elec_gas_tech_Yh, L1231.eff_R_e
 L1231.eff_R_elec_F_tech_Yh <- L1231.eff_R_elec_F_tech_Yh[
       order( L1231.eff_R_elec_F_tech_Yh$fuel, L1231.eff_R_elec_F_tech_Yh$technology, L1231.eff_R_elec_F_tech_Yh$GCAM_region_ID ), ]
 
-L1231.out_EJ_R_elec_Fnogas_tech_Yh <- subset( L123.out_EJ_R_elec_F_Yh, fuel != "gas" )
-L1231.out_EJ_R_elec_Fnogas_tech_Yh$technology <- calibrated_techs$technology[
-      match( vecpaste( L1231.out_EJ_R_elec_Fnogas_tech_Yh[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ) ]
-L1231.out_EJ_R_elec_F_tech_Yh <- rbind( L1231.out_EJ_R_elec_gas_tech_Yh, L1231.out_EJ_R_elec_Fnogas_tech_Yh[ c( R_S_F_tech, X_historical_years ) ] )
-L1231.out_EJ_R_elec_F_tech_Yh <- L1231.out_EJ_R_elec_F_tech_Yh[ order( L1231.out_EJ_R_elec_F_tech_Yh$fuel, L1231.out_EJ_R_elec_F_tech_Yh$technology ), ]
+L1231.in_EJ_R_elec_Fnogas_tech_Yh <- subset( L123.in_EJ_R_elec_F_Yh, fuel != "gas" )
+L1231.in_EJ_R_elec_Fnogas_tech_Yh$technology <- calibrated_techs$technology[
+      match( vecpaste( L1231.in_EJ_R_elec_Fnogas_tech_Yh[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ) ]
+L1231.in_EJ_R_elec_F_tech_Yh <- rbind( L1231.in_EJ_R_elec_gas_tech_Yh, L1231.in_EJ_R_elec_Fnogas_tech_Yh[ c( R_S_F_tech, X_historical_years ) ] )
+L1231.in_EJ_R_elec_F_tech_Yh <- L1231.in_EJ_R_elec_F_tech_Yh[ order( L1231.in_EJ_R_elec_F_tech_Yh$fuel, L1231.in_EJ_R_elec_F_tech_Yh$technology ), ]
 
-#Calculate inputs as output / efficiency
-L1231.in_EJ_R_elec_F_tech_Yh <- L1231.eff_R_elec_F_tech_Yh
-L1231.in_EJ_R_elec_F_tech_Yh[ X_historical_years ] <- L1231.out_EJ_R_elec_F_tech_Yh[
-      match( vecpaste( L1231.in_EJ_R_elec_F_tech_Yh[ R_S_F_tech ] ), vecpaste( L1231.out_EJ_R_elec_F_tech_Yh[ R_S_F_tech ] ) ), X_historical_years ] /
+#Calculate output as input * efficiency
+#This table only includes technologies with modeled efficiencies
+L1231.out_EJ_R_elec_Fin_tech_Yh <- L1231.eff_R_elec_F_tech_Yh
+L1231.out_EJ_R_elec_Fin_tech_Yh[ X_historical_years ] <- L1231.in_EJ_R_elec_F_tech_Yh[
+      match( vecpaste( L1231.out_EJ_R_elec_Fin_tech_Yh[ R_S_F_tech ] ), vecpaste( L1231.in_EJ_R_elec_F_tech_Yh[ R_S_F_tech ] ) ), X_historical_years ] *
       L1231.eff_R_elec_F_tech_Yh[ X_historical_years ]
+
+#Combine with technologies modeled by output only (e.g. nuclear, hydro, renewables)
+L1231.out_EJ_R_elec_Fout_tech_Yh <- subset(L123.out_EJ_R_elec_F_Yh, !fuel %in% L1231.out_EJ_R_elec_Fin_tech_Yh$fuel )
+L1231.out_EJ_R_elec_Fout_tech_Yh$technology <- calibrated_techs$technology[
+      match( vecpaste( L1231.out_EJ_R_elec_Fout_tech_Yh[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ) ]
+L1231.out_EJ_R_elec_F_tech_Yh <- rbind( L1231.out_EJ_R_elec_Fin_tech_Yh, L1231.out_EJ_R_elec_Fout_tech_Yh )
 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L1231.out_EJ_R_elec_F_tech_Yh <- c( "Outputs of electricity sector by GCAM region / fuel / technology / historical year","Unit = EJ" )
-comments.L1231.in_EJ_R_elec_F_tech_Yh <- c( "Inputs to electricity sector by GCAM region / fuel / technology / historical year","Unit = EJ" )
+comments.L1231.in_EJ_R_elec_F_tech_Yh <- c( "Outputs of electricity sector by GCAM region / fuel / technology / historical year","Unit = EJ" )
+comments.L1231.out_EJ_R_elec_F_tech_Yh <- c( "Inputs to electricity sector by GCAM region / fuel / technology / historical year","Unit = EJ" )
 comments.L1231.eff_R_elec_F_tech_Yh <- c( "Electric sector efficiencies by GCAM region / fuel / technology / historical year","Unitless IO" )
 
 #write tables as CSV files
-writedata( L1231.out_EJ_R_elec_F_tech_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1231.out_EJ_R_elec_F_tech_Yh", comments=comments.L1231.out_EJ_R_elec_F_tech_Yh )
 writedata( L1231.in_EJ_R_elec_F_tech_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1231.in_EJ_R_elec_F_tech_Yh", comments=comments.L1231.in_EJ_R_elec_F_tech_Yh )
+writedata( L1231.out_EJ_R_elec_F_tech_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1231.out_EJ_R_elec_F_tech_Yh", comments=comments.L1231.out_EJ_R_elec_F_tech_Yh )
 writedata( L1231.eff_R_elec_F_tech_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1231.eff_R_elec_F_tech_Yh", comments=comments.L1231.eff_R_elec_F_tech_Yh )
 
 # Every script should finish with this line

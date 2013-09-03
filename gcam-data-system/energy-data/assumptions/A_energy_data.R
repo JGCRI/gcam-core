@@ -29,7 +29,7 @@ heat_price <- 2.8
 digits_CO2coef <- 1
 digits_calproduction <- 6
 digits_calOutput <- 6
-digits_depresource <- 0
+digits_depresource <- 1
 digits_maxSubResource <- 5
 digits_mid.price <- 3
 digits_curve.exponent <- 3
@@ -59,5 +59,21 @@ H_energy_GJtH2 <- 120
 #Set a year to which to converge the feedstock:energy ratios in generic industrial production function coefficients
 indcoef_conv_year <- 2150
 X_indcoef_conv_year <- paste0( "X", indcoef_conv_year )
+
+cement_CCS_cost_2000USDtCO2 <- 50   #Starting point of supply curve in Mahasenan et al 2003
+CO2_storage_cost_1990USDtC <- 42    #From GCAM 1.0 inputs
+
+#Internal gains scalers
+int_gains_scaler_heating <- -100 # Usually set to 1000 or 2000 for USA and China (temperate regions)
+#Regions with low heating demands are problematic as intgains may cause demands to go negative. Therefore reading in a value
+#that reduces the effects of this parameter
+int_gains_scaler_cooling <- 100
+
+
+
+
+
+
+
 
 

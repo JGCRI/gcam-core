@@ -4,10 +4,14 @@ conv_thous_mil <- 1e-3
 conv_mil_bil <- 1e-3
 conv_bil_mil <- 1e3
 conv_mil_thous <- 1e3
+conv_bil_thous <- 1e6
+conv_thous_bil <- 1e-6
+conv_C_CO2 <- 44/12
 
 #Dollar conversion factors
 conv_1990_2005_USD <- 1.383
 conv_1990_2007_USD <- 1.470
+conv_1990_1975_USD <- 0.4649
 conv_1996_1975_USD <- 0.4049
 conv_1997_1975_USD <- 0.3983
 conv_1998_1975_USD <- 0.3939

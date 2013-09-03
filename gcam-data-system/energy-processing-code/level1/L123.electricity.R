@@ -33,9 +33,10 @@ L123.out_EJ_R_elec_F_Yh$fuel <- enduse_fuel_aggregation$electricity[ match( L123
 L123.out_EJ_R_elec_F_Yh <- aggregate( L123.out_EJ_R_elec_F_Yh[ X_historical_years ], by=as.list( L123.out_EJ_R_elec_F_Yh[ R_S_F ] ), sum )
 
 printlog( "Fuel inputs to electricity: aggregating intermediate fuels" )
-L123.in_EJ_R_elec_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_electricity generation" & fuel %in% electricity_input_fuels )
+L123.in_EJ_R_elec_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_electricity generation" )
 L123.in_EJ_R_elec_F_Yh$sector <- sub( "in_", "", L123.in_EJ_R_elec_F_Yh$sector )
 L123.in_EJ_R_elec_F_Yh$fuel <- enduse_fuel_aggregation$electricity[ match( L123.in_EJ_R_elec_F_Yh$fuel, enduse_fuel_aggregation$fuel ) ]
+L123.in_EJ_R_elec_F_Yh <- subset( L123.in_EJ_R_elec_F_Yh, fuel %in% electricity_input_fuels )
 L123.in_EJ_R_elec_F_Yh <- aggregate( L123.in_EJ_R_elec_F_Yh[ X_historical_years ], by=as.list( L123.in_EJ_R_elec_F_Yh[ R_S_F ] ), sum )
 
 printlog( "Calculating efficiencies whose inputs are considered")
@@ -64,7 +65,7 @@ L123.out_EJ_R_indchp_F_Yh <- aggregate( L123.out_EJ_R_indchp_F_Yh[ X_historical_
 
 printlog( "Fuel inputs to CHP systems: calculated from electricity output using exogenous elec/fuel ratios" )
 L123.in_EJ_R_indchp_F_Yh <- L123.out_EJ_R_indchp_F_Yh
-L123.in_EJ_R_indchp_F_Yh[ X_historical_years ] <- L123.out_EJ_R_indchp_F_Yh[ X_historical_years ] * A23.chp_elecratio$elec_ratio[
+L123.in_EJ_R_indchp_F_Yh[ X_historical_years ] <- L123.out_EJ_R_indchp_F_Yh[ X_historical_years ] / A23.chp_elecratio$elec_ratio[
       match( L123.in_EJ_R_indchp_F_Yh$fuel, A23.chp_elecratio$fuel ) ]
 
 # -----------------------------------------------------------------------------

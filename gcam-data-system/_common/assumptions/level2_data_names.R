@@ -37,6 +37,7 @@ names_FixedOutput <- c( names_TechYr, "fixedOutput" )
 
 #Global technologies
 names_GlobalTech <- c( "sector.name", "subsector.name", "technology" )
+names_GlobalTechInterp <- c( "sector.name", "subsector.name", "technology", "apply.to","from.year", "to.year", "interpolation.function" )
 names_GlobalTechYr <- c( names_GlobalTech, "year" )
 names_GlobalTechInput <- c( names_GlobalTechYr, input )
 names_GlobalTechCoef <- c( names_GlobalTechYr, input, "coefficient" )

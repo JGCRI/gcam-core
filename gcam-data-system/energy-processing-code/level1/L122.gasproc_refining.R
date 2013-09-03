@@ -111,11 +111,16 @@ L122.in_EJ_R_gtlctl_F_Yh[ X_historical_years ] <- L122.out_EJ_R_gtlctl_Yh[ X_his
       X_historical_years ]
       
 ##CRUDE OIL REFINING
-printlog( "Oil refining: output is equal to TPES minus net refinery energy use" )
+printlog( "Oil refining: output is equal to TPES minus net refinery energy use and output of CTL and GTL" )
+#NOTE: This is complicated. The outputs of CTL and GTL have the same fuel name as the output of oil refining,
+# so need to be deducted from TPES in order to calculate regional output of oil refining.
+# In contrast, biofuels are assigned different names, so they are not in the TPES of refined liquids.
 L122.out_EJ_R_oilrefining_Yh <- data.frame( GCAM_region_ID = GCAM_region_names$GCAM_region_ID, sector = "oil refining", fuel = "oil" )
 L122.out_EJ_R_oilrefining_Yh[ X_historical_years ] <-
       subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel == "refined liquids", select = X_historical_years ) - 
-      subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "net_oil refining" & fuel == "refined liquids", select = X_historical_years )
+      subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "net_oil refining" & fuel == "refined liquids", select = X_historical_years ) -
+      subset( L122.out_EJ_R_gtlctl_Yh, sector == "ctl" & fuel == "coal", select = X_historical_years ) -
+      subset( L122.out_EJ_R_gtlctl_Yh, sector == "gtl" & fuel == "gas", select = X_historical_years )
 
 printlog( "Oil refining: input of oil is equal to TPES, and input of other fuels is from net refinery energy use")
 L122.in_EJ_R_oilrefining_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "net_oil refining" )

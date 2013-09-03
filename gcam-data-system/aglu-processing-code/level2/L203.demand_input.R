@@ -74,14 +74,14 @@ printlog( "L203.StubTech_demand: identification of stub technologies for demands
 L203.StubTech_demand <- write_to_all_regions_ag( A_demand_technology, names_Tech )
 names( L203.StubTech_demand ) <- gsub( "technology", "stub.technology", names( L203.StubTech_demand ) )
 
-printlog( "L203.StubTechInterp_demand: shareweight interpolation for demands" )
-L203.StubTechInterp_demand <- write_to_all_regions_ag( A_demand_technology, names_TechInterp )
-names( L203.StubTechInterp_demand ) <- gsub( "technology", "stub.technology", names( L203.StubTechInterp_demand ) )
+printlog( "L203.GlobalTechCoef_demand: input names of demand technologies" )
+L203.GlobalTechCoef_demand <- repeat_and_add_vector( A_demand_technology, Y, c( model_base_years, model_future_years ) )
+L203.GlobalTechCoef_demand[ c( "sector.name", "subsector.name" ) ] <- L203.GlobalTechCoef_demand[ c( "supplysector", "subsector" ) ]
+L203.GlobalTechCoef_demand <- L203.GlobalTechCoef_demand[ names_GlobalTechCoef ]
 
-printlog( "L203.GlobalTechInput_demand: input names of demand technologies" )
-L203.GlobalTechInput_demand <- repeat_and_add_vector( A_demand_technology, Y, c( model_base_years, model_future_years ) )
-L203.GlobalTechInput_demand[ c( "sector.name", "subsector.name" ) ] <- L203.GlobalTechInput_demand[ c( "supplysector", "subsector" ) ]
-L203.GlobalTechInput_demand <- L203.GlobalTechInput_demand[ names_GlobalTechInput ]
+printlog( "L203.GlobalTechShrwt_demand: shareweights of demand technologies" )
+L203.GlobalTechShrwt_demand <- L203.GlobalTechCoef_demand[ names_GlobalTechYr ]
+L203.GlobalTechShrwt_demand$share.weight <- 1
 
 #Calibrated food and nonfood demands of crops and meat
 #Create table of regions, technologies, and all base years
@@ -279,8 +279,8 @@ write_mi_data( L203.Supplysector_demand, IDstring="Supplysector", domain="AGLU_L
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_demand_input.xml" )
 write_mi_data( L203.SubsectorAll_demand, "SubsectorAll", "AGLU_LEVEL2_DATA", "L203.SubsectorAll_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )
 write_mi_data( L203.StubTech_demand, "StubTech", "AGLU_LEVEL2_DATA", "L203.StubTech_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )
-write_mi_data( L203.StubTechInterp_demand, "StubTechInterp", "AGLU_LEVEL2_DATA", "L203.StubTechInterp_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )
-write_mi_data( L203.GlobalTechInput_demand, "GlobalTechInput", "AGLU_LEVEL2_DATA", "L203.GlobalTechInput_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )
+write_mi_data( L203.GlobalTechCoef_demand, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L203.GlobalTechCoef_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )
+write_mi_data( L203.GlobalTechShrwt_demand, "GlobalTechShrwt", "AGLU_LEVEL2_DATA", "L203.GlobalTechShrwt_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )
 write_mi_data( L203.StubTechProd_food_crop, "StubTechProd", "AGLU_LEVEL2_DATA", "L203.StubTechProd_food_crop", "AGLU_XML_BATCH", "batch_demand_input.xml" )
 write_mi_data( L203.StubTechProd_food_meat, "StubTechProd", "AGLU_LEVEL2_DATA", "L203.StubTechProd_food_meat", "AGLU_XML_BATCH", "batch_demand_input.xml" )
 write_mi_data( L203.StubTechProd_nonfood_crop, "StubTechProd", "AGLU_LEVEL2_DATA", "L203.StubTechProd_nonfood_crop", "AGLU_XML_BATCH", "batch_demand_input.xml" )

@@ -15,7 +15,7 @@ source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 logstart( "L1011.en_bal_adj.R" )
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
-printlog( "Historical energy balances from IEA, aggregated to GCAM regions, intermediate sectors, and intermediate fuels" )
+printlog( "Adjustments to IEA energy balances" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -24,16 +24,18 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
 EIA_RFO_intlship_kbbld <- readdata( "ENERGY_LEVEL0_DATA", "EIA_RFO_intlship_kbbld" )
 EIA_TOT_intlship_kbbld <- readdata( "ENERGY_LEVEL0_DATA", "EIA_TOT_intlship_kbbld" )
 EIA_ctry <- readdata( "ENERGY_MAPPINGS", "EIA_ctry" )
+A22.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_coef" )
 L101.en_bal_EJ_R_Si_Fi_Yh_full <- readdata( "ENERGY_LEVEL1_DATA", "L101.en_bal_EJ_R_Si_Fi_Yh_full" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 # subset only the relevant years and combine OECD with non-OECD
 ###MODIFICATIONS TO IEA ENERGY BALANCES
-printlog( "NOTE: Replacing IEA estimates of international shipping fuel consumption with EIA estimates")
+printlog( "Replacing IEA estimates of international shipping fuel consumption with EIA estimates")
 #First, convert available data to EJ per year of total refined liquid products
 EIA_yearcols <- names( EIA_RFO_intlship_kbbld )[ names( EIA_RFO_intlship_kbbld ) %in% X_historical_years ]
 L1011.in_EJ_ctry_intlship_RFO_Yh <- data.frame(
@@ -72,7 +74,23 @@ L1011.in_EJ_R_Si_Fi_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, grepl( "in_", subs
 L1011.in_EJ_R_Si_Fi_Yh$sector <- "TPES"
 L1011.en_bal_EJ_R_Si_Fi_Yh[ L1011.en_bal_EJ_R_Si_Fi_Yh$sector == "TPES", ] <- aggregate( L1011.in_EJ_R_Si_Fi_Yh[ X_historical_years ],
       by=as.list( L1011.in_EJ_R_Si_Fi_Yh[ R_S_F ] ), sum )
-                 
+
+printlog( "NOTE: TPES of natural gas includes gasified coal. This is subtracted here" )
+#This is complicated. Because the output of "gas works gas" that is produced from coal is not distinguished from that produced by other fuels,
+# the process is modeled based on the fuel inputs, and the output fuel is assigned the same name as natural gas. As a result the estimates of
+# TPES at this point for natural gas include both natural gas and gasified coal. This subtraction generally follows the method used in code file L122.
+L1011.gasproc_coef <- gcam_interp( subset( A22.globaltech_coef, supplysector == "gas processing" ), historical_years )
+L1011.gasproc_coef[ S_F ] <- calibrated_techs[ match( vecpaste( L1011.gasproc_coef[ s_s_t ] ), vecpaste( calibrated_techs[ s_s_t ] ) ), S_F ]
+L1011.out_EJ_R_gasproc_coal_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_gas processing" & fuel == "coal" )
+L1011.out_EJ_R_gasproc_coal_Yh$sector <- sub( "in_", "", L1011.out_EJ_R_gasproc_coal_Yh$sector )
+L1011.out_EJ_R_gasproc_coal_Yh[ X_historical_years ] <- L1011.out_EJ_R_gasproc_coal_Yh[ X_historical_years ] / L1011.gasproc_coef[
+      match( vecpaste( L1011.out_EJ_R_gasproc_coal_Yh[ S_F ] ), vecpaste( L1011.gasproc_coef[ S_F ] ) ),
+      X_historical_years ]
+
+#Subtract
+L1011.en_bal_EJ_R_Si_Fi_Yh[ L1011.en_bal_EJ_R_Si_Fi_Yh$sector == "TPES" & L1011.en_bal_EJ_R_Si_Fi_Yh$fuel == "gas", X_historical_years ] <-
+      L1011.en_bal_EJ_R_Si_Fi_Yh[ L1011.en_bal_EJ_R_Si_Fi_Yh$sector == "TPES" & L1011.en_bal_EJ_R_Si_Fi_Yh$fuel == "gas", X_historical_years ] -
+      L1011.out_EJ_R_gasproc_coal_Yh[ X_historical_years ]
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table

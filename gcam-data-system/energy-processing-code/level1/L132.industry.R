@@ -26,6 +26,7 @@ L121.in_EJ_R_unoil_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_unoil_F
 L122.in_EJ_R_refining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.in_EJ_R_refining_F_Yh" )
 L122.in_EJ_R_gasproc_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.in_EJ_R_gasproc_F_Yh" )
 L122.out_EJ_R_gasproc_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_gasproc_F_Yh" )
+L123.in_EJ_R_indchp_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_indchp_F_Yh" )
 L124.in_EJ_R_heat_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.in_EJ_R_heat_F_Yh" )
 L131.in_EJ_R_Senduse_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L131.in_EJ_R_Senduse_F_Yh" )
 L131.share_R_Senduse_heat_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L131.share_R_Senduse_heat_Yh" )
@@ -44,14 +45,17 @@ L132.in_EJ_R_indfeed_F_Yh$sector <- sub( "in_", "", L132.in_EJ_R_indfeed_F_Yh$se
 L132.in_EJ_R_indenergy_F_Yh <- subset( L132.in_EJ_R_ind_F_Yh, grepl( "energy", sector ) )
 L132.in_EJ_R_indenergy_F_Yh$sector <- sub( "in_", "", L132.in_EJ_R_indenergy_F_Yh$sector )
 
-#Compile the net energy use by unconventional oil production, gas processing, and refining that were derived from known output and assumed IO coefs
+#Compile the net energy use by unconventional oil production, gas processing, refining, and CHP that were derived elsewhere
 # This energy will need to be deducted from industrial energy use
 ## Unconventional oil: the only relevant fuel is gas, as electricity (if any) was taken off prior to scaling for end-use sectors
 L132.in_EJ_R_indunoil_F_Yh <- subset( L121.in_EJ_R_unoil_F_Yh, fuel == "gas" )
 
-## Gas processing: Coal and possibly gas are relevant. Biogas is treated as primary energy in the IEA energy balances
-## Natural gas processing net energy use needs to be calculated as input minus output (it is currently 0 as the IO coef is 1)
-L132.in_EJ_R_indgasproc_F_Yh <- subset( L122.in_EJ_R_gasproc_F_Yh, fuel %in% c( "coal", "gas" ) )
+## Gas processing: This is complicated. Coal is not deducted, as inputs to coal gasification were mapped directly
+# from the IEA energy balances, not derived from known fuel outputs multiplied by assumed IO coefs. The reason for doing this is that
+# coal is one of several possible inputs to "gas works", and there is only one output. So no way to disaggregate fuel inputs if calculating from the output.
+# Biogas is treated as primary energy in the IEA energy balances, so not relevant here.
+## Natural gas processing net energy use is the only one that may need to be calculated (09/2013: It is currently 0 as the IO coef is 1).
+L132.in_EJ_R_indgasproc_F_Yh <- subset( L122.in_EJ_R_gasproc_F_Yh, fuel == "gas" )
 L132.in_EJ_R_indgasproc_F_Yh[ L132.in_EJ_R_indgasproc_F_Yh$fuel == "gas", X_historical_years ] <-
       L122.in_EJ_R_gasproc_F_Yh[ L122.in_EJ_R_gasproc_F_Yh$fuel == "gas", X_historical_years ] - 
       L122.out_EJ_R_gasproc_F_Yh[ L122.out_EJ_R_gasproc_F_Yh$fuel == "gas", X_historical_years ]
@@ -60,8 +64,11 @@ L132.in_EJ_R_indgasproc_F_Yh[ L132.in_EJ_R_indgasproc_F_Yh$fuel == "gas", X_hist
 ## Refining: Electricity was taken off prior to scaling for end-use sectors, and in the IEA energy balances, biofuels are treated as primary energy
 L132.in_EJ_R_indrefining_F_Yh <- subset( L122.in_EJ_R_refining_F_Yh, !grepl( "oil refining", sector ) & fuel %in% c( "gas", "coal" ) )
 
+#CHP: no adjustments necessary
+L132.in_EJ_R_indchp_F_Yh <- L123.in_EJ_R_indchp_F_Yh
+
 #Combine all of the deduction tables and multiply by -1 to indicate that these are deductions
-L132.in_EJ_R_inddeductions_F_Yh <- rbind( L132.in_EJ_R_indunoil_F_Yh, L132.in_EJ_R_indgasproc_F_Yh, L132.in_EJ_R_indrefining_F_Yh )
+L132.in_EJ_R_inddeductions_F_Yh <- rbind( L132.in_EJ_R_indunoil_F_Yh, L132.in_EJ_R_indrefining_F_Yh, L132.in_EJ_R_indgasproc_F_Yh, L132.in_EJ_R_indchp_F_Yh )
 L132.in_EJ_R_inddeductions_F_Yh[ X_historical_years ] <- -1 * L132.in_EJ_R_inddeductions_F_Yh[ X_historical_years ]
 
 ##Heat: fuel inputs to heat need to be added to industrial energy use, in regions where heat is not modeled as a final fuel

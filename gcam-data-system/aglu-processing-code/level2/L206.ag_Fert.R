@@ -128,11 +128,11 @@ L206.AgCost_bio_adj <- remove_AEZ_nonexist( L206.AgCost_bio_adj )
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 #writing out fert_bio table first, in order to preserve region order in final XML file
 write_mi_data( L206.AgCoef_Fert_ag, IDstring="AgCoef", domain="AGLU_LEVEL2_DATA", fn="L206.AgCoef_Fert_ag",
-               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_Fert_input.xml" ) 
-write_mi_data( L206.AgCoef_Fert_bio, "AgCoef", "AGLU_LEVEL2_DATA", "L206.AgCoef_Fert_bio", "AGLU_XML_BATCH", "batch_ag_Fert_input.xml" ) 
-write_mi_data( L206.AgCost_ag_adj, "AgCost", "AGLU_LEVEL2_DATA", "L206.AgCost_ag_adj", "AGLU_XML_BATCH", "batch_ag_Fert_input.xml" ) 
-write_mi_data( L206.AgCost_bio_adj, "AgCost", "AGLU_LEVEL2_DATA", "L206.AgCost_bio_adj", "AGLU_XML_BATCH", "batch_ag_Fert_input.xml" ) 
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_Fert.xml" ) 
+write_mi_data( L206.AgCoef_Fert_bio, "AgCoef", "AGLU_LEVEL2_DATA", "L206.AgCoef_Fert_bio", "AGLU_XML_BATCH", "batch_ag_Fert.xml" ) 
+write_mi_data( L206.AgCost_ag_adj, "AgCost", "AGLU_LEVEL2_DATA", "L206.AgCost_ag_adj", "AGLU_XML_BATCH", "batch_ag_Fert.xml" ) 
+write_mi_data( L206.AgCost_bio_adj, "AgCost", "AGLU_LEVEL2_DATA", "L206.AgCost_bio_adj", "AGLU_XML_BATCH", "batch_ag_Fert.xml" ) 
 
-insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_Fert_input.xml", "AGLU_XML_FINAL", "ag_Fert_input.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_Fert.xml", "AGLU_XML_FINAL", "ag_Fert.xml", "", xml_tag="outFile" )
 
 logstop()

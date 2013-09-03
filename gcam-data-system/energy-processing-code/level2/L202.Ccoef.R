@@ -35,7 +35,7 @@ L102.Ccoef_kgCGJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L102.Ccoef_kgCGJ_R_F
 # 2. Build tables for CSVs
 #Carbon contents
 printlog( "L202.C_Coefs: Carbon contents of fuels in all regions" )
-L202.CarbonCoef <- write_to_all_regions( A_PrimaryFuelCCoef )
+L202.CarbonCoef <- write_to_all_regions( A_PrimaryFuelCCoef, has.traded = T )
 if( use_GCAM3_Ccoefs == 1 ) {
 	printlog( "Using exogenous C coefs from GCAM 3.0")
 	L202.CarbonCoef <- L202.CarbonCoef[ c( "region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef")]

@@ -62,7 +62,7 @@ L213.LN3_Logit$logit.exponent[ L213.LN3_Logit$AEZ %in% AEZs_most_arid ] <- A_Lan
       match( L213.LN3_Logit$LandNode3[ L213.LN3_Logit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
 
 #Append AEZ names and keep only relevant columns
-L213.LN3_Logit <- append_AEZ( L213.LN3_Logit )
+L213.LN3_Logit <- append_AEZ( L213.LN3_Logit, var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3" )
 L213.LN3_Logit <- L213.LN3_Logit[ names_LN3_Logit ]
 
 printlog( "L213.LN3_DefaultShare: Default shares for new technologies in specified years" )
