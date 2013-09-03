@@ -1,5 +1,3 @@
-# L210.rsrc.R
-
 # Before we can load headers we need some paths defined.  They
 # may be provided by a system environment variable or just
 # having already been set in the workspace
@@ -190,13 +188,28 @@ printlog( "L210.GrdRenewRsrcCurves_geo: graded supply curves of geothermal (hydr
 L210.RsrcCurves_EJ_R_geo <- add_region_name( L116.RsrcCurves_EJ_R_geo )
 L210.GrdRenewRsrcCurves_geo <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_geo, "renewresource", "sub-renewable-resource" )
 
+printlog( "L210.GrdRenewRsrcMax_geo: default max sub resource of geothermal (hydrothermal) resources")
+L210.GrdRenewRsrcMax_geo <- subset( L210.GrdRenewRsrcCurves_geo, grade = unique( grade )[1] )
+L210.GrdRenewRsrcMax_geo$maxSubResource <- 1
+L210.GrdRenewRsrcMax_geo <- L210.GrdRenewRsrcMax_geo[ names_maxSubResource ]
+
 printlog( "L210.GrdRenewRsrcCurves_EGS: graded supply curves of geothermal (EGS) resources")
 L210.RsrcCurves_EJ_R_EGS <- add_region_name( L116.RsrcCurves_EJ_R_EGS )
 L210.GrdRenewRsrcCurves_EGS <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_EGS, "renewresource", "sub-renewable-resource" )
 
+printlog( "L210.GrdRenewRsrcMax_EGS: default max sub resource of EGS resources")
+L210.GrdRenewRsrcMax_EGS <- subset( L210.GrdRenewRsrcCurves_EGS, grade = unique( grade )[1] )
+L210.GrdRenewRsrcMax_EGS$maxSubResource <- 1
+L210.GrdRenewRsrcMax_EGS <- L210.GrdRenewRsrcMax_EGS[ names_maxSubResource ]
+
 printlog( "L210.GrdRenewRsrcCurves_tradbio: graded supply curves of traditional biomass resources")
 L210.RsrcCurves_EJ_R_tradbio <- add_region_name( L117.RsrcCurves_EJ_R_tradbio )
 L210.GrdRenewRsrcCurves_tradbio <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_tradbio, "renewresource", "sub-renewable-resource" )
+
+printlog( "L210.GrdRenewRsrcMax_tradbio: default max sub resource of tradbio resources")
+L210.GrdRenewRsrcMax_tradbio <- subset( L210.GrdRenewRsrcCurves_tradbio, grade = unique( grade )[1] )
+L210.GrdRenewRsrcMax_tradbio$maxSubResource <- 1
+L210.GrdRenewRsrcMax_tradbio <- L210.GrdRenewRsrcMax_tradbio[ names_maxSubResource ]
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -216,8 +229,11 @@ write_mi_data( L210.SmthRenewRsrcCurves_MSW, "SmthRenewRsrcCurves", "ENERGY_LEVE
 write_mi_data( L210.SmthRenewRsrcCurves_wind, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_wind", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.SmthRenewRsrcCurves_roofPV, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_roofPV", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.GrdRenewRsrcCurves_geo, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_geo", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.GrdRenewRsrcMax_geo, "GrdRenewRsrcMax", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcMax_geo", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.GrdRenewRsrcCurves_EGS, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_EGS", "ENERGY_XML_BATCH", "batch_geo_adv.xml" ) 
+write_mi_data( L210.GrdRenewRsrcMax_EGS, "GrdRenewRsrcMax", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcMax_EGS", "ENERGY_XML_BATCH", "batch_geo_adv.xml" ) 
 write_mi_data( L210.GrdRenewRsrcCurves_tradbio, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_tradbio", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.GrdRenewRsrcMax_tradbio, "GrdRenewRsrcMax", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcMax_tradbio", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources.xml", "ENERGY_XML_FINAL", "resources.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_adv.xml", "ENERGY_XML_FINAL", "geo_adv.xml", "", xml_tag="outFile" )

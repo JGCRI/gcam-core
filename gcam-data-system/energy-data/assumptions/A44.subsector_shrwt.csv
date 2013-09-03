@@ -1,0 +1,34 @@
+# Building default subsector shareweights,,,,
+supplysector,subsector,year.fillout,year,share.weight
+resid heating,biomass,start-year,,1
+resid heating,coal,start-year,,1
+resid heating,electricity,start-year,,1
+resid heating,gas,start-year,,1
+resid heating,refined liquids,start-year,,1
+resid heating,traditional biomass,start-year,,1
+resid heating,district heat,start-year,,1
+resid cooling,electricity,start-year,,1
+resid cooling,gas,start-year,,1
+resid others,biomass,start-year,,1
+resid others,coal,start-year,,1
+resid others,electricity,start-year,,1
+resid others,gas,start-year,,1
+resid others,refined liquids,start-year,,1
+resid others,traditional biomass,start-year,,1
+resid others,district heat,start-year,,1
+comm heating,biomass,start-year,,1
+comm heating,coal,start-year,,1
+comm heating,electricity,start-year,,1
+comm heating,gas,start-year,,1
+comm heating,refined liquids,start-year,,1
+comm heating,traditional biomass,start-year,,1
+comm heating,district heat,start-year,,1
+comm cooling,electricity,start-year,,1
+comm cooling,gas,start-year,,1
+comm others,biomass,start-year,,1
+comm others,coal,start-year,,1
+comm others,electricity,start-year,,1
+comm others,gas,start-year,,1
+comm others,refined liquids,start-year,,1
+comm others,traditional biomass,start-year,,1
+comm others,district heat,start-year,,1

@@ -55,6 +55,8 @@ RenewRsrcCalProd,world/+{name}region,region/+{name}renewresource,renewresource/+
 
 maxSubResource,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+maxSubResource,scenario,scenario/world
 
+GrdRenewRsrcMax,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+maxSubResource,scenario,scenario/world
+
 DepRsrcCurves,world/+{name}region,region/+{name}depresource,depresource/+{name}subresource,subresource/+{name}grade,grade/+available,grade/+extractioncost,scenario,scenario/world
 
 RenewRsrcCurves,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{name}grade,grade/+available,grade/+extractioncost,scenario,scenario/world

@@ -1,0 +1,8 @@
+# Building sector default supplysector information (units and logit exponents),,,,
+supplysector,output.unit,input.unit,price.unit,logit.exponent
+resid heating,EJ,EJ,1975$/GJ,-3
+resid cooling,EJ,EJ,1975$/GJ,-3
+resid others,EJ,EJ,1975$/GJ,-3
+comm heating,EJ,EJ,1975$/GJ,-3
+comm cooling,EJ,EJ,1975$/GJ,-3
+comm others,EJ,EJ,1975$/GJ,-3

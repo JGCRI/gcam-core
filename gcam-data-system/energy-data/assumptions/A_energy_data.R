@@ -50,9 +50,7 @@ CO2.storage.market <- "carbon-storage"
 
 default_electric_efficiency <- 0.3     #Used in region x fuel combinations where the IEA data has fuel input but not output
 
-Fert_name <- "N fertilizer"
 min_in_EJ_ind <- 1e-3
-conv_NH3_N <- 14/17
 NH3_H_frac <- 3/17
 H_energy_GJtH2 <- 120
 
