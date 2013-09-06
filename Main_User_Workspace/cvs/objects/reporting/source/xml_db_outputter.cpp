@@ -1327,7 +1327,54 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         writeItemUsingYear( "forcing-CO2", "W/m^2",
                              aClimateModel->getForcing( "CO2", util::round( year ) ),
                              year );
-
+		
+		// CH4 Forcing
+        writeItemUsingYear( "forcing-CH4", "W/m^2",
+						   aClimateModel->getForcing( "CH4", util::round( year ) ),
+						   year );
+		
+		// N2O Forcing
+        writeItemUsingYear( "forcing-N2O", "W/m^2",
+						   aClimateModel->getForcing( "N2O", util::round( year ) ),
+						   year );
+		
+		// SO2 Forcing
+        writeItemUsingYear( "forcing-SO2", "W/m^2",
+						   aClimateModel->getForcing( "SO2", util::round( year ) ),
+						   year );
+		
+		// DirSO2 Forcing
+        writeItemUsingYear( "forcing-DirSO2", "W/m^2",
+						   aClimateModel->getForcing( "DirSO2", util::round( year ) ),
+						   year );
+		
+		// TropO3 Forcing
+        writeItemUsingYear( "forcing-TropO3", "W/m^2",
+						   aClimateModel->getForcing( "TropO3", util::round( year ) ),
+						   year );
+		
+		// BC Forcing
+        writeItemUsingYear( "forcing-BC", "W/m^2",
+						   aClimateModel->getForcing( "BC", util::round( year ) ),
+						   year );
+		
+		// OC Forcing
+        writeItemUsingYear( "forcing-OC", "W/m^2",
+						   aClimateModel->getForcing( "OC", util::round( year ) ),
+						   year );
+		
+		// long-lived F-gas Forcing
+        writeItemUsingYear( "forcing-longlivedFgas", "W/m^2",
+						   aClimateModel->getForcing( "SF6", util::round( year ) )
+						   + aClimateModel->getForcing( "CF4", util::round( year ) )
+						   + aClimateModel->getForcing( "C2F6", util::round( year ) ),
+						   year );
+		
+		// Montreal gas Forcing
+        writeItemUsingYear( "forcing-Montreal", "W/m^2",
+						   aClimateModel->getForcing( "Montreal", util::round( year ) ),
+						   year );
+		
         // Total Forcing
         writeItemUsingYear( "forcing-total", "W/m^2",
                             aClimateModel->getTotalForcing( year ),
