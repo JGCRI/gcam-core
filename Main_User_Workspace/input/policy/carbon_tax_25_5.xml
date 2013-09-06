@@ -10,6 +10,7 @@
 				<fixedTax year="2065">224.6</fixedTax>
 				<fixedTax year="2080">467</fixedTax>
 				<fixedTax year="2095">970.8</fixedTax>
+				<fixedTax year="2100">1239.0</fixedTax>
 			</ghgpolicy>
 		</region>
 		<region name="Canada">
