@@ -88,8 +88,10 @@
 			 	 	 return
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
-			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+			 	 	 let $scenario_split := tokenize($scenario, ' '),
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 			 	 	 return (: get renewables from electricity :)
 			 	 	 local:get-primary-renewable($currTree/supplysector[@name='electricity' or @name='base load generation' or @name='subpeak generation' or @name='peak generation' or @name='intermediate generation' or @name='elect_td_bld']//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output, local:get-weighted-eff($currTree/supplysector[@name='electricity' or @name='base load generation' or @name='subpeak generation' or @name='peak generation' or @name='intermediate generation' ]//keyword[fn:exists(@average-fossil-efficiency)]/preceding-sibling::output-primary)) 
 					 		 	| (: get renewables from H2ProdCS :)
@@ -170,7 +172,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 			 	 	 return (: get renewables from electricity :)
 					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='electricity' or @name='base load generation' or @name='subpeak generation' or @name='peak generation' or @name='intermediate generation' or @name='elect_td_bld']//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
 					 		 	| (: get renewables from H2ProdCS :)
@@ -926,7 +930,9 @@
                      for $scenario in $scenarios,       
                      $region in $regionsG   
                      let $scenario_split := tokenize($scenario, ' '),       
-                     $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
                      return 
                         local:get-percapita($currTree/gcam-consumer//building-node-input)
                         
@@ -1947,7 +1953,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
 						| (: get the sector emissions :)
@@ -1999,7 +2007,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
 						| (: get the sector emissions :)
@@ -2051,7 +2061,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='CH4' or @name='CH4_AWB' or @name='CH4_AGR') )])])
 						| (: get the sector emissions :)
@@ -2103,7 +2115,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='N2O' or @name='N2O_AWB' or @name='N2O_AGR') )])])
 						| (: get the sector emissions :)
@@ -2155,7 +2169,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='NOx' or @name='NOx_AWB' or @name='NOx_AGR') )])])
 						| (: get the sector emissions :)
@@ -2207,7 +2223,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='SO2_1' or @name='SO2_2' or @name='SO2_3' or @name='SO2_4' or @name='SO2_1_AWB' or @name='SO2_2_AWB' or @name='SO2_3_AWB' or @name='SO2_4_AWB') )])])
 						| (: get the sector emissions :)
@@ -2259,7 +2277,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='BC' or @name='BC_AWB' or @name='BC_AGR') )])])
 						| (: get the sector emissions :)
@@ -2311,7 +2331,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='OC' or @name='OC_AWB' or @name='OC_AGR') )])])
 						| (: get the sector emissions :)
@@ -2363,7 +2385,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='CO' or @name='CO_AWB' or @name='CO_AGR') )])])
 						| (: get the sector emissions :)
@@ -2415,7 +2439,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='NMVOC' or @name='NMVOC_AWB' or @name='NMVOC_AGR') )])])
 						| (: get the sector emissions :)
@@ -2467,7 +2493,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='NH3' or @name='NH3_AWB' or @name='NH3_AGR') )])])
 						| (: get the sector emissions :)
@@ -2519,7 +2547,9 @@
 			 	 	 for $scenario in $scenarios, 	    
 			 	 	 $region in $regionsG 	
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+                     $scenario_name := string-join($scenario_split[position() &lt; last()], ' '),
+			 	 	 $scenario_date := $scenario_split[last()],
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_name and @date = $scenario_date]/world/*[@type = 'region' and @name=$region]
 					 return (: rename resources as a sector/subsector/tech :)
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
 						| (: get the sector emissions :)
