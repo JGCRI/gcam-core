@@ -272,6 +272,23 @@ L203.PriceElasticity$price.elasticity[ L203.PriceElasticity$region == "USA" &
       L203.PriceElasticity$energy.final.demand == "FoodDemand_Meat" ] <- food_meat_P_elas_USA
 L203.PriceElasticity <- L203.PriceElasticity[ names_PriceElasticity ]
 
+#Remove any regions for which agriculture and land use are not modeled
+L203.Supplysector_demand         <- subset( L203.Supplysector_demand, !region %in% no_aglu_regions )
+L203.SubsectorAll_demand         <- subset( L203.SubsectorAll_demand, !region %in% no_aglu_regions )
+L203.StubTech_demand             <- subset( L203.StubTech_demand, !region %in% no_aglu_regions )
+L203.StubTechProd_food_crop      <- subset( L203.StubTechProd_food_crop, !region %in% no_aglu_regions )
+L203.StubTechProd_food_meat      <- subset( L203.StubTechProd_food_meat, !region %in% no_aglu_regions )
+L203.StubTechProd_nonfood_crop   <- subset( L203.StubTechProd_nonfood_crop, !region %in% no_aglu_regions )
+L203.StubTechProd_nonfood_meat   <- subset( L203.StubTechProd_nonfood_meat, !region %in% no_aglu_regions )
+L203.StubTechProd_For            <- subset( L203.StubTechProd_For, !region %in% no_aglu_regions )
+L203.StubTechFixOut_exp          <- subset( L203.StubTechFixOut_exp, !region %in% no_aglu_regions )
+L203.StubCalorieContent_crop     <- subset( L203.StubCalorieContent_crop, !region %in% no_aglu_regions )
+L203.StubCalorieContent_meat     <- subset( L203.StubCalorieContent_meat, !region %in% no_aglu_regions )
+L203.PerCapitaBased              <- subset( L203.PerCapitaBased, !region %in% no_aglu_regions )
+L203.BaseService                 <- subset( L203.BaseService, !region %in% no_aglu_regions )
+L203.IncomeElasticity            <- subset( L203.IncomeElasticity, !region %in% no_aglu_regions )
+L203.PriceElasticity             <- subset( L203.PriceElasticity, !region %in% no_aglu_regions )
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 

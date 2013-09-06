@@ -41,6 +41,9 @@ L116.LC_km2_ctry_LT_AEZ$iso <- GIS_ctry_AEZ$iso[ match( L116.LC_km2_ctry_LT_AEZ$
 L116.LC_km2_ctry <- aggregate( L116.LC_km2_ctry_LT_AEZ[ "Area.km2." ],
       by=as.list( L116.LC_km2_ctry_LT_AEZ[ "iso" ] ), sum )
 
+###ADD IN TAIWAN TO THE LAND AREA
+L116.LC_km2_ctry <- rbind( L116.LC_km2_ctry, data.frame( iso = "twn", Area.km2. = 36000))
+
 #Match in the GCAM 3.0 region and aggregate to compute shares of countries within GCAM 3.0 region
 L116.LC_km2_ctry$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L116.LC_km2_ctry$iso, iso_GCAM_regID$iso ) ]
 L116.LC_km2_RG3 <- aggregate( L116.LC_km2_ctry[ "Area.km2." ], by=as.list( L116.LC_km2_ctry[ "region_GCAM3" ] ), sum )

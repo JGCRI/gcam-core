@@ -60,13 +60,31 @@ L105.an_Prod_t_R_C_Y <- aggregate( L100.FAO_an_Prod_t[ X_AGLU_historical_years ]
 
 #Convert to desired units (Mt, Pcal, and bm2)
 printlog( "Converting mass to Mt, energy to Pcal, and area to bm2 (thous km2)" )
-L105.an_Food_Mt_R_C_Y <- cbind( L105.an_Food_t_R_C_Y[ R_C ], L105.an_Food_t_R_C_Y[ X_AGLU_historical_years ] * conv_t_Mt )
-L105.an_Food_Pcal_R_C_Y <- cbind( L105.an_Food_Mcal_R_C_Y[ R_C ], L105.an_Food_Mcal_R_C_Y[ X_AGLU_historical_years ] * conv_Mcal_Pcal )
-L105.an_Prod_Mt_R_C_Y <- cbind( L105.an_Prod_t_R_C_Y[ R_C ], L105.an_Prod_t_R_C_Y[ X_AGLU_historical_years ] * conv_t_Mt )
-L105.an_Prod_Mt_ctry_C_Y <- cbind( L105.an_Prod_t_ctry_C_Y[ c( "iso", C) ], L105.an_Prod_t_ctry_C_Y[ X_AGLU_historical_years ] * conv_t_Mt )
+L105.an_Food_Mt_R_C_Y_prelim <- cbind( L105.an_Food_t_R_C_Y[ R_C ], L105.an_Food_t_R_C_Y[ X_AGLU_historical_years ] * conv_t_Mt )
+L105.an_Food_Pcal_R_C_Y_prelim <- cbind( L105.an_Food_Mcal_R_C_Y[ R_C ], L105.an_Food_Mcal_R_C_Y[ X_AGLU_historical_years ] * conv_Mcal_Pcal )
+L105.an_Prod_Mt_R_C_Y_prelim <- cbind( L105.an_Prod_t_R_C_Y[ R_C ], L105.an_Prod_t_R_C_Y[ X_AGLU_historical_years ] * conv_t_Mt )
+L105.an_Prod_Mt_ctry_C_Y_prelim <- cbind( L105.an_Prod_t_ctry_C_Y[ c( "iso", C) ], L105.an_Prod_t_ctry_C_Y[ X_AGLU_historical_years ] * conv_t_Mt )
 
 #Calculate Mt to Pcal conversion for each region and animal type
-L105.an_kcalg_R_C_Y <- cbind( L105.an_Food_Mt_R_C_Y[ R_C ], L105.an_Food_Pcal_R_C_Y[ X_AGLU_historical_years ] / L105.an_Food_Mt_R_C_Y[ X_AGLU_historical_years ] )
+L105.an_kcalg_R_C_Y_prelim <- cbind( L105.an_Food_Mt_R_C_Y_prelim[ R_C ],
+      L105.an_Food_Pcal_R_C_Y_prelim[ X_AGLU_historical_years ] / L105.an_Food_Mt_R_C_Y_prelim[ X_AGLU_historical_years ] )
+
+#Translate these to full tables, where no values can be missing
+L105.an_Food_Mt_R_C_Y <- translate_to_full_table( L105.an_Food_Mt_R_C_Y_prelim,
+      R, unique( iso_GCAM_regID$GCAM_region_ID ),
+      C, unique( L105.an_Food_Mt_R_C_Y_prelim$GCAM_commodity ) )
+L105.an_Food_Pcal_R_C_Y <- translate_to_full_table( L105.an_Food_Pcal_R_C_Y_prelim,
+      R, unique( iso_GCAM_regID$GCAM_region_ID ),
+      C, unique( L105.an_Food_Pcal_R_C_Y_prelim$GCAM_commodity ) )
+L105.an_kcalg_R_C_Y <- translate_to_full_table( L105.an_kcalg_R_C_Y_prelim,
+      R, unique( iso_GCAM_regID$GCAM_region_ID ),
+      C, unique( L105.an_kcalg_R_C_Y_prelim$GCAM_commodity ), na.value = 1 )
+L105.an_Prod_Mt_R_C_Y <- translate_to_full_table( L105.an_Prod_Mt_R_C_Y_prelim,
+      R, unique( iso_GCAM_regID$GCAM_region_ID ),
+      C, unique( L105.an_Prod_Mt_R_C_Y_prelim$GCAM_commodity ) )
+L105.an_Prod_Mt_ctry_C_Y <- translate_to_full_table( L105.an_Prod_Mt_ctry_C_Y_prelim,
+      "iso", unique( iso_GCAM_regID$iso ),
+      C, unique( L105.an_Prod_Mt_ctry_C_Y_prelim$GCAM_commodity ) )
 
 # -----------------------------------------------------------------------------
 # 3. Output

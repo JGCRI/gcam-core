@@ -12,7 +12,7 @@ if( !exists( "SOCIOPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(SOCIOPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(SOCIOPROC_DIR,"/../_common/headers/SOCIO_header.R",sep=""))
-logstart( "L23211.Cement_Inc_Elas_scenarios.R" )
+logstart( "L2321.Cement_Inc_Elas_scenarios.R" )
 adddep(paste(SOCIOPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(SOCIOPROC_DIR,"/../_common/headers/SOCIO_header.R",sep=""))
 printlog( "Cement income elasticities by socioeconomic scenario and GCAM region" )
@@ -82,11 +82,11 @@ write_mi_data( L2321.IncomeElasticity_cement_SSP3, "IncomeElasticity", "SOCIO_LE
 write_mi_data( L2321.IncomeElasticity_cement_SSP4, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L2321.IncomeElasticity_cement_SSP4", "SOCIO_XML_BATCH", "batch_cement_SSP4.xml" ) 
 write_mi_data( L2321.IncomeElasticity_cement_SSP5, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L2321.IncomeElasticity_cement_SSP5", "SOCIO_XML_BATCH", "batch_cement_SSP5.xml" ) 
 
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_GCAM3.xml", "SOCIO_XML_FINAL", "industry_GCAM3.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP1.xml", "SOCIO_XML_FINAL", "industry_SSP1.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP2.xml", "SOCIO_XML_FINAL", "industry_SSP2.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP3.xml", "SOCIO_XML_FINAL", "industry_SSP3.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP4.xml", "SOCIO_XML_FINAL", "industry_SSP4.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP5.xml", "SOCIO_XML_FINAL", "industry_SSP5.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_GCAM3.xml", "SOCIO_XML_FINAL", "cement_GCAM3.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP1.xml", "SOCIO_XML_FINAL", "cement_SSP1.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP2.xml", "SOCIO_XML_FINAL", "cement_SSP2.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP3.xml", "SOCIO_XML_FINAL", "cement_SSP3.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP4.xml", "SOCIO_XML_FINAL", "cement_SSP4.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_cement_SSP5.xml", "SOCIO_XML_FINAL", "cement_SSP5.xml", "", xml_tag="outFile" )
 
 logstop()

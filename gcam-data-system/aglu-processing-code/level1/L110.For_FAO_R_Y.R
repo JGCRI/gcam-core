@@ -69,6 +69,13 @@ L110.For_ALL_bm3_R_Y$NetExp_bm3 <- L110.For_ALL_bm3_R_Y$Prod_bm3 - L110.For_ALL_
 printlog( "Building adjusted forest mass balance table" )
 L110.For_ALL_bm3_R_Y <- L110.For_ALL_bm3_R_Y[ c( R_C_Y, For_Flow_cols ) ]
 
+#Translate to full table for any regions with no forest data
+L110.For_ALL_bm3_R_Y <- translate_to_full_table( L110.For_ALL_bm3_R_Y,
+      R, unique( iso_GCAM_regID[[R]] ),
+      C, unique( L110.For_ALL_bm3_R_Y[[C]] ),
+      Y, unique( L110.For_ALL_bm3_R_Y[[Y]] ),
+      datacols = For_Flow_cols )
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table

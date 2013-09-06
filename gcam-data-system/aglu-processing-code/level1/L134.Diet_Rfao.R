@@ -103,6 +103,13 @@ L134.Food_t_R_Dmnd_Y <- aggregate( L134.Food_t_ctry_Dmnd_Y[ X_diet_years ], by=a
 L134.FoodRatio_R_Dmnd_Y <- L134.Food_t_R_Dmnd_Y
 L134.FoodRatio_R_Dmnd_Y[ X_diet_years ] <- L134.Food_t_R_Dmnd_Y[ X_diet_years ] / L134.Food_t_R_Dmnd_Y[[ X_final_historical_year ]]
 
+#Write this to a full table with no missing values for regions that do not actually exist
+L134.FoodRatio_R_Dmnd_Y <- translate_to_full_table( L134.FoodRatio_R_Dmnd_Y,
+      R, unique( iso_GCAM_regID[[R]] ),
+      "GCAM_demand", unique( L134.FoodRatio_R_Dmnd_Y$GCAM_demand ),
+      datacols = X_diet_years,
+      na.value = 1 )
+
 #Multiply ratios by the caloric demands in the final historical year
 L134.pcFood_kcald_R_Dmnd_Y[ X_diet_years ] <- L134.pcFood_kcald_R_Dmnd_Y[[ X_final_historical_year ]] * L134.FoodRatio_R_Dmnd_Y[
       match( vecpaste( L134.pcFood_kcald_R_Dmnd_Y[ c( R, "GCAM_demand" ) ] ),

@@ -108,11 +108,14 @@ L113.ag_bioYield_GJm2_R_AEZ_ref[ AEZs ] <-
       L113.ag_bioYieldIndex_R_AEZ[ AEZs ] * EPIC_bio_Yield$MEAN_SD_kgm2[ EPIC_bio_Yield$AEZ == Index_AEZ ]
 L113.ag_bioYield_GJm2_R_AEZ_ref[ AEZs_arid ] <-
       L113.ag_bioYieldIndex_R_AEZ[ AEZs_arid ] * EPIC_bio_Yield$MEAN_kgm2[ EPIC_bio_Yield$AEZ == Index_AEZ ]
+#Set yields to zero in regions with no agricultural data
+L113.ag_bioYield_GJm2_R_AEZ_ref[ is.na( L113.ag_bioYield_GJm2_R_AEZ_ref ) ] <- 0
 
 #For "hi" scenario, arid AEZs use the same yield base
 L113.ag_bioYield_GJm2_R_AEZ_hi <- L113.ag_bioYieldIndex_R_AEZ
 L113.ag_bioYield_GJm2_R_AEZ_hi[ AEZs ] <-
       L113.ag_bioYieldIndex_R_AEZ[ AEZs ] * EPIC_bio_Yield$MEAN_mult_kgm2[ EPIC_bio_Yield$AEZ == Index_AEZ ]
+L113.ag_bioYield_GJm2_R_AEZ_hi[ is.na( L113.ag_bioYield_GJm2_R_AEZ_hi ) ] <- 0
 
 # -----------------------------------------------------------------------------
 # 3. Output

@@ -80,6 +80,13 @@ L1322.Fert_Prod_MtN_ctry_F_Y.melt[[R]] <- iso_GCAM_regID[[R]][ match( L1322.Fert
 L1322.Fert_ALL_MtN_R_F_Y <- aggregate( L1322.Fert_Prod_MtN_ctry_F_Y.melt[ "in_Fert" ],
       by=as.list( L1322.Fert_Prod_MtN_ctry_F_Y.melt[ R_F_Xyr ] ), sum )
 
+#Expand this table to all regions x fuels x years in case there are regions that aren't countries in the aglu databases
+L1322.Fert_ALL_MtN_R_F_Y <- translate_to_full_table( L1322.Fert_ALL_MtN_R_F_Y,
+      R, unique( iso_GCAM_regID[[R]] ),
+      "fuel", unique( L1322.Fert_ALL_MtN_R_F_Y$fuel ),
+      "Xyear", X_historical_years,
+      datacols = "in_Fert" )
+
 #Melt other energy tables (ind energy, ind feedstocks) and match in values
 L1322.in_EJ_R_indenergy_F_Yh.melt <- melt( L1321.in_EJ_R_indenergy_F_Yh, id.vars = R_S_F, variable_name = Xyr )
 L1322.in_EJ_R_indfeed_F_Yh.melt <- melt( L132.in_EJ_R_indfeed_F_Yh, id.vars = R_S_F, variable_name = Xyr )
@@ -117,6 +124,14 @@ L1322.Fert_Prod_MtN_ctry_F_Y.melt$in_Fert_adj <- with( L1322.Fert_Prod_MtN_ctry_
 printlog( "Re-checking total energy inputs to fertilizer against industrial energy use for each region")
 L1322.Fert_ALL_MtN_R_F_Y_adj <- aggregate( L1322.Fert_Prod_MtN_ctry_F_Y.melt[ c( "Fert_Prod_MtN_adj", "in_Fert_adj" ) ],
       by=as.list( L1322.Fert_Prod_MtN_ctry_F_Y.melt[ R_F_Xyr ] ), sum )
+
+#Again need to write out to all region x fuel x year combinations
+L1322.Fert_ALL_MtN_R_F_Y_adj <- translate_to_full_table( L1322.Fert_ALL_MtN_R_F_Y_adj,
+      R, unique( iso_GCAM_regID[[R]] ),
+      "fuel", unique( L1322.Fert_ALL_MtN_R_F_Y_adj$fuel ),
+      "Xyear", X_historical_years,
+      datacols = c( "Fert_Prod_MtN_adj", "in_Fert_adj" ) )
+
 L1322.Fert_ALL_MtN_R_F_Y_adj[ c( "in_indenergy", "in_indfeed" ) ] <-
       L1322.Fert_ALL_MtN_R_F_Y[ c( "in_indenergy", "in_indfeed" ) ]
 L1322.Fert_ALL_MtN_R_F_Y_adj$check <- with( L1322.Fert_ALL_MtN_R_F_Y_adj, in_indenergy + in_indfeed - in_Fert_adj )
@@ -147,13 +162,20 @@ L1322.Fert_ALL_MtN_R_F_Y_adj$indenergy_to_Fert <- with( L1322.Fert_ALL_MtN_R_F_Y
 L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert <- with( L1322.Fert_ALL_MtN_R_F_Y_adj, in_indenergy - indenergy_to_Fert )
 L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert <- with( L1322.Fert_ALL_MtN_R_F_Y_adj, in_indfeed - indfeed_to_Fert )
 
+#This is complicated. This last step pertains to the available energy and feedstock quantities for the industrial sector, in regions
+# where either went negative as a result of including the fertilizer industry (using the IEA's shares of production by fuel type, 
+# modified so that no regions went negative, and following the IEA's conventions on disaggregation of feedstocks and energy-use.
+# We are assuming that for the purposes of re-allocation of energy from the (general) industrial sector to the fertilizer sector, all energy
+# is available, whether initially classified as feedstocks or energy-use. This may zero out both energy and feedstocks or both in the
+# general industrial sector, causing all industrial demands of natural gas to be for the ammonia industry.
+# Note that the quantities are added because one is negative.
 L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert < 0 ] <-
-      L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert < 0 ] -
+      L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert < 0 ] +
       L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert < 0 ]
 L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert < 0 ] <- 0
 
 L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert < 0 ] <-
-      L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert < 0 ] -
+      L1322.Fert_ALL_MtN_R_F_Y_adj$in_indfeed_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert < 0 ] +
       L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert < 0 ]
 L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert < 0 ] <- 0
 

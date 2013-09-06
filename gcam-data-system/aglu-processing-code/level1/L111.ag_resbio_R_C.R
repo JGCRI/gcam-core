@@ -55,6 +55,12 @@ L111.ag_resbio_R_C <- L111.ag_resbio_Prod_R_C[ R_C ]
 L111.ag_resbio_R_C[ resbio_params ] <- L111.ag_resbio_Prod_R_C[ resbio_params ] / L111.ag_resbio_Prod_R_C$X2005
 L111.ag_resbio_R_C[ is.na( L111.ag_resbio_R_C ) ] <- 0
 
+#Translate to full table with all region x crop commodity combinations
+L111.ag_resbio_R_C <- translate_to_full_table( L111.ag_resbio_R_C,
+      R, unique( iso_GCAM_regID[[R]]),
+      C, unique( L111.ag_resbio_R_C[[C]] ),
+      datacols = resbio_params )
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table

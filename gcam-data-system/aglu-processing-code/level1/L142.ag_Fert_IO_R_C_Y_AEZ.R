@@ -130,6 +130,7 @@ L142.ag_Fert_ConsScaler_MtN_R_Y$Fert_Cons_MtN <- L142.ag_Fert_Cons_MtN_R_Y.melt$
       match( vecpaste( L142.ag_Fert_ConsScaler_MtN_R_Y[ R_Y ] ),
              vecpaste( L142.ag_Fert_Cons_MtN_R_Y.melt[ R_Y ] ) ) ]
 L142.ag_Fert_ConsScaler_MtN_R_Y$scaler <- L142.ag_Fert_ConsScaler_MtN_R_Y$Fert_Cons_MtN / L142.ag_Fert_ConsScaler_MtN_R_Y$Fert_Cons_MtN_unscaled
+L142.ag_Fert_ConsScaler_MtN_R_Y$scaler[ is.na( L142.ag_Fert_ConsScaler_MtN_R_Y$scaler ) ] <- 0
 
 #Calculate scaled consumption
 L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$scaler <- L142.ag_Fert_ConsScaler_MtN_R_Y$scaler[

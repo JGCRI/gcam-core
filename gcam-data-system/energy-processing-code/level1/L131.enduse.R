@@ -24,6 +24,9 @@ enduse_sector_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_sector_aggrega
 L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )
 L121.in_EJ_R_unoil_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_unoil_F_Yh" )
 L122.in_EJ_R_refining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.in_EJ_R_refining_F_Yh" )
+L124.in_EJ_R_heat_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.in_EJ_R_heat_F_Yh" )
+L124.out_EJ_R_heat_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.out_EJ_R_heat_F_Yh" )
+L124.out_EJ_R_heatfromelec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.out_EJ_R_heatfromelec_F_Yh" )
 L126.out_EJ_R_electd_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L126.out_EJ_R_electd_F_Yh" )
 
 # -----------------------------------------------------------------------------
@@ -56,7 +59,35 @@ L131.in_EJ_R_Senduse_elec_Yh[ X_historical_years ] <- L131.in_EJ_R_Senduse_elec_
 #Replace unscaled estimates of end use sector electricity consumption in full table
 L131.in_EJ_R_Senduse_F_Yh[ L131.in_EJ_R_Senduse_F_Yh$fuel == "electricity", ] <- L131.in_EJ_R_Senduse_elec_Yh
 
-#Heat in many regions is not modeled separately from the fuels used to produce it.
+#HEAT SCALING
+#Total delivered heat = output of district heat sector + secondary (heat) output of electric sector
+L131.in_EJ_R_enduse_heat_Yh <- aggregate( L124.out_EJ_R_heat_F_Yh[ X_historical_years ], by=as.list( L124.out_EJ_R_heat_F_Yh[ R ] ), sum )
+L131.out_EJ_R_heatfromelec_Yh <- aggregate( L124.out_EJ_R_heatfromelec_F_Yh[ X_historical_years ], by=as.list( L124.out_EJ_R_heatfromelec_F_Yh[ R ] ), sum )
+L131.in_EJ_R_enduse_heat_Yh[ X_historical_years ] <- L131.in_EJ_R_enduse_heat_Yh[ X_historical_years ] + L131.out_EJ_R_heatfromelec_Yh[
+      match( L131.in_EJ_R_enduse_heat_Yh[[R]], L131.out_EJ_R_heatfromelec_Yh[[R]] ),
+      X_historical_years ]
+
+#Subset the end use sectors and aggregate by fuel. Only in regions where heat is modeled as a separate fuel.
+heat_regionIDs <- A_regions$GCAM_region_ID[ A_regions$heat == 1 ]
+L131.in_EJ_R_Senduse_heat_Yh <- subset( L131.in_EJ_R_Senduse_F_Yh, fuel == "heat" & GCAM_region_ID %in% heat_regionIDs )
+L131.in_EJ_R_enduse_heat_Yh_unscaled <- aggregate( L131.in_EJ_R_Senduse_heat_Yh[ X_historical_years ], by=as.list( L131.in_EJ_R_Senduse_heat_Yh[ R_F ] ), sum )
+
+#Calculate the scalers required to balance district heat production and consumption within each region
+L131.scaler_R_enduse_heat_Yh <- L131.in_EJ_R_enduse_heat_Yh
+L131.scaler_R_enduse_heat_Yh[ X_historical_years ] <- L131.in_EJ_R_enduse_heat_Yh[ X_historical_years ] / L131.in_EJ_R_enduse_heat_Yh_unscaled[
+      match( L131.in_EJ_R_enduse_heat_Yh[[R]], L131.in_EJ_R_enduse_heat_Yh_unscaled[[R]] ),
+      X_historical_years ]
+L131.scaler_R_enduse_heat_Yh[ is.na( L131.scaler_R_enduse_heat_Yh) ] <- 0
+
+#Multiply the district heat scalers by the original estimates of district heat consumption by end use sectors
+L131.in_EJ_R_Senduse_heat_Yh[ X_historical_years ] <- L131.in_EJ_R_Senduse_heat_Yh[ X_historical_years ] * L131.scaler_R_enduse_heat_Yh[
+      match( L131.in_EJ_R_Senduse_heat_Yh$GCAM_region_ID, L131.scaler_R_enduse_heat_Yh$GCAM_region_ID ),
+      X_historical_years ]
+
+#Replace unscaled estimates of end use sector electricity consumption in full table
+L131.in_EJ_R_Senduse_F_Yh[ L131.in_EJ_R_Senduse_F_Yh$fuel == "heat" & L131.in_EJ_R_Senduse_F_Yh[[R]] %in% heat_regionIDs, ] <- L131.in_EJ_R_Senduse_heat_Yh
+
+#Heat in some regions is not modeled separately from the fuels used to produce it.
 noheat_regionIDs <- A_regions$GCAM_region_ID[ A_regions$heat == 0]
 
 #In these regions, calculate the share of regional heat demand by each sector

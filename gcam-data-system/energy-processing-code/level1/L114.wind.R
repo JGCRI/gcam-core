@@ -1,5 +1,3 @@
-# L114.wind.R
-
 # Before we can load headers we need some paths defined.  They
 # may be provided by a system environment variable or just
 # having already been set in the workspace
@@ -38,6 +36,9 @@ printlog( "Downscaling GCAM 3.0 wind supply curves to countries on the basis of 
 L114.LC_km2_ctry_LT_AEZ <- subset( Sage_Hyde15_Area, Year == max( Year ) )
 L114.LC_km2_ctry_LT_AEZ$iso <- GIS_ctry_AEZ$iso[ match( L114.LC_km2_ctry_LT_AEZ$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]
 L114.LC_km2_ctry <- aggregate( L114.LC_km2_ctry_LT_AEZ[ "Area.km2." ], by=as.list( L114.LC_km2_ctry_LT_AEZ[ "iso" ] ), sum )
+
+##Adding in Taiwan
+L114.LC_km2_ctry <- rbind( L114.LC_km2_ctry, data.frame( iso = "twn", Area.km2. = 36000) )
 
 #Match in the GCAM 3.0 region and aggregate to compute shares of countries within GCAM 3.0 region
 L114.LC_km2_ctry$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L114.LC_km2_ctry$iso, iso_GCAM_regID$iso ) ]

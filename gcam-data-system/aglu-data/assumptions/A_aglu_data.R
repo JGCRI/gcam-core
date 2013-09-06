@@ -1,3 +1,6 @@
+#Regions in which agriculture and land use are not modeled
+no_aglu_regions <- "Taiwan"
+
 #------------------------------------------------------------------------------------
 AGLU_historical_years <- 1971:2010
 X_AGLU_historical_years <- paste( "X", AGLU_historical_years, sep = "" )
@@ -104,7 +107,7 @@ max_FeedIO <- 100
 
 # Minimum and maximum harvested:cropped ratios
 min_HA_to_Cropland <- 1
-max_HA_to_Cropland <- 2.5
+max_HA_to_Cropland <- 3
 
 # Maximum portion of any AEZs pastures that can be in production
 max_MgdPast_frac <- 0.85

@@ -39,6 +39,9 @@ L152.in_EJ_R_trn_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L152.in_EJ_R_trn_F_Yh"
 printlog( "L252.Supplysector_trn: Supply sector information for transportation sector" )
 L252.Supplysector_trn <- write_to_all_regions( A52.sector, names_Supplysector )
 
+printlog( "L252.FinalEnergyKeyword_trn: Supply sector keywords for transportation sector" )
+L252.FinalEnergyKeyword_trn <- na.omit( write_to_all_regions( A52.sector, names_FinalEnergyKeyword ) )
+
 # 2b. Subsector information
 printlog( "L252.SubsectorLogit_trn: Subsector logit exponents of transportation sector" )
 L252.SubsectorLogit_trn <- write_to_all_regions( A52.subsector_logit, names_SubsectorLogit )
@@ -135,6 +138,7 @@ L252.BaseService_trn <- data.frame(
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L252.Supplysector_trn, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L252.Supplysector_trn",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_transportation_agg.xml" ) 
+write_mi_data( L252.FinalEnergyKeyword_trn, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L252.FinalEnergyKeyword_trn", "ENERGY_XML_BATCH", "batch_transportation_agg.xml" ) 
 write_mi_data( L252.SubsectorLogit_trn, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L252.SubsectorLogit_trn", "ENERGY_XML_BATCH", "batch_transportation_agg.xml" ) 
 if( exists( "L252.SubsectorShrwt_trn" ) ){
 	write_mi_data( L252.SubsectorShrwt_trn, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L252.SubsectorShrwt_trn", "ENERGY_XML_BATCH", "batch_transportation_agg.xml" )

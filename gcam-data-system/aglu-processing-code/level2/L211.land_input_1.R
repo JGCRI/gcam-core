@@ -126,6 +126,9 @@ L211.LN1_UnmgdCarbon <- add_carbon_info( L211.LN1_UnmgdCarbon,
 L211.LN1_UnmgdCarbon <- L211.LN1_UnmgdCarbon[ names_LN1_UnmgdCarbon ]
 
 printlog( "Removing non-existent AEZs from all tables" )
+L211.LN0_Logit <- subset( L211.LN0_Logit, !region %in% no_aglu_regions )
+L211.LN0_Land <- subset( L211.LN0_Land, !region %in% no_aglu_regions )
+L211.LN0_SoilTimeScale <- subset( L211.LN0_SoilTimeScale, !region %in% no_aglu_regions )
 L211.LN1_ValueLogit <- remove_AEZ_nonexist( L211.LN1_ValueLogit, AEZcol = "LandNode1" )
 L211.LN1_HistUnmgdAllocation <- remove_AEZ_nonexist( L211.LN1_HistUnmgdAllocation, AEZcol = "LandNode1" )
 L211.LN1_UnmgdAllocation <- remove_AEZ_nonexist( L211.LN1_UnmgdAllocation, AEZcol = "LandNode1" )

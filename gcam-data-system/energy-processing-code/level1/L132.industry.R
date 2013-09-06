@@ -91,6 +91,10 @@ L132.in_EJ_R_Sindenergy_F_Yh$sector <- unique( L132.in_EJ_R_indenergy_F_Yh$secto
 L132.in_EJ_R_Sindenergy_F_Yh <- subset( L132.in_EJ_R_Sindenergy_F_Yh, paste( GCAM_region_ID, fuel ) %!in% paste( A_regions[[R]][ A_regions$heat == 0 ], "heat" ) )
 L132.in_EJ_R_indenergy_F_Yh <- aggregate( L132.in_EJ_R_Sindenergy_F_Yh[ X_historical_years ], by=as.list( L132.in_EJ_R_Sindenergy_F_Yh[R_S_F ] ), sum )
 
+#Where unit conversions have produced slightly negative numbers that should be 0, re-set to 0
+L132.in_EJ_R_indenergy_F_Yh[ X_historical_years ][
+      L132.in_EJ_R_indenergy_F_Yh[ X_historical_years ] < 0 & L132.in_EJ_R_indenergy_F_Yh[ X_historical_years ] > -1e-6] <- 0
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table

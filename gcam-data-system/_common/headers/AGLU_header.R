@@ -62,27 +62,6 @@ downscale_IMAGE_regions <- function( data, idvars, years = X_AGLU_historical_yea
 	data_new <- data_new[ c("iso", idvars, years ) ]
 }
 
-#translate_to_full_table: function to write out all possible combinations of variables
-translate_to_full_table <- function( data, var1, var1_values, var2, var2_values, var3 = NA, var3_values = NA, datacols = X_AGLU_historical_years, na.value = 0 ){
-	data_new <- data.frame(
-	     rep( sort( var1_values ), times = length( var2_values ) ),
-	     sort( rep( var2_values, times = length( var1_values ) ) ) )
-	names( data_new ) <- c( var1, var2 )
-	if( is.na( var3 ) ){
-		data_new[ datacols ] <- data[
-			match( vecpaste( data_new[ c( var1, var2 ) ] ), vecpaste( data[ c( var1, var2 ) ] ) ),
-			datacols ]
-	}
-	if( !is.na( var3 ) ){
-		data_new <- repeat_and_add_vector( data_new, var3, var3_values )
-		data_new[ datacols ] <- data[
-			match( vecpaste( data_new[ c( var1, var2, var3 ) ] ), vecpaste( data[ c( var1, var2, var3 ) ] ) ),
-			datacols ]
-	}
-	data_new[ is.na( data_new ) ] <- na.value
-	return( data_new )
-}
-
 # -----------------------------------------------------------------------------
 # write_to_all_regions_ag: write out ag table to all regions
 write_to_all_regions_ag <- function( data, names ){

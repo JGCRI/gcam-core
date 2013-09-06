@@ -48,6 +48,9 @@ L242.rm_heat_techs_R <- add_region_name( L242.rm_heat_techs_R )
 printlog( "L242.Supplysector_bld: Supply sector information for building sector" )
 L242.Supplysector_bld <- write_to_all_regions( A42.sector, names_Supplysector )
 
+printlog( "L242.FinalEnergyKeyword_bld: Supply sector keywords for building sector" )
+L242.FinalEnergyKeyword_bld <- na.omit( write_to_all_regions( A42.sector, names_FinalEnergyKeyword ) )
+
 # 2b. Subsector information
 printlog( "L242.SubsectorLogit_bld: Subsector logit exponents of building sector" )
 L242.SubsectorLogit_bld <- write_to_all_regions( A42.subsector_logit, names_SubsectorLogit )
@@ -170,6 +173,7 @@ L242.BaseService_bld <- data.frame(
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L242.Supplysector_bld, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L242.Supplysector_bld",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_building_agg.xml" ) 
+write_mi_data( L242.FinalEnergyKeyword_bld, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L242.FinalEnergyKeyword_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" ) 
 write_mi_data( L242.SubsectorLogit_bld, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L242.SubsectorLogit_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" ) 
 if( exists( "L242.SubsectorShrwt_bld" ) ){
 	write_mi_data( L242.SubsectorShrwt_bld, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L242.SubsectorShrwt_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" )

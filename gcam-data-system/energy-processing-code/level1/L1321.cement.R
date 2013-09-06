@@ -123,6 +123,10 @@ L1321.IO_R_elec_Yh <- data.frame( GCAM_region_ID = L1321.in_EJ_R_elec_Yh$GCAM_re
       L1321.in_EJ_R_elec_Yh[ X_historical_years ] / L1321.out_EJ_R_elec_Yh[ X_historical_years ] )
 L1321.IO_R_elec_Yh.melt <- interpolate_and_melt( L1321.IO_R_elec_Yh, historical_years )
 
+#Set a maximum threshold on the electric sector average input-output coefficient
+Max_IOelec <- 4
+L1321.IO_R_elec_Yh.melt$value[ L1321.IO_R_elec_Yh.melt$value > Max_IOelec ] <- Max_IOelec
+
 #Match the electric generation intensity by GCAM region
 L1321.Cement_ALL_ctry_Yh$IOelec <- L1321.IO_R_elec_Yh.melt$value[
       match( vecpaste( L1321.Cement_ALL_ctry_Yh[ R_Y ] ), vecpaste( L1321.IO_R_elec_Yh.melt[ R_Y ] ) ) ]
@@ -184,8 +188,33 @@ for( i in 1:ncol( L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ] ) ){
 	L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ][i][
 	    L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ][i] < 0 & L1321.in_EJ_R_indenergy_F_Yh$fuel == "biomass"] <- min_in_EJ_ind
 }
+
+#Negative values in other fuels are problematic. This seems to be mostly developing regions with (probably incorrectly) low bio shares
+# This method assigns negative industrial energy consumption to biomass.
 if( any( L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ] < 0 ) ){
-	printlog( "ERROR: Net negative industrial energy use")
+	printlog( "Negative industrial energy use from cement energy deduction. Re-balancing by assigning energy to biomass")
+	L1321.in_EJ_R_indenergy_F_Yh.melt <- melt( L1321.in_EJ_R_indenergy_F_Yh, id.vars = R_S_F, variable_name = "Xyear" )
+	#Subset region / years where any fuels are negative
+	L1321.cement_adj_neg <- subset( L1321.in_EJ_R_indenergy_F_Yh.melt, value < 0 )
+	#These are the amounts by which cement energy needs to be adjusted for these fuels (negative adjustment)
+	L1321.cement_adj_neg$sector <- "cement"
+	#Need to aggregate this energy and assign it to biomass (positive adjustment)
+	L1321.cement_adj_pos <- L1321.cement_adj_neg
+	L1321.cement_adj_pos$fuel <- "biomass"
+	#Aggregate in case any regions have multiple negative fuels
+	L1321.cement_adj_pos <- aggregate( L1321.cement_adj_pos[ "value" ] * -1, by=as.list( L1321.cement_adj_pos[ c( R, S_F, Xyr ) ] ), sum )
+
+	#Reset the negative values to 0 in the industrial energy table
+	L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ][ L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ] < 0 ] <- 0
+	
+	#Add in the adjustments to a molten table of cement energy consumption. Recast.
+	#Need to return the cement energy consumption table to a normal data frame (has bad info from prior cast)
+	L1321.in_EJ_R_cement_F_Y <- data.frame( L1321.in_EJ_R_cement_F_Y )
+	L1321.in_EJ_R_cement_F_Y.melt <- melt( L1321.in_EJ_R_cement_F_Y, id.vars = R_S_F, variable_name = "Xyear" )
+	L1321.in_EJ_R_cement_F_Y.melt <- rbind( L1321.in_EJ_R_cement_F_Y.melt, L1321.cement_adj_neg, L1321.cement_adj_pos )
+	L1321.in_EJ_R_cement_F_Y.melt <- aggregate( L1321.in_EJ_R_cement_F_Y.melt[ "value" ],
+	    by=as.list( L1321.in_EJ_R_cement_F_Y.melt[ c( R, S_F, Xyr ) ] ), sum )
+	L1321.in_EJ_R_cement_F_Y <- cast( L1321.in_EJ_R_cement_F_Y.melt, GCAM_region_ID + sector + fuel ~ Xyear )
 }
 
 # -----------------------------------------------------------------------------

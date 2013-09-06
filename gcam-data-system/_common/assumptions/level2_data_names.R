@@ -7,6 +7,7 @@ names_LaborProductivity <- c( "region", "year", "laborproductivity" )
 
 #Supplysectors
 names_Supplysector <- c( "region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.exponent" )
+names_FinalEnergyKeyword <- c( "region", "supplysector", "final.energy" )
 names_SupplysectorPrice <- c( "region", "supplysector", "year", "price" )
 names_ElecReserve <- c( "region", "supplysector", "electricity.reserve.margin", "average.grid.capacity.factor" )
 

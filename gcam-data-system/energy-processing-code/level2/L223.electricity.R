@@ -34,6 +34,7 @@ A23.subsector_shrwt_nuc_R <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrw
 A23.subsector_shrwt_renew_R <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt_renew_R" )
 A23.globalinttech <- readdata( "ENERGY_ASSUMPTIONS", "A23.globalinttech" )
 A23.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_shrwt" )
+A23.globaltech_keyword <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_keyword" )
 A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )
 A23.globaltech_capital <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital" )
 A23.globaltech_OMfixed <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMfixed" )
@@ -77,16 +78,25 @@ L223.SubsectorShrwt_nuc <- add_region_name( L223.SubsectorShrwt_nuc )
 L223.SubsectorShrwt_nuc <- na.omit( L223.SubsectorShrwt_nuc[ names_SubsectorShrwt ] )
 
 printlog( "L223.SubsectorShrwt_renew: Near term subsector shareweights of renewable technologies" )
+#First, melt the table with near-term shareweights from GCAM 3.0 regions
 L223.SubsectorShrwt_renew_GCAM3 <- melt( A23.subsector_shrwt_renew_R, id.vars = grep( "X[0-9]{4}", names( A23.subsector_shrwt_renew_R ), invert = T ) )
 L223.SubsectorShrwt_renew_GCAM3$year <- substring( L223.SubsectorShrwt_renew_GCAM3$variable, 2, 5 )
 names( L223.SubsectorShrwt_renew_GCAM3 )[ names( L223.SubsectorShrwt_renew_GCAM3 ) == "value" ] <- "share.weight"
-L223.SubsectorShrwt_renew <- repeat_and_add_vector( subset( L223.SubsectorShrwt_renew_GCAM3, region_GCAM3 == region_GCAM3[1] ), R, GCAM_region_names[[R]] )
+
+#Build a table with all combinations of GCAM regions, electricity technologies, and years
+L223.SubsectorShrwt_renew <- data.frame(
+      GCAM_region_ID = rep( GCAM_region_names[[R]], times = length( unique( L223.SubsectorShrwt_renew_GCAM3$subsector ) ) ),
+      supplysector = unique( L223.SubsectorShrwt_renew_GCAM3$supplysector ),
+      subsector = sort( rep( unique( L223.SubsectorShrwt_renew_GCAM3$subsector ), times = nrow( GCAM_region_names ) ) ) )
+L223.SubsectorShrwt_renew <- repeat_and_add_vector( L223.SubsectorShrwt_renew, Y, unique( L223.SubsectorShrwt_renew_GCAM3$year ) )
+
+printlog( "Using an approximate match between current regions and GCAM 3.0 regions" )
 L223.SubsectorShrwt_renew$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L223.SubsectorShrwt_renew[[R]], iso_GCAM_regID[[R]] ) ]
 L223.SubsectorShrwt_renew$share.weight <- L223.SubsectorShrwt_renew_GCAM3$share.weight[
       match( vecpaste( L223.SubsectorShrwt_renew[ c( "region_GCAM3", "subsector", "year" ) ] ),
              vecpaste( L223.SubsectorShrwt_renew_GCAM3[ c( "region_GCAM3", "subsector", "year" ) ] ) ) ]
-L223.SubsectorShrwt_renew <- add_region_name( L223.SubsectorShrwt_renew )
-L223.SubsectorShrwt_renew <- na.omit( L223.SubsectorShrwt_renew[ names_SubsectorShrwt ] )
+L223.SubsectorShrwt_renew[ is.na( L223.SubsectorShrwt_renew ) ] <- 0
+L223.SubsectorShrwt_renew <- add_region_name( L223.SubsectorShrwt_renew )[ names_SubsectorShrwt ]
 
 printlog( "L223.SubsectorInterp_elec and L223.SubsectorInterpTo_elec: Subsector shareweight interpolation of electricity sector" )
 if( any( is.na( A23.subsector_interp$to.value ) ) ){
@@ -145,6 +155,19 @@ L223.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globa
 L223.GlobalTechShrwt_elec <- L223.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
 L223.GlobalIntTechShrwt_elec <- subset_inttechs( L223.GlobalTechShrwt_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechShrwt_elec <- subset_techs( L223.GlobalTechShrwt_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+
+printlog( "L223.PrimaryRenewKeyword_elec: Keywords of primary renewable electric generation technologies" )
+L223.AllKeyword_elec <- repeat_and_add_vector( A23.globaltech_keyword, Y, c( model_base_years, model_future_years ) )
+L223.AllKeyword_elec[ c( "sector.name", "subsector.name" ) ] <- L223.AllKeyword_elec[ c( "supplysector", "subsector" ) ]
+L223.PrimaryRenewKeyword_elec <- L223.AllKeyword_elec[ !is.na( L223.AllKeyword_elec$primary.renewable ), c( names_GlobalTechYr, "primary.renewable" ) ]
+L223.PrimaryRenewKeywordInt_elec <- subset_inttechs( L223.PrimaryRenewKeyword_elec,
+      inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+L223.PrimaryRenewKeyword_elec <- subset_techs( L223.PrimaryRenewKeyword_elec,
+      inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+
+printlog( "L223.AvgFossilEffKeyword_elec: Keywords of fossil/bio electric generation technologies" )
+L223.AvgFossilEffKeyword_elec <- L223.AllKeyword_elec[ !is.na( L223.AllKeyword_elec$average.fossil.efficiency ),
+      c( names_GlobalTechYr, "average.fossil.efficiency" ) ]
 
 #CO2 capture rates of global technologies
 printlog( "L223.GlobalTechCapture_elec: CO2 capture fractions from global electricity generation technologies" )
@@ -243,7 +266,8 @@ L223.in_EJ_R_elec_F_tech_Yh[ c( "supplysector", "subsector", "stub.technology" )
 L223.in_EJ_R_elec_F_tech_Yh <- subset( L223.in_EJ_R_elec_F_tech_Yh, calibrated_techs$calibration[
       match( paste( sector, fuel, technology ), paste( calibrated_techs$sector, calibrated_techs$fuel, calibrated_techs$technology ) ) ] == "input" )
 
-L223.out_EJ_R_elec_F_tech_Yh <- interpolate_and_melt( L1231.out_EJ_R_elec_F_tech_Yh, model_base_years )
+printlog( "NOTE: Fixed output is assumed to apply in all historical years, regardless of final calibration year")
+L223.out_EJ_R_elec_F_tech_Yh <- interpolate_and_melt( L1231.out_EJ_R_elec_F_tech_Yh, model_years[ model_years %in% historical_years ] )
 L223.out_EJ_R_elec_F_tech_Yh <- add_region_name( L223.out_EJ_R_elec_F_tech_Yh )
 L223.out_EJ_R_elec_F_tech_Yh[ c( "supplysector", "subsector", "stub.technology" ) ] <- calibrated_techs[
       match( paste( L223.out_EJ_R_elec_F_tech_Yh$sector, L223.out_EJ_R_elec_F_tech_Yh$fuel, L223.out_EJ_R_elec_F_tech_Yh$technology ),
@@ -251,8 +275,10 @@ L223.out_EJ_R_elec_F_tech_Yh[ c( "supplysector", "subsector", "stub.technology" 
       c( "supplysector", "subsector", "technology" ) ]
 L223.fixout_EJ_R_elec_F_tech_Yh <- subset( L223.out_EJ_R_elec_F_tech_Yh, calibrated_techs$calibration[
       match( paste( sector, fuel, technology ), paste( calibrated_techs$sector, calibrated_techs$fuel, calibrated_techs$technology ) ) ] == "fixed output" )
-L223.calout_EJ_R_elec_F_tech_Yh <- subset( L223.out_EJ_R_elec_F_tech_Yh, calibrated_techs$calibration[
-      match( paste( sector, fuel, technology ), paste( calibrated_techs$sector, calibrated_techs$fuel, calibrated_techs$technology ) ) ] == "output" )
+L223.calout_EJ_R_elec_F_tech_Yh <- subset( L223.out_EJ_R_elec_F_tech_Yh,
+      calibrated_techs$calibration[
+          match( paste( sector, fuel, technology ), paste( calibrated_techs$sector, calibrated_techs$fuel, calibrated_techs$technology ) ) ] == "output" &
+          year %in% model_base_years )
 
 printlog( "L223.StubTechCalInput_elec: calibrated input of electricity generation technologies")
 #Note that there is no need to specify which stub technologies are intermittent
@@ -280,7 +306,8 @@ L223.StubTechProd_elec <- set_subsector_shrwt( L223.StubTechProd_elec, value.nam
 L223.StubTechProd_elec$share.weight <- ifelse( L223.StubTechProd_elec$calOutputValue > 0, 1, 0 )
 
 printlog( "L223.StubTechEff_elec: calibrated efficiencies of electricity generation technologies" )
-L223.eff_R_elec_F_tech_Yh <- interpolate_and_melt( L1231.eff_R_elec_F_tech_Yh, model_base_years )
+printlog( "NOTE: Electric sector efficiencies are assumed to apply for all historical years, regardless of final calibration year" )
+L223.eff_R_elec_F_tech_Yh <- interpolate_and_melt( L1231.eff_R_elec_F_tech_Yh, model_years[ model_years %in% historical_years ] )
 L223.eff_R_elec_F_tech_Yh <- add_region_name( L223.eff_R_elec_F_tech_Yh )
 L223.eff_R_elec_F_tech_Yh[ c( "supplysector", "subsector", "stub.technology" ) ] <- calibrated_techs[
       match( paste( L223.eff_R_elec_F_tech_Yh$sector, L223.eff_R_elec_F_tech_Yh$fuel, L223.eff_R_elec_F_tech_Yh$technology ),
@@ -326,6 +353,9 @@ write_mi_data( L223.GlobalTechOMvar_elec, "GlobalTechOMvar", "ENERGY_LEVEL2_DATA
 write_mi_data( L223.GlobalIntTechOMvar_elec, "GlobalIntTechOMvar", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechOMvar_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalTechShrwt_elec, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L223.GlobalTechShrwt_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalIntTechShrwt_elec, "GlobalIntTechShrwt", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechShrwt_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
+write_mi_data( L223.PrimaryRenewKeyword_elec, "PrimaryRenewKeyword", "ENERGY_LEVEL2_DATA", "L223.PrimaryRenewKeyword_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
+write_mi_data( L223.PrimaryRenewKeywordInt_elec, "PrimaryRenewKeywordInt", "ENERGY_LEVEL2_DATA", "L223.PrimaryRenewKeywordInt_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
+write_mi_data( L223.AvgFossilEffKeyword_elec, "AvgFossilEffKeyword", "ENERGY_LEVEL2_DATA", "L223.AvgFossilEffKeyword_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalTechCapture_elec, "GlobalTechCapture", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapture_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalIntTechBackup_elec, "GlobalIntTechBackup", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechBackup_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 if( exists( "L223.GlobalTechShutdownProfit_elec" ) ) {

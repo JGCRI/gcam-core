@@ -65,6 +65,8 @@ L123.ag_PastureProdfrac_R_Y_AEZ <- L123.ag_potentialProd_Mt_R_Past_Y_AEZ[ R_LT_A
 L123.ag_PastureProdfrac_R_Y_AEZ[ X_AGLU_historical_years ] <- L123.ag_potentialProd_Mt_R_Past_Y_AEZ[ X_AGLU_historical_years ] / L123.ag_potentialProd_Mt_R_Past_Y[
       match( L123.ag_potentialProd_Mt_R_Past_Y_AEZ[[R]], L123.ag_potentialProd_Mt_R_Past_Y[[R]] ),
       X_AGLU_historical_years ]
+#For regions that do not exist, return NaNs to 0
+L123.ag_PastureProdfrac_R_Y_AEZ[ is.na( L123.ag_PastureProdfrac_R_Y_AEZ ) ] <- 0
 L123.ag_Prod_Mt_R_Past_Y_AEZ <- L123.ag_PastureProdfrac_R_Y_AEZ[ R_LT_AEZ ]
 names( L123.ag_Prod_Mt_R_Past_Y_AEZ )[ names( L123.ag_Prod_Mt_R_Past_Y_AEZ) == LT ] <- C
 L123.ag_Prod_Mt_R_Past_Y_AEZ[ X_AGLU_historical_years ] <- L123.ag_PastureProdfrac_R_Y_AEZ[ X_AGLU_historical_years ] * L108.ag_Feed_Mt_R_C_Y[
@@ -146,6 +148,8 @@ L123.For_Prodfrac_R_Y_AEZ <- L123.For_potentialProd_bm3_R_Y_AEZ[ R_C_AEZ ]
 L123.For_Prodfrac_R_Y_AEZ[ X_AGLU_historical_years ] <- L123.For_potentialProd_bm3_R_Y_AEZ[ X_AGLU_historical_years ] / L123.For_potentialProd_bm3_R_Y[
       match( L123.For_potentialProd_bm3_R_Y_AEZ[[R]], L123.For_potentialProd_bm3_R_Y[[R]] ),
       X_AGLU_historical_years ]
+#For regions that do not exist, return NaNs to 0
+L123.For_Prodfrac_R_Y_AEZ[ is.na( L123.For_Prodfrac_R_Y_AEZ ) ] <- 0
 L123.For_Prod_bm3_R_Y_AEZ <- L123.For_Prodfrac_R_Y_AEZ[ R_C_AEZ]
 L123.For_Prod_bm3_R_Y_AEZ[ X_AGLU_historical_years ] <- L123.For_Prodfrac_R_Y_AEZ[ X_AGLU_historical_years ] * L123.For_ALL_bm3_R_Y[
       match( L123.For_Prodfrac_R_Y_AEZ[[R]], L123.For_ALL_bm3_R_Y[[R]] ),

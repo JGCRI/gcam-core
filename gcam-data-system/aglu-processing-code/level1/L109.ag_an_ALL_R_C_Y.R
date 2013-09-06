@@ -88,9 +88,9 @@ if( any( L109.ag_ALL_Mt_R_C_Y$OtherUses_Mt<0 ) ){
 	L109.ag_ALL_Mt_R_C_Y_adj <- L109.ag_ALL_Mt_R_C_Y[ c( R_C_Y, ag_Flow_cols ) ]
 	L109.ag_ALL_Mt_R_C_Y_adj$NetExp_Mt <- L109.ag_ALL_Mt_R_C_Y$NetExp_Mt_adj2
 	L109.ag_ALL_Mt_R_C_Y_adj$Supply_Mt <- L109.ag_ALL_Mt_R_C_Y_adj$Prod_Mt - L109.ag_ALL_Mt_R_C_Y_adj$NetExp_Mt
-	L109.ag_ALL_Mt_R_C_Y_adj[ ag_Flow_cols ] <- round( L109.ag_ALL_Mt_R_C_Y_adj[ ag_Flow_cols ], digits_calOutput )
 	L109.ag_ALL_Mt_R_C_Y_adj$OtherUses_Mt <- L109.ag_ALL_Mt_R_C_Y_adj$Supply_Mt - L109.ag_ALL_Mt_R_C_Y_adj$Food_Mt -
       L109.ag_ALL_Mt_R_C_Y_adj$Biofuels_Mt - L109.ag_ALL_Mt_R_C_Y_adj$Feed_Mt
+	L109.ag_ALL_Mt_R_C_Y_adj[ ag_Flow_cols ] <- round( L109.ag_ALL_Mt_R_C_Y_adj[ ag_Flow_cols ], digits_calOutput )
 	L109.ag_ALL_Mt_R_C_Y <- L109.ag_ALL_Mt_R_C_Y_adj
 } 
 
@@ -136,8 +136,8 @@ if( any( L109.an_ALL_Mt_R_C_Y$OtherUses_Mt<0 ) ){
 	L109.an_ALL_Mt_R_C_Y_adj <- L109.an_ALL_Mt_R_C_Y[ c( R_C_Y, an_Flow_cols ) ]
 	L109.an_ALL_Mt_R_C_Y_adj$NetExp_Mt <- L109.an_ALL_Mt_R_C_Y$NetExp_Mt_adj2
 	L109.an_ALL_Mt_R_C_Y_adj$Supply_Mt <- L109.an_ALL_Mt_R_C_Y_adj$Prod_Mt - L109.an_ALL_Mt_R_C_Y_adj$NetExp_Mt
-	L109.an_ALL_Mt_R_C_Y_adj[ an_Flow_cols ] <- round( L109.an_ALL_Mt_R_C_Y_adj[ an_Flow_cols ], digits_calOutput )
 	L109.an_ALL_Mt_R_C_Y_adj$OtherUses_Mt <- L109.an_ALL_Mt_R_C_Y_adj$Supply_Mt - L109.an_ALL_Mt_R_C_Y_adj$Food_Mt
+	L109.an_ALL_Mt_R_C_Y_adj[ an_Flow_cols ] <- round( L109.an_ALL_Mt_R_C_Y_adj[ an_Flow_cols ], digits_calOutput )
 	L109.an_ALL_Mt_R_C_Y <- L109.an_ALL_Mt_R_C_Y_adj
 } 
 

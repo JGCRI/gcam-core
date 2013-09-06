@@ -27,40 +27,11 @@ A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 A21.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_coef")
 A22.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_coef" )
 L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )
+L121.in_EJ_R_unoil_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_unoil_F_Yh" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-# 2a. GAS PROCESSING
-printlog( "Gas processing input-output coefficients are exogenous" )
-# Interpolate gas processing IO coefs to all historical years and match in the fuel name
-L122.gasproc_coef <- gcam_interp( subset( A22.globaltech_coef, supplysector == "gas processing" ), historical_years )
-L122.gasproc_coef[ S_F ] <- calibrated_techs[ match( vecpaste( L122.gasproc_coef[ s_s_t ] ), vecpaste( calibrated_techs[ s_s_t ] ) ), S_F ]
-
-printlog( "Gas processing output: biogas and natural gas equal to regional TPES" )
-L122.out_EJ_R_gasproc_F_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh,
-      sector == "TPES" & fuel == "gasified biomass" |
-      sector == "TPES" & fuel == "gas" )
-L122.out_EJ_R_gasproc_F_Yh$sector <- "gas processing"
-L122.out_EJ_R_gasproc_F_Yh$fuel[ L122.out_EJ_R_gasproc_F_Yh$fuel == "gasified biomass" ] <- "biomass"
-
-printlog( "Gas processing output from coal gasification is calculated from the input of coal")
-L122.in_EJ_R_gasproc_coal_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_gas processing" & fuel == "coal" )
-L122.in_EJ_R_gasproc_coal_Yh$sector <- "gas processing"
-L122.out_EJ_R_gasproc_coal_Yh <- L122.in_EJ_R_gasproc_coal_Yh
-L122.out_EJ_R_gasproc_coal_Yh[ X_historical_years ] <- L122.in_EJ_R_gasproc_coal_Yh[ X_historical_years ] / L122.gasproc_coef[
-      match( vecpaste( L122.in_EJ_R_gasproc_coal_Yh[ S_F ] ), vecpaste( L122.gasproc_coef[ S_F ] ) ),
-      X_historical_years ]
-      
-#Combine (rbind) coal and the other fuels
-L122.out_EJ_R_gasproc_F_Yh <- rbind( L122.out_EJ_R_gasproc_F_Yh, L122.out_EJ_R_gasproc_coal_Yh )      
-
-printlog( "Calculate the inputs to gas processing")
-L122.in_EJ_R_gasproc_F_Yh <- L122.out_EJ_R_gasproc_F_Yh
-L122.in_EJ_R_gasproc_F_Yh[ X_historical_years ] <- L122.out_EJ_R_gasproc_F_Yh[ X_historical_years ] * L122.gasproc_coef[
-      match( vecpaste( L122.in_EJ_R_gasproc_F_Yh[ S_F ] ), vecpaste( L122.gasproc_coef[ S_F ] ) ),
-      X_historical_years ]
-
-# 2b. REFINING
+# 2a. REFINING
 ##For most technologies, inputs are derived from outputs based on exogenous IO coefficients. Subset the relevant IO coefs
 L122.globaltech_coef <- subset( A22.globaltech_coef, paste( supplysector, subsector, technology ) %in% vecpaste( calibrated_techs[ s_s_t ] ) )
 L122.globaltech_coef[ S_F ] <- calibrated_techs[
@@ -157,6 +128,64 @@ L121.globaltech_coef <- gcam_interp( A21.globaltech_coef, historical_years )
 L122.in_Mt_R_C_Yh <- L122.in_EJ_R_1stgenbio_F_Yh[ c( "GCAM_region_ID", "GCAM_commodity") ]
 L122.in_Mt_R_C_Yh[ X_historical_years ] <- L122.in_EJ_R_1stgenbio_F_Yh[ X_historical_years ] * L121.globaltech_coef[
       match( L122.in_Mt_R_C_Yh$GCAM_commodity, L121.globaltech_coef$minicam.energy.input ),
+      X_historical_years ]
+
+# 2b. GAS PROCESSING
+printlog( "Gas processing input-output coefficients are exogenous" )
+# Interpolate gas processing IO coefs to all historical years and match in the fuel name
+L122.gasproc_coef <- gcam_interp( subset( A22.globaltech_coef, supplysector == "gas processing" ), historical_years )
+L122.gasproc_coef[ S_F ] <- calibrated_techs[ match( vecpaste( L122.gasproc_coef[ s_s_t ] ), vecpaste( calibrated_techs[ s_s_t ] ) ), S_F ]
+
+printlog( "Gas processing output from biomass gasification is equal to regional TPES" )
+L122.out_EJ_R_gasproc_bio_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel == "gasified biomass" )
+L122.out_EJ_R_gasproc_bio_Yh$sector <- "gas processing"
+L122.out_EJ_R_gasproc_bio_Yh$fuel <- "biomass"
+
+printlog( "Gas processing output from coal gasification is calculated from the input of coal")
+L122.in_EJ_R_gasproc_coal_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_gas processing" & fuel == "coal" )
+L122.in_EJ_R_gasproc_coal_Yh$sector <- "gas processing"
+L122.out_EJ_R_gasproc_coal_Yh <- L122.in_EJ_R_gasproc_coal_Yh
+L122.out_EJ_R_gasproc_coal_Yh[ X_historical_years ] <- L122.in_EJ_R_gasproc_coal_Yh[ X_historical_years ] / L122.gasproc_coef[
+      match( vecpaste( L122.in_EJ_R_gasproc_coal_Yh[ S_F ] ), vecpaste( L122.gasproc_coef[ S_F ] ) ),
+      X_historical_years ]
+      
+printlog( "Natural gas is equal to regional TPES minus upstream use of natural gas (e.g. GTL)" )
+L122.out_EJ_R_gasproc_gas_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "TPES" & fuel == "gas" )
+L122.out_EJ_R_gasproc_gas_Yh$sector <- "gas processing"
+      
+#NOTE: This is complicated. Several of the "upstream" energy users--in GCAM 3.0, unconventional oil production and gas-to-liquids--are assumed
+# to use natural gas upstream of the processing and T&D infrastructure. If this is the case, then these sectors' consumption of gas should not
+# be included in the gas processing and pipeline sectors. However this may be changed in the future, and for this reason the following
+# method is designed to work if future users re-set the energy inputs to these technologies from "regional natural gas" to "wholesale gas".
+#First, extract the input names
+reg_nat_gas <- calibrated_techs$minicam.energy.input[ calibrated_techs$sector == "gas processing" & calibrated_techs$fuel == "gas" ]
+gas_to_unconv_oil <- calibrated_techs$minicam.energy.input[ calibrated_techs$sector == "unconventional oil production" & calibrated_techs$fuel == "gas" ]
+gas_to_gtl <- calibrated_techs$minicam.energy.input[ calibrated_techs$sector == "gtl" & calibrated_techs$fuel == "gas" ]
+
+#Where the input names for unconv oil or GTL are equal to the name of the input to the gas processing sector,
+# subtract from the gas processing sector's production
+if ( gas_to_unconv_oil == reg_nat_gas ){
+	L122.out_EJ_R_gasproc_gas_Yh[ L122.out_EJ_R_gasproc_gas_Yh[[R]] %in% L121.in_EJ_R_unoil_F_Yh[[R]], X_historical_years ] <-
+	L122.out_EJ_R_gasproc_gas_Yh[ L122.out_EJ_R_gasproc_gas_Yh[[R]] %in% L121.in_EJ_R_unoil_F_Yh[[R]], X_historical_years ] - L121.in_EJ_R_unoil_F_Yh[
+	   match( vecpaste( L122.out_EJ_R_gasproc_gas_Yh[ L122.out_EJ_R_gasproc_gas_Yh[[R]] %in% L121.in_EJ_R_unoil_F_Yh[[R]], R_F ] ),
+	          vecpaste( L121.in_EJ_R_unoil_F_Yh[ R_F ] ) ),
+	   X_historical_years ]	
+}
+
+if ( gas_to_gtl == reg_nat_gas ){
+	L122.out_EJ_R_gasproc_gas_Yh[ X_historical_years ] <-
+	L122.out_EJ_R_gasproc_gas_Yh[ X_historical_years ] - L122.in_EJ_R_gtlctl_F_Yh[
+	   match( vecpaste( L122.out_EJ_R_gasproc_gas_Yh[ R_F ] ), vecpaste( L122.in_EJ_R_gtlctl_F_Yh[ R_F ] ) ),
+	   X_historical_years ]	
+}
+
+#Combine (rbind) individual fuel tables
+L122.out_EJ_R_gasproc_F_Yh <- rbind( L122.out_EJ_R_gasproc_gas_Yh, L122.out_EJ_R_gasproc_bio_Yh, L122.out_EJ_R_gasproc_coal_Yh )      
+
+printlog( "Calculate the inputs to gas processing")
+L122.in_EJ_R_gasproc_F_Yh <- L122.out_EJ_R_gasproc_F_Yh
+L122.in_EJ_R_gasproc_F_Yh[ X_historical_years ] <- L122.out_EJ_R_gasproc_F_Yh[ X_historical_years ] * L122.gasproc_coef[
+      match( vecpaste( L122.in_EJ_R_gasproc_F_Yh[ S_F ] ), vecpaste( L122.gasproc_coef[ S_F ] ) ),
       X_historical_years ]
 
 # -----------------------------------------------------------------------------

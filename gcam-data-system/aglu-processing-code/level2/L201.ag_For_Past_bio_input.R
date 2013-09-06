@@ -209,7 +209,9 @@ L201.AgYield_bio_hi$yield[ paste( L201.AgYield_bio_hi$region, L201.AgYield_bio_h
    L201.AgYield_bio_ref$yield[ paste( L201.AgYield_bio_ref$region, L201.AgYield_bio_ref$AgSupplySubsector ) %in%
       paste( A_biocrops_R_AEZ$region, A_biocrops_R_AEZ$AgSupplySubsector ) ]
 
-printlog( "Removing non-existent AEZs from all tables")
+printlog( "Removing non-existent regions and AEZs from all tables")
+L201.AgSupplySector <- subset( L201.AgSupplySector, !region %in% no_aglu_regions )
+L201.AgSupplySector_biomassOil <- subset( L201.AgSupplySector_biomassOil, !region %in% no_aglu_regions )
 L201.AgSupplySubsector <- remove_AEZ_nonexist( L201.AgSupplySubsector )
 L201.AgTechInterp <- remove_AEZ_nonexist( L201.AgTechInterp )
 L201.AgTechShrwt <- remove_AEZ_nonexist( L201.AgTechShrwt )

@@ -67,7 +67,7 @@ int_gains_scaler_heating <- -100 # Usually set to 1000 or 2000 for USA and China
 #that reduces the effects of this parameter
 int_gains_scaler_cooling <- 100
 
-
+discount_rate_enduse <- 0.1
 
 
 

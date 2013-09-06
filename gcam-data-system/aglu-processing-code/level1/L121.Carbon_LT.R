@@ -187,4 +187,3 @@ writedata( L121.MatureAge_R_LT_AEZ, domain="AGLU_LEVEL1_DATA", fn="L121.MatureAg
 
 # Every script should finish with this line
 logstop()
-      

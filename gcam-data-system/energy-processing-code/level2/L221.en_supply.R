@@ -33,6 +33,7 @@ A21.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A21.subsector_interp" )
 A21.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_coef" )
 A21.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_cost" )
 A21.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_shrwt" )
+A21.globaltech_keyword <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_keyword" )
 A21.tradedtech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_coef" )
 A21.tradedtech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_cost" )
 A21.tradedtech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_shrwt" )
@@ -98,6 +99,12 @@ printlog( "L221.GlobalTechShrwt_en: Shareweights of global technologies for upst
 L221.globaltech_shrwt.melt <- interpolate_and_melt( A21.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )
 L221.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L221.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]
 L221.GlobalTechShrwt_en <- L221.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
+
+#Keywords of global technologies
+printlog( "L221.PrimaryConsKeyword_en: Primary energy consumption keywords" )
+L221.PrimaryConsKeyword_en <- repeat_and_add_vector( A21.globaltech_keyword, Y, c( model_base_years, model_future_years ) )
+L221.PrimaryConsKeyword_en[ c( "sector.name", "subsector.name" ) ] <- L221.PrimaryConsKeyword_en[ c( "supplysector", "subsector" ) ]
+L221.PrimaryConsKeyword_en <- L221.PrimaryConsKeyword_en[ c( names_GlobalTechYr, "primary.consumption" ) ]
 
 #Coefficients of traded technologies
 printlog( "L221.TechCoef_en_Traded: Energy inputs, coefficients, and market names of traded technologies for upstream energy handling" )
@@ -207,6 +214,7 @@ write_mi_data( L221.StubTech_en, "StubTech", "ENERGY_LEVEL2_DATA", "L221.StubTec
 write_mi_data( L221.GlobalTechCoef_en, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L221.GlobalTechCoef_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.GlobalTechCost_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L221.GlobalTechCost_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.GlobalTechShrwt_en, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L221.GlobalTechShrwt_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
+write_mi_data( L221.PrimaryConsKeyword_en, "PrimaryConsKeyword", "ENERGY_LEVEL2_DATA", "L221.PrimaryConsKeyword_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechCoef_en_Traded, "TechCoef", "ENERGY_LEVEL2_DATA", "L221.TechCoef_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechCost_en_Traded, "TechCost", "ENERGY_LEVEL2_DATA", "L221.TechCost_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechShrwt_en_Traded, "TechShrwt", "ENERGY_LEVEL2_DATA", "L221.TechShrwt_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )

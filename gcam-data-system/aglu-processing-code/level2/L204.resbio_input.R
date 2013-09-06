@@ -166,6 +166,7 @@ L204.AgResBioCurve_Jatr <- repeat_and_add_vector( L204.Jatr_R_Y_AEZ, "price", un
 L204.AgResBioCurve_Jatr$fract.harvested <- A_resbio_curves$Jatr[ match( L204.AgResBioCurve_Jatr$price, A_resbio_curves$price ) ]
 
 printlog( "Removing non-existent region x AEZs from all tables" )
+L204.StubResBioCurve_Mill <- subset( L204.StubResBioCurve_Mill, !region %in% no_aglu_regions )
 L204.AgResBio_For <- remove_AEZ_nonexist( L204.AgResBio_For )
 L204.AgResBioCurve_For <- remove_AEZ_nonexist( L204.AgResBioCurve_For )
 L204.AgResBio_ag <- remove_AEZ_nonexist( L204.AgResBio_ag )

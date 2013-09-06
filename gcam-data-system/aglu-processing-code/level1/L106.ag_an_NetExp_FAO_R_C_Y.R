@@ -118,6 +118,14 @@ L106.ag_NetExp_Mt_R_C_Y[ X_AGLU_historical_years ] <- L106.ag_NetExp_t_R_C_Y_adj
 L106.an_NetExp_Mt_R_C_Y <- L106.an_NetExp_t_R_C_Y_adj
 L106.an_NetExp_Mt_R_C_Y[ X_AGLU_historical_years ] <- L106.an_NetExp_t_R_C_Y_adj[ X_AGLU_historical_years ] * conv_t_Mt
 
+#Translate these to full tables, where no values can be missing
+L106.ag_NetExp_Mt_R_C_Y <- translate_to_full_table( L106.ag_NetExp_Mt_R_C_Y,
+      R, unique( iso_GCAM_regID$GCAM_region_ID ),
+      C, unique( L106.ag_NetExp_Mt_R_C_Y$GCAM_commodity ) )
+L106.an_NetExp_Mt_R_C_Y <- translate_to_full_table( L106.an_NetExp_Mt_R_C_Y,
+      R, unique( iso_GCAM_regID$GCAM_region_ID ),
+      C, unique( L106.an_NetExp_Mt_R_C_Y$GCAM_commodity ) )
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table

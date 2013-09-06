@@ -305,6 +305,16 @@ StubTechSecOut,world/+{name}region,region/+{name}supplysector,supplysector/+{nam
 
 StubResBioCurve,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}residue-biomass-production,residue-biomass-production/+{price}fract-harvested,residue-biomass-production/+fract-harvested,scenario,scenario/world
 
+FinalEnergyKeyword,world/+{name}region,region/+{name}supplysector,supplysector/+{final-energy}keyword,scenario,scenario/world
+
+PrimaryConsKeyword,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{primary-consumption}keyword,scenario,scenario/world,world/global-technology-database
+
+PrimaryRenewKeyword,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{primary-renewable}keyword,scenario,scenario/world,world/global-technology-database
+
+PrimaryRenewKeywordInt,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{primary-renewable}keyword,scenario,scenario/world,world/global-technology-database
+
+AvgFossilEffKeyword,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/{average-fossil-efficiency=}keyword,scenario,scenario/world,world/global-technology-database
+
 CarbonCoef,world/+{name}region,region/+{name}PrimaryFuelCO2Coef,region/+PrimaryFuelCO2Coef,scenario,scenario/world
 
 ModelTime,modeltime/+{time-step}start-year,modeltime/+start-year,modeltime/+final-calibration-year,modeltime/+end-year,scenario,scenario/modeltime

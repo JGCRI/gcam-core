@@ -53,6 +53,7 @@ L108.ag_Feedfrac_R_Cnf_Y <- L108.ag_Feed_Mt_R_Cnf_Y
 L108.ag_Feedfrac_R_Cnf_Y[ X_AGLU_historical_years ] <- L108.ag_Feed_Mt_R_Cnf_Y[ X_AGLU_historical_years ] / L108.ag_Feed_Mt_R_Y[
       match( L108.ag_Feedfrac_R_Cnf_Y$GCAM_region_ID, L108.ag_Feed_Mt_R_Y$GCAM_region_ID ),
       X_AGLU_historical_years ]
+L108.ag_Feedfrac_R_Cnf_Y[ is.na( L108.ag_Feedfrac_R_Cnf_Y ) ] <- 0
 
 #Compile regional total feedcrop demands from IMAGE data
 printlog( "Multiplying feedcrop shares by IMAGE-based total regional feedcrop demands" )

@@ -39,6 +39,24 @@ L100.IEAfull$PRODUCT[ L100.IEAfull$PRODUCT == "Natural Gas" ] <- "Natural gas"
 L100.IEAfull$PRODUCT[ L100.IEAfull$PRODUCT == "Other Kerosene" ] <- "Other kerosene"
 L100.IEAfull$PRODUCT[ L100.IEAfull$PRODUCT == "Total" ] <- "Total of all energy sources"
 
+###UP FRONT ADJUSTMENTS
+# NEARLY THE ENTIRE SUPPLY OF NATURAL GAS IN OTHER AFRICA BETWEEN 2001 and 2004 IS ALLOCATED TO GTL PLANTS
+# OPERATING AT NEARLY 100% EFFICIENCY. ADJUSTING THE ENERGY INPUT QUANTITIES TO AVOID NEGATIVE VALUES LATER ON.
+GTL_coef <- 1.7
+GTL_adj_years <- paste0( "X", 2001:2004 )
+L100.IEAfull[ L100.IEAfull$COUNTRY == "Other Africa" & L100.IEAfull$FLOW == "TGTL" & L100.IEAfull$PRODUCT == "Natural gas",  GTL_adj_years] <-
+      L100.IEAfull[ L100.IEAfull$COUNTRY == "Other Africa" & L100.IEAfull$FLOW == "TGTL" & L100.IEAfull$PRODUCT == "Other hydrocarbons",  GTL_adj_years] *
+      GTL_coef * -1     #Need to multiply by -1 because other hydrocarbons are the output and have a different sign
+
+# TURKEY HAS ELECTRICITY PRODUCTION FROM PRIMARY SOLID BIOFUELS (ELAUTOC) BETWEEN 1971 AND 1981 WITH NO CORRESPONDING FUEL INPUT BY ANY SECTORS
+# ADDING A FUEL INPUT TO AVOID NEGATIVE NUMBERS LATER ON.
+CHP_IOcoef <- 5
+conv_GWh_ktoe <- 0.08598452 #ELAUTOC (the output) is in gigawatt hours, whereas AUTOCHP (the input) is in ktoe
+CHP_adj_years <- paste0( "X", 1971:1981 )
+L100.IEAfull[ L100.IEAfull$COUNTRY == "Turkey" & L100.IEAfull$FLOW == "AUTOCHP" & L100.IEAfull$PRODUCT == "Primary solid biofuels",  CHP_adj_years] <-
+      L100.IEAfull[ L100.IEAfull$COUNTRY == "Turkey" & L100.IEAfull$FLOW == "ELAUTOC" & L100.IEAfull$PRODUCT == "Primary solid biofuels",  CHP_adj_years] *
+      CHP_IOcoef * conv_GWh_ktoe * -1
+
 #Split the country mapping table into composite regions and single-countries
 IEA_ctry_composite <- subset( IEA_ctry, IEA_ctry %in% c( "Former Soviet Union (if no detail)", "Former Yugoslavia (if no detail)",
       "Other Africa", "Other Non-OECD Americas", "Other Asia" ) )

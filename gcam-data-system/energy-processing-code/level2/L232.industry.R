@@ -33,6 +33,7 @@ A32.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_coef" )
 A32.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_cost" )
 A32.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_eff" )
 A32.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_shrwt" )
+A32.globaltech_interp <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_interp" )
 A32.nonenergy_Cseq <- readdata( "ENERGY_ASSUMPTIONS", "A32.nonenergy_Cseq" )
 A32.fuelprefElasticity <- readdata( "ENERGY_ASSUMPTIONS", "A32.fuelprefElasticity" )
 A32.demand <- readdata( "ENERGY_ASSUMPTIONS", "A32.demand" )
@@ -50,6 +51,9 @@ L232.rm_heat_techs_R <- add_region_name( L232.rm_heat_techs_R )
 # 2a. Supplysector information
 printlog( "L232.Supplysector_ind: Supply sector information for industry sector" )
 L232.Supplysector_ind <- write_to_all_regions( A32.sector, names_Supplysector )
+
+printlog( "L232.FinalEnergyKeyword_ind: Supply sector keywords for industry sector" )
+L232.FinalEnergyKeyword_ind <- na.omit( write_to_all_regions( A32.sector, names_FinalEnergyKeyword ) )
 
 # 2b. Subsector information
 printlog( "L232.SubsectorLogit_ind: Subsector logit exponents of industry sector" )
@@ -99,6 +103,10 @@ printlog( "L232.GlobalTechShrwt_ind: Shareweights of global industrial sector te
 L232.globaltech_shrwt.melt <- interpolate_and_melt( A32.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )
 L232.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L232.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]
 L232.GlobalTechShrwt_ind <- L232.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
+
+printlog( "L232.StubTechInterp_ind: Shareweight interpolation of global industrial sector technologies" )
+L232.StubTechInterp_ind <- write_to_all_regions( A32.globaltech_interp, names_TechInterp )
+names( L232.StubTechInterp_ind )[ names( L232.StubTechInterp_ind ) == "technology" ] <- "stub.technology"
 
 printlog( "L232.GlobalTechEff_ind: Energy inputs and coefficients of global industrial energy use and feedstocks technologies" )
 L232.globaltech_eff.melt <- interpolate_and_melt( A32.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )
@@ -288,6 +296,7 @@ L232.BaseService_ind <- data.frame(
 write_mi_data( L232.Supplysector_ind, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L232.Supplysector_ind",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_industry.xml" ) 
 write_mi_data( L232.SubsectorLogit_ind, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L232.SubsectorLogit_ind", "ENERGY_XML_BATCH", "batch_industry.xml" ) 
+write_mi_data( L232.FinalEnergyKeyword_ind, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L232.FinalEnergyKeyword_ind", "ENERGY_XML_BATCH", "batch_industry.xml" ) 
 if( exists( "L232.SubsectorShrwt_ind" ) ){
 	write_mi_data( L232.SubsectorShrwt_ind, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L232.SubsectorShrwt_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 	}
@@ -303,6 +312,7 @@ if( exists( "L232.SubsectorInterpTo_ind" ) ) {
 	}
 write_mi_data( L232.StubTech_ind, "StubTech", "ENERGY_LEVEL2_DATA", "L232.StubTech_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.GlobalTechShrwt_ind, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L232.GlobalTechShrwt_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
+write_mi_data( L232.StubTechInterp_ind, "StubTechInterp", "ENERGY_LEVEL2_DATA", "L232.StubTechInterp_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.GlobalTechEff_ind, "GlobalTechEff", "ENERGY_LEVEL2_DATA", "L232.GlobalTechEff_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.GlobalTechCoef_ind, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L232.GlobalTechCoef_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.GlobalTechCost_ind, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L232.GlobalTechCost_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )

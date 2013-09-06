@@ -258,6 +258,25 @@ L202.StubTechFixOut_imp_an$fixedOutput[ L202.StubTechFixOut_imp_an$year > max( f
       L202.StubTechFixOut_imp_an$fixedOutput[ L202.StubTechFixOut_imp_an$year == max( final_an_ALL_year ) ]
 L202.StubTechFixOut_imp_an <- L202.StubTechFixOut_imp_an[ names_StubTechFixOut ]
 
+#Remove any regions for which agriculture and land use are not modeled
+L202.RenewRsrc <- subset( L202.RenewRsrc, !region %in% no_aglu_regions )
+L202.RenewRsrcPrice <- subset( L202.RenewRsrcPrice, !region %in% no_aglu_regions )
+L202.RenewRsrcCalProd <- subset( L202.RenewRsrcCalProd, !region %in% no_aglu_regions )
+L202.maxSubResource <- subset( L202.maxSubResource, !region %in% no_aglu_regions )
+L202.RenewRsrcCurves <- subset( L202.RenewRsrcCurves, !region %in% no_aglu_regions )
+L202.Supplysector_in <- subset( L202.Supplysector_in, !region %in% no_aglu_regions )
+L202.SubsectorAll_in <- subset( L202.SubsectorAll_in, !region %in% no_aglu_regions )
+L202.StubTech_in <- subset( L202.StubTech_in, !region %in% no_aglu_regions )
+L202.StubTechInterp_in <- subset( L202.StubTechInterp_in, !region %in% no_aglu_regions )
+L202.StubTechProd_in <- subset( L202.StubTechProd_in, !region %in% no_aglu_regions )
+L202.Supplysector_an <- subset( L202.Supplysector_an, !region %in% no_aglu_regions )
+L202.SubsectorAll_an <- subset( L202.SubsectorAll_an, !region %in% no_aglu_regions )
+L202.StubTech_an <- subset( L202.StubTech_an, !region %in% no_aglu_regions )
+L202.StubTechInterp_an <- subset( L202.StubTechInterp_an, !region %in% no_aglu_regions )
+L202.StubTechProd_an <- subset( L202.StubTechProd_an, !region %in% no_aglu_regions )
+L202.StubTechCoef_an <- subset( L202.StubTechCoef_an, !region %in% no_aglu_regions )
+L202.StubTechFixOut_imp_an <- subset( L202.StubTechFixOut_imp_an, !region %in% no_aglu_regions )
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 

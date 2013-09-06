@@ -29,6 +29,7 @@ A25.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A25.subsector_shrwt" )
 A25.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A25.globaltech_eff" )
 A25.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A25.globaltech_cost" )
 A25.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A25.globaltech_shrwt" )
+A25.globaltech_keyword <- readdata( "ENERGY_ASSUMPTIONS", "A25.globaltech_keyword" )
 A25.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A25.globaltech_co2capture" )
 
 # -----------------------------------------------------------------------------
@@ -86,6 +87,15 @@ L225.globaltech_shrwt.melt <- interpolate_and_melt( A25.globaltech_shrwt, c( mod
 L225.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L225.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]
 L225.GlobalTechShrwt_h2 <- L225.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
 
+printlog( "L225.PrimaryRenewKeyword_h2: Keywords of primary renewable electric generation technologies" )
+L225.AllKeyword_h2 <- repeat_and_add_vector( A25.globaltech_keyword, Y, c( model_base_years, model_future_years ) )
+L225.AllKeyword_h2[ c( "sector.name", "subsector.name" ) ] <- L225.AllKeyword_h2[ c( "supplysector", "subsector" ) ]
+L225.PrimaryRenewKeyword_h2 <- L225.AllKeyword_h2[ !is.na( L225.AllKeyword_h2$primary.renewable ), c( names_GlobalTechYr, "primary.renewable" ) ]
+
+printlog( "L225.AvgFossilEffKeyword_h2: Keywords of fossil/bio electric generation technologies" )
+L225.AvgFossilEffKeyword_h2 <- L225.AllKeyword_h2[ !is.na( L225.AllKeyword_h2$average.fossil.efficiency ),
+      c( names_GlobalTechYr, "average.fossil.efficiency" ) ]
+
 printlog( "L225.GlobalTechCapture_h2: CO2 capture fractions from global fertilizer production technologies with CCS" )
 ## No need to consider historical periods or intermittent technologies here
 L225.globaltech_co2capture.melt <- interpolate_and_melt( A25.globaltech_co2capture, model_future_years, value.name="remove.fraction" )
@@ -117,6 +127,8 @@ write_mi_data( L225.StubTech_h2, "StubTech", "ENERGY_LEVEL2_DATA", "L225.StubTec
 write_mi_data( L225.GlobalTechEff_h2, "GlobalTechEff", "ENERGY_LEVEL2_DATA", "L225.GlobalTechEff_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
 write_mi_data( L225.GlobalTechCost_h2, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L225.GlobalTechCost_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
 write_mi_data( L225.GlobalTechShrwt_h2, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L225.GlobalTechShrwt_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
+write_mi_data( L225.PrimaryRenewKeyword_h2, "PrimaryRenewKeyword", "ENERGY_LEVEL2_DATA", "L225.PrimaryRenewKeyword", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
+write_mi_data( L225.AvgFossilEffKeyword_h2, "AvgFossilEffKeyword", "ENERGY_LEVEL2_DATA", "L225.AvgFossilEffKeyword_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
 write_mi_data( L225.GlobalTechCapture_h2, "GlobalTechCapture", "ENERGY_LEVEL2_DATA", "L225.GlobalTechCapture_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_hydrogen.xml", "ENERGY_XML_FINAL", "hydrogen.xml", "", xml_tag="outFile" )
