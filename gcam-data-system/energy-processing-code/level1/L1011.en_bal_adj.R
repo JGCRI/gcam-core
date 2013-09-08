@@ -81,7 +81,8 @@ printlog( "NOTE: TPES of natural gas includes gasified coal. This is subtracted 
 # TPES at this point for natural gas include both natural gas and gasified coal. This subtraction generally follows the method used in code file L122.
 L1011.gasproc_coef <- gcam_interp( subset( A22.globaltech_coef, supplysector == "gas processing" ), historical_years )
 L1011.gasproc_coef[ S_F ] <- calibrated_techs[ match( vecpaste( L1011.gasproc_coef[ s_s_t ] ), vecpaste( calibrated_techs[ s_s_t ] ) ), S_F ]
-L1011.out_EJ_R_gasproc_coal_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_gas processing" & fuel == "coal" )
+L1011.in_EJ_R_gasproc_coal_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, sector == "in_gas processing" & fuel == "coal" )
+L1011.out_EJ_R_gasproc_coal_Yh <- L1011.in_EJ_R_gasproc_coal_Yh
 L1011.out_EJ_R_gasproc_coal_Yh$sector <- sub( "in_", "", L1011.out_EJ_R_gasproc_coal_Yh$sector )
 L1011.out_EJ_R_gasproc_coal_Yh[ X_historical_years ] <- L1011.out_EJ_R_gasproc_coal_Yh[ X_historical_years ] / L1011.gasproc_coef[
       match( vecpaste( L1011.out_EJ_R_gasproc_coal_Yh[ S_F ] ), vecpaste( L1011.gasproc_coef[ S_F ] ) ),
@@ -91,6 +92,14 @@ L1011.out_EJ_R_gasproc_coal_Yh[ X_historical_years ] <- L1011.out_EJ_R_gasproc_c
 L1011.en_bal_EJ_R_Si_Fi_Yh[ L1011.en_bal_EJ_R_Si_Fi_Yh$sector == "TPES" & L1011.en_bal_EJ_R_Si_Fi_Yh$fuel == "gas", X_historical_years ] <-
       L1011.en_bal_EJ_R_Si_Fi_Yh[ L1011.en_bal_EJ_R_Si_Fi_Yh$sector == "TPES" & L1011.en_bal_EJ_R_Si_Fi_Yh$fuel == "gas", X_historical_years ] -
       L1011.out_EJ_R_gasproc_coal_Yh[ X_historical_years ]
+
+#This is also complicated. In regions with very low natural gas use and high coal-to-gas with very high input-output coefs on coal-to-gas production
+# (South Africa), dividing the coal input by the IO coef may cause gas production in excess of the demands in the region.
+# If this is the case, need to return to original energy balance data and reduce the coal input to gas works (can re-allocate to another sector if desired)
+if( any( L1011.en_bal_EJ_R_Si_Fi_Yh[ L1011.en_bal_EJ_R_Si_Fi_Yh$sector == "TPES" & L1011.en_bal_EJ_R_Si_Fi_Yh$fuel == "gas", X_historical_years ] < 0 ) ){
+	stop( "Exogenous IO coef on coal input to gas works caused an increase in natural gas beyond the regional TPES of gas")
+}
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table

@@ -42,7 +42,7 @@ $(AGLUPROC)/logs/L2%.log: $(AGLUPROC)/Level2/L2%
 
 $(AGLUXML)/%.xml: $(AGLUPROC)/xml-batch/batch_%.xml
 	echo $?
-	java -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
+	java -Xmx2g -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
 clean:
 	-rm -f $(AGLUPROC)/logs/*.d

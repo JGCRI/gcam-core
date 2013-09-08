@@ -177,6 +177,29 @@ L123.LC_bm2_R_MgdFor_Yh_AEZ[ X_preAGLU_years ] <- L123.LC_bm2_R_MgdFor_Y_AEZ[[ X
       X_preAGLU_years ]
 L123.LC_bm2_R_MgdFor_Yh_AEZ <- L123.LC_bm2_R_MgdFor_Yh_AEZ[ c( R_LT_AEZ, X_land_cover_years ) ]
 
+#Where managed forest is greater than assumed maximum percentage of total forest, reduce the managed forest land.
+#Output is unaffected so these regions have higher yields.
+printlog( "Applying maximum percentage of any region/AEZs forest that is allowed to be in production (managed)" )
+printlog( "NOTE: In region/AEZs where applicable, this threshold will result in increased forest yields" )
+L123.LC_bm2_R_For_Yh_AEZ <- L120.LC_bm2_R_LT_Yh_AEZ[ L120.LC_bm2_R_LT_Yh_AEZ[[LT]] == "Forest", c( R_LT_AEZ, X_land_cover_years ) ]
+L123.LC_MgdForFrac_Yh_AEZ <- L123.LC_bm2_R_MgdFor_Yh_AEZ[ R_LT_AEZ ]
+L123.LC_MgdForFrac_Yh_AEZ[ X_land_cover_years ] <-
+      L123.LC_bm2_R_MgdFor_Yh_AEZ[ X_land_cover_years ] / L123.LC_bm2_R_For_Yh_AEZ[ X_land_cover_years ]
+L123.LC_MgdForFrac_Yh_AEZ[ is.na( L123.LC_MgdForFrac_Yh_AEZ) ] <- 0
+L123.LC_MgdForFrac_Yh_AEZ_adj <- L123.LC_MgdForFrac_Yh_AEZ
+L123.LC_MgdForFrac_Yh_AEZ_adj[ X_land_cover_years ][ L123.LC_MgdForFrac_Yh_AEZ_adj[ X_land_cover_years ] > max_MgdFor_frac ] <- max_MgdFor_frac
+
+#Recalculate managed forest land, adjusted by assumed maximum portion that can be managed
+L123.LC_bm2_R_MgdFor_Yh_AEZ <- L123.LC_bm2_R_For_Yh_AEZ[ R_LT_AEZ ]
+L123.LC_bm2_R_MgdFor_Yh_AEZ[ X_land_cover_years ] <-
+      L123.LC_bm2_R_For_Yh_AEZ[ X_land_cover_years ] * L123.LC_MgdForFrac_Yh_AEZ_adj[ X_land_cover_years ]
+
+#Recalculate forestry yield
+L123.For_Yield_m3m2_R_AEZ <- L123.For_Prod_bm3_R_Y_AEZ[ R_C_AEZ ]
+L123.For_Yield_m3m2_R_AEZ[ X_AGLU_historical_years ] <-
+      L123.For_Prod_bm3_R_Y_AEZ[ X_AGLU_historical_years ] / L123.LC_bm2_R_MgdFor_Yh_AEZ [ X_AGLU_historical_years ]
+L123.For_Yield_m3m2_R_AEZ[ is.na( L123.For_Yield_m3m2_R_AEZ ) ] <- 0
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments to tables

@@ -60,8 +60,9 @@ L124.out_EJ_R_heatfromelec_F_Yh$fuel <- enduse_fuel_aggregation$heat[ match( L12
 L124.out_EJ_R_heatfromelec_F_Yh <- aggregate( L124.out_EJ_R_heatfromelec_F_Yh[ X_historical_years ], by=as.list( L124.out_EJ_R_heatfromelec_F_Yh[ R_S_F ] ), sum )
 
 printlog( "Secondary output coefficients on heat produced by main activity CHP plants" )
-#Only do this for regions where district heat is being modeled
-L124.heatoutratio_R_elec_F_tech_Yh <- subset( L1231.out_EJ_R_elec_F_tech_Yh, fuel %in% L124.out_EJ_R_heatfromelec_F_Yh$fuel & GCAM_region_ID %in% heat_regionIDs )
+#Only do this for regions where district heat is being modeled, and for technologies where heat output is modeled
+L124.heatoutratio_R_elec_F_tech_Yh <- subset( L1231.out_EJ_R_elec_F_tech_Yh, GCAM_region_ID %in% heat_regionIDs &
+      technology %in% calibrated_techs$technology[ calibrated_techs$secondary.output == "heat" ] )
 L124.heatoutratio_R_elec_F_tech_Yh[ X_historical_years ] <- L124.out_EJ_R_heatfromelec_F_Yh[
       match( vecpaste( L124.heatoutratio_R_elec_F_tech_Yh[ R_F ] ), vecpaste( L124.out_EJ_R_heatfromelec_F_Yh[ R_F ] ) ), X_historical_years ] /
       L124.heatoutratio_R_elec_F_tech_Yh[ X_historical_years ]

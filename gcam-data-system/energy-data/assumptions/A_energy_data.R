@@ -27,13 +27,13 @@ electricity_input_fuels <- c( "biomass", "coal", "gas", "refined liquids" )
 heat_price <- 2.8
 
 digits_CO2coef <- 1
-digits_calproduction <- 6
-digits_calOutput <- 6
+digits_calproduction <- 7
+digits_calOutput <- 7
 digits_depresource <- 1
 digits_maxSubResource <- 5
 digits_mid.price <- 3
 digits_curve.exponent <- 3
-digits_coefficient <- 6
+digits_coefficient <- 7
 digits_cost <- 4
 digits_efficiency <- 3
 digits_capital <- 0

@@ -46,11 +46,17 @@ L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 <- L1231.eff_R_elec_gas_tech.melt$
              paste( L1231.eff_R_elec_gas_tech.melt$year, L1231.eff_R_elec_gas_tech.melt$technology ) ) ]
 
 #Reset upper and lower bound efficiencies, as needed
-##Where avg efficiency is outside of the range of the two technologies, set the upper or lower one to the average. This will take 100% of the market share.
+##Where avg efficiency is outside of the range of the two technologies, set the lower bound equal to the average, and the upper equal to
+## the average plus a small adjustment. This adjustment avoids assigning 100% of market share to combined-cycle.
+##NOTE: this is complicated. Heat output is not allowed for combined cycle power plants--it is assumed that CHP plants are all single-cycle.
+# However if a region has very high efficiencies of CC power plants that bring the weighted average higher than our assumed CC efficiency (e.g. Turkey),
+# this could set the market share of single-cycle power plants to 0 and therefore zero out any heat production from these technologies.
+# Adding this small adjustment factor to the efficiencies avoids this outcome.
+elec_adj <- 0.03
 L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1[ L1231.eff_R_elec_gas_Yh.melt$efficiency < L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1 ] <-
       L1231.eff_R_elec_gas_Yh.melt$efficiency[ L1231.eff_R_elec_gas_Yh.melt$efficiency < L1231.eff_R_elec_gas_Yh.melt$efficiency_tech1 ]
 L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2[ L1231.eff_R_elec_gas_Yh.melt$efficiency > L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 ] <-
-      L1231.eff_R_elec_gas_Yh.melt$efficiency[ L1231.eff_R_elec_gas_Yh.melt$efficiency > L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 ]
+      L1231.eff_R_elec_gas_Yh.melt$efficiency[ L1231.eff_R_elec_gas_Yh.melt$efficiency > L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 ] + elec_adj
       
 #Cast efficiency table to final format
 L1231.eff_R_elec_gas_tech1_Yh <- cast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "efficiency_tech1")

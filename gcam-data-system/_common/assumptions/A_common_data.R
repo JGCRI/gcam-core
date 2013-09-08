@@ -1,3 +1,6 @@
+#Regions in which agriculture and land use are not modeled
+no_aglu_regions <- "Taiwan"
+
 #------------------------------------------------------------------------------------
 #Historical years for data write-out
 historical_years <- 1971:2010

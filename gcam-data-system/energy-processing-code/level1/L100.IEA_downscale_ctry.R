@@ -44,9 +44,18 @@ L100.IEAfull$PRODUCT[ L100.IEAfull$PRODUCT == "Total" ] <- "Total of all energy 
 # OPERATING AT NEARLY 100% EFFICIENCY. ADJUSTING THE ENERGY INPUT QUANTITIES TO AVOID NEGATIVE VALUES LATER ON.
 GTL_coef <- 1.7
 GTL_adj_years <- paste0( "X", 2001:2004 )
-L100.IEAfull[ L100.IEAfull$COUNTRY == "Other Africa" & L100.IEAfull$FLOW == "TGTL" & L100.IEAfull$PRODUCT == "Natural gas",  GTL_adj_years] <-
-      L100.IEAfull[ L100.IEAfull$COUNTRY == "Other Africa" & L100.IEAfull$FLOW == "TGTL" & L100.IEAfull$PRODUCT == "Other hydrocarbons",  GTL_adj_years] *
+L100.IEAfull[ L100.IEAfull$COUNTRY == "Other Africa" & L100.IEAfull$FLOW == "TGTL" & L100.IEAfull$PRODUCT == "Natural gas", GTL_adj_years] <-
+      L100.IEAfull[ L100.IEAfull$COUNTRY == "Other Africa" & L100.IEAfull$FLOW == "TGTL" & L100.IEAfull$PRODUCT == "Other hydrocarbons", GTL_adj_years] *
       GTL_coef * -1     #Need to multiply by -1 because other hydrocarbons are the output and have a different sign
+
+# SOUTH AFRICA HAS A COAL-TO-GAS IO COEF IN THE GAS WORKS SECTOR OF ABOUT 5:1, AND LOW NATURAL GAS CONSUMPTION IN OTHER SECTORS
+# THE COAL INPUTS ARE OVER-RIDDEN HERE AS THE GAS OUTPUT TIMES AN EXOGENOUS IO COEF
+coal_to_gas_coef <- 1.3
+#Only use other bituminous coal; no need to maintain distinction between coal (if no detail) and other bituminous coal
+L100.IEAfull[ L100.IEAfull$COUNTRY == "South Africa" & L100.IEAfull$FLOW == "TGASWKS" & L100.IEAfull$PRODUCT == "Hard coal (if no detail)",  X_historical_years ] <- 0
+L100.IEAfull[ L100.IEAfull$COUNTRY == "South Africa" & L100.IEAfull$FLOW == "TGASWKS" & L100.IEAfull$PRODUCT == "Other bituminous coal",  X_historical_years ] <-
+      L100.IEAfull[ L100.IEAfull$COUNTRY == "South Africa" & L100.IEAfull$FLOW == "TGASWKS" & L100.IEAfull$PRODUCT == "Gas works gas",  X_historical_years] *
+      coal_to_gas_coef * -1     #Need to multiply by -1 because inputs and outputs have a different sign
 
 # TURKEY HAS ELECTRICITY PRODUCTION FROM PRIMARY SOLID BIOFUELS (ELAUTOC) BETWEEN 1971 AND 1981 WITH NO CORRESPONDING FUEL INPUT BY ANY SECTORS
 # ADDING A FUEL INPUT TO AVOID NEGATIVE NUMBERS LATER ON.

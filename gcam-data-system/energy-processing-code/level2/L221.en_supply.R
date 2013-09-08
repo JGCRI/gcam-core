@@ -193,6 +193,24 @@ L221.StubTechShrwt_bio <- subset( L221.StubTechShrwt_bio,
       vecpaste( L221.StubTechShrwt_bio[ c( "stub.technology", "year", "share.weight" ) ] ) != 
       vecpaste( L221.globaltech_shrwt_bio[ c( "technology", "year", "share.weight" ) ] ) )
 
+###For regions with no agricultural and land use sector (Taiwan), need to remove the passthrough supplysectors for first-gen biofuels
+ag_en <- c( "regional corn for ethanol", "regional sugar for ethanol", "regional biomassOil" )
+L221.Supplysector_en <- L221.Supplysector_en[ vecpaste( L221.Supplysector_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
+L221.SubsectorLogit_en <- L221.SubsectorLogit_en[ vecpaste( L221.SubsectorLogit_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
+if( exists( "L221.SubsectorShrwt_en" ) ){
+	L221.SubsectorShrwt_en <- L221.SubsectorShrwt_en[ vecpaste( L221.SubsectorShrwt_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
+}
+if( exists( "L221.SubsectorShrwtFllt_en" ) ){
+	L221.SubsectorShrwtFllt_en <- L221.SubsectorShrwtFllt_en[ vecpaste( L221.SubsectorShrwtFllt_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
+}
+if( exists( "L221.SubsectorInterp_en" ) ) {
+	L221.SubsectorInterp_en <- L221.SubsectorInterp_en[ vecpaste( L221.SubsectorInterp_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
+}
+if( exists( "L221.SubsectorInterpTo_en" ) ) {
+	L221.SubsectorInterpTo_en <- L221.SubsectorInterpTo_en[ vecpaste( L221.SubsectorInterpTo_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
+}
+L221.StubTech_en <- L221.StubTech_en[ vecpaste( L221.StubTech_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L221.Supplysector_en, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L221.Supplysector_en",
