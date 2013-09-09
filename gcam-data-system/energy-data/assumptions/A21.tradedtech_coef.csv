@@ -1,1 +1,3 @@
-# Primary energy handling default coefficients,,,,,supplysector,subsector,technology,minicam.energy.input,1975,2100traded unconventional oil,unconventional oil,unconventional oil,unconventional oil production,1,1
+# Primary energy handling default coefficients,,,,,
+supplysector,subsector,technology,minicam.energy.input,1971,2100
+traded unconventional oil,unconventional oil,unconventional oil,unconventional oil production,1,1

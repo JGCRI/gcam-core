@@ -83,27 +83,33 @@ L210.UnlimitRsrc <- data.frame(
       capacity.factor = L210.unlim_rsrc_info$capacity.factor )
 
 printlog( "L210.DepRsrcPrice: historical prices for depletable resources" )
-L210.dep_rsrc_price.melt <- melt( L210.dep_rsrc_info[ c( "region", "resource", X_model_base_years ) ], id.vars = c( "region", "resource" ) )
+L210.dep_rsrc_price.melt <- interpolate_and_melt(
+      L210.dep_rsrc_info[ names( L210.dep_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],
+      model_base_years )
 L210.DepRsrcPrice <- data.frame(
       region = L210.dep_rsrc_price.melt$region,
       depresource = L210.dep_rsrc_price.melt$resource,
-      year = substr( L210.dep_rsrc_price.melt$variable, 2, 5 ),
+      year = L210.dep_rsrc_price.melt$year,
       price = L210.dep_rsrc_price.melt$value )
 
 printlog( "L210.RenewRsrcPrice: historical prices for renewable resources" )
-L210.renew_rsrc_price.melt <- melt( L210.renew_rsrc_info[ c( "region", "resource", X_model_base_years ) ], id.vars = c( "region", "resource" ) )
+L210.renew_rsrc_price.melt <- interpolate_and_melt(
+      L210.renew_rsrc_info[ names( L210.renew_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],
+      model_base_years )
 L210.RenewRsrcPrice <- data.frame(
       region = L210.renew_rsrc_price.melt$region,
       renewresource = L210.renew_rsrc_price.melt$resource,
-      year = substr( L210.renew_rsrc_price.melt$variable, 2, 5 ),
+      year = L210.renew_rsrc_price.melt$year,
       price = L210.renew_rsrc_price.melt$value )
 
 printlog( "L210.UnlimitRsrcPrice: prices for unlimited resources" )
-L210.unlimit_rsrc_price.melt <- melt( L210.unlim_rsrc_info[ c( "region", "resource", X_model_base_years ) ], id.vars = c( "region", "resource" ) )
+L210.unlimit_rsrc_price.melt <- interpolate_and_melt(
+      L210.unlim_rsrc_info[ names( L210.unlim_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],
+      model_base_years )
 L210.UnlimitRsrcPrice <- data.frame(
       region = L210.unlimit_rsrc_price.melt$region,
       unlimited.resource = L210.unlimit_rsrc_price.melt$resource,
-      year = substr( L210.unlimit_rsrc_price.melt$variable, 2, 5 ),
+      year = L210.unlimit_rsrc_price.melt$year,
       price = L210.unlimit_rsrc_price.melt$value )
 
 # 2b. Tech change

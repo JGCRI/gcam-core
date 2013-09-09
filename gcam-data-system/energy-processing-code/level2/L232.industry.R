@@ -220,7 +220,7 @@ L232.tech_coef <- add_region_name( L232.tech_coef )
 L232.tech_coef[[ X_model_base_years[ length( X_model_base_years ) ] ]] <- L232.StubTechCoef_industry_base$coefficient[
       match( paste( L232.tech_coef$region, L232.tech_coef[[input]], max( model_base_years ) ),
              paste( L232.StubTechCoef_industry_base$region, L232.StubTechCoef_industry_base[[input]], L232.StubTechCoef_industry_base[[Y]] ) ) ] 
-L232.tech_coef[ X_indcoef_conv_year ] <- L232.tech_coef[ X_model_future_years[ length( X_model_future_years ) ] ]
+L232.tech_coef[ X_indcoef_conv_year ] <- L232.tech_coef[ "X2100" ]
 L232.tech_coef <- gcam_interp( L232.tech_coef, c( max( model_base_years ), model_future_years, indcoef_conv_year ) )
 L232.StubTechCoef_industry_fut <- interpolate_and_melt( L232.tech_coef, model_future_years, value.name = "coefficient" )
 L232.StubTechCoef_industry_fut$stub.technology <- L232.StubTechCoef_industry_fut$technology
