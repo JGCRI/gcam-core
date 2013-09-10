@@ -11,30 +11,42 @@ export ENERGYDAT	= .
 export ENERGYXML = ../xml/energy-xml
 export COMMON = ../_common
 
-L1SCRIPTS = $(wildcard $(ENERGYPROC)/level1/*.R)
-L1LOGS	  = $(patsubst %.R,%.R.log,$(subst /level1/,/logs/,$(L1SCRIPTS)))
+L1ASCRIPTS = $(sort $(wildcard $(ENERGYPROC)/level1/LA*.R))
+L1ALOGS	  = $(patsubst %.R,%.R.log,$(subst /level1/,/logs/,$(L1ASCRIPTS)))
 
-L2SCRIPTS = $(wildcard $(ENERGYPROC)/level2/*.R)
+L1BSCRIPTS = $(sort $(wildcard $(ENERGYPROC)/level1/LB*.R))
+L1BLOGS	  = $(patsubst %.R,%.R.log,$(subst /level1/,/logs/,$(L1BSCRIPTS)))
+
+
+L2SCRIPTS = $(sort $(wildcard $(ENERGYPROC)/level2/*.R))
 L2LOGS    = $(patsubst %.R,%.R.log,$(subst /level2/,/logs/,$(L2SCRIPTS)))
 
 LOGDEPS	  = $(wildcard $(ENERGYPROC)/logs/*.d)
 
-XML_BATCH_FILES = $(wildcard $(ENERGYPROC)/xml-batch/*.xml)
+XML_BATCH_FILES = $(sort $(wildcard $(ENERGYPROC)/xml-batch/*.xml))
 XML_FILES = $(subst batch_,,$(subst $(ENERGYPROC)/xml-batch,$(ENERGYXML),$(XML_BATCH_FILES)))
 
 include $(LOGDEPS)
 
-all: level1 level2 XML_BATCH
+#all: level1A level1B level2 XML_BATCH
 
-level1: $(L1LOGS)
+level1A: $(L1ALOGS)
 
-level2: level1 $(L2LOGS)
+## Level 1B also depends on the first phase of the AGLU processing.
+## This dependency is captured in the upper-level makefile.
+level1B: $(L1BLOGS)
+
+level2: level1B $(L2LOGS)
 
 XML_BATCH: level2 $(XML_FILES)
 
-$(ENERGYPROC)/logs/L1%.log: $(ENERGYPROC)/level1/L1%
+$(ENERGYPROC)/logs/LA1%.log: $(ENERGYPROC)/level1/LA1%
 	@echo $?
-	$(RCMD) $< $(ENERGYPROC)/logs/L1.Rout
+	$(RCMD) $< $(ENERGYPROC)/logs/LA1.Rout
+
+$(ENERGYPROC)/logs/LB1%.log: $(ENERGYPROC)/level1/LB1%
+	@echo $?
+	$(RCMD) $< $(ENERGYPROC)/logs/LB1.Rout 
 
 $(ENERGYPROC)/logs/L2%.log: $(ENERGYPROC)/level2/L2%
 	@echo $?
