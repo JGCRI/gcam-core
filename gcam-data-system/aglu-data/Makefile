@@ -11,32 +11,43 @@ export AGLUDAT	= .
 export AGLUXML = ../xml/aglu-xml
 export COMMON = ../_common
 
-L1SCRIPTS = $(wildcard $(AGLUPROC)/Level1/*.R)
-L1LOGS	  = $(patsubst %.R,%.R.log,$(subst /Level1/,/logs/,$(L1SCRIPTS)))
+L1ASCRIPTS = $(sort $(wildcard $(AGLUPROC)/level1/LA*.R))
+L1ALOGS	  = $(patsubst %.R,%.R.log,$(subst /level1/,/logs/,$(L1ASCRIPTS)))
 
-L2SCRIPTS = $(wildcard $(AGLUPROC)/Level2/*.R)
-L2LOGS    = $(patsubst %.R,%.R.log,$(subst /Level2/,/logs/,$(L2SCRIPTS)))
+L1BSCRIPTS = $(sort $(wildcard $(AGLUPROC)/level1/LB*.R))
+L1BLOGS	  = $(patsubst %.R,%.R.log,$(subst /level1/,/logs/,$(L1BSCRIPTS))) 
+
+L2SCRIPTS = $(sort $(wildcard $(AGLUPROC)/level2/*.R))
+L2LOGS    = $(patsubst %.R,%.R.log,$(subst /level2/,/logs/,$(L2SCRIPTS)))
 
 LOGDEPS	  = $(wildcard $(AGLUPROC)/logs/*.d)
 
-XML_BATCH_FILES = $(wildcard $(AGLUPROC)/xml-batch/*.xml)
+XML_BATCH_FILES = $(sort $(wildcard $(AGLUPROC)/xml-batch/*.xml))
 XML_FILES = $(subst batch_,,$(subst $(AGLUPROC)/xml-batch,$(AGLUXML),$(XML_BATCH_FILES)))
 
 include $(LOGDEPS)
 
-all: Level1 Level2 XML_BATCH
+#all: level1 level2 XML_BATCH
 
-Level1: $(L1LOGS)
+level1A: $(L1ALOGS)
 
-Level2: Level1 $(L2LOGS)
+## level 1B also depends on the first phase of energy processing.
+## This dependency is captured in the top-directory makefile
+level1B: $(L1BLOGS)
 
-XML_BATCH: Level2 $(XML_FILES)
+level2: level1 $(L2LOGS)
 
-$(AGLUPROC)/logs/L1%.log: $(AGLUPROC)/Level1/L1%
+XML_BATCH: level2 $(XML_FILES)
+
+$(AGLUPROC)/logs/LA1%.log: $(AGLUPROC)/level1/LA1%
 	echo $?
-	$(RCMD) $< $(AGLUPROC)/logs/L1.Rout
+	$(RCMD) $< $(AGLUPROC)/logs/LA1.Rout
 
-$(AGLUPROC)/logs/L2%.log: $(AGLUPROC)/Level2/L2%
+$(AGLUPROC)/logs/LB1%.log: $(AGLUPROC)/level1/LB1%
+	echo $?
+	$(RCMD) $< $(AGLUPROC)/logs/LB1.Rout
+
+$(AGLUPROC)/logs/L2%.log: $(AGLUPROC)/level2/L2%
 	echo $?
 	$(RCMD) $< $(AGLUPROC)/logs/L2.Rout
 
@@ -52,6 +63,7 @@ clean:
 
 test:
 	echo 'deps:  ' $(L1DEPS)
-	echo 'logfiles:  ' $(L1LOGS)
+	echo 'l1A logs:  ' $(L1ALOGS)
+	echo 'l1B logs:  ' $(L1BLOGS)
 	echo 'l2logs:  ' $(L2LOGS)
 	echo 'xml files:  ' $(XML_FILES)
