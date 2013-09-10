@@ -12,7 +12,7 @@ if( !exists( "AGLUPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
-logstart( "L125.LC_tot.R" )
+logstart( "LB125.LC_tot.R" )
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
 printlog( "Total land area and area check" )

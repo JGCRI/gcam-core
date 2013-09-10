@@ -12,7 +12,7 @@ if( !exists( "AGLUPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
-logstart( "L107.an_IMAGE_R_C_Sys_Fd_Y.R" )
+logstart( "LA107.an_IMAGE_R_C_Sys_Fd_Y.R" )
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
 printlog( "Animal product data from IMAGE, assigned to GCAM region / commodity / system / feed / year" )

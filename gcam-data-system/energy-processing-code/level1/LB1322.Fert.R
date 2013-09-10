@@ -12,7 +12,7 @@ if( !exists( "ENERGYPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
-logstart( "L1322.Fert.R" )
+logstart( "LB1322.Fert.R" )
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 printlog( "Fertilizer production by region / fuel and fertilizer costs by technology" )

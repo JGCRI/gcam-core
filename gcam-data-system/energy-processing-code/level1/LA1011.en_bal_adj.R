@@ -12,7 +12,7 @@ if( !exists( "ENERGYPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
-logstart( "L1011.en_bal_adj.R" )
+logstart( "LA1011.en_bal_adj.R" )
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 printlog( "Adjustments to IEA energy balances" )

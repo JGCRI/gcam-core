@@ -10,7 +10,7 @@ if( !exists( "ENERGYPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
-logstart( "L152.transportation.R" )
+logstart( "LA152.transportation.R" )
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 printlog( "Historical transportation sector energy consumption by region and fuel" )

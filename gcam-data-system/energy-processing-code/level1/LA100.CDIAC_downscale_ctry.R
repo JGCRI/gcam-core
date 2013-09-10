@@ -12,7 +12,7 @@ if( !exists( "ENERGYPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
-logstart( "L100.CDIAC_downscale_ctry.R" )
+logstart( "LA100.CDIAC_downscale_ctry.R" )
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 printlog( "Historical CO2 emissions from CDIAC downscaled to country" )

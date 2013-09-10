@@ -7,7 +7,7 @@ xml: aglu2 energy2 socio2 modeltime
 common:
 	$(MAKE) -C _common all
 
-energy1a: common
+energy1a: common modeltime socio2
 	$(MAKE) -C energy-data level1A
 
 energy1b: energy1a aglu1a
@@ -16,7 +16,7 @@ energy1b: energy1a aglu1a
 energy2: energy1b
 	$(MAKE) -C energy-data level2
 
-aglu1a: common
+aglu1a: common modeltime socio2
 	$(MAKE) -C aglu-data level1A
 
 aglu1b: aglu1a energy1a
@@ -33,6 +33,13 @@ socio2: socio1
 
 modeltime: common
 	$(MAKE) -C modeltime-data level2
+
+clean:
+	$(MAKE) -C energy-data clean
+	$(MAKE) -C aglu-data clean
+	$(MAKE) -C modeltime-data clean
+	$(MAKE) -C socioeconomics-data clean
+
 
 ## add water-data build commands here eventually
 
