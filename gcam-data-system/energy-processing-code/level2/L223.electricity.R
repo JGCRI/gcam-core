@@ -309,8 +309,8 @@ L223.StubTechFixOut_hydro[ c( "supplysector", "subsector", "stub.technology" ) ]
              paste( calibrated_techs$sector, calibrated_techs$fuel ) ),
       c( "supplysector", "subsector", "technology" ) ]
 L223.StubTechFixOut_hydro$share.weight.year <- L223.StubTechFixOut_hydro$year
-L223.StubTechFixOut_hydro$subsector.share.weight <- 0
-L223.StubTechFixOut_hydro$share.weight <- 0
+L223.StubTechFixOut_hydro$subs.share.weight <- 0
+L223.StubTechFixOut_hydro$tech.share.weight <- 0
 L223.StubTechFixOut_hydro <- L223.StubTechFixOut_hydro[ names_StubTechFixOut ]
 
 printlog( "L223.StubTechProd_elec: calibrated output of electricity generation technologies" )
