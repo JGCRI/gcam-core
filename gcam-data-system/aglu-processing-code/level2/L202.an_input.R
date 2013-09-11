@@ -252,10 +252,19 @@ L202.StubTechFixOut_imp_an$subs.share.weight <- 0
 L202.StubTechFixOut_imp_an$tech.share.weight <- 0
 L202.StubTechFixOut_imp_an <- L202.StubTechFixOut_imp_an[ names_StubTechFixOut ]
 
-#For values beyond the animal product mass balance time series, use the final available year
-final_an_ALL_year <- max( L202.an_ALL_Mt_R_C_Y$year )
-L202.StubTechFixOut_imp_an$fixedOutput[ L202.StubTechFixOut_imp_an$year > max( final_an_ALL_year ) ] <-    
-      L202.StubTechFixOut_imp_an$fixedOutput[ L202.StubTechFixOut_imp_an$year == max( final_an_ALL_year ) ]
+#For values beyond the final base year, copy the final base year forward
+#NOTE: This is complicated. Currently the base-service read in to the model is not used in years after the final calibration year.
+# If actual historical values are used here in historical years after the final calibration year, the model will not solve as the
+# supply of the Exports_* markets will be set while the demand will be purely inelastic, carried forward with no changes from the
+# final calibration year. This could theoretically be overcome in most instances by reading in time- and region-specific income
+# elasticities that return the correct values for each historical year after the final calibration year. This is not done, and is not
+# recommended, as any regions that switch between imports and exports will have elasiticies of +/- Inf; the historical data can not be
+# represented. If the model code is changed to allow the base-service to be prescribed beyond the final calibration year, then the following line may be used:
+#final_an_exp_year <- max( L202.an_ALL_Mt_R_C_Y$year )
+
+final_an_exp_year <- max( model_base_years )
+L202.StubTechFixOut_imp_an$fixedOutput[ L202.StubTechFixOut_imp_an$year > max( final_an_exp_year ) ] <-    
+      L202.StubTechFixOut_imp_an$fixedOutput[ L202.StubTechFixOut_imp_an$year == max( final_an_exp_year ) ]
 L202.StubTechFixOut_imp_an <- L202.StubTechFixOut_imp_an[ names_StubTechFixOut ]
 
 #Remove any regions for which agriculture and land use are not modeled

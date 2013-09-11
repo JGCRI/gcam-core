@@ -85,6 +85,9 @@ L205.ag_YieldRate_R_C_Y_AEZ_ref.melt <- add_agtech_names( L205.ag_YieldRate_R_C_
 names( L205.ag_YieldRate_R_C_Y_AEZ_ref.melt )[ names( L205.ag_YieldRate_R_C_Y_AEZ_ref.melt ) == "value" ] <- "AgProdChange"
 L205.AgProdChange_ag_ref <- L205.ag_YieldRate_R_C_Y_AEZ_ref.melt[
       L205.ag_YieldRate_R_C_Y_AEZ_ref.melt$year %in% model_future_years, names_AgProdChange ]
+#If the final calibration year is less than the final historical year, this method will return Inf for crops that are 0 in one year
+# and non-zero in subsequent years. e.g. Korea and FSU FodderGrass. Setting the agprodchange to 0, and keeping these techs out.
+L205.AgProdChange_ag_ref[ L205.AgProdChange_ag_ref == Inf ] <- 0
 
 printlog( "Translating bioenergy crop yield ratios to annualized improvement rates in specified time periods" )
 L205.bio_YieldRatio_R_Y_AEZ_ref.melt <- melt( L114.bio_YieldRatio_R_AEZ_Y_ref, id.vars = R_Y, variable_name = AEZ )

@@ -125,9 +125,7 @@ L2322.StubTechCoef_Fert <- L2322.StubTechCoef_Fert[ names_StubTechCoef ]
 
 printlog( "L2322.StubTechFixOut_Fert_imp: fixed output of import technology (fixed imports)" )
 #Imports are negative net exports
-fixout_years_base <- historical_years[ historical_years %in% c( model_base_years, model_future_years ) ]
-fixout_years_fut <- model_future_years[ model_future_years %!in% fixout_years_base ]
-L2322.StubTechFixOut_Fert_imp_base <- interpolate_and_melt( L142.ag_Fert_NetExp_MtN_R_Y, fixout_years_base, value.name = "fixedOutput" )
+L2322.StubTechFixOut_Fert_imp_base <- interpolate_and_melt( L142.ag_Fert_NetExp_MtN_R_Y, model_base_years, value.name = "fixedOutput" )
 L2322.StubTechFixOut_Fert_imp_base <- add_region_name( L2322.StubTechFixOut_Fert_imp_base )
 L2322.StubTechFixOut_Fert_imp_base[ c( "supplysector", "subsector", "stub.technology" ) ] <- A322.globaltech_renew[
       rep( 1, times = nrow( L2322.StubTechFixOut_Fert_imp_base ) ), s_s_t ]
@@ -137,12 +135,12 @@ L2322.StubTechFixOut_Fert_imp_base[ c( "subs.share.weight", "tech.share.weight" 
 
 #Repeat final year to all future years and rbind
 L2322.StubTechFixOut_Fert_imp_fut <- repeat_and_add_vector(
-      L2322.StubTechFixOut_Fert_imp_base[ L2322.StubTechFixOut_Fert_imp_base[[Y]] == max( fixout_years_base ), ], Y, fixout_years_fut )
+      L2322.StubTechFixOut_Fert_imp_base[ L2322.StubTechFixOut_Fert_imp_base[[Y]] == max( model_base_years ), ], Y, model_future_years )
 L2322.StubTechFixOut_Fert_imp <- rbind( L2322.StubTechFixOut_Fert_imp_base, L2322.StubTechFixOut_Fert_imp_fut )[ names_StubTechFixOut ]
 
 printlog( "L2322.StubTechFixOut_Fert_exp: fixed output of import technology (fixed imports)" )
 #Exports are positive net exports
-L2322.StubTechFixOut_Fert_exp_base <- interpolate_and_melt( L142.ag_Fert_NetExp_MtN_R_Y, fixout_years_base, value.name = "fixedOutput" )
+L2322.StubTechFixOut_Fert_exp_base <- interpolate_and_melt( L142.ag_Fert_NetExp_MtN_R_Y, model_base_years, value.name = "fixedOutput" )
 L2322.StubTechFixOut_Fert_exp_base <- add_region_name( L2322.StubTechFixOut_Fert_exp_base )
 L2322.StubTechFixOut_Fert_exp_base[ c( "supplysector", "subsector", "stub.technology" ) ] <- A322.globaltech_shrwt[
       grepl( "Exports", A322.globaltech_shrwt$supplysector ), s_s_t ][
@@ -153,7 +151,7 @@ L2322.StubTechFixOut_Fert_exp_base[ c( "subs.share.weight", "tech.share.weight" 
 
 #Repeat final year to all future years and rbind
 L2322.StubTechFixOut_Fert_exp_fut <- repeat_and_add_vector(
-      L2322.StubTechFixOut_Fert_exp_base[ L2322.StubTechFixOut_Fert_exp_base[[Y]] == max( fixout_years_base ), ], Y, fixout_years_fut )
+      L2322.StubTechFixOut_Fert_exp_base[ L2322.StubTechFixOut_Fert_exp_base[[Y]] == max( model_base_years ), ], Y, model_future_years )
 L2322.StubTechFixOut_Fert_exp <- rbind( L2322.StubTechFixOut_Fert_exp_base, L2322.StubTechFixOut_Fert_exp_fut )[ names_StubTechFixOut ]
 
 printlog( "L2322.PerCapitaBased_Fert: per-capita based flag for fertilizer exports final demand" )
