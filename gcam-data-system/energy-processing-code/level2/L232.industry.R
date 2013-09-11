@@ -142,8 +142,7 @@ L232.GlobalTechCost_ind <- L232.globaltech_cost.melt[ names_GlobalTechCost ]
 #Carbon capture from feedstock carbon sequestration
 printlog( "L232.GlobalTechCSeq_ind: CO2 capture fractions from global electricity generation technologies" )
 ## No need to consider historical periods or intermittent technologies here
-L232.globaltech_Cseq.melt <- write_to_all_regions( A32.nonenergy_Cseq )
-L232.globaltech_Cseq.melt <- repeat_and_add_vector( L232.globaltech_Cseq.melt, Y, c( model_base_years, model_future_years ) )
+L232.globaltech_Cseq.melt <- repeat_and_add_vector( A32.nonenergy_Cseq, Y, c( model_base_years, model_future_years ) )
 L232.globaltech_Cseq.melt[ c( "sector.name", "subsector.name" ) ] <- L232.globaltech_Cseq.melt[ c( "supplysector", "subsector" ) ]
 L232.GlobalTechCSeq_ind <- L232.globaltech_Cseq.melt[ names_GlobalTechCSeq ]
 

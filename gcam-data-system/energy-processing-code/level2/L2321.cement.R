@@ -160,7 +160,7 @@ L2321.StubTechCalInput_cement_heat$tech.share.weight <- L2321.StubTechCalInput_c
 L2321.StubTechCalInput_cement_heat <- L2321.StubTechCalInput_cement_heat[ names_StubTechCalInput ]
 
 printlog( "L2321.PerCapitaBased_cement: per-capita based flag for fertilizer exports final demand" )
-L2321.PerCapitaBased_cement <- write_to_all_regions( A321.demand )[ names_PerCapitaBased ]
+L2321.PerCapitaBased_cement <- write_to_all_regions( A321.demand,  names_PerCapitaBased )
 
 printlog( "L2321.BaseService_cement: base-year service output of cement" )
 L2321.BaseService_cement <- data.frame(
@@ -170,7 +170,7 @@ L2321.BaseService_cement <- data.frame(
       base.service = L2321.StubTechProd_cement$calOutputValue )
 
 printlog( "L2321.PriceElasticity_cement: price elasticity" )
-L2321.PriceElasticity_cement <- write_to_all_regions( A321.demand )
+L2321.PriceElasticity_cement <- write_to_all_regions( A321.demand, names_PriceElasticity[ names_PriceElasticity != Y ] )
 L2321.PriceElasticity_cement <- repeat_and_add_vector( L2321.PriceElasticity_cement, Y, model_future_years )[ names_PriceElasticity ]
 
 #Income elasticities are read in the socioeconomics module

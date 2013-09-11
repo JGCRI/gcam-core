@@ -5,16 +5,19 @@ names_Pop <- c( "region", "year", "totalPop" )
 names_baseGDP <- c( "region", "baseGDP" )
 names_LaborProductivity <- c( "region", "year", "laborproductivity" )
 
+#Primary fuel carbon coefficients
+names_PrimaryFuelCO2Coef <- c( "region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef")
+
 #Supplysectors
-names_Supplysector <- c( "region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.exponent" )
+names_Supplysector <- c( "region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent" )
 names_FinalEnergyKeyword <- c( "region", "supplysector", "final.energy" )
 names_SupplysectorPrice <- c( "region", "supplysector", "year", "price" )
 names_ElecReserve <- c( "region", "supplysector", "electricity.reserve.margin", "average.grid.capacity.factor" )
 
 #Subsectors
 names_Subsector <- c( "region", "supplysector", "subsector")
-names_SubsectorAll <- c( names_Subsector, "logit.exponent", "year.fillout", "share.weight", "apply.to","from.year", "to.year", "interpolation.function" )
-names_SubsectorLogit <- c( names_Subsector, "logit.exponent" )
+names_SubsectorAll <- c( names_Subsector, "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight", "apply.to","from.year", "to.year", "interpolation.function" )
+names_SubsectorLogit <- c( names_Subsector, "logit.year.fillout", "logit.exponent" )
 names_SubsectorShrwt <- c( names_Subsector, "year", "share.weight" )
 names_SubsectorShrwtFllt <- c( names_Subsector, "year.fillout", "share.weight" )
 names_SubsectorInterp <- c( names_Subsector, "apply.to","from.year", "to.year", "interpolation.function" )
@@ -67,9 +70,9 @@ names_StubTechCost <- c( names_StubTechYr, "minicam.non.energy.input", "input.co
 names_StubTechFixOut <- c( names_StubTechYr, "fixedOutput", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 
 #Agricultural sectors, subsectors, and technologies
-names_AgSupplySector <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.exponent" )
+names_AgSupplySector <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent" )
 names_AgSupplySubsector <- c( "region", "AgSupplySector", "AgSupplySubsector" )
-names_AgSupplySubsectorAll <- c( "region", "AgSupplySector", "AgSupplySubsector", "logit.exponent", "year.fillout", "share.weight" )
+names_AgSupplySubsectorAll <- c( "region", "AgSupplySector", "AgSupplySubsector", "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight" )
 names_AgTech <- c( "region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 names_AgTechInterp <- c( names_AgTech, "apply.to", "from.year", "to.year", "interpolation.function" )
 names_AgTechYr <- c( names_AgTech, "year" )
@@ -112,24 +115,24 @@ names_PriceElasticity <- c( names_EnergyFinalDemand, "year", "price.elasticity" 
 names_IncomeElasticity <- c( names_EnergyFinalDemand, "year", "income.elasticity" )
 
 #Land types
-names_LN0_Land <- c( "region", "LandAllocatorRoot", "landAllocation" )
-names_LN0_Logit <- c( "region", "LandAllocatorRoot", "logit.exponent" )
+names_LN0_Land <- c( "region", "LandAllocatorRoot", "year.fillout", "landAllocation" )
+names_LN0_Logit <- c( "region", "LandAllocatorRoot", "logit.year.fillout", "logit.exponent" )
 names_LN0_SoilTimeScale <- c( "region", "LandAllocatorRoot", "soilTimeScale" )
-names_LN1_ValueLogit <- c( "region", "LandAllocatorRoot", "LandNode1", "unManagedLandValue", "logit.exponent" )
+names_LN1_ValueLogit <- c( "region", "LandAllocatorRoot", "LandNode1", "unManagedLandValue", "logit.year.fillout", "logit.exponent" )
 names_LN1_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "UnmanagedLandLeaf", "year", "allocation" )
 names_LN1_UnmgdAllocation <- names_LN1_HistUnmgdAllocation
 names_LN1_UnmgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-      "veg.carbon.density", "soil.carbon.density", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
-names_LN2_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "logit.exponent" )
+      "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+names_LN2_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "logit.year.fillout", "logit.exponent" )
 names_LN2_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "UnmanagedLandLeaf", "year", "allocation" )
 names_LN2_UnmgdAllocation <- names_LN2_HistUnmgdAllocation
 names_LN2_HistMgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandLeaf", "year", "allocation" )
 names_LN2_MgdAllocation <- names_LN2_HistMgdAllocation
 names_LN2_UnmgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-      "veg.carbon.density", "soil.carbon.density", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+      "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
 names_LN2_MgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-      "veg.carbon.density", "soil.carbon.density", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
-names_LN3_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.exponent" )
+      "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+names_LN3_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.year.fillout", "logit.exponent" )
 names_LN3_DefaultShare <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3",
                       "default.share.2020", "default.share.2025", "default.share.2035" )
 names_LN3_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf", "year", "allocation" )
@@ -137,7 +140,7 @@ names_LN3_UnmgdAllocation <- names_LN3_HistUnmgdAllocation
 names_LN3_HistMgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year", "allocation" )
 names_LN3_MgdAllocation <- names_LN3_HistMgdAllocation
 names_LN3_UnmgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-      "veg.carbon.density", "soil.carbon.density", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+      "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
 names_LN3_MgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
-      "veg.carbon.density", "soil.carbon.density", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+      "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
 names_LN3_NewTech <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year.fillout", "isNewTechnology" )

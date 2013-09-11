@@ -11,11 +11,11 @@ LaborForceFillout,world/+{name}region,GDP/+{year;fillout=1}laborforce,GDP/+labor
 
 LaborProductivity,world/+{name}region,GDP/+{year}laborproductivity,GDP/+laborproductivity,scenario,scenario/world,region/GDP
 
-AgSupplySector,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+output-unit,AgSupplySector/+input-unit,AgSupplySector/+price-unit,AgSupplySector/+calPrice,AgSupplySector/+market,AgSupplySector/+{year=1975;fillout=1}logit-exponent,scenario,scenario/world
+AgSupplySector,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+output-unit,AgSupplySector/+input-unit,AgSupplySector/+price-unit,AgSupplySector/+calPrice,AgSupplySector/+market,AgSupplySector/+{year;fillout=1}logit-exponent,AgSupplySector/+logit-exponent,scenario,scenario/world
 
 AgSupplySubsector,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,scenario/world,scenario
 
-AgSupplySubsectorAll,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{year=1975;fillout=1}logit-exponent,AgSupplySubsector/+{year;fillout=1}share-weight,AgSupplySubsector/+share-weight,scenario/world,scenario
+AgSupplySubsectorAll,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{year;fillout=1}logit-exponent,AgSupplySubsector/+logit-exponent,AgSupplySubsector/+{year;fillout=1}share-weight,AgSupplySubsector/+share-weight,scenario/world,scenario
 
 AgTechInterp,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{apply-to}interpolation-rule,AgProductionTechnology/+{from-year}interpolation-rule,AgProductionTechnology/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
 
@@ -71,7 +71,7 @@ RenewRsrcTechChange,world/+{name}region,region/+{name}renewresource,renewresourc
 
 SmthRenewRsrcTechChange,world/+{name}region,region/+{name}renewresource,renewresource/+{name}smooth-renewable-subresource,smooth-renewable-subresource/+{year;fillout=1}techChange,smooth-renewable-subresource/+techChange,scenario,scenario/world
 
-Supplysector,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975;fillout=1}logit-exponent,scenario,scenario/world
+Supplysector,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year;fillout=1}logit-exponent,supplysector/+logit-exponent,scenario,scenario/world
 
 SupplysectorPrice,world/+{name}region,region/+{name}supplysector,supplysector/+{year}price,supplysector/+price,scenario,scenario/world
 
@@ -79,9 +79,9 @@ ElecReserve,world/+{name}region,region/+{name}supplysector,{name=electricity-res
 
 Subsector,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,scenario,scenario/world
 
-SubsectorAll,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}logit-exponent,subsector/+{year;fillout=1}share-weight,subsector/+share-weight,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
+SubsectorAll,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year;fillout=1}logit-exponent,subsector/+logit-exponent,subsector/+{year;fillout=1}share-weight,subsector/+share-weight,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
 
-SubsectorLogit,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}logit-exponent,scenario/world,scenario
+SubsectorLogit,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year;fillout=1}logit-exponent,subsector/+logit-exponent,scenario/world,scenario
 
 SubsectorShrwt,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year}share-weight,subsector/+share-weight,scenario/world,scenario
 
@@ -135,23 +135,23 @@ AgProdChange,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{n
 
 AgCost,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+nonLandVariableCost,scenario,scenario/world,period/{name=CO2}CO2
 
-LN0_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{year=1975;fillout=1}logit-exponent,scenario,scenario/world
+LN0_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{year;fillout=1}logit-exponent,LandAllocatorRoot/+logit-exponent,scenario,scenario/world
 
-LN0_Land,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{year=1975;fillout=1}landAllocation,scenario,scenario/world
+LN0_Land,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{year;fillout=1}landAllocation,LandAllocatorRoot/+landAllocation,scenario,scenario/world
 
 LN0_SoilTimeScale,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+soilTimeScale,scenario,scenario/world
 
 LN1_Delete,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name;delete=1}LandNode,scenario,scenario/world
 
-LN1_ValueLogit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+unManagedLandValue,LandNode1/+{year=1975;fillout=1}logit-exponent,scenario,scenario/world
+LN1_ValueLogit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+unManagedLandValue,LandNode1/+{year;fillout=1}logit-exponent,LandNode1/+logit-exponent,scenario,scenario/world
 
 LN1_HistUnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}UnmanagedLandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,UnmanagedLandLeaf/land-use-history
 
 LN1_UnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}UnmanagedLandLeaf,UnmanagedLandLeaf/+{year}landAllocation,UnmanagedLandLeaf/+landAllocation,scenario,scenario/world
 
-LN1_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year=1975;fillout=1}mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
+LN1_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
 
-LN2_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{year=1975;fillout=1}logit-exponent,scenario,scenario/world
+LN2_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{year;fillout=1}logit-exponent,LandNode2/+logit-exponent,scenario,scenario/world
 
 LN2_HistUnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}UnmanagedLandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,UnmanagedLandLeaf/land-use-history
 
@@ -161,11 +161,11 @@ LN2_HistMgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAl
 
 LN2_MgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandLeaf,LandLeaf/+{year}landAllocation,LandLeaf/+landAllocation,scenario,scenario/world
 
-LN2_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year=1975;fillout=1}mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
+LN2_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
 
-LN2_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year=1975;fillout=1}mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
+LN2_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
 
-LN3_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{year=1975;fillout=1}logit-exponent,scenario,scenario/world
+LN3_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{year;fillout=1}logit-exponent,LandNode3/+logit-exponent,scenario,scenario/world
 
 LN3_DefaultShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{year=2020}default-share,LandNode3/+{year=2025}default-share,LandNode3/+{year=2035}default-share,scenario,scenario/world
 
@@ -173,13 +173,13 @@ LN3_HistUnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,Land
 
 LN3_UnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}UnmanagedLandLeaf,UnmanagedLandLeaf/+{year}landAllocation,UnmanagedLandLeaf/+landAllocation,scenario,scenario/world
 
-LN3_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year=1975;fillout=1}mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
+LN3_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
 
 LN3_HistMgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,LandLeaf/land-use-history
 
 LN3_MgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,LandLeaf/+{year}landAllocation,LandLeaf/+landAllocation,scenario,scenario/world
 
-LN3_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year=1975;fillout=1}mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
+LN3_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
 
 LN3_NewTech,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,LandLeaf/+{year;fillout=1}isNewTechnology,LandLeaf/+isNewTechnology,scenario,scenario/world
 

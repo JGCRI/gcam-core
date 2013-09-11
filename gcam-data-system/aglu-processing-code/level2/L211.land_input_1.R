@@ -45,11 +45,13 @@ printlog( "L211.LN0_Logit: Logit exponent of the first land nest" )
 L211.LN0_Logit <- data.frame(
       region = GCAM_region_names$region,
       LandAllocatorRoot = "root",
+      logit.year.fillout = min( model_base_years ),
       logit.exponent = 0 )[ names_LN0_Logit ]
 
 printlog( "L211.LN0_Land: Total regional land allocation" )
 L211.LN0_Land <- add_region_name( L125.LC_bm2_R )
 L211.LN0_Land$LandAllocatorRoot <- "root"
+L211.LN0_Land$year.fillout <- min( model_base_years )
 L211.LN0_Land$landAllocation <- L211.LN0_Land$LC_bm2
 L211.LN0_Land <- L211.LN0_Land[ names_LN0_Land ]
 
@@ -76,6 +78,7 @@ L211.LN1_ValueLogit$unManagedLandValue <- round( L211.LV_USD75_m2_R_AEZ.melt$val
       match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),
              vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,
       digits_land_value )
+L211.LN1_ValueLogit$logit.year.fillout <- min( model_base_years )
 L211.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[
       match( L211.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]
 L211.LN1_ValueLogit$logit.exponent[ L211.LN1_ValueLogit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[

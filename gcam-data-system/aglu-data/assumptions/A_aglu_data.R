@@ -14,7 +14,7 @@ preAGLU_years <- land_history_years[ !land_history_years %in% AGLU_historical_ye
 X_preAGLU_years <- paste( "X", preAGLU_years, sep = "" )
 
 # Diet years
-diet_years <- seq( 2010, 2050, 5 )
+diet_years <- c( max( historical_years ), future_years[ future_years <= 2050 ] )
 X_diet_years <- paste( "X", diet_years, sep="" )
 diet_gdpScen <- "SSP2" #Scenario to match with FAO projections in deriving income elasticities
 

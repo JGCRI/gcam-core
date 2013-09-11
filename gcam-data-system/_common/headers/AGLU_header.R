@@ -65,6 +65,7 @@ downscale_IMAGE_regions <- function( data, idvars, years = X_AGLU_historical_yea
 # -----------------------------------------------------------------------------
 # write_to_all_regions_ag: write out ag table to all regions
 write_to_all_regions_ag <- function( data, names ){
+	if ( "logit.year.fillout" %in% names ) data$logit.year.fillout <- "start-year"
 	data_new <- set_years( data )
 	data_new <- repeat_and_add_vector( data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
 	data_new <- add_region_name( data_new )
@@ -118,6 +119,7 @@ add_carbon_info <- function( data, veg_data, soil_data, age_data, LT_name = "Cde
 	data$hist.soil.carbon.density <- soil_data$value[
       match( vecpaste( data[ c( "region", LT_name, AEZ ) ] ),
              vecpaste( soil_data[ c( "region", LT, AEZ ) ] ) ) ]
+	data$mature.age.year.fillout <- min( model_base_years )
 	data$mature.age <- age_data$value[
       match( vecpaste( data[ c( "region", LT_name, AEZ ) ] ),
              vecpaste( age_data[ c( "region", LT, AEZ ) ] ) ) ]

@@ -48,6 +48,7 @@ L212.LN2_Logit$LandNode1 <- A_LandNode2$LandNode1[ match( L212.LN2_Logit$LandNod
 L212.LN2_Logit <- repeat_and_add_vector( L212.LN2_Logit, AEZ, AEZs )
 
 #Match in logit exponents based on the land node 2
+L212.LN2_Logit$logit.year.fillout <- min( model_base_years )
 L212.LN2_Logit$logit.exponent <- A_LandNode_logit$logit.exponent[ match( L212.LN2_Logit$LandNode2, A_LandNode_logit$LandNode ) ]
 L212.LN2_Logit$logit.exponent[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[
       match( L212.LN2_Logit$LandNode2[ L212.LN2_Logit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]
@@ -67,10 +68,12 @@ L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- add_node_leaf_names( L212.LC_bm2_R_Unmgd2_Yh
        nesting_table = A_LandLeaf_Unmgd2, leaf_name = "UnmanagedLandLeaf", LN1 = "LandNode1", LN2 = "LandNode2" )
 
 printlog( "L212.LN2_HistUnmgdAllocation: Historical land cover, unmanaged land in the second nest" )
-L212.LN2_HistUnmgdAllocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[ L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[Y]] %in% land_history_years, names_LN2_HistUnmgdAllocation ]
+L212.LN2_HistUnmgdAllocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[
+      L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[Y]] %in% land_history_years, names_LN2_HistUnmgdAllocation ]
 
 printlog( "L212.LN2_UnmgdAllocation: Model base period land cover, unmanaged land in the second nest" )
-L212.LN2_UnmgdAllocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[ L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[Y]] %in% model_base_years, names_LN2_UnmgdAllocation ]
+L212.LN2_UnmgdAllocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[
+      L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[Y]] %in% model_base_years, names_LN2_UnmgdAllocation ]
 
 #Managed land
 L212.LC_bm2_R_Mgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf2$LandLeaf )

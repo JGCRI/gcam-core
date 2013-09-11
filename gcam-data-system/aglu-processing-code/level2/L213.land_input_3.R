@@ -57,6 +57,7 @@ L213.LN3_Logit[ c( "LandNode1", "LandNode2" ) ] <- A_LandNode3[
 L213.LN3_Logit <- repeat_and_add_vector( L213.LN3_Logit, AEZ, AEZs )
 
 #Match in logit exponents based on the land node 2
+L213.LN3_Logit$logit.year.fillout <- min( model_base_years )
 L213.LN3_Logit$logit.exponent <- A_LandNode_logit$logit.exponent[ match( L213.LN3_Logit$LandNode3, A_LandNode_logit$LandNode ) ]
 L213.LN3_Logit$logit.exponent[ L213.LN3_Logit$AEZ %in% AEZs_most_arid ] <- A_LandNode_logit$logit.exponent.arid[
       match( L213.LN3_Logit$LandNode3[ L213.LN3_Logit$AEZ %in% AEZs_most_arid ], A_LandNode_logit$LandNode ) ]

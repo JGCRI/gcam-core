@@ -57,9 +57,10 @@ L201.AgSupplySector_biomassOil$AgSupplySector <- "biomassOil"
 L201.AgSupplySector_biomassOil$calPrice <- 0.7    #Value irrelevant
 L201.AgSupplySector_biomassOil$market[ L201.AgSupplySector_biomassOil$market == "regional" ] <-
       L201.AgSupplySector_biomassOil$region[ L201.AgSupplySector_biomassOil$market == "regional" ]
+L201.AgSupplySector_biomassOil$logit.year.fillout <- min( model_base_years )
 L201.AgSupplySector_biomassOil <- L201.AgSupplySector_biomassOil[ names_AgSupplySector ]
 
-printlog( "L201.AgSupplySubsector: Generic AgSupplySubsector characteristics (logit, shareweight interpolation)" )
+printlog( "L201.AgSupplySubsector: Generic AgSupplySubsector characteristics (none specified as competition is in the land allocator)" )
 A_AgSupplySubsector_repAEZ <- repeat_and_add_vector( A_AgSupplySubsector, AEZ, AEZs )
 A_AgSupplySubsector_repAEZ$AgSupplySubsector <- with( A_AgSupplySubsector_repAEZ, paste( AgSupplySector, AEZ, sep = AEZ_delimiter ) )
 L201.AgSupplySubsector <- write_to_all_regions_ag( A_AgSupplySubsector_repAEZ, names_AgSupplySubsector )

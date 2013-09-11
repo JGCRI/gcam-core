@@ -70,6 +70,7 @@ set_traded_names <- function( data, apply.to="selected" ) {
 # -----------------------------------------------------------------------------
 # write_to_all_regions: write out data to all regions, and set traded names as required
 write_to_all_regions <- function( data, names, has.traded=F, apply.to = "selected", set.market = F ){
+	if ( "logit.year.fillout" %in% names ) data$logit.year.fillout <- "start-year"
 	data_new <- set_years( data )
 	data_new <- repeat_and_add_vector( data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
 	data_new <- add_region_name( data_new )
