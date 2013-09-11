@@ -63,10 +63,13 @@ conv_kbbl_bbl <- 1000
 conv_bbl_tonne_RFO <- 1 / 6.66
 conv_bbl_tonne_distillate <- 1 / 7.46
 conv_days_year <- 1 / 365.25
+conv_year_hours <- 8766
 conv_tonne_GJ_RFO <- 40.87
 conv_tonne_GJ_distillate <- 42.91
 conv_GJ_EJ <- 1e-9
 conv_kwh_GJ <- 0.0036
+conv_GWh_EJ <- 3.6e-6
+conv_MWh_EJ <- 3.6e-9
 
 #from billion barrels a day to EJ per year
 conv_bbld_EJyr <- 6.119 * 365.25 * 1e-3

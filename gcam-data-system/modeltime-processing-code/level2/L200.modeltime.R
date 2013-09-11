@@ -60,7 +60,9 @@ L200.MAGICC <- data.frame(
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
 write_mi_data( L200.ModelTime, IDstring="ModelTime", domain="MODELTIME_LEVEL2_DATA", fn="L200.ModelTime", batch_XML_domain="MODELTIME_XML_BATCH", batch_XML_file="batch_modeltime.xml" ) 
-write_mi_data( L200.ModelTimeInterYears, "ModelTimeInterYears", "MODELTIME_LEVEL2_DATA", "L200.ModelTimeInterYears", "MODELTIME_XML_BATCH", "batch_modeltime.xml" ) 
+if( nrow( L200.ModelTimeInterYears ) != 0 ){
+  write_mi_data( L200.ModelTimeInterYears, "ModelTimeInterYears", "MODELTIME_LEVEL2_DATA", "L200.ModelTimeInterYears", "MODELTIME_XML_BATCH", "batch_modeltime.xml" )
+}
 write_mi_data( L200.MAGICC, "MAGICC", "MODELTIME_LEVEL2_DATA", "L200.MAGICC", "MODELTIME_XML_BATCH", "batch_modeltime.xml" ) 
 
 insert_file_into_batchxml( "MODELTIME_XML_BATCH", "batch_modeltime.xml", "MODELTIME_XML_FINAL", "modeltime.xml", "", xml_tag="outFile" )

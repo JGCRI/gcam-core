@@ -41,6 +41,7 @@ A23.globaltech_OMfixed <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMfixe
 A23.globaltech_OMvar <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMvar" )
 A23.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_retirement" )
 A23.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_co2capture" )
+L118.out_EJ_R_elec_hydro_Yfut <- readdata( "ENERGY_LEVEL1_DATA", "L118.out_EJ_R_elec_hydro_Yfut" )
 L1231.in_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.in_EJ_R_elec_F_tech_Yh" )
 L1231.out_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.out_EJ_R_elec_F_tech_Yh" )
 L1231.eff_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.eff_R_elec_F_tech_Yh" )
@@ -287,21 +288,35 @@ L223.StubTechCalInput_elec$minicam.energy.input <- A23.globaltech_eff$minicam.en
       match( paste( L223.StubTechCalInput_elec$subsector, L223.StubTechCalInput_elec$stub.technology ),
              paste( A23.globaltech_eff$subsector, A23.globaltech_eff$technology ) ) ]
 L223.StubTechCalInput_elec$calibrated.value <- round( L223.in_EJ_R_elec_F_tech_Yh$value, digits_calOutput )
-L223.StubTechCalInput_elec$year.share.weight <- L223.StubTechCalInput_elec$year
+L223.StubTechCalInput_elec$share.weight.year <- L223.StubTechCalInput_elec$year
 L223.StubTechCalInput_elec <- set_subsector_shrwt( L223.StubTechCalInput_elec, value.name = "calibrated.value" )
 L223.StubTechCalInput_elec$share.weight <- ifelse( L223.StubTechCalInput_elec$calibrated.value > 0, 1, 0 )
 
 printlog( "L223.StubTechFixOut_elec: fixed output of electricity generation technologies")
 L223.StubTechFixOut_elec <- L223.fixout_EJ_R_elec_F_tech_Yh[ names_StubTechYr ]
 L223.StubTechFixOut_elec$fixedOutput <- round( L223.fixout_EJ_R_elec_F_tech_Yh$value, digits_calOutput )
-L223.StubTechFixOut_elec$year.share.weight <- L223.StubTechFixOut_elec$year
+L223.StubTechFixOut_elec$share.weight.year <- L223.StubTechFixOut_elec$year
 L223.StubTechFixOut_elec$subsector.share.weight <- 0
 L223.StubTechFixOut_elec$share.weight <- 0
+
+#Adding in future hydropower generation here
+printlog( "L223.StubTechFixOut_hydro: fixed output of future hydropower")
+L223.StubTechFixOut_hydro <- interpolate_and_melt( L118.out_EJ_R_elec_hydro_Yfut,
+      model_future_years[ !model_future_years %in% historical_years ], value = "fixedOutput" )
+L223.StubTechFixOut_hydro <- add_region_name( L223.StubTechFixOut_hydro )
+L223.StubTechFixOut_hydro[ c( "supplysector", "subsector", "stub.technology" ) ] <- calibrated_techs[
+      match( paste( L223.StubTechFixOut_hydro$sector, L223.StubTechFixOut_hydro$fuel ),
+             paste( calibrated_techs$sector, calibrated_techs$fuel ) ),
+      c( "supplysector", "subsector", "technology" ) ]
+L223.StubTechFixOut_hydro$share.weight.year <- L223.StubTechFixOut_hydro$year
+L223.StubTechFixOut_hydro$subsector.share.weight <- 0
+L223.StubTechFixOut_hydro$share.weight <- 0
+L223.StubTechFixOut_hydro <- L223.StubTechFixOut_hydro[ names_StubTechFixOut ]
 
 printlog( "L223.StubTechProd_elec: calibrated output of electricity generation technologies" )
 L223.StubTechProd_elec <- L223.calout_EJ_R_elec_F_tech_Yh[ names_StubTechYr ]
 L223.StubTechProd_elec$calOutputValue <- round( L223.calout_EJ_R_elec_F_tech_Yh$value, digits_calOutput )
-L223.StubTechProd_elec$year.share.weight <- L223.StubTechProd_elec$year
+L223.StubTechProd_elec$share.weight.year <- L223.StubTechProd_elec$year
 L223.StubTechProd_elec <- set_subsector_shrwt( L223.StubTechProd_elec, value.name="calOutputValue" )
 L223.StubTechProd_elec$share.weight <- ifelse( L223.StubTechProd_elec$calOutputValue > 0, 1, 0 )
 
@@ -408,6 +423,7 @@ if( exists( "L223.GlobalIntTechLifetime_elec" ) ) {
 	}
 write_mi_data( L223.StubTechCalInput_elec, "StubTechCalInput", "ENERGY_LEVEL2_DATA", "L223.StubTechCalInput_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.StubTechFixOut_elec, "StubTechFixOut", "ENERGY_LEVEL2_DATA", "L223.StubTechFixOut_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
+write_mi_data( L223.StubTechFixOut_hydro, "StubTechFixOut", "ENERGY_LEVEL2_DATA", "L223.StubTechFixOut_hydro", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.StubTechProd_elec, "StubTechProd", "ENERGY_LEVEL2_DATA", "L223.StubTechProd_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.StubTechEff_elec, "StubTechEff", "ENERGY_LEVEL2_DATA", "L223.StubTechEff_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 
