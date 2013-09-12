@@ -114,10 +114,12 @@ L224.StubTechCalInput_heat <- set_subsector_shrwt( L224.StubTechCalInput_heat, v
 L224.StubTechCalInput_heat$share.weight <- ifelse( L224.StubTechCalInput_heat$calibrated.value > 0, 1, 0 )
 
 #Secondary output of heat, applied to electricity generation technologies
-#NOTE: Using historical information for all model periods that fall within historical time (i.e. not just the model base years)
-heat_base_years <- c( model_base_years, model_future_years )[ c( model_base_years, model_future_years ) %in% historical_years ]
-heat_future_years <- c( model_base_years, model_future_years )[ !c( model_base_years, model_future_years ) %in% historical_years ]
-L224.heatoutratio_R_elec_F_tech_Yh <- interpolate_and_melt( L124.heatoutratio_R_elec_F_tech_Yh, heat_base_years )
+#NOTE: This is complicated. Initially tried using historical information for all model periods that fall within historical time
+# (i.e. not just the model base years). However for regions like the FSU where historical periods often have very low output of heat
+# from the district heat sector, and most heat as a secondary output from the electricity sector, the secondary output heat can easily
+# exceed the demands from the end-use sectors, causing model solution failure. For this reason, the convention applied here is to
+# use the secondary output of heat from the power sector only in the model base years.
+L224.heatoutratio_R_elec_F_tech_Yh <- interpolate_and_melt( L124.heatoutratio_R_elec_F_tech_Yh, model_base_years )
 L224.heatoutratio_R_elec_F_tech_Yh <- add_region_name( L224.heatoutratio_R_elec_F_tech_Yh )
 L224.heatoutratio_R_elec_F_tech_Yh[ c( "supplysector", "subsector", "stub.technology" ) ] <- calibrated_techs[
       match( paste( L224.heatoutratio_R_elec_F_tech_Yh$sector, L224.heatoutratio_R_elec_F_tech_Yh$fuel, L224.heatoutratio_R_elec_F_tech_Yh$technology ),
@@ -135,7 +137,7 @@ L224.StubTechCost_elec$minicam.non.energy.input <- "heat plant"
 L224.StubTechCost_elec$input.cost <- round( L224.StubTechSecOut_elec$secondary.output * heat_price, digits_cost )
 
 #Need to fill out object names for all model time periods
-L224.StubTechCost_elec_fut <- repeat_and_add_vector( subset( L224.StubTechCost_elec, year == max( year ) ), Y, heat_future_years )
+L224.StubTechCost_elec_fut <- repeat_and_add_vector( subset( L224.StubTechCost_elec, year == max( year ) ), Y, model_future_years )
 L224.StubTechCost_elec_fut$input.cost <- 0
 L224.StubTechCost_elec <- rbind( L224.StubTechCost_elec, L224.StubTechCost_elec_fut )
 

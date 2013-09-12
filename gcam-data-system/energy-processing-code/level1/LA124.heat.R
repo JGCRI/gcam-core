@@ -78,11 +78,11 @@ L124.heatoutratio_R_elec_F_tech_Yh <- L124.heatoutratio_R_elec_F_tech_Yh[ rowSum
 # IEA's MAINCHP flow, which we model in the electric sector with a secondary output of heat to the district heat sector. In GCAM this will
 # cause solution failure as the district heat supply will be 0. In order to avoid this outcome we need a nominal amount of heat produced
 # in the zero years. The code below sets an exogenous year as the one to use to extract fuel shares for each region. In all 0 region / years,
-# output is equal to the output in the fuel-share year times 1e-6 to avoid throwing off the energy balances.
+# output is equal to the output in the fuel-share year times 1e-3 to avoid throwing off the energy balances.
 fuel_share_year <- "X2010"
 L124.mult_R_heat_Yh <- aggregate( L124.in_EJ_R_heat_F_Yh[ X_historical_years ], by=as.list( L124.in_EJ_R_heat_F_Yh[ R_S ] ), sum )
-L124.mult_R_heat_Yh[ X_historical_years ][ L124.mult_R_heat_Yh[ X_historical_years ] == 0 ] <- 1e-6
-L124.mult_R_heat_Yh[ X_historical_years ][ L124.mult_R_heat_Yh[ X_historical_years ] != 1e-6 ] <- 0
+L124.mult_R_heat_Yh[ X_historical_years ][ L124.mult_R_heat_Yh[ X_historical_years ] == 0 ] <- 1e-3
+L124.mult_R_heat_Yh[ X_historical_years ][ L124.mult_R_heat_Yh[ X_historical_years ] != 1e-3 ] <- 0
 
 L124.mult_R_heatfromelec_Yh <- aggregate( L124.out_EJ_R_heatfromelec_F_Yh[ X_historical_years ], by=as.list( L124.out_EJ_R_heatfromelec_F_Yh[ R_S ] ), sum )
 L124.mult_R_heatfromelec_Yh[ X_historical_years ][ L124.mult_R_heatfromelec_Yh[ X_historical_years ] !=0 ] <- 1
