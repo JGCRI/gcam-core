@@ -1,10 +1,10 @@
 #---------------------
 # Model base years
-model_base_years <- c( 1971, 1972 )
+model_base_years <- c( 1971:2010 )
 X_model_base_years <- paste0( "X", model_base_years )
 
 # Model future years
-model_future_years <- c( 1973:2010, seq( 2015, 2100, 5 ) )
+model_future_years <- seq( 2015, 2100, 5 )
 X_model_future_years <- paste0( "X", model_future_years )
 
 #All model years
