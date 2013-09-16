@@ -90,21 +90,29 @@ L205.AgProdChange_ag_ref <- L205.ag_YieldRate_R_C_Y_AEZ_ref.melt[
 L205.AgProdChange_ag_ref[ L205.AgProdChange_ag_ref == Inf ] <- 0
 
 printlog( "Translating bioenergy crop yield ratios to annualized improvement rates in specified time periods" )
+#Bio_years <- model_future_years[ model_future_years >= Bio_start_year ]
+#X_Bio_years <- paste0( "X", Bio_years )
 L205.bio_YieldRatio_R_Y_AEZ_ref.melt <- melt( L114.bio_YieldRatio_R_AEZ_Y_ref, id.vars = R_Y, variable_name = AEZ )
 #Only use the yield ratios in years after the introduction of biomass
-L205.bio_YieldRatio_R_Y_AEZ_ref.melt <- subset( L205.bio_YieldRatio_R_Y_AEZ_ref.melt, year > Bio_start_year & year %in% model_future_years )
+L205.bio_YieldRatio_R_Y_AEZ_ref.melt <- subset( L205.bio_YieldRatio_R_Y_AEZ_ref.melt, year %in% future_years )
 L205.bio_YieldRatio_R_Y_AEZ_ref.melt$Xyear <- paste0( "X", L205.bio_YieldRatio_R_Y_AEZ_ref.melt$year )
 L205.bio_YieldRatio_R_Y_AEZ_ref <- cast( L205.bio_YieldRatio_R_Y_AEZ_ref.melt, GCAM_region_ID + AEZ ~ Xyear )
-df.timesteps_bio <- df.timesteps[ rep( 1, length.out = nrow( L205.bio_YieldRatio_R_Y_AEZ_ref ) ),
-      colnames( df.timesteps ) %in% names( L205.bio_YieldRatio_R_Y_AEZ_ref ) ]
+
+#NOTE: The bio yield ratios are from a base year. Need to switch this to ratio from the prior time period
+L205.bio_YieldRatio_R_Y_AEZ_ref[ X_future_years[ 2:length( X_future_years ) ] ] <-
+      L205.bio_YieldRatio_R_Y_AEZ_ref[ X_future_years[ 2:length( X_future_years ) ] ] /
+      L205.bio_YieldRatio_R_Y_AEZ_ref[ X_future_years[ 1:( length( X_future_years ) -1 ) ] ]
+df.timesteps_bio <- as.data.frame( df.timesteps[ rep( 1, length.out = nrow( L205.bio_YieldRatio_R_Y_AEZ_ref ) ),
+      colnames( df.timesteps ) %in% names( L205.bio_YieldRatio_R_Y_AEZ_ref ) ] )
+row.names( df.timesteps_bio ) <- 1:nrow( df.timesteps_bio )
 
 #Solve for the yield rate using the ratio and the timestep
-Bio_years <- model_future_years[ model_future_years >= Bio_start_year ]
-X_Bio_years <- paste0( "X", Bio_years )
 L205.bio_YieldRate_R_Y_AEZ_ref <- L205.bio_YieldRatio_R_Y_AEZ_ref
-L205.bio_YieldRate_R_Y_AEZ_ref[ X_Bio_years[ 2:length( X_Bio_years ) ] ] <-
-      ( L205.bio_YieldRatio_R_Y_AEZ_ref[ X_Bio_years[ 2:length( X_Bio_years ) ] ] ) ^
-      (1 / df.timesteps_bio ) - 1
+L205.bio_YieldRate_R_Y_AEZ_ref[[ X_future_years[1] ]] <- L205.bio_YieldRate_R_Y_AEZ_ref[[ X_future_years[1] ]] ^ 
+      (1 / df.timesteps_bio[[ X_future_years[ 1 ]] ] ) - 1
+L205.bio_YieldRate_R_Y_AEZ_ref[ X_future_years[ 2:length( X_future_years ) ] ] <-
+      ( L205.bio_YieldRatio_R_Y_AEZ_ref[ X_future_years[ 2:length( X_future_years ) ] ] ) ^
+      (1 / df.timesteps_bio[ X_future_years[ 2:length( X_future_years ) ] ] ) - 1
 
 printlog( "Table L205.AgProdChange_bio_ref: Reference scenario ag prod change (biomass only)" )
 L205.bio_YieldRate_R_Y_AEZ_ref <- data.frame( L205.bio_YieldRate_R_Y_AEZ_ref ) #Need to remove the info that cast left it with
@@ -114,7 +122,7 @@ L205.bio_YieldRate_R_Y_AEZ_ref.melt[[Y]] <- sub( "X", "", L205.bio_YieldRate_R_Y
 L205.bio_YieldRate_R_Y_AEZ_ref.melt <- add_region_name( L205.bio_YieldRate_R_Y_AEZ_ref.melt )
 L205.bio_YieldRate_R_Y_AEZ_ref.melt <- add_agtech_names( L205.bio_YieldRate_R_Y_AEZ_ref.melt )
 names( L205.bio_YieldRate_R_Y_AEZ_ref.melt )[ names( L205.bio_YieldRate_R_Y_AEZ_ref.melt ) == "value" ] <- "AgProdChange"
-L205.AgProdChange_bio_ref <- L205.bio_YieldRate_R_Y_AEZ_ref.melt[ names_AgProdChange ]
+L205.AgProdChange_bio_ref <- subset( L205.bio_YieldRate_R_Y_AEZ_ref.melt, year %in% model_future_years )[ names_AgProdChange ]
 
 printlog( "Renaming specified bioenergy crops in the productivity change tables" )
 L205.AgProdChange_bio_ref <- rename_biocrops( L205.AgProdChange_bio_ref, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",

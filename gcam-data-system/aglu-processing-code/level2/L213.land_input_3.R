@@ -203,12 +203,14 @@ L213.LN3_MgdCarbon_crop[ L213.LN3_MgdCarbon_crop[[LT]]%in% A_Fodderbio_chars[[C]
 
 #Calculate vegetation carbon density based on the yields and crop characteristics
 L213.LN3_MgdCarbon_crop$hist.veg.carbon.density <- 
-      round( L213.LN3_MgdCarbon_crop$Yield / ( L213.LN3_MgdCarbon_crop$HarvestIndex + 1e-6 ) * ( 1 + L213.LN3_MgdCarbon_crop$Root_Shoot ) *
+      round( L213.LN3_MgdCarbon_crop$Yield / ( L213.LN3_MgdCarbon_crop$HarvestIndex ) * ( 1 + L213.LN3_MgdCarbon_crop$Root_Shoot ) *
              ( 1 - L213.LN3_MgdCarbon_crop$WaterContent ) * Ccontent_cellulose * Cconv_peak_avg,
       digits_C_density_crop )
 #Replace missing values with the default values      
 L213.LN3_MgdCarbon_crop$hist.veg.carbon.density[ is.na( L213.LN3_MgdCarbon_crop$hist.veg.carbon.density ) ] <-
       L213.LN3_MgdCarbon_crop$veg.carbon.density[ is.na( L213.LN3_MgdCarbon_crop$hist.veg.carbon.density ) ]
+L213.LN3_MgdCarbon_crop$hist.veg.carbon.density[ L213.LN3_MgdCarbon_crop$hist.veg.carbon.density == Inf ] <-
+      L213.LN3_MgdCarbon_crop$veg.carbon.density[ L213.LN3_MgdCarbon_crop$hist.veg.carbon.density == Inf ]
 L213.LN3_MgdCarbon_crop$veg.carbon.density <- L213.LN3_MgdCarbon_crop$hist.veg.carbon.density
 L213.LN3_MgdCarbon_crop <- L213.LN3_MgdCarbon_crop[ names_LN3_MgdCarbon ]
 
