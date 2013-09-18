@@ -102,6 +102,8 @@ public :
 
     virtual double getValue( const std::string& aRegionName, const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
+    
+    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
 
     static const std::string& getXMLNameStatic( );
 

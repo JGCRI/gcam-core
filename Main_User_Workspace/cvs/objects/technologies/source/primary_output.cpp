@@ -205,6 +205,11 @@ double PrimaryOutput::getValue( const string& aRegionName,
     return 0;
 }
 
+string PrimaryOutput::getOutputUnits( const string& aRegionName ) const {
+    return scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, true )
+        ->getString( "output-unit", false );
+}
+
 double PrimaryOutput::getEmissionsPerOutput( const string& aGHGName,
                                              const int aPeriod ) const
 {

@@ -230,6 +230,13 @@ public:
     virtual double getValue( const std::string& aRegionName,
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const = 0;
+    
+    /*!
+     * \brief Get output units string for this good.
+     * \param aRegionName Name of the region containing the output.
+     * \return The appropriate units string to use.
+     */
+    virtual std::string getOutputUnits( const std::string& aRegionName ) const = 0;
 
     /*!
      * \brief Get the emissions of a given gas per unit of primary output.

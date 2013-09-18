@@ -1019,7 +1019,9 @@ void XMLDBOutputter::startVisitOutput( const IOutput* aOutput, const int aPeriod
             continue;
         }
         attrs[ "vintage" ] = util::toString( modeltime->getper_to_yr( curr ) );
-        attrs[ "unit" ] = mCurrentOutputUnit;
+        // Avoid doing the expensive units lookup when the good is the same as the
+        // current sector we can just use the sector units.
+        attrs[ "unit" ] = aOutput->getName() == mCurrentSector ? mCurrentOutputUnit : aOutput->getOutputUnits( mCurrentRegion );
         // Avoid writing zeros to save space.
         // Write physical output for each output.
         double currValue = aOutput->getPhysicalOutput( curr );

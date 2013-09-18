@@ -109,3 +109,7 @@ void GenericOutput::setPhysicalOutput( const double aPrimaryOutput,
     // Primary output is given by the technology.
     mPhysicalOutputs[ aPeriod ] = aPrimaryOutput;
 }
+
+string GenericOutput::getOutputUnits( const string& aRegionName ) const {
+    return "";
+}

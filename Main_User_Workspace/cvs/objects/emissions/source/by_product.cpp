@@ -284,6 +284,11 @@ double ByProduct::calcPhysicalOutputInternal( const double aPrimaryOutput,
     return ( 1.0 - removeFraction ) * ( aPrimaryOutput * mCoef );
 }
 
+string ByProduct::getOutputUnits( const string& aRegionName ) const {
+    return scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, true )
+        ->getString( "output-unit", false );
+}
+
 void ByProduct::doInterpolations( const int aYear, const int aPreviousYear,
                                   const int aNextYear, const IOutput* aPreviousOutput,
                                   const IOutput* aNextOutput )

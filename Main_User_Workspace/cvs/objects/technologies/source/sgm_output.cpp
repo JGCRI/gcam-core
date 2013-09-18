@@ -264,6 +264,11 @@ double SGMOutput::getValue( const string& aRegionName,
     return 0;
 }
 
+string SGMOutput::getOutputUnits( const string& aRegionName ) const {
+    return scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, true )
+        ->getString( "output-unit", false );
+}
+
 double SGMOutput::getEmissionsPerOutput( const string& aGHGName,
                                          const int aPeriod ) const
 {

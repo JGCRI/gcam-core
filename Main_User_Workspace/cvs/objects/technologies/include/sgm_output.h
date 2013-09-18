@@ -141,6 +141,8 @@ public:
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
     
+    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
+    
     virtual void setCurrencyOutput( const std::string& aRegionName,
                                     const double aOutput,
                                     const int aPeriod );

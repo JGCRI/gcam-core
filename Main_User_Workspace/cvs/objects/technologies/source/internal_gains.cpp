@@ -48,6 +48,7 @@
 #include "util/base/include/ivisitor.h"
 #include "sectors/include/sector_utils.h"
 #include "containers/include/market_dependency_finder.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -221,6 +222,11 @@ double InternalGains::getValue( const string& aRegionName,
     // There is no direct value for internal gains, only indirectly by changing
     // thermal load requirements.
     return 0;
+}
+
+string InternalGains::getOutputUnits( const string& aRegionName ) const {
+    return scenario->getMarketplace()->getMarketInfo( SectorUtils::getTrialMarketName( mTrialMarketName ),
+        aRegionName, 0, true )->getString( "output-unit", false );
 }
 
 double InternalGains::getEmissionsPerOutput( const string& aGHGName,

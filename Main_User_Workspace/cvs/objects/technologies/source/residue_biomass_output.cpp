@@ -464,6 +464,11 @@ bool ResidueBiomassOutput::XMLParse( const xercesc::DOMNode* aNode )
     return true;
 }
 
+string ResidueBiomassOutput::getOutputUnits( const string& aRegionName ) const {
+    return scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, true )
+        ->getString( "output-unit", false );
+}
+
 void ResidueBiomassOutput::doInterpolations( const int aYear, const int aPreviousYear,
                                              const int aNextYear, const IOutput* aPreviousOutput,
                                              const IOutput* aNextOutput )

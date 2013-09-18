@@ -141,6 +141,8 @@ public:
     virtual double getValue( const std::string& aRegionName,
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
+    
+    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
 
     virtual double getEmissionsPerOutput( const std::string& aGHGName,
                                           const int aPeriod ) const;

@@ -249,6 +249,11 @@ double SecondaryOutput::getValue( const string& aRegionName,
     return price * mOutputRatio * mPriceMult;
 }
 
+string SecondaryOutput::getOutputUnits( const string& aRegionName ) const {
+    return scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, true )
+        ->getString( "output-unit", false );
+}
+
 double SecondaryOutput::getEmissionsPerOutput( const string& aGHGName,
                                                const int aPeriod ) const
 {

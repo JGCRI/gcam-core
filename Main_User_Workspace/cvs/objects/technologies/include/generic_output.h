@@ -93,6 +93,8 @@ public:
                                     const std::string& aRegionName,
                                     ICaptureComponent* aCaptureComponent,
                                     const int aPeriod );
+    
+    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
