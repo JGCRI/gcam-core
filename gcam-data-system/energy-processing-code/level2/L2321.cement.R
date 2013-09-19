@@ -42,14 +42,17 @@ L1321.in_EJ_R_cement_F_Y <- readdata( "ENERGY_LEVEL1_DATA", "L1321.in_EJ_R_cemen
 # 2. Perform computations
 #Create tables to delete technologies and subsectors in regions where heat is not modeled as a fuel
 # 2a. Supplysector information
-printlog( "L2321.Supplysector_cement: Supply sector information for fertilizer sector" )
+printlog( "L2321.Supplysector_cement: Supply sector information for cement sector" )
 L2321.Supplysector_cement <- write_to_all_regions( A321.sector, names_Supplysector )
 
+printlog( "L2321.FinalEnergyKeyword_cement: Supply sector keywords for cement sector" )
+L2321.FinalEnergyKeyword_cement <- na.omit( write_to_all_regions( A321.sector, names_FinalEnergyKeyword ) )
+
 # 2b. Subsector information
-printlog( "L2321.SubsectorLogit_cement: Subsector logit exponents of fertilizer sector" )
+printlog( "L2321.SubsectorLogit_cement: Subsector logit exponents of cement sector" )
 L2321.SubsectorLogit_cement <- write_to_all_regions( A321.subsector_logit, names_SubsectorLogit )
 
-printlog( "L2321.SubsectorShrwt_cement and L2321.SubsectorShrwtFllt_cement: Subsector shareweights of fertilizer sector" )
+printlog( "L2321.SubsectorShrwt_cement and L2321.SubsectorShrwtFllt_cement: Subsector shareweights of cement sector" )
 if( any( !is.na( A321.subsector_shrwt$year ) ) ){
 	L2321.SubsectorShrwt_cement <- write_to_all_regions( A321.subsector_shrwt[ !is.na( A321.subsector_shrwt$year ), ], names_SubsectorShrwt )
 	}
@@ -57,7 +60,7 @@ if( any( !is.na( A321.subsector_shrwt$year.fillout ) ) ){
 	L2321.SubsectorShrwtFllt_cement <- write_to_all_regions( A321.subsector_shrwt[ !is.na( A321.subsector_shrwt$year.fillout ), ], names_SubsectorShrwtFllt )
 	}
 
-printlog( "L2321.SubsectorInterp_cement and L2321.SubsectorInterpTo_cement: Subsector shareweight interpolation of fertilizer sector" )
+printlog( "L2321.SubsectorInterp_cement and L2321.SubsectorInterpTo_cement: Subsector shareweight interpolation of cement sector" )
 if( any( is.na( A321.subsector_interp$to.value ) ) ){
 	L2321.SubsectorInterp_cement <- write_to_all_regions( A321.subsector_interp[ is.na( A321.subsector_interp$to.value ), ], names_SubsectorInterp )
 	}
@@ -84,7 +87,7 @@ L2321.GlobalTechCoef_cement <- L2321.globaltech_coef.melt[ names_GlobalTechCoef 
 L2321.GlobalTechCoef_cement$coefficient <- round( L2321.GlobalTechCoef_cement$coefficient, digits_coefficient )
 
 #Carbon capture rates from technologies with CCS
-printlog( "L2321.GlobalTechCapture_cement: CO2 capture fractions from global fertilizer production technologies with CCS" )
+printlog( "L2321.GlobalTechCapture_cement: CO2 capture fractions from global cement production technologies with CCS" )
 ## No need to consider historical periods or intermittent technologies here
 L2321.globaltech_co2capture.melt <- interpolate_and_melt( A321.globaltech_co2capture, model_future_years, value.name="remove.fraction" )
 L2321.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L2321.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]
@@ -159,7 +162,7 @@ L2321.StubTechCalInput_cement_heat$subs.share.weight <- ifelse( L2321.StubTechCa
 L2321.StubTechCalInput_cement_heat$tech.share.weight <- L2321.StubTechCalInput_cement_heat$subs.share.weight
 L2321.StubTechCalInput_cement_heat <- L2321.StubTechCalInput_cement_heat[ names_StubTechCalInput ]
 
-printlog( "L2321.PerCapitaBased_cement: per-capita based flag for fertilizer exports final demand" )
+printlog( "L2321.PerCapitaBased_cement: per-capita based flag for cement exports final demand" )
 L2321.PerCapitaBased_cement <- write_to_all_regions( A321.demand,  names_PerCapitaBased )
 
 printlog( "L2321.BaseService_cement: base-year service output of cement" )
@@ -179,6 +182,7 @@ L2321.PriceElasticity_cement <- repeat_and_add_vector( L2321.PriceElasticity_cem
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L2321.Supplysector_cement, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L2321.Supplysector_cement",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_cement.xml" ) 
+write_mi_data( L2321.FinalEnergyKeyword_cement, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L2321.FinalEnergyKeyword_cement", "ENERGY_XML_BATCH", "batch_cement.xml" ) 
 write_mi_data( L2321.SubsectorLogit_cement, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L2321.SubsectorLogit_cement", "ENERGY_XML_BATCH", "batch_cement.xml" ) 
 if( exists( "L2321.SubsectorShrwt_cement" ) ){
 	write_mi_data( L2321.SubsectorShrwt_cement, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L2321.SubsectorShrwt_cement", "ENERGY_XML_BATCH", "batch_cement.xml" )
