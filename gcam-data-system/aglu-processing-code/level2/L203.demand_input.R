@@ -42,13 +42,18 @@ L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thou
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
+# NOTE: This is somewhat complicated. Unlike demands in the energy system, the aglu demands are treated as exogenous
+# in all historical periods, regardless of which model base years are used. Processing data for all historical years
+# that are also model years (i.e. not just the model base years)
+aglu_demand_calyears <- historical_years[ historical_years %in% model_years ]
+X_aglu_demand_calyears <- paste0( "X", aglu_demand_calyears )
 
-L203.ag_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L101.ag_Food_Pcal_R_C_Y, model_base_years )
-L203.ag_kcalg_R_C_Y.melt <- interpolate_and_melt( L101.ag_kcalg_R_C_Y, model_base_years )
-L203.an_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L105.an_Food_Pcal_R_C_Y, model_base_years )
-L203.an_kcalg_R_C_Y.melt <- interpolate_and_melt( L105.an_kcalg_R_C_Y, model_base_years )
+L203.ag_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L101.ag_Food_Pcal_R_C_Y, aglu_demand_calyears )
+L203.ag_kcalg_R_C_Y.melt <- interpolate_and_melt( L101.ag_kcalg_R_C_Y, aglu_demand_calyears )
+L203.an_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L105.an_Food_Pcal_R_C_Y, aglu_demand_calyears )
+L203.an_kcalg_R_C_Y.melt <- interpolate_and_melt( L105.an_kcalg_R_C_Y, aglu_demand_calyears )
 L203.pcFood_kcald_R_Dmnd_Y.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y, diet_years )
-L203.Pop_thous_R_Yh <- interpolate_and_melt( L101.Pop_thous_R_Yh, model_base_years )
+L203.Pop_thous_R_Yh <- interpolate_and_melt( L101.Pop_thous_R_Yh, aglu_demand_calyears )
 L203.pcgdp_thous90USD_SSP_R_Y.melt <- interpolate_and_melt( L102.pcgdp_thous90USD_SSP_R_Y, c( model_base_years, model_future_years ) )
 
 #Adding lookup vectors to level1 output tables
@@ -85,13 +90,14 @@ L203.GlobalTechShrwt_demand$share.weight <- 1
 
 #Calibrated food and nonfood demands of crops and meat
 #Create table of regions, technologies, and all base years
+# NOTE: Easiest if the model base years are subsetted from a full table as a last step in the construction of each of these tables
 A_demand_technology_R <- write_to_all_regions_ag( A_demand_technology, c( names_Tech, "minicam.energy.input", "market.name" ) )
 A_demand_technology_R$stub.technology <- A_demand_technology_R$technology
-A_demand_technology_R_Ybase <- repeat_and_add_vector( A_demand_technology_R, Y, model_base_years )
+A_demand_technology_R_Yh <- repeat_and_add_vector( A_demand_technology_R, Y, aglu_demand_calyears )
 A_demand_technology_R_Y <- repeat_and_add_vector( A_demand_technology_R, Y, c( model_base_years, model_future_years ) )
 
 printlog( "L203.StubTechProd_food_crop: crop food demand by technology and region" )
-L203.StubTechProd_food_crop <- subset( A_demand_technology_R_Ybase, supplysector == "FoodDemand_Crops" )
+L203.StubTechProd_food_crop <- subset( A_demand_technology_R_Yh, supplysector == "FoodDemand_Crops" )
 L203.StubTechProd_food_crop$calOutputValue <- round( L203.ag_Food_Pcal_R_C_Y.melt$value[
       match( vecpaste( L203.StubTechProd_food_crop[ c( "region", "technology", Y ) ] ),
              vecpaste( L203.ag_Food_Pcal_R_C_Y.melt[ c( "region", C, Y ) ] ) ) ],
@@ -103,7 +109,7 @@ L203.StubTechProd_food_crop$tech.share.weight <- ifelse( L203.StubTechProd_food_
 L203.StubTechProd_food_crop <- L203.StubTechProd_food_crop[ names_StubTechProd]
 
 printlog( "L203.StubTechProd_food_meat: meat food demand by technology and region" )
-L203.StubTechProd_food_meat <- subset( A_demand_technology_R_Ybase, supplysector == "FoodDemand_Meat" )
+L203.StubTechProd_food_meat <- subset( A_demand_technology_R_Yh, supplysector == "FoodDemand_Meat" )
 L203.StubTechProd_food_meat$calOutputValue <- round( L203.an_Food_Pcal_R_C_Y.melt$value[
       match( vecpaste( L203.StubTechProd_food_meat[ c( "region", "technology", Y ) ] ),
              vecpaste( L203.an_Food_Pcal_R_C_Y.melt[ c( "region", C, Y ) ] ) ) ],
@@ -115,7 +121,7 @@ L203.StubTechProd_food_meat$tech.share.weight <- ifelse( L203.StubTechProd_food_
 L203.StubTechProd_food_meat <- L203.StubTechProd_food_meat[ names_StubTechProd]
 
 printlog( "L203.StubTechProd_nonfood_crop: crop nonfood demand by technology and region" )
-L203.StubTechProd_nonfood_crop <- subset( A_demand_technology_R_Ybase, supplysector == "NonFoodDemand_Crops" )
+L203.StubTechProd_nonfood_crop <- subset( A_demand_technology_R_Yh, supplysector == "NonFoodDemand_Crops" )
 L203.StubTechProd_nonfood_crop$calOutputValue <- round( L203.ag_ALL_Mt_R_C_Y$OtherUses_Mt[
       match( vecpaste( L203.StubTechProd_nonfood_crop[ c( "region", "technology", Y ) ] ),
              vecpaste( L203.ag_ALL_Mt_R_C_Y[ c( "region", C, Y ) ] ) ) ],
@@ -127,7 +133,7 @@ L203.StubTechProd_nonfood_crop$tech.share.weight <- ifelse( L203.StubTechProd_no
 L203.StubTechProd_nonfood_crop <- L203.StubTechProd_nonfood_crop[ names_StubTechProd]
 
 printlog( "L203.StubTechProd_nonfood_meat: meat nonfood demand by technology and region" )
-L203.StubTechProd_nonfood_meat <- subset( A_demand_technology_R_Ybase, supplysector == "NonFoodDemand_Meat" )
+L203.StubTechProd_nonfood_meat <- subset( A_demand_technology_R_Yh, supplysector == "NonFoodDemand_Meat" )
 L203.StubTechProd_nonfood_meat$calOutputValue <- round( L203.an_ALL_Mt_R_C_Y$OtherUses_Mt[
       match( vecpaste( L203.StubTechProd_nonfood_meat[ c( "region", "technology", Y ) ] ),
              vecpaste( L203.an_ALL_Mt_R_C_Y[ c( "region", C, Y ) ] ) ) ],
@@ -139,7 +145,7 @@ L203.StubTechProd_nonfood_meat$tech.share.weight <- ifelse( L203.StubTechProd_no
 L203.StubTechProd_nonfood_meat <- L203.StubTechProd_nonfood_meat[ names_StubTechProd]
 
 printlog( "L203.StubTechProd_For: Forest product demand by technology and region" )
-L203.StubTechProd_For <- subset( A_demand_technology_R_Ybase, supplysector == "NonFoodDemand_Forest" )
+L203.StubTechProd_For <- subset( A_demand_technology_R_Yh, supplysector == "NonFoodDemand_Forest" )
 L203.StubTechProd_For$calOutputValue <- round( L203.For_ALL_bm3_R_Y$Cons_bm3[
       match( vecpaste( L203.StubTechProd_For[ c( "region", Y ) ] ),
              vecpaste( L203.For_ALL_bm3_R_Y[ c( "region", Y ) ] ) ) ],
@@ -212,10 +218,10 @@ L203.Food_pckcald_R.melt$pckcald <- L203.Food_pckcald_R.melt$base.service * conv
 L203.Food_pckcald_R.melt$Xyear <- paste0( "X", L203.Food_pckcald_R.melt$year )
 L203.Food_pckcald_R_Yh <- cast( L203.Food_pckcald_R.melt, region + energy.final.demand ~ Xyear, value = "pckcald" )
 L203.pcFoodRatio_R_Yh <- L203.Food_pckcald_R_Yh
-L203.pcFoodRatio_R_Yh[ X_model_base_years[ 2:length( X_model_base_years ) ] ] <-
-      L203.Food_pckcald_R_Yh[ X_model_base_years[ 2:length( X_model_base_years ) ] ] / 
-      L203.Food_pckcald_R_Yh[ X_model_base_years[ 1:( length( X_model_base_years ) - 1 ) ] ]
-L203.pcFoodRatio_R_Yh[ X_model_base_years[1] ] <- 1
+L203.pcFoodRatio_R_Yh[ X_aglu_demand_calyears[ 2:length( X_aglu_demand_calyears ) ] ] <-
+      L203.Food_pckcald_R_Yh[ X_aglu_demand_calyears[ 2:length( X_aglu_demand_calyears ) ] ] / 
+      L203.Food_pckcald_R_Yh[ X_aglu_demand_calyears[ 1:( length( X_aglu_demand_calyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Yh[ X_aglu_demand_calyears[1] ] <- 1
 
 printlog( "Step 2: Calculating future changes (ratios) in caloric demands by region and demand type" )
 #Cast table of future diet change and compute ratios
@@ -230,7 +236,7 @@ L203.pcFoodRatio_R_Dmnd_Yfut[ X_diet_years[1] ] <- 1
 
 printlog( "Step 3: Merging the historical and future caloric demand trajectories" )
 L203.pcFoodRatio_R_Dmnd_Y <- L203.pcFoodRatio_R_Yh
-L203.pcFoodRatio_R_Dmnd_Y[ X_diet_years ] <- L203.pcFoodRatio_R_Yh[[X_model_base_years[ length( X_model_base_years ) ]]] * 
+L203.pcFoodRatio_R_Dmnd_Y[ X_diet_years ] <- L203.pcFoodRatio_R_Yh[[X_aglu_demand_calyears[ length( X_aglu_demand_calyears ) ]]] * 
       L203.pcFoodRatio_R_Dmnd_Yfut[
           match( vecpaste( L203.pcFoodRatio_R_Yh[ names_EnergyFinalDemand ] ),
                  vecpaste( L203.pcFoodRatio_R_Dmnd_Yfut[ names_EnergyFinalDemand ] ) ),
@@ -238,7 +244,7 @@ L203.pcFoodRatio_R_Dmnd_Y[ X_diet_years ] <- L203.pcFoodRatio_R_Yh[[X_model_base
 
 printlog( "Step 4: Calculating the historical per-capita GDP trajectories over the same time period" )
 printlog( "NOTE: only computing elasticities based on the specified GDP scenario" )
-IncElas_years <- sort( unique( c( model_base_years, diet_years ) ) )
+IncElas_years <- sort( unique( c( aglu_demand_calyears, diet_years ) ) )
 X_IncElas_years <- paste0( "X", IncElas_years )
 L203.pcgdp_thous90USD_R_Y.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
        L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == diet_gdpScen & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% IncElas_years, ]
@@ -273,19 +279,20 @@ L203.PriceElasticity$price.elasticity[ L203.PriceElasticity$region == "USA" &
 L203.PriceElasticity <- L203.PriceElasticity[ names_PriceElasticity ]
 
 #Remove any regions for which agriculture and land use are not modeled
+## ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
 L203.Supplysector_demand         <- subset( L203.Supplysector_demand, !region %in% no_aglu_regions )
 L203.SubsectorAll_demand         <- subset( L203.SubsectorAll_demand, !region %in% no_aglu_regions )
 L203.StubTech_demand             <- subset( L203.StubTech_demand, !region %in% no_aglu_regions )
-L203.StubTechProd_food_crop      <- subset( L203.StubTechProd_food_crop, !region %in% no_aglu_regions )
-L203.StubTechProd_food_meat      <- subset( L203.StubTechProd_food_meat, !region %in% no_aglu_regions )
-L203.StubTechProd_nonfood_crop   <- subset( L203.StubTechProd_nonfood_crop, !region %in% no_aglu_regions )
-L203.StubTechProd_nonfood_meat   <- subset( L203.StubTechProd_nonfood_meat, !region %in% no_aglu_regions )
-L203.StubTechProd_For            <- subset( L203.StubTechProd_For, !region %in% no_aglu_regions )
+L203.StubTechProd_food_crop      <- subset( L203.StubTechProd_food_crop, !region %in% no_aglu_regions & year %in% model_base_years )
+L203.StubTechProd_food_meat      <- subset( L203.StubTechProd_food_meat, !region %in% no_aglu_regions & year %in% model_base_years )
+L203.StubTechProd_nonfood_crop   <- subset( L203.StubTechProd_nonfood_crop, !region %in% no_aglu_regions & year %in% model_base_years )
+L203.StubTechProd_nonfood_meat   <- subset( L203.StubTechProd_nonfood_meat, !region %in% no_aglu_regions & year %in% model_base_years )
+L203.StubTechProd_For            <- subset( L203.StubTechProd_For, !region %in% no_aglu_regions & year %in% model_base_years )
 L203.StubTechFixOut_exp          <- subset( L203.StubTechFixOut_exp, !region %in% no_aglu_regions )
 L203.StubCalorieContent_crop     <- subset( L203.StubCalorieContent_crop, !region %in% no_aglu_regions )
 L203.StubCalorieContent_meat     <- subset( L203.StubCalorieContent_meat, !region %in% no_aglu_regions )
 L203.PerCapitaBased              <- subset( L203.PerCapitaBased, !region %in% no_aglu_regions )
-L203.BaseService                 <- subset( L203.BaseService, !region %in% no_aglu_regions )
+L203.BaseService                 <- subset( L203.BaseService, !region %in% no_aglu_regions & year %in% model_base_years )
 L203.IncomeElasticity            <- subset( L203.IncomeElasticity, !region %in% no_aglu_regions )
 L203.PriceElasticity             <- subset( L203.PriceElasticity, !region %in% no_aglu_regions )
 
