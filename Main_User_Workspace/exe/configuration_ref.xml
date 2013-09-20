@@ -74,6 +74,8 @@
 		<Value name="aglu">../input/aglu/ag_cost.xml</Value>
 		<Value name="aglu">../input/aglu/ag_prodchange_ref.xml</Value>
 		<Value name="aglu">../input/aglu/Fert_input.xml</Value>
+		<Value name="aglu">../input/aglu/protected_land_input_2.xml</Value>
+		<Value name="aglu">../input/aglu/protected_land_input_3.xml</Value>
 
 		<Value name="ag_nonco2">../input/aglu/nonco2_ag.xml</Value>
 		<Value name="livestock_nonco2">../input/aglu/nonco2_an.xml</Value>
@@ -92,7 +94,7 @@
 		<Value name="BatchMode">0</Value>
 		<Value name="find-path">0</Value>
 		<Value name="createCostCurve">0</Value>
-		<Value name="agSubsidy">1</Value>
+		<Value name="agSubsidy">0</Value>
 		<Value name="addLUCtoMarket">0</Value>
 		<Value name="write-xml-db">1</Value>
 		<Value name="write-access-db">0</Value>
