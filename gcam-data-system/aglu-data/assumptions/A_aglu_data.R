@@ -96,6 +96,9 @@ digits_MAC <- 4 #portion of abatement at specified cost
 
 #-----------------------------------------------------------
 #ASSUMPTIONS
+# Fraction of land to protect
+protect_land_fract <- 0.9
+
 # Threshold for regional production fractions in "small AEZs" whose production can be adjusted
 small_AEZ_prodfrac <- 0.015
 
