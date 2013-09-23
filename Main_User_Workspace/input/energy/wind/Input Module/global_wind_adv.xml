@@ -7,17 +7,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.00</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -29,7 +29,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.57</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -41,7 +41,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.18</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -53,7 +53,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.85</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -65,7 +65,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.60</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -77,7 +77,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.41</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -91,42 +91,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.75</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.75</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.68</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.23</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.57</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.13</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.88</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -147,17 +147,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.99</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.99</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.01</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -169,7 +169,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.58</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -181,7 +181,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.20</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -193,7 +193,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.86</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -205,7 +205,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.61</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -217,7 +217,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.42</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -231,42 +231,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.69</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.11</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.24</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.57</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.88</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -287,17 +287,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.00</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -309,7 +309,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.57</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -321,7 +321,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.18</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -333,7 +333,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.85</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -345,7 +345,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.60</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -357,7 +357,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.41</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -371,42 +371,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.75</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.75</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.68</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.23</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.57</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.13</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.88</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -427,17 +427,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.02</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.02</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.04</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -449,7 +449,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -461,7 +461,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.21</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -473,7 +473,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.87</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -485,7 +485,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.62</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -497,7 +497,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -511,42 +511,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.79</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.79</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.71</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.13</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.26</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.59</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.15</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -567,17 +567,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.17</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.17</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.16</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -589,7 +589,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.70</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -601,7 +601,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.31</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -613,7 +613,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.96</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -625,7 +625,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.70</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -637,7 +637,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.50</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -651,42 +651,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.94</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.94</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.34</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.66</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.22</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.96</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -707,17 +707,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.10</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -729,7 +729,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.65</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -741,7 +741,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.26</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -753,7 +753,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.92</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -765,7 +765,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.66</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -777,7 +777,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.47</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -791,42 +791,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.87</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.87</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.77</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.18</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.62</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.93</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -847,17 +847,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.28</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.28</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.25</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -869,7 +869,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.79</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -881,7 +881,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.38</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -893,7 +893,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>3.03</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -905,7 +905,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.76</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -917,7 +917,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.56</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -931,42 +931,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>12.06</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>12.06</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.91</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.29</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.40</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.71</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.27</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>5.01</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -987,17 +987,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.99</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.99</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.01</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1009,7 +1009,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.58</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1021,7 +1021,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.20</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1033,7 +1033,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.86</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1045,7 +1045,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.61</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1057,7 +1057,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.42</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1071,42 +1071,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.69</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.11</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.24</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.57</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.88</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1127,17 +1127,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>6.38</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>6.38</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>5.13</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1149,7 +1149,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>4.58</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1161,7 +1161,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>4.09</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1173,7 +1173,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>3.66</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1185,7 +1185,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1197,7 +1197,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1211,42 +1211,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>13.16</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>13.16</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>9.72</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.96</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>6.23</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.75</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>5.46</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1267,17 +1267,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>4.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.01</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1289,7 +1289,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.57</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1301,7 +1301,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1313,7 +1313,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.85</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1325,7 +1325,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.60</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1337,7 +1337,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.41</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1351,42 +1351,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.69</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.11</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.24</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.57</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.88</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1407,17 +1407,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.31</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.31</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.27</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1429,7 +1429,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.81</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1441,7 +1441,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.40</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1453,7 +1453,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>3.04</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1465,7 +1465,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.77</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1477,7 +1477,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.57</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1491,42 +1491,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>12.08</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>12.08</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.93</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.31</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.41</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.72</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.28</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>5.02</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1547,17 +1547,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.26</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.26</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.23</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1569,7 +1569,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.77</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1581,7 +1581,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.37</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1593,7 +1593,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>3.01</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1605,7 +1605,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.74</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1617,7 +1617,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.54</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1631,42 +1631,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>12.03</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>12.03</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.27</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.38</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.70</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.26</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.99</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1687,17 +1687,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.08</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.08</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.08</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1709,7 +1709,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.64</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1721,7 +1721,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.25</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1733,7 +1733,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1745,7 +1745,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.65</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1757,7 +1757,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.46</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1771,42 +1771,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.85</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.85</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.17</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.29</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.62</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.18</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.92</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1827,17 +1827,17 @@
                <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.81</input-cost>
+                        <input-cost>5.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.88</input-cost>
+                        <input-cost>4.02</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1849,7 +1849,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.46</input-cost>
+                        <input-cost>3.58</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1861,7 +1861,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.09</input-cost>
+                        <input-cost>3.20</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1873,7 +1873,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.77</input-cost>
+                        <input-cost>2.86</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1885,7 +1885,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.53</input-cost>
+                        <input-cost>2.61</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1897,7 +1897,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.34</input-cost>
+                        <input-cost>2.42</input-cost>
                      </minicam-non-energy-input>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
@@ -1911,42 +1911,42 @@
                <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.77</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.58</input-cost>
+                        <input-cost>11.77</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.61</input-cost>
+                        <input-cost>8.70</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.07</input-cost>
+                        <input-cost>7.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.21</input-cost>
+                        <input-cost>6.25</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.55</input-cost>
+                        <input-cost>5.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>5.12</input-cost>
+                        <input-cost>5.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.86</input-cost>
+                        <input-cost>4.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>

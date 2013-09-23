@@ -1,59 +1,1 @@
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-2101,,,,minicam-non-energy-input,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,subsector,intermittent-technology,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Australia_NZ,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Canada,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-China,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Eastern Europe,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Former Soviet Union,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-India,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Japan,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Korea,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Latin America,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Middle East,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Southeast Asia,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-USA,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-Western Europe,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
-,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-2106,,,,,,,,,,,
-,,,,,capacity-limit-backup-calculator,,,,,,
-region,supplysector,subsector,intermittent-technology,period,capacity-limit,trial-market-name,electric-sector-name,backup-capital-cost,backup-capacity-factor,,
-ALL,electricity,wind,wind,2020,0.4,renewable,electricity,30,0.05,,
-ALL,electricity,wind,wind,2035,0.4,renewable,electricity,30,0.05,,
-ALL,electricity,wind,wind,2050,0.4,renewable,electricity,30,0.05,,
-ALL,electricity,wind,wind,2065,0.4,renewable,electricity,30,0.05,,
-ALL,electricity,wind,wind,2080,0.4,renewable,electricity,30,0.05,,
-ALL,electricity,wind,wind,2095,0.4,renewable,electricity,30,0.05,,
-,,,,,,,,,,,
-,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-2111,,,,minicam-non-energy-input,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Australia_NZ,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Canada,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-China,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Eastern Europe,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Former Soviet Union,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-India,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Japan,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Korea,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Latin America,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Middle East,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Southeast Asia,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-USA,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-Western Europe,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
-,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-305,,,,,,,,,,,
-,,,,2020 fillout,,,,,,,
-region,renewresource,smooth-renewable-subresource,gdpSupplyElast,techChange,subResourceVariance,subResourceCapacityFactor,,,,,
-ALL,large onshore windresource,large onshore wind,0,0,0.2,0.4,,,,,
+INPUT_TABLE,,,,,,,,,,,Variable ID,,,,,,,,,,,2101,,,,minicam-non-energy-input,,,,,,,,,,,input-cost,,,,,,,region,supplysector,subsector,intermittent-technology,1990,2005,2020,2035,2050,2065,2080,2095Africa,electricity,wind,wind,4.98,4.98,4.00,3.57,3.18,2.85,2.60,2.41Australia_NZ,electricity,wind,wind,4.99,4.99,4.01,3.58,3.20,2.86,2.61,2.42Canada,electricity,wind,wind,4.98,4.98,4.00,3.57,3.18,2.85,2.60,2.41China,electricity,wind,wind,5.02,5.02,4.04,3.60,3.21,2.87,2.62,2.43Eastern Europe,electricity,wind,wind,5.17,5.17,4.16,3.70,3.31,2.96,2.70,2.50Former Soviet Union,electricity,wind,wind,5.10,5.10,4.10,3.65,3.26,2.92,2.66,2.47India,electricity,wind,wind,5.28,5.28,4.25,3.79,3.38,3.03,2.76,2.56Japan,electricity,wind,wind,4.99,4.99,4.01,3.58,3.20,2.86,2.61,2.42Korea,electricity,wind,wind,6.38,6.38,5.13,4.58,4.09,3.66,3.33,3.09Latin America,electricity,wind,wind,4.98,4.98,4.01,3.57,3.19,2.85,2.60,2.41Middle East,electricity,wind,wind,5.31,5.31,4.27,3.81,3.40,3.04,2.77,2.57Southeast Asia,electricity,wind,wind,5.26,5.26,4.23,3.77,3.37,3.01,2.74,2.54USA,electricity,wind,wind,5.08,5.08,4.08,3.64,3.25,2.91,2.65,2.46Western Europe,electricity,wind,wind,5.00,5.00,4.02,3.58,3.20,2.86,2.61,2.42,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,Variable ID,,,,,,,,,,,2106,,,,,,,,,,,,,,,,capacity-limit-backup-calculator,,,,,,region,supplysector,subsector,intermittent-technology,period,capacity-limit,trial-market-name,electric-sector-name,backup-capital-cost,backup-capacity-factor,,ALL,electricity,wind,wind,2020,0.4,renewable,electricity,30,0.05,,ALL,electricity,wind,wind,2035,0.4,renewable,electricity,30,0.05,,ALL,electricity,wind,wind,2050,0.4,renewable,electricity,30,0.05,,ALL,electricity,wind,wind,2065,0.4,renewable,electricity,30,0.05,,ALL,electricity,wind,wind,2080,0.4,renewable,electricity,30,0.05,,ALL,electricity,wind,wind,2095,0.4,renewable,electricity,30,0.05,,,,,,,,,,,,,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,Variable ID,,,,,,,,,,,2111,,,,minicam-non-energy-input,,,,,,,,,,,input-cost,,,,,,,region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095Africa,electricity,wind,wind_storage,11.75,11.75,8.68,7.10,6.23,5.57,5.13,4.88Australia_NZ,electricity,wind,wind_storage,11.76,11.76,8.69,7.11,6.24,5.57,5.14,4.88Canada,electricity,wind,wind_storage,11.75,11.75,8.68,7.10,6.23,5.57,5.13,4.88China,electricity,wind,wind_storage,11.79,11.79,8.71,7.13,6.26,5.59,5.15,4.90Eastern Europe,electricity,wind,wind_storage,11.94,11.94,8.82,7.22,6.34,5.66,5.22,4.96Former Soviet Union,electricity,wind,wind_storage,11.87,11.87,8.77,7.18,6.30,5.62,5.19,4.93India,electricity,wind,wind_storage,12.06,12.06,8.91,7.29,6.40,5.71,5.27,5.01Japan,electricity,wind,wind_storage,11.76,11.76,8.69,7.11,6.24,5.57,5.14,4.88Korea,electricity,wind,wind_storage,13.16,13.16,9.72,7.96,6.98,6.23,5.75,5.46Latin America,electricity,wind,wind_storage,11.76,11.76,8.69,7.11,6.24,5.57,5.14,4.88Middle East,electricity,wind,wind_storage,12.08,12.08,8.93,7.31,6.41,5.72,5.28,5.02Southeast Asia,electricity,wind,wind_storage,12.03,12.03,8.89,7.27,6.38,5.70,5.26,4.99USA,electricity,wind,wind_storage,11.85,11.85,8.76,7.17,6.29,5.62,5.18,4.92Western Europe,electricity,wind,wind_storage,11.77,11.77,8.70,7.12,6.25,5.58,5.14,4.89,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,Variable ID,,,,,,,,,,,305,,,,,,,,,,,,,,,2020 fillout,,,,,,,region,renewresource,smooth-renewable-subresource,gdpSupplyElast,techChange,subResourceVariance,subResourceCapacityFactor,,,,,ALL,large onshore windresource,large onshore wind,0,0,0.2,0.4,,,,,

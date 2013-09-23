@@ -577,7 +577,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>916</capital-overnight>
+                        <capital-overnight>943</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.40</capacity-factor>
                      </input-capital>
@@ -601,7 +601,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>916</capital-overnight>
+                        <capital-overnight>943</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.40</capacity-factor>
                      </input-capital>
@@ -625,7 +625,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>916</capital-overnight>
+                        <capital-overnight>943</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.40</capacity-factor>
                      </input-capital>
@@ -649,7 +649,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>748</capital-overnight>
+                        <capital-overnight>768</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.45</capacity-factor>
                      </input-capital>
@@ -673,7 +673,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>619</capital-overnight>
+                        <capital-overnight>634</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.47</capacity-factor>
                      </input-capital>
@@ -697,7 +697,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>555</capital-overnight>
+                        <capital-overnight>568</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.49</capacity-factor>
                      </input-capital>
@@ -721,7 +721,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>506</capital-overnight>
+                        <capital-overnight>517</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.51</capacity-factor>
                      </input-capital>
@@ -745,7 +745,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>469</capital-overnight>
+                        <capital-overnight>480</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.52</capacity-factor>
                      </input-capital>
@@ -769,7 +769,7 @@
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
-                        <capital-overnight>443</capital-overnight>
+                        <capital-overnight>452</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.52</capacity-factor>
                      </input-capital>
@@ -802,7 +802,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>380</capital-overnight>
+                        <capital-overnight>407</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.40</capacity-factor>
                      </input-capital>
@@ -836,7 +836,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>380</capital-overnight>
+                        <capital-overnight>407</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.40</capacity-factor>
                      </input-capital>
@@ -870,7 +870,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>380</capital-overnight>
+                        <capital-overnight>407</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.40</capacity-factor>
                      </input-capital>
@@ -904,7 +904,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>353</capital-overnight>
+                        <capital-overnight>377</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.45</capacity-factor>
                      </input-capital>
@@ -938,7 +938,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>327</capital-overnight>
+                        <capital-overnight>350</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.47</capacity-factor>
                      </input-capital>
@@ -972,7 +972,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>303</capital-overnight>
+                        <capital-overnight>324</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.49</capacity-factor>
                      </input-capital>
@@ -1006,7 +1006,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>281</capital-overnight>
+                        <capital-overnight>301</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.51</capacity-factor>
                      </input-capital>
@@ -1040,7 +1040,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>261</capital-overnight>
+                        <capital-overnight>279</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.52</capacity-factor>
                      </input-capital>
@@ -1074,7 +1074,7 @@
                      <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>242</capital-overnight>
+                        <capital-overnight>259</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
                         <capacity-factor>0.52</capacity-factor>
                      </input-capital>
