@@ -1,987 +1,325 @@
-L111.ag_resbio_R_C <- translate_to_full_table( L111.ag_resbio_R_C,#
-      R, unique( iso_GCAM_regID[[R]]),#
-      C, unique( L111.ag_resbio_R_C[[C]] ),#
-      datacols = resbio_params )#
-# -----------------------------------------------------------------------------#
-# 3. Output#
-#Add comments for each table#
-comments.L111.ag_resbio_R_C <- c( "Weighted average residue biomass parameters by GCAM region / commodity","Units: varied" )#
-#write tables as CSV files#
-writedata( L111.ag_resbio_R_C, domain="AGLU_LEVEL1_DATA",fn="L111.ag_resbio_R_C", comments=comments.L111.ag_resbio_R_C )#
-# Every script should finish with this line#
-logstop()
-source("../aglu-processing-code/level1/L112.ag_prodchange_R_C_Y.R")
-L112.ag_YieldRatio_R_C_Ysy_AEZ[1:30,]
-GCAM_region_names
-source("../aglu-processing-code/level1/L113.bio_Yield_R_AEZ.R")
-L113.ag_bioYield_GJm2_R_AEZ_ref
-L113.ag_bioYield_GJm2_R_AEZ_ref <- L113.ag_bioYieldIndex_R_AEZ#
-L113.ag_bioYield_GJm2_R_AEZ_ref[ AEZs ] <-#
-      L113.ag_bioYieldIndex_R_AEZ[ AEZs ] * EPIC_bio_Yield$MEAN_SD_kgm2[ EPIC_bio_Yield$AEZ == Index_AEZ ]#
-L113.ag_bioYield_GJm2_R_AEZ_ref[ AEZs_arid ] <-#
-      L113.ag_bioYieldIndex_R_AEZ[ AEZs_arid ] * EPIC_bio_Yield$MEAN_kgm2[ EPIC_bio_Yield$AEZ == Index_AEZ ]#
-L113.ag_bioYield_GJm2_R_AEZ_ref[ is.na( L113.ag_bioYield_GJm2_R_AEZ_ref ) ] <- 0
-L113.ag_bioYield_GJm2_R_AEZ_ref
-L113.ag_bioYield_GJm2_R_AEZ_hi <- L113.ag_bioYieldIndex_R_AEZ#
-L113.ag_bioYield_GJm2_R_AEZ_hi[ AEZs ] <-#
-      L113.ag_bioYieldIndex_R_AEZ[ AEZs ] * EPIC_bio_Yield$MEAN_mult_kgm2[ EPIC_bio_Yield$AEZ == Index_AEZ ]
-L113.ag_bioYield_GJm2_R_AEZ_hi
-source("../aglu-processing-code/level1/L113.bio_Yield_R_AEZ.R")
-source("../aglu-processing-code/level1/L114.ag_prodchange_scenarios.R")
-subset(L114.ag_YieldRatio_R_C_Y_AEZ_ref, GCAM_region_ID==30)
-L114.ag_YieldRatio_R_C_Y_AEZ_ref[1:30,]
-L114.bio_YieldRatio_R_AEZ_Y_ref
-source(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-source(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))#
-logstart( "L120.LC_GIS_R_LTgis_Yh_AEZ.R" )#
-adddep(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-adddep(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))#
-printlog( "Land cover by region / GIS land types / historical year / AEZ" )#
-# -----------------------------------------------------------------------------#
-# 1. Read data from GIS mapping#
+SOCIOPROC_DIR <- "../socioeconomics-processing-code/"
+source(paste(SOCIOPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(SOCIOPROC_DIR,"/../_common/headers/SOCIO_header.R",sep=""))#
+logstart( "L101.Population.R" )#
+adddep(paste(SOCIOPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(SOCIOPROC_DIR,"/../_common/headers/SOCIO_header.R",sep=""))#
+printlog( "Historical and future population by GCAM region" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read data#
+#
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
-sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )#
-iso_GCAM_regID <- readdata( "COMMON_MAPPINGS","iso_GCAM_regID" )#
-GIS_ctry_AEZ <- readdata( "AGLU_MAPPINGS","GIS_ctry_AEZ" )#
-GIS_land_types <- readdata( "AGLU_MAPPINGS","GIS_land_types" )#
-SAGE_LT <- readdata( "AGLU_MAPPINGS","SAGE_LT" )#
-Sage_Hyde15_Area <- readdata( "AGLU_GIS_DATA", "Sage_Hyde15_Area" )#
-# -----------------------------------------------------------------------------#
-# 2. Perform computations#
-#Add vectors for GCAM region ID and AEZ#
-Sage_Hyde15_Area$iso <- GIS_ctry_AEZ$iso[ match( Sage_Hyde15_Area$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]#
-Sage_Hyde15_Area$AEZ <- GIS_ctry_AEZ$AEZ[ match( Sage_Hyde15_Area$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]#
-Sage_Hyde15_Area$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( Sage_Hyde15_Area$iso, iso_GCAM_regID$iso ) ]#
-#Add vectors for land type ( SAGE, HYDE, and WDPA )#
-printlog( "Mapping in land types from different GIS databases" )#
-Sage_Hyde15_Area[ c( "LT_SAGE", "LT_HYDE", "LT_WDPA" ) ] <- GIS_land_types[#
-      match( Sage_Hyde15_Area$Category, GIS_land_types$Category ),#
-      c( "LT_SAGE", "LT_HYDE", "LT_WDPA" ) ]#
-Sage_Hyde15_Area$LT_SAGE_5 <- SAGE_LT$Land_Type[ match( Sage_Hyde15_Area$LT_SAGE, SAGE_LT$LT_SAGE ) ]#
-#Drop all rows with missing values ( bodies of water )#
-printlog( "Dropping inland water" )#
-Sage_Hyde15_Area <- na.omit( Sage_Hyde15_Area )#
-#Reset WDPA classification to "Non-protected" where HYDE classification is cropland, pasture, or urban land#
-Sage_Hyde15_Area$LT_WDPA[ Sage_Hyde15_Area$LT_HYDE!="Unmanaged" ] <- "Non-protected"#
-#These multi-tiered classifications will be used for C contents, but for all land cover processing, collapse into GCAM land types#
-printlog ( "Collapsing multi-tiered GIS land types into a single vector of aggregate land types" )#
-Sage_Hyde15_Area$Land_Type <- Sage_Hyde15_Area$LT_SAGE_5#
-#Need to add levels to new variable Land_Type#
-#NOTE: To include protected lands: Add a category called "Protected" to the list below#
-Sage_Hyde15_Area$Land_Type[ Sage_Hyde15_Area$LT_HYDE=="Cropland" ] <- "Cropland"#
-Sage_Hyde15_Area$Land_Type[ Sage_Hyde15_Area$LT_HYDE=="Pasture" ] <- "Pasture"#
-Sage_Hyde15_Area$Land_Type[ Sage_Hyde15_Area$LT_HYDE=="Urbanland" ] <- "UrbanLand"    #This is the only land type whose "land" is capitalized here#
-#NOTE: To include protected lands, uncomment the line below#
-#Sage_Hyde15_Area$Land_Type[ Sage_Hyde15_Area$LT_WDPA=="Protected" ] <- "Protected"#
-#Add vector for area in thousand square kilometers (bm2)#
-Sage_Hyde15_Area$Area_bm2 <- Sage_Hyde15_Area$Area.km2. * conv_km2_bm2#
-#LAND COVER FOR LAND ALLOCATION#
-#Aggregate into GCAM regions and land types. This table is incomplete (missing non-existent combinations), indicated by LCi#
-printlog( "Part 1: Land cover by GCAM land category in all model history/base years" )#
-printlog( "Collapsing land cover into GCAM regions and aggregate land types" )#
-names( Sage_Hyde15_Area )[ names( Sage_Hyde15_Area ) == "Year" ] <- Y#
-L120.LCi_bm2_R_LT_year_AEZ <- aggregate( Sage_Hyde15_Area[ "Area_bm2" ], by=as.list( Sage_Hyde15_Area[ R_LT_Y_AEZ ] ), sum )#
-#Cast by year and interpolate to include all desired years#
-L120.LCi_bm2_R_LT_year_AEZ$Xyear <- paste( "X", L120.LCi_bm2_R_LT_year_AEZ$year, sep = "" )#
-L120.LCi_bm2_R_LT_year_AEZ.cast <- cast( L120.LCi_bm2_R_LT_year_AEZ, GCAM_region_ID + Land_Type + AEZ ~ Xyear, value = "Area_bm2" )#
+sourcedata( "SOCIO_ASSUMPTIONS", "A_socioeconomics_data", extension = ".R" )#
+iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )#
+GCAM3_population <- readdata( "SOCIO_LEVEL0_DATA", "GCAM3_population" )#
+L100.Pop_thous_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.Pop_thous_ctry_Yh" )#
+L100.Pop_thous_SSP_ctry_Yfut <- readdata( "SOCIO_LEVEL1_DATA", "L100.Pop_thous_SSP_ctry_Yfut" )#
 #
-###TEMPORARY STEP: SET 2010 EQUAL TO 2005 IN ABSENCE OF ANY REAL DATA FOR 2010#
-L120.LCi_bm2_R_LT_year_AEZ.cast$X2010 <- L120.LCi_bm2_R_LT_year_AEZ.cast$X2005#
-L120.LCi_bm2_R_LT_allyear_AEZ.cast <- gcam_interp( L120.LCi_bm2_R_LT_year_AEZ.cast, land_cover_years )#
+# -----------------------------------------------------------------------------#
+# 2. Perform computations#
+#Historical population by region#
+L100.Pop_thous_ctry_Yh[[R]] <- iso_GCAM_regID[[R]][ match( L100.Pop_thous_ctry_Yh$iso, iso_GCAM_regID$iso ) ]#
+L101.Pop_thous_R_Yh <- aggregate( L100.Pop_thous_ctry_Yh[ c( X_Maddison_historical_years, X_UN_historical_years ) ],#
+      by=as.list( L100.Pop_thous_ctry_Yh[ R ] ), sum )#
 #
-#Reset to a data frame, melt, and drop the "X" prefix from the year vector#
-L120.LCi_bm2_R_LT_allyear_AEZ.cast <- data.frame( L120.LCi_bm2_R_LT_allyear_AEZ.cast[ R_LT_AEZ ], L120.LCi_bm2_R_LT_allyear_AEZ.cast[ X_land_cover_years ] )#
+#Future population in the SSP scenarios#
+L100.Pop_thous_SSP_ctry_Yfut[[R]] <- iso_GCAM_regID[[R]][ match( L100.Pop_thous_SSP_ctry_Yfut$iso, iso_GCAM_regID$iso ) ]#
+L101.Pop_thous_SSP_R_Yfut <- aggregate( L100.Pop_thous_SSP_ctry_Yfut[ c( X_future_years ) ],#
+      by=as.list( L100.Pop_thous_SSP_ctry_Yfut[ Scen_R ] ), sum )#
 #
-#Create "complete" table with all possible combinations of regions, land types, AEZs, and years#
-printlog( "Expanding table to include all possible combinations of region, land type, year, and AEZ" )#
-L120.LC_bm2_R_LT_Yh_AEZ <- translate_to_full_table( L120.LCi_bm2_R_LT_allyear_AEZ.cast,#
-      var1 = R, var1_values = sort( unique( iso_GCAM_regID$GCAM_region_ID ) ),#
-      var2 = LT, var2_values = unique( L120.LCi_bm2_R_LT_year_AEZ$Land_Type ),#
-      var3 = AEZ, var3_values = AEZs,#
-      datacols = X_land_cover_years )#
+printlog( "Downscaling GCAM 3.0 population to country on the basis of UN historical data and base SSP in future years")#
+#Population by GCAM 3.0 region - downscale to country according to actual shares in the historical periods, and SSPbase in the future periods#
+L101.Pop_thous_ctry_Y <- L100.Pop_thous_ctry_Yh#
+L101.Pop_thous_ctry_Y[ X_future_years ] <- L100.Pop_thous_SSP_ctry_Yfut[#
+      match( paste( L101.Pop_thous_ctry_Y$iso, base_pop_scen ),#
+             paste( L100.Pop_thous_SSP_ctry_Yfut$iso, L100.Pop_thous_SSP_ctry_Yfut[[Scen]] ) ),#
+      X_future_years ]#
+L101.Pop_thous_ctry_Y$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L101.Pop_thous_ctry_Y$iso, iso_GCAM_regID$iso ) ]#
+L101.Pop_thous_SSPbase_RG3_Y <- aggregate( L101.Pop_thous_ctry_Y[ c( X_historical_years, X_future_years ) ],#
+      by=as.list( L101.Pop_thous_ctry_Y[ "region_GCAM3"] ), sum )#
 #
-#Subset the land types that are not further modified, and write them out#
-L120.LC_bm2_R_UrbanLand_Yh_AEZ <- L120.LC_bm2_R_LT_Yh_AEZ[ L120.LC_bm2_R_LT_Yh_AEZ[[LT]] =="UrbanLand", ]#
-L120.LC_bm2_R_Tundra_Yh_AEZ <- L120.LC_bm2_R_LT_Yh_AEZ[ L120.LC_bm2_R_LT_Yh_AEZ[[LT]] =="Tundra", ]#
-L120.LC_bm2_R_RckIceDsrt_Yh_AEZ <- L120.LC_bm2_R_LT_Yh_AEZ[ L120.LC_bm2_R_LT_Yh_AEZ[[LT]] =="RockIceDesert", ]#
-#NOTE: If protected lands are included, uncomment the text below#
-#LC_bm2_R_Protected_Yh_AEZ <- L120.LC_bm2_R_LT_Yh_AEZ[ L120.LC_bm2_R_LT_Yh_AEZ[[LT]] =="Protected", ]#
-#LAND COVER FOR CARBON CONTENT CALCULATION#
-printlog ( "Part 2: Land cover by Sage14 category for carbon content calculation" )#
-printlog ( "Collapsing land cover into GCAM regions and SAGE 14 land types" )#
-Sage_Hyde15_Area_by <- subset( Sage_Hyde15_Area, year == max( year ) )#
-L120.LCi_bm2_R_LTsage_AEZ <- aggregate( Sage_Hyde15_Area_by[ "Area_bm2" ],#
-      by=as.list( Sage_Hyde15_Area_by[ c( R, "LT_SAGE", AEZ ) ] ), sum )#
-L120.LCi_bm2_R_LTsage_AEZ.cast <- cast( L120.LCi_bm2_R_LTsage_AEZ, GCAM_region_ID + LT_SAGE ~ AEZ, value = "Area_bm2" )#
-L120.LCi_bm2_R_LTsage_AEZ.cast[ is.na( L120.LCi_bm2_R_LTsage_AEZ.cast ) ] <- 0#
-#Create "complete" table with all possible combinations of regions, land types, AEZs, and years#
-printlog( "Expanding table to include all possible combinations of region, land type, and AEZ" )#
-L120.LC_bm2_R_LTsage_AEZ <- translate_to_full_table( L120.LCi_bm2_R_LTsage_AEZ.cast,#
-      var1 = R, var1_values = sort( unique( iso_GCAM_regID$GCAM_region_ID ) ),#
-      var2 = "LT_SAGE", var2_values = unique( L120.LCi_bm2_R_LTsage_AEZ.cast$LT_SAGE ),#
-      datacols = AEZs  )
-Sage_Hyde15_Area$iso <- GIS_ctry_AEZ$iso[ match( Sage_Hyde15_Area$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]#
-Sage_Hyde15_Area$AEZ <- GIS_ctry_AEZ$AEZ[ match( Sage_Hyde15_Area$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]#
-Sage_Hyde15_Area$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( Sage_Hyde15_Area$iso, iso_GCAM_regID$iso ) ]#
-#Add vectors for land type ( SAGE, HYDE, and WDPA )#
-printlog( "Mapping in land types from different GIS databases" )#
-Sage_Hyde15_Area[ c( "LT_SAGE", "LT_HYDE", "LT_WDPA" ) ] <- GIS_land_types[#
-      match( Sage_Hyde15_Area$Category, GIS_land_types$Category ),#
-      c( "LT_SAGE", "LT_HYDE", "LT_WDPA" ) ]#
-Sage_Hyde15_Area$LT_SAGE_5 <- SAGE_LT$Land_Type[ match( Sage_Hyde15_Area$LT_SAGE, SAGE_LT$LT_SAGE ) ]#
-#Drop all rows with missing values ( bodies of water )#
-printlog( "Dropping inland water" )#
-Sage_Hyde15_Area <- na.omit( Sage_Hyde15_Area )#
-#Reset WDPA classification to "Non-protected" where HYDE classification is cropland, pasture, or urban land#
-Sage_Hyde15_Area$LT_WDPA[ Sage_Hyde15_Area$LT_HYDE!="Unmanaged" ] <- "Non-protected"#
-#These multi-tiered classifications will be used for C contents, but for all land cover processing, collapse into GCAM land types#
-printlog ( "Collapsing multi-tiered GIS land types into a single vector of aggregate land types" )#
-Sage_Hyde15_Area$Land_Type <- Sage_Hyde15_Area$LT_SAGE_5#
-#Need to add levels to new variable Land_Type#
-#NOTE: To include protected lands: Add a category called "Protected" to the list below#
-Sage_Hyde15_Area$Land_Type[ Sage_Hyde15_Area$LT_HYDE=="Cropland" ] <- "Cropland"#
-Sage_Hyde15_Area$Land_Type[ Sage_Hyde15_Area$LT_HYDE=="Pasture" ] <- "Pasture"#
-Sage_Hyde15_Area$Land_Type[ Sage_Hyde15_Area$LT_HYDE=="Urbanland" ] <- "UrbanLand"    #This is the only land type whose "land" is capitalized here#
-#NOTE: To include protected lands, uncomment the line below#
-#Sage_Hyde15_Area$Land_Type[ Sage_Hyde15_Area$LT_WDPA=="Protected" ] <- "Protected"
-Sage_Hyde15_Area$Area_bm2 <- Sage_Hyde15_Area$Area.km2. * conv_km2_bm2#
-#LAND COVER FOR LAND ALLOCATION#
-#Aggregate into GCAM regions and land types. This table is incomplete (missing non-existent combinations), indicated by LCi#
-printlog( "Part 1: Land cover by GCAM land category in all model history/base years" )#
-printlog( "Collapsing land cover into GCAM regions and aggregate land types" )#
-names( Sage_Hyde15_Area )[ names( Sage_Hyde15_Area ) == "Year" ] <- Y#
-L120.LCi_bm2_R_LT_year_AEZ <- aggregate( Sage_Hyde15_Area[ "Area_bm2" ], by=as.list( Sage_Hyde15_Area[ R_LT_Y_AEZ ] ), sum )#
-#Cast by year and interpolate to include all desired years#
-L120.LCi_bm2_R_LT_year_AEZ$Xyear <- paste( "X", L120.LCi_bm2_R_LT_year_AEZ$year, sep = "" )#
-L120.LCi_bm2_R_LT_year_AEZ.cast <- cast( L120.LCi_bm2_R_LT_year_AEZ, GCAM_region_ID + Land_Type + AEZ ~ Xyear, value = "Area_bm2" )
-L120.LCi_bm2_R_LT_year_AEZ.cast$X2010 <- L120.LCi_bm2_R_LT_year_AEZ.cast$X2005#
-L120.LCi_bm2_R_LT_allyear_AEZ.cast <- gcam_interp( L120.LCi_bm2_R_LT_year_AEZ.cast, land_cover_years )
-rm(list=lst())
-rm(list=list())
-rm(list=ls())
+#Calculate shares of each country within its region over the historical time series#
+L101.Popshares_ctryRG3_Y <- L101.Pop_thous_ctry_Y[ c( "iso", "region_GCAM3", X_historical_years, X_future_years ) ]#
+L101.Popshares_ctryRG3_Y[ c( X_historical_years, X_future_years ) ] <-#
+      L101.Pop_thous_ctry_Y[ c( X_historical_years, X_future_years ) ] / L101.Pop_thous_SSPbase_RG3_Y[#
+         match( L101.Pop_thous_ctry_Y$region_GCAM3, L101.Pop_thous_SSPbase_RG3_Y$region_GCAM3 ),#
+      c( X_historical_years, X_future_years ) ]#
+#
+#Interpolate the GCAM population data to all historical and future years#
+L101.Pop_thous_GCAM3_RG3_Y <- gcam_interp( GCAM3_population, c( historical_years, future_years ) )[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
+#
+if( "X2100" %in% X_future_years ){#
+	printlog( "Extending GCAM 3.0 scenario to 2100 using SSPbase population ratios by GCAM 3.0 region")#
+	L101.Pop_thous_GCAM3_RG3_Y$X2100 <- L101.Pop_thous_GCAM3_RG3_Y$X2095 *#
+	   L101.Pop_thous_SSPbase_RG3_Y$X2100[ match( L101.Pop_thous_GCAM3_RG3_Y$region_GCAM3, L101.Pop_thous_SSPbase_RG3_Y$region_GCAM3 ) ] /#
+	   L101.Pop_thous_SSPbase_RG3_Y$X2095[ match( L101.Pop_thous_GCAM3_RG3_Y$region_GCAM3, L101.Pop_thous_SSPbase_RG3_Y$region_GCAM3 ) ]#
+}#
+#
+#Multiply these population numbers by the shares of each country within GCAM region#
+L101.Pop_thous_GCAM3_ctry_Y <- L101.Popshares_ctryRG3_Y#
+L101.Pop_thous_GCAM3_ctry_Y[ c( X_historical_years, X_future_years ) ] <- #
+      L101.Popshares_ctryRG3_Y[ c( X_historical_years, X_future_years ) ] * L101.Pop_thous_GCAM3_RG3_Y[#
+         match( L101.Popshares_ctryRG3_Y$region_GCAM3, L101.Pop_thous_GCAM3_RG3_Y$region_GCAM3 ),#
+      c( X_historical_years, X_future_years ) ]#
+#
+printlog( "Aggregating by GCAM regions")#
+L101.Pop_thous_GCAM3_ctry_Y[[R]] <- iso_GCAM_regID[[R]][ match( L101.Pop_thous_GCAM3_ctry_Y$iso, iso_GCAM_regID$iso ) ]#
+L101.Pop_thous_GCAM3_R_Y <- aggregate( L101.Pop_thous_GCAM3_ctry_Y[ c( X_historical_years, X_future_years ) ],#
+      by=as.list( L101.Pop_thous_GCAM3_ctry_Y[ R ] ), sum )#
+L101.Pop_thous_GCAM3_ctry_Y <- L101.Pop_thous_GCAM3_ctry_Y[ c( "iso", X_historical_years, X_future_years ) ]
+dim( L101.Pop_thous_GCAM3_R_Y)
+head( L101.Pop_thous_GCAM3_R_Y)
+head(L101.Pop_thous_R_Yh)
+GCAM3_population
+subset(L101.Pop_thous_R_Yh, GCAM_region_ID==7)
+subset(L101.Pop_thous_GCAM3_R_Y, GCAM_region_ID==7)
+subset(L101.Pop_thous_R_Yh, GCAM_region_ID==7)[X_historical_years ] / subset(L101.Pop_thous_GCAM3_R_Y, GCAM_region_ID==7)[ X_historical_years]
+logstop()
+source(paste(SOCIOPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(SOCIOPROC_DIR,"/../_common/headers/SOCIO_header.R",sep=""))#
+logstart( "L102.GDP.R" )#
+adddep(paste(SOCIOPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(SOCIOPROC_DIR,"/../_common/headers/SOCIO_header.R",sep=""))#
+printlog( "Historical and future GDP by GCAM region" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read data#
+#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
+sourcedata( "SOCIO_ASSUMPTIONS", "A_socioeconomics_data", extension = ".R" )#
+iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )#
+SSP_GDP_PPP <- readdata( "SOCIO_LEVEL0_DATA", "SSP_GDP_PPP" )#
+GCAM3_GDP <- readdata( "SOCIO_LEVEL0_DATA", "GCAM3_GDP" )#
+L100.gdp_mil90usd_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.gdp_mil90usd_ctry_Yh" )#
+L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )#
+L101.Pop_thous_SSP_R_Yfut <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_SSP_R_Yfut" )
+2. Perform computations#
+printlog( "NOTE: The SSPs do not include Taiwan. This needs to be added for the processing" )#
+printlog( "Taiwan will be assigned the same growth rate as China in future time periods" )#
+TWN_GDP_PPP <- data.frame(#
+      model = gdp_model,#
+      Scenario = unique( SSP_GDP_PPP$Scenario[ SSP_GDP_PPP$model == gdp_model ] ),#
+      Region = "TWN",#
+      Variable = unique( SSP_GDP_PPP$Variable), Unit = unique( SSP_GDP_PPP$Unit ) )#
+TWN_GDP_PPP[ X_historical_years[ X_historical_years %in% names( SSP_GDP_PPP ) ] ] <- L100.gdp_mil90usd_ctry_Yh[#
+      L100.gdp_mil90usd_ctry_Yh$iso == "twn",#
+      X_historical_years[ X_historical_years %in% names( SSP_GDP_PPP ) ] ] * conv_1990_2005_USD * conv_mil_bil#
+#
+#NOTE: Not worrying about PPP:MER conversion factors here. This is crapola anyway and will be replaced when the SSP group adds Taiwan.#
+X_SSP_data_years <- names( SSP_GDP_PPP )[ grep( "X[0-9]{4}", names( SSP_GDP_PPP ) ) ]#
+X_SSP_data_years_base <- X_SSP_data_years[ X_SSP_data_years %in% names( TWN_GDP_PPP ) ]#
+X_SSP_data_years_fut <- X_SSP_data_years[ !X_SSP_data_years %in% names( TWN_GDP_PPP ) ]#
+X_SSP_data_years_fby <- X_SSP_data_years_base[ length( X_SSP_data_years_base ) ]#
+CHN_GDP_PPP <- subset( SSP_GDP_PPP, Region=="CHN" & model == gdp_model )#
+TWN_GDP_PPP[ X_SSP_data_years_fut ] <- TWN_GDP_PPP[[ X_SSP_data_years_fby ]] * CHN_GDP_PPP[ X_SSP_data_years_fut ] / CHN_GDP_PPP[[ X_SSP_data_years_fby ]]#
+#
+#Rbind the Taiwan GDP scenarios back to the full database#
+SSP_GDP_PPP <- rbind( SSP_GDP_PPP, TWN_GDP_PPP )#
+#
+printlog( "Aggregating historical and future GDP by GCAM region")#
+L100.gdp_mil90usd_ctry_Yh[[R]] <- iso_GCAM_regID[[R]][ match( L100.gdp_mil90usd_ctry_Yh$iso, iso_GCAM_regID$iso ) ]#
+L102.gdp_mil90usd_R_Yh <- aggregate( L100.gdp_mil90usd_ctry_Yh[ X_historical_years ], by=as.list( L100.gdp_mil90usd_ctry_Yh[ R ] ), sum )#
+#
+#Future GDP in the SSP scenarios#
+printlog( "NOTE: this point in the processing method defines the maximum number of countries that may be regions in GCAM (182)" )#
+L102.gdp_bilusd_ctry_Yfut <- subset( SSP_GDP_PPP, model == gdp_model )#
+L102.gdp_bilusd_ctry_Yfut$iso <- tolower( L102.gdp_bilusd_ctry_Yfut$Region )#
+#
+#Romania is called "rou" in the SSP database. reset this#
+L102.gdp_bilusd_ctry_Yfut$iso[ L102.gdp_bilusd_ctry_Yfut$iso == "rou" ] <- "rom"#
+#
+#Map in the region and scenario#
+L102.gdp_bilusd_ctry_Yfut[[R]] <- iso_GCAM_regID[[R]][ match( L102.gdp_bilusd_ctry_Yfut$iso, iso_GCAM_regID$iso ) ]#
+L102.gdp_bilusd_ctry_Yfut$scenario <- substr( L102.gdp_bilusd_ctry_Yfut$Scenario, 1, 4 )#
+#
+#Specify which years in the SSP databases to use#
+X_SSP_years <- names( L102.gdp_bilusd_ctry_Yfut )[ names( L102.gdp_bilusd_ctry_Yfut ) %in% c( X_historical_years, X_future_years ) ]#
+#
+#Find any common years between the historical data and the "future" data, for computation of ratios#
+X_common_years <- X_SSP_years[ X_SSP_years %in% names( L102.gdp_mil90usd_R_Yh ) ]#
+#
+#Use the most recent year as the transition point between the two databases#
+printlog( "NOTE: using historical data through final historical year, and ratios from final historical year in projections" )#
+X_base_year <- X_common_years[ length( X_common_years ) ]#
+#
+L102.gdp_mil90usd_SSP_R_Yfut <- aggregate( L102.gdp_bilusd_ctry_Yfut[ X_SSP_years ], by=as.list( L102.gdp_bilusd_ctry_Yfut[ Scen_R ] ), sum )#
+#
+#Calculate the GDP ratios from the first year in the projections. Use this ratio to project GDP from historical dataset in final historical period#
+L102.gdpRatio_SSP_R_Yfut <- L102.gdp_mil90usd_SSP_R_Yfut[ c( Scen_R, X_future_years ) ]#
+L102.gdpRatio_SSP_R_Yfut[ X_future_years ] <- L102.gdp_mil90usd_SSP_R_Yfut[ X_future_years ] /  L102.gdp_mil90usd_SSP_R_Yfut[[ X_base_year ]]#
+#
+#Use these ratios to build the GDP trajectories by SSP#
+L102.gdp_mil90usd_SSP_R_Y <- repeat_and_add_vector( L102.gdp_mil90usd_R_Yh, Scen, unique( L102.gdpRatio_SSP_R_Yfut[[Scen]] ) )#
+L102.gdp_mil90usd_SSP_R_Y[X_future_years] <- L102.gdp_mil90usd_SSP_R_Y[[X_base_year]] * L102.gdpRatio_SSP_R_Yfut[#
+      match( vecpaste( L102.gdp_mil90usd_SSP_R_Y[ Scen_R ] ), vecpaste( L102.gdpRatio_SSP_R_Yfut[ Scen_R ] ) ),#
+      X_future_years ]#
+L102.gdp_mil90usd_SSP_R_Y <- L102.gdp_mil90usd_SSP_R_Y[ c( Scen_R, X_historical_years, X_future_years ) ]#
+#
+printlog( "Calculating per-capita GDP by GCAM region and historical year and SSP scenario" )#
+#First, merge the population datasets (historical and future/scenario)#
+L102.Pop_thous_SSP_R_Y <- L101.Pop_thous_SSP_R_Yfut#
+L102.Pop_thous_SSP_R_Y[ X_historical_years ] <- L101.Pop_thous_R_Yh[#
+      match( L102.Pop_thous_SSP_R_Y[[R]], L101.Pop_thous_R_Yh[[R]] ),#
+      X_historical_years ]#
+L102.Pop_thous_SSP_R_Y <- L102.Pop_thous_SSP_R_Y[ c( Scen_R, X_historical_years, X_future_years ) ]#
+#
+#Calculate per-capita GDP#
+L102.pcgdp_thous90USD_SSP_R_Y <- L102.gdp_mil90usd_SSP_R_Y#
+L102.pcgdp_thous90USD_SSP_R_Y[ c( X_historical_years, X_future_years ) ] <-#
+      L102.gdp_mil90usd_SSP_R_Y[ c( X_historical_years, X_future_years ) ] / L102.Pop_thous_SSP_R_Y[#
+         match( vecpaste( L102.pcgdp_thous90USD_SSP_R_Y[ Scen_R ] ), vecpaste( L102.Pop_thous_SSP_R_Y[ Scen_R ] ) ),#
+         c( X_historical_years, X_future_years ) ]#
+#GDP by GCAM region from GCAM 3.0 GDPs.#
+printlog( "Downscaling GCAM 3.0 GDP by GCAM 3.0 region to countries, using SSP2 GDP scenario" )#
+#GDP by GCAM 3.0 region - downscale to country according to actual shares in the historical periods, and SSPbase in the future periods#
+L102.gdp_mil90usd_ctry_Yh <- subset( L100.gdp_mil90usd_ctry_Yh, iso %in% L102.gdp_bilusd_ctry_Yfut$iso )#
+L102.gdp_mil90usd_ctry_Yh[ X_future_years ] <- L102.gdp_bilusd_ctry_Yfut[#
+      match( paste( L102.gdp_mil90usd_ctry_Yh$iso, base_pop_scen ),#
+             paste( L102.gdp_bilusd_ctry_Yfut$iso, L102.gdp_bilusd_ctry_Yfut[[Scen]] ) ),#
+      X_future_years ]#
+L102.gdp_mil90usd_ctry_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L102.gdp_mil90usd_ctry_Yh$iso, iso_GCAM_regID$iso ) ]#
+L102.gdp_mil90usd_SSPbase_RG3_Y <- aggregate( L102.gdp_mil90usd_ctry_Yh[ c( X_historical_years, X_future_years ) ],#
+      by=as.list( L102.gdp_mil90usd_ctry_Yh[ "region_GCAM3"] ), sum )#
+#
+#Calculate shares of each country within its region over the historical time series#
+L102.gdpshares_ctryRG3_Y <- L102.gdp_mil90usd_ctry_Yh[ c( "iso", "region_GCAM3", X_historical_years, X_future_years ) ]#
+L102.gdpshares_ctryRG3_Y[ c( X_historical_years, X_future_years ) ] <-#
+      L102.gdp_mil90usd_ctry_Yh[ c( X_historical_years, X_future_years ) ] / L102.gdp_mil90usd_SSPbase_RG3_Y[#
+         match( L102.gdp_mil90usd_ctry_Yh$region_GCAM3, L102.gdp_mil90usd_SSPbase_RG3_Y$region_GCAM3 ),#
+      c( X_historical_years, X_future_years ) ]#
+#
+#Interpolate the GCAM population data to all historical and future years#
+L102.gdp_mil90usd_GCAM3_RG3_Y <- gcam_interp( GCAM3_GDP, c( historical_years, future_years ) )[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
+#
+if( "X2100" %in% X_future_years ){#
+	printlog( "Extending GCAM 3.0 scenario to 2100 using SSPbase GDP ratios by GCAM 3.0 region")#
+	L102.gdp_mil90usd_GCAM3_RG3_Y$X2100 <- L102.gdp_mil90usd_GCAM3_RG3_Y$X2095 *#
+	   L102.gdp_mil90usd_SSPbase_RG3_Y$X2100[ match( L102.gdp_mil90usd_GCAM3_RG3_Y$region_GCAM3, L102.gdp_mil90usd_SSPbase_RG3_Y$region_GCAM3 ) ] /#
+	   L102.gdp_mil90usd_SSPbase_RG3_Y$X2095[ match( L102.gdp_mil90usd_GCAM3_RG3_Y$region_GCAM3, L102.gdp_mil90usd_SSPbase_RG3_Y$region_GCAM3 ) ]#
+	L102.gdp_mil90usd_GCAM3_RG3_Y <- gcam_interp( L102.gdp_mil90usd_GCAM3_RG3_Y, c( historical_years, future_years ) )#
+}#
+GCAM_GDP_years <- as.numeric( substr( names( GCAM3_GDP ), 2, 5 )[ grepl( "X[0-9]{4}", names( GCAM3_GDP ) ) ] )#
+X_GCAM_GDP_years <- paste0( "X", GCAM_GDP_years )#
+X_first_GCAM_GDP_year <- paste0( "X", min( GCAM_GDP_years ) )#
+X_first_historical_year <- X_historical_years[1]#
+if( min( historical_years ) < min( GCAM_GDP_years ) ){#
+	printlog( "Extending GCAM 3.0 scenario to first historical year using historical GDP ratios by GCAM 3.0 region")#
+	L102.gdp_mil90usd_GCAM3_RG3_Y[[X_first_historical_year]] <- L102.gdp_mil90usd_GCAM3_RG3_Y[[X_first_GCAM_GDP_year]] *#
+	   L102.gdp_mil90usd_SSPbase_RG3_Y[[X_first_historical_year]][ match( L102.gdp_mil90usd_GCAM3_RG3_Y$region_GCAM3, L102.gdp_mil90usd_SSPbase_RG3_Y$region_GCAM3 ) ] /#
+	   L102.gdp_mil90usd_SSPbase_RG3_Y[[X_first_GCAM_GDP_year]][ match( L102.gdp_mil90usd_GCAM3_RG3_Y$region_GCAM3, L102.gdp_mil90usd_SSPbase_RG3_Y$region_GCAM3 ) ]#
+	L102.gdp_mil90usd_GCAM3_RG3_Y <- gcam_interp( L102.gdp_mil90usd_GCAM3_RG3_Y, c( historical_years, future_years ) )#
+}#
+#
+#Multiply these GDP numbers by the shares of each country within GCAM region#
+L102.gdp_mil90usd_GCAM3_ctry_Y <- L102.gdpshares_ctryRG3_Y#
+L102.gdp_mil90usd_GCAM3_ctry_Y[ c( X_historical_years, X_future_years ) ] <- #
+      L102.gdpshares_ctryRG3_Y[ c( X_historical_years, X_future_years ) ] * L102.gdp_mil90usd_GCAM3_RG3_Y[#
+         match( L102.gdpshares_ctryRG3_Y$region_GCAM3, L102.gdp_mil90usd_GCAM3_RG3_Y$region_GCAM3 ),#
+      c( X_historical_years, X_future_years ) ]#
+#
+printlog( "Aggregating by GCAM regions")#
+L102.gdp_mil90usd_GCAM3_ctry_Y[[R]] <- iso_GCAM_regID[[R]][ match( L102.gdp_mil90usd_GCAM3_ctry_Y$iso, iso_GCAM_regID$iso ) ]#
+L102.gdp_mil90usd_GCAM3_R_Y <- aggregate( L102.gdp_mil90usd_GCAM3_ctry_Y[ c( X_historical_years, X_future_years ) ],#
+      by=as.list( L102.gdp_mil90usd_GCAM3_ctry_Y[ R ] ), sum )#
+L102.gdp_mil90usd_GCAM3_ctry_Y <- L102.gdp_mil90usd_GCAM3_ctry_Y[ c( "iso", X_historical_years, X_future_years ) ]
+head(SSP_GDP_PPP)
+head(GCAM3_GDP)
+head(L100.gdp_mil90usd_ctry_Yh)
+logstop()
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L222.en_transformation.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Primary energy transformation" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
+sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
+fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+A22.sector <- readdata( "ENERGY_ASSUMPTIONS", "A22.sector" )#
+A22.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_logit" )#
+A22.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_shrwt" )#
+A22.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_interp" )#
+A22.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_coef" )#
+A22.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_cost" )#
+A22.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_shrwt" )#
+A22.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_co2capture" )#
+A22.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_retirement" )#
+L122.out_EJ_R_gasproc_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_gasproc_F_Yh" )#
+L122.out_EJ_R_refining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_refining_F_Yh" )#
+L122.IO_R_oilrefining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.IO_R_oilrefining_F_Yh" )
 ENERGYPROC_DIR <- "../energy-processing-code/"
-getwd()
-sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
-sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
-sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
-GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )#
-iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
-source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-logstart( "L144.global_building.R" )#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-printlog( "Global Building Data" )#
-# -----------------------------------------------------------------------------#
-# 1. Read files#
-sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
-sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
-sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
-GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )#
-iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
-GCAM_region_names
-A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
-bld_iso_region <- readdata( "ENERGY_MAPPINGS", "bld_iso_region" )#
-calibrated_techs_bld_det <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_bld_det" )#
-A44.cost_efficiency <- readdata( "ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )#
-A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )#
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )#
-A44.shell_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.shell_eff_mult_RG3" )#
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )#
-A44.USA_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A44.USA_TechChange" )
-L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )
-source("../energy-processing-code/level1/L142.building.R")
-source("../energy-processing-code/level1/L142.building.R")
-source("../energy-processing-code/level1/L142.building.R")
+source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+logstart( "L222.en_transformation.R" )#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
+adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
+printlog( "Primary energy transformation" )#
+#
+# -----------------------------------------------------------------------------#
+# 1. Read files#
+#
+sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
+sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
+sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
+sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
+GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
+fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )#
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )#
+A22.sector <- readdata( "ENERGY_ASSUMPTIONS", "A22.sector" )#
+A22.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_logit" )#
+A22.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_shrwt" )#
+A22.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_interp" )#
+A22.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_coef" )#
+A22.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_cost" )#
+A22.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_shrwt" )#
+A22.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_co2capture" )#
+A22.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_retirement" )#
+L122.out_EJ_R_gasproc_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_gasproc_F_Yh" )#
+L122.out_EJ_R_refining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_refining_F_Yh" )#
+L122.IO_R_oilrefining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.IO_R_oilrefining_F_Yh" )
+A22.globaltech_interp <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_interp" )
+A22.globaltech_interp
+printlog( "L222.Supplysector_en: Supply sector information for energy transformation sectors" )#
+L222.Supplysector_en <- write_to_all_regions( A22.sector, names_Supplysector )#
+#
+# 2b. Subsector information#
+printlog( "L222.SubsectorLogit_en: Subsector logit exponents of energy transformation sectors" )#
+L222.SubsectorLogit_en <- write_to_all_regions( A22.subsector_logit, names_SubsectorLogit )#
+#
+printlog( "L222.SubsectorShrwt_en and L222.SubsectorShrwtFllt_en: Subsector shareweights of energy transformation sectors" )#
+if( any( !is.na( A22.subsector_shrwt$year ) ) ){#
+	L222.SubsectorShrwt_en <- write_to_all_regions( A22.subsector_shrwt[ !is.na( A22.subsector_shrwt$year ), ], names_SubsectorShrwt )#
+	}#
+if( any( !is.na( A22.subsector_shrwt$year.fillout ) ) ){#
+	L222.SubsectorShrwtFllt_en <- write_to_all_regions( A22.subsector_shrwt[ !is.na( A22.subsector_shrwt$year.fillout ), ], names_SubsectorShrwtFllt )#
+	}#
+#
+printlog( "L222.SubsectorInterp_en and L222.SubsectorInterpTo_en: Subsector shareweight interpolation of energy transformation sectors" )#
+if( any( is.na( A22.subsector_interp$to.value ) ) ){#
+	L222.SubsectorInterp_en <- write_to_all_regions( A22.subsector_interp[ is.na( A22.subsector_interp$to.value ), ], names_SubsectorInterp )#
+	}#
+if( any( !is.na( A22.subsector_interp$to.value ) ) ){#
+	L222.SubsectorInterpTo_en <- write_to_all_regions( A22.subsector_interp[ !is.na( A22.subsector_interp$to.value ), ], names_SubsectorInterpTo )#
+	}
+write_to_all_regions
+L222.GlobalTechInterp_en <- set_years( A22.globaltech_interp )
+L222.GlobalTechInterp_en
 logstop()
 logstop()
-logstart( "L144.global_building.R" )#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-printlog( "Global Building Data" )#
-# -----------------------------------------------------------------------------#
-# 1. Read files#
-sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
-sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
-sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
-GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )#
-iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )#
-A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
-bld_iso_region <- readdata( "ENERGY_MAPPINGS", "bld_iso_region" )#
-calibrated_techs_bld_det <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_bld_det" )#
-A44.cost_efficiency <- readdata( "ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )#
-A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )#
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )#
-A44.shell_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.shell_eff_mult_RG3" )#
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )#
-A44.USA_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A44.USA_TechChange" )#
-L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )
-dim(L142.in_EJ_R_bld_F_Yh)
-L142.in_EJ_R_bld_F_Yh[1:50,1:10]
-L144.USA_TechChange <- gcam_interp( A44.USA_TechChange, c( historical_years, future_years ) )#
-L144.USA_TechChange <- L144.USA_TechChange[ c( supp, tech, c( X_historical_years, X_future_years ) ) ]#
-#Now, make a data table with the timesteps that corresponds to the above data frame#
-timesteps <- c( historical_years, future_years )[ 2:length( c( historical_years, future_years ) ) ] -#
-  c( historical_years, future_years )[ 1:(length( c( historical_years, future_yearsure_years ) ) - 1 ) ]#
-timesteps_rep_techs <- t( data.frame( timesteps ) )[ rep( 1, times = nrow( L144.USA_TechChange ) ), ]#
-#Use this table to convert the tech change table into ratios (multipliers) from a base year#
-L144.USA_TechMult <- L144.USA_TechChange#
-L144.USA_TechMult[ X_historical_years[1] ] <- 1#
-for( i in 2:length( c( X_historical_years, X_future_years ) ) ){#
-  L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i] <-#
-    L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i-1] *#
-    ( 1 + L144.USA_TechChange[ c( X_historical_years, X_future_years ) ][ i ] )^#
-    timesteps_rep_techs[i-1]#
-}
-timesteps <- c( historical_years, future_years )[ 2:length( c( historical_years, future_years ) ) ] -#
-  c( historical_years, future_years )[ 1:(length( c( historical_years, future_years ) ) - 1 ) ]
-timesteps
-timesteps_rep_techs <- t( data.frame( timesteps ) )[ rep( 1, times = nrow( L144.USA_TechChange ) ), ]#
-#Use this table to convert the tech change table into ratios (multipliers) from a base year#
-L144.USA_TechMult <- L144.USA_TechChange#
-L144.USA_TechMult[ X_historical_years[1] ] <- 1#
-for( i in 2:length( c( X_historical_years, X_future_years ) ) ){#
-  L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i] <-#
-    L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i-1] *#
-    ( 1 + L144.USA_TechChange[ c( X_historical_years, X_future_years ) ][ i ] )^#
-    timesteps_rep_techs[i-1]#
-}
-L144.USA_TechMult
-region_GCAM3
-region_GCAM3 <- unique(iso_GCAM_regID$region_GCAM3)
-region_GCAM3
-L144.TechMult_R <- repeat_and_add_vector( L144.USA_TechMult, "region_GCAM3", region_GCAM3 )
-L144.TechMult_R[1:30,]
-L144.TechMult_R <- L144.TechMult_R[c("region_GCAM3", supp, tech, X_historical_years, X_future_years)]
-head(L144.TechMult_R)
-A44.shell_eff_mult_RG3
-A44.shell_eff_mult_RG3 <- gcam_interp( A44.shell_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.shell_eff_mult_RG3 <- A44.shell_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]
-head(A44.shell_eff_mult_RG3)
-head(A44.shell_eff_mult_RG3)
-L144.TechMult_R[1,2]
-L144.TechMult_R[1,]
-L144.TechMult_R[1:2,]
-?grepl
-grepl( "shell", L144.TechMult_R$technology )
-L144.ShellTechMult_R <- subset( L144.TechMult_R, grepl( "shell", technology ) )
-L144.ShellTechMult_R
-grep( "shell", L144.TechMult_R$technology )
-L144.ShellTechMult_R <- subset( L144.TechMult_R, grep( "shell", technology ) )
-L144.ShellTechMult_R <- subset( L144.TechMult_R, grep( "shell", technology ) )
-head(L144.ShellTechMult_R)
-L144.shell_eff_R_Y <- L144.ShellTechMult_R #
-L144.shell_eff_R_Y[ c( X_historical_years, X_future_years ) ] <- L144.ShellTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-      A44.shell_eff_mult_RG3[ match( L144.ShellTechMult_R$region_GCAM3, A44.shell_eff_mult_RG3$region_GCAM3 ),#
-      c( X_historical_years, X_future_years ) ]
-head(L144.shell_eff_R_Y)
-A44.shell_eff_mult_RG3
-head(A44.tech_eff_mult_RG3)
-A44.tech_eff_mult_RG3
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )
-A44.tech_eff_mult_RG3
-A44.tech_eff_mult_RG3 <- gcam_interp( A44.tech_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.tech_eff_mult_RG3 <- A44.tech_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]
-?grep
-L144.EnduseTechMult_R <- subset( L144.TechMult_R, !grepl( "shell", technology ) )
-L144.EnduseTechMult_R
-head(L144.EnduseTechMult_R)
-L144.EnduseTechMult_R <- subset( L144.TechMult_R, !grepl( "shell", technology ) )#
-L144.end_use_eff <- L144.EnduseTechMult_R#
-L144.end_use_eff[ c( X_historical_years, X_future_years ) ] <- L144.EnduseTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-  A44.tech_eff_mult_RG3[ match( L144.EnduseTechMult_R$region_GCAM3, A44.tech_eff_mult_RG3$region_GCAM3 ),#
-  c( X_historical_years, X_future_years ) ]
-L144.end_use_eff
-L144.EnduseTechMult_R <- subset( L144.TechMult_R, !grepl( "shell", technology ) )#
-L144.end_use_eff_Index <- L144.EnduseTechMult_R#
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.EnduseTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-  A44.tech_eff_mult_RG3[ match( L144.EnduseTechMult_R$region_GCAM3, A44.tech_eff_mult_RG3$region_GCAM3 ),#
-  c( X_historical_years, X_future_years ) ]
-L144.end_use_eff_Index[1:5]
-L144.USA_TechMult <- L144.USA_TechChange#
-L144.USA_TechMult[ X_historical_years[1] ] <- 1#
-for( i in 2:length( c( X_historical_years, X_future_years ) ) ){#
-  L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i] <-#
-    L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i-1] *#
-    ( 1 + L144.USA_TechChange[ c( X_historical_years, X_future_years ) ][ i ] )^#
-    timesteps_rep_techs[i-1]#
-}
-head(L144.USA_TechMult)
-2.62*3.413
-L144.USA_TechMult[1:10,]
-9*1.22
-11.06*0.875
-11.06*0.875/3.412
-11.06*0.875/3.412/2.63
-L144.USA_TechMult[[ base_tech_eff_Index_year ]]
-base_tech_eff_Index_year <- "X2000"
-L144.USA_TechMult[[ base_tech_eff_Index_year ]]
-L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] <- L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] /#
-      L144.USA_TechMult[ base_tech_eff_Index_year ]
-L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] <- L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] /#
-      L144.USA_TechMult[[ base_tech_eff_Index_year ]]
-head(L144.USA_TechMult)
-repeat table by number of regions #
-region_GCAM3 <- unique(iso_GCAM_regID$region_GCAM3)#
-#
-L144.TechMult_R <- repeat_and_add_vector( L144.USA_TechMult, "region_GCAM3", region_GCAM3 )#
-L144.TechMult_R <- L144.TechMult_R[c("region_GCAM3", supp, tech, X_historical_years, X_future_years)]#
-#Shell efficiency calc#
-#First, subset the technology/year multiplier table so that it includes only shells#
-L144.ShellTechMult_R <- subset( L144.TechMult_R, grepl( "shell", technology ) )#
-#
-#interpolate region specific adjustement factors to historical and future years#
-A44.shell_eff_mult_RG3 <- gcam_interp( A44.shell_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.shell_eff_mult_RG3 <- A44.shell_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
-L144.shell_eff_R_Y <- L144.ShellTechMult_R #
-L144.shell_eff_R_Y[ c( X_historical_years, X_future_years ) ] <- L144.ShellTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-      A44.shell_eff_mult_RG3[ match( L144.ShellTechMult_R$region_GCAM3, A44.shell_eff_mult_RG3$region_GCAM3 ),#
-      c( X_historical_years, X_future_years ) ]#
-# 2b. Calculate technology efficiency by region, service, technology, and year#
-A44.tech_eff_mult_RG3 <- gcam_interp( A44.tech_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.tech_eff_mult_RG3 <- A44.tech_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
-#First, subset the technology/year multiplier table so that it includes only energy-consuming techs (no shells)#
-L144.EnduseTechMult_R <- subset( L144.TechMult_R, !grepl( "shell", technology ) )#
-L144.end_use_eff_Index <- L144.EnduseTechMult_R#
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.EnduseTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-  A44.tech_eff_mult_RG3[ match( L144.EnduseTechMult_R$region_GCAM3, A44.tech_eff_mult_RG3$region_GCAM3 ),#
-  c( X_historical_years, X_future_years ) ]#
-#These values are indexed to the USA in the base year. Unlike shells, the end-use technology values read to the model#
-# are not just indices, so need to multiply through by assumed base efficiency levels for each technology
-head(L144.end_use_eff_Index)
-history
-vecpaste( L144.end_use_eff_Index[ c( supp, tech ) ) ] )
-vecpaste( L144.end_use_eff_Index[ c( supp, tech ) ] )
-vecpaste( L144.end_use_eff_Index[ c( supp, tech ) ] )
-vecpaste( A44.cost_efficiency[ c( supp, tech ) ] )
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] *#
-      A44.cost_efficiency$efficiency[#
-          match( vecpaste( L144.end_use_eff_Index[ c( supp, tech ) ] ), vecpaste( A44.cost_efficiency[ c( supp, tech ) ] ) ) ]
-head(L144.end_use_eff_Index)
-L144.end_use_eff_Index[!complete.cases(L144.end_use_eff_Index),]
-calibrated_techs_bld_det <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_bld_det" )#
-A44.cost_efficiency <- readdata( "ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )#
-A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )#
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )#
-A44.shell_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.shell_eff_mult_RG3" )#
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )#
-A44.USA_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A44.USA_TechChange" )#
-L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )
-calibrated_techs_bld_det
-A44.cost_efficiency <- readdata( "ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )
-A44.cost_efficiency
-A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )#
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )#
-A44.shell_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.shell_eff_mult_RG3" )#
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )
-A44.demand_satiation_mult
-head(A44.share_serv_fuel)
-head(A44.shell_eff_mult_RG3)
-head(A44.tech_eff_mult_RG3)
-head(A44.USA_TechChange)
-A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
-bld_iso_region <- readdata( "ENERGY_MAPPINGS", "bld_iso_region" )#
-calibrated_techs_bld_det <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_bld_det" )#
-A44.cost_efficiency <- readdata( "ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )#
-A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )#
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )#
-A44.shell_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.shell_eff_mult_RG3" )#
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )#
-A44.USA_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A44.USA_TechChange" )#
-L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )#
-# 2a. Calculate shell efficiency by region, and year#
-#Write out the tech change table to all desired years, and convert to ratios from a base year#
-L144.USA_TechChange <- gcam_interp( A44.USA_TechChange, c( historical_years, future_years ) )#
-L144.USA_TechChange <- L144.USA_TechChange[ c( supp, tech, c( X_historical_years, X_future_years ) ) ]#
-#Now, make a data table with the timesteps that corresponds to the above data frame#
-timesteps <- c( historical_years, future_years )[ 2:length( c( historical_years, future_years ) ) ] -#
-  c( historical_years, future_years )[ 1:(length( c( historical_years, future_years ) ) - 1 ) ]#
-timesteps_rep_techs <- t( data.frame( timesteps ) )[ rep( 1, times = nrow( L144.USA_TechChange ) ), ]#
-#Use this table to convert the tech change table into ratios (multipliers) from a base year#
-L144.USA_TechMult <- L144.USA_TechChange#
-L144.USA_TechMult[ X_historical_years[1] ] <- 1#
-for( i in 2:length( c( X_historical_years, X_future_years ) ) ){#
-  L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i] <-#
-    L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i-1] *#
-    ( 1 + L144.USA_TechChange[ c( X_historical_years, X_future_years ) ][ i ] )^#
-    timesteps_rep_techs[i-1]#
-}#
-#
-#These multipliers assume a base year of the first historical year. However most of the efficiencies are based on data from more recent#
-# years. This next part adjusts the scale so that the index year is not the first historical year#
-base_tech_eff_Index_year <- "X2000"#
-L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] <- L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] /#
-      L144.USA_TechMult[[ base_tech_eff_Index_year ]]#
-#This table can then be repeated by the number of regions, and multiplied by region-specific#
-# adjustment factors (interpolated)( need to match on the region)#
-#repeat table by number of regions #
-region_GCAM3 <- unique(iso_GCAM_regID$region_GCAM3)#
-#
-L144.TechMult_R <- repeat_and_add_vector( L144.USA_TechMult, "region_GCAM3", region_GCAM3 )#
-L144.TechMult_R <- L144.TechMult_R[c("region_GCAM3", supp, tech, X_historical_years, X_future_years)]#
-#Shell efficiency calc#
-#First, subset the technology/year multiplier table so that it includes only shells#
-L144.ShellTechMult_R <- subset( L144.TechMult_R, grepl( "shell", technology ) )#
-#
-#interpolate region specific adjustement factors to historical and future years#
-A44.shell_eff_mult_RG3 <- gcam_interp( A44.shell_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.shell_eff_mult_RG3 <- A44.shell_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
-L144.shell_eff_R_Y <- L144.ShellTechMult_R #
-L144.shell_eff_R_Y[ c( X_historical_years, X_future_years ) ] <- L144.ShellTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-      A44.shell_eff_mult_RG3[ match( L144.ShellTechMult_R$region_GCAM3, A44.shell_eff_mult_RG3$region_GCAM3 ),#
-      c( X_historical_years, X_future_years ) ]#
-# 2b. Calculate technology efficiency by region, service, technology, and year#
-A44.tech_eff_mult_RG3 <- gcam_interp( A44.tech_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.tech_eff_mult_RG3 <- A44.tech_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
-#First, subset the technology/year multiplier table so that it includes only energy-consuming techs (no shells)#
-L144.EnduseTechMult_R <- subset( L144.TechMult_R, !grepl( "shell", technology ) )#
-L144.end_use_eff_Index <- L144.EnduseTechMult_R#
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.EnduseTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-  A44.tech_eff_mult_RG3[ match( L144.EnduseTechMult_R$region_GCAM3, A44.tech_eff_mult_RG3$region_GCAM3 ),#
-  c( X_historical_years, X_future_years ) ]#
-#These values are indexed to the USA in the base year. Unlike shells, the end-use technology values read to the model#
-# are not just indices, so need to multiply through by assumed base efficiency levels for each technology#
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] *#
-      A44.cost_efficiency$efficiency[#
-          match( vecpaste( L144.end_use_eff_Index[ c( supp, tech ) ] ), vecpaste( A44.cost_efficiency[ c( supp, tech ) ] ) ) ]
-dim(L144.end_use_eff_Index)
-head(L144.end_use_eff_Index)
-any(is.na(L144.end_use_eff_Index))
-L144.end_use_eff_Index[!complete.cases(L144.end_use_eff_Index),]
-A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
-bld_iso_region <- readdata( "ENERGY_MAPPINGS", "bld_iso_region" )#
-calibrated_techs_bld_det <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_bld_det" )#
-A44.cost_efficiency <- readdata( "ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )#
-A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )#
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )#
-A44.shell_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.shell_eff_mult_RG3" )#
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )#
-A44.USA_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A44.USA_TechChange" )#
-L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )#
-# 2a. Calculate shell efficiency by region, and year#
-#Write out the tech change table to all desired years, and convert to ratios from a base year#
-L144.USA_TechChange <- gcam_interp( A44.USA_TechChange, c( historical_years, future_years ) )#
-L144.USA_TechChange <- L144.USA_TechChange[ c( supp, tech, c( X_historical_years, X_future_years ) ) ]#
-#Now, make a data table with the timesteps that corresponds to the above data frame#
-timesteps <- c( historical_years, future_years )[ 2:length( c( historical_years, future_years ) ) ] -#
-  c( historical_years, future_years )[ 1:(length( c( historical_years, future_years ) ) - 1 ) ]#
-timesteps_rep_techs <- t( data.frame( timesteps ) )[ rep( 1, times = nrow( L144.USA_TechChange ) ), ]#
-#Use this table to convert the tech change table into ratios (multipliers) from a base year#
-L144.USA_TechMult <- L144.USA_TechChange#
-L144.USA_TechMult[ X_historical_years[1] ] <- 1#
-for( i in 2:length( c( X_historical_years, X_future_years ) ) ){#
-  L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i] <-#
-    L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i-1] *#
-    ( 1 + L144.USA_TechChange[ c( X_historical_years, X_future_years ) ][ i ] )^#
-    timesteps_rep_techs[i-1]#
-}#
-#
-#These multipliers assume a base year of the first historical year. However most of the efficiencies are based on data from more recent#
-# years. This next part adjusts the scale so that the index year is not the first historical year#
-base_tech_eff_Index_year <- "X2000"#
-L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] <- L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] /#
-      L144.USA_TechMult[[ base_tech_eff_Index_year ]]#
-#This table can then be repeated by the number of regions, and multiplied by region-specific#
-# adjustment factors (interpolated)( need to match on the region)#
-#repeat table by number of regions #
-region_GCAM3 <- unique(iso_GCAM_regID$region_GCAM3)#
-#
-L144.TechMult_R <- repeat_and_add_vector( L144.USA_TechMult, "region_GCAM3", region_GCAM3 )#
-L144.TechMult_R <- L144.TechMult_R[c("region_GCAM3", supp, tech, X_historical_years, X_future_years)]#
-#Shell efficiency calc#
-#First, subset the technology/year multiplier table so that it includes only shells#
-L144.ShellTechMult_R <- subset( L144.TechMult_R, grepl( "shell", technology ) )#
-#
-#interpolate region specific adjustement factors to historical and future years#
-A44.shell_eff_mult_RG3 <- gcam_interp( A44.shell_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.shell_eff_mult_RG3 <- A44.shell_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
-L144.shell_eff_R_Y <- L144.ShellTechMult_R #
-L144.shell_eff_R_Y[ c( X_historical_years, X_future_years ) ] <- L144.ShellTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-      A44.shell_eff_mult_RG3[ match( L144.ShellTechMult_R$region_GCAM3, A44.shell_eff_mult_RG3$region_GCAM3 ),#
-      c( X_historical_years, X_future_years ) ]#
-# 2b. Calculate technology efficiency by region, service, technology, and year#
-A44.tech_eff_mult_RG3 <- gcam_interp( A44.tech_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.tech_eff_mult_RG3 <- A44.tech_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
-#First, subset the technology/year multiplier table so that it includes only energy-consuming techs (no shells)#
-L144.EnduseTechMult_R <- subset( L144.TechMult_R, !grepl( "shell", technology ) )#
-L144.end_use_eff_Index <- L144.EnduseTechMult_R#
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.EnduseTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-  A44.tech_eff_mult_RG3[ match( L144.EnduseTechMult_R$region_GCAM3, A44.tech_eff_mult_RG3$region_GCAM3 ),#
-  c( X_historical_years, X_future_years ) ]#
-#These values are indexed to the USA in the base year. Unlike shells, the end-use technology values read to the model#
-# are not just indices, so need to multiply through by assumed base efficiency levels for each technology#
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] *#
-      A44.cost_efficiency$efficiency[#
-          match( vecpaste( L144.end_use_eff_Index[ c( supp, tech ) ] ), vecpaste( A44.cost_efficiency[ c( supp, tech ) ] ) ) ]
-any(is.na(L144.end_use_eff_Index))
-L144.share_fuel <- aggregate( A44.share_serv_fuel[[ "share_TFEbysector" ]], by=as.list( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), sum )#
-names( L144.share_fuel )[ names( L144.share_fuel ) == "x" ] <- "fuel_share_of_TFEbysector"#
-A44.share_serv_fuel$fuel_share_of_TFEbysector <- L144.share_fuel$fuel_share_of_TFEbysector[#
-      match( vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), vecpaste( L144.share_fuel[ c( "region_GCAM3", S_F ) ] ) ) ]#
-A44.share_serv_fuel$share_serv_fuel <- A44.share_serv_fuel$share_TFEbysector / A44.share_serv_fuel$fuel_share_of_TFEbysector#
-#
-#Reset NaNs for regions that do not have any of a given fuel type#
-A44.share_serv_fuel[ is.na( A44.share_serv_fuel ) ] <- 0
-dim(A44.share_serv_fuel)
-A44.share_serv_fuel[1:30,]
-calibrated_techs_bld_det
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det, R, GCAM_region_names[[R]] )
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det, R, GCAM_region_names[[R]] )
-subset(L144.in_EJ_R_bld_serv_F_Yh, fuel == "gas")
-iso_GCAM_regID
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]
-head(L144.in_EJ_R_bld_serv_F_Yh)
-any(is.na(L144.in_EJ_R_bld_serv_F_Yh))
-subset(L144.in_EJ_R_bld_serv_F_Yh, supplysector == "resid heating" & fuel == "gas")
-subset(iso_GCAM_regID, GCAM_region_ID==12)
-subset(iso_GCAM_regID, GCAM_region_ID==13)
-subset(iso_GCAM_regID, GCAM_region_ID==14)
-subset(iso_GCAM_regID, GCAM_region_ID==15)
-subset(iso_GCAM_regID, GCAM_region_ID==16)
-subset(iso_GCAM_regID, GCAM_region_ID==17)
-subset(iso_GCAM_regID, GCAM_region_ID==18)
-subset(iso_GCAM_regID, GCAM_region_ID==19)
-subset(iso_GCAM_regID, GCAM_region_ID==20)
-subset(iso_GCAM_regID, GCAM_region_ID==21)
-subset(iso_GCAM_regID, GCAM_region_ID==22)
-subset(iso_GCAM_regID, GCAM_region_ID==23)
-subset(iso_GCAM_regID, GCAM_region_ID==24)
-subset(iso_GCAM_regID, GCAM_region_ID==25)
-subset(iso_GCAM_regID, GCAM_region_ID==26)
-subset(iso_GCAM_regID, GCAM_region_ID==12)
-subset(iso_GCAM_regID, GCAM_region_ID==11)
-subset(iso_GCAM_regID, GCAM_region_ID==10)
-subset(iso_GCAM_regID, GCAM_region_ID==9)
-subset(iso_GCAM_regID, GCAM_region_ID==8)
-subset(iso_GCAM_regID, GCAM_region_ID==7)
-subset(iso_GCAM_regID, GCAM_region_ID==6)
-subset(iso_GCAM_regID, GCAM_region_ID==5)
-subset(iso_GCAM_regID, GCAM_region_ID==4)
-subset(iso_GCAM_regID, GCAM_region_ID==3)
-subset(iso_GCAM_regID, GCAM_region_ID==2)
-subset(iso_GCAM_regID, GCAM_region_ID==1)
-L144.in_EJ_R_bld_serv_F_Yh[1,]
-A44.share_serv_fuel[1,]
-vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, supp ) ] )
-head(A44.share_serv_fuel)
-calibrated_techs_bld_det
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )
-L144.share_fuel <- aggregate( A44.share_serv_fuel[[ "share_TFEbysector" ]], by=as.list( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), sum )#
-names( L144.share_fuel )[ names( L144.share_fuel ) == "x" ] <- "fuel_share_of_TFEbysector"#
-A44.share_serv_fuel$fuel_share_of_TFEbysector <- L144.share_fuel$fuel_share_of_TFEbysector[#
-      match( vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), vecpaste( L144.share_fuel[ c( "region_GCAM3", S_F ) ] ) ) ]#
-A44.share_serv_fuel$share_serv_fuel <- A44.share_serv_fuel$share_TFEbysector / A44.share_serv_fuel$fuel_share_of_TFEbysector#
-#
-#Reset NaNs for regions that do not have any of a given fuel type#
-A44.share_serv_fuel[ is.na( A44.share_serv_fuel ) ] <- 0#
-#
-#For making the energy consumption table, start with the tech list that will be in each region, and repeat by number of regions#
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det, R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]
-head(A44.share_serv_fuel)
-vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, supp ) ] )[1:20]
-vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] )[1:20]
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, supp ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ) ]
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, supp ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]
-any(is.na(L144.in_EJ_R_bld_serv_F_Yh))
-L144.in_EJ_R_bld_serv_F_Yh[1:10,]
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )
-L144.share_fuel <- aggregate( A44.share_serv_fuel[[ "share_TFEbysector" ]], by=as.list( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), sum )#
-names( L144.share_fuel )[ names( L144.share_fuel ) == "x" ] <- "fuel_share_of_TFEbysector"#
-A44.share_serv_fuel$fuel_share_of_TFEbysector <- L144.share_fuel$fuel_share_of_TFEbysector[#
-      match( vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), vecpaste( L144.share_fuel[ c( "region_GCAM3", S_F ) ] ) ) ]#
-A44.share_serv_fuel$share_serv_fuel <- A44.share_serv_fuel$share_TFEbysector / A44.share_serv_fuel$fuel_share_of_TFEbysector#
-#
-#Reset NaNs for regions that do not have any of a given fuel type#
-A44.share_serv_fuel[ is.na( A44.share_serv_fuel ) ] <- 0#
-#
-#For making the energy consumption table, start with the tech list that will be in each region, and repeat by number of regions#
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det, R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, supp ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]
-any(is.na(L144.in_EJ_R_bld_serv_F_Yh))
-L144.in_EJ_R_bld_serv_F_Yh[1:20 ]
-L144.in_EJ_R_bld_serv_F_Yh[1:20, ]
-R_S_F
-A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
-bld_iso_region <- readdata( "ENERGY_MAPPINGS", "bld_iso_region" )#
-calibrated_techs_bld_det <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_bld_det" )#
-A44.cost_efficiency <- readdata( "ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )#
-A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )#
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )#
-A44.shell_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.shell_eff_mult_RG3" )#
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )#
-A44.USA_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A44.USA_TechChange" )#
-L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )
-So, re-normalize#
-L144.share_fuel <- aggregate( A44.share_serv_fuel[[ "share_TFEbysector" ]], by=as.list( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), sum )#
-names( L144.share_fuel )[ names( L144.share_fuel ) == "x" ] <- "fuel_share_of_TFEbysector"#
-A44.share_serv_fuel$fuel_share_of_TFEbysector <- L144.share_fuel$fuel_share_of_TFEbysector[#
-      match( vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), vecpaste( L144.share_fuel[ c( "region_GCAM3", S_F ) ] ) ) ]#
-A44.share_serv_fuel$share_serv_fuel <- A44.share_serv_fuel$share_TFEbysector / A44.share_serv_fuel$fuel_share_of_TFEbysector#
-#
-#Reset NaNs for regions that do not have any of a given fuel type#
-A44.share_serv_fuel[ is.na( A44.share_serv_fuel ) ] <- 0
-calibrated_techs_bld_det[1:10,]
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )
-L144.in_EJ_R_bld_serv_F_Yh[1:10,]
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ) #
-      X_historical_years ]
-vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ][1:10]
-vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] )[1:10]
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]
-head(L144.in_EJ_R_bld_serv_F_Yh)
-L144.in_EJ_R_bld_serv_F_Yh[!complete.cases(L144.in_EJ_R_bld_serv_F_Yh),1:15]
-source("../energy-processing-code/level1/L142.building.R")
-logstop()
-source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-logstart( "L144.global_building.R" )#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-printlog( "Global Building Data" )#
-# -----------------------------------------------------------------------------#
-# 1. Read files#
-sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
-sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
-sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
-GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )#
-iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )#
-A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )#
-bld_iso_region <- readdata( "ENERGY_MAPPINGS", "bld_iso_region" )#
-calibrated_techs_bld_det <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_bld_det" )#
-A44.cost_efficiency <- readdata( "ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )#
-A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )#
-A44.share_serv_fuel <- readdata( "ENERGY_ASSUMPTIONS", "A44.share_serv_fuel" )#
-A44.shell_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.shell_eff_mult_RG3" )#
-A44.tech_eff_mult_RG3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.tech_eff_mult_RG3" )#
-A44.USA_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A44.USA_TechChange" )#
-L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )#
-# -----------------------------------------------------------------------------#
-# 2. Perform computations#
-# 2a. Calculate shell efficiency by region, and year#
-#Write out the tech change table to all desired years, and convert to ratios from a base year#
-L144.USA_TechChange <- gcam_interp( A44.USA_TechChange, c( historical_years, future_years ) )#
-L144.USA_TechChange <- L144.USA_TechChange[ c( supp, tech, c( X_historical_years, X_future_years ) ) ]#
-#
-#Now, make a data table with the timesteps that corresponds to the above data frame#
-timesteps <- c( historical_years, future_years )[ 2:length( c( historical_years, future_years ) ) ] -#
-  c( historical_years, future_years )[ 1:(length( c( historical_years, future_years ) ) - 1 ) ]#
-#
-timesteps_rep_techs <- t( data.frame( timesteps ) )[ rep( 1, times = nrow( L144.USA_TechChange ) ), ]#
-#
-#Use this table to convert the tech change table into ratios (multipliers) from a base year#
-L144.USA_TechMult <- L144.USA_TechChange#
-#
-L144.USA_TechMult[ X_historical_years[1] ] <- 1#
-#
-for( i in 2:length( c( X_historical_years, X_future_years ) ) ){#
-  L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i] <-#
-    L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i-1] *#
-    ( 1 + L144.USA_TechChange[ c( X_historical_years, X_future_years ) ][ i ] )^#
-    timesteps_rep_techs[i-1]#
-}#
-#
-#These multipliers assume a base year of the first historical year. However most of the efficiencies are based on data from more recent#
-# years. This next part adjusts the scale so that the index year is not the first historical year#
-base_tech_eff_Index_year <- "X2000"#
-L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] <- L144.USA_TechMult[ c( X_historical_years, X_future_years ) ] /#
-      L144.USA_TechMult[[ base_tech_eff_Index_year ]]#
-#
-#This table can then be repeated by the number of regions, and multiplied by region-specific#
-# adjustment factors (interpolated)( need to match on the region)#
-#
-#repeat table by number of regions #
-region_GCAM3 <- unique(iso_GCAM_regID$region_GCAM3)#
-#
-L144.TechMult_R <- repeat_and_add_vector( L144.USA_TechMult, "region_GCAM3", region_GCAM3 )#
-L144.TechMult_R <- L144.TechMult_R[c("region_GCAM3", supp, tech, X_historical_years, X_future_years)]#
-#
-#Shell efficiency calc#
-#First, subset the technology/year multiplier table so that it includes only shells#
-L144.ShellTechMult_R <- subset( L144.TechMult_R, grepl( "shell", technology ) )#
-#
-#interpolate region specific adjustement factors to historical and future years#
-A44.shell_eff_mult_RG3 <- gcam_interp( A44.shell_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.shell_eff_mult_RG3 <- A44.shell_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
-#
-L144.shell_eff_R_Y <- L144.ShellTechMult_R #
-L144.shell_eff_R_Y[ c( X_historical_years, X_future_years ) ] <- L144.ShellTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-      A44.shell_eff_mult_RG3[ match( L144.ShellTechMult_R$region_GCAM3, A44.shell_eff_mult_RG3$region_GCAM3 ),#
-      c( X_historical_years, X_future_years ) ]#
-# 2b. Calculate technology efficiency by region, service, technology, and year#
-#
-A44.tech_eff_mult_RG3 <- gcam_interp( A44.tech_eff_mult_RG3, c( historical_years, future_years ) )#
-A44.tech_eff_mult_RG3 <- A44.tech_eff_mult_RG3[ c( "region_GCAM3", X_historical_years, X_future_years ) ]#
-#
-#First, subset the technology/year multiplier table so that it includes only energy-consuming techs (no shells)#
-L144.EnduseTechMult_R <- subset( L144.TechMult_R, !grepl( "shell", technology ) )#
-L144.end_use_eff_Index <- L144.EnduseTechMult_R#
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.EnduseTechMult_R[ c( X_historical_years,X_future_years ) ] * #
-  A44.tech_eff_mult_RG3[ match( L144.EnduseTechMult_R$region_GCAM3, A44.tech_eff_mult_RG3$region_GCAM3 ),#
-  c( X_historical_years, X_future_years ) ]#
-#
-#These values are indexed to the USA in the base year. Unlike shells, the end-use technology values read to the model#
-# are not just indices, so need to multiply through by assumed base efficiency levels for each technology#
-L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] <- L144.end_use_eff_Index[ c( X_historical_years, X_future_years ) ] *#
-      A44.cost_efficiency$efficiency[#
-          match( vecpaste( L144.end_use_eff_Index[ c( supp, tech ) ] ), vecpaste( A44.cost_efficiency[ c( supp, tech ) ] ) ) ]#
-#
-# 2c. Calculate costs by service, technology, and year#
-# 2d. Calculate energy consumption by region, service, technology, and year#
-#Service share data is share of total TFE by sector, not share within each fuel#
-#So, re-normalize#
-L144.share_fuel <- aggregate( A44.share_serv_fuel[[ "share_TFEbysector" ]], by=as.list( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), sum )#
-names( L144.share_fuel )[ names( L144.share_fuel ) == "x" ] <- "fuel_share_of_TFEbysector"#
-A44.share_serv_fuel$fuel_share_of_TFEbysector <- L144.share_fuel$fuel_share_of_TFEbysector[#
-      match( vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F ) ] ), vecpaste( L144.share_fuel[ c( "region_GCAM3", S_F ) ] ) ) ]#
-A44.share_serv_fuel$share_serv_fuel <- A44.share_serv_fuel$share_TFEbysector / A44.share_serv_fuel$fuel_share_of_TFEbysector#
-#
-#Reset NaNs for regions that do not have any of a given fuel type#
-A44.share_serv_fuel[ is.na( A44.share_serv_fuel ) ] <- 0#
-#
-#For making the energy consumption table, start with the tech list that will be in each region, and repeat by number of regions#
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]#
-#
-# 2e. Calculate service output by region, service, and year (efficiency times energy consumption, aggregated by service)#
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel * L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]
-L144.in_EJ_R_bld_serv_F_Yh[!complete.cases(L144.in_EJ_R_bld_serv_F_Yh),1:15]
-heat_regions
-A_regions
-heat_regions <- A_regions[[R]][ A_regions$heat == 1 ]
-heat_regions
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, fuel == "heat" & !GCAM_region_ID %in% heat_regions )
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]#
-#
-# 2e. Calculate service output by region, service, and year (efficiency times energy consumption, aggregated by service)#
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel * L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]
-noheat_regions <- A_regions[[R]][ A_regions$heat == 0 ]
-noheat_regions
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, !fuel == "heat" & GCAM_region_ID %in% noheat_regions )
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-L144.in_EJ_R_bld_serv_F_Yh[1:30,]
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]#
-#
-# 2e. Calculate service output by region, service, and year (efficiency times energy consumption, aggregated by service)#
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel * L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]#
-#This has a number of combinations that do not apply. Drop the known ones.#
-#Heat in regions where this is not modeled as a separate fuel#
-noheat_regions <- A_regions[[R]][ A_regions$heat == 0 ]#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, !( fuel == "heat" & GCAM_region_ID %in% noheat_regions ) )
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]#
-#
-# 2e. Calculate service output by region, service, and year (efficiency times energy consumption, aggregated by service)#
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel * L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]
-noheat_regions <- A_regions[[R]][ A_regions$heat == 0 ]#
-noheat_regions_heat <- paste( noheat_regions, "heat" )
-noheat_regions_heat
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]#
-#
-# 2e. Calculate service output by region, service, and year (efficiency times energy consumption, aggregated by service)#
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel * L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]#
-#This has a number of combinations that do not apply. Drop the known ones.#
-#Heat in regions where this is not modeled as a separate fuel#
-noheat_regions <- A_regions[[R]][ A_regions$heat == 0 ]#
-noheat_regions_heat <- paste( noheat_regions, "heat" )#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( GCAM_region_ID, fuel ) %in% noheat_regions_heat )
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-L144.in_EJ_R_bld_serv_F_Yh[1:10]
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]#
-#
-# 2e. Calculate service output by region, service, and year (efficiency times energy consumption, aggregated by service)#
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel * L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]#
-#This has a number of combinations that do not apply. Drop the known ones.#
-#Heat in regions where this is not modeled as a separate fuel#
-noheat_regions <- A_regions[[R]][ A_regions$heat == 0 ]#
-noheat_regions_heat <- paste( noheat_regions, "heat" )#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( GCAM_region_ID, fuel ) %!in% noheat_regions_heat )
-L144.in_EJ_R_bld_serv_F_Yh[1:10,]
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]#
-#
-# 2e. Calculate service output by region, service, and year (efficiency times energy consumption, aggregated by service)#
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel * L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]#
-#This has a number of combinations that do not apply. Drop the known ones.#
-#Heat in regions where this is not modeled as a separate fuel#
-noheat_regions <- A_regions[[R]][ A_regions$heat == 0 ]#
-noheat_regions_heat <- paste( noheat_regions, "heat" )#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( GCAM_region_ID, fuel ) %!in% noheat_regions_heat )
-noheat_regions_heat <- paste( A_regions[[R]][ A_regions$heat == 0 ], "heat" )#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( GCAM_region_ID, fuel ) %!in% noheat_regions_heat )
-A_regions
-notradbio_regions_tradbio <- paste( A_regions[[R]][ A_regions$tradbio_region == 0 ], "traditional biomass" )#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( GCAM_region_ID, fuel ) %!in% notradbio_regions_tradbio )
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-L144.in_EJ_R_bld_serv_F_Yh[!complete.cases(L144.in_EJ_R_bld_serv_F_Yh),1:10]
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( sector, fuel ) != "bld_comm traditional biomass" )
-L144.in_EJ_R_bld_serv_F_Yh[!complete.cases(L144.in_EJ_R_bld_serv_F_Yh),1:10]
-L144.in_EJ_R_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], R, GCAM_region_names[[R]] )#
-#
-#Match in the name of the region_GCAM3#
-#NOTE: This just uses an approximate match between the new regions and the GCAM 3.0 regions, based on the first country alphabetically that is#
-# matched between the new and old regions. For new composite regions that are quite different from before, this can cause inconsistent mappings#
-L144.in_EJ_R_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_R_bld_serv_F_Yh[[R]], iso_GCAM_regID[[R]] ) ]#
-#
-#Match in the service shares, and then the energy quantities to be multiplied by the service shares#
-L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),#
-             vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]#
-#
-# 2e. Calculate service output by region, service, and year (efficiency times energy consumption, aggregated by service)#
-L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel * L142.in_EJ_R_bld_F_Yh[#
-      match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ R_S_F ] ),#
-             vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),#
-      X_historical_years ]#
-#This has a number of combinations that do not apply. Drop the known ones.#
-#Heat in regions where this is not modeled as a separate fuel#
-noheat_regions_heat <- paste( A_regions[[R]][ A_regions$heat == 0 ], "heat" )#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( GCAM_region_ID, fuel ) %!in% noheat_regions_heat )#
-#
-#Traditional biomass in regions where this fuel is not modeled#
-notradbio_regions_tradbio <- paste( A_regions[[R]][ A_regions$tradbio_region == 0 ], "traditional biomass" )#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( GCAM_region_ID, fuel ) %!in% notradbio_regions_tradbio )#
-L144.in_EJ_R_bld_serv_F_Yh <- subset( L144.in_EJ_R_bld_serv_F_Yh, paste( sector, fuel ) != "bld_comm traditional biomass" )
-dim(L144.in_EJ_R_bld_serv_F_Yh)
-colSums(L144.in_EJ_R_bld_serv_F_Yh[X_historical_years])
-colSums(L142.in_EJ_R_bld_F_Yh[X_historical_years])
-colSums(L144.in_EJ_R_bld_serv_F_Yh[X_historical_years])/colSums(L142.in_EJ_R_bld_F_Yh[X_historical_years])
-tmp<-aggregate(L144.in_EJ_R_bld_serv_F_Yh[X_historical_years],by=as.list(L144.in_EJ_R_bld_serv_F_Yh[R_S_F]),sum)
-dim(tmp)
-dim(L142.in_EJ_R_bld_F_Yh)
-tmp[1:3]==L142.in_EJ_R_bld_F_Yh[1:3]
-tmp1 <- tmp
-tmp1[X_historical_years] <- tmp[X_historical_years] - L142.in_EJ_R_bld_F_Yh[X_historical_years]
-tmp1
-tmp1[1:5]
-tmp1[abs(tmp1$X1971 > 1e-3),1:5]
-tmp1[abs(tmp1$X1971 > 1e-6),1:5]
-tmp1[abs(tmp1$X1971 > 1e-13),1:5]
-tmp1[abs(tmp1$X1971) > 1e-3,1:5]
-tmp1[abs(tmp1$X1971) > 1e-3,]
-subset(L144.in_EJ_R_bld_serv_F_Yh, GCAM_region_ID==28)
+source("../energy-processing-code/level2/L222.en_transformation.R")
+names( GlobalTechInterp_en )[ names( GlobalTechInterp_en ) %in% c( "supplysector", "subsector" ) ] <- c( "sector.name", "subsector.name" )
+names( L222.GlobalTechInterp_en )[ names( L222.GlobalTechInterp_en ) %in% c( "supplysector", "subsector" ) ] <- c( "sector.name", "subsector.name" )
+L222.GlobalTechInterp_en
+source("../energy-processing-code/level2/L222.en_transformation.R")
+q()

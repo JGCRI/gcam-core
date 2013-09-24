@@ -32,6 +32,7 @@ A22.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_interp" )
 A22.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_coef" )
 A22.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_cost" )
 A22.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_shrwt" )
+A22.globaltech_interp <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_interp" )
 A22.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_co2capture" )
 A22.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_retirement" )
 L122.out_EJ_R_gasproc_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_gasproc_F_Yh" )
@@ -76,6 +77,10 @@ L222.StubTech_en <- subset( L222.StubTech_en, stub.technology %!in% firstgenbio_
       paste( region, stub.technology ) %in%
       c( paste( GCAM_region_names$region, GCAM_region_names$ethanol ),
          paste( GCAM_region_names$region, GCAM_region_names$biodiesel ) ) )
+
+printlog( "L222.GlobalTechInterp_en: Technology shareweight interpolation of energy transformation sectors" )
+L222.GlobalTechInterp_en <- set_years( A22.globaltech_interp )
+names( L222.GlobalTechInterp_en )[ names( L222.GlobalTechInterp_en ) %in% c( "supplysector", "subsector" ) ] <- c( "sector.name", "subsector.name" )
 
 #Coefficients of global technologies
 printlog( "L222.GlobalTechCoef_en: Energy inputs and coefficients of global technologies for energy transformation" )
@@ -229,6 +234,7 @@ if( exists( "L222.SubsectorInterpTo_en" ) ) {
 	write_mi_data( L222.SubsectorInterpTo_en, "SubsectorInterpTo", "ENERGY_LEVEL2_DATA", "L222.SubsectorInterpTo_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 	}
 write_mi_data( L222.StubTech_en, "StubTech", "ENERGY_LEVEL2_DATA", "L222.StubTech_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
+write_mi_data( L222.GlobalTechInterp_en, "GlobalTechInterp", "ENERGY_LEVEL2_DATA", "L222.GlobalTechInterp_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 write_mi_data( L222.GlobalTechCoef_en, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCoef_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 write_mi_data( L222.GlobalTechCost_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCost_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 write_mi_data( L222.GlobalTechShrwt_en, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L222.GlobalTechShrwt_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )

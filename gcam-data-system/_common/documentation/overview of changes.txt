@@ -16,6 +16,7 @@ Documentation of intentional changes
 15) Not decreasing ownuse IO coefs over time. The only reason we did before was a mis-understanding of what ownuse was. It isn't an inefficiency or loss; it simply reflects the share of AUTOELEC as opposed to MAINELEC and MAINCHP, which aren't being modeled.
 16) Hydrogen technologies adjusted efficiencies. Old efficiencies didn't take into account secondary inputs/outputs of electricity and as such CCS techs had higher efficiencies
 17) Got rid of solar_no_backup and wind_no_backup because they are useless and antediluvian
+18) Remapped IEA's "Other" fuel inputs to cement production in the USA from biomass to pet coke. Based on DOE-PI project with NEMS.
 
 *Note that "heat output" used to be reported in TJ but now seems to be reported in ktoe
 
