@@ -78,7 +78,7 @@ digits_Fert_IO <- 8 #units energy per mass of fertilizer
 digits_C_density <- 1 #vegetative and soil carbon density
 digits_MatureAge <- 0 #number of years for mature age
 digits_C_density_crop <- 3 #cropland vegetative soil carbon content
-digits_IncElas <- 2 #income elasticities
+digits_IncElas <- 4 #income elasticities
 
 #Residue biomass characteristics
 digits_harvest_index <- 2
