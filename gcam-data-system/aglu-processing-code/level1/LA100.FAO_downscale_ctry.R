@@ -110,17 +110,23 @@ FAO_data_ALL[ is.na( FAO_data_ALL ) ] <- 0
 FAO_data_ALL$iso <- AGLU_ctry$iso[ match( FAO_data_ALL$countries, AGLU_ctry$FAO_country ) ]
 
 #Downscale countries individually
+#NOTE: This is complicated. The FAO data needs to be downscaled to all FAO historical years (i.e. back
+# to 1961 regardless of when we are starting our historical time series). Otherwise the early historical
+# years will get averaged with zeroes.
 #Czechoslovakia
 L100.FAO_data_ALL_cze4downscale <- subset( FAO_data_ALL, iso %in% AGLU_ctry$iso[ AGLU_ctry$FAO_country == "Czechoslovakia" ] )
-L100.FAO_data_ALL_cze <- downscale_FAO_country( L100.FAO_data_ALL_cze4downscale, "Czechoslovakia", 1993 )
+L100.FAO_data_ALL_cze <- downscale_FAO_country( L100.FAO_data_ALL_cze4downscale, "Czechoslovakia", 1993,
+                                                years = FAO_historical_years )
 
 #USSR
 L100.FAO_data_ALL_ussr4downscale <- subset( FAO_data_ALL, iso %in% AGLU_ctry$iso[ AGLU_ctry$FAO_country == "USSR" ] )
-L100.FAO_data_ALL_ussr <- downscale_FAO_country( L100.FAO_data_ALL_ussr4downscale, "USSR", 1992 )
+L100.FAO_data_ALL_ussr <- downscale_FAO_country( L100.FAO_data_ALL_ussr4downscale, "USSR", 1992,
+                                                 years = FAO_historical_years  )
 
 #Yugoslavia
 L100.FAO_data_ALL_yug4downscale <- subset( FAO_data_ALL, iso %in% AGLU_ctry$iso[ AGLU_ctry$FAO_country == "Yugoslav SFR" ] )
-L100.FAO_data_ALL_yug <- downscale_FAO_country( L100.FAO_data_ALL_yug4downscale, "Yugoslav SFR", 1992 )
+L100.FAO_data_ALL_yug <- downscale_FAO_country( L100.FAO_data_ALL_yug4downscale, "Yugoslav SFR", 1992,
+                                                years = FAO_historical_years  )
 
 #Combine these downscaled databases and drop these countries from the full databases
 L100.FAO_data_ALL_downscaled <- rbind( L100.FAO_data_ALL_cze, L100.FAO_data_ALL_ussr, L100.FAO_data_ALL_yug )

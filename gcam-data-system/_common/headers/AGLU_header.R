@@ -24,9 +24,10 @@ rename_biocrops <- function( data, lookup, data_matchvar, lookup_matchvar, data_
 
 # -----------------------------------------------------------------------------
 #downscale_FAO_country: function to downscale the countries that separated into multiple modern countries (e.g. USSR).
-downscale_FAO_country <- function( data, country_name, dissolution_year, item_name = "item", element_name = "element" ){
+downscale_FAO_country <- function( data, country_name, dissolution_year, item_name = "item",
+                                   element_name = "element", years = AGLU_historical_years ){
 	X_dissolution_year <- paste( "X", dissolution_year, sep = "" )
-	ctry_years <- AGLU_historical_years[ AGLU_historical_years < dissolution_year ]
+	ctry_years <- years[ years < dissolution_year ]
 	X_ctry_years <- paste( "X", ctry_years, sep = "" )
 	data_ratio <- aggregate( data[ c( X_ctry_years, X_dissolution_year ) ], by=as.list( data[ c( item_name, element_name ) ] ), sum )
 	data_ratio[ c( X_ctry_years, X_dissolution_year ) ] <- data_ratio[ c( X_ctry_years, X_dissolution_year ) ] / data_ratio[[ X_dissolution_year ]]
