@@ -1,9 +1,0 @@
-# File: A_Fert_subsector.csv,
-# Description: Subsectors of fertilizer production,
-# Original source: NA,
-# ----------,
-supplysector,subsector
-N fertilizer,coal
-N fertilizer,gas
-N fertilizer,refined liquids
-Exports_fertilizer,N fertilizer
