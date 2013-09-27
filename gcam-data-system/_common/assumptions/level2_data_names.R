@@ -1,5 +1,6 @@
 #Column names of tables that are read in to the model interface
 #These correspond to the headers of the same name in the headers/ModelInterface_headers.txt file
+
 #Demographics
 names_Pop <- c( "region", "year", "totalPop" )
 names_baseGDP <- c( "region", "baseGDP" )
@@ -113,6 +114,7 @@ names_PerCapitaBased <- c( names_EnergyFinalDemand, "perCapitaBased" )
 names_BaseService <- c( names_EnergyFinalDemand, "year", "base.service" )
 names_PriceElasticity <- c( names_EnergyFinalDemand, "year", "price.elasticity" )
 names_IncomeElasticity <- c( names_EnergyFinalDemand, "year", "income.elasticity" )
+names_aeei <- c( "region", "energy.final.demand", "year", "aeei" )
 
 #Land types
 names_LN0_Land <- c( "region", "LandAllocatorRoot", "year.fillout", "landAllocation" )

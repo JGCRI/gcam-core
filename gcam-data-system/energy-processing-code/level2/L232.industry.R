@@ -36,13 +36,20 @@ A32.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_shrwt" )
 A32.globaltech_interp <- readdata( "ENERGY_ASSUMPTIONS", "A32.globaltech_interp" )
 A32.nonenergy_Cseq <- readdata( "ENERGY_ASSUMPTIONS", "A32.nonenergy_Cseq" )
 A32.fuelprefElasticity <- readdata( "ENERGY_ASSUMPTIONS", "A32.fuelprefElasticity" )
+#####A32.aeei <- readdata( "ENERGY_ASSUMPTIONS", "A32.aeei" ) 
 A32.demand <- readdata( "ENERGY_ASSUMPTIONS", "A32.demand" )
 L123.in_EJ_R_indchp_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_indchp_F_Yh")
 L1322.in_EJ_R_indenergy_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indenergy_F_Yh" )
 L1322.in_EJ_R_indfeed_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indfeed_F_Yh" )
 
+
 # -----------------------------------------------------------------------------
 # 2. Perform computations
+#####tmp <- interpolate_and_melt( A32.aeei, model_future_years, value.name="aeei")
+#####tmp <- repeat_and_add_vector( tmp, R, GCAM_region_names[[R]] )
+#####tmp <- add_region_name( tmp )
+#####L232.aeei <- tmp[ c ( "region", "energy.final.demand", "year", "aeei" ) ]
+
 #Create tables to delete technologies and subsectors in regions where heat is not modeled as a fuel
 L232.heat_techs <- unique( calibrated_techs[ grepl( "industry", calibrated_techs$sector ) & calibrated_techs$fuel == "heat", s_s_t ] )
 L232.rm_heat_techs_R <- repeat_and_add_vector( L232.heat_techs, R, A_regions[[R]][ A_regions$heat == 0 ] )
@@ -325,6 +332,8 @@ write_mi_data( L232.FuelPrefElast_indenergy, "FuelPrefElast", "ENERGY_LEVEL2_DAT
 write_mi_data( L232.PerCapitaBased_ind, "PerCapitaBased", "ENERGY_LEVEL2_DATA", "L232.PerCapitaBased_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.PriceElasticity_ind, "PriceElasticity", "ENERGY_LEVEL2_DATA", "L232.PriceElasticity_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.BaseService_ind, "BaseService", "ENERGY_LEVEL2_DATA", "L232.BaseService_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
+#######write_mi_data( L232.aeei, "aeei", "ENERGY_LEVEL2_DATA", "L232.aeei", "ENERGY_XML_BATCH", "batch_industry.xml" )
+
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_industry.xml", "ENERGY_XML_FINAL", "industry.xml", "", xml_tag="outFile" )
 
