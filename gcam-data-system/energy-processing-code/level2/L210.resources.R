@@ -158,7 +158,14 @@ L210.SmthRenewRsrcTechChange <- data.frame(
 # 2c. Calibrated production (depletable resources only)
 printlog( "L210.DepRsrcCalProd: calibrated production of depletable resources" )
 printlog( "NOTE: Assuming only one calibrated subresource per depletable resource" )
-L210.Prod_EJ_R_F_Y <- L111.Prod_EJ_R_F_Yh[ c( R_S_F, X_model_base_years ) ]
+printlog( "NOTE: Unconventional oil production is calibrated in the traded unconventional oil technology")
+# This is complicated. If the unconventional oil production is calibrated in the resource, then there is
+# no way to interpolate the base-year price-adders (calibration parameters) in the future. Regions that do
+# not produce in the base years effectively come in with no price wedge in the first future time period,
+# and those with the price wedge have their base-year behavior essentially carried forward to all periods.
+# Calibrating this in the "traded unconventional oil" sectors allows for shareweight interpolation.
+L210.Prod_EJ_R_F_Y <- L111.Prod_EJ_R_F_Yh[
+      L111.Prod_EJ_R_F_Yh$fuel != "unconventional oil", c( R_S_F, X_model_base_years ) ]
 L210.Prod_EJ_R_F_Y.melt <- melt( L210.Prod_EJ_R_F_Y, id.vars = c( R_S_F ) )
 L210.Prod_EJ_R_F_Y.melt <- add_region_name( L210.Prod_EJ_R_F_Y.melt )
 

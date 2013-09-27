@@ -1,3 +1,1 @@
-# Primary energy handling default costs,,,,,
-supplysector,subsector,technology,minicam.non.energy.input,1971,2100
-traded unconventional oil,unconventional oil,unconventional oil,non-energy,0,0
+# Primary energy handling default costs. Includes price shock from 2005-2010,,,,,,,supplysector,subsector,technology,minicam.non.energy.input,1971,2005,2010,2100traded unconventional oil,unconventional oil,unconventional oil,non-energy,0,0,1.5,1.5
