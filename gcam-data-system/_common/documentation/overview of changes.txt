@@ -17,6 +17,7 @@ Documentation of intentional changes
 16) Hydrogen technologies adjusted efficiencies. Old efficiencies didn't take into account secondary inputs/outputs of electricity and as such CCS techs had higher efficiencies
 17) Got rid of solar_no_backup and wind_no_backup because they are useless and antediluvian
 18) Remapped IEA's "Other" fuel inputs to cement production in the USA from biomass to pet coke. Based on DOE-PI project with NEMS.
+19) Added a 0.15$/GJ delivery charge to the "unconventional oil" technology of "regional oil". Suspect that not having this in GCAM 3.0 was an unintentional omission, or perhaps was done to avoid changing the costs. Either way the delivery and other charges for "crude oil" and "unconventional oil" are the same once they're part of the same infrastructure, so this shouldn't differ between the two.
 
 *Note that "heat output" used to be reported in TJ but now seems to be reported in ktoe
 

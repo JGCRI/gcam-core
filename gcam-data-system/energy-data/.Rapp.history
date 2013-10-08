@@ -1,10 +1,18 @@
-ENERGYPROC_DIR <- "../energy-processing-code/"
+ENERGYPROC_DIR<-"../energy-processing-code/"
+if( !exists( "ENERGYPROC_DIR" ) ){#
+    if( Sys.getenv( "ENERGYPROC" ) != "" ){#
+        ENERGYPROC_DIR <- Sys.getenv( "ENERGYPROC" )#
+    } else {#
+        stop("Could not determine location of energy data system. Please set the R var ENERGYPROC_DIR to the appropriate location")#
+    }#
+}#
+# Universal header file - provides logging, file support, etc.#
 source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
 source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-logstart( "L210.Cstorage.R" )#
+logstart( "L210.resources.R" )#
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
 adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-printlog( "Carbon storage supply curves and sectors" )#
+printlog( "Resource supply information" )#
 # -----------------------------------------------------------------------------#
 # 1. Read files#
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
@@ -12,323 +20,99 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
-A61.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A61.rsrc_info")
-A61.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A61.rsrc_info")#
-A61.sector <- readdata( "ENERGY_ASSUMPTIONS", "A61.sector")#
-A61.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A61.subsector_shrwt")#
-A61.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_coef")#
-A61.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_cost")#
-A61.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_shrwt")
-A61.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A61.rsrc_info")#
-A61.sector <- readdata( "ENERGY_ASSUMPTIONS", "A61.sector")#
-A61.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A61.subsector_shrwt")#
-A61.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_coef")#
-A61.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_cost")#
-A61.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_shrwt")
-A61.rsrc_info
-A61.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A61.rsrc_info")
-A61.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A61.rsrc_info")
-A61.rsrc_info
-L261.rsrc_info <- repeat_and_add_vector( A61.rsrc_info, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
-L261.rsrc_info <- add_region_name( L261.rsrc_info )#
+A10.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.rsrc_info")#
+A10.subrsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.subrsrc_info")#
+A10.TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A10.TechChange")#
+A15.roofPV_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A15.roofPV_TechChange" )#
+L111.RsrcCurves_EJ_R_Ffos <- readdata( "ENERGY_LEVEL1_DATA", "L111.RsrcCurves_EJ_R_Ffos" )#
+L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )#
+L112.RsrcCurves_Mt_R_U <- readdata( "ENERGY_LEVEL1_DATA", "L112.RsrcCurves_Mt_R_U" )#
+L113.RsrcCurves_EJ_R_MSW <- readdata( "ENERGY_LEVEL1_DATA", "L113.RsrcCurves_EJ_R_MSW" )#
+L114.RsrcCurves_EJ_R_wind <- readdata( "ENERGY_LEVEL1_DATA", "L114.RsrcCurves_EJ_R_wind" )#
+L115.RsrcCurves_EJ_R_roofPV <- readdata( "ENERGY_LEVEL1_DATA", "L115.RsrcCurves_EJ_R_roofPV" )#
+L116.RsrcCurves_EJ_R_geo <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_geo" )#
+L116.RsrcCurves_EJ_R_EGS <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_EGS" )#
+L117.RsrcCurves_EJ_R_tradbio <- readdata( "ENERGY_LEVEL1_DATA", "L117.RsrcCurves_EJ_R_tradbio" )#
+# -----------------------------------------------------------------------------#
+# 2. Build tables for CSVs#
+# 2a. Output unit, price unit, market#
+#Interpolate to specified historical years, as necessary#
+L210.rsrc_info <- gcam_interp( A10.rsrc_info, model_base_years )#
+#Repeat and add region vector to resource assumptions table (use ID to ensure correct region ordering)#
+L210.rsrc_info <- repeat_and_add_vector( A10.rsrc_info, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
+L210.rsrc_info <- add_region_name( L210.rsrc_info )#
 #Reset regional markets to the names of the specific regions#
-L261.rsrc_info$market[ L261.rsrc_info$market == "regional" ] <- L261.rsrc_info$region[ L261.rsrc_info$market == "regional" ]#
+L210.rsrc_info$market[ L210.rsrc_info$market == "regional" ] <- L210.rsrc_info$region[ L210.rsrc_info$market == "regional" ]#
 #Split different types of resources into separate tables#
-L261.dep_rsrc_info <- subset( L261.rsrc_info, resource_type == "depresource" )
-L261.unlim_rsrc_info <- subset( L261.rsrc_info, resource_type == "unlimited-resource" )
-L261.dep_rsrc_info
-L261.unlim_rsrc_info <- subset( L261.rsrc_info, resource_type == "unlimited-resource" )
-L261.unlim_rsrc_info
-L261.DepRsrc <- data.frame(#
-      region = L261.dep_rsrc_info$region,#
-      depresource = L261.dep_rsrc_info$resource,#
-      output.unit = L261.dep_rsrc_info$output.unit,#
-      price.unit = L261.dep_rsrc_info$price.unit,#
-      market = L261.dep_rsrc_info$market)
-L261.DepRsrc
-printlog( "L261.UnlimitRsrc: output unit, price unit, and market for unlimited resources" )#
-L261.UnlimitRsrc <- data.frame(#
-      region = L261.unlim_rsrc_info$region,#
-      unlimited.resource = L261.unlim_rsrc_info$resource,#
-      output.unit = L261.unlim_rsrc_info$output.unit,#
-      price.unit = L261.unlim_rsrc_info$price.unit,#
-      market = L261.unlim_rsrc_info$market,#
-      capacity.factor = L261.unlim_rsrc_info$capacity.factor )
-L261.UnlimitRsrc
-A61.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A61.rsrc_info")#
-A61.sector <- readdata( "ENERGY_ASSUMPTIONS", "A61.sector")#
-A61.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A61.subsector_shrwt")#
-A61.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_coef")#
-A61.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_cost")#
-A61.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_shrwt")
-A61.rsrc_info
-A61.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A61.rsrc_info")
-A61.rsrc_info
-A61.sector <- readdata( "ENERGY_ASSUMPTIONS", "A61.sector")
-A61.sector
-A61.subsector_shrwt
-A61.globaltech_coef
-A61.globaltech_cost
-A61.globaltech_shrwt
-L261.rsrc_info <- repeat_and_add_vector( A61.rsrc_info, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
-L261.rsrc_info <- add_region_name( L261.rsrc_info )#
-#Reset regional markets to the names of the specific regions#
-L261.rsrc_info$market[ L261.rsrc_info$market == "regional" ] <- L261.rsrc_info$region[ L261.rsrc_info$market == "regional" ]#
-#Split different types of resources into separate tables#
-L261.dep_rsrc_info <- subset( L261.rsrc_info, resource_type == "depresource" )#
-L261.unlim_rsrc_info <- subset( L261.rsrc_info, resource_type == "unlimited-resource" )#
-printlog( "L261.DepRsrc: output unit, price unit, and market for depletable resources" )#
-L261.DepRsrc <- data.frame(#
-      region = L261.dep_rsrc_info$region,#
-      depresource = L261.dep_rsrc_info$resource,#
-      output.unit = L261.dep_rsrc_info$output.unit,#
-      price.unit = L261.dep_rsrc_info$price.unit,#
-      market = L261.dep_rsrc_info$market)#
-printlog( "L261.UnlimitRsrc: output unit, price unit, and market for unlimited resources" )#
-L261.UnlimitRsrc <- data.frame(#
-      region = L261.unlim_rsrc_info$region,#
-      unlimited.resource = L261.unlim_rsrc_info$resource,#
-      output.unit = L261.unlim_rsrc_info$output.unit,#
-      price.unit = L261.unlim_rsrc_info$price.unit,#
-      market = L261.unlim_rsrc_info$market,#
-      capacity.factor = L261.unlim_rsrc_info$capacity.factor )
-L261.DepRsrc
-L261.UnlimitRsrc
-names_Supplysector
-L261.Supplysector_C <- write_to_all_regions( A61.sector, names_Supplysector )
-L261.Supplysector_C
-L261.SubsectorLogit_en <- write_to_all_regions( A61.subsector_logit, names_SubsectorLogit )
-A61.subsector_shrwt
-names_SubsectorShrwtFllt
-L261.SubsectorShrwtFllt_en <- write_to_all_regions( A61.subsector_shrwt, names_SubsectorShrwtFllt )
-L261.SubsectorShrwtFllt_en
-L261.StubTech_en <- write_to_all_regions( A61.globaltech_shrwt, names_Tech )
-names( L261.StubTech_en ) <- names_StubTech
-L261.StubTech_en
-L261.globaltech_coef.melt <- interpolate_and_melt( A61.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )
-L261.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]#
-L261.GlobalTechCoef_en <- L261.globaltech_coef.melt[ names_GlobalTechCoef ]
-dim(L261.GlobalTechCoef_en)
-L261.GlobalTechCoef_en[1:30,]
-Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)#
-L261.StubTech_C <- write_to_all_regions( A61.globaltech_shrwt, names_Tech )#
-names( L261.StubTech_C ) <- names_StubTech#
-#
-#Coefficients of global technologies#
-printlog( "L261.GlobalTechCoef_C: Energy inputs and coefficients of global technologies for carbon storage" )#
-L261.globaltech_coef.melt <- interpolate_and_melt( A61.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )#
-#Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology#
-L261.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]#
-L261.GlobalTechCoef_C <- L261.globaltech_coef.melt[ names_GlobalTechCoef ]#
-#
-#Costs of global technologies#
-printlog( "L261.GlobalTechCost_C: Costs of global technologies for carbon storage" )#
-L261.globaltech_cost.melt <- interpolate_and_melt( A61.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )#
-L261.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]#
-L261.GlobalTechCost_C <- L261.globaltech_cost.melt[ names_GlobalTechCost ]#
-L261.GlobalTechCost_C$input.cost <- round( L261.GlobalTechCost_C$input.cost, digits_cost )
-A61.globaltech_cost
-names_GlobalTechCost
-A61.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_cost")
-A61.globaltech_cost
-L261.globaltech_cost.melt <- interpolate_and_melt( A61.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )#
-L261.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]#
-L261.GlobalTechCost_C <- L261.globaltech_cost.melt[ names_GlobalTechCost ]#
-L261.GlobalTechCost_C$input.cost <- round( L261.GlobalTechCost_C$input.cost, digits_cost )
-L261.GlobalTechCost_C
-L261.globaltech_shrwt.melt <- interpolate_and_melt( A61.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )#
-L261.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]#
-L261.GlobalTechShrwt_C <- L261.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
-L261.GlobalTechShrwt_C
-L261.SubsectorShrwtFllt_C <- write_to_all_regions( A61.subsector_shrwt, names_SubsectorShrwtFllt )
-L261.DepRsrc <- data.frame(#
-      region = L261.dep_rsrc_info$region,#
-      depresource = L261.dep_rsrc_info$resource,#
-      output.unit = L261.dep_rsrc_info$output.unit,#
-      price.unit = L261.dep_rsrc_info$price.unit,#
-      market = L261.dep_rsrc_info$market)#
-printlog( "L261.UnlimitRsrc: output unit, price unit, and market for unlimited resources" )#
-L261.UnlimitRsrc <- data.frame(#
-      region = L261.unlim_rsrc_info$region,#
-      unlimited.resource = L261.unlim_rsrc_info$resource,#
-      output.unit = L261.unlim_rsrc_info$output.unit,#
-      price.unit = L261.unlim_rsrc_info$price.unit,#
-      market = L261.unlim_rsrc_info$market,#
-      capacity.factor = L261.unlim_rsrc_info$capacity.factor )#
-# 2b. Resource supply curves#
-printlog( "L261.DepRsrcCurves_C: supply curves of carbon storage resources")#
-L261.RsrcCurves_MtC_R <- add_region_name( L161.RsrcCurves_MtC_R )#
-L261.DepRsrcCurves_fos <- convert_rsrc_to_L2( L261.RsrcCurves_EJ_R_Ffos, "depresource" )#
-#2c. Carbon storage sector information#
-printlog( "L261.Supplysector_C: Carbon storage supplysector information" )#
-L261.Supplysector_C <- write_to_all_regions( A61.sector, names_Supplysector )#
-#
-# 2d. Subsector information#
-printlog( "L261.SubsectorShrwtFllt_C: Subsector shareweights of energy transformation sectors" )#
-L261.SubsectorShrwtFllt_C <- write_to_all_regions( A61.subsector_shrwt, names_SubsectorShrwtFllt )#
-#
-#2e. Technology information#
-printlog( "L261.StubTech_C: Identification of stub technologies of energy transformation" )#
-#Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)#
-L261.StubTech_C <- write_to_all_regions( A61.globaltech_shrwt, names_Tech )#
-names( L261.StubTech_C ) <- names_StubTech#
-#
-#Coefficients of global technologies#
-printlog( "L261.GlobalTechCoef_C: Energy inputs and coefficients of global technologies for carbon storage" )#
-L261.globaltech_coef.melt <- interpolate_and_melt( A61.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )#
-#Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology#
-L261.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]#
-L261.GlobalTechCoef_C <- L261.globaltech_coef.melt[ names_GlobalTechCoef ]#
-#
-#Costs of global technologies#
-printlog( "L261.GlobalTechCost_C: Costs of global technologies for carbon storage" )#
-L261.globaltech_cost.melt <- interpolate_and_melt( A61.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )#
-L261.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]#
-L261.GlobalTechCost_C <- L261.globaltech_cost.melt[ names_GlobalTechCost ]#
-L261.GlobalTechCost_C$input.cost <- round( L261.GlobalTechCost_C$input.cost, digits_cost )#
-#Shareweights of global technologies#
-printlog( "L261.GlobalTechShrwt_C: Shareweights of global technologies for energy transformation" )#
-L261.globaltech_shrwt.melt <- interpolate_and_melt( A61.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )#
-L261.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]#
-L261.GlobalTechShrwt_C <- L261.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
-write_mi_data( L261.DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L261.DepRsrc", batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_Cstorage.xml" ) #
-write_mi_data( L261.UnlimitRsrc, "UnlimitRsrc", "ENERGY_LEVEL2_DATA", "L261.UnlimitRsrc", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L222.Supplysector_C, "Supplysector", "ENERGY_LEVEL2_DATA", "L222.Supplysector_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L222.SubsectorShrwtFllt_C, "SubsectorShrwtFllt", "ENERGY_LEVEL2_DATA", "L222.SubsectorShrwtFllt_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L222.StubTech_C, "StubTech", "ENERGY_LEVEL2_DATA", "L222.StubTech_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L222.GlobalTechCoef_C, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCoef_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L222.GlobalTechCost_C, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCost_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L222.GlobalTechShrwt_C, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L222.GlobalTechShrwt_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" )
-write_mi_data( L261.Supplysector_C, "Supplysector", "ENERGY_LEVEL2_DATA", "L261.Supplysector_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L261.SubsectorShrwtFllt_C, "SubsectorShrwtFllt", "ENERGY_LEVEL2_DATA", "L261.SubsectorShrwtFllt_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L261.StubTech_C, "StubTech", "ENERGY_LEVEL2_DATA", "L261.StubTech_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L261.GlobalTechCoef_C, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L261.GlobalTechCoef_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L261.GlobalTechCost_C, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L261.GlobalTechCost_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) #
-write_mi_data( L261.GlobalTechShrwt_C, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L261.GlobalTechShrwt_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" )
-insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_Cstorage.xml", "ENERGY_XML_FINAL", "Cstorage.xml", "", xml_tag="outFile" )
-convert_rsrc_to_L2
-logstop()
-logstart( "LA161.Cstorage.R" )
-printlog( "Carbon storage resource supply curves" )
-sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
-sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )#
-sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
-iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )#
-GIS_ctry_AEZ <- readdata( "AGLU_MAPPINGS", "GIS_ctry_AEZ" )#
-Sage_Hyde15_Area <- readdata( "AGLU_GIS_DATA", "Sage_Hyde15_Area" )
-Dooley_Cstorage_RG3_MtCO2 <- readdata( "ENERGY_LEVEL0_DATA", "Dooley_Cstorage_RG3_MtCO2" )
-A61.Cstorage_curves <- readdata( "ENERGY_ASSUMPTIONS", "A61.Cstorage_curves" )
-A61.Cstorage_curves
-L161.LC_km2_ctry_LT_AEZ <- subset( Sage_Hyde15_Area, Year == max( Year ) )#
-L161.LC_km2_ctry_LT_AEZ$iso <- GIS_ctry_AEZ$iso[ match( L161.LC_km2_ctry_LT_AEZ$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]#
-L161.LC_km2_ctry <- aggregate( L161.LC_km2_ctry_LT_AEZ[ "Area.km2." ],#
-      by=as.list( L161.LC_km2_ctry_LT_AEZ[ "iso" ] ), sum )
-dim(L161.LC_km2_ctry)
-head(L161.LC_km2_ctry)
-L161.LC_km2_ctry <- rbind( L161.LC_km2_ctry, data.frame( iso = "twn", Area.km2. = 36000))
-L161.LC_km2_ctry$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L161.LC_km2_ctry$iso, iso_GCAM_regID$iso ) ]#
-L161.LC_km2_RG3 <- aggregate( L161.LC_km2_ctry[ "Area.km2." ], by=as.list( L161.LC_km2_ctry[ "region_GCAM3" ] ), sum )#
-L161.LC_km2_ctry$area_RG3 <- L161.LC_km2_RG3$Area.km2.[ match( L161.LC_km2_ctry$region_GCAM3, L161.LC_km2_RG3$region_GCAM3 ) ]#
-L161.LC_km2_ctry$share <- L161.LC_km2_ctry$Area.km2. / L161.LC_km2_ctry$area_RG3
-head(L161.LC_km2_ctry)
-A61.Cstorage_curves
-Dooley_Cstorage_RG3_MtCO2
-melt(Dooley_Cstorage_RG3_MtCO2)
-L161.Cstorage_MtCO2_RG3 <- melt( Dooley_Cstorage_RG3_MtCO2, id.vars = "region_GCAM3" )
-L161.Cstorage_MtCO2_RG3_src <- melt( Dooley_Cstorage_RG3_MtCO2, id.vars = "region_GCAM3" )
-subset( L161.Cstorage_MtCO2_RG3_src, !grepl( "Offshore", variable ) )
-Dooley_Cstorage_RG3_MtCO2 <- readdata( "ENERGY_LEVEL0_DATA", "Dooley_Cstorage_RG3_MtCO2" )
-Dooley_Cstorage_RG3_MtCO2
-L161.Cstorage_MtCO2_RG3_src <- melt( Dooley_Cstorage_RG3_MtCO2, id.vars = "region_GCAM3" )#
-printlog( "NOTE: Not including any offshore carbon resources in the onshore resource estimates. Offshore is considered an unlimited resource")#
-L161.Cstorage_MtCO2_RG3_src <- subset( L161.Cstorage_MtCO2_RG3_src, !grepl( "Offshore", variable ) )
-L161.Cstorage_MtCO2_RG3_src
-L161.Cstorage_MtCO2_RG3 <- aggregate( L161.Cstorage_MtCO2_RG3_src[ "value" ], by=as.list( L161.Cstorage_MtCO2_RG3_src[ "region_GCAM3" ] ), sum )
-L161.Cstorage_MtCO2_RG3
-A61.Cstorage_curves
-L161.Cstorage_MtCO2_RG3_grade <- repeat_and_add_vector( L161.Cstorage_MtCO2_RG3, "grade", unique( A61.Cstorage_curves$grade ) )#
-L161.Cstorage_MtCO2_RG3_grade$available <- L161.Cstorage_MtCO2_RG3_grade$value * A61.Cstorage_curves$fraction[#
-      match( L161.Cstorage_MtCO2_RG3_grade$grade, A61.Cstorage_curves$grade ) ]
-L161.Cstorage_MtCO2_RG3_grade
-L161.Available_MtC_ctry_C <- repeat_and_add_vector( L161.LC_km2_ctry, "grade", unique( A61.Cstorage_curves$grade ) )#
-L161.Available_MtC_ctry_C$available_RG3 <- L161.Cstorage_MtCO2_RG3_grade$available[#
-      match( vecpaste( L161.Available_MtC_ctry_C[ c( "region_GCAM3", "grade" ) ] ), vecpaste( L161.Cstorage_MtCO2_RG3_grade[ c( "region_GCAM3", "grade" ) ] ) ) ]#
-L161.Available_MtC_ctry_C$available <- L161.Available_MtC_ctry_C$share * L161.Available_MtC_ctry_C$available_RG3
-dim(L161.Available_MtC_ctry_C)
-subset(L161.Available_MtC_ctry_C, region=="USA")
-subset(L161.Available_MtC_ctry_C, GCAM_region_ID==1)
-subset(L161.Available_MtC_ctry_C, iso == "usa")
-conv_C_CO2
-L161.Available_MtC_ctry_C <- repeat_and_add_vector( L161.LC_km2_ctry, "grade", unique( A61.Cstorage_curves$grade ) )#
-L161.Available_MtC_ctry_C$available_RG3 <- L161.Cstorage_MtCO2_RG3_grade$available[#
-      match( vecpaste( L161.Available_MtC_ctry_C[ c( "region_GCAM3", "grade" ) ] ), vecpaste( L161.Cstorage_MtCO2_RG3_grade[ c( "region_GCAM3", "grade" ) ] ) ) ] /#
-      conv_C_CO2#
-L161.Available_MtC_ctry_C$available <- L161.Available_MtC_ctry_C$share * L161.Available_MtC_ctry_C$available_RG3
-subset(L161.Available_MtC_ctry_C, iso == "usa")
-L161.Available_MtC_ctry_C[[R]]<- iso_GCAM_regID[[R]][ match( L161.Available_MtC_ctry_C$iso, iso_GCAM_regID$iso ) ]#
-L161.Available_MtC_R_C <- aggregate( L161.Available_MtC_ctry_C[ "available" ], by=as.list( L161.Available_MtC_ctry_C[ c( R, "grade" ) ] ), sum )
-L161.Available_MtC_R_C
-A61.Cstorage_curves
-A61.Cstorage_curves <- readdata( "ENERGY_ASSUMPTIONS", "A61.Cstorage_curves" )
-A61.Cstorage_curves
-A61.Cstorage_curves <- readdata( "ENERGY_ASSUMPTIONS", "A61.Cstorage_curves" )
-A61.Cstorage_curves
-L161.RsrcCurves_MtC_R_C <- data.frame(#
-      GCAM_region_ID = sort( unique( iso_GCAM_regID[[R]] ) ),#
-      resource = unique( A61.Cstorage_curves$resource ),#
-      subresource = unique( A61.Cstorage_curves$subresource) )#
-L161.RsrcCurves_MtC_R_C <- repeat_and_add_vector( L161.RsrcCurves_MtC_R_C, "grade", unique(  A61.Cstorage_curves$grade ) )#
-L161.RsrcCurves_MtC_R_C$available <- L161.Available_MtC_R_C$available[#
-      match( vecpaste( L161.RsrcCurves_MtC_R_C[ c( R, "grade" ) ] ),#
-             vecpaste( L161.Available_MtC_R_C[ c( R, "grade" ) ] ) ) ]
-subset(L161.RsrcCurves_MtC_R_C, GCAM_region_ID==1)
-conv_1990_2005_USD
-L161.RsrcCurves_MtC_R_C$extractioncost <- A61.Cstorage_curves$cost_2005USDtCO2[#
-      match( L161.RsrcCurves_MtC_R_C$grade, A61.Cstorage_curves$grade ) ] *#
-      conv_C_CO2 / conv_1990_2005_USD
-subset(L161.RsrcCurves_MtC_R_C, GCAM_region_ID==1)
-10000*conv_1990_2005_USD/conv_C_CO2
-head(L161.RsrcCurves_MtC_R_C)
-L161.RsrcCurves_MtC_R <- data.frame(#
-      GCAM_region_ID = sort( unique( iso_GCAM_regID[[R]] ) ),#
-      resource = unique( A61.Cstorage_curves$resource ),#
-      subresource = unique( A61.Cstorage_curves$subresource) )#
-L161.RsrcCurves_MtC_R <- repeat_and_add_vector( L161.RsrcCurves_MtC_R, "grade", unique(  A61.Cstorage_curves$grade ) )#
-L161.RsrcCurves_MtC_R$available <- L161.Available_MtC_R_C$available[#
-      match( vecpaste( L161.RsrcCurves_MtC_R[ c( R, "grade" ) ] ),#
-             vecpaste( L161.Available_MtC_R_C[ c( R, "grade" ) ] ) ) ]#
-#NOTE: currently assuming that all regions have the same price points#
-L161.RsrcCurves_MtC_R$extractioncost <- A61.Cstorage_curves$cost_2005USDtCO2[#
-      match( L161.RsrcCurves_MtC_R$grade, A61.Cstorage_curves$grade ) ] *#
-      conv_C_CO2 / conv_1990_2005_USD
-comments.L161.RsrcCurves_MtC_R <- c( "Carbon storage resource supply curves by GCAM region","Unit = Mt C" )#
-#
-#write tables as CSV files#
-writedata( L161.RsrcCurves_MtC_R, domain="ENERGY_LEVEL1_DATA", fn="L161.RsrcCurves_MtC_R", comments=comments.L161.RsrcCurves_MtC_R )#
-#
-# Every script should finish with this line#
-logstop()
-L161.RsrcCurves_MtC_R <- readdata( "ENERGY_LEVEL1_DATA", "L161.RsrcCurves_MtC_R" )
-logstart( "L261.Cstorage.R" )
-L161.RsrcCurves_MtC_R <- readdata( "ENERGY_LEVEL1_DATA", "L161.RsrcCurves_MtC_R" )
-L261.RsrcCurves_MtC_R <- add_region_name( L161.RsrcCurves_MtC_R )#
-L261.DepRsrcCurves_C <- convert_rsrc_to_L2( L261.DepRsrcCurves_C, "depresource" )
-L261.DepRsrcCurves_C <- add_region_name( L161.RsrcCurves_MtC_R )
-L261.DepRsrcCurves_C <- convert_rsrc_to_L2( L261.DepRsrcCurves_C, "depresource" )
-head(L261.DepRsrcCurves_C)
-L261.DepRsrcCurves_C[L261.DepRsrcCurves_C$region=="USA"]
-L261.DepRsrcCurves_C[L261.DepRsrcCurves_C$region=="USA",]
-digits_cost
-digits_depresource
-convert_rsrc_to_L2
-digits_depresource
-L161.RsrcCurves_MtC_R$extractioncost <- round(#
-      A61.Cstorage_curves$cost_2005USDtCO2[ match( L161.RsrcCurves_MtC_R$grade, A61.Cstorage_curves$grade ) ] *#
-         conv_C_CO2 / conv_1990_2005_USD,#
-      digits_depresource )
-L161.RsrcCurves_MtC_R
-L261.DepRsrcCurves_C <- add_region_name( L161.RsrcCurves_MtC_R )#
-L261.DepRsrcCurves_C <- convert_rsrc_to_L2( L261.DepRsrcCurves_C, "depresource" )
-write_mi_data( L261.DepRsrcCurves_C, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L261.DepRsrcCurves_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" )
+L210.dep_rsrc_info <- subset( L210.rsrc_info, resource_type == "depresource" )#
+L210.renew_rsrc_info <- subset( L210.rsrc_info, resource_type == "renewresource" )#
+L210.unlim_rsrc_info <- subset( L210.rsrc_info, resource_type == "unlimited-resource" )#
+printlog( "L210.DepRsrc: output unit, price unit, and market for depletable resources" )#
+L210.DepRsrc <- data.frame(#
+      region = L210.dep_rsrc_info$region,#
+      depresource = L210.dep_rsrc_info$resource,#
+      output.unit = L210.dep_rsrc_info$output.unit,#
+      price.unit = L210.dep_rsrc_info$price.unit,#
+      market = L210.dep_rsrc_info$market)#
+printlog( "L210.RenewRsrc: output unit, price unit, and market for renewable resources" )#
+L210.RenewRsrc <- data.frame(#
+      region = L210.renew_rsrc_info$region,#
+      renewresource = L210.renew_rsrc_info$resource,#
+      output.unit = L210.renew_rsrc_info$output.unit,#
+      price.unit = L210.renew_rsrc_info$price.unit,#
+      market = L210.renew_rsrc_info$market)#
+printlog( "L210.UnlimitRsrc: output unit, price unit, and market for unlimited resources" )#
+L210.UnlimitRsrc <- data.frame(#
+      region = L210.unlim_rsrc_info$region,#
+      unlimited.resource = L210.unlim_rsrc_info$resource,#
+      output.unit = L210.unlim_rsrc_info$output.unit,#
+      price.unit = L210.unlim_rsrc_info$price.unit,#
+      market = L210.unlim_rsrc_info$market,#
+      capacity.factor = L210.unlim_rsrc_info$capacity.factor )#
+printlog( "L210.DepRsrcPrice: historical prices for depletable resources" )#
+L210.dep_rsrc_price.melt <- interpolate_and_melt(#
+      L210.dep_rsrc_info[ names( L210.dep_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],#
+      model_base_years )#
+L210.DepRsrcPrice <- data.frame(#
+      region = L210.dep_rsrc_price.melt$region,#
+      depresource = L210.dep_rsrc_price.melt$resource,#
+      year = L210.dep_rsrc_price.melt$year,#
+      price = L210.dep_rsrc_price.melt$value )
+printlog( "L210.RenewRsrcPrice: historical prices for renewable resources" )#
+L210.renew_rsrc_price.melt <- interpolate_and_melt(#
+      L210.renew_rsrc_info[ names( L210.renew_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],#
+      model_base_years )#
+L210.RenewRsrcPrice <- data.frame(#
+      region = L210.renew_rsrc_price.melt$region,#
+      renewresource = L210.renew_rsrc_price.melt$resource,#
+      year = L210.renew_rsrc_price.melt$year,#
+      price = L210.renew_rsrc_price.melt$value )#
+printlog( "L210.UnlimitRsrcPrice: prices for unlimited resources" )#
+L210.unlimit_rsrc_price.melt <- interpolate_and_melt(#
+      L210.unlim_rsrc_info[ names( L210.unlim_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],#
+      model_base_years )#
+L210.UnlimitRsrcPrice <- data.frame(#
+      region = L210.unlimit_rsrc_price.melt$region,#
+      unlimited.resource = L210.unlimit_rsrc_price.melt$resource,#
+      year = L210.unlimit_rsrc_price.melt$year,#
+      price = L210.unlimit_rsrc_price.melt$value )
+tail(L111.Prod_EJ_R_F_Yh)
+A10.unoil_priceadder <- readdata( "ENERGY_ASSUMPTIONS", "A10.unoil_priceadder")
+A10.unoil_priceadder
+A10.rsrc_info
+tail(L111.Prod_EJ_R_F_Yh)
+tail
+tail()
+L210.Prod_EJ_R_F_Y <- L111.Prod_EJ_R_F_Yh[#
+      L111.Prod_EJ_R_F_Yh$fuel != "unconventional oil", c( R_S_F, X_model_base_years ) ]
+L210.Prod_EJ_R_F_Y.melt <- melt( L210.Prod_EJ_R_F_Y, id.vars = c( R_S_F ) )#
+L210.Prod_EJ_R_F_Y.melt <- add_region_name( L210.Prod_EJ_R_F_Y.melt )#
+L210.DepRsrcCalProd <- data.frame(#
+      region = L210.Prod_EJ_R_F_Y.melt$region,#
+      depresource = L210.Prod_EJ_R_F_Y.melt$fuel,#
+      subresource = A10.TechChange$subresource[ match( L210.Prod_EJ_R_F_Y.melt$fuel, A10.TechChange$resource ) ],#
+      year = substr( L210.Prod_EJ_R_F_Y.melt$variable, 2, 5 ),#
+      cal.production = round( L210.Prod_EJ_R_F_Y.melt$value, digits_calproduction ) )
+subset(L210.DepRsrcCalProd, region=="Canada")
 logstop()
 q()
