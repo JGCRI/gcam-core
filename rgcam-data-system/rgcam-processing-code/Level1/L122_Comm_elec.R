@@ -11,6 +11,7 @@ printlog( "Commercial sector electricity consumption by state and service" )
 
 Census_state_division <- readmap( "Census_state_division" )
 GCAM_comm_services <- readmap( "GCAM_comm_services" )
+Census_pop_hist <- readdata( "Census_pop_hist" )
 EIA_distheat <- readdata( "EIA_distheat" )
 PNNL_commext_elec <- readdata( "PNNL_commext_elec" )
 L104_in_EJ_state_bld_F <- readdata( "L104_in_EJ_state_bld_F" )
@@ -31,7 +32,7 @@ L122_in_EJ_comm_elec_U_1992_CBECS <- data.frame(
       subregion9 = L121_CBECS_1992$subregion9,
       Xyear = "X1992",
       sph_dir = L121_CBECS_1992$ELHTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
-      col = L121_CBECS_1992$ELCLBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
+      col_dir = L121_CBECS_1992$ELCLBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
       wth_dir = L121_CBECS_1992$ELWTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
       vnt = L121_CBECS_1992$ELVNBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
       ckg = L121_CBECS_1992$ELCKBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
@@ -46,12 +47,14 @@ printlog( "NOTE: Assuming constant national fuel shares and efficiencies for dis
 L122_in_EJ_comm_elec_U_1992_CBECS$sph_dh <- L121_CBECS_1992$DHHTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
       EIA_distheat$share[ EIA_distheat$fuel == "electricity" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="electricity" & EIA_distheat$service == "heating" ]
-L122_in_EJ_comm_elec_U_1992_CBECS$wth_dh <- L121_CBECS_1992$DHHTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
+L122_in_EJ_comm_elec_U_1992_CBECS$col_dh <- 0 #Category not included in 1992 CBECS
+L122_in_EJ_comm_elec_U_1992_CBECS$wth_dh <- L121_CBECS_1992$DHWTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
       EIA_distheat$share[ EIA_distheat$fuel == "electricity" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="electricity" & EIA_distheat$service == "hot water" ]
 
 #Add fuel inputs to district services to the relevant services
 L122_in_EJ_comm_elec_U_1992_CBECS$sph <- L122_in_EJ_comm_elec_U_1992_CBECS$sph_dir + L122_in_EJ_comm_elec_U_1992_CBECS$sph_dh
+L122_in_EJ_comm_elec_U_1992_CBECS$col <- L122_in_EJ_comm_elec_U_1992_CBECS$col_dir + L122_in_EJ_comm_elec_U_1992_CBECS$col_dh
 L122_in_EJ_comm_elec_U_1992_CBECS$wth <- L122_in_EJ_comm_elec_U_1992_CBECS$wth_dir + L122_in_EJ_comm_elec_U_1992_CBECS$wth_dh
 
 #Repeat for 1995 CBECS
@@ -59,7 +62,7 @@ L122_in_EJ_comm_elec_U_1995_CBECS <- data.frame(
       subregion9 = L121_CBECS_1995$subregion9,
       Xyear = "X1995",
       sph_dir = L121_CBECS_1995$ELHTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
-      col = L121_CBECS_1995$ELCLBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
+      col_dir = L121_CBECS_1995$ELCLBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
       wth_dir = L121_CBECS_1995$ELWTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
       vnt = L121_CBECS_1995$ELVNBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
       ckg = L121_CBECS_1995$ELCKBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
@@ -71,11 +74,15 @@ L122_in_EJ_comm_elec_U_1995_CBECS <- data.frame(
 L122_in_EJ_comm_elec_U_1995_CBECS$sph_dh <- L121_CBECS_1995$DHHTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
       EIA_distheat$share[ EIA_distheat$fuel == "electricity" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="electricity" & EIA_distheat$service == "heating" ]
-L122_in_EJ_comm_elec_U_1995_CBECS$wth_dh <- L121_CBECS_1995$DHHTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
+L122_in_EJ_comm_elec_U_1995_CBECS$col_dh <- L121_CBECS_1995$DHCLBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
+      EIA_distheat$share[ EIA_distheat$fuel == "electricity" & EIA_distheat$service == "cooling" ] /
+      EIA_distheat$efficiency[ EIA_distheat$fuel=="electricity" & EIA_distheat$service == "cooling" ]
+L122_in_EJ_comm_elec_U_1995_CBECS$wth_dh <- L121_CBECS_1995$DHWTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
       EIA_distheat$share[ EIA_distheat$fuel == "electricity" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="electricity" & EIA_distheat$service == "hot water" ]
 
 L122_in_EJ_comm_elec_U_1995_CBECS$sph <- L122_in_EJ_comm_elec_U_1995_CBECS$sph_dir + L122_in_EJ_comm_elec_U_1995_CBECS$sph_dh
+L122_in_EJ_comm_elec_U_1995_CBECS$col <- L122_in_EJ_comm_elec_U_1995_CBECS$col_dir + L122_in_EJ_comm_elec_U_1995_CBECS$col_dh
 L122_in_EJ_comm_elec_U_1995_CBECS$wth <- L122_in_EJ_comm_elec_U_1995_CBECS$wth_dir + L122_in_EJ_comm_elec_U_1995_CBECS$wth_dh
 
 #Repeat for 2003 CBECS
@@ -83,7 +90,7 @@ L122_in_EJ_comm_elec_U_2003_CBECS <- data.frame(
       subregion9 = L121_CBECS_2003$subregion9,
       Xyear = "X2003",
       sph_dir = L121_CBECS_2003$ELHTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
-      col = L121_CBECS_2003$ELCLBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
+      col_dir = L121_CBECS_2003$ELCLBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
       wth_dir = L121_CBECS_2003$ELWTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
       vnt = L121_CBECS_2003$ELVNBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
       ckg = L121_CBECS_2003$ELCKBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
@@ -95,11 +102,15 @@ L122_in_EJ_comm_elec_U_2003_CBECS <- data.frame(
 L122_in_EJ_comm_elec_U_2003_CBECS$sph_dh <- L121_CBECS_2003$DHHTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
       EIA_distheat$share[ EIA_distheat$fuel == "electricity" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="electricity" & EIA_distheat$service == "heating" ]
-L122_in_EJ_comm_elec_U_2003_CBECS$wth_dh <- L121_CBECS_2003$DHHTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
+L122_in_EJ_comm_elec_U_2003_CBECS$col_dh <- L121_CBECS_2003$DHCLBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
+      EIA_distheat$share[ EIA_distheat$fuel == "electricity" & EIA_distheat$service == "cooling" ] /
+      EIA_distheat$efficiency[ EIA_distheat$fuel=="electricity" & EIA_distheat$service == "cooling" ]
+L122_in_EJ_comm_elec_U_2003_CBECS$wth_dh <- L121_CBECS_2003$DHWTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
       EIA_distheat$share[ EIA_distheat$fuel == "electricity" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="electricity" & EIA_distheat$service == "hot water" ]
 
 L122_in_EJ_comm_elec_U_2003_CBECS$sph <- L122_in_EJ_comm_elec_U_2003_CBECS$sph_dir + L122_in_EJ_comm_elec_U_2003_CBECS$sph_dh
+L122_in_EJ_comm_elec_U_2003_CBECS$col <- L122_in_EJ_comm_elec_U_2003_CBECS$col_dir + L122_in_EJ_comm_elec_U_2003_CBECS$col_dh
 L122_in_EJ_comm_elec_U_2003_CBECS$wth <- L122_in_EJ_comm_elec_U_2003_CBECS$wth_dir + L122_in_EJ_comm_elec_U_2003_CBECS$wth_dh
 
 #Rbind CBECS databases into one dataframe
@@ -223,8 +234,8 @@ L122_poppct_state <- data.frame(
       state = Census_pop_hist$state,
       sweep( Census_pop_hist[ X_base_years ], 2, colSums( Census_pop_hist[ X_base_years ] ) , "/" ) )
 L122_in_EJ_USA_commext_elec_repstate <- L122_in_EJ_USA_commext_elec[ rep( 1, times = nrow( L122_poppct_state ) ), ]
-L122_in_EJ_state_commext_elec <- data.frame( state = L122_poppct_state$state, service = "comm other",
-      L122_poppct_state[ X_base_years ] * L122_in_EJ_USA_commext_elec_repstate[ X_base_years ] )
+L122_in_EJ_state_commext_elec <- data.frame( state = L122_poppct_state$state, GCAM_sector = "comm", GCAM_fuel = "electricity",
+      service = "comm non-building", L122_poppct_state[ X_base_years ] * L122_in_EJ_USA_commext_elec_repstate[ X_base_years ] )
 
 #2g. FINAL ENERGY BY STATE, END USE, AND BASE YEAR
 #Deduct non-building commercial electricity (commext) from state-level commercial electricity consumption
@@ -242,21 +253,15 @@ L122_in_EJ_state_commint_elec_U <- data.frame( L122_in_EJ_state_commint_elec_rep
                                                              
 #Add in the exterior other to the interior other
 printlog( "Adding in non-building electricity (final table)" )
-L122_in_EJ_state_comm_elec_U <- L122_in_EJ_state_commint_elec_U
-L122_in_EJ_state_comm_elec_U[ L122_in_EJ_state_comm_elec_U$service == "comm other", X_base_years ] <-
-      L122_in_EJ_state_commint_elec_U[ L122_in_EJ_state_commint_elec_U$service == "comm other", X_base_years] +
-      L122_in_EJ_state_commext_elec[ X_base_years ]
+L122_in_EJ_state_comm_elec_U <- rbind( L122_in_EJ_state_commint_elec_U, L122_in_EJ_state_commext_elec )
 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
 comments.L122_in_EJ_state_comm_elec_U <- c( "Commercial sector electricity consumption by state and service","Unit = EJ" )
-#Write out the exterior building energy use for the BEND project
-comments.L122_in_EJ_state_commext_elec <- c( "Commercial non-building electricity consumption by state and service","Unit = EJ" )
 
 #write tables as CSV files
 writedata( L122_in_EJ_state_comm_elec_U,fn="L122_in_EJ_state_comm_elec_U", comments=comments.L122_in_EJ_state_comm_elec_U )
-writedata( L122_in_EJ_state_commext_elec,fn="L122_in_EJ_state_commext_elec", comments=comments.L122_in_EJ_state_commext_elec )
 
 # Every script should finish with this line
 logstop()

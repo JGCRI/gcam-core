@@ -30,7 +30,7 @@ L123_in_EJ_comm_gas_U_1992_CBECS <- data.frame(
       subregion9 = L121_CBECS_1992$subregion9,
       Xyear = "X1992",
       sph_dir = L121_CBECS_1992$NGHTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
-      col = 0,
+      col_dir = 0,
       wth_dir = L121_CBECS_1992$NGWTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
       ckg = L121_CBECS_1992$NGCKBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5,
       othint = L121_CBECS_1992$NGMSBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 )
@@ -41,12 +41,14 @@ printlog( "NOTE: Assuming constant national fuel shares and efficiencies for dis
 L123_in_EJ_comm_gas_U_1992_CBECS$sph_dh <- L121_CBECS_1992$DHHTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
       EIA_distheat$share[ EIA_distheat$fuel == "gas" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="gas" & EIA_distheat$service == "heating" ]
-L123_in_EJ_comm_gas_U_1992_CBECS$wth_dh <- L121_CBECS_1992$DHHTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
+L123_in_EJ_comm_gas_U_1992_CBECS$col_dh <- 0
+L123_in_EJ_comm_gas_U_1992_CBECS$wth_dh <- L121_CBECS_1992$DHWTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
       EIA_distheat$share[ EIA_distheat$fuel == "gas" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="gas" & EIA_distheat$service == "hot water" ]
 
 #Add fuel inputs to district services to the relevant services
 L123_in_EJ_comm_gas_U_1992_CBECS$sph <- L123_in_EJ_comm_gas_U_1992_CBECS$sph_dir + L123_in_EJ_comm_gas_U_1992_CBECS$sph_dh
+L123_in_EJ_comm_gas_U_1992_CBECS$col <- L123_in_EJ_comm_gas_U_1992_CBECS$col_dir + L123_in_EJ_comm_gas_U_1992_CBECS$col_dh
 L123_in_EJ_comm_gas_U_1992_CBECS$wth <- L123_in_EJ_comm_gas_U_1992_CBECS$wth_dir + L123_in_EJ_comm_gas_U_1992_CBECS$wth_dh
 
 #Repeat for 1995 CBECS
@@ -54,7 +56,7 @@ L123_in_EJ_comm_gas_U_1995_CBECS <- data.frame(
       subregion9 = L121_CBECS_1995$subregion9,
       Xyear = "X1995",
       sph_dir = L121_CBECS_1995$NGHTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
-      col = L121_CBECS_1995$NGCLBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
+      col_dir = L121_CBECS_1995$NGCLBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
       wth_dir = L121_CBECS_1995$NGWTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
       ckg = L121_CBECS_1995$NGCKBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6,
       othint = L121_CBECS_1995$NGMSBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 )
@@ -62,11 +64,15 @@ L123_in_EJ_comm_gas_U_1995_CBECS <- data.frame(
 L123_in_EJ_comm_gas_U_1995_CBECS$sph_dh <- L121_CBECS_1995$DHHTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
       EIA_distheat$share[ EIA_distheat$fuel == "gas" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="gas" & EIA_distheat$service == "heating" ]
-L123_in_EJ_comm_gas_U_1995_CBECS$wth_dh <- L121_CBECS_1995$DHHTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
+L123_in_EJ_comm_gas_U_1995_CBECS$col_dh <- L121_CBECS_1995$DHCLBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
+      EIA_distheat$share[ EIA_distheat$fuel == "gas" & EIA_distheat$service == "cooling" ] /
+      EIA_distheat$efficiency[ EIA_distheat$fuel=="gas" & EIA_distheat$service == "cooling" ]
+L123_in_EJ_comm_gas_U_1995_CBECS$wth_dh <- L121_CBECS_1995$DHWTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
       EIA_distheat$share[ EIA_distheat$fuel == "gas" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="gas" & EIA_distheat$service == "hot water" ]
 
 L123_in_EJ_comm_gas_U_1995_CBECS$sph <- L123_in_EJ_comm_gas_U_1995_CBECS$sph_dir + L123_in_EJ_comm_gas_U_1995_CBECS$sph_dh
+L123_in_EJ_comm_gas_U_1995_CBECS$col <- L123_in_EJ_comm_gas_U_1995_CBECS$col_dir + L123_in_EJ_comm_gas_U_1995_CBECS$col_dh
 L123_in_EJ_comm_gas_U_1995_CBECS$wth <- L123_in_EJ_comm_gas_U_1995_CBECS$wth_dir + L123_in_EJ_comm_gas_U_1995_CBECS$wth_dh
 
 #Repeat for 2003 CBECS
@@ -74,7 +80,7 @@ L123_in_EJ_comm_gas_U_2003_CBECS <- data.frame(
       subregion9 = L121_CBECS_2003$subregion9,
       Xyear = "X2003",
       sph_dir = L121_CBECS_2003$NGHTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
-      col = L121_CBECS_2003$NGCLBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
+      col_dir = L121_CBECS_2003$NGCLBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
       wth_dir = L121_CBECS_2003$NGWTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
       ckg = L121_CBECS_2003$NGCKBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8,
       othint = L121_CBECS_2003$NGMSBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 )
@@ -82,11 +88,15 @@ L123_in_EJ_comm_gas_U_2003_CBECS <- data.frame(
 L123_in_EJ_comm_gas_U_2003_CBECS$sph_dh <- L121_CBECS_2003$DHHTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
       EIA_distheat$share[ EIA_distheat$fuel == "gas" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="gas" & EIA_distheat$service == "heating" ]
-L123_in_EJ_comm_gas_U_2003_CBECS$wth_dh <- L121_CBECS_2003$DHHTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
+L123_in_EJ_comm_gas_U_2003_CBECS$col_dh <- L121_CBECS_2003$DHCLBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
+      EIA_distheat$share[ EIA_distheat$fuel == "gas" & EIA_distheat$service == "cooling" ] /
+      EIA_distheat$efficiency[ EIA_distheat$fuel=="gas" & EIA_distheat$service == "cooling" ]
+L123_in_EJ_comm_gas_U_2003_CBECS$wth_dh <- L121_CBECS_2003$DHWTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
       EIA_distheat$share[ EIA_distheat$fuel == "gas" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="gas" & EIA_distheat$service == "hot water" ]
 
 L123_in_EJ_comm_gas_U_2003_CBECS$sph <- L123_in_EJ_comm_gas_U_2003_CBECS$sph_dir + L123_in_EJ_comm_gas_U_2003_CBECS$sph_dh
+L123_in_EJ_comm_gas_U_2003_CBECS$col <- L123_in_EJ_comm_gas_U_2003_CBECS$col_dir + L123_in_EJ_comm_gas_U_2003_CBECS$col_dh
 L123_in_EJ_comm_gas_U_2003_CBECS$wth <- L123_in_EJ_comm_gas_U_2003_CBECS$wth_dir + L123_in_EJ_comm_gas_U_2003_CBECS$wth_dh
 
 #Rbind CBECS databases into one dataframe

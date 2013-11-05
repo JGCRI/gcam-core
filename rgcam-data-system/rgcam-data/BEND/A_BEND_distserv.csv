@@ -1,8 +1,0 @@
-# Mapping from BEND district services to names in EIA-based table,,,,,
-# Source: Tables_BEND_Data.xlsx,,,,,
-BEND_sector,BEND_service,BEND_fuel,BEND_technology,GCAM_sector,service
-Residential,Heating Energy (kBtu/Yr),District Heating,District Heating,district services,heating
-Residential,Cooling Energy (kBtu/Yr),District Cooling,District Cooling,district services,cooling
-Commercial,Heating Energy (kBtu/Yr),District Heating,District Heating,district services,heating
-Commercial,Cooling Energy (kBtu/Yr),District Cooling,District Cooling,district services,cooling
-Commercial,Hot Water Heating Energy (kBtu/Yr),District Hot Water,District Hot Water,district services,hot water

@@ -30,7 +30,7 @@ if( !exists( "GCAM_SOURCE_FN" ) ) {		# i.e. #ifndef
 GCAM_DATA_COMMENT 		<- "#"								# Comment character for files
 XML_TEMPLATE_FILENAME 	<- "batch_rgcam_template.xml"		# XML template file name
 GCAM_HEADERS_RGCAM 		<- "headers_rgcam.txt"				# RGCAM header file name
-PATH_FROM_MI 			<- "./"		                        # Path from Model Interface
+PATH_FROM_MI 			<- "../../Energy/RGCAM/rgcam-data-system"		                        # Path from Model Interface
 DEPENDENCY_FOLDER 		<- "rgcam-dependencies"				# Dependency data folder
 FILEPATHMAP 			<- "rgcam-processing-code/headers/filemapping.csv"	# List of file mappings
 
@@ -346,4 +346,11 @@ avg_FAObaseyears <- function( d, field ) {
 	return( d_new )
 }
 
+# -----------------------------------------------------------------------------
+# repeat_and_add_vector: function for repeating a dataframe in order to add a new vector
+repeat_and_add_vector <- function( data, vector, vector_values ) {
+     data_new <- data[ rep( 1:nrow( data ), times = length( vector_values ) ), ]
+     data_new[[vector]] <- sort( rep( vector_values, length.out = nrow( data_new ) ) )
+     return( data_new )
+	 }
 

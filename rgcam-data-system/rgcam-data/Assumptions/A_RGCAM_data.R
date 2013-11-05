@@ -15,7 +15,7 @@ GCAM_model_period0 <- 1975
 X_GCAM_model_period0 <- "X1975"
 final_cal_year <- 2005
 X_final_cal_year <- "X2005"
-GCAM_out_years <- c( 1990, seq( 2005, 2095, by = 5 ) )
+GCAM_out_years <- seq( 2005, 2095, by = 5 )
 X_GCAM_out_years <- paste( "X", GCAM_out_years, sep = "" )
 
 #Identifier columns
@@ -84,6 +84,7 @@ intgains_digits <- 3
 retirement_fn_digits <- 3
 BEND_efficiency_digits <- 4
 BEND_kbtu_digits <- 0
+BEND_Tbtu_digits <- 4
 capacity_factor_digits <- 2
 
 P_elas_flsp <- -1         #price elasticity of floorspace
@@ -103,8 +104,11 @@ floor_to_surface <- 5.5
 
 coal_phaseout_year <- 2020   #the year at which coal use in buildings is assumed to go to 0
 
+BEND_serviceID <- c( "BEND_sector", "BEND_service" )
 BEND_techID <- c( "BEND_sector", "BEND_service", "BEND_fuel", "BEND_technology" )
 
-
+#Average USA HDD and CDD in 2005, used for state indexing
+base_HDD_USA <- 4524
+base_CDD_USA <- 1215
 
 

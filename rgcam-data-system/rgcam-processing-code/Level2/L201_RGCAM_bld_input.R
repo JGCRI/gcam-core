@@ -98,6 +98,25 @@ L201_BldServSatn <- data.frame( A_bld_service[
 L201_BldThermalServSatn <- data.frame( A_bld_service[ 
       A_bld_service$building_service_input %in% thermal_services, 
       c( bld_node_names, "building_service_input", "internal_gains_scaler", "satiation_base_year_increase", "satiation_adder" ) ] )
+
+#Building thermal service satiation should be read individually by state, so that the internal gains scalers can be adjusted for HDD and CDD
+# These scalers determine the importance of internal gain energy for heating and cooling demands. Internal gain energy does not matter for heating
+# (cooling) during times of year when heating (cooling) is not taking place
+L201_BldThermalServSatn <- repeat_and_add_vector( L201_BldThermalServSatn, "region", states )
+L201_BldThermalServSatn$rel_HDD <- HDD_His_Fut$X2005[ match( L201_BldThermalServSatn$region, HDD_His_Fut$state ) ] / base_HDD_USA
+L201_BldThermalServSatn$rel_CDD <- CDD_His_Fut$X2005[ match( L201_BldThermalServSatn$region, CDD_His_Fut$state ) ] / base_CDD_USA
+L201_BldThermalServSatn$internal_gains_scaler[ grepl( "heating", L201_BldThermalServSatn$building_service_input ) ] <-
+      round( L201_BldThermalServSatn$internal_gains_scaler[ grepl( "heating", L201_BldThermalServSatn$building_service_input ) ] *
+             L201_BldThermalServSatn$rel_HDD[ grepl( "heating", L201_BldThermalServSatn$building_service_input ) ],
+             HDDCDD_digits )
+L201_BldThermalServSatn$internal_gains_scaler[ grepl( "cooling", L201_BldThermalServSatn$building_service_input ) ] <-
+      round( L201_BldThermalServSatn$internal_gains_scaler[ grepl( "cooling", L201_BldThermalServSatn$building_service_input ) ] *
+             L201_BldThermalServSatn$rel_CDD[ grepl( "cooling", L201_BldThermalServSatn$building_service_input ) ],
+             HDDCDD_digits )
+
+#Reorder columns and specify the service input as a thermal service input
+L201_BldThermalServSatn <- L201_BldThermalServSatn[ c( "region", bld_node_names,
+      "building_service_input", "internal_gains_scaler", "satiation_base_year_increase", "satiation_adder" ) ]
 names( L201_BldThermalServSatn )[ names( L201_BldThermalServSatn ) == "building_service_input" ] <- "thermal_building_service_input"
 
 printlog( "L201_DegreeDays: HEATING DEGREE DAYS, COOLING DEGREE DAYS" )
@@ -118,14 +137,14 @@ L201_cooling_services_repstate <- L201_cooling_services_repstate[ order( L201_co
 #Changing degree days in the future come from a scenario which should thus
 #be matched to the scenario being run, i.e. A2 or B2.
 L201_HDD_Fixed <- HDD_His_Fut
-L201_HDD_Fixed[, c( X_GCAM_model_period0, X_GCAM_years ) ] <- HDD_His_Fut[, X_GCAM_base_years[2] ]
+#L201_HDD_Fixed[, c( X_GCAM_model_period0, X_GCAM_years ) ] <- HDD_His_Fut[, X_GCAM_base_years[2] ]
 L201_HDD <- data.frame(
       region = rep( L201_HDD_Fixed$state, length.out = nrow( L201_heating_services_repstate ) ),
       L201_heating_services_repstate,
       L201_HDD_Fixed[ c( X_GCAM_model_period0, X_GCAM_years ) ] )
       
 L201_CDD_Fixed <- CDD_His_Fut
-L201_CDD_Fixed[, c( X_GCAM_model_period0, X_GCAM_years ) ] <- CDD_His_Fut[, X_GCAM_base_years[2] ]
+#L201_CDD_Fixed[, c( X_GCAM_model_period0, X_GCAM_years ) ] <- CDD_His_Fut[, X_GCAM_base_years[2] ]
 L201_CDD <- data.frame(
       region = rep( L201_CDD_Fixed$state, length.out = nrow( L201_cooling_services_repstate ) ),
       L201_cooling_services_repstate,

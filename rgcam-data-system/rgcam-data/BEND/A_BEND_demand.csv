@@ -1,5 +1,0 @@
-# Names for the demand portion of the buildings sector,,,
-# Source: Tables_BEND_Data.xlsx,,,
-gcam_consumer,nodeInput,building_node_input,internal_gains_market_name
-resid,resid,resid_building,resid-internal-gains-trial-market
-comm,comm,comm_building,comm-internal-gains-trial-market

@@ -39,7 +39,7 @@ printlog( "NOTE: Assuming constant national fuel shares and efficiencies for dis
 L124_in_EJ_comm_oil_U_1992_CBECS$sph_dh <- L121_CBECS_1992$DHHTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
       EIA_distheat$share[ EIA_distheat$fuel == "refined liquids" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="refined liquids" & EIA_distheat$service == "heating" ]
-L124_in_EJ_comm_oil_U_1992_CBECS$wth_dh <- L121_CBECS_1992$DHHTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
+L124_in_EJ_comm_oil_U_1992_CBECS$wth_dh <- L121_CBECS_1992$DHWTBTU5 * conv_kbtu_EJ * L121_CBECS_1992$ADJWT5 *
       EIA_distheat$share[ EIA_distheat$fuel == "refined liquids" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="refined liquids" & EIA_distheat$service == "hot water" ]
 
@@ -58,7 +58,7 @@ L124_in_EJ_comm_oil_U_1995_CBECS <- data.frame(
 L124_in_EJ_comm_oil_U_1995_CBECS$sph_dh <- L121_CBECS_1995$DHHTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
       EIA_distheat$share[ EIA_distheat$fuel == "refined liquids" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="refined liquids" & EIA_distheat$service == "heating" ]
-L124_in_EJ_comm_oil_U_1995_CBECS$wth_dh <- L121_CBECS_1995$DHHTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
+L124_in_EJ_comm_oil_U_1995_CBECS$wth_dh <- L121_CBECS_1995$DHWTBTU6 * conv_kbtu_EJ * L121_CBECS_1995$ADJWT6 *
       EIA_distheat$share[ EIA_distheat$fuel == "refined liquids" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="refined liquids" & EIA_distheat$service == "hot water" ]
 
@@ -76,7 +76,7 @@ L124_in_EJ_comm_oil_U_2003_CBECS <- data.frame(
 L124_in_EJ_comm_oil_U_2003_CBECS$sph_dh <- L121_CBECS_2003$DHHTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
       EIA_distheat$share[ EIA_distheat$fuel == "refined liquids" & EIA_distheat$service == "heating" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="refined liquids" & EIA_distheat$service == "heating" ]
-L124_in_EJ_comm_oil_U_2003_CBECS$wth_dh <- L121_CBECS_2003$DHHTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
+L124_in_EJ_comm_oil_U_2003_CBECS$wth_dh <- L121_CBECS_2003$DHWTBTU8 * conv_kbtu_EJ * L121_CBECS_2003$ADJWT8 *
       EIA_distheat$share[ EIA_distheat$fuel == "refined liquids" & EIA_distheat$service == "hot water" ] /
       EIA_distheat$efficiency[ EIA_distheat$fuel=="refined liquids" & EIA_distheat$service == "hot water" ]
 
