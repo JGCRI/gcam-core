@@ -115,37 +115,33 @@ names( L223.StubTech_elec ) <- names_StubTech
 
 #Efficiencies of global technologies
 printlog( "L223.GlobalTechEff_elec: Energy inputs and coefficients of global electricity generation technologies" )
-L223.globaltech_eff.melt <- interpolate_and_melt( A23.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )
+L223.globaltech_eff.melt <- interpolate_and_melt( A23.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency", digits = digits_efficiency )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L223.globaltech_eff.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_eff.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechEff_elec <- L223.globaltech_eff.melt[ names_GlobalTechEff ]
-L223.GlobalTechEff_elec$efficiency <- round( L223.GlobalTechEff_elec$efficiency, digits_efficiency )
 
 L223.GlobalIntTechEff_elec <- subset_inttechs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechEff_elec <- subset_techs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 
 #Costs of global technologies
 printlog( "L223.GlobalTechCapital_elec: Capital costs of global electricity generation technologies" )
-L223.globaltech_capital.melt <- interpolate_and_melt( A23.globaltech_capital, c( model_base_years, model_future_years ), value.name="capital.overnight" )
+L223.globaltech_capital.melt <- interpolate_and_melt( A23.globaltech_capital, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital )
 L223.globaltech_capital.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_capital.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechCapital_elec <- L223.globaltech_capital.melt[ names_GlobalTechCapital ]
-L223.GlobalTechCapital_elec$capital.overnight <- round( L223.GlobalTechCapital_elec$capital.overnight, digits_capital )
 L223.GlobalIntTechCapital_elec <- subset_inttechs( L223.GlobalTechCapital_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechCapital_elec <- subset_techs( L223.GlobalTechCapital_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 
 printlog( "L223.GlobalTechOMfixed_elec: Fixed O&M costs of global electricity generation technologies" )
-L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed" )
+L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed", digits = digits_OM )
 L223.globaltech_OMfixed.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_OMfixed.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechOMfixed_elec <- L223.globaltech_OMfixed.melt[ names_GlobalTechOMfixed ]
-L223.GlobalTechOMfixed_elec$OM.fixed <- round( L223.GlobalTechOMfixed_elec$OM.fixed, digits_OM )
 L223.GlobalIntTechOMfixed_elec <- subset_inttechs( L223.GlobalTechOMfixed_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechOMfixed_elec <- subset_techs( L223.GlobalTechOMfixed_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 
 printlog( "L223.GlobalTechOMvar_elec: Variable O&M costs of global electricity generation technologies" )
-L223.globaltech_OMvar.melt <- interpolate_and_melt( A23.globaltech_OMvar, c( model_base_years, model_future_years ), value.name="OM.var" )
+L223.globaltech_OMvar.melt <- interpolate_and_melt( A23.globaltech_OMvar, c( model_base_years, model_future_years ), value.name="OM.var", digits = digits_OM )
 L223.globaltech_OMvar.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_OMvar.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechOMvar_elec <- L223.globaltech_OMvar.melt[ names_GlobalTechOMvar ]
-L223.GlobalTechOMvar_elec$OM.var <- round( L223.GlobalTechOMvar_elec$OM.var, digits_OM )
 L223.GlobalIntTechOMvar_elec <- subset_inttechs( L223.GlobalTechOMvar_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechOMvar_elec <- subset_techs( L223.GlobalTechOMvar_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 
@@ -173,11 +169,9 @@ L223.AvgFossilEffKeyword_elec <- L223.AllKeyword_elec[ !is.na( L223.AllKeyword_e
 #CO2 capture rates of global technologies
 printlog( "L223.GlobalTechCapture_elec: CO2 capture fractions from global electricity generation technologies" )
 ## No need to consider historical periods or intermittent technologies here
-L223.globaltech_co2capture.melt <- interpolate_and_melt( A23.globaltech_co2capture, model_future_years, value.name="remove.fraction" )
+L223.globaltech_co2capture.melt <- interpolate_and_melt( A23.globaltech_co2capture, model_future_years, value.name="remove.fraction", digits = digits_remove.fraction )
 L223.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]
-L223.GlobalTechCapture_elec <- data.frame(
-      L223.globaltech_co2capture.melt[ names_GlobalTechYr ],
-      remove.fraction = round( L223.globaltech_co2capture.melt$remove.fraction, digits = digits_remove.fraction ) )
+L223.GlobalTechCapture_elec <- L223.globaltech_co2capture.melt[ c( names_GlobalTechYr, "remove.fraction" ) ]
 L223.GlobalTechCapture_elec$storage.market <- CO2.storage.market
 
 #Backup parameters for intermittent technologies

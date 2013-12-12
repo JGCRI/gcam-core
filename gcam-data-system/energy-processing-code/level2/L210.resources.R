@@ -25,6 +25,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 A10.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.rsrc_info")
 A10.subrsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.subrsrc_info")
 A10.TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A10.TechChange")
@@ -48,6 +49,10 @@ L210.rsrc_info <- gcam_interp( A10.rsrc_info, model_base_years )
 #Repeat and add region vector to resource assumptions table (use ID to ensure correct region ordering)
 L210.rsrc_info <- repeat_and_add_vector( A10.rsrc_info, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
 L210.rsrc_info <- add_region_name( L210.rsrc_info )
+
+#Remove traditional biomass from regions where it does not apply
+rm_tradbio_regions <- paste( A_regions[[R]][ A_regions$tradbio_region == 0 ], L117.RsrcCurves_EJ_R_tradbio$resource[1] )
+L210.rsrc_info <- subset( L210.rsrc_info, !paste( GCAM_region_ID, resource ) %in% rm_tradbio_regions )
 
 #Reset regional markets to the names of the specific regions
 L210.rsrc_info$market[ L210.rsrc_info$market == "regional" ] <- L210.rsrc_info$region[ L210.rsrc_info$market == "regional" ]
@@ -220,7 +225,7 @@ L210.RsrcCurves_EJ_R_tradbio <- add_region_name( L117.RsrcCurves_EJ_R_tradbio )
 L210.GrdRenewRsrcCurves_tradbio <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_tradbio, "renewresource", "sub-renewable-resource" )
 
 printlog( "L210.GrdRenewRsrcMax_tradbio: default max sub resource of tradbio resources")
-L210.GrdRenewRsrcMax_tradbio <- subset( L210.GrdRenewRsrcCurves_tradbio, grade = unique( grade )[1] )
+L210.GrdRenewRsrcMax_tradbio <- subset( L210.GrdRenewRsrcCurves_tradbio, grade == unique( grade )[1] )
 L210.GrdRenewRsrcMax_tradbio$maxSubResource <- 1
 L210.GrdRenewRsrcMax_tradbio <- L210.GrdRenewRsrcMax_tradbio[ names_maxSubResource ]
 

@@ -440,10 +440,11 @@ vecpaste <- function (x) {
 
 # -----------------------------------------------------------------------------
 # interpolate_and_melt: melt a table with years as columns and interpolate to all specified years
-interpolate_and_melt <- function( data, years, value.name="value" ){
+interpolate_and_melt <- function( data, years, value.name="value", digits = NA ){
 	data_new <- gcam_interp( data, years )
 	if( any(is.na( data_new[ grep( "X[0-9]{4}", names( data_new ) ) ] ) ) ) stop( "Provided years in input data do not span range of desired output years" )
 	data_new.melt <- melt( data_new, id.vars = grep( "X[0-9]{4}", names( data_new ), invert = T ) )
+	if( !is.na( digits ) ) data_new.melt$value <- round( data_new.melt$value, digits )
 	names( data_new.melt )[ names( data_new.melt ) == "value" ] <- value.name
 	data_new.melt$year <- as.numeric( substr( data_new.melt$variable, 2, 5 ) )
 	data_new.melt <- data_new.melt[ order( data_new.melt$year ), ]

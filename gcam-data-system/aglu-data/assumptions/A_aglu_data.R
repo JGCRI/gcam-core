@@ -68,6 +68,9 @@ R_C_Sys_Fd_Y <- c( R, C, Sys, Fd, Y )
 C_Sys <- c( C, Sys )
 C_Sys_Fd <- c( C, Sys, Fd )
 R_Fd <- c( R, Fd )
+rcp_gcm_cm <- c( "rcp", "gcm", "cropmodel" )
+rcp_gcm_cm_aezid <- c( rcp_gcm_cm, "ID" )
+rcp_gcm_cm_aezid_crop <- c( rcp_gcm_cm, "ID", "crop" )
 
 #-----------------------------------------------------------------
 #NUMBERS OF DIGITS FOR MODEL INPUT DATA

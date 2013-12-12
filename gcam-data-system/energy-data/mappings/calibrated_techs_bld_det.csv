@@ -1,1 +1,34 @@
-# mapping between intermediate sectors and fuels to the techs in this module,,,,,sector,fuel,service,supplysector,subsector,technologybld_resid,biomass,resid heating,resid heating,biomass,biomassbld_resid,coal,resid heating,resid heating,coal,coalbld_resid,electricity,resid heating,resid heating,electricity,electricitybld_resid,gas,resid heating,resid heating,gas,gasbld_resid,refined liquids,resid heating,resid heating,refined liquids,refined liquidsbld_resid,traditional biomass,resid heating,resid heating,traditional biomass,traditional biomassbld_resid,heat,resid heating,resid heating,district heat,district heatbld_resid,electricity,resid cooling,resid cooling,electricity,electricitybld_resid,gas,resid cooling,resid cooling,gas,gasbld_resid,biomass,resid others,resid others,biomass,biomassbld_resid,coal,resid others,resid others,coal,coalbld_resid,electricity,resid others,resid others,electricity,electricitybld_resid,gas,resid others,resid others,gas,gasbld_resid,refined liquids,resid others,resid others,refined liquids,refined liquidsbld_resid,traditional biomass,resid others,resid others,traditional biomass,traditional biomassbld_resid,heat,resid others,resid others,district heat,district heatbld_comm,biomass,comm heating,comm heating,biomass,biomassbld_comm,coal,comm heating,comm heating,coal,coalbld_comm,electricity,comm heating,comm heating,electricity,electricitybld_comm,gas,comm heating,comm heating,gas,gasbld_comm,refined liquids,comm heating,comm heating,refined liquids,refined liquidsbld_comm,traditional biomass,comm heating,comm heating,traditional biomass,traditional biomassbld_comm,heat,comm heating,comm heating,district heat,district heatbld_comm,electricity,comm cooling,comm cooling,electricity,electricitybld_comm,gas,comm cooling,comm cooling,gas,gasbld_comm,biomass,comm others,comm others,biomass,biomassbld_comm,coal,comm others,comm others,coal,coalbld_comm,electricity,comm others,comm others,electricity,electricitybld_comm,gas,comm others,comm others,gas,gasbld_comm,refined liquids,comm others,comm others,refined liquids,refined liquidsbld_comm,traditional biomass,comm others,comm others,traditional biomass,traditional biomassbld_comm,heat,comm others,comm others,district heat,district heat
+# mapping between intermediate sectors and fuels to the techs in this module,,,,,,,,,
+sector,fuel,service,supplysector,subsector,technology,minicam.energy.input,gcam.consumer,nodeInput,building.node.input
+bld_resid,biomass,resid heating,resid heating,biomass,biomass,delivered biomass,resid,resid,resid_building
+bld_resid,coal,resid heating,resid heating,coal,coal,delivered coal,resid,resid,resid_building
+bld_resid,electricity,resid heating,resid heating,electricity,electricity,elect_td_bld,resid,resid,resid_building
+bld_resid,gas,resid heating,resid heating,gas,gas,delivered gas,resid,resid,resid_building
+bld_resid,refined liquids,resid heating,resid heating,refined liquids,refined liquids,refined liquids enduse,resid,resid,resid_building
+bld_resid,traditional biomass,resid heating,resid heating,traditional biomass,traditional biomass,traditional biomass,resid,resid,resid_building
+bld_resid,heat,resid heating,resid heating,district heat,district heat,district heat,resid,resid,resid_building
+bld_resid,electricity,resid cooling,resid cooling,electricity,electricity,elect_td_bld,resid,resid,resid_building
+bld_resid,gas,resid cooling,resid cooling,gas,gas,delivered gas,resid,resid,resid_building
+bld_resid,biomass,resid others,resid others,biomass,biomass,delivered biomass,resid,resid,resid_building
+bld_resid,coal,resid others,resid others,coal,coal,delivered coal,resid,resid,resid_building
+bld_resid,electricity,resid others,resid others,electricity,electricity,elect_td_bld,resid,resid,resid_building
+bld_resid,gas,resid others,resid others,gas,gas,delivered gas,resid,resid,resid_building
+bld_resid,refined liquids,resid others,resid others,refined liquids,refined liquids,refined liquids enduse,resid,resid,resid_building
+bld_resid,traditional biomass,resid others,resid others,traditional biomass,traditional biomass,traditional biomass,resid,resid,resid_building
+bld_resid,heat,resid others,resid others,district heat,district heat,district heat,resid,resid,resid_building
+bld_comm,biomass,comm heating,comm heating,biomass,biomass,delivered biomass,comm,comm,comm_building
+bld_comm,coal,comm heating,comm heating,coal,coal,delivered coal,comm,comm,comm_building
+bld_comm,electricity,comm heating,comm heating,electricity,electricity,elect_td_bld,comm,comm,comm_building
+bld_comm,gas,comm heating,comm heating,gas,gas,delivered gas,comm,comm,comm_building
+bld_comm,refined liquids,comm heating,comm heating,refined liquids,refined liquids,refined liquids enduse,comm,comm,comm_building
+bld_comm,traditional biomass,comm heating,comm heating,traditional biomass,traditional biomass,traditional biomass,comm,comm,comm_building
+bld_comm,heat,comm heating,comm heating,district heat,district heat,district heat,comm,comm,comm_building
+bld_comm,electricity,comm cooling,comm cooling,electricity,electricity,elect_td_bld,comm,comm,comm_building
+bld_comm,gas,comm cooling,comm cooling,gas,gas,delivered gas,comm,comm,comm_building
+bld_comm,biomass,comm others,comm others,biomass,biomass,delivered biomass,comm,comm,comm_building
+bld_comm,coal,comm others,comm others,coal,coal,delivered coal,comm,comm,comm_building
+bld_comm,electricity,comm others,comm others,electricity,electricity,elect_td_bld,comm,comm,comm_building
+bld_comm,gas,comm others,comm others,gas,gas,delivered gas,comm,comm,comm_building
+bld_comm,refined liquids,comm others,comm others,refined liquids,refined liquids,refined liquids enduse,comm,comm,comm_building
+bld_comm,traditional biomass,comm others,comm others,traditional biomass,traditional biomass,traditional biomass,comm,comm,comm_building
+bld_comm,heat,comm others,comm others,district heat,district heat,district heat,comm,comm,comm_building

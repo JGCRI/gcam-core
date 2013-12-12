@@ -27,18 +27,35 @@ sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_bio_cost_yield <- readdata( "AGLU_ASSUMPTIONS", "A_bio_cost_yield" )
 A_biocrops_R_AEZ <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ" )
+L113.ag_bioYield_GJm2_R_AEZ_ref <- readdata( "AGLU_LEVEL1_DATA", "L113.ag_bioYield_GJm2_R_AEZ_ref" )
 L114.ag_YieldRatio_R_C_Y_AEZ_ref <- readdata( "AGLU_LEVEL1_DATA", "L114.ag_YieldRatio_R_C_Y_AEZ_ref" )
 L114.bio_YieldRatio_R_AEZ_Y_ref <- readdata( "AGLU_LEVEL1_DATA", "L114.bio_YieldRatio_R_AEZ_Y_ref" )
+L115.ag_CCI_rcp_gcm_cm_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L115.ag_CCI_rcp_gcm_cm_R_C_AEZ" )
+L115.bio_CCI_rcp_gcm_cm_R_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L115.bio_CCI_rcp_gcm_cm_R_AEZ" )
 L122.ag_EcYield_kgm2_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_EcYield_kgm2_R_C_Y_AEZ" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
 L133.ag_Cost_75USDkg_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L133.ag_Cost_75USDkg_C_AEZ" )
 
 # -----------------------------------------------------------------------------
 
+printlog( "Merging biomass and ag crops into the same dataframes, for yields and yield ratios" )
+#Yields
+L205.ag_bioYield_GJm2_R_AEZ_ref <- melt( L113.ag_bioYield_GJm2_R_AEZ_ref, id.vars = R, variable_name = AEZ )
+L205.ag_bioYield_GJm2_R_AEZ_ref[[C]] <- "biomass"
+X_yield_hist_years <- X_historical_years[ X_historical_years %in% c( X_model_base_years, X_model_future_years ) ]
+L205.ag_bioYield_GJm2_R_AEZ_ref[ X_yield_hist_years ] <- L205.ag_bioYield_GJm2_R_AEZ_ref[ "value" ]
+L205.ag_EcYield_kgm2_R_C_Y_AEZ <- L122.ag_EcYield_kgm2_R_C_Y_AEZ[ c( R_C_AEZ, X_yield_hist_years ) ]
+L205.ag_EcYield_kgm2_R_C_Y_AEZ <- rbind( L205.ag_EcYield_kgm2_R_C_Y_AEZ, L205.ag_bioYield_GJm2_R_AEZ_ref[ names( L205.ag_EcYield_kgm2_R_C_Y_AEZ ) ] )
+
+#Yield ratios
+L114.bio_YieldRatio_R_AEZ_Y_ref[[C]] <- "biomass"
+L205.ag_YieldRatio_R_C_Y_AEZ_ref <- rbind( L114.ag_YieldRatio_R_C_Y_AEZ_ref, L114.bio_YieldRatio_R_AEZ_Y_ref )
+
+L115.bio_CCI_rcp_gcm_cm_R_AEZ[[C]] <- "biomass"
+L205.ag_CCI_rcp_gcm_cm_R_C_AEZ <- rbind( L115.ag_CCI_rcp_gcm_cm_R_C_AEZ, L115.bio_CCI_rcp_gcm_cm_R_AEZ )
+
 printlog( "Calculating crop yields in all time periods for the reference scenario" )
-L205.ag_EcYield_kgm2_R_C_Y_AEZ <- L122.ag_EcYield_kgm2_R_C_Y_AEZ[
-      names( L122.ag_EcYield_kgm2_R_C_Y_AEZ ) %in% c( R_C_AEZ, X_model_base_years, X_model_future_years ) ]
-L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt <- melt( L114.ag_YieldRatio_R_C_Y_AEZ_ref, id.vars = R_C_Y, variable_name = AEZ )
+L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt <- melt( L205.ag_YieldRatio_R_C_Y_AEZ_ref, id.vars = R_C_Y, variable_name = AEZ )
 #Only use the yield ratios in years beyond the historical time series, for which actual yield data is available
 L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt <- subset( L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt, year > max( historical_years ) )
 L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt$Xyear <- paste0( "X", L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt$year )
@@ -57,12 +74,30 @@ L205.ag_EcYield_kgm2_R_C_Y_AEZ_NAs <- L205.ag_EcYield_kgm2_R_C_Y_AEZ[ !complete.
 L205.ag_EcYield_kgm2_R_C_Y_AEZ_NAs[ X_yieldratio_years ] <- L205.ag_EcYield_kgm2_R_C_Y_AEZ_NAs[[ X_final_historical_year ]]
 L205.ag_EcYield_kgm2_R_C_Y_AEZ[ !complete.cases( L205.ag_EcYield_kgm2_R_C_Y_AEZ ), ] <- L205.ag_EcYield_kgm2_R_C_Y_AEZ_NAs
 
+#Scenarios with climate impacts
+#First, subset only the region/commodity/aez combinations that have climate impacts
+L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ <- L205.ag_EcYield_kgm2_R_C_Y_AEZ[ vecpaste( L205.ag_EcYield_kgm2_R_C_Y_AEZ[ R_C_AEZ ] ) %in%
+      vecpaste( L205.ag_CCI_rcp_gcm_cm_R_C_AEZ[ R_C_AEZ ] ), ]
+L205.all_rcp_gcm_cm <- unique( L205.ag_CCI_rcp_gcm_cm_R_C_AEZ[ rcp_gcm_cm ] )
+L205.all_rcp_gcm_cm$scenID <- 1:nrow( L205.all_rcp_gcm_cm )
+L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ <- repeat_and_add_vector( L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ, "scenID", L205.all_rcp_gcm_cm$scenID )
+L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ rcp_gcm_cm ] <- L205.all_rcp_gcm_cm[
+      match( L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ$scenID, L205.all_rcp_gcm_cm$scenID ), rcp_gcm_cm]
+
+#Then, multiply the base yield ratios by the climate impact yield ratios
+L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ X_yieldratio_years ] <- L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ X_yieldratio_years ] *
+      L205.ag_CCI_rcp_gcm_cm_R_C_AEZ[ match(
+          vecpaste( L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ R_C_AEZ ] ),
+          vecpaste( L205.ag_CCI_rcp_gcm_cm_R_C_AEZ[ R_C_AEZ ] ) ),
+      X_yieldratio_years ]
+
 printlog( "Translating yields to rates of agricultural productivity change" )
 #Build a dataframe of the timestep lengths, of the same dimensions as the yield dataframe (except without the initial period)
 timesteps <- model_years[ 2:length( model_years ) ] - model_years[ 1:( length( model_years ) -1 ) ]
 names( timesteps ) <- X_model_years[ 2:length( X_model_years ) ]
 df.timesteps <- t( as.data.frame( timesteps ) )
 df.timesteps <- df.timesteps[ rep( 1, length.out = nrow( L205.ag_EcYield_kgm2_R_C_Y_AEZ ) ), ]
+df.timesteps_scen <- df.timesteps[ rep( 1, length.out = nrow( L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ ) ), ]
 
 #Calculate the yield ratio from the prior period in the yield dataframe
 L205.ag_YieldRatio_R_C_Y_AEZ_ref <- L205.ag_EcYield_kgm2_R_C_Y_AEZ[ c( R_C_AEZ, X_model_years[ 2:length( X_model_years ) ] ) ]
@@ -71,62 +106,65 @@ L205.ag_YieldRatio_R_C_Y_AEZ_ref[ X_model_years[ 2:length( X_model_years ) ] ] <
       L205.ag_EcYield_kgm2_R_C_Y_AEZ[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
 L205.ag_YieldRatio_R_C_Y_AEZ_ref[ is.na( L205.ag_YieldRatio_R_C_Y_AEZ_ref ) ] <- 1
 
+L205.ag_YieldRatio_scen_R_C_Y_AEZ <- L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ c( "scenID", rcp_gcm_cm, R_C_AEZ, X_model_years[ 2:length( X_model_years ) ] ) ]
+L205.ag_YieldRatio_scen_R_C_Y_AEZ[ X_model_years[ 2:length( X_model_years ) ] ] <-
+      L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ X_model_years[ 2:length( X_model_years ) ] ] /
+      L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L205.ag_YieldRatio_scen_R_C_Y_AEZ[ is.na( L205.ag_YieldRatio_scen_R_C_Y_AEZ ) ] <- 1
+
 #Solve for the yield rate using the ratio and the timestep
 L205.ag_YieldRate_R_C_Y_AEZ_ref <- L205.ag_YieldRatio_R_C_Y_AEZ_ref
 L205.ag_YieldRate_R_C_Y_AEZ_ref[ X_model_years[ 2:length( X_model_years ) ] ] <-
       ( L205.ag_YieldRatio_R_C_Y_AEZ_ref[ X_model_years[ 2:length( X_model_years ) ] ] ) ^
       (1 / df.timesteps ) - 1
 
-printlog( "Table L205.AgProdChange_ag_ref: Reference scenario ag prod change (not incl biomass)" )
-L205.ag_YieldRate_R_C_Y_AEZ_ref.melt <- melt( L205.ag_YieldRate_R_C_Y_AEZ_ref, id.vars = R_C_AEZ, variable_name = Y )
-L205.ag_YieldRate_R_C_Y_AEZ_ref.melt[[Y]] <- sub( "X", "", L205.ag_YieldRate_R_C_Y_AEZ_ref.melt[[Y]] )
-L205.ag_YieldRate_R_C_Y_AEZ_ref.melt <- add_region_name( L205.ag_YieldRate_R_C_Y_AEZ_ref.melt )
-L205.ag_YieldRate_R_C_Y_AEZ_ref.melt <- add_agtech_names( L205.ag_YieldRate_R_C_Y_AEZ_ref.melt )
-names( L205.ag_YieldRate_R_C_Y_AEZ_ref.melt )[ names( L205.ag_YieldRate_R_C_Y_AEZ_ref.melt ) == "value" ] <- "AgProdChange"
-L205.AgProdChange_ag_ref <- L205.ag_YieldRate_R_C_Y_AEZ_ref.melt[
-      L205.ag_YieldRate_R_C_Y_AEZ_ref.melt$year %in% model_future_years, names_AgProdChange ]
+L205.ag_YieldRate_scen_R_C_Y_AEZ <- L205.ag_YieldRatio_scen_R_C_Y_AEZ
+L205.ag_YieldRate_scen_R_C_Y_AEZ[ X_model_years[ 2:length( X_model_years ) ] ] <-
+      ( L205.ag_YieldRatio_scen_R_C_Y_AEZ[ X_model_years[ 2:length( X_model_years ) ] ] ) ^
+      (1 / df.timesteps ) - 1
+
+printlog( "Table L205.AgProdChange_ref: Reference scenario ag prod change (not incl biomass)" )
+L205.AgProdChange_ref <- melt( L205.ag_YieldRate_R_C_Y_AEZ_ref, id.vars = R_C_AEZ, variable_name = "Xyear" )
+L205.AgProdChange_ref$year <- sub( "X", "", L205.AgProdChange_ref$Xyear )
+L205.AgProdChange_ref$AgProdChange <- round( L205.AgProdChange_ref$value, digits_AgProdChange )
+L205.AgProdChange_ref <- subset( L205.AgProdChange_ref, year %in% model_future_years )
+L205.AgProdChange_ref <- add_region_name( L205.AgProdChange_ref )
+L205.AgProdChange_ref <- add_agtech_names( L205.AgProdChange_ref )[ names_AgProdChange ]
 #If the final calibration year is less than the final historical year, this method will return Inf for crops that are 0 in one year
 # and non-zero in subsequent years. e.g. Korea and FSU FodderGrass. Setting the agprodchange to 0, and keeping these techs out.
-L205.AgProdChange_ag_ref[ L205.AgProdChange_ag_ref == Inf ] <- 0
-
-printlog( "Translating bioenergy crop yield ratios to annualized improvement rates in specified time periods" )
-#Bio_years <- model_future_years[ model_future_years >= Bio_start_year ]
-#X_Bio_years <- paste0( "X", Bio_years )
-L205.bio_YieldRatio_R_Y_AEZ_ref.melt <- melt( L114.bio_YieldRatio_R_AEZ_Y_ref, id.vars = R_Y, variable_name = AEZ )
-#Only use the yield ratios in years after the introduction of biomass
-L205.bio_YieldRatio_R_Y_AEZ_ref.melt <- subset( L205.bio_YieldRatio_R_Y_AEZ_ref.melt, year %in% future_years )
-L205.bio_YieldRatio_R_Y_AEZ_ref.melt$Xyear <- paste0( "X", L205.bio_YieldRatio_R_Y_AEZ_ref.melt$year )
-L205.bio_YieldRatio_R_Y_AEZ_ref <- cast( L205.bio_YieldRatio_R_Y_AEZ_ref.melt, GCAM_region_ID + AEZ ~ Xyear )
-
-#NOTE: The bio yield ratios are from a base year. Need to switch this to ratio from the prior time period
-L205.bio_YieldRatio_R_Y_AEZ_ref[ X_future_years[ 2:length( X_future_years ) ] ] <-
-      L205.bio_YieldRatio_R_Y_AEZ_ref[ X_future_years[ 2:length( X_future_years ) ] ] /
-      L205.bio_YieldRatio_R_Y_AEZ_ref[ X_future_years[ 1:( length( X_future_years ) -1 ) ] ]
-df.timesteps_bio <- as.data.frame( df.timesteps[ rep( 1, length.out = nrow( L205.bio_YieldRatio_R_Y_AEZ_ref ) ),
-      colnames( df.timesteps ) %in% names( L205.bio_YieldRatio_R_Y_AEZ_ref ) ] )
-row.names( df.timesteps_bio ) <- 1:nrow( df.timesteps_bio )
-
-#Solve for the yield rate using the ratio and the timestep
-L205.bio_YieldRate_R_Y_AEZ_ref <- L205.bio_YieldRatio_R_Y_AEZ_ref
-L205.bio_YieldRate_R_Y_AEZ_ref[[ X_future_years[1] ]] <- L205.bio_YieldRate_R_Y_AEZ_ref[[ X_future_years[1] ]] ^ 
-      (1 / df.timesteps_bio[[ X_future_years[ 1 ]] ] ) - 1
-L205.bio_YieldRate_R_Y_AEZ_ref[ X_future_years[ 2:length( X_future_years ) ] ] <-
-      ( L205.bio_YieldRatio_R_Y_AEZ_ref[ X_future_years[ 2:length( X_future_years ) ] ] ) ^
-      (1 / df.timesteps_bio[ X_future_years[ 2:length( X_future_years ) ] ] ) - 1
-
-printlog( "Table L205.AgProdChange_bio_ref: Reference scenario ag prod change (biomass only)" )
-L205.bio_YieldRate_R_Y_AEZ_ref <- data.frame( L205.bio_YieldRate_R_Y_AEZ_ref ) #Need to remove the info that cast left it with
-L205.bio_YieldRate_R_Y_AEZ_ref[[C]] <- "biomass"
-L205.bio_YieldRate_R_Y_AEZ_ref.melt <- melt( L205.bio_YieldRate_R_Y_AEZ_ref, id.vars = R_C_AEZ, variable_name = Y )
-L205.bio_YieldRate_R_Y_AEZ_ref.melt[[Y]] <- sub( "X", "", L205.bio_YieldRate_R_Y_AEZ_ref.melt[[Y]] )
-L205.bio_YieldRate_R_Y_AEZ_ref.melt <- add_region_name( L205.bio_YieldRate_R_Y_AEZ_ref.melt )
-L205.bio_YieldRate_R_Y_AEZ_ref.melt <- add_agtech_names( L205.bio_YieldRate_R_Y_AEZ_ref.melt )
-names( L205.bio_YieldRate_R_Y_AEZ_ref.melt )[ names( L205.bio_YieldRate_R_Y_AEZ_ref.melt ) == "value" ] <- "AgProdChange"
-L205.AgProdChange_bio_ref <- subset( L205.bio_YieldRate_R_Y_AEZ_ref.melt, year %in% model_future_years )[ names_AgProdChange ]
+L205.AgProdChange_ref[ L205.AgProdChange_ref == Inf ] <- 0
 
 printlog( "Renaming specified bioenergy crops in the productivity change tables" )
-L205.AgProdChange_bio_ref <- rename_biocrops( L205.AgProdChange_bio_ref, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+L205.AgProdChange_ref <- rename_biocrops( L205.AgProdChange_ref, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
       lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
+
+# Climate impacts scenarios: Follow the same steps, but with all scenarios in a single table
+L205.ag_YieldRate_scen_R_C_Y_AEZ.melt <- melt( L205.ag_YieldRate_scen_R_C_Y_AEZ, id.vars = c( "scenID", rcp_gcm_cm, R_C_AEZ ), variable_name = "Xyear" )
+L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$year <- sub( "X", "", L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$Xyear )
+L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$AgProdChange <- round( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$value, digits_AgProdChange )
+L205.ag_YieldRate_scen_R_C_Y_AEZ.melt <- subset( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt, year %in% model_future_years )
+L205.ag_YieldRate_scen_R_C_Y_AEZ.melt <- add_region_name( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt )
+L205.ag_YieldRate_scen_R_C_Y_AEZ.melt <- add_agtech_names( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt )
+L205.ag_YieldRate_scen_R_C_Y_AEZ.melt[ L205.ag_YieldRate_scen_R_C_Y_AEZ.melt == Inf ] <- 0
+
+#Then, split the CCI scenarios into different tables, assigning object names based on the rcp x gcm x crop model identifiers
+# NOTE: NEED TO WRITE OUT THE DATA IN THIS STEP TOO. not sure how to split object from object name if referred to later
+for( i in 1:max( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$scenID ) ){
+	scenarios <- unique( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt[ c( "scenID", rcp_gcm_cm ) ] )
+	scen_strings <- paste( scenarios$rcp, scenarios$gcm, scenarios$cropmodel, sep = "_" )
+	objectname <- paste0( "L205.AgProdChange_", scen_strings[i] )
+	object <- subset( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt, scenID == i )[ names_AgProdChange ]
+	object <- rename_biocrops( object, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+              lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
+	object <- remove_AEZ_nonexist( object )
+	assign( objectname, object )
+	batchXMLstring <- paste0( "batch_ag_prodchange_",
+	                  substr( objectname, regexpr( "AgProdChange_", objectname ) + 13, nchar( objectname ) ),
+	                  ".xml" )
+	write_mi_data( object, "AgProdChange", "AGLU_LEVEL2_DATA", objectname, "AGLU_XML_BATCH", batchXMLstring )
+	XMLstring <- sub( "batch_", "", batchXMLstring )
+	insert_file_into_batchxml( "AGLU_XML_BATCH", batchXMLstring, "AGLU_XML_FINAL", XMLstring, "", xml_tag="outFile" )
+}
 
 #COSTS
 #Round costs to specified number of digits; this is ready for model input
@@ -181,18 +219,15 @@ L205.AgCost_bio$nonLandVariableCost[ L205.AgCost_bio$AEZ == "AEZ07" &
 L205.AgCost_bio <- L205.AgCost_bio[ names_AgCost ]
 
 printlog( "Removing non-existent AEZs from all tables")
-L205.AgProdChange_ag_ref <- remove_AEZ_nonexist( L205.AgProdChange_ag_ref )
-L205.AgProdChange_bio_ref <- remove_AEZ_nonexist( L205.AgProdChange_bio_ref )
+L205.AgProdChange_ref <- remove_AEZ_nonexist( L205.AgProdChange_ref )
 L205.AgCost_ag <- remove_AEZ_nonexist( L205.AgCost_ag )
 L205.AgCost_For <- remove_AEZ_nonexist( L205.AgCost_For )
 L205.AgCost_bio <- remove_AEZ_nonexist( L205.AgCost_bio )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-
-write_mi_data( L205.AgProdChange_ag_ref, IDstring="AgProdChange", domain="AGLU_LEVEL2_DATA", fn="L205.AgProdChange_ag_ref",
+write_mi_data( L205.AgProdChange_ref, IDstring="AgProdChange", domain="AGLU_LEVEL2_DATA", fn="L205.AgProdChange_ref",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_prodchange_ref.xml" ) 
-write_mi_data( L205.AgProdChange_bio_ref, "AgProdChange", "AGLU_LEVEL2_DATA", "L205.AgProdChange_bio_ref", "AGLU_XML_BATCH", "batch_ag_prodchange_ref.xml" ) 
 write_mi_data( L205.AgCost_ag, "AgCost", "AGLU_LEVEL2_DATA", "L205.AgCost_ag", "AGLU_XML_BATCH", "batch_ag_cost.xml" ) 
 write_mi_data( L205.AgCost_For, "AgCost", "AGLU_LEVEL2_DATA", "L205.AgCost_For", "AGLU_XML_BATCH", "batch_ag_cost.xml" ) 
 write_mi_data( L205.AgCost_bio, "AgCost", "AGLU_LEVEL2_DATA", "L205.AgCost_bio", "AGLU_XML_BATCH", "batch_ag_cost.xml" ) 

@@ -77,11 +77,10 @@ L2322.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L2322.glo
 L2322.GlobalTechShrwt_Fert <- L2322.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
 
 printlog( "L2322.GlobalTechCoef_Fert: Energy inputs and coefficients of global fertilizer energy use and feedstocks technologies" )
-L2322.globaltech_coef.melt <- interpolate_and_melt( A322.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )
+L2322.globaltech_coef.melt <- interpolate_and_melt( A322.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient", digits = digits_coefficient )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L2322.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L2322.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
 L2322.GlobalTechCoef_Fert <- L2322.globaltech_coef.melt[ names_GlobalTechCoef ]
-L2322.GlobalTechCoef_Fert$coefficient <- round( L2322.GlobalTechCoef_Fert$coefficient, digits_coefficient )
 
 #Costs of global technologies
 printlog( "L2322.GlobalTechCost_Fert: Non-energy costs of global fertilizer manufacturing technologies" )
@@ -96,33 +95,29 @@ L2322.GlobalTechCost_Fert <- na.omit( L2322.GlobalTechCost_Fert )
 #Carbon capture rates from technologies with CCS
 printlog( "L2322.GlobalTechCapture_Fert: CO2 capture fractions from global fertilizer production technologies with CCS" )
 ## No need to consider historical periods or intermittent technologies here
-L2322.globaltech_co2capture.melt <- interpolate_and_melt( A322.globaltech_co2capture, model_future_years, value.name="remove.fraction" )
+L2322.globaltech_co2capture.melt <- interpolate_and_melt( A322.globaltech_co2capture, model_future_years, value.name="remove.fraction", digits = digits_remove.fraction )
 L2322.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L2322.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]
-L2322.GlobalTechCapture_Fert <- data.frame(
-      L2322.globaltech_co2capture.melt[ names_GlobalTechYr ],
-      remove.fraction = round( L2322.globaltech_co2capture.melt$remove.fraction, digits = digits_remove.fraction ) )
+L2322.GlobalTechCapture_Fert <- L2322.globaltech_co2capture.melt[ c( names_GlobalTechYr, "remove.fraction" ) ]
 L2322.GlobalTechCapture_Fert$storage.market <- CO2.storage.market
 
 #Calibration and region-specific data
 printlog( "L2322.StubTechProd_Fert: calibrated output of fertilizer technologies" )
-L2322.StubTechProd_Fert <- interpolate_and_melt( L1322.Fert_Prod_MtN_R_F_Y, model_base_years, value.name = "calOutputValue" )
+L2322.StubTechProd_Fert <- interpolate_and_melt( L1322.Fert_Prod_MtN_R_F_Y, model_base_years, value.name = "calOutputValue", digits = digits_calOutput )
 L2322.StubTechProd_Fert <- add_region_name( L2322.StubTechProd_Fert )
 L2322.StubTechProd_Fert[ s_s_t ] <- calibrated_techs[ match( vecpaste( L2322.StubTechProd_Fert[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ), s_s_t ]
 L2322.StubTechProd_Fert$stub.technology <- L2322.StubTechProd_Fert$technology
-L2322.StubTechProd_Fert$calOutputValue <- round( L2322.StubTechProd_Fert$calOutputValue, digits_calOutput )
 L2322.StubTechProd_Fert$share.weight.year <- L2322.StubTechProd_Fert[[Y]]
 L2322.StubTechProd_Fert$subs.share.weight <- ifelse( L2322.StubTechProd_Fert$calOutputValue > 0, 1, 0 )
 L2322.StubTechProd_Fert$tech.share.weight <- L2322.StubTechProd_Fert$subs.share.weight
 L2322.StubTechProd_Fert <- L2322.StubTechProd_Fert[ names_StubTechProd ]
 
 printlog( "L2322.StubTechCoef_Fert: calibrated base-year coefficients of fertilizer production technologies" )
-L2322.StubTechCoef_Fert <- interpolate_and_melt( L1322.IO_R_Fert_F_Yh, model_base_years, value.name = "coefficient" )
+L2322.StubTechCoef_Fert <- interpolate_and_melt( L1322.IO_R_Fert_F_Yh, model_base_years, value.name = "coefficient", digits = digits_coefficient )
 #Where 0, drop from this table (to revert to assumed defaults)
 L2322.StubTechCoef_Fert <- subset( L2322.StubTechCoef_Fert, coefficient != 0 )
 L2322.StubTechCoef_Fert <- add_region_name( L2322.StubTechCoef_Fert )
 L2322.StubTechCoef_Fert[ s_s_t_i ] <- calibrated_techs[ match( vecpaste( L2322.StubTechCoef_Fert[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ), s_s_t_i ]
 L2322.StubTechCoef_Fert$stub.technology <- L2322.StubTechCoef_Fert$technology
-L2322.StubTechCoef_Fert$coefficient <- round( L2322.StubTechCoef_Fert$coefficient, digits_coefficient )
 L2322.StubTechCoef_Fert$market.name <- L2322.StubTechCoef_Fert$region
 L2322.StubTechCoef_Fert <- L2322.StubTechCoef_Fert[ names_StubTechCoef ]
 
@@ -143,12 +138,12 @@ L2322.StubTechFixOut_Fert_imp <- rbind( L2322.StubTechFixOut_Fert_imp_base, L232
 
 printlog( "L2322.StubTechFixOut_Fert_exp: fixed output of import technology (fixed imports)" )
 #Exports are positive net exports
-L2322.StubTechFixOut_Fert_exp_base <- interpolate_and_melt( L142.ag_Fert_NetExp_MtN_R_Y, model_base_years, value.name = "fixedOutput" )
+L2322.StubTechFixOut_Fert_exp_base <- interpolate_and_melt( L142.ag_Fert_NetExp_MtN_R_Y, model_base_years, value.name = "fixedOutput", digits = digits_calOutput  )
 L2322.StubTechFixOut_Fert_exp_base <- add_region_name( L2322.StubTechFixOut_Fert_exp_base )
 L2322.StubTechFixOut_Fert_exp_base[ c( "supplysector", "subsector", "stub.technology" ) ] <- A322.globaltech_shrwt[
       grepl( "Exports", A322.globaltech_shrwt$supplysector ), s_s_t ][
           rep( 1, times = nrow( L2322.StubTechFixOut_Fert_exp_base ) ), ]
-L2322.StubTechFixOut_Fert_exp_base$fixedOutput <- round( pmax( 0, L2322.StubTechFixOut_Fert_exp_base$fixedOutput ), digits_calOutput )
+L2322.StubTechFixOut_Fert_exp_base$fixedOutput <- pmax( 0, L2322.StubTechFixOut_Fert_exp_base$fixedOutput )
 L2322.StubTechFixOut_Fert_exp_base$share.weight.year <- L2322.StubTechFixOut_Fert_exp_base$year
 L2322.StubTechFixOut_Fert_exp_base[ c( "subs.share.weight", "tech.share.weight" ) ] <- 0
 

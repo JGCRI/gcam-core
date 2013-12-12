@@ -84,18 +84,16 @@ names( L222.GlobalTechInterp_en )[ names( L222.GlobalTechInterp_en ) %in% c( "su
 
 #Coefficients of global technologies
 printlog( "L222.GlobalTechCoef_en: Energy inputs and coefficients of global technologies for energy transformation" )
-L222.globaltech_coef.melt <- interpolate_and_melt( A22.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )
+L222.globaltech_coef.melt <- interpolate_and_melt( A22.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient", digits = digits_coefficient )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L222.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L222.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
 L222.GlobalTechCoef_en <- L222.globaltech_coef.melt[ names_GlobalTechCoef ]
-L222.GlobalTechCoef_en$coefficient <- round( L222.GlobalTechCoef_en$coefficient, digits_coefficient )
 
 #Costs of global technologies
 printlog( "L222.GlobalTechCost_en: Costs of global technologies for energy transformation" )
-L222.globaltech_cost.melt <- interpolate_and_melt( A22.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )
+L222.globaltech_cost.melt <- interpolate_and_melt( A22.globaltech_cost, model_years, value.name="input.cost", digits = digits_cost )
 L222.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L222.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]
 L222.GlobalTechCost_en <- L222.globaltech_cost.melt[ names_GlobalTechCost ]
-L222.GlobalTechCost_en$input.cost <- round( L222.GlobalTechCost_en$input.cost, digits_cost )
 
 #Shareweights of global technologies
 printlog( "L222.GlobalTechShrwt_en: Shareweights of global technologies for energy transformation" )
@@ -106,11 +104,9 @@ L222.GlobalTechShrwt_en <- L222.globaltech_shrwt.melt[ c( names_GlobalTechYr, "s
 #CO2 capture rates of global technologies
 printlog( "L222.GlobalTechCapture_en: CO2 capture fractions from global technologies for energy transformation" )
 ## No need to consider historical periods here
-L222.globaltech_co2capture.melt <- interpolate_and_melt( A22.globaltech_co2capture, model_future_years, value.name="remove.fraction" )
+L222.globaltech_co2capture.melt <- interpolate_and_melt( A22.globaltech_co2capture, model_future_years, value.name="remove.fraction", digits = digits_remove.fraction )
 L222.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L222.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]
-L222.GlobalTechCapture_en <- data.frame(
-      L222.globaltech_co2capture.melt[ names_GlobalTechYr ],
-      remove.fraction = round( L222.globaltech_co2capture.melt$remove.fraction, digits_remove.fraction ) )
+L222.GlobalTechCapture_en <- L222.globaltech_co2capture.melt[ c( names_GlobalTechYr, "remove.fraction" ) ]
 L222.GlobalTechCapture_en$storage.market <- CO2.storage.market
 
 #Retirement information

@@ -74,11 +74,10 @@ L252.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L252.globa
 L252.GlobalTechShrwt_trn <- L252.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
 
 printlog( "L252.GlobalTechEff_trn: Energy inputs and coefficients of global transportation energy use and feedstocks technologies" )
-L252.globaltech_eff.melt <- interpolate_and_melt( A52.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )
+L252.globaltech_eff.melt <- interpolate_and_melt( A52.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency", digits = digits_efficiency )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L252.globaltech_eff.melt[ c( "sector.name", "subsector.name" ) ] <- L252.globaltech_eff.melt[ c( "supplysector", "subsector" ) ]
 L252.GlobalTechEff_trn <- L252.globaltech_eff.melt[ names_GlobalTechEff ]
-L252.GlobalTechEff_trn$efficiency <- round( L252.GlobalTechEff_trn$efficiency, digits_efficiency )
 
 #Costs of global technologies
 printlog( "L252.GlobalTechCost_trn: Capital costs of global transportation technologies" )

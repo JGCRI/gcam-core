@@ -1,326 +1,441 @@
 
-InterestRate,world/+{name}region,region/+interest-rate,scenario,scenario/world
+InterestRate, world/+{name}region, region/+interest-rate, scenario, scenario/world
 
-Pop,world/+{name}region,demographics/+{year}populationMiniCAM,populationMiniCAM/+totalPop,scenario,scenario/world,region/demographics
+Pop, world/+{name}region, demographics/+{year}populationMiniCAM, populationMiniCAM/+totalPop, scenario, scenario/world, region/demographics
 
-BaseGDP,world/+{name}region,GDP/+baseGDP,scenario,scenario/world,region/GDP
+BaseGDP, world/+{name}region, GDP/+baseGDP, scenario, scenario/world, region/GDP
 
-LaborForce,world/+{name}region,GDP/+{year}laborforce,GDP/+laborforce,scenario,scenario/world,region/GDP
+LaborForce, world/+{name}region, GDP/+{year}laborforce, GDP/+laborforce, scenario, scenario/world, region/GDP
 
-LaborForceFillout,world/+{name}region,GDP/+{year;fillout=1}laborforce,GDP/+laborforce,scenario,scenario/world,region/GDP
+LaborForceFillout, world/+{name}region, GDP/+{year;fillout=1}laborforce, GDP/+laborforce, scenario, scenario/world, region/GDP
 
-LaborProductivity,world/+{name}region,GDP/+{year}laborproductivity,GDP/+laborproductivity,scenario,scenario/world,region/GDP
+LaborProductivity, world/+{name}region, GDP/+{year}laborproductivity, GDP/+laborproductivity, scenario, scenario/world, region/GDP
 
-AgSupplySector,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+output-unit,AgSupplySector/+input-unit,AgSupplySector/+price-unit,AgSupplySector/+calPrice,AgSupplySector/+market,AgSupplySector/+{year;fillout=1}logit-exponent,AgSupplySector/+logit-exponent,scenario,scenario/world
+AgSupplySector, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+output-unit, AgSupplySector/+input-unit, AgSupplySector/+price-unit, AgSupplySector/+calPrice, AgSupplySector/+market, AgSupplySector/+{year;fillout=1}logit-exponent, AgSupplySector/+logit-exponent, scenario, scenario/world
 
-AgSupplySubsector,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,scenario/world,scenario
+AgSupplySubsector, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, scenario/world, scenario
 
-AgSupplySubsectorAll,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{year;fillout=1}logit-exponent,AgSupplySubsector/+logit-exponent,AgSupplySubsector/+{year;fillout=1}share-weight,AgSupplySubsector/+share-weight,scenario/world,scenario
+AgSupplySubsectorAll, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{year;fillout=1}logit-exponent, AgSupplySubsector/+logit-exponent, AgSupplySubsector/+{year;fillout=1}share-weight, AgSupplySubsector/+share-weight, scenario/world, scenario
 
-AgTechInterp,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{apply-to}interpolation-rule,AgProductionTechnology/+{from-year}interpolation-rule,AgProductionTechnology/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
+AgTechInterp, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{apply-to}interpolation-rule, AgProductionTechnology/+{from-year}interpolation-rule, AgProductionTechnology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario/world, scenario
 
-AgTechYr,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,scenario/world,scenario,period/{name=CO2}CO2
+AgTechYr, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, scenario/world, scenario, period/{name=CO2}CO2
 
-AgTechShrwt,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+share-weight,scenario/world,scenario,period/{name=CO2}CO2
+AgTechShrwt, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+share-weight, scenario/world, scenario, period/{name=CO2}CO2
 
-AgProduction,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,CalDataOutput/+calOutputValue,AgSupplySubsector/+{year}share-weight, AgSupplySubsector/+share-weight,period/+share-weight,period/CalDataOutput,scenario,scenario/world
+AgProduction, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, CalDataOutput/+calOutputValue, AgSupplySubsector/+{year}share-weight, AgSupplySubsector/+share-weight, period/+share-weight, period/CalDataOutput, scenario, scenario/world
 
-AgHAtoCL,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+harvests-per-year,scenario,scenario/world
+AgHAtoCL, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+harvests-per-year, scenario, scenario/world
 
-AgYield,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+yield,scenario,scenario/world
+AgYield, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+yield, scenario, scenario/world
 
-AgCoef,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+coefficient,scenario,scenario/world,period/{name=CO2}CO2
+AgCoef, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, period/{name=CO2}CO2
 
-DepRsrc,world/+{name}region,region/+{name}depresource,depresource/+output-unit,depresource/+price-unit,depresource/+market,scenario,scenario/world
+DepRsrc, world/+{name}region, region/+{name}depresource, depresource/+output-unit, depresource/+price-unit, depresource/+market, scenario, scenario/world
 
-RenewRsrc,world/+{name}region,region/+{name}renewresource,renewresource/+output-unit,renewresource/+price-unit,renewresource/+market,scenario,scenario/world
+RenewRsrc, world/+{name}region, region/+{name}renewresource, renewresource/+output-unit, renewresource/+price-unit, renewresource/+market, scenario, scenario/world
 
-UnlimitRsrc,world/+{name}region,region/+{name}unlimited-resource,unlimited-resource/+output-unit,unlimited-resource/+price-unit,unlimited-resource/+market,unlimited-resource/+capacity-factor,scenario,scenario/world
+UnlimitRsrc, world/+{name}region, region/+{name}unlimited-resource, unlimited-resource/+output-unit, unlimited-resource/+price-unit, unlimited-resource/+market, unlimited-resource/+capacity-factor, scenario, scenario/world
 
-DepRsrcPrice,world/+{name}region,region/+{name}depresource,depresource/+{year}price,depresource/+price,scenario,scenario/world
+DepRsrcPrice, world/+{name}region, region/+{name}depresource, depresource/+{year}price, depresource/+price, scenario, scenario/world
 
-RenewRsrcPrice,world/+{name}region,region/+{name}renewresource,renewresource/+{year}price,renewresource/+price,scenario,scenario/world
+RenewRsrcPrice, world/+{name}region, region/+{name}renewresource, renewresource/+{year}price, renewresource/+price, scenario, scenario/world
 
-UnlimitRsrcPrice,world/+{name}region,region/+{name}unlimited-resource,unlimited-resource/+{year}price,unlimited-resource/+price,scenario,scenario/world
+UnlimitRsrcPrice, world/+{name}region, region/+{name}unlimited-resource, unlimited-resource/+{year}price, unlimited-resource/+price, scenario, scenario/world
 
-SubDepRsrc,world/+{name}region,region/+{name}depresource,depresource/+{name}subresource,scenario,scenario/world
+SubDepRsrc, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, scenario, scenario/world
 
-SubRenewRsrc,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,scenario,scenario/world
+SubRenewRsrc, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, scenario, scenario/world
 
-SmthRenewRsrc,world/+{name}region,region/+{name}renewresource,renewresource/+{name}smooth-renewable-subresource,scenario,scenario/world
+SmthRenewRsrc, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, scenario, scenario/world
 
-DepRsrcCalProd,world/+{name}region,region/+{name}depresource,depresource/+{name}subresource,subresource/+{year}cal-production,subresource/+cal-production,scenario,scenario/world
+DepRsrcCalProd, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{year}cal-production, subresource/+cal-production, scenario, scenario/world
 
-RenewRsrcCalProd,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{year}cal-production,sub-renewable-resource/+cal-production,scenario,scenario/world
+RenewRsrcCalProd, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year}cal-production, sub-renewable-resource/+cal-production, scenario, scenario/world
 
-maxSubResource,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+maxSubResource,scenario,scenario/world
+maxSubResource, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
-GrdRenewRsrcMax,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+maxSubResource,scenario,scenario/world
+GrdRenewRsrcMax, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
-DepRsrcCurves,world/+{name}region,region/+{name}depresource,depresource/+{name}subresource,subresource/+{name}grade,grade/+available,grade/+extractioncost,scenario,scenario/world
+DepRsrcCurves, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
-RenewRsrcCurves,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{name}grade,grade/+available,grade/+extractioncost,scenario,scenario/world
+RenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
-SmthRenewRsrcCurves,world/+{name}region,region/+{name}renewresource,renewresource/+{name}smooth-renewable-subresource,smooth-renewable-subresource/+maxSubResource,smooth-renewable-subresource/+mid-price,smooth-renewable-subresource/+curve-exponent,scenario,scenario/world
+SmthRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, scenario, scenario/world
 
-GrdRenewRsrcCurves,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{name}grade,grade/+available,grade/+extractioncost,scenario,scenario/world
+GrdRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
-DepRsrcTechChange,world/+{name}region,region/+{name}depresource,depresource/+{name}subresource,subresource/+{year;fillout=1}techChange,subresource/+techChange,scenario,scenario/world
+DepRsrcTechChange, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{year;fillout=1}techChange, subresource/+techChange, scenario, scenario/world
 
-RenewRsrcTechChange,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{year;fillout=1}techChange,sub-renewable-resource/+techChange,scenario,scenario/world
+RenewRsrcTechChange, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}techChange, sub-renewable-resource/+techChange, scenario, scenario/world
 
-SmthRenewRsrcTechChange,world/+{name}region,region/+{name}renewresource,renewresource/+{name}smooth-renewable-subresource,smooth-renewable-subresource/+{year;fillout=1}techChange,smooth-renewable-subresource/+techChange,scenario,scenario/world
+SmthRenewRsrcTechChange, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}techChange, smooth-renewable-subresource/+techChange, scenario, scenario/world
 
-Supplysector,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year;fillout=1}logit-exponent,supplysector/+logit-exponent,scenario,scenario/world
+Supplysector, world/+{name}region, region/+{name}supplysector, supplysector/+output-unit, supplysector/+input-unit, supplysector/+price-unit, supplysector/+{year;fillout=1}logit-exponent, supplysector/+logit-exponent, scenario, scenario/world
 
-SupplysectorPrice,world/+{name}region,region/+{name}supplysector,supplysector/+{year}price,supplysector/+price,scenario,scenario/world
+SupplysectorPrice, world/+{name}region, region/+{name}supplysector, supplysector/+{year}price, supplysector/+price, scenario, scenario/world
 
 ElecReserve,world/+{name}region,region/+{name}supplysector,{name=electricity-reserve-margin}object-meta-info/+value,{name=average-grid-capacity-factor}object-meta-info/+value,@supplysector/object-meta-info,scenario,scenario/world
 
-Subsector,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,scenario,scenario/world
+Subsector, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, scenario, scenario/world
 
-SubsectorAll,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year;fillout=1}logit-exponent,subsector/+logit-exponent,subsector/+{year;fillout=1}share-weight,subsector/+share-weight,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
+SubsectorAll, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year;fillout=1}logit-exponent, subsector/+logit-exponent, subsector/+{year;fillout=1}share-weight, subsector/+share-weight, subsector/+{apply-to}interpolation-rule, subsector/+{from-year}interpolation-rule, subsector/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario/world, scenario
 
-SubsectorLogit,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year;fillout=1}logit-exponent,subsector/+logit-exponent,scenario/world,scenario
+SubsectorLogit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year;fillout=1}logit-exponent, subsector/+logit-exponent, scenario/world, scenario
 
-SubsectorShrwt,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year}share-weight,subsector/+share-weight,scenario/world,scenario
+SubsectorShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year}share-weight, subsector/+share-weight, scenario/world, scenario
 
-SubsectorShrwtFllt,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year;fillout=1}share-weight,subsector/+share-weight,scenario/world,scenario
+SubsectorShrwtFllt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year;fillout=1}share-weight, subsector/+share-weight, scenario/world, scenario
 
-SubsectorInterp,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
+SubsectorInterp, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{apply-to}interpolation-rule, subsector/+{from-year}interpolation-rule, subsector/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario/world, scenario
 
-SubsectorInterpTo,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+to-value,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
+SubsectorInterpTo, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{apply-to}interpolation-rule, subsector/+{from-year}interpolation-rule, subsector/+{to-year}interpolation-rule, interpolation-rule/+to-value, interpolation-rule/+{name}interpolation-function, scenario/world, scenario
 
-FuelPrefElast,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year;fillout=1}fuelprefElasticity,subsector/+fuelprefElasticity,scenario/world,scenario
 
-Tech,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,scenario,scenario/world
+FuelPrefElast, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year;fillout=1}fuelprefElasticity, subsector/+fuelprefElasticity, scenario/world, scenario
 
-TechYr,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,scenario,scenario/world,period/{name=CO2}CO2
 
-Production,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,CalDataOutput/+calOutputValue,subsector/+{year}share-weight,subsector/+share-weight,period/+share-weight,period/CalDataOutput,scenario,scenario/world
+Tech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, scenario, scenario/world
 
-CalInput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+calibrated-value,scenario,scenario/world
+TechYr, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, scenario, scenario/world, period/{name=CO2}CO2
 
-TechCoef,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+coefficient,minicam-energy-input/+market-name,scenario,scenario/world,period/{name=CO2}CO2
 
-TechEff,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,minicam-energy-input/+market-name,scenario,scenario/world,period/{name=CO2}CO2
+Production, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, CalDataOutput/+calOutputValue, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, period/CalDataOutput, scenario, scenario/world
 
-TechCost,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+{name}minicam-non-energy-input,minicam-non-energy-input/+input-cost,scenario,scenario/world,period/{name=CO2}CO2
+CalInput, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+calibrated-value, scenario, scenario/world
 
-TechShrwt,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+share-weight,scenario,scenario/world,period/{name=CO2}CO2
+TechCoef, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, minicam-energy-input/+market-name, scenario, scenario/world, period/{name=CO2}CO2
 
-CarbonCapture,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,standard-capture-component/+storage-market,standard-capture-component/+remove-fraction,scenario,scenario/world,period/standard-capture-component
 
-TechFixOut,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+fixedOutput,scenario,scenario/world,period/{name=CO2}CO2
+TechEff, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, minicam-energy-input/+market-name, scenario, scenario/world, period/{name=CO2}CO2
 
-CalorieContent,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,scenario,scenario/world,period/{name=CO2}CO2
 
-PerCapitaBased,world/+{name}region,region/+{name}energy-final-demand,energy-final-demand/+perCapitaBased,energy-final-demand/final-energy-consumer,scenario,scenario/world
+TechCost, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world, period/{name=CO2}CO2
 
-BaseService,world/+{name}region,region/+{name}energy-final-demand,energy-final-demand/+{year}base-service,energy-final-demand/+base-service,scenario,scenario/world
+TechShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+share-weight, scenario, scenario/world, period/{name=CO2}CO2
 
-IncomeElasticity,world/+{name}region,region/+{name}energy-final-demand,energy-final-demand/+{year}income-elasticity,energy-final-demand/+income-elasticity,scenario,scenario/world
+CarbonCapture, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, standard-capture-component/+storage-market, standard-capture-component/+remove-fraction, scenario, scenario/world, period/standard-capture-component
 
-PriceElasticity,world/+{name}region,region/+{name}energy-final-demand,energy-final-demand/+{year}price-elasticity,energy-final-demand/+price-elasticity,scenario,scenario/world
+TechFixOut, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+fixedOutput, scenario, scenario/world, period/{name=CO2}CO2
 
-aeei,world/+{name}region,region/+{name}energy-final-demand,final-energy-consumer/+{year}aeei,final-energy-consumer/+aeei,scenario,scenario/world,energy-final-demand/final-energy-consumer
+CalorieContent, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, scenario, scenario/world, period/{name=CO2}CO2
 
-AgResBio,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+{name}residue-biomass-production,residue-biomass-production/+mass-conversion,residue-biomass-production/+harvest-index,residue-biomass-production/+eros-ctrl,residue-biomass-production/+mass-to-energy,residue-biomass-production/+water-content,scenario,scenario/world
+PerCapitaBased, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+perCapitaBased, energy-final-demand/final-energy-consumer, scenario, scenario/world
 
-AgResBioCurve,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+{name}residue-biomass-production,residue-biomass-production/+{price}fract-harvested,residue-biomass-production/+fract-harvested,scenario,scenario/world
+BaseService, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+{year}base-service, energy-final-demand/+base-service, scenario, scenario/world
 
-ResBio,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+{name}residue-biomass-production,residue-biomass-production/+mass-conversion,residue-biomass-production/+harvest-index,residue-biomass-production/+eros-ctrl,residue-biomass-production/+mass-to-energy,residue-biomass-production/+water-content,scenario,scenario/world
+IncomeElasticity, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+{year}income-elasticity, energy-final-demand/+income-elasticity, scenario, scenario/world
 
-ResBioCurve,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+{name}residue-biomass-production,residue-biomass-production/+{price}fract-harvested,residue-biomass-production/+fract-harvested,scenario,scenario/world
+PriceElasticity, world/+{name}region, region/+{name}energy-final-demand, energy-final-demand/+{year}price-elasticity, energy-final-demand/+price-elasticity, scenario, scenario/world
 
-AgProdChange,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+agProdChange,scenario,scenario/world
+aeei, world/+{name}region, region/+{name}energy-final-demand, final-energy-consumer/+{year}aeei, final-energy-consumer/+aeei, scenario, scenario/world, energy-final-demand/final-energy-consumer
 
-AgCost,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+nonLandVariableCost,scenario,scenario/world,period/{name=CO2}CO2
+AgResBio, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+mass-conversion, residue-biomass-production/+harvest-index, residue-biomass-production/+eros-ctrl, residue-biomass-production/+mass-to-energy, residue-biomass-production/+water-content, scenario, scenario/world
 
-LN0_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{year;fillout=1}logit-exponent,LandAllocatorRoot/+logit-exponent,scenario,scenario/world
+AgResBioCurve, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+{price}fract-harvested, residue-biomass-production/+fract-harvested, scenario, scenario/world
 
-LN0_Land,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{year;fillout=1}landAllocation,LandAllocatorRoot/+landAllocation,scenario,scenario/world
+ResBio, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+mass-conversion, residue-biomass-production/+harvest-index, residue-biomass-production/+eros-ctrl, residue-biomass-production/+mass-to-energy, residue-biomass-production/+water-content, scenario, scenario/world
 
-LN0_SoilTimeScale,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+soilTimeScale,scenario,scenario/world
+ResBioCurve, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+{price}fract-harvested, residue-biomass-production/+fract-harvested, scenario, scenario/world
 
-LN1_Delete,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name;delete=1}LandNode,scenario,scenario/world
+AgProdChange, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+agProdChange, scenario, scenario/world
 
-LN1_ValueLogit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+unManagedLandValue,LandNode1/+{year;fillout=1}logit-exponent,LandNode1/+logit-exponent,scenario,scenario/world
+AgCost, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+nonLandVariableCost, scenario, scenario/world, period/{name=CO2}CO2
 
-LN1_HistUnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}UnmanagedLandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,UnmanagedLandLeaf/land-use-history
+LN0_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{year;fillout=1}logit-exponent, LandAllocatorRoot/+logit-exponent, scenario, scenario/world
 
-LN1_UnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}UnmanagedLandLeaf,UnmanagedLandLeaf/+{year}landAllocation,UnmanagedLandLeaf/+landAllocation,scenario,scenario/world
+LN0_Land, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{year;fillout=1}landAllocation, LandAllocatorRoot/+landAllocation, scenario, scenario/world
 
-LN1_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
+LN0_SoilTimeScale, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+soilTimeScale, scenario, scenario/world
 
-LN2_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{year;fillout=1}logit-exponent,LandNode2/+logit-exponent,scenario,scenario/world
+LN1_Delete, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name;delete=1}LandNode, scenario, scenario/world
 
-LN2_HistUnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}UnmanagedLandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,UnmanagedLandLeaf/land-use-history
+LN1_ValueLogit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+unManagedLandValue, LandNode1/+{year;fillout=1}logit-exponent, LandNode1/+logit-exponent, scenario, scenario/world
 
-LN2_UnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}UnmanagedLandLeaf,UnmanagedLandLeaf/+{year}landAllocation,UnmanagedLandLeaf/+landAllocation,scenario,scenario/world
+LN1_HistUnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}UnmanagedLandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, UnmanagedLandLeaf/land-use-history
 
-LN2_HistMgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,LandLeaf/land-use-history
+LN1_UnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}UnmanagedLandLeaf, UnmanagedLandLeaf/+{year}landAllocation, UnmanagedLandLeaf/+landAllocation, scenario, scenario/world
 
-LN2_MgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandLeaf,LandLeaf/+{year}landAllocation,LandLeaf/+landAllocation,scenario,scenario/world
+LN1_UnmgdCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}UnmanagedLandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, land-carbon-densities/+above-ground-carbon-density, land-carbon-densities/+below-ground-carbon-density, land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age, UnmanagedLandLeaf/+minAboveGroundCDensity, UnmanagedLandLeaf/+minBelowGroundCDensity, scenario, scenario/world, UnmanagedLandLeaf/land-carbon-densities, UnmanagedLandLeaf/land-use-history
 
-LN2_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
+LN2_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{year;fillout=1}logit-exponent, LandNode2/+logit-exponent, scenario, scenario/world
 
-LN2_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
+LN2_HistUnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}UnmanagedLandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, UnmanagedLandLeaf/land-use-history
 
-LN3_Logit,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{year;fillout=1}logit-exponent,LandNode3/+logit-exponent,scenario,scenario/world
+LN2_UnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}UnmanagedLandLeaf, UnmanagedLandLeaf/+{year}landAllocation, UnmanagedLandLeaf/+landAllocation, scenario, scenario/world
 
-LN3_DefaultShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{year=2020}default-share,LandNode3/+{year=2025}default-share,LandNode3/+{year=2035}default-share,scenario,scenario/world
+LN2_HistMgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, LandLeaf/land-use-history
 
-LN3_HistUnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}UnmanagedLandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,UnmanagedLandLeaf/land-use-history
+LN2_MgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandLeaf, LandLeaf/+{year}landAllocation, LandLeaf/+landAllocation, scenario, scenario/world
 
-LN3_UnmgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}UnmanagedLandLeaf,UnmanagedLandLeaf/+{year}landAllocation,UnmanagedLandLeaf/+landAllocation,scenario,scenario/world
+LN2_UnmgdCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}UnmanagedLandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, land-carbon-densities/+above-ground-carbon-density, land-carbon-densities/+below-ground-carbon-density, land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age, UnmanagedLandLeaf/+minAboveGroundCDensity, UnmanagedLandLeaf/+minBelowGroundCDensity, scenario, scenario/world, UnmanagedLandLeaf/land-carbon-densities, UnmanagedLandLeaf/land-use-history
 
-LN3_UnmgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}UnmanagedLandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,UnmanagedLandLeaf/+minAboveGroundCDensity,UnmanagedLandLeaf/+minBelowGroundCDensity,scenario,scenario/world,UnmanagedLandLeaf/land-carbon-densities,UnmanagedLandLeaf/land-use-history
+LN2_MgdCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, land-carbon-densities/+above-ground-carbon-density, land-carbon-densities/+below-ground-carbon-density, land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age, LandLeaf/+minAboveGroundCDensity, LandLeaf/+minBelowGroundCDensity, scenario, scenario/world, LandLeaf/land-carbon-densities, LandLeaf/land-use-history
 
-LN3_HistMgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,LandLeaf/land-use-history
+LN3_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{year;fillout=1}logit-exponent, LandNode3/+logit-exponent, scenario, scenario/world
 
-LN3_MgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,LandLeaf/+{year}landAllocation,LandLeaf/+landAllocation,scenario,scenario/world
+LN3_DefaultShare, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{year=2020}default-share, LandNode3/+{year=2025}default-share, LandNode3/+{year=2035}default-share, scenario, scenario/world
 
-LN3_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
+LN3_HistUnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, UnmanagedLandLeaf/land-use-history
 
-LN3_NewTech,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,LandLeaf/+{year;fillout=1}isNewTechnology,LandLeaf/+isNewTechnology,scenario,scenario/world
+LN3_UnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, UnmanagedLandLeaf/+{year}landAllocation, UnmanagedLandLeaf/+landAllocation, scenario, scenario/world
 
-11000,NODE_RENAME
+LN3_UnmgdCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, land-carbon-densities/+above-ground-carbon-density, land-carbon-densities/+below-ground-carbon-density, land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age, UnmanagedLandLeaf/+minAboveGroundCDensity, UnmanagedLandLeaf/+minBelowGroundCDensity, scenario, scenario/world, UnmanagedLandLeaf/land-carbon-densities, UnmanagedLandLeaf/land-use-history
 
-UnmgdSector,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+input-unit,AgSupplySector/+market,scenario,scenario/world
+LN3_HistMgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, LandLeaf/land-use-history
 
-ItemName_Unmgd,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}UnmanagedLandTechnology,UnmanagedLandTechnology/+{year}period,period/+itemName,period/{name=CO2}CO2,scenario,scenario/world
+LN3_MgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, LandLeaf/+{year}landAllocation, LandLeaf/+landAllocation, scenario, scenario/world
 
-InputDriver_Unmgd,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}UnmanagedLandTechnology,UnmanagedLandTechnology/+{year}period,period/+{name}generic-ghg,generic-ghg/input-driver,scenario,scenario/world
+LN3_MgdCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, land-carbon-densities/+above-ground-carbon-density, land-carbon-densities/+below-ground-carbon-density, land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age, LandLeaf/+minAboveGroundCDensity, LandLeaf/+minBelowGroundCDensity, scenario, scenario/world, LandLeaf/land-carbon-densities, LandLeaf/land-use-history
 
-OutputDriver,world/+{name}region,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1}technology,technology/+{year}period,period/+{name}generic-ghg,generic-ghg/output-driver,scenario,scenario/world
+LN3_NewTech, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, LandLeaf/+{year;fillout=1}isNewTechnology, LandLeaf/+isNewTechnology, scenario, scenario/world
 
-OutputDriver_Ag,world/+{name}region,region/+{name;nocreate=1}AgSupplySector,AgSupplySector/+{name;nocreate=1}AgSupplySubsector,AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+{name}generic-ghg,generic-ghg/output-driver,scenario,scenario/world
+11000, NODE_RENAME
 
-OutputDriver_Unmgd,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}UnmanagedLandTechnology,UnmanagedLandTechnology/+{year}period,period/+{name}generic-ghg,generic-ghg/output-driver,scenario,scenario/world
+UnmgdSector, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+input-unit, AgSupplySector/+market, scenario, scenario/world
 
-ghgCoef,world/+{name}region,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1}technology,technology/+{year}period,period/+{name}generic-ghg,generic-ghg/+uncontrolled-emiss-coef,scenario,scenario/world
+ItemName_Unmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+itemName, period/{name=CO2}CO2, scenario, scenario/world
 
-ghgCoef_Ag,world/+{name}region,region/+{name;nocreate=1}AgSupplySector,AgSupplySector/+{name;nocreate=1}AgSupplySubsector,AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+{name}generic-ghg,generic-ghg/+uncontrolled-emiss-coef,scenario,scenario/world
+InputDriver_Unmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}generic-ghg, generic-ghg/input-driver, scenario, scenario/world
 
-ghgCoef_Unmgd,world/+{name}region,region/+{name}AgSupplySector,AgSupplySector/+{name}AgSupplySubsector,AgSupplySubsector/+{name}UnmanagedLandTechnology,UnmanagedLandTechnology/+{year}period,period/+{name}generic-ghg,generic-ghg/+uncontrolled-emiss-coef,scenario,scenario/world
+OutputDriver, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}technology, technology/+{year}period, period/+{name}generic-ghg, generic-ghg/output-driver, scenario, scenario/world
 
-GDPControl_Ag,world/+{name}region,region/+{name;nocreate=1}AgSupplySector,AgSupplySector/+{name;nocreate=1}AgSupplySubsector,AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+{name}generic-ghg,generic-ghg/+gdp-mid-control,generic-ghg/+gdp-control-range,generic-ghg/+final-emiss-coef,scenario,scenario/world
+OutputDriver_Ag, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}generic-ghg, generic-ghg/output-driver, scenario, scenario/world
 
-MAC_5pt,world/+{name}region,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1}technology,technology/+{year}period,period/+{name}generic-ghg,MAC/+{tax=0}reduction,MAC/+{tax=55}reduction,MAC/+{tax=110}reduction,MAC/+{tax=165}reduction,MAC/+{tax=220}reduction,scenario,scenario/world,generic-ghg/MAC
+OutputDriver_Unmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}generic-ghg, generic-ghg/output-driver, scenario, scenario/world
 
-MAC_12pt,world/+{name}region,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1}technology,technology/+{year}period,period/+{name}generic-ghg,MAC/+{tax=0}reduction,MAC/+{tax=10}reduction,MAC/+{tax=20}reduction,MAC/+{tax=30}reduction,MAC/+{tax=40}reduction,MAC/+{tax=50}reduction,MAC/+{tax=75}reduction,MAC/+{tax=100}reduction,MAC/+{tax=125}reduction,MAC/+{tax=150}reduction,MAC/+{tax=175}reduction,MAC/+{tax=200}reduction,MAC/+final-reduction,scenario,scenario/world,generic-ghg/MAC
+ghgCoef, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}technology, technology/+{year}period, period/+{name}generic-ghg, generic-ghg/+uncontrolled-emiss-coef, scenario, scenario/world
 
-MAC_5pt_Ag,world/+{name}region,region/+{name;nocreate=1}AgSupplySector,AgSupplySector/+{name;nocreate=1}AgSupplySubsector,AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+{name}generic-ghg,MAC/+{tax=0}reduction,MAC/+{tax=55}reduction,MAC/+{tax=110}reduction,MAC/+{tax=165}reduction,MAC/+{tax=220}reduction,scenario,scenario/world,generic-ghg/MAC
+ghgCoef_Ag, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}generic-ghg, generic-ghg/+uncontrolled-emiss-coef, scenario, scenario/world
 
-MAC_12pt_Ag,world/+{name}region,region/+{name;nocreate=1}AgSupplySector,AgSupplySector/+{name;nocreate=1}AgSupplySubsector,AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology,AgProductionTechnology/+{year}period,period/+{name}generic-ghg,MAC/+{tax=0}reduction,MAC/+{tax=10}reduction,MAC/+{tax=20}reduction,MAC/+{tax=30}reduction,MAC/+{tax=40}reduction,MAC/+{tax=50}reduction,MAC/+{tax=75}reduction,MAC/+{tax=100}reduction,MAC/+{tax=125}reduction,MAC/+{tax=150}reduction,MAC/+{tax=175}reduction,MAC/+{tax=200}reduction,MAC/+final-reduction,scenario,scenario/world,generic-ghg/MAC
+ghgCoef_Unmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}generic-ghg, generic-ghg/+uncontrolled-emiss-coef, scenario, scenario/world
 
-GlobalTechInterp,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{apply-to}interpolation-rule,technology/+{from-year}interpolation-rule,technology/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario,scenario/world,world/global-technology-database
+GDPControl_Ag, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}generic-ghg, generic-ghg/+gdp-mid-control, generic-ghg/+gdp-control-range, generic-ghg/+final-emiss-coef, scenario, scenario/world
 
-GlobalTechInput,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}minicam-energy-input,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2
+MAC_5pt, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}technology, technology/+{year}period, period/+{name}generic-ghg, MAC/+{tax=0}reduction, MAC/+{tax=55}reduction, MAC/+{tax=110}reduction, MAC/+{tax=165}reduction, MAC/+{tax=220}reduction, scenario, scenario/world, generic-ghg/MAC
 
-GlobalTechCoef,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+coefficient,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2
+MAC_12pt, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}technology, technology/+{year}period, period/+{name}generic-ghg, MAC/+{tax=0}reduction, MAC/+{tax=10}reduction, MAC/+{tax=20}reduction, MAC/+{tax=30}reduction, MAC/+{tax=40}reduction, MAC/+{tax=50}reduction, MAC/+{tax=75}reduction, MAC/+{tax=100}reduction, MAC/+{tax=125}reduction, MAC/+{tax=150}reduction, MAC/+{tax=175}reduction, MAC/+{tax=200}reduction, MAC/+final-reduction, scenario, scenario/world, generic-ghg/MAC
 
-GlobalTechEff,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2
+MAC_5pt_Ag, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}generic-ghg, MAC/+{tax=0}reduction, MAC/+{tax=55}reduction, MAC/+{tax=110}reduction, MAC/+{tax=165}reduction, MAC/+{tax=220}reduction, scenario, scenario/world, generic-ghg/MAC
 
-GlobalTechCost,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}minicam-non-energy-input,minicam-non-energy-input/+input-cost,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2
+MAC_12pt_Ag, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}generic-ghg, MAC/+{tax=0}reduction, MAC/+{tax=10}reduction, MAC/+{tax=20}reduction, MAC/+{tax=30}reduction, MAC/+{tax=40}reduction, MAC/+{tax=50}reduction, MAC/+{tax=75}reduction, MAC/+{tax=100}reduction, MAC/+{tax=125}reduction, MAC/+{tax=150}reduction, MAC/+{tax=175}reduction, MAC/+{tax=200}reduction, MAC/+final-reduction, scenario, scenario/world, generic-ghg/MAC
 
-GlobalTechCapital,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}input-capital,input-capital/+capital-overnight,input-capital/+fixed-charge-rate,input-capital/+capacity-factor,scenario,scenario/world,world/global-technology-database
+GlobalTechInterp, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{apply-to}interpolation-rule, technology/+{from-year}interpolation-rule, technology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario, scenario/world, world/global-technology-database
 
-GlobalTechOMfixed,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}input-OM-fixed,input-OM-fixed/+OM-fixed,input-OM-fixed/+capacity-factor,scenario,scenario/world,world/global-technology-database
 
-GlobalTechOMvar,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}input-OM-var,input-OM-var/+OM-var,scenario,scenario/world,world/global-technology-database
+GlobalTechInput, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
-GlobalTechShrwt,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+share-weight,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2
+GlobalTechCoef, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
-GlobalTechLifetime,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+lifetime,scenario,scenario/world,world/global-technology-database
 
-GlobalTechSCurve,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+lifetime,s-curve-shutdown-decider/+steepness,s-curve-shutdown-decider/+half-life,scenario,scenario/world,world/global-technology-database,period/s-curve-shutdown-decider
+GlobalTechEff, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
-GlobalTechSCurveProfit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+lifetime,s-curve-shutdown-decider/+steepness,s-curve-shutdown-decider/+half-life,scenario,scenario/world,world/global-technology-database,period/s-curve-shutdown-decider,period/profit-shutdown-decider
 
-GlobalTechShutdown,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+lifetime,phased-shutdown-decider/+shutdown-rate,scenario,scenario/world,world/global-technology-database,period/phased-shutdown-decider
+GlobalTechCost, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
-GlobalTechShutdownProfit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+lifetime,phased-shutdown-decider/+shutdown-rate,scenario,scenario/world,world/global-technology-database,period/phased-shutdown-decider,period/profit-shutdown-decider
 
-GlobalTechLifetime,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+lifetime,scenario,scenario/world
+GlobalTechCapital, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}input-capital, input-capital/+capital-overnight, input-capital/+fixed-charge-rate, input-capital/+capacity-factor, scenario, scenario/world, world/global-technology-database
 
-GlobalTechLifetimeProfit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+lifetime,scenario,scenario/world,world/global-technology-database,period/profit-shutdown-decider
 
-GlobalTechSecOut,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}secondary-output,secondary-output/+output-ratio,scenario,scenario/world,world/global-technology-database
 
-GlobalTechCapture,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,standard-capture-component/+remove-fraction, standard-capture-component/+storage-market,scenario,scenario/world,world/global-technology-database,period/standard-capture-component
+GlobalTechOMfixed, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}input-OM-fixed, input-OM-fixed/+OM-fixed, input-OM-fixed/+capacity-factor, scenario, scenario/world, world/global-technology-database
 
-GlobalTechCSeq,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,non-energy-use-capture-component/+remove-fraction, non-energy-use-capture-component/+target-gas,scenario,scenario/world,world/global-technology-database,period/non-energy-use-capture-component
 
-GlobalIntTechEff,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2
 
-GlobalIntTechShrwt,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+share-weight,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2
+GlobalTechOMvar, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}input-OM-var, input-OM-var/+OM-var, scenario, scenario/world, world/global-technology-database
 
-GlobalIntTechCapital,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{name}input-capital,input-capital/+capital-overnight,input-capital/+fixed-charge-rate,input-capital/+capacity-factor,scenario,scenario/world,world/global-technology-database
 
-GlobalIntTechOMfixed,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{name}input-OM-fixed,input-OM-fixed/+OM-fixed,input-OM-fixed/+capacity-factor,scenario,scenario/world,world/global-technology-database
 
-GlobalIntTechOMvar,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{name}input-OM-var,input-OM-var/+OM-var,scenario,scenario/world,world/global-technology-database
+GlobalTechShrwt, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+share-weight, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
-GlobalIntTechSCurve,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+lifetime,s-curve-shutdown-decider/+steepness,s-curve-shutdown-decider/+half-life,scenario,scenario/world,world/global-technology-database,period/s-curve-shutdown-decider
 
-GlobalIntTechSCurveProfit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+lifetime,s-curve-shutdown-decider/+steepness,s-curve-shutdown-decider/+half-life,scenario,scenario/world,world/global-technology-database,period/s-curve-shutdown-decider,period/profit-shutdown-decider
+GlobalTechLifetime, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database
 
-GlobalIntTechShutdown,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+lifetime,phased-shutdown-decider/+shutdown-rate,scenario,scenario/world,world/global-technology-database,period/phased-shutdown-decider
 
-GlobalIntTechShutdownProfit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+lifetime,phased-shutdown-decider/+shutdown-rate,scenario,scenario/world,world/global-technology-database,period/phased-shutdown-decider,period/profit-shutdown-decider
 
-GlobalIntTechLifetime,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+lifetime,scenario,scenario/world,world/global-technology-database
+GlobalTechSCurve, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, world/global-technology-database, period/s-curve-shutdown-decider
 
-GlobalIntTechLifetimeProfit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+lifetime,scenario,scenario/world,world/global-technology-database,period/profit-shutdown-decider
 
-GlobalIntTechBackup,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+electric-sector-name,period/+trial-market-name,period/+backup-capital-cost,period/+backup-capacity-factor,capacity-limit-backup-calculator/+capacity-limit,period/+{name}minicam-energy-input,period/+{name}minicam-non-energy-input,scenario,scenario/world,world/global-technology-database,period/capacity-limit-backup-calculator
 
-GlobalRenewTech,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}renewable-input,scenario/world,scenario,world/global-technology-database,period/{name=CO2}CO2
+GlobalTechSCurveProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, world/global-technology-database, period/s-curve-shutdown-decider, period/profit-shutdown-decider
 
-GlobalResBio,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}residue-biomass-production,residue-biomass-production/+mass-conversion,residue-biomass-production/+harvest-index,residue-biomass-production/+eros-ctrl,residue-biomass-production/+mass-to-energy,residue-biomass-production/+water-content,scenario,scenario/world,world/global-technology-database
 
-StubTech,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,scenario,scenario/world
 
-StubTechInterp,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{apply-to}interpolation-rule,stub-technology/+{from-year}interpolation-rule,stub-technology/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario,scenario/world
+GlobalTechShutdown, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider
 
-StubTechProd,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,CalDataOutput/+calOutputValue,subsector/+{year}share-weight,subsector/+share-weight,period/+share-weight,period/CalDataOutput,scenario,scenario/world
 
-StubTechCoef,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+coefficient,minicam-energy-input/+market-name,scenario,scenario/world
 
-StubTechCost,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}minicam-non-energy-input,minicam-non-energy-input/+input-cost,scenario,scenario/world
+GlobalTechShutdownProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider, period/profit-shutdown-decider
 
-StubTechEff,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,minicam-energy-input/+market-name,scenario,scenario/world
 
-StubCalorieContent,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,scenario,scenario/world
 
-StubTechCalInput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+calibrated-value,subsector/+{year}share-weight,subsector/+share-weight,period/+share-weight,scenario,scenario/world
+GlobalTechLifetime, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, scenario, scenario/world
 
-StubTechShrwt,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+share-weight,scenario,scenario/world
 
-StubTechFixOut,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+fixedOutput,subsector/+{year}share-weight,subsector/+share-weight,period/+share-weight,scenario,scenario/world
 
-StubTechCapFac,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}input-capital,input-capital/+capacity-factor,period/+{name}input-OM-fixed,input-OM-fixed/+capacity-factor,scenario,scenario/world
+GlobalTechLifetimeProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database, period/profit-shutdown-decider
 
-StubTechSecOut,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}secondary-output,secondary-output/+output-ratio,scenario,scenario/world
 
-StubResBioCurve,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,period/+{name}residue-biomass-production,residue-biomass-production/+{price}fract-harvested,residue-biomass-production/+fract-harvested,scenario,scenario/world
 
-FinalEnergyKeyword,world/+{name}region,region/+{name}supplysector,supplysector/+{final-energy}keyword,scenario,scenario/world
+GlobalTechSecOut, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}secondary-output, secondary-output/+output-ratio, scenario, scenario/world, world/global-technology-database
 
-PrimaryConsKeyword,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{primary-consumption}keyword,scenario,scenario/world,world/global-technology-database
 
-PrimaryRenewKeyword,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{primary-renewable}keyword,scenario,scenario/world,world/global-technology-database
+GlobalTechCapture, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, standard-capture-component/+remove-fraction, standard-capture-component/+storage-market, scenario, scenario/world, world/global-technology-database, period/standard-capture-component
 
-PrimaryRenewKeywordInt,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{primary-renewable}keyword,scenario,scenario/world,world/global-technology-database
 
-AvgFossilEffKeyword,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/{average-fossil-efficiency=}keyword,scenario,scenario/world,world/global-technology-database
 
-CarbonCoef,world/+{name}region,region/+{name}PrimaryFuelCO2Coef,region/+PrimaryFuelCO2Coef,scenario,scenario/world
+GlobalTechCSeq, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, non-energy-use-capture-component/+remove-fraction, non-energy-use-capture-component/+target-gas, scenario, scenario/world, world/global-technology-database, period/non-energy-use-capture-component
 
-ModelTime,modeltime/+{time-step}start-year,modeltime/+start-year,modeltime/+final-calibration-year,modeltime/+end-year,scenario,scenario/modeltime
 
-ModelTimeInterYears,modeltime/+{time-step}inter-year,modeltime/+inter-year,scenario,scenario/modeltime
 
-MAGICC,MagiccModel/+last-historical-year,MagiccModel/+bc-unit-forcing,MagiccModel/+carbon-model-start-year,scenario,scenario/world,world/MagiccModel
+GlobalIntTechEff, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
+
+
+
+GlobalIntTechShrwt, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+share-weight, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
+
+
+
+GlobalIntTechCapital, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}input-capital, input-capital/+capital-overnight, input-capital/+fixed-charge-rate, input-capital/+capacity-factor, scenario, scenario/world, world/global-technology-database
+
+
+
+GlobalIntTechOMfixed, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}input-OM-fixed, input-OM-fixed/+OM-fixed, input-OM-fixed/+capacity-factor, scenario, scenario/world, world/global-technology-database
+
+
+
+GlobalIntTechOMvar, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}input-OM-var, input-OM-var/+OM-var, scenario, scenario/world, world/global-technology-database
+
+
+
+GlobalIntTechSCurve, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, world/global-technology-database, period/s-curve-shutdown-decider
+
+
+
+GlobalIntTechSCurveProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, world/global-technology-database, period/s-curve-shutdown-decider, period/profit-shutdown-decider
+
+
+
+GlobalIntTechShutdown, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider
+
+
+
+GlobalIntTechShutdownProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider, period/profit-shutdown-decider
+
+
+
+GlobalIntTechLifetime, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database
+
+
+
+GlobalIntTechLifetimeProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database, period/profit-shutdown-decider
+
+
+
+GlobalIntTechBackup, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+electric-sector-name, period/+trial-market-name, period/+backup-capital-cost, period/+backup-capacity-factor, capacity-limit-backup-calculator/+capacity-limit, period/+{name}minicam-energy-input, period/+{name}minicam-non-energy-input, scenario, scenario/world, world/global-technology-database, period/capacity-limit-backup-calculator
+
+
+
+GlobalRenewTech, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}renewable-input, scenario/world, scenario, world/global-technology-database, period/{name=CO2}CO2
+
+
+GlobalResBio, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+mass-conversion, residue-biomass-production/+harvest-index, residue-biomass-production/+eros-ctrl, residue-biomass-production/+mass-to-energy, residue-biomass-production/+water-content, scenario, scenario/world, world/global-technology-database
+
+
+StubTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, scenario, scenario/world
+
+
+StubTechInterp, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{apply-to}interpolation-rule, stub-technology/+{from-year}interpolation-rule, stub-technology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario, scenario/world
+
+
+StubTechProd, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, CalDataOutput/+calOutputValue, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, period/CalDataOutput, scenario, scenario/world
+
+
+StubTechCoef, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, minicam-energy-input/+market-name, scenario, scenario/world
+
+
+
+StubTechCost, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world
+
+
+
+StubTechEff, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, minicam-energy-input/+market-name, scenario, scenario/world
+
+
+
+StubCalorieContent, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, scenario, scenario/world
+
+
+StubTechCalInput, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+calibrated-value, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, scenario, scenario/world
+
+
+StubTechShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+share-weight, scenario, scenario/world
+
+
+StubTechFixOut, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+fixedOutput, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, scenario, scenario/world
+
+
+StubTechCapFac, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}input-capital, input-capital/+capacity-factor, period/+{name}input-OM-fixed, input-OM-fixed/+capacity-factor, scenario, scenario/world
+
+
+
+StubTechSecOut, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}secondary-output, secondary-output/+output-ratio, scenario, scenario/world
+
+
+StubResBioCurve, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+{price}fract-harvested, residue-biomass-production/+fract-harvested, scenario, scenario/world
+
+
+FinalEnergyKeyword, world/+{name}region, region/+{name}supplysector, supplysector/+{final-energy}keyword, scenario, scenario/world
+
+
+
+PrimaryConsKeyword, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{primary-consumption}keyword, scenario, scenario/world, world/global-technology-database
+
+
+
+PrimaryRenewKeyword, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{primary-renewable}keyword, scenario, scenario/world, world/global-technology-database
+
+PrimaryRenewKeywordInt, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{primary-renewable}keyword, scenario, scenario/world, world/global-technology-database
+
+AvgFossilEffKeyword, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/{average-fossil-efficiency=}keyword, scenario, scenario/world, world/global-technology-database
+
+CarbonCoef, world/+{name}region, region/+{name}PrimaryFuelCO2Coef, region/+PrimaryFuelCO2Coef, scenario, scenario/world
+
+ModelTime, modeltime/+{time-step}start-year, modeltime/+start-year, modeltime/+final-calibration-year, modeltime/+end-year, scenario, scenario/modeltime
+
+ModelTimeInterYears, modeltime/+{time-step}inter-year, modeltime/+inter-year, scenario, scenario/modeltime
+
+MAGICC, MagiccModel/+last-historical-year, MagiccModel/+bc-unit-forcing, MagiccModel/+carbon-model-start-year, scenario, scenario/world, world/MagiccModel
+
+
+SubregionalShares, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{year;fillout=1}subregional-population-share, gcam-consumer/+{year;fillout=1}subregional-income-share, gcam-consumer/+subregional-population-share, gcam-consumer/+subregional-income-share, scenario, scenario/world
+
+PriceExp_IntGains, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{year;fillout=1}price-exponent, building-node-input/+price-exponent, building-node-input/+internal-gains-market-name, building-node-input/+internal-gains-unit, scenario, scenario/world
+
+DemandFunction_flsp, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+prodDmdFnType, scenario, scenario/world
+
+DemandFunction_serv, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+prodDmdFnType, scenario, scenario/world
+
+Floorspace, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{year}base-building-size, building-node-input/+base-building-size, scenario, scenario/world
+
+Satiation_flsp, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, satiation-demand-function/+satiation-level, scenario, scenario/world, building-node-input/satiation-demand-function
+
+GenericBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+{year}base-service, building-service-input/+base-service, scenario, scenario/world
+
+ThermalBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+{year}base-service, thermal-building-service-input/+base-service, scenario, scenario/world
+
+GenericServiceSatiation, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, satiation-demand-function/+satiation-level, scenario, scenario/world, building-service-input/satiation-demand-function
+
+ThermalServiceSatiation, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, satiation-demand-function/+satiation-level, scenario, scenario/world, thermal-building-service-input/satiation-demand-function
+
+HDDCDD, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+{year}degree-days, thermal-building-service-input/+degree-days, scenario, scenario/world
+
+ShellConductance, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{year}shell-conductance, building-node-input/+shell-conductance, building-node-input/+{year}floor-to-surface-ratio, building-node-input/+floor-to-surface-ratio,scenario, scenario/world
+
+StubTechIntGainOutputRatio, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, internal-gains/+output-ratio, internal-gains/+internal-gains-market-name, scenario, scenario/world, period/internal-gains
+
+Intgains_scalar, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+internal-gains-scalar, scenario, scenario/world
+
+DeleteThermalService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name;delete=1}thermal-building-service-input, region/+{name;delete=1}supplysector, scenario, scenario/world
+
+DeleteGenericService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name;delete=1}building-service-input, region/+{name;delete=1}supplysector, scenario, scenario/world

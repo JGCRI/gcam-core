@@ -27,6 +27,7 @@ A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 IEA_flow_sector <- readdata( "ENERGY_MAPPINGS", "IEA_flow_sector" )
 IEA_product_fuel <- readdata( "ENERGY_MAPPINGS", "IEA_product_fuel" )
 IEA_sector_fuel_modifications <- readdata( "ENERGY_MAPPINGS", "IEA_sector_fuel_modifications" )
+enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )
 L100.IEA_en_bal_ctry_hist <- readdata( "ENERGY_LEVEL1_DATA", "L100.IEA_en_bal_ctry_hist" )
 
 # -----------------------------------------------------------------------------
@@ -123,13 +124,28 @@ L101.in_EJ_R_TPES_Fi_Yh <- aggregate( L101.in_EJ_R_Si_Fi_Yh[ X_historical_years 
 #Append (rbind) TPES onto the end of the energy balances
 L101.en_bal_EJ_R_Si_Fi_Yh_full <- rbind( L101.en_bal_EJ_R_Si_Fi_Yh_full, L101.in_EJ_R_TPES_Fi_Yh )
 
+#For downscaling of buildings and transportation energy, aggregate by fuel and country
+L101.in_ktoe_ctry_trn_Fiea <- subset( L101.IEA_en_bal_ctry_hist_clean, grepl( "trn", sector ) )
+L101.in_ktoe_ctry_trn_Fiea$fuel <- enduse_fuel_aggregation$trn[ match( L101.in_ktoe_ctry_trn_Fiea$fuel, enduse_fuel_aggregation$fuel ) ]
+L101.in_EJ_ctry_trn_Fi_Yh <- aggregate( L101.in_ktoe_ctry_trn_Fiea[ X_historical_years ] * L101.in_ktoe_ctry_trn_Fiea$conv,
+      by=as.list( L101.in_ktoe_ctry_trn_Fiea[ c( "iso", S_F ) ] ), sum )
+
+L101.in_ktoe_ctry_bld_Fiea <- subset( L101.IEA_en_bal_ctry_hist_clean, grepl( "bld", sector ) )
+L101.in_ktoe_ctry_bld_Fiea$fuel <- enduse_fuel_aggregation$bld[ match( L101.in_ktoe_ctry_bld_Fiea$fuel, enduse_fuel_aggregation$fuel ) ]
+L101.in_EJ_ctry_bld_Fi_Yh <- aggregate( L101.in_ktoe_ctry_bld_Fiea[ X_historical_years ] * L101.in_ktoe_ctry_bld_Fiea$conv,
+      by=as.list( L101.in_ktoe_ctry_bld_Fiea[ c( "iso", S_F ) ] ), sum )
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
 comments.L101.en_bal_EJ_R_Si_Fi_Yh_full <- c( "Energy balances by GCAM region / intermediate sector / intermediate fuel / historical year","Unit = EJ" )
+comments.L101.in_EJ_ctry_trn_Fi_Yh <- c( "Transportation sector energy consumption by country / IEA mode / fuel / historical year","Unit = EJ" )
+comments.L101.in_EJ_ctry_bld_Fi_Yh <- c( "Building energy consumption by country / IEA sector / fuel / historical year","Unit = EJ" )
 
 #write tables as CSV files
 writedata( L101.en_bal_EJ_R_Si_Fi_Yh_full, domain="ENERGY_LEVEL1_DATA", fn="L101.en_bal_EJ_R_Si_Fi_Yh_full", comments=comments.L101.en_bal_EJ_R_Si_Fi_Yh_full )
+writedata( L101.in_EJ_ctry_trn_Fi_Yh, domain="ENERGY_LEVEL1_DATA", fn="L101.in_EJ_ctry_trn_Fi_Yh", comments=comments.L101.in_EJ_ctry_trn_Fi_Yh )
+writedata( L101.in_EJ_ctry_bld_Fi_Yh, domain="ENERGY_LEVEL1_DATA", fn="L101.in_EJ_ctry_bld_Fi_Yh", comments=comments.L101.in_EJ_ctry_bld_Fi_Yh )
 
 # Every script should finish with this line
 logstop()

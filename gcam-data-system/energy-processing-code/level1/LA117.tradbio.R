@@ -25,6 +25,7 @@ printlog( "Traditional biomass resource supply curves" )
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )
 A17.tradbio_curves <- readdata( "ENERGY_ASSUMPTIONS", "A17.tradbio_curves" )
@@ -38,14 +39,14 @@ L117.TPES_EJ_R_bld_tradbio_Yh.melt <- melt( L117.TPES_EJ_R_bld_tradbio_Yh, id.va
 L117.maxSubResource_tradbio <- aggregate( L117.TPES_EJ_R_bld_tradbio_Yh.melt[ "value" ],
       by=as.list( L117.TPES_EJ_R_bld_tradbio_Yh.melt[ c( R_S_F ) ] ), max )
 
-printlog( "Setting a minimum quantity for regions where the fuel does not apply" )
-#Any number will work as demand in these regions will always be 0, but setting 0 available may cause solution problems
-L117.maxSubResource_tradbio$value[ L117.maxSubResource_tradbio$value == 0 ] <- 0.1
-
 printlog( "Writing the supply curves to all regions, multiplying maxSubResouce by quantity available at each grade")
 L117.RsrcCurves_EJ_R_tradbio <- repeat_and_add_vector( A17.tradbio_curves, R, sort( unique( iso_GCAM_regID[[R]] ) ) )[ c( R, names( A17.tradbio_curves ) ) ]
 L117.RsrcCurves_EJ_R_tradbio$available <- L117.RsrcCurves_EJ_R_tradbio$available * L117.maxSubResource_tradbio$value[
       match( L117.RsrcCurves_EJ_R_tradbio[[R]], L117.maxSubResource_tradbio[[R]] ) ]
+
+printlog( "Removing resource curves in regions where this fuel does not apply" )
+rm_tradbio_regions <- A_regions[[ R ]][ A_regions$tradbio_region == 0 ]
+L117.RsrcCurves_EJ_R_tradbio <- L117.RsrcCurves_EJ_R_tradbio[ !L117.RsrcCurves_EJ_R_tradbio[[R]] %in% rm_tradbio_regions, ]
 
 # -----------------------------------------------------------------------------
 # 3. Output

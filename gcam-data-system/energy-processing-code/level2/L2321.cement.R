@@ -80,23 +80,21 @@ L2321.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L2321.glo
 L2321.GlobalTechShrwt_cement <- L2321.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
 
 printlog( "L2321.GlobalTechCoef_cement: Energy inputs and coefficients of cement technologies" )
-L2321.globaltech_coef.melt <- interpolate_and_melt( A321.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )
+L2321.globaltech_coef.melt <- interpolate_and_melt( A321.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient", digits = digits_coefficient )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L2321.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L2321.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
 L2321.GlobalTechCoef_cement <- L2321.globaltech_coef.melt[ names_GlobalTechCoef ]
-L2321.GlobalTechCoef_cement$coefficient <- round( L2321.GlobalTechCoef_cement$coefficient, digits_coefficient )
 
 #Carbon capture rates from technologies with CCS
 printlog( "L2321.GlobalTechCapture_cement: CO2 capture fractions from global cement production technologies with CCS" )
 ## No need to consider historical periods or intermittent technologies here
-L2321.globaltech_co2capture.melt <- interpolate_and_melt( A321.globaltech_co2capture, model_future_years, value.name="remove.fraction" )
+L2321.globaltech_co2capture.melt <- interpolate_and_melt( A321.globaltech_co2capture, model_future_years, value.name="remove.fraction", digits = digits_remove.fraction )
 L2321.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L2321.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]
-L2321.GlobalTechCapture_cement <- L2321.globaltech_co2capture.melt[ names_GlobalTechYr ]
-L2321.GlobalTechCapture_cement$remove.fraction <- round( L2321.globaltech_co2capture.melt$remove.fraction, digits = digits_remove.fraction )
+L2321.GlobalTechCapture_cement <- L2321.globaltech_co2capture.melt[ c( names_GlobalTechYr, "remove.fraction" ) ]
 L2321.GlobalTechCapture_cement$storage.market <- CO2.storage.market
 
 printlog( "L2321.GlobalTechCost_cement: Non-energy costs of global cement manufacturing technologies" )
-L2321.globaltech_cost.melt <- interpolate_and_melt( A321.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )
+L2321.globaltech_cost.melt <- interpolate_and_melt( A321.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost", digits = digits_cost )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L2321.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L2321.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]
 L2321.GlobalTechCost_cement <- L2321.globaltech_cost.melt[ names_GlobalTechCost ]
@@ -123,13 +121,12 @@ L2321.GlobalTechCost_cement$input.cost <- round( L2321.GlobalTechCost_cement$inp
 
 #Calibration and region-specific data
 printlog( "L2321.StubTechProd_cement: calibrated cement production" )
-L2321.StubTechProd_cement <- interpolate_and_melt( L1321.out_Mt_R_cement_Yh, model_base_years, value.name = "calOutputValue" )
+L2321.StubTechProd_cement <- interpolate_and_melt( L1321.out_Mt_R_cement_Yh, model_base_years, value.name = "calOutputValue", digits_calOutput )
 L2321.StubTechProd_cement <- add_region_name( L2321.StubTechProd_cement )
 L2321.StubTechProd_cement[ s_s_t ] <- calibrated_techs[
       match( paste( L2321.StubTechProd_cement$sector, "output" ),  #Only take the tech IDs where the calibration is identified as output
              paste( calibrated_techs$sector, calibrated_techs$calibration ) ), s_s_t ]
 L2321.StubTechProd_cement$stub.technology <- L2321.StubTechProd_cement$technology
-L2321.StubTechProd_cement$calOutputValue <- round( L2321.StubTechProd_cement$calOutputValue, digits_calOutput )
 L2321.StubTechProd_cement$share.weight.year <- L2321.StubTechProd_cement[[Y]]
 L2321.StubTechProd_cement$subs.share.weight <- ifelse( L2321.StubTechProd_cement$calOutputValue > 0, 1, 0 )
 L2321.StubTechProd_cement$tech.share.weight <- L2321.StubTechProd_cement$subs.share.weight
@@ -138,16 +135,15 @@ L2321.StubTechProd_cement <- L2321.StubTechProd_cement[ names_StubTechProd ]
 printlog( "L2321.StubTechCoef_cement: region-specific coefficients of cement production technologies" )
 #Take this as a given in all years for which data is available
 L2321.StubTechCoef_cement <- interpolate_and_melt( L1321.IO_GJkg_R_cement_F_Yh,
-      historical_years[ historical_years %in% c( model_base_years, model_future_years ) ], value.name = "coefficient" )
+      historical_years[ historical_years %in% c( model_base_years, model_future_years ) ], value.name = "coefficient", digits_coefficient )
 L2321.StubTechCoef_cement <- add_region_name( L2321.StubTechCoef_cement )
 L2321.StubTechCoef_cement[ s_s_t_i ] <- calibrated_techs[ match( vecpaste( L2321.StubTechCoef_cement[ S_F ] ), vecpaste( calibrated_techs[ S_F ] ) ), s_s_t_i ]
 L2321.StubTechCoef_cement$stub.technology <- L2321.StubTechCoef_cement$technology
-L2321.StubTechCoef_cement$coefficient <- round( L2321.StubTechCoef_cement$coefficient, digits_coefficient )
 L2321.StubTechCoef_cement$market.name <- L2321.StubTechCoef_cement$region
 L2321.StubTechCoef_cement <- L2321.StubTechCoef_cement[ names_StubTechCoef ]
 
 printlog( "L2321.StubTechCalInput_cement_heat: calibrated cement production" )
-L2321.StubTechCalInput_cement_heat <- interpolate_and_melt( L1321.in_EJ_R_cement_F_Y, model_base_years, value.name = "calibrated.value" )
+L2321.StubTechCalInput_cement_heat <- interpolate_and_melt( L1321.in_EJ_R_cement_F_Y, model_base_years, value.name = "calibrated.value", digits = digits_calOutput )
 L2321.StubTechCalInput_cement_heat <- add_region_name( L2321.StubTechCalInput_cement_heat )
 L2321.StubTechCalInput_cement_heat[ s_s_t_i ] <- calibrated_techs[
       match( vecpaste( L2321.StubTechCalInput_cement_heat[ S_F] ),
@@ -156,7 +152,6 @@ L2321.StubTechCalInput_cement_heat[ s_s_t_i ] <- calibrated_techs[
 #This table should only be the technologies for producing heat - drop the electricity inputs to the cement production technology
 L2321.StubTechCalInput_cement_heat <- subset( L2321.StubTechCalInput_cement_heat, supplysector %!in% L2321.StubTechCoef_cement$supplysector )
 L2321.StubTechCalInput_cement_heat$stub.technology <- L2321.StubTechCalInput_cement_heat$technology
-L2321.StubTechCalInput_cement_heat$calibrated.value <- round( L2321.StubTechCalInput_cement_heat$calibrated.value, digits_calOutput )
 L2321.StubTechCalInput_cement_heat$share.weight.year <- L2321.StubTechCalInput_cement_heat[[Y]]
 L2321.StubTechCalInput_cement_heat$subs.share.weight <- ifelse( L2321.StubTechCalInput_cement_heat$calibrated.value > 0, 1, 0 )
 L2321.StubTechCalInput_cement_heat$tech.share.weight <- L2321.StubTechCalInput_cement_heat$subs.share.weight

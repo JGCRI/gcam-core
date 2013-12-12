@@ -71,18 +71,16 @@ names( L226.StubTech_en ) <- names_StubTech
 
 #Efficiencies of global technologies
 printlog( "L226.GlobalTechEff_en: Energy inputs and efficiencies of global technologies for energy distribution" )
-L226.globaltech_coef.melt <- interpolate_and_melt( A26.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )
+L226.globaltech_coef.melt <- interpolate_and_melt( A26.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency", digits = digits_efficiency )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L226.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L226.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
 L226.GlobalTechEff_en <- L226.globaltech_coef.melt[ names_GlobalTechEff ]
-L226.GlobalTechEff_en$efficiency <- round( L226.GlobalTechEff_en$efficiency, digits_efficiency )
 
 #Costs of global technologies
 printlog( "L226.GlobalTechCost_en: Costs of global technologies for energy distribution" )
-L226.globaltech_cost.melt <- interpolate_and_melt( A26.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )
+L226.globaltech_cost.melt <- interpolate_and_melt( A26.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost", digits = digits_cost )
 L226.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L226.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]
 L226.GlobalTechCost_en <- L226.globaltech_cost.melt[ names_GlobalTechCost ]
-L226.GlobalTechCost_en$input.cost <- round( L226.GlobalTechCost_en$input.cost, digits_cost )
 
 #Shareweights of global technologies
 printlog( "L226.GlobalTechShrwt_en: Shareweights of global technologies for energy distribution" )

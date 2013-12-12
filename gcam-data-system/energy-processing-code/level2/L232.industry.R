@@ -45,11 +45,6 @@ L1322.in_EJ_R_indfeed_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_ind
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-#####tmp <- interpolate_and_melt( A32.aeei, model_future_years, value.name="aeei")
-#####tmp <- repeat_and_add_vector( tmp, R, GCAM_region_names[[R]] )
-#####tmp <- add_region_name( tmp )
-#####L232.aeei <- tmp[ c ( "region", "energy.final.demand", "year", "aeei" ) ]
-
 #Create tables to delete technologies and subsectors in regions where heat is not modeled as a fuel
 L232.heat_techs <- unique( calibrated_techs[ grepl( "industry", calibrated_techs$sector ) & calibrated_techs$fuel == "heat", s_s_t ] )
 L232.rm_heat_techs_R <- repeat_and_add_vector( L232.heat_techs, R, A_regions[[R]][ A_regions$heat == 0 ] )
@@ -116,11 +111,10 @@ L232.StubTechInterp_ind <- write_to_all_regions( A32.globaltech_interp, names_Te
 names( L232.StubTechInterp_ind )[ names( L232.StubTechInterp_ind ) == "technology" ] <- "stub.technology"
 
 printlog( "L232.GlobalTechEff_ind: Energy inputs and coefficients of global industrial energy use and feedstocks technologies" )
-L232.globaltech_eff.melt <- interpolate_and_melt( A32.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )
+L232.globaltech_eff.melt <- interpolate_and_melt( A32.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency", digits = digits_efficiency )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L232.globaltech_eff.melt[ c( "sector.name", "subsector.name" ) ] <- L232.globaltech_eff.melt[ c( "supplysector", "subsector" ) ]
 L232.GlobalTechEff_ind <- L232.globaltech_eff.melt[ names_GlobalTechEff ]
-L232.GlobalTechEff_ind$efficiency <- round( L232.GlobalTechEff_ind$efficiency, digits_efficiency )
 
 #Coefficients on global industry sector technologies (not energy-use or feedstocks)
 printlog( "L232.GlobalTechCoef_ind: Energy inputs and coefficients of global industry technologies" )
@@ -228,7 +222,7 @@ L232.tech_coef[[ X_model_base_years[ length( X_model_base_years ) ] ]] <- L232.S
              paste( L232.StubTechCoef_industry_base$region, L232.StubTechCoef_industry_base[[input]], L232.StubTechCoef_industry_base[[Y]] ) ) ] 
 L232.tech_coef[ X_indcoef_conv_year ] <- L232.tech_coef[ "X2100" ]
 L232.tech_coef <- gcam_interp( L232.tech_coef, c( max( model_base_years ), model_future_years, indcoef_conv_year ) )
-L232.StubTechCoef_industry_fut <- interpolate_and_melt( L232.tech_coef, model_future_years, value.name = "coefficient" )
+L232.StubTechCoef_industry_fut <- interpolate_and_melt( L232.tech_coef, model_future_years, value.name = "coefficient", digits = digits_coefficient )
 L232.StubTechCoef_industry_fut$stub.technology <- L232.StubTechCoef_industry_fut$technology
 L232.StubTechCoef_industry_fut$market.name <- L232.StubTechCoef_industry_fut$region
 
@@ -332,8 +326,6 @@ write_mi_data( L232.FuelPrefElast_indenergy, "FuelPrefElast", "ENERGY_LEVEL2_DAT
 write_mi_data( L232.PerCapitaBased_ind, "PerCapitaBased", "ENERGY_LEVEL2_DATA", "L232.PerCapitaBased_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.PriceElasticity_ind, "PriceElasticity", "ENERGY_LEVEL2_DATA", "L232.PriceElasticity_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 write_mi_data( L232.BaseService_ind, "BaseService", "ENERGY_LEVEL2_DATA", "L232.BaseService_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
-#######write_mi_data( L232.aeei, "aeei", "ENERGY_LEVEL2_DATA", "L232.aeei", "ENERGY_XML_BATCH", "batch_industry.xml" )
-
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_industry.xml", "ENERGY_XML_FINAL", "industry.xml", "", xml_tag="outFile" )
 

@@ -39,6 +39,8 @@ digits_efficiency <- 3
 digits_capital <- 0
 digits_OM <- 2
 digits_remove.fraction <- 2
+digits_floorspace <- 3
+digits_hddcdd <- 0
 
 default_energy_unit <- "EJ"
 default_energy_price_unit <- "1975$/GJ"
@@ -61,15 +63,15 @@ X_indcoef_conv_year <- paste0( "X", indcoef_conv_year )
 cement_CCS_cost_2000USDtCO2 <- 50   #Starting point of supply curve in Mahasenan et al 2003
 CO2_storage_cost_1990USDtC <- 42    #From GCAM 1.0 inputs
 
-#Internal gains scalers
-int_gains_scaler_heating <- -100 # Usually set to 1000 or 2000 for USA and China (temperate regions)
-#Regions with low heating demands are problematic as intgains may cause demands to go negative. Therefore reading in a value
-#that reduces the effects of this parameter
-int_gains_scaler_cooling <- 100
+discount_rate_bld <- 0.1
 
-discount_rate_enduse <- 0.1
+#Set which years to use to calculate climate normals (HDD and CDD) in each region
+climate_normal_years <- 1981:2000
+X_climate_normal_years <- paste0( "X", climate_normal_years )
+InternalGainsScalar_USA_h <- -930
+InternalGainsScalar_USA_c <- 350
 
-
+floor.to.surface.ratio <- 5.5
 
 
 

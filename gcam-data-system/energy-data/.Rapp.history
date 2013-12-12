@@ -1,118 +1,0 @@
-ENERGYPROC_DIR<-"../energy-processing-code/"
-if( !exists( "ENERGYPROC_DIR" ) ){#
-    if( Sys.getenv( "ENERGYPROC" ) != "" ){#
-        ENERGYPROC_DIR <- Sys.getenv( "ENERGYPROC" )#
-    } else {#
-        stop("Could not determine location of energy data system. Please set the R var ENERGYPROC_DIR to the appropriate location")#
-    }#
-}#
-# Universal header file - provides logging, file support, etc.#
-source(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-source(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-logstart( "L210.resources.R" )#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))#
-adddep(paste(ENERGYPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))#
-printlog( "Resource supply information" )#
-# -----------------------------------------------------------------------------#
-# 1. Read files#
-sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )#
-sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )#
-sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )#
-sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )#
-GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")#
-A10.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.rsrc_info")#
-A10.subrsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.subrsrc_info")#
-A10.TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A10.TechChange")#
-A15.roofPV_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A15.roofPV_TechChange" )#
-L111.RsrcCurves_EJ_R_Ffos <- readdata( "ENERGY_LEVEL1_DATA", "L111.RsrcCurves_EJ_R_Ffos" )#
-L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )#
-L112.RsrcCurves_Mt_R_U <- readdata( "ENERGY_LEVEL1_DATA", "L112.RsrcCurves_Mt_R_U" )#
-L113.RsrcCurves_EJ_R_MSW <- readdata( "ENERGY_LEVEL1_DATA", "L113.RsrcCurves_EJ_R_MSW" )#
-L114.RsrcCurves_EJ_R_wind <- readdata( "ENERGY_LEVEL1_DATA", "L114.RsrcCurves_EJ_R_wind" )#
-L115.RsrcCurves_EJ_R_roofPV <- readdata( "ENERGY_LEVEL1_DATA", "L115.RsrcCurves_EJ_R_roofPV" )#
-L116.RsrcCurves_EJ_R_geo <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_geo" )#
-L116.RsrcCurves_EJ_R_EGS <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_EGS" )#
-L117.RsrcCurves_EJ_R_tradbio <- readdata( "ENERGY_LEVEL1_DATA", "L117.RsrcCurves_EJ_R_tradbio" )#
-# -----------------------------------------------------------------------------#
-# 2. Build tables for CSVs#
-# 2a. Output unit, price unit, market#
-#Interpolate to specified historical years, as necessary#
-L210.rsrc_info <- gcam_interp( A10.rsrc_info, model_base_years )#
-#Repeat and add region vector to resource assumptions table (use ID to ensure correct region ordering)#
-L210.rsrc_info <- repeat_and_add_vector( A10.rsrc_info, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )#
-L210.rsrc_info <- add_region_name( L210.rsrc_info )#
-#Reset regional markets to the names of the specific regions#
-L210.rsrc_info$market[ L210.rsrc_info$market == "regional" ] <- L210.rsrc_info$region[ L210.rsrc_info$market == "regional" ]#
-#Split different types of resources into separate tables#
-L210.dep_rsrc_info <- subset( L210.rsrc_info, resource_type == "depresource" )#
-L210.renew_rsrc_info <- subset( L210.rsrc_info, resource_type == "renewresource" )#
-L210.unlim_rsrc_info <- subset( L210.rsrc_info, resource_type == "unlimited-resource" )#
-printlog( "L210.DepRsrc: output unit, price unit, and market for depletable resources" )#
-L210.DepRsrc <- data.frame(#
-      region = L210.dep_rsrc_info$region,#
-      depresource = L210.dep_rsrc_info$resource,#
-      output.unit = L210.dep_rsrc_info$output.unit,#
-      price.unit = L210.dep_rsrc_info$price.unit,#
-      market = L210.dep_rsrc_info$market)#
-printlog( "L210.RenewRsrc: output unit, price unit, and market for renewable resources" )#
-L210.RenewRsrc <- data.frame(#
-      region = L210.renew_rsrc_info$region,#
-      renewresource = L210.renew_rsrc_info$resource,#
-      output.unit = L210.renew_rsrc_info$output.unit,#
-      price.unit = L210.renew_rsrc_info$price.unit,#
-      market = L210.renew_rsrc_info$market)#
-printlog( "L210.UnlimitRsrc: output unit, price unit, and market for unlimited resources" )#
-L210.UnlimitRsrc <- data.frame(#
-      region = L210.unlim_rsrc_info$region,#
-      unlimited.resource = L210.unlim_rsrc_info$resource,#
-      output.unit = L210.unlim_rsrc_info$output.unit,#
-      price.unit = L210.unlim_rsrc_info$price.unit,#
-      market = L210.unlim_rsrc_info$market,#
-      capacity.factor = L210.unlim_rsrc_info$capacity.factor )#
-printlog( "L210.DepRsrcPrice: historical prices for depletable resources" )#
-L210.dep_rsrc_price.melt <- interpolate_and_melt(#
-      L210.dep_rsrc_info[ names( L210.dep_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],#
-      model_base_years )#
-L210.DepRsrcPrice <- data.frame(#
-      region = L210.dep_rsrc_price.melt$region,#
-      depresource = L210.dep_rsrc_price.melt$resource,#
-      year = L210.dep_rsrc_price.melt$year,#
-      price = L210.dep_rsrc_price.melt$value )
-printlog( "L210.RenewRsrcPrice: historical prices for renewable resources" )#
-L210.renew_rsrc_price.melt <- interpolate_and_melt(#
-      L210.renew_rsrc_info[ names( L210.renew_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],#
-      model_base_years )#
-L210.RenewRsrcPrice <- data.frame(#
-      region = L210.renew_rsrc_price.melt$region,#
-      renewresource = L210.renew_rsrc_price.melt$resource,#
-      year = L210.renew_rsrc_price.melt$year,#
-      price = L210.renew_rsrc_price.melt$value )#
-printlog( "L210.UnlimitRsrcPrice: prices for unlimited resources" )#
-L210.unlimit_rsrc_price.melt <- interpolate_and_melt(#
-      L210.unlim_rsrc_info[ names( L210.unlim_rsrc_info ) %in% c( "region", "resource", X_historical_years ) ],#
-      model_base_years )#
-L210.UnlimitRsrcPrice <- data.frame(#
-      region = L210.unlimit_rsrc_price.melt$region,#
-      unlimited.resource = L210.unlimit_rsrc_price.melt$resource,#
-      year = L210.unlimit_rsrc_price.melt$year,#
-      price = L210.unlimit_rsrc_price.melt$value )
-tail(L111.Prod_EJ_R_F_Yh)
-A10.unoil_priceadder <- readdata( "ENERGY_ASSUMPTIONS", "A10.unoil_priceadder")
-A10.unoil_priceadder
-A10.rsrc_info
-tail(L111.Prod_EJ_R_F_Yh)
-tail
-tail()
-L210.Prod_EJ_R_F_Y <- L111.Prod_EJ_R_F_Yh[#
-      L111.Prod_EJ_R_F_Yh$fuel != "unconventional oil", c( R_S_F, X_model_base_years ) ]
-L210.Prod_EJ_R_F_Y.melt <- melt( L210.Prod_EJ_R_F_Y, id.vars = c( R_S_F ) )#
-L210.Prod_EJ_R_F_Y.melt <- add_region_name( L210.Prod_EJ_R_F_Y.melt )#
-L210.DepRsrcCalProd <- data.frame(#
-      region = L210.Prod_EJ_R_F_Y.melt$region,#
-      depresource = L210.Prod_EJ_R_F_Y.melt$fuel,#
-      subresource = A10.TechChange$subresource[ match( L210.Prod_EJ_R_F_Y.melt$fuel, A10.TechChange$resource ) ],#
-      year = substr( L210.Prod_EJ_R_F_Y.melt$variable, 2, 5 ),#
-      cal.production = round( L210.Prod_EJ_R_F_Y.melt$value, digits_calproduction ) )
-subset(L210.DepRsrcCalProd, region=="Canada")
-logstop()
-q()

@@ -57,6 +57,7 @@ names_GlobalCarbonCapture <- c( names_GlobalTechYr, "storage.market", "remove.fr
 names_GlobalRenewTech <- c( names_GlobalTechYr, "renewable.input" )
 names_GlobalTechSecOut <- c( names_GlobalTechYr, "secondary.output", "output.ratio" )
 names_GlobalTechCSeq <- c( names_GlobalTechYr, "remove.fraction", "target.gas" )
+names_GlobalTechShutdown <- c( names_GlobalTechYr, "lifetime", "shutdown.rate" )
 
 #Stub technologies
 names_StubTech <- c( "region", "supplysector", "subsector", "stub.technology" )
@@ -115,6 +116,21 @@ names_BaseService <- c( names_EnergyFinalDemand, "year", "base.service" )
 names_PriceElasticity <- c( names_EnergyFinalDemand, "year", "price.elasticity" )
 names_IncomeElasticity <- c( names_EnergyFinalDemand, "year", "income.elasticity" )
 names_aeei <- c( "region", "energy.final.demand", "year", "aeei" )
+
+#Consumers
+names_Consumers <- c( "region", "gcam.consumer" )
+names_BldNodes <- c( "region", "gcam.consumer", "nodeInput", "building.node.input" )
+names_PriceExp_IntGains <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "price.exp.year.fillout", "price.exponent",
+                             "internal.gains.market.name", "internal.gains.unit")
+names_Floorspace <- c( "region", "gcam.consumer", "nodeInput", "building.node.input", "year", "base.building.size" )
+names_DemandFunction_flsp <- c("region", "gcam.consumer", "nodeInput", "prodDmdFnType" )
+names_DemandFunction_serv <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "prodDmdFnType" )
+names_Satiation_flsp <- c( "region", "gcam.consumer", "nodeInput", "building.node.input", "satiation.level" )					
+names_ShellConductance <- c( names_BldNodes, "year", "shell.conductance", "shell.year", "floor.to.surface.ratio" )
+names_GenericServiceSatiation <- c( names_BldNodes, "building.service.input", "satiation.level" )
+names_ThermalServiceSatiation <- c( names_BldNodes, "thermal.building.service.input", "satiation.level" )
+names_HDDCDD <- c( names_BldNodes, "thermal.building.service.input", "year", "degree.days" )
+names_Intgains_scalar <- c( names_BldNodes, "thermal.building.service.input", "internal.gains.scalar")					
 
 #Land types
 names_LN0_Land <- c( "region", "LandAllocatorRoot", "year.fillout", "landAllocation" )

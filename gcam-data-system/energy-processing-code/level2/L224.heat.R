@@ -78,18 +78,16 @@ L224.StubTech_heat <- subset( L224.StubTech_heat, region %in% heat_regions)
 
 #Coefficients of global technologies
 printlog( "L224.GlobalTechCoef_heat: Energy inputs and coefficients of global technologies for district heat" )
-L224.globaltech_coef.melt <- interpolate_and_melt( A24.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient" )
+L224.globaltech_coef.melt <- interpolate_and_melt( A24.globaltech_coef, c( model_base_years, model_future_years ), value.name="coefficient", digits = digits_coefficient )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L224.globaltech_coef.melt[ c( "sector.name", "subsector.name" ) ] <- L224.globaltech_coef.melt[ c( "supplysector", "subsector" ) ]
 L224.GlobalTechCoef_heat <- L224.globaltech_coef.melt[ names_GlobalTechCoef ]
-L224.GlobalTechCoef_heat$coefficient <- round( L224.GlobalTechCoef_heat$coefficient, digits_coefficient )
 
 #Costs of global technologies
 printlog( "L224.GlobalTechCost_heat: Costs of global technologies for district heat" )
-L224.globaltech_cost.melt <- interpolate_and_melt( A24.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )
+L224.globaltech_cost.melt <- interpolate_and_melt( A24.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost", digits = digits_cost )
 L224.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L224.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]
 L224.GlobalTechCost_heat <- L224.globaltech_cost.melt[ names_GlobalTechCost ]
-L224.GlobalTechCost_heat$input.cost <- round( L224.GlobalTechCost_heat$input.cost, digits_cost )
 
 #Shareweights of global technologies
 printlog( "L224.GlobalTechShrwt_heat: Shareweights of global technologies for district heat" )

@@ -68,18 +68,16 @@ names( L225.StubTech_h2 ) <- names_StubTech
 
 #Efficiencies of global technologies
 printlog( "L225.GlobalTechEff_h2: Energy inputs and efficiencies of global technologies for hydrogen" )
-L225.globaltech_eff.melt <- interpolate_and_melt( A25.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency" )
+L225.globaltech_eff.melt <- interpolate_and_melt( A25.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency", digits = digits_efficiency )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L225.globaltech_eff.melt[ c( "sector.name", "subsector.name" ) ] <- L225.globaltech_eff.melt[ c( "supplysector", "subsector" ) ]
 L225.GlobalTechEff_h2 <- L225.globaltech_eff.melt[ names_GlobalTechEff ]
-L225.GlobalTechEff_h2$efficiency <- round( L225.GlobalTechEff_h2$efficiency, digits_efficiency )
 
 #Costs of global technologies
 printlog( "L225.GlobalTechCost_h2: Costs of global technologies for hydrogen" )
-L225.globaltech_cost.melt <- interpolate_and_melt( A25.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost" )
+L225.globaltech_cost.melt <- interpolate_and_melt( A25.globaltech_cost, c( model_base_years, model_future_years ), value.name="input.cost", digits = digits_cost )
 L225.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L225.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]
 L225.GlobalTechCost_h2 <- L225.globaltech_cost.melt[ names_GlobalTechCost ]
-L225.GlobalTechCost_h2$input.cost <- round( L225.GlobalTechCost_h2$input.cost, digits_cost )
 
 #Shareweights of global technologies
 printlog( "L225.GlobalTechShrwt_h2: Shareweights of global technologies for hydrogen" )
@@ -98,11 +96,9 @@ L225.AvgFossilEffKeyword_h2 <- L225.AllKeyword_h2[ !is.na( L225.AllKeyword_h2$av
 
 printlog( "L225.GlobalTechCapture_h2: CO2 capture fractions from global fertilizer production technologies with CCS" )
 ## No need to consider historical periods or intermittent technologies here
-L225.globaltech_co2capture.melt <- interpolate_and_melt( A25.globaltech_co2capture, model_future_years, value.name="remove.fraction" )
+L225.globaltech_co2capture.melt <- interpolate_and_melt( A25.globaltech_co2capture, model_future_years, value.name="remove.fraction", digits = digits_remove.fraction )
 L225.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L225.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]
-L225.GlobalTechCapture_h2 <- data.frame(
-      L225.globaltech_co2capture.melt[ names_GlobalTechYr ],
-      remove.fraction = round( L225.globaltech_co2capture.melt$remove.fraction, digits = digits_remove.fraction ) )
+L225.GlobalTechCapture_h2 <- L225.globaltech_co2capture.melt[ c( names_GlobalTechYr, "remove.fraction" ) ]
 L225.GlobalTechCapture_h2$storage.market <- CO2.storage.market
 
 # -----------------------------------------------------------------------------

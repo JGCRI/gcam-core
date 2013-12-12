@@ -5,6 +5,7 @@ no_aglu_regions <- "Taiwan"
 #Historical years for data write-out
 historical_years <- 1971:2010
 X_historical_years <- paste( "X", historical_years, sep = "" )
+final_historical_year <- max( historical_years )
 X_final_historical_year <- X_historical_years[ length( X_historical_years ) ]
 
 #Future years, where applicable
