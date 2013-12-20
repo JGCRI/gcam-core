@@ -2097,7 +2097,7 @@ void CLIMAT()
     //F1202       CALL INIT
     init( &Limits, &CLIM, &CONCS, &TANDSL, &FORCE, &Sulph, &VARW, &ICE, &AREAS, &NSIM,
          &OZ, &NEWCONCS, &CARB, &CAR, &METH1, &METH2, &METH3, &METH4, &CO2READ, &JSTART,
-         &CORREN, &HALOF, &COBS, &TauNitr );
+         &CORREN, &HALOF, &COBS, &TauNitr, &QADD );
     //F1203 !
     //F1204 !  LINEARLY EXTRAPOLATE LAST ESO2 VALUES FOR ONE YEAR
     //F1205 !
@@ -2353,7 +2353,7 @@ void CLIMAT()
              &Sulph, &VARW, &ICE, &AREAS, &NSIM,
              &OZ, &NEWCONCS, &CARB, &CAR, &METH1,
              &METH2, &METH3, &METH4, &CO2READ, &JSTART,
-             &CORREN, &HALOF, &COBS, &TauNitr );     
+             &CORREN, &HALOF, &COBS, &TauNitr, &QADD );     
          //F1372 !
         //F1373       IF(NESO2.EQ.1)THEN
         if( NESO2 == 1 ) {

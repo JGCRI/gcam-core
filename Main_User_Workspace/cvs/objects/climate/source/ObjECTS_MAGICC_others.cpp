@@ -92,7 +92,7 @@ void init( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, TANDSL_bl
           Sulph_block* Sulph, VARW_block* VARW, ICE_block* ICE, AREAS_block* AREAS, NSIM_block* NSIM,
           OZ_block* OZ, NEWCONCS_block* NEWCONCS, CARB_block* CARB, CAR_block* CAR, METH1_block* METH1,
           METH2_block* METH2, METH3_block* METH3, METH4_block* METH4, CO2READ_block* CO2READ, JSTART_block* JSTART,
-          CORREN_block* CORREN, HALOF_block* HALOF, COBS_block* COBS, TauNitr_block* TauNitr )
+          CORREN_block* CORREN, HALOF_block* HALOF, COBS_block* COBS, TauNitr_block* TauNitr, QADD_block* QADD )
 {
     //    std::cout << "SUBROUTINE INIT" << endl;
     f_enter( __func__ );
@@ -309,6 +309,46 @@ void init( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, TANDSL_bl
     TANDSL->SLT[ 1 ] = 0.0;
     //F3210       EX(0)=0.0
     TANDSL->EX[ 0 ] = 0.0;
+
+    fill( &TANDSL->TGAV[0], &TANDSL->TGAV[0]+iTp, 0.0 );
+    fill( &TANDSL->TDEEP[0], &TANDSL->TDEEP[0]+iTp, 0.0 );
+    fill( &TANDSL->SLI[0], &TANDSL->SLI[0]+iTp, 0.0 );
+    fill( &TANDSL->SLG[0], &TANDSL->SLG[0]+iTp, 0.0 );
+    fill( &TANDSL->SLA[0], &TANDSL->SLA[0]+iTp, 0.0 );
+    fill( &TANDSL->SLT[0], &TANDSL->SLT[0]+iTp, 0.0 );
+    fill( &TANDSL->EX[0], &TANDSL->EX[0]+iTp, 0.0 );
+
+    fill( &TANDSL->TNHAV[0], &TANDSL->TNHAV[0]+iTp, 0.0 );
+    fill( &TANDSL->TSHAV[0], &TANDSL->TSHAV[0]+iTp, 0.0 );
+    fill( &TANDSL->TOCNPREV[0], &TANDSL->TOCNPREV[0]+iTp, 0.0 );
+    fill( &TANDSL->TOCN[0], &TANDSL->TOCN[0]+iTp, 0.0 );
+
+    TANDSL->TEQU[ 0 ] = 0; TANDSL->TEQU[ 1 ] = 0;
+    TANDSL->TLAND[ 0 ] = 0; TANDSL->TLAND[ 1 ] = 0;
+    TANDSL->TOCEAN[ 0 ] = 0; TANDSL->TOCEAN[ 1 ] = 0;
+    TANDSL->TOCN[ 0 ] = 0; TANDSL->TOCN[ 1 ] = 0;
+    TANDSL->TOCNPREV[ 0 ] = 0; TANDSL->TOCNPREV[ 1 ] = 0;
+
+    TANDSL->QTOT[ 0 ] = 0;
+    TANDSL->QGH[ 0 ] = 0;
+    TANDSL->QOZ[ 0 ] = 0;
+    TANDSL->QBIO[ 0 ] = 0;
+    TANDSL->SLO[ 0 ] = 0;
+    TANDSL->QSO2[ 0 ] = 0;
+    TANDSL->QDIR[ 0 ] = 0;
+    TANDSL->QLAND[ 0 ] = 0;
+    TANDSL->QMN[ 0 ] = 0;
+    
+    QADD->QEX[0] = 0;
+    QADD->QEXNH[0] = 0;
+    QADD->QEXSH[0] = 0;
+    QADD->QEXNHO[0] = 0;
+    QADD->QEXNHL[0] = 0;
+    QADD->QEXSHO[0] = 0;
+    QADD->QEXSHL[0] = 0;
+    
+    FORCE->QBC[0] = 0;
+    FORCE->QOC[0] = 0;
     //F3211 !
     //F3212 !  CALCULATE NEW RADIATIVE FORCINGS EVERY FOURTH LOOP (I.E., WHEN
     //F3213 !   NSIM=1,5,9,13,17) WHEN NEW SO2 EMISSIONS ARE USED.

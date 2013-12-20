@@ -338,7 +338,7 @@ void init( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, TANDSL_bl
           Sulph_block* Sulph, VARW_block* VARW, ICE_block* ICE, AREAS_block* AREAS, NSIM_block* NSIM,
           OZ_block* OZ, NEWCONCS_block* NEWCONCS, CARB_block* CARB, CAR_block* CAR, METH1_block* METH1,
           METH2_block* METH2, METH3_block* METH3, METH4_block* METH4, CO2READ_block* CO2READ, JSTART_block* JSTART,
-          CORREN_block* CORREN, HALOF_block* HALOF, COBS_block* COBS, TauNitr_block* TauNitr );
+          CORREN_block* CORREN, HALOF_block* HALOF, COBS_block* COBS, TauNitr_block* TauNitr, QADD_block* QADD );
 void interp( int NVAL, int ISTART, int IY[], float X[], magicc_array* Y, int KEND );
 void deltaq( Limits_block* Limits, OZ_block* OZ, CLIM_block* CLIM, CONCS_block* CONCS,
             NEWCONCS_block* NEWCONCS, CARB_block* CARB, TANDSL_block* TANDSL, CAR_block* CAR,
