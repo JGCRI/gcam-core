@@ -140,6 +140,8 @@ L115.GTAP_ag_HA_ha <- GTAP_ag_HA_ha
 L115.GTAP_ag_HA_ha$iso <- L115.GTAP_ag_HA_ha$ctry
 L115.GTAP_ag_HA_ha$LPJmL_crop <- FAO_ag_items_PRODSTAT$LPJmL_crop[
       match( L115.GTAP_ag_HA_ha$GTAP_crop, FAO_ag_items_PRODSTAT$GTAP_crop ) ]
+L115.GTAP_ag_HA_ha$GEPIC_crop <- FAO_ag_items_PRODSTAT$GEPIC_crop[
+      match( L115.GTAP_ag_HA_ha$GTAP_crop, FAO_ag_items_PRODSTAT$GTAP_crop ) ]
 L115.GTAP_ag_HA_ha <- na.omit( L115.GTAP_ag_HA_ha )
 L115.GTAP_ag_HA_ha.melt <- melt( L115.GTAP_ag_HA_ha, variable_name = AEZ, measure.vars = AEZs )
 
@@ -152,10 +154,14 @@ L115.all_rcp_gcm_cm$scenID <- 1:nrow( L115.all_rcp_gcm_cm )
 L115.GTAP_ag_HA_ha_rcp_gcm_cm <- repeat_and_add_vector( L115.GTAP_ag_HA_ha.melt, "scenID", L115.all_rcp_gcm_cm$scenID )
 L115.GTAP_ag_HA_ha_rcp_gcm_cm[ rcp_gcm_cm ] <- L115.all_rcp_gcm_cm[
       match( L115.GTAP_ag_HA_ha_rcp_gcm_cm$scenID, L115.all_rcp_gcm_cm$scenID ), rcp_gcm_cm]
+L115.GTAP_ag_HA_ha_rcp_gcm_cm$cm_crop[ L115.GTAP_ag_HA_ha_rcp_gcm_cm$cropmodel == "lpjml" ] <-
+     L115.GTAP_ag_HA_ha_rcp_gcm_cm$LPJmL_crop[ L115.GTAP_ag_HA_ha_rcp_gcm_cm$cropmodel == "lpjml" ]
+L115.GTAP_ag_HA_ha_rcp_gcm_cm$cm_crop[ L115.GTAP_ag_HA_ha_rcp_gcm_cm$cropmodel == "gepic" ] <-
+     L115.GTAP_ag_HA_ha_rcp_gcm_cm$GEPIC_crop[ L115.GTAP_ag_HA_ha_rcp_gcm_cm$cropmodel == "gepic" ]
 
 #Match in the climate impacts for each row, in a separate column.
 L115.GTAP_ag_HA_ha_rcp_gcm_cm[ X_CCI_years ] <- L115.CCI_rcp_gcm_cm_R_Cisi_Y[
-      match( vecpaste( L115.GTAP_ag_HA_ha_rcp_gcm_cm[ c( rcp_gcm_cm, "iso", AEZ, "LPJmL_crop" ) ] ),
+      match( vecpaste( L115.GTAP_ag_HA_ha_rcp_gcm_cm[ c( rcp_gcm_cm, "iso", AEZ, "cm_crop" ) ] ),
              vecpaste( L115.CCI_rcp_gcm_cm_R_Cisi_Y[ c( rcp_gcm_cm, "iso", AEZ, "crop" ) ] ) ),
       X_CCI_years ]
 

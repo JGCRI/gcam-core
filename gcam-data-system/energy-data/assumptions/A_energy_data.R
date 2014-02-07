@@ -41,6 +41,7 @@ digits_OM <- 2
 digits_remove.fraction <- 2
 digits_floorspace <- 3
 digits_hddcdd <- 0
+digits_shrwt <- 4
 
 default_energy_unit <- "EJ"
 default_energy_price_unit <- "1975$/GJ"
@@ -64,6 +65,7 @@ cement_CCS_cost_2000USDtCO2 <- 50   #Starting point of supply curve in Mahasenan
 CO2_storage_cost_1990USDtC <- 42    #From GCAM 1.0 inputs
 
 discount_rate_bld <- 0.1
+bld_frac_of_income <- 0.2
 
 #Set which years to use to calculate climate normals (HDD and CDD) in each region
 climate_normal_years <- 1981:2000
@@ -72,8 +74,6 @@ InternalGainsScalar_USA_h <- -930
 InternalGainsScalar_USA_c <- 350
 
 floor.to.surface.ratio <- 5.5
-
-
 
 
 

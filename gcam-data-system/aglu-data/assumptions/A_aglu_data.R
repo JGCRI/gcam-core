@@ -60,6 +60,7 @@ R_LT_Y_AEZ <- c( R, LT, Y, AEZ )
 R_C <- c( R, C )
 R_C_AEZ <- c( R, C, AEZ )
 R_C_Y <- c( R, C, Y ) 
+R_C_Y_AEZ <- c( R, C, Y, AEZ ) 
 C_Y <- c( C, Y ) 
 C_AEZ <- c( C, AEZ )
 R_C_Sys <- c( R, C, Sys )
@@ -70,7 +71,10 @@ C_Sys_Fd <- c( C, Sys, Fd )
 R_Fd <- c( R, Fd )
 rcp_gcm_cm <- c( "rcp", "gcm", "cropmodel" )
 rcp_gcm_cm_aezid <- c( rcp_gcm_cm, "ID" )
+rcp_gcm_cm_aezid_irr <- c( rcp_gcm_cm, "ID", "irr" )
 rcp_gcm_cm_aezid_crop <- c( rcp_gcm_cm, "ID", "crop" )
+rcp_gcm_cm_aezid_crop_irr <- c( rcp_gcm_cm, "ID", "crop", "irr" )
+
 
 #-----------------------------------------------------------------
 #NUMBERS OF DIGITS FOR MODEL INPUT DATA
@@ -219,6 +223,15 @@ swgr_Fert_IO_gNm2 <- 5.6
 swgr_Yield_kgCm2 <- 0.34
 popl_Fert_IO_gNm2 <- 3.36
 popl_Yield_kgCm2 <- 0.345
+
+#Water characteristics
+Irr_Cons_name <- "water consumption"
+Irr_W_name <- "water withdrawals"
+Bio_Cons_name <- "biophysical water consumption"
+swgr_Bio_IO_km3EJ <- 25  # From Vaibhav's paper
+misc_Bio_IO_km3EJ <- 20
+Jat_Bio_IO_km3EJ <- 240  # Roughly double the coefficient of soybeans
+wdy_Bio_IO_km3EJ <- 25
 
 #Woody bioenergy crop names
 woody_biocrops <- c( "eucalyptus", "willow" )

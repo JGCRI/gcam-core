@@ -19,7 +19,6 @@ printlog( "Historical transportation sector energy consumption by region and fue
 # 1. Read files
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
-A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )
 enduse_sector_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_sector_aggregation" )
 L131.in_EJ_R_Senduse_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L131.in_EJ_R_Senduse_F_Yh" )

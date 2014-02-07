@@ -174,13 +174,13 @@ L244.GenericServiceSatiation <- subset( L244.ServiceSatiation_USA, building.serv
 L244.GenericServiceSatiation <- write_to_all_regions( L244.GenericServiceSatiation, names_GenericServiceSatiation )
 
 ## This is bad. Should be done here but we aren't. Instead need to match in the floorspace into the base service table, divide to calculate the service demand
-## per unit floorspace, and then aggregate across years, taking the maximum. This (increased slightly) is then the minimum satiation level that needs to be read in.
+## per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
 ## TODO: fix the bad code in the model. need a flexible building service function
 L244.BS <- L244.GenericBaseService
 L244.BS$flsp <- L244.Floorspace$base.building.size[
       match( vecpaste( L244.BS[ c( names_BldNodes, "year" ) ] ), vecpaste( L244.Floorspace[ c( names_BldNodes, "year" ) ] ) ) ]
 L244.BS$service.per.flsp <- L244.BS$base.service / L244.BS$flsp
-L244.moreBS <- aggregate( L244.BS[ "service.per.flsp" ], by=as.list( L244.BS[ c( names_BldNodes, "building.service.input" ) ] ), max )
+L244.moreBS <- subset( L244.BS, year == max( model_base_years ) )
 L244.GenericServiceSatiation$satiation.level <- pmax( L244.GenericServiceSatiation$satiation.level, L244.moreBS$service.per.flsp[
       match( vecpaste( L244.GenericServiceSatiation[ c( names_BldNodes, "building.service.input" ) ] ),
              vecpaste( L244.moreBS[ c( names_BldNodes, "building.service.input" ) ] ) ) ] * 1.0001 )
@@ -201,14 +201,14 @@ L244.ThermalServiceSatiation$satiation_mult <- L244.ThermalServiceSatiation$degr
 L244.ThermalServiceSatiation$satiation.level <- round( L244.ThermalServiceSatiation$satiation.level * L244.ThermalServiceSatiation$satiation_mult,
       digits = digits_calOutput )
 
-#This part here is bad. The service satiation can not be lower than the base year demand, so need to use pmax to set a floor on the quantity
-# TODO: the model code here really needs to be fixed. Satiation levels are unstable, and including more base years will result in different required satiation levels.
+#This part here is bad. The service satiation in the final cal year can not be lower than the observed demand, so need to use pmax to set a floor on the quantity
+# TODO: fix model code.
 # First need to calculate the maximum quantities of demand over the historical time period, expressed per unit floorspace
 L244.tmp <- L244.ThermalBaseService
 L244.tmp$flsp <- L244.Floorspace$base.building.size[
       match( vecpaste( L244.tmp[ c( names_BldNodes, "year" ) ] ), vecpaste( L244.Floorspace[ c( names_BldNodes, "year" ) ] ) ) ]
 L244.tmp$service.per.flsp <- L244.tmp$base.service / L244.tmp$flsp
-L244.tmp1 <- aggregate( L244.tmp[ "service.per.flsp" ], by=as.list( L244.tmp[ c( names_BldNodes, "thermal.building.service.input" ) ] ), max )
+L244.tmp1 <- subset( L244.tmp, year == max( model_base_years ) )
 
 # Then, match in this quantity into the thermal service satiation and take the max
 L244.ThermalServiceSatiation$service.per.flsp <- L244.tmp1$service.per.flsp[

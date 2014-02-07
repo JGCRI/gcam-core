@@ -8,8 +8,8 @@ X_Maddison_historical_years <- paste0( "X", Maddison_historical_years )
 UN_historical_years <- c( 1950, 1971:2010 )
 X_UN_historical_years <- paste0( "X", UN_historical_years )
 
-pop_model <- "IIASA POP"
-gdp_model <- "OECD Env-Linkages"
+pop_model <- "IIASA-WiC POP"
+gdp_model <- "OECD Env-Growth"
 base_pop_scen <- "SSP2"
 base_gdp_scen <- "SSP2"
 

@@ -71,6 +71,31 @@ names_StubTechCalorieContent <- c( names_StubTechEff )
 names_StubTechCost <- c( names_StubTechYr, "minicam.non.energy.input", "input.cost" )
 names_StubTechFixOut <- c( names_StubTechYr, "fixedOutput", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 
+#Transportation subsectors and technologies
+names_tranSubsector <- c( "region", "supplysector", "tranSubsector" )
+names_tranSubsectorLogit <- c( names_tranSubsector, "logit.year.fillout", "logit.exponent" )
+names_tranSubsectorShrwt <- c( names_tranSubsector, "year", "share.weight" )
+names_tranSubsectorShrwtFllt <- c( names_tranSubsector, "year.fillout", "share.weight" )
+names_tranSubsectorInterp <- c( names_tranSubsector, "apply.to","from.year", "to.year", "interpolation.function" )
+names_tranSubsectorInterpTo <- c( names_tranSubsector, "apply.to","from.year", "to.year", "to.value", "interpolation.function" )
+names_tranSubsectorSpeed <- c( names_tranSubsector, "year", "speed" )
+names_tranSubsectorVOTT <- c( names_tranSubsector, "addTimeValue", "year.fillout", "time.value.multiplier" )
+names_tranSubsectorFuelPref <- c( names_tranSubsector, "year.fillout", "fuelprefElasticity" )
+
+names_StubTranTech <- c( "region", "supplysector", "tranSubsector", "stub.technology" )
+names_StubTranTechYr <- c( names_StubTranTech, "year" )
+names_StubTranTechCalInput <- c( names_StubTranTechYr, input, "calibrated.value", "share.weight.year", "subs.share.weight", "tech.share.weight" )
+names_StubTranTechLoadFactor <- c( names_StubTranTechYr, "loadFactor" )
+names_StubTranTechCost <- c( names_StubTranTechYr, "minicam.non.energy.input", "input.cost" )
+names_StubTranTechCoef <- c( names_StubTranTechYr, input, "coefficient", "market.name" )
+
+
+names_GlobalTranTech <- c( "sector.name", "subsector.name", "tranTechnology" )
+names_GlobalTranTechYr <- c( names_GlobalTranTech, "year")
+names_GlobalTranTechShrwt <- c( names_GlobalTranTechYr, "share.weight" )
+names_GlobalTranTechInterp <- c( names_GlobalTranTech, "apply.to","from.year", "to.year", "interpolation.function" )
+names_GlobalTranTechSCurve <- c( names_GlobalTranTechYr, "lifetime", "steepness", "half.life" )
+
 #Agricultural sectors, subsectors, and technologies
 names_AgSupplySector <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent" )
 names_AgSupplySubsector <- c( "region", "AgSupplySector", "AgSupplySubsector" )

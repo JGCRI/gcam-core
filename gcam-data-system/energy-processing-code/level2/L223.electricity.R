@@ -284,7 +284,7 @@ L223.StubTechCalInput_elec$minicam.energy.input <- A23.globaltech_eff$minicam.en
 L223.StubTechCalInput_elec$calibrated.value <- round( L223.in_EJ_R_elec_F_tech_Yh$value, digits_calOutput )
 L223.StubTechCalInput_elec$share.weight.year <- L223.StubTechCalInput_elec$year
 L223.StubTechCalInput_elec <- set_subsector_shrwt( L223.StubTechCalInput_elec, value.name = "calibrated.value" )
-L223.StubTechCalInput_elec$share.weight <- ifelse( L223.StubTechCalInput_elec$calibrated.value > 0, 1, 0 )
+L223.StubTechCalInput_elec$tech.share.weight <- ifelse( L223.StubTechCalInput_elec$calibrated.value > 0, 1, 0 )
 
 printlog( "L223.StubTechFixOut_elec: fixed output of electricity generation technologies")
 L223.StubTechFixOut_elec <- L223.fixout_EJ_R_elec_F_tech_Yh[ names_StubTechYr ]

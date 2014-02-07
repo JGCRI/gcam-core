@@ -21,7 +21,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "SOCIO_ASSUMPTIONS", "A_socioeconomics_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
-SSP_GDP_PPP <- readdata( "SOCIO_LEVEL0_DATA", "SSP_GDP_PPP" )
+SSP_database_v9 <- readdata( "SOCIO_LEVEL0_DATA", "SSP_database_v9" )
 GCAM3_GDP <- readdata( "SOCIO_LEVEL0_DATA", "GCAM3_GDP" )
 L100.gdp_mil90usd_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.gdp_mil90usd_ctry_Yh" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
@@ -29,43 +29,21 @@ L101.Pop_thous_SSP_R_Yfut <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_SSP_
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-printlog( "NOTE: The SSPs do not include Taiwan. This needs to be added for the processing" )
-printlog( "Taiwan will be assigned the same growth rate as China in future time periods" )
-TWN_GDP_PPP <- data.frame(
-      model = gdp_model,
-      Scenario = unique( SSP_GDP_PPP$Scenario[ SSP_GDP_PPP$model == gdp_model ] ),
-      Region = "TWN",
-      Variable = unique( SSP_GDP_PPP$Variable), Unit = unique( SSP_GDP_PPP$Unit ) )
-TWN_GDP_PPP[ X_historical_years[ X_historical_years %in% names( SSP_GDP_PPP ) ] ] <- L100.gdp_mil90usd_ctry_Yh[
-      L100.gdp_mil90usd_ctry_Yh$iso == "twn",
-      X_historical_years[ X_historical_years %in% names( SSP_GDP_PPP ) ] ] * conv_1990_2005_USD * conv_mil_bil
-
-#NOTE: Not worrying about PPP:MER conversion factors here. This is crapola anyway and will be replaced when the SSP group adds Taiwan.
-X_SSP_data_years <- names( SSP_GDP_PPP )[ grep( "X[0-9]{4}", names( SSP_GDP_PPP ) ) ]
-X_SSP_data_years_base <- X_SSP_data_years[ X_SSP_data_years %in% names( TWN_GDP_PPP ) ]
-X_SSP_data_years_fut <- X_SSP_data_years[ !X_SSP_data_years %in% names( TWN_GDP_PPP ) ]
-X_SSP_data_years_fby <- X_SSP_data_years_base[ length( X_SSP_data_years_base ) ]
-CHN_GDP_PPP <- subset( SSP_GDP_PPP, Region=="CHN" & model == gdp_model )
-TWN_GDP_PPP[ X_SSP_data_years_fut ] <- TWN_GDP_PPP[[ X_SSP_data_years_fby ]] * CHN_GDP_PPP[ X_SSP_data_years_fut ] / CHN_GDP_PPP[[ X_SSP_data_years_fby ]]
-
-#Rbind the Taiwan GDP scenarios back to the full database
-SSP_GDP_PPP <- rbind( SSP_GDP_PPP, TWN_GDP_PPP )
-
 printlog( "Aggregating historical and future GDP by GCAM region")
 L100.gdp_mil90usd_ctry_Yh[[R]] <- iso_GCAM_regID[[R]][ match( L100.gdp_mil90usd_ctry_Yh$iso, iso_GCAM_regID$iso ) ]
 L102.gdp_mil90usd_R_Yh <- aggregate( L100.gdp_mil90usd_ctry_Yh[ X_historical_years ], by=as.list( L100.gdp_mil90usd_ctry_Yh[ R ] ), sum )
 
 #Future GDP in the SSP scenarios
-printlog( "NOTE: this point in the processing method defines the maximum number of countries that may be regions in GCAM (182)" )
-L102.gdp_bilusd_ctry_Yfut <- subset( SSP_GDP_PPP, model == gdp_model )
-L102.gdp_bilusd_ctry_Yfut$iso <- tolower( L102.gdp_bilusd_ctry_Yfut$Region )
+printlog( "NOTE: this point in the processing method defines the maximum number of countries that may be regions in GCAM (184)" )
+L102.gdp_bilusd_ctry_Yfut <- subset( SSP_database_v9, MODEL == gdp_model & VARIABLE == "GDP|PPP" )
+L102.gdp_bilusd_ctry_Yfut$iso <- tolower( L102.gdp_bilusd_ctry_Yfut$REGION )
 
 #Romania is called "rou" in the SSP database. reset this
 L102.gdp_bilusd_ctry_Yfut$iso[ L102.gdp_bilusd_ctry_Yfut$iso == "rou" ] <- "rom"
 
 #Map in the region and scenario
 L102.gdp_bilusd_ctry_Yfut[[R]] <- iso_GCAM_regID[[R]][ match( L102.gdp_bilusd_ctry_Yfut$iso, iso_GCAM_regID$iso ) ]
-L102.gdp_bilusd_ctry_Yfut$scenario <- substr( L102.gdp_bilusd_ctry_Yfut$Scenario, 1, 4 )
+L102.gdp_bilusd_ctry_Yfut$scenario <- substr( L102.gdp_bilusd_ctry_Yfut$SCENARIO, 1, 4 )
 
 #Specify which years in the SSP databases to use
 X_SSP_years <- names( L102.gdp_bilusd_ctry_Yfut )[ names( L102.gdp_bilusd_ctry_Yfut ) %in% c( X_historical_years, X_future_years ) ]

@@ -21,7 +21,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "SOCIO_ASSUMPTIONS", "A_socioeconomics_data", extension = ".R" )
 socioeconomics_ctry <- readdata( "SOCIO_MAPPINGS", "socioeconomics_ctry" )
 Maddison_population <- readdata( "SOCIO_LEVEL0_DATA", "Maddison_population" )
-SSP_Population <- readdata( "SOCIO_LEVEL0_DATA", "SSP_Population" )
+SSP_database_v9 <- readdata( "SOCIO_LEVEL0_DATA", "SSP_database_v9" )
 UN_popTot <- readdata( "SOCIO_LEVEL0_DATA", "UN_popTot" )
 
 # -----------------------------------------------------------------------------
@@ -102,9 +102,9 @@ printlog( "Part 3: Downscaling SSP scenarios to the modern day iso level" )
 X_final_historical_year <- X_UN_historical_years[ length( X_UN_historical_years ) ]
 
 #Subset the SSP scenarios from the appropriate model and drop the version name from the scenario name
-L100.pop_mil_SSP_ctry_Yfut <- subset( SSP_Population, model == pop_model )
-L100.pop_mil_SSP_ctry_Yfut$iso <- tolower( L100.pop_mil_SSP_ctry_Yfut$Region )
-L100.pop_mil_SSP_ctry_Yfut[[Scen]] <- substr( L100.pop_mil_SSP_ctry_Yfut$Scenario, 1, 4 )
+L100.pop_mil_SSP_ctry_Yfut <- subset( SSP_database_v9, MODEL == pop_model & VARIABLE == "Population" )
+L100.pop_mil_SSP_ctry_Yfut$iso <- tolower( L100.pop_mil_SSP_ctry_Yfut$REGION )
+L100.pop_mil_SSP_ctry_Yfut[[Scen]] <- substr( L100.pop_mil_SSP_ctry_Yfut$SCENARIO, 1, 4 )
 
 #Romania is called "rou" in the SSP database. reset this
 L100.pop_mil_SSP_ctry_Yfut$iso[ L100.pop_mil_SSP_ctry_Yfut$iso == "rou" ] <- "rom"

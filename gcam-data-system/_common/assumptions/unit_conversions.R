@@ -44,6 +44,7 @@ conv_Pcal_Mcal <- 1e9
 
 #volume conversions
 conv_m3_bm3 <- 1e-9
+conv_Mm3_km3 <- 1e-3
 
 #area conversions
 conv_Ha_bm2 <- 1e-5
@@ -70,6 +71,9 @@ conv_GJ_EJ <- 1e-9
 conv_kwh_GJ <- 0.0036
 conv_GWh_EJ <- 3.6e-6
 conv_MWh_EJ <- 3.6e-9
+conv_MJ_btu <- 947.777
+conv_EJ_GJ <- 1e9
+conv_btu_kJ <- 1.0551
 
 #from billion barrels a day to EJ per year
 conv_bbld_EJyr <- 6.119 * 365.25 * 1e-3

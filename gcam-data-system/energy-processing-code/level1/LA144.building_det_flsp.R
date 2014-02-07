@@ -29,6 +29,7 @@ CEDB_ResFloorspace_chn <- readdata( "ENERGY_LEVEL0_DATA", "CEDB_ResFloorspace_ch
 IEA_PCResFloorspace <- readdata( "ENERGY_LEVEL0_DATA", "IEA_PCResFloorspace" )
 Odyssee_ResFloorspacePerHouse <- readdata( "ENERGY_LEVEL0_DATA", "Odyssee_ResFloorspacePerHouse" )
 L100.Pop_thous_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.Pop_thous_ctry_Yh" )
+L102.gdp_mil90usd_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -132,15 +133,23 @@ L144.flsp_bm2_ctry_comm_Yh [ X_historical_years ] <- L144.flsp_bm2_ctry_comm_Yh 
 L144.flsp_bm2_R_comm_Yh <- aggregate( L144.flsp_bm2_ctry_comm_Yh [ X_historical_years ], 
   by = as.list( L144.flsp_bm2_ctry_comm_Yh[ R ] ), sum ) 
 
+#Calculation of floorspace prices - using a simple formulation right now
+L144.flspPrice_90USDm2_R_bld_Yh <- L144.flsp_bm2_R_res_Yh
+L144.flspPrice_90USDm2_R_bld_Yh[ X_historical_years ] <-
+      L102.gdp_mil90usd_GCAM3_R_Y[ X_historical_years ] * conv_mil_bil * bld_frac_of_income / 
+      L144.flsp_bm2_R_res_Yh[ X_historical_years ]
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
 comments.L144.flsp_bm2_R_res_Yh <- c( "Residential floorspace by GCAM region / historical year","Unit = bm2" )
 comments.L144.flsp_bm2_R_comm_Yh <- c( "Commercial floorspace by GCAM region / historical year","Unit = bm2" )
+comments.L144.flspPrice_90USDm2_R_bld_Yh <- c( "Building floorspace prices by GCAM region / historical year","Unit = 1990$ / m2" )
 
 #write tables as CSV files
 writedata( L144.flsp_bm2_R_res_Yh, domain="ENERGY_LEVEL1_DATA", fn="L144.flsp_bm2_R_res_Yh", comments=comments.L144.flsp_bm2_R_res_Yh )
 writedata( L144.flsp_bm2_R_comm_Yh, domain="ENERGY_LEVEL1_DATA", fn="L144.flsp_bm2_R_comm_Yh", comments=comments.L144.flsp_bm2_R_comm_Yh )
+writedata( L144.flspPrice_90USDm2_R_bld_Yh, domain="ENERGY_LEVEL1_DATA", fn="L144.flspPrice_90USDm2_R_bld_Yh", comments=comments.L144.flspPrice_90USDm2_R_bld_Yh )
 
 # Every script should finish with this line
 logstop()
