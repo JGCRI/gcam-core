@@ -39,7 +39,7 @@ L100.pop_thous_Rgdp_Yh <- aggregate( L100.pop_thous_ctry_Yh[ "Value" ], by=as.li
 names( L100.pop_thous_Rgdp_Yh )[ names( L100.pop_thous_Rgdp_Yh ) == "Value" ] <- "pop_thous"
 
 #Melt the GDP table and match GDP by region into the population table
-L100.gdp_milusd_Rgdp_Yh.melt <- melt( GDPhist, id.vars = c( "Country", "iso" ), variable_name = "Xyear" )
+L100.gdp_milusd_Rgdp_Yh.melt <- melt( GDPhist, id.vars = c( "Country", "iso" ), variable.name = "Xyear" )
 L100.pop_thous_Rgdp_Yh$gdp_mil <- L100.gdp_milusd_Rgdp_Yh.melt$value[
       match( vecpaste( L100.pop_thous_Rgdp_Yh[ c( "GDP_reg", "Xyear" ) ] ),
              vecpaste( L100.gdp_milusd_Rgdp_Yh.melt[ c( "iso", "Xyear" ) ] ) ) ]
@@ -54,7 +54,7 @@ L100.pop_thous_ctry_Yh$pcgdp_thous <- L100.pop_thous_Rgdp_Yh$pcgdp_thous[
 L100.pop_thous_ctry_Yh$gdp_milusd <- L100.pop_thous_ctry_Yh$Value * L100.pop_thous_ctry_Yh$pcgdp_thous
 
 #Cast so that years are columns
-L100.gdp_mil90usd_ctry_Yh <- cast( L100.pop_thous_ctry_Yh, iso ~ Xyear, value = "gdp_milusd" )
+L100.gdp_mil90usd_ctry_Yh <- dcast( L100.pop_thous_ctry_Yh, iso ~ Xyear, value.var = "gdp_milusd" )
 
 # -----------------------------------------------------------------------------
 # 3. Output

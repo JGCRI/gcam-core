@@ -14,3 +14,10 @@ inventory_match_year <- 2009
 default_gas_Ccoef <- 14.2
 default_coal_Ccoef <- 27.3
 default_liquids_Ccoef <- 19.6
+
+digits_CO2coef <- 1
+
+#Level2 data names
+#Primary fuel carbon coefficients
+names_PrimaryFuelCO2Coef <- c( "region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef")
+

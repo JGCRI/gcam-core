@@ -17,5 +17,12 @@ default_interest.rate <- 0.05
 default_laborforce <- 0.5
 
 digits_Pop <- 0
+digits_GDP <- 0
 digits_LaborProductivity <- 5
-digits_IncElas_ind <- 3
+digits_IncElas_bld <- 3 #These are for aggregate sectors and don't matter
+digits_IncElas_trn <- 3
+
+#Level2 data names specific to the socioeconomics module
+names_Pop <- c( "region", "year", "totalPop" )
+names_baseGDP <- c( "region", "baseGDP" )
+names_LaborProductivity <- c( "region", "year", "laborproductivity" )

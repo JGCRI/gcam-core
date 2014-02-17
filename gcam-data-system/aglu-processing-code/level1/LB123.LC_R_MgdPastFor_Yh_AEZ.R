@@ -52,7 +52,7 @@ L123.ag_Yield_kgm2_Past_AEZ[ is.na( L123.ag_Yield_kgm2_Past_AEZ ) ] <- 0
 #Calculate bottom-up estimate of pasture production by region and AEZ ( yield times land area )
 printlog( "Calculating total pasture grass production by region and AEZ" )
 L123.LC_bm2_R_Past_Y_AEZ <- subset( L120.LC_bm2_R_LT_Yh_AEZ, Land_Type=="Pasture", select = c( R_LT_AEZ, X_AGLU_historical_years ) )
-L123.ag_Yield_kgm2_Past_AEZ.melt <- melt( L123.ag_Yield_kgm2_Past_AEZ, id.vars = C, variable_name = "AEZ" ) 
+L123.ag_Yield_kgm2_Past_AEZ.melt <- melt( L123.ag_Yield_kgm2_Past_AEZ, id.vars = C, variable.name = "AEZ" ) 
 
 L123.ag_potentialProd_Mt_R_Past_Y_AEZ <- L123.LC_bm2_R_Past_Y_AEZ
 L123.ag_potentialProd_Mt_R_Past_Y_AEZ[ X_AGLU_historical_years ] <- L123.LC_bm2_R_Past_Y_AEZ[ X_AGLU_historical_years ] * L123.ag_Yield_kgm2_Past_AEZ.melt$value[
@@ -131,7 +131,7 @@ L123.For_Yield_m3m2_R_AEZ[ is.na( L123.For_Yield_m3m2_R_AEZ ) ] <- 0
 #disaggregate logging to AEZ on the basis of biomass production rates.
 printlog( "NOTE: Using forest biomass production by AEZ to disaggregate regional wood production to AEZs" )
 L123.LC_bm2_R_For_Y_AEZ <- L120.LC_bm2_R_LT_Yh_AEZ[ L120.LC_bm2_R_LT_Yh_AEZ[[LT]] == "Forest", c( R_LT_AEZ, X_AGLU_historical_years ) ]
-L123.For_Yield_m3m2_R_AEZ.melt <- melt( L123.For_Yield_m3m2_R_AEZ, id.vars = R_C, variable_name = "AEZ" )
+L123.For_Yield_m3m2_R_AEZ.melt <- melt( L123.For_Yield_m3m2_R_AEZ, id.vars = R_C, variable.name = "AEZ" )
 
 L123.For_potentialProd_bm3_R_Y_AEZ <- L123.LC_bm2_R_For_Y_AEZ
 names( L123.For_potentialProd_bm3_R_Y_AEZ )[ names( L123.For_potentialProd_bm3_R_Y_AEZ ) == LT ] <- C
@@ -140,7 +140,7 @@ L123.For_potentialProd_bm3_R_Y_AEZ[ X_AGLU_historical_years ] <- L123.LC_bm2_R_F
 
 #Cast regional forestry output into the same format as these tables
 L110.For_ALL_bm3_R_Y$Xyear <- paste( "X", L110.For_ALL_bm3_R_Y[[Y]], sep = "" )
-L123.For_ALL_bm3_R_Y <- cast( L110.For_ALL_bm3_R_Y, GCAM_region_ID + GCAM_commodity ~ Xyear, value = "Prod_bm3" )
+L123.For_ALL_bm3_R_Y <- dcast( L110.For_ALL_bm3_R_Y, GCAM_region_ID + GCAM_commodity ~ Xyear, value.var = "Prod_bm3" )
 
 #Forest output by AEZ = Regional forest output * AEZ-wise forest biomass production fraction
 L123.For_potentialProd_bm3_R_Y <- aggregate( L123.For_potentialProd_bm3_R_Y_AEZ[ X_AGLU_historical_years ], by=as.list( L123.For_potentialProd_bm3_R_Y_AEZ[ R_C ] ), sum )

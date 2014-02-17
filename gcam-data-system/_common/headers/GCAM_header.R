@@ -6,7 +6,7 @@
 
 # -----------------------------------------------------------------------------
 # Load required libraries
-libs <- c( "ggplot2", "reshape" )
+libs <- c( "reshape2" )
 for( i in libs ) {
 	if( !require( i, character.only=T ) ) {
 		cat( "Couldn't load", i, "; trying to download it...\n" )
@@ -421,7 +421,9 @@ set_years <- function( data ) {
      data_new <- data
      data_new[data_new == "start-year"] <- min( model_base_years )
      data_new[data_new == "final-calibration-year" ] <- max( model_base_years )
+     data_new[data_new == "final-historical-year" ] <- max( historical_years )
      data_new[data_new == "initial-future-year" ] <- min( model_future_years )
+     data_new[data_new == "initial-nonhistorical-year" ] <- min( model_years[ model_years > max( historical_years ) ] )
      data_new[data_new == "end-year" ] <- max( model_future_years )
      return( data_new )
 	 }

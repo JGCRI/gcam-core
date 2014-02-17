@@ -82,7 +82,7 @@ L201.AgProduction <- repeat_and_add_vector( L201.AgProduction, Y, model_base_yea
 L201.AgProduction_ag <- L201.AgProduction[ L201.AgProduction$AgSupplySector %in% L104.ag_Prod_Mt_R_C_Y_AEZ[[C]], ]
 
 #Melt table of production
-L201.ag_Prod_Mt_R_C_Y_AEZ.melt <- melt( L104.ag_Prod_Mt_R_C_Y_AEZ, id.vars = R_C_AEZ, variable_name = Y )
+L201.ag_Prod_Mt_R_C_Y_AEZ.melt <- melt( L104.ag_Prod_Mt_R_C_Y_AEZ, id.vars = R_C_AEZ, variable.name = Y )
 L201.ag_Prod_Mt_R_C_Y_AEZ.melt[[Y]] <- sub( "X", "", L201.ag_Prod_Mt_R_C_Y_AEZ.melt[[Y]])
 L201.ag_Prod_Mt_R_C_Y_AEZ.melt <- add_region_name( L201.ag_Prod_Mt_R_C_Y_AEZ.melt )
 L201.ag_Prod_Mt_R_C_Y_AEZ.melt$AgProductionTechnology <- paste( L201.ag_Prod_Mt_R_C_Y_AEZ.melt[[C]], L201.ag_Prod_Mt_R_C_Y_AEZ.melt[[AEZ]], sep = AEZ_delimiter )
@@ -101,7 +101,7 @@ L201.AgProduction_ag <- L201.AgProduction_ag[ names_AgProduction ]
 
 printlog( "L201.AgProduction_For: Forest product calibration (output)" )
 #Melt production table
-L201.For_Prod_bm3_R_Y_AEZ.melt <- melt( L123.For_Prod_bm3_R_Y_AEZ, id.vars = R_C_AEZ, variable_name = Y )
+L201.For_Prod_bm3_R_Y_AEZ.melt <- melt( L123.For_Prod_bm3_R_Y_AEZ, id.vars = R_C_AEZ, variable.name = Y )
 L201.For_Prod_bm3_R_Y_AEZ.melt[[Y]] <- sub( "X", "", L201.For_Prod_bm3_R_Y_AEZ.melt[[Y]])
 L201.For_Prod_bm3_R_Y_AEZ.melt <- add_region_name( L201.For_Prod_bm3_R_Y_AEZ.melt )
 L201.For_Prod_bm3_R_Y_AEZ.melt$AgProductionTechnology <- paste( L201.For_Prod_bm3_R_Y_AEZ.melt[[C]], L201.For_Prod_bm3_R_Y_AEZ.melt[[AEZ]], sep = AEZ_delimiter )
@@ -119,7 +119,7 @@ L201.AgProduction_For <- L201.AgProduction_For[ names_AgProduction ]
 
 printlog( "L201.AgProduction_Past: Pasture product calibration (output)" )
 #Melt production table
-L201.ag_Prod_Mt_R_Past_Y_AEZ.melt <- melt( L123.ag_Prod_Mt_R_Past_Y_AEZ, id.vars = R_C_AEZ, variable_name = Y )
+L201.ag_Prod_Mt_R_Past_Y_AEZ.melt <- melt( L123.ag_Prod_Mt_R_Past_Y_AEZ, id.vars = R_C_AEZ, variable.name = Y )
 L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[Y]] <- sub( "X", "", L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[Y]])
 L201.ag_Prod_Mt_R_Past_Y_AEZ.melt <- add_region_name( L201.ag_Prod_Mt_R_Past_Y_AEZ.melt )
 L201.ag_Prod_Mt_R_Past_Y_AEZ.melt$AgProductionTechnology <- paste( L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[C]], L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[AEZ]], sep = AEZ_delimiter )
@@ -137,7 +137,7 @@ L201.AgProduction_Past <- L201.AgProduction_Past[ names_AgProduction ]
 
 printlog( "L201.AgHAtoCL: Harvests per year" )
 #Melt Harvested-area-to-cropland table
-L201.ag_HA_to_CropLand_R_Y_AEZ.melt <- melt( L122.ag_HA_to_CropLand_R_Y_AEZ, id.vars = R_AEZ, variable_name = Y )
+L201.ag_HA_to_CropLand_R_Y_AEZ.melt <- melt( L122.ag_HA_to_CropLand_R_Y_AEZ, id.vars = R_AEZ, variable.name = Y )
 L201.ag_HA_to_CropLand_R_Y_AEZ.melt[[Y]] <- sub( "X", "", L201.ag_HA_to_CropLand_R_Y_AEZ.melt[[Y]])
 L201.ag_HA_to_CropLand_R_Y_AEZ.melt<- add_region_name( L201.ag_HA_to_CropLand_R_Y_AEZ.melt )
 
@@ -161,10 +161,10 @@ L201.AgYield_bio <- L201.AgProduction[ L201.AgProduction$AgSupplySector == "biom
 L201.AgYield_bio[[AEZ]] <- with( L201.AgYield_bio, substr( AgProductionTechnology, nchar( AgProductionTechnology ) - 4, nchar( AgProductionTechnology ) ) )
 
 #Melt tables of base year biomass yields
-L201.ag_bioYield_GJm2_R_AEZ_ref.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_ref, id.vars = R, variable_name = AEZ ) 
+L201.ag_bioYield_GJm2_R_AEZ_ref.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_ref, id.vars = R, variable.name = AEZ ) 
 L201.ag_bioYield_GJm2_R_AEZ_ref.melt<- add_region_name( L201.ag_bioYield_GJm2_R_AEZ_ref.melt )
 
-L201.ag_bioYield_GJm2_R_AEZ_hi.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_hi, id.vars = R, variable_name = AEZ ) 
+L201.ag_bioYield_GJm2_R_AEZ_hi.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_hi, id.vars = R, variable.name = AEZ ) 
 L201.ag_bioYield_GJm2_R_AEZ_hi.melt<- add_region_name( L201.ag_bioYield_GJm2_R_AEZ_hi.melt )
 
 #Reference scenario: paste in biomass yields

@@ -45,8 +45,8 @@ L103.ag_HA_frac_R_C_AEZ[ AEZs ] <- L102.ag_HA_bm2_R_C_AEZ [ AEZs ] /
 L103.ag_HA_frac_R_C_AEZ[ is.na( L103.ag_HA_frac_R_C_AEZ ) ] <- 0     
 
 #Melt fraction tables so that they can be applied to each historical year
-L103.ag_Prod_frac_R_C_AEZ.melt <- melt( L103.ag_Prod_frac_R_C_AEZ, id.vars = R_C, variable_name = AEZ )
-L103.ag_HA_frac_R_C_AEZ.melt <- melt( L103.ag_HA_frac_R_C_AEZ, id.vars = R_C, variable_name = AEZ )
+L103.ag_Prod_frac_R_C_AEZ.melt <- melt( L103.ag_Prod_frac_R_C_AEZ, id.vars = R_C, variable.name = AEZ )
+L103.ag_HA_frac_R_C_AEZ.melt <- melt( L103.ag_HA_frac_R_C_AEZ, id.vars = R_C, variable.name = AEZ )
 
 #Repeat the FAO historical production and harvested area tables by the AEZs, and multiply by AEZ-wise shares
 L103.ag_Prod_Mt_R_C_Y_AEZ <- repeat_and_add_vector( L101.ag_Prod_Mt_R_C_Y, AEZ, AEZs )[ c( R_C_AEZ, X_AGLU_historical_years ) ]

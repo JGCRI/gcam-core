@@ -37,7 +37,7 @@ L142.ag_Fert_IO_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L142.ag_Fert_IO_R_C_
 # 2. Build tables
 printlog( "Table L206.AgCoef_Fert_ag: Fertilizer input-output coefficients (kgN per kg crop) by region / crop / year / AEZ" )
 #Melt fertilizer IO coef table, and round to specified number of digits
-L206.Ag_Fert_IO_R_C_Y_AEZ.melt <- melt( L142.ag_Fert_IO_R_C_Y_AEZ, id.vars = R_C_AEZ, variable_name = Y )
+L206.Ag_Fert_IO_R_C_Y_AEZ.melt <- melt( L142.ag_Fert_IO_R_C_Y_AEZ, id.vars = R_C_AEZ, variable.name = Y )
 L206.Ag_Fert_IO_R_C_Y_AEZ.melt[[Y]] <- sub( "X", "", L206.Ag_Fert_IO_R_C_Y_AEZ.melt[[Y]] )
 L206.Ag_Fert_IO_R_C_Y_AEZ.melt$value <- round( L206.Ag_Fert_IO_R_C_Y_AEZ.melt$value, digits_Fert_IO )
 L206.Ag_Fert_IO_R_C_Y_AEZ.melt <- add_region_name( L206.Ag_Fert_IO_R_C_Y_AEZ.melt )
@@ -88,7 +88,7 @@ L206.AgCoef_Fert_bio <- L206.AgCoef_Fert_bio[ names_AgCoef ]
 
 #Adjustments to NonLandVariableCosts (75USD / kg crop) for all regions, crops, AEZs, and years
 printlog( "Table L206.AgCost_ag_adj: Adjusted NonLandVariableCost by region / crop / year / AEZ" )
-L206.ag_Cost_75USDkg_C_AEZ.melt <- melt( L133.ag_Cost_75USDkg_C_AEZ, id.vars = C, variable_name = AEZ )
+L206.ag_Cost_75USDkg_C_AEZ.melt <- melt( L133.ag_Cost_75USDkg_C_AEZ, id.vars = C, variable.name = AEZ )
 L206.ag_Cost_75USDkg_C_AEZ.melt <- add_agtech_names( L206.ag_Cost_75USDkg_C_AEZ.melt )
 
 #Calculate the fertilizer-related deduction to costs: fertilizer price (converted to 75USD/kgN) times IO coef

@@ -25,6 +25,7 @@ printlog( "Historical fossil energy production, supply curves, and price adjustm
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_rsrc_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
 IEA_product_rsrc <- readdata( "ENERGY_MAPPINGS", "IEA_product_rsrc" )
 rsrc_unconv_oil_prod_bbld <- readdata( "ENERGY_LEVEL0_DATA", "rsrc_unconv_oil_prod_bbld")

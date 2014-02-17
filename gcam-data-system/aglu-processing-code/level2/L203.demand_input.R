@@ -47,12 +47,14 @@ L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thou
 # that are also model years (i.e. not just the model base years)
 aglu_demand_calyears <- historical_years[ historical_years %in% model_years ]
 X_aglu_demand_calyears <- paste0( "X", aglu_demand_calyears )
+aglu_demand_futureyears <- model_years[ !model_years %in% aglu_demand_calyears ]
+X_aglu_demand_futureyears <- paste0( "X", aglu_demand_futureyears )
 
 L203.ag_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L101.ag_Food_Pcal_R_C_Y, aglu_demand_calyears )
 L203.ag_kcalg_R_C_Y.melt <- interpolate_and_melt( L101.ag_kcalg_R_C_Y, aglu_demand_calyears )
 L203.an_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L105.an_Food_Pcal_R_C_Y, aglu_demand_calyears )
 L203.an_kcalg_R_C_Y.melt <- interpolate_and_melt( L105.an_kcalg_R_C_Y, aglu_demand_calyears )
-L203.pcFood_kcald_R_Dmnd_Y.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y, diet_years )
+L203.pcFood_kcald_R_Dmnd_Y.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y, aglu_demand_futureyears )
 L203.Pop_thous_R_Yh <- interpolate_and_melt( L101.Pop_thous_R_Yh, aglu_demand_calyears )
 L203.pcgdp_thous90USD_SSP_R_Y.melt <- interpolate_and_melt( L102.pcgdp_thous90USD_SSP_R_Y, c( model_base_years, model_future_years ) )
 
@@ -205,6 +207,7 @@ L203.BaseService <- aggregate( L203.StubTechProd_all$calOutputValue,
 names( L203.BaseService ) <- names_BaseService
 
 printlog( "L203.IncomeElasticity: Income elasticities" )
+printlog( "NOTE: food demands are taken as given in historical validation runs" )
 #Note: these steps contain processing normally considered level 1, but are done here because unlike other quantities computed in level 1,
 # the income elasticities depend on the timestep length chosen, and as such are dependent on the modeltime, which is not a level 1 attribute
 printlog( "Step 1: Building historical estimates of changes in per-capita food demands by region and demand type")
@@ -216,7 +219,7 @@ L203.Food_pckcald_R.melt$pckcald <- L203.Food_pckcald_R.melt$base.service * conv
 
 #Cast so that years are columns (with X pasted in front), and compute a table of ratios
 L203.Food_pckcald_R.melt$Xyear <- paste0( "X", L203.Food_pckcald_R.melt$year )
-L203.Food_pckcald_R_Yh <- cast( L203.Food_pckcald_R.melt, region + energy.final.demand ~ Xyear, value = "pckcald" )
+L203.Food_pckcald_R_Yh <- dcast( L203.Food_pckcald_R.melt, region + energy.final.demand ~ Xyear, value.var = "pckcald" )
 L203.pcFoodRatio_R_Yh <- L203.Food_pckcald_R_Yh
 L203.pcFoodRatio_R_Yh[ X_aglu_demand_calyears[ 2:length( X_aglu_demand_calyears ) ] ] <-
       L203.Food_pckcald_R_Yh[ X_aglu_demand_calyears[ 2:length( X_aglu_demand_calyears ) ] ] / 
@@ -227,45 +230,41 @@ printlog( "Step 2: Calculating future changes (ratios) in caloric demands by reg
 #Cast table of future diet change and compute ratios
 L203.pcFood_kcald_R_Dmnd_Y.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
 L203.pcFood_kcald_R_Dmnd_Y.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
-L203.pcFood_kcald_R_Dmnd_Yfut <- cast( L203.pcFood_kcald_R_Dmnd_Y.melt, region + energy.final.demand ~ variable )
+L203.pcFood_kcald_R_Dmnd_Yfut <- dcast( L203.pcFood_kcald_R_Dmnd_Y.melt, region + energy.final.demand ~ variable )
 L203.pcFoodRatio_R_Dmnd_Yfut <- L203.pcFood_kcald_R_Dmnd_Yfut
-L203.pcFoodRatio_R_Dmnd_Yfut[ X_diet_years[ 2:length( X_diet_years ) ] ] <-
-      L203.pcFood_kcald_R_Dmnd_Yfut[ X_diet_years[ 2:length( X_diet_years ) ] ] / 
-      L203.pcFood_kcald_R_Dmnd_Yfut[ X_diet_years[ 1:( length( X_diet_years ) - 1 ) ] ]
-L203.pcFoodRatio_R_Dmnd_Yfut[ X_diet_years[1] ] <- 1
+L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
+      L203.pcFood_kcald_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
+      L203.pcFood_kcald_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[1] ] <- 1
 
 printlog( "Step 3: Merging the historical and future caloric demand trajectories" )
 L203.pcFoodRatio_R_Dmnd_Y <- L203.pcFoodRatio_R_Yh
-L203.pcFoodRatio_R_Dmnd_Y[ X_diet_years ] <- L203.pcFoodRatio_R_Yh[[X_aglu_demand_calyears[ length( X_aglu_demand_calyears ) ]]] * 
+L203.pcFoodRatio_R_Dmnd_Y[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Yh[[X_aglu_demand_calyears[ length( X_aglu_demand_calyears ) ]]] * 
       L203.pcFoodRatio_R_Dmnd_Yfut[
           match( vecpaste( L203.pcFoodRatio_R_Yh[ names_EnergyFinalDemand ] ),
                  vecpaste( L203.pcFoodRatio_R_Dmnd_Yfut[ names_EnergyFinalDemand ] ) ),
-          X_diet_years ]
+          X_aglu_demand_futureyears ]
 
-printlog( "Step 4: Calculating the historical per-capita GDP trajectories over the same time period" )
+printlog( "Step 4: Calculating the per-capita GDP trajectories over the same time period" )
 printlog( "NOTE: only computing elasticities based on the specified GDP scenario" )
-IncElas_years <- sort( unique( c( aglu_demand_calyears, diet_years ) ) )
-X_IncElas_years <- paste0( "X", IncElas_years )
 L203.pcgdp_thous90USD_R_Y.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
-       L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == diet_gdpScen & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% IncElas_years, ]
-L203.pcgdp_usd_R_Y <- cast( L203.pcgdp_thous90USD_R_Y.melt, region ~ variable )
+       L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == diet_gdpScen & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_usd_R_Y <- dcast( L203.pcgdp_thous90USD_R_Y.melt, region ~ variable )
 L203.pcgdpRatio_R_Y <- L203.pcgdp_usd_R_Y
-L203.pcgdpRatio_R_Y[ X_IncElas_years[ 2:length( X_IncElas_years ) ] ] <-
-      L203.pcgdp_usd_R_Y[ X_IncElas_years[ 2:length( X_IncElas_years ) ] ] / 
-      L203.pcgdp_usd_R_Y[ X_IncElas_years[ 1:( length( X_IncElas_years ) - 1 ) ] ]
-L203.pcgdpRatio_R_Y[ X_IncElas_years[1] ] <- 1
+L203.pcgdpRatio_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
+      L203.pcgdp_usd_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] / 
+      L203.pcgdp_usd_R_Y[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y[ X_model_years[1] ] <- 1
 
 printlog( "Step 5: Solving for the income elasticities in each time period" )
 L203.IncElas_R_Dmnd_Y <- L203.pcFoodRatio_R_Dmnd_Y
-L203.IncElas_R_Dmnd_Y[ X_IncElas_years ] <-
-      round( log( L203.pcFoodRatio_R_Dmnd_Y [ X_IncElas_years ] ) / 
-             log( L203.pcgdpRatio_R_Y[ match( L203.pcFoodRatio_R_Dmnd_Y$region, L203.pcgdpRatio_R_Y$region ), X_IncElas_years ] ),
+L203.IncElas_R_Dmnd_Y[ X_model_years ] <-
+      round( log( L203.pcFoodRatio_R_Dmnd_Y [ X_model_years ] ) / 
+             log( L203.pcgdpRatio_R_Y[ match( L203.pcFoodRatio_R_Dmnd_Y$region, L203.pcgdpRatio_R_Y$region ), X_model_years ] ),
              digits_IncElas )
 L203.IncElas_R_Dmnd_Y[ is.na( L203.IncElas_R_Dmnd_Y ) ] <- 0
 
-printlog( "Step 6: Filling out the income elasticities beyond the final diet period, and subsetting only future periods")
-L203.IncElas_R_Dmnd_Y[[ X_model_future_years[ length( X_model_future_years ) ] ]] <- default_IncElas
-L203.IncElas_R_Dmnd_Y <- data.frame( L203.IncElas_R_Dmnd_Y ) #Need to remove the information left by the melt and cast functions
+printlog( "Step 6: Converting to appropriate formats")
 L203.IncomeElasticity <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y, model_future_years, value.name = "income.elasticity" )
 L203.IncomeElasticity <- L203.IncomeElasticity[ names_IncomeElasticity ]
 

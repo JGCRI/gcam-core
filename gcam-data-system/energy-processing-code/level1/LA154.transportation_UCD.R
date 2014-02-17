@@ -20,7 +20,7 @@ printlog( "Processing of UC Davis transportation database to GCAM region / secto
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
-sourcedata( "ENERGY_ASSUMPTIONS", "A54.UCD_header", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_trn_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 calibrated_techs_trn_agg <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_trn_agg" )
 enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )
@@ -135,7 +135,7 @@ printlog( "Part 2: Downscaling of parameters in the UCD database to the country 
 printlog( "2a: Merging of non-fuel costs to assign each technology with a single cost per vkm" )
 #NOTE: because "$" is recognized as an operator in R, it can not be used in grepl() to return the costs. Using exact unit names
 L154.UCD_trn_cost_data <- subset( UCD_transportation_database, unit %in% c( "2005$/veh/yr", "2005$/veh", "2005$/vkt" ) )
-L154.UCD_trn_cost_data.melt <- melt( L154.UCD_trn_cost_data, measure.vars = X_UCD_years, variable_name = "Xyear" )
+L154.UCD_trn_cost_data.melt <- melt( L154.UCD_trn_cost_data, measure.vars = X_UCD_years, variable.name = "Xyear" )
 
 #Where the unit is $/vkt, the various cost components are ready for aggregation
 #Where the unit is $/veh, convert to $/veh/yr using an exogenous fixed charge rate
@@ -157,19 +157,36 @@ L154.UCD_trn_cost_data_agg.melt <- aggregate( L154.UCD_trn_cost_data.melt[ "valu
       by=as.list( L154.UCD_trn_cost_data.melt[ c( "UCD_region", UCD_techID, "unit", "Xyear" ) ] ),
       sum )
 L154.UCD_trn_cost_data_agg.melt$variable <- "non-fuel costs"
-L154.UCD_trn_cost_data_agg <- cast( L154.UCD_trn_cost_data_agg.melt, UCD_region + UCD_sector + mode + size.class +
-      UCD_technology + UCD_fuel + variable + unit ~ Xyear, value = "value" )
+L154.UCD_trn_cost_data_agg <- dcast( L154.UCD_trn_cost_data_agg.melt, UCD_region + UCD_sector + mode + size.class +
+      UCD_technology + UCD_fuel + variable + unit ~ Xyear, value.var = "value" )
 
 L154.UCD_trn_data <- rbind(
       subset( UCD_transportation_database, variable %in% c( "intensity", "load factor", "speed" ) ),
       L154.UCD_trn_cost_data_agg )
 
+#Loop through the database to get rid of missing values in the base years, filling them out with the values from the next time period
+printlog( "Looping through the UCD database to fill out all missing values with the nearest available year that is not missing")
+#First, go forwards, taking the prior value
+for( i in 2:length( X_UCD_years ) ){
+	L154.UCD_trn_data[[ X_UCD_years[i] ]][ is.na( L154.UCD_trn_data[[ X_UCD_years[i] ]] ) ] <- #for all other missing value columns, jump to the next
+	   L154.UCD_trn_data[[ X_UCD_years[i-1] ]][ is.na( L154.UCD_trn_data[[ X_UCD_years[i] ]] ) ]
+}
+
+#Then, go backwards, taking the next value
+for( i in ( length( X_UCD_years ) - 1 ):1 ){
+	L154.UCD_trn_data[[ X_UCD_years[i] ]][ is.na( L154.UCD_trn_data[[ X_UCD_years[i] ]] ) ] <- #for all other missing value columns, jump to the next
+	   L154.UCD_trn_data[[ X_UCD_years[i+1] ]][ is.na( L154.UCD_trn_data[[ X_UCD_years[i] ]] ) ]
+}
+
 #Write this out to all years and melt (this step takes a long time)
-L154.UCD_trn_data_Y <- gcam_interp( L154.UCD_trn_data,
-      years = c( historical_years, future_years ), rule = 2 )
+#In order to reduce the time, write out the initial years as a preliminary step
+L154.UCD_trn_data_Y <- L154.UCD_trn_data
+L154.UCD_trn_data_Y[ X_pre_UCD_years ] <- L154.UCD_trn_data_Y[ X_UCD_first_year ]
+L154.UCD_trn_data_Y <- gcam_interp( L154.UCD_trn_data_Y,
+      years = c( hist_nonUCD_years, future_years ), rule = 2 )
 L154.UCD_trn_data_Y.melt <- melt( L154.UCD_trn_data_Y,
       measure.vars = c( X_historical_years, X_future_years ),
-      variable_name = "Xyear" )
+      variable.name = "Xyear" )
 
 #Split into different tables, one per variable
 L154.UCD_trn_intensity_Y.melt <- subset( L154.UCD_trn_data_Y.melt, variable == "intensity" )
@@ -185,12 +202,12 @@ L154.in_EJ_ctry_trn_m_Y <- aggregate( L154.in_EJ_ctry_trn_m_sz_tech_F_Y[ c( X_hi
 #This table will be used for the energy weights, applied to each country/sector/mode
 L154.in_EJ_ctry_trn_m_Y.melt <- melt( L154.in_EJ_ctry_trn_m_Y,
       measure.vars = c( X_historical_years, X_future_years ),
-      variable_name = "Xyear" )
+      variable.name = "Xyear" )
 
 #Also melt the energy table, which has a full technology list. This will be used for matching in parameters.
 L154.ALL_ctry_trn_m_sz_tech_F_Y.melt <- melt( L154.in_EJ_ctry_trn_m_sz_tech_F_Y,
       measure.vars = c( X_historical_years, X_future_years ),
-      variable_name = "Xyear" )
+      variable.name = "Xyear" )
 
 #Add in the UCD region for matching in the derived variables
 L154.ALL_ctry_trn_m_sz_tech_F_Y.melt$UCD_region <- UCD_ctry$UCD_region[
@@ -262,18 +279,18 @@ L154.ALL_R_trn_m_sz_tech_F_Y.melt <- within( L154.ALL_R_trn_m_sz_tech_F_Y.melt, 
 L154.ALL_R_trn_m_sz_tech_F_Y.melt <- within( L154.ALL_R_trn_m_sz_tech_F_Y.melt, speed_kmhr <- Tvkm / Thr )
 
 #Build the final data frames, casting by year
-L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y <- cast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
+L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y <- dcast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
       GCAM_region_ID + UCD_sector + mode + size.class + UCD_technology + UCD_fuel ~ Xyear,
-      value = "intensity_MJvkm" )
-L154.loadfactor_R_trn_m_sz_tech_F_Y <- cast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
+      value.var = "intensity_MJvkm" )
+L154.loadfactor_R_trn_m_sz_tech_F_Y <- dcast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
       GCAM_region_ID + UCD_sector + mode + size.class + UCD_technology + UCD_fuel ~ Xyear,
-      value = "loadfactor" )
-L154.cost_usdvkm_R_trn_m_sz_tech_F_Y <- cast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
+      value.var = "loadfactor" )
+L154.cost_usdvkm_R_trn_m_sz_tech_F_Y <- dcast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
       GCAM_region_ID + UCD_sector + mode + size.class + UCD_technology + UCD_fuel ~ Xyear,
-      value = "cost_usdvkm" )
-L154.speed_kmhr_R_trn_m_sz_tech_F_Y <- cast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
+      value.var = "cost_usdvkm" )
+L154.speed_kmhr_R_trn_m_sz_tech_F_Y <- dcast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
       GCAM_region_ID + UCD_sector + mode + size.class + UCD_technology + UCD_fuel ~ Xyear,
-      value = "speed_kmhr" )
+      value.var = "speed_kmhr" )
 
 printlog( "Part 3: Downscaling of non-motorized transport to the country level, using population" )
 L154.out_bpkm_Rucd_trn_nonmotor <- subset( UCD_transportation_database, mode %in% c( "Walk", "Cycle" ) & variable == "service output" )

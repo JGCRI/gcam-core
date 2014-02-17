@@ -43,7 +43,7 @@ A_bio_frac_prod_R <- add_region_name( A_bio_frac_prod_R )
 
 #FORESTRY
 #Melt forest production table to get Forest name by region and AEZ
-L204.For_Prod_bm3_R_Y_AEZ.melt <- melt( L123.For_Prod_bm3_R_Y_AEZ, id.vars = R_C_AEZ, variable_name = "year" )
+L204.For_Prod_bm3_R_Y_AEZ.melt <- melt( L123.For_Prod_bm3_R_Y_AEZ, id.vars = R_C_AEZ, variable.name = "year" )
 L204.For_Prod_bm3_R_Y_AEZ.melt$year <- sub( "X", "", L204.For_Prod_bm3_R_Y_AEZ.melt$year )
 L204.For_Prod_bm3_R_Y_AEZ.melt<- add_region_name( L204.For_Prod_bm3_R_Y_AEZ.melt )
 L204.For_Prod_bm3_R_AEZ.melt <- subset( L204.For_Prod_bm3_R_Y_AEZ.melt, year == max( year ) )

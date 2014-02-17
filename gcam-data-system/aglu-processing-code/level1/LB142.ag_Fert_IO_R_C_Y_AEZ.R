@@ -48,7 +48,7 @@ L142.ag_Fert_Cons_MtN_R_AEZ_Rmkty.melt <- aggregate( Nfert_By_AEZ[ "Nfert.kg." ]
       by=as.list( Nfert_By_AEZ[ c( R_AEZ ) ] ), sum )
 
 #Cast so that AEZs are columns
-L142.ag_Fert_Cons_MtN_R_AEZ_Rmkty <- cast( L142.ag_Fert_Cons_MtN_R_AEZ_Rmkty.melt, GCAM_region_ID ~ AEZ, value = "Nfert.kg." )
+L142.ag_Fert_Cons_MtN_R_AEZ_Rmkty <- dcast( L142.ag_Fert_Cons_MtN_R_AEZ_Rmkty.melt, GCAM_region_ID ~ AEZ, value.var = "Nfert.kg." )
 L142.ag_Fert_Cons_MtN_R_AEZ_Rmkty[ is.na( L142.ag_Fert_Cons_MtN_R_AEZ_Rmkty ) ] <- 0
 
 printlog( "Compiling fertilizer production and consumption by country and by GCAM region" )
@@ -105,13 +105,13 @@ L142.ag_Fert_Cons_MtN_R_C_AEZ <- aggregate( L142.ag_Fert_Cons_MtN_ctry_crop_AEZ[
 
 printlog( "Calculating unscaled coefficients as unscaled fertilizer demands divided by production")
 L142.ag_Prod_Mt_R_C_AEZ <- L104.ag_Prod_Mt_R_C_Y_AEZ[ c( R_C_AEZ, X_base_year_IFA ) ]
-L142.ag_Fert_IO_R_C_AEZ.melt <- melt( L142.ag_Fert_Cons_MtN_R_C_AEZ, id.vars = R_C, variable_name = AEZ )
+L142.ag_Fert_IO_R_C_AEZ.melt <- melt( L142.ag_Fert_Cons_MtN_R_C_AEZ, id.vars = R_C, variable.name = AEZ )
 L142.ag_Fert_IO_R_C_AEZ.melt$value <- L142.ag_Fert_IO_R_C_AEZ.melt$value / L142.ag_Prod_Mt_R_C_AEZ[[ X_base_year_IFA ]]
 L142.ag_Fert_IO_R_C_AEZ.melt$value[ L142.ag_Fert_IO_R_C_AEZ.melt$value == Inf ] <- 0
 L142.ag_Fert_IO_R_C_AEZ.melt$value[ is.na( L142.ag_Fert_IO_R_C_AEZ.melt$value ) ] <- 0
 
 #Melt to match into table of production
-L142.ag_Fert_Cons_MtN_R_C_Y_AEZ <- melt( L104.ag_Prod_Mt_R_C_Y_AEZ, id.vars = R_C_AEZ, variable_name = "Xyear" )
+L142.ag_Fert_Cons_MtN_R_C_Y_AEZ <- melt( L104.ag_Prod_Mt_R_C_Y_AEZ, id.vars = R_C_AEZ, variable.name = "Xyear" )
 names( L142.ag_Fert_Cons_MtN_R_C_Y_AEZ )[ names( L142.ag_Fert_Cons_MtN_R_C_Y_AEZ ) == "value" ] <- "Prod_Mt"
 L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$year <- substr( L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Xyear, 2, 5 )
 L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Fert_IO_unscaled <- L142.ag_Fert_IO_R_C_AEZ.melt$value[
@@ -120,7 +120,7 @@ L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Fert_IO_unscaled <- L142.ag_Fert_IO_R_C_AEZ.melt
 L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Fert_Cons_MtN_unscaled <- L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Prod_Mt * L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Fert_IO_unscaled
 
 #Melt regional fertilizer consumption by region and year
-L142.ag_Fert_Cons_MtN_R_Y.melt <- melt( L142.ag_Fert_Cons_MtN_R_Y, id.vars = R_C, variable_name = "Xyear" )
+L142.ag_Fert_Cons_MtN_R_Y.melt <- melt( L142.ag_Fert_Cons_MtN_R_Y, id.vars = R_C, variable.name = "Xyear" )
 L142.ag_Fert_Cons_MtN_R_Y.melt$year <- substr( L142.ag_Fert_Cons_MtN_R_Y.melt$Xyear, 2, 5 )
 
 #Compute region/year scalers so that consumption balances
@@ -140,7 +140,7 @@ L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Fert_Cons_MtN <- L142.ag_Fert_Cons_MtN_R_C_Y_AEZ
 L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Fert_IO <- L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$Fert_IO_unscaled * L142.ag_Fert_Cons_MtN_R_C_Y_AEZ$scaler
 
 #Cast the IO coefs into a new data frame to be written out
-L142.ag_Fert_IO_R_C_Y_AEZ <- cast( L142.ag_Fert_Cons_MtN_R_C_Y_AEZ, GCAM_region_ID + GCAM_commodity + AEZ ~ Xyear, value = "Fert_IO" )
+L142.ag_Fert_IO_R_C_Y_AEZ <- dcast( L142.ag_Fert_Cons_MtN_R_C_Y_AEZ, GCAM_region_ID + GCAM_commodity + AEZ ~ Xyear, value.var = "Fert_IO" )
 
 #Check to make sure that the fertilizer inputs do not blink in and out (if present in any year, need to be present in all years)
 L142.Fert_IO_check <- L142.ag_Fert_IO_R_C_Y_AEZ[ rowSums( L142.ag_Fert_IO_R_C_Y_AEZ[ X_AGLU_historical_years ] ) != 0, ]
@@ -154,7 +154,7 @@ printlog( "Aggregating GCAM fertilizer consumption by region and AEZ, for compar
 L142.ag_Fert_Cons_MtN_R_C_fby_AEZ <- subset( L142.ag_Fert_Cons_MtN_R_C_Y_AEZ, year == 1998 )
 L142.ag_Fert_Cons_MtN_R_AEZ.melt <- aggregate( L142.ag_Fert_Cons_MtN_R_C_fby_AEZ[ "Fert_Cons_MtN" ],
       by=as.list( L142.ag_Fert_Cons_MtN_R_C_fby_AEZ[ R_AEZ ] ), sum )
-L142.ag_Fert_Cons_MtN_R_AEZ <- cast( L142.ag_Fert_Cons_MtN_R_AEZ.melt, GCAM_region_ID ~ AEZ, value = "Fert_Cons_MtN" )
+L142.ag_Fert_Cons_MtN_R_AEZ <- dcast( L142.ag_Fert_Cons_MtN_R_AEZ.melt, GCAM_region_ID ~ AEZ, value.var = "Fert_Cons_MtN" )
 L142.ag_Fert_Cons_MtN_R_AEZ[ is.na( L142.ag_Fert_Cons_MtN_R_AEZ ) ] <- 0
 
 # -----------------------------------------------------------------------------

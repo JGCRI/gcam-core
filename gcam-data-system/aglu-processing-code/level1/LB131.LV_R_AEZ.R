@@ -44,7 +44,7 @@ GTAP_base_year <- 2000
 X_GTAP_base_year <- paste( "X", GTAP_base_year, sep = "" )
 
 L131.LC_bm2_R_HarvCropLand_AEZ <- L122.LC_bm2_R_HarvCropLand_Yh_AEZ[ c( R_AEZ, X_GTAP_base_year ) ]
-L131.LC_bm2_R_HarvCropLand_AEZ <- cast( L131.LC_bm2_R_HarvCropLand_AEZ, GCAM_region_ID ~ AEZ, value = X_GTAP_base_year )
+L131.LC_bm2_R_HarvCropLand_AEZ <- dcast( L131.LC_bm2_R_HarvCropLand_AEZ, GCAM_region_ID ~ AEZ, value.var = X_GTAP_base_year )
 
 #Calculate land value as economic output divided by land cover
 L131.LV_USD75_m2_R_AEZ <- L131.LV_milUSD75_R_AEZ

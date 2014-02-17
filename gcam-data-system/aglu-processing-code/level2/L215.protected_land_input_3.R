@@ -42,7 +42,7 @@ L125.LC_bm2_R_LT_Yh_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R_LT_Yh_AE
 #Subset the relevant land types from table with all land types
 #Unmanaged land
 L215.LC_bm2_R_Unmgd3_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf_Unmgd3$UnmanagedLandLeaf )
-L215.LC_bm2_R_Unmgd3_Yh_AEZ.melt <- melt( L215.LC_bm2_R_Unmgd3_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+L215.LC_bm2_R_Unmgd3_Yh_AEZ.melt <- melt( L215.LC_bm2_R_Unmgd3_Yh_AEZ, id.vars = R_LT_AEZ, variable.name = "Xyear" )
 L215.LC_bm2_R_Unmgd3_Yh_AEZ.melt <- add_region_name( L215.LC_bm2_R_Unmgd3_Yh_AEZ.melt )
 L215.LC_bm2_R_Unmgd3_Yh_AEZ.melt[[Y]] <- sub( "X", "", L215.LC_bm2_R_Unmgd3_Yh_AEZ.melt$Xyear )
 # Set the land allocation to the "unprotected value"
@@ -76,9 +76,9 @@ L215.LN1_ProtectAllocation <- L215.LN1_AllProtectAllocation[
 
 #CARBON CONTENTS AND MATURE AGES
 #Melt tables with compiled carbon contents and mature ages
-L215.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
-L215.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
-L215.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
+L215.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
+L215.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
+L215.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
 
 #Add region vector
 L215.VegC_kgm2_R_LT_AEZ.melt <- add_region_name( L215.VegC_kgm2_R_LT_AEZ.melt )

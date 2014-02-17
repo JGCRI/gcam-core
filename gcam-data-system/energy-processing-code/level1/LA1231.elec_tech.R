@@ -20,6 +20,7 @@ printlog( "Disaggregation of historical electricity production into specific tec
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_elec_data", extension = ".R" )
 A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )
 calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
 L123.in_EJ_R_elec_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_elec_F_Yh" )
@@ -59,9 +60,9 @@ L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2[ L1231.eff_R_elec_gas_Yh.melt$effi
       L1231.eff_R_elec_gas_Yh.melt$efficiency[ L1231.eff_R_elec_gas_Yh.melt$efficiency > L1231.eff_R_elec_gas_Yh.melt$efficiency_tech2 ] + elec_adj
       
 #Cast efficiency table to final format
-L1231.eff_R_elec_gas_tech1_Yh <- cast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "efficiency_tech1")
+L1231.eff_R_elec_gas_tech1_Yh <- dcast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value.var = "efficiency_tech1")
 L1231.eff_R_elec_gas_tech1_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[1] )
-L1231.eff_R_elec_gas_tech2_Yh <- cast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "efficiency_tech2")
+L1231.eff_R_elec_gas_tech2_Yh <- dcast( L1231.eff_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value.var = "efficiency_tech2")
 L1231.eff_R_elec_gas_tech2_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[2] )
 L1231.eff_R_elec_gas_tech_Yh <- rbind( L1231.eff_R_elec_gas_tech1_Yh, L1231.eff_R_elec_gas_tech2_Yh )[ c( R_S_F_tech, X_historical_years ) ]
 
@@ -77,9 +78,9 @@ L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ_tech1 <- L1231.in_EJ_R_elec_gas_Yh.melt$in_
 L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ_tech2 <- L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ - L1231.in_EJ_R_elec_gas_Yh.melt$in_EJ_tech1
 
 #Cast to final format
-L1231.in_EJ_R_elec_gas_tech1_Yh <- cast( L1231.in_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "in_EJ_tech1" )
+L1231.in_EJ_R_elec_gas_tech1_Yh <- dcast( L1231.in_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value.var = "in_EJ_tech1" )
 L1231.in_EJ_R_elec_gas_tech1_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[1] )
-L1231.in_EJ_R_elec_gas_tech2_Yh <- cast( L1231.in_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value = "in_EJ_tech2" )
+L1231.in_EJ_R_elec_gas_tech2_Yh <- dcast( L1231.in_EJ_R_elec_gas_Yh.melt, GCAM_region_ID + sector + fuel ~ variable, value.var = "in_EJ_tech2" )
 L1231.in_EJ_R_elec_gas_tech2_Yh$technology <- unique( L1231.eff_R_elec_gas_tech.melt$technology[2] )
 L1231.in_EJ_R_elec_gas_tech_Yh <- rbind( L1231.in_EJ_R_elec_gas_tech1_Yh, L1231.in_EJ_R_elec_gas_tech2_Yh)[ c( R_S_F_tech, X_historical_years ) ]
 

@@ -56,7 +56,7 @@ L104.ag_avgYield_kgm2_R_C_Y_AEZ[ X_AGLU_historical_years ] <- L104.ag_Yield_kgm2
 
 #Match in production fraction (by region/crop/aez) and maximum yield (by crop) into table of historical yields
 L104.ag_Yield_kgm2_R_C_Y_AEZ <- L103.ag_Yield_kgm2_R_C_Y_AEZ
-L104.ag_Prod_frac_R_C_AEZ.melt <- melt( L103.ag_Prod_frac_R_C_AEZ, id.vars = R_C, variable_name = AEZ )
+L104.ag_Prod_frac_R_C_AEZ.melt <- melt( L103.ag_Prod_frac_R_C_AEZ, id.vars = R_C, variable.name = AEZ )
 L104.ag_Yield_kgm2_R_C_Y_AEZ$Prod_frac <- L104.ag_Prod_frac_R_C_AEZ.melt$value[
       match( vecpaste( L104.ag_Yield_kgm2_R_C_Y_AEZ[ R_C_AEZ ] ), vecpaste( L104.ag_Prod_frac_R_C_AEZ.melt[ R_C_AEZ] ) ) ]
 L104.ag_Yield_kgm2_R_C_Y_AEZ$MaxYield <- L104.ag_maxYield_kgm2_C[[X_Yield_Year]][

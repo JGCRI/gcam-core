@@ -89,7 +89,7 @@ L113.ag_bioYieldIndex_AEZ$Index_Ccell[ L113.ag_bioYieldIndex_AEZ$AEZ == "AEZ11" 
       
 #Cast by AEZs and repeat by number of regions
 L113.ag_bioYieldIndex_R_AEZ <- repeat_and_add_vector( L113.ag_bioYieldIndex_AEZ, R, sort( unique( iso_GCAM_regID$GCAM_region_ID ) ) )
-L113.ag_bioYieldIndex_R_AEZ <- cast( L113.ag_bioYieldIndex_R_AEZ, GCAM_region_ID ~ AEZ, value = "Index_Ccell" )
+L113.ag_bioYieldIndex_R_AEZ <- dcast( L113.ag_bioYieldIndex_R_AEZ, GCAM_region_ID ~ AEZ, value.var = "Index_Ccell" )
 
 #Build table of yield indices by region and AEZ
 printlog( "Multiplying regional bioenergy indices by EPIC-adjusted AEZ bioenergy indices" )

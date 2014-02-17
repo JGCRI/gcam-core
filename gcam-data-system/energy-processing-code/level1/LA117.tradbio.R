@@ -35,7 +35,7 @@ A17.tradbio_curves <- readdata( "ENERGY_ASSUMPTIONS", "A17.tradbio_curves" )
 # 2a. Geothermal resource supply curves
 printlog( "Calculating the max resource of tradbio as the maximum during the historical years" )
 L117.TPES_EJ_R_bld_tradbio_Yh <- subset( L1011.en_bal_EJ_R_Si_Fi_Yh, fuel == "biomass_tradbio" & sector == "TPES" )
-L117.TPES_EJ_R_bld_tradbio_Yh.melt <- melt( L117.TPES_EJ_R_bld_tradbio_Yh, id.vars = R_S_F, variable_name = "Xyear" )
+L117.TPES_EJ_R_bld_tradbio_Yh.melt <- melt( L117.TPES_EJ_R_bld_tradbio_Yh, id.vars = R_S_F, variable.name = "Xyear" )
 L117.maxSubResource_tradbio <- aggregate( L117.TPES_EJ_R_bld_tradbio_Yh.melt[ "value" ],
       by=as.list( L117.TPES_EJ_R_bld_tradbio_Yh.melt[ c( R_S_F ) ] ), max )
 

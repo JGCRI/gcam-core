@@ -18,8 +18,10 @@ printlog( "Model input for aggregate industrial sectors" )
 # 1. Read files
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_ind_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )
 calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
@@ -41,7 +43,10 @@ A32.demand <- readdata( "ENERGY_ASSUMPTIONS", "A32.demand" )
 L123.in_EJ_R_indchp_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L123.in_EJ_R_indchp_F_Yh")
 L1322.in_EJ_R_indenergy_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indenergy_F_Yh" )
 L1322.in_EJ_R_indfeed_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indfeed_F_Yh" )
-
+A32.inc_elas_output <- readdata( "SOCIO_ASSUMPTIONS", "A32.inc_elas_output" )
+L101.Pop_thous_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_R_Y" )
+L102.gdp_mil90usd_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_R_Y" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -217,7 +222,7 @@ L232.StubTechCoef_industry_base$market.name <- L232.StubTechCoef_industry_base$r
 # Instead, interpolate the coefficients to these global default values in a specified period
 L232.tech_coef <- repeat_and_add_vector( A32.globaltech_coef, R, GCAM_region_names[[R]] )
 L232.tech_coef <- add_region_name( L232.tech_coef )
-L232.tech_coef[[ X_model_base_years[ length( X_model_base_years ) ] ]] <- L232.StubTechCoef_industry_base$coefficient[
+L232.tech_coef[[ X_final_model_base_year ]] <- L232.StubTechCoef_industry_base$coefficient[
       match( paste( L232.tech_coef$region, L232.tech_coef[[input]], max( model_base_years ) ),
              paste( L232.StubTechCoef_industry_base$region, L232.StubTechCoef_industry_base[[input]], L232.StubTechCoef_industry_base[[Y]] ) ) ] 
 L232.tech_coef[ X_indcoef_conv_year ] <- L232.tech_coef[ "X2100" ]
@@ -289,7 +294,61 @@ L232.BaseService_ind <- data.frame(
       year = L232.StubTechProd_industry$year,
       base.service = L232.StubTechProd_industry$calOutputValue )
 
-##NOTE: income elasticities are GDP-dependent and are set in the socioeconomics module
+printlog( "L232.IncomeElasticity_ind_scen: income elasticity of industry (scenario-specific)" )
+#First, calculate the per-capita GDP pathways of every GDP scenario and combine
+L232.pcgdp_thous90USD_GCAM3_R_Y <- data.frame(
+      L102.gdp_mil90usd_GCAM3_R_Y[ R ],
+      L102.gdp_mil90usd_GCAM3_R_Y[ c( X_historical_years, X_future_years ) ] /
+      L101.Pop_thous_GCAM3_R_Y[ c( X_historical_years, X_future_years ) ] )
+L232.pcgdp_thous90USD_GCAM3_R_Y[[Scen]] <- "GCAM3"
+
+#Combine GCAM 3.0 with the SSPs, and subset only the relevant years
+L232.pcgdp_thous90USD_ALL_R_Y <- rbind(
+      L102.pcgdp_thous90USD_SSP_R_Y,
+      L232.pcgdp_thous90USD_GCAM3_R_Y )[ c( Scen_R, X_final_model_base_year, X_model_future_years ) ]
+
+# Per-capita GDP ratios, which are used in the equation for demand growth
+X_elast_years <- c( X_final_model_base_year, X_model_future_years )
+L232.pcgdpRatio_ALL_R_Y <- L232.pcgdp_thous90USD_ALL_R_Y[ c( Scen_R, X_model_future_years ) ]
+L232.pcgdpRatio_ALL_R_Y[ X_elast_years[ 2:length( X_elast_years ) ] ] <-
+      L232.pcgdp_thous90USD_ALL_R_Y[ X_elast_years[ 2:length( X_elast_years ) ] ] /
+      L232.pcgdp_thous90USD_ALL_R_Y[ X_elast_years[ 1:( length( X_elast_years ) - 1 ) ] ]
+
+#Calculate the industrial output as the base-year industrial output times the GDP ratio raised to the income elasticity
+# The income elasticity is looked up based on the prior year's output
+L232.Output_ind <- add_region_name( L232.pcgdpRatio_ALL_R_Y[ c( Scen_R ) ] )
+L232.Output_ind[[X_final_model_base_year ]] <- L232.BaseService_ind$base.service[
+      match( paste( L232.Output_ind$region, max( model_base_years ) ),
+             paste( L232.BaseService_ind$region, L232.BaseService_ind$year ) ) ] * conv_bil_thous /
+      L101.Pop_thous_GCAM3_R_Y[[ X_final_model_base_year ]][
+         match( L232.Output_ind[[R]], L101.Pop_thous_GCAM3_R_Y[[R]] ) ]
+
+#At each time, the output is equal to the prior period's output times the GDP ratio, raised to the elasticity
+# that corresponds to the output that was observed in the prior time period. This method prevents (ideally) runaway
+# industrial production.
+for( i in 2:( length( X_elast_years ) ) ){
+	L232.Output_ind[ X_elast_years[i] ] <-
+	   L232.Output_ind[ X_elast_years[i-1] ] *
+	   L232.pcgdpRatio_ALL_R_Y[ X_elast_years[i] ] ^
+	   approx( x = A32.inc_elas_output$pc.output_GJ,
+	           y = A32.inc_elas_output$inc_elas,
+	           xout = L232.Output_ind[[ X_elast_years[i-1] ]], rule = 2 )$y
+}	
+
+#Now that we have industrial output, we can back out the appropriate income elasticities
+L232.IncElas_ind <- L232.Output_ind[ c( Scen, R, X_model_future_years ) ]
+for( i in 1:length( X_model_future_years ) ){
+	L232.IncElas_ind[ X_model_future_years[i] ] <-
+	approx( x = A32.inc_elas_output$pc.output_GJ,
+	           y = A32.inc_elas_output$inc_elas,
+	           xout = L232.Output_ind[[ X_model_future_years[i] ]], rule = 2 )$y
+}
+
+L232.IncomeElasticity_ind <- interpolate_and_melt(
+      L232.IncElas_ind, model_future_years, value.name = "income.elasticity", digits = digits_IncElas_ind )
+L232.IncomeElasticity_ind <- add_region_name( L232.IncomeElasticity_ind )
+L232.IncomeElasticity_ind$energy.final.demand <- A32.demand$energy.final.demand
+#These will be written out as separate tables using a for loop
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -328,5 +387,21 @@ write_mi_data( L232.PriceElasticity_ind, "PriceElasticity", "ENERGY_LEVEL2_DATA"
 write_mi_data( L232.BaseService_ind, "BaseService", "ENERGY_LEVEL2_DATA", "L232.BaseService_ind", "ENERGY_XML_BATCH", "batch_industry.xml" )
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_industry.xml", "ENERGY_XML_FINAL", "industry.xml", "", xml_tag="outFile" )
+
+#Income elasticities by scenario
+for( i in 1:length( unique( L232.IncomeElasticity_ind[[ Scen ]] ) ) ){
+  scenarios <- unique( L232.IncomeElasticity_ind[[ Scen ]] )
+  scen_strings <- tolower( scenarios )
+  objectname <- paste0( "L232.IncomeElasticity_ind_", scen_strings[i] )
+  object <- subset( L232.IncomeElasticity_ind, scenario == scenarios[i] )[ names_IncomeElasticity ] 
+  assign( objectname, object )
+  batchXMLstring <- paste0( "batch_industry_incelas_",
+                            scen_strings[i],
+                            ".xml" )
+  write_mi_data( object, "IncomeElasticity", "ENERGY_LEVEL2_DATA", objectname, "ENERGY_XML_BATCH", batchXMLstring )
+  XMLstring <- sub( "batch_", "", batchXMLstring )
+  insert_file_into_batchxml( "ENERGY_XML_BATCH", batchXMLstring, "ENERGY_XML_FINAL", XMLstring, "", xml_tag="outFile" )
+}
+
 
 logstop()

@@ -40,7 +40,7 @@ L133.ag_Cost_75USDkg_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L133.ag_Cost_75USDk
 
 printlog( "Merging biomass and ag crops into the same dataframes, for yields and yield ratios" )
 #Yields
-L205.ag_bioYield_GJm2_R_AEZ_ref <- melt( L113.ag_bioYield_GJm2_R_AEZ_ref, id.vars = R, variable_name = AEZ )
+L205.ag_bioYield_GJm2_R_AEZ_ref <- melt( L113.ag_bioYield_GJm2_R_AEZ_ref, id.vars = R, variable.name = AEZ )
 L205.ag_bioYield_GJm2_R_AEZ_ref[[C]] <- "biomass"
 X_yield_hist_years <- X_historical_years[ X_historical_years %in% c( X_model_base_years, X_model_future_years ) ]
 L205.ag_bioYield_GJm2_R_AEZ_ref[ X_yield_hist_years ] <- L205.ag_bioYield_GJm2_R_AEZ_ref[ "value" ]
@@ -55,11 +55,11 @@ L115.bio_CCI_rcp_gcm_cm_R_AEZ[[C]] <- "biomass"
 L205.ag_CCI_rcp_gcm_cm_R_C_AEZ <- rbind( L115.ag_CCI_rcp_gcm_cm_R_C_AEZ, L115.bio_CCI_rcp_gcm_cm_R_AEZ )
 
 printlog( "Calculating crop yields in all time periods for the reference scenario" )
-L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt <- melt( L205.ag_YieldRatio_R_C_Y_AEZ_ref, id.vars = R_C_Y, variable_name = AEZ )
+L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt <- melt( L205.ag_YieldRatio_R_C_Y_AEZ_ref, id.vars = R_C_Y, variable.name = AEZ )
 #Only use the yield ratios in years beyond the historical time series, for which actual yield data is available
 L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt <- subset( L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt, year > max( historical_years ) )
 L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt$Xyear <- paste0( "X", L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt$year )
-L205.ag_YieldRatio_R_C_Y_AEZ_ref <- cast( L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt, GCAM_region_ID + GCAM_commodity + AEZ ~ Xyear )
+L205.ag_YieldRatio_R_C_Y_AEZ_ref <- dcast( L205.ag_YieldRatio_R_C_Y_AEZ_ref.melt, GCAM_region_ID + GCAM_commodity + AEZ ~ Xyear )
 
 #Only multiply in the ratios for "model future years" that are greater than the last historical year
 #Distinction applies for using earlier final calibration years
@@ -124,7 +124,7 @@ L205.ag_YieldRate_scen_R_C_Y_AEZ[ X_model_years[ 2:length( X_model_years ) ] ] <
       (1 / df.timesteps ) - 1
 
 printlog( "Table L205.AgProdChange_ref: Reference scenario ag prod change (not incl biomass)" )
-L205.AgProdChange_ref <- melt( L205.ag_YieldRate_R_C_Y_AEZ_ref, id.vars = R_C_AEZ, variable_name = "Xyear" )
+L205.AgProdChange_ref <- melt( L205.ag_YieldRate_R_C_Y_AEZ_ref, id.vars = R_C_AEZ, variable.name = "Xyear" )
 L205.AgProdChange_ref$year <- sub( "X", "", L205.AgProdChange_ref$Xyear )
 L205.AgProdChange_ref$AgProdChange <- round( L205.AgProdChange_ref$value, digits_AgProdChange )
 L205.AgProdChange_ref <- subset( L205.AgProdChange_ref, year %in% model_future_years )
@@ -139,7 +139,7 @@ L205.AgProdChange_ref <- rename_biocrops( L205.AgProdChange_ref, lookup = A_bioc
       lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 
 # Climate impacts scenarios: Follow the same steps, but with all scenarios in a single table
-L205.ag_YieldRate_scen_R_C_Y_AEZ.melt <- melt( L205.ag_YieldRate_scen_R_C_Y_AEZ, id.vars = c( "scenID", rcp_gcm_cm, R_C_AEZ ), variable_name = "Xyear" )
+L205.ag_YieldRate_scen_R_C_Y_AEZ.melt <- melt( L205.ag_YieldRate_scen_R_C_Y_AEZ, id.vars = c( "scenID", rcp_gcm_cm, R_C_AEZ ), variable.name = "Xyear" )
 L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$year <- sub( "X", "", L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$Xyear )
 L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$AgProdChange <- round( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt$value, digits_AgProdChange )
 L205.ag_YieldRate_scen_R_C_Y_AEZ.melt <- subset( L205.ag_YieldRate_scen_R_C_Y_AEZ.melt, year %in% model_future_years )
@@ -173,7 +173,7 @@ L205.ag_Cost_75USDkg_C_AEZ[ AEZs ] <- round( L205.ag_Cost_75USDkg_C_AEZ[ AEZs ],
 
 printlog( "Table L205.AgCost_ag: costs of ag commodities (excl forest and biomass)" )
 #Melt table of costs and write it out to all regions and time periods
-L205.ag_Cost_75USDkg_C_AEZ.melt <- melt( L205.ag_Cost_75USDkg_C_AEZ, id.vars = C, variable_name = AEZ )
+L205.ag_Cost_75USDkg_C_AEZ.melt <- melt( L205.ag_Cost_75USDkg_C_AEZ, id.vars = C, variable.name = AEZ )
 names( L205.ag_Cost_75USDkg_C_AEZ.melt )[ names( L205.ag_Cost_75USDkg_C_AEZ.melt ) == "value" ] <- "nonLandVariableCost"
 L205.ag_Cost_75USDkg_C_AEZ.melt <- add_agtech_names( L205.ag_Cost_75USDkg_C_AEZ.melt )
 L205.ag_Cost_75USDkg_C_AEZ.melt_repR <- repeat_and_add_vector( L205.ag_Cost_75USDkg_C_AEZ.melt, R, GCAM_region_names[[R]] )

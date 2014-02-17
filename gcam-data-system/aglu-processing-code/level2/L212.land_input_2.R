@@ -60,7 +60,7 @@ L212.LN2_Logit <- L212.LN2_Logit[ names_LN2_Logit ]
 #LAND ALLOCATION AND LAND USE HISTORY
 #Unmanaged land
 L212.LC_bm2_R_Unmgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf_Unmgd2$UnmanagedLandLeaf )
-L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Unmgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Unmgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable.name = "Xyear" )
 L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt <- add_region_name( L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt )
 L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[[Y]] <- sub( "X", "", L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$Xyear )
 L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$allocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt$value
@@ -77,7 +77,7 @@ L212.LN2_UnmgdAllocation <- L212.LC_bm2_R_Unmgd2_Yh_AEZ.melt[
 
 #Managed land
 L212.LC_bm2_R_Mgd2_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf2$LandLeaf )
-L212.LC_bm2_R_Mgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Mgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+L212.LC_bm2_R_Mgd2_Yh_AEZ.melt <- melt( L212.LC_bm2_R_Mgd2_Yh_AEZ, id.vars = R_LT_AEZ, variable.name = "Xyear" )
 L212.LC_bm2_R_Mgd2_Yh_AEZ.melt <- add_region_name( L212.LC_bm2_R_Mgd2_Yh_AEZ.melt )
 L212.LC_bm2_R_Mgd2_Yh_AEZ.melt[[Y]] <- sub( "X", "", L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$Xyear )
 L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$allocation <- L212.LC_bm2_R_Mgd2_Yh_AEZ.melt$value
@@ -92,9 +92,9 @@ L212.LN2_MgdAllocation <- L212.LC_bm2_R_Mgd2_Yh_AEZ.melt[ L212.LC_bm2_R_Mgd2_Yh_
 
 #CARBON CONTENTS AND MATURE AGES
 #Melt tables with compiled carbon contents and mature ages
-L212.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
-L212.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
-L212.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
+L212.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
+L212.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
+L212.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
 
 #Add region vector
 L212.VegC_kgm2_R_LT_AEZ.melt <- add_region_name( L212.VegC_kgm2_R_LT_AEZ.melt )

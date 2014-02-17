@@ -1,1 +1,1 @@
-#Characteristics of final demand sectors,,,energy.final.demand,perCapitaBased,price.elasticity,income.elasticitytrn_pass,1,-1.25,1trn_freight,0,-0.65,1trn_aviation_intl,1,-1,1trn_shipping_intl,0,-0.65,1
+#Characteristics of final demand sectors,,,energy.final.demand,perCapitaBased,price.elasticity,income.elasticitytrn_pass,1,-1.25,1trn_freight,0,-0.65,0.75trn_aviation_intl,1,-1,1trn_shipping_intl,0,-0.65,0.4

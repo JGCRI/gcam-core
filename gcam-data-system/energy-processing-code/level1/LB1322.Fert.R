@@ -5,7 +5,7 @@ if( !exists( "ENERGYPROC_DIR" ) ){
     if( Sys.getenv( "ENERGYPROC" ) != "" ){
         ENERGYPROC_DIR <- Sys.getenv( "ENERGYPROC" )
     } else {
-        stop("Could not determine location of aglu processing scripts, please set the R var ENERGYPROC_DIR to the appropriate location")
+        stop("Could not determine location of energy data system, please set the R var ENERGYPROC_DIR to the appropriate location")
     }
 }
 
@@ -23,6 +23,7 @@ printlog( "Fertilizer production by region / fuel and fertilizer costs by techno
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_ind_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 IEA_ctry <- readdata( "ENERGY_MAPPINGS", "IEA_ctry" )
 IEA_Fert_fuel_data <- readdata( "ENERGY_LEVEL0_DATA", "IEA_Fert_fuel_data" )
@@ -50,7 +51,7 @@ L1322.IEA_fert_fuel_intensities$fuel <- sub( "oil", "refined liquids", as.charac
 L1322.IEA_fert_fuel_intensities$intensity_GJkgN <- L1322.IEA_fert_fuel_intensities$value / conv_t_kg / conv_NH3_N
 
 #Melt fertilizer production table to allow fuel shares to be modified over time
-L1322.Fert_Prod_MtN_ctry_Y.melt <- melt( L142.ag_Fert_Prod_MtN_ctry_Y, id.vars = "iso", variable_name = Xyr )
+L1322.Fert_Prod_MtN_ctry_Y.melt <- melt( L142.ag_Fert_Prod_MtN_ctry_Y, id.vars = "iso", variable.name = Xyr )
 
 #Repeat fertilizer production table by number of fuels and match in the IEA region, fuel share, and intensity for each country
 L1322.Fert_Prod_MtN_ctry_F_Y.melt <- repeat_and_add_vector( L1322.Fert_Prod_MtN_ctry_Y.melt, "fuel", c( "coal", "gas", "refined liquids" ) )
@@ -88,8 +89,8 @@ L1322.Fert_ALL_MtN_R_F_Y <- translate_to_full_table( L1322.Fert_ALL_MtN_R_F_Y,
       datacols = "in_Fert" )
 
 #Melt other energy tables (ind energy, ind feedstocks) and match in values
-L1322.in_EJ_R_indenergy_F_Yh.melt <- melt( L1321.in_EJ_R_indenergy_F_Yh, id.vars = R_S_F, variable_name = Xyr )
-L1322.in_EJ_R_indfeed_F_Yh.melt <- melt( L132.in_EJ_R_indfeed_F_Yh, id.vars = R_S_F, variable_name = Xyr )
+L1322.in_EJ_R_indenergy_F_Yh.melt <- melt( L1321.in_EJ_R_indenergy_F_Yh, id.vars = R_S_F, variable.name = Xyr )
+L1322.in_EJ_R_indfeed_F_Yh.melt <- melt( L132.in_EJ_R_indfeed_F_Yh, id.vars = R_S_F, variable.name = Xyr )
 
 L1322.Fert_ALL_MtN_R_F_Y$in_indenergy <- L1322.in_EJ_R_indenergy_F_Yh.melt$value[
       match( vecpaste( L1322.Fert_ALL_MtN_R_F_Y[ R_F_Xyr ] ),
@@ -181,10 +182,10 @@ L1322.Fert_ALL_MtN_R_F_Y_adj$in_indenergy_netFert[ L1322.Fert_ALL_MtN_R_F_Y_adj$
 
 printlog( "Building tables of fertilizer production by technology, IO coefs, and energy/feedstock inputs to rest of industry")
 L1322.Fert_ALL_MtN_R_F_Y_adj$sector <- Fert_name
-L1322.Fert_Prod_MtN_R_F_Y <- cast( L1322.Fert_ALL_MtN_R_F_Y_adj, GCAM_region_ID + sector + fuel ~ Xyear, value = "Fert_Prod_MtN_adj" )
-L1322.IO_R_Fert_F_Yh <- cast( L1322.Fert_ALL_MtN_R_F_Y_adj, GCAM_region_ID + sector + fuel ~ Xyear, value = "intensity_GJkgN" )
-L1322.in_EJ_R_indenergy_Ffert_Yh <- cast( L1322.Fert_ALL_MtN_R_F_Y_adj, GCAM_region_ID  + fuel ~ Xyear, value = "in_indenergy_netFert" )
-L1322.in_EJ_R_indfeed_Ffert_Yh <- cast( L1322.Fert_ALL_MtN_R_F_Y_adj, GCAM_region_ID + fuel ~ Xyear, value = "in_indfeed_netFert" )
+L1322.Fert_Prod_MtN_R_F_Y <- dcast( L1322.Fert_ALL_MtN_R_F_Y_adj, GCAM_region_ID + sector + fuel ~ Xyear, value.var = "Fert_Prod_MtN_adj" )
+L1322.IO_R_Fert_F_Yh <- dcast( L1322.Fert_ALL_MtN_R_F_Y_adj, GCAM_region_ID + sector + fuel ~ Xyear, value.var = "intensity_GJkgN" )
+L1322.in_EJ_R_indenergy_Ffert_Yh <- dcast( L1322.Fert_ALL_MtN_R_F_Y_adj, GCAM_region_ID  + fuel ~ Xyear, value.var = "in_indenergy_netFert" )
+L1322.in_EJ_R_indfeed_Ffert_Yh <- dcast( L1322.Fert_ALL_MtN_R_F_Y_adj, GCAM_region_ID + fuel ~ Xyear, value.var = "in_indfeed_netFert" )
 
 L1322.in_EJ_R_indenergy_F_Yh <- L1321.in_EJ_R_indenergy_F_Yh
 #Need to match this in due to different sorting in the two tables

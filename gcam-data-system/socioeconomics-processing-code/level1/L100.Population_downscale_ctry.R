@@ -76,7 +76,7 @@ L100.PopRatio_Maddison_Yhh[ X_Maddison_historical_years ] <- L100.Pop_Maddison_Y
 printlog( "Part 2: Applying these ratios to the historical UN population data")
 UN_popTot$iso <- tolower( UN_popTot$Country )
 UN_popTot$XYear <- paste0( "X", UN_popTot$Year )
-L100.Pop_thous_ctry_Yh <- cast( subset( UN_popTot, Scenario == "EST" ), iso ~ XYear, value = "Value" )
+L100.Pop_thous_ctry_Yh <- dcast( subset( UN_popTot, Scenario == "EST" ), iso ~ XYear, value.var = "Value" )
 #Reset XEA to Taiwan
 L100.Pop_thous_ctry_Yh$iso[ L100.Pop_thous_ctry_Yh$iso == "xea" ] <- "twn"      
 L100.Pop_thous_ctry_Yh[ X_Maddison_historical_years ] <- L100.Pop_thous_ctry_Yh[[ X_UN_historical_years[1] ]] * L100.PopRatio_Maddison_Yhh[

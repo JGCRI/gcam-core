@@ -49,9 +49,10 @@ L110.FAO_For_ALL_bm3_prelim$flow <- sub( "_m3", "_bm3", L110.FAO_For_ALL_bm3_pre
 
 #Build volumetric balance table
 printlog( "Building mass balance" )
-L110.For_ALL_bm3_R_Y <- recast( L110.FAO_For_ALL_bm3_prelim, GCAM_region_ID + GCAM_commodity +variable ~ flow, id.var = c( R_C, "flow" ) )
-names( L110.For_ALL_bm3_R_Y )[ names( L110.For_ALL_bm3_R_Y ) == "variable" ] <- Y
-L110.For_ALL_bm3_R_Y$year <- as.numeric( sub( "X", "", L110.For_ALL_bm3_R_Y$year ) )
+L110.For_ALL_bm3_R_Y.melt <- melt( L110.FAO_For_ALL_bm3_prelim, id.vars = c( R_C, "flow" ), variable.name = Y )
+L110.For_ALL_bm3_R_Y <- dcast( L110.For_ALL_bm3_R_Y.melt, GCAM_region_ID + GCAM_commodity + year ~ flow )
+
+L110.For_ALL_bm3_R_Y[[Y]] <- as.numeric( sub( "X", "", L110.For_ALL_bm3_R_Y[[Y]] ) )
 L110.For_ALL_bm3_R_Y$Cons_bm3 <- L110.For_ALL_bm3_R_Y$Prod_bm3 - L110.For_ALL_bm3_R_Y$NetExp_bm3
 
 #Re-order columns

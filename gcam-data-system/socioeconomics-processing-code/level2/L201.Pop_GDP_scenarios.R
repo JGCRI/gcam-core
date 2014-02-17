@@ -38,15 +38,16 @@ printlog( "L201.InterestRate: Interest rates by region" )
 L201.InterestRate <- data.frame( region = GCAM_region_names$region, interest.rate = default_interest.rate )
 
 printlog( "L201.Pop_GCAM3: Population by region from the GCAM 3.0 core scenario" )
-L201.Pop_GCAM3 <- interpolate_and_melt( L101.Pop_thous_GCAM3_R_Y, c( model_base_years, model_future_years ), value.name = "totalPop" )
+L201.Pop_GCAM3 <- interpolate_and_melt( L101.Pop_thous_GCAM3_R_Y,
+      c( model_base_years, model_future_years ), value.name = "totalPop", digits = digits_Pop )
 L201.Pop_GCAM3 <- add_region_name( L201.Pop_GCAM3 )
 L201.Pop_GCAM3 <- L201.Pop_GCAM3[ names_Pop ]
 
 #Population in the SSP scenarios
 #Merge the SSP population table (future) with the historical estimates
 L101.Pop_thous_SSP_R_Y <- merge( L101.Pop_thous_R_Yh, L101.Pop_thous_SSP_R_Yfut, all.y = T )
-L101.Pop_thous_SSP_R_Y.melt <- interpolate_and_melt( L101.Pop_thous_SSP_R_Y, c( model_base_years, model_future_years ), value.name = "totalPop" )
-L101.Pop_thous_SSP_R_Y.melt$totalPop <- round( L101.Pop_thous_SSP_R_Y.melt$totalPop, digits_Pop )
+L101.Pop_thous_SSP_R_Y.melt <- interpolate_and_melt( L101.Pop_thous_SSP_R_Y,
+      c( model_base_years, model_future_years ), value.name = "totalPop", digits = digits_Pop )
 L101.Pop_thous_SSP_R_Y.melt <- add_region_name( L101.Pop_thous_SSP_R_Y.melt )
 
 #Split into separate tables to be written out
@@ -68,12 +69,12 @@ L201.Pop_SSP5 <- L101.Pop_thous_SSP_R_Y.melt[ L101.Pop_thous_SSP_R_Y.melt[[Scen]
 #Calculation of parameters required for GDP scenario
 printlog( "L201.BaseGDP_GCAM3: Base GDP for GCAM 3.0 core scenario")
 L201.BaseGDP_GCAM3 <- add_region_name( L102.gdp_mil90usd_GCAM3_R_Y )
-L201.BaseGDP_GCAM3$baseGDP <- L201.BaseGDP_GCAM3[[ X_model_base_years[1] ]]
+L201.BaseGDP_GCAM3$baseGDP <- round( L201.BaseGDP_GCAM3[[ X_model_base_years[1] ]], digits_GDP )
 L201.BaseGDP_GCAM3 <- L201.BaseGDP_GCAM3[ names_baseGDP ]
 
 printlog( "L201.BaseGDP_SSP: Base GDP for all SSP scenarios")
 L201.BaseGDP_SSP <- add_region_name( L102.gdp_mil90usd_SSP_R_Y[ L102.gdp_mil90usd_SSP_R_Y[[Scen]] == base_gdp_scen, ] )
-L201.BaseGDP_SSP$baseGDP <- L201.BaseGDP_SSP[[ X_model_base_years[1] ]]
+L201.BaseGDP_SSP$baseGDP <- round( L201.BaseGDP_SSP[[ X_model_base_years[1] ]], digits_GDP )
 L201.BaseGDP_SSP <- L201.BaseGDP_SSP[ names_baseGDP ]
 
 printlog( "L201.LaborForceFillout: Labor force participation and productivity for all scenarios")

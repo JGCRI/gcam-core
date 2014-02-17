@@ -75,7 +75,7 @@ L213.LN3_DefaultShare$default.share.2035 <- default_share
 #LAND USE HISTORY
 #Unmanaged land
 L213.LC_bm2_R_Unmgd3_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf_Unmgd3$UnmanagedLandLeaf )
-L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt <- melt( L213.LC_bm2_R_Unmgd3_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt <- melt( L213.LC_bm2_R_Unmgd3_Yh_AEZ, id.vars = R_LT_AEZ, variable.name = "Xyear" )
 L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt <- add_region_name( L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt )
 L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt[[Y]] <- sub( "X", "", L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt$Xyear )
 L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt$allocation <- L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt$value
@@ -90,7 +90,7 @@ L213.LN3_UnmgdAllocation <- L213.LC_bm2_R_Unmgd3_Yh_AEZ.melt[ L213.LC_bm2_R_Unmg
 
 #Managed land - non-crop
 L213.LC_bm2_R_Mgd3_Yh_AEZ <- subset( L125.LC_bm2_R_LT_Yh_AEZ, Land_Type %in% A_LandLeaf3$LandLeaf )
-L213.LC_bm2_R_Mgd3_Yh_AEZ.melt <- melt( L213.LC_bm2_R_Mgd3_Yh_AEZ, id.vars = R_LT_AEZ, variable_name = "Xyear" )
+L213.LC_bm2_R_Mgd3_Yh_AEZ.melt <- melt( L213.LC_bm2_R_Mgd3_Yh_AEZ, id.vars = R_LT_AEZ, variable.name = "Xyear" )
 L213.LC_bm2_R_Mgd3_Yh_AEZ.melt <- add_region_name( L213.LC_bm2_R_Mgd3_Yh_AEZ.melt )
 L213.LC_bm2_R_Mgd3_Yh_AEZ.melt[[Y]] <- sub( "X", "", L213.LC_bm2_R_Mgd3_Yh_AEZ.melt$Xyear )
 L213.LC_bm2_R_Mgd3_Yh_AEZ.melt$allocation <- L213.LC_bm2_R_Mgd3_Yh_AEZ.melt$value
@@ -104,7 +104,7 @@ printlog( "L213.LN3_MgdAllocation_noncrop: Model base period land cover, managed
 L213.LN3_MgdAllocation_noncrop <- L213.LC_bm2_R_Mgd3_Yh_AEZ.melt[ L213.LC_bm2_R_Mgd3_Yh_AEZ.melt[[Y]] %in% model_base_years, names_LN3_MgdAllocation ]
 
 #Managed land - crop land
-L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt <- melt( L122.LC_bm2_R_HarvCropLand_C_Yh_AEZ, id.vars = R_C_AEZ, variable_name = "Xyear" )
+L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt <- melt( L122.LC_bm2_R_HarvCropLand_C_Yh_AEZ, id.vars = R_C_AEZ, variable.name = "Xyear" )
 L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt <- add_region_name( L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt )
 L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt[[Y]] <- sub( "X", "", L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt$Xyear )
 L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt$allocation <- round( L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt$value, digits_land_use )
@@ -134,9 +134,9 @@ L213.LN3_MgdAllocation_bio <- L213.LC_bm2_R_bio_Yh_AEZ.melt[ L213.LC_bm2_R_bio_Y
 
 #CARBON CONTENTS AND MATURE AGES
 #Melt tables with compiled carbon contents and mature ages
-L213.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
-L213.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
-L213.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable_name = AEZ )
+L213.VegC_kgm2_R_LT_AEZ.melt <- melt( L121.VegC_kgm2_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
+L213.SoilC_kgm2_R_LT_AEZ.melt <- melt( L121.SoilC_kgm2_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
+L213.MatureAge_R_LT_AEZ.melt <- melt( L121.MatureAge_R_LT_AEZ, id.vars = R_LT, variable.name = AEZ )
 
 #Add region vector
 L213.VegC_kgm2_R_LT_AEZ.melt <- add_region_name( L213.VegC_kgm2_R_LT_AEZ.melt )
@@ -225,7 +225,7 @@ L213.LN3_MgdCarbon_bio_ref <- rename_biocrops( L213.LN3_MgdCarbon_bio_ref, looku
 L213.LN3_MgdCarbon_bio_ref[ crop_chars ] <- A_Fodderbio_chars[ match( L213.LN3_MgdCarbon_bio_ref[[LT]], A_Fodderbio_chars[[C]] ), crop_chars ]
 
 #Biomass yield
-L213.ag_bioYield_GJm2_R_AEZ_ref.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_ref, id.vars = R, variable_name = AEZ )
+L213.ag_bioYield_GJm2_R_AEZ_ref.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_ref, id.vars = R, variable.name = AEZ )
 L213.ag_bioYield_GJm2_R_AEZ_ref.melt <- add_region_name( L213.ag_bioYield_GJm2_R_AEZ_ref.melt )
 
 #Match in biomass yield, converting from GJ/m2 to kg/m2
@@ -244,7 +244,7 @@ L213.LN3_MgdCarbon_bio_ref$hist.veg.carbon.density <-
 L213.LN3_MgdCarbon_bio_ref$veg.carbon.density <- L213.LN3_MgdCarbon_bio_ref$hist.veg.carbon.density
 
 printlog( "L213.LN3_MgdCarbon_bio_hi: Carbon content info, managed land in the third nest, bioenergy (hi yields)" )
-L213.ag_bioYield_GJm2_R_AEZ_hi.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_hi, id.vars = R, variable_name = AEZ )
+L213.ag_bioYield_GJm2_R_AEZ_hi.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_hi, id.vars = R, variable.name = AEZ )
 L213.ag_bioYield_GJm2_R_AEZ_hi.melt <- add_region_name( L213.ag_bioYield_GJm2_R_AEZ_hi.melt )
 
 #Replace biomass yields in this table

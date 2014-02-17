@@ -51,7 +51,7 @@ if( nrow( L114.ag_YieldRatio_Cnsy_Y ) != 0 ) {
 
 	#Drop the base year and cast by AEZs
 	L114.ag_YieldRatio_R_Cnsy_Ysy_AEZ.melt <- subset( L114.ag_YieldRatio_R_Cnsy_Ysy_AEZ.melt, year %!in% historical_years )
-	L114.ag_YieldRatio_R_Cnsy_Ysy_AEZ <- cast( L114.ag_YieldRatio_R_Cnsy_Ysy_AEZ.melt, GCAM_region_ID + GCAM_commodity + year ~ AEZ)
+	L114.ag_YieldRatio_R_Cnsy_Ysy_AEZ <- dcast( L114.ag_YieldRatio_R_Cnsy_Ysy_AEZ.melt, GCAM_region_ID + GCAM_commodity + year ~ AEZ)
 
 	#Rbind this with the previous table and sort
 	L114.ag_YieldRatio_R_C_Ysy_AEZ <- rbind( L112.ag_YieldRatio_R_C_Ysy_AEZ, L114.ag_YieldRatio_R_Cnsy_Ysy_AEZ )

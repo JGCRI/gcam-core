@@ -46,7 +46,7 @@ L242.IncomeElasticity_bld_GCAM3 <- interpolate_and_melt( L242.pcgdp_GCAM3_R_Y, m
 #Match in the income elasticity for each GDP point
 L242.IncomeElasticity_bld_GCAM3$income.elasticity <- round(
       approx( A42.inc_elas$pcgdp_90thousUSD, A42.inc_elas$inc_elas, xout = L242.IncomeElasticity_bld_GCAM3$pcgdp_90thousUSD, rule = 2 )$y,
-      digits_IncElas_ind )
+      digits_IncElas_bld )
 L242.IncomeElasticity_bld_GCAM3$energy.final.demand <- A42.demand$energy.final.demand
 L242.IncomeElasticity_bld_GCAM3 <- L242.IncomeElasticity_bld_GCAM3[ names_IncomeElasticity]
 
@@ -55,7 +55,7 @@ L242.pcgdp_thous90USD_SSP_R_Y <- add_region_name( L102.pcgdp_thous90USD_SSP_R_Y 
 L242.pcgdp_thous90USD_SSP_R_Y.melt <- interpolate_and_melt( L242.pcgdp_thous90USD_SSP_R_Y, model_future_years, value.name = "pcgdp_90thousUSD" )
 L242.pcgdp_thous90USD_SSP_R_Y.melt$income.elasticity <- round(
       approx( A42.inc_elas$pcgdp_90thousUSD, A42.inc_elas$inc_elas, xout = L242.pcgdp_thous90USD_SSP_R_Y.melt$pcgdp_90thousUSD, rule = 2 )$y,
-      digits_IncElas_ind )
+      digits_IncElas_bld )
 L242.pcgdp_thous90USD_SSP_R_Y.melt$energy.final.demand <- A42.demand$energy.final.demand
 
 printlog( "L242.IncomeElasticity_bld_SSP1")

@@ -47,12 +47,12 @@ L122.in_Mt_R_C_Yh$flow <- "Biofuels_Mt"
 
 #Rbind and recast so that the flows are the columns
 L109.ag_ALL_Mt_R_C_Y_prelim <- rbind( L104.ag_Prod_Mt_R_C_Y, L109.ag_NetExp_Mt_R_C_Y, L101.ag_Food_Mt_R_C_Y, L108.ag_Feed_Mt_R_C_Y, L122.in_Mt_R_C_Yh )
-L109.ag_ALL_Mt_R_C_Y <- recast( L109.ag_ALL_Mt_R_C_Y_prelim, GCAM_region_ID + GCAM_commodity + variable ~ flow, id.var = c( R_C, "flow" ) )
+L109.ag_ALL_Mt_R_C_Y.melt <- melt( L109.ag_ALL_Mt_R_C_Y_prelim, id.vars = c( R_C, "flow" ), variable.name = Y )
+L109.ag_ALL_Mt_R_C_Y <- dcast( L109.ag_ALL_Mt_R_C_Y.melt, GCAM_region_ID + GCAM_commodity + year ~ flow )
 
 #set non-existent combinations to 0
 L109.ag_ALL_Mt_R_C_Y[ is.na( L109.ag_ALL_Mt_R_C_Y ) ] <- 0
-names( L109.ag_ALL_Mt_R_C_Y )[ names( L109.ag_ALL_Mt_R_C_Y ) == "variable" ] <- Y
-L109.ag_ALL_Mt_R_C_Y$year <- as.numeric( sub( "X", "", L109.ag_ALL_Mt_R_C_Y$year ) )
+L109.ag_ALL_Mt_R_C_Y[[Y]] <- as.numeric( sub( "X", "", L109.ag_ALL_Mt_R_C_Y[[Y]] ) )
 
 #For any commodities (e.g. pasture, residue, scavenging) in feed but not in production tables, production = feed
 Feed_commodities <- unique( L108.ag_Feed_Mt_R_C_Y$GCAM_commodity[ !L108.ag_Feed_Mt_R_C_Y$GCAM_commodity %in% L104.ag_Prod_Mt_R_C_Y$GCAM_commodity ] )
@@ -102,7 +102,8 @@ L105.an_Food_Mt_R_C_Y$flow <- "Food_Mt"
 
 #Rbind and recast so that the flows are the columns
 L109.an_ALL_Mt_R_C_Y_prelim <- rbind( L105.an_Prod_Mt_R_C_Y, L106.an_NetExp_Mt_R_C_Y, L105.an_Food_Mt_R_C_Y )
-L109.an_ALL_Mt_R_C_Y <- recast( L109.an_ALL_Mt_R_C_Y_prelim, GCAM_region_ID + GCAM_commodity + variable ~ flow, id.var = c( R_C, "flow" ) )
+L109.an_ALL_Mt_R_C_Y.melt <- melt( L109.an_ALL_Mt_R_C_Y_prelim, id.vars = c( R_C, "flow" ) )
+L109.an_ALL_Mt_R_C_Y <- dcast( L109.an_ALL_Mt_R_C_Y.melt, GCAM_region_ID + GCAM_commodity + variable ~ flow )
 
 names( L109.an_ALL_Mt_R_C_Y )[ names( L109.an_ALL_Mt_R_C_Y ) == "variable" ] <- Y
 L109.an_ALL_Mt_R_C_Y$year <- as.numeric( sub( "X", "", L109.an_ALL_Mt_R_C_Y$year ) )

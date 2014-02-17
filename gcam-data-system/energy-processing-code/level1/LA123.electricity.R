@@ -19,6 +19,7 @@ printlog( "Historical inputs, outputs, and IO coefficients of electricity (incl.
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_elec_data", extension = ".R" )
 enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )
 A23.chp_elecratio <- readdata( "ENERGY_ASSUMPTIONS", "A23.chp_elecratio" )
 L1011.en_bal_EJ_R_Si_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.en_bal_EJ_R_Si_Fi_Yh" )

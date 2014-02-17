@@ -22,6 +22,8 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_ccs_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_elec_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )
@@ -186,7 +188,7 @@ L223.globaltech_retirement[ c( "sector.name", "subsector.name" ) ] <- L223.globa
 #Copy the data in the first future period through to the end year
 L223.globaltech_retirement <- rbind(
       subset( L223.globaltech_retirement, year == max( model_base_years ) ),
-      repeat_and_add_vector( subset( L223.globaltech_retirement, year == min(model_future_years ) ), "year", model_future_years ) )
+      repeat_and_add_vector( subset( L223.globaltech_retirement, year > max(model_base_years ) ), "year", model_future_years ) )
 
 #Retirement may consist of any of three types of retirement function (phased, s-curve, or none), with and without profit shutdown decider
 # All of these options have different headers, and all are allowed

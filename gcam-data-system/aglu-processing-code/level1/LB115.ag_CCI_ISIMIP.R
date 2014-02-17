@@ -143,7 +143,7 @@ L115.GTAP_ag_HA_ha$LPJmL_crop <- FAO_ag_items_PRODSTAT$LPJmL_crop[
 L115.GTAP_ag_HA_ha$GEPIC_crop <- FAO_ag_items_PRODSTAT$GEPIC_crop[
       match( L115.GTAP_ag_HA_ha$GTAP_crop, FAO_ag_items_PRODSTAT$GTAP_crop ) ]
 L115.GTAP_ag_HA_ha <- na.omit( L115.GTAP_ag_HA_ha )
-L115.GTAP_ag_HA_ha.melt <- melt( L115.GTAP_ag_HA_ha, variable_name = AEZ, measure.vars = AEZs )
+L115.GTAP_ag_HA_ha.melt <- melt( L115.GTAP_ag_HA_ha, variable.name = AEZ, measure.vars = AEZs )
 
 # Drop the zeroes. This will make the next steps much easier
 L115.GTAP_ag_HA_ha.melt <- subset( L115.GTAP_ag_HA_ha.melt, value != 0 )

@@ -21,6 +21,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_ind_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 A_PrimaryFuelCCoef <- readdata( "EMISSIONS_ASSUMPTIONS", "A_PrimaryFuelCCoef" )
 cement_regions <- readdata( "ENERGY_MAPPINGS", "cement_regions" )
@@ -152,11 +153,11 @@ L1321.Cement_ALL_R_Yh$elec_GJkg <- L1321.Cement_ALL_R_Yh$elec_EJ / L1321.Cement_
 L1321.Cement_ALL_R_Yh$Xyear <- paste( "X", L1321.Cement_ALL_R_Yh$year, sep = "" )
 
 #Compile the IO coefficients (electricity and heat) into a table and combine with limestone. Need to convert to GJ per kg (EJ per Mt)
-L1321.IO_Cement_GJkg_R_elec_Yh <- cast( L1321.Cement_ALL_R_Yh, GCAM_region_ID ~ Xyear, value = "elec_GJkg" )
+L1321.IO_Cement_GJkg_R_elec_Yh <- dcast( L1321.Cement_ALL_R_Yh, GCAM_region_ID ~ Xyear, value.var = "elec_GJkg" )
 L1321.IO_Cement_GJkg_R_elec_Yh[ X_additional_years ] <- L1321.IO_Cement_GJkg_R_elec_Yh[ X_final_CO2_year ]
 L1321.IO_Cement_GJkg_R_elec_Yh <- data.frame( L1321.IO_Cement_GJkg_R_elec_Yh[ "GCAM_region_ID" ],
       sector = "cement", fuel = "electricity", L1321.IO_Cement_GJkg_R_elec_Yh[ X_historical_years ] )
-L1321.IO_Cement_GJkg_R_heat_Yh <- cast( L1321.Cement_ALL_R_Yh, GCAM_region_ID ~ Xyear, value = "heat_GJkg" )
+L1321.IO_Cement_GJkg_R_heat_Yh <- dcast( L1321.Cement_ALL_R_Yh, GCAM_region_ID ~ Xyear, value.var = "heat_GJkg" )
 L1321.IO_Cement_GJkg_R_heat_Yh[ X_additional_years ] <- L1321.IO_Cement_GJkg_R_heat_Yh[ X_final_CO2_year ]
 L1321.IO_Cement_GJkg_R_heat_Yh <- data.frame( L1321.IO_Cement_GJkg_R_heat_Yh[ "GCAM_region_ID" ],
       sector = "cement", fuel = "heat", L1321.IO_Cement_GJkg_R_heat_Yh[ X_historical_years ] )
@@ -171,7 +172,7 @@ L1321.in_EJ_R_cement_F_Y.melt$fuel <- tolower( substr( L1321.in_EJ_R_cement_F_Y.
 L1321.in_EJ_R_cement_F_Y.melt$fuel[ grepl( "elec", L1321.in_EJ_R_cement_F_Y.melt$fuel ) ] <- "electricity"
 #Reset oil to refined liquids
 L1321.in_EJ_R_cement_F_Y.melt$fuel <- sub( "oil", "refined liquids", L1321.in_EJ_R_cement_F_Y.melt$fuel )
-L1321.in_EJ_R_cement_F_Y <- cast( L1321.in_EJ_R_cement_F_Y.melt, GCAM_region_ID + sector + fuel ~ Xyear )
+L1321.in_EJ_R_cement_F_Y <- dcast( L1321.in_EJ_R_cement_F_Y.melt, GCAM_region_ID + sector + fuel ~ Xyear )
 L1321.in_EJ_R_cement_F_Y[ X_additional_years ] <- L1321.in_EJ_R_cement_F_Y[ X_final_CO2_year ]
 
 #Calculate the remaining industrial energy use
@@ -193,7 +194,7 @@ for( i in 1:ncol( L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ] ) ){
 # This method assigns negative industrial energy consumption to biomass.
 if( any( L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ] < 0 ) ){
 	printlog( "Negative industrial energy use from cement energy deduction. Re-balancing by assigning energy to biomass")
-	L1321.in_EJ_R_indenergy_F_Yh.melt <- melt( L1321.in_EJ_R_indenergy_F_Yh, id.vars = R_S_F, variable_name = "Xyear" )
+	L1321.in_EJ_R_indenergy_F_Yh.melt <- melt( L1321.in_EJ_R_indenergy_F_Yh, id.vars = R_S_F, variable.name = "Xyear" )
 	#Subset region / years where any fuels are negative
 	L1321.cement_adj_neg <- subset( L1321.in_EJ_R_indenergy_F_Yh.melt, value < 0 )
 	#These are the amounts by which cement energy needs to be adjusted for these fuels (negative adjustment)
@@ -210,11 +211,11 @@ if( any( L1321.in_EJ_R_indenergy_F_Yh[ X_historical_years ] < 0 ) ){
 	#Add in the adjustments to a molten table of cement energy consumption. Recast.
 	#Need to return the cement energy consumption table to a normal data frame (has bad info from prior cast)
 	L1321.in_EJ_R_cement_F_Y <- data.frame( L1321.in_EJ_R_cement_F_Y )
-	L1321.in_EJ_R_cement_F_Y.melt <- melt( L1321.in_EJ_R_cement_F_Y, id.vars = R_S_F, variable_name = "Xyear" )
+	L1321.in_EJ_R_cement_F_Y.melt <- melt( L1321.in_EJ_R_cement_F_Y, id.vars = R_S_F, variable.name = "Xyear" )
 	L1321.in_EJ_R_cement_F_Y.melt <- rbind( L1321.in_EJ_R_cement_F_Y.melt, L1321.cement_adj_neg, L1321.cement_adj_pos )
 	L1321.in_EJ_R_cement_F_Y.melt <- aggregate( L1321.in_EJ_R_cement_F_Y.melt[ "value" ],
 	    by=as.list( L1321.in_EJ_R_cement_F_Y.melt[ c( R, S_F, Xyr ) ] ), sum )
-	L1321.in_EJ_R_cement_F_Y <- cast( L1321.in_EJ_R_cement_F_Y.melt, GCAM_region_ID + sector + fuel ~ Xyear )
+	L1321.in_EJ_R_cement_F_Y <- dcast( L1321.in_EJ_R_cement_F_Y.melt, GCAM_region_ID + sector + fuel ~ Xyear )
 }
 
 # -----------------------------------------------------------------------------

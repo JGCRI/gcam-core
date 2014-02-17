@@ -42,7 +42,7 @@ L102.CO2_Mt_R_F_Yh.melt <- aggregate( L102.CDIAC_CO2_ctry_hist.melt[ "value" ] *
 
 #Cast so that columns are years (column names need "X" pasted)
 L102.CO2_Mt_R_F_Yh.melt$Xyear <- paste( "X", L102.CO2_Mt_R_F_Yh.melt$year, sep = "" )
-L102.CO2_Mt_R_F_Yh <- cast( L102.CO2_Mt_R_F_Yh.melt, GCAM_region_ID + fuel ~ Xyear )
+L102.CO2_Mt_R_F_Yh <- dcast( L102.CO2_Mt_R_F_Yh.melt, GCAM_region_ID + fuel ~ Xyear )
 
 #Calculate regional and global CO2 emissions coefficients by fuel
 #Calculate the TPES by fuel, deducting non-energy use of fuels that does not result in CO2 emissions

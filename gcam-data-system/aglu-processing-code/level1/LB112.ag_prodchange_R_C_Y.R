@@ -46,7 +46,7 @@ FAO_ag_CROSIT$HA_kha[ FAO_ag_CROSIT$Prod_kt == 0 & FAO_ag_CROSIT$HA_kha != 0 ] <
 #Cast by year
 printlog( "NOTE: Only using total production and harvested area from CROSIT (not separating rainfed and irrigated)")
 crs_ID <- c( "CROSIT_ctry", "CROSIT_crop" )
-L112.ag_Yield_kgHa_Rcrs_Ccrs_Y <- cast( FAO_ag_CROSIT[ c( crs_ID, "Xyear", "Yield_kgHa") ], CROSIT_ctry + CROSIT_crop ~ Xyear, value = "Yield_kgHa" )
+L112.ag_Yield_kgHa_Rcrs_Ccrs_Y <- dcast( FAO_ag_CROSIT[ c( crs_ID, "Xyear", "Yield_kgHa") ], CROSIT_ctry + CROSIT_crop ~ Xyear, value.var = "Yield_kgHa" )
 
 #Interpolate to specified agricultural productivity years, and drop any years not specified
 L112.ag_Yield_kgHa_Rcrs_Ccrs_Y <- gcam_interp( L112.ag_Yield_kgHa_Rcrs_Ccrs_Y, spec_ag_prod_years )

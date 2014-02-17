@@ -87,7 +87,7 @@ L161.RsrcCurves_MtC_R$available <- L161.Available_MtC_R_C$available[
 L161.RsrcCurves_MtC_R$extractioncost <- round(
       A61.Cstorage_curves$cost_2005USDtCO2[ match( L161.RsrcCurves_MtC_R$grade, A61.Cstorage_curves$grade ) ] *
          conv_C_CO2 / conv_1990_2005_USD,
-      digits_depresource )
+      digits_cost )
 
 # -----------------------------------------------------------------------------
 # 3. Output

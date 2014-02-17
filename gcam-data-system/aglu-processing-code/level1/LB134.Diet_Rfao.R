@@ -116,6 +116,13 @@ L134.pcFood_kcald_R_Dmnd_Y[ X_diet_years ] <- L134.pcFood_kcald_R_Dmnd_Y[[ X_fin
              vecpaste( L134.FoodRatio_R_Dmnd_Y[ c( R, "GCAM_demand" ) ] ) ),
       X_diet_years ]
 
+printlog( "Extending the projected diets to all years, assuming convergence year and demand levels")
+L134.pcFood_kcald_R_Dmnd_Y[[ X_diet_convergence_year ]][ L134.pcFood_kcald_R_Dmnd_Y$GCAM_demand == "crops" ] <- convergence_kcald_crops
+L134.pcFood_kcald_R_Dmnd_Y[[ X_diet_convergence_year ]][ L134.pcFood_kcald_R_Dmnd_Y$GCAM_demand == "meat" ] <- convergence_kcald_meat
+
+L134.pcFood_kcald_R_Dmnd_Y <- gcam_interp( L134.pcFood_kcald_R_Dmnd_Y, c( historical_years, future_years ) )
+L134.pcFood_kcald_R_Dmnd_Y <- L134.pcFood_kcald_R_Dmnd_Y[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments to tables

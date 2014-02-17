@@ -21,6 +21,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
+sourcedata( "ENERGY_ASSUMPTIONS", "A_bld_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 calibrated_techs_bld_det <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_bld_det" )
 A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
@@ -46,17 +47,22 @@ L144.shell_eff_R_Y <- readdata("ENERGY_LEVEL1_DATA","L144.shell_eff_R_Y")
 L144.NEcost_75USDGJ <- readdata( "ENERGY_LEVEL1_DATA", "L144.NEcost_75USDGJ" )
 L144.internal_gains <- readdata ("ENERGY_LEVEL1_DATA", "L144.internal_gains" )
 L143.HDDCDD_scen_R_Y <- readdata( "ENERGY_LEVEL1_DATA", "L143.HDDCDD_scen_R_Y" )
+L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA" , "L101.Pop_thous_R_Yh" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 #Subregional population and income shares: need to be read in because these default to 0
-L244.SubregionalShares <- write_to_all_regions( A44.gcam_consumer, names_Consumers )
+printlog( "L244.SubregionalShares: subregional population and income shares (not currently used)" )
+L244.SubregionalShares <- write_to_all_regions( A44.gcam_consumer, names_BldConsumers )
 L244.SubregionalShares[ c( "pop.year.fillout", "inc.year.fillout" ) ] <- min( model_base_years )
 L244.SubregionalShares[ c( "subregional.population.share", "subregional.income.share" ) ] <- 1
 
 #internal gains
+printlog( "L244.PriceExp_IntGains: price exponent on floorspace and naming of internal gains trial markets" )
 L244.PriceExp_IntGains <- write_to_all_regions( A44.gcam_consumer, names_PriceExp_IntGains )
 
+printlog( "L244.Floorspace: base year floorspace" )
 #Building residential floorspace in the base years
 L244.Floorspace_resid <- interpolate_and_melt( L144.flsp_bm2_R_res_Yh, model_base_years, value.name="base.building.size", digits = digits_floorspace )
 L244.Floorspace_resid <- add_region_name( L244.Floorspace_resid )
@@ -75,11 +81,13 @@ L244.Floorspace_comm <- L244.Floorspace_comm[ names_Floorspace ]
 L244.Floorspace <- rbind( L244.Floorspace_resid, L244.Floorspace_comm )
 
 #demand function
+printlog( "L244.DemandFunction_serv and L244.DemandFunction_flsp: demand function types" )
 L244.DemandFunction_serv <- write_to_all_regions( A44.demandFn_serv, names_DemandFunction_serv )
 L244.DemandFunction_flsp <- write_to_all_regions( A44.demandFn_flsp, names_DemandFunction_flsp )
 
 #Floorspace demand satiation
-L244.Satiation_flsp_class <- melt( A44.satiation_flsp, id.vars = "region.class", variable_name = "sector" )
+printlog( "L244.Satiation_flsp: Satiation levels assumed for floorspace" )
+L244.Satiation_flsp_class <- melt( A44.satiation_flsp, id.vars = "region.class", variable.name = "sector" )
 L244.Satiation_flsp_class$satiation.level <- L244.Satiation_flsp_class$value * conv_thous_bil
 L244.Satiation_flsp <- write_to_all_regions( A44.gcam_consumer, names_BldNodes )
 
@@ -91,7 +99,33 @@ L244.Satiation_flsp$satiation.level <- L244.Satiation_flsp_class$satiation.level
          vecpaste( L244.Satiation_flsp_class[ c( "region.class", "sector" ) ] ) ) ]
 L244.Satiation_flsp <- L244.Satiation_flsp[ names_Satiation_flsp ]
 
+# Satiation adder - this is total BS. Required for shaping the future floorspace growth trajectories in each region
+printlog( "L244.SatiationAdder: Satiation adders in floorspace demand function" )
+#First, prepare socioeconomics tables by adding region names
+L102.pcgdp_thous90USD_SSP_R_Y <- add_region_name( L102.pcgdp_thous90USD_SSP_R_Y )
+L101.Pop_thous_R_Yh <- add_region_name( L101.Pop_thous_R_Yh )
+
+#Match in the per-capita GDP, total floorspace, and population (for calculating per-capita floorspace)
+L244.SatiationAdder <- L244.Satiation_flsp
+L244.SatiationAdder$pcGDP_thous90USD <- L102.pcgdp_thous90USD_SSP_R_Y[[ X_satiation_year ]][
+      match( L244.SatiationAdder$region, L102.pcgdp_thous90USD_SSP_R_Y$region ) ]
+L244.SatiationAdder$Flsp_bm2 <- L244.Floorspace$base.building.size[
+      match( paste( L244.SatiationAdder$region, L244.SatiationAdder$gcam.consumer, satiation_year ),
+             paste( L244.Floorspace$region, L244.Floorspace$gcam.consumer, L244.Floorspace$year ) ) ]
+L244.SatiationAdder$pop_thous <- L101.Pop_thous_R_Yh[[ X_satiation_year ]][
+      match( L244.SatiationAdder$region, L101.Pop_thous_R_Yh$region ) ]
+L244.SatiationAdder$pcFlsp_mm2 <- L244.SatiationAdder$Flsp_bm2 / L244.SatiationAdder$pop_thous
+
+#At this point, we have all of the data required for calculating the satiation adder in each region
+L244.SatiationAdder$satiation.adder <- round(
+         L244.SatiationAdder$satiation.level - (
+         exp( log( 2 ) * L244.SatiationAdder$pcGDP_thous90USD / impedance_level ) *
+         ( L244.SatiationAdder$satiation.level - L244.SatiationAdder$pcFlsp_mm2 ) ),
+      digits_satiation_adder )
+L244.SatiationAdder <- L244.SatiationAdder[ names_SatiationAdder ]
+
 #Services: base-service (service output in the base year)
+printlog( "L244.GenericBaseService and L244.ThermalBaseService: Base year output of buildings services (per unit floorspace)" )
 # First, separate the thermal from the generic services. Generic services will be assumed to produce
 # internal gain energy, so anything in the internal gains assumptions table will be assumed generic
 generic_services <- unique( A44.internal_gains$supplysector )
@@ -100,7 +134,6 @@ thermal_services <- unique( A44.sector$supplysector )[ !unique( A44.sector$suppl
 #Base-service: interpolate and melt, subsetting only the model base years. change names as indicated in
 # calibrated_techs_bld_det (from sector and service to gcam.consumer, nodeInput, building.node.input and
 # building.service.input, where the last column is the same as the supplysector)
-
 L244.base_service <- interpolate_and_melt(L144.base_service_EJ_serv, model_base_years, value.name = "base.service", digits = digits_calOutput )
 L244.base_service[ c( "gcam.consumer", "nodeInput", "building.node.input", "building.service.input" ) ] <- 
   calibrated_techs_bld_det[ match( vecpaste( L244.base_service[c ( "sector", "service" ) ] ), 
@@ -110,12 +143,12 @@ L244.base_service <- add_region_name( L244.base_service )
 L244.base_service <- L244.base_service[ c( names_BldNodes, "building.service.input", "year", "base.service" ) ]
 
 # Separate thermal and generic services into separate tables with different ID strings
-
 L244.GenericBaseService <- subset( L244.base_service, building.service.input %in% generic_services )
 L244.ThermalBaseService <- subset( L244.base_service, building.service.input %in% thermal_services )
 names( L244.ThermalBaseService )[ names( L244.ThermalBaseService ) == "building.service.input" ] <- "thermal.building.service.input"
 
 #Heating and cooling degree days (thermal services only)
+printlog( "L244.HDDCDD: Heating and cooling degree days by scenario" )
 # Processing of HDD and CDD data
 L244.all_sres_gcm <- unique( L143.HDDCDD_scen_R_Y [c ("SRES", "GCM") ] )
 L244.all_sres_gcm$scenID <- 1:nrow( L244.all_sres_gcm )  
@@ -124,7 +157,7 @@ L244.HDDCDD_scen_R_Y$scenID <- L244.all_sres_gcm$scenID[
   match( vecpaste( L244.HDDCDD_scen_R_Y[ c( "SRES", "GCM" ) ] ),
          vecpaste( L244.all_sres_gcm[ c( "SRES", "GCM" ) ] ) ) ]
 
-L244.HDDCDD_scen_R_Y.melt <- melt( L244.HDDCDD_scen_R_Y, id.vars = c( "GCAM_region_ID","scenID", "SRES", "GCM", "variable" ), variable_name = "Xyear")
+L244.HDDCDD_scen_R_Y.melt <- melt( L244.HDDCDD_scen_R_Y, id.vars = c( "GCAM_region_ID","scenID", "SRES", "GCM", "variable" ), variable.name = "Xyear")
 L244.HDDCDD_scen_R_Y.melt$year <- sub( "X", "", L244.HDDCDD_scen_R_Y.melt$Xyear )
 L244.HDDCDD_scen_R_Y.melt <- add_region_name( L244.HDDCDD_scen_R_Y.melt )
 
@@ -149,6 +182,7 @@ L244.HDDCDD$degree.days <- round( L244.HDDCDD_scen_R_Y.melt$value[
   digits_hddcdd )
 
 #Service satiation
+printlog( "L244.GenericServiceSatiation: Satiation levels assumed for non-thermal building services")
 #First, calculate the service output per unit floorspace in the USA region
 L244.ServiceSatiation_USA <- L144.base_service_EJ_serv[
   L144.base_service_EJ_serv[[R]] == 1, c( R_S, "service", X_historical_years ) ]
@@ -157,10 +191,20 @@ L244.ServiceSatiation_USA[ c( "gcam.consumer", "nodeInput", "building.node.input
                                    vecpaste( calibrated_techs_bld_det[ c( "sector","service" ) ] ) ),
                             c( "gcam.consumer", "nodeInput", "building.node.input", "supplysector" ) ]
 L244.ServiceSatiation_USA <- add_region_name( L244.ServiceSatiation_USA )
-L244.ServiceSatiation_USA[[Y]] <- max( historical_years )
-L244.ServiceSatiation_USA$floorspace_bm2 <- L244.Floorspace$base.building.size[
-  match( vecpaste( L244.ServiceSatiation_USA[ c( "region", "gcam.consumer", Y ) ] ),
-         vecpaste( L244.Floorspace[ c( "region", "gcam.consumer", Y ) ] ) ) ]
+
+#Floorspace should be matched in for a specified year, from the full floorspace table (i.e. not one that is subsetted to model base years)
+L144.flsp_bm2_R_res_Yh$gcam.consumer <- unique( A44.gcam_consumer$gcam.consumer[ grepl( "res", A44.gcam_consumer$gcam.consumer ) ] )
+L144.flsp_bm2_R_res_Yh <- add_region_name( L144.flsp_bm2_R_res_Yh )
+L144.flsp_bm2_R_comm_Yh$gcam.consumer <- unique( A44.gcam_consumer$gcam.consumer[ grepl( "com", A44.gcam_consumer$gcam.consumer ) ] )
+L144.flsp_bm2_R_comm_Yh <- add_region_name( L144.flsp_bm2_R_comm_Yh )
+L244.flsp_bm2_R <- rbind(
+     L144.flsp_bm2_R_res_Yh[ c( names_BldConsumers, X_satiation_year ) ],
+     L144.flsp_bm2_R_comm_Yh[ c( names_BldConsumers, X_satiation_year ) ] )
+
+L244.ServiceSatiation_USA[[Y]] <- satiation_year
+L244.ServiceSatiation_USA$floorspace_bm2 <- L244.flsp_bm2_R[[ X_satiation_year ]][
+  match( vecpaste( L244.ServiceSatiation_USA[ names_BldConsumers ] ),
+         vecpaste( L244.flsp_bm2_R[ names_BldConsumers ] ) ) ]
 
 L244.ServiceSatiation_USA$satiation.level <- round(
   L244.ServiceSatiation_USA[[ X_final_historical_year ]] *
@@ -186,6 +230,7 @@ L244.GenericServiceSatiation$satiation.level <- pmax( L244.GenericServiceSatiati
              vecpaste( L244.moreBS[ c( names_BldNodes, "building.service.input" ) ] ) ) ] * 1.0001 )
 
 #Thermal services: need to multiply by HDD/CDD ratio from the USA
+printlog( "L244.ThermalServiceSatiation: Satiation levels assumed for thermal building services")
 L244.ThermalServiceSatiation <- subset( L244.ServiceSatiation_USA, building.service.input %in% thermal_services )
 L244.ThermalServiceSatiation <- write_to_all_regions( L244.ThermalServiceSatiation, names_GenericServiceSatiation )
 names( L244.ThermalServiceSatiation ) <- sub( "building.service.input", "thermal.building.service.input", names( L244.ThermalServiceSatiation ) )
@@ -219,6 +264,7 @@ L244.ThermalServiceSatiation$satiation.level <- round( pmax( L244.ThermalService
 L244.ThermalServiceSatiation <- L244.ThermalServiceSatiation[ names_ThermalServiceSatiation ]
 
 #shell efficiency
+printlog( "L244.ShellConductance_bld: Shell conductance (inverse of shell efficiency)" )
 L244.shell_eff_R_Y <- interpolate_and_melt(L144.shell_eff_R_Y, model_years, value.name="shell.conductance", digits = digits_efficiency )
 L244.shell_eff_R_Y <- add_region_name(L244.shell_eff_R_Y)
 L244.shell_eff_R_Y[ bld_nodes_noregion ] <- A44.gcam_consumer[
@@ -230,6 +276,7 @@ L244.shell_eff_R_Y$floor.to.surface.ratio <- floor.to.surface.ratio
 L244.ShellConductance_bld <- L244.shell_eff_R_Y[ names_ShellConductance ]
 
 #supplysector
+printlog( "L244.Supplysector_bld: Supplysector info for buildings" )
 L244.Supplysector_bld <- write_to_all_regions( A44.sector, names_Supplysector )
 
 printlog( "L244.FinalEnergyKeyword_bld: Supply sector keywords for detailed building sector" )
@@ -273,17 +320,19 @@ if( any( !is.na( A44.subsector_interp$to.value ) ) ){
 }
 
 #fuel preference elasticity
-A44.fuelprefElasticity$year.fillout <- min( model_future_years )
+printlog( "L244.FuelPrefElast_bld: Fuel preference elasticities for buildings" )
+A44.fuelprefElasticity$year.fillout <- min( model_base_years )
 L244.FuelPrefElast_bld <- write_to_all_regions( A44.fuelprefElasticity, names_FuelPrefElasticity )
 L244.FuelPrefElast_bld <- subset( L244.FuelPrefElast_bld,
       paste( region, supplysector, subsector ) %in% paste( L244.Tech_bld$region, L244.Tech_bld$supplysector, L244.Tech_bld$subsector ) )
 
 #technology 
+printlog( "L244.StubTech_bld: Identification of stub technologies for buildings" )
 L244.StubTech_bld <- L244.Tech_bld
 names( L244.StubTech_bld ) <- sub( "technology", "stub.technology", names( L244.StubTech_bld ) )
 
 #calibration 
-
+printlog( "L244.StubTechCalInput_bld: Calibrated energy consumption by buildings technologies" )
 L244.in_EJ_R_bld_serv_F_Yh <- interpolate_and_melt(L144.in_EJ_R_bld_serv_F_Yh, model_base_years, value.name = "calibrated.value", digits = digits_calOutput)
 L244.in_EJ_R_bld_serv_F_Yh <- add_region_name(L244.in_EJ_R_bld_serv_F_Yh)
 
@@ -297,6 +346,7 @@ L244.in_EJ_R_bld_serv_F_Yh$tech.share.weight <- ifelse( L244.in_EJ_R_bld_serv_F_
 L244.StubTechCalInput_bld <- L244.in_EJ_R_bld_serv_F_Yh[ names_StubTechCalInput ]
 
 #end use effciency 
+printlog( "L244.StubTechEff_bld: Assumed efficiencies (all years) of buildings technologies" )
 L244.end_use_eff <- interpolate_and_melt(L144.end_use_eff, model_years, value.name="efficiency", digits = digits_calOutput )
 L244.end_use_eff <- add_region_name(L244.end_use_eff)
 
@@ -308,6 +358,7 @@ L244.end_use_eff$market.name <- L244.end_use_eff$region
 L244.StubTechEff_bld <- L244.end_use_eff[ names_StubTechEff ]
 
 #shareweight
+printlog( "L244.GlobalTechShrwt_bld: Default shareweights for global building technologies" )
 L244.GlobalTechShrwt_bld <- interpolate_and_melt( A44.globaltech_shrwt, model_years, value.name="share.weight" )
 L244.GlobalTechShrwt_bld[ c( "sector.name", "subsector.name" ) ] <- L244.GlobalTechShrwt_bld[ c( supp, subs ) ]
 L244.GlobalTechShrwt_bld <- L244.GlobalTechShrwt_bld[ c( names_GlobalTechYr, "share.weight" ) ]
@@ -321,6 +372,7 @@ L244.GlobalTechCost_bld$minicam.non.energy.input <- "non-energy"
 L244.GlobalTechCost_bld <- L244.GlobalTechCost_bld[ names_GlobalTechCost ]
 
 #retirement and shutdown rate
+printlog( "L244.GlobalTechShutdown_bld: Retirement rates for building technologies" )
 printlog( "NOTE: Retirement and shutdown rates only applied for existing (final cal year) stock")
 L244.GlobalTechShutdown_bld <- A44.cost_efficiency
 L244.GlobalTechShutdown_bld[[Y]] <- max( model_base_years )
@@ -328,7 +380,7 @@ L244.GlobalTechShutdown_bld[ c( "sector.name", "subsector.name" ) ] <- L244.Glob
 L244.GlobalTechShutdown_bld <- L244.GlobalTechShutdown_bld[ names_GlobalTechShutdown ]
 
 #internal gains output ratio
-
+printlog( "L244.StubTechIntGainOutputRatio: Output ratios of internal gain energy from non-thermal building services" )
 L244.StubTechIntGainOutputRatio <- interpolate_and_melt( L144.internal_gains, model_years, value="internal.gains.output.ratio", digits = digits_efficiency )
 L244.StubTechIntGainOutputRatio <- add_region_name( L244.StubTechIntGainOutputRatio ) 
 L244.StubTechIntGainOutputRatio$building.node.input <- calibrated_techs_bld_det[ 
@@ -342,7 +394,7 @@ L244.StubTechIntGainOutputRatio <- L244.StubTechIntGainOutputRatio[c(names_TechY
                                   "internal.gains.output.ratio", "internal.gains.market.name" ) ]
 
 #internal gains scaling
-
+printlog( "L244.Intgains_scalar: Scalers relating internal gain energy to increased/reduced cooling/heating demands" )
 variable <- c("HDD", "CDD")
 value <- c(InternalGainsScalar_USA_h, InternalGainsScalar_USA_c)
 US.base.scalar <- data.frame(variable, value)
@@ -364,6 +416,7 @@ L244.Intgains_scalar$internal.gains.scalar <- round(
 L244.Intgains_scalar <- L244.Intgains_scalar[ names_Intgains_scalar ]
 
 #Need to remove any services (supplysectors and building-service-inputs) and intgains trial markets for services that don't exist in any years
+printlog( "L244.DeleteThermalService and L244.DeleteGenericService: Removing non-existent services, likely related to 0 HDD or CDD")
 L244.DeleteThermalService <- subset(
       aggregate( L244.ThermalBaseService[ "base.service"],
             by=as.list( L244.ThermalBaseService[ c( names_BldNodes, "thermal.building.service.input" ) ] ), max ),
@@ -383,6 +436,7 @@ write_mi_data( L244.Floorspace, "Floorspace", "ENERGY_LEVEL2_DATA", "L244.Floors
 write_mi_data( L244.DemandFunction_serv, "DemandFunction_serv", "ENERGY_LEVEL2_DATA", "L244.DemandFunction_serv", "ENERGY_XML_BATCH", "batch_building_det.xml" ) 
 write_mi_data( L244.DemandFunction_flsp, "DemandFunction_flsp", "ENERGY_LEVEL2_DATA", "L244.DemandFunction_flsp", "ENERGY_XML_BATCH", "batch_building_det.xml" ) 
 write_mi_data( L244.Satiation_flsp, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp", "ENERGY_XML_BATCH", "batch_building_det.xml" ) 
+write_mi_data( L244.SatiationAdder, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder", "ENERGY_XML_BATCH", "batch_building_det.xml" ) 
 write_mi_data( L244.ThermalBaseService, "ThermalBaseService", "ENERGY_LEVEL2_DATA", "L244.ThermalBaseService", "ENERGY_XML_BATCH", "batch_building_det.xml" ) 
 write_mi_data( L244.GenericBaseService, "GenericBaseService", "ENERGY_LEVEL2_DATA", "L244.GenericBaseService", "ENERGY_XML_BATCH", "batch_building_det.xml" ) 
 #Need to subset and write out the HDD/CDD xmls in a for loop, as we don't know the number or names of scenarios

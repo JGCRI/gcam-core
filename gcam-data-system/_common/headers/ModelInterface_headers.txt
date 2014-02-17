@@ -327,6 +327,8 @@ Floorspace, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{na
 
 Satiation_flsp, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, satiation-demand-function/+satiation-level, scenario, scenario/world, building-node-input/satiation-demand-function
 
+SatiationAdder, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, satiation-demand-function/+satiation-adder, scenario, scenario/world, building-node-input/satiation-demand-function
+
 GenericBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}building-service-input, building-service-input/+{year}base-service, building-service-input/+base-service, scenario, scenario/world
 
 ThermalBaseService, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{name}nodeInput, nodeInput/+{name}building-node-input, building-node-input/+{name}thermal-building-service-input, thermal-building-service-input/+{year}base-service, thermal-building-service-input/+base-service, scenario, scenario/world

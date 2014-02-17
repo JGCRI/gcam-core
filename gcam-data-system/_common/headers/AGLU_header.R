@@ -43,7 +43,7 @@ interpolate_IMAGE_years <- function( data, idvars, years = AGLU_historical_years
 	data.melt <- melt( data, id.vars = idvars )
 	data.melt$IMAGE_region_ID <- as.numeric( substr( as.character( data.melt$variable ), 2, nchar( as.character( data.melt$variable ) ) ) )
 	data.melt$year <- paste( "X", data.melt$year, sep = "" )
-	data_new <- cast( data.melt, IMAGE_region_ID + ... ~ year )
+	data_new <- dcast( data.melt, IMAGE_region_ID + ... ~ year )
 	data_new <- data_new[ names( data_new) != "variable" ]
 	data_new$X1960 <- data_new$X1970
 	data_new <- gcam_interp( data_new, years )

@@ -120,7 +120,7 @@ L133.ag_Cost_75USDkg_C_AEZ.melt <- data.frame(
 L133.ag_Cost_75USDkg_C_AEZ.melt$value <- L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value[
       match( vecpaste( L133.ag_Cost_75USDkg_C_AEZ.melt[ C_AEZ ] ),
              vecpaste( L133.ag_Cost_75USDkg_Cusda_AEZ.melt[ C_AEZ ] ) ) ]
-L133.ag_Cost_75USDkg_C_AEZ <- cast( L133.ag_Cost_75USDkg_C_AEZ.melt, GCAM_commodity ~ AEZ )
+L133.ag_Cost_75USDkg_C_AEZ <- dcast( L133.ag_Cost_75USDkg_C_AEZ.melt, GCAM_commodity ~ AEZ )
 
 #AD HOC FILLOUT OF CROP COST TABLE
 #Start with temperate AEZs, filling out missing AEZs for crops with cost data

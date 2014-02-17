@@ -1,19 +1,32 @@
 #Column names of tables that are read in to the model interface
 #These correspond to the headers of the same name in the headers/ModelInterface_headers.txt file
+# These are for generic categories; module-specific level2 data names are found in data header files of each module
+#Resources
+names_DepRsrc <- c( "region", "depresource", "output.unit", "price.unit", "market" )
+names_RenewRsrc <- c( "region", "renewresource", "output.unit", "price.unit", "market" )
+names_UnlimitRsrc <- c( "region", "unlimited.resource", "output.unit", "price.unit", "market" )
+names_DepRsrcPrice <- c( "region", "depresource", "year", "price" )
+names_RenewRsrcPrice <- c( "region", "renewresource", "year", "price" )
+names_UnlimitRsrcPrice <- c( "region", "unlimited.resource", "year", "price" )
 
-#Demographics
-names_Pop <- c( "region", "year", "totalPop" )
-names_baseGDP <- c( "region", "baseGDP" )
-names_LaborProductivity <- c( "region", "year", "laborproductivity" )
-
-#Primary fuel carbon coefficients
-names_PrimaryFuelCO2Coef <- c( "region", "PrimaryFuelCO2Coef.name", "PrimaryFuelCO2Coef")
+#Subresources
+names_SubDepRsrc <- c( "region", "depresource", "subresource" )
+names_SubRenewRsrc <- c( "region", "renewresource", "sub.renewable.resource" )
+names_SmthRenewRsrc <- c( "region", "renewresource", "smooth.renewable.subresource" )
+names_DepRsrcCalProd <- c( names_SubDepRsrc, "year", "cal.production" )
+names_RenewRsrcCalProd <- c( names_SubRenewRsrc, "year", "cal.production" )
+names_maxSubResource <- c( names_SubRenewRsrc, "maxSubResource" ) #only applicable for renewable resources
+names_DepRsrcCurves <- c( names_SubDepRsrc, "grade", "available", "extractioncost" )
+names_RenewRsrcCurves <- c( names_SubRenewRsrc, "grade", "available", "extractioncost" )
+names_SmthRenewRsrcCurves <- c( names_SmthRenewRsrc, "maxSubResource", "mid.price", "curve.exponent" )
+names_DepRsrcTechChange <- c( names_SubDepRsrc, "year.fillout", "techChange" )
+names_RenewRsrcTechChange <- c( names_SubRenewRsrc, "year.fillout", "techChange" )
+names_SmthRenewRsrcTechChange <- c( names_SmthRenewRsrc, "year.fillout", "techChange" )
 
 #Supplysectors
 names_Supplysector <- c( "region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent" )
 names_FinalEnergyKeyword <- c( "region", "supplysector", "final.energy" )
 names_SupplysectorPrice <- c( "region", "supplysector", "year", "price" )
-names_ElecReserve <- c( "region", "supplysector", "electricity.reserve.margin", "average.grid.capacity.factor" )
 
 #Subsectors
 names_Subsector <- c( "region", "supplysector", "subsector")
@@ -71,31 +84,6 @@ names_StubTechCalorieContent <- c( names_StubTechEff )
 names_StubTechCost <- c( names_StubTechYr, "minicam.non.energy.input", "input.cost" )
 names_StubTechFixOut <- c( names_StubTechYr, "fixedOutput", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 
-#Transportation subsectors and technologies
-names_tranSubsector <- c( "region", "supplysector", "tranSubsector" )
-names_tranSubsectorLogit <- c( names_tranSubsector, "logit.year.fillout", "logit.exponent" )
-names_tranSubsectorShrwt <- c( names_tranSubsector, "year", "share.weight" )
-names_tranSubsectorShrwtFllt <- c( names_tranSubsector, "year.fillout", "share.weight" )
-names_tranSubsectorInterp <- c( names_tranSubsector, "apply.to","from.year", "to.year", "interpolation.function" )
-names_tranSubsectorInterpTo <- c( names_tranSubsector, "apply.to","from.year", "to.year", "to.value", "interpolation.function" )
-names_tranSubsectorSpeed <- c( names_tranSubsector, "year", "speed" )
-names_tranSubsectorVOTT <- c( names_tranSubsector, "addTimeValue", "year.fillout", "time.value.multiplier" )
-names_tranSubsectorFuelPref <- c( names_tranSubsector, "year.fillout", "fuelprefElasticity" )
-
-names_StubTranTech <- c( "region", "supplysector", "tranSubsector", "stub.technology" )
-names_StubTranTechYr <- c( names_StubTranTech, "year" )
-names_StubTranTechCalInput <- c( names_StubTranTechYr, input, "calibrated.value", "share.weight.year", "subs.share.weight", "tech.share.weight" )
-names_StubTranTechLoadFactor <- c( names_StubTranTechYr, "loadFactor" )
-names_StubTranTechCost <- c( names_StubTranTechYr, "minicam.non.energy.input", "input.cost" )
-names_StubTranTechCoef <- c( names_StubTranTechYr, input, "coefficient", "market.name" )
-
-
-names_GlobalTranTech <- c( "sector.name", "subsector.name", "tranTechnology" )
-names_GlobalTranTechYr <- c( names_GlobalTranTech, "year")
-names_GlobalTranTechShrwt <- c( names_GlobalTranTechYr, "share.weight" )
-names_GlobalTranTechInterp <- c( names_GlobalTranTech, "apply.to","from.year", "to.year", "interpolation.function" )
-names_GlobalTranTechSCurve <- c( names_GlobalTranTechYr, "lifetime", "steepness", "half.life" )
-
 #Agricultural sectors, subsectors, and technologies
 names_AgSupplySector <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent" )
 names_AgSupplySubsector <- c( "region", "AgSupplySector", "AgSupplySubsector" )
@@ -112,28 +100,6 @@ names_AgProdChange <- c( names_AgTechYr, "AgProdChange" )
 names_AgCost <- c( names_AgTechYr, "nonLandVariableCost" )
 names_AgCoef <- c( names_AgTechYr, input, "coefficient" )
 
-#Resources
-names_DepRsrc <- c( "region", "depresource", "output.unit", "price.unit", "market" )
-names_RenewRsrc <- c( "region", "renewresource", "output.unit", "price.unit", "market" )
-names_UnlimitRsrc <- c( "region", "unlimited.resource", "output.unit", "price.unit", "market" )
-names_DepRsrcPrice <- c( "region", "depresource", "year", "price" )
-names_RenewRsrcPrice <- c( "region", "renewresource", "year", "price" )
-names_UnlimitRsrcPrice <- c( "region", "unlimited.resource", "year", "price" )
-
-#Subresources
-names_SubDepRsrc <- c( "region", "depresource", "subresource" )
-names_SubRenewRsrc <- c( "region", "renewresource", "sub.renewable.resource" )
-names_SmthRenewRsrc <- c( "region", "renewresource", "smooth.renewable.subresource" )
-names_DepRsrcCalProd <- c( names_SubDepRsrc, "year", "cal.production" )
-names_RenewRsrcCalProd <- c( names_SubRenewRsrc, "year", "cal.production" )
-names_maxSubResource <- c( names_SubRenewRsrc, "maxSubResource" ) #only applicable for renewable resources
-names_DepRsrcCurves <- c( names_SubDepRsrc, "grade", "available", "extractioncost" )
-names_RenewRsrcCurves <- c( names_SubRenewRsrc, "grade", "available", "extractioncost" )
-names_SmthRenewRsrcCurves <- c( names_SmthRenewRsrc, "maxSubResource", "mid.price", "curve.exponent" )
-names_DepRsrcTechChange <- c( names_SubDepRsrc, "year.fillout", "techChange" )
-names_RenewRsrcTechChange <- c( names_SubRenewRsrc, "year.fillout", "techChange" )
-names_SmthRenewRsrcTechChange <- c( names_SmthRenewRsrc, "year.fillout", "techChange" )
-
 #Demands
 names_EnergyFinalDemand <- c( "region", "energy.final.demand" )
 names_PerCapitaBased <- c( names_EnergyFinalDemand, "perCapitaBased" )
@@ -141,21 +107,6 @@ names_BaseService <- c( names_EnergyFinalDemand, "year", "base.service" )
 names_PriceElasticity <- c( names_EnergyFinalDemand, "year", "price.elasticity" )
 names_IncomeElasticity <- c( names_EnergyFinalDemand, "year", "income.elasticity" )
 names_aeei <- c( "region", "energy.final.demand", "year", "aeei" )
-
-#Consumers
-names_Consumers <- c( "region", "gcam.consumer" )
-names_BldNodes <- c( "region", "gcam.consumer", "nodeInput", "building.node.input" )
-names_PriceExp_IntGains <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "price.exp.year.fillout", "price.exponent",
-                             "internal.gains.market.name", "internal.gains.unit")
-names_Floorspace <- c( "region", "gcam.consumer", "nodeInput", "building.node.input", "year", "base.building.size" )
-names_DemandFunction_flsp <- c("region", "gcam.consumer", "nodeInput", "prodDmdFnType" )
-names_DemandFunction_serv <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "prodDmdFnType" )
-names_Satiation_flsp <- c( "region", "gcam.consumer", "nodeInput", "building.node.input", "satiation.level" )					
-names_ShellConductance <- c( names_BldNodes, "year", "shell.conductance", "shell.year", "floor.to.surface.ratio" )
-names_GenericServiceSatiation <- c( names_BldNodes, "building.service.input", "satiation.level" )
-names_ThermalServiceSatiation <- c( names_BldNodes, "thermal.building.service.input", "satiation.level" )
-names_HDDCDD <- c( names_BldNodes, "thermal.building.service.input", "year", "degree.days" )
-names_Intgains_scalar <- c( names_BldNodes, "thermal.building.service.input", "internal.gains.scalar")					
 
 #Land types
 names_LN0_Land <- c( "region", "LandAllocatorRoot", "year.fillout", "landAllocation" )
