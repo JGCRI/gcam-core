@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------
 #UNIT CONVERSIONS
+conv_ones_mil <- 1e-6
 conv_thous_mil <- 1e-3
 conv_mil_bil <- 1e-3
 conv_bil_mil <- 1e3

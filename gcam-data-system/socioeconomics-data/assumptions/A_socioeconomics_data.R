@@ -4,6 +4,9 @@
 Maddison_historical_years <- seq( 1700, 1900, 50 )
 X_Maddison_historical_years <- paste0( "X", Maddison_historical_years )
 
+Maddison_GDP_years <- 1971:2003
+X_Maddison_GDP_years <- paste0( "X", Maddison_GDP_years )
+
 #Years for which to use UN data
 UN_historical_years <- c( 1950, 1971:2010 )
 X_UN_historical_years <- paste0( "X", UN_historical_years )

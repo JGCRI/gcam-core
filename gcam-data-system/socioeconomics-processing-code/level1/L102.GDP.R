@@ -48,6 +48,9 @@ L102.gdp_bilusd_ctry_Yfut[[Scen]] <- substr( L102.gdp_bilusd_ctry_Yfut$SCENARIO,
 #Specify which years in the SSP databases to use
 X_SSP_years <- names( L102.gdp_bilusd_ctry_Yfut )[ names( L102.gdp_bilusd_ctry_Yfut ) %in% c( X_historical_years, X_future_years ) ]
 
+#Subset only the years that aren't missing
+X_SSP_years <- names( colSums( L102.gdp_bilusd_ctry_Yfut[ X_SSP_years ] )[ !is.na( colSums( L102.gdp_bilusd_ctry_Yfut[ X_SSP_years ] ) ) ] )
+
 #Find any common years between the historical data and the "future" data, for computation of ratios
 X_common_years <- X_SSP_years[ X_SSP_years %in% names( L102.gdp_mil90usd_R_Yh ) ]
 
