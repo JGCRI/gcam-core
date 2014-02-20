@@ -60,7 +60,7 @@ for( i in 2:length( c( X_historical_years, X_future_years ) ) ){
   L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i] <-
     L144.USA_TechMult[ c( X_historical_years, X_future_years ) ][i-1] *
     ( 1 + L144.USA_TechChange[ c( X_historical_years, X_future_years ) ][ i ] )^
-    timesteps_rep_techs[i-1]
+    timesteps_rep_techs[,i-1]
 }
 
 #These multipliers assume a base year of the first historical year. However most of the efficiencies are based on data from more recent
