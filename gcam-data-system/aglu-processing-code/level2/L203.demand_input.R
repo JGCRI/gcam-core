@@ -47,7 +47,7 @@ L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thou
 # that are also model years (i.e. not just the model base years)
 aglu_demand_calyears <- historical_years[ historical_years %in% model_years ]
 X_aglu_demand_calyears <- paste0( "X", aglu_demand_calyears )
-aglu_demand_futureyears <- model_years[ !model_years %in% aglu_demand_calyears ]
+aglu_demand_futureyears <- c( max( aglu_demand_calyears  ), model_years[ !model_years %in% aglu_demand_calyears ] )
 X_aglu_demand_futureyears <- paste0( "X", aglu_demand_futureyears )
 
 L203.ag_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L101.ag_Food_Pcal_R_C_Y, aglu_demand_calyears )
@@ -235,15 +235,11 @@ L203.pcFoodRatio_R_Dmnd_Yfut <- L203.pcFood_kcald_R_Dmnd_Yfut
 L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
       L203.pcFood_kcald_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
       L203.pcFood_kcald_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
-L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[1] ] <- 1
+L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
 
 printlog( "Step 3: Merging the historical and future caloric demand trajectories" )
 L203.pcFoodRatio_R_Dmnd_Y <- L203.pcFoodRatio_R_Yh
-L203.pcFoodRatio_R_Dmnd_Y[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Yh[[X_aglu_demand_calyears[ length( X_aglu_demand_calyears ) ]]] * 
-      L203.pcFoodRatio_R_Dmnd_Yfut[
-          match( vecpaste( L203.pcFoodRatio_R_Yh[ names_EnergyFinalDemand ] ),
-                 vecpaste( L203.pcFoodRatio_R_Dmnd_Yfut[ names_EnergyFinalDemand ] ) ),
-          X_aglu_demand_futureyears ]
+L203.pcFoodRatio_R_Dmnd_Y[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears ]
 
 printlog( "Step 4: Calculating the per-capita GDP trajectories over the same time period" )
 printlog( "NOTE: only computing elasticities based on the specified GDP scenario" )

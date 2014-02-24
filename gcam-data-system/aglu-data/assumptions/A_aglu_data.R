@@ -17,7 +17,7 @@ X_preAGLU_years <- paste( "X", preAGLU_years, sep = "" )
 diet_years <- c( max( historical_years ), future_years[ future_years <= 2050 ] )
 X_diet_years <- paste( "X", diet_years, sep="" )
 diet_gdpScen <- "SSP2" #Scenario to match with FAO projections in deriving income elasticities
-diet_convergence_year <- 2200
+diet_convergence_year <- 5000   #using a flat trajectory for comparison with the core model
 X_diet_convergence_year <- paste0("X", diet_convergence_year )
 convergence_kcald_crops <- 2500
 convergence_kcald_meat <- 1000

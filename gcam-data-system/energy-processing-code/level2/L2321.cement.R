@@ -39,6 +39,10 @@ A321.demand <- readdata( "ENERGY_ASSUMPTIONS", "A321.demand" )
 L1321.out_Mt_R_cement_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1321.out_Mt_R_cement_Yh")
 L1321.IO_GJkg_R_cement_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1321.IO_GJkg_R_cement_F_Yh" )
 L1321.in_EJ_R_cement_F_Y <- readdata( "ENERGY_LEVEL1_DATA", "L1321.in_EJ_R_cement_F_Y" )
+A321.inc_elas_output <- readdata( "SOCIO_ASSUMPTIONS", "A321.inc_elas_output" )
+L101.Pop_thous_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_R_Y" )
+L102.gdp_mil90usd_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_R_Y" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -173,7 +177,61 @@ printlog( "L2321.PriceElasticity_cement: price elasticity" )
 L2321.PriceElasticity_cement <- write_to_all_regions( A321.demand, names_PriceElasticity[ names_PriceElasticity != Y ] )
 L2321.PriceElasticity_cement <- repeat_and_add_vector( L2321.PriceElasticity_cement, Y, model_future_years )[ names_PriceElasticity ]
 
-#Income elasticities are read in the socioeconomics module
+printlog( "L2321.IncomeElasticity_cement_scen: income elasticity of industry (scenario-specific)" )
+#First, calculate the per-capita GDP pathways of every GDP scenario and combine
+L2321.pcgdp_thous90USD_GCAM3_R_Y <- data.frame(
+      L102.gdp_mil90usd_GCAM3_R_Y[ R ],
+      L102.gdp_mil90usd_GCAM3_R_Y[ c( X_historical_years, X_future_years ) ] /
+      L101.Pop_thous_GCAM3_R_Y[ c( X_historical_years, X_future_years ) ] )
+L2321.pcgdp_thous90USD_GCAM3_R_Y[[Scen]] <- "GCAM3"
+
+#Combine GCAM 3.0 with the SSPs, and subset only the relevant years
+L2321.pcgdp_thous90USD_ALL_R_Y <- rbind(
+      L102.pcgdp_thous90USD_SSP_R_Y,
+      L2321.pcgdp_thous90USD_GCAM3_R_Y )[ c( Scen_R, X_final_model_base_year, X_model_future_years ) ]
+
+# Per-capita GDP ratios, which are used in the equation for demand growth
+X_elast_years <- c( X_final_model_base_year, X_model_future_years )
+L2321.pcgdpRatio_ALL_R_Y <- L2321.pcgdp_thous90USD_ALL_R_Y[ c( Scen_R, X_model_future_years ) ]
+L2321.pcgdpRatio_ALL_R_Y[ X_elast_years[ 2:length( X_elast_years ) ] ] <-
+      L2321.pcgdp_thous90USD_ALL_R_Y[ X_elast_years[ 2:length( X_elast_years ) ] ] /
+      L2321.pcgdp_thous90USD_ALL_R_Y[ X_elast_years[ 1:( length( X_elast_years ) - 1 ) ] ]
+
+#Calculate the cement output as the base-year cement output times the GDP ratio raised to the income elasticity
+# The income elasticity is looked up based on the prior year's output
+L2321.Output_cement <- add_region_name( L2321.pcgdpRatio_ALL_R_Y[ c( Scen_R ) ] )
+L2321.Output_cement[[X_final_model_base_year ]] <- L2321.BaseService_cement$base.service[
+      match( paste( L2321.Output_cement$region, max( model_base_years ) ),
+             paste( L2321.BaseService_cement$region, L2321.BaseService_cement$year ) ) ] * conv_mil_thous /
+      L101.Pop_thous_GCAM3_R_Y[[ X_final_model_base_year ]][
+         match( L2321.Output_cement[[R]], L101.Pop_thous_GCAM3_R_Y[[R]] ) ]
+
+#At each time, the output is equal to the prior period's output times the GDP ratio, raised to the elasticity
+# that corresponds to the output that was observed in the prior time period. This method prevents (ideally) runaway
+# production/consumption.
+for( i in 2:( length( X_elast_years ) ) ){
+	L2321.Output_cement[ X_elast_years[i] ] <-
+	   L2321.Output_cement[ X_elast_years[i-1] ] *
+	   L2321.pcgdpRatio_ALL_R_Y[ X_elast_years[i] ] ^
+	   approx( x = A321.inc_elas_output$pc.output_t,
+	           y = A321.inc_elas_output$inc_elas,
+	           xout = L2321.Output_cement[[ X_elast_years[i-1] ]], rule = 2 )$y
+}	
+
+#Now that we have cement output, we can back out the appropriate income elasticities
+L2321.IncElas_cement <- L2321.Output_cement[ c( Scen, R, X_model_future_years ) ]
+for( i in 1:length( X_model_future_years ) ){
+	L2321.IncElas_cement[ X_model_future_years[i] ] <-
+	approx( x = A321.inc_elas_output$pc.output_t,
+	           y = A321.inc_elas_output$inc_elas,
+	           xout = L2321.Output_cement[[ X_model_future_years[i] ]], rule = 2 )$y
+}
+
+L2321.IncomeElasticity_cement <- interpolate_and_melt(
+      L2321.IncElas_cement, model_future_years, value.name = "income.elasticity", digits = digits_IncElas_ind )
+L2321.IncomeElasticity_cement <- add_region_name( L2321.IncomeElasticity_cement )
+L2321.IncomeElasticity_cement$energy.final.demand <- A321.demand$energy.final.demand
+#These will be written out as separate tables using a for loop
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -207,5 +265,20 @@ write_mi_data( L2321.BaseService_cement, "BaseService", "ENERGY_LEVEL2_DATA", "L
 write_mi_data( L2321.PriceElasticity_cement, "PriceElasticity", "ENERGY_LEVEL2_DATA", "L2321.PriceElasticity_cement", "ENERGY_XML_BATCH", "batch_cement.xml" )
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_cement.xml", "ENERGY_XML_FINAL", "cement.xml", "", xml_tag="outFile" )
+
+#Income elasticities by scenario
+for( i in 1:length( unique( L2321.IncomeElasticity_cement[[ Scen ]] ) ) ){
+  scenarios <- unique( L2321.IncomeElasticity_cement[[ Scen ]] )
+  scen_strings <- tolower( scenarios )
+  objectname <- paste0( "L2321.IncomeElasticity_cement_", scen_strings[i] )
+  object <- subset( L2321.IncomeElasticity_cement, scenario == scenarios[i] )[ names_IncomeElasticity ] 
+  assign( objectname, object )
+  batchXMLstring <- paste0( "batch_cement_incelas_",
+                            scen_strings[i],
+                            ".xml" )
+  write_mi_data( object, "IncomeElasticity", "ENERGY_LEVEL2_DATA", objectname, "ENERGY_XML_BATCH", batchXMLstring )
+  XMLstring <- sub( "batch_", "", batchXMLstring )
+  insert_file_into_batchxml( "ENERGY_XML_BATCH", batchXMLstring, "ENERGY_XML_FINAL", XMLstring, "", xml_tag="outFile" )
+}
 
 logstop()
