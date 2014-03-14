@@ -99,6 +99,7 @@ names_AgCoef <- c( names_AgTechYr, input, "coefficient", "market.name" )
 names_AgProdChange <- c( names_AgTechYr, "AgProdChange" )
 names_AgCost <- c( names_AgTechYr, "nonLandVariableCost" )
 names_AgCoef <- c( names_AgTechYr, input, "coefficient" )
+names_UnmgdTech <- c( "region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology" )
 
 #Demands
 names_EnergyFinalDemand <- c( "region", "energy.final.demand" )
