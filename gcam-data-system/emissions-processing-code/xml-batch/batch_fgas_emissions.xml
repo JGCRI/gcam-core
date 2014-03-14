@@ -1,9 +1,0 @@
-<ModelInterfaceBatch>
-	<class name="ModelInterface.ModelGUI2.InputViewer">
-	<command name="CSV file">
-		<headerFile>../_common/headers//ModelInterface_headers.txt</headerFile>
-		<csvFile>../emissions-data/level2//L241.fgas_all.csv</csvFile>
-		<outFile>../xml/emissions-xml//all_fgas_emissions.xml</outFile>
- 	</command>
-	</class>
-</ModelInterfaceBatch>
