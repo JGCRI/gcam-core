@@ -1,4 +1,5 @@
-xml: aglu2 energy2 socio2 modeltime
+xml: emiss2 aglu2 energy2 socio2 modeltime
+	$(MAKE) -C emissions-data XML_BATCH
 	$(MAKE) -C aglu-data XML_BATCH
 	$(MAKE) -C energy-data XML_BATCH
 	$(MAKE) -C socioeconomics-data XML_BATCH
@@ -6,6 +7,12 @@ xml: aglu2 energy2 socio2 modeltime
 
 common:
 	$(MAKE) -C _common all
+
+emiss2: emiss1
+	$(MAKE) -C emissions-data level2
+
+emiss1: common modeltime energy1b aglu1b
+	$(MAKE) -C emissions-data level1
 
 energy1a: common modeltime socio2
 	$(MAKE) -C energy-data level1A
@@ -35,6 +42,7 @@ modeltime: common
 	$(MAKE) -C modeltime-data level2
 
 clean:
+	$(MAKE) -C emissions-data clean
 	$(MAKE) -C energy-data clean
 	$(MAKE) -C aglu-data clean
 	$(MAKE) -C modeltime-data clean
