@@ -1,0 +1,197 @@
+INPUT_TABLE
+Variable ID
+MAC
+
+region,supplysector,subsector,stub.technology,year,Non.CO2,name,tax,mac.reduction
+Africa_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Africa_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Africa_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Africa_Western,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Argentina,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Australia_NZ,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Brazil,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Canada,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Central America and Caribbean,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Central Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+China,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Colombia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+EU-12,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+EU-15,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Europe_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Europe_Non_EU,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+European Free Trade Association,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+India,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Indonesia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Japan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Mexico,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Middle East,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Pakistan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Russia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+South Africa,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+South America_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+South America_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+South Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+South Korea,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Southeast Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Taiwan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+USA,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,0,0
+Africa_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Africa_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Africa_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Africa_Western,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Argentina,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Australia_NZ,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Brazil,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Canada,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Central America and Caribbean,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Central Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+China,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Colombia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+EU-12,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+EU-15,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Europe_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Europe_Non_EU,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+European Free Trade Association,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+India,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Indonesia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Japan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Mexico,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Middle East,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+Pakistan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Russia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+South Africa,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+South America_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+South America_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0
+South Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+South Korea,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Southeast Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Taiwan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+USA,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,20,0.96
+Africa_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Africa_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Africa_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Africa_Western,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Argentina,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Australia_NZ,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Brazil,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Canada,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Central America and Caribbean,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Central Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+China,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Colombia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+EU-12,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+EU-15,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Europe_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Europe_Non_EU,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+European Free Trade Association,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+India,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Indonesia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Japan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Mexico,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Middle East,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+Pakistan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Russia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+South Africa,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+South America_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+South America_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0
+South Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+South Korea,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Southeast Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Taiwan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+USA,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,30,0.96
+Africa_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Africa_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Africa_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Africa_Western,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Argentina,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Australia_NZ,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Brazil,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Canada,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Central America and Caribbean,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Central Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+China,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Colombia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+EU-12,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+EU-15,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Europe_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Europe_Non_EU,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+European Free Trade Association,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+India,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Indonesia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Japan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Mexico,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Middle East,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+Pakistan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Russia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+South Africa,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+South America_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+South America_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0
+South Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+South Korea,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Southeast Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Taiwan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+USA,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,50,0.96
+Africa_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Africa_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Africa_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Africa_Western,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Argentina,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Australia_NZ,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Brazil,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Canada,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Central America and Caribbean,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Central Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+China,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Colombia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+EU-12,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+EU-15,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Europe_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Europe_Non_EU,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+European Free Trade Association,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+India,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Indonesia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Japan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Mexico,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Middle East,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+Pakistan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Russia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+South Africa,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+South America_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+South America_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0
+South Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+South Korea,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Southeast Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Taiwan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+USA,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,100,0.96
+Africa_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Africa_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Africa_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Africa_Western,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Argentina,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Australia_NZ,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Brazil,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Canada,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Central America and Caribbean,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Central Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+China,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Colombia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+EU-12,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+EU-15,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Europe_Eastern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Europe_Non_EU,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+European Free Trade Association,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+India,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Indonesia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Japan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Mexico,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Middle East,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+Pakistan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Russia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+South Africa,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+South America_Northern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+South America_Southern,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0
+South Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+South Korea,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Southeast Asia,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+Taiwan,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96
+USA,industrial processes,adipic acid,adipic acid,2005,N2O,Adipic Acid,200,0.96

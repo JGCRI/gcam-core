@@ -1,0 +1,288 @@
+INPUT_TABLE
+Variable ID
+OutputEmissCoeffAg
+
+region,AgSupplySector,AgSupplySubsector,AgProductionTechnology,year,Non.CO2,bio_N2O_coef
+Africa_Eastern,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.009445905
+Africa_Northern,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.008163204
+India,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.005656341
+Mexico,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.008163204
+Middle East,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.015843792
+Pakistan,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.0095297
+South Africa,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.009445905
+South America_Northern,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.008163204
+South America_Southern,biomass,biomassAEZ01,biomassAEZ01,2005,N2O_AGR,0.008163204
+Africa_Eastern,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.009445905
+Africa_Northern,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.008163204
+India,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.005656341
+Mexico,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.008163204
+Middle East,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.015843792
+South Africa,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.009445905
+South America_Northern,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.008163204
+South America_Southern,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.008163204
+Colombia,biomass,biomassAEZ02,biomassAEZ02,2005,N2O_AGR,0.008163204
+Africa_Eastern,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.009445905
+Africa_Northern,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.008163204
+India,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.005656341
+Mexico,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.008163204
+Middle East,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.015843792
+South Africa,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.009445905
+South America_Northern,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.008163204
+South America_Southern,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.0095297
+Colombia,biomass,biomassAEZ03,biomassAEZ03,2005,N2O_AGR,0.008163204
+Africa_Eastern,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.009445905
+Africa_Northern,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.008163204
+Central America and Caribbean,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.008163204
+China,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.009519354
+EU-15,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.010212662
+India,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.005656341
+Indonesia,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.0095297
+Mexico,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.008163204
+South Africa,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.009445905
+South America_Northern,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.008163204
+South America_Southern,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.0095297
+Southeast Asia,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.0095297
+Colombia,biomass,biomassAEZ04,biomassAEZ04,2005,N2O_AGR,0.008163204
+Africa_Eastern,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.008163204
+Central America and Caribbean,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.008163204
+China,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.009519354
+India,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.005656341
+Indonesia,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.0095297
+Mexico,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.008163204
+South Africa,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.009445905
+South America_Northern,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.008163204
+South America_Southern,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.0095297
+Southeast Asia,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.0095297
+Colombia,biomass,biomassAEZ05,biomassAEZ05,2005,N2O_AGR,0.008163204
+Africa_Eastern,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.008163204
+Central America and Caribbean,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.008163204
+China,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.009519354
+India,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.005656341
+Indonesia,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.0095297
+Mexico,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.008163204
+South Africa,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.009445905
+South America_Northern,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.008163204
+South America_Southern,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.0095297
+Southeast Asia,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.0095297
+Colombia,biomass,biomassAEZ06,biomassAEZ06,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.011314286
+Africa_Eastern,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.009445905
+Africa_Northern,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.02357597
+Canada,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.009519354
+Europe_Non_EU,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.006412916
+India,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.005656341
+Mexico,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.008163204
+Middle East,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.015843792
+Pakistan,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.0095297
+Russia,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.004930186
+South Africa,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.009445905
+South America_Southern,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ07,biomassAEZ07,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.011314286
+Africa_Eastern,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.009445905
+Africa_Northern,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.02357597
+Canada,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.009519354
+EU-12,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.010212662
+EU-15,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.010212662
+Europe_Eastern,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.006412916
+Europe_Non_EU,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.006412916
+India,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.005656341
+Mexico,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.008163204
+Middle East,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.015843792
+Pakistan,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.0095297
+Russia,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.004930186
+South Africa,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.009445905
+South America_Southern,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ08,biomassAEZ08,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.011314286
+Africa_Eastern,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.009445905
+Africa_Northern,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.02357597
+Canada,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.009519354
+EU-12,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.010212662
+EU-15,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.010212662
+Europe_Eastern,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.006412916
+Europe_Non_EU,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.006412916
+India,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.005656341
+Japan,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.006583467
+Mexico,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.008163204
+Middle East,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.015843792
+Pakistan,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.0095297
+Russia,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.004930186
+South Africa,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.009445905
+South America_Southern,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.0095297
+Southeast Asia,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ09,biomassAEZ09,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.011314286
+Africa_Eastern,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.009445905
+Africa_Northern,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.009445905
+Africa_Western,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.008163204
+Canada,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.009519354
+EU-12,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.010212662
+EU-15,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.010212662
+Europe_Eastern,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.006412916
+Europe_Non_EU,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.006412916
+European Free Trade Association,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.010212662
+India,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.005656341
+Japan,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.006583467
+Mexico,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.008163204
+Middle East,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.015843792
+Pakistan,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.0095297
+Russia,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.004930186
+South Africa,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.009445905
+South America_Southern,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.0095297
+South Korea,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.007774893
+Southeast Asia,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ10,biomassAEZ10,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.011314286
+Africa_Eastern,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.009445905
+Africa_Southern,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.008163204
+Canada,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.009519354
+EU-12,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.010212662
+EU-15,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.010212662
+Europe_Non_EU,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.006412916
+India,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.005656341
+Japan,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.006583467
+Mexico,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.008163204
+Pakistan,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.0095297
+Russia,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.004930186
+South Africa,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.009445905
+South America_Southern,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.0095297
+South Korea,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.007774893
+Southeast Asia,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.008163204
+Colombia,biomass,biomassAEZ11,biomassAEZ11,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.011314286
+Africa_Eastern,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.009445905
+Australia_NZ,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.02357597
+Brazil,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.008163204
+Central America and Caribbean,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.008163204
+Central Asia,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.009519354
+EU-15,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.010212662
+Europe_Non_EU,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.006412916
+India,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.005656341
+Japan,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.006583467
+Mexico,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.008163204
+Pakistan,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.0095297
+South America_Southern,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.0095297
+Southeast Asia,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.008163204
+Colombia,biomass,biomassAEZ12,biomassAEZ12,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.011314286
+Canada,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.009519354
+EU-15,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.010212662
+European Free Trade Association,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.010212662
+India,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.005656341
+Pakistan,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.0095297
+Russia,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.004930186
+South America_Southern,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ13,biomassAEZ13,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.011314286
+Canada,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.009519354
+EU-15,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.010212662
+Europe_Non_EU,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.006412916
+European Free Trade Association,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.010212662
+India,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.005656341
+Pakistan,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.0095297
+Russia,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.004930186
+South America_Southern,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ14,biomassAEZ14,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.011314286
+Australia_NZ,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.02357597
+Canada,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.009519354
+EU-12,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.010212662
+EU-15,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.010212662
+Europe_Non_EU,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.006412916
+European Free Trade Association,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.010212662
+India,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.005656341
+Japan,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.006583467
+Russia,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.004930186
+South America_Southern,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.0095297
+Southeast Asia,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ15,biomassAEZ15,2005,N2O_AGR,0.008163204
+USA,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.011314286
+Australia_NZ,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.02357597
+Canada,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.014327954
+Central Asia,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.0095297
+China,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.009519354
+EU-12,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.010212662
+EU-15,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.010212662
+Europe_Eastern,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.006412916
+Europe_Non_EU,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.006412916
+European Free Trade Association,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.010212662
+India,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.005656341
+Russia,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.004930186
+South America_Southern,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.008163204
+South Asia,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.0095297
+Southeast Asia,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.0095297
+Argentina,biomass,biomassAEZ16,biomassAEZ16,2005,N2O_AGR,0.008163204
+Australia_NZ,biomass,biomassAEZ17,biomassAEZ17,2005,N2O_AGR,0.02357597
+China,biomass,biomassAEZ17,biomassAEZ17,2005,N2O_AGR,0.009519354
+South America_Southern,biomass,biomassAEZ17,biomassAEZ17,2005,N2O_AGR,0.008163204
+South America_Southern,biomass,biomassAEZ18,biomassAEZ18,2005,N2O_AGR,0.008163204

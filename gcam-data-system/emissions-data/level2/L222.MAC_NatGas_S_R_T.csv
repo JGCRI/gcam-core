@@ -1,0 +1,197 @@
+INPUT_TABLE
+Variable ID
+ResMAC
+
+region,depresource,Non.CO2,name,tax,mac.reduction
+Africa_Eastern,natural gas,CH4,Natural Gas,0,0.21
+Africa_Northern,natural gas,CH4,Natural Gas,0,0.21
+Africa_Southern,natural gas,CH4,Natural Gas,0,0.21
+Africa_Western,natural gas,CH4,Natural Gas,0,0.21
+Argentina,natural gas,CH4,Natural Gas,0,0.17
+Australia_NZ,natural gas,CH4,Natural Gas,0,0.2
+Brazil,natural gas,CH4,Natural Gas,0,0.17
+Canada,natural gas,CH4,Natural Gas,0,0.13
+Central America and Caribbean,natural gas,CH4,Natural Gas,0,0.17
+Central Asia,natural gas,CH4,Natural Gas,0,0.12
+China,natural gas,CH4,Natural Gas,0,0.31
+Colombia,natural gas,CH4,Natural Gas,0,0.17
+EU-12,natural gas,CH4,Natural Gas,0,0.18
+EU-15,natural gas,CH4,Natural Gas,0,0.18
+Europe_Eastern,natural gas,CH4,Natural Gas,0,0.25
+Europe_Non_EU,natural gas,CH4,Natural Gas,0,0.29
+European Free Trade Association,natural gas,CH4,Natural Gas,0,0.18
+India,natural gas,CH4,Natural Gas,0,0.2
+Indonesia,natural gas,CH4,Natural Gas,0,0.12
+Japan,natural gas,CH4,Natural Gas,0,0.28
+Mexico,natural gas,CH4,Natural Gas,0,0.11
+Middle East,natural gas,CH4,Natural Gas,0,0.14
+Pakistan,natural gas,CH4,Natural Gas,0,0.12
+Russia,natural gas,CH4,Natural Gas,0,0.04
+South Africa,natural gas,CH4,Natural Gas,0,0.21
+South America_Northern,natural gas,CH4,Natural Gas,0,0.17
+South America_Southern,natural gas,CH4,Natural Gas,0,0.17
+South Asia,natural gas,CH4,Natural Gas,0,0.12
+South Korea,natural gas,CH4,Natural Gas,0,0.28
+Southeast Asia,natural gas,CH4,Natural Gas,0,0.12
+Taiwan,natural gas,CH4,Natural Gas,0,0.12
+USA,natural gas,CH4,Natural Gas,0,0.15
+Africa_Eastern,natural gas,CH4,Natural Gas,20,0.22
+Africa_Northern,natural gas,CH4,Natural Gas,20,0.22
+Africa_Southern,natural gas,CH4,Natural Gas,20,0.22
+Africa_Western,natural gas,CH4,Natural Gas,20,0.22
+Argentina,natural gas,CH4,Natural Gas,20,0.22
+Australia_NZ,natural gas,CH4,Natural Gas,20,0.2
+Brazil,natural gas,CH4,Natural Gas,20,0.25
+Canada,natural gas,CH4,Natural Gas,20,0.18
+Central America and Caribbean,natural gas,CH4,Natural Gas,20,0.22
+Central Asia,natural gas,CH4,Natural Gas,20,0.21
+China,natural gas,CH4,Natural Gas,20,0.36
+Colombia,natural gas,CH4,Natural Gas,20,0.22
+EU-12,natural gas,CH4,Natural Gas,20,0.18
+EU-15,natural gas,CH4,Natural Gas,20,0.18
+Europe_Eastern,natural gas,CH4,Natural Gas,20,0.26
+Europe_Non_EU,natural gas,CH4,Natural Gas,20,0.29
+European Free Trade Association,natural gas,CH4,Natural Gas,20,0.18
+India,natural gas,CH4,Natural Gas,20,0.27
+Indonesia,natural gas,CH4,Natural Gas,20,0.21
+Japan,natural gas,CH4,Natural Gas,20,0.28
+Mexico,natural gas,CH4,Natural Gas,20,0.21
+Middle East,natural gas,CH4,Natural Gas,20,0.2
+Pakistan,natural gas,CH4,Natural Gas,20,0.21
+Russia,natural gas,CH4,Natural Gas,20,0.27
+South Africa,natural gas,CH4,Natural Gas,20,0.22
+South America_Northern,natural gas,CH4,Natural Gas,20,0.22
+South America_Southern,natural gas,CH4,Natural Gas,20,0.22
+South Asia,natural gas,CH4,Natural Gas,20,0.21
+South Korea,natural gas,CH4,Natural Gas,20,0.28
+Southeast Asia,natural gas,CH4,Natural Gas,20,0.21
+Taiwan,natural gas,CH4,Natural Gas,20,0.21
+USA,natural gas,CH4,Natural Gas,20,0.19
+Africa_Eastern,natural gas,CH4,Natural Gas,30,0.3
+Africa_Northern,natural gas,CH4,Natural Gas,30,0.3
+Africa_Southern,natural gas,CH4,Natural Gas,30,0.3
+Africa_Western,natural gas,CH4,Natural Gas,30,0.3
+Argentina,natural gas,CH4,Natural Gas,30,0.28
+Australia_NZ,natural gas,CH4,Natural Gas,30,0.2
+Brazil,natural gas,CH4,Natural Gas,30,0.25
+Canada,natural gas,CH4,Natural Gas,30,0.18
+Central America and Caribbean,natural gas,CH4,Natural Gas,30,0.28
+Central Asia,natural gas,CH4,Natural Gas,30,0.22
+China,natural gas,CH4,Natural Gas,30,0.37
+Colombia,natural gas,CH4,Natural Gas,30,0.28
+EU-12,natural gas,CH4,Natural Gas,30,0.18
+EU-15,natural gas,CH4,Natural Gas,30,0.18
+Europe_Eastern,natural gas,CH4,Natural Gas,30,0.26
+Europe_Non_EU,natural gas,CH4,Natural Gas,30,0.34
+European Free Trade Association,natural gas,CH4,Natural Gas,30,0.18
+India,natural gas,CH4,Natural Gas,30,0.28
+Indonesia,natural gas,CH4,Natural Gas,30,0.22
+Japan,natural gas,CH4,Natural Gas,30,0.31
+Mexico,natural gas,CH4,Natural Gas,30,0.21
+Middle East,natural gas,CH4,Natural Gas,30,0.2
+Pakistan,natural gas,CH4,Natural Gas,30,0.22
+Russia,natural gas,CH4,Natural Gas,30,0.27
+South Africa,natural gas,CH4,Natural Gas,30,0.3
+South America_Northern,natural gas,CH4,Natural Gas,30,0.28
+South America_Southern,natural gas,CH4,Natural Gas,30,0.28
+South Asia,natural gas,CH4,Natural Gas,30,0.22
+South Korea,natural gas,CH4,Natural Gas,30,0.28
+Southeast Asia,natural gas,CH4,Natural Gas,30,0.22
+Taiwan,natural gas,CH4,Natural Gas,30,0.22
+USA,natural gas,CH4,Natural Gas,30,0.19
+Africa_Eastern,natural gas,CH4,Natural Gas,50,0.36
+Africa_Northern,natural gas,CH4,Natural Gas,50,0.36
+Africa_Southern,natural gas,CH4,Natural Gas,50,0.36
+Africa_Western,natural gas,CH4,Natural Gas,50,0.36
+Argentina,natural gas,CH4,Natural Gas,50,0.35
+Australia_NZ,natural gas,CH4,Natural Gas,50,0.24
+Brazil,natural gas,CH4,Natural Gas,50,0.3
+Canada,natural gas,CH4,Natural Gas,50,0.18
+Central America and Caribbean,natural gas,CH4,Natural Gas,50,0.35
+Central Asia,natural gas,CH4,Natural Gas,50,0.36
+China,natural gas,CH4,Natural Gas,50,0.37
+Colombia,natural gas,CH4,Natural Gas,50,0.35
+EU-12,natural gas,CH4,Natural Gas,50,0.24
+EU-15,natural gas,CH4,Natural Gas,50,0.24
+Europe_Eastern,natural gas,CH4,Natural Gas,50,0.33
+Europe_Non_EU,natural gas,CH4,Natural Gas,50,0.39
+European Free Trade Association,natural gas,CH4,Natural Gas,50,0.24
+India,natural gas,CH4,Natural Gas,50,0.39
+Indonesia,natural gas,CH4,Natural Gas,50,0.36
+Japan,natural gas,CH4,Natural Gas,50,0.31
+Mexico,natural gas,CH4,Natural Gas,50,0.35
+Middle East,natural gas,CH4,Natural Gas,50,0.2
+Pakistan,natural gas,CH4,Natural Gas,50,0.36
+Russia,natural gas,CH4,Natural Gas,50,0.3
+South Africa,natural gas,CH4,Natural Gas,50,0.36
+South America_Northern,natural gas,CH4,Natural Gas,50,0.35
+South America_Southern,natural gas,CH4,Natural Gas,50,0.35
+South Asia,natural gas,CH4,Natural Gas,50,0.36
+South Korea,natural gas,CH4,Natural Gas,50,0.35
+Southeast Asia,natural gas,CH4,Natural Gas,50,0.36
+Taiwan,natural gas,CH4,Natural Gas,50,0.36
+USA,natural gas,CH4,Natural Gas,50,0.19
+Africa_Eastern,natural gas,CH4,Natural Gas,100,0.46
+Africa_Northern,natural gas,CH4,Natural Gas,100,0.46
+Africa_Southern,natural gas,CH4,Natural Gas,100,0.46
+Africa_Western,natural gas,CH4,Natural Gas,100,0.46
+Argentina,natural gas,CH4,Natural Gas,100,0.46
+Australia_NZ,natural gas,CH4,Natural Gas,100,0.37
+Brazil,natural gas,CH4,Natural Gas,100,0.46
+Canada,natural gas,CH4,Natural Gas,100,0.32
+Central America and Caribbean,natural gas,CH4,Natural Gas,100,0.46
+Central Asia,natural gas,CH4,Natural Gas,100,0.46
+China,natural gas,CH4,Natural Gas,100,0.44
+Colombia,natural gas,CH4,Natural Gas,100,0.46
+EU-12,natural gas,CH4,Natural Gas,100,0.31
+EU-15,natural gas,CH4,Natural Gas,100,0.31
+Europe_Eastern,natural gas,CH4,Natural Gas,100,0.36
+Europe_Non_EU,natural gas,CH4,Natural Gas,100,0.39
+European Free Trade Association,natural gas,CH4,Natural Gas,100,0.31
+India,natural gas,CH4,Natural Gas,100,0.46
+Indonesia,natural gas,CH4,Natural Gas,100,0.46
+Japan,natural gas,CH4,Natural Gas,100,0.44
+Mexico,natural gas,CH4,Natural Gas,100,0.46
+Middle East,natural gas,CH4,Natural Gas,100,0.39
+Pakistan,natural gas,CH4,Natural Gas,100,0.46
+Russia,natural gas,CH4,Natural Gas,100,0.37
+South Africa,natural gas,CH4,Natural Gas,100,0.46
+South America_Northern,natural gas,CH4,Natural Gas,100,0.46
+South America_Southern,natural gas,CH4,Natural Gas,100,0.46
+South Asia,natural gas,CH4,Natural Gas,100,0.46
+South Korea,natural gas,CH4,Natural Gas,100,0.46
+Southeast Asia,natural gas,CH4,Natural Gas,100,0.46
+Taiwan,natural gas,CH4,Natural Gas,100,0.46
+USA,natural gas,CH4,Natural Gas,100,0.35
+Africa_Eastern,natural gas,CH4,Natural Gas,200,0.46
+Africa_Northern,natural gas,CH4,Natural Gas,200,0.46
+Africa_Southern,natural gas,CH4,Natural Gas,200,0.46
+Africa_Western,natural gas,CH4,Natural Gas,200,0.46
+Argentina,natural gas,CH4,Natural Gas,200,0.46
+Australia_NZ,natural gas,CH4,Natural Gas,200,0.46
+Brazil,natural gas,CH4,Natural Gas,200,0.46
+Canada,natural gas,CH4,Natural Gas,200,0.35
+Central America and Caribbean,natural gas,CH4,Natural Gas,200,0.46
+Central Asia,natural gas,CH4,Natural Gas,200,0.46
+China,natural gas,CH4,Natural Gas,200,0.45
+Colombia,natural gas,CH4,Natural Gas,200,0.46
+EU-12,natural gas,CH4,Natural Gas,200,0.33
+EU-15,natural gas,CH4,Natural Gas,200,0.33
+Europe_Eastern,natural gas,CH4,Natural Gas,200,0.36
+Europe_Non_EU,natural gas,CH4,Natural Gas,200,0.39
+European Free Trade Association,natural gas,CH4,Natural Gas,200,0.33
+India,natural gas,CH4,Natural Gas,200,0.46
+Indonesia,natural gas,CH4,Natural Gas,200,0.46
+Japan,natural gas,CH4,Natural Gas,200,0.46
+Mexico,natural gas,CH4,Natural Gas,200,0.46
+Middle East,natural gas,CH4,Natural Gas,200,0.46
+Pakistan,natural gas,CH4,Natural Gas,200,0.46
+Russia,natural gas,CH4,Natural Gas,200,0.37
+South Africa,natural gas,CH4,Natural Gas,200,0.46
+South America_Northern,natural gas,CH4,Natural Gas,200,0.46
+South America_Southern,natural gas,CH4,Natural Gas,200,0.46
+South Asia,natural gas,CH4,Natural Gas,200,0.46
+South Korea,natural gas,CH4,Natural Gas,200,0.46
+Southeast Asia,natural gas,CH4,Natural Gas,200,0.46
+Taiwan,natural gas,CH4,Natural Gas,200,0.46
+USA,natural gas,CH4,Natural Gas,200,0.37

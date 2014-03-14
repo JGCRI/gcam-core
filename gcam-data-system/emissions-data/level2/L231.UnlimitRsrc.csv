@@ -1,0 +1,37 @@
+INPUT_TABLE
+Variable ID
+UnlimitRsrc
+
+region,unlimited.resource,output.unit,price.unit,market,capacity.factor
+USA,misc emissions sources,NA,NA,global,0
+Africa_Eastern,misc emissions sources,NA,NA,global,0
+Africa_Northern,misc emissions sources,NA,NA,global,0
+Africa_Southern,misc emissions sources,NA,NA,global,0
+Africa_Western,misc emissions sources,NA,NA,global,0
+Australia_NZ,misc emissions sources,NA,NA,global,0
+Brazil,misc emissions sources,NA,NA,global,0
+Canada,misc emissions sources,NA,NA,global,0
+Central America and Caribbean,misc emissions sources,NA,NA,global,0
+Central Asia,misc emissions sources,NA,NA,global,0
+China,misc emissions sources,NA,NA,global,0
+EU-12,misc emissions sources,NA,NA,global,0
+EU-15,misc emissions sources,NA,NA,global,0
+Europe_Eastern,misc emissions sources,NA,NA,global,0
+Europe_Non_EU,misc emissions sources,NA,NA,global,0
+European Free Trade Association,misc emissions sources,NA,NA,global,0
+India,misc emissions sources,NA,NA,global,0
+Indonesia,misc emissions sources,NA,NA,global,0
+Japan,misc emissions sources,NA,NA,global,0
+Mexico,misc emissions sources,NA,NA,global,0
+Middle East,misc emissions sources,NA,NA,global,0
+Pakistan,misc emissions sources,NA,NA,global,0
+Russia,misc emissions sources,NA,NA,global,0
+South Africa,misc emissions sources,NA,NA,global,0
+South America_Northern,misc emissions sources,NA,NA,global,0
+South America_Southern,misc emissions sources,NA,NA,global,0
+South Asia,misc emissions sources,NA,NA,global,0
+South Korea,misc emissions sources,NA,NA,global,0
+Southeast Asia,misc emissions sources,NA,NA,global,0
+Taiwan,misc emissions sources,NA,NA,global,0
+Argentina,misc emissions sources,NA,NA,global,0
+Colombia,misc emissions sources,NA,NA,global,0

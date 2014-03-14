@@ -1,0 +1,389 @@
+INPUT_TABLE
+Variable ID
+StubTech
+
+region,supplysector,subsector,stub.technology
+USA,urban processes,landfills,landfills
+USA,urban processes,wastewater treatment,wastewater treatment
+USA,urban processes,aerosols,aerosols
+USA,urban processes,fire_exting,fire_exting
+USA,industrial processes,adipic acid,adipic acid
+USA,industrial processes,nitric acid,nitric acid
+USA,industrial processes,foams,foams
+USA,industrial processes,solvents,solvents
+USA,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+USA,industrial processes,semiconductors,semiconductors
+USA,industrial processes,Al_Mg,Al_Mg
+USA,industrial processes,other industrial processes,other industrial processes
+Africa_Eastern,urban processes,landfills,landfills
+Africa_Eastern,urban processes,wastewater treatment,wastewater treatment
+Africa_Eastern,urban processes,aerosols,aerosols
+Africa_Eastern,urban processes,fire_exting,fire_exting
+Africa_Eastern,industrial processes,adipic acid,adipic acid
+Africa_Eastern,industrial processes,nitric acid,nitric acid
+Africa_Eastern,industrial processes,foams,foams
+Africa_Eastern,industrial processes,solvents,solvents
+Africa_Eastern,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Africa_Eastern,industrial processes,semiconductors,semiconductors
+Africa_Eastern,industrial processes,Al_Mg,Al_Mg
+Africa_Eastern,industrial processes,other industrial processes,other industrial processes
+Africa_Northern,urban processes,landfills,landfills
+Africa_Northern,urban processes,wastewater treatment,wastewater treatment
+Africa_Northern,urban processes,aerosols,aerosols
+Africa_Northern,urban processes,fire_exting,fire_exting
+Africa_Northern,industrial processes,adipic acid,adipic acid
+Africa_Northern,industrial processes,nitric acid,nitric acid
+Africa_Northern,industrial processes,foams,foams
+Africa_Northern,industrial processes,solvents,solvents
+Africa_Northern,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Africa_Northern,industrial processes,semiconductors,semiconductors
+Africa_Northern,industrial processes,Al_Mg,Al_Mg
+Africa_Northern,industrial processes,other industrial processes,other industrial processes
+Africa_Southern,urban processes,landfills,landfills
+Africa_Southern,urban processes,wastewater treatment,wastewater treatment
+Africa_Southern,urban processes,aerosols,aerosols
+Africa_Southern,urban processes,fire_exting,fire_exting
+Africa_Southern,industrial processes,adipic acid,adipic acid
+Africa_Southern,industrial processes,nitric acid,nitric acid
+Africa_Southern,industrial processes,foams,foams
+Africa_Southern,industrial processes,solvents,solvents
+Africa_Southern,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Africa_Southern,industrial processes,semiconductors,semiconductors
+Africa_Southern,industrial processes,Al_Mg,Al_Mg
+Africa_Southern,industrial processes,other industrial processes,other industrial processes
+Africa_Western,urban processes,landfills,landfills
+Africa_Western,urban processes,wastewater treatment,wastewater treatment
+Africa_Western,urban processes,aerosols,aerosols
+Africa_Western,urban processes,fire_exting,fire_exting
+Africa_Western,industrial processes,adipic acid,adipic acid
+Africa_Western,industrial processes,nitric acid,nitric acid
+Africa_Western,industrial processes,foams,foams
+Africa_Western,industrial processes,solvents,solvents
+Africa_Western,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Africa_Western,industrial processes,semiconductors,semiconductors
+Africa_Western,industrial processes,Al_Mg,Al_Mg
+Africa_Western,industrial processes,other industrial processes,other industrial processes
+Australia_NZ,urban processes,landfills,landfills
+Australia_NZ,urban processes,wastewater treatment,wastewater treatment
+Australia_NZ,urban processes,aerosols,aerosols
+Australia_NZ,urban processes,fire_exting,fire_exting
+Australia_NZ,industrial processes,adipic acid,adipic acid
+Australia_NZ,industrial processes,nitric acid,nitric acid
+Australia_NZ,industrial processes,foams,foams
+Australia_NZ,industrial processes,solvents,solvents
+Australia_NZ,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Australia_NZ,industrial processes,semiconductors,semiconductors
+Australia_NZ,industrial processes,Al_Mg,Al_Mg
+Australia_NZ,industrial processes,other industrial processes,other industrial processes
+Brazil,urban processes,landfills,landfills
+Brazil,urban processes,wastewater treatment,wastewater treatment
+Brazil,urban processes,aerosols,aerosols
+Brazil,urban processes,fire_exting,fire_exting
+Brazil,industrial processes,adipic acid,adipic acid
+Brazil,industrial processes,nitric acid,nitric acid
+Brazil,industrial processes,foams,foams
+Brazil,industrial processes,solvents,solvents
+Brazil,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Brazil,industrial processes,semiconductors,semiconductors
+Brazil,industrial processes,Al_Mg,Al_Mg
+Brazil,industrial processes,other industrial processes,other industrial processes
+Canada,urban processes,landfills,landfills
+Canada,urban processes,wastewater treatment,wastewater treatment
+Canada,urban processes,aerosols,aerosols
+Canada,urban processes,fire_exting,fire_exting
+Canada,industrial processes,adipic acid,adipic acid
+Canada,industrial processes,nitric acid,nitric acid
+Canada,industrial processes,foams,foams
+Canada,industrial processes,solvents,solvents
+Canada,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Canada,industrial processes,semiconductors,semiconductors
+Canada,industrial processes,Al_Mg,Al_Mg
+Canada,industrial processes,other industrial processes,other industrial processes
+Central America and Caribbean,urban processes,landfills,landfills
+Central America and Caribbean,urban processes,wastewater treatment,wastewater treatment
+Central America and Caribbean,urban processes,aerosols,aerosols
+Central America and Caribbean,urban processes,fire_exting,fire_exting
+Central America and Caribbean,industrial processes,adipic acid,adipic acid
+Central America and Caribbean,industrial processes,nitric acid,nitric acid
+Central America and Caribbean,industrial processes,foams,foams
+Central America and Caribbean,industrial processes,solvents,solvents
+Central America and Caribbean,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Central America and Caribbean,industrial processes,semiconductors,semiconductors
+Central America and Caribbean,industrial processes,Al_Mg,Al_Mg
+Central America and Caribbean,industrial processes,other industrial processes,other industrial processes
+Central Asia,urban processes,landfills,landfills
+Central Asia,urban processes,wastewater treatment,wastewater treatment
+Central Asia,urban processes,aerosols,aerosols
+Central Asia,urban processes,fire_exting,fire_exting
+Central Asia,industrial processes,adipic acid,adipic acid
+Central Asia,industrial processes,nitric acid,nitric acid
+Central Asia,industrial processes,foams,foams
+Central Asia,industrial processes,solvents,solvents
+Central Asia,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Central Asia,industrial processes,semiconductors,semiconductors
+Central Asia,industrial processes,Al_Mg,Al_Mg
+Central Asia,industrial processes,other industrial processes,other industrial processes
+China,urban processes,landfills,landfills
+China,urban processes,wastewater treatment,wastewater treatment
+China,urban processes,aerosols,aerosols
+China,urban processes,fire_exting,fire_exting
+China,industrial processes,adipic acid,adipic acid
+China,industrial processes,nitric acid,nitric acid
+China,industrial processes,foams,foams
+China,industrial processes,solvents,solvents
+China,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+China,industrial processes,semiconductors,semiconductors
+China,industrial processes,Al_Mg,Al_Mg
+China,industrial processes,other industrial processes,other industrial processes
+EU-12,urban processes,landfills,landfills
+EU-12,urban processes,wastewater treatment,wastewater treatment
+EU-12,urban processes,aerosols,aerosols
+EU-12,urban processes,fire_exting,fire_exting
+EU-12,industrial processes,adipic acid,adipic acid
+EU-12,industrial processes,nitric acid,nitric acid
+EU-12,industrial processes,foams,foams
+EU-12,industrial processes,solvents,solvents
+EU-12,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+EU-12,industrial processes,semiconductors,semiconductors
+EU-12,industrial processes,Al_Mg,Al_Mg
+EU-12,industrial processes,other industrial processes,other industrial processes
+EU-15,urban processes,landfills,landfills
+EU-15,urban processes,wastewater treatment,wastewater treatment
+EU-15,urban processes,aerosols,aerosols
+EU-15,urban processes,fire_exting,fire_exting
+EU-15,industrial processes,adipic acid,adipic acid
+EU-15,industrial processes,nitric acid,nitric acid
+EU-15,industrial processes,foams,foams
+EU-15,industrial processes,solvents,solvents
+EU-15,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+EU-15,industrial processes,semiconductors,semiconductors
+EU-15,industrial processes,Al_Mg,Al_Mg
+EU-15,industrial processes,other industrial processes,other industrial processes
+Europe_Eastern,urban processes,landfills,landfills
+Europe_Eastern,urban processes,wastewater treatment,wastewater treatment
+Europe_Eastern,urban processes,aerosols,aerosols
+Europe_Eastern,urban processes,fire_exting,fire_exting
+Europe_Eastern,industrial processes,adipic acid,adipic acid
+Europe_Eastern,industrial processes,nitric acid,nitric acid
+Europe_Eastern,industrial processes,foams,foams
+Europe_Eastern,industrial processes,solvents,solvents
+Europe_Eastern,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Europe_Eastern,industrial processes,semiconductors,semiconductors
+Europe_Eastern,industrial processes,Al_Mg,Al_Mg
+Europe_Eastern,industrial processes,other industrial processes,other industrial processes
+Europe_Non_EU,urban processes,landfills,landfills
+Europe_Non_EU,urban processes,wastewater treatment,wastewater treatment
+Europe_Non_EU,urban processes,aerosols,aerosols
+Europe_Non_EU,urban processes,fire_exting,fire_exting
+Europe_Non_EU,industrial processes,adipic acid,adipic acid
+Europe_Non_EU,industrial processes,nitric acid,nitric acid
+Europe_Non_EU,industrial processes,foams,foams
+Europe_Non_EU,industrial processes,solvents,solvents
+Europe_Non_EU,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Europe_Non_EU,industrial processes,semiconductors,semiconductors
+Europe_Non_EU,industrial processes,Al_Mg,Al_Mg
+Europe_Non_EU,industrial processes,other industrial processes,other industrial processes
+European Free Trade Association,urban processes,landfills,landfills
+European Free Trade Association,urban processes,wastewater treatment,wastewater treatment
+European Free Trade Association,urban processes,aerosols,aerosols
+European Free Trade Association,urban processes,fire_exting,fire_exting
+European Free Trade Association,industrial processes,adipic acid,adipic acid
+European Free Trade Association,industrial processes,nitric acid,nitric acid
+European Free Trade Association,industrial processes,foams,foams
+European Free Trade Association,industrial processes,solvents,solvents
+European Free Trade Association,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+European Free Trade Association,industrial processes,semiconductors,semiconductors
+European Free Trade Association,industrial processes,Al_Mg,Al_Mg
+European Free Trade Association,industrial processes,other industrial processes,other industrial processes
+India,urban processes,landfills,landfills
+India,urban processes,wastewater treatment,wastewater treatment
+India,urban processes,aerosols,aerosols
+India,urban processes,fire_exting,fire_exting
+India,industrial processes,adipic acid,adipic acid
+India,industrial processes,nitric acid,nitric acid
+India,industrial processes,foams,foams
+India,industrial processes,solvents,solvents
+India,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+India,industrial processes,semiconductors,semiconductors
+India,industrial processes,Al_Mg,Al_Mg
+India,industrial processes,other industrial processes,other industrial processes
+Indonesia,urban processes,landfills,landfills
+Indonesia,urban processes,wastewater treatment,wastewater treatment
+Indonesia,urban processes,aerosols,aerosols
+Indonesia,urban processes,fire_exting,fire_exting
+Indonesia,industrial processes,adipic acid,adipic acid
+Indonesia,industrial processes,nitric acid,nitric acid
+Indonesia,industrial processes,foams,foams
+Indonesia,industrial processes,solvents,solvents
+Indonesia,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Indonesia,industrial processes,semiconductors,semiconductors
+Indonesia,industrial processes,Al_Mg,Al_Mg
+Indonesia,industrial processes,other industrial processes,other industrial processes
+Japan,urban processes,landfills,landfills
+Japan,urban processes,wastewater treatment,wastewater treatment
+Japan,urban processes,aerosols,aerosols
+Japan,urban processes,fire_exting,fire_exting
+Japan,industrial processes,adipic acid,adipic acid
+Japan,industrial processes,nitric acid,nitric acid
+Japan,industrial processes,foams,foams
+Japan,industrial processes,solvents,solvents
+Japan,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Japan,industrial processes,semiconductors,semiconductors
+Japan,industrial processes,Al_Mg,Al_Mg
+Japan,industrial processes,other industrial processes,other industrial processes
+Mexico,urban processes,landfills,landfills
+Mexico,urban processes,wastewater treatment,wastewater treatment
+Mexico,urban processes,aerosols,aerosols
+Mexico,urban processes,fire_exting,fire_exting
+Mexico,industrial processes,adipic acid,adipic acid
+Mexico,industrial processes,nitric acid,nitric acid
+Mexico,industrial processes,foams,foams
+Mexico,industrial processes,solvents,solvents
+Mexico,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Mexico,industrial processes,semiconductors,semiconductors
+Mexico,industrial processes,Al_Mg,Al_Mg
+Mexico,industrial processes,other industrial processes,other industrial processes
+Middle East,urban processes,landfills,landfills
+Middle East,urban processes,wastewater treatment,wastewater treatment
+Middle East,urban processes,aerosols,aerosols
+Middle East,urban processes,fire_exting,fire_exting
+Middle East,industrial processes,adipic acid,adipic acid
+Middle East,industrial processes,nitric acid,nitric acid
+Middle East,industrial processes,foams,foams
+Middle East,industrial processes,solvents,solvents
+Middle East,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Middle East,industrial processes,semiconductors,semiconductors
+Middle East,industrial processes,Al_Mg,Al_Mg
+Middle East,industrial processes,other industrial processes,other industrial processes
+Pakistan,urban processes,landfills,landfills
+Pakistan,urban processes,wastewater treatment,wastewater treatment
+Pakistan,urban processes,aerosols,aerosols
+Pakistan,urban processes,fire_exting,fire_exting
+Pakistan,industrial processes,adipic acid,adipic acid
+Pakistan,industrial processes,nitric acid,nitric acid
+Pakistan,industrial processes,foams,foams
+Pakistan,industrial processes,solvents,solvents
+Pakistan,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Pakistan,industrial processes,semiconductors,semiconductors
+Pakistan,industrial processes,Al_Mg,Al_Mg
+Pakistan,industrial processes,other industrial processes,other industrial processes
+Russia,urban processes,landfills,landfills
+Russia,urban processes,wastewater treatment,wastewater treatment
+Russia,urban processes,aerosols,aerosols
+Russia,urban processes,fire_exting,fire_exting
+Russia,industrial processes,adipic acid,adipic acid
+Russia,industrial processes,nitric acid,nitric acid
+Russia,industrial processes,foams,foams
+Russia,industrial processes,solvents,solvents
+Russia,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Russia,industrial processes,semiconductors,semiconductors
+Russia,industrial processes,Al_Mg,Al_Mg
+Russia,industrial processes,other industrial processes,other industrial processes
+South Africa,urban processes,landfills,landfills
+South Africa,urban processes,wastewater treatment,wastewater treatment
+South Africa,urban processes,aerosols,aerosols
+South Africa,urban processes,fire_exting,fire_exting
+South Africa,industrial processes,adipic acid,adipic acid
+South Africa,industrial processes,nitric acid,nitric acid
+South Africa,industrial processes,foams,foams
+South Africa,industrial processes,solvents,solvents
+South Africa,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+South Africa,industrial processes,semiconductors,semiconductors
+South Africa,industrial processes,Al_Mg,Al_Mg
+South Africa,industrial processes,other industrial processes,other industrial processes
+South America_Northern,urban processes,landfills,landfills
+South America_Northern,urban processes,wastewater treatment,wastewater treatment
+South America_Northern,urban processes,aerosols,aerosols
+South America_Northern,urban processes,fire_exting,fire_exting
+South America_Northern,industrial processes,adipic acid,adipic acid
+South America_Northern,industrial processes,nitric acid,nitric acid
+South America_Northern,industrial processes,foams,foams
+South America_Northern,industrial processes,solvents,solvents
+South America_Northern,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+South America_Northern,industrial processes,semiconductors,semiconductors
+South America_Northern,industrial processes,Al_Mg,Al_Mg
+South America_Northern,industrial processes,other industrial processes,other industrial processes
+South America_Southern,urban processes,landfills,landfills
+South America_Southern,urban processes,wastewater treatment,wastewater treatment
+South America_Southern,urban processes,aerosols,aerosols
+South America_Southern,urban processes,fire_exting,fire_exting
+South America_Southern,industrial processes,adipic acid,adipic acid
+South America_Southern,industrial processes,nitric acid,nitric acid
+South America_Southern,industrial processes,foams,foams
+South America_Southern,industrial processes,solvents,solvents
+South America_Southern,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+South America_Southern,industrial processes,semiconductors,semiconductors
+South America_Southern,industrial processes,Al_Mg,Al_Mg
+South America_Southern,industrial processes,other industrial processes,other industrial processes
+South Asia,urban processes,landfills,landfills
+South Asia,urban processes,wastewater treatment,wastewater treatment
+South Asia,urban processes,aerosols,aerosols
+South Asia,urban processes,fire_exting,fire_exting
+South Asia,industrial processes,adipic acid,adipic acid
+South Asia,industrial processes,nitric acid,nitric acid
+South Asia,industrial processes,foams,foams
+South Asia,industrial processes,solvents,solvents
+South Asia,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+South Asia,industrial processes,semiconductors,semiconductors
+South Asia,industrial processes,Al_Mg,Al_Mg
+South Asia,industrial processes,other industrial processes,other industrial processes
+South Korea,urban processes,landfills,landfills
+South Korea,urban processes,wastewater treatment,wastewater treatment
+South Korea,urban processes,aerosols,aerosols
+South Korea,urban processes,fire_exting,fire_exting
+South Korea,industrial processes,adipic acid,adipic acid
+South Korea,industrial processes,nitric acid,nitric acid
+South Korea,industrial processes,foams,foams
+South Korea,industrial processes,solvents,solvents
+South Korea,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+South Korea,industrial processes,semiconductors,semiconductors
+South Korea,industrial processes,Al_Mg,Al_Mg
+South Korea,industrial processes,other industrial processes,other industrial processes
+Southeast Asia,urban processes,landfills,landfills
+Southeast Asia,urban processes,wastewater treatment,wastewater treatment
+Southeast Asia,urban processes,aerosols,aerosols
+Southeast Asia,urban processes,fire_exting,fire_exting
+Southeast Asia,industrial processes,adipic acid,adipic acid
+Southeast Asia,industrial processes,nitric acid,nitric acid
+Southeast Asia,industrial processes,foams,foams
+Southeast Asia,industrial processes,solvents,solvents
+Southeast Asia,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Southeast Asia,industrial processes,semiconductors,semiconductors
+Southeast Asia,industrial processes,Al_Mg,Al_Mg
+Southeast Asia,industrial processes,other industrial processes,other industrial processes
+Taiwan,urban processes,landfills,landfills
+Taiwan,urban processes,wastewater treatment,wastewater treatment
+Taiwan,urban processes,aerosols,aerosols
+Taiwan,urban processes,fire_exting,fire_exting
+Taiwan,industrial processes,adipic acid,adipic acid
+Taiwan,industrial processes,nitric acid,nitric acid
+Taiwan,industrial processes,foams,foams
+Taiwan,industrial processes,solvents,solvents
+Taiwan,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Taiwan,industrial processes,semiconductors,semiconductors
+Taiwan,industrial processes,Al_Mg,Al_Mg
+Taiwan,industrial processes,other industrial processes,other industrial processes
+Argentina,urban processes,landfills,landfills
+Argentina,urban processes,wastewater treatment,wastewater treatment
+Argentina,urban processes,aerosols,aerosols
+Argentina,urban processes,fire_exting,fire_exting
+Argentina,industrial processes,adipic acid,adipic acid
+Argentina,industrial processes,nitric acid,nitric acid
+Argentina,industrial processes,foams,foams
+Argentina,industrial processes,solvents,solvents
+Argentina,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Argentina,industrial processes,semiconductors,semiconductors
+Argentina,industrial processes,Al_Mg,Al_Mg
+Argentina,industrial processes,other industrial processes,other industrial processes
+Colombia,urban processes,landfills,landfills
+Colombia,urban processes,wastewater treatment,wastewater treatment
+Colombia,urban processes,aerosols,aerosols
+Colombia,urban processes,fire_exting,fire_exting
+Colombia,industrial processes,adipic acid,adipic acid
+Colombia,industrial processes,nitric acid,nitric acid
+Colombia,industrial processes,foams,foams
+Colombia,industrial processes,solvents,solvents
+Colombia,industrial processes,HCFC_22_Prod,HCFC_22_Prod
+Colombia,industrial processes,semiconductors,semiconductors
+Colombia,industrial processes,Al_Mg,Al_Mg
+Colombia,industrial processes,other industrial processes,other industrial processes

@@ -1,0 +1,197 @@
+INPUT_TABLE
+Variable ID
+MAC
+
+region,supplysector,subsector,stub.technology,year,Non.CO2,name,tax,mac.reduction
+Africa_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Africa_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Africa_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Africa_Western,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Argentina,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Australia_NZ,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Brazil,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Canada,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Central America and Caribbean,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Central Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+China,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Colombia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+EU-12,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+EU-15,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Europe_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Europe_Non_EU,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+European Free Trade Association,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+India,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Indonesia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Japan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Mexico,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Middle East,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Pakistan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Russia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+South Africa,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+South America_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+South America_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+South Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+South Korea,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Southeast Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Taiwan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+USA,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,0,0
+Africa_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Africa_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Africa_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Africa_Western,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Argentina,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Australia_NZ,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Brazil,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Canada,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Central America and Caribbean,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Central Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+China,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Colombia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+EU-12,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+EU-15,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Europe_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Europe_Non_EU,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+European Free Trade Association,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+India,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Indonesia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Japan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Mexico,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Middle East,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Pakistan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Russia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+South Africa,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+South America_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+South America_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+South Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+South Korea,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Southeast Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+Taiwan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0
+USA,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,20,0.89
+Africa_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Africa_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Africa_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Africa_Western,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Argentina,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Australia_NZ,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Brazil,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Canada,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Central America and Caribbean,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Central Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+China,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Colombia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+EU-12,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+EU-15,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Europe_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Europe_Non_EU,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+European Free Trade Association,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+India,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Indonesia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Japan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Mexico,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Middle East,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Pakistan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Russia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+South Africa,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+South America_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+South America_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+South Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+South Korea,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Southeast Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+Taiwan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0
+USA,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,30,0.89
+Africa_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Africa_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Africa_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Africa_Western,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Argentina,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Australia_NZ,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Brazil,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Canada,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Central America and Caribbean,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Central Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+China,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Colombia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+EU-12,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+EU-15,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Europe_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Europe_Non_EU,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+European Free Trade Association,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+India,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Indonesia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Japan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Mexico,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Middle East,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Pakistan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Russia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+South Africa,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+South America_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+South America_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+South Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+South Korea,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Southeast Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+Taiwan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0
+USA,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,50,0.89
+Africa_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Africa_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Africa_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Africa_Western,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Argentina,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Australia_NZ,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Brazil,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Canada,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Central America and Caribbean,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Central Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+China,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Colombia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+EU-12,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+EU-15,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Europe_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Europe_Non_EU,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+European Free Trade Association,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+India,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Indonesia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Japan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Mexico,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Middle East,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Pakistan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Russia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+South Africa,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+South America_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+South America_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+South Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+South Korea,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Southeast Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+Taiwan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0
+USA,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,100,0.89
+Africa_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Africa_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Africa_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Africa_Western,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Argentina,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Australia_NZ,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Brazil,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Canada,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Central America and Caribbean,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Central Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+China,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Colombia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+EU-12,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+EU-15,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Europe_Eastern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Europe_Non_EU,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+European Free Trade Association,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+India,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Indonesia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Japan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Mexico,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89
+Middle East,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Pakistan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Russia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+South Africa,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+South America_Northern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+South America_Southern,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+South Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+South Korea,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Southeast Asia,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+Taiwan,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0
+USA,industrial processes,nitric acid,nitric acid,2005,N2O,Nitric Acid,200,0.89

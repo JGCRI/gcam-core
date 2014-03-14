@@ -1,0 +1,269 @@
+INPUT_TABLE
+Variable ID
+GlobalTechCost
+
+sector.name,subsector.name,technology,year,minicam.non.energy.input,input.cost
+urban processes,landfills,landfills,1975,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,1975,non-energy,0
+urban processes,aerosols,aerosols,1975,non-energy,0
+urban processes,fire_exting,fire_exting,1975,non-energy,0
+industrial processes,adipic acid,adipic acid,1975,non-energy,0
+industrial processes,nitric acid,nitric acid,1975,non-energy,0
+industrial processes,foams,foams,1975,non-energy,0
+industrial processes,solvents,solvents,1975,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,1975,non-energy,0
+industrial processes,semiconductors,semiconductors,1975,non-energy,0
+industrial processes,Al_Mg,Al_Mg,1975,non-energy,0
+industrial processes,other industrial processes,other industrial processes,1975,non-energy,0
+urban processes,landfills,landfills,1990,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,1990,non-energy,0
+urban processes,aerosols,aerosols,1990,non-energy,0
+urban processes,fire_exting,fire_exting,1990,non-energy,0
+industrial processes,adipic acid,adipic acid,1990,non-energy,0
+industrial processes,nitric acid,nitric acid,1990,non-energy,0
+industrial processes,foams,foams,1990,non-energy,0
+industrial processes,solvents,solvents,1990,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,1990,non-energy,0
+industrial processes,semiconductors,semiconductors,1990,non-energy,0
+industrial processes,Al_Mg,Al_Mg,1990,non-energy,0
+industrial processes,other industrial processes,other industrial processes,1990,non-energy,0
+urban processes,landfills,landfills,2005,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2005,non-energy,0
+urban processes,aerosols,aerosols,2005,non-energy,0
+urban processes,fire_exting,fire_exting,2005,non-energy,0
+industrial processes,adipic acid,adipic acid,2005,non-energy,0
+industrial processes,nitric acid,nitric acid,2005,non-energy,0
+industrial processes,foams,foams,2005,non-energy,0
+industrial processes,solvents,solvents,2005,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2005,non-energy,0
+industrial processes,semiconductors,semiconductors,2005,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2005,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2005,non-energy,0
+urban processes,landfills,landfills,2010,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2010,non-energy,0
+urban processes,aerosols,aerosols,2010,non-energy,0
+urban processes,fire_exting,fire_exting,2010,non-energy,0
+industrial processes,adipic acid,adipic acid,2010,non-energy,0
+industrial processes,nitric acid,nitric acid,2010,non-energy,0
+industrial processes,foams,foams,2010,non-energy,0
+industrial processes,solvents,solvents,2010,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2010,non-energy,0
+industrial processes,semiconductors,semiconductors,2010,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2010,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2010,non-energy,0
+urban processes,landfills,landfills,2015,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2015,non-energy,0
+urban processes,aerosols,aerosols,2015,non-energy,0
+urban processes,fire_exting,fire_exting,2015,non-energy,0
+industrial processes,adipic acid,adipic acid,2015,non-energy,0
+industrial processes,nitric acid,nitric acid,2015,non-energy,0
+industrial processes,foams,foams,2015,non-energy,0
+industrial processes,solvents,solvents,2015,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2015,non-energy,0
+industrial processes,semiconductors,semiconductors,2015,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2015,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2015,non-energy,0
+urban processes,landfills,landfills,2020,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2020,non-energy,0
+urban processes,aerosols,aerosols,2020,non-energy,0
+urban processes,fire_exting,fire_exting,2020,non-energy,0
+industrial processes,adipic acid,adipic acid,2020,non-energy,0
+industrial processes,nitric acid,nitric acid,2020,non-energy,0
+industrial processes,foams,foams,2020,non-energy,0
+industrial processes,solvents,solvents,2020,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2020,non-energy,0
+industrial processes,semiconductors,semiconductors,2020,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2020,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2020,non-energy,0
+urban processes,landfills,landfills,2025,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2025,non-energy,0
+urban processes,aerosols,aerosols,2025,non-energy,0
+urban processes,fire_exting,fire_exting,2025,non-energy,0
+industrial processes,adipic acid,adipic acid,2025,non-energy,0
+industrial processes,nitric acid,nitric acid,2025,non-energy,0
+industrial processes,foams,foams,2025,non-energy,0
+industrial processes,solvents,solvents,2025,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2025,non-energy,0
+industrial processes,semiconductors,semiconductors,2025,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2025,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2025,non-energy,0
+urban processes,landfills,landfills,2030,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2030,non-energy,0
+urban processes,aerosols,aerosols,2030,non-energy,0
+urban processes,fire_exting,fire_exting,2030,non-energy,0
+industrial processes,adipic acid,adipic acid,2030,non-energy,0
+industrial processes,nitric acid,nitric acid,2030,non-energy,0
+industrial processes,foams,foams,2030,non-energy,0
+industrial processes,solvents,solvents,2030,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2030,non-energy,0
+industrial processes,semiconductors,semiconductors,2030,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2030,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2030,non-energy,0
+urban processes,landfills,landfills,2035,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2035,non-energy,0
+urban processes,aerosols,aerosols,2035,non-energy,0
+urban processes,fire_exting,fire_exting,2035,non-energy,0
+industrial processes,adipic acid,adipic acid,2035,non-energy,0
+industrial processes,nitric acid,nitric acid,2035,non-energy,0
+industrial processes,foams,foams,2035,non-energy,0
+industrial processes,solvents,solvents,2035,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2035,non-energy,0
+industrial processes,semiconductors,semiconductors,2035,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2035,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2035,non-energy,0
+urban processes,landfills,landfills,2040,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2040,non-energy,0
+urban processes,aerosols,aerosols,2040,non-energy,0
+urban processes,fire_exting,fire_exting,2040,non-energy,0
+industrial processes,adipic acid,adipic acid,2040,non-energy,0
+industrial processes,nitric acid,nitric acid,2040,non-energy,0
+industrial processes,foams,foams,2040,non-energy,0
+industrial processes,solvents,solvents,2040,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2040,non-energy,0
+industrial processes,semiconductors,semiconductors,2040,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2040,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2040,non-energy,0
+urban processes,landfills,landfills,2045,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2045,non-energy,0
+urban processes,aerosols,aerosols,2045,non-energy,0
+urban processes,fire_exting,fire_exting,2045,non-energy,0
+industrial processes,adipic acid,adipic acid,2045,non-energy,0
+industrial processes,nitric acid,nitric acid,2045,non-energy,0
+industrial processes,foams,foams,2045,non-energy,0
+industrial processes,solvents,solvents,2045,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2045,non-energy,0
+industrial processes,semiconductors,semiconductors,2045,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2045,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2045,non-energy,0
+urban processes,landfills,landfills,2050,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2050,non-energy,0
+urban processes,aerosols,aerosols,2050,non-energy,0
+urban processes,fire_exting,fire_exting,2050,non-energy,0
+industrial processes,adipic acid,adipic acid,2050,non-energy,0
+industrial processes,nitric acid,nitric acid,2050,non-energy,0
+industrial processes,foams,foams,2050,non-energy,0
+industrial processes,solvents,solvents,2050,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2050,non-energy,0
+industrial processes,semiconductors,semiconductors,2050,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2050,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2050,non-energy,0
+urban processes,landfills,landfills,2055,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2055,non-energy,0
+urban processes,aerosols,aerosols,2055,non-energy,0
+urban processes,fire_exting,fire_exting,2055,non-energy,0
+industrial processes,adipic acid,adipic acid,2055,non-energy,0
+industrial processes,nitric acid,nitric acid,2055,non-energy,0
+industrial processes,foams,foams,2055,non-energy,0
+industrial processes,solvents,solvents,2055,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2055,non-energy,0
+industrial processes,semiconductors,semiconductors,2055,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2055,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2055,non-energy,0
+urban processes,landfills,landfills,2060,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2060,non-energy,0
+urban processes,aerosols,aerosols,2060,non-energy,0
+urban processes,fire_exting,fire_exting,2060,non-energy,0
+industrial processes,adipic acid,adipic acid,2060,non-energy,0
+industrial processes,nitric acid,nitric acid,2060,non-energy,0
+industrial processes,foams,foams,2060,non-energy,0
+industrial processes,solvents,solvents,2060,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2060,non-energy,0
+industrial processes,semiconductors,semiconductors,2060,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2060,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2060,non-energy,0
+urban processes,landfills,landfills,2065,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2065,non-energy,0
+urban processes,aerosols,aerosols,2065,non-energy,0
+urban processes,fire_exting,fire_exting,2065,non-energy,0
+industrial processes,adipic acid,adipic acid,2065,non-energy,0
+industrial processes,nitric acid,nitric acid,2065,non-energy,0
+industrial processes,foams,foams,2065,non-energy,0
+industrial processes,solvents,solvents,2065,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2065,non-energy,0
+industrial processes,semiconductors,semiconductors,2065,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2065,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2065,non-energy,0
+urban processes,landfills,landfills,2070,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2070,non-energy,0
+urban processes,aerosols,aerosols,2070,non-energy,0
+urban processes,fire_exting,fire_exting,2070,non-energy,0
+industrial processes,adipic acid,adipic acid,2070,non-energy,0
+industrial processes,nitric acid,nitric acid,2070,non-energy,0
+industrial processes,foams,foams,2070,non-energy,0
+industrial processes,solvents,solvents,2070,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2070,non-energy,0
+industrial processes,semiconductors,semiconductors,2070,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2070,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2070,non-energy,0
+urban processes,landfills,landfills,2075,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2075,non-energy,0
+urban processes,aerosols,aerosols,2075,non-energy,0
+urban processes,fire_exting,fire_exting,2075,non-energy,0
+industrial processes,adipic acid,adipic acid,2075,non-energy,0
+industrial processes,nitric acid,nitric acid,2075,non-energy,0
+industrial processes,foams,foams,2075,non-energy,0
+industrial processes,solvents,solvents,2075,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2075,non-energy,0
+industrial processes,semiconductors,semiconductors,2075,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2075,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2075,non-energy,0
+urban processes,landfills,landfills,2080,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2080,non-energy,0
+urban processes,aerosols,aerosols,2080,non-energy,0
+urban processes,fire_exting,fire_exting,2080,non-energy,0
+industrial processes,adipic acid,adipic acid,2080,non-energy,0
+industrial processes,nitric acid,nitric acid,2080,non-energy,0
+industrial processes,foams,foams,2080,non-energy,0
+industrial processes,solvents,solvents,2080,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2080,non-energy,0
+industrial processes,semiconductors,semiconductors,2080,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2080,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2080,non-energy,0
+urban processes,landfills,landfills,2085,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2085,non-energy,0
+urban processes,aerosols,aerosols,2085,non-energy,0
+urban processes,fire_exting,fire_exting,2085,non-energy,0
+industrial processes,adipic acid,adipic acid,2085,non-energy,0
+industrial processes,nitric acid,nitric acid,2085,non-energy,0
+industrial processes,foams,foams,2085,non-energy,0
+industrial processes,solvents,solvents,2085,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2085,non-energy,0
+industrial processes,semiconductors,semiconductors,2085,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2085,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2085,non-energy,0
+urban processes,landfills,landfills,2090,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2090,non-energy,0
+urban processes,aerosols,aerosols,2090,non-energy,0
+urban processes,fire_exting,fire_exting,2090,non-energy,0
+industrial processes,adipic acid,adipic acid,2090,non-energy,0
+industrial processes,nitric acid,nitric acid,2090,non-energy,0
+industrial processes,foams,foams,2090,non-energy,0
+industrial processes,solvents,solvents,2090,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2090,non-energy,0
+industrial processes,semiconductors,semiconductors,2090,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2090,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2090,non-energy,0
+urban processes,landfills,landfills,2095,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2095,non-energy,0
+urban processes,aerosols,aerosols,2095,non-energy,0
+urban processes,fire_exting,fire_exting,2095,non-energy,0
+industrial processes,adipic acid,adipic acid,2095,non-energy,0
+industrial processes,nitric acid,nitric acid,2095,non-energy,0
+industrial processes,foams,foams,2095,non-energy,0
+industrial processes,solvents,solvents,2095,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2095,non-energy,0
+industrial processes,semiconductors,semiconductors,2095,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2095,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2095,non-energy,0
+urban processes,landfills,landfills,2100,non-energy,0
+urban processes,wastewater treatment,wastewater treatment,2100,non-energy,0
+urban processes,aerosols,aerosols,2100,non-energy,0
+urban processes,fire_exting,fire_exting,2100,non-energy,0
+industrial processes,adipic acid,adipic acid,2100,non-energy,0
+industrial processes,nitric acid,nitric acid,2100,non-energy,0
+industrial processes,foams,foams,2100,non-energy,0
+industrial processes,solvents,solvents,2100,non-energy,0
+industrial processes,HCFC_22_Prod,HCFC_22_Prod,2100,non-energy,0
+industrial processes,semiconductors,semiconductors,2100,non-energy,0
+industrial processes,Al_Mg,Al_Mg,2100,non-energy,0
+industrial processes,other industrial processes,other industrial processes,2100,non-energy,0

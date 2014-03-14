@@ -1,0 +1,485 @@
+INPUT_TABLE
+Variable ID
+ResEmissCoef
+
+region,subsector,Non.CO2,emiss.coef
+USA,coal,SO2_1,0
+USA,crude oil,SO2_1,0.0010457
+USA,natural gas,SO2_1,0.0010457
+Africa_Eastern,coal,SO2_3,0
+Africa_Eastern,crude oil,SO2_3,0
+Africa_Eastern,natural gas,SO2_3,0
+Africa_Northern,coal,SO2_3,0
+Africa_Northern,crude oil,SO2_3,9.3e-06
+Africa_Northern,natural gas,SO2_3,9.3e-06
+Africa_Southern,coal,SO2_3,0
+Africa_Southern,crude oil,SO2_3,1.74e-05
+Africa_Southern,natural gas,SO2_3,1.74e-05
+Africa_Western,coal,SO2_3,0
+Africa_Western,crude oil,SO2_3,3.26e-05
+Africa_Western,natural gas,SO2_3,3.26e-05
+Australia_NZ,coal,SO2_3,0
+Australia_NZ,crude oil,SO2_3,0.0005096
+Australia_NZ,natural gas,SO2_3,0.0005096
+Brazil,coal,SO2_3,0
+Brazil,crude oil,SO2_3,4.2e-06
+Brazil,natural gas,SO2_3,4.2e-06
+Canada,coal,SO2_1,0
+Canada,crude oil,SO2_1,1.3e-06
+Canada,natural gas,SO2_1,1.3e-06
+Central America and Caribbean,coal,SO2_3,0
+Central America and Caribbean,crude oil,SO2_3,9e-07
+Central America and Caribbean,natural gas,SO2_3,9e-07
+Central Asia,coal,SO2_2,0
+Central Asia,crude oil,SO2_2,1.18e-05
+Central Asia,natural gas,SO2_2,1.18e-05
+China,coal,SO2_2,0
+China,crude oil,SO2_2,0.0208684
+China,natural gas,SO2_2,0.0208684
+EU-12,coal,SO2_1,0
+EU-12,crude oil,SO2_1,1e-07
+EU-12,natural gas,SO2_1,1e-07
+EU-15,coal,SO2_1,0
+EU-15,crude oil,SO2_1,1.7e-06
+EU-15,natural gas,SO2_1,1.7e-06
+Europe_Eastern,coal,SO2_1,0
+Europe_Eastern,crude oil,SO2_1,0
+Europe_Eastern,natural gas,SO2_1,0
+Europe_Non_EU,coal,SO2_1,0
+Europe_Non_EU,crude oil,SO2_1,0
+Europe_Non_EU,natural gas,SO2_1,0
+European Free Trade Association,coal,SO2_1,0
+European Free Trade Association,crude oil,SO2_1,6e-07
+European Free Trade Association,natural gas,SO2_1,6e-07
+India,coal,SO2_2,0
+India,crude oil,SO2_2,0.0369262
+India,natural gas,SO2_2,0.0369262
+Indonesia,coal,SO2_2,0
+Indonesia,crude oil,SO2_2,6.7e-06
+Indonesia,natural gas,SO2_2,6.7e-06
+Japan,coal,SO2_2,0
+Japan,crude oil,SO2_2,1.5e-06
+Japan,natural gas,SO2_2,1.5e-06
+Mexico,coal,SO2_3,0
+Mexico,crude oil,SO2_3,2e-06
+Mexico,natural gas,SO2_3,2e-06
+Middle East,coal,SO2_3,0
+Middle East,crude oil,SO2_3,5.3e-06
+Middle East,natural gas,SO2_3,5.3e-06
+Pakistan,coal,SO2_2,0
+Pakistan,crude oil,SO2_2,0
+Pakistan,natural gas,SO2_2,0
+Russia,coal,SO2_4,0
+Russia,crude oil,SO2_4,1.46e-05
+Russia,natural gas,SO2_4,1.46e-05
+South Africa,coal,SO2_3,0
+South Africa,crude oil,SO2_3,0
+South Africa,natural gas,SO2_3,0
+South America_Northern,coal,SO2_3,0
+South America_Northern,crude oil,SO2_3,3.3e-06
+South America_Northern,natural gas,SO2_3,3.3e-06
+South America_Southern,coal,SO2_3,0
+South America_Southern,crude oil,SO2_3,9.4e-06
+South America_Southern,natural gas,SO2_3,9.4e-06
+South Asia,coal,SO2_2,0
+South Asia,crude oil,SO2_2,2e-07
+South Asia,natural gas,SO2_2,2e-07
+South Korea,coal,SO2_2,0
+South Korea,crude oil,SO2_2,0
+South Korea,natural gas,SO2_2,0
+Southeast Asia,coal,SO2_2,0
+Southeast Asia,crude oil,SO2_2,3.5e-06
+Southeast Asia,natural gas,SO2_2,3.5e-06
+Taiwan,coal,SO2_2,0
+Taiwan,crude oil,SO2_2,0
+Taiwan,natural gas,SO2_2,0
+Argentina,coal,SO2_3,0
+Argentina,crude oil,SO2_3,1.6e-06
+Argentina,natural gas,SO2_3,1.6e-06
+Colombia,coal,SO2_3,0
+Colombia,crude oil,SO2_3,3.1e-06
+Colombia,natural gas,SO2_3,3.1e-06
+USA,coal,CO,0.0129191
+USA,crude oil,CO,0.0084754
+USA,natural gas,CO,0.0084754
+USA,coal,NH3,0
+USA,crude oil,NH3,0
+USA,natural gas,NH3,0
+USA,coal,NMVOC,0.0495585
+USA,crude oil,NMVOC,0.0855256
+USA,natural gas,NMVOC,0.0855256
+USA,coal,NOx,1.17e-05
+USA,crude oil,NOx,0.0002164
+USA,natural gas,NOx,0.0002164
+Africa_Eastern,coal,CO,440.4843829
+Africa_Eastern,crude oil,CO,0
+Africa_Eastern,natural gas,CO,0
+Africa_Eastern,coal,NH3,0
+Africa_Eastern,crude oil,NH3,0
+Africa_Eastern,natural gas,NH3,0
+Africa_Eastern,coal,NMVOC,141.6603079
+Africa_Eastern,crude oil,NMVOC,0.0637036
+Africa_Eastern,natural gas,NMVOC,0.0637036
+Africa_Eastern,coal,NOx,0.3142787
+Africa_Eastern,crude oil,NOx,0
+Africa_Eastern,natural gas,NOx,0
+Africa_Northern,coal,CO,996.4838398
+Africa_Northern,crude oil,CO,0.0055125
+Africa_Northern,natural gas,CO,0.0055125
+Africa_Northern,coal,NH3,0
+Africa_Northern,crude oil,NH3,0
+Africa_Northern,natural gas,NH3,0
+Africa_Northern,coal,NMVOC,320.5798864
+Africa_Northern,crude oil,NMVOC,0.06688
+Africa_Northern,natural gas,NMVOC,0.06688
+Africa_Northern,coal,NOx,0.7119964
+Africa_Northern,crude oil,NOx,0.0010025
+Africa_Northern,natural gas,NOx,0.0010025
+Africa_Southern,coal,CO,13.683413
+Africa_Southern,crude oil,CO,0.0102589
+Africa_Southern,natural gas,CO,0.0102589
+Africa_Southern,coal,NH3,0
+Africa_Southern,crude oil,NH3,0
+Africa_Southern,natural gas,NH3,0
+Africa_Southern,coal,NMVOC,4.444276
+Africa_Southern,crude oil,NMVOC,0.0817152
+Africa_Southern,natural gas,NMVOC,0.0817152
+Africa_Southern,coal,NOx,0.0097794
+Africa_Southern,crude oil,NOx,0.0018659
+Africa_Southern,natural gas,NOx,0.0018659
+Africa_Western,coal,CO,266.1763226
+Africa_Western,crude oil,CO,0.0192651
+Africa_Western,natural gas,CO,0.0192651
+Africa_Western,coal,NH3,0
+Africa_Western,crude oil,NH3,0
+Africa_Western,natural gas,NH3,0
+Africa_Western,coal,NMVOC,85.6698862
+Africa_Western,crude oil,NMVOC,0.088439
+Africa_Western,natural gas,NMVOC,0.088439
+Africa_Western,coal,NOx,0.1899247
+Africa_Western,crude oil,NOx,0.0035089
+Africa_Western,natural gas,NOx,0.0035089
+Australia_NZ,coal,CO,0.0011325
+Australia_NZ,crude oil,CO,0.0039197
+Australia_NZ,natural gas,CO,0.0039197
+Australia_NZ,coal,NH3,0
+Australia_NZ,crude oil,NH3,0
+Australia_NZ,natural gas,NH3,0
+Australia_NZ,coal,NMVOC,0.0394635
+Australia_NZ,crude oil,NMVOC,0.0569537
+Australia_NZ,natural gas,NMVOC,0.0569537
+Australia_NZ,coal,NOx,1e-06
+Australia_NZ,crude oil,NOx,6.66e-05
+Australia_NZ,natural gas,NOx,6.66e-05
+Brazil,coal,CO,30.9545855
+Brazil,crude oil,CO,0.0025011
+Brazil,natural gas,CO,0.0025011
+Brazil,coal,NH3,0
+Brazil,crude oil,NH3,0
+Brazil,natural gas,NH3,0
+Brazil,coal,NMVOC,10.6074904
+Brazil,crude oil,NMVOC,0.0983087
+Brazil,natural gas,NMVOC,0.0983087
+Brazil,coal,NOx,0.0281581
+Brazil,crude oil,NOx,0.0004532
+Brazil,natural gas,NOx,0.0004532
+Canada,coal,CO,0
+Canada,crude oil,CO,0.000796
+Canada,natural gas,CO,0.000796
+Canada,coal,NH3,0
+Canada,crude oil,NH3,0
+Canada,natural gas,NH3,0
+Canada,coal,NMVOC,0.0325365
+Canada,crude oil,NMVOC,0.0703359
+Canada,natural gas,NMVOC,0.0703359
+Canada,coal,NOx,0
+Canada,crude oil,NOx,0.0001448
+Canada,natural gas,NOx,0.0001448
+Central America and Caribbean,coal,CO,0
+Central America and Caribbean,crude oil,CO,0.0005099
+Central America and Caribbean,natural gas,CO,0.0005099
+Central America and Caribbean,coal,NH3,0
+Central America and Caribbean,crude oil,NH3,0
+Central America and Caribbean,natural gas,NH3,0
+Central America and Caribbean,coal,NMVOC,0
+Central America and Caribbean,crude oil,NMVOC,0.0617834
+Central America and Caribbean,natural gas,NMVOC,0.0617834
+Central America and Caribbean,coal,NOx,0
+Central America and Caribbean,crude oil,NOx,9.29e-05
+Central America and Caribbean,natural gas,NOx,9.29e-05
+Central Asia,coal,CO,0.0036961
+Central Asia,crude oil,CO,0.0069723
+Central Asia,natural gas,CO,0.0069723
+Central Asia,coal,NH3,0
+Central Asia,crude oil,NH3,0
+Central Asia,natural gas,NH3,0
+Central Asia,coal,NMVOC,0.0574219
+Central Asia,crude oil,NMVOC,0.0557971
+Central Asia,natural gas,NMVOC,0.0557971
+Central Asia,coal,NOx,2.6e-06
+Central Asia,crude oil,NOx,0.0012674
+Central Asia,natural gas,NOx,0.0012674
+China,coal,CO,0.0147179
+China,crude oil,CO,0.1625009
+China,natural gas,CO,0.1625009
+China,coal,NH3,0
+China,crude oil,NH3,0
+China,natural gas,NH3,0
+China,coal,NMVOC,0.0761158
+China,crude oil,NMVOC,0.111173
+China,natural gas,NMVOC,0.111173
+China,coal,NOx,1.05e-05
+China,crude oil,NOx,0.0030923
+China,natural gas,NOx,0.0030923
+EU-12,coal,CO,0.0172935
+EU-12,crude oil,CO,5.86e-05
+EU-12,natural gas,CO,5.86e-05
+EU-12,coal,NH3,0
+EU-12,crude oil,NH3,0
+EU-12,natural gas,NH3,0
+EU-12,coal,NMVOC,0.1573652
+EU-12,crude oil,NMVOC,0.0907843
+EU-12,natural gas,NMVOC,0.0907843
+EU-12,coal,NOx,1.24e-05
+EU-12,crude oil,NOx,1.06e-05
+EU-12,natural gas,NOx,1.06e-05
+EU-15,coal,CO,0.0282768
+EU-15,crude oil,CO,0.0010068
+EU-15,natural gas,CO,0.0010068
+EU-15,coal,NH3,0
+EU-15,crude oil,NH3,0
+EU-15,natural gas,NH3,0
+EU-15,coal,NMVOC,0.1496541
+EU-15,crude oil,NMVOC,0.1342481
+EU-15,natural gas,NMVOC,0.1342481
+EU-15,coal,NOx,2.57e-05
+EU-15,crude oil,NOx,0.0001824
+EU-15,natural gas,NOx,0.0001824
+Europe_Eastern,coal,CO,0.0319351
+Europe_Eastern,crude oil,CO,7.4e-06
+Europe_Eastern,natural gas,CO,7.4e-06
+Europe_Eastern,coal,NH3,0
+Europe_Eastern,crude oil,NH3,0
+Europe_Eastern,natural gas,NH3,0
+Europe_Eastern,coal,NMVOC,0.0579767
+Europe_Eastern,crude oil,NMVOC,0.0810176
+Europe_Eastern,natural gas,NMVOC,0.0810176
+Europe_Eastern,coal,NOx,2.29e-05
+Europe_Eastern,crude oil,NOx,1.3e-06
+Europe_Eastern,natural gas,NOx,1.3e-06
+Europe_Non_EU,coal,CO,0.040493
+Europe_Non_EU,crude oil,CO,0
+Europe_Non_EU,natural gas,CO,0
+Europe_Non_EU,coal,NH3,0
+Europe_Non_EU,crude oil,NH3,0
+Europe_Non_EU,natural gas,NH3,0
+Europe_Non_EU,coal,NMVOC,0.5067587
+Europe_Non_EU,crude oil,NMVOC,0.235664
+Europe_Non_EU,natural gas,NMVOC,0.235664
+Europe_Non_EU,coal,NOx,2.9e-05
+Europe_Non_EU,crude oil,NOx,0
+Europe_Non_EU,natural gas,NOx,0
+European Free Trade Association,coal,CO,0.1023745
+European Free Trade Association,crude oil,CO,0.0003689
+European Free Trade Association,natural gas,CO,0.0003689
+European Free Trade Association,coal,NH3,0
+European Free Trade Association,crude oil,NH3,0
+European Free Trade Association,natural gas,NH3,0
+European Free Trade Association,coal,NMVOC,0.1145285
+European Free Trade Association,crude oil,NMVOC,0.0677531
+European Free Trade Association,natural gas,NMVOC,0.0677531
+European Free Trade Association,coal,NOx,9.32e-05
+European Free Trade Association,crude oil,NOx,6.71e-05
+European Free Trade Association,natural gas,NOx,6.71e-05
+India,coal,CO,0.0910501
+India,crude oil,CO,0.2861557
+India,natural gas,CO,0.2861557
+India,coal,NH3,0
+India,crude oil,NH3,0
+India,natural gas,NH3,0
+India,coal,NMVOC,0.0659284
+India,crude oil,NMVOC,0.1359509
+India,natural gas,NMVOC,0.1359509
+India,coal,NOx,6.5e-05
+India,crude oil,NOx,0.0052373
+India,natural gas,NOx,0.0052373
+Indonesia,coal,CO,0.0684943
+Indonesia,crude oil,CO,0.0039806
+Indonesia,natural gas,CO,0.0039806
+Indonesia,coal,NH3,0
+Indonesia,crude oil,NH3,0
+Indonesia,natural gas,NH3,0
+Indonesia,coal,NMVOC,0.0465566
+Indonesia,crude oil,NMVOC,0.0597095
+Indonesia,natural gas,NMVOC,0.0597095
+Indonesia,coal,NOx,4.9e-05
+Indonesia,crude oil,NOx,0.0007217
+Indonesia,natural gas,NOx,0.0007217
+Japan,coal,CO,0
+Japan,crude oil,CO,0.0008752
+Japan,natural gas,CO,0.0008752
+Japan,coal,NH3,0
+Japan,crude oil,NH3,0
+Japan,natural gas,NH3,0
+Japan,coal,NMVOC,0
+Japan,crude oil,NMVOC,2.1386672
+Japan,natural gas,NMVOC,2.1386672
+Japan,coal,NOx,0
+Japan,crude oil,NOx,0.0001592
+Japan,natural gas,NOx,0.0001592
+Mexico,coal,CO,0.6674432
+Mexico,crude oil,CO,0.0012129
+Mexico,natural gas,CO,0.0012129
+Mexico,coal,NH3,0
+Mexico,crude oil,NH3,0
+Mexico,natural gas,NH3,0
+Mexico,coal,NMVOC,0.2308766
+Mexico,crude oil,NMVOC,0.0820827
+Mexico,natural gas,NMVOC,0.0820827
+Mexico,coal,NOx,0.0004743
+Mexico,crude oil,NOx,0.0002206
+Mexico,natural gas,NOx,0.0002206
+Middle East,coal,CO,2.5668564
+Middle East,crude oil,CO,0.003115
+Middle East,natural gas,CO,0.003115
+Middle East,coal,NH3,0
+Middle East,crude oil,NH3,0
+Middle East,natural gas,NH3,0
+Middle East,coal,NMVOC,0.8940418
+Middle East,crude oil,NMVOC,0.0780003
+Middle East,natural gas,NMVOC,0.0780003
+Middle East,coal,NOx,0.0018326
+Middle East,crude oil,NOx,0.0005669
+Middle East,natural gas,NOx,0.0005669
+Pakistan,coal,CO,1.302987
+Pakistan,crude oil,CO,0
+Pakistan,natural gas,CO,0
+Pakistan,coal,NH3,0
+Pakistan,crude oil,NH3,0
+Pakistan,natural gas,NH3,0
+Pakistan,coal,NMVOC,0.5147444
+Pakistan,crude oil,NMVOC,0.0433663
+Pakistan,natural gas,NMVOC,0.0433663
+Pakistan,coal,NOx,0.0009289
+Pakistan,crude oil,NOx,0
+Pakistan,natural gas,NOx,0
+Russia,coal,CO,0.0043956
+Russia,crude oil,CO,0.0085987
+Russia,natural gas,CO,0.0085987
+Russia,coal,NH3,0
+Russia,crude oil,NH3,0
+Russia,natural gas,NH3,0
+Russia,coal,NMVOC,0.2509582
+Russia,crude oil,NMVOC,0.0485803
+Russia,natural gas,NMVOC,0.0485803
+Russia,coal,NOx,3.1e-06
+Russia,crude oil,NOx,0.0015643
+Russia,natural gas,NOx,0.0015643
+South Africa,coal,CO,0.111963
+South Africa,crude oil,CO,0
+South Africa,natural gas,CO,0
+South Africa,coal,NH3,0
+South Africa,crude oil,NH3,0
+South Africa,natural gas,NH3,0
+South Africa,coal,NMVOC,0.0846212
+South Africa,crude oil,NMVOC,0.4378588
+South Africa,natural gas,NMVOC,0.4378588
+South Africa,coal,NOx,7.99e-05
+South Africa,crude oil,NOx,0
+South Africa,natural gas,NOx,0
+South America_Northern,coal,CO,0.0352093
+South America_Northern,crude oil,CO,0.0019762
+South America_Northern,natural gas,CO,0.0019762
+South America_Northern,coal,NH3,0
+South America_Northern,crude oil,NH3,0
+South America_Northern,natural gas,NH3,0
+South America_Northern,coal,NMVOC,0.0923248
+South America_Northern,crude oil,NMVOC,0.0850485
+South America_Northern,natural gas,NMVOC,0.0850485
+South America_Northern,coal,NOx,2.51e-05
+South America_Northern,crude oil,NOx,0.0003587
+South America_Northern,natural gas,NOx,0.0003587
+South America_Southern,coal,CO,25.5856441
+South America_Southern,crude oil,CO,0.0055467
+South America_Southern,natural gas,CO,0.0055467
+South America_Southern,coal,NH3,0
+South America_Southern,crude oil,NH3,0
+South America_Southern,natural gas,NH3,0
+South America_Southern,coal,NMVOC,8.3091281
+South America_Southern,crude oil,NMVOC,0.0855423
+South America_Southern,natural gas,NMVOC,0.0855423
+South America_Southern,coal,NOx,0.0182575
+South America_Southern,crude oil,NOx,0.0010072
+South America_Southern,natural gas,NOx,0.0010072
+South Asia,coal,CO,16.1170651
+South Asia,crude oil,CO,0.0001222
+South Asia,natural gas,CO,0.0001222
+South Asia,coal,NH3,0
+South Asia,crude oil,NH3,0
+South Asia,natural gas,NH3,0
+South Asia,coal,NMVOC,5.3109227
+South Asia,crude oil,NMVOC,0.0262263
+South Asia,natural gas,NMVOC,0.0262263
+South Asia,coal,NOx,0.0115261
+South Asia,crude oil,NOx,2.23e-05
+South Asia,natural gas,NOx,2.23e-05
+South Korea,coal,CO,0.0784209
+South Korea,crude oil,CO,0
+South Korea,natural gas,CO,0
+South Korea,coal,NH3,0
+South Korea,crude oil,NH3,0
+South Korea,natural gas,NH3,0
+South Korea,coal,NMVOC,0.114878
+South Korea,crude oil,NMVOC,4.4894944
+South Korea,natural gas,NMVOC,4.4894944
+South Korea,coal,NOx,5.6e-05
+South Korea,crude oil,NOx,0
+South Korea,natural gas,NOx,0
+Southeast Asia,coal,CO,1.3835526
+Southeast Asia,crude oil,CO,0.0020848
+Southeast Asia,natural gas,CO,0.0020848
+Southeast Asia,coal,NH3,0
+Southeast Asia,crude oil,NH3,0
+Southeast Asia,natural gas,NH3,0
+Southeast Asia,coal,NMVOC,0.5690106
+Southeast Asia,crude oil,NMVOC,0.0773486
+Southeast Asia,natural gas,NMVOC,0.0773486
+Southeast Asia,coal,NOx,0.0009892
+Southeast Asia,crude oil,NOx,0.0003799
+Southeast Asia,natural gas,NOx,0.0003799
+Taiwan,coal,CO,0
+Taiwan,crude oil,CO,0
+Taiwan,natural gas,CO,0
+Taiwan,coal,NH3,0
+Taiwan,crude oil,NH3,0
+Taiwan,natural gas,NH3,0
+Taiwan,coal,NMVOC,0
+Taiwan,crude oil,NMVOC,4.4721508
+Taiwan,natural gas,NMVOC,4.4721508
+Taiwan,coal,NOx,0
+Taiwan,crude oil,NOx,0
+Taiwan,natural gas,NOx,0
+Argentina,coal,CO,272.9615851
+Argentina,crude oil,CO,0.0009388
+Argentina,natural gas,CO,0.0009388
+Argentina,coal,NH3,0
+Argentina,crude oil,NH3,0
+Argentina,natural gas,NH3,0
+Argentina,coal,NMVOC,89.5505551
+Argentina,crude oil,NMVOC,0.0597125
+Argentina,natural gas,NMVOC,0.0597125
+Argentina,coal,NOx,0.2474213
+Argentina,crude oil,NOx,0.0001708
+Argentina,natural gas,NOx,0.0001708
+Colombia,coal,CO,0.1228665
+Colombia,crude oil,CO,0.0018122
+Colombia,natural gas,CO,0.0018122
+Colombia,coal,NH3,0
+Colombia,crude oil,NH3,0
+Colombia,natural gas,NH3,0
+Colombia,coal,NMVOC,0.0525145
+Colombia,crude oil,NMVOC,0.0824386
+Colombia,natural gas,NMVOC,0.0824386
+Colombia,coal,NOx,8.79e-05
+Colombia,crude oil,NOx,0.000329
+Colombia,natural gas,NOx,0.000329
