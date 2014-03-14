@@ -8,16 +8,16 @@ xml: emiss2 aglu2 energy2 socio2 modeltime
 common:
 	$(MAKE) -C _common all
 
+emiss1: common modeltime energy2 aglu2
+	$(MAKE) -C emissions-data level1
+
 emiss2: emiss1
 	$(MAKE) -C emissions-data level2
-
-emiss1: common modeltime energy1b aglu1b
-	$(MAKE) -C emissions-data level1
 
 energy1a: common modeltime socio2
 	$(MAKE) -C energy-data level1A
 
-energy1b: energy1a aglu1a
+energy1b: energy1a aglu1b
 	$(MAKE) -C energy-data level1B
 
 energy2: energy1b
