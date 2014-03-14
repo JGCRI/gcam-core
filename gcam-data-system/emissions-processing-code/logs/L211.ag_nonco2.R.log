@@ -1,0 +1,57 @@
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : -----
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Starting L211.ag_nonco2.R
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Historical emissions in the aglu system
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../_common/assumptions//A_common_data.R...OK.
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../_common/assumptions//level2_data_names.R...OK.
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../modeltime-data/assumptions//A_modeltime_data.R...OK.
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../aglu-data/assumptions//A_aglu_data.R...OK.
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/assumptions//A_emissions_data.R...OK.
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../_common/mappings//GCAM_region_names.csv...OK. 32 rows, 2 cols
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/assumptions//A_regions.csv...OK. 32 rows, 5 cols
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../aglu-data/assumptions//A_agSupplySector.csv...OK. 15 rows, 7 cols
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../aglu-data/level1//L125.R_AEZ_nonexist.csv...OK. 293 rows, 2 cols
+Fri Mar 14 14:52:01 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/level1//L121.nonco2_tg_R_awb_C_Y_AEZ.csv...OK. 48384 rows, 44 cols
+Fri Mar 14 14:52:08 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/level1//L122.ghg_tg_R_agr_C_Y_AEZ.csv...OK. 13896 rows, 42 cols
+Fri Mar 14 14:52:09 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/level1//L113.ghg_tg_R_an_C_Sys_Fd_Yh.csv...OK. 2048 rows, 45 cols
+Fri Mar 14 14:52:09 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/level1//L123.bcoc_tgmt_R_awb_2000.csv...OK. 64 rows, 4 cols
+Fri Mar 14 14:52:09 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/level1//L115.nh3_tg_R_an_C_Sys_Fd_Yh.csv...OK. 1024 rows, 37 cols
+Fri Mar 14 14:52:09 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/assumptions//A11.max_reduction.csv...OK. 216 rows, 9 cols
+Fri Mar 14 14:52:09 2014 L211.ag_nonco2.R [ 1 ] : Reading ../emissions-data/assumptions//A11.steepness.csv...OK. 216 rows, 9 cols
+Fri Mar 14 14:52:09 2014 L211.ag_nonco2.R [ 1 ] : L211.AWBEmissions: AWB emissions in all regions
+Fri Mar 14 14:52:25 2014 L211.ag_nonco2.R [ 1 ] : L211.AGREmissions: ag AGR emissions in all regions
+Fri Mar 14 14:52:26 2014 L211.ag_nonco2.R [ 1 ] : L211.AGRBioEmissions: bio AGR emissions in all regions
+Fri Mar 14 14:52:26 2014 L211.ag_nonco2.R [ 1 ] : L211.AnAGREmissions: an AGR emissions in all regions
+Fri Mar 14 14:52:26 2014 L211.ag_nonco2.R [ 1 ] : L211.AnNH3Emissions: an NH3 emissions in all regions
+Fri Mar 14 14:52:26 2014 L211.ag_nonco2.R [ 1 ] : L211.AWB_BCOC_Emissions: BC / OC AWB emissions in all regions
+Fri Mar 14 14:52:27 2014 L211.ag_nonco2.R [ 1 ] : L211.nonghg_max_reduction: maximum reduction for energy technologies in all regions
+Fri Mar 14 14:52:28 2014 L211.ag_nonco2.R [ 1 ] : L211.nonghg_steepness: steepness of reduction for energy technologies in all regions
+Fri Mar 14 14:52:29 2014 L211.ag_nonco2.R [ 1 ] : Removing non-existent regions and AEZs from all tables
+Fri Mar 14 14:52:29 2014 L211.ag_nonco2.R [ 1 ] : Rename to regional SO2
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Writing ../emissions-data/level2//L211.awb_emissions.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Creating batch_ag_emissions.xml from ../_common/headers//batch_xml_template.xml
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../_common/headers//ModelInterface_headers.txt into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag headerFile
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../emissions-data/level2//L211.awb_emissions.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Writing ../emissions-data/level2//L211.agr_emissions.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../emissions-data/level2//L211.agr_emissions.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Writing ../emissions-data/level2//L211.an_emissions.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../emissions-data/level2//L211.an_emissions.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Writing ../emissions-data/level2//L211.an_nh3_emissions.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../emissions-data/level2//L211.an_nh3_emissions.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Writing ../emissions-data/level2//L211.bio_emissions.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../emissions-data/level2//L211.bio_emissions.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Writing ../emissions-data/level2//L211.awb_bcoc_emissions.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../emissions-data/level2//L211.awb_bcoc_emissions.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:30 2014 L211.ag_nonco2.R [ 1 ] : Writing ../emissions-data/level2//L211.nonco2_max_reduction.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:31 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../emissions-data/level2//L211.nonco2_max_reduction.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:31 2014 L211.ag_nonco2.R [ 1 ] : Writing ../emissions-data/level2//L211.nonco2_steepness.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:31 2014 L211.ag_nonco2.R [ 1 ] : Inserting ../emissions-data/level2//L211.nonco2_steepness.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:31 2014 L211.ag_nonco2.R [ 1 ] : Writing dependency information for L211.ag_nonco2.R ...
+Fri Mar 14 14:52:31 2014 L211.ag_nonco2.R [ 1 ] : All done with L211.ag_nonco2.R

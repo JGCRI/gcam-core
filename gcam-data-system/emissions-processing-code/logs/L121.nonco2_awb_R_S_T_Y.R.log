@@ -1,0 +1,23 @@
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : -----
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Starting L121.nonco2_awb_R_S_T_Y.R
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../_common/assumptions//A_common_data.R...OK.
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/assumptions//A_emissions_data.R...OK.
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../aglu-data/assumptions//A_aglu_data.R...OK.
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../_common/mappings//iso_GCAM_regID.csv...OK. 238 rows, 4 cols
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/mappings//EDGAR_nation.csv...OK. 269 rows, 2 cols
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/mappings//EDGAR_sector.csv...OK. 44 rows, 3 cols
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../aglu-data/level1//L104.ag_Prod_Mt_R_C_Y_AEZ.csv...OK. 6912 rows, 43 cols
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_SO2.csv...OK. 2973 rows, 45 cols
+Fri Mar 14 14:50:43 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_CO.csv...OK. 3026 rows, 45 cols
+Fri Mar 14 14:50:44 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_NOx.csv...OK. 3619 rows, 45 cols
+Fri Mar 14 14:50:44 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_NMVOC.csv...OK. 4572 rows, 47 cols
+Fri Mar 14 14:50:44 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_CH4.csv...OK. 4234 rows, 45 cols
+Fri Mar 14 14:50:44 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_N2O.csv...OK. 5070 rows, 45 cols
+Fri Mar 14 14:50:44 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_NH3.csv...OK. 3546 rows, 45 cols
+Fri Mar 14 14:50:44 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Compute share of regional production by technology
+Fri Mar 14 14:50:45 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Compute EDGAR emissions by region
+Fri Mar 14 14:50:47 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Compute emissions by GCAM region, commodity, and AEZ
+Fri Mar 14 14:51:05 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Writing ../emissions-data/level1//L121.nonco2_tg_R_awb_C_Y_AEZ.csv w/ 2 comments
+Fri Mar 14 14:51:07 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : Writing dependency information for L121.nonco2_awb_R_S_T_Y.R ...
+Fri Mar 14 14:51:07 2014 L121.nonco2_awb_R_S_T_Y.R [ 1 ] : All done with L121.nonco2_awb_R_S_T_Y.R

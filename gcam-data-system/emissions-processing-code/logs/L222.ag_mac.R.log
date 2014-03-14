@@ -1,0 +1,27 @@
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : -----
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Starting L222.ag_mac.R
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Historical emissions in the aglu system
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../_common/assumptions//A_common_data.R...OK.
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../_common/assumptions//level2_data_names.R...OK.
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../modeltime-data/assumptions//A_modeltime_data.R...OK.
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../aglu-data/assumptions//A_aglu_data.R...OK.
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../emissions-data/assumptions//A_emissions_data.R...OK.
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../_common/mappings//GCAM_region_names.csv...OK. 32 rows, 2 cols
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../aglu-data/level1//L125.R_AEZ_nonexist.csv...OK. 293 rows, 2 cols
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../emissions-data/assumptions//A_regions.csv...OK. 32 rows, 5 cols
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../emissions-data/mappings//GCAM_sector_tech.csv...OK. 370 rows, 15 cols
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../emissions-data/level0//MAC_ManureManagement.csv...OK. 24 rows, 16 cols
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Reading ../emissions-data/level0//MAC_N2O.csv...OK. 25 rows, 16 cols
+Fri Mar 14 14:52:35 2014 L222.ag_mac.R [ 1 ] : Manure management
+Fri Mar 14 14:52:36 2014 L222.ag_mac.R [ 1 ] : N2O
+Fri Mar 14 14:52:37 2014 L222.ag_mac.R [ 1 ] : Removing non-existent regions and AEZs from all tables
+Fri Mar 14 14:52:37 2014 L222.ag_mac.R [ 1 ] : Writing ../emissions-data/level2//L222.MM_MAC_S_R_T.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:37 2014 L222.ag_mac.R [ 1 ] : Inserting ../emissions-data/level2//L222.MM_MAC_S_R_T.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+Fri Mar 14 14:52:37 2014 L222.ag_mac.R [ 1 ] : Writing ../emissions-data/level2//L222.N2O_MAC_S_R_T.csv
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:37 2014 L222.ag_mac.R [ 1 ] : Inserting ../emissions-data/level2//L222.N2O_MAC_S_R_T.csv into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag csvFile
+[1] "../emissions-processing-code/xml-batch//batch_ag_emissions.xml"
+Fri Mar 14 14:52:37 2014 L222.ag_mac.R [ 1 ] : Inserting ../xml/emissions-xml//all_aglu_emissions.xml into ../emissions-processing-code/xml-batch//batch_ag_emissions.xml using tag outFile
+Fri Mar 14 14:52:37 2014 L222.ag_mac.R [ 1 ] : Writing dependency information for L222.ag_mac.R ...
+Fri Mar 14 14:52:37 2014 L222.ag_mac.R [ 1 ] : All done with L222.ag_mac.R

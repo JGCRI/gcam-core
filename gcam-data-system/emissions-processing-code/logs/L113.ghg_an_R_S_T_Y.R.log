@@ -1,0 +1,20 @@
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : -----
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Starting L113.ghg_an_R_S_T_Y.R
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../_common/assumptions//A_common_data.R...OK.
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/assumptions//A_emissions_data.R...OK.
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../_common/mappings//iso_GCAM_regID.csv...OK. 238 rows, 4 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/mappings//EDGAR_sector.csv...OK. 44 rows, 3 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/mappings//EPA_ghg_tech.csv...OK. 273 rows, 3 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/mappings//EDGAR_nation.csv...OK. 269 rows, 2 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/mappings//GCAM_sector_tech.csv...OK. 370 rows, 15 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../aglu-data/level1//L107.an_Prod_Mt_R_C_Sys_Fd_Y.csv...OK. 1024 rows, 44 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level1//L103.ghg_tgmt_USA_an_Sepa_F_2005.csv...OK. 5 rows, 3 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_CH4.csv...OK. 4234 rows, 45 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_N2O.csv...OK. 5070 rows, 45 cols
+Fri Mar 14 14:50:36 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Computing unscaled emissions by country and technology
+Fri Mar 14 14:50:37 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Compute EDGAR emissions by region and sector
+Fri Mar 14 14:50:38 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Scale EPA emissions by tech to match EDGAR totals
+Fri Mar 14 14:50:39 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Writing ../emissions-data/level1//L113.ghg_tg_R_an_C_Sys_Fd_Yh.csv w/ 2 comments
+Fri Mar 14 14:50:39 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : Writing dependency information for L113.ghg_an_R_S_T_Y.R ...
+Fri Mar 14 14:50:39 2014 L113.ghg_an_R_S_T_Y.R [ 1 ] : All done with L113.ghg_an_R_S_T_Y.R

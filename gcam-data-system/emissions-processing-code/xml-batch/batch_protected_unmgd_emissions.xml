@@ -1,0 +1,19 @@
+<ModelInterfaceBatch>
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+	<command name="CSV file">
+		<headerFile>../_common/headers//ModelInterface_headers.txt</headerFile>
+		<csvFile>../emissions-data/level2//L213.Sector.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.LandItem.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.LandItemProtect.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.GRASSEmissions.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.FORESTEmissions.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.GRASSEmissionsFactors.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.FORESTEmissionsFactors.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.GRASSEmissionsProtect.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.FORESTEmissionsProtect.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.GRASSEmissionsFactorsProtect.csv</csvFile>
+		<csvFile>../emissions-data/level2//L213.FORESTEmissionsFactorsProtect.csv</csvFile>
+		<outFile>../xml/emissions-xml//all_protected_unmgd_emissions.xml</outFile>
+ 	</command>
+	</class>
+</ModelInterfaceBatch>

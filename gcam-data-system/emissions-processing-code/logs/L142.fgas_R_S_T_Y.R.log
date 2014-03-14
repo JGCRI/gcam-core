@@ -1,0 +1,18 @@
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : -----
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Starting L142.fgas_R_S_T_Y.R
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Historical emissions factors by GCAM technology, computed from EPA emissions data and IEA energy balances
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../_common/assumptions//A_common_data.R...OK.
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/assumptions//A_emissions_data.R...OK.
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../_common/mappings//GCAM_region_names.csv...OK. 32 rows, 2 cols
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../_common/mappings//iso_GCAM_regID.csv...OK. 238 rows, 4 cols
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/mappings//EDGAR_sector.csv...OK. 44 rows, 3 cols
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/mappings//EDGAR_nation.csv...OK. 269 rows, 2 cols
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/assumptions//A41.GWP.csv...OK. 10 rows, 3 cols
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_PFC.csv...OK. 228 rows, 45 cols
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level0//EDGAR_HFC.csv...OK. 419 rows, 45 cols
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Reading ../emissions-data/level1//L141.fgas_pct_USA_S_2005.csv...OK. 63 rows, 7 cols
+Fri Mar 14 14:51:51 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Map EDGAR HFC emissions to GCAM technologies
+Fri Mar 14 14:51:52 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Map EDGAR PFC emissions to GCAM technologies
+Fri Mar 14 14:51:53 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Writing ../emissions-data/level1//L142.fgas_tg_R_S_Yh.csv w/ 2 comments
+Fri Mar 14 14:51:53 2014 L142.fgas_R_S_T_Y.R [ 1 ] : Writing dependency information for L142.fgas_R_S_T_Y.R ...
+Fri Mar 14 14:51:53 2014 L142.fgas_R_S_T_Y.R [ 1 ] : All done with L142.fgas_R_S_T_Y.R
