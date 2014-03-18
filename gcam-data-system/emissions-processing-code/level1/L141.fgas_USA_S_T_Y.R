@@ -53,8 +53,11 @@ printlog( "Compute the % EDGAR emissions by each gas & technology" )
 L141.fgas_tg_USA_S_2005.melt$HFC_PFC <- A41.GWP$HFC_PFC[ match( L141.fgas_tg_USA_S_2005.melt$Non.CO2, A41.GWP$Gas )]
 L141.fgas_tg_USA_S_2005.melt$emissions[ is.na( L141.fgas_tg_USA_S_2005.melt$emissions ) ] <- 0
 L141.hfc.pfc_tg_USA_Sedgar_2005.melt <- aggregate( L141.fgas_tg_USA_S_2005.melt$emissions, by=as.list( L141.fgas_tg_USA_S_2005.melt[ c( "EDGAR_agg_sector", "HFC_PFC")]), sum )
+L141.hfc.pfc_ct_USA_Sedgar_2005.melt <- aggregate( L141.fgas_tg_USA_S_2005.melt$emissions, by=as.list( L141.fgas_tg_USA_S_2005.melt[ c( "EDGAR_agg_sector", "HFC_PFC")]), length )
 L141.fgas_tg_USA_S_2005.melt$sector_total <- L141.hfc.pfc_tg_USA_Sedgar_2005.melt$x[ match( vecpaste( L141.fgas_tg_USA_S_2005.melt[ c( "EDGAR_agg_sector", "HFC_PFC" )]), vecpaste( L141.hfc.pfc_tg_USA_Sedgar_2005.melt[ c( "EDGAR_agg_sector", "HFC_PFC")] ))]
+L141.fgas_tg_USA_S_2005.melt$sector_count <- L141.hfc.pfc_ct_USA_Sedgar_2005.melt$x[ match( vecpaste( L141.fgas_tg_USA_S_2005.melt[ c( "EDGAR_agg_sector", "HFC_PFC" )]), vecpaste( L141.hfc.pfc_tg_USA_Sedgar_2005.melt[ c( "EDGAR_agg_sector", "HFC_PFC")] ))]
 L141.fgas_tg_USA_S_2005.melt$pct <- L141.fgas_tg_USA_S_2005.melt$emissions / L141.fgas_tg_USA_S_2005.melt$sector_total 
+L141.fgas_tg_USA_S_2005.melt$pct[ L141.fgas_tg_USA_S_2005.melt$pct == "NaN" ] <- 1 / L141.fgas_tg_USA_S_2005.melt$sector_count[ L141.fgas_tg_USA_S_2005.melt$pct == "NaN" ] 
 L141.fgas_tg_USA_S_2005.melt <- na.omit( L141.fgas_tg_USA_S_2005.melt )
 
 #Drop unnecessary columns
