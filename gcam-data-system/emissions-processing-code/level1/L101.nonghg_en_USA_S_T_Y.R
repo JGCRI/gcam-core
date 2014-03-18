@@ -30,7 +30,7 @@ EPA_tech <- readdata( "EMISSIONS_MAPPINGS", "EPA_tech" )
 L1231.in_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.in_EJ_R_elec_F_tech_Yh" )
 L1322.in_EJ_R_indenergy_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_indenergy_F_Yh" )
 L144.in_EJ_R_bld_serv_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L144.in_EJ_R_bld_serv_F_Yh" )
-L152.in_EJ_R_trn_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L152.in_EJ_R_trn_F_Yh" )
+L154.in_EJ_R_trn_m_sz_tech_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L154.in_EJ_R_trn_m_sz_tech_F_Yh" )
 L1322.Fert_Prod_MtN_R_F_Y <- readdata( "ENERGY_LEVEL1_DATA", "L1322.Fert_Prod_MtN_R_F_Y" )
 L1321.in_EJ_R_cement_F_Y <- readdata( "ENERGY_LEVEL1_DATA", "L1321.in_EJ_R_cement_F_Y" )
 L124.in_EJ_R_heat_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.in_EJ_R_heat_F_Yh" )
@@ -50,14 +50,18 @@ L1322.in_EJ_R_indenergy_F_Yh$technology <- L1322.in_EJ_R_indenergy_F_Yh$fuel
 L144.in_EJ_R_bld_serv_F_Yh$sector <- L144.in_EJ_R_bld_serv_F_Yh$service
 L144.in_EJ_R_bld_serv_F_Yh$technology <- L144.in_EJ_R_bld_serv_F_Yh$fuel
 L144.in_EJ_R_bld_serv_F_Yh <- L144.in_EJ_R_bld_serv_F_Yh[ names( L144.in_EJ_R_bld_serv_F_Yh ) != "service" ]
-L152.in_EJ_R_trn_F_Yh$technology <- L152.in_EJ_R_trn_F_Yh$fuel
 L1322.Fert_Prod_MtN_R_F_Y$technology <- L1322.Fert_Prod_MtN_R_F_Y$fuel
 L1321.in_EJ_R_cement_F_Y$technology <- L1321.in_EJ_R_cement_F_Y$fuel
 L124.in_EJ_R_heat_F_Yh$technology <- L124.in_EJ_R_heat_F_Yh$fuel
 L111.Prod_EJ_R_F_Yh$technology <- L111.Prod_EJ_R_F_Yh$fuel
 
+L154.in_EJ_R_trn_m_sz_tech_F_Yh$technology <- L154.in_EJ_R_trn_m_sz_tech_F_Yh$fuel
+L154.in_EJ_R_trn_m_sz_tech_F_Yh$fuel <- L154.in_EJ_R_trn_m_sz_tech_F_Yh$mode
+L154.in_EJ_R_trn_m_sz_tech_F_Yh$sector <- L154.in_EJ_R_trn_m_sz_tech_F_Yh$UCD_sector
+L154.in_EJ_R_trn_m_sz_tech_F_Yh <- L154.in_EJ_R_trn_m_sz_tech_F_Yh[ names( L154.in_EJ_R_trn_m_sz_tech_F_Yh ) %!in% c( "mode", "UCD_sector", "size.class", "UCD_technology", "UCD_fuel" )]
+
 #Bind all together
-L101.in_EJ_R_en_Si_F_Yh <- rbind( L1231.in_EJ_R_elec_F_tech_Yh, L1322.in_EJ_R_indenergy_F_Yh, L144.in_EJ_R_bld_serv_F_Yh, L152.in_EJ_R_trn_F_Yh, L1322.Fert_Prod_MtN_R_F_Y, L1321.in_EJ_R_cement_F_Y, L124.in_EJ_R_heat_F_Yh, L111.Prod_EJ_R_F_Yh  )
+L101.in_EJ_R_en_Si_F_Yh <- rbind( L1231.in_EJ_R_elec_F_tech_Yh, L1322.in_EJ_R_indenergy_F_Yh, L144.in_EJ_R_bld_serv_F_Yh, L154.in_EJ_R_trn_m_sz_tech_F_Yh, L1322.Fert_Prod_MtN_R_F_Y, L1321.in_EJ_R_cement_F_Y, L124.in_EJ_R_heat_F_Yh, L111.Prod_EJ_R_F_Yh  )
       
 printlog( "Subset for USA only and aggregate to EPA categories")
 L101.in_EJ_USA_en_Si_F_Yh <- subset( L101.in_EJ_R_en_Si_F_Yh, L101.in_EJ_R_en_Si_F_Yh$GCAM_region_ID == "1" )
