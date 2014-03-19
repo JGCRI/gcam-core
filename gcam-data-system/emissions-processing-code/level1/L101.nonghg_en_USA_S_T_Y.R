@@ -75,61 +75,61 @@ printlog( "Convert EPA SO2 emissions inventory to Tg and aggregate by sector and
 L101.so2_tg_USA_en_Sepa_F_Yh <- epa_so2
 L101.so2_tg_USA_en_Sepa_F_Yh$sector <- EPA_tech$sector[ match( L101.so2_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
 L101.so2_tg_USA_en_Sepa_F_Yh$fuel <- EPA_tech$fuel[ match( L101.so2_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
-L101.so2_tg_USA_en_Sepa_F_Yh <- aggregate( L101.so2_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ], by=as.list( L101.so2_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
+L101.so2_tg_USA_en_Sepa_F_Yh <- aggregate( L101.so2_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ], by=as.list( L101.so2_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
 
 #Drop missing values
 L101.so2_tg_USA_en_Sepa_F_Yh[ is.na( L101.so2_tg_USA_en_Sepa_F_Yh ) ] <- 0      
 
 #Convert to Tg
-L101.so2_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ] <- L101.so2_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ] * tst_to_tg  
+L101.so2_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ] <- L101.so2_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ] * tst_to_tg  
 
 printlog( "Convert EPA CO emissions inventory to Tg and aggregate by sector and technology" )
 L101.co_tg_USA_en_Sepa_F_Yh <- epa_co
 L101.co_tg_USA_en_Sepa_F_Yh$sector <- EPA_tech$sector[ match( L101.co_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
 L101.co_tg_USA_en_Sepa_F_Yh$fuel <- EPA_tech$fuel[ match( L101.co_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
-L101.co_tg_USA_en_Sepa_F_Yh <- aggregate( L101.co_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ], by=as.list( L101.co_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
+L101.co_tg_USA_en_Sepa_F_Yh <- aggregate( L101.co_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ], by=as.list( L101.co_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
 
 #Drop missing values
 L101.co_tg_USA_en_Sepa_F_Yh[ is.na( L101.co_tg_USA_en_Sepa_F_Yh ) ] <- 0      
 
 #Convert to Tg
-L101.co_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ] <- L101.co_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ] * tst_to_tg  
+L101.co_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ] <- L101.co_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ] * tst_to_tg  
 
 printlog( "Convert EPA NOx emissions inventory to Tg and aggregate by sector and technology" )
 L101.nox_tg_USA_en_Sepa_F_Yh <- epa_nox
 L101.nox_tg_USA_en_Sepa_F_Yh$sector <- EPA_tech$sector[ match( L101.nox_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
 L101.nox_tg_USA_en_Sepa_F_Yh$fuel <- EPA_tech$fuel[ match( L101.nox_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
-L101.nox_tg_USA_en_Sepa_F_Yh <- aggregate( L101.nox_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ], by=as.list( L101.nox_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
+L101.nox_tg_USA_en_Sepa_F_Yh <- aggregate( L101.nox_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ], by=as.list( L101.nox_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
 
 #Drop missing values
 L101.nox_tg_USA_en_Sepa_F_Yh[ is.na( L101.nox_tg_USA_en_Sepa_F_Yh ) ] <- 0      
 
 #Convert to Tg
-L101.nox_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ] <- L101.nox_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ] * tst_to_tg  
+L101.nox_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ] <- L101.nox_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ] * tst_to_tg  
 
 printlog( "Convert EPA VOC emissions inventory to Tg and aggregate by sector and technology" )
 L101.voc_tg_USA_en_Sepa_F_Yh <- epa_voc
 L101.voc_tg_USA_en_Sepa_F_Yh$sector <- EPA_tech$sector[ match( L101.voc_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
 L101.voc_tg_USA_en_Sepa_F_Yh$fuel <- EPA_tech$fuel[ match( L101.voc_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
-L101.voc_tg_USA_en_Sepa_F_Yh <- aggregate( L101.voc_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ], by=as.list( L101.voc_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
+L101.voc_tg_USA_en_Sepa_F_Yh <- aggregate( L101.voc_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ], by=as.list( L101.voc_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
 
 #Drop missing values
 L101.voc_tg_USA_en_Sepa_F_Yh[ is.na( L101.voc_tg_USA_en_Sepa_F_Yh ) ] <- 0      
 
 #Convert to Tg
-L101.voc_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ] <- L101.voc_tg_USA_en_Sepa_F_Yh[ EPA_historical_years ] * tst_to_tg  
+L101.voc_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ] <- L101.voc_tg_USA_en_Sepa_F_Yh[ X_EPA_historical_years ] * tst_to_tg  
 
 printlog( "Convert EPA NH3 emissions inventory to Tg and aggregate by sector and technology" )
 L101.nh3_tg_USA_en_Sepa_F_Yh <- epa_nh3
 L101.nh3_tg_USA_en_Sepa_F_Yh$sector <- EPA_tech$sector[ match( L101.nh3_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
 L101.nh3_tg_USA_en_Sepa_F_Yh$fuel <- EPA_tech$fuel[ match( L101.nh3_tg_USA_en_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
-L101.nh3_tg_USA_en_Sepa_F_Yh <- aggregate( L101.nh3_tg_USA_en_Sepa_F_Yh[ EPA_NH3_historical_years ], by=as.list( L101.nh3_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
+L101.nh3_tg_USA_en_Sepa_F_Yh <- aggregate( L101.nh3_tg_USA_en_Sepa_F_Yh[ X_NH3_historical_years ], by=as.list( L101.nh3_tg_USA_en_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
 
 #Drop missing values
 L101.nh3_tg_USA_en_Sepa_F_Yh[ is.na( L101.nh3_tg_USA_en_Sepa_F_Yh ) ] <- 0      
 
 #Convert to Tg
-L101.nh3_tg_USA_en_Sepa_F_Yh[ EPA_NH3_historical_years ] <- L101.nh3_tg_USA_en_Sepa_F_Yh[ EPA_NH3_historical_years ] * tst_to_tg  
+L101.nh3_tg_USA_en_Sepa_F_Yh[ X_NH3_historical_years ] <- L101.nh3_tg_USA_en_Sepa_F_Yh[ X_NH3_historical_years ] * tst_to_tg  
 
 printlog( "Compute SO2 emissions factors by dividing EPA inventory by IEA energy balances" )
 #First melt data frame   

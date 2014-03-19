@@ -3,10 +3,10 @@ C_S_F <- c( "iso", "sector", "fuel")
 
 #------------------------------------------------------------------------------------
 #Historical years for data write-out
-historical_years <- 1971:2002
-EPA_historical_years <- paste( "X", historical_years, sep = "" )
+EPA_historical_years <- 1971:2002
+X_EPA_historical_years <- paste( "X", EPA_historical_years, sep = "" )
 NH3_historical_years <- 1990:2002
-EPA_NH3_historical_years <- paste( "X", NH3_historical_years, sep = "" )
+X_NH3_historical_years <- paste( "X", NH3_historical_years, sep = "" )
 EDGAR_historical_years <- 1971:2008
 X_EDGAR_historical_years <- paste( "X", EDGAR_historical_years, sep = "" )
 NH3_extra_years <- 1971:1989

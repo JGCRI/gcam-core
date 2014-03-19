@@ -35,14 +35,14 @@ printlog( "Convert EPA GHG emissions inventory to Tg and aggregate by sector and
 L105.nh3_tg_USA_an_Sepa_F_Yh <- EPA_NH3
 L105.nh3_tg_USA_an_Sepa_F_Yh$sector <- EPA_tech$sector[ match( L105.nh3_tg_USA_an_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
 L105.nh3_tg_USA_an_Sepa_F_Yh$fuel <- EPA_tech$fuel[ match( L105.nh3_tg_USA_an_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
-L105.nh3_tg_USA_an_Sepa_F_Yh <- aggregate( L105.nh3_tg_USA_an_Sepa_F_Yh[ EPA_NH3_historical_years ], by=as.list( L105.nh3_tg_USA_an_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
+L105.nh3_tg_USA_an_Sepa_F_Yh <- aggregate( L105.nh3_tg_USA_an_Sepa_F_Yh[ X_NH3_historical_years ], by=as.list( L105.nh3_tg_USA_an_Sepa_F_Yh[ c( "sector", "fuel" ) ] ), sum )
 
 #Drop missing values and subset for animals
 L105.nh3_tg_USA_an_Sepa_F_Yh[ is.na( L105.nh3_tg_USA_an_Sepa_F_Yh ) ] <- 0
 L105.nh3_tg_USA_an_Sepa_F_Yh <- subset( L105.nh3_tg_USA_an_Sepa_F_Yh, L105.nh3_tg_USA_an_Sepa_F_Yh$sector == "Animals" )
 
 #Convert to Tg
-L105.nh3_tg_USA_an_Sepa_F_Yh[ EPA_NH3_historical_years ] <- L105.nh3_tg_USA_an_Sepa_F_Yh[ EPA_NH3_historical_years ] * tst_to_tg  
+L105.nh3_tg_USA_an_Sepa_F_Yh[ X_NH3_historical_years ] <- L105.nh3_tg_USA_an_Sepa_F_Yh[ X_NH3_historical_years ] * tst_to_tg  
 
 printlog( "Compute GHG emissions factors by dividing EPA inventory by FAO animal production" )
 #Subset for USA only in 2005 and aggregate to EPA categories"
@@ -50,7 +50,7 @@ L105.out_Mt_USA_an_C_Sys_Fd_Yh <- subset( L107.an_Prod_Mt_R_C_Sys_Fd_Y, L107.an_
 L105.out_Mt_USA_an_C_Sys_Fd_Yh.melt <- melt( L105.out_Mt_USA_an_C_Sys_Fd_Yh, id.vars = c( "GCAM_region_ID", "GCAM_commodity", "system", "feed" ) )
 L105.out_Mt_USA_an_Yh.melt <- aggregate( L105.out_Mt_USA_an_C_Sys_Fd_Yh.melt$value, by=as.list( L105.out_Mt_USA_an_C_Sys_Fd_Yh.melt[ c( "variable" )]), sum )
 names( L105.out_Mt_USA_an_Yh.melt )[ names( L105.out_Mt_USA_an_Yh.melt ) == "x" ] <- "production"
-L105.out_Mt_USA_an_Yh.melt <- subset( L105.out_Mt_USA_an_Yh.melt, L105.out_Mt_USA_an_Yh.melt$variable %in% EPA_NH3_historical_years )
+L105.out_Mt_USA_an_Yh.melt <- subset( L105.out_Mt_USA_an_Yh.melt, L105.out_Mt_USA_an_Yh.melt$variable %in% X_NH3_historical_years )
 
 L105.nh3_tgmt_USA_an_Yh.melt <- melt( L105.nh3_tg_USA_an_Sepa_F_Yh, id.vars=c( "sector", "fuel" ) )
 L105.nh3_tgmt_USA_an_Yh.melt$production <- L105.out_Mt_USA_an_Yh.melt$production[ match( L105.nh3_tgmt_USA_an_Yh.melt$variable, L105.out_Mt_USA_an_Yh.melt$variable   )]
