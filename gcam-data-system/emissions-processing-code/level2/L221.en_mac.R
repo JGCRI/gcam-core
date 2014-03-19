@@ -138,9 +138,9 @@ L222.MAC_NatGas_S_R_T <- L222.MAC_NatGas_S_R_T[ c( "region", "depresource", "Non
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L222.MAC_AdipicAcid_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L222.MAC_AdipicAcid_S_R_T", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L222.MAC_NitricAcid_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L222.MAC_NitricAcid_S_R_T", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L222.MAC_NatGas_S_R_T, "ResMAC", "EMISSIONS_LEVEL2_DATA", "L222.MAC_NatGas_S_R_T", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
+write_mi_data( L222.MAC_AdipicAcid_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L222.MAC_AdipicAcid_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L222.MAC_NitricAcid_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L222.MAC_NitricAcid_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L222.MAC_NatGas_S_R_T, "ResMAC", "EMISSIONS_LEVEL2_DATA", "L222.MAC_NatGas_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 
 
 logstop()

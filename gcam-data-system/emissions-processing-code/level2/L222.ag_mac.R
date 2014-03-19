@@ -110,9 +110,9 @@ L222.MM_MAC_S_R_T <- subset( L222.MM_MAC_S_R_T, !region %in% no_aglu_regions )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L222.MM_MAC_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L222.MM_MAC_S_R_T", "EMISSIONS_XML_BATCH", "batch_ag_emissions.xml" ) 
-write_mi_data( L222.N2O_MAC_S_R_T, "AgMAC", "EMISSIONS_LEVEL2_DATA", "L222.N2O_MAC_S_R_T", "EMISSIONS_XML_BATCH", "batch_ag_emissions.xml" ) 
+write_mi_data( L222.MM_MAC_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L222.MM_MAC_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L222.N2O_MAC_S_R_T, "AgMAC", "EMISSIONS_LEVEL2_DATA", "L222.N2O_MAC_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
 
-insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_ag_emissions.xml", "EMISSIONS_XML_FINAL", "all_aglu_emissions.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml", "EMISSIONS_XML_FINAL", "all_aglu_emissions.xml", "", xml_tag="outFile" )
 
 logstop()

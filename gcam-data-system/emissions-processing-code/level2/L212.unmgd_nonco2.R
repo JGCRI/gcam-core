@@ -151,13 +151,13 @@ L212.FORESTEmissions <- rename_SO2( L212.FORESTEmissions, A_regions, FALSE )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L212.Sector, "SectorUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.Sector", "EMISSIONS_XML_BATCH", "batch_unmgd_emissions.xml" ) 
-write_mi_data( L212.LandItem, "ItemNameUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.LandItem", "EMISSIONS_XML_BATCH", "batch_unmgd_emissions.xml" ) 
-write_mi_data( L212.GRASSEmissions, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissions", "EMISSIONS_XML_BATCH", "batch_unmgd_emissions.xml" ) 
-write_mi_data( L212.FORESTEmissions, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissions", "EMISSIONS_XML_BATCH", "batch_unmgd_emissions.xml" ) 
-write_mi_data( L212.GRASSEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_unmgd_emissions.xml" ) 
-write_mi_data( L212.FORESTEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_unmgd_emissions.xml" ) 
+write_mi_data( L212.Sector, "SectorUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.Sector", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.LandItem, "ItemNameUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.LandItem", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.GRASSEmissions, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissions", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.FORESTEmissions, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissions", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.GRASSEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.FORESTEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 
-insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_unmgd_emissions.xml", "EMISSIONS_XML_FINAL", "all_unmgd_emissions.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml", "EMISSIONS_XML_FINAL", "all_unmgd_emissions.xml", "", xml_tag="outFile" )
 
 logstop()

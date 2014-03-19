@@ -58,7 +58,7 @@ L101.Popshares_ctryRG3_Y[ c( X_historical_years, X_future_years ) ] <-
 #Interpolate the GCAM population data to all historical and future years
 L101.Pop_thous_GCAM3_RG3_Y <- gcam_interp( GCAM3_population, c( historical_years, future_years ) )[ c( "region_GCAM3", X_historical_years, X_future_years ) ]
 
-if( "X2100" %in% X_future_years && "X2100" %!in% names( L101.Pop_thous_GCAM3_RG3_Y ) ){
+if( "X2100" %in% X_future_years ){
 	printlog( "Extending GCAM 3.0 scenario to 2100 using SSPbase population ratios by GCAM 3.0 region")
 	L101.Pop_thous_GCAM3_RG3_Y$X2100 <- L101.Pop_thous_GCAM3_RG3_Y$X2095 *
 	   L101.Pop_thous_SSPbase_RG3_Y$X2100[ match( L101.Pop_thous_GCAM3_RG3_Y$region_GCAM3, L101.Pop_thous_SSPbase_RG3_Y$region_GCAM3 ) ] /

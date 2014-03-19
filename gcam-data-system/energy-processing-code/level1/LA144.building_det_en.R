@@ -34,6 +34,8 @@ L101.in_EJ_ctry_bld_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L101.in_EJ_ctry_bl
 L142.in_EJ_R_bld_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L142.in_EJ_R_bld_F_Yh" )
 L143.HDDCDD_scen_RG3_Y <- readdata( "ENERGY_LEVEL1_DATA", "L143.HDDCDD_scen_RG3_Y" )
 L143.HDDCDD_scen_ctry_Y <- readdata( "ENERGY_LEVEL1_DATA", "L143.HDDCDD_scen_ctry_Y" )
+GCAM3_pcGDP <- readdata( "SOCIO_LEVEL0_DATA", "GCAM3_pcGDP" )
+L102.pcgdp_thous90USD_GCAM3_ctry_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_GCAM3_ctry_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -138,10 +140,10 @@ A44.share_serv_fuel$share_serv_fuel <- A44.share_serv_fuel$share_TFEbysector / A
 A44.share_serv_fuel[ is.na( A44.share_serv_fuel ) ] <- 0
 
 #For making the energy consumption table, start with the tech list that will be in each region, and repeat by number of countries from IEA
-L144.in_EJ_ctry_bld_serv_F_Yh <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], "iso", sort( unique( L101.in_EJ_ctry_bld_Fi_Yh$iso ) ) )
+L144.in_EJ_ctry_bld_serv_F <- repeat_and_add_vector( calibrated_techs_bld_det[ c( S_F, "service" ) ], "iso", sort( unique( L101.in_EJ_ctry_bld_Fi_Yh$iso ) ) )
 
 #Match in the name of the region_GCAM3
-L144.in_EJ_ctry_bld_serv_F_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_ctry_bld_serv_F_Yh$iso, iso_GCAM_regID$iso ) ]
+L144.in_EJ_ctry_bld_serv_F$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L144.in_EJ_ctry_bld_serv_F$iso, iso_GCAM_regID$iso ) ]
 
 #The next sequence of steps is intended to modify service shares for countries within region_GCAM3, to account for sub-regional differences in HDDCDD.
 # First, need to associate HDD and CDD with the corresponding services (heating and cooling, respectively)
@@ -151,55 +153,143 @@ cooling_services <- thermal_services[ grepl( "cool", thermal_services ) ]
 hddcdd_mapping <- rbind( 
       data.frame( service = cooling_services, variable = "CDD"),
       data.frame( service = heating_services, variable = "HDD" ) )
-L144.in_EJ_ctry_bld_serv_F_Yh$variable <- hddcdd_mapping$variable[ match( L144.in_EJ_ctry_bld_serv_F_Yh$service, hddcdd_mapping$service ) ]
+
+#Subset the thermal services
+L144.in_EJ_ctry_bld_thrm_F <- subset( L144.in_EJ_ctry_bld_serv_F, service %in% thermal_services )
+L144.in_EJ_ctry_bld_thrm_F$variable <- hddcdd_mapping$variable[ match( L144.in_EJ_ctry_bld_thrm_F$service, hddcdd_mapping$service ) ]
 
 #Then, calculate the "normals" from the HDD and CDD data, both at the country level and the GCAM 3.0 region level.
 L143.HDDCDD_scen_ctry_Y$normal <- apply( L143.HDDCDD_scen_ctry_Y[ X_climate_normal_years ], 1, mean )
 
-##NOTE: wherever the climate normal is less than 1, this will round to 0 when hddcdd are read in to the model. Go ahead and put these at 0
+##NOTE: wherever the climate normal is less than 1, this will round to 0 when hddcdd are read in to the model. Go ahead and put these at 0,
+# in order to remove any instances where HDDCDD are treated as being greater than 0 when the model will see a 0
 L143.HDDCDD_scen_ctry_Y$normal[ L143.HDDCDD_scen_ctry_Y$normal < 1 ] <- 0
 
+#Calculate the normals for each country over the historical time period
 L143.HDDCDD_scen_RG3_Y$normal <- apply( L143.HDDCDD_scen_RG3_Y[ X_climate_normal_years ], 1, mean )
-L144.in_EJ_ctry_bld_serv_F_Yh$normal <- L143.HDDCDD_scen_ctry_Y$normal[
-      match( vecpaste( L144.in_EJ_ctry_bld_serv_F_Yh[ c( "iso", "variable" ) ] ),
+L144.in_EJ_ctry_bld_thrm_F$normal <- L143.HDDCDD_scen_ctry_Y$normal[
+      match( vecpaste( L144.in_EJ_ctry_bld_thrm_F[ c( "iso", "variable" ) ] ),
              vecpaste( L143.HDDCDD_scen_ctry_Y[ c( "iso", "variable" ) ] ) ) ]
-L144.in_EJ_ctry_bld_serv_F_Yh$normal_RG3 <- L143.HDDCDD_scen_RG3_Y$normal[
-      match( vecpaste( L144.in_EJ_ctry_bld_serv_F_Yh[ c( "region_GCAM3", "variable" ) ] ),
+
+#Missing values are countries where no HDDCDD data are available. These will default to their region's average
+L144.in_EJ_ctry_bld_thrm_F$normal_RG3 <- L143.HDDCDD_scen_RG3_Y$normal[
+      match( vecpaste( L144.in_EJ_ctry_bld_thrm_F[ c( "region_GCAM3", "variable" ) ] ),
              vecpaste( L143.HDDCDD_scen_RG3_Y[ c( "region_GCAM3", "variable" ) ] ) ) ]
-L144.in_EJ_ctry_bld_serv_F_Yh$adjustment <- L144.in_EJ_ctry_bld_serv_F_Yh$normal / L144.in_EJ_ctry_bld_serv_F_Yh$normal_RG3
+L144.in_EJ_ctry_bld_thrm_F$normal[ is.na( L144.in_EJ_ctry_bld_thrm_F$normal ) ] <-
+      L144.in_EJ_ctry_bld_thrm_F$normal_RG3[ is.na( L144.in_EJ_ctry_bld_thrm_F$normal ) ]
 
-#For non-thermal services and for countries for which HDDCDD data isn't available, this adjustment is 1
-L144.in_EJ_ctry_bld_serv_F_Yh$adjustment[ is.na( L144.in_EJ_ctry_bld_serv_F_Yh$adjustment ) ] <- 1
+#Shares of energy allocated to heating are assumed to be modified only by HDD in each country. However, cooling
+# energy shares may be better if modified in some way by GDP.
+## NOTE: This method is not implemented at present
+#L144.in_EJ_ctry_bld_thrm_F$pcGDP <- (
+#      L102.pcgdp_thous90USD_GCAM3_ctry_Y[[ X_serv_share_year ]][
+#      match( L144.in_EJ_ctry_bld_thrm_F$iso, L102.pcgdp_thous90USD_GCAM3_ctry_Y$iso ) ] )
+#L144.in_EJ_ctry_bld_thrm_F$pcGDP_RG3 <- ( 
+#      GCAM3_pcGDP[[ X_serv_share_year ]][
+#      match( L144.in_EJ_ctry_bld_thrm_F$region_GCAM3, GCAM3_pcGDP$region_GCAM3 ) ] )
 
-#Match in the unadjusted shares, and re-normalize
-L144.in_EJ_ctry_bld_serv_F_Yh$share_serv_fuel <- A44.share_serv_fuel$share_serv_fuel[
-      match( vecpaste( L144.in_EJ_ctry_bld_serv_F_Yh[ c( "region_GCAM3", S_F, "service" ) ] ),
+#Where GDP values for specific nations are missing, default to the regional average
+#L144.in_EJ_ctry_bld_thrm_F$pcGDP[ is.na( L144.in_EJ_ctry_bld_thrm_F$pcGDP ) ] <-
+#      L144.in_EJ_ctry_bld_thrm_F$pcGDP_RG3[ is.na( L144.in_EJ_ctry_bld_thrm_F$pcGDP ) ]
+
+#Calculate the adjustment to the energy consumed by heating and cooling.
+# Heating: use only the degree day ratio
+L144.in_EJ_ctry_bld_thrm_F$adjustment <-
+      L144.in_EJ_ctry_bld_thrm_F$normal /
+      L144.in_EJ_ctry_bld_thrm_F$normal_RG3
+#L144.in_EJ_ctry_bld_thrm_F$adjustment[ L144.in_EJ_ctry_bld_thrm_F$service %in% cooling_services ] <-
+#      L144.in_EJ_ctry_bld_thrm_F$adjustment[ L144.in_EJ_ctry_bld_thrm_F$service %in% cooling_services ] *
+#      L144.in_EJ_ctry_bld_thrm_F$pcGDP[ L144.in_EJ_ctry_bld_thrm_F$service %in% cooling_services ] /
+#      L144.in_EJ_ctry_bld_thrm_F$pcGDP_RG3[ L144.in_EJ_ctry_bld_thrm_F$service %in% cooling_services ]
+
+#Match in the unadjusted shares, and compute the first-order estimate of energy consumption
+L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel_RG3 <- A44.share_serv_fuel$share_serv_fuel[
+      match( vecpaste( L144.in_EJ_ctry_bld_thrm_F[ c( "region_GCAM3", S_F, "service" ) ] ),
              vecpaste( A44.share_serv_fuel[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]
-L144.in_EJ_ctry_bld_serv_F_Yh$share_serv_fuel_adj <- L144.in_EJ_ctry_bld_serv_F_Yh$share_serv_fuel * L144.in_EJ_ctry_bld_serv_F_Yh$adjustment
 
-#These new shares are not normalized (i.e. they don't add to 1). Re-aggregate and re-compute the shares
-L144.in_EJ_ctry_bld_F_Yh <- aggregate( L144.in_EJ_ctry_bld_serv_F_Yh[ "share_serv_fuel_adj" ],
-      by=as.list( L144.in_EJ_ctry_bld_serv_F_Yh[ c( "iso", S_F ) ] ), sum )
-L144.in_EJ_ctry_bld_serv_F_Yh$share_final <- L144.in_EJ_ctry_bld_serv_F_Yh$share_serv_fuel_adj / L144.in_EJ_ctry_bld_F_Yh$share_serv_fuel_adj[
-      match( vecpaste( L144.in_EJ_ctry_bld_serv_F_Yh[ c( "iso", S_F ) ] ),
-             vecpaste( L144.in_EJ_ctry_bld_F_Yh[ c( "iso", S_F ) ] ) ) ]
-L144.in_EJ_ctry_bld_serv_F_Yh$share_final[ is.na( L144.in_EJ_ctry_bld_serv_F_Yh$share_final ) ] <- 0
+#Drop the rows where no service shares are modeled
+L144.in_EJ_ctry_bld_thrm_F <- L144.in_EJ_ctry_bld_thrm_F[ complete.cases( L144.in_EJ_ctry_bld_thrm_F ), ]
 
 #Match in the energy consumption quantities in a base year, multiplying by the service shares
 ## Using rowMeans() to include all historical years in the calc. This guards against accidentally dropping fuels that may be zero in one year but non-zero in others.
 ## NOTE: these energy consumption quantities are from early in the processing and are not scaled to the final energy quantities. Don't match in all historical years here
 L101.in_EJ_ctry_bld_Fi_Yh$sector <- sub( "in_", "", L101.in_EJ_ctry_bld_Fi_Yh$sector )
 L101.in_EJ_ctry_bld_Fi_Yh$Energy_EJ <- rowMeans( L101.in_EJ_ctry_bld_Fi_Yh[ X_historical_years ] )
-L144.in_EJ_ctry_bld_serv_F_Yh$Energy_EJ <- L144.in_EJ_ctry_bld_serv_F_Yh$share_final * L101.in_EJ_ctry_bld_Fi_Yh$Energy_EJ[
-      match( vecpaste( L144.in_EJ_ctry_bld_serv_F_Yh[ c( "iso", S_F ) ] ),
+
+#Energy_tot = energy consumption by country, sector, and fuel (not disaggregated to service)
+L144.in_EJ_ctry_bld_thrm_F$Energy_tot_EJ <- L101.in_EJ_ctry_bld_Fi_Yh$Energy_EJ[
+      match( vecpaste( L144.in_EJ_ctry_bld_thrm_F[ c( "iso", S_F ) ] ),
              vecpaste( L101.in_EJ_ctry_bld_Fi_Yh[ c( "iso", S_F ) ] ) ) ]
+L144.in_EJ_ctry_bld_thrm_F$Energy_tot_EJ[ is.na( L144.in_EJ_ctry_bld_thrm_F$Energy_tot_EJ ) ] <- 0
+
+#For the first-order estimate of energy by service, multiply the total energy by the default (region_GCAM3) shares
+L144.in_EJ_ctry_bld_thrm_F$Energy_unadj_EJ <-
+      L144.in_EJ_ctry_bld_thrm_F$Energy_tot_EJ *
+      L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel_RG3
+
+#Calculate the adjusted energy consumption (unadjusted energy times the adjustment factor)
+L144.in_EJ_ctry_bld_thrm_F$Energy_adj_EJ <-
+      L144.in_EJ_ctry_bld_thrm_F$Energy_unadj_EJ *
+      L144.in_EJ_ctry_bld_thrm_F$adjustment
+
+#This adjusted energy is unscaled, in that when aggregated by GCAM3 region, the.service allocations will be different
+# than the original assumed amounts.
+# The next steps calculate energy scalers specific to each region_GCAM3, sector, and fuel
+L144.scalers_RG3_bld_thrm_F <- aggregate( L144.in_EJ_ctry_bld_thrm_F[ c( "Energy_unadj_EJ", "Energy_adj_EJ" ) ],
+      by=as.list( L144.in_EJ_ctry_bld_thrm_F[ c( "region_GCAM3", S_F, "service" ) ] ), sum )
+L144.scalers_RG3_bld_thrm_F$scaler <-
+      L144.scalers_RG3_bld_thrm_F$Energy_unadj_EJ /
+      L144.scalers_RG3_bld_thrm_F$Energy_adj_EJ
+L144.scalers_RG3_bld_thrm_F$scaler[ is.na( L144.scalers_RG3_bld_thrm_F$scaler ) ] <- 1
+
+#Use the scalers to calculate adjusted and scaled energy consumption by country, sector, fuel, and service
+# These will be used to calculate the final service portions for each country
+L144.in_EJ_ctry_bld_thrm_F$Energy_final_EJ <- L144.in_EJ_ctry_bld_thrm_F$Energy_adj_EJ *
+      L144.scalers_RG3_bld_thrm_F$scaler[
+         match( vecpaste( L144.in_EJ_ctry_bld_thrm_F[ c( "region_GCAM3", S_F, "service" ) ] ),
+                vecpaste( L144.scalers_RG3_bld_thrm_F[ c( "region_GCAM3", S_F, "service" ) ] ) ) ]
+
+#Now we can compute the shares of energy allocated to heating and cooling. Other will be the residual.
+L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel <-
+      L144.in_EJ_ctry_bld_thrm_F$Energy_final_EJ /
+      L144.in_EJ_ctry_bld_thrm_F$Energy_tot_EJ
+L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel[ is.na( L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel ) ] <- 0
+
+#Never allow these shares to exceed a maximum assumed threshold
+L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel[
+      L144.in_EJ_ctry_bld_thrm_F$service %in% heating_services &
+      L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel > 1 ] <- max_heating_share
+L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel[
+      L144.in_EJ_ctry_bld_thrm_F$service %in% cooling_services &
+      L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel > 1 ] <- max_cooling_share
+
+#Aggregate the services to calculate the residual to be allocated to non-thermal services
+L144.share_ctry_bld_thrm_F <- aggregate( L144.in_EJ_ctry_bld_thrm_F[ "share_serv_fuel" ],
+      by=as.list( L144.in_EJ_ctry_bld_thrm_F[ c( "iso", S_F ) ] ), sum )
+
+L144.in_EJ_ctry_bld_oth_F <- subset( L144.in_EJ_ctry_bld_serv_F, service %!in% thermal_services )
+L144.in_EJ_ctry_bld_oth_F$share_serv_fuel <- 1 - L144.share_ctry_bld_thrm_F$share_serv_fuel[
+      match( vecpaste( L144.in_EJ_ctry_bld_oth_F[ c( "iso", S_F ) ] ),
+             vecpaste( L144.share_ctry_bld_thrm_F[ c( "iso", S_F ) ] ) ) ]
+
+#Re-build the table with all services
+L144.in_EJ_ctry_bld_serv_F <- rbind(
+      L144.in_EJ_ctry_bld_thrm_F[ c( "iso", S_F, "service", "share_serv_fuel" ) ],
+      L144.in_EJ_ctry_bld_oth_F[ c( "iso", S_F, "service", "share_serv_fuel" ) ] )
+
+#Multiply by the country/sector/fuel energy consumption to get the estimate of energy consumption
+L144.in_EJ_ctry_bld_serv_F$Energy_EJ <- L144.in_EJ_ctry_bld_serv_F$share_serv_fuel *
+      L101.in_EJ_ctry_bld_Fi_Yh$Energy_EJ[
+         match( vecpaste( L144.in_EJ_ctry_bld_serv_F[ c( "iso", S_F ) ] ),
+                vecpaste( L101.in_EJ_ctry_bld_Fi_Yh[ c( "iso", S_F ) ] ) ) ]
+L144.in_EJ_ctry_bld_serv_F$Energy_EJ[ is.na( L144.in_EJ_ctry_bld_serv_F$Energy_EJ ) ] <- 0
 
 #This is now ready for aggregation and computation of service shares by the "new" GCAM regions
-L144.in_EJ_ctry_bld_serv_F_Yh[[ R ]] <- iso_GCAM_regID[[ R ]][ match( L144.in_EJ_ctry_bld_serv_F_Yh$iso, iso_GCAM_regID$iso ) ]
-L144.in_EJ_R_bld_serv_F_Yh <- aggregate( L144.in_EJ_ctry_bld_serv_F_Yh[ "Energy_EJ" ],
-      by=as.list( L144.in_EJ_ctry_bld_serv_F_Yh[ c( R_S_F, "service" ) ] ), sum, na.rm = T )
-L144.in_EJ_R_bld_F_Yh <- aggregate( L144.in_EJ_ctry_bld_serv_F_Yh[ "Energy_EJ" ],
-      by=as.list( L144.in_EJ_ctry_bld_serv_F_Yh[ R_S_F ] ), sum, na.rm = T )
+L144.in_EJ_ctry_bld_serv_F[[ R ]] <- iso_GCAM_regID[[ R ]][ match( L144.in_EJ_ctry_bld_serv_F$iso, iso_GCAM_regID$iso ) ]
+L144.in_EJ_R_bld_serv_F_Yh <- aggregate( L144.in_EJ_ctry_bld_serv_F[ "Energy_EJ" ],
+      by=as.list( L144.in_EJ_ctry_bld_serv_F[ c( R_S_F, "service" ) ] ), sum )
+L144.in_EJ_R_bld_F_Yh <- aggregate( L144.in_EJ_ctry_bld_serv_F[ "Energy_EJ" ],
+      by=as.list( L144.in_EJ_ctry_bld_serv_F[ R_S_F ] ), sum )
 L144.in_EJ_R_bld_serv_F_Yh$share_serv_fuel <- L144.in_EJ_R_bld_serv_F_Yh$Energy_EJ / L144.in_EJ_R_bld_F_Yh$Energy_EJ[
       match( vecpaste( L144.in_EJ_R_bld_serv_F_Yh[ c( R_S_F ) ] ),
              vecpaste( L144.in_EJ_R_bld_F_Yh[ c( R_S_F ) ] ) ) ]
@@ -211,7 +301,7 @@ L144.in_EJ_R_bld_serv_F_Yh[ X_historical_years ] <- L144.in_EJ_R_bld_serv_F_Yh$s
              vecpaste( L142.in_EJ_R_bld_F_Yh[ R_S_F ] ) ),
       X_historical_years ]
 L144.in_EJ_R_bld_serv_F_Yh <- L144.in_EJ_R_bld_serv_F_Yh[ c( R_S_F, "service", X_historical_years ) ]
-      
+
 #This has a number of combinations that do not apply. Drop the known ones.
 #This should take care of all missing values
 #Heat in regions where this is not modeled as a separate fuel

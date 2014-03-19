@@ -11,10 +11,18 @@ X_climate_normal_years <- paste0( "X", climate_normal_years )
 InternalGainsScalar_USA_h <- -930
 InternalGainsScalar_USA_c <- 350
 
+#Indicate which year is used in partitioning of base-year energy services
+serv_share_year <- 2005
+X_serv_share_year <- paste0( "X", serv_share_year )
+
+#Maximum amount of energy allowed to be used for space heating, for any fuel
+max_heating_share <- 0.9
+max_cooling_share <- 0.75
+
 floor.to.surface.ratio <- 5.5
 
-#BS parameter - "impedance". used to derive "satiation adders".
-impedance_level <- 10.5
+#GDP level at which half of the satiation level of floorspace is reached, in thousand 1990$ per capita
+gdp_mid_satiation <- 10.5
 satiation_year <- 2005
 X_satiation_year <- paste0( "X", satiation_year )
 

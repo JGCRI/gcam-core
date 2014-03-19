@@ -187,33 +187,33 @@ L231.IndCoef <- rbind( L231.IndCoef, L231.IndCoef.fy )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L231.UnlimitRsrc, "UnlimitRsrc", "EMISSIONS_LEVEL2_DATA", "L231.UnlimitRsrc", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" ) 
-write_mi_data( L231.UnlimitRsrcPrice, "UnlimitRsrcPrice", "EMISSIONS_LEVEL2_DATA", "L231.UnlimitRsrcPrice", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" ) 
-write_mi_data( L231.FinalDemand_urb, "FinalDemandInfo", "EMISSIONS_LEVEL2_DATA", "L231.FinalDemand_urb", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
+write_mi_data( L231.UnlimitRsrc, "UnlimitRsrc", "EMISSIONS_LEVEL2_DATA", "L231.UnlimitRsrc", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" ) 
+write_mi_data( L231.UnlimitRsrcPrice, "UnlimitRsrcPrice", "EMISSIONS_LEVEL2_DATA", "L231.UnlimitRsrcPrice", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" ) 
+write_mi_data( L231.FinalDemand_urb, "FinalDemandInfo", "EMISSIONS_LEVEL2_DATA", "L231.FinalDemand_urb", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
 write_mi_data( L231.Supplysector_urb_ind, IDstring="Supplysector", domain="EMISSIONS_LEVEL2_DATA", fn="L231.Supplysector_urb_ind",
-               batch_XML_domain="EMISSIONS_XML_BATCH", batch_XML_file="batch_prc_sector.xml" )  
-write_mi_data( L231.SubsectorLogit_urb_ind, "SubsectorLogit", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorLogit_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" ) 
+               batch_XML_domain="EMISSIONS_XML_BATCH", batch_XML_file="batch_ind_urb_processing_sectors.xml" )  
+write_mi_data( L231.SubsectorLogit_urb_ind, "SubsectorLogit", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorLogit_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" ) 
 if( exists( "L231.SubsectorShrwt_urb_ind" ) ){
-	write_mi_data( L231.SubsectorShrwt_ind, "SubsectorShrwt", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorShrwt_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
+	write_mi_data( L231.SubsectorShrwt_ind, "SubsectorShrwt", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorShrwt_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
 	}
 if( exists( "L231.SubsectorShrwtFllt_urb_ind" ) ){
 	write_mi_data( L231.SubsectorShrwtFllt_urb_ind, "SubsectorShrwtFllt", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorShrwtFllt_urb_ind",
-	               "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" ) 
+	               "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" ) 
 	}
 if( exists( "L231.SubsectorInterp_urb_ind" ) ) {
-	write_mi_data( L231.SubsectorInterp_urb_ind, "SubsectorInterp", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorInterp_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
+	write_mi_data( L231.SubsectorInterp_urb_ind, "SubsectorInterp", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorInterp_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
 	}
 if( exists( "L231.SubsectorInterpTo_urb_ind" ) ) {
-	write_mi_data( L231.SubsectorInterpTo_urb_ind, "SubsectorInterpTo", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorInterpTo_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
+	write_mi_data( L231.SubsectorInterpTo_urb_ind, "SubsectorInterpTo", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorInterpTo_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
 	}
-write_mi_data( L231.StubTech_urb_ind, "StubTech", "EMISSIONS_LEVEL2_DATA", "L231.StubTech_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
-write_mi_data( L231.GlobalTechShrwt_urb_ind, "GlobalTechShrwt", "EMISSIONS_LEVEL2_DATA", "L231.GlobalTechShrwt_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
-write_mi_data( L231.GlobalTechEff_urb_ind, "GlobalTechEff", "EMISSIONS_LEVEL2_DATA", "L231.GlobalTechEff_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
-write_mi_data( L231.GlobalTechCoef_urb_ind, "GlobalTechCoef", "EMISSIONS_LEVEL2_DATA", "L231.GlobalTechCoef_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
-write_mi_data( L231.GlobalTechCost_urb_ind, "GlobalTechCost", "EMISSIONS_LEVEL2_DATA", "L231.GlobalTechCost_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
-write_mi_data( L231.RegionalTechCalValue_urb_ind, "StubTechCalInputIndUrb", "EMISSIONS_LEVEL2_DATA", "L231.RegionalTechCalValue_urb_ind", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
-write_mi_data( L231.IndCoef, "StubTechCoefIndUrb", "EMISSIONS_LEVEL2_DATA", "L231.IndCoef", "EMISSIONS_XML_BATCH", "batch_prc_sector.xml" )
+write_mi_data( L231.StubTech_urb_ind, "StubTech", "EMISSIONS_LEVEL2_DATA", "L231.StubTech_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
+write_mi_data( L231.GlobalTechShrwt_urb_ind, "GlobalTechShrwt", "EMISSIONS_LEVEL2_DATA", "L231.GlobalTechShrwt_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
+write_mi_data( L231.GlobalTechEff_urb_ind, "GlobalTechEff", "EMISSIONS_LEVEL2_DATA", "L231.GlobalTechEff_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
+write_mi_data( L231.GlobalTechCoef_urb_ind, "GlobalTechCoef", "EMISSIONS_LEVEL2_DATA", "L231.GlobalTechCoef_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
+write_mi_data( L231.GlobalTechCost_urb_ind, "GlobalTechCost", "EMISSIONS_LEVEL2_DATA", "L231.GlobalTechCost_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
+write_mi_data( L231.RegionalTechCalValue_urb_ind, "StubTechCalInputIndUrb", "EMISSIONS_LEVEL2_DATA", "L231.RegionalTechCalValue_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
+write_mi_data( L231.IndCoef, "StubTechCoefIndUrb", "EMISSIONS_LEVEL2_DATA", "L231.IndCoef", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
 
-insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_prc_sector.xml", "EMISSIONS_XML_FINAL", "ind_urb_processing_sectors.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml", "EMISSIONS_XML_FINAL", "ind_urb_processing_sectors.xml", "", xml_tag="outFile" )
 
 logstop()

@@ -117,12 +117,12 @@ L201.nonghg_res <- rename_SO2( L201.nonghg_res, A_region, FALSE )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L201.nonghg_en, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_pol_emissions", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L201.ghg_en, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_ghg_emissions", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L201.bcoc_en, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L201.en_bcoc_emissions", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L201.nonghg_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L201.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L201.nonghg_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L201.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L201.nonghg_res, "ResEmissCoef", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_res", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L201.ghg_res, "ResEmissCoef", "EMISSIONS_LEVEL2_DATA", "L201.ghg_res", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
+write_mi_data( L201.nonghg_en, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_pol_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.ghg_en, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_ghg_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.bcoc_en, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L201.en_bcoc_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.nonghg_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L201.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.nonghg_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L201.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.nonghg_res, "ResEmissCoef", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.ghg_res, "ResEmissCoef", "EMISSIONS_LEVEL2_DATA", "L201.ghg_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 
 logstop()

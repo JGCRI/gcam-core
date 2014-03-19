@@ -33,16 +33,16 @@ level2: level1 $(L2LOGS)
 XML_BATCH: level2 $(XML_FILES)
 
 $(EMISSIONSPROC)/logs/L1%.log: $(EMISSIONSPROC)/level1/L1%
-	@echo $?
+	echo $?
 	$(RCMD) $< $(EMISSIONSPROC)/logs/L1.Rout
 
 $(EMISSIONSPROC)/logs/L2%.log: $(EMISSIONSPROC)/level2/L2%
-	@echo $?
+	echo $?
 	$(RCMD) $< $(EMISSIONSPROC)/logs/L2.Rout
 
 $(EMISSIONSXML)/%.xml: $(EMISSIONSPROC)/xml-batch/batch_%.xml
-	@echo $?
-	java -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
+	echo $?
+	java -Xmx2g -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
 clean:
 	-rm -f $(EMISSIONSPROC)/logs/*.log

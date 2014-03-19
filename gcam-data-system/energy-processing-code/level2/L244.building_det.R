@@ -119,7 +119,7 @@ L244.SatiationAdder$pcFlsp_mm2 <- L244.SatiationAdder$Flsp_bm2 / L244.SatiationA
 #At this point, we have all of the data required for calculating the satiation adder in each region
 L244.SatiationAdder$satiation.adder <- round(
          L244.SatiationAdder$satiation.level - (
-         exp( log( 2 ) * L244.SatiationAdder$pcGDP_thous90USD / impedance_level ) *
+         exp( log( 2 ) * L244.SatiationAdder$pcGDP_thous90USD / gdp_mid_satiation ) *
          ( L244.SatiationAdder$satiation.level - L244.SatiationAdder$pcFlsp_mm2 ) ),
       digits_satiation_adder )
 L244.SatiationAdder <- L244.SatiationAdder[ names_SatiationAdder ]

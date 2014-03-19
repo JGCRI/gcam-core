@@ -72,8 +72,8 @@ L232.nonco2_steepness <- rename_SO2( L232.nonco2_steepness, A_region, FALSE )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L232.nonco2_prc, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L232.nonco2_prc", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L232.nonco2_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L232.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L232.nonco2_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L232.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
+write_mi_data( L232.nonco2_prc, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L232.nonco2_prc", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L232.nonco2_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L232.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L232.nonco2_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L232.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 
 logstop()

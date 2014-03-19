@@ -98,10 +98,10 @@ L241.nonghg_steepness <- rename_SO2( L241.nonghg_steepness, A_region, FALSE )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L241.nonco2_tech_coeff, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L241.nonco2_tech_coeff", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L241.nonghg_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L241.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
-write_mi_data( L241.nonghg_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L241.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_en_emissions.xml" ) 
+write_mi_data( L241.nonco2_tech_coeff, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L241.nonco2_tech_coeff", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L241.nonghg_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L241.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L241.nonghg_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L241.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 
-insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_en_emissions.xml", "EMISSIONS_XML_FINAL", "all_energy_emissions.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml", "EMISSIONS_XML_FINAL", "all_energy_emissions.xml", "", xml_tag="outFile" )
 
 logstop()

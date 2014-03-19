@@ -1,8 +1,1 @@
-# Primary energy transformation technology capture fractions,,,,
-supplysector,subsector,technology,1971,2100
-refining,coal to liquids,coal to liquids CCS level 1,0.818,0.818
-refining,coal to liquids,coal to liquids CCS level 2,0.981,0.981
-refining,biomass liquids,cellulosic ethanol CCS level 1,0.26,0.26
-refining,biomass liquids,cellulosic ethanol CCS level 2,0.992,0.992
-refining,biomass liquids,FT biofuels CCS level 1,0.818,0.818
-refining,biomass liquids,FT biofuels CCS level 2,0.98,0.98
+# Primary energy transformation technology capture fractions,,,,supplysector,subsector,technology,1971,2100refining,coal to liquids,coal to liquids CCS level 1,0.818,0.818refining,coal to liquids,coal to liquids CCS level 2,0.981,0.981refining,biomass liquids,cellulosic ethanol CCS level 1,0.26,0.26refining,biomass liquids,cellulosic ethanol CCS level 2,0.992,0.992refining,biomass liquids,FT biofuels CCS level 1,0.818,0.818refining,biomass liquids,FT biofuels CCS level 2,0.98,0.98

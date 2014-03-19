@@ -45,8 +45,8 @@ L241.fgas_all$input.emissions <- round( L241.fgas$value, digits_emissions )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L241.fgas_all, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L241.fgas_all", "EMISSIONS_XML_BATCH", "batch_fgas_emissions.xml" ) 
+write_mi_data( L241.fgas_all, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L241.fgas_all", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
 
-insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_fgas_emissions.xml", "EMISSIONS_XML_FINAL", "all_fgas_emissions.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml", "EMISSIONS_XML_FINAL", "all_fgas_emissions.xml", "", xml_tag="outFile" )
 
 logstop()

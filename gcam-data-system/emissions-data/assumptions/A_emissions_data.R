@@ -39,6 +39,7 @@ kg_to_tg <- 0.000000001
 
 #Significant digits
 digits_emissions <- 7
+digits_CO2coef <- 1
 
 #Base years for emissions data
 emiss_model_base_years <- c( "1975", "1990", "2005" )

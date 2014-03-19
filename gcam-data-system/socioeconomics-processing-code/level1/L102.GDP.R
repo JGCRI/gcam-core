@@ -24,6 +24,8 @@ iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 SSP_database_v9 <- readdata( "SOCIO_LEVEL0_DATA", "SSP_database_v9" )
 GCAM3_GDP <- readdata( "SOCIO_LEVEL0_DATA", "GCAM3_GDP" )
 L100.gdp_mil90usd_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.gdp_mil90usd_ctry_Yh" )
+L101.Pop_thous_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_R_Y" )
+L101.Pop_thous_GCAM3_ctry_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_ctry_Y" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
 L101.Pop_thous_SSP_R_Yfut <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_SSP_R_Yfut" )
 
@@ -108,7 +110,7 @@ L102.gdpshares_ctryRG3_Y[ c( X_historical_years, X_future_years ) ] <-
 #Interpolate the GCAM population data to all historical and future years
 L102.gdp_mil90usd_GCAM3_RG3_Y <- gcam_interp( GCAM3_GDP, c( historical_years, future_years ) )[ c( "region_GCAM3", X_historical_years, X_future_years ) ]
 
-if( "X2100" %in% X_future_years && "X2100" %!in% names( L102.gdp_mil90usd_GCAM3_RG3_Y ) ){
+if( "X2100" %in% X_future_years ){
 	printlog( "Extending GCAM 3.0 scenario to 2100 using SSPbase GDP ratios by GCAM 3.0 region")
 	L102.gdp_mil90usd_GCAM3_RG3_Y$X2100 <- L102.gdp_mil90usd_GCAM3_RG3_Y$X2095 *
 	   L102.gdp_mil90usd_SSPbase_RG3_Y$X2100[ match( L102.gdp_mil90usd_GCAM3_RG3_Y$region_GCAM3, L102.gdp_mil90usd_SSPbase_RG3_Y$region_GCAM3 ) ] /
@@ -140,6 +142,19 @@ L102.gdp_mil90usd_GCAM3_R_Y <- aggregate( L102.gdp_mil90usd_GCAM3_ctry_Y[ c( X_h
       by=as.list( L102.gdp_mil90usd_GCAM3_ctry_Y[ R ] ), sum )
 L102.gdp_mil90usd_GCAM3_ctry_Y <- L102.gdp_mil90usd_GCAM3_ctry_Y[ c( "iso", X_historical_years, X_future_years ) ]
 
+#Calculate per-capita GDP
+L102.pcgdp_thous90USD_GCAM3_R_Y <- L102.gdp_mil90usd_GCAM3_R_Y
+L102.pcgdp_thous90USD_GCAM3_R_Y[ c( X_historical_years, X_future_years ) ] <-
+      L102.gdp_mil90usd_GCAM3_R_Y[ c( X_historical_years, X_future_years ) ] / L101.Pop_thous_GCAM3_R_Y[
+         match( L102.gdp_mil90usd_GCAM3_R_Y[[ R ]], L101.Pop_thous_GCAM3_R_Y[[ R ]] ),
+         c( X_historical_years, X_future_years ) ]
+
+L102.pcgdp_thous90USD_GCAM3_ctry_Y <- L102.gdp_mil90usd_GCAM3_ctry_Y
+L102.pcgdp_thous90USD_GCAM3_ctry_Y[ c( X_historical_years, X_future_years ) ] <-
+      L102.gdp_mil90usd_GCAM3_ctry_Y[ c( X_historical_years, X_future_years ) ] / L101.Pop_thous_GCAM3_ctry_Y[
+         match( L102.gdp_mil90usd_GCAM3_ctry_Y[[ "iso" ]], L101.Pop_thous_GCAM3_ctry_Y[[ "iso" ]] ),
+         c( X_historical_years, X_future_years ) ]
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments to tables
@@ -147,11 +162,15 @@ comments.L102.gdp_mil90usd_SSP_R_Y <- c( "GDP by SSP scenario and GCAM region (i
 comments.L102.pcgdp_thous90USD_SSP_R_Y <- c( "per-capita GDP by SSP scenario and GCAM region (including historical time series)","Unit = thousand 1990 USD / cap" )
 comments.L102.gdp_mil90usd_GCAM3_R_Y <- c( "Total GDP from GCAM 3.0 by GCAM region (including historical time series)","Unit = 1990 USD" )
 comments.L102.gdp_mil90usd_GCAM3_ctry_Y <- c( "Total GDP from GCAM 3.0 by country (including historical time series)","Unit = 1990 USD" )
+comments.L102.pcgdp_thous90USD_GCAM3_R_Y <- c( "Total GDP from GCAM 3.0 by GCAM region (including historical time series)","Unit = thous 1990 USD / cap" )
+comments.L102.pcgdp_thous90USD_GCAM3_ctry_Y <- c( "Per-capita GDP from GCAM 3.0 by country (including historical time series)","Unit = thous 1990 USD / cap" )
 
 writedata( L102.gdp_mil90usd_SSP_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_SSP_R_Y", comments=comments.L102.gdp_mil90usd_SSP_R_Y )
 writedata( L102.pcgdp_thous90USD_SSP_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.pcgdp_thous90USD_SSP_R_Y", comments=comments.L102.pcgdp_thous90USD_SSP_R_Y )
 writedata( L102.gdp_mil90usd_GCAM3_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_GCAM3_R_Y", comments=comments.L102.gdp_mil90usd_GCAM3_R_Y )
 writedata( L102.gdp_mil90usd_GCAM3_ctry_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_GCAM3_ctry_Y", comments=comments.L102.gdp_mil90usd_GCAM3_ctry_Y )
+writedata( L102.pcgdp_thous90USD_GCAM3_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.pcgdp_thous90USD_GCAM3_R_Y", comments=comments.L102.pcgdp_thous90USD_GCAM3_R_Y )
+writedata( L102.pcgdp_thous90USD_GCAM3_ctry_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.pcgdp_thous90USD_GCAM3_ctry_Y", comments=comments.L102.pcgdp_thous90USD_GCAM3_ctry_Y )
 
 # Every script should finish with this line
 logstop()

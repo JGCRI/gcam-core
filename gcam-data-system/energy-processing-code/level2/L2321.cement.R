@@ -41,7 +41,7 @@ L1321.IO_GJkg_R_cement_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1321.IO_GJkg_R_
 L1321.in_EJ_R_cement_F_Y <- readdata( "ENERGY_LEVEL1_DATA", "L1321.in_EJ_R_cement_F_Y" )
 A321.inc_elas_output <- readdata( "SOCIO_ASSUMPTIONS", "A321.inc_elas_output" )
 L101.Pop_thous_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_R_Y" )
-L102.gdp_mil90usd_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_R_Y" )
+L102.pcgdp_thous90USD_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_GCAM3_R_Y" )
 L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
@@ -179,16 +179,12 @@ L2321.PriceElasticity_cement <- repeat_and_add_vector( L2321.PriceElasticity_cem
 
 printlog( "L2321.IncomeElasticity_cement_scen: income elasticity of industry (scenario-specific)" )
 #First, calculate the per-capita GDP pathways of every GDP scenario and combine
-L2321.pcgdp_thous90USD_GCAM3_R_Y <- data.frame(
-      L102.gdp_mil90usd_GCAM3_R_Y[ R ],
-      L102.gdp_mil90usd_GCAM3_R_Y[ c( X_historical_years, X_future_years ) ] /
-      L101.Pop_thous_GCAM3_R_Y[ c( X_historical_years, X_future_years ) ] )
-L2321.pcgdp_thous90USD_GCAM3_R_Y[[Scen]] <- "GCAM3"
 
 #Combine GCAM 3.0 with the SSPs, and subset only the relevant years
+L102.pcgdp_thous90USD_GCAM3_R_Y[[Scen]] <- "GCAM3"
 L2321.pcgdp_thous90USD_ALL_R_Y <- rbind(
       L102.pcgdp_thous90USD_SSP_R_Y,
-      L2321.pcgdp_thous90USD_GCAM3_R_Y )[ c( Scen_R, X_final_model_base_year, X_model_future_years ) ]
+      L102.pcgdp_thous90USD_GCAM3_R_Y )[ c( Scen_R, X_final_model_base_year, X_model_future_years ) ]
 
 # Per-capita GDP ratios, which are used in the equation for demand growth
 X_elast_years <- c( X_final_model_base_year, X_model_future_years )
