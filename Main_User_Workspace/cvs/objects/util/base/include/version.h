@@ -41,7 +41,7 @@
  * NOTE: ADD 1 TO LATEST SUBVERSION REVISION NUMBER
  */
 //! The latest SVN revision number for identification of the build.
-#define __REVISION_NUMBER__ "5050" 
+#define __REVISION_NUMBER__ "5051" 
 /*****************************************************************************/
 
 //! GCAM model version.
