@@ -45,6 +45,7 @@
 #include "land_allocator/include/unmanaged_land_leaf.h"
 #include "land_allocator/include/carbon_land_leaf.h"
 #include "land_allocator/include/land_use_history.h"
+#include "ccarbon_model/include/node_carbon_calc.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
 #include <numeric>
@@ -131,6 +132,9 @@ bool LandNode::XMLParse( const xercesc::DOMNode* aNode ){
         else if( nodeName == LandUseHistory::getXMLNameStatic() ){
             parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
         }
+        else if( nodeName == NodeCarbonCalc::getXMLNameStatic() ){
+            parseSingleNode( curr, mCarbonCalc, new NodeCarbonCalc );
+        }
         else if( nodeName == "default-share" ){
             XMLHelper<double>::insertValueIntoVector( curr, mGhostShareNumerator,
                                                   scenario->getModeltime() );
@@ -174,6 +178,10 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
         mLandUseHistory->toInputXML( out, tabs );
     }
     
+    if( mCarbonCalc.get() ) {
+        mCarbonCalc->toInputXML( out, tabs );
+    }
+    
     if( mAdjustScalersForNewTech ) {
         XMLWriteElement( mAdjustScalersForNewTech, "adjustForNewTech", out, tabs );
     }
@@ -200,6 +208,9 @@ void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tab
 
     if( mLandUseHistory.get() ){
         mLandUseHistory->toDebugXML( period, out, tabs );
+    }
+    if( mCarbonCalc.get() ) {
+        mCarbonCalc->toDebugXML( period, out, tabs );
     }
     // write out for mChildren
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -230,6 +241,11 @@ void LandNode::completeInit( const string& aRegionName,
 {
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->completeInit( aRegionName, aRegionInfo );
+    }
+
+    if( mCarbonCalc.get() ) {
+        accept( mCarbonCalc.get(), -1 );
+        mCarbonCalc->completeInit();
     }
 }
 
@@ -705,6 +721,10 @@ void LandNode::calcLandAllocation( const string& aRegionName,
 void LandNode::calcLUCEmissions( const string& aRegionName,
                                  const int aPeriod, const int aEndYear )
 {
+    if( mCarbonCalc.get() ) {
+        mCarbonCalc->calc( aPeriod, aEndYear );
+    }
+    
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear );
     }

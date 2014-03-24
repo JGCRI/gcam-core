@@ -13,6 +13,8 @@
 		0E4247C1143D022E00A8BBD3 /* land_allocator_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247C0143D022E00A8BBD3 /* land_allocator_activity.cpp */; };
 		0E4247C9143D033700A8BBD3 /* final_demand_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247C8143D033700A8BBD3 /* final_demand_activity.cpp */; };
 		0E4247D2143D0DCC00A8BBD3 /* sector_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247D1143D0DCC00A8BBD3 /* sector_activity.cpp */; };
+		0E440957183C7EDF000DA5FF /* node_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E440956183C7EDF000DA5FF /* node_carbon_calc.cpp */; };
+		0E44096E183D501B000DA5FF /* no_emiss_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E44096D183D501B000DA5FF /* no_emiss_carbon_calc.cpp */; };
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
 		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
@@ -331,6 +333,10 @@
 		0E4247C8143D033700A8BBD3 /* final_demand_activity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = final_demand_activity.cpp; sourceTree = "<group>"; };
 		0E4247CD143D03B600A8BBD3 /* sector_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sector_activity.h; sourceTree = "<group>"; };
 		0E4247D1143D0DCC00A8BBD3 /* sector_activity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sector_activity.cpp; sourceTree = "<group>"; };
+		0E440955183C7ECD000DA5FF /* node_carbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = node_carbon_calc.h; sourceTree = "<group>"; };
+		0E440956183C7EDF000DA5FF /* node_carbon_calc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = node_carbon_calc.cpp; sourceTree = "<group>"; };
+		0E44096C183D4F86000DA5FF /* no_emiss_carbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = no_emiss_carbon_calc.h; sourceTree = "<group>"; };
+		0E44096D183D501B000DA5FF /* no_emiss_carbon_calc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = no_emiss_carbon_calc.cpp; sourceTree = "<group>"; };
 		0EF7AF4A13E1EFCF0034AA71 /* market_dependency_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_dependency_finder.h; sourceTree = "<group>"; };
 		0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_dependency_finder.cpp; sourceTree = "<group>"; };
 		0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lognrbt.cpp; sourceTree = "<group>"; };
@@ -1119,6 +1125,8 @@
 				CD48842D122873C000F5A88A /* carbon_model_utils.h */,
 				CD48842E122873C000F5A88A /* icarbon_calc.h */,
 				CD48842F122873C000F5A88A /* land_carbon_densities.h */,
+				0E440955183C7ECD000DA5FF /* node_carbon_calc.h */,
+				0E44096C183D4F86000DA5FF /* no_emiss_carbon_calc.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1129,6 +1137,8 @@
 				CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */,
 				CD488432122873C000F5A88A /* carbon_model_utils.cpp */,
 				CD488433122873C000F5A88A /* land_carbon_densities.cpp */,
+				0E440956183C7EDF000DA5FF /* node_carbon_calc.cpp */,
+				0E44096D183D501B000DA5FF /* no_emiss_carbon_calc.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2882,6 +2892,8 @@
 				CDD21004161B9FA300945527 /* jacobian-precondition.cpp in Sources */,
 				CDD21005161B9FA300945527 /* svd_invert_solve.cpp in Sources */,
 				CDBAAD7F1651520D00BB9E56 /* gcam_parallel.cpp in Sources */,
+				0E440957183C7EDF000DA5FF /* node_carbon_calc.cpp in Sources */,
+				0E44096E183D501B000DA5FF /* no_emiss_carbon_calc.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

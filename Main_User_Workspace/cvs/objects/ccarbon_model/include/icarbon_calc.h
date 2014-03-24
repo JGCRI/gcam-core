@@ -80,8 +80,6 @@ public:
     //! Destructor.
     inline virtual ~ICarbonCalc();
 
-    virtual ICarbonCalc* clone() const = 0;
-
     // Documentation is inherited.
     virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
 
@@ -90,6 +88,9 @@ public:
     
     // Documentation is inherited.
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
+
+    //! Get element name used for XML parsing.
+    virtual const std::string& getXMLName() const = 0;
     
     /*!
      * \brief Complete the initialization of the carbon calculator.
@@ -149,7 +150,7 @@ public:
     virtual void setActualBelowGroundCarbonDensity( const double aBelowGroundCarbonDensity,
                                            const int aPeriod ) = 0;
     
-		virtual int getMatureAge( ) const = 0;
+    virtual int getMatureAge( ) const = 0;
 
     virtual double getAboveGroundCarbonSubsidyDiscountFactor( ) = 0;
 
@@ -167,7 +168,7 @@ public:
      * \param aMatureAge The age (in years) this land cover type reaches full biomass.
      * \param aPeriod Model period.
      */
-    virtual void setMatureAge( const int aMatureAge ) = 0;    
+    virtual void setMatureAge( const int aMatureAge ) = 0;
 
     // Documentation is inherited.
     virtual void accept( IVisitor* aVisitor,

@@ -67,10 +67,6 @@ mMatureAge( 1 )
 LandCarbonDensities::~LandCarbonDensities() {
 }
 
-LandCarbonDensities* LandCarbonDensities::clone() const{
-    return 0;
-}
-
 /*! \brief Parses all XML data for the class.
 * \author James Blackwood
 * \param aCurr Pointer to the current node in the XML input tree
@@ -107,7 +103,7 @@ bool LandCarbonDensities::XMLParse( const DOMNode* aCurr ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string " << nodeName
-                    << " found while parsing " << getXMLNameStatic() << "." << endl;
+                    << " found while parsing " << getXMLName() << "." << endl;
         }
     }
 
@@ -116,7 +112,7 @@ bool LandCarbonDensities::XMLParse( const DOMNode* aCurr ) {
 }
 
 void LandCarbonDensities::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteOpeningTag( getXMLName(), aOut, aTabs );
     const Modeltime* modeltime = scenario->getModeltime();
     const int year = modeltime->getper_to_yr( aPeriod );
     XMLWriteElement( mAvgAboveGroundCarbon, "above-ground-carbon-density", aOut, aTabs );
@@ -124,15 +120,15 @@ void LandCarbonDensities::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
     XMLWriteElement( mLandUse[ aPeriod ], "land-use", aOut, aTabs );
     XMLWriteElement( mTotalEmissions[ year ], "total-emissions", aOut, aTabs );
     XMLWriteElement( mMatureAge, "mature-age", aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 void LandCarbonDensities::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteOpeningTag( getXMLName(), aOut, aTabs );
     XMLWriteElement( mAvgAboveGroundCarbon, "above-ground-carbon-density", aOut, aTabs, 0.0 );
     XMLWriteElement( mAvgBelowGroundCarbon, "below-ground-carbon-density", aOut, aTabs, 0.0 );
     XMLWriteElement( mMatureAge, "mature-age", aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -149,7 +145,11 @@ const string& LandCarbonDensities::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! 
+const string& LandCarbonDensities::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+/*!
 * \brief Perform initializations that only need to be done once.
 * \author Kate Calvin
 */

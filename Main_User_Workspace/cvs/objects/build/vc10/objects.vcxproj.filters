@@ -1049,6 +1049,12 @@
     <ClCompile Include="..\..\solution\util\source\svd_invert_solve.cpp">
       <Filter>Source Files\solution\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ccarbon_model\source\no_emiss_carbon_calc.cpp">
+      <Filter>Source Files\ccarbon_model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\ccarbon_model\source\node_carbon_calc.cpp">
+      <Filter>Source Files\ccarbon_model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2136,6 +2142,12 @@
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\fltcmp.hpp">
       <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ccarbon_model\include\no_emiss_carbon_calc.h">
+      <Filter>Header Files\ccarbon_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\ccarbon_model\include\node_carbon_calc.h">
+      <Filter>Header Files\ccarbon_model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

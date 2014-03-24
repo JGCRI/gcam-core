@@ -53,7 +53,7 @@
 
 // Forward declarations
 class LandUseHistory;
-class ICarbonCalc;
+class NodeCarbonCalc;
 /*!
  * \brief A node in the land allocation tree.
  * \details A land allocator node represents a type of land available for
@@ -72,6 +72,7 @@ class ICarbonCalc;
  *              - \c LandNode LandNode::children
  *              - \c UnmanagedLandLeaf LandNode::children
  *              - \c land-use-history LandNode::mLandUseHistory
+ *              - \c node-carbon-calc LandNode::mCarbonCalc
  */
 class LandNode : public ALandAllocatorItem {
 public:
@@ -210,6 +211,10 @@ protected:
 
     //! Container of historical land use.
     std::auto_ptr<LandUseHistory> mLandUseHistory;
+
+    //! (optional) A carbon calculation which can used when children maybe similar
+    //! in terms of switching between them does not mean carbon is emitted per se.
+    std::auto_ptr<NodeCarbonCalc> mCarbonCalc;
 };
 
 #endif // _LAND_NODE_H_

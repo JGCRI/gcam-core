@@ -1,0 +1,761 @@
+INPUT_TABLE
+Variable ID
+LN2_UnmgdAllocation
+
+region,LandAllocatorRoot,LandNode1,LandNode2,UnmanagedLandLeaf2,year,allocation
+USA,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0
+Canada,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0
+Western Europe,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0
+Japan,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0
+Australia_NZ,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,52.631822
+Former Soviet Union,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0
+China,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0
+Middle East,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,50.920824
+Africa,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,166.054336
+Latin America,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,4.934536
+Southeast Asia,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0.495628
+Eastern Europe,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0
+Korea,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0
+India,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1975,0.213772
+USA,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+Canada,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+Western Europe,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+Japan,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+Australia_NZ,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,39.649748
+Former Soviet Union,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+China,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+Middle East,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0.005261
+Africa,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,90.426957
+Latin America,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,4.92352
+Southeast Asia,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+Eastern Europe,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+Korea,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0
+India,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1975,0.480194
+USA,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0
+Canada,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0
+Western Europe,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0
+Japan,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0
+Australia_NZ,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,21.100975
+Former Soviet Union,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0
+China,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0
+Middle East,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0.014419
+Africa,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,113.178799
+Latin America,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,16.29734
+Southeast Asia,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0.015973
+Eastern Europe,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0
+Korea,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,0
+India,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1975,1.709222
+USA,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0
+Canada,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0
+Western Europe,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0.003848
+Japan,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0
+Australia_NZ,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,4.226163
+Former Soviet Union,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0
+China,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0.125382
+Middle East,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0
+Africa,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,139.1639
+Latin America,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,35.161475
+Southeast Asia,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0.918146
+Eastern Europe,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0
+Korea,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0
+India,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1975,0.496203
+USA,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0
+Canada,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0
+Western Europe,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0
+Japan,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0
+Australia_NZ,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0.218375
+Former Soviet Union,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0
+China,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0.68346
+Middle East,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0
+Africa,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,61.566224
+Latin America,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,100.788072
+Southeast Asia,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,1.186134
+Eastern Europe,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0
+Korea,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0
+India,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1975,0.131959
+USA,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0
+Canada,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0
+Western Europe,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0
+Japan,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0
+Australia_NZ,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0.421352
+Former Soviet Union,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0
+China,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,1.939427
+Middle East,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0
+Africa,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,37.906184
+Latin America,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,63.219027
+Southeast Asia,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,8.698897
+Eastern Europe,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0
+Korea,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0
+India,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1975,0.10035
+USA,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,132.887081
+Canada,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,2.870959
+Western Europe,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,0.033752
+Japan,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,0
+Australia_NZ,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,261.740143
+Former Soviet Union,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,118.847018
+China,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,116.215815
+Middle East,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,75.168039
+Africa,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,128.082822
+Latin America,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,85.014097
+Southeast Asia,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,7.89574
+Eastern Europe,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,0
+Korea,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,0
+India,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1975,0.686763
+USA,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,41.367846
+Canada,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,1.173452
+Western Europe,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,5.569096
+Japan,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,0
+Australia_NZ,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,21.219232
+Former Soviet Union,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,37.683149
+China,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,44.22126
+Middle East,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,27.921909
+Africa,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,50.907362
+Latin America,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,27.422151
+Southeast Asia,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,14.385724
+Eastern Europe,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,0.242645
+Korea,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,0
+India,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1975,0.445133
+USA,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,6.66068
+Canada,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,2.006441
+Western Europe,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,9.142346
+Japan,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,0.002749
+Australia_NZ,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,10.186631
+Former Soviet Union,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,16.40117
+China,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,10.526836
+Middle East,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,4.084615
+Africa,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,45.670083
+Latin America,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,16.355707
+Southeast Asia,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,0.498337
+Eastern Europe,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,2.260257
+Korea,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,0
+India,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1975,0.228573
+USA,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,18.989048
+Canada,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,1.033975
+Western Europe,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,19.690633
+Japan,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,0.045065
+Australia_NZ,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,5.842106
+Former Soviet Union,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,19.44137
+China,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,7.114846
+Middle East,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,0.11418
+Africa,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,18.301071
+Latin America,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,10.842083
+Southeast Asia,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,0.291205
+Eastern Europe,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,11.626597
+Korea,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,0.00644
+India,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1975,0.65384
+USA,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,17.830109
+Canada,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,0.004723
+Western Europe,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,15.819294
+Japan,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,0.019354
+Australia_NZ,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,7.673697
+Former Soviet Union,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,0.196246
+China,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,17.299912
+Middle East,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,0
+Africa,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,3.869741
+Latin America,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,9.080962
+Southeast Asia,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,0.907196
+Eastern Europe,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,2.679224
+Korea,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,0.007577
+India,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1975,0.278885
+USA,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,8.81744
+Canada,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0
+Western Europe,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,4.510529
+Japan,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0.005419
+Australia_NZ,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,9.782563
+Former Soviet Union,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0.093656
+China,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,24.503484
+Middle East,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0
+Africa,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0.229114
+Latin America,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,55.460508
+Southeast Asia,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0.629952
+Eastern Europe,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0.191196
+Korea,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0
+India,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1975,0.129912
+USA,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,5.859601
+Canada,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,1.157843
+Western Europe,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,0.121016
+Japan,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,0
+Australia_NZ,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,0
+Former Soviet Union,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,66.734742
+China,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,79.086616
+Middle East,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,0
+Africa,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,0
+Latin America,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,12.529754
+Southeast Asia,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,3.044014
+Eastern Europe,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,0
+Korea,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,0
+India,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1975,0.237958
+USA,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,1.334912
+Canada,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,0.49972
+Western Europe,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,2.109713
+Japan,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,0
+Australia_NZ,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,0
+Former Soviet Union,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,17.812574
+China,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,81.043678
+Middle East,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,0
+Africa,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,0
+Latin America,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,6.999951
+Southeast Asia,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,1.599175
+Eastern Europe,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,0
+Korea,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,0
+India,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1975,0.361895
+USA,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0.405434
+Canada,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,3.976999
+Western Europe,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,2.774129
+Japan,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0.0015
+Australia_NZ,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0.602229
+Former Soviet Union,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,20.008091
+China,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,30.113853
+Middle East,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0
+Africa,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0
+Latin America,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,3.256071
+Southeast Asia,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0.270677
+Eastern Europe,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0.144605
+Korea,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0
+India,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1975,0.220908
+USA,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0.16728
+Canada,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0.286779
+Western Europe,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,2.058396
+Japan,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0
+Australia_NZ,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,2.982505
+Former Soviet Union,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0.349559
+China,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,7.566161
+Middle East,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0
+Africa,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0
+Latin America,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,1.84204
+Southeast Asia,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0.185572
+Eastern Europe,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0.134525
+Korea,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0
+India,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1975,0.126655
+USA,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+Canada,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+Western Europe,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+Japan,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+Australia_NZ,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0.615733
+Former Soviet Union,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+China,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0.287788
+Middle East,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+Africa,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+Latin America,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0.194084
+Southeast Asia,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+Eastern Europe,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+Korea,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+India,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1975,0
+USA,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Canada,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Western Europe,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Japan,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Australia_NZ,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Former Soviet Union,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+China,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Middle East,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Africa,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Latin America,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0.087768
+Southeast Asia,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Eastern Europe,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+Korea,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+India,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1975,0
+USA,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0
+Canada,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0
+Western Europe,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0
+Japan,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0
+Australia_NZ,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,49.845109
+Former Soviet Union,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0
+China,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0
+Middle East,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,64.724948
+Africa,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,170.071655
+Latin America,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,5.522757
+Southeast Asia,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0.485685
+Eastern Europe,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0
+Korea,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0
+India,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,1990,0.187032
+USA,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+Canada,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+Western Europe,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+Japan,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+Australia_NZ,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,37.532541
+Former Soviet Union,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+China,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+Middle East,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0.006027
+Africa,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,92.868433
+Latin America,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,5.488645
+Southeast Asia,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+Eastern Europe,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+Korea,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0
+India,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,1990,0.44633
+USA,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0
+Canada,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0
+Western Europe,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0
+Japan,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0
+Australia_NZ,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,19.983223
+Former Soviet Union,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0
+China,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0
+Middle East,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0.018854
+Africa,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,116.528879
+Latin America,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,18.291978
+Southeast Asia,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0.011317
+Eastern Europe,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0
+Korea,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,0
+India,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,1990,1.579111
+USA,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0
+Canada,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0
+Western Europe,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0.003196
+Japan,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0
+Australia_NZ,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,4.008517
+Former Soviet Union,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0
+China,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0.148733
+Middle East,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0
+Africa,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,143.349444
+Latin America,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,39.268863
+Southeast Asia,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,1.042618
+Eastern Europe,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0
+Korea,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0
+India,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,1990,0.470574
+USA,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0
+Canada,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0
+Western Europe,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0
+Japan,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0
+Australia_NZ,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0.206543
+Former Soviet Union,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0
+China,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0.784828
+Middle East,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0
+Africa,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,62.292377
+Latin America,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,113.447825
+Southeast Asia,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,1.301092
+Eastern Europe,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0
+Korea,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0
+India,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,1990,0.123117
+USA,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0
+Canada,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0
+Western Europe,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0
+Japan,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0
+Australia_NZ,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0.407853
+Former Soviet Union,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0
+China,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,2.254903
+Middle East,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0
+Africa,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,37.600034
+Latin America,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,69.55388
+Southeast Asia,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,9.486295
+Eastern Europe,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0
+Korea,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0
+India,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,1990,0.091616
+USA,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,130.75206
+Canada,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,2.797619
+Western Europe,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,0.03725
+Japan,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,0
+Australia_NZ,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,247.896192
+Former Soviet Union,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,121.614977
+China,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,131.208273
+Middle East,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,96.137332
+Africa,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,124.241617
+Latin America,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,86.608807
+Southeast Asia,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,7.882987
+Eastern Europe,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,0
+Korea,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,0
+India,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,1990,0.615115
+USA,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,40.688563
+Canada,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,1.151745
+Western Europe,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,6.332324
+Japan,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,0
+Australia_NZ,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,20.104079
+Former Soviet Union,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,39.345327
+China,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,55.353468
+Middle East,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,28.493976
+Africa,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,51.554769
+Latin America,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,29.548132
+Southeast Asia,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,14.444059
+Eastern Europe,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,0.282084
+Korea,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,0
+India,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,1990,0.405918
+USA,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,6.622224
+Canada,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,2.007919
+Western Europe,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,8.900893
+Japan,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,0.001573
+Australia_NZ,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,9.691947
+Former Soviet Union,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,17.001797
+China,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,13.049743
+Middle East,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,4.221013
+Africa,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,46.320819
+Latin America,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,17.483741
+Southeast Asia,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,0.504299
+Eastern Europe,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,2.477991
+Korea,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,0
+India,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,1990,0.209924
+USA,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,19.487225
+Canada,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,1.194816
+Western Europe,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,18.5264
+Japan,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,0.026678
+Australia_NZ,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,5.580423
+Former Soviet Union,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,20.880902
+China,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,8.924719
+Middle East,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,0.125762
+Africa,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,18.386905
+Latin America,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,11.509109
+Southeast Asia,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,0.285915
+Eastern Europe,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,11.508298
+Korea,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,0.011007
+India,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,1990,0.610991
+USA,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,18.570832
+Canada,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,0.004542
+Western Europe,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,14.721891
+Japan,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,0.011462
+Australia_NZ,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,7.510773
+Former Soviet Union,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,0.199567
+China,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,21.940137
+Middle East,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,0
+Africa,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,3.812114
+Latin America,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,9.531708
+Southeast Asia,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,0.977331
+Eastern Europe,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,2.672777
+Korea,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,0.013727
+India,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,1990,0.254625
+USA,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,9.123617
+Canada,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0
+Western Europe,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,4.473848
+Japan,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0.003111
+Australia_NZ,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,9.691717
+Former Soviet Union,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0.097692
+China,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,30.076764
+Middle East,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0
+Africa,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0.226848
+Latin America,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,59.54234
+Southeast Asia,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0.677848
+Eastern Europe,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0.186781
+Korea,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0
+India,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,1990,0.123299
+USA,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,5.74029
+Canada,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,1.136741
+Western Europe,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,0.111331
+Japan,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,0
+Australia_NZ,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,0
+Former Soviet Union,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,68.779501
+China,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,99.002183
+Middle East,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,0
+Africa,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,0
+Latin America,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,12.653636
+Southeast Asia,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,3.065814
+Eastern Europe,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,0
+Korea,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,0
+India,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,1990,0.223223
+USA,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,1.303171
+Canada,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,0.484412
+Western Europe,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,2.035112
+Japan,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,0
+Australia_NZ,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,0
+Former Soviet Union,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,18.159236
+China,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,95.259741
+Middle East,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,0
+Africa,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,0
+Latin America,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,7.37969
+Southeast Asia,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,1.591022
+Eastern Europe,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,0
+Korea,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,0
+India,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,1990,0.362793
+USA,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0.384141
+Canada,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,3.869997
+Western Europe,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,2.502703
+Japan,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0.000875
+Australia_NZ,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0.600784
+Former Soviet Union,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,19.867975
+China,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,37.837175
+Middle East,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0
+Africa,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0
+Latin America,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,3.628051
+Southeast Asia,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0.302354
+Eastern Europe,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0.135272
+Korea,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0
+India,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,1990,0.204912
+USA,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0.16225
+Canada,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0.287822
+Western Europe,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,1.96961
+Japan,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0
+Australia_NZ,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,2.976213
+Former Soviet Union,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0.34978
+China,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,10.069592
+Middle East,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0
+Africa,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0
+Latin America,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,2.086004
+Southeast Asia,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0.208568
+Eastern Europe,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0.124613
+Korea,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0
+India,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,1990,0.135506
+USA,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+Canada,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+Western Europe,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+Japan,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+Australia_NZ,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0.597273
+Former Soviet Union,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+China,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0.385658
+Middle East,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+Africa,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+Latin America,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0.206062
+Southeast Asia,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+Eastern Europe,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+Korea,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+India,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,1990,0
+USA,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Canada,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Western Europe,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Japan,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Australia_NZ,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Former Soviet Union,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+China,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Middle East,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Africa,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Latin America,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0.093278
+Southeast Asia,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Eastern Europe,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+Korea,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+India,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,1990,0
+USA,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0
+Canada,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0
+Western Europe,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0
+Japan,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0
+Australia_NZ,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,46.876552
+Former Soviet Union,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0
+China,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0
+Middle East,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,66.312631
+Africa,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,152.154968
+Latin America,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,5.36274
+Southeast Asia,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0.426488
+Eastern Europe,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0
+Korea,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0
+India,root,AgroForestLandAEZ01,AllPastureLandAEZ01,UnmanagedPastureAEZ01,2005,0.203797
+USA,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+Canada,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+Western Europe,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+Japan,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+Australia_NZ,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,35.291668
+Former Soviet Union,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+China,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+Middle East,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0.005642
+Africa,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,90.10467
+Latin America,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,5.679037
+Southeast Asia,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+Eastern Europe,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+Korea,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0
+India,root,AgroForestLandAEZ02,AllPastureLandAEZ02,UnmanagedPastureAEZ02,2005,0.644396
+USA,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0
+Canada,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0
+Western Europe,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0
+Japan,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0
+Australia_NZ,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,18.832062
+Former Soviet Union,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0
+China,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0
+Middle East,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0.01514
+Africa,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,118.12351
+Latin America,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,18.727845
+Southeast Asia,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0.015098
+Eastern Europe,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0
+Korea,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,0
+India,root,AgroForestLandAEZ03,AllPastureLandAEZ03,UnmanagedPastureAEZ03,2005,3.1808
+USA,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0
+Canada,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0
+Western Europe,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0.006532
+Japan,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0
+Australia_NZ,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,3.776205
+Former Soviet Union,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0
+China,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0.259751
+Middle East,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0
+Africa,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,142.866869
+Latin America,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,39.50797
+Southeast Asia,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,1.049853
+Eastern Europe,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0
+Korea,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0
+India,root,AgroForestLandAEZ04,AllPastureLandAEZ04,UnmanagedPastureAEZ04,2005,0.742045
+USA,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0
+Canada,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0
+Western Europe,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0
+Japan,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0
+Australia_NZ,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0.194232
+Former Soviet Union,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0
+China,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,1.556975
+Middle East,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0
+Africa,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,62.149186
+Latin America,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,114.061221
+Southeast Asia,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,1.450911
+Eastern Europe,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0
+Korea,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0
+India,root,AgroForestLandAEZ05,AllPastureLandAEZ05,UnmanagedPastureAEZ05,2005,0.097768
+USA,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0
+Canada,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0
+Western Europe,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0
+Japan,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0
+Australia_NZ,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0.401696
+Former Soviet Union,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0
+China,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,2.93436
+Middle East,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0
+Africa,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,39.215245
+Latin America,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,69.206213
+Southeast Asia,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,7.378592
+Eastern Europe,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0
+Korea,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0
+India,root,AgroForestLandAEZ06,AllPastureLandAEZ06,UnmanagedPastureAEZ06,2005,0.072007
+USA,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,121.001457
+Canada,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,2.401442
+Western Europe,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,0.046248
+Japan,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,0
+Australia_NZ,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,232.742099
+Former Soviet Union,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,138.158669
+China,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,129.057928
+Middle East,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,91.233632
+Africa,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,122.299852
+Latin America,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,83.472835
+Southeast Asia,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,7.35917
+Eastern Europe,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,0
+Korea,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,0
+India,root,AgroForestLandAEZ07,AllPastureLandAEZ07,UnmanagedPastureAEZ07,2005,0.622472
+USA,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,37.651286
+Canada,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,0.987835
+Western Europe,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,7.797019
+Japan,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,0
+Australia_NZ,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,18.834461
+Former Soviet Union,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,47.198907
+China,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,51.25979
+Middle East,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,20.815547
+Africa,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,52.17599
+Latin America,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,28.720979
+Southeast Asia,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,13.457003
+Eastern Europe,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,0.344392
+Korea,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,0
+India,root,AgroForestLandAEZ08,AllPastureLandAEZ08,UnmanagedPastureAEZ08,2005,0.40226
+USA,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,6.615742
+Canada,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,1.764679
+Western Europe,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,9.674834
+Japan,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,0.001597
+Australia_NZ,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,9.197099
+Former Soviet Union,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,20.177272
+China,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,14.540388
+Middle East,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,3.914437
+Africa,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,48.828065
+Latin America,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,17.518076
+Southeast Asia,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,0.421577
+Eastern Europe,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,2.615825
+Korea,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,0
+India,root,AgroForestLandAEZ09,AllPastureLandAEZ09,UnmanagedPastureAEZ09,2005,0.499068
+USA,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,20.785829
+Canada,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,1.598725
+Western Europe,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,18.681579
+Japan,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,0.02758
+Australia_NZ,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,5.35066
+Former Soviet Union,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,26.335858
+China,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,8.920575
+Middle East,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,0.164118
+Africa,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,19.23878
+Latin America,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,11.587959
+Southeast Asia,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,0.333721
+Eastern Europe,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,10.533721
+Korea,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,0.002066
+India,root,AgroForestLandAEZ10,AllPastureLandAEZ10,UnmanagedPastureAEZ10,2005,0.554554
+USA,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,21.32391
+Canada,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,0.008839
+Western Europe,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,15.047181
+Japan,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,0.017066
+Australia_NZ,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,7.232536
+Former Soviet Union,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,0.259589
+China,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,22.95838
+Middle East,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,0
+Africa,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,3.39724
+Latin America,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,9.288216
+Southeast Asia,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,0.871292
+Eastern Europe,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,2.521822
+Korea,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,0.003126
+India,root,AgroForestLandAEZ11,AllPastureLandAEZ11,UnmanagedPastureAEZ11,2005,0.313208
+USA,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,11.170957
+Canada,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0
+Western Europe,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,3.845837
+Japan,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0.004112
+Australia_NZ,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,9.779964
+Former Soviet Union,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0.149118
+China,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,36.102227
+Middle East,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0
+Africa,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0.148081
+Latin America,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,61.075667
+Southeast Asia,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0.578544
+Eastern Europe,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0.139462
+Korea,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0
+India,root,AgroForestLandAEZ12,AllPastureLandAEZ12,UnmanagedPastureAEZ12,2005,0.044728
+USA,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,5.228474
+Canada,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0.987759
+Western Europe,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0.07924
+Japan,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0
+Australia_NZ,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0
+Former Soviet Union,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,78.610604
+China,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,95.331799
+Middle East,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0
+Africa,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0
+Latin America,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,12.096426
+Southeast Asia,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,2.744489
+Eastern Europe,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0
+Korea,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0
+India,root,AgroForestLandAEZ13,AllPastureLandAEZ13,UnmanagedPastureAEZ13,2005,0.078357
+USA,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,1.164003
+Canada,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,0.416222
+Western Europe,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,1.96172
+Japan,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,0
+Australia_NZ,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,0
+Former Soviet Union,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,20.324507
+China,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,92.877147
+Middle East,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,0
+Africa,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,0
+Latin America,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,6.963918
+Southeast Asia,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,1.387482
+Eastern Europe,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,0
+Korea,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,0
+India,root,AgroForestLandAEZ14,AllPastureLandAEZ14,UnmanagedPastureAEZ14,2005,0.323376
+USA,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0.346112
+Canada,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,3.42261
+Western Europe,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,2.01565
+Japan,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0.000873
+Australia_NZ,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0.590754
+Former Soviet Union,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,21.540381
+China,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,35.596818
+Middle East,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0
+Africa,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0
+Latin America,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,3.429771
+Southeast Asia,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0.214801
+Eastern Europe,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0.098852
+Korea,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0
+India,root,AgroForestLandAEZ15,AllPastureLandAEZ15,UnmanagedPastureAEZ15,2005,0.204204
+USA,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0.142945
+Canada,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0.257226
+Western Europe,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,1.7468
+Japan,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0
+Australia_NZ,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,2.927371
+Former Soviet Union,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0.387622
+China,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,8.945968
+Middle East,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0
+Africa,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0
+Latin America,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,1.94969
+Southeast Asia,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0.201314
+Eastern Europe,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0.085569
+Korea,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0
+India,root,AgroForestLandAEZ16,AllPastureLandAEZ16,UnmanagedPastureAEZ16,2005,0.207557
+USA,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+Canada,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+Western Europe,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+Japan,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+Australia_NZ,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0.56846
+Former Soviet Union,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+China,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0.373766
+Middle East,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+Africa,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+Latin America,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0.197302
+Southeast Asia,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+Eastern Europe,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+Korea,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+India,root,AgroForestLandAEZ17,AllPastureLandAEZ17,UnmanagedPastureAEZ17,2005,0
+USA,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Canada,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Western Europe,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Japan,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Australia_NZ,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Former Soviet Union,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+China,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Middle East,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Africa,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Latin America,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0.089377
+Southeast Asia,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Eastern Europe,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+Korea,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0
+India,root,AgroForestLandAEZ18,AllPastureLandAEZ18,UnmanagedPastureAEZ18,2005,0

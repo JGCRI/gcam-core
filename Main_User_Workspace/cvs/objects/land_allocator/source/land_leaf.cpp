@@ -51,6 +51,7 @@
 #include "land_allocator/include/land_leaf.h"
 #include "util/base/include/ivisitor.h"
 #include "ccarbon_model/include/land_carbon_densities.h"
+#include "ccarbon_model/include/no_emiss_carbon_calc.h"
 #include "containers/include/iinfo.h"
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
@@ -157,6 +158,9 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
         }
         else if( nodeName == LandCarbonDensities::getXMLNameStatic() ) {
             parseSingleNode( curr, mCarbonContentCalc, new LandCarbonDensities );
+        }
+        else if( nodeName == NoEmissCarbonCalc::getXMLNameStatic() ) {
+            parseSingleNode( curr, mCarbonContentCalc, new NoEmissCarbonCalc );
         }
         else if( nodeName == "landConstraintCurve" ) {
             mLandExpansionCostName = XMLHelper<string>::getValue( curr );

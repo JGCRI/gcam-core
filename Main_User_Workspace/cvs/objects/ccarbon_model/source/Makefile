@@ -9,6 +9,8 @@ include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = carbon_model_utils.o \
              asimple_carbon_calc.o \
+             no_emiss_carbon_calc.o \
+             node_carbon_calc.o \
              land_carbon_densities.o
 
 ccarbon_model_dir: ${OBJS}

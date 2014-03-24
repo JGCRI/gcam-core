@@ -57,6 +57,7 @@ class LandUseHistory;
  *          intensive carbon content calculators.
  */
 class ASimpleCarbonCalc : public ICarbonCalc {
+    friend class NodeCarbonCalc;
 public:
     ASimpleCarbonCalc();
     virtual ~ASimpleCarbonCalc();

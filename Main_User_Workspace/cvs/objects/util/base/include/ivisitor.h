@@ -105,6 +105,7 @@ class NodeInput;
 class BuildingServiceInput;
 class BuildingNodeInput;
 class GCAMConsumer;
+class NoEmissCarbonCalc;
 
 /*!
  * \brief An interface to a class which visits every node in the tree and
@@ -304,6 +305,9 @@ public:
     // Following are the derived class accepts
     virtual void startVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) = 0;
     virtual void endVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) = 0;
+
+    virtual void startVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod ) = 0;
+    virtual void endVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod ) = 0;
 };
 
 IVisitor::~IVisitor(){

@@ -68,13 +68,14 @@ class LandCarbonDensities : public ASimpleCarbonCalc {
 public:
     LandCarbonDensities();
     virtual ~LandCarbonDensities();
-    virtual LandCarbonDensities* clone() const;
 
     static const std::string& getXMLNameStatic();
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+
+    virtual const std::string& getXMLName() const;
 
     virtual void completeInit();
 
