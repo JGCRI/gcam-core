@@ -427,6 +427,10 @@ LN3_UnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandA
 
 LN3_UnmgdCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, land-carbon-densities/+above-ground-carbon-density, land-carbon-densities/+below-ground-carbon-density, land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age, UnmanagedLandLeaf/+minAboveGroundCDensity, UnmanagedLandLeaf/+minBelowGroundCDensity, scenario, scenario/world, UnmanagedLandLeaf/land-carbon-densities, UnmanagedLandLeaf/land-use-history
 
+LN3_NoEmissCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandLeaf,LandLeaf/+no-emiss-carbon-calc,scenario,scenario/world
+
+LN3_NodeCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+node-carbon-calc,scenario,scenario/world
+
 LN3_HistMgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, LandLeaf/land-use-history
 
 LN3_MgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, LandLeaf/+{year}landAllocation, LandLeaf/+landAllocation, scenario, scenario/world
@@ -483,3 +487,5 @@ AgGDPCtrlMax, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSu
 AgGDPCtrlSteep, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+steepness, scenario, scenario/world
 
 ResEmissCoef, world/+{name}region, region/+{name;nocreate=1}depresource, depresource/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/output-driver, scenario, scenario/world
+
+EQUIV_TABLE,NODE_EQUIVALENCE

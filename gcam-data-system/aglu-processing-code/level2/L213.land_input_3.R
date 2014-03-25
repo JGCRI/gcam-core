@@ -178,6 +178,33 @@ L213.LN3_MgdCarbon_noncrop <- L213.LN3_MgdCarbon[ L213.LN3_MgdCarbon[[LT]] %!in%
 printlog( "L213.LN3_MgdCarbon_crop: Carbon content info, managed land in the third nest, cropland" )
 L213.LN3_MgdCarbon_crop <- L213.LN3_MgdCarbon[ L213.LN3_MgdCarbon[[LT]] %in% L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt[[C]], ]
 
+# Set Forests to use node-carbon-calc at the node level and no-emiss-carbon-calc at the leaf
+# to allow them to switch between each other without lots of emissions+uptake
+printlog( "L213.LN3_NoEmissCarbon: Set the no-emiss-carbon-calc as the type of carbon to use in forest leaves" )
+L213.LN3_NoEmissCarbon <- subset( L213.LN3_UnmgdCarbon, grepl( "Forest", UnmanagedLandLeaf ),
+    select=c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf" ) )
+names( L213.LN3_NoEmissCarbon ) <- sub( 'Unmanaged', '', names( L213.LN3_NoEmissCarbon ) )
+L213.LN3_NoEmissCarbon <- rbind( L213.LN3_NoEmissCarbon, subset( L213.LN3_MgdCarbon, grepl( "Forest", Cdensity_LT ),
+    select=c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf" ) ) )
+# Just need to create an empty tag, to do so we have to have a whitespace column and an
+# extra column with extraneous data
+L213.LN3_NoEmissCarbon$no.emiss.carbon.calc <- " "
+L213.LN3_NoEmissCarbon$extra <- "junk"
+
+# Put the node carbon calc in the node just above the leaves
+printlog( "L213.LN3_NodeCarbon: Set the node-carbon-calc to drive the carbon calc between forest leaves" )
+L213.LN3_NodeCarbon <- L213.LN3_NoEmissCarbon
+L213.LN3_NodeCarbon$LandLeaf <- NULL
+L213.LN3_NodeCarbon <- unique( L213.LN3_NodeCarbon )
+names( L213.LN3_NodeCarbon ) <- sub( 'no.emiss', 'node', names( L213.LN3_NodeCarbon ) )
+
+# Create node equivalence lists so that we don't have to subset and create a bunch of extra
+# tables for reading in the *CarbonCalc data
+# TODO: better place for these?  they are related to headers since they list tag names
+printlog( "L213.NodeEquiv: Node tag equivalence list to minimize extra tables to read in same params" )
+L213.NodeEquiv <- data.frame( group.name=c("Leaf"), tag1=c("LandLeaf"), tag2=c("UnmanagedLandLeaf"), stringsAsFactors=FALSE )
+L213.NodeEquiv <- rbind( L213.NodeEquiv, c( "CarbonCalc", "land-carbon-densities", "no-emiss-carbon-calc") )
+
 #CROPLAND VEGETATION CARBON DENSITY CALCULATION
 #Add region ID vector to residue biomass table
 L213.ag_resbio_R_C <- add_region_name( L111.ag_resbio_R_C )
@@ -297,6 +324,8 @@ L213.LN3_MgdCarbon_crop <- remove_AEZ_nonexist( L213.LN3_MgdCarbon_crop, AEZcol 
 L213.LN3_MgdCarbon_bio_ref <- remove_AEZ_nonexist( L213.LN3_MgdCarbon_bio_ref, AEZcol = "LandNode1" )
 L213.LN3_MgdCarbon_bio_hi <- remove_AEZ_nonexist( L213.LN3_MgdCarbon_bio_hi, AEZcol = "LandNode1" )
 L213.LN3_NewTech <- remove_AEZ_nonexist( L213.LN3_NewTech, AEZcol = "LandNode1" )
+L213.LN3_NoEmissCarbon <- remove_AEZ_nonexist( L213.LN3_NoEmissCarbon, AEZcol="LandNode1" )
+L213.LN3_NodeCarbon <- remove_AEZ_nonexist( L213.LN3_NodeCarbon, AEZcol="LandNode1" )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -306,6 +335,9 @@ write_mi_data( L213.LN3_Logit, IDstring="LN3_Logit", domain="AGLU_LEVEL2_DATA", 
 write_mi_data( L213.LN3_DefaultShare, "LN3_DefaultShare", "AGLU_LEVEL2_DATA", "L213.LN3_DefaultShare", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L213.LN3_HistUnmgdAllocation, "LN3_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L213.LN3_HistUnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L213.LN3_UnmgdAllocation, "LN3_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L213.LN3_UnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
+write_mi_data( L213.NodeEquiv, "EQUIV_TABLE", "AGLU_LEVEL2_DATA", "L213.NodeEquiv", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
+write_mi_data( L213.LN3_NoEmissCarbon, "LN3_NoEmissCarbon", "AGLU_LEVEL2_DATA", "L213.LN3_NoEmissCarbon", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
+write_mi_data( L213.LN3_NodeCarbon, "LN3_NodeCarbon", "AGLU_LEVEL2_DATA", "L213.LN3_NodeCarbon", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L213.LN3_HistMgdAllocation_noncrop, "LN3_HistMgdAllocation", "AGLU_LEVEL2_DATA", "L213.LN3_HistMgdAllocation_noncrop", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L213.LN3_MgdAllocation_noncrop, "LN3_MgdAllocation", "AGLU_LEVEL2_DATA", "L213.LN3_MgdAllocation_noncrop", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L213.LN3_HistMgdAllocation_crop, "LN3_HistMgdAllocation", "AGLU_LEVEL2_DATA", "L213.LN3_HistMgdAllocation_crop", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
