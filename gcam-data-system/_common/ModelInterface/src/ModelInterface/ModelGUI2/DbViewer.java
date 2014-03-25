@@ -1,3 +1,32 @@
+/*
+* LEGAL NOTICE
+* This computer software was prepared by Battelle Memorial Institute,
+* hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
+* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+* LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
+* sentence must appear on any copies of this computer software.
+* 
+* Copyright 2012 Battelle Memorial Institute.  All Rights Reserved.
+* Distributed as open-source under the terms of the Educational Community 
+* License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
+* 
+* EXPORT CONTROL
+* User agrees that the Software will not be shipped, transferred or
+* exported into any country or used in any manner prohibited by the
+* United States Export Administration Act or any other applicable
+* export laws, restrictions or regulations (collectively the "Export Laws").
+* Export of the Software may require some form of license or other
+* authority from the U.S. Government, and failure to obtain such
+* export control license may result in criminal liability under
+* U.S. laws. In addition, if the Software is identified as export controlled
+* items under the Export Laws, User represents and warrants that User
+* is not a citizen, or otherwise located within, an embargoed nation
+* (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
+*     and that User is not otherwise prohibited
+* under the Export Laws from receiving the Software.
+* 
+*/
 package ModelInterface.ModelGUI2;
 
 import ModelInterface.ConfigurationEditor.guihelpers.XMLFileFilter;
@@ -71,15 +100,16 @@ import org.w3c.dom.Element;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 
-import org.jfree.report.JFreeReport;
+//import org.jfree.report.JFreeReport;
 /*
 import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.*;
  */
 import org.apache.xpath.domapi.XPathEvaluatorImpl;
-import org.jfree.chart.JFreeChart;
+//import org.jfree.chart.JFreeChart;
 import org.w3c.dom.xpath.*;
 
+/*
 import org.jfree.report.Group;
 import org.jfree.report.modules.gui.base.ExportPluginFactory;
 import org.jfree.report.JFreeReportBoot;
@@ -89,6 +119,7 @@ import org.jfree.report.modules.gui.base.PreviewDialog;
 //import org.jfree.report.elementfactory.TextFieldElementFactory;
 import org.jfree.report.elementfactory.DrawableFieldElementFactory;
 import org.jfree.ui.FloatDimension;
+*/
 
 import org.apache.poi.hssf.usermodel.*;
 
@@ -106,7 +137,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	private DOMImplementationLS implls;
 
 
-	protected Vector scns;
+	protected Vector<ScenarioListItem> scns;
 	protected JList scnList;
 	protected JList regionList;
 	protected Vector regions;
@@ -193,9 +224,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		});
 
 		try {
+            /*
 			System.setProperty(DOMImplementationRegistry.PROPERTY,
 			"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
 			//"org.apache.xerces.dom.DOMImplementationSourceImpl");
+            */
 			DOMImplementationRegistry reg = DOMImplementationRegistry
 			.newInstance();
 			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
@@ -326,6 +359,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			} else {
 				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", batchFiles[0].getParent());
 
+                // TODO: we are currently limiting oursleves to xls files.  Figoure out the best way to switch
+                // between xls and csv.
 				final FileFilter xlsFilter = (new javax.swing.filechooser.FileFilter() {
 					public boolean accept(File f) {
 						return f.getName().toLowerCase().endsWith(".xls") || f.isDirectory();
@@ -340,6 +375,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				if(xlsFiles == null) {
 					return;
 				} else {
+                    for(int i = 0; i < xlsFiles.length; ++i) {
+                        if(!xlsFiles[i].getName().endsWith(".xls")) {
+                            xlsFiles[i] = new File(xlsFiles[i].getAbsolutePath()+".xls");
+                        }
+                    }
 					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", xlsFiles[0].getParent());
 					batchQuery(batchFiles[0], xlsFiles[0]);
 				}
@@ -397,9 +437,9 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		parentFrame.setTitle("["+dbFile+"] - ModelInterface");
 	}
 
-	private Vector getScenarios() {
+	private Vector<ScenarioListItem> getScenarios() {
 		XmlValue temp;
-		Vector ret = new Vector();
+		Vector<ScenarioListItem> ret = new Vector<ScenarioListItem>();
 		try {
 			XmlResults res = XMLDB.getInstance().createQuery("/scenario", null, null, null);
 			while(res.hasNext()) {
@@ -1083,8 +1123,10 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			// error?
 			return;
 		}
-		jsp = (JScrollPane)tablesTabs.getSelectedComponent();
-		jTable = getJTableFromComponent(jsp);
+        throw new UnsupportedOperationException("This feature is currently disabled.");
+        /*
+		jTable = getJTableFromComponent(tablesTabs.getSelectedComponent());
+		jsp = new JScrollPane(tablesTabs.getSelectedComponent());
 		JFreeReportBoot.getInstance().start();
 		JFreeReport report = new JFreeReport();
 		java.awt.print.PageFormat pageFormat = new java.awt.print.PageFormat();
@@ -1169,10 +1211,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		} catch(ReportProcessingException e) {
 			e.printStackTrace();
 		}
+    */
 	}
 
 	protected BatchWindow batchQuery(File queryFile, final File excelFile) {
-		final Vector tempScns = getScenarios();
+		final Vector<ScenarioListItem> tempScns = getScenarios();
 		final String singleSheetCheckBoxPropName = "batchQueryResultsInDifferentSheets";
 		final String includeChartsPropName ="batchQueryIncludeCharts";
 		final String splitRunsPropName = "batchQuerySplitRunsInDifferentSheets";
@@ -1275,8 +1318,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		}
 		//create window
 
-		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, singleSheetCheckBox, drawPicsCheckBox, 
-				numQueries,res, parentFrame, overwriteCheckBox);
+		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, singleSheetCheckBox.isSelected(), drawPicsCheckBox.isSelected(), 
+				numQueries,res, parentFrame, overwriteCheckBox.isSelected(), false);
 		//create listener for window
 
 
@@ -1363,11 +1406,14 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		Object c;
 		try {
 			QueryResultsPanel qPanel = (QueryResultsPanel)comp;
-			c = ((JScrollPane)qPanel.getComponent(0)).getViewport().getView();
+			c = qPanel.getComponent(0);
+			if(c instanceof JPanel){
+				return null;
+			}
 			if(c instanceof JSplitPane) {
-				return (JTable)((JScrollPane)((JSplitPane)c).getLeftComponent()).getViewport().getView();
+                return (JTable)((JScrollPane)((JSplitPane)c).getLeftComponent()).getViewport().getView();
 			} else {
-				return (JTable)c;
+                return (JTable)((JScrollPane)c).getViewport().getView();
 			}
 		} catch (ClassCastException e) {
 			e.printStackTrace();
@@ -1646,6 +1692,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		scanDialog.setVisible(true);
 	}
 	public void runBatch(Node command) {
+		Properties prop = InterfaceMain.getInstance().getProperties();
+		final String singleSheetCheckBoxPropName = "batchQueryResultsInDifferentSheets";
+		final String includeChartsPropName ="batchQueryIncludeCharts";
+		final String splitRunsPropName = "batchQuerySplitRunsInDifferentSheets";
+		final String replaceResultsPropName = "batchQueryReplaceResults";
 		NodeList children = command.getChildNodes();
 		for(int i = 0; i < children.getLength(); ++i ) {
 			Node child = children.item(i);
@@ -1661,7 +1712,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				File queryFile = null;
 				File outFile = null;
 				String dbFile = null;
-				//ArrayList<ScenarioListItem> scenarios = new ArrayList<ScenarioListItem>();
+				List<String> scenariosNames = new ArrayList<String>();
+				boolean singleSheet = Boolean.parseBoolean(prop.getProperty(singleSheetCheckBoxPropName, "false"));
+				boolean includeCharts = Boolean.parseBoolean(prop.getProperty(includeChartsPropName, "true"));
+				boolean splitRuns = Boolean.parseBoolean(prop.getProperty(splitRunsPropName, "false"));
+				boolean replaceResults = Boolean.parseBoolean(prop.getProperty(replaceResultsPropName, "false"));
 				// read file names for header file, csv files, and the output file
 				NodeList fileNameChildren = child.getChildNodes();
 				for(int j = 0; j < fileNameChildren.getLength(); ++j) {
@@ -1674,49 +1729,96 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					} else if(fileNode.getNodeName().equals("outFile")) {
 						outFile = new File(fileNode.getTextContent());
 					} else if(fileNode.getNodeName().equals("xmldbLocation")) {
-						//dbFile = new File(fileNode.getTextContent());
                         dbFile = fileNode.getTextContent();
-                        /*
 					} else if(fileNode.getNodeName().equals("scenario")) {
-                        scenarios.add(new ScenarioListItem("", ((Element)fileNode).getAttribute("name"),
-                                    ((Element)fileNode).getAttribute("date")));
-                                    */
+                        scenariosNames.add(((Element)fileNode).getAttribute("name"));
+                    } else if(fileNode.getNodeName().equals(singleSheetCheckBoxPropName)) {
+                        singleSheet = Boolean.parseBoolean(fileNode.getFirstChild().getNodeValue());
+                    } else if(fileNode.getNodeName().equals(includeChartsPropName)) {
+                        includeCharts = Boolean.parseBoolean(fileNode.getFirstChild().getNodeValue());
+                    } else if(fileNode.getNodeName().equals(splitRunsPropName)) {
+                        splitRuns = Boolean.parseBoolean(fileNode.getFirstChild().getNodeValue());
+                    } else if(fileNode.getNodeName().equals(replaceResultsPropName)) {
+                        replaceResults = Boolean.parseBoolean(fileNode.getFirstChild().getNodeValue());
 					} else {
 						System.out.println("Unknown tag: "+fileNode.getNodeName());
 						// should I print this error to the screen?
 					}
 				}
-				// make sure we have enough to run the batch query 
-				// which means we have a query file, output file, and
-				// at database location
-				if(queryFile != null && outFile != null && dbFile != null /*&& !scenarios.isEmpty()*/) {
-                    try {
-                        XMLDB.openDatabase(dbFile, parentFrame);
-
-                        // run the queries and wait for them to finish so that we
-                        // can close the database
-                        BatchWindow runner = batchQuery(queryFile, outFile);
-                        if(runner != null) {
-                            runner.waitForFinish();
-                        }
-                    } catch(Exception e) {
-                        e.printStackTrace();
-                        JOptionPane.showMessageDialog(parentFrame,
-                                "Recieved error while running: "+e.getMessage(),
-                                "Batch File Error", JOptionPane.ERROR_MESSAGE);
-                    } finally {
-                        XMLDB.closeDatabase();
+                try {
+                    // make sure we have enough to run the batch query 
+                    // which means we have a query file, output file, and
+                    // at database location
+                    if(queryFile == null || outFile == null || dbFile == null) {
+                        throw new Exception("Not enough information provided to run batch query.");
                     }
-				} else {
-					JOptionPane.showMessageDialog(parentFrame,
-							"Not enough info to run batch query.",
-							"Batch File Error", JOptionPane.ERROR_MESSAGE);
-				}
+                    XMLDB.openDatabase(dbFile, parentFrame);
+
+                    Vector<ScenarioListItem> scenariosInDb = getScenarios();
+                    Vector<ScenarioListItem> scenariosToRun = new Vector<ScenarioListItem>();
+                    if(scenariosNames.isEmpty() && !scenariosInDb.isEmpty()) {
+                        scenariosToRun.add(scenariosInDb.lastElement());
+                    } else {
+                        for(Iterator<String> nameIt = scenariosNames.iterator(); nameIt.hasNext(); ) {
+                            String name = nameIt.next();
+                            boolean found = false;
+                            for(ListIterator<ScenarioListItem> scenarioIt = scenariosInDb.listIterator(scenariosInDb.size()); scenarioIt.hasPrevious() && !found; ) {
+                                ScenarioListItem scenarioItem = scenarioIt.previous();
+                                if(name.equals(scenarioItem.getScnName())) {
+                                    scenariosToRun.add(scenarioItem);
+                                    found = true;
+                                    // TODO: warn about duplicates?
+                                }
+                            }
+                        }
+                    }
+                    if(scenariosToRun.isEmpty()) {
+                        throw new Exception("Could not find scenarios to run.");
+                    }
+
+                    // read the batch query file
+                    Document queries = readQueries(queryFile);
+                    XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queries);
+                    final XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+
+                    final int numQueries = res.getSnapshotLength();
+                    if(numQueries == 0) {
+                        throw new Exception("Could not find queries to run.");
+                    }
+                    final Vector<Object[]> toRunScns = new Vector<Object[]>();
+                    if(!splitRuns) {
+                        toRunScns.add(scenariosToRun.toArray());
+                    } else {
+                        for(Iterator<ScenarioListItem> scnIt = scenariosToRun.iterator(); scnIt.hasNext(); ) {
+                            Object[] temp = new Object[1];
+                            temp[0] = scnIt.next();
+                            toRunScns.add(temp);
+                        }
+                    }
+
+                    // run the queries and wait for them to finish so that we
+                    // can close the database
+                    BatchWindow runner = new BatchWindow(outFile, toRunScns, singleSheet, includeCharts, numQueries, res, parentFrame, replaceResults, true);
+                    if(runner != null) {
+                        runner.waitForFinish();
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    /*
+                    JOptionPane.showMessageDialog(parentFrame,
+                            "Recieved error while running: "+e.getMessage(),
+                            "Batch File Error", JOptionPane.ERROR_MESSAGE);
+                            */
+                } finally {
+                    XMLDB.closeDatabase();
+                }
 			} else {
 				System.out.println("Unknown command: "+actionCommand);
+                /*
 				JOptionPane.showMessageDialog(parentFrame,
 						"Unknown command: "+actionCommand,
 						"Batch File Error", JOptionPane.ERROR_MESSAGE);
+                        */
 			}
 		}
 	}

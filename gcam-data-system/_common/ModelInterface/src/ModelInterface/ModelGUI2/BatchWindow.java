@@ -1,3 +1,32 @@
+/*
+* LEGAL NOTICE
+* This computer software was prepared by Battelle Memorial Institute,
+* hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
+* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+* LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
+* sentence must appear on any copies of this computer software.
+* 
+* Copyright 2012 Battelle Memorial Institute.  All Rights Reserved.
+* Distributed as open-source under the terms of the Educational Community 
+* License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
+* 
+* EXPORT CONTROL
+* User agrees that the Software will not be shipped, transferred or
+* exported into any country or used in any manner prohibited by the
+* United States Export Administration Act or any other applicable
+* export laws, restrictions or regulations (collectively the "Export Laws").
+* Export of the Software may require some form of license or other
+* authority from the U.S. Government, and failure to obtain such
+* export control license may result in criminal liability under
+* U.S. laws. In addition, if the Software is identified as export controlled
+* items under the Export Laws, User represents and warrants that User
+* is not a citizen, or otherwise located within, an embargoed nation
+* (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
+*     and that User is not otherwise prohibited
+* under the Export Laws from receiving the Software.
+* 
+*/
 package ModelInterface.ModelGUI2;
 
 import java.awt.BorderLayout;
@@ -16,6 +45,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Vector;
@@ -85,16 +115,16 @@ public class BatchWindow extends Window {
 	 */
 	private static final long serialVersionUID = -1481157258336281895L;
 
-	final File excelFile;
+	final File outputFile;
 	final Vector<Object[]> toRunScns; 
-	final JCheckBox singleSheetCheckBox; 
-	final JCheckBox drawPicsCheckBox; 
+	final boolean singleSheet; 
+	final boolean drawPics; 
 	final int numQueries; 
 	final XPathResult res;
 	final JFrame parentFrame;
 	Thread exportThread;
-	final JCheckBox overwriteCheckBox;
-	final boolean overwrite;
+	final boolean overwriteFile;
+	final boolean suppressMessages;
 	final JProgressBar progressBar;
 	final Runnable increaseProgress;
 	final Window progressDialog;
@@ -186,32 +216,35 @@ public class BatchWindow extends Window {
 	 * Instantiates a new batch window. A window with a progress bar is made. 
 	 * The window terminates the operating thread upon exiting the window.  
 	 * 
-	 * @param excelFile file that the excel sheet will be saved in
+	 * @param outputFile that the results will be saved in. This may be xls or csv
+     *  determined by the filename extension.
 	 * @param toRunScns the scans to run
-	 * @param singleSheetCheckBox check box corresponding to single or multiple sheets
-	 * @param drawPicsCheckBox option to draw charts
+	 * @param singleSheet Boolean corresponding to single or multiple sheets
+	 * @param drawPics Boolean option to draw charts
 	 * @param numQueries the number of queries
 	 * @param res The XPath results which will contain the aQuery to run.
 	 * @param parentFrame the parent frame GUI
-	 * @param overwriteCheckBox option to overwrite existing file
+	 * @param overwriteFile Boolean option to overwrite existing file
+	 * @param suppressMessages Boolean to indicate to avoid popping up dialog boxes which require user intervention.
 	 */
-	public BatchWindow(final File excelFileIn, final Vector<Object[]> toRunScns,
-			final JCheckBox singleSheetCheckBox, final JCheckBox drawPicsCheckBox,
+	public BatchWindow(final File outputFile, final Vector<Object[]> toRunScns,
+			final boolean singleSheet, final boolean drawPics,
 			final int numQueries, final XPathResult res, final JFrame parentFrame,
-			JCheckBox overwriteCheckBox) {
+			final boolean overwriteFile, final boolean suppressMessages) {
 
 
 
 		super(parentFrame);
-		this.excelFile = new File(excelFileIn.getName().endsWith(".xls") ? excelFileIn.getAbsolutePath() : excelFileIn.getAbsolutePath()+".xls");
+        this.outputFile = outputFile;
+        final boolean isExcelOutput = outputFile.getName().endsWith(".xls");
 		this.toRunScns = toRunScns;
-		this.singleSheetCheckBox = singleSheetCheckBox;
-		this.drawPicsCheckBox = drawPicsCheckBox;
+		this.singleSheet = singleSheet;
+		this.drawPics = drawPics;
 		this.numQueries = numQueries;
 		this.res = res;
 		this.parentFrame = parentFrame;
-		this.overwriteCheckBox = overwriteCheckBox;
-		this.overwrite = overwriteCheckBox.isSelected();
+		this.overwriteFile = overwriteFile;
+        this.suppressMessages = suppressMessages;
 
         // determine the proper number of threads to use for queries by
         // checking the configuration parameter which defaults to the
@@ -252,24 +285,23 @@ public class BatchWindow extends Window {
 			public void run() {
 				Node tempNode;
 				HSSFWorkbook wb = null;
-				HSSFSheet sheet = null;
-				HSSFPatriarch drawingPat = null;
 				List<String>tempRegions = new Vector<String>();
-				int numErrors = 0;
 				// read/create the output excel file
 
 
 				if(isInterrupted())
 					return;
 
-				if(excelFile.exists() && !(overwrite)) {
+				if(isExcelOutput && outputFile.exists() && !(overwriteFile)) {
 					try {
-						wb = new HSSFWorkbook(new FileInputStream(excelFile));
+						wb = new HSSFWorkbook(new FileInputStream(outputFile));
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
+                        if(!suppressMessages) {
 						JOptionPane.showMessageDialog(parentFrame,
-								"There was an error while trying to open "+excelFile,
+								"There was an error while trying to open "+outputFile,
 								"Batch Query Error", JOptionPane.ERROR_MESSAGE);
+                        }
 						progressDialog.dispose();
 						return;
 					}
@@ -340,93 +372,13 @@ public class BatchWindow extends Window {
                 // let the thread pool know no more queries will be added
                 queryThreadPool.shutdown();
 
-                //Option to add results to an existing file has been added.
-                if(wb == null || (excelFile.exists() && (overwrite))) {
-                    wb = new HSSFWorkbook();
+                // Write results as they becuase available
+                if(isExcelOutput) {
+                    doExcelOutput(outputFile, wb, results);
+                } else {
+                    doCsvOutput(outputFile, results);
                 }
-                try {
-                    // actually get the query results and write them into the spreadsheet
-                    for(Iterator<Object[]> itScn = toRunScns.iterator(); itScn.hasNext(); itScn.next()) {
-                        if(!singleSheetCheckBox.isSelected()) { 
-                            sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
-                            drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
-                        }
-                        for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
-                            tempNode = res.snapshotItem(snapshotIndex);
-                            if(tempNode.getNodeType() == Node.COMMENT_NODE) {
-                                // skip comments
-                                continue;
-                            }
-                            if(isInterrupted())
-                                return;
 
-                            if(singleSheetCheckBox.isSelected()) {
-                                sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
-                                drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
-                            }
-
-                            // may need to get two results if the task was an extra run for global
-                            for(int extra = 0; extra < 1 || (!results.isEmpty() && results.peek().isTaskAnExtraRun()); ++extra) {
-                                try {
-                                    // get will block until the query is done processing
-                                    // just peek now and remove after the get to ensure all tasks get cancelled 
-                                    // in the event we are interrupted
-                                    results.peek().get().exportToExcel(sheet, wb, drawingPat);
-                                } catch(ExecutionException ee) {
-                                    ee.printStackTrace();
-                                    HSSFRow row = sheet.createRow(sheet.getLastRowNum());
-                                    row.createCell((short)0).setCellValue(results.peek().getQueryName()+" had error: "+ee.getMessage());
-                                    // avoid reporting the same error twice in the case of extra runs
-                                    if(!results.peek().isTaskAnExtraRun()) {
-                                        ++numErrors;
-                                    }
-                                } finally {
-                                    results.remove();
-                                }
-                            }
-                        }
-
-                    }
-                    if(isInterrupted())
-                        return;
-
-
-                    try {
-                        String fileName = excelFile.toString();
-                        if(fileName.contains(".xml"))
-                            fileName = fileName.replace(".xml", "");
-                        if(fileName.contains(".xls"))
-                            fileName = fileName.replace(".xls", "");
-
-                        FileOutputStream fos = new FileOutputStream(fileName+".xls");
-                        wb.write(fos);
-                        fos.close();
-                        if(numErrors == 0) {
-                            JOptionPane.showMessageDialog(parentFrame,
-                                    "Sucessfully ran batch query",
-                                    "Batch Query", JOptionPane.INFORMATION_MESSAGE);
-                        } else {
-                            // warn the users that some queries had errors
-                            JOptionPane.showMessageDialog(parentFrame,
-                                    "Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s."),
-                                    "Batch Query", JOptionPane.WARNING_MESSAGE);
-                        }
-                    } catch(IOException ioe) {
-                        ioe.printStackTrace();
-                        JOptionPane.showMessageDialog(parentFrame,
-                                "There was an error while trying to write results",
-                                "Batch Query Error", JOptionPane.ERROR_MESSAGE);
-                    } finally {
-                        progressDialog.dispose();
-                    }
-                } catch(InterruptedException ie) {
-                    ie.printStackTrace();
-                    // make sure all of the query tasks are cancelled since the thread pool will
-                    // not do this for us
-                    for(Iterator<FutureQueryTask> it = results.iterator(); it.hasNext(); ) {
-                        it.next().cancel(true);
-                    }
-                }
 			}
 		};
 
@@ -510,4 +462,198 @@ public class BatchWindow extends Window {
         }
     }
 
+    /**
+     * Write the results of the batch into an excel spread sheet.
+     * @param outputFile The location to write the spread sheet to.
+     * @param wb The workbook object which may have already been opened for the
+     *  case when results will be appended to the file.  Null otherwise.
+     * @param results The batch results to be written out as they become available.
+     */
+    private void doExcelOutput(final File outputFile, HSSFWorkbook wb, Queue<FutureQueryTask> results) {
+        HSSFSheet sheet = null;
+        HSSFPatriarch drawingPat = null;
+        int numErrors = 0;
+
+        //Option to add results to an existing file has been added.
+        if(wb == null || (outputFile.exists() && (overwriteFile))) {
+            wb = new HSSFWorkbook();
+        }
+
+        try {
+            // actually get the query results and write them into the spreadsheet
+            for(Iterator<Object[]> itScn = toRunScns.iterator(); itScn.hasNext(); itScn.next()) {
+                if(!singleSheet) { 
+                    sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
+                    drawingPat = drawPics ? sheet.createDrawingPatriarch() : null;
+                }
+                for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
+                    Node tempNode = res.snapshotItem(snapshotIndex);
+                    if(tempNode.getNodeType() == Node.COMMENT_NODE) {
+                        // skip comments
+                        continue;
+                    }
+                    if(Thread.currentThread().isInterrupted())
+                        return;
+
+                    if(singleSheet) {
+                        sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
+                        drawingPat = drawPics ? sheet.createDrawingPatriarch() : null;
+                    }
+
+                    // may need to get two results if the task was an extra run for global
+                    for(int extra = 0; extra < 1 || (!results.isEmpty() && results.peek().isTaskAnExtraRun()); ++extra) {
+                        try {
+                            // get will block until the query is done processing
+                            // just peek now and remove after the get to ensure all tasks get cancelled 
+                            // in the event we are interrupted
+                            results.peek().get().exportToExcel(sheet, wb, drawingPat);
+                        } catch(ExecutionException ee) {
+                            ee.printStackTrace();
+                            HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
+                            row.createCell((short)0).setCellValue(results.peek().getQueryName()+" had error: "+ee.getMessage());
+                            // avoid reporting the same error twice in the case of extra runs
+                            if(!results.peek().isTaskAnExtraRun()) {
+                                ++numErrors;
+                            }
+                        } finally {
+                            results.remove();
+                        }
+                    }
+                }
+
+            }
+            if(Thread.currentThread().isInterrupted())
+                return;
+
+
+            try {
+                FileOutputStream fos = new FileOutputStream(outputFile);
+                wb.write(fos);
+                fos.close();
+                if(numErrors == 0) {
+                    System.out.println("Sucessfully ran batch query.");
+                    if(!suppressMessages) {
+                        JOptionPane.showMessageDialog(parentFrame,
+                                "Sucessfully ran batch query",
+                                "Batch Query", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    // warn the users that some queries had errors
+                    final String message = "Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s.");
+                    System.out.println(message);
+                    if(!suppressMessages) {
+                        JOptionPane.showMessageDialog(parentFrame,
+                                message,
+                                "Batch Query", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            } catch(IOException ioe) {
+                ioe.printStackTrace();
+                if(!suppressMessages) {
+                    JOptionPane.showMessageDialog(parentFrame,
+                            "There was an error while trying to write results",
+                            "Batch Query Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } finally {
+                progressDialog.dispose();
+            }
+        } catch(InterruptedException ie) {
+            ie.printStackTrace();
+            // make sure all of the query tasks are cancelled since the thread pool will
+            // not do this for us
+            for(Iterator<FutureQueryTask> it = results.iterator(); it.hasNext(); ) {
+                it.next().cancel(true);
+            }
+        }
+    }
+
+    /**
+     * Write the results of the batch into a CSV file.
+     * @param outputFile The location to write the CSV to.
+     * @param results The batch results to be written out as they become available.
+     */
+    private void doCsvOutput(final File outputFile, Queue<FutureQueryTask> results) {
+        final char delimiter = ',';
+        int numErrors = 0;
+        StringBuilder outputBuf = new StringBuilder();
+
+        try {
+            // actually get the query results and write them into the spreadsheet
+            for(Iterator<Object[]> itScn = toRunScns.iterator(); itScn.hasNext(); itScn.next()) {
+                for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
+                    Node tempNode = res.snapshotItem(snapshotIndex);
+                    if(tempNode.getNodeType() == Node.COMMENT_NODE) {
+                        // skip comments
+                        continue;
+                    }
+                    if(Thread.currentThread().isInterrupted())
+                        return;
+
+                    // may need to get two results if the task was an extra run for global
+                    for(int extra = 0; extra < 1 || (!results.isEmpty() && results.peek().isTaskAnExtraRun()); ++extra) {
+                        try {
+                            // get will block until the query is done processing
+                            // just peek now and remove after the get to ensure all tasks get cancelled 
+                            // in the event we are interrupted
+                            outputBuf.append(results.peek().get().exportToText(delimiter));
+                        } catch(ExecutionException ee) {
+                            ee.printStackTrace();
+                            String lineEnding = System.getProperty("line.separator");
+                            outputBuf.append(results.peek().getQueryName()).append(" had error: ").append(ee.getMessage())
+                                        .append(lineEnding);
+                            // avoid reporting the same error twice in the case of extra runs
+                            if(!results.peek().isTaskAnExtraRun()) {
+                                ++numErrors;
+                            }
+                        } finally {
+                            results.remove();
+                        }
+                    }
+                }
+
+            }
+            if(Thread.currentThread().isInterrupted())
+                return;
+
+
+            try {
+                PrintStream outputStream = new PrintStream(outputFile);
+                outputStream.print(outputBuf.toString());
+                outputStream.close();
+                if(numErrors == 0) {
+                    System.out.println("Sucessfully ran batch query.");
+                    if(!suppressMessages) {
+                        JOptionPane.showMessageDialog(parentFrame,
+                                "Sucessfully ran batch query",
+                                "Batch Query", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    // warn the users that some queries had errors
+                    final String message = "Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s.");
+                    System.out.println(message);
+                    if(!suppressMessages) {
+                        JOptionPane.showMessageDialog(parentFrame,
+                                message,
+                                "Batch Query", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            } catch(IOException ioe) {
+                ioe.printStackTrace();
+                if(!suppressMessages) {
+                    JOptionPane.showMessageDialog(parentFrame,
+                            "There was an error while trying to write results",
+                            "Batch Query Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } finally {
+                progressDialog.dispose();
+            }
+        } catch(InterruptedException ie) {
+            ie.printStackTrace();
+            // make sure all of the query tasks are cancelled since the thread pool will
+            // not do this for us
+            for(Iterator<FutureQueryTask> it = results.iterator(); it.hasNext(); ) {
+                it.next().cancel(true);
+            }
+        }
+    }
 }

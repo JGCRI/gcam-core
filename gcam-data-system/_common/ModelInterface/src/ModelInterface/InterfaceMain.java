@@ -1,3 +1,32 @@
+/*
+* LEGAL NOTICE
+* This computer software was prepared by Battelle Memorial Institute,
+* hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
+* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+* LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
+* sentence must appear on any copies of this computer software.
+* 
+* Copyright 2012 Battelle Memorial Institute.  All Rights Reserved.
+* Distributed as open-source under the terms of the Educational Community 
+* License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
+* 
+* EXPORT CONTROL
+* User agrees that the Software will not be shipped, transferred or
+* exported into any country or used in any manner prohibited by the
+* United States Export Administration Act or any other applicable
+* export laws, restrictions or regulations (collectively the "Export Laws").
+* Export of the Software may require some form of license or other
+* authority from the U.S. Government, and failure to obtain such
+* export control license may result in criminal liability under
+* U.S. laws. In addition, if the Software is identified as export controlled
+* items under the Export Laws, User represents and warrants that User
+* is not a citizen, or otherwise located within, an embargoed nation
+* (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
+*     and that User is not otherwise prohibited
+* under the Export Laws from receiving the Software.
+* 
+*/
 package ModelInterface;
 
 import java.util.*;
@@ -53,6 +82,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 	public static final int FILE_MENU_POS = 0;
 	public static final int EDIT_MENU_POS = 1;
+	public static final int HELP_MENU_POS = 100;
 	public static final int FILE_NEW_MENUITEM_POS = 0;
 	public static final int FILE_OPEN_SUBMENU_POS = 5;
 	public static final int FILE_SAVE_MENUITEM_POS = 10;
@@ -118,6 +148,22 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			}
 		});
 
+        if(args.length > 0 && args.length != 2) {
+            System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
+            return;
+        } else if(args.length == 2) {
+            if(args[0].equals("-b")) {
+                File batchFile = new File(args[1]);
+                main  = new InterfaceMain("Model Interface");
+                main.initialize();
+                main.runBatch(batchFile, true);
+                main.dispose();
+            } else {
+                System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
+            }
+            return;
+        }
+
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				createAndShowGUI();
@@ -145,8 +191,6 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				savedProperties.loadFromXML(new FileInputStream(propertiesFile));
 			} catch (FileNotFoundException notFound) {
 				// well I checked if it existed before so..
-				System.out.println("Wow you made it get here, you win 1 million dollars...");
-				System.out.println("Ask James for you prize");
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
 			}
@@ -216,6 +260,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		batchMenu.addActionListener(this);
 		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(batchMenu, FILE_OPEN_SUBMENU_POS);
 
+		menuMan.addMenuItem(new JMenu("Help"), HELP_MENU_POS);
+
 		setupUndo(menuMan);
 	}
 
@@ -237,6 +283,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		DMView.addMenuItems(menuMan);
 		final MenuAdder recentFilesList = RecentFilesList.getInstance();
 		recentFilesList.addMenuItems(menuMan);
+		final MenuAdder aboutDialog = new AboutDialog(this);
+		aboutDialog.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.
@@ -249,6 +297,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		menuAdders.add(PPView);
 		menuAdders.add(DMView);
 		menuAdders.add(recentFilesList);
+		menuAdders.add(aboutDialog);
 		menuAdders.add(confEditor);
 	}
 
@@ -324,7 +373,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
                 public void run() {
                     if(result != null) {
                         for(File file : result) {
-                            runBatch(file);
+                            runBatch(file, false);
                         }
                     }
                     // TODO: message that all were run
@@ -377,13 +426,13 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	}
 	public class MenuManager {
 		private JMenuItem menuValue;
-		private Map subItems;
-		private SortedSet sepList;
+		private Map<Integer, MenuManager> subItems;
+		private SortedSet<Integer> sepList;
 		MenuManager(JMenuItem menuValue) {
 			this.menuValue = menuValue;
 			sepList = null;
 			if(menuValue == null || menuValue instanceof JMenu) {
-				subItems = new TreeMap();
+				subItems = new TreeMap<Integer, MenuManager>();
 			} else {
 				subItems = null;
 			}
@@ -398,7 +447,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		*/
 		public void addSeparator(int where) {
 			if(sepList == null) {
-				sepList = new TreeSet();
+				sepList = new TreeSet<Integer>();
 			}
 			sepList.add(where);
 		}
@@ -514,9 +563,10 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 * and if any of the class implements BatchRunner it will pass
 	 * it off the command to that class. 
 	 * @param file The batch file to run.
+	 * @param suppressMessages Boolean to indicate to avoid popping up dialog boxes which require user intervention.
 	 * @see BatchRunner 
 	 */
-	private void runBatch(File file) {
+	private void runBatch(File file, boolean suppressMessages) {
 		// don't really care about document element's name
 		Node doc = FileUtils.loadDocument(this, file, null).getDocumentElement();
 
@@ -538,15 +588,19 @@ public class InterfaceMain extends JFrame implements ActionListener {
 					((BatchRunner)runner).runBatch(currClass);
 				} else {
 					System.out.println("could not find batch runner for class "+className);
+                    if(!suppressMessages) {
 					JOptionPane.showMessageDialog(this,
 							"Could not find batch runner for class "+className,
 							"Batch File Error", JOptionPane.ERROR_MESSAGE);
+                    }
 				}
 			}
 		}
 		System.out.println("Finished running "+file);
+        if(!suppressMessages) {
 		JOptionPane.showMessageDialog(this,
 				"Finished running batch file "+file.getName(),
 				"Batch File Complete", JOptionPane.INFORMATION_MESSAGE);
+        }
 	}
 }

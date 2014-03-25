@@ -1,3 +1,32 @@
+/*
+* LEGAL NOTICE
+* This computer software was prepared by Battelle Memorial Institute,
+* hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
+* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+* LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
+* sentence must appear on any copies of this computer software.
+* 
+* Copyright 2012 Battelle Memorial Institute.  All Rights Reserved.
+* Distributed as open-source under the terms of the Educational Community 
+* License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
+* 
+* EXPORT CONTROL
+* User agrees that the Software will not be shipped, transferred or
+* exported into any country or used in any manner prohibited by the
+* United States Export Administration Act or any other applicable
+* export laws, restrictions or regulations (collectively the "Export Laws").
+* Export of the Software may require some form of license or other
+* authority from the U.S. Government, and failure to obtain such
+* export control license may result in criminal liability under
+* U.S. laws. In addition, if the Software is identified as export controlled
+* items under the Export Laws, User represents and warrants that User
+* is not a citizen, or otherwise located within, an embargoed nation
+* (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
+*     and that User is not otherwise prohibited
+* under the Export Laws from receiving the Software.
+* 
+*/
 package ModelInterface.ModelGUI2.csvconv;
 
 import java.util.*;
@@ -62,6 +91,28 @@ public class DOMTreeBuilder {
 	 */
 	private boolean renameNodeNames;
 
+    /**
+     * A Map used to associate equivalent element tags for when compared
+     * for building the DOM tree.  This map associates a group name to a
+     * set of the equivalent tags in that group. The name isn't used except
+     * to allow users to add tags to that group later. This list is built up
+     * by processing tables and is used to generate equivNameLookup.
+     */
+    private final Map<String, Set<String> > equivMap = new TreeMap<String, Set<String> >();
+
+    /**
+     * Maps a element tag name to a set of tag names which may be considered
+     * equivalent.  This map is built up from equivMap anytime it changes. This
+     * is the main datastructure used when processing to build the DOM tree.
+     */
+    private Map<String, Set<String> > equivNameLookup = new TreeMap<String, Set<String> >();
+
+    /**
+     * A flag to indicate the current table being processed is to create a set
+     * of equivalent tag names.
+     */
+    private boolean addTagEquiv;
+
 	/** Default constructor.
 	* Initializes the lookUpMap.
 	*/
@@ -70,6 +121,7 @@ public class DOMTreeBuilder {
 		lookUpMap = new HashMap<String, Map<String, String>>();
 		buildMap = false;
 		renameNodeNames = false;
+        addTagEquiv = false;
 	}
 
 	/** Set the header.
@@ -82,6 +134,13 @@ public class DOMTreeBuilder {
 			doRenameNodes(doc.getDocumentElement());
 			renameNodeNames = false;
 		}
+        if(addTagEquiv) {
+            // We were processing equivalence tag tables and are now
+            // moving on to another table so now is a good time to
+            // build equivNameLookup which is used during processing
+            buildEquivalenceLists();
+            addTagEquiv = false;
+        }
 		// if the header starts with MAP that means it is
 		// only intended to set up a look-up-map
 		if(headerIn.matches(".*MAP,.*")) {
@@ -96,6 +155,11 @@ public class DOMTreeBuilder {
 			head = null;
 			return;
 		}
+        if(headerIn.matches(".*NODE_EQUIVALENCE.*")) {
+            addTagEquiv = true;
+            head = null;
+            return;
+        }
 		head = new Headers(headerIn);
 		// create the document if it has been created alredy and if we have a 
 		// root header we can use.
@@ -131,6 +195,29 @@ public class DOMTreeBuilder {
 			addToRenameMap(data);
 			return;
 		}
+        if(addTagEquiv) {
+            // The header indicated that this table is simply to build up
+            // the map of tag equivalence.
+            // The first column is the name of the group and all subsequent columns
+            // are element tag names which are equivalent to the other tags in the
+            // group. If a group has already been created then tags provided will be
+            // merged with those that were previously provided.
+            if(data.size() < 2) {
+                System.out.println("Error not enough data to create equivalence.");
+                return;
+            }
+            String equivName = data.get(0);
+            Set<String> equivTagNames = equivMap.get(equivName);
+            if(equivTagNames == null) {
+                equivTagNames = new HashSet<String>();
+            }
+            for( int i = 1; i < data.size(); ++i) {
+                // Note that equivTagNames is a set so duplicates will be ignored
+                equivTagNames.add(data.get(i));
+            }
+            equivMap.put(equivName, equivTagNames);
+            return;
+        }
 		if (head == null && !buildMap) {
 			System.out.println("Warning, no header set, skipping data");
 			return;
@@ -210,6 +297,22 @@ public class DOMTreeBuilder {
 		}
 	}
 
+    /**
+     * Generate the equivNameLookup map from the equivMap.  The name lookup map
+     * is simply a map from a tag name to all equivalent tag names.  Structuring
+     * it this way makes it fast and eqsy to use when processing.
+     */
+    private void buildEquivalenceLists() {
+        // Reset the map and start anew
+        equivNameLookup = new TreeMap<String, Set<String> >();
+        for(Iterator<Set<String> > groupIter = equivMap.values().iterator(); groupIter.hasNext(); ) {
+            Set<String> currEquivGroup = groupIter.next();
+            for(Iterator<String> tagIter = currEquivGroup.iterator(); tagIter.hasNext(); ) {
+                equivNameLookup.put(tagIter.next(), currEquivGroup);
+            }
+        }
+    }
+
 	/**
 	 * Converts any attributes according to the look-up-map should
 	 * they be in the map.
@@ -248,18 +351,23 @@ public class DOMTreeBuilder {
 
 	/** Compare to Individual Elements of a DOM tree.
 	*
-	*   Elements are considered to be the same if they both have the same tag name,
-	*   same attrubutes, and same TEXT data if any.
-	*  TODO: see if using Node.isEqualNode(Node) is a better idea then making my own. 
+	*   Elements are considered to be the same if they both have the same or equivalent
+    *   tag name, same attrubutes, and same TEXT data if any.
 	*
 	*  @param e1 The first element that will be compared against the other.
 	*  @param e2 The second element that will be compared against the other. 
 	*   @return Returns true if the elements are the same, false otherwise.
 	*/
-	public static boolean compareHelper(Element e1, Element e2){ // helper for compare function
+	private boolean compareHelper(Element e1, Element e2){ // helper for compare function
 		// first make sure tag names are the same
 		if( !((e1.getTagName()).equals(e2.getTagName()) ) ){
-			return false;
+            // If they are not exactly the same the user may have meant
+            // them to be equivalent.
+            Set<String> tagEquivSet = equivNameLookup.get(e1.getTagName());
+            if(tagEquivSet == null || !tagEquivSet.contains(e2.getTagName())) {
+                // Not the same or equivalent tag means they are not the same.
+                return false;
+            }
 		}
 
 		// go through all the attributes, make sure have the same ammount and the have the same values
@@ -287,12 +395,12 @@ public class DOMTreeBuilder {
 	*  @param e2 The element that we are looking for as a child under e2. 
 	*   @return Returns the Node which is the same as e2 and already exists in the tree, or null.
 	*/
-	public static Node compare( Element e1, Element e2 ){
+	private Node compare( Element e1, Element e2 ){
 		// get all the immediate children of e1 and compare them to e2
 		NodeList list1 = e1.getChildNodes();
 		for(int i=0; i<list1.getLength(); i++){
 			if(list1.item(i).getNodeType() != Element.TEXT_NODE){
-				if(/*list1.item(i).isEqualNode(e2)*/compareHelper((Element)list1.item(i), e2)){
+				if(compareHelper((Element)list1.item(i), e2)){
 					return list1.item(i);
 				}
 			}

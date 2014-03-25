@@ -1,3 +1,32 @@
+/*
+* LEGAL NOTICE
+* This computer software was prepared by Battelle Memorial Institute,
+* hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
+* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+* LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
+* sentence must appear on any copies of this computer software.
+* 
+* Copyright 2012 Battelle Memorial Institute.  All Rights Reserved.
+* Distributed as open-source under the terms of the Educational Community 
+* License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
+* 
+* EXPORT CONTROL
+* User agrees that the Software will not be shipped, transferred or
+* exported into any country or used in any manner prohibited by the
+* United States Export Administration Act or any other applicable
+* export laws, restrictions or regulations (collectively the "Export Laws").
+* Export of the Software may require some form of license or other
+* authority from the U.S. Government, and failure to obtain such
+* export control license may result in criminal liability under
+* U.S. laws. In addition, if the Software is identified as export controlled
+* items under the Export Laws, User represents and warrants that User
+* is not a citizen, or otherwise located within, an embargoed nation
+* (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
+*     and that User is not otherwise prohibited
+* under the Export Laws from receiving the Software.
+* 
+*/
 package ModelInterface.ModelGUI2.tables;
 
 import ModelInterface.common.DataPair;
@@ -624,7 +653,7 @@ public class MultiTableModel extends BaseTableModel{
 	  JTable jTable = (JTable)((JScrollPane)getValueAt(rows[0], cols[0])).getViewport().getView();
 	  ((BaseTableModel)jTable.getModel()).annotate(jTable.getSelectedRows(), jTable.getSelectedColumns(), documentation);
   }
-  public String exportToText() {
+  public String exportToText(char delimiter) {
 	  String lineEnding = System.getProperty("line.separator");
 	  StringBuilder ret = new StringBuilder();
 	  // excel doesn't handle html properly so we will have 
@@ -641,10 +670,17 @@ public class MultiTableModel extends BaseTableModel{
 	  } else {
 		  tempTitle += " (1 Table)";
 	  }
+      if(tempTitle.indexOf(delimiter) != -1) {
+          tempTitle = '"'+tempTitle+'"';
+      }
 	  ret.append(tempTitle).append(lineEnding);
 	  for(int i = 0; i < getRowCount(); i += 2) {
-		  ret.append(getValueAt(i, 0).toString()).append(lineEnding)
-					  .append(getModelAt(i+1).exportToText());
+          String value = getValueAt(i, 0).toString();
+          if(value.indexOf(delimiter) != -1) {
+              value = '"'+value+'"';
+          }
+		  ret.append(value).append(lineEnding)
+					  .append(getModelAt(i+1).exportToText(delimiter));
 	  }
 	  return ret.toString();
   }
