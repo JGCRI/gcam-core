@@ -42,6 +42,7 @@ modeltime: common
 	$(MAKE) -C modeltime-data level2
 
 clean:
+	$(MAKE) -C _common clean
 	$(MAKE) -C emissions-data clean
 	$(MAKE) -C energy-data clean
 	$(MAKE) -C aglu-data clean
