@@ -28,6 +28,7 @@ UCD_ctry <- readdata( "ENERGY_MAPPINGS", "UCD_ctry" )
 UCD_techs <- readdata( "ENERGY_MAPPINGS", "UCD_techs" )
 UCD_transportation_database <- readdata( "ENERGY_LEVEL0_DATA", "UCD_transportation_database" )
 L101.in_EJ_ctry_trn_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L101.in_EJ_ctry_trn_Fi_Yh" )
+L1011.in_EJ_ctry_intlship_TOT_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.in_EJ_ctry_intlship_TOT_Yh" )
 L131.in_EJ_R_Senduse_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L131.in_EJ_R_Senduse_F_Yh" )
 L100.Pop_thous_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.Pop_thous_ctry_Yh" )
 
@@ -37,6 +38,24 @@ printlog( "Part 1: downscaling country-level transportation energy data to UCD t
 printlog( "NOTE: We are currently aggregating IEA's data on rail and road due to inconsistencies (e.g. no rail in the Middle East)" )
 printlog( "To changes this, modify the mappings in ", file_fqn( "ENERGY_MAPPINGS", "calibrated_techs_trn_agg" ) )
 L154.in_EJ_ctry_trn_Fi_Yh <- L101.in_EJ_ctry_trn_Fi_Yh
+
+#First, replace the international shipping data (swapping in EIA for IEA)
+X_intship_EIA_years <- names( L1011.in_EJ_ctry_intlship_TOT_Yh )[
+      grepl( "X[0-9]{4}", names( L1011.in_EJ_ctry_intlship_TOT_Yh ) ) ]
+#Only perform this swap for international shipping / refined liquids, and in countries in the EIA database
+L154.in_EJ_ctry_trn_Fi_Yh[
+         L154.in_EJ_ctry_trn_Fi_Yh$sector == "in_trn_international ship" &
+         L154.in_EJ_ctry_trn_Fi_Yh$fuel == "refined liquids" &
+         L154.in_EJ_ctry_trn_Fi_Yh$iso %in% L1011.in_EJ_ctry_intlship_TOT_Yh$iso,
+      X_intship_EIA_years ] <-
+      L1011.in_EJ_ctry_intlship_TOT_Yh[
+         match( L154.in_EJ_ctry_trn_Fi_Yh$iso[
+             L154.in_EJ_ctry_trn_Fi_Yh$sector == "in_trn_international ship" &
+             L154.in_EJ_ctry_trn_Fi_Yh$fuel == "refined liquids" &
+             L154.in_EJ_ctry_trn_Fi_Yh$iso %in% L1011.in_EJ_ctry_intlship_TOT_Yh$iso],
+           L1011.in_EJ_ctry_intlship_TOT_Yh$iso ),
+         X_intship_EIA_years ]
+
 L154.in_EJ_ctry_trn_Fi_Yh$sector <- sub( "in_", "", L101.in_EJ_ctry_trn_Fi_Yh$sector )
 L154.in_EJ_ctry_trn_Fi_Yh$UCD_category <- calibrated_techs_trn_agg$UCD_category[
       match( L154.in_EJ_ctry_trn_Fi_Yh$sector, calibrated_techs_trn_agg$sector ) ]

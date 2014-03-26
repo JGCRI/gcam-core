@@ -61,6 +61,7 @@ L1011.in_EJ_ctry_intlship_TOT_Yh[ L1011.in_EJ_ctry_intlship_TOT_Yh$Country=="Rus
 #Match in the countries and aggregate by region
 L1011.in_EJ_ctry_intlship_TOT_Yh$iso <- EIA_ctry$iso[ match( L1011.in_EJ_ctry_intlship_TOT_Yh$Country, EIA_ctry$EIA_ctry ) ]
 L1011.in_EJ_ctry_intlship_TOT_Yh$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L1011.in_EJ_ctry_intlship_TOT_Yh$iso, iso_GCAM_regID$iso)]
+L1011.in_EJ_ctry_intlship_TOT_Yh <- subset( L1011.in_EJ_ctry_intlship_TOT_Yh, complete.cases( L1011.in_EJ_ctry_intlship_TOT_Yh ) )
 L1011.in_EJ_R_intlship_Yh <- aggregate( L1011.in_EJ_ctry_intlship_TOT_Yh[ EIA_yearcols ],
       by=as.list( L1011.in_EJ_ctry_intlship_TOT_Yh[ "GCAM_region_ID" ] ), sum )
 
@@ -104,9 +105,11 @@ if( any( L1011.en_bal_EJ_R_Si_Fi_Yh[ L1011.en_bal_EJ_R_Si_Fi_Yh$sector == "TPES"
 # 3. Output
 #Add comments for each table
 comments.L1011.en_bal_EJ_R_Si_Fi_Yh <- c( "Energy balances by GCAM region / intermediate sector / intermediate fuel / historical year","Unit = EJ" )
+comments.L1011.in_EJ_ctry_intlship_TOT_Yh <- c( "Liquid fuel consumption by international shipping by country / historical year","Unit = EJ" )
 
 #write tables as CSV files
 writedata( L1011.en_bal_EJ_R_Si_Fi_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1011.en_bal_EJ_R_Si_Fi_Yh", comments=comments.L1011.en_bal_EJ_R_Si_Fi_Yh )
+writedata( L1011.in_EJ_ctry_intlship_TOT_Yh, domain="ENERGY_LEVEL1_DATA", fn="L1011.in_EJ_ctry_intlship_TOT_Yh", comments=comments.L1011.in_EJ_ctry_intlship_TOT_Yh )
 
 # Every script should finish with this line
 logstop()
