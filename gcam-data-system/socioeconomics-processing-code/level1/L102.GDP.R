@@ -110,7 +110,7 @@ L102.gdpshares_ctryRG3_Y[ c( X_historical_years, X_future_years ) ] <-
 #Interpolate the GCAM population data to all historical and future years
 L102.gdp_mil90usd_GCAM3_RG3_Y <- gcam_interp( GCAM3_GDP, c( historical_years, future_years ) )[ c( "region_GCAM3", X_historical_years, X_future_years ) ]
 
-if( "X2100" %in% X_future_years ){
+if( "X2100" %in% X_future_years && "X2100" %!in% names( L102.gdp_mil90usd_GCAM3_RG3_Y ) ){
 	printlog( "Extending GCAM 3.0 scenario to 2100 using SSPbase GDP ratios by GCAM 3.0 region")
 	L102.gdp_mil90usd_GCAM3_RG3_Y$X2100 <- L102.gdp_mil90usd_GCAM3_RG3_Y$X2095 *
 	   L102.gdp_mil90usd_SSPbase_RG3_Y$X2100[ match( L102.gdp_mil90usd_GCAM3_RG3_Y$region_GCAM3, L102.gdp_mil90usd_SSPbase_RG3_Y$region_GCAM3 ) ] /
