@@ -71,7 +71,7 @@ printlog( "L201.nonghg_max_reduction: maximum reduction for energy technologies 
 L201.max_reduction <- melt( A51.max_reduction, id.vars=c( "supplysector", "subsector", "stub.technology" ))
 L201.max_reduction <- repeat_and_add_vector( L201.max_reduction, "region", GCAM_region_names$region )
 L201.nonghg_max_reduction <- rbind( L201.bcoc_en[ c( names_StubTech, "Non.CO2" ) ], L201.nonghg_en[ c( names_StubTech, "Non.CO2" ) ] )
-L201.nonghg_max_reduction$year <- max( model_base_years )
+L201.nonghg_max_reduction$year <- ctrl_base_year
 L201.nonghg_max_reduction$ctrl.name <- "GDP_control"
 L201.nonghg_max_reduction$max.reduction <- L201.max_reduction$value[ match( vecpaste( L201.nonghg_max_reduction[ c( names_StubTech, "Non.CO2" ) ]), vecpaste( L201.max_reduction[ c( names_StubTech, "variable" ) ]) )]
 L201.nonghg_max_reduction <- na.omit( L201.nonghg_max_reduction )
@@ -81,7 +81,7 @@ printlog( "L201.nonghg_steepness: steepness of reduction for energy technologies
 L201.steepness <- melt( A51.steepness, id.vars=c( "supplysector", "subsector", "stub.technology" ))
 L201.steepness <- repeat_and_add_vector( L201.steepness, "region", GCAM_region_names$region )
 L201.nonghg_steepness <- L201.nonghg_max_reduction[ c( names_StubTech, "Non.CO2" ) ]
-L201.nonghg_steepness$year <- max( model_base_years )
+L201.nonghg_steepness$year <- ctrl_base_year
 L201.nonghg_steepness$ctrl.name <- "GDP_control"
 L201.nonghg_steepness$steepness <- L201.steepness$value[ match( vecpaste( L201.nonghg_steepness[ c( names_StubTech, "Non.CO2" ) ]), vecpaste( L201.steepness[ c( names_StubTech, "variable" ) ]) )]
 L201.nonghg_steepness <- na.omit( L201.nonghg_steepness )

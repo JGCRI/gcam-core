@@ -141,7 +141,7 @@ printlog( "L211.nonghg_max_reduction: maximum reduction for energy technologies 
 L211.max_reduction <- melt( A11.max_reduction, id.vars=c( "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" ))
 L211.max_reduction <- repeat_and_add_vector( L211.max_reduction, "region", GCAM_region_names$region )
 L211.nonghg_max_reduction <- rbind( L211.AWB_BCOC[ c( names_AgTech, "Non.CO2" ) ], L211.AWB[ c( names_AgTech, "Non.CO2" ) ] )
-L211.nonghg_max_reduction$year <- max( model_base_years )
+L211.nonghg_max_reduction$year <- ctrl_base_year
 L211.nonghg_max_reduction$ctrl.name <- "GDP_control"
 L211.nonghg_max_reduction$max.reduction <- L211.max_reduction$value[ match( vecpaste( L211.nonghg_max_reduction[ c( names_AgTech, "Non.CO2" ) ]), vecpaste( L211.max_reduction[ c( names_AgTech, "variable" ) ]) )]
 L211.nonghg_max_reduction <- na.omit( L211.nonghg_max_reduction )
@@ -151,7 +151,7 @@ printlog( "L211.nonghg_steepness: steepness of reduction for energy technologies
 L211.steepness <- melt( A11.steepness, id.vars=c( "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" ))
 L211.steepness <- repeat_and_add_vector( L211.steepness, "region", GCAM_region_names$region )
 L211.nonghg_steepness <- L211.nonghg_max_reduction[ c( names_AgTech, "Non.CO2" ) ]
-L211.nonghg_steepness$year <- max( model_base_years )
+L211.nonghg_steepness$year <- ctrl_base_year
 L211.nonghg_steepness$ctrl.name <- "GDP_control"
 L211.nonghg_steepness$steepness <- L211.steepness$value[ match( vecpaste( L211.nonghg_steepness[ c( names_AgTech, "Non.CO2" ) ]), vecpaste( L211.steepness[ c( names_AgTech, "variable" ) ]) )]
 L211.nonghg_steepness <- na.omit( L211.nonghg_steepness )

@@ -63,7 +63,7 @@ L222.MAC_AdipicAcid_S_R_T$mac.reduction <- L222.MAC_AdipicAcid$value[ match( vec
 L222.MAC_AdipicAcid_S_R_T <- na.omit( L222.MAC_AdipicAcid_S_R_T )
 
 #Add extra columns and re-order
-L222.MAC_AdipicAcid_S_R_T$year <- final_emiss_year
+L222.MAC_AdipicAcid_S_R_T$year <- ctrl_base_year
 L222.MAC_AdipicAcid_S_R_T$Non.CO2 <- "N2O"
 L222.MAC_AdipicAcid_S_R_T$name <- "Adipic Acid"
 L222.MAC_AdipicAcid_S_R_T <- L222.MAC_AdipicAcid_S_R_T[ c( names_StubTechYr, "Non.CO2", "name", "tax", "mac.reduction" )]
@@ -98,7 +98,7 @@ L222.MAC_NitricAcid_S_R_T$mac.reduction <- L222.MAC_NitricAcid$value[ match( vec
 L222.MAC_NitricAcid_S_R_T <- na.omit( L222.MAC_NitricAcid_S_R_T )
 
 #Add extra columns and re-order
-L222.MAC_NitricAcid_S_R_T$year <- final_emiss_year
+L222.MAC_NitricAcid_S_R_T$year <- ctrl_base_year
 L222.MAC_NitricAcid_S_R_T$Non.CO2 <- "N2O"
 L222.MAC_NitricAcid_S_R_T$name <- "Nitric Acid"
 L222.MAC_NitricAcid_S_R_T <- L222.MAC_NitricAcid_S_R_T[ c( names_StubTechYr, "Non.CO2", "name", "tax", "mac.reduction" )]
