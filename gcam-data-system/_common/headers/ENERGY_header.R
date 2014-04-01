@@ -22,6 +22,9 @@ convert_rsrc_to_L2 <- function( data, resource_type, subresource_type=NA ) {
 		maxSubResource = round( data$maxSubResource, digits_maxSubResource ),
 		mid.price = round( data$mid.price, digits_mid.price ),
 		curve.exponent = round( data$curve.exponent, digits_curve.exponent ) )
+        if( any( names( data ) == "gdpSupplyElast" ) ) {
+            data_new$gdpSupplyElast = round( data$gdpSupplyElast, digits_gdpSupplyElast )
+        }
 	}
 	if( resource_type == "renewresource" & subresource_type == "sub-renewable-resource") {
 		data_new <- data.frame(

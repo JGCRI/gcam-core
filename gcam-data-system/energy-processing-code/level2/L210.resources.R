@@ -193,7 +193,7 @@ L210.DepRsrcCurves_U <- convert_rsrc_to_L2( L210.RsrcCurves_Mt_R_U, "depresource
 
 printlog( "L210.SmthRenewRsrcCurves_MSW: supply curves of waste biomass resources")
 L210.RsrcCurves_EJ_R_MSW <- add_region_name( L113.RsrcCurves_EJ_R_MSW )
-L210.SmthRenewRsrcCurves_MSW <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_MSW, "renewresource", "smooth-renewable-subresource" )
+L210.SmthRenewRsrcCurvesGdpElast_MSW <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_MSW, "renewresource", "smooth-renewable-subresource" )
 
 printlog( "L210.SmthRenewRsrcCurves_wind: supply curves of wind resources")
 L210.RsrcCurves_EJ_R_wind <- add_region_name( L114.RsrcCurves_EJ_R_wind )
@@ -244,7 +244,7 @@ write_mi_data( L210.SmthRenewRsrcTechChange, "SmthRenewRsrcTechChange", "ENERGY_
 write_mi_data( L210.DepRsrcCalProd, "DepRsrcCalProd", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCalProd", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.DepRsrcCurves_fos, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCurves_fos", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.DepRsrcCurves_U, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCurves_U", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
-write_mi_data( L210.SmthRenewRsrcCurves_MSW, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_MSW", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.SmthRenewRsrcCurvesGdpElast_MSW, "SmthRenewRsrcCurvesGdpElast", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_MSW", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.SmthRenewRsrcCurves_wind, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_wind", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.SmthRenewRsrcCurves_roofPV, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_roofPV", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.GrdRenewRsrcCurves_geo, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_geo", "ENERGY_XML_BATCH", "batch_resources.xml" ) 

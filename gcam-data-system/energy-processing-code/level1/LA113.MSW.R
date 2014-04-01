@@ -55,9 +55,9 @@ L113.RsrcCurves_EJ_R_MSW <- data.frame(
       subresource = unique( A13.MSW_curves$subresource) )
 L113.RsrcCurves_EJ_R_MSW$maxSubResource <- L113.MSW_maxSubResource$maxSubResource[
       match( L113.RsrcCurves_EJ_R_MSW[[R]], L113.MSW_maxSubResource[[R]] ) ]
-L113.RsrcCurves_EJ_R_MSW[ c( "mid.price", "curve.exponent" ) ] <- A13.MSW_curves[
+L113.RsrcCurves_EJ_R_MSW[ c( "mid.price", "curve.exponent", "gdpSupplyElast" ) ] <- A13.MSW_curves[
       rep( 1, times = nrow( L113.RsrcCurves_EJ_R_MSW ) ),
-      c( "mid.price", "curve.exponent" ) ]
+      c( "mid.price", "curve.exponent", "gdpSupplyElast" ) ]
 
 # 2b. Historical biomass prices (currently determined at global level, so no level 1 processing necessary)
 
