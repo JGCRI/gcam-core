@@ -47,7 +47,7 @@ emiss_model_base_years <- c( "1975", "1990", "2005" )
 #Gases
 nonghg_gases <- c( "SO2", "NOx", "CO", "NMVOC", "NH3" )
 awb_gases <- c( "SO2_AWB", "NOx_AWB", "CO_AWB", "NMVOC_AWB", "CH4_AWB", "N2O_AWB", "NH3_AWB" )
-agr_gases <- c( "CH4_AGR", "N2O_AGR", "NH3_AGR" )
+agr_gases <- c( "CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR" )
 GHG_names <- c( "CH4", "N2O" )
 F_Gases <- c( "HFC23", "HFC32", "HFC125", "HFC134a", "HFC143a", "HFC236fa", "CF4", "C2F6", "SF6" )
 
@@ -55,6 +55,7 @@ F_Gases <- c( "HFC23", "HFC32", "HFC125", "HFC134a", "HFC143a", "HFC236fa", "CF4
 awb_sectors <- "ag_waste_burning"
 agr_sectors <- c( "rice", "fertilizer", "soil" )
 prc_sectors <- c( "industry_processes", "chemicals", "landfills", "wastewater", "aerosols", "metals", "foams", "solvents", "semiconductors" )
+trn_intl_sectors <- c( "trn_intl_ship", "trn_intl_air" )
 
 #Lookup vectors
 R_G_Sedgar <- c( "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector")
