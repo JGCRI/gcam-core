@@ -31,9 +31,8 @@ L111.nonghg_tgej_R_en_S_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L111.nonghg_
 L112.ghg_tg_R_en_S_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L112.ghg_tg_R_en_S_F_Yh" )
 L112.ghg_tgej_R_en_S_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L112.ghg_tgej_R_en_S_F_Yh" )
 L114.bcoc_tgej_R_en_S_F_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L114.bcoc_tgej_R_en_S_F_2000" )
-A51.max_reduction <- readdata( "EMISSIONS_ASSUMPTIONS", "A51.max_reduction" )
+L151.nonghg_ctrl_R_en_S_T <- readdata( "EMISSIONS_LEVEL1_DATA", "L151.nonghg_ctrl_R_en_S_T" )
 A51.steepness <- readdata( "EMISSIONS_ASSUMPTIONS", "A51.steepness" )
-
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -68,12 +67,13 @@ L201.bcoc_en <- L201.BCOC[ c( names_StubTechYr, "Non.CO2" ) ]
 L201.bcoc_en$emiss.coef <- round( L201.BCOC$X2000, digits_emissions )
 
 printlog( "L201.nonghg_max_reduction: maximum reduction for energy technologies in all regions" )
-L201.max_reduction <- melt( A51.max_reduction, id.vars=c( "supplysector", "subsector", "stub.technology" ))
-L201.max_reduction <- repeat_and_add_vector( L201.max_reduction, "region", GCAM_region_names$region )
-L201.nonghg_max_reduction <- rbind( L201.bcoc_en[ c( names_StubTech, "Non.CO2" ) ], L201.nonghg_en[ c( names_StubTech, "Non.CO2" ) ] )
+L201.max_reduction <- L151.nonghg_ctrl_R_en_S_T
+L201.max_reduction <- add_region_name( L201.max_reduction )
+
+L201.nonghg_max_reduction <- L201.max_reduction[ c( names_StubTech, "Non.CO2" ) ]
 L201.nonghg_max_reduction$year <- ctrl_base_year
 L201.nonghg_max_reduction$ctrl.name <- "GDP_control"
-L201.nonghg_max_reduction$max.reduction <- L201.max_reduction$value[ match( vecpaste( L201.nonghg_max_reduction[ c( names_StubTech, "Non.CO2" ) ]), vecpaste( L201.max_reduction[ c( names_StubTech, "variable" ) ]) )]
+L201.nonghg_max_reduction$max.reduction <- L201.max_reduction$max_reduction[ match( vecpaste( L201.nonghg_max_reduction[ c( names_StubTech, "Non.CO2" ) ]), vecpaste( L201.max_reduction[ c( names_StubTech, "Non.CO2" ) ]) )]
 L201.nonghg_max_reduction <- na.omit( L201.nonghg_max_reduction )
 L201.nonghg_max_reduction <- L201.nonghg_max_reduction[ c( names_StubTechYr, "Non.CO2", "ctrl.name", "max.reduction" )]
 

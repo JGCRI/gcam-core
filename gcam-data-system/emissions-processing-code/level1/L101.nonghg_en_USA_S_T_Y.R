@@ -56,7 +56,7 @@ L124.in_EJ_R_heat_F_Yh$technology <- L124.in_EJ_R_heat_F_Yh$fuel
 L111.Prod_EJ_R_F_Yh$technology <- L111.Prod_EJ_R_F_Yh$fuel
 
 L154.in_EJ_R_trn_m_sz_tech_F_Yh$technology <- L154.in_EJ_R_trn_m_sz_tech_F_Yh$fuel
-L154.in_EJ_R_trn_m_sz_tech_F_Yh$fuel <- L154.in_EJ_R_trn_m_sz_tech_F_Yh$mode
+L154.in_EJ_R_trn_m_sz_tech_F_Yh$fuel <- paste( L154.in_EJ_R_trn_m_sz_tech_F_Yh$mode, L154.in_EJ_R_trn_m_sz_tech_F_Yh$size.class, sep="_")
 L154.in_EJ_R_trn_m_sz_tech_F_Yh$sector <- L154.in_EJ_R_trn_m_sz_tech_F_Yh$UCD_sector
 L154.in_EJ_R_trn_m_sz_tech_F_Yh <- L154.in_EJ_R_trn_m_sz_tech_F_Yh[ names( L154.in_EJ_R_trn_m_sz_tech_F_Yh ) %!in% c( "mode", "UCD_sector", "size.class", "UCD_technology", "UCD_fuel" )]
 

@@ -31,6 +31,7 @@ L142.ag_Fert_IO_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L142.ag_Fert_IO_R_C_
 EDGAR_CH4 <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_CH4" )
 EDGAR_N2O <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_N2O" )
 EDGAR_NH3 <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_NH3" )
+EDGAR_NOx <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_NOx" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -45,7 +46,8 @@ printlog( "Compute EDGAR emissions by region" )
 EDGAR_CH4$Non.CO2 <- "CH4_AGR"
 EDGAR_N2O$Non.CO2 <- "N2O_AGR"
 EDGAR_NH3$Non.CO2 <- "NH3_AGR"
-L122.EDGAR <- rbind( EDGAR_CH4, EDGAR_N2O, EDGAR_NH3 )
+EDGAR_NOx$Non.CO2 <- "NOx_AGR"
+L122.EDGAR <- rbind( EDGAR_CH4, EDGAR_N2O, EDGAR_NH3, EDGAR_NOx )
 L122.EDGAR$sector <- EDGAR_sector$agg_sector[ match( L122.EDGAR$IPCC, EDGAR_sector$IPCC ) ]
 L122.EDGAR$iso <- EDGAR_nation$iso[ match( L122.EDGAR$ISO_A3, EDGAR_nation$ISO_A3 )]
 L122.EDGAR$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L122.EDGAR$iso, iso_GCAM_regID$iso )]   

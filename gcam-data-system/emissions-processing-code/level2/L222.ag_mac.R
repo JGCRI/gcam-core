@@ -27,6 +27,7 @@ sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
+A_biocrops_R_AEZ <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ" )
 A_region <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 GCAM_sector_tech <- readdata( "EMISSIONS_MAPPINGS", "GCAM_sector_tech" )
 MM_MAC <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_ManureManagement" )
@@ -103,6 +104,9 @@ L222.N2O_MAC_S_R_T$year <- final_emiss_year
 L222.N2O_MAC_S_R_T$Non.CO2 <- "N2O_AGR"
 L222.N2O_MAC_S_R_T$name <- "N2O"
 L222.N2O_MAC_S_R_T <- L222.N2O_MAC_S_R_T[ c( names_AgTech, "year", "Non.CO2", "name", "tax", "mac.reduction" )]
+
+L222.N2O_MAC_S_R_T <- rename_biocrops( L222.N2O_MAC_S_R_T, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+                                lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 
 printlog( "Removing non-existent regions and AEZs from all tables")
 L222.N2O_MAC_S_R_T <- remove_AEZ_nonexist( L222.N2O_MAC_S_R_T )

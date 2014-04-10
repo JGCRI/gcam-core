@@ -93,6 +93,12 @@ L111.EDGAR$EDGAR_agg_sector <- EDGAR_sector$agg_sector[ match( L111.EDGAR$IPCC, 
 L111.EDGAR$iso <- EDGAR_nation$iso[ match( L111.EDGAR$ISO_A3, EDGAR_nation$ISO_A3 )]
 L111.EDGAR$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L111.EDGAR$iso, iso_GCAM_regID$iso )]   
 
+#Save international shipping & aviation emissions in a separate dataframe
+L111.EDGAR_intl <- subset( L111.EDGAR, L111.EDGAR$ISO_A3 %in% c( "SEA", "AIR" ) )
+L111.EDGAR_intl <- L111.EDGAR_intl[ names( L111.EDGAR_intl ) %!in% c( "IPCC.Annex", "World.Region", "ISO_A3", "iso", "Name", "IPCC", "IPCC_description", "GCAM_region_ID" ) ]
+L111.EDGAR_intl <- na.omit( L111.EDGAR_intl )
+L111.EDGAR_intl.melt <- melt( L111.EDGAR_intl, id.vars = c( "EDGAR_agg_sector", "Non.CO2" ))
+
 #Drop unnecessary columns, aggregate by region, and melt
 L111.EDGAR <- L111.EDGAR[ names( L111.EDGAR ) %!in% c( "IPCC.Annex", "World.Region", "ISO_A3", "iso", "Name", "IPCC", "IPCC_description" ) ]
 L111.EDGAR <- na.omit( L111.EDGAR )
@@ -110,6 +116,24 @@ L111.nonghg_tg_R_en_Si_F_Yh.melt$scaler <- L111.emiss_scaler$scaler[ match( vecp
 L111.nonghg_tg_R_en_Si_F_Yh.melt$emissions <- L111.nonghg_tg_R_en_Si_F_Yh.melt$epa_emissions * L111.nonghg_tg_R_en_Si_F_Yh.melt$scaler
 L111.nonghg_tg_R_en_Si_F_Yh.melt[ is.na( L111.nonghg_tg_R_en_Si_F_Yh.melt ) ] <- 0
 
+printlog( "Compute international shipping and international aviation emissions")
+# These are provided in the EDGAR inventory at the global level only
+L111.nonghg_tg_R_en_Si_F_Yh_intl.melt <- subset( L111.nonghg_tg_R_en_Si_F_Yh.melt, L111.nonghg_tg_R_en_Si_F_Yh.melt$EDGAR_agg_sector %in% trn_intl_sectors )
+L111.nonghg_tg_R_en_Si_F_Yh_dom.melt <- subset( L111.nonghg_tg_R_en_Si_F_Yh.melt, L111.nonghg_tg_R_en_Si_F_Yh.melt$EDGAR_agg_sector %!in% trn_intl_sectors )
+
+L111.en_Si_Yh_intl.melt <- aggregate( L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$energy, by=as.list( L111.nonghg_tg_R_en_Si_F_Yh_intl.melt[ c( "EDGAR_agg_sector", "Non.CO2", "xyear" ) ] ), sum )
+L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$tot_energy <- L111.en_Si_Yh_intl.melt$x[ match( vecpaste( L111.nonghg_tg_R_en_Si_F_Yh_intl.melt[ c( "EDGAR_agg_sector", "Non.CO2", "xyear" ) ] ), vecpaste( L111.en_Si_Yh_intl.melt[  c( "EDGAR_agg_sector", "Non.CO2", "xyear" ) ]) ) ] 
+L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$tot_emiss <- L111.EDGAR_intl.melt$value[ match( vecpaste( L111.nonghg_tg_R_en_Si_F_Yh_intl.melt[ c( "EDGAR_agg_sector", "Non.CO2", "xyear" ) ] ), vecpaste( L111.EDGAR_intl.melt[  c( "EDGAR_agg_sector", "Non.CO2", "variable" ) ]) ) ] / 1000.0 
+L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$energy_share <- L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$energy / L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$tot_energy
+L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$emissions <- L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$tot_emiss * L111.nonghg_tg_R_en_Si_F_Yh_intl.melt$energy_share
+
+#Remove unnecessary columns and rows
+L111.nonghg_tg_R_en_Si_F_Yh_intl.melt <- L111.nonghg_tg_R_en_Si_F_Yh_intl.melt[ names( L111.nonghg_tg_R_en_Si_F_Yh_intl.melt ) %!in% c( "tot_energy", "tot_emiss", "energy_share" )]
+L111.nonghg_tg_R_en_Si_F_Yh_intl.melt <- na.omit( L111.nonghg_tg_R_en_Si_F_Yh_intl.melt )
+
+#Recombine dataframes
+L111.nonghg_tg_R_en_Si_F_Yh.melt <- rbind( L111.nonghg_tg_R_en_Si_F_Yh_intl.melt, L111.nonghg_tg_R_en_Si_F_Yh_dom.melt )
+
 printlog( "Map in final GCAM sector, technology, and driver type")
 L111.nonghg_tg_R_en_S_F_Yh.melt <- L111.nonghg_tg_R_en_Si_F_Yh.melt
 L111.nonghg_tg_R_en_S_F_Yh.melt$supplysector <- GCAM_sector_tech$supplysector[ match( vecpaste( L111.nonghg_tg_R_en_S_F_Yh.melt[ c( "sector", "fuel", "technology" ) ] ) , vecpaste( GCAM_sector_tech[c( "sector", "fuel", "technology" )] ) ) ]
@@ -118,7 +142,8 @@ L111.nonghg_tg_R_en_S_F_Yh.melt$stub.technology <- GCAM_sector_tech$stub.technol
 L111.nonghg_tg_R_en_S_F_Yh.melt <- aggregate( L111.nonghg_tg_R_en_S_F_Yh.melt$emissions, by=as.list( L111.nonghg_tg_R_en_S_F_Yh.melt[ R_G_StubTechYr ]), sum)
 names( L111.nonghg_tg_R_en_S_F_Yh.melt )[ names( L111.nonghg_tg_R_en_S_F_Yh.melt ) == "x" ] <- "input.emissions"
 
-#Reshape
+#Remove Non-EDGAR years and Reshape
+L111.nonghg_tg_R_en_S_F_Yh.melt <- subset( L111.nonghg_tg_R_en_S_F_Yh.melt, L111.nonghg_tg_R_en_S_F_Yh.melt$xyear %in% X_EDGAR_historical_years )
 L111.nonghg_tg_R_en_S_F_Yh <- dcast( L111.nonghg_tg_R_en_S_F_Yh.melt, GCAM_region_ID + Non.CO2 + supplysector + subsector + stub.technology ~ xyear, value = c( "input.emissions" ) )
  
 printlog( "Compute emissions factor by GCAM sector, technology, and driver type" )

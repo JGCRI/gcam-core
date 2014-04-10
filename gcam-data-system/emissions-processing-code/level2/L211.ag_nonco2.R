@@ -28,6 +28,7 @@ sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 A_regions <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 A_agSupplySector <- readdata( "AGLU_ASSUMPTIONS", "A_agSupplySector" )
+A_biocrops_R_AEZ <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
 L121.nonco2_tg_R_awb_C_Y_AEZ <- readdata( "EMISSIONS_LEVEL1_DATA", "L121.nonco2_tg_R_awb_C_Y_AEZ" )
 L122.ghg_tg_R_agr_C_Y_AEZ <- readdata( "EMISSIONS_LEVEL1_DATA", "L122.ghg_tg_R_agr_C_Y_AEZ" )
@@ -93,6 +94,9 @@ L211.AGRBio$year <- final_emiss_year
 
 #Format for csv file
 L211.AGRBio <- L211.AGRBio[ c( names_AgTech, "year", "Non.CO2", "bio_N2O_coef" ) ]
+
+L211.AGRBio <- rename_biocrops( L211.AGRBio, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+                                          lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 
 printlog( "L211.AnAGREmissions: an AGR emissions in all regions" )
 #Interpolate and add region name

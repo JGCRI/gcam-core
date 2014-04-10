@@ -98,16 +98,43 @@ L124.nonco2_tg_R_forest_Y_AEZ.melt <- na.omit( L124.nonco2_tg_R_forest_Y_AEZ.mel
 #Reshape
 L124.nonco2_tg_R_forest_Y_AEZ <- dcast( L124.nonco2_tg_R_forest_Y_AEZ.melt, GCAM_region_ID + Non.CO2 + AEZ ~ variable, value = c( "emissions" ) )
 
+printlog( "Compute average emissions factors for forest and grassland")
+#These emissions factors will be used from 2005 and beyond
+L124.grass_bm2_Y <- aggregate( L124.grass_bm2_R_Y$value, by=as.list( L124.grass_bm2_R_Y[ c( "variable" ) ] ), sum  )
+L124.forest_bm2_Y <- aggregate( L124.forest_bm2_R_Y$value, by=as.list( L124.forest_bm2_R_Y[ c( "variable" ) ] ), sum  )
+
+L124.nonco2_tg_grass_Y.melt <- aggregate( L124.nonco2_tg_R_grass_Y_AEZ.melt$emissions, by=as.list( L124.nonco2_tg_R_grass_Y_AEZ.melt[ c( "Non.CO2", "variable" ) ] ), sum )
+L124.nonco2_tg_forest_Y.melt <- aggregate( L124.nonco2_tg_R_forest_Y_AEZ.melt$emissions, by=as.list( L124.nonco2_tg_R_forest_Y_AEZ.melt[ c( "Non.CO2", "variable" ) ] ), sum )
+
+L124.nonco2_tgbm2_grass_Y.melt <- L124.nonco2_tg_grass_Y.melt
+names( L124.nonco2_tgbm2_grass_Y.melt )[ names( L124.nonco2_tgbm2_grass_Y.melt ) == "x" ] <- "emissions"
+L124.nonco2_tgbm2_grass_Y.melt$land_area <- L124.grass_bm2_Y$x[ match( L124.nonco2_tgbm2_grass_Y.melt$variable, L124.grass_bm2_Y$variable )]
+L124.nonco2_tgbm2_grass_Y.melt$land_type <- "grassland"
+L124.nonco2_tgbm2_grass_Y.melt$em_fact <- L124.nonco2_tgbm2_grass_Y.melt$emissions / L124.nonco2_tgbm2_grass_Y.melt$land_area
+L124.nonco2_tgbm2_grass_fy.melt <- subset( L124.nonco2_tgbm2_grass_Y.melt, L124.nonco2_tgbm2_grass_Y.melt$variable == paste( "X", final_emiss_year, sep="" ))
+L124.nonco2_tgbm2_grass_fy.melt <- L124.nonco2_tgbm2_grass_fy.melt[ names( L124.nonco2_tgbm2_grass_fy.melt ) %in% c( "Non.CO2", "land_type", "em_fact" )]
+
+L124.nonco2_tgbm2_forest_Y.melt <- L124.nonco2_tg_forest_Y.melt
+names( L124.nonco2_tgbm2_forest_Y.melt )[ names( L124.nonco2_tgbm2_forest_Y.melt ) == "x" ] <- "emissions"
+L124.nonco2_tgbm2_forest_Y.melt$land_area <- L124.forest_bm2_Y$x[ match( L124.nonco2_tgbm2_forest_Y.melt$variable, L124.forest_bm2_Y$variable )]
+L124.nonco2_tgbm2_forest_Y.melt$land_type <- "forest"
+L124.nonco2_tgbm2_forest_Y.melt$em_fact <- L124.nonco2_tgbm2_forest_Y.melt$emissions / L124.nonco2_tgbm2_forest_Y.melt$land_area
+L124.nonco2_tgbm2_forest_fy.melt <- subset( L124.nonco2_tgbm2_forest_Y.melt, L124.nonco2_tgbm2_forest_Y.melt$variable == paste( "X", final_emiss_year, sep="" ))
+L124.nonco2_tgbm2_forest_fy.melt <- L124.nonco2_tgbm2_forest_fy.melt[ names( L124.nonco2_tgbm2_forest_fy.melt ) %in% c( "Non.CO2", "land_type", "em_fact" )]
 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
 comments.L124.nonco2_tg_R_grass_Y_AEZ <- c( "Grassland fire emissions by GCAM region / commodity / historical year", "Unit = Tg" )
 comments.L124.nonco2_tg_R_forest_Y_AEZ <- c( "Forest fire emissions by GCAM region / commodity / historical year", "Unit = Tg" )
+comments.L124.nonco2_tgbm2_grass_fy.melt <- c( "Average grassland fire emissions factors in the final historical year", "Unit = Tg / bm2" )
+comments.L124.nonco2_tgbm2_forest_fy.melt <- c( "Average forest fire emissions factors in the final historical year", "Unit = Tg / bm2" )
 
 #write tables as CSV files
 writedata( L124.nonco2_tg_R_grass_Y_AEZ, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tg_R_grass_Y_AEZ", comments=comments.L124.nonco2_tg_R_grass_Y_AEZ )
 writedata( L124.nonco2_tg_R_forest_Y_AEZ, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tg_R_forest_Y_AEZ", comments=comments.L124.nonco2_tg_R_forest_Y_AEZ )
+writedata( L124.nonco2_tgbm2_grass_fy.melt, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tgbm2_grass_fy.melt", comments=comments.L124.nonco2_tgbm2_grass_fy.melt )
+writedata( L124.nonco2_tgbm2_forest_fy.melt, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tgbm2_forest_fy.melt", comments=comments.L124.nonco2_tgbm2_forest_fy.melt )
 
 # Every script should finish with this line
 logstop()
