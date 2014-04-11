@@ -47,6 +47,7 @@ L118.out_EJ_R_elec_hydro_Yfut <- readdata( "ENERGY_LEVEL1_DATA", "L118.out_EJ_R_
 L1231.in_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.in_EJ_R_elec_F_tech_Yh" )
 L1231.out_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.out_EJ_R_elec_F_tech_Yh" )
 L1231.eff_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.eff_R_elec_F_tech_Yh" )
+L102.gdp_mil90usd_GCAM3_ctry_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_ctry_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -70,15 +71,39 @@ if( any( !is.na( A23.subsector_shrwt$year.fillout ) ) ){
 	}
 
 printlog( "L223.SubsectorShrwt_nuc: Subsector shareweights of nuclear electricity" )
-L223.SubsectorShrwt_nuc_GCAM3 <- interpolate_and_melt(
-      A23.subsector_shrwt_nuc_R, model_future_years[model_future_years >= 2020 & model_future_years <= 2065 ], value.name = "share.weight" )
-L223.SubsectorShrwt_nuc <- repeat_and_add_vector( subset( L223.SubsectorShrwt_nuc_GCAM3, region_GCAM3 == region_GCAM3[1] ), R, GCAM_region_names[[R]] )
-L223.SubsectorShrwt_nuc$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( L223.SubsectorShrwt_nuc[[R]], iso_GCAM_regID[[R]] ) ]
-L223.SubsectorShrwt_nuc$share.weight <- L223.SubsectorShrwt_nuc_GCAM3$share.weight[
-      match( vecpaste( L223.SubsectorShrwt_nuc[ c( "region_GCAM3", "subsector", "year" ) ] ),
-             vecpaste( L223.SubsectorShrwt_nuc_GCAM3[ c( "region_GCAM3", "subsector", "year" ) ] ) ) ]
-L223.SubsectorShrwt_nuc <- add_region_name( L223.SubsectorShrwt_nuc )
-L223.SubsectorShrwt_nuc <- na.omit( L223.SubsectorShrwt_nuc[ names_SubsectorShrwt ] )
+# Start out with the list of ISO matched to region_GCAM3
+L223.SubsectorShrwt_nuc_ctry <- iso_GCAM_regID[ c( "iso", "region_GCAM3", R ) ]
+X_nuc_shrwt_years <- names( A23.subsector_shrwt_nuc_R )[ grepl( "X[0-9]{4}", names( A23.subsector_shrwt_nuc_R ) ) ]
+nuc_shrwt_years <- as.numeric( substr( X_nuc_shrwt_years, 2, 5 ) )
+L223.SubsectorShrwt_nuc_ctry[ X_nuc_shrwt_years ] <- A23.subsector_shrwt_nuc_R[
+      match( L223.SubsectorShrwt_nuc_ctry$region_GCAM3,
+             A23.subsector_shrwt_nuc_R$region_GCAM3 ),
+      X_nuc_shrwt_years ]
+
+#Where country-level shareweights are provided, use those
+L223.SubsectorShrwt_nuc_ctry[ L223.SubsectorShrwt_nuc_ctry$iso %in% A23.subsector_shrwt_nuc_R$iso, X_nuc_shrwt_years ] <- 
+      A23.subsector_shrwt_nuc_R[ match( 
+         L223.SubsectorShrwt_nuc_ctry$iso[ L223.SubsectorShrwt_nuc_ctry$iso %in% A23.subsector_shrwt_nuc_R$iso ],
+         A23.subsector_shrwt_nuc_R$iso ),
+      X_nuc_shrwt_years ]
+      
+# Use GDP by country as a weighting factor in going from country-level shareweights to region-level shareweights
+L223.SubsectorShrwt_nuc_ctry$weight <- L102.gdp_mil90usd_GCAM3_ctry_Y[[X_final_historical_year]][
+      match( L223.SubsectorShrwt_nuc_ctry$iso, L102.gdp_mil90usd_GCAM3_ctry_Y$iso ) ]
+L223.SubsectorShrwt_nuc_ctry <- na.omit( L223.SubsectorShrwt_nuc_ctry )
+L223.SubsectorShrwt_nuc_ctry[ X_nuc_shrwt_years ] <-
+      L223.SubsectorShrwt_nuc_ctry[ X_nuc_shrwt_years ] * L223.SubsectorShrwt_nuc_ctry$weight
+L223.SubsectorShrwt_nuc_R <- aggregate( L223.SubsectorShrwt_nuc_ctry[ c( X_nuc_shrwt_years, "weight" ) ],
+      by=as.list( L223.SubsectorShrwt_nuc_ctry[ R ] ), sum )
+L223.SubsectorShrwt_nuc_R[ X_nuc_shrwt_years ] <- 
+      L223.SubsectorShrwt_nuc_R[ X_nuc_shrwt_years ] / L223.SubsectorShrwt_nuc_R$weight
+
+# Interpolate to model time periods, and add columns specifying the final format
+L223.SubsectorShrwt_nuc <- interpolate_and_melt(
+      L223.SubsectorShrwt_nuc_R, model_future_years[ model_future_years >= min( nuc_shrwt_years ) & model_future_years <= max( nuc_shrwt_years ) ],
+      value.name = "share.weight" )
+L223.SubsectorShrwt_nuc[ c( supp, subs ) ] <- A23.subsector_shrwt_nuc_R[ 1, c( supp, subs ) ]
+L223.SubsectorShrwt_nuc <- add_region_name( L223.SubsectorShrwt_nuc )[ names_SubsectorShrwt ]
 
 printlog( "L223.SubsectorShrwt_renew: Near term subsector shareweights of renewable technologies" )
 #First, melt the table with near-term shareweights from GCAM 3.0 regions
