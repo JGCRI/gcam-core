@@ -598,6 +598,7 @@
     <ClCompile Include="..\..\marketplace\source\calibration_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\demand_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\inverse_calibration_market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\linked_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\market.cpp" />
     <ClCompile Include="..\..\marketplace\source\market_locator.cpp" />
     <ClCompile Include="..\..\marketplace\source\market_RES.cpp" />
@@ -608,6 +609,7 @@
     <ClCompile Include="..\..\marketplace\source\price_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\trial_value_market.cpp" />
     <ClCompile Include="..\..\parallel\source\gcam_parallel.cpp" />
+    <ClCompile Include="..\..\policy\source\linked_ghg_policy.cpp" />
     <ClCompile Include="..\..\resources\source\accumulated_grade.cpp" />
     <ClCompile Include="..\..\resources\source\accumulated_post_grade.cpp" />
     <ClCompile Include="..\..\resources\source\depleting_fixed_resource.cpp" />
@@ -670,6 +672,7 @@
     <ClCompile Include="..\..\solution\util\source\solver_library.cpp" />
     <ClCompile Include="..\..\solution\util\source\svd_invert_solve.cpp" />
     <ClCompile Include="..\..\solution\util\source\unsolved_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\target_finder\source\cumulative_emissions_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\kyoto_forcing_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\secanter.cpp" />
     <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp" />
@@ -906,6 +909,7 @@
     <ClInclude Include="..\..\marketplace\include\demand_market.h" />
     <ClInclude Include="..\..\marketplace\include\imarket_type.h" />
     <ClInclude Include="..\..\marketplace\include\inverse_calibration_market.h" />
+    <ClInclude Include="..\..\marketplace\include\linked_market.h" />
     <ClInclude Include="..\..\marketplace\include\market.h" />
     <ClInclude Include="..\..\marketplace\include\market_locator.h" />
     <ClInclude Include="..\..\marketplace\include\market_RES.h" />
@@ -923,6 +927,7 @@
     <ClInclude Include="..\..\parallel\include\grain-collect.hpp" />
     <ClInclude Include="..\..\parallel\include\graph-parse.hpp" />
     <ClInclude Include="..\..\parallel\include\util.hpp" />
+    <ClInclude Include="..\..\policy\include\linked_ghg_policy.h" />
     <ClInclude Include="..\..\resources\include\accumulated_grade.h" />
     <ClInclude Include="..\..\resources\include\accumulated_post_grade.h" />
     <ClInclude Include="..\..\resources\include\aresource.h" />
@@ -996,6 +1001,7 @@
     <ClInclude Include="..\..\solution\util\include\ublas-helpers.hpp" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solver_info_filter.h" />
+    <ClInclude Include="..\..\target_finder\include\cumulative_emissions_target.h" />
     <ClInclude Include="..\..\target_finder\include\emissions_stabalization_target.h" />
     <ClInclude Include="..\..\target_finder\include\itarget_solver.h" />
     <ClInclude Include="..\..\target_finder\include\kyoto_forcing_target.h" />

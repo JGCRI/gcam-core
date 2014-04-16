@@ -8,6 +8,7 @@ PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = policy_ghg.o \
+             linked_ghg_policy.o \
              policy_portfolio_standard.o
 
 policy_dir: ${OBJS}

@@ -51,6 +51,7 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/price_market.h"
+#include "marketplace/include/linked_market.h"
 #include "marketplace/include/market_locator.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
@@ -174,6 +175,42 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
         markets.push_back( tempVector );
     }
 
+    // Add the region onto the market.
+    for( unsigned int i = 0; i < markets[ marketNumber ].size(); i++ ) {
+        markets[ marketNumber ][ i ]->addRegion( regionName );
+    }
+    // Return whether we were required to create a new market.
+    return isNewMarket;
+}
+
+bool Marketplace::createLinkedMarket( const string& regionName, const string& marketName,
+                                      const string& goodName, const string& linkedMarket )
+{
+    /*! \pre Region name, market name, sector name, and linked good name must be non null. */
+    assert( !regionName.empty() && !marketName.empty() && !goodName.empty() && !linkedMarket.empty() );
+
+    // Create the index within the market locator.
+    const int uniqueNumber = static_cast<int>( markets.size() );
+    int marketNumber = mMarketLocator->addMarket( marketName, regionName, goodName, uniqueNumber );
+    
+    // If the market number is the unique number we passed it, the market did not already exist and 
+    // we should create the market objects, one per period.
+    const bool isNewMarket = ( marketNumber == uniqueNumber );
+    if( isNewMarket ){
+        const int linkedMarketNumber = mMarketLocator->getMarketNumber( regionName, linkedMarket );
+        if( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Linked market "<< goodName << " in " << regionName << " could not be linked to " << linkedMarket << endl;
+        }
+        vector<Market*> tempVector( scenario->getModeltime()->getmaxper() );
+        for( unsigned int i = 0; i < tempVector.size(); i++ ){
+            tempVector[ i ] = new LinkedMarket( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ? 0
+                                                : markets[ linkedMarketNumber ][ i ], goodName, marketName, i );
+        }
+        markets.push_back( tempVector );
+    }
+    
     // Add the region onto the market.
     for( unsigned int i = 0; i < markets[ marketNumber ].size(); i++ ) {
         markets[ marketNumber ][ i ]->addRegion( regionName );
@@ -1029,7 +1066,7 @@ bool Marketplace::checkstate(int period, const std::vector<double> &ostate, std:
   bool ok = true;
   std::vector<double> cstate(fullstate(period));
   for(unsigned i=0; i<ostate.size(); ++i) {
-    if(!dblcmp(ostate[i],cstate[i], tol)) {
+      if(!dblcmp(ostate[i],cstate[i], tol)) {
       ok = false;
       if(log) {
         int imkt = i/3;

@@ -1203,7 +1203,7 @@ void XMLDBOutputter::startVisitMarket( const Market* aMarket,
         }
     }
 
-    writeItem( "price", mCurrentPriceUnit, aMarket->price, -1 );
+    writeItem( "price", mCurrentPriceUnit, aMarket->getPrice(), -1 );
     writeItem( "demand", mCurrentOutputUnit, aMarket->getRawDemand(), -1 );
     writeItem( "supply", mCurrentOutputUnit, aMarket->getRawSupply(), -1 );
 

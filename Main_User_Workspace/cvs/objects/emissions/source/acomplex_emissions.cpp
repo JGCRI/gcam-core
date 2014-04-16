@@ -211,15 +211,38 @@ double AComplexEmissions::getGHGValue( const string& aRegionName,
     
     double GHGTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
-        GHGTax = 0;
+        return 0;
     }
 
     // apply carbon equivalent to emiss coefficient
     double generalizedCost = GHGTax * gwp * mEmissionsCoef->getCoef() / CVRT90;
+    
+    double macReduction = 0;
+    if ( ghgMac.get() && aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ){
+        macReduction = ghgMac->findReduction( aRegionName, aPeriod);
+    }
+    
+    double fControl = 0;
+    /*!
+     * \warning We would need emissDriver to adjust mid control only when we are dealing
+     *          with an input driver, in other words calibrating emissions.  This does not
+     *          make sense to do when a policy is in effect however it may be occurring.
+     *          There is not "correct" behavior in this case.
+     */
+    double mAdjustedGDPMidControl = const_cast<AComplexEmissions*>(this)->adjustControlParameters( gdpCap, /*emissDriver*/0, macReduction, aPeriod );
+    // -1000 is used as a flag to indicate maxCntrl is not being used. This is problematic
+    // because maxCntrl can and is currently being computed to take on a value smaller
+    // than -1000. This could be a data error, but is happening now.
+    // TODO: Separate the switch and the value from maxCntrl ( possibly add a boolean )
+    if ( maxCntrl > -999 ) {
+        fControl = const_cast<AComplexEmissions*>(this)->controlFunction( maxCntrl, mGDPControlRange, mAdjustedGDPMidControl, gdpCap );
+    }
+    
+    double adjEmissCoef = ( 1- macReduction ) * ( 1 - emAdjust ) * ( 1 - fControl );
 
     // The generalized cost returned by the GHG may be negative if
     // emissions crediting is occuring.
-    return generalizedCost;
+    return generalizedCost * adjEmissCoef;
 }
 
 void AComplexEmissions::calcEmission( const string& aRegionName, 
@@ -370,7 +393,7 @@ void AComplexEmissions::toDebugXMLDerived( const int period, ostream& out, Tabs*
 * \return mAdjustedGDPMidControl
 * \todo let initCalc know the period so that calcTechChange calculation can be moved there and will only have to be done once per period
 */
-double AComplexEmissions::adjustControlParameters( const double gdpCap, const double emissDrive, const double macReduction, const int period ){
+double AComplexEmissions::adjustControlParameters( const double gdpCap, const double emissDrive, const double macReduction, const int period ) {
     double mAdjustedGDPMidControl = mGDPMidControl; //! mGDPMidControlRange used by the control function- adjusted for techDiffusion
 
     if (techDiff !=0){
@@ -458,6 +481,12 @@ double AComplexEmissions::calcTechChange( const int period ){
     int year = modeltime->getper_to_yr( period ); 
     year -=  modeltime->getper_to_yr(1); // subtracts off base year to find number of years after base year
     return pow(1 + (techDiff / 100), year );
+}
+
+void AComplexEmissions::completeInit( const string& aRegionName, const string& aSectorName,
+                                      const IInfo* aTechIInfo )
+{
+    AGHG::completeInit( aRegionName, aSectorName, aTechIInfo );
 }
 
 void AComplexEmissions::initCalc( const string& aRegionName,

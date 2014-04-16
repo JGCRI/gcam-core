@@ -292,6 +292,10 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 
     // Create a single primary output for the resource output.
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( mName ) );
+    
+    for( unsigned int i = 0; i < ghg.size(); i++ ) {
+        ghg[ i ]->completeInit( aRegionName, mName, mResourceInfo.get() );
+    }
 }
 
 /*! \brief Perform any initializations needed for each period.

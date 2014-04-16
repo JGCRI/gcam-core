@@ -60,6 +60,7 @@
 #include "emissions/include/emissions_driver_factory.h"
 #include "technologies/include/icapture_component.h"
 #include "marketplace/include/cached_market.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -186,6 +187,10 @@ void AGHG::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 void AGHG::completeInit( const string& aRegionName, const string& aSectorName,
                          const IInfo* aTechInfo )
 {
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
+                                                                      aRegionName,
+                                                                      getName(),
+                                                                      aRegionName );
 }
 
 /*!

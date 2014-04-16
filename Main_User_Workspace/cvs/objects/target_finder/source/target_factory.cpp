@@ -51,6 +51,7 @@
 #include "target_finder/include/temperature_target.h"
 #include "target_finder/include/emissions_stabalization_target.h"
 #include "target_finder/include/kyoto_forcing_target.h"
+#include "target_finder/include/cumulative_emissions_target.h"
 
 using namespace std;
 
@@ -65,6 +66,7 @@ bool TargetFactory::isOfType( const string& aType ) {
 		|| ( aType == ForcingTarget::getXMLNameStatic() )
 		|| ( aType == TemperatureTarget::getXMLNameStatic() )
         || ( aType == KyotoForcingTarget::getXMLNameStatic() )
+        || ( aType == CumulativeEmissionsTarget::getXMLNameStatic() )
         || ( aType == EmissionsStabalizationTarget::getXMLNameStatic() ) );
 }
 
@@ -104,7 +106,11 @@ auto_ptr<ITarget> TargetFactory::create( const string& aType,
                                                           aTargetValue,
                                                           aFirstTaxYear ) );
     }
-
+    if( aType == CumulativeEmissionsTarget::getXMLNameStatic() ){
+        return auto_ptr<ITarget>( new CumulativeEmissionsTarget( aClimateModel,
+                                                                 aTargetValue,
+                                                                 aFirstTaxYear ) );
+    }
     if( aType == EmissionsStabalizationTarget::getXMLNameStatic() ){
         return auto_ptr<ITarget>( new EmissionsStabalizationTarget( aClimateModel,
                                                                     aTargetValue,

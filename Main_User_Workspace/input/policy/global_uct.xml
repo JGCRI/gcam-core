@@ -1,0 +1,100 @@
+<scenario name="uct_addLUC">
+	<world>
+		<region name="USA">
+            <!-- Linked policies must be read in after the policy to which it links.
+                 This may be difficult to do in some cases so create an empty CO2
+                 policy that ensure there is something to link to.  The actual policy
+                 can be filled in later.
+             -->
+			<ghgpolicy name="CO2">
+				<market>global</market>
+            </ghgpolicy>
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+                <price-adjust year="1975" fillout="1">1.0</price-adjust>
+                <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
+                <price-unit>1990$/tC</price-unit>
+                <output-unit>MTC</output-unit>
+			</linked-ghg-policy>
+		</region>
+		<region name="Canada">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Western Europe">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Japan">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Australia_NZ">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Former Soviet Union">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="China">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Middle East">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Africa">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Latin America">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Southeast Asia">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Eastern Europe">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="Korea">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+		<region name="India">
+			<linked-ghg-policy name="CO2_LUC">
+				<market>global</market>
+				<linked-policy>CO2</linked-policy>
+			</linked-ghg-policy>
+		</region>
+    </world>
+</scenario>

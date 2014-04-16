@@ -19,6 +19,7 @@ OBJS       = calibration_market.o \
              price_market.o \
              cached_market.o \
              market_RES.o \
+             linked_market.o \
              trial_value_market.o
 
 marketplace_dir: ${OBJS}

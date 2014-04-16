@@ -371,59 +371,51 @@ void LandLeaf::setProfitRate( const string& aRegionName,
 * \param aPeriod Model period.
 */
 double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod ) const {
-    // Get boolean from configuration file that indicates agriculture lands should
-    // be subsidized. Default is true
-    const static bool agSubsidy = Configuration::getInstance()->getBool( "agSubsidy", true );
-    if ( agSubsidy ){
-        const double dollar_conversion_75_90 = 2.212;
-        // Check if a carbon market exists and has a non-zero price.
-        const Marketplace* marketplace = scenario->getMarketplace();
-        double carbonPrice = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
+    const double dollar_conversion_75_90 = 2.212;
+    // Check if a carbon market exists and has a non-zero price.
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double carbonPrice = marketplace->getPrice( "CO2_LUC", aRegionName, aPeriod, false );
 
+    // If a carbon price exists, calculate the subsidy
+    if( carbonPrice != Marketplace::NO_MARKET_PRICE && carbonPrice > 0.0 ){
         // Retrieve proportional tax rate.
-        const IInfo* marketInfo = marketplace->getMarketInfo( "CO2", aRegionName, aPeriod, false );
+        const IInfo* marketInfo = marketplace->getMarketInfo( "CO2_LUC", aRegionName, aPeriod, false );
         // Note: the key includes the region name.
-        const double proportionalTaxRate = 
-            ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
+        const double proportionalTaxRate =
+        ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) )
             ? marketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
             : 1.0;
+        
+        // Carbon price is in 1990$, but land value is in 1975$ so we need to convert
+        carbonPrice /= dollar_conversion_75_90;
 
-        // If a carbon price exists, calculate the subsidy
-        if( carbonPrice != Marketplace::NO_MARKET_PRICE && carbonPrice > 0.0 ){
-            // Carbon price is in 1990$, but land value is in 1975$ so we need to convert
-            carbonPrice /= dollar_conversion_75_90;
+        // Adjust carbon price with the proportional tax rate.
+        carbonPrice *= proportionalTaxRate;
+        
+        // Carbon content is in kgC/m2. Land profit rate is in $/billion m2 (or $/ thous km2).
+        // We need to multiply by 1e9 to go from $/m2 to $/billion m2
+        // We need to divide by 1e3 to go from kgC to tC
+        const double conversionFactor = 1000000.0;
 
-            // Adjust carbon price with the proportional tax rate.
-            carbonPrice *= proportionalTaxRate;
-            
-            // Carbon content is in kgC/m2. Land profit rate is in $/billion m2 (or $/ thous km2).
-            // We need to multiply by 1e9 to go from $/m2 to $/billion m2
-            // We need to divide by 1e3 to go from kgC to tC
-            const double conversionFactor = 1000000.0;
+        // We are only subsidizing for carbon contents above the read in minimum
+        const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
+        double incrementalAboveCDensity = mCarbonContentCalc->getActualAboveGroundCarbonDensity( year )
+                                            - mMinAboveGroundCDensity;
+        double incrementalBelowCDensity = mCarbonContentCalc->getActualBelowGroundCarbonDensity( year )
+                                            - mMinBelowGroundCDensity;
 
-            // We are only subsidizing for carbon contents above the read in minimum
-            const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
-            double incrementalAboveCDensity = mCarbonContentCalc->getActualAboveGroundCarbonDensity( year )
-                                                - mMinAboveGroundCDensity;
-            double incrementalBelowCDensity = mCarbonContentCalc->getActualBelowGroundCarbonDensity( year )
-                                                - mMinBelowGroundCDensity;
+        // Calculate the carbon value as the total carbon content of the land
+        // multiplied by the carbon price and the interest rate.
+        double carbonSubsidy = ( incrementalAboveCDensity * mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
+            + incrementalBelowCDensity * mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
+            * carbonPrice * ( mInterestRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
 
-            // Calculate the carbon value as the total carbon content of the land
-            // multiplied by the carbon price and the interest rate.
-            double carbonSubsidy = ( incrementalAboveCDensity * mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
-                + incrementalBelowCDensity * mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
-                * carbonPrice * ( mInterestRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
+        assert( carbonSubsidy >= 0.0 );
 
-            assert( carbonSubsidy >= 0.0 );
-
-            return carbonSubsidy;
-        }
-
-        // If no market price
-        return 0.0;
+        return carbonSubsidy;
     }
 
-    // If ag subsidy is not being used
+    // If no market price
     return 0.0;
 }
 
@@ -601,13 +593,12 @@ void LandLeaf::calcLUCEmissions( const string& aRegionName,
     mCarbonContentCalc->calc( aPeriod, aEndYear );
 
     // Add emissions to the carbon market. 
-    const static bool addLUCtoMarket = Configuration::getInstance()->getBool( "addLUCtoMarket", false );
     const Modeltime* modeltime = scenario->getModeltime();
-    if ( ( aEndYear != CarbonModelUtils::getEndYear() || aPeriod == modeltime->getmaxper() - 1 ) && addLUCtoMarket ) {
+    if ( ( aEndYear != CarbonModelUtils::getEndYear() || aPeriod == modeltime->getmaxper() - 1 ) ) {
         double LUCEmissions = mCarbonContentCalc
             ->getNetLandUseChangeEmission( modeltime->getper_to_yr( aPeriod ) );
         Marketplace* marketplace = scenario->getMarketplace();
-        mLastCalcCO2Value = marketplace->addToDemand( "CO2", aRegionName, LUCEmissions,
+        mLastCalcCO2Value = marketplace->addToDemand( "CO2_LUC", aRegionName, LUCEmissions,
                                                       mLastCalcCO2Value, aPeriod, false );
     }  
 }

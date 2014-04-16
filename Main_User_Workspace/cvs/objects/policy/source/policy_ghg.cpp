@@ -58,8 +58,6 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-// static initialize.
-const string GHGPolicy::XML_NAME = "ghgpolicy";
 
 /*! \brief Default constructor. */
 GHGPolicy::GHGPolicy():
@@ -114,7 +112,7 @@ GHGPolicy* GHGPolicy::clone() const {
 * \return The constant XML_NAME.
 */
 const string& GHGPolicy::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -127,6 +125,7 @@ const string& GHGPolicy::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const string& GHGPolicy::getXMLNameStatic() {
+    const static string XML_NAME = "ghgpolicy";
     return XML_NAME;
 }
 

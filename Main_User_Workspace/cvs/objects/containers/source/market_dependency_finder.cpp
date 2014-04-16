@@ -45,6 +45,7 @@
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market_locator.h"
 #include "marketplace/include/market.h"
+#include "marketplace/include/linked_market.h"
 #include "containers/include/iactivity.h"
 
 #if GCAM_PARALLEL_ENABLED
@@ -395,6 +396,26 @@ void MarketDependencyFinder::createOrdering() {
         // locate the market by name
         int marketNumber = mMarketplace->mMarketLocator->getMarketNumber( (*it)->mLocatedInRegion, (*it)->mName );
         if( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
+            // Handle the linked market type by tracing back the links to the actual policy
+            // and associating to that market directly.  Note that may be need to traverse
+            // multiple linked markets before we arrive at the actual policy.
+            if( mMarketplace->markets[ marketNumber ][ 0 ]->getType() == IMarketType::LINKED ) {
+                Market* currMarket = mMarketplace->markets[ marketNumber ][ 0 ];
+                int currMarketNumber = marketNumber;
+                while( currMarket->getType() == IMarketType::LINKED ) {
+                    currMarket = ((LinkedMarket*)currMarket)->mLinkedMarket;
+                    if( !currMarket ) {
+                        break;
+                    }
+                    currMarketNumber = mMarketplace->mMarketLocator->getMarketNumber( (*it)->mLocatedInRegion, currMarket->getGoodName() );
+                }
+                if( !currMarket ) {
+                    continue;
+                }
+                marketNumber = currMarketNumber;
+                assert( marketNumber != MarketLocator::MARKET_NOT_FOUND );
+            }
+            
             // Find/create an entry for the market to dependency struct
             auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( marketNumber ) );
             MarketToDepIterator mrktIter = mMarketsToDep.find( marketToDep.get() );
@@ -484,6 +505,10 @@ void MarketDependencyFinder::createOrdering() {
                 else {
                     if( !(*dependIt)->mPriceVertices.empty() ) {
                         (*mrktIter)->mImpliedVertices.insert( (*dependIt)->getFirstPriceVertex() );
+                    }
+                    else if( !(*dependIt)->mDemandVertices.empty() ) {
+                        // Could get here for instance if a resource has dependencies
+                        (*mrktIter)->mImpliedVertices.insert( (*dependIt)->getFirstDemandVertex() );
                     }
                 }
             }

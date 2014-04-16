@@ -1055,6 +1055,15 @@
     <ClCompile Include="..\..\ccarbon_model\source\node_carbon_calc.cpp">
       <Filter>Source Files\ccarbon_model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\marketplace\source\linked_market.cpp">
+      <Filter>Source Files\marketplace</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\policy\source\linked_ghg_policy.cpp">
+      <Filter>Source Files\policy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\target_finder\source\cumulative_emissions_target.cpp">
+      <Filter>Source Files\target_finder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2148,6 +2157,15 @@
     </ClInclude>
     <ClInclude Include="..\..\ccarbon_model\include\node_carbon_calc.h">
       <Filter>Header Files\ccarbon_model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\marketplace\include\linked_market.h">
+      <Filter>Header Files\marketplace</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\policy\include\linked_ghg_policy.h">
+      <Filter>Header Files\policy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\target_finder\include\cumulative_emissions_target.h">
+      <Filter>Header Files\target_finder</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

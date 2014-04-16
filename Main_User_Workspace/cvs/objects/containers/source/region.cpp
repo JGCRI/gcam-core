@@ -58,6 +58,7 @@
 
 #include "policy/include/policy_portfolio_standard.h"
 #include "policy/include/policy_ghg.h"
+#include "policy/include/linked_ghg_policy.h"
 #include "emissions/include/emissions_summer.h"
 
 #include "util/curves/include/curve.h"
@@ -157,6 +158,9 @@ void Region::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == GHGPolicy::getXMLNameStatic() ){
             parseContainerNode( curr, mGhgPolicies, new GHGPolicy() );
+        }
+        else if( nodeName == LinkedGHGPolicy::getXMLNameStatic() ){
+            parseContainerNode( curr, mGhgPolicies, new LinkedGHGPolicy() );
         }
         else if( nodeName == PolicyPortfolioStandard::getXMLNameStatic() ){
             parseContainerNode( curr, mPolicies, new PolicyPortfolioStandard() );

@@ -63,18 +63,17 @@ public:
     GHGPolicy( const std::string aName,
                const std::string aMarket,
                const std::vector<double>& aFixedTaxes );
-    GHGPolicy* clone() const;
-    const std::string& getName() const;
-    const std::string& getXMLName() const;
+    virtual GHGPolicy* clone() const;
+    virtual const std::string& getName() const;
+    virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-    void XMLParse( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    void completeInit( const std::string& aRegionName );
-    bool isApplicable( const std::string& aRegion ) const;
-    void setConstraint( const std::vector<double>& aConstraint );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
+    virtual void XMLParse( const xercesc::DOMNode* node );
+    virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual void completeInit( const std::string& aRegionName );
+    virtual bool isApplicable( const std::string& aRegion ) const;
+    virtual void setConstraint( const std::vector<double>& aConstraint );
+protected:
     std::string mName; //!< GHG name
     std::string mMarket; //!< Name of the market
     bool isFixedTax; //!< Boolean to use fixed tax or constraint

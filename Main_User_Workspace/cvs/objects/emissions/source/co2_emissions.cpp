@@ -48,7 +48,6 @@
 #include "technologies/include/ioutput.h"
 #include "technologies/include/icapture_component.h"
 #include "marketplace/include/cached_market.h"
-#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -125,15 +124,6 @@ void CO2Emissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 void CO2Emissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     // write the xml for the class members.
     XMLWriteElement( mEmissionsUnit, "emissions-unit", out, tabs );
-}
-
-void CO2Emissions::completeInit( const string& aRegionName, const string& aSectorName,
-                                 const IInfo* aTechInfo )
-{
-    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
-                                                                      aRegionName,
-                                                                      getName(),
-                                                                      aRegionName );
 }
 
 void CO2Emissions::initCalc( const string& aRegionName,

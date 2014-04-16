@@ -140,6 +140,8 @@ public:
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     bool createMarket( const std::string& regionName, const std::string& marketName,
                        const std::string& goodName, const IMarketType::Type aMarketType );
+    bool createLinkedMarket( const std::string& regionName, const std::string& marketName,
+                             const std::string& goodName, const std::string& linkedMarket );
     void initPrices();
     void nullSuppliesAndDemands( const int period );
     void setPrice( const std::string& goodName, const std::string& regionName, const double value,

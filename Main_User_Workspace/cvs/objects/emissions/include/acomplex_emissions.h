@@ -63,6 +63,10 @@ public:
     virtual AComplexEmissions* clone() const = 0;
 
     virtual void copyGHGParameters( const AGHG* prevGHG );
+    
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
+                               const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
                            const IInfo* aLocalInfo,

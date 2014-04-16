@@ -174,6 +174,11 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType,
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Price markets are only created internally in the marketplace." << endl;
     }
+    else if ( aType == IMarketType::LINKED ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Linked markets are only created via Marketplace::createLinkedMarket." << endl;
+    }
     else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
@@ -761,7 +766,7 @@ const string& Market::convert_type_to_string( const IMarketType::Type aType ) {
     // the same order as the IMarketType enum.
     static const string types[] = { "Normal", "Calibration", "Inverse-Calibration",
                                     "Tax", "RES", "Subsidy", "Trial-Value",
-                                    "Demand", "Price" };
+                                    "Demand", "Price", "Linked" };
 
     // Check that the types array is up to date.
     assert( sizeof( types ) / sizeof( types[ 0 ] ) == IMarketType::END );

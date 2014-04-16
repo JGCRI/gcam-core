@@ -68,10 +68,6 @@ public:
 
     virtual const std::string& getName() const;
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const IInfo* aTechIInfo );
-    
     virtual void initCalc( const std::string& aRegionName,
                            const IInfo* aLocalInfo,
                            const int aPeriod );

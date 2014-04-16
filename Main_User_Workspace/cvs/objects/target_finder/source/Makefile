@@ -16,6 +16,7 @@ OBJS       = bisecter.o \
              target_factory.o \
              secanter.o \
              kyoto_forcing_target.o \
+             cumulative_emissions_target.o \
              temperature_target.o
 
 target_finder_dir: ${OBJS}

@@ -17,6 +17,7 @@
 		0E44096E183D501B000DA5FF /* no_emiss_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E44096D183D501B000DA5FF /* no_emiss_carbon_calc.cpp */; };
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
 		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
+		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
 		CD48872C122873C200F5A88A /* land_carbon_densities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488433122873C000F5A88A /* land_carbon_densities.cpp */; };
@@ -279,6 +280,8 @@
 		CD48883B122873C200F5A88A /* plain_text_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871C122873C200F5A88A /* plain_text_logger.cpp */; };
 		CD48883C122873C200F5A88A /* xml_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871D122873C200F5A88A /* xml_logger.cpp */; };
 		CD548E5A12AFFD9400ADCE8C /* generic_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD548E5912AFFD9400ADCE8C /* generic_output.cpp */; };
+		CD83E61614F4584900A1D301 /* linked_market.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E61514F4584900A1D301 /* linked_market.cpp */; };
+		CD83E63A14F54B1000A1D301 /* linked_ghg_policy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E63914F54B1000A1D301 /* linked_ghg_policy.cpp */; };
 		CDAF62F0130DAB6900D93AFB /* MAGICC_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */; };
 		CDAF62F1130DAB6900D93AFB /* MAGICC_IO_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */; };
 		CDAF62F2130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */; };
@@ -341,6 +344,8 @@
 		0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_dependency_finder.cpp; sourceTree = "<group>"; };
 		0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lognrbt.cpp; sourceTree = "<group>"; };
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
+		CD177C39159A0ADA000A996F /* cumulative_emissions_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cumulative_emissions_target.h; sourceTree = "<group>"; };
+		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD48842C122873C000F5A88A /* asimple_carbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asimple_carbon_calc.h; sourceTree = "<group>"; };
 		CD48842D122873C000F5A88A /* carbon_model_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carbon_model_utils.h; sourceTree = "<group>"; };
@@ -989,6 +994,10 @@
 		CD52798D16418A9F00A425BF /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
 		CD548E5812AFFD8C00ADCE8C /* generic_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = generic_output.h; sourceTree = "<group>"; };
 		CD548E5912AFFD9400ADCE8C /* generic_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = generic_output.cpp; sourceTree = "<group>"; };
+		CD83E61214F456C000A1D301 /* linked_market.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linked_market.h; sourceTree = "<group>"; };
+		CD83E61514F4584900A1D301 /* linked_market.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linked_market.cpp; sourceTree = "<group>"; };
+		CD83E63814F548E000A1D301 /* linked_ghg_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linked_ghg_policy.h; sourceTree = "<group>"; };
+		CD83E63914F54B1000A1D301 /* linked_ghg_policy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linked_ghg_policy.cpp; sourceTree = "<group>"; };
 		CDAF62EA130DAB6100D93AFB /* MAGICC_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAGICC_array.h; sourceTree = "<group>"; };
 		CDAF62EB130DAB6100D93AFB /* ObjECTS_MAGICC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjECTS_MAGICC.h; sourceTree = "<group>"; };
 		CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MAGICC_array.cpp; sourceTree = "<group>"; };
@@ -1722,6 +1731,7 @@
 				CD488566122873C100F5A88A /* normal_market.h */,
 				CD488567122873C100F5A88A /* price_market.h */,
 				CD488568122873C100F5A88A /* trial_value_market.h */,
+				CD83E61214F456C000A1D301 /* linked_market.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1742,6 +1752,7 @@
 				CD488573122873C100F5A88A /* normal_market.cpp */,
 				CD488574122873C100F5A88A /* price_market.cpp */,
 				CD488575122873C100F5A88A /* trial_value_market.cpp */,
+				CD83E61514F4584900A1D301 /* linked_market.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -1881,6 +1892,7 @@
 			children = (
 				CD4885A5122873C100F5A88A /* policy_ghg.h */,
 				CD4885A6122873C100F5A88A /* policy_portfolio_standard.h */,
+				CD83E63814F548E000A1D301 /* linked_ghg_policy.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1890,6 +1902,7 @@
 			children = (
 				CD4885A8122873C100F5A88A /* policy_ghg.cpp */,
 				CD4885A9122873C100F5A88A /* policy_portfolio_standard.cpp */,
+				CD83E63914F54B1000A1D301 /* linked_ghg_policy.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2204,6 +2217,7 @@
 				CD48865E122873C200F5A88A /* simple_policy_target_runner.h */,
 				CD48865F122873C200F5A88A /* target_factory.h */,
 				CD488660122873C200F5A88A /* temperature_target.h */,
+				CD177C39159A0ADA000A996F /* cumulative_emissions_target.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -2221,6 +2235,7 @@
 				CD488667122873C200F5A88A /* simple_policy_target_runner.cpp */,
 				CD488668122873C200F5A88A /* target_factory.cpp */,
 				CD488669122873C200F5A88A /* temperature_target.cpp */,
+				CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2888,6 +2903,9 @@
 				CDE074B3146895AA00432712 /* satiation_demand_function.cpp in Sources */,
 				CDCB33331469934E00BEA539 /* consumer_activity.cpp in Sources */,
 				CDCBBF0D14BB6658008B5F4D /* thermal_building_service_input.cpp in Sources */,
+				CD83E61614F4584900A1D301 /* linked_market.cpp in Sources */,
+				CD83E63A14F54B1000A1D301 /* linked_ghg_policy.cpp in Sources */,
+				CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */,
 				CDD20FFF161B9F9200945527 /* logbroyden.cpp in Sources */,
 				CDD21004161B9FA300945527 /* jacobian-precondition.cpp in Sources */,
 				CDD21005161B9FA300945527 /* svd_invert_solve.cpp in Sources */,
@@ -2953,7 +2971,7 @@
 					"-ldb_cxx",
 				);
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				SYMROOT = ../../../../exe;
 				USER_HEADER_SEARCH_PATHS = ../..;
 			};
@@ -2987,7 +3005,7 @@
 					"-ldb_cxx",
 				);
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				SYMROOT = ../../../../exe;
 				USER_HEADER_SEARCH_PATHS = ../..;
 			};
@@ -3027,7 +3045,7 @@
 					"-lblas",
 				);
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				SYMROOT = ../../../../exe;
 				USER_HEADER_SEARCH_PATHS = ../..;
 			};
@@ -3085,7 +3103,7 @@
 					"-ltbbmalloc",
 				);
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
+				SDKROOT = "";
 				SYMROOT = ../../../../exe;
 				USER_HEADER_SEARCH_PATHS = ../..;
 			};

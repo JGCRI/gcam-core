@@ -175,6 +175,19 @@ public:
        *       cannot be created from the rest of the model.
        */
       PRICE,
+        
+      /*! 
+       * \brief A market which links another market such that supplies/demands
+       *        will get added to both markets and the price is always that of the
+       *        market which is linked.
+       * \details This type of market can be useful for instance when trying to 
+       *          connect various GHGs into a single policy market.  This market
+       *          will allow setting price and quantity multipliers for unit
+       *          conversions.  In the GHG case they would be interpreted as GWPs.
+       * \note Linked markets must be created through Marketplace::createLinkedMarket
+       *       instead of the typical Marketplace::createMarket.
+       */
+      LINKED,
 
       /*!
        * \brief End enum marker.
