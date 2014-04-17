@@ -45,12 +45,12 @@
             <bracket-interval>1.0</bracket-interval>
             <max-bracket-iterations>40</max-bracket-iterations>
             <max-iterations>30</max-iterations>
-			<solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
+			<solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal" || market-name="globalOtherMeat_Fish" || market-name="globalScavenging_Other_Rsrc")</solution-info-filter>
         </bisect-all-solver-component>
         <log-newton-raphson-backtracking-solver-component>
             <max-iterations>50</max-iterations>
 	    <ftol>1.0e-3</ftol>
-            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
+            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal" || market-name="globalOtherMeat_Fish" || market-name="globalScavenging_Other_Rsrc")</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component>
     </user-configurable-solver>
     <user-configurable-solver year="2005">
@@ -62,13 +62,13 @@
             <max-iterations>15</max-iterations>
 	    <ftol>1.0e-3</ftol>
             <!-- include the tax market in the newton-raphson -->
-            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
+            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal" || market-name="globalOtherMeat_Fish" || market-name="globalScavenging_Other_Rsrc")</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component>
         <bisect-all-solver-component>
             <bracket-interval>1.0</bracket-interval>
             <max-bracket-iterations>40</max-bracket-iterations>
             <max-iterations>30</max-iterations>
-			<solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
+			<solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal" || market-name="globalOtherMeat_Fish" || market-name="globalScavenging_Other_Rsrc")</solution-info-filter>
         </bisect-all-solver-component>
     </user-configurable-solver>
     <!-- For all other periods, newton-raphson is called before the bisection after bisection on the

@@ -139,10 +139,11 @@ void SubRenewableResource::cumulsupply( double prc, int per ) {
 void SubRenewableResource::annualsupply( int period, const GDP* gdp, double price, double prev_price ) {
 
     double fractionAvailable = -1;
+    const double effectivePrice = price + mPriceAdder[ period ];
 
     // Move up the cost curve until a point is found above the current price.
     for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
-        if( mGrade[ i ]->getCost( period ) > price ){
+        if( mGrade[ i ]->getCost( period ) > effectivePrice ){
             // Determine the cost and available for the previous point. If
             // this is the first point in the cost curve the previous grade
             // is the bottom of the curve.
@@ -160,7 +161,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
             // This should not be able to happen because the above if
             // statement would fail.
             assert( mGrade[ i ]->getCost( period ) > prevGradeCost );
-            double gradeFraction = ( price - prevGradeCost )
+            double gradeFraction = ( effectivePrice - prevGradeCost )
                 / ( mGrade[ i ]->getCost( period ) - prevGradeCost ); 
             // compute production as fraction of total possible
             fractionAvailable = prevGradeAvailable + gradeFraction
@@ -177,7 +178,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 
         // Use the function 1-1/(p/pMax) to determine the amount of the
         // additional percent to use.
-        double additionalFraction = 1 - 1 / ( price / maxCost );
+        double additionalFraction = 1 - 1 / ( effectivePrice / maxCost );
 
         // Add up to an additional percent to the total resource to create a
         // smooth derivative above the max price.
