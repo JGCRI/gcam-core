@@ -32,7 +32,11 @@ remove_AEZ_nonexist <- function( data, AEZcol = "AgSupplySubsector", AEZnonexist
 rename_SO2 <- function( data, so2_map, is.awb = FALSE ){
   data_so2 <- subset( data, data$Non.CO2 == "SO2" )
   data_notso2 <- subset( data, data$Non.CO2 != "SO2" )
-
+  if ( is.awb ) {
+    data_so2 <- subset( data, data$Non.CO2 == "SO2_AWB" )
+    data_notso2 <- subset( data, data$Non.CO2 != "SO2_AWB" )  
+  }
+  
   if ( is.awb ) {
     so2_map$SO2_name <- paste( so2_map$SO2_name, "_AWB", sep="" )
   }
@@ -42,3 +46,23 @@ rename_SO2 <- function( data, so2_map, is.awb = FALSE ){
   return (data_new )
 }            
 
+# -----------------------------------------------------------------------------
+# rename_biocrops: a function for changing the names of "biomass" in selected region/AEZs
+rename_biocrops <- function( data, lookup, data_matchvar, lookup_matchvar, data_var1, data_var2=NA, data_var3 = NA ){
+  data_new <- data
+  data_new$ID <- paste( data_new$region, data_new[[data_matchvar]] )
+  lookup$ID <- paste( lookup$region, lookup[[lookup_matchvar]] )
+  data_new[ data_new$ID %in% lookup$ID, data_var1 ] <- lookup[
+    match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
+    data_var1 ]
+  if( !is.na( data_var2 ) ) {
+    data_new[ data_new$ID %in% lookup$ID, data_var2 ] <- lookup[
+      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
+      data_var2 ] }
+  if( !is.na( data_var3 ) ) {
+    data_new[ data_new$ID %in% lookup$ID, data_var3 ] <- lookup[
+      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
+      data_var3 ] }
+  data_new <- data_new[ names( data_new ) != "ID" ]   
+  return (data_new )
+}            
