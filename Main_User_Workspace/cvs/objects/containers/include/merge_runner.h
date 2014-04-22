@@ -78,6 +78,8 @@ public:
                                Timer& aTimer );
     
     void printOutput( Timer& timer, const bool aCloseDB = true ) const;
+
+    virtual void cleanup();
 	Scenario* getInternalScenario();
 	virtual const Scenario* getInternalScenario() const;
 

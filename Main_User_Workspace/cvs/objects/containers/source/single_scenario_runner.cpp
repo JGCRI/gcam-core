@@ -236,6 +236,13 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     mainLog << "Model run completed." << endl;
 }
 
+void SingleScenarioRunner::cleanup() {
+    // The current scenario is no longer needed since a new scenario run will be
+    // created from scratch the next time a scenario is setup and run.
+    mScenario.reset( 0 );
+    scenario = 0;
+}
+
 Scenario* SingleScenarioRunner::getInternalScenario(){
 	return mScenario.get();
 }

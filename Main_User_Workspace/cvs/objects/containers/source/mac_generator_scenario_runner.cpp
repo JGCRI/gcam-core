@@ -158,6 +158,10 @@ void MACGeneratorScenarioRunner::printOutput( Timer& timer, const bool aCloseDB 
     }
 }
 
+void MACGeneratorScenarioRunner::cleanup() {
+    mSingleScenario->cleanup();
+}
+
 /*! \brief Get the internal scenario.
 * \return The internal scenario.
 */

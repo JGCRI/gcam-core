@@ -144,6 +144,11 @@ void MergeRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
     xmlOut.close();
 }
 
+void MergeRunner::cleanup() {
+    mScenario.reset( 0 );
+    scenario = 0;
+}
+
 /*! \brief Get the internal scenario.
  \return The internal scenario.
 */

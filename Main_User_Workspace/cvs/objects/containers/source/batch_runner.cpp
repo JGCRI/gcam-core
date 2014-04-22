@@ -153,6 +153,9 @@ bool BatchRunner::runScenarios( const int aSinglePeriod,
             success &= scenarioSuccess;
             (*runner)->getInternalScenario()->accept( &csvOutputter, -1 );
             csvOutputter.writeDidScenarioSolve( scenarioSuccess );
+            // Clean up the current scenario runner before we move on to the next
+            // so that we do not accumulate a large amount of idle memory.
+            (*runner)->cleanup();
         }
 
         // Loop forward to find a position to increment.
@@ -187,6 +190,12 @@ void BatchRunner::printOutput( Timer& aTimer, const bool aCloseDB ) const {
         for( list<string>::const_iterator name = mUnsolvedNames.begin(); name != mUnsolvedNames.end(); ++name ){
             mainLog << *name << endl;
         }
+    }
+}
+
+void BatchRunner::cleanup() {
+    for( RunnerIterator runner = mScenarioRunners.begin(); runner != mScenarioRunners.end(); ++runner ){
+        (*runner)->cleanup();
     }
 }
 

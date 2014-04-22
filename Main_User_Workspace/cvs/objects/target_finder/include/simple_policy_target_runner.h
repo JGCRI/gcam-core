@@ -144,6 +144,8 @@ public:
     virtual void printOutput( Timer& timer,
                               const bool aCloseDB ) const;
 
+    virtual void cleanup();
+
     virtual Scenario* getInternalScenario();
     virtual const Scenario* getInternalScenario() const;
 

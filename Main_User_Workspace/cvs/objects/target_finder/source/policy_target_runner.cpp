@@ -335,6 +335,11 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     return success;
 }
 
+void PolicyTargetRunner::cleanup() {
+    mSingleScenario->cleanup();
+    mPolicyCostCalculator.reset( 0 );
+}
+
 /*!
  * \brief Solve the policy target for the initial year of the target.
  * \details Modifies the base year price and calculates a Hotelling price path

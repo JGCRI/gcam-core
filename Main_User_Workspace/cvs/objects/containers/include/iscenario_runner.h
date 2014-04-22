@@ -117,6 +117,15 @@ public:
                               const bool aCloseDB = true ) const = 0;
 
     /*!
+     * \brief Cleanup any memory that may no longer be needed.
+     * \details This method will be called when the currently setup scenario will
+     *          no longer be needed and would be safe to clean up. The scenario
+     *          runner may be asked to setup and run a new scenario so essential
+     *          data and parameters should not be cleaned-up.
+     */
+    virtual void cleanup() = 0;
+
+    /*!
      * \brief Get the a mutable reference to the internal scenario object.
      * \details At any given time there is only one Scenario object within the
      *          model that is performing runs. This function returns a pointer
