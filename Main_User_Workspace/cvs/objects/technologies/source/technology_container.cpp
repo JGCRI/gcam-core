@@ -439,12 +439,21 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
     interpolateShareWeights( aPeriod );
     
     // Cache the first and last technologies to those that are operating in this period
-    // to avoid iterating over more technologies than necessary.
+    // to avoid iterating over more technologies than necessary.  We must be careful to
+    // check all past vintages in case the operating technologies are not contiguous.
     mCachedVintageRangePeriod = -1;
     mCachedTechRangeBegin = getVintageBegin( aPeriod );
     mCachedTechRangeEnd = mVintages.rend();
-    for( TechRangeIterator it = mCachedTechRangeBegin; it != mVintages.rend() && mCachedTechRangeEnd == mVintages.rend(); ++it ) {
-        if( !(*it).second->isOperating( aPeriod ) ) {
+    for( TechRangeIterator it = mCachedTechRangeBegin; it != mVintages.rend(); ++it ) {
+        if( mCachedTechRangeEnd != mVintages.rend() && (*it).second->isOperating( aPeriod ) ) {
+            // We found a vintage that is still operating so we must reset the end
+            // iterator and keep looking for an earlier end point.
+            mCachedTechRangeEnd = mVintages.rend();
+        }
+        else if( mCachedTechRangeEnd == mVintages.rend() && !(*it).second->isOperating( aPeriod ) ) {
+            // We have found a vintage that is no longer operating.  This could
+            // potentially be our end iterator provided we don't find and earlier
+            // vintage that is still operating.
             mCachedTechRangeEnd = it;
         }
     }

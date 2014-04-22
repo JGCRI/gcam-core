@@ -45,12 +45,16 @@
 
 #include "functions/include/satiation_demand_function.h"
 #include "util/base/include/xml_helper.h"
+#include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
 
 using namespace std;
 using namespace xercesc;
 
+extern Scenario* scenario;
+
 SatiationDemandFunction::SatiationDemandFunction():
-mSatiationAdder( 0 )
+mParsedSatiationAdder( 0 )
 {
 }
 
@@ -82,7 +86,7 @@ bool SatiationDemandFunction::XMLParse( const DOMNode* aNode ) {
             mParsedSatiationLevel.set( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "satiation-adder" ) {
-            mSatiationAdder.set( XMLHelper<double>::getValue( curr ) );
+            mParsedSatiationAdder.set( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "satiation-base-year-increase" ) {
             mBaseYearSatiationMultiplier.set( XMLHelper<double>::getValue( curr ) );
@@ -112,7 +116,7 @@ void SatiationDemandFunction::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     if( mBaseYearSatiationMultiplier.isInited() ) {
         XMLWriteElement( mBaseYearSatiationMultiplier, "satiation-base-year-increase", aOut, aTabs );
     }
-    XMLWriteElementCheckDefault( mSatiationAdder, "satiation-adder", aOut, aTabs, Value( 0.0 ) );
+    XMLWriteElementCheckDefault( mParsedSatiationAdder, "satiation-adder", aOut, aTabs, Value( 0.0 ) );
     
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -146,8 +150,9 @@ double SatiationDemandFunction::calcDemand( const double aDemandDriver ) const {
  *          that value can also be determined now.
  * \param aDemand The calibrated output of this function.
  * \param aDemandDriver The driver for the calibrated demand level.
+ * \param aPeriod The model period.
  */
-void SatiationDemandFunction::calibrateSatiationImpedance( const double aDemand, const double aDemandDriver ) {
+void SatiationDemandFunction::calibrateSatiationImpedance( const double aDemand, const double aDemandDriver, const int aPeriod ) {
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::ERROR );
     // Figure out the appropraite satiation level the user wanted to use.
@@ -162,19 +167,44 @@ void SatiationDemandFunction::calibrateSatiationImpedance( const double aDemand,
     else if( mBaseYearSatiationMultiplier.isInited() ) {
         mSatiationLevel = aDemand * mBaseYearSatiationMultiplier;
     }
+    mSatiationAdder = mParsedSatiationAdder;
     
     // Do some errors checking
     if( aDemand >= mSatiationLevel ) {
-        mainLog << "Base year demand: " << aDemand << " is greater than satiation level: " << mSatiationLevel << endl;
-        exit( 1 );
+        if( aPeriod < scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+            // We are just calibrating this temporarily so that calcDemand returns
+            // the calibrated demand.  Only the final calibration period will matter.
+            // Just reset it to avoid the math from blowing up.
+            mSatiationLevel = aDemand * 1.1;
+        }
+        else {
+            mainLog << "Base year demand: " << aDemand << " is greater than satiation level: " << mSatiationLevel << endl;
+            exit( 1 );
+        }
     }
     else if( mSatiationLevel <= mSatiationAdder ) {
-        mainLog << "Satiation level: " << mSatiationLevel << " is less than satiation adder: " << mSatiationAdder << endl;
-        exit( 1 );
+        if( aPeriod < scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+            // We are just calibrating this temporarily so that calcDemand returns
+            // the calibrated demand.  Only the final calibration period will matter.
+            // Just reset it to avoid the math from blowing up.
+            mSatiationAdder = 0;
+        }
+        else {
+            mainLog << "Satiation level: " << mSatiationLevel << " is less than satiation adder: " << mSatiationAdder << endl;
+            exit( 1 );
+        }
     }
     else if( aDemand <= mSatiationAdder ) {
-        mainLog << "Base year demand: " << aDemand << " is less than satiation adder: " << mSatiationAdder << endl;
-        exit( 1 );
+        if( aPeriod < scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+            // We are just calibrating this temporarily so that calcDemand returns
+            // the calibrated demand.  Only the final calibration period will matter.
+            // Just reset it to avoid the math from blowing up.
+            mSatiationAdder = 0;
+        }
+        else {
+            mainLog << "Base year demand: " << aDemand << " is less than satiation adder: " << mSatiationAdder << endl;
+            exit( 1 );
+        }
     }
     
     // calibrate the satiation impedance

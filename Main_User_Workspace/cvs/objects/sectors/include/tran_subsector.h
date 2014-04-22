@@ -49,6 +49,8 @@
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 // Forward declarations
 class GDP;
@@ -64,6 +66,7 @@ class IInfo;
 
 
 class TranSubsector: public Subsector{
+    friend class XMLDBOutputter;
 public:
     TranSubsector( const std::string& regionName, const std::string& sectorName );
     static const std::string& getXMLNameStatic();    
@@ -75,21 +78,24 @@ public:
                            const Demographic* aDemographics,
                            const MoreSectorInfo* aMoreSectorInfo,
                            const int aPeriod );
-	double getPrice( const GDP* aGDP, const int aPeriod ) const;
+    double getPrice( const GDP* aGDP, const int aPeriod ) const;
 
     virtual void setOutput( const double aVariableSubsectorDemand,
-							const double aFixedOutputScaleFactor,
-							const GDP* aGDP,
-							const int aPeriod );
+                            const double aFixedOutputScaleFactor,
+                            const GDP* aGDP,
+                            const int aPeriod );
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    std::vector<double> speed; // Speed of Mode in Miles/hour
+    objects::PeriodVector<Value> speed; // Speed of Mode in Miles/hour
     std::vector<double> mPopulation; // copy of population from demographics
     std::vector<double> popDenseElasticity; // Population Density Elasticity of mode
     std::vector<double> mServiceOutputs; //!< Service output by period.
     double popDensity; // population density per land area
+    //! Time value multiplier
+    objects::PeriodVector<Value> mTimeValueMult;
 
     virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
-	virtual void MCoutputAllSectors( const GDP* aGDP,
+    virtual void MCoutputAllSectors( const GDP* aGDP,
                                      const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
                                      const std::vector<double> aSectorOutput ) const;
 
@@ -98,14 +104,14 @@ protected:
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;
 
-	double getTimeValue( const GDP* aGDP, const int aPeriod ) const;
-	double getTimeInTransit( const int aPeriod ) const;
-	double getServicePerCapita( const int aPeriod ) const;
-	double getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) const;
+    double getTimeValue( const GDP* aGDP, const int aPeriod ) const;
+    double getTimeInTransit( const int aPeriod ) const;
+    double getServicePerCapita( const int aPeriod ) const;
+    double getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) const;
 private:
     static const std::string XML_NAME; //!< XML name of this object.
-	bool mAddTimeValue;  //!< add value of time to price term
-    
+    bool mAddTimeValue;  //!< add value of time to price term
+
     //! Save time value for debugging purposes. 
     mutable double mTimeValue;
 };

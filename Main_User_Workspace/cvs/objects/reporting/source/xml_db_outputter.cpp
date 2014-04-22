@@ -103,6 +103,7 @@
 #include "technologies/include/ioutput.h"
 #include "functions/include/minicam_input.h"
 #include "functions/include/iinput.h"
+#include "sectors/include/tran_subsector.h"
 #include "technologies/include/tran_technology.h"
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
@@ -733,6 +734,23 @@ void XMLDBOutputter::endVisitSubsector( const Subsector* aSubsector,
 {
     // Write the closing subsector tag.
     XMLWriteClosingTag( aSubsector->getXMLName(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        double currValue = aTranSubsector->speed[ i ];
+        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+            writeItem( "speed", "km/hr", currValue, i );
+        }
+        currValue = aTranSubsector->mTimeValueMult[ i ];
+        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+            writeItem( "time-value-multiplier", "N/A", currValue, i );
+        }
+    }
+}
+
+void XMLDBOutputter::endVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) {
 }
 
 void XMLDBOutputter::startVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod ){

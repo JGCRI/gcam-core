@@ -58,6 +58,8 @@
 #include "demographics/include/demographic.h"
 #include "technologies/include/itechnology_container.h"
 #include "technologies/include/itechnology.h"
+#include "sectors/include/sector_utils.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -76,15 +78,16 @@ const string TranSubsector::XML_NAME = "tranSubsector";
 * \param aUnit The sector output unit.
 * \author Josh Lurz, Sonny Kim
 */
-TranSubsector::TranSubsector( const string& regionName, const string& sectorName ): Subsector( regionName, sectorName ) {
-	// resize vectors
-	const Modeltime* modeltime = scenario->getModeltime();
-	const int maxper = modeltime->getmaxper();
-	speed.resize( maxper ); // average speed of mode
-	mPopulation.resize( maxper ); // copy of population since demog object not available
-	popDenseElasticity.resize( maxper );
-	popDensity = 1; // initialize to 1 for now
-	mAddTimeValue = false; // initialize to false
+TranSubsector::TranSubsector( const string& regionName, const string& sectorName ): Subsector( regionName, sectorName ),
+mTimeValueMult( 1.0 )
+{
+    // resize vectors
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int maxper = modeltime->getmaxper();
+    mPopulation.resize( maxper ); // copy of population since demog object not available
+    popDenseElasticity.resize( maxper );
+    popDensity = 1; // initialize to 1 for now
+    mAddTimeValue = false; // initialize to false
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -119,21 +122,24 @@ const std::string& TranSubsector::getXMLNameStatic() {
 * \return Boolean for node match.
 */
 bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {    
-	// additional read in for transportation
-	const Modeltime* modeltime = scenario->getModeltime();
-	if( nodeName == "addTimeValue" ){
-		mAddTimeValue = XMLHelper<bool>::getValue( curr );
-	}
-	else if( nodeName == "speed" ){
-		XMLHelper<double>::insertValueIntoVector( curr, speed, modeltime );
-	}
-	else if( nodeName == "popDenseElasticity" ){
-		XMLHelper<double>::insertValueIntoVector( curr, popDenseElasticity, modeltime );
-	}
-	else {
-		return false;
-	}
-	return true;
+    // additional read in for transportation
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( nodeName == "addTimeValue" ){
+        mAddTimeValue = XMLHelper<bool>::getValue( curr );
+    }
+    else if( nodeName == "speed" ){
+        XMLHelper<Value>::insertValueIntoVector( curr, speed, modeltime );
+    }
+    else if( nodeName == "popDenseElasticity" ){
+        XMLHelper<double>::insertValueIntoVector( curr, popDenseElasticity, modeltime );
+    }
+    else if( nodeName == "time-value-multiplier" ){
+        XMLHelper<Value>::insertValueIntoVector( curr, mTimeValueMult, modeltime );
+    }
+    else {
+        return false;
+    }
+    return true;
 }
 
 /*! \brief XML output stream for derived classes
@@ -144,11 +150,12 @@ bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-	XMLWriteElementCheckDefault( mAddTimeValue, "addTimeValue", out, tabs, false );
+    XMLWriteElementCheckDefault( mAddTimeValue, "addTimeValue", out, tabs, false );
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( speed, "speed", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( speed, "speed", out, tabs, modeltime, Value( 0.0 ) );
     XMLWriteVector( popDenseElasticity, "popDenseElasticity", out, tabs, modeltime, 0.0 );
     XMLWriteVector( mServiceOutputs, "serviceoutput", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mTimeValueMult, "time-value-multiplier", out, tabs, modeltime, Value( 1.0 ) );
 }
 
 /*! \brief XML output for debugging.
@@ -158,13 +165,14 @@ void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-	XMLWriteElement( mAddTimeValue, "addTimeValue", out, tabs );
-	XMLWriteElement( popDenseElasticity[ period ], "popDenseElasticity", out, tabs );
-	XMLWriteElement( popDensity, "popDensity", out, tabs );
-	XMLWriteElement( speed[ period ], "speed", out, tabs );
+    XMLWriteElement( mAddTimeValue, "addTimeValue", out, tabs );
+    XMLWriteElement( popDenseElasticity[ period ], "popDenseElasticity", out, tabs );
+    XMLWriteElement( popDensity, "popDensity", out, tabs );
+    XMLWriteElement( speed[ period ], "speed", out, tabs );
+    XMLWriteElement( mTimeValueMult[ period ], "time-value-multiplier", out, tabs );
     
     // Write out useful debugging info
-	XMLWriteElement( mTimeValue, "timeValue", out, tabs );
+    XMLWriteElement( mTimeValue, "timeValue", out, tabs );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -177,6 +185,9 @@ void TranSubsector::completeInit( const IInfo* aSectorInfo,
 {
     // Only call base class completeInit.
     Subsector::completeInit( aSectorInfo, aLandAllocator );
+
+    SectorUtils::fillMissingPeriodVectorInterpolated( speed );
+    SectorUtils::fillMissingPeriodVectorInterpolated( mTimeValueMult );
 }
 
 /*!
@@ -197,20 +208,20 @@ void TranSubsector::initCalc( NationalAccount* aNationalAccount,
 							 const MoreSectorInfo* aMoreSectorInfo,
 							 const int aPeriod )
 {
-	// Check if illegal values have been read in
-	if ( speed[ aPeriod ] <= 0 ) {
-		speed[ aPeriod ] = 1;
-		ILogger& mainLog = ILogger::getLogger( "main_log" );
-		mainLog.setLevel( ILogger::ERROR );
-		mainLog << "Speed was zero or negative in subsector: " << name << " in region " 
-			<< regionName << ". Reset to 1." << endl;
-	}
-	// time in transit
-	// initialize vector to hold population (thousands)
-	// TODO: revise access to population to avoid statement below
-	mPopulation[ aPeriod ] = aDemographics->getTotal( aPeriod );
+    // Check if illegal values have been read in
+    if ( speed[ aPeriod ] <= 0 ) {
+        speed[ aPeriod ] = 1;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Speed was zero or negative in subsector: " << name << " in region " 
+            << regionName << ". Reset to 1." << endl;
+    }
+    // time in transit
+    // initialize vector to hold population (thousands)
+    // TODO: revise access to population to avoid statement below
+    mPopulation[ aPeriod ] = aDemographics->getTotal( aPeriod );
 
-	Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
+    Subsector::initCalc( aNationalAccount, aDemographics, aMoreSectorInfo, aPeriod );
 }
 
 /*! \brief returns the subsector price.
@@ -222,13 +233,13 @@ void TranSubsector::initCalc( NationalAccount* aNationalAccount,
 * \return The subsector price with or without value of time. 
 */
 double TranSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
-	// mAddTimeValue is a boolean that determines whether the service price includes
-	// the value of time
-	if (mAddTimeValue) {
-		return getGeneralizedPrice( aGDP, aPeriod );
-	}
-	// normal share-weighted total technology cost only
-	return Subsector::getPrice( aGDP, aPeriod );
+    // mAddTimeValue is a boolean that determines whether the service price includes
+    // the value of time
+    if (mAddTimeValue) {
+        return getGeneralizedPrice( aGDP, aPeriod );
+    }
+    // normal share-weighted total technology cost only
+    return Subsector::getPrice( aGDP, aPeriod );
 }
 
 /*! \brief Get the time value for the period.
@@ -238,13 +249,13 @@ double TranSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
 * \return The time value.
 */
 double TranSubsector::getTimeValue( const GDP* aGDP, const int aPeriod ) const {
-	const double WEEKS_PER_YEAR = 50;
-	const double HOURS_PER_WEEK = 40;
-	// calculate time value based on hours worked per year Convert GDPperCap
-	// into dollars (instead of 1000's of $'s) GDP value at this point in the
-	// code does not include energy feedback calculation for this year, so is,
-	// therefore, approximate
-	return aGDP->getApproxGDPperCap( aPeriod ) * 1000 / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / speed[ aPeriod ];
+    const double WEEKS_PER_YEAR = 50;
+    const double HOURS_PER_WEEK = 40;
+    // calculate time value based on hours worked per year Convert GDPperCap
+    // into dollars (instead of 1000's of $'s) GDP value at this point in the
+    // code does not include energy feedback calculation for this year, so is,
+    // therefore, approximate
+    return aGDP->getApproxGDPperCap( aPeriod ) * 1000 * mTimeValueMult[ aPeriod ] / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / speed[ aPeriod ];
 }
 
 /*! \brief Calculate the generalized service price for the mode that includes time value.
@@ -254,14 +265,14 @@ double TranSubsector::getTimeValue( const GDP* aGDP, const int aPeriod ) const {
 * \return The the generalized price.
 */
 double TranSubsector::getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) const {
-	// add cost of time spent on travel by converting gdp/cap into an hourly
-	// wage and multiplying by average speed.
-	// The price unit is $ per service, e.g. $/pass-mi or $/ton-mi
+    // add cost of time spent on travel by converting gdp/cap into an hourly
+    // wage and multiplying by average speed.
+    // The price unit is $ per service, e.g. $/pass-mi or $/ton-mi
     
     // Save time value so can print out
     // Maybe also write to XML DB?
     mTimeValue =  getTimeValue( aGDP, aPeriod );
-	return Subsector::getPrice( aGDP, aPeriod ) + mTimeValue;
+    return Subsector::getPrice( aGDP, aPeriod ) + mTimeValue;
 }
 
 /*! \brief Get the time in transit per day per person for the period.
@@ -271,11 +282,11 @@ double TranSubsector::getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) 
 * \return The time in transit.
 */
 double TranSubsector::getTimeInTransit( const int aPeriod ) const {
-	const double DAYS_PER_YEAR = 365;
-	const double POP_MILE_CONV = 1000;
-	// calculate time in transit per day for each person using total population
-	return getOutput( aPeriod ) / mPopulation[ aPeriod ] * POP_MILE_CONV  
-		/ speed[ aPeriod ] / DAYS_PER_YEAR ;
+    const double DAYS_PER_YEAR = 365;
+    const double POP_MILE_CONV = 1000;
+    // calculate time in transit per day for each person using total population
+    return getOutput( aPeriod ) / mPopulation[ aPeriod ] * POP_MILE_CONV  
+        / speed[ aPeriod ] / DAYS_PER_YEAR ;
 }
 
 /*! \brief Get service per day per capita for the period.
@@ -284,17 +295,17 @@ double TranSubsector::getTimeInTransit( const int aPeriod ) const {
 * \return The service per day per capita.
 */
 double TranSubsector::getServicePerCapita( const int aPeriod ) const {
-	const double DAYS_PER_YEAR = 365;
-	const double POP_MILE_CONV = 1000;
-	// units: million pass or ton mi / thousand persons
-	return getOutput( aPeriod ) / mPopulation[ aPeriod ] * POP_MILE_CONV
-		/ DAYS_PER_YEAR ;
+    const double DAYS_PER_YEAR = 365;
+    const double POP_MILE_CONV = 1000;
+    // units: million pass or ton mi / thousand persons
+    return getOutput( aPeriod ) / mPopulation[ aPeriod ] * POP_MILE_CONV
+        / DAYS_PER_YEAR ;
 }
 
 void TranSubsector::setOutput( const double aVariableSubsectorDemand,
-							  const double aFixedOutputScaleFactor,
-							  const GDP* aGDP,
-							  const int aPeriod )
+                               const double aFixedOutputScaleFactor,
+                               const GDP* aGDP,
+                               const int aPeriod )
 {
     Subsector::setOutput( aVariableSubsectorDemand,
                           aFixedOutputScaleFactor,
@@ -315,8 +326,8 @@ void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
     
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-	const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
-	const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
+    const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
+    const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
     vector<double> temp(maxper);
     
     // total Subsector output
@@ -325,7 +336,7 @@ void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
     }
     dboutput4(regionName,"Secondary Energy Prod",sectorName,name,outputUnit,temp);
     // Subsector price
-	for( int m = 0; m < maxper; m++ ){
+    for( int m = 0; m < maxper; m++ ){
         temp[ m ] = getPrice( aGDP, m );
     }
     dboutput4(regionName,"Price",sectorName,name,priceUnit,temp);
@@ -342,13 +353,13 @@ void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
         dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-new-investment", 
             mTechContainers[i]->getName(), outputUnit, temp );
 		
-		// Output for all vintages.
+        // Output for all vintages.
         for ( int m=0; m < maxper;m++) {
-			temp[ m ] = 0;
+            temp[ m ] = 0;
             // Only sum output to the current period.
-			for( int j = 0; j <= m; ++j ){
-				temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m );
-			}
+            for( int j = 0; j <= m; ++j ){
+                temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m );
+            }
         }
         dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-total", mTechContainers[i]->getName(), outputUnit, temp );
         // Transportation technology cost already in 1990 $.
@@ -369,28 +380,40 @@ void TranSubsector::MCoutputAllSectors( const GDP* aGDP,
                                         const IndirectEmissionsCalculator* aIndirectEmissionsCalc,
                                         const vector<double> aSectorOutput ) const
 {
-	Subsector::MCoutputAllSectors( aGDP, aIndirectEmissionsCalc, aSectorOutput );
+    Subsector::MCoutputAllSectors( aGDP, aIndirectEmissionsCalc, aSectorOutput );
 
-	// function protocol
-	void dboutput4(string var1name,string var2name,string var3name,string var4name,
-		string uname,vector<double> dout);
-	const int maxPeriod = scenario->getModeltime()->getmaxper();
-	const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
-	vector<double> temp( maxPeriod );
-	// Subsector timeValue price
-	for( int per = 0; per < maxPeriod; ++per ){
-		temp [ per ] = getTimeValue( aGDP, per );
-	}
-	dboutput4( regionName, "General", "TimeValue", sectorName + name, priceUnit, temp );
-	// Subsector speed
-	dboutput4( regionName, "General", "Speed", sectorName + name, "Miles/hr", speed );
-	// time in transit (hours/day/person)
-	for( int per = 0; per < maxPeriod; ++per ){
-		temp[ per ] = getTimeInTransit( per );
-	}
-	dboutput4( regionName, "End-Use Service", sectorName+" TimeInTransit", name, "hrs/day/per", temp);
-	// service per day per person (service/day/person)
-	for( int per = 0; per < maxPeriod; ++per ){
-		temp[ per ] = getServicePerCapita( per );
-	}
+    // function protocol
+    void dboutput4(string var1name,string var2name,string var3name,string var4name,
+        string uname,vector<double> dout);
+    const int maxPeriod = scenario->getModeltime()->getmaxper();
+    const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
+    vector<double> temp( maxPeriod );
+    // Subsector timeValue price
+    for( int per = 0; per < maxPeriod; ++per ){
+        temp [ per ] = getTimeValue( aGDP, per );
+    }
+    dboutput4( regionName, "General", "TimeValue", sectorName + name, priceUnit, temp );
+    // Subsector speed
+    dboutput4( regionName, "General", "Speed", sectorName + name, "Miles/hr", convertToVector( speed ) );
+    // time in transit (hours/day/person)
+    for( int per = 0; per < maxPeriod; ++per ){
+        temp[ per ] = getTimeInTransit( per );
+    }
+    dboutput4( regionName, "End-Use Service", sectorName+" TimeInTransit", name, "hrs/day/per", temp);
+    // service per day per person (service/day/person)
+    for( int per = 0; per < maxPeriod; ++per ){
+        temp[ per ] = getServicePerCapita( per );
+    }
+}
+
+void TranSubsector::accept( IVisitor* aVisitor, const int period ) const {
+    aVisitor->startVisitSubsector( this, period );
+    aVisitor->startVisitTranSubsector( this, period );
+
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        (*techIter)->accept( aVisitor, period );
+    }
+	
+    aVisitor->endVisitTranSubsector( this,  period );
+    aVisitor->endVisitSubsector( this, period );
 }

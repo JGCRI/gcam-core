@@ -90,7 +90,7 @@
  *                   A multiplier of the demand used during calibration to use to
  *                   set mSatiationLevel.  Parsing this value precludes the use of 
  *                   satiation-level.
- *              - \c satiation-adder SatiationDemandFunction::mSatiationAdder
+ *              - \c satiation-adder SatiationDemandFunction::mParsedSatiationAdder
  *                   Shape parameter which represents the subsistence level or the
  *                   minimum demand when the driver is zero.  Optional parameter.
  *
@@ -104,7 +104,7 @@ public:
 
     double calcDemand( const double aDemandDriver ) const;
     
-    void calibrateSatiationImpedance( const double aDemand, const double aDemandDriver );
+    void calibrateSatiationImpedance( const double aDemand, const double aDemandDriver, const int aPeriod );
 
     static const std::string& getXMLNameStatic();
 
@@ -134,7 +134,12 @@ private:
     //! calibrated via calibrateSatiationImpedance.
     Value mSatiationImpedance;
 
-    //! Satiation adder, determines subsistence level.
+    //! Satiation adder, determines subsistence level.  This is the parsed value
+    //! and will not change.
+    Value mParsedSatiationAdder;
+
+    //! Satiation adder, determines subsistence level.  This value may be adjusted
+    //! from the parsed value during some calibration periods.
     Value mSatiationAdder;
 };
 

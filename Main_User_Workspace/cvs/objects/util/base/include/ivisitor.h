@@ -98,6 +98,7 @@ class LandNode;
 class ICarbonCalc;
 class IClimateModel;
 class IInput;
+class TranSubsector;
 class TranTechnology;
 class LandUseHistory;
 class AgProductionTechnology;
@@ -303,6 +304,9 @@ public:
     virtual void endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) = 0;
 
     // Following are the derived class accepts
+    virtual void startVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) = 0;
+    virtual void endVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) = 0;
+	
     virtual void startVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) = 0;
     virtual void endVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) = 0;
 

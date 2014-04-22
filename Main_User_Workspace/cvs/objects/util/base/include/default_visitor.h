@@ -217,6 +217,9 @@ public:
 
     virtual void startVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ){}
     virtual void endVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ){}
+	
+    virtual void startVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) {}
+    virtual void endVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) {}
 
     virtual void startVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ){}
     virtual void endVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ){}

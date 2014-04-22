@@ -73,7 +73,7 @@ double BuildingServiceFunction::calcCoefficient( InputSet& input, double consump
             BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
             double servicePerFloorspace = buildingServiceInput->getPhysicalDemand( period ) / floorSpace;
-            buildingServiceInput->getSatiationDemandFunction()->calibrateSatiationImpedance( servicePerFloorspace, income / buildingServiceInput->getPricePaid( regionName, period ) );
+            buildingServiceInput->getSatiationDemandFunction()->calibrateSatiationImpedance( servicePerFloorspace, income / buildingServiceInput->getPricePaid( regionName, period ), period );
             double serviceDensity = calcServiceDensity( buildingServiceInput, income, regionName, period );
             coefficient =  servicePerFloorspace / ( serviceDensity * thermalLoad );
         }
