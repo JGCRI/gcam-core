@@ -57,7 +57,27 @@ L100.CO2_FSU_hist[ datacols ] <- L100.CO2_USSR_hist_repCtry[ datacols ] *
       L100.CO2_postUSSR_hist_shares[ match( L100.CO2_FSU_hist$iso, L100.CO2_postUSSR_hist_shares$iso ),
       datacols ]
 
-L100.CDIAC_CO2_ctry_hist <- rbind( L100.CO2_ctry_noUSSR_hist, L100.CO2_FSU_hist)
+#Repeat for Yugoslavia
+L100.CO2_ctry_noUSSR_Yug_hist <- subset( L100.CO2_ctry_noUSSR_hist, nation != "YUGOSLAVIA (FORMER SOCIALIST FEDERAL REPUBLIC)" )
+L100.CO2_Yug_hist <- subset( L100.CO2_ctry_noUSSR_hist, nation == "YUGOSLAVIA (FORMER SOCIALIST FEDERAL REPUBLIC)" )
+Yug_years <- unique( L100.CO2_Yug_hist$year )
+L100.CO2_Yug_hist_repCtry <- repeat_and_add_vector( L100.CO2_Yug_hist, "iso",
+      CDIAC_nation$iso[ CDIAC_nation$nation == "YUGOSLAVIA (FORMER SOCIALIST FEDERAL REPUBLIC)" ] )
+
+L100.CO2_ctry_noUSSR_Yug_hist$iso <- CDIAC_nation$iso[ match( L100.CO2_ctry_noUSSR_Yug_hist$nation, CDIAC_nation$nation ) ]
+L100.CO2_ctry_noUSSR_Yug_hist <- na.omit( L100.CO2_ctry_noUSSR_Yug_hist )
+L100.CO2_postYug_hist <- subset( L100.CO2_ctry_noUSSR_Yug_hist, iso %in% L100.CO2_Yug_hist_repCtry$iso & year == max( Yug_years ) + 1 )
+datacols <- names( L100.CDIAC_CO2_ctry_hist )[ names( L100.CDIAC_CO2_ctry_hist ) %!in% c( "nation", "year", "iso" ) ]
+L100.CO2_postYug_hist_shares <- L100.CO2_postYug_hist
+L100.CO2_postYug_hist_shares[ datacols ] <- sweep( L100.CO2_postYug_hist[ datacols ],
+      2, colSums( L100.CO2_postYug_hist[ datacols ] ), "/" )
+
+L100.CO2_FYug_hist <- L100.CO2_Yug_hist_repCtry
+L100.CO2_FYug_hist[ datacols ] <- L100.CO2_Yug_hist_repCtry[ datacols ] *
+      L100.CO2_postYug_hist_shares[ match( L100.CO2_FYug_hist$iso, L100.CO2_postYug_hist_shares$iso ),
+      datacols ]
+
+L100.CDIAC_CO2_ctry_hist <- rbind( L100.CO2_ctry_noUSSR_Yug_hist, L100.CO2_FSU_hist, L100.CO2_FYug_hist )
 L100.CDIAC_CO2_ctry_hist <- L100.CDIAC_CO2_ctry_hist[ order( L100.CDIAC_CO2_ctry_hist$iso, L100.CDIAC_CO2_ctry_hist$year ), c( "iso", "year", datacols ) ]
 
 # -----------------------------------------------------------------------------
