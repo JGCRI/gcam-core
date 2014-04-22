@@ -76,6 +76,7 @@ L100.CO2_FYug_hist <- L100.CO2_Yug_hist_repCtry
 L100.CO2_FYug_hist[ datacols ] <- L100.CO2_Yug_hist_repCtry[ datacols ] *
       L100.CO2_postYug_hist_shares[ match( L100.CO2_FYug_hist$iso, L100.CO2_postYug_hist_shares$iso ),
       datacols ]
+L100.CO2_FYug_hist[ datacols ][ is.na( L100.CO2_FYug_hist[ datacols ] ) ] <- 0
 
 L100.CDIAC_CO2_ctry_hist <- rbind( L100.CO2_ctry_noUSSR_Yug_hist, L100.CO2_FSU_hist, L100.CO2_FYug_hist )
 L100.CDIAC_CO2_ctry_hist <- L100.CDIAC_CO2_ctry_hist[ order( L100.CDIAC_CO2_ctry_hist$iso, L100.CDIAC_CO2_ctry_hist$year ), c( "iso", "year", datacols ) ]
