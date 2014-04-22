@@ -199,8 +199,6 @@ GlobalTechShutdown, global-technology-database/+{sector-name}location-info, glob
 
 GlobalTechShutdownProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider, period/profit-shutdown-decider
 
-GlobalTechLifetime, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, scenario, scenario/world
-
 GlobalTechLifetimeProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database, period/profit-shutdown-decider
 
 GlobalTechSecOut, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}secondary-output, secondary-output/+output-ratio, scenario, scenario/world, world/global-technology-database
