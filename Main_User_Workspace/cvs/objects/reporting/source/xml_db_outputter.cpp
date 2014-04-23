@@ -1608,6 +1608,12 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
                         "below-ground-carbon-density", mBuffer, mTabs.get(), aYear );
         
     }
+    for( int aYear = modeltime->getStartYear();
+             aYear <= modeltime->getper_to_yr( modeltime->getmaxper() - 1 ) || aYear == modeltime->getper_to_yr( modeltime->getmaxper() - 1 );
+             aYear += outputInterval ){
+        writeItemUsingYear( "above-ground-carbon-stock", "MtC", aCarbonCalc->getAboveGroundCarbonStock( aYear ), aYear );
+
+    }
 }
 
 void XMLDBOutputter::endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){

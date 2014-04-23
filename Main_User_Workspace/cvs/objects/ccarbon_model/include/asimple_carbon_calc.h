@@ -107,15 +107,29 @@ protected:
     //! Total land used by period.
     objects::PeriodVector<double> mLandUse;
 
-    //! Stored emissions which are necessary to clear the total emissions when
-    //! recalculating a period.
-    objects::PeriodVector<objects::YearVector<double>*> mStoredEmissions;
+    //! Stored above ground emissions which are necessary to clear the total emissions
+    //! when recalculating a period.
+    objects::PeriodVector<objects::YearVector<double>*> mStoredEmissionsAbove;
+
+    //! Stored above ground emissions which are necessary to clear the total emissions
+    //! when recalculating a period.
+    objects::PeriodVector<objects::YearVector<double>*> mStoredEmissionsBelow;
 
     //! Total emissions by year.
     objects::YearVector<double> mTotalEmissions;
 
+    //! Above ground total emissions by year
+    objects::YearVector<double> mTotalEmissionsAbove;
+
+    //! Below ground total emissions by year
+    objects::YearVector<double> mTotalEmissionsBelow;
+
+    //! Above ground carbon stock
+    objects::YearVector<double> mCarbonStock;
+
     //! Time scale for soil carbon emissions
     int mSoilTimeScale;
+
 
     /*! 
      * \brief The land use history for the land leaf or it's parent land node.
@@ -135,10 +149,13 @@ protected:
     //! since they can not be reset.
     bool mHasCalculatedHistoricEmiss;
 
-    void calcAboveGroundCarbonEmission( const double aCarbonDiff,
-                                        const int aYear,
-                                        const int aEndYear,
-                                        objects::YearVector<double>& aEmissVector);
+    void calcAboveGroundCarbonEmission(const double aPrevCarbonStock,
+                                       const double aPrevLandArea,
+                                       const double aCurrLandArea,
+                                       const double aPrevCarbonDensity,
+                                       const int aYear,
+                                       const int aEndYear,
+                                       objects::YearVector<double>& aEmissVector);
 
     void calcBelowGroundCarbonEmission( const double aCarbonDiff,
                                         const int aYear,

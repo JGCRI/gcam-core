@@ -169,11 +169,13 @@ void NodeCarbonCalc::calcLandUseHistory()
     vector<double> prevLand( mCarbonCalcs.size() );
     vector<double> currLand( mCarbonCalcs.size() );
     vector<double> diffLand( mCarbonCalcs.size() );
+    vector<double> carbonStock( mCarbonCalcs.size() );
     double prevLandTotal = 0;
     for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
         double land = mCarbonCalcs[ i ]->mLandUseHistory->getAllocation( CarbonModelUtils::getStartYear() - 1 );
         prevLand[ i ] = land;
         prevLandTotal += land;
+        carbonStock[ i ] = land * aboveGroundCarbonDensity[ i ];
     }
     // Calculated emissions over the entire historical period.
     for( int year = CarbonModelUtils::getStartYear(); year <= mCarbonCalcs[ 0 ]->mLandUseHistory->getMaxYear(); ++year ) {
@@ -199,9 +201,14 @@ void NodeCarbonCalc::calcLandUseHistory()
                 diffLand[ i ] -= newDiff;
                 diffLandTotal -= newDiff;
                 assert( diffLand[ i ] == 0 || diffLandTotal == 0 );
-                mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( -1 * newDiff * aboveGroundCarbonDensity[ i ], year, CarbonModelUtils::getEndYear(), mCarbonCalcs[ i ]->mTotalEmissions );
-                mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( -1 * newDiff * belowGroundCarbonDensity[ i ], year, CarbonModelUtils::getEndYear(), mCarbonCalcs[ i ]->mTotalEmissions );
+                mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( carbonStock[ i ], prevLand[ i ], prevLand[ i ] + newDiff,
+                                                                  aboveGroundCarbonDensity[ i ], year,
+                                                                  CarbonModelUtils::getEndYear(), mCarbonCalcs[ i ]->mTotalEmissionsAbove );
+                mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( -1 * newDiff * belowGroundCarbonDensity[ i ], year,
+                                                                  CarbonModelUtils::getEndYear(), mCarbonCalcs[ i ]->mTotalEmissionsBelow );
             }
+            // Adjust carbon stock for any emissions that occurred from this change.
+            carbonStock[ i ] -= mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ];
         }
         // The difference in total land area change should have all been allocated
         // across the various land types.
@@ -210,18 +217,22 @@ void NodeCarbonCalc::calcLandUseHistory()
         // Now the differences in land area are all between the land options with in 
         // this node carbon calc.  We must then allocate the change in carbon between
         // those options.
-        double carbonPrevAbove = 0;
         double carbonPrevBelow = 0;
-        double carbonCurrAbove = 0;
-        double carbonCurrBelow = 0;
+        double carbonStockMoved = 0;
+        double totalLandGain = 0;
         double landCheck = 0;
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
             if( diffLand[ i ] > 0 ) {
-                carbonCurrAbove += diffLand[ i ] * aboveGroundCarbonDensity[ i ];
-                carbonCurrBelow += diffLand[ i ] * belowGroundCarbonDensity[ i ];
+                totalLandGain += diffLand[ i ];
             }
             else {
-                carbonPrevAbove -= diffLand[ i ] * aboveGroundCarbonDensity[ i ];
+                // Calculate the carbon that will be moved out of this land type by
+                // computing the average from the current carbon stock.
+                double currCarbonStockMoved = -1 * carbonStock[ i ] * diffLand[ i ] / prevLand[ i ];
+                carbonStockMoved += currCarbonStockMoved;
+                // Remove the carbon that is changing land type from the carbon stock without
+                // emissions.
+                carbonStock[ i ] -= currCarbonStockMoved;
                 carbonPrevBelow -= diffLand[ i ] * belowGroundCarbonDensity[ i ];
             }
             landCheck += diffLand[ i ];
@@ -230,24 +241,28 @@ void NodeCarbonCalc::calcLandUseHistory()
         // change in land should be zero at this point.
         assert( util::isEqual( landCheck, 0.0 ) );
 
-        // Allocate the change in carbon.  We do this by assigning it all to one of the
-        // options that increased in land if carbon is gained or decreased in land
-        // if the carbon decreased.  The carbon in total makes sense although this
-        // assignment to the options is arbitrary.
-        const double carbonDiffAbove = -1 * (carbonCurrAbove - carbonPrevAbove);
-        const double carbonDiffBelow = -1 * (carbonCurrBelow - carbonPrevBelow);
-        // If the change in carbon is zero then no need to do anything.
-        bool hasAssignedCarbon = util::isEqual( carbonDiffAbove, 0.0 );
-        for( size_t i = 0; i < mCarbonCalcs.size() && !hasAssignedCarbon; ++i ) {
-            if( hasSameSign( carbonDiffAbove, diffLand[ i ] ) ) {
-                mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( carbonDiffAbove, year, CarbonModelUtils::getEndYear(), mCarbonCalcs[ i ]->mTotalEmissions );
-                mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelow, year, CarbonModelUtils::getEndYear(), mCarbonCalcs[ i ]->mTotalEmissions );
-                hasAssignedCarbon = true;
+        // Allocate the change in carbon.  We do this by assigning it to the
+        // options that increased in land.
+        for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
+            if( diffLand[ i ] > 0 ) {
+                double emissBeforeMove = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ];
+                // Calculate the difference in carbon densities which would drive any
+                // emissions or uptake.
+                double fractionOfGain = diffLand[ i ] / totalLandGain;
+                double currCarbonMove = fractionOfGain * carbonStockMoved;
+                double carbonDiffAboveDensity = -1 * ( currCarbonMove / diffLand[ i ] - aboveGroundCarbonDensity[ i ] );
+                double carbonDiffBelow = -1 * ( diffLand[ i ] * belowGroundCarbonDensity[ i ] - fractionOfGain * carbonPrevBelow );
+                mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( 0, 0, diffLand[ i ], carbonDiffAboveDensity, year,
+                                                                  CarbonModelUtils::getEndYear(), mCarbonCalcs[ i ]->mTotalEmissionsAbove );
+                mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelow, year, CarbonModelUtils::getEndYear(),
+                                                                  mCarbonCalcs[ i ]->mTotalEmissionsBelow );
+                // Adjust carbon stock to include the carbon being moved in minus any emissions because of moving
+                // the carbon.
+                carbonStock[ i ] += currCarbonMove - ( mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] - emissBeforeMove );
             }
+            mCarbonCalcs[ i ]->mTotalEmissions[ year ] = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] + mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
         }
-        // The change in carbon must be assigned somewhere.
-        assert( hasAssignedCarbon );
-
+        
         prevLand = currLand;
         prevLandTotal = currLandTotal;
     }
@@ -256,6 +271,7 @@ void NodeCarbonCalc::calcLandUseHistory()
     // areas.
     for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
         mCarbonCalcs[ i ]->setTotalLandUse( prevLand[ i ], 0 );
+        mCarbonCalcs[ i ]->mCarbonStock[ mCarbonCalcs[ i ]->mLandUseHistory->getMaxYear() ] = carbonStock[ i ];
     }
 
     mHasCalculatedHistoricEmiss = true;
@@ -277,15 +293,19 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear ) {
         int year = prevModelYear + 1;
 
         // clear the previously calculated emissions first
-        vector<YearVector<double>*> currEmissions( mCarbonCalcs.size() );
+        vector<YearVector<double>*> currEmissionsAbove( mCarbonCalcs.size() );
+        vector<YearVector<double>*> currEmissionsBelow( mCarbonCalcs.size() );
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-            currEmissions[ i ] = mCarbonCalcs[ i ]->mStoredEmissions[ aPeriod ];
+            currEmissionsAbove[ i ] = mCarbonCalcs[ i ]->mStoredEmissionsAbove[ aPeriod ];
+            currEmissionsBelow[ i ] = mCarbonCalcs[ i ]->mStoredEmissionsBelow[ aPeriod ];
             for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
-                mCarbonCalcs[ i ]->mTotalEmissions[ year ] -= (*currEmissions[ i ])[ year ];
-                (*currEmissions[ i ])[ year ] = 0.0;
+                mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] -= (*currEmissionsAbove[ i ])[ year ];
+                mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] -= (*currEmissionsBelow[ i ])[ year ];
+                (*currEmissionsAbove[ i ])[ year ] = 0.0;
+                (*currEmissionsBelow[ i ])[ year ] = 0.0;
             }
         }
-
+        
         // stash carbon densities for quick access
         year = prevModelYear;
         vector<double> aboveGroundCarbonDensity( mCarbonCalcs.size() );
@@ -296,95 +316,130 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear ) {
         }
 
         // compute changes in land area
-        vector<double> prevLand( mCarbonCalcs.size() );
-        vector<double> currLand( mCarbonCalcs.size() );
-        vector<double> diffLand( mCarbonCalcs.size() );
+        vector<double> prevLandByTimestep( mCarbonCalcs.size() );
+        vector<double> currLandByTimestep( mCarbonCalcs.size() );
+        vector<double> diffLandByTimestep( mCarbonCalcs.size() );
         double prevLandTotal = 0;
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
             double land = mCarbonCalcs[ i ]->mLandUse[ aPeriod - 1 ];
-            prevLand[ i ] = land;
+            prevLandByTimestep[ i ] = land;
             prevLandTotal += land;
         }
         double currLandTotal = 0;
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
             double land = mCarbonCalcs[ i ]->mLandUse[ aPeriod ];
-            currLand[ i ] = land;
+            currLandByTimestep[ i ] = land;
             currLandTotal += land;
-            diffLand[ i ] = land - prevLand[ i ];
+            diffLandByTimestep[ i ] = land - prevLandByTimestep[ i ];
         }
         double diffLandTotal = currLandTotal - prevLandTotal;
+        vector<double> diffLandFromExternalByYear( mCarbonCalcs.size(), 0 );
+        vector<double> diffLandFromInternalByYear( mCarbonCalcs.size(), 0 );
+        double totalInternalLandGainByYear = 0;
+        double totalInternalCarbonAboveMovedByYear = 0;
+        double totalInternalCarbonBelowMovedByYear = 0;
+        vector<double> internalCarbonAboveMovedByYear( mCarbonCalcs.size(), 0 );
+        double diffLandInternalCheck = 0;
 
         // First allocate changes in total land area preferentially adding land to the
         // most carbon dense land first when the total increase and conversely removing
         // land from the least carbon dense lands first when it decreases.
         vector<size_t>::const_iterator cdenIt = diffLandTotal > 0 ? mIndHighToLow.begin() : mIndLowToHigh.begin();
         vector<size_t>::const_iterator cdenItEnd = diffLandTotal > 0 ? mIndHighToLow.end() : mIndLowToHigh.end();
-        for( ; cdenIt < cdenItEnd && diffLandTotal != 0; ++cdenIt ) {
+        for( ; cdenIt < cdenItEnd; ++cdenIt ) {
             size_t i = *cdenIt;
-            if( hasSameSign( diffLandTotal, diffLand[ i ] ) ) {
-                double newDiff = abs( diffLand[ i ] ) < abs( diffLandTotal ) ? diffLand[ i ] : diffLandTotal;
-                diffLand[ i ] -= newDiff;
+            if( hasSameSign( diffLandTotal, diffLandByTimestep[ i ] ) ) {
+                double newDiff = abs( diffLandByTimestep[ i ] ) < abs( diffLandTotal ) ? diffLandByTimestep[ i ] : diffLandTotal;
+                diffLandByTimestep[ i ] -= newDiff;
                 diffLandTotal -= newDiff;
-                assert( diffLand[ i ] == 0 || diffLandTotal == 0 );
-                double carbonDiffAbovePerYear = -1 * newDiff * aboveGroundCarbonDensity[ i ] / modelTimestep;
-                double carbonDiffBelowPerYear = -1 * newDiff * belowGroundCarbonDensity[ i ] / modelTimestep;
-                for( year = prevModelYear + 1; year <= modelYear; ++year ) {
-                    mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( carbonDiffAbovePerYear, year, aEndYear, *currEmissions[ i ] );
-                    mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelowPerYear, year, aEndYear, *currEmissions[ i ] );
-                }
+                assert( diffLandByTimestep[ i ] == 0 || diffLandTotal == 0 );
+                diffLandFromExternalByYear[ i ] = newDiff / modelTimestep;
+            }
+
+            // Any differences in land for this land type are due to changes in area
+            // internal to the node.
+            diffLandInternalCheck += diffLandByTimestep[ i ];
+            diffLandFromInternalByYear[ i ] = diffLandByTimestep[ i ] / modelTimestep;
+
+            // Store some information that will be useful for calculating changes in
+            // carbon.
+            if( diffLandFromInternalByYear[ i ] > 0 ) {
+                totalInternalLandGainByYear += diffLandFromInternalByYear[ i ];
+            }
+            else {
+                // Calculate the carbon that will be moved out of this land type by
+                // computing the average from the current carbon stock.
+                double currCarbonMovedByYear = -1 * mCarbonCalcs[ i ]->mCarbonStock[ prevModelYear ] * diffLandByTimestep[ i ] / prevLandByTimestep[ i ] / modelTimestep;
+                totalInternalCarbonAboveMovedByYear += currCarbonMovedByYear;
+                internalCarbonAboveMovedByYear[ i ] = currCarbonMovedByYear;
+                totalInternalCarbonBelowMovedByYear -= diffLandFromInternalByYear[ i ] * belowGroundCarbonDensity[ i ];
             }
         }
         // The difference in total land area change should have all been allocated
         // across the various land types.
         assert( util::isEqual( diffLandTotal, 0.0 ) );
-
-        // Now the differences in land area are all between the land options with in 
-        // this node carbon calc.  We must then allocate the change in carbon between
-        // those options.
-        double carbonPrevAbove = 0;
-        double carbonPrevBelow = 0;
-        double carbonCurrAbove = 0;
-        double carbonCurrBelow = 0;
-        double landCheck = 0;
-        for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
-            if( diffLand[ i ] > 0 ) {
-                carbonCurrAbove += diffLand[ i ] * aboveGroundCarbonDensity[ i ];
-                carbonCurrBelow += diffLand[ i ] * belowGroundCarbonDensity[ i ];
-            }
-            else {
-                carbonPrevAbove -= diffLand[ i ] * aboveGroundCarbonDensity[ i ];
-                carbonPrevBelow -= diffLand[ i ] * belowGroundCarbonDensity[ i ];
-            }
-            landCheck += diffLand[ i ];
-        }
         // Some land options increase in size and some decrease but in total the
-        // change in land should be zero at this point.
-        assert( util::isEqual( landCheck, 0.0 ) );
+        // change in land internal to the node should be zero.
+        assert( util::isEqual( diffLandInternalCheck, 0.0 ) );
 
-        // Allocate the change in carbon.  We do this by assigning it all to one of the
-        // options that increased in land if carbon is gained or decreased in land
-        // if the carbon decreased.  The carbon in total makes sense although this
-        // assignment to the options is arbitrary.
-        double carbonDiffAbovePerYear = -1 * ( carbonCurrAbove - carbonPrevAbove ) / modelTimestep;
-        double carbonDiffBelowPerYear = -1 * ( carbonCurrBelow - carbonPrevBelow ) / modelTimestep;
-        // If the change in carbon is zero then no need to do anything.
-        bool hasAssignedCarbon = util::isEqual( carbonDiffAbovePerYear, 0.0 );
-        for( size_t i = 0; i < mCarbonCalcs.size() && !hasAssignedCarbon; ++i ) {
-            if( hasSameSign( carbonDiffAbovePerYear, diffLand[ i ] ) ) {
-                for( year = prevModelYear + 1; year <= modelYear; ++year ) {
-                    mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( carbonDiffAbovePerYear, year, aEndYear, *currEmissions[ i ] );
-                    mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelowPerYear, year, aEndYear, *currEmissions[ i ] );
+        vector<double> prevLand( prevLandByTimestep );
+        vector<double> currLand( mCarbonCalcs.size() );
+        for( year = prevModelYear + 1; year <= modelYear; ++year ) {
+            // Initialize the carbon stock in this year to the carbon stock of the previous year minus
+            // any emissions that have already been allocated in this year from earlier year land decisions.
+            for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
+                mCarbonCalcs[ i ]->mCarbonStock[ year ] = mCarbonCalcs[ i ]->mCarbonStock[ year - 1 ] -
+                    ( mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] + (*currEmissionsAbove[ i ])[ year ] );
+            }
+            // Calculate emissions from changes in land that was removed/added from outside of this node.
+            for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
+                currLand[ i ] = prevLand[ i ] + diffLandFromExternalByYear[ i ];
+                double carbonDiffBelowPerYear = -1 * diffLandFromExternalByYear[ i ] * belowGroundCarbonDensity[ i ];
+                double prevEmiss = (*currEmissionsAbove[ i ])[ year ];
+                mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( mCarbonCalcs[ i ]->mCarbonStock[ year - 1 ], prevLand[ i ],
+                                                                  currLand[ i ], aboveGroundCarbonDensity[ i ], year, aEndYear,
+                                                                  *currEmissionsAbove[ i ] );
+                mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelowPerYear, year, aEndYear, *currEmissionsBelow[ i ] );
+                mCarbonCalcs[ i ]->mCarbonStock[ year ] -= (*currEmissionsAbove[ i ])[ year ] - prevEmiss;
+            }
+            // Calculate emissions from changes in land internal to this node.  Carbon can move internally
+            // to the node with out emissions however if there is a difference in carbon densities then
+            // emissions/uptake may still occur.  These emissions/uptake get accounted for in the options
+            // that gain land.
+            for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
+                currLand[ i ] += diffLandFromInternalByYear[ i ];
+                if( diffLandFromInternalByYear[ i ] > 0 ) {
+                    double emissBeforeMove = (*currEmissionsAbove[ i ])[ year ];
+                    // Calculate the difference in carbon densities which would drive any
+                    // emissions or uptake.
+                    double fractionOfGain = diffLandFromInternalByYear[ i ] / totalInternalLandGainByYear;
+                    double currCarbonMove = fractionOfGain * totalInternalCarbonAboveMovedByYear;
+                    double carbonDiffAboveDensity = -1 * ( currCarbonMove / diffLandFromInternalByYear[ i ] - aboveGroundCarbonDensity[ i ] );
+                    double carbonDiffBelow = -1 * ( diffLandFromInternalByYear[ i ] * belowGroundCarbonDensity[ i ] -
+                        fractionOfGain * totalInternalCarbonBelowMovedByYear );
+                    mCarbonCalcs[ i ]->calcAboveGroundCarbonEmission( 0, 0, diffLandFromInternalByYear[ i ], carbonDiffAboveDensity,
+                                                                      year, aEndYear, *currEmissionsAbove[ i ] );
+                    mCarbonCalcs[ i ]->calcBelowGroundCarbonEmission( carbonDiffBelow, year, aEndYear, *currEmissionsBelow[ i ] );
+                    // Adjust carbon stock to include the carbon being moved in minus any emissions because of moving
+                    // the carbon.
+                    mCarbonCalcs[ i ]->mCarbonStock[ year ] += currCarbonMove - ( (*currEmissionsAbove[ i ])[ year ] - emissBeforeMove );
                 }
-                hasAssignedCarbon = true;
+                else {
+                    // Remove the carbon that is changing land type from the carbon stock without
+                    // emissions.
+                    mCarbonCalcs[ i ]->mCarbonStock[ year ] -= internalCarbonAboveMovedByYear[ i ];
+                }
+                prevLand[ i ] = currLand[ i ];
             }
         }
-        // The change in carbon must be assigned somewhere.
-        assert( hasAssignedCarbon );
 
         // add current emissions to the total
         for( size_t i = 0; i < mCarbonCalcs.size(); ++i ) {
             for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
-                mCarbonCalcs[ i ]->mTotalEmissions[ year ] += (*currEmissions[ i ])[ year ];
+                mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] += (*currEmissionsAbove[ i ])[ year ];
+                mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] += (*currEmissionsBelow[ i ])[ year ];
+                mCarbonCalcs[ i ]->mTotalEmissions[ year ] = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] +
+                    mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
             }
         }
     }
