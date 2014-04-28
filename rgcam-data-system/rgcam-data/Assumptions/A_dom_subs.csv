@@ -1,0 +1,4 @@
+# This table contains subsector level assumptions,,,,,,,,
+# Source: Tables_Dom_Data.xlsx,,,,,,,,
+supplysector,subsector,logit,sw_2020,sw_2035,sw_2050,sw_2065,sw_2080,sw_2095
+domestic water,domestic water,-6,1,1,1,1,1,1

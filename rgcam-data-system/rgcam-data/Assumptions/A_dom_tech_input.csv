@@ -1,0 +1,45 @@
+# Assumed technology charactoristics including costs and efficiencies,,,,,,,
+# Source: Tables_Dom_Data.xlsx,,,,,,,
+supplysector,subsector,technology,year,share_weight,input_cost,minicam_energy_input,efficiency
+domestic water,domestic water,domestic water,1975,1,1.537035136,water consumption,1
+domestic water,domestic water,domestic water,1990,1,1.537035136,water consumption,1
+domestic water,domestic water,domestic water,2005,1,1.656436234,water consumption,1
+domestic water,domestic water,domestic water,2010,1,1.698263324,water consumption,1
+domestic water,domestic water,domestic water,2015,1,1.741146601,water consumption,1
+domestic water,domestic water,domestic water,2020,1,1.785112735,water consumption,1
+domestic water,domestic water,domestic water,2025,1,1.830189068,water consumption,1
+domestic water,domestic water,domestic water,2030,1,1.876403636,water consumption,1
+domestic water,domestic water,domestic water,2035,1,1.923785179,water consumption,1
+domestic water,domestic water,domestic water,2040,1,1.972363166,water consumption,1
+domestic water,domestic water,domestic water,2045,1,2.022167807,water consumption,1
+domestic water,domestic water,domestic water,2050,1,2.073230078,water consumption,1
+domestic water,domestic water,domestic water,2055,1,2.125581736,water consumption,1
+domestic water,domestic water,domestic water,2060,1,2.179255338,water consumption,1
+domestic water,domestic water,domestic water,2065,1,2.234284266,water consumption,1
+domestic water,domestic water,domestic water,2070,1,2.290702744,water consumption,1
+domestic water,domestic water,domestic water,2075,1,2.348545859,water consumption,1
+domestic water,domestic water,domestic water,2080,1,2.407849585,water consumption,1
+domestic water,domestic water,domestic water,2085,1,2.468650804,water consumption,1
+domestic water,domestic water,domestic water,2090,1,2.53098733,water consumption,1
+domestic water,domestic water,domestic water,2095,1,2.594897932,water consumption,1
+domestic water,domestic water,domestic water,1975,1,1.537035136,water withdrawals,0.174525127
+domestic water,domestic water,domestic water,1990,1,1.537035136,water withdrawals,0.174525127
+domestic water,domestic water,domestic water,2005,1,1.656436234,water withdrawals,0.16676049
+domestic water,domestic water,domestic water,2010,1,1.698263324,water withdrawals,0.164249817
+domestic water,domestic water,domestic water,2015,1,1.741146601,water withdrawals,0.161776943
+domestic water,domestic water,domestic water,2020,1,1.785112735,water withdrawals,0.1593413
+domestic water,domestic water,domestic water,2025,1,1.830189068,water withdrawals,0.156942327
+domestic water,domestic water,domestic water,2030,1,1.876403636,water withdrawals,0.154579471
+domestic water,domestic water,domestic water,2035,1,1.923785179,water withdrawals,0.15225219
+domestic water,domestic water,domestic water,2040,1,1.972363166,water withdrawals,0.149959947
+domestic water,domestic water,domestic water,2045,1,2.022167807,water withdrawals,0.147702216
+domestic water,domestic water,domestic water,2050,1,2.073230078,water withdrawals,0.145478475
+domestic water,domestic water,domestic water,2055,1,2.125581736,water withdrawals,0.143288215
+domestic water,domestic water,domestic water,2060,1,2.179255338,water withdrawals,0.14113093
+domestic water,domestic water,domestic water,2065,1,2.234284266,water withdrawals,0.139006124
+domestic water,domestic water,domestic water,2070,1,2.290702744,water withdrawals,0.136913308
+domestic water,domestic water,domestic water,2075,1,2.348545859,water withdrawals,0.134852001
+domestic water,domestic water,domestic water,2080,1,2.407849585,water withdrawals,0.132821728
+domestic water,domestic water,domestic water,2085,1,2.468650804,water withdrawals,0.130822022
+domestic water,domestic water,domestic water,2090,1,2.53098733,water withdrawals,0.128852422
+domestic water,domestic water,domestic water,2095,1,2.594897932,water withdrawals,0.126912476
