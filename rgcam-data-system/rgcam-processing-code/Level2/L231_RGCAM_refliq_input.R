@@ -187,7 +187,7 @@ L231_TechInput <- rbind( L231_TechInput, L231_agg_temp )
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
 write_mi_data( L231_DeleteSector, "SectorDelete", "L231_DeleteSector", "batch_rgcam_refined_liquids_input.xml" )
-write_mi_data( L231_Sector, "Sector", "L231_Sector", "batch_rgcam_refined_liquids_input.xml" )
+write_mi_data( L231_Sector, "PassThroughSector", "L231_Sector", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_CO2Coefs, "CO2Coefs", "L231_CO2Coefs", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_Subsector, "ElecSubsector", "L231_Subsector", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_SubsInterpRule, "ElecSubsInterpRule", "L231_SubsInterpRule", "batch_rgcam_refined_liquids_input.xml" )
@@ -198,7 +198,7 @@ write_mi_data( L231_GlobalDBTechInputCCS, "GlobalDBTechCCS", "L231_GlobalDBTechI
 write_mi_data( L231_TechStubs, "TechStubs", "L231_TechStubs", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_CalOutput, "CalOutput", "L231_CalOutput", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_InputCoef, "IndustrySector", "L231_InputCoef", "batch_rgcam_refined_liquids_input.xml" )
-write_mi_data( L231_TechInput, "RefLiqTechInput", "L231_TechInput", "batch_rgcam_refined_liquids_input.xml" )
+write_mi_data( L231_TechInput, "PassThroughTechInput", "L231_TechInput", "batch_rgcam_refined_liquids_input.xml" )
 
 insert_file_into_batchxml( "batch_rgcam_refined_liquids_input.xml", "rgcam_refined_liquids_input.xml", "", xml_tag="outFile" )
 

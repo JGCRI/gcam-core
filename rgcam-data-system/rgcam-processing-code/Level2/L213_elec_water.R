@@ -235,6 +235,11 @@ names( L213_elec_water_coefs_FA )[ length( names( L213_elec_water_coefs_FA ) ) ]
 L213_elec_water_coefs_FA <- subset( L213_elec_water_coefs_FA, cooling_tech %in% L213_cooling_techs )
 L213_elec_water_coefs_FA$period <- as.integer( sub( 'X', '', L213_elec_water_coefs_FA$period ) )
 
+# The coefficients are in m^3/MWh, we need them in km^3/EJ so we will convert them here
+L213_conv_m3perMWh_km3perEJ <- (1/1000^3) / conv_TWh_EJ * 1e6
+L213_elec_water_coefs$unweighted_coef <- L213_elec_water_coefs$unweighted_coef * L213_conv_m3perMWh_km3perEJ
+L213_elec_water_coefs_FA$unweighted_coef <- L213_elec_water_coefs_FA$unweighted_coef * L213_conv_m3perMWh_km3perEJ
+
 # The shares in the base year are by fuel since that is how the generation technologies will be
 # represented
 # TODO: some way to make sure the missing technologies are consistent with energy calibration data
