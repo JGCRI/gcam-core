@@ -62,7 +62,7 @@ FinalDemandDelete,world/+{name}region,region/+{name;delete=1}energy-final-demand
 
 Sector,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975;fillout=1}logit-exponent,scenario/world,scenario
 
-PassThroughSector,world/+{name}region,region/+{name}pass-through-sector,pass-through-sector/+output-unit,pass-through-sector/+input-unit,pass-through-sector/+price-unit,pass-through-sector/+{year=1975;fillout=1}logit-exponent,pass-through-sector/+marginal-revenue-sector,pass-through-sector/+marginal-revenue-market,scenario/world,scenario
+PassThroughSectorMargRev,world/+{name}region,region/+{name}pass-through-sector,pass-through-sector/+marginal-revenue-sector,pass-through-sector/+marginal-revenue-market,scenario/world,scenario
 
 SectorKeyword,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975;fillout=1}logit-exponent,supplysector/+{final-energy}keyword,scenario/world,scenario
 
@@ -148,7 +148,7 @@ CalOutput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}sub
 
 RefLiqTechInput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,period/+{name}minicam-energy-input,technology/+{year}period,period/+share-weight,minicam-energy-input/+calibrated-value,minicam-energy-input/+coefficient,minicam-non-energy-input/+input-cost,minicam-energy-input/+market-name,scenario,scenario/world,period/{name=CO2}CO2,period/{name=non-energy}minicam-non-energy-input
 
-PassThroughTechInput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}pass-through-technology,period/+{name}minicam-energy-input,pass-through-technology/+{year}period,period/+share-weight,minicam-energy-input/+calibrated-value,minicam-energy-input/+coefficient,minicam-non-energy-input/+input-cost,minicam-energy-input/+market-name,scenario,scenario/world,period/{name=CO2}CO2,period/{name=non-energy}minicam-non-energy-input
+PassThroughTech,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}pass-through-technology,scenario,scenario/world
 
 ElecCapacityFactor,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,input-capital/+capacity-factor,input-OM-fixed/+capacity-factor,period/{name=capital}input-capital,period/{name=OM-fixed}input-OM-fixed,scenario,scenario/world
 
@@ -193,4 +193,6 @@ RPSPolicyConstraint,world/+{name}region,region/+{name}policy-portfolio-standard,
 SubsidyInput,world/+{name}region,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1;allow-interpolate=1}stub-technology,stub-technology/+{year}period,period/+{name}input-subsidy,input-subsidy/+coefficient,scenario,scenario/world
 
 TaxInput,world/+{name}region,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1;allow-interpolate=1}stub-technology,stub-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+coefficient,minicam-energy-input/+price-unit-conversion,scenario,scenario/world
+
+EQUIV_TABLE,NODE_EQUIVALENCE
 

@@ -43,17 +43,27 @@ L231_fuel_output <- melt( L231_fuel_output, id=c( "state", "GCAM_sector" ), vari
 L231_fuel_output$year <- substring( L231_fuel_output$year, 2 )
 names( L231_fuel_output ) <- c( "region", "technology", "year", "output" )
 
+printlog( "L231_NodeEquiv: Set up node equivalence for pass-through sectors and technologies." )
+L231_NodeEquiv <- data.frame( group.name=c( "Sector" ), tag1=c( "supplysector" ), tag2=c( "pass-through-sector" ), stringsAsFactors=FALSE )
+L231_NodeEquiv <- rbind( L231_NodeEquiv, data.frame( group.name=c( "Tech" ), tag1=c( "technology" ), tag2=c( "pass-through-technology" ) ) )
+
 printlog( "L231_Delete: DELETE EXISTING US REFINERIES" )
 L231_DeleteSector <- A_refliq_Delete
 
 printlog( "L231_Sector: SECTOR LEVEL PARAMS" )
 # The sector table will include units strings as well as the logit exponent by region
 L231_sectors_in_states <- A_refliq_sector[ A_refliq_sector$by_state, "supplysector" ]
-L231_Sector <- A_refliq_sector[ A_refliq_sector$by_state, names( A_refliq_sector ) %!in% c( "by_state" ) ]
+L231_MargRev <- A_refliq_sector[ A_refliq_sector$by_state,
+    names( A_refliq_sector ) %in% c( "supplysector", "marginal_rev_sector", "marginal_rev_market" ) ]
+L231_MargRev <- L231_MargRev[ sort( rep( 1:nrow( L231_MargRev ), times = length( L231_subregions ) ) ), ]
+L231_MargRev <- data.frame( region=L231_subregions, L231_MargRev )
+
+L231_Sector <- A_refliq_sector[ A_refliq_sector$by_state,
+    names( A_refliq_sector ) %!in% c( "by_state", "marginal_rev_sector", "marginal_rev_market" ) ]
 L231_Sector <- L231_Sector[ sort( rep( 1:nrow( L231_Sector ), times = length( L231_subregions ) ) ), ]
 L231_Sector <- data.frame( region=L231_subregions, L231_Sector )
 L231_Sector <- rbind( L231_Sector, data.frame( region="USA", A_refliq_sector[ !A_refliq_sector$by_state,
-    names( A_refliq_sector ) %!in% c( "by_state" ) ] ) )
+    names( A_refliq_sector ) %!in% c( "by_state", "marginal_rev_sector", "marginal_rev_market" ) ] ) )
 
 # Specify CO2 coefficients for the new sectors we are creating
 printlog( "L231_CO2Coefs: CO2 COEFS FOR NEW SECTORS" )
@@ -98,15 +108,6 @@ L231_TechStubs <- unique( L231_GlobalDBTechInput[ L231_GlobalDBTechInput$technol
 L231_TechStubs <- L231_TechStubs[ sort( rep( 1:nrow( L231_TechStubs), times = length( L231_subregions ) ) ), ]
 L231_TechStubs <- data.frame( region=L231_subregions, L231_TechStubs )
 
-# This is a bit awkward but I am going to zero out base year share weights for these future techs.
-# I don't know why this wasn't done in the spreadsheet but it also means these will NEVER compete
-# since the interpolation rule is just fixed, so what was the point?
-#L230_GlobalDBTechInput[
-    #paste( L230_GlobalDBTechInput$supplysector, L230_GlobalDBTechInput$subsector, L230_GlobalDBTechInput$technology )
-    #%in%
-    #paste( L230_TechStubs$supplysector, L230_TechStubs$subsector, L230_TechStubs$technology ) &
-    #L230_GlobalDBTechInput$year %in% GCAM_base_years, "share_weight" ] <- 0
-
 # Table for calibration
 printlog( "L231_CalOutput: TECH CAL" )
 # For calibration we will just use CalDataOutput which is given in L231_fuel_output
@@ -129,6 +130,10 @@ L231_InputCoef <- L231_InputCoef[, c( "region", "supplysector", "subsector",
 
 # Now we need to calibrate/create tech inputs for the aggregation of refined liquids
 # on state then fuel
+L231_agg_temp <- L231_MargRev[ L231_MargRev$region == L231_subregions[1], ]
+L231_agg_temp$region <- "USA"
+L231_MargRev <- rbind( L231_MargRev, L231_agg_temp )
+
 L231_agg_temp <- L231_Sector[ L231_Sector$region == L231_subregions[1], ]
 L231_agg_temp$region <- "USA"
 L231_Sector <- rbind( L231_Sector, L231_agg_temp )
@@ -183,11 +188,25 @@ L231_agg_temp[ which( !is.na( match( paste( L231_agg_temp$minicam_energy_input, 
     data.frame( share_weight=1, calibrated_value=L231_agg_temp2$output )
 L231_TechInput <- rbind( L231_TechInput, L231_agg_temp )
 
+L231_TechInterpRule <- unique( subset( L231_TechInput, supplysector %in% L231_sectors_in_states,
+    select=c( "region", "supplysector", "subsector", "technology" ) ) )
+L231_TechInterpRule$from.year <- final_cal_year
+L231_TechInterpRule$to.year <- 9999
+L231_TechInterpRule$interp.function <- "fixed"
+L231_TechInterpRule$apply.to <- "share-weight"
+
+printlog( "L231_PassTroughTech: Define the technologies that are purely pass-throughs" )
+L231_PassTroughTech <- unique( subset( L231_TechInput, supplysector %in% L231_sectors_in_states |
+    supplysector %in% unique( L231_MargRev$marginal_rev_sector ),
+    select=c( "region", "supplysector", "subsector", "technology" ) ) )
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
+write_mi_data( L231_NodeEquiv, "EQUIV_TABLE", "L231_NodeEquiv", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_DeleteSector, "SectorDelete", "L231_DeleteSector", "batch_rgcam_refined_liquids_input.xml" )
-write_mi_data( L231_Sector, "PassThroughSector", "L231_Sector", "batch_rgcam_refined_liquids_input.xml" )
+write_mi_data( L231_MargRev, "PassThroughSectorMargRev", "L231_MargRev", "batch_rgcam_refined_liquids_input.xml" )
+write_mi_data( L231_Sector, "Sector", "L231_Sector", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_CO2Coefs, "CO2Coefs", "L231_CO2Coefs", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_Subsector, "ElecSubsector", "L231_Subsector", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_SubsInterpRule, "ElecSubsInterpRule", "L231_SubsInterpRule", "batch_rgcam_refined_liquids_input.xml" )
@@ -198,7 +217,9 @@ write_mi_data( L231_GlobalDBTechInputCCS, "GlobalDBTechCCS", "L231_GlobalDBTechI
 write_mi_data( L231_TechStubs, "TechStubs", "L231_TechStubs", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_CalOutput, "CalOutput", "L231_CalOutput", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_InputCoef, "IndustrySector", "L231_InputCoef", "batch_rgcam_refined_liquids_input.xml" )
-write_mi_data( L231_TechInput, "PassThroughTechInput", "L231_TechInput", "batch_rgcam_refined_liquids_input.xml" )
+write_mi_data( L231_PassTroughTech, "PassThroughTech", "L231_PassTroughTech", "batch_rgcam_refined_liquids_input.xml" )
+write_mi_data( L231_TechInput, "RefLiqTechInput", "L231_TechInput", "batch_rgcam_refined_liquids_input.xml" )
+write_mi_data( L231_TechInterpRule, "TechInterpRule", "L231_TechInterpRule", "batch_rgcam_refined_liquids_input.xml" )
 
 insert_file_into_batchxml( "batch_rgcam_refined_liquids_input.xml", "rgcam_refined_liquids_input.xml", "", xml_tag="outFile" )
 
