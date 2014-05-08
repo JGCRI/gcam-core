@@ -76,7 +76,9 @@ mFirstTaxYear( 2020 ),
 mMaxIterations( 100 ),
 mInitialTargetYear( ITarget::getUseMaxTargetYearFlag() ),
 mHasParsedConfig( false ),
-mNumForwardLooking( 0 )
+mNumForwardLooking( 0 ),
+mMaxTax( 4999 ),
+mNumBackwardsLook( 0 )
 {
     // Check to make sure calibration is off.
     const Configuration* conf = Configuration::getInstance();
@@ -154,7 +156,21 @@ bool PolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
             mInitialTargetYear = XMLHelper<int>::getAttr( curr, "year" );
         }
         else if( nodeName == "forward-look" ) {
-            mNumForwardLooking = XMLHelper<int>::getValue( curr );
+            const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
+            const int year = XMLHelper<int>::getAttr( curr, "year" );
+            if( year == 0 ) {
+                int value = XMLHelper<int>::getValue( curr );
+                fill( mNumForwardLooking.begin(), mNumForwardLooking.end(), value );
+            }
+            else {
+                XMLHelper<int>::insertValueIntoVector( curr, mNumForwardLooking, modeltime );
+            }
+        }
+        else if( nodeName == "max-tax" ) {
+            mMaxTax = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "backward-look" ) {
+            mNumBackwardsLook = XMLHelper<int>::getValue( curr );
         }
         // Handle unknown nodes.
         else {
@@ -178,6 +194,9 @@ bool PolicyTargetRunner::setupScenarios( Timer& aTimer,
 
     bool success = mSingleScenario->setupScenarios( aTimer, aName,
                                                     aScenComponents );
+
+    // Size the forward looking vector now that we have a scenario
+    mNumForwardLooking.resize( mSingleScenario->getInternalScenario()->getModeltime()->getmaxper(), 0 );
     
     // Only read from the configuration file if the data has not already been
     // directly parsed from the BatchRunner configuration file.
@@ -230,11 +249,6 @@ bool PolicyTargetRunner::setupScenarios( Timer& aTimer,
             ->getModeltime()->getEndYear();
     }
     
-    /*!
-     * \pre The number of periods to look forward must be valid.
-     */
-    assert( mNumForwardLooking >= 0 );
-
     return success;
 }
 
@@ -247,17 +261,24 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     targetLog.setLevel( ILogger::NOTICE );
     targetLog << "Performing the baseline run." << endl;
     
-    // Clear any existing tax.
-    const Modeltime* modeltime = getInternalScenario()->getModeltime();
-    vector<double> taxes( modeltime->getmaxper(), 0.0 );
-
-    setTrialTaxes( taxes );
-
     // Run the model without a tax target once to get a baseline for the
     // solver and to calculate the initial non-tax periods.
     bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
                                                   true, aTimer );
     
+    // Allow the use of an existing tax, note that taxes after mFirstTaxYear will
+    // be overridden.
+    const Modeltime* modeltime = getInternalScenario()->getModeltime();
+    const Marketplace* marketplace = getInternalScenario()->getMarketplace();
+    vector<double> taxes( modeltime->getmaxper(), 0.0 );
+    for( int period = modeltime->getFinalCalibrationPeriod() + 1; period < modeltime->getmaxper(); ++period ) {
+        double tax = marketplace->getPrice( mTaxName, "USA", period, false );
+        if( tax != Marketplace::NO_MARKET_PRICE ) {
+            taxes[ period ] = tax;
+        }
+    }
+    setTrialTaxes( taxes );
+
     // TODO: This is only necessary because the cost calculator has trouble solving
     // a zero carbon tax with restart turned on.  This should be unnecessary with
     // a better solver.
@@ -291,6 +312,11 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
         if( modeltime->getper_to_yr( targetPeriod ) == targetYear ){
             ++targetPeriod;
         }
+
+        // Do backwards look if set, do not go before the first tax period
+        targetPeriod -= mNumBackwardsLook;
+        unsigned int firstTaxPeriod = modeltime->getyr_to_per( mFirstTaxYear );
+        targetPeriod = max( targetPeriod, firstTaxPeriod );
         
         // If the target was found successfully, iterate over each period past
         // the target period until the concentration in that period is equal to
@@ -298,14 +324,20 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
         for( int period = targetPeriod; period < modeltime->getmaxper() && success;
              ++period )
         {
-            if( mNumForwardLooking == 0 ) {
+            int numForwardLooking = mNumForwardLooking[ period ];
+            /*!
+             * \pre The number of periods to look forward must be valid.
+             */
+            assert( numForwardLooking >= 0 );
+
+            if( numForwardLooking == 0 ) {
                 success &= solveFutureTarget( taxes, policyTarget.get(),
                                               mMaxIterations, mTolerance, period,
                                               aTimer );
             }
             else {
-                const int periodsToSkip = period + mNumForwardLooking < modeltime->getmaxper() ?
-                    mNumForwardLooking :
+                const int periodsToSkip = period + numForwardLooking < modeltime->getmaxper() ?
+                    numForwardLooking :
                     modeltime->getmaxper() - period - 1;
                 success &= skipFuturePeriod( taxes, policyTarget.get(), mMaxIterations,
                                              mTolerance, period, period + periodsToSkip,
@@ -368,10 +400,8 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
     targetLog << "Solving for the initial target. Performing the baseline run."
               << endl;
 
-    // Clear any existing policy.
-    const double initialTax = 0.0;
-    fill( aTaxes.begin(), aTaxes.end(), initialTax );
-    setTrialTaxes( aTaxes );
+    const int firstTaxPeriod = getInternalScenario()->getModeltime()->getyr_to_per( mFirstTaxYear );
+    const double initialTax = aTaxes[ firstTaxPeriod ];
     
     const int finalModelYear = getInternalScenario()->getModeltime()->getEndYear();
 
@@ -429,11 +459,12 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
         }
 
         // Set the trial tax.
-        aTaxes = calculateHotellingPath( trial.first,
+        calculateHotellingPath( trial.first,
                                          mPathDiscountRate,
                                          getInternalScenario()->getModeltime(),
                                          mFirstTaxYear,
-                                         finalModelYear );
+                                         finalModelYear,
+                                         aTaxes );
 
         setTrialTaxes( aTaxes );
 
@@ -609,16 +640,21 @@ bool PolicyTargetRunner::skipFuturePeriod( vector<double>& aTaxes,
     targetLog << "Skipping to future target in period " << aPeriod << " from "
               << aFirstSkippedPeriod << "." << endl;
     
+    const int lastPeriodToCalc = aPeriod;
     const int currYear = modeltime->getper_to_yr( aPeriod );
     const int lastTaxYear = modeltime->getper_to_yr( aFirstSkippedPeriod - 1 );
+    // The last solved price tends to be a better starting point then the last
+    // hotelling price.
+    aTaxes[ aPeriod ] = aTaxes[ aFirstSkippedPeriod ];
     for( int period = aFirstSkippedPeriod; period < aPeriod; ++period ) {
         const int year = modeltime->getper_to_yr( period );
         aTaxes[ period ] = util::linearInterpolateY( year, lastTaxYear, currYear,
                                                      aTaxes[ aFirstSkippedPeriod - 1 ],
                                                      aTaxes[ aPeriod ] );
+        getInternalScenario()->invalidatePeriod( period );
     }
     setTrialTaxes( aTaxes );
-    bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, false, aTimer );
+    bool success = mSingleScenario->runScenarios( lastPeriodToCalc, false, aTimer );
     
     // Construct a solver which has an initial trial equal to the current tax.
     auto_ptr<ITargetSolver> solver;
@@ -661,6 +697,7 @@ bool PolicyTargetRunner::skipFuturePeriod( vector<double>& aTaxes,
             aTaxes[ period ] = util::linearInterpolateY( year, lastTaxYear, currYear,
                                                          aTaxes[ aFirstSkippedPeriod - 1 ],
                                                          aTaxes[ aPeriod ] );
+            getInternalScenario()->invalidatePeriod( period );
         }
         
         // Set the trial taxes.
@@ -668,7 +705,7 @@ bool PolicyTargetRunner::skipFuturePeriod( vector<double>& aTaxes,
         
         // Run the base scenario.
         // TODO: If the run failed to solve then the target status may be unreliable.
-        success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, false, aTimer );
+        success = mSingleScenario->runScenarios( lastPeriodToCalc, false, aTimer );
     }
     
     if( solver->getIterations() >= aLimitIterations ){
@@ -750,16 +787,16 @@ const string& PolicyTargetRunner::getXMLNameStatic(){
  *         final years are not within the initial and final periods of the model
  *         there will be zeros for the untaxed periods.
  */
-vector<double>
+void
 PolicyTargetRunner::calculateHotellingPath( const double aInitialTax,
                                             const double aHotellingRate,
                                             const Modeltime* aModeltime,
                                             const int aInitialYear,
-                                            const int aFinalYear )
+                                            const int aFinalYear,
+                                            vector<double>& aTaxes )
 {
     // Initialize the tax vector.
     const int maxPeriod = aModeltime->getmaxper();
-    vector<double> taxes( maxPeriod );
 
     // Only set a tax for periods up to the period of the target year. Calculate
     // the tax for each year. Periods set to zero tax will not be solved.
@@ -775,9 +812,8 @@ PolicyTargetRunner::calculateHotellingPath( const double aInitialTax,
         const int numYears = currYear - aInitialYear;
         assert( numYears >= 0 );
 
-        taxes[ per ] = aInitialTax * pow( 1 + aHotellingRate, numYears );
+        aTaxes[ per ] = min( aInitialTax * pow( 1 + aHotellingRate, numYears ), mMaxTax );
     }
-    return taxes;
 }
 
 /*!

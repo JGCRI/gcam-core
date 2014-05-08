@@ -917,3 +917,13 @@ void Scenario::initSolvers() {
 const vector<int>& Scenario::getUnsolvedPeriods() const {
     return unsolvedPeriods;
 }
+
+/*!
+ * \brief Reset the flag which indicates if a model period should be
+ *        recalculated to force it to do so the next time run is called.
+ * \param aPeriod The model period to invalidate.
+ */
+void Scenario::invalidatePeriod( const int aPeriod ) {
+    mIsValidPeriod[ aPeriod ] = false;
+}
+

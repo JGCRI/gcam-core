@@ -184,14 +184,24 @@ private:
     bool mHasParsedConfig;
     
     //! The number of periods to forward look when trying to stay on target
-    int mNumForwardLooking;
+    //! which my change by period
+    std::vector<int> mNumForwardLooking;
 
-    static std::vector<double>
+    //! The number of periods to go backwards before stabalization to re-stabalizing
+    int mNumBackwardsLook;
+
+    //! The maximum tax to use.  Used to avoid extremly high taxes which
+    //! max occur at the end of a long hotelling path and which may not
+    //! solve.
+    double mMaxTax;
+
+    void
         calculateHotellingPath( const double aIntialTax,
                                 const double aHotellingRate,
                                 const Modeltime* aModeltime,
                                 const int aInitialYear,
-                                const int aFinalYear );
+                                const int aFinalYear,
+                                std::vector<double>& aTaxes );
 
     void setTrialTaxes( const std::vector<double> aTaxes );
     
