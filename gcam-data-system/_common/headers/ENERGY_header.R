@@ -25,6 +25,9 @@ convert_rsrc_to_L2 <- function( data, resource_type, subresource_type=NA ) {
         if( any( names( data ) == "gdpSupplyElast" ) ) {
             data_new$gdpSupplyElast = round( data$gdpSupplyElast, digits_gdpSupplyElast )
         }
+        if( any( names( data ) == "subResourceCapacityFactor" ) ) {
+            data_new$subResourceCapacityFactor = round( data$subResourceCapacityFactor, digits_capacity.factor )
+        }
 	}
 	if( resource_type == "renewresource" & subresource_type == "sub-renewable-resource") {
 		data_new <- data.frame(

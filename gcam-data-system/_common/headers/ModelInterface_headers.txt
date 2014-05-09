@@ -83,6 +83,8 @@ SmthRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewreso
 
 SmthRenewRsrcCurvesGdpElast, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, scenario, scenario/world
 
+SmthRenewRsrcCurvesGdpElastCapFac, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, smooth-renewable-subresource/+subResourceCapacityFactor, scenario, scenario/world
+
 GrdRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
 DepRsrcTechChange, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{year;fillout=1}techChange, subresource/+techChange, scenario, scenario/world
@@ -273,7 +275,7 @@ StubCalorieContent, world/+{name}region, region/+{name}supplysector, supplysecto
 
 StubTechFixOut, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+fixedOutput, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, scenario, scenario/world
 
-StubTechCapFac, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}input-capital, input-capital/+capacity-factor, period/+{name}input-OM-fixed, input-OM-fixed/+capacity-factor, scenario, scenario/world
+StubTechCapFac, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}input-capital, input-capital/+capacity-factor, period/+{name}input-OM-fixed, input-OM-fixed/+capacity-factor, scenario, scenario/world
 
 StubTechSecOut, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}secondary-output, secondary-output/+output-ratio, scenario, scenario/world
 
