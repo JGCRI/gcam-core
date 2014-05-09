@@ -39,6 +39,8 @@ A23.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_shrwt" )
 A23.globaltech_keyword <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_keyword" )
 A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )
 A23.globaltech_capital <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital" )
+A23.globaltech_capital_adv <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital_adv" )
+A23.globaltech_capital_low <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital_low" )
 A23.globaltech_OMfixed <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMfixed" )
 A23.globaltech_OMvar <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_OMvar" )
 A23.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_retirement" )
@@ -157,6 +159,38 @@ L223.globaltech_capital.melt[ c( "sector.name", "subsector.name" ) ] <- L223.glo
 L223.GlobalTechCapital_elec <- L223.globaltech_capital.melt[ names_GlobalTechCapital ]
 L223.GlobalIntTechCapital_elec <- subset_inttechs( L223.GlobalTechCapital_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechCapital_elec <- subset_techs( L223.GlobalTechCapital_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+
+#Costs of global technologies - advanced
+printlog( "L223.GlobalTechCapital_elec_adv: Capital costs of global electricity generation technologies - advanced case" )
+L223.globaltech_capital_adv.melt <- interpolate_and_melt( A23.globaltech_capital_adv, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital )
+L223.globaltech_capital_adv.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_capital_adv.melt[ c( "supplysector", "subsector" ) ]
+L223.GlobalTechCapital_elec_adv <- L223.globaltech_capital_adv.melt[ names_GlobalTechCapital ]
+L223.GlobalIntTechCapital_elec_adv <- subset_inttechs( L223.GlobalTechCapital_elec_adv, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+L223.GlobalTechCapital_elec_adv <- subset_techs( L223.GlobalTechCapital_elec_adv, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+
+L223.GlobalIntTechCapital_sol_adv <- subset( L223.GlobalIntTechCapital_elec_adv, L223.GlobalIntTechCapital_elec_adv$subsector.name %in% c( "solar", "rooftop_pv") )
+L223.GlobalTechCapital_sol_adv <- subset( L223.GlobalTechCapital_elec_adv, L223.GlobalTechCapital_elec_adv$subsector.name %in% c( "solar", "rooftop_pv")) 
+
+L223.GlobalIntTechCapital_wind_adv <- subset( L223.GlobalIntTechCapital_elec_adv, L223.GlobalIntTechCapital_elec_adv$subsector.name == "wind" )
+L223.GlobalTechCapital_wind_adv <- subset( L223.GlobalTechCapital_elec_adv, L223.GlobalTechCapital_elec_adv$subsector.name == "wind") 
+
+L223.GlobalTechCapital_geo_adv <- subset( L223.GlobalTechCapital_elec_adv, L223.GlobalTechCapital_elec_adv$subsector.name == "geothermal") 
+
+#Costs of global technologies - low
+printlog( "L223.GlobalTechCapital_elec_low: Capital costs of global electricity generation technologies - lowanced case" )
+L223.globaltech_capital_low.melt <- interpolate_and_melt( A23.globaltech_capital_low, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital )
+L223.globaltech_capital_low.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_capital_low.melt[ c( "supplysector", "subsector" ) ]
+L223.GlobalTechCapital_elec_low <- L223.globaltech_capital_low.melt[ names_GlobalTechCapital ]
+L223.GlobalIntTechCapital_elec_low <- subset_inttechs( L223.GlobalTechCapital_elec_low, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+L223.GlobalTechCapital_elec_low <- subset_techs( L223.GlobalTechCapital_elec_low, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+
+L223.GlobalIntTechCapital_sol_low <- subset( L223.GlobalIntTechCapital_elec_low, L223.GlobalIntTechCapital_elec_low$subsector.name %in% c( "solar", "rooftop_pv") )
+L223.GlobalTechCapital_sol_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name %in% c( "solar", "rooftop_pv")) 
+
+L223.GlobalIntTechCapital_wind_low <- subset( L223.GlobalIntTechCapital_elec_low, L223.GlobalIntTechCapital_elec_low$subsector.name == "wind" )
+L223.GlobalTechCapital_wind_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "wind") 
+
+L223.GlobalTechCapital_geo_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "geothermal") 
 
 printlog( "L223.GlobalTechOMfixed_elec: Fixed O&M costs of global electricity generation technologies" )
 L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed", digits = digits_OM )
@@ -449,6 +483,29 @@ write_mi_data( L223.StubTechProd_elec, "StubTechProd", "ENERGY_LEVEL2_DATA", "L2
 write_mi_data( L223.StubTechEff_elec, "StubTechEff", "ENERGY_LEVEL2_DATA", "L223.StubTechEff_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_electricity.xml", "ENERGY_XML_FINAL", "electricity.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_sol_adv, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_sol_adv", "ENERGY_XML_BATCH", "batch_solar_adv.xml" )
+write_mi_data( L223.GlobalIntTechCapital_sol_adv, "GlobalIntTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechCapital_sol_adv", "ENERGY_XML_BATCH", "batch_solar_adv.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_solar_adv.xml", "ENERGY_XML_FINAL", "solar_adv.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_wind_adv, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_wind_adv", "ENERGY_XML_BATCH", "batch_wind_adv.xml" )
+write_mi_data( L223.GlobalIntTechCapital_wind_adv, "GlobalIntTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechCapital_wind_adv", "ENERGY_XML_BATCH", "batch_wind_adv.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_wind_adv.xml", "ENERGY_XML_FINAL", "wind_adv.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_geo_adv, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_geo_adv", "ENERGY_XML_BATCH", "batch_geo_adv.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_adv.xml", "ENERGY_XML_FINAL", "geo_adv.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_sol_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_sol_low", "ENERGY_XML_BATCH", "batch_solar_low.xml" )
+write_mi_data( L223.GlobalIntTechCapital_sol_low, "GlobalIntTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechCapital_sol_low", "ENERGY_XML_BATCH", "batch_solar_low.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_solar_low.xml", "ENERGY_XML_FINAL", "solar_low.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_wind_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_wind_low", "ENERGY_XML_BATCH", "batch_wind_low.xml" )
+write_mi_data( L223.GlobalIntTechCapital_wind_low, "GlobalIntTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechCapital_wind_low", "ENERGY_XML_BATCH", "batch_wind_low.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_wind_low.xml", "ENERGY_XML_FINAL", "wind_low.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_geo_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_geo_low", "ENERGY_XML_BATCH", "batch_geo_low.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_low.xml", "ENERGY_XML_FINAL", "geo_low.xml", "", xml_tag="outFile" )
+
 
 logstop()
 
