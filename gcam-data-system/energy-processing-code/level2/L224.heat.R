@@ -34,6 +34,7 @@ A24.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A24.subsector_interp" )
 A24.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A24.globaltech_coef" )
 A24.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A24.globaltech_cost" )
 A24.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A24.globaltech_shrwt" )
+L1231.eff_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.eff_R_elec_F_tech_Yh" )
 L124.in_EJ_R_heat_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.in_EJ_R_heat_F_Yh" )
 L124.heatoutratio_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.heatoutratio_R_elec_F_tech_Yh" )
 
@@ -134,6 +135,29 @@ L224.StubTechSecOut_elec$secondary.output <- round( L224.heatoutratio_R_elec_F_t
 L224.StubTechCost_elec <- L224.StubTechSecOut_elec[ names_StubTechYr ]
 L224.StubTechCost_elec$minicam.non.energy.input <- "heat plant"
 L224.StubTechCost_elec$input.cost <- round( L224.StubTechSecOut_elec$secondary.output * heat_price, digits_cost )
+
+## NOTE: For gas-electric technologies whose efficiencies are below the default assumptions, this cost needs to be reduced
+L224.eff_R_elec_F_tech_Y <- melt( L1231.eff_R_elec_F_tech_Yh,
+      id.vars = R_S_F_tech,
+      measure.vars = X_model_base_years,
+      variable.name = Y,
+      value.name = "efficiency" )
+L224.eff_R_elec_F_tech_Y$year <- as.numeric( sub( "X", "", L224.eff_R_elec_F_tech_Y$year ) )
+L224.eff_R_elec_F_tech_Y <- add_region_name( L224.eff_R_elec_F_tech_Y )
+L224.eff_Rh_elec_gas_sc_Y <- subset( L224.eff_R_elec_F_tech_Y, region %in% heat_regions & fuel == "gas" & efficiency < default_electric_efficiency )
+L224.eff_Rh_elec_gas_sc_Y$cost_modifier <- gas_price * ( 1 / default_electric_efficiency - 1 / L224.eff_Rh_elec_gas_sc_Y$efficiency )
+
+#Modify the costs (don't read this iteratively)
+L224.StubTechCost_elec$cost_modifier <- NA
+L224.StubTechCost_elec$cost_modifier <- L224.eff_Rh_elec_gas_sc_Y$cost_modifier[
+      match( vecpaste( L224.StubTechCost_elec[ c( "region", "subsector", "stub.technology", "year" ) ] ),
+             vecpaste( L224.eff_Rh_elec_gas_sc_Y[ c( "region", "fuel", "technology", "year" ) ] ) ) ]
+L224.StubTechCost_elec$input.cost[ !is.na( L224.StubTechCost_elec$cost_modifier ) ] <-
+   round( pmax( 0,
+      L224.StubTechCost_elec$input.cost[ !is.na( L224.StubTechCost_elec$cost_modifier ) ] +
+      L224.StubTechCost_elec$cost_modifier[ !is.na( L224.StubTechCost_elec$cost_modifier ) ] ),
+   digits_cost )
+L224.StubTechCost_elec$cost_modifier <- NULL
 
 #Need to fill out object names for all model time periods
 L224.StubTechCost_elec_fut <- repeat_and_add_vector( subset( L224.StubTechCost_elec, year == max( year ) ), Y, model_future_years )
