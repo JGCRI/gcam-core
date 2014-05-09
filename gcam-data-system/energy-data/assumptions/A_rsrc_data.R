@@ -7,5 +7,6 @@ digits_maxSubResource <- 5
 digits_mid.price <- 3
 digits_curve.exponent <- 3
 digits_gdpSupplyElast <- 3
+digits_capacity.factor <- 2
 
 #Level2 data names
