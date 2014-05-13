@@ -243,4 +243,18 @@ woody_biocrops <- c( "eucalyptus", "willow" )
 
 AEZ_delimiter <- ""       #delimiter between the appended sector name and AEZ name
 
+#Multipliers for high & low ag prod growth scenarios
+hi_ag_prod_growth_mult <- 1.5
+low_ag_prod_growth_mult <- 0.5
 
+#Multipliers for ag waste SSP scenarios
+low_waste_mult <- 0.85
+high_waste_mult <- 1.15
+
+#Multipliers for meat SSP scenarios
+low_meat_mult <- 0.85
+high_meat_mult <- 1.15
+
+#GDP per capita thressholds for SSP4 region groupings
+hi_growth_pcgdp <- 12.275
+lo_growth_pcgdp <- 2.75
