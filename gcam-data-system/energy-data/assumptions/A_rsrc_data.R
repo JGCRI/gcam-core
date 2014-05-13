@@ -10,3 +10,8 @@ digits_gdpSupplyElast <- 3
 digits_capacity.factor <- 2
 
 #Level2 data names
+
+#Multipliers on extraction cost for SSP scenarios - note "hi" indicates high ccs not high cost
+hi_ccs_cost_mult <- 0.8
+lo_ccs_cost_mult <- 3
+lowest_ccs_cost_mult <- 10
