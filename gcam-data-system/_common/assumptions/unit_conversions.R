@@ -12,6 +12,7 @@ conv_C_CO2 <- 44/12
 #Dollar conversion factors
 conv_1990_2005_USD <- 1.383
 conv_1990_2007_USD <- 1.470
+conv_1990_2010_USD <- 1.510
 conv_1990_1975_USD <- 0.4649
 conv_1996_1975_USD <- 0.4049
 conv_1997_1975_USD <- 0.3983
