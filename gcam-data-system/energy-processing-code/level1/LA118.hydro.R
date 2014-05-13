@@ -85,13 +85,10 @@ L118.out_EJ_RG3_elec_hydro_Y <- L118.out_EJ_RG3_elec_hydro_Y[ names( L118.out_EJ
 L118.out_EJ_RG3_elec_hydro_Y <- gcam_interp( L118.out_EJ_RG3_elec_hydro_Y, future_years, rule = 2 )[
       c( "region_GCAM3", X_final_historical_year, X_future_years ) ]
 
-#Calculate the growth from period to period in each region
-L118.growth_EJ_RG3_elec_hydro_Y <- L118.out_EJ_RG3_elec_hydro_Y[ c( "region_GCAM3", X_future_years ) ]
-for( i in 1:ncol( L118.growth_EJ_RG3_elec_hydro_Y[ X_future_years ] ) ){
-	L118.growth_EJ_RG3_elec_hydro_Y[ X_future_years ][i] <-
-	L118.out_EJ_RG3_elec_hydro_Y[ X_future_years ][i] -
-	L118.out_EJ_RG3_elec_hydro_Y[ c( X_final_historical_year, X_future_years ) ][i]	
-}
+#Calculate the growth from the base year in each region_GCAM3. This will be partitioned to countries according to potential
+L118.growth_EJ_RG3_elec_hydro_Y <- data.frame(
+      L118.out_EJ_RG3_elec_hydro_Y[ "region_GCAM3" ],
+      L118.out_EJ_RG3_elec_hydro_Y[ X_future_years ] - L118.out_EJ_RG3_elec_hydro_Y[[ X_final_historical_year ]] )
 
 #Calculate the share of the growth potential by each country within its GCAM 3.0 region
 Hydropower_potential$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[ match( Hydropower_potential$iso, iso_GCAM_regID$iso ) ]
@@ -100,10 +97,11 @@ Hydropower_potential$Growth_potential_EJ_R <- Hydropower_potential_RG3$Growth_po
       match( Hydropower_potential$region_GCAM3, Hydropower_potential_RG3$region_GCAM3 ) ]
 Hydropower_potential$share <- Hydropower_potential$Growth_potential_EJ / Hydropower_potential$Growth_potential_EJ_R
 
-#Add future years to table of base-year hydropower generation as region_GCAM3 output times country-wise share
+#Add future years to table of base-year hydropower generation as base-year output plus region_GCAM3 growth times country-wise share
 L118.out_EJ_ctry_elec_hydro_Y <- L118.out_EJ_ctry_elec_hydro_fby[ c( "iso", "region_GCAM3", X_final_historical_year ) ]
-L118.out_EJ_ctry_elec_hydro_Y[ X_future_years ] <- Hydropower_potential$share[ match( L118.out_EJ_ctry_elec_hydro_Y$iso, Hydropower_potential$iso ) ] *
-      L118.out_EJ_RG3_elec_hydro_Y[ match( L118.out_EJ_ctry_elec_hydro_Y$region_GCAM3, L118.out_EJ_RG3_elec_hydro_Y$region_GCAM3 ),
+L118.out_EJ_ctry_elec_hydro_Y[ X_future_years ] <- L118.out_EJ_ctry_elec_hydro_Y[[ X_final_historical_year ]] +
+      Hydropower_potential$share[ match( L118.out_EJ_ctry_elec_hydro_Y$iso, Hydropower_potential$iso ) ] *
+      L118.growth_EJ_RG3_elec_hydro_Y[ match( L118.out_EJ_ctry_elec_hydro_Y$region_GCAM3, L118.growth_EJ_RG3_elec_hydro_Y$region_GCAM3 ),
       X_future_years ]
 
 #For countries not in the world dams database (all are very small), copy final historical year forward
@@ -121,7 +119,7 @@ L118.out_EJ_R_elec_hydro_Yfut <- L118.out_EJ_R_elec_hydro_Yfut[ c( R_S_F, X_fina
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L118.out_EJ_R_elec_hydro_Yfut <- c( "Traditional biomass resources by GCAM region","Unit = EJ" )
+comments.L118.out_EJ_R_elec_hydro_Yfut <- c( "Hydropower production by GCAM region","Unit = EJ" )
 
 #write tables as CSV files
 writedata( L118.out_EJ_R_elec_hydro_Yfut, domain="ENERGY_LEVEL1_DATA", fn="L118.out_EJ_R_elec_hydro_Yfut", comments=comments.L118.out_EJ_R_elec_hydro_Yfut )

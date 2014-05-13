@@ -364,7 +364,8 @@ L223.StubTechFixOut_elec$share.weight <- 0
 #Adding in future hydropower generation here
 printlog( "L223.StubTechFixOut_hydro: fixed output of future hydropower")
 L223.StubTechFixOut_hydro <- interpolate_and_melt( L118.out_EJ_R_elec_hydro_Yfut,
-      model_future_years[ !model_future_years %in% historical_years ], value = "fixedOutput" )
+      model_future_years[ !model_future_years %in% historical_years ], value = "fixedOutput",
+      digits = digits_calOutput )
 L223.StubTechFixOut_hydro <- add_region_name( L223.StubTechFixOut_hydro )
 L223.StubTechFixOut_hydro[ c( "supplysector", "subsector", "stub.technology" ) ] <- calibrated_techs[
       match( paste( L223.StubTechFixOut_hydro$sector, L223.StubTechFixOut_hydro$fuel ),
