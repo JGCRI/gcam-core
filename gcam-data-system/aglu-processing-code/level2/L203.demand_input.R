@@ -37,6 +37,9 @@ L109.ag_ALL_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L109.ag_ALL_Mt_R_C_Y" )
 L109.an_ALL_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L109.an_ALL_Mt_R_C_Y" )
 L110.For_ALL_bm3_R_Y <- readdata( "AGLU_LEVEL1_DATA", "L110.For_ALL_bm3_R_Y" )
 L134.pcFood_kcald_R_Dmnd_Y <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y" )
+L134.pcFood_kcald_R_Dmnd_Y_low <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_low" )
+L134.pcFood_kcald_R_Dmnd_Y_high <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_high" )
+L134.pcFood_kcald_R_Dmnd_Y_ssp4 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_ssp4" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
 L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
@@ -55,6 +58,9 @@ L203.ag_kcalg_R_C_Y.melt <- interpolate_and_melt( L101.ag_kcalg_R_C_Y, aglu_dema
 L203.an_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L105.an_Food_Pcal_R_C_Y, aglu_demand_calyears )
 L203.an_kcalg_R_C_Y.melt <- interpolate_and_melt( L105.an_kcalg_R_C_Y, aglu_demand_calyears )
 L203.pcFood_kcald_R_Dmnd_Y.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y, aglu_demand_futureyears )
+L203.pcFood_kcald_R_Dmnd_Y_low.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_low, aglu_demand_futureyears )
+L203.pcFood_kcald_R_Dmnd_Y_high.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_high, aglu_demand_futureyears )
+L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_ssp4, aglu_demand_futureyears )
 L203.Pop_thous_R_Yh <- interpolate_and_melt( L101.Pop_thous_R_Yh, aglu_demand_calyears )
 L203.pcgdp_thous90USD_SSP_R_Y.melt <- interpolate_and_melt( L102.pcgdp_thous90USD_SSP_R_Y, c( model_base_years, model_future_years ) )
 
@@ -68,6 +74,9 @@ L203.ag_ALL_Mt_R_C_Y <- add_region_name( L109.ag_ALL_Mt_R_C_Y )
 L203.an_ALL_Mt_R_C_Y <- add_region_name( L109.an_ALL_Mt_R_C_Y )
 L203.For_ALL_bm3_R_Y <- add_region_name( L110.For_ALL_bm3_R_Y )
 L203.pcFood_kcald_R_Dmnd_Y.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y.melt )
+L203.pcFood_kcald_R_Dmnd_Y_high.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_high.melt )
+L203.pcFood_kcald_R_Dmnd_Y_low.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_low.melt )
+L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt )
 L203.Pop_thous_R_Yh <- add_region_name( L203.Pop_thous_R_Yh )
 L203.pcgdp_thous90USD_SSP_R_Y.melt <- add_region_name( L203.pcgdp_thous90USD_SSP_R_Y.melt )
 
@@ -237,9 +246,45 @@ L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand
       L203.pcFood_kcald_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
 L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
 
+L203.pcFood_kcald_R_Dmnd_Y_high.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_high.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
+L203.pcFood_kcald_R_Dmnd_Y_high.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_high.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
+L203.pcFood_kcald_R_Dmnd_Yfut_high <- dcast( L203.pcFood_kcald_R_Dmnd_Y_high.melt, region + energy.final.demand ~ variable )
+L203.pcFoodRatio_R_Dmnd_Yfut_high <- L203.pcFood_kcald_R_Dmnd_Yfut_high
+L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
+  L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
+  L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
+
+L203.pcFood_kcald_R_Dmnd_Y_low.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_low.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
+L203.pcFood_kcald_R_Dmnd_Y_low.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_low.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
+L203.pcFood_kcald_R_Dmnd_Yfut_low <- dcast( L203.pcFood_kcald_R_Dmnd_Y_low.melt, region + energy.final.demand ~ variable )
+L203.pcFoodRatio_R_Dmnd_Yfut_low <- L203.pcFood_kcald_R_Dmnd_Yfut_low
+L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
+  L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
+  L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
+
+L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
+L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
+L203.pcFood_kcald_R_Dmnd_Yfut_ssp4 <- dcast( L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt, region + energy.final.demand ~ variable )
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp4 <- L203.pcFood_kcald_R_Dmnd_Yfut_ssp4
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
+
 printlog( "Step 3: Merging the historical and future caloric demand trajectories" )
 L203.pcFoodRatio_R_Dmnd_Y <- L203.pcFoodRatio_R_Yh
 L203.pcFoodRatio_R_Dmnd_Y[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears ]
+
+L203.pcFoodRatio_R_Dmnd_Y_high <- L203.pcFoodRatio_R_Yh
+L203.pcFoodRatio_R_Dmnd_Y_high[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears ]
+
+L203.pcFoodRatio_R_Dmnd_Y_low <- L203.pcFoodRatio_R_Yh
+L203.pcFoodRatio_R_Dmnd_Y_low[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears ]
+
+L203.pcFoodRatio_R_Dmnd_Y_ssp4 <- L203.pcFoodRatio_R_Yh
+L203.pcFoodRatio_R_Dmnd_Y_ssp4[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears ]
 
 printlog( "Step 4: Calculating the per-capita GDP trajectories over the same time period" )
 printlog( "NOTE: only computing elasticities based on the specified GDP scenario" )
@@ -252,6 +297,51 @@ L203.pcgdpRatio_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
       L203.pcgdp_usd_R_Y[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
 L203.pcgdpRatio_R_Y[ X_model_years[1] ] <- 1
 
+L203.pcgdp_thous90USD_R_Y_SSP1.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
+  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP1" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_usd_R_Y_SSP1 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP1.melt, region ~ variable )
+L203.pcgdpRatio_R_Y_SSP1 <- L203.pcgdp_usd_R_Y_SSP1
+L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ 2:length( X_model_years ) ] ] <-
+  L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ 2:length( X_model_years ) ] ] / 
+  L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP1[ X_model_years[1] ] <- 1
+
+L203.pcgdp_thous90USD_R_Y_SSP2.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
+  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP2" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_usd_R_Y_SSP2 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP2.melt, region ~ variable )
+L203.pcgdpRatio_R_Y_SSP2 <- L203.pcgdp_usd_R_Y_SSP2
+L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ 2:length( X_model_years ) ] ] <-
+  L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ 2:length( X_model_years ) ] ] / 
+  L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP2[ X_model_years[1] ] <- 1
+
+L203.pcgdp_thous90USD_R_Y_SSP3.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
+  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP3" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_usd_R_Y_SSP3 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP3.melt, region ~ variable )
+L203.pcgdpRatio_R_Y_SSP3 <- L203.pcgdp_usd_R_Y_SSP3
+L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ 2:length( X_model_years ) ] ] <-
+  L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ 2:length( X_model_years ) ] ] / 
+  L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP3[ X_model_years[1] ] <- 1
+
+L203.pcgdp_thous90USD_R_Y_SSP4.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
+  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP4" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_usd_R_Y_SSP4 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP4.melt, region ~ variable )
+L203.pcgdpRatio_R_Y_SSP4 <- L203.pcgdp_usd_R_Y_SSP4
+L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ 2:length( X_model_years ) ] ] <-
+  L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ 2:length( X_model_years ) ] ] / 
+  L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP4[ X_model_years[1] ] <- 1
+
+L203.pcgdp_thous90USD_R_Y_SSP5.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
+  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP5" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_usd_R_Y_SSP5 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP5.melt, region ~ variable )
+L203.pcgdpRatio_R_Y_SSP5 <- L203.pcgdp_usd_R_Y_SSP5
+L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ 2:length( X_model_years ) ] ] <-
+  L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ 2:length( X_model_years ) ] ] / 
+  L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP5[ X_model_years[1] ] <- 1
+
 printlog( "Step 5: Solving for the income elasticities in each time period" )
 L203.IncElas_R_Dmnd_Y <- L203.pcFoodRatio_R_Dmnd_Y
 L203.IncElas_R_Dmnd_Y[ X_model_years ] <-
@@ -260,9 +350,59 @@ L203.IncElas_R_Dmnd_Y[ X_model_years ] <-
              digits_IncElas )
 L203.IncElas_R_Dmnd_Y[ is.na( L203.IncElas_R_Dmnd_Y ) ] <- 0
 
+L203.IncElas_R_Dmnd_Y_SSP1 <- L203.pcFoodRatio_R_Dmnd_Y_low
+L203.IncElas_R_Dmnd_Y_SSP1[ X_model_years ] <-
+  round( log( L203.pcFoodRatio_R_Dmnd_Y_low[ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP1[ match( L203.pcFoodRatio_R_Dmnd_Y_low$region, L203.pcgdpRatio_R_Y_SSP1$region ), X_model_years ] ),
+         digits_IncElas )
+L203.IncElas_R_Dmnd_Y_SSP1[ is.na( L203.IncElas_R_Dmnd_Y_SSP1 ) ] <- 0
+
+L203.IncElas_R_Dmnd_Y_SSP2 <- L203.pcFoodRatio_R_Dmnd_Y
+L203.IncElas_R_Dmnd_Y_SSP2[ X_model_years ] <-
+  round( log( L203.pcFoodRatio_R_Dmnd_Y[ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP2[ match( L203.pcFoodRatio_R_Dmnd_Y$region, L203.pcgdpRatio_R_Y_SSP2$region ), X_model_years ] ),
+         digits_IncElas )
+L203.IncElas_R_Dmnd_Y_SSP2[ is.na( L203.IncElas_R_Dmnd_Y_SSP2 ) ] <- 0
+
+L203.IncElas_R_Dmnd_Y_SSP3 <- L203.pcFoodRatio_R_Dmnd_Y_high
+L203.IncElas_R_Dmnd_Y_SSP3[ X_model_years ] <-
+  round( log( L203.pcFoodRatio_R_Dmnd_Y_high [ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP3[ match( L203.pcFoodRatio_R_Dmnd_Y_high$region, L203.pcgdpRatio_R_Y_SSP3$region ), X_model_years ] ),
+         digits_IncElas )
+L203.IncElas_R_Dmnd_Y_SSP3[ is.na( L203.IncElas_R_Dmnd_Y_SSP3 ) ] <- 0
+
+L203.IncElas_R_Dmnd_Y_SSP4 <- L203.pcFoodRatio_R_Dmnd_Y_ssp4
+L203.IncElas_R_Dmnd_Y_SSP4[ X_model_years ] <-
+  round( log( L203.pcFoodRatio_R_Dmnd_Y_ssp4[ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP4[ match( L203.pcFoodRatio_R_Dmnd_Y_ssp4$region, L203.pcgdpRatio_R_Y_SSP4$region ), X_model_years ] ),
+         digits_IncElas )
+L203.IncElas_R_Dmnd_Y_SSP4[ is.na( L203.IncElas_R_Dmnd_Y_SSP4 ) ] <- 0
+
+L203.IncElas_R_Dmnd_Y_SSP5 <- L203.pcFoodRatio_R_Dmnd_Y_high
+L203.IncElas_R_Dmnd_Y_SSP5[ X_model_years ] <-
+  round( log( L203.pcFoodRatio_R_Dmnd_Y_high[ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP5[ match( L203.pcFoodRatio_R_Dmnd_Y_high$region, L203.pcgdpRatio_R_Y_SSP5$region ), X_model_years ] ),
+         digits_IncElas )
+L203.IncElas_R_Dmnd_Y_SSP5[ is.na( L203.IncElas_R_Dmnd_Y_SSP5 ) ] <- 0
+
 printlog( "Step 6: Converting to appropriate formats")
 L203.IncomeElasticity <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y, model_future_years, value.name = "income.elasticity" )
 L203.IncomeElasticity <- L203.IncomeElasticity[ names_IncomeElasticity ]
+
+L203.IncomeElasticity_SSP1 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP1, model_future_years, value.name = "income.elasticity" )
+L203.IncomeElasticity_SSP1 <- L203.IncomeElasticity_SSP1[ names_IncomeElasticity ]
+
+L203.IncomeElasticity_SSP2 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP2, model_future_years, value.name = "income.elasticity" )
+L203.IncomeElasticity_SSP2 <- L203.IncomeElasticity_SSP2[ names_IncomeElasticity ]
+
+L203.IncomeElasticity_SSP3 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP3, model_future_years, value.name = "income.elasticity" )
+L203.IncomeElasticity_SSP3 <- L203.IncomeElasticity_SSP3[ names_IncomeElasticity ]
+
+L203.IncomeElasticity_SSP4 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP4, model_future_years, value.name = "income.elasticity" )
+L203.IncomeElasticity_SSP4 <- L203.IncomeElasticity_SSP4[ names_IncomeElasticity ]
+
+L203.IncomeElasticity_SSP5 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP5, model_future_years, value.name = "income.elasticity" )
+L203.IncomeElasticity_SSP5 <- L203.IncomeElasticity_SSP5[ names_IncomeElasticity ]
 
 printlog( "L203.PriceElasticity: Price elasticities" )
 L203.PriceElasticity <- write_to_all_regions_ag( A_demand_supplysector, c( names_EnergyFinalDemand, "price.elasticity" ) )
@@ -289,6 +429,11 @@ L203.StubCalorieContent_meat     <- subset( L203.StubCalorieContent_meat, !regio
 L203.PerCapitaBased              <- subset( L203.PerCapitaBased, !region %in% no_aglu_regions )
 L203.BaseService                 <- subset( L203.BaseService, !region %in% no_aglu_regions & year %in% model_base_years )
 L203.IncomeElasticity            <- subset( L203.IncomeElasticity, !region %in% no_aglu_regions )
+L203.IncomeElasticity_SSP1       <- subset( L203.IncomeElasticity_SSP1, !region %in% no_aglu_regions )
+L203.IncomeElasticity_SSP2       <- subset( L203.IncomeElasticity_SSP2, !region %in% no_aglu_regions )
+L203.IncomeElasticity_SSP3       <- subset( L203.IncomeElasticity_SSP3, !region %in% no_aglu_regions )
+L203.IncomeElasticity_SSP4       <- subset( L203.IncomeElasticity_SSP4, !region %in% no_aglu_regions )
+L203.IncomeElasticity_SSP5       <- subset( L203.IncomeElasticity_SSP5, !region %in% no_aglu_regions )
 L203.PriceElasticity             <- subset( L203.PriceElasticity, !region %in% no_aglu_regions )
 
 # -----------------------------------------------------------------------------
@@ -314,5 +459,20 @@ write_mi_data( L203.IncomeElasticity, "IncomeElasticity", "AGLU_LEVEL2_DATA", "L
 write_mi_data( L203.PriceElasticity, "PriceElasticity", "AGLU_LEVEL2_DATA", "L203.PriceElasticity", "AGLU_XML_BATCH", "batch_demand_input.xml" )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_demand_input.xml", "AGLU_XML_FINAL", "demand_input.xml", "", xml_tag="outFile" )
+
+write_mi_data( L203.IncomeElasticity_SSP1, "IncomeElasticity", "AGLU_LEVEL2_DATA", "L203.IncomeElasticity_SSP1", "AGLU_XML_BATCH", "batch_food_SSP1.xml" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_food_SSP1.xml", "AGLU_XML_FINAL", "food_SSP1.xml", "", xml_tag="outFile" )
+
+write_mi_data( L203.IncomeElasticity_SSP2, "IncomeElasticity", "AGLU_LEVEL2_DATA", "L203.IncomeElasticity_SSP2", "AGLU_XML_BATCH", "batch_food_SSP2.xml" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_food_SSP2.xml", "AGLU_XML_FINAL", "food_SSP2.xml", "", xml_tag="outFile" )
+
+write_mi_data( L203.IncomeElasticity_SSP3, "IncomeElasticity", "AGLU_LEVEL2_DATA", "L203.IncomeElasticity_SSP3", "AGLU_XML_BATCH", "batch_food_SSP3.xml" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_food_SSP3.xml", "AGLU_XML_FINAL", "food_SSP3.xml", "", xml_tag="outFile" )
+
+write_mi_data( L203.IncomeElasticity_SSP4, "IncomeElasticity", "AGLU_LEVEL2_DATA", "L203.IncomeElasticity_SSP4", "AGLU_XML_BATCH", "batch_food_SSP4.xml" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_food_SSP4.xml", "AGLU_XML_FINAL", "food_SSP4.xml", "", xml_tag="outFile" )
+
+write_mi_data( L203.IncomeElasticity_SSP5, "IncomeElasticity", "AGLU_LEVEL2_DATA", "L203.IncomeElasticity_SSP5", "AGLU_XML_BATCH", "batch_food_SSP5.xml" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_food_SSP5.xml", "AGLU_XML_FINAL", "food_SSP5.xml", "", xml_tag="outFile" )
 
 logstop()

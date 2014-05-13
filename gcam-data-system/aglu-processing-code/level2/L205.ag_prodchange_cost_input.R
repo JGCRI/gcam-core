@@ -22,6 +22,7 @@ printlog( "Model input for agricultural costs and productivity change" )
 
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
@@ -35,6 +36,7 @@ L115.bio_CCI_rcp_gcm_cm_R_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L115.bio_CCI_rcp
 L122.ag_EcYield_kgm2_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_EcYield_kgm2_R_C_Y_AEZ" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
 L133.ag_Cost_75USDkg_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L133.ag_Cost_75USDkg_C_AEZ" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y")
 
 # -----------------------------------------------------------------------------
 
@@ -218,6 +220,27 @@ L205.AgCost_bio$nonLandVariableCost[ L205.AgCost_bio$AEZ == "AEZ07" &
                   L205.AgCost_bio$region %in% c( "USA", "Canada" ) ], A_bio_cost_yield$GCAM_commodity ) ]
 L205.AgCost_bio <- L205.AgCost_bio[ names_AgCost ]
 
+printlog( "Table L205.AgProdChange_high: High ag prod change (not incl biomass)" )
+L205.AgProdChange_high <- L205.AgProdChange_ref
+L205.AgProdChange_high$AgProdChange <- L205.AgProdChange_high$AgProdChange * hi_ag_prod_growth_mult
+
+printlog( "Table L205.AgProdChange_low: Low ag prod change (not incl biomass)" )
+L205.AgProdChange_low <- L205.AgProdChange_ref
+L205.AgProdChange_low$AgProdChange <- L205.AgProdChange_low$AgProdChange * low_ag_prod_growth_mult
+
+printlog( "Table L205.AgProdChange_SSP4: SSP4 ag prod change (not incl biomass)" )
+L205.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L205.pcgdp_2010 <- L205.pcgdp_2010[ names( L205.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
+L205.pcgdp_2010 <- add_region_name( L205.pcgdp_2010 )
+L205.pcgdp_2010$X2010 <- L205.pcgdp_2010$X2010 * conv_1990_2010_USD
+L205.high_reg <- L205.pcgdp_2010$region[ L205.pcgdp_2010$X2010 > hi_growth_pcgdp ]
+L205.low_reg <- L205.pcgdp_2010$region[ L205.pcgdp_2010$X2010 < lo_growth_pcgdp ]
+
+L205.AgProdChange_ssp4_lo <- subset( L205.AgProdChange_low, L205.AgProdChange_low$region %in% L205.low_reg )
+L205.AgProdChange_ssp4_hi <- subset( L205.AgProdChange_high, L205.AgProdChange_high$region %in% L205.high_reg )
+L205.AgProdChange_ssp4_med <- subset( L205.AgProdChange_ref, L205.AgProdChange_ref$region %!in% c( L205.high_reg, L205.low_reg ) )
+L205.AgProdChange_ssp4 <- rbind( L205.AgProdChange_ssp4_lo, L205.AgProdChange_ssp4_med, L205.AgProdChange_ssp4_hi )
+
 printlog( "Removing non-existent AEZs from all tables")
 L205.AgProdChange_ref <- remove_AEZ_nonexist( L205.AgProdChange_ref )
 L205.AgCost_ag <- remove_AEZ_nonexist( L205.AgCost_ag )
@@ -234,5 +257,22 @@ write_mi_data( L205.AgCost_bio, "AgCost", "AGLU_LEVEL2_DATA", "L205.AgCost_bio",
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_prodchange_ref.xml", "AGLU_XML_FINAL", "ag_prodchange_ref.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_cost.xml", "AGLU_XML_FINAL", "ag_cost.xml", "", xml_tag="outFile" )
+
+write_mi_data( L205.AgProdChange_high, IDstring="AgProdChange", domain="AGLU_LEVEL2_DATA", fn="L205.AgProdChange_ssp1",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_prodchange_ssp1.xml" ) 
+write_mi_data( L205.AgProdChange_ref, IDstring="AgProdChange", domain="AGLU_LEVEL2_DATA", fn="L205.AgProdChange_ssp2",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_prodchange_ssp2.xml" ) 
+write_mi_data( L205.AgProdChange_low, IDstring="AgProdChange", domain="AGLU_LEVEL2_DATA", fn="L205.AgProdChange_ssp3",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_prodchange_ssp3.xml" ) 
+write_mi_data( L205.AgProdChange_ssp4, IDstring="AgProdChange", domain="AGLU_LEVEL2_DATA", fn="L205.AgProdChange_ssp4",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_prodchange_ssp4.xml" ) 
+write_mi_data( L205.AgProdChange_high, IDstring="AgProdChange", domain="AGLU_LEVEL2_DATA", fn="L205.AgProdChange_ssp5",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_prodchange_ssp5.xml" ) 
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_prodchange_ssp1.xml", "AGLU_XML_FINAL", "ag_prodchange_ssp1.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_prodchange_ssp2.xml", "AGLU_XML_FINAL", "ag_prodchange_ssp2.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_prodchange_ssp3.xml", "AGLU_XML_FINAL", "ag_prodchange_ssp3.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_prodchange_ssp4.xml", "AGLU_XML_FINAL", "ag_prodchange_ssp4.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_prodchange_ssp5.xml", "AGLU_XML_FINAL", "ag_prodchange_ssp5.xml", "", xml_tag="outFile" )
+
 
 logstop()

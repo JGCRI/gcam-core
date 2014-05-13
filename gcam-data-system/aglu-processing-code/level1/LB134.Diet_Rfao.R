@@ -31,6 +31,7 @@ L100.FAO_an_Food_t <- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_an_Food_t" )
 L101.ag_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_Food_Pcal_R_C_Y" )
 L105.an_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L105.an_Food_Pcal_R_C_Y" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y")
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -123,12 +124,43 @@ L134.pcFood_kcald_R_Dmnd_Y[[ X_diet_convergence_year ]][ L134.pcFood_kcald_R_Dmn
 L134.pcFood_kcald_R_Dmnd_Y <- gcam_interp( L134.pcFood_kcald_R_Dmnd_Y, c( historical_years, future_years ) )
 L134.pcFood_kcald_R_Dmnd_Y <- L134.pcFood_kcald_R_Dmnd_Y[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
 
+printlog( "Alternative diet scenarios for the SSPs" )
+L134.pcFood_kcald_R_Dmnd_Y_low <- L134.pcFood_kcald_R_Dmnd_Y[ c( R, "GCAM_demand", X_historical_years, "X2050" ) ]
+L134.pcFood_kcald_R_Dmnd_Y_low$X2050 <- L134.pcFood_kcald_R_Dmnd_Y_low$X2050 * low_waste_mult
+L134.pcFood_kcald_R_Dmnd_Y_low$X2050[ L134.pcFood_kcald_R_Dmnd_Y_low$GCAM_demand == "meat" ] <- L134.pcFood_kcald_R_Dmnd_Y_low$X2050[ L134.pcFood_kcald_R_Dmnd_Y_low$GCAM_demand == "meat" ] * low_meat_mult
+L134.pcFood_kcald_R_Dmnd_Y_low$X2100 <- L134.pcFood_kcald_R_Dmnd_Y_low$X2050
+L134.pcFood_kcald_R_Dmnd_Y_low <- gcam_interp( L134.pcFood_kcald_R_Dmnd_Y_low, c( historical_years, future_years ) )
+L134.pcFood_kcald_R_Dmnd_Y_low <- L134.pcFood_kcald_R_Dmnd_Y_low[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
+
+L134.pcFood_kcald_R_Dmnd_Y_high <- L134.pcFood_kcald_R_Dmnd_Y[ c( R, "GCAM_demand", X_historical_years, "X2050" ) ]
+L134.pcFood_kcald_R_Dmnd_Y_high$X2050 <- L134.pcFood_kcald_R_Dmnd_Y_high$X2050 * high_waste_mult
+L134.pcFood_kcald_R_Dmnd_Y_high$X2050[ L134.pcFood_kcald_R_Dmnd_Y_high$GCAM_demand == "meat" ] <- L134.pcFood_kcald_R_Dmnd_Y_high$X2050[ L134.pcFood_kcald_R_Dmnd_Y_high$GCAM_demand == "meat" ] * high_meat_mult
+L134.pcFood_kcald_R_Dmnd_Y_high$X2100 <- L134.pcFood_kcald_R_Dmnd_Y_high$X2050
+L134.pcFood_kcald_R_Dmnd_Y_high <- gcam_interp( L134.pcFood_kcald_R_Dmnd_Y_high, c( historical_years, future_years ) )
+L134.pcFood_kcald_R_Dmnd_Y_high <- L134.pcFood_kcald_R_Dmnd_Y_high[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
+
+L134.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L134.pcgdp_2010 <- L134.pcgdp_2010[ names( L134.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
+L134.pcgdp_2010$X2010 <- L134.pcgdp_2010$X2010 * conv_1990_2010_USD
+L134.high_reg <- L134.pcgdp_2010$GCAM_region_ID[ L134.pcgdp_2010$X2010 > hi_growth_pcgdp ]
+L134.low_reg <- L134.pcgdp_2010$GCAM_region_ID[ L134.pcgdp_2010$X2010 < lo_growth_pcgdp ]
+
+L134.pcFood_kcald_R_Dmnd_Y_ssp4_lo <- subset( L134.pcFood_kcald_R_Dmnd_Y_low, L134.pcFood_kcald_R_Dmnd_Y_low$GCAM_region_ID %in% L134.low_reg )
+L134.pcFood_kcald_R_Dmnd_Y_ssp4_med <- subset( L134.pcFood_kcald_R_Dmnd_Y, L134.pcFood_kcald_R_Dmnd_Y$GCAM_region_ID %!in% c( L134.low_reg, L134.high_reg) )
+L134.pcFood_kcald_R_Dmnd_Y_ssp4_hi <- subset( L134.pcFood_kcald_R_Dmnd_Y_high, L134.pcFood_kcald_R_Dmnd_Y_high$GCAM_region_ID %in% L134.high_reg )
+L134.pcFood_kcald_R_Dmnd_Y_ssp4 <- rbind( L134.pcFood_kcald_R_Dmnd_Y_ssp4_lo, L134.pcFood_kcald_R_Dmnd_Y_ssp4_med, L134.pcFood_kcald_R_Dmnd_Y_ssp4_hi)
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments to tables
 comments.L134.pcFood_kcald_R_Dmnd_Y <- c( "Per-capita food demands by region / demand type / year (historical and future)","Unit: kcal / person / day" )
+comments.L134.pcFood_kcald_R_Dmnd_Y_low <- c( "Low Per-capita food demands by region / demand type / year (historical and future)","Unit: kcal / person / day" )
+comments.L134.pcFood_kcald_R_Dmnd_Y_high <- c( "High Per-capita food demands by region / demand type / year (historical and future)","Unit: kcal / person / day" )
+comments.L134.pcFood_kcald_R_Dmnd_Y_ssp4 <- c( "SSP4 Per-capita food demands by region / demand type / year (historical and future)","Unit: kcal / person / day" )
 
 writedata( L134.pcFood_kcald_R_Dmnd_Y, domain="AGLU_LEVEL1_DATA", fn="L134.pcFood_kcald_R_Dmnd_Y", comments=comments.L134.pcFood_kcald_R_Dmnd_Y )
+writedata( L134.pcFood_kcald_R_Dmnd_Y_low, domain="AGLU_LEVEL1_DATA", fn="L134.pcFood_kcald_R_Dmnd_Y_low", comments=comments.L134.pcFood_kcald_R_Dmnd_Y_low )
+writedata( L134.pcFood_kcald_R_Dmnd_Y_high, domain="AGLU_LEVEL1_DATA", fn="L134.pcFood_kcald_R_Dmnd_Y_high", comments=comments.L134.pcFood_kcald_R_Dmnd_Y_high )
+writedata( L134.pcFood_kcald_R_Dmnd_Y_ssp4, domain="AGLU_LEVEL1_DATA", fn="L134.pcFood_kcald_R_Dmnd_Y_ssp4", comments=comments.L134.pcFood_kcald_R_Dmnd_Y_ssp4 )
 
 # Every script should finish with this line
 logstop()
