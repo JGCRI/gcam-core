@@ -27,6 +27,7 @@ A44.flsp_bm2_state_comm <- readdata( "ENERGY_ASSUMPTIONS", "A44.flsp_bm2_state_c
 A44.pcflsp_default <- readdata( "ENERGY_ASSUMPTIONS", "A44.pcflsp_default" )
 A44.HouseholdSize <- readdata( "ENERGY_ASSUMPTIONS", "A44.HouseholdSize" )
 CEDB_ResFloorspace_chn <- readdata( "ENERGY_LEVEL0_DATA", "CEDB_ResFloorspace_chn" )
+Other_pcflsp_m2_ctry_Yh <- readdata( "ENERGY_LEVEL0_DATA", "Other_pcflsp_m2_ctry_Yh" )
 IEA_PCResFloorspace <- readdata( "ENERGY_LEVEL0_DATA", "IEA_PCResFloorspace" )
 Odyssee_ResFloorspacePerHouse <- readdata( "ENERGY_LEVEL0_DATA", "Odyssee_ResFloorspacePerHouse" )
 L100.Pop_thous_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.Pop_thous_ctry_Yh" )
@@ -86,11 +87,13 @@ L144.OECD_pcflsp_Yh <- gcam_interp( L144.OECD_pcflsp_Yh, interp_years_later )
 #Time series doesn't span entire "historical" range; need to extrapolate
 #Just for now, use constant floorspace outside of available time series
 L144.pcflsp_m2_chn_Yh <- gcam_interp( L144.pcflsp_m2_chn_Yh, historical_years, rule = 2 )
+L144.pcflsp_m2_otherctry_Yh <- gcam_interp( subset(
+      Other_pcflsp_m2_ctry_Yh, gcam.consumer == "resid" ), historical_years, rule = 2 )[ c( "iso", X_historical_years ) ]
 L144.OECD_pcflsp_Yh <- gcam_interp( L144.OECD_pcflsp_Yh, historical_years, rule = 2 )
 L144.OECD_pcflsp_Yh <- L144.OECD_pcflsp_Yh[ c( "iso", X_historical_years ) ]
 
-#Combine China floorspace with the OECD countries' floorspace
-L144.OECD_pcflsp_Yh <- rbind( L144.OECD_pcflsp_Yh, L144.pcflsp_m2_chn_Yh )
+#Combine all available national inventories
+L144.ALL_pcflsp_Yh <- rbind( L144.OECD_pcflsp_Yh, L144.pcflsp_m2_chn_Yh, L144.pcflsp_m2_otherctry_Yh )
 
 #Replace the USA data with 50-state-derived data
 A44.flsp_bm2_state_res$iso <- "usa"
@@ -104,7 +107,7 @@ L144.pcflsp_m2_USA_res[ USA_flsp_years ] <- L144.flsp_bm2_USA_res[ USA_flsp_year
 
 #Extrapolate the US data to all years, and match into the table of OECD countries' floorspace
 L144.pcflsp_m2_USA_res <- gcam_interp( L144.pcflsp_m2_USA_res, historical_years, rule = 2 )
-L144.OECD_pcflsp_Yh[ L144.OECD_pcflsp_Yh$iso == "usa", X_historical_years ] <- L144.pcflsp_m2_USA_res[ X_historical_years ]
+L144.ALL_pcflsp_Yh[ L144.ALL_pcflsp_Yh$iso == "usa", X_historical_years ] <- L144.pcflsp_m2_USA_res[ X_historical_years ]
 
 #Apply default estimates of per-capita floorspace to remaining countries in the world
 #Extrapolate the defaults to all years
@@ -113,8 +116,8 @@ L144.res_pcflsp <- gcam_interp( subset( A44.pcflsp_default, gcam.consumer == "re
 L144.pcflsp_m2_ctry_Yh <- L100.Pop_thous_ctry_Yh[ "iso" ]
 L144.pcflsp_m2_ctry_Yh$region_GCAM3 <- iso_GCAM_regID$region_GCAM3[
       match( L144.pcflsp_m2_ctry_Yh$iso, iso_GCAM_regID$iso ) ]
-L144.pcflsp_m2_ctry_Yh[ X_historical_years ] <- L144.OECD_pcflsp_Yh[
-      match( L144.pcflsp_m2_ctry_Yh$iso, L144.OECD_pcflsp_Yh$iso ),
+L144.pcflsp_m2_ctry_Yh[ X_historical_years ] <- L144.ALL_pcflsp_Yh[
+      match( L144.pcflsp_m2_ctry_Yh$iso, L144.ALL_pcflsp_Yh$iso ),
       X_historical_years ]
 L144.pcflsp_m2_ctry_Yh[ !complete.cases( L144.pcflsp_m2_ctry_Yh ), X_historical_years ] <- L144.res_pcflsp[
       match( L144.pcflsp_m2_ctry_Yh$region_GCAM3[ !complete.cases( L144.pcflsp_m2_ctry_Yh ) ],
@@ -144,14 +147,27 @@ L144.pcflsp_m2_USA_comm[ USA_flsp_years ] <- L144.flsp_bm2_USA_comm[ USA_flsp_ye
 #Extrapolate the US data to all years
 L144.pcflsp_m2_USA_comm <- gcam_interp( L144.pcflsp_m2_USA_comm, historical_years, rule = 2 )
 
+#Do the same for data from other sources, where available
+L144.pcflsp_m2_comm_otherctry_Yh <- gcam_interp( subset(
+      Other_pcflsp_m2_ctry_Yh, gcam.consumer == "comm" ), historical_years, rule = 2 )[ c( "iso", X_historical_years ) ]
+L144.flsp_bm2_comm_otherctry_Yh <- L144.pcflsp_m2_comm_otherctry_Yh
+L144.flsp_bm2_comm_otherctry_Yh[ X_historical_years ] <- L144.pcflsp_m2_comm_otherctry_Yh[ X_historical_years ] * conv_thous_bil *
+      L100.Pop_thous_ctry_Yh[ match( L144.flsp_bm2_comm_otherctry_Yh$iso, L100.Pop_thous_ctry_Yh$iso ),
+      X_historical_years ]
+      
 L144.comm_flsp <- gcam_interp( subset( A44.pcflsp_default, gcam.consumer == "comm" ), historical_years, rule=2 )
 L144.comm_flsp[ L144.comm_flsp$region_GCAM3 == "USA", X_historical_years ] <-
       L144.pcflsp_m2_USA_comm[ X_historical_years ]
-L100.Pop_thous_ctry_Yh [ c( "region_GCAM3", "GCAM_region_ID" ) ] <- iso_GCAM_regID[ 
+L100.Pop_thous_ctry_Yh[ c( "region_GCAM3", "GCAM_region_ID" ) ] <- iso_GCAM_regID[ 
   match( L100.Pop_thous_ctry_Yh$iso, iso_GCAM_regID$iso), c( "region_GCAM3", "GCAM_region_ID" ) ]
-L144.flsp_bm2_ctry_comm_Yh <- L100.Pop_thous_ctry_Yh
-L144.flsp_bm2_ctry_comm_Yh [ X_historical_years ] <- L144.flsp_bm2_ctry_comm_Yh [ X_historical_years ] * conv_thous_bil *
+L144.flsp_bm2_ctry_comm_Yh <- L100.Pop_thous_ctry_Yh[ c( "iso", "GCAM_region_ID", "region_GCAM3", X_historical_years ) ]
+L144.flsp_bm2_ctry_comm_Yh[ X_historical_years ] <- L100.Pop_thous_ctry_Yh [ X_historical_years ] * conv_thous_bil *
   L144.comm_flsp[ match( L144.flsp_bm2_ctry_comm_Yh$region_GCAM3, L144.comm_flsp$region_GCAM3 ), X_historical_years ] 
+L144.flsp_bm2_ctry_comm_Yh[ L144.flsp_bm2_ctry_comm_Yh$iso %in% L144.flsp_bm2_comm_otherctry_Yh$iso, X_historical_years ] <-
+      L144.flsp_bm2_comm_otherctry_Yh[
+         match( L144.flsp_bm2_ctry_comm_Yh$iso[ L144.flsp_bm2_ctry_comm_Yh$iso %in% L144.flsp_bm2_comm_otherctry_Yh$iso ],
+                L144.flsp_bm2_comm_otherctry_Yh$iso ),
+         X_historical_years ]
 L144.flsp_bm2_R_comm_Yh <- aggregate( L144.flsp_bm2_ctry_comm_Yh [ X_historical_years ], 
   by = as.list( L144.flsp_bm2_ctry_comm_Yh[ R ] ), sum ) 
 
