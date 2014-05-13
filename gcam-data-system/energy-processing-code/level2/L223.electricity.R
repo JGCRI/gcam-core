@@ -179,6 +179,8 @@ L223.GlobalTechCapital_wind_adv <- subset( L223.GlobalTechCapital_elec_adv, L223
 
 L223.GlobalTechCapital_geo_adv <- subset( L223.GlobalTechCapital_elec_adv, L223.GlobalTechCapital_elec_adv$subsector.name == "geothermal") 
 
+L223.GlobalTechCapital_nuc_adv <- subset( L223.GlobalTechCapital_elec_adv, L223.GlobalTechCapital_elec_adv$subsector.name == "nuclear") 
+
 #Costs of global technologies - low
 printlog( "L223.GlobalTechCapital_elec_low: Capital costs of global electricity generation technologies - lowanced case" )
 L223.globaltech_capital_low.melt <- interpolate_and_melt( A23.globaltech_capital_low, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital )
@@ -194,6 +196,8 @@ L223.GlobalIntTechCapital_wind_low <- subset( L223.GlobalIntTechCapital_elec_low
 L223.GlobalTechCapital_wind_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "wind") 
 
 L223.GlobalTechCapital_geo_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "geothermal") 
+
+L223.GlobalTechCapital_nuc_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "nuclear") 
 
 printlog( "L223.GlobalTechOMfixed_elec: Fixed O&M costs of global electricity generation technologies" )
 L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed", digits = digits_OM )
@@ -555,8 +559,11 @@ write_mi_data( L223.GlobalTechCapital_wind_adv, "GlobalTechCapital", "ENERGY_LEV
 write_mi_data( L223.GlobalIntTechCapital_wind_adv, "GlobalIntTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechCapital_wind_adv", "ENERGY_XML_BATCH", "batch_wind_adv.xml" )
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_wind_adv.xml", "ENERGY_XML_FINAL", "wind_adv.xml", "", xml_tag="outFile" )
 
-write_mi_data( L223.GlobalTechCapital_geo_adv, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_geo_adv", "ENERGY_XML_BATCH", "batch_geo_adv.xml" )
-insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_adv.xml", "ENERGY_XML_FINAL", "geo_adv.xml", "", xml_tag="outFile" )
+write_mi_data( L223.GlobalTechCapital_geo_adv, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_geo_adv", "ENERGY_XML_BATCH", "batch_geo_tech_adv.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_tech_adv.xml", "ENERGY_XML_FINAL", "geo_tech_adv.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_nuc_adv, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_nuc_adv", "ENERGY_XML_BATCH", "batch_nuclear_adv.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_nuclear_adv.xml", "ENERGY_XML_FINAL", "nuclear_adv.xml", "", xml_tag="outFile" )
 
 write_mi_data( L223.GlobalTechCapital_sol_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_sol_low", "ENERGY_XML_BATCH", "batch_solar_low.xml" )
 write_mi_data( L223.GlobalIntTechCapital_sol_low, "GlobalIntTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechCapital_sol_low", "ENERGY_XML_BATCH", "batch_solar_low.xml" )
@@ -569,6 +576,8 @@ insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_wind_low.xml", "ENERGY_XML
 write_mi_data( L223.GlobalTechCapital_geo_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_geo_low", "ENERGY_XML_BATCH", "batch_geo_low.xml" )
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_low.xml", "ENERGY_XML_FINAL", "geo_low.xml", "", xml_tag="outFile" )
 
+write_mi_data( L223.GlobalTechCapital_nuc_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_nuc_low", "ENERGY_XML_BATCH", "batch_nuclear_low.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_nuclear_low.xml", "ENERGY_XML_FINAL", "nuclear_low.xml", "", xml_tag="outFile" )
 
 logstop()
 

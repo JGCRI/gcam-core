@@ -70,6 +70,18 @@ printlog( "L261.DepRsrcCurves_C: supply curves of carbon storage resources")
 L261.DepRsrcCurves_C <- add_region_name( L161.RsrcCurves_MtC_R )
 L261.DepRsrcCurves_C <- convert_rsrc_to_L2( L261.DepRsrcCurves_C, "depresource" )
 
+printlog( "L261.DepRsrcCurves_C_high: high supply curves of carbon storage resources")
+L261.DepRsrcCurves_C_high <- L261.DepRsrcCurves_C
+L261.DepRsrcCurves_C_high$extractioncost <- L261.DepRsrcCurves_C_high$extractioncost * hi_ccs_cost_mult
+
+printlog( "L261.DepRsrcCurves_C_low: low supply curves of carbon storage resources")
+L261.DepRsrcCurves_C_low <- L261.DepRsrcCurves_C
+L261.DepRsrcCurves_C_low$extractioncost <- L261.DepRsrcCurves_C_low$extractioncost * lo_ccs_cost_mult
+
+printlog( "L261.DepRsrcCurves_C_lowest: lowest supply curves of carbon storage resources")
+L261.DepRsrcCurves_C_lowest <- L261.DepRsrcCurves_C
+L261.DepRsrcCurves_C_lowest$extractioncost <- L261.DepRsrcCurves_C_lowest$extractioncost * lowest_ccs_cost_mult
+
 #2c. Carbon storage sector information
 printlog( "L261.Supplysector_C: Carbon storage supplysector information" )
 L261.Supplysector_C <- write_to_all_regions( A61.sector, names_Supplysector )
@@ -97,11 +109,23 @@ L261.globaltech_cost.melt <- interpolate_and_melt( A61.globaltech_cost, c( model
 L261.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]
 L261.GlobalTechCost_C <- L261.globaltech_cost.melt[ names_GlobalTechCost ]
 
+printlog( "L261.GlobalTechCost_C_High: High costs of global technologies for carbon storage -- this prices out CCS" )
+L261.GlobalTechCost_C_High <- L261.GlobalTechCost_C
+L261.GlobalTechCost_C_High$input.cost <- 10000
+L261.GlobalTechCost_C_High_onshore <- L261.GlobalTechCost_C_High
+L261.GlobalTechCost_C_High_onshore$subsector.name <- "onshore carbon-storage"
+L261.GlobalTechCost_C_High_onshore$technology <- "onshore carbon-storage"
+L261.GlobalTechCost_C_High <- rbind( L261.GlobalTechCost_C_High, L261.GlobalTechCost_C_High_onshore )
+
 #Shareweights of global technologies
 printlog( "L261.GlobalTechShrwt_C: Shareweights of global technologies for energy transformation" )
 L261.globaltech_shrwt.melt <- interpolate_and_melt( A61.globaltech_shrwt, c( model_base_years, model_future_years ), value.name="share.weight" )
 L261.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L261.globaltech_shrwt.melt[ c( "supplysector", "subsector" ) ]
 L261.GlobalTechShrwt_C <- L261.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
+
+printlog( "L261.GlobalTechShrwt_C_nooffshore: Use zero shareweights for offshore storage" )
+L261.GlobalTechShrwt_C_nooffshore <- subset( L261.GlobalTechShrwt_C, L261.GlobalTechShrwt_C$subsector.name == "offshore carbon-storage" )
+L261.GlobalTechShrwt_C_nooffshore$share.weight <- 0
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -117,5 +141,20 @@ write_mi_data( L261.GlobalTechCost_C, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L
 write_mi_data( L261.GlobalTechShrwt_C, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L261.GlobalTechShrwt_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) 
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_Cstorage.xml", "ENERGY_XML_FINAL", "Cstorage.xml", "", xml_tag="outFile" )
+
+write_mi_data( L261.GlobalTechCost_C_High, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L261.GlobalTechCost_C_High", "ENERGY_XML_BATCH", "batch_high_cost_ccs.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_high_cost_ccs.xml", "ENERGY_XML_FINAL", "high_cost_ccs.xml", "", xml_tag="outFile" )
+
+write_mi_data( L261.GlobalTechShrwt_C_nooffshore, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L261.GlobalTechShrwt_C_nooffshore", "ENERGY_XML_BATCH", "batch_no_offshore_ccs.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_no_offshore_ccs.xml", "ENERGY_XML_FINAL", "no_offshore_ccs.xml", "", xml_tag="outFile" )
+
+write_mi_data( L261.DepRsrcCurves_C_high, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L261.DepRsrcCurves_C_high", "ENERGY_XML_BATCH", "batch_ccs_supply_high.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_ccs_supply_high.xml", "ENERGY_XML_FINAL", "ccs_supply_high.xml", "", xml_tag="outFile" )
+
+write_mi_data( L261.DepRsrcCurves_C_low, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L261.DepRsrcCurves_C_low", "ENERGY_XML_BATCH", "batch_ccs_supply_low.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_ccs_supply_low.xml", "ENERGY_XML_FINAL", "ccs_supply_low.xml", "", xml_tag="outFile" )
+
+write_mi_data( L261.DepRsrcCurves_C_lowest, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L261.DepRsrcCurves_C_lowest", "ENERGY_XML_BATCH", "batch_ccs_supply_lowest.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_ccs_supply_lowest.xml", "ENERGY_XML_FINAL", "ccs_supply_lowest.xml", "", xml_tag="outFile" )
 
 logstop()

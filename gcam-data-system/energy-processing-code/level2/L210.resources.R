@@ -30,6 +30,7 @@ A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 A10.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.rsrc_info")
 A10.subrsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A10.subrsrc_info")
 A10.TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A10.TechChange")
+A10.TechChange_SSPs <- readdata( "ENERGY_ASSUMPTIONS", "A10.TechChange_SSPs")
 A15.roofPV_TechChange <- readdata( "ENERGY_ASSUMPTIONS", "A15.roofPV_TechChange" )
 L111.RsrcCurves_EJ_R_Ffos <- readdata( "ENERGY_LEVEL1_DATA", "L111.RsrcCurves_EJ_R_Ffos" )
 L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )
@@ -153,6 +154,49 @@ L210.DepRsrcTechChange <- data.frame(
       year.fillout = substr( L210.dep_rsrc_TechChange.melt$variable, 2, 5 ),
       techChange = L210.dep_rsrc_TechChange.melt$value )
 
+# Tech change in the SSPs
+# Repeat and add region vector to assumed techchange tables
+L210.rsrc_TechChange_SSPs <- repeat_and_add_vector( A10.TechChange_SSPs, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
+L210.rsrc_TechChange_SSPs <- add_region_name( L210.rsrc_TechChange_SSPs )
+
+#Retrieve the techChange years from the table column names
+X_rsrc_TechChangeYears_SSPs <- names( A10.TechChange_SSPs )[ grep( "X[0-9]{4}", names( A10.TechChange_SSPs ) )]
+
+#Melt
+#NOTE: assuming no tech change for unlimited resources
+L210.rsrc_TechChange_SSPs.melt <- melt( L210.rsrc_TechChange_SSPs[ c( "SSP", "region", "resource", "subresource", X_rsrc_TechChangeYears_SSPs ) ],
+                                        id.vars = c( "SSP", "region", "resource", "subresource" ) )
+L210.rsrc_TechChange_SSPs.melt$subresource_type <- A10.subrsrc_info$subresource_type[ match( L210.rsrc_TechChange_SSPs.melt$subresource, A10.subrsrc_info$subresource ) ]
+
+printlog( "L210.DepRsrcTechChange_SSPs: technological change for depletable resources in the SSPs" )
+L210.DepRsrcTechChange_SSPs <- data.frame(
+  SSP = L210.rsrc_TechChange_SSPs.melt$SSP,
+  region = L210.rsrc_TechChange_SSPs.melt$region,
+  depresource = L210.rsrc_TechChange_SSPs.melt$resource,
+  subresource = L210.rsrc_TechChange_SSPs.melt$subresource,
+  year.fillout = substr( L210.rsrc_TechChange_SSPs.melt$variable, 2, 5 ),
+  techChange = L210.rsrc_TechChange_SSPs.melt$value )
+
+#SSP1
+L210.DepRsrcTechChange_SSP1 <- subset( L210.DepRsrcTechChange_SSPs, L210.DepRsrcTechChange_SSPs$SSP == "SSP1" )
+L210.DepRsrcTechChange_SSP1 <- L210.DepRsrcTechChange_SSP1[ names( L210.DepRsrcTechChange_SSP1 ) != "SSP" ]
+
+#SSP1
+L210.DepRsrcTechChange_SSP2 <- subset( L210.DepRsrcTechChange_SSPs, L210.DepRsrcTechChange_SSPs$SSP == "SSP2" )
+L210.DepRsrcTechChange_SSP2 <- L210.DepRsrcTechChange_SSP2[ names( L210.DepRsrcTechChange_SSP2 ) != "SSP" ]
+
+#SSP1
+L210.DepRsrcTechChange_SSP3 <- subset( L210.DepRsrcTechChange_SSPs, L210.DepRsrcTechChange_SSPs$SSP == "SSP3" )
+L210.DepRsrcTechChange_SSP3 <- L210.DepRsrcTechChange_SSP3[ names( L210.DepRsrcTechChange_SSP3 ) != "SSP" ]
+
+#SSP1
+L210.DepRsrcTechChange_SSP4 <- subset( L210.DepRsrcTechChange_SSPs, L210.DepRsrcTechChange_SSPs$SSP == "SSP4" )
+L210.DepRsrcTechChange_SSP4 <- L210.DepRsrcTechChange_SSP4[ names( L210.DepRsrcTechChange_SSP4 ) != "SSP" ]
+
+#SSP5
+L210.DepRsrcTechChange_SSP5 <- subset( L210.DepRsrcTechChange_SSPs, L210.DepRsrcTechChange_SSPs$SSP == "SSP5" )
+L210.DepRsrcTechChange_SSP5 <- L210.DepRsrcTechChange_SSP5[ names( L210.DepRsrcTechChange_SSP5 ) != "SSP" ]
+
 printlog( "L210.SmthRenewRsrcTechChange: technological change for smooth renewable subresources" )
 L210.SmthRenewRsrcTechChange <- data.frame(
       region = L210.renew_rsrc_TechChange.melt$region,
@@ -256,5 +300,20 @@ write_mi_data( L210.GrdRenewRsrcMax_tradbio, "GrdRenewRsrcMax", "ENERGY_LEVEL2_D
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources.xml", "ENERGY_XML_FINAL", "resources.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_geo_adv.xml", "ENERGY_XML_FINAL", "geo_adv.xml", "", xml_tag="outFile" )
+
+write_mi_data( L210.DepRsrcTechChange_SSP1, "DepRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.DepRsrcTechChange_SSP1", "ENERGY_XML_BATCH", "batch_resources_SSP1.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources_SSP1.xml", "ENERGY_XML_FINAL", "resources_SSP1.xml", "", xml_tag="outFile" )
+
+write_mi_data( L210.DepRsrcTechChange_SSP2, "DepRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.DepRsrcTechChange_SSP2", "ENERGY_XML_BATCH", "batch_resources_SSP2.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources_SSP2.xml", "ENERGY_XML_FINAL", "resources_SSP2.xml", "", xml_tag="outFile" )
+
+write_mi_data( L210.DepRsrcTechChange_SSP3, "DepRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.DepRsrcTechChange_SSP3", "ENERGY_XML_BATCH", "batch_resources_SSP3.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources_SSP3.xml", "ENERGY_XML_FINAL", "resources_SSP3.xml", "", xml_tag="outFile" )
+
+write_mi_data( L210.DepRsrcTechChange_SSP4, "DepRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.DepRsrcTechChange_SSP4", "ENERGY_XML_BATCH", "batch_resources_SSP4.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources_SSP4.xml", "ENERGY_XML_FINAL", "resources_SSP4.xml", "", xml_tag="outFile" )
+
+write_mi_data( L210.DepRsrcTechChange_SSP5, "DepRsrcTechChange", "ENERGY_LEVEL2_DATA", "L210.DepRsrcTechChange_SSP5", "ENERGY_XML_BATCH", "batch_resources_SSP5.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_resources_SSP5.xml", "ENERGY_XML_FINAL", "resources_SSP5.xml", "", xml_tag="outFile" )
 
 logstop()
