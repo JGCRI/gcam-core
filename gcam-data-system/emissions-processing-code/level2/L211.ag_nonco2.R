@@ -90,7 +90,7 @@ L211.AGRBio <- repeat_and_add_vector( L211.AGRBio, "AEZ", AEZs )
 L211.AGRBio$AgSupplySubsector <- paste( L211.AGRBio$AgSupplySector, L211.AGRBio$AEZ, sep="" )
 L211.AGRBio$AgProductionTechnology <- L211.AGRBio$AgSupplySubsector
 L211.AGRBio$Non.CO2 <- "N2O_AGR"
-L211.AGRBio$year <- final_emiss_year
+L211.AGRBio$year <- ctrl_base_year
 
 #Format for csv file
 L211.AGRBio <- L211.AGRBio[ c( names_AgTech, "year", "Non.CO2", "bio_N2O_coef" ) ]

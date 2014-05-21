@@ -69,7 +69,7 @@ for ( y in X_NH3_extra_years ) {
 }
 
 #Reshape
-L105.nh3_tgmt_USA_an_Yh <- dcast( L105.nh3_tgmt_USA_an_Yh.melt, sector + fuel ~ variable, value = c( "nh3_em_factor" ))
+L105.nh3_tgmt_USA_an_Yh <- dcast( L105.nh3_tgmt_USA_an_Yh.melt, sector + fuel ~ variable, value.var = c( "nh3_em_factor" ))
 
 # -----------------------------------------------------------------------------
 # 3. Output

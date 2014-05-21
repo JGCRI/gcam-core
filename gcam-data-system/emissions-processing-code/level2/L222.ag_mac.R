@@ -65,7 +65,7 @@ L222.MM_MAC_S_R_T$mac.reduction <- L222.MM_MAC$value[ match( vecpaste( L222.MM_M
 L222.MM_MAC_S_R_T <- na.omit( L222.MM_MAC_S_R_T )
 
 #Add extra columns and re-order
-L222.MM_MAC_S_R_T$year <- final_emiss_year
+L222.MM_MAC_S_R_T$year <- ctrl_base_year
 L222.MM_MAC_S_R_T$Non.CO2 <- "CH4_AGR"
 L222.MM_MAC_S_R_T$name <- "Manure Management"
 L222.MM_MAC_S_R_T <- L222.MM_MAC_S_R_T[ c( names_StubTechYr, "Non.CO2", "name", "tax", "mac.reduction" )]
@@ -100,7 +100,7 @@ L222.N2O_MAC_S_R_T$mac.reduction <- L222.N2O_MAC$value[ match( vecpaste( L222.N2
 L222.N2O_MAC_S_R_T <- na.omit( L222.N2O_MAC_S_R_T )
 
 #Add extra columns and re-order
-L222.N2O_MAC_S_R_T$year <- final_emiss_year
+L222.N2O_MAC_S_R_T$year <- ctrl_base_year
 L222.N2O_MAC_S_R_T$Non.CO2 <- "N2O_AGR"
 L222.N2O_MAC_S_R_T$name <- "N2O"
 L222.N2O_MAC_S_R_T <- L222.N2O_MAC_S_R_T[ c( names_AgTech, "year", "Non.CO2", "name", "tax", "mac.reduction" )]

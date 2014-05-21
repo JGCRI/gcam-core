@@ -140,6 +140,7 @@ L101.so2_tgej_USA_en_Sepa_F_Yh.melt$emissions <- L101.so2_tg_USA_en_Sepa_F_Yh.me
 L101.so2_tgej_USA_en_Sepa_F_Yh.melt$emissions[ is.na( L101.so2_tgej_USA_en_Sepa_F_Yh.melt$emissions ) ] <- 0
 L101.so2_tgej_USA_en_Sepa_F_Yh.melt$em_factor <- L101.so2_tgej_USA_en_Sepa_F_Yh.melt$emissions / L101.so2_tgej_USA_en_Sepa_F_Yh.melt$energy
 L101.so2_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.so2_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "Inf" ] <- 0
+L101.so2_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.so2_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "NaN" ] <- 0
 
 #Compute sector emissions. If these are zero, then reset all fuel em_factors to 1.
 L101.so2_tgej_USA_en_Sepa_Yh.melt <- aggregate( L101.so2_tgej_USA_en_Sepa_F_Yh.melt$emissions, by=as.list( L101.so2_tgej_USA_en_Sepa_F_Yh.melt[ c( "EPA_agg_sector", "variable" ) ] ), sum )
@@ -149,7 +150,7 @@ names( L101.so2_tgej_USA_en_Sepa_F_Yh.melt )[ names( L101.so2_tgej_USA_en_Sepa_F
 names( L101.so2_tgej_USA_en_Sepa_F_Yh.melt )[ names( L101.so2_tgej_USA_en_Sepa_F_Yh.melt ) == "EPA_agg_fuel" ] <- "fuel"
 
 #Reshape
-L101.so2_tgej_USA_en_Sepa_F_Yh <- dcast( L101.so2_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value = c( "em_factor" ) )
+L101.so2_tgej_USA_en_Sepa_F_Yh <- dcast( L101.so2_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value.var = c( "em_factor" ) )
 
 printlog( "Compute CO emissions factors by dividing EPA inventory by IEA energy balances" )
 #First melt both data sets   
@@ -160,6 +161,7 @@ L101.co_tgej_USA_en_Sepa_F_Yh.melt$emissions <- L101.co_tg_USA_en_Sepa_F_Yh.melt
 L101.co_tgej_USA_en_Sepa_F_Yh.melt$emissions[ is.na( L101.co_tgej_USA_en_Sepa_F_Yh.melt$emissions ) ] <- 0
 L101.co_tgej_USA_en_Sepa_F_Yh.melt$em_factor <- L101.co_tgej_USA_en_Sepa_F_Yh.melt$emissions / L101.co_tgej_USA_en_Sepa_F_Yh.melt$energy
 L101.co_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.co_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "Inf" ] <- 0
+L101.co_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.co_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "NaN" ] <- 0
 
 #Compute sector emissions. If these are zero, then reset all fuel em_factors to 1.
 L101.co_tgej_USA_en_Sepa_Yh.melt <- aggregate( L101.co_tgej_USA_en_Sepa_F_Yh.melt$emissions, by=as.list( L101.co_tgej_USA_en_Sepa_F_Yh.melt[ c( "EPA_agg_sector", "variable" ) ] ), sum )
@@ -169,7 +171,7 @@ names( L101.co_tgej_USA_en_Sepa_F_Yh.melt )[ names( L101.co_tgej_USA_en_Sepa_F_Y
 names( L101.co_tgej_USA_en_Sepa_F_Yh.melt )[ names( L101.co_tgej_USA_en_Sepa_F_Yh.melt ) == "EPA_agg_fuel" ] <- "fuel"
 
 #Reshape
-L101.co_tgej_USA_en_Sepa_F_Yh <- dcast( L101.co_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value = c( "em_factor" ) )
+L101.co_tgej_USA_en_Sepa_F_Yh <- dcast( L101.co_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value.var = c( "em_factor" ) )
 
 printlog( "Compute NOx emissions factors by dividing EPA inventory by IEA energy balances" )
 #First melt both data sets   
@@ -180,6 +182,7 @@ L101.nox_tgej_USA_en_Sepa_F_Yh.melt$emissions <- L101.nox_tg_USA_en_Sepa_F_Yh.me
 L101.nox_tgej_USA_en_Sepa_F_Yh.melt$emissions[ is.na( L101.nox_tgej_USA_en_Sepa_F_Yh.melt$emissions ) ] <- 0
 L101.nox_tgej_USA_en_Sepa_F_Yh.melt$em_factor <- L101.nox_tgej_USA_en_Sepa_F_Yh.melt$emissions / L101.nox_tgej_USA_en_Sepa_F_Yh.melt$energy
 L101.nox_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.nox_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "Inf" ] <- 0
+L101.nox_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.nox_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "NaN" ] <- 0
 
 #Compute sector emissions. If these are zero, then reset all fuel em_factors to 1.
 L101.nox_tgej_USA_en_Sepa_Yh.melt <- aggregate( L101.nox_tgej_USA_en_Sepa_F_Yh.melt$emissions, by=as.list( L101.nox_tgej_USA_en_Sepa_F_Yh.melt[ c( "EPA_agg_sector", "variable" ) ] ), sum )
@@ -189,7 +192,7 @@ names( L101.nox_tgej_USA_en_Sepa_F_Yh.melt )[ names( L101.nox_tgej_USA_en_Sepa_F
 names( L101.nox_tgej_USA_en_Sepa_F_Yh.melt )[ names( L101.nox_tgej_USA_en_Sepa_F_Yh.melt ) == "EPA_agg_fuel" ] <- "fuel"
 
 #Reshape
-L101.nox_tgej_USA_en_Sepa_F_Yh <- dcast( L101.nox_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value = c( "em_factor" ) )
+L101.nox_tgej_USA_en_Sepa_F_Yh <- dcast( L101.nox_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value.var = c( "em_factor" ) )
 
 printlog( "Compute VOC emissions factors by dividing EPA inventory by IEA energy balances" )
 #First melt both data sets   
@@ -200,6 +203,7 @@ L101.voc_tgej_USA_en_Sepa_F_Yh.melt$emissions <- L101.voc_tg_USA_en_Sepa_F_Yh.me
 L101.voc_tgej_USA_en_Sepa_F_Yh.melt$emissions[ is.na( L101.voc_tgej_USA_en_Sepa_F_Yh.melt$emissions ) ] <- 0
 L101.voc_tgej_USA_en_Sepa_F_Yh.melt$em_factor <- L101.voc_tgej_USA_en_Sepa_F_Yh.melt$emissions / L101.voc_tgej_USA_en_Sepa_F_Yh.melt$energy
 L101.voc_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.voc_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "Inf" ] <- 0
+L101.voc_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.voc_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "NaN" ] <- 0
 
 #Compute sector emissions. If these are zero, then reset all fuel em_factors to 1.
 L101.voc_tgej_USA_en_Sepa_Yh.melt <- aggregate( L101.voc_tgej_USA_en_Sepa_F_Yh.melt$emissions, by=as.list( L101.voc_tgej_USA_en_Sepa_F_Yh.melt[ c( "EPA_agg_sector", "variable" ) ] ), sum )
@@ -209,7 +213,7 @@ names( L101.voc_tgej_USA_en_Sepa_F_Yh.melt )[ names( L101.voc_tgej_USA_en_Sepa_F
 names( L101.voc_tgej_USA_en_Sepa_F_Yh.melt )[ names( L101.voc_tgej_USA_en_Sepa_F_Yh.melt ) == "EPA_agg_fuel" ] <- "fuel"
 
 #Reshape
-L101.voc_tgej_USA_en_Sepa_F_Yh <- dcast( L101.voc_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value = c( "em_factor" ) )
+L101.voc_tgej_USA_en_Sepa_F_Yh <- dcast( L101.voc_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value.var = c( "em_factor" ) )
 
 printlog( "Compute NH3 emissions factors by dividing EPA inventory by IEA energy balances" )
 #First melt both data sets   
@@ -220,6 +224,7 @@ L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$emissions <- L101.nh3_tg_USA_en_Sepa_F_Yh.me
 L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$emissions[ is.na( L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$emissions ) ] <- 0
 L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$em_factor <- L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$emissions / L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$energy
 L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "Inf" ] <- 0
+L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$em_factor[ L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$em_factor == "NaN" ] <- 0
 
 #Compute sector emissions. If these are zero, then reset all fuel em_factors to 1.
 L101.nh3_tgej_USA_en_Sepa_Yh.melt <- aggregate( L101.nh3_tgej_USA_en_Sepa_F_Yh.melt$emissions, by=as.list( L101.nh3_tgej_USA_en_Sepa_F_Yh.melt[ c( "EPA_agg_sector", "variable" ) ] ), sum )
@@ -236,7 +241,7 @@ for ( y in X_NH3_extra_years ) {
 }
 
 #Reshape
-L101.nh3_tgej_USA_en_Sepa_F_Yh <- dcast( L101.nh3_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value = c( "em_factor" ) )
+L101.nh3_tgej_USA_en_Sepa_F_Yh <- dcast( L101.nh3_tgej_USA_en_Sepa_F_Yh.melt, sector + fuel ~ variable, value.var = c( "em_factor" ) )
 
 # -----------------------------------------------------------------------------
 # 3. Output
