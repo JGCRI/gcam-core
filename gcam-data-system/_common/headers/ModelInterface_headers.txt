@@ -480,6 +480,8 @@ StubTechCalInputIndUrb, world/+{name}region, region/+{name}supplysector, supplys
 
 StubTechCoefIndUrb, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world
 
+DelEmCtrl, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name;delete=1}gdp-control, scenario, scenario/world
+
 GDPCtrlMax, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+max-reduction, scenario, scenario/world
 
 GDPCtrlSteep, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+steepness, scenario, scenario/world
