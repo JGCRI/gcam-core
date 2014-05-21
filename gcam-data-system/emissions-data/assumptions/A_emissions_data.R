@@ -11,6 +11,8 @@ EDGAR_historical_years <- 1971:2008
 X_EDGAR_historical_years <- paste( "X", EDGAR_historical_years, sep = "" )
 NH3_extra_years <- 1971:1989
 X_NH3_extra_years <- paste( "X", NH3_extra_years, sep = "" )
+GAINS_years <- c( 2010, 2020, 2030 )
+GAINS_base_year <- 2005
 
 #At present the CO2 emissions inventory from CDIAC stops at 2009
 CO2_historical_years <- historical_years[ historical_years < 2010 ]
@@ -44,6 +46,9 @@ digits_CO2coef <- 1
 #Base years for emissions data
 emiss_model_base_years <- c( "1975", "1990", "2005" )
 
+#Years for ssp inputs
+ssp_model_years <- c( 2010, future_years )
+
 #Gases
 nonghg_gases <- c( "SO2", "NOx", "CO", "NMVOC", "NH3" )
 awb_gases <- c( "SO2_AWB", "NOx_AWB", "CO_AWB", "NMVOC_AWB", "CH4_AWB", "N2O_AWB", "NH3_AWB" )
@@ -73,3 +78,14 @@ ctrl_base_year <- 1990
 
 #Regional coal CH4 emission coefficient - some of the calculated values are astronomical. Overwriting this for now
 coal_CH4_coef <- 0.38
+
+#GDP per capita thressholds for SSP4 region groupings - TODO: move this to common data since it is in aglu & emissions
+hi_pcgdp <- 12.275
+lo_pcgdp <- 2.75
+
+#Coal SO2 emissions factor thresshold, used for determining whether a region has strong or weak air pollution policy
+coal_so2_thresshold <- 0.1
+
+#Marker region for SSP non-CO2 pollution controls in low income regions
+#Note: this is the region whose air pollution controls are applied to low income regions in SSP1 & SSP5. The protocol states Western Europe
+ssp_marker_region <- 13
