@@ -290,7 +290,7 @@ write_mi_data( L210.DepRsrcCurves_fos, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L
 write_mi_data( L210.DepRsrcCurves_U, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.DepRsrcCurves_U", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.SmthRenewRsrcCurvesGdpElast_MSW, "SmthRenewRsrcCurvesGdpElast", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_MSW", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.SmthRenewRsrcCurves_wind, "SmthRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurves_wind", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
-write_mi_data( L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV, "SmthRenewRsrcCurvesGdpElastCapFac", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
+write_mi_data( L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV, "SmthRenewRsrcCurvesGdpElast", "ENERGY_LEVEL2_DATA", "L210.SmthRenewRsrcCurvesGdpElastCapFac_roofPV", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.GrdRenewRsrcCurves_geo, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_geo", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.GrdRenewRsrcMax_geo, "GrdRenewRsrcMax", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcMax_geo", "ENERGY_XML_BATCH", "batch_resources.xml" ) 
 write_mi_data( L210.GrdRenewRsrcCurves_EGS, "GrdRenewRsrcCurves", "ENERGY_LEVEL2_DATA", "L210.GrdRenewRsrcCurves_EGS", "ENERGY_XML_BATCH", "batch_geo_adv.xml" ) 

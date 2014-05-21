@@ -36,8 +36,10 @@ A44.demandFn_serv <- readdata( "ENERGY_ASSUMPTIONS", "A44.demandFn_serv" )
 A44.demandFn_flsp <- readdata( "ENERGY_ASSUMPTIONS", "A44.demandFn_flsp" )
 A44.internal_gains <- readdata( "ENERGY_ASSUMPTIONS", "A44.internal_gains" )
 A44.satiation_flsp <- readdata( "ENERGY_ASSUMPTIONS", "A44.satiation_flsp" )
+A44.satiation_flsp_SSPs <- readdata( "ENERGY_ASSUMPTIONS", "A44.satiation_flsp_SSPs" )
 A44.cost_efficiency <- readdata ("ENERGY_ASSUMPTIONS", "A44.cost_efficiency" )
 A44.demand_satiation_mult <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult" )
+A44.demand_satiation_mult_SSPs <- readdata( "ENERGY_ASSUMPTIONS", "A44.demand_satiation_mult_SSPs" )
 L144.flsp_bm2_R_res_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L144.flsp_bm2_R_res_Yh" )
 L144.flsp_bm2_R_comm_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L144.flsp_bm2_R_comm_Yh" )
 L144.base_service_EJ_serv <- readdata( "ENERGY_LEVEL1_DATA", "L144.base_service_EJ_serv" )
@@ -99,6 +101,7 @@ L244.Satiation_flsp$satiation.level <- L244.Satiation_flsp_class$satiation.level
          vecpaste( L244.Satiation_flsp_class[ c( "region.class", "sector" ) ] ) ) ]
 L244.Satiation_flsp <- L244.Satiation_flsp[ names_Satiation_flsp ]
 
+
 # Satiation adder - this is total BS. Required for shaping the future floorspace growth trajectories in each region
 printlog( "L244.SatiationAdder: Satiation adders in floorspace demand function" )
 #First, prepare socioeconomics tables by adding region names
@@ -123,6 +126,65 @@ L244.SatiationAdder$satiation.adder <- round(
          ( L244.SatiationAdder$satiation.level - L244.SatiationAdder$pcFlsp_mm2 ) ),
       digits_satiation_adder )
 L244.SatiationAdder <- L244.SatiationAdder[ names_SatiationAdder ]
+
+printlog( "L244.Satiation_flsp_SSPs: Satiation levels assumed for floorspace in the SSPs" )
+L244.Satiation_flsp_class_SSPs <- melt( A44.satiation_flsp_SSPs, id.vars = c( "SSP", "region.class"), variable.name = "sector" )
+L244.Satiation_flsp_class_SSPs$satiation.level <- L244.Satiation_flsp_class_SSPs$value * conv_thous_bil
+
+#Match in the region class, and use this to then match in the satiation floorspace
+L244.Satiation_flsp_SSPs <- write_to_all_regions( A44.gcam_consumer, names_BldNodes )
+L244.Satiation_flsp_SSPs <- repeat_and_add_vector( L244.Satiation_flsp_SSPs, "SSP", c( "SSP1", "SSP2", "SSP3", "SSP4", "SSP5" ))
+L244.Satiation_flsp_SSPs$region.class <- A_regions$region.class[
+  match( L244.Satiation_flsp_SSPs$region, A_regions$region ) ]
+L244.Satiation_flsp_SSPs$satiation.level <- L244.Satiation_flsp_class_SSPs$satiation.level[
+  match( vecpaste( L244.Satiation_flsp_SSPs[ c( "SSP", "region.class", "gcam.consumer" ) ] ),
+         vecpaste( L244.Satiation_flsp_class_SSPs[ c( "SSP", "region.class", "sector" ) ] ) ) ]
+
+#Calculate pcFlsp and make sure it is smaller than the satiation level
+L244.Satiation_flsp_SSPs$pcGDP_thous90USD <- L102.pcgdp_thous90USD_SSP_R_Y[[ X_satiation_year ]][
+  match( L244.Satiation_flsp_SSPs$region, L102.pcgdp_thous90USD_SSP_R_Y$region ) ]
+L244.Satiation_flsp_SSPs$Flsp_bm2 <- L244.Floorspace$base.building.size[
+  match( paste( L244.Satiation_flsp_SSPs$region, L244.Satiation_flsp_SSPs$gcam.consumer, satiation_year ),
+         paste( L244.Floorspace$region, L244.Floorspace$gcam.consumer, L244.Floorspace$year ) ) ]
+L244.Satiation_flsp_SSPs$pop_thous <- L101.Pop_thous_R_Yh[[ X_satiation_year ]][
+  match( L244.Satiation_flsp_SSPs$region, L101.Pop_thous_R_Yh$region ) ]
+L244.Satiation_flsp_SSPs$pcFlsp_mm2 <- L244.Satiation_flsp_SSPs$Flsp_bm2 / L244.Satiation_flsp_SSPs$pop_thous
+
+L244.Satiation_flsp_SSPs$satiation.level[ L244.Satiation_flsp_SSPs$pcFlsp_mm2 > L244.Satiation_flsp_SSPs$satiation.level ] <- 
+  1.001 * L244.Satiation_flsp_SSPs$pcFlsp_mm2[ L244.Satiation_flsp_SSPs$pcFlsp_mm2 > L244.Satiation_flsp_SSPs$satiation.level ]
+
+# Satiation adder - this is total BS. Required for shaping the future floorspace growth trajectories in each region
+printlog( "L244.SatiationAdder_SSPs: Satiation adders in floorspace demand function for the SSPs" )
+L244.SatiationAdder_SSPs <- L244.Satiation_flsp_SSPs
+L244.SatiationAdder_SSPs$satiation.adder <- round(
+  L244.SatiationAdder_SSPs$satiation.level - (
+    exp( log( 2 ) * L244.SatiationAdder_SSPs$pcGDP_thous90USD / gdp_mid_satiation ) *
+      ( L244.SatiationAdder_SSPs$satiation.level - L244.SatiationAdder_SSPs$pcFlsp_mm2 ) ),
+  digits_satiation_adder )
+L244.SatiationAdder_SSPs <- L244.SatiationAdder_SSPs[ c( names_SatiationAdder, "SSP" ) ]
+
+L244.Satiation_flsp_SSPs <- L244.Satiation_flsp_SSPs[ c( names_Satiation_flsp, "SSP" ) ]
+L244.Satiation_flsp_SSP1 <- subset( L244.Satiation_flsp_SSPs, L244.Satiation_flsp_SSPs$SSP == "SSP1" )
+L244.Satiation_flsp_SSP1 <- L244.Satiation_flsp_SSP1[ names( L244.Satiation_flsp_SSP1 ) != "SSP" ]
+L244.Satiation_flsp_SSP2 <- subset( L244.Satiation_flsp_SSPs, L244.Satiation_flsp_SSPs$SSP == "SSP2" )
+L244.Satiation_flsp_SSP2 <- L244.Satiation_flsp_SSP2[ names( L244.Satiation_flsp_SSP2 ) != "SSP" ]
+L244.Satiation_flsp_SSP3 <- subset( L244.Satiation_flsp_SSPs, L244.Satiation_flsp_SSPs$SSP == "SSP3" )
+L244.Satiation_flsp_SSP3 <- L244.Satiation_flsp_SSP3[ names( L244.Satiation_flsp_SSP3 ) != "SSP" ]
+L244.Satiation_flsp_SSP4 <- subset( L244.Satiation_flsp_SSPs, L244.Satiation_flsp_SSPs$SSP == "SSP4" )
+L244.Satiation_flsp_SSP4 <- L244.Satiation_flsp_SSP4[ names( L244.Satiation_flsp_SSP4 ) != "SSP" ]
+L244.Satiation_flsp_SSP5 <- subset( L244.Satiation_flsp_SSPs, L244.Satiation_flsp_SSPs$SSP == "SSP5" )
+L244.Satiation_flsp_SSP5 <- L244.Satiation_flsp_SSP5[ names( L244.Satiation_flsp_SSP5 ) != "SSP" ]
+
+L244.SatiationAdder_SSP1 <- subset( L244.SatiationAdder_SSPs, L244.SatiationAdder_SSPs$SSP == "SSP1" )
+L244.SatiationAdder_SSP1 <- L244.SatiationAdder_SSP1[ names( L244.SatiationAdder_SSP1 ) != "SSP" ]
+L244.SatiationAdder_SSP2 <- subset( L244.SatiationAdder_SSPs, L244.SatiationAdder_SSPs$SSP == "SSP2" )
+L244.SatiationAdder_SSP2 <- L244.SatiationAdder_SSP2[ names( L244.SatiationAdder_SSP2 ) != "SSP" ]
+L244.SatiationAdder_SSP3 <- subset( L244.SatiationAdder_SSPs, L244.SatiationAdder_SSPs$SSP == "SSP3" )
+L244.SatiationAdder_SSP3 <- L244.SatiationAdder_SSP3[ names( L244.SatiationAdder_SSP3 ) != "SSP" ]
+L244.SatiationAdder_SSP4 <- subset( L244.SatiationAdder_SSPs, L244.SatiationAdder_SSPs$SSP == "SSP4" )
+L244.SatiationAdder_SSP4 <- L244.SatiationAdder_SSP4[ names( L244.SatiationAdder_SSP4 ) != "SSP" ]
+L244.SatiationAdder_SSP5 <- subset( L244.SatiationAdder_SSPs, L244.SatiationAdder_SSPs$SSP == "SSP5" )
+L244.SatiationAdder_SSP5 <- L244.SatiationAdder_SSP5[ names( L244.SatiationAdder_SSP5 ) != "SSP" ]
 
 #Services: base-service (service output in the base year)
 printlog( "L244.GenericBaseService and L244.ThermalBaseService: Base year output of buildings services (per unit floorspace)" )
@@ -228,6 +290,46 @@ L244.moreBS <- subset( L244.BS, year == max( model_base_years ) )
 L244.GenericServiceSatiation$satiation.level <- pmax( L244.GenericServiceSatiation$satiation.level, L244.moreBS$service.per.flsp[
       match( vecpaste( L244.GenericServiceSatiation[ c( names_BldNodes, "building.service.input" ) ] ),
              vecpaste( L244.moreBS[ c( names_BldNodes, "building.service.input" ) ] ) ) ] * 1.0001 )
+
+#Service satiation
+printlog( "L244.GenericServiceSatiation_SSPs: Satiation levels assumed for non-thermal building services in the SSPs")
+#First, calculate the service output per unit floorspace in the USA region
+L244.ServiceSatiation_USA_SSPs <- subset( L244.ServiceSatiation_USA, building.service.input %in% generic_services )
+L244.ServiceSatiation_USA_SSPs <- repeat_and_add_vector( L244.ServiceSatiation_USA_SSPs, "SSP", c( "SSP1", "SSP2", "SSP3", "SSP4", "SSP5" ))
+
+L244.ServiceSatiation_USA_SSPs$satiation.level <- round(
+  L244.ServiceSatiation_USA_SSPs[[ X_final_historical_year ]] *
+    A44.demand_satiation_mult_SSPs$multiplier[
+      match( paste( L244.ServiceSatiation_USA_SSPs$SSP, L244.ServiceSatiation_USA_SSPs$building.service.input), paste( A44.demand_satiation_mult_SSPs$SSP, A44.demand_satiation_mult_SSPs[[supp]] ) ) ] /
+    L244.ServiceSatiation_USA_SSPs$floorspace_bm2,
+  digits_calOutput )
+
+#Generic services: read these values to all regions because they're all the same
+L244.GenericServiceSatiation_SSPs <- write_to_all_regions( L244.ServiceSatiation_USA_SSPs, c( names_GenericServiceSatiation, "SSP"  ) )
+
+## This is bad. Should be done here but we aren't. Instead need to match in the floorspace into the base service table, divide to calculate the service demand
+## per unit floorspace in the final calibration year. This (increased slightly) is then the minimum satiation level that needs to be read in.
+## TODO: fix the bad code in the model. need a flexible building service function
+L244.BS <- L244.GenericBaseService
+L244.BS$flsp <- L244.Floorspace$base.building.size[
+  match( vecpaste( L244.BS[ c( names_BldNodes, "year" ) ] ), vecpaste( L244.Floorspace[ c( names_BldNodes, "year" ) ] ) ) ]
+L244.BS$service.per.flsp <- L244.BS$base.service / L244.BS$flsp
+L244.moreBS <- subset( L244.BS, year == max( model_base_years ) )
+L244.GenericServiceSatiation_SSPs$satiation.level <- pmax( L244.GenericServiceSatiation_SSPs$satiation.level, L244.moreBS$service.per.flsp[
+  match( vecpaste( L244.GenericServiceSatiation_SSPs[ c( names_BldNodes, "building.service.input" ) ] ),
+         vecpaste( L244.moreBS[ c( names_BldNodes, "building.service.input" ) ] ) ) ] * 1.0001 )
+
+#Separate SSPs into separate files
+L244.GenericServiceSatiation_SSP1 <- subset( L244.GenericServiceSatiation_SSPs, L244.GenericServiceSatiation_SSPs$SSP == "SSP1" )
+L244.GenericServiceSatiation_SSP1 <- L244.GenericServiceSatiation_SSP1[ names( L244.GenericServiceSatiation_SSP1 ) != "SSP" ]
+L244.GenericServiceSatiation_SSP2 <- subset( L244.GenericServiceSatiation_SSPs, L244.GenericServiceSatiation_SSPs$SSP == "SSP2" )
+L244.GenericServiceSatiation_SSP2 <- L244.GenericServiceSatiation_SSP2[ names( L244.GenericServiceSatiation_SSP2 ) != "SSP" ]
+L244.GenericServiceSatiation_SSP3 <- subset( L244.GenericServiceSatiation_SSPs, L244.GenericServiceSatiation_SSPs$SSP == "SSP3" )
+L244.GenericServiceSatiation_SSP3 <- L244.GenericServiceSatiation_SSP3[ names( L244.GenericServiceSatiation_SSP3 ) != "SSP" ]
+L244.GenericServiceSatiation_SSP4 <- subset( L244.GenericServiceSatiation_SSPs, L244.GenericServiceSatiation_SSPs$SSP == "SSP4" )
+L244.GenericServiceSatiation_SSP4 <- L244.GenericServiceSatiation_SSP4[ names( L244.GenericServiceSatiation_SSP4 ) != "SSP" ]
+L244.GenericServiceSatiation_SSP5 <- subset( L244.GenericServiceSatiation_SSPs, L244.GenericServiceSatiation_SSPs$SSP == "SSP5" )
+L244.GenericServiceSatiation_SSP5 <- L244.GenericServiceSatiation_SSP5[ names( L244.GenericServiceSatiation_SSP5 ) != "SSP" ]
 
 #Thermal services: need to multiply by HDD/CDD ratio from the USA
 printlog( "L244.ThermalServiceSatiation: Satiation levels assumed for thermal building services")
@@ -491,5 +593,30 @@ if( nrow( L244.DeleteGenericService ) > 0 ){
 }
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_det.xml", "ENERGY_XML_FINAL", "building_det.xml", "", xml_tag="outFile" )
+
+write_mi_data( L244.Satiation_flsp_SSP1, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP1", "ENERGY_XML_BATCH", "batch_building_SSP1.xml" ) 
+write_mi_data( L244.SatiationAdder_SSP1, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP1", "ENERGY_XML_BATCH", "batch_building_SSP1.xml" ) 
+write_mi_data( L244.GenericServiceSatiation_SSP1, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP1", "ENERGY_XML_BATCH", "batch_building_SSP1.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP1.xml", "ENERGY_XML_FINAL", "building_SSP1.xml", "", xml_tag="outFile" )
+
+write_mi_data( L244.Satiation_flsp_SSP2, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP2", "ENERGY_XML_BATCH", "batch_building_SSP2.xml" ) 
+write_mi_data( L244.SatiationAdder_SSP2, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP2", "ENERGY_XML_BATCH", "batch_building_SSP2.xml" ) 
+write_mi_data( L244.GenericServiceSatiation_SSP2, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP2", "ENERGY_XML_BATCH", "batch_building_SSP2.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP2.xml", "ENERGY_XML_FINAL", "building_SSP2.xml", "", xml_tag="outFile" )
+
+write_mi_data( L244.Satiation_flsp_SSP3, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP3", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" ) 
+write_mi_data( L244.SatiationAdder_SSP3, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP3", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" ) 
+write_mi_data( L244.GenericServiceSatiation_SSP3, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP3", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP3.xml", "ENERGY_XML_FINAL", "building_SSP3.xml", "", xml_tag="outFile" )
+
+write_mi_data( L244.Satiation_flsp_SSP4, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP4", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" ) 
+write_mi_data( L244.SatiationAdder_SSP4, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP4", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" ) 
+write_mi_data( L244.GenericServiceSatiation_SSP4, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP4", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP4.xml", "ENERGY_XML_FINAL", "building_SSP4.xml", "", xml_tag="outFile" )
+
+write_mi_data( L244.Satiation_flsp_SSP5, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP5", "ENERGY_XML_BATCH", "batch_building_SSP5.xml" ) 
+write_mi_data( L244.SatiationAdder_SSP5, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP5", "ENERGY_XML_BATCH", "batch_building_SSP5.xml" ) 
+write_mi_data( L244.GenericServiceSatiation_SSP5, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP5", "ENERGY_XML_BATCH", "batch_building_SSP5.xml" ) 
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP5.xml", "ENERGY_XML_FINAL", "building_SSP5.xml", "", xml_tag="outFile" )
 
 logstop()
