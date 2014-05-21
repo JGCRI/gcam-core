@@ -23,7 +23,7 @@ floor.to.surface.ratio <- 5.5
 
 #GDP level at which half of the satiation level of floorspace is reached, in thousand 1990$ per capita
 gdp_mid_satiation <- 10.5
-satiation_year <- 2005
+satiation_year <- 2010
 X_satiation_year <- paste0( "X", satiation_year )
 
 ## Level2 data names for the model interface headers
