@@ -246,6 +246,9 @@ L205.AgProdChange_ref <- remove_AEZ_nonexist( L205.AgProdChange_ref )
 L205.AgCost_ag <- remove_AEZ_nonexist( L205.AgCost_ag )
 L205.AgCost_For <- remove_AEZ_nonexist( L205.AgCost_For )
 L205.AgCost_bio <- remove_AEZ_nonexist( L205.AgCost_bio )
+L205.AgProdChange_low <- remove_AEZ_nonexist( L205.AgProdChange_low )
+L205.AgProdChange_high <- remove_AEZ_nonexist( L205.AgProdChange_high )
+L205.AgProdChange_ssp4 <- remove_AEZ_nonexist( L205.AgProdChange_ssp4 )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
