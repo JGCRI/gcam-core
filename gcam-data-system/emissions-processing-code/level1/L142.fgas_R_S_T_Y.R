@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L142.fgas_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions factors by GCAM technology, computed from EPA emissions data and IEA energy balances" )
+printlog( "Historical F-gas emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions shares" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -52,7 +52,7 @@ names( L142.EDGAR_HFC.melt )[ names( L142.EDGAR_HFC.melt ) == "x" ] <- "EDGAR_em
 
 #Now, map in EDGAR emissions & compute tech/gas specific emissions
 L142.hfc_tg_R_S_Yh.melt$EDGAR_emissions <- L142.EDGAR_HFC.melt$EDGAR_emissions[ match( vecpaste( L142.hfc_tg_R_S_Yh.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "xyear")]), vecpaste( L142.EDGAR_HFC.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "variable" )] ))]
-L142.hfc_tg_R_S_Yh.melt <- na.omit( L142.hfc_tg_R_S_Yh.melt )
+L142.hfc_tg_R_S_Yh.melt$EDGAR_emissions[ is.na( L142.hfc_tg_R_S_Yh.melt$EDGAR_emissions )] <- 0
 L142.hfc_tg_R_S_Yh.melt$emissions <- L142.hfc_tg_R_S_Yh.melt$EDGAR_emissions * L142.hfc_tg_R_S_Yh.melt$pct
 
 printlog( "Map EDGAR PFC emissions to GCAM technologies" )
@@ -74,7 +74,7 @@ names( L142.EDGAR_PFC.melt )[ names( L142.EDGAR_PFC.melt ) == "x" ] <- "EDGAR_em
 
 #Now, map in emissions
 L142.pfc_tg_R_S_Yh.melt$EDGAR_emissions <- L142.EDGAR_PFC.melt$EDGAR_emissions[ match( vecpaste( L142.pfc_tg_R_S_Yh.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "xyear")]), vecpaste( L142.EDGAR_PFC.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "variable" )] ))]
-L142.pfc_tg_R_S_Yh.melt <- na.omit( L142.pfc_tg_R_S_Yh.melt )
+L142.pfc_tg_R_S_Yh.melt$EDGAR_emissions[ is.na( L142.pfc_tg_R_S_Yh.melt$EDGAR_emissions )] <- 0
 L142.pfc_tg_R_S_Yh.melt$emissions <- L142.pfc_tg_R_S_Yh.melt$EDGAR_emissions * L142.pfc_tg_R_S_Yh.melt$pct
 
 #Combine dataframes, convert to Tg of gas, & reshape

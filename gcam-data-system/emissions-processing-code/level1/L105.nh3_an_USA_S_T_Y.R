@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L105.nh3_an_USA_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions factors by GCAM technology, computed from EPA emissions data and IEA energy balances" )
+printlog( "Historical NH3 emissions factors for animals by GCAM technology, computed from EPA emissions data and FAO animal statistics" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -30,7 +30,6 @@ EPA_NH3 <- readdata( "EMISSIONS_LEVEL0_DATA", "EPA_NH3" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-# Combine all energy driver data into a single dataframe
 printlog( "Convert EPA GHG emissions inventory to Tg and aggregate by sector and technology" )
 L105.nh3_tg_USA_an_Sepa_F_Yh <- EPA_NH3
 L105.nh3_tg_USA_an_Sepa_F_Yh$sector <- EPA_tech$sector[ match( L105.nh3_tg_USA_an_Sepa_F_Yh$Source_Category , EPA_tech$EPA_Category )]
@@ -74,7 +73,7 @@ L105.nh3_tgmt_USA_an_Yh <- dcast( L105.nh3_tgmt_USA_an_Yh.melt, sector + fuel ~ 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L105.nh3_tgmt_USA_an_Yh <- c( "NH3 emissions factors by sector / technology / year", "Unit = Tg / Mt" )
+comments.L105.nh3_tgmt_USA_an_Yh <- c( "NH3 emissions factors for animals by sector / technology / year", "Unit = Tg / Mt" )
 
 #write tables as CSV files
 writedata( L105.nh3_tgmt_USA_an_Yh, domain="EMISSIONS_LEVEL1_DATA", fn="L105.nh3_tgmt_USA_an_Yh", comments=comments.L105.nh3_tgmt_USA_an_Yh )

@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L124.nonco2_unmgd_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
+printlog( "Historical emissions from unmanaged land by land cover type, computed from EDGAR emissions data" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -125,8 +125,8 @@ L124.nonco2_tgbm2_forest_fy.melt <- L124.nonco2_tgbm2_forest_fy.melt[ names( L12
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L124.nonco2_tg_R_grass_Y_AEZ <- c( "Grassland fire emissions by GCAM region / commodity / historical year", "Unit = Tg" )
-comments.L124.nonco2_tg_R_forest_Y_AEZ <- c( "Forest fire emissions by GCAM region / commodity / historical year", "Unit = Tg" )
+comments.L124.nonco2_tg_R_grass_Y_AEZ <- c( "Grassland fire emissions by GCAM region / land cover type / historical year", "Unit = Tg" )
+comments.L124.nonco2_tg_R_forest_Y_AEZ <- c( "Forest fire emissions by GCAM region / land cover type / historical year", "Unit = Tg" )
 comments.L124.nonco2_tgbm2_grass_fy.melt <- c( "Average grassland fire emissions factors in the final historical year", "Unit = Tg / bm2" )
 comments.L124.nonco2_tgbm2_forest_fy.melt <- c( "Average forest fire emissions factors in the final historical year", "Unit = Tg / bm2" )
 

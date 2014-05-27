@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L103.ghg_an_USA_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions factors by GCAM technology, computed from EPA emissions data and IEA energy balances" )
+printlog( "Historical emissions factors for animals by GCAM technology, computed from EPA emissions data and FAO animal data" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -30,7 +30,6 @@ EPA_FCCC_GHG_2005 <- readdata( "EMISSIONS_LEVEL0_DATA", "EPA_FCCC_AG_2005" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-# Combine all energy driver data into a single dataframe
 printlog( "Convert EPA GHG emissions inventory to Tg and aggregate by sector and technology" )
 L103.ghg_tg_USA_an_Sepa_F_2005 <- EPA_FCCC_GHG_2005
 L103.ghg_tg_USA_an_Sepa_F_2005$sector <- EPA_tech$sector[ match( L103.ghg_tg_USA_an_Sepa_F_2005$Source_Category , EPA_tech$Source_Category )]
@@ -64,7 +63,7 @@ L103.ghg_tgmt_USA_an_Sepa_F_2005<- L103.ghg_tgmt_USA_an_Sepa_F_2005[ names( L103
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L103.ghg_tgmt_USA_an_Sepa_F_2005 <- c( "GHG emissions factors by sector / technology / 2005", "Unit = Tg / Mt" )
+comments.L103.ghg_tgmt_USA_an_Sepa_F_2005 <- c( "GHG emissions factors for animals by sector / technology / 2005", "Unit = Tg / Mt" )
 
 #write tables as CSV files
 writedata( L103.ghg_tgmt_USA_an_Sepa_F_2005, domain="EMISSIONS_LEVEL1_DATA", fn="L103.ghg_tgmt_USA_an_Sepa_F_2005", comments=comments.L103.ghg_tgmt_USA_an_Sepa_F_2005 )

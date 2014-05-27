@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L101.nonghg_en_USA_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions factors by GCAM technology, computed from EPA emissions data and IEA energy balances" )
+printlog( "Historical emissions factors for energy by GCAM technology, computed from EPA emissions data and IEA energy balances" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files

@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L131.nonco2_proc_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
+printlog( "Historical emissions from the processing sector by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files

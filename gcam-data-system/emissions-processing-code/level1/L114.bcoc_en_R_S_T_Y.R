@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L114.bcoc_en_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical BC/OC emissions by GCAM technology, computed from RCP emissions data and Smith emissions factors" )
+printlog( "Historical BC/OC emissions in the energy system by GCAM technology, computed from RCP emissions data and Smith emissions factors" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -115,7 +115,7 @@ L114.bcoc_tgej_R_en_S_F_2000 <- dcast( L114.bcoc_tg_R_en_S_F_2000.melt, GCAM_reg
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L114.bcoc_tgej_R_en_S_F_2000 <- c( "BC / OC emissions factors by GCAM region / sector / technology / 2000", "Unit = Tg / EJ" )
+comments.L114.bcoc_tgej_R_en_S_F_2000 <- c( "BC / OC emissions factors for energy technologies by GCAM region / sector / technology / 2000", "Unit = Tg / EJ" )
 
 #write tables as CSV files
 writedata( L114.bcoc_tgej_R_en_S_F_2000, domain="EMISSIONS_LEVEL1_DATA", fn="L114.bcoc_tgej_R_en_S_F_2000", comments=comments.L114.bcoc_tgej_R_en_S_F_2000 )

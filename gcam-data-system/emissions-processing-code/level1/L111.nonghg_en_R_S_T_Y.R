@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L111.nonghg_en_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
+printlog( "Historical emissions for the energy system by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -41,7 +41,6 @@ EDGAR_NH3 <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_NH3" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-# Compute emissions using EPA emissions factors and IEA fuel consumption
 printlog( "First add gas name and bind all dataframes together. This will make future processing easier" )
 L101.so2_tgej_USA_en_Sepa_F_Yh$Non.CO2 <- "SO2"
 L101.co_tgej_USA_en_Sepa_F_Yh$Non.CO2 <- "CO"
@@ -167,8 +166,8 @@ L111.nonghg_tgej_R_en_S_F_Yh <- dcast( L111.nonghg_tg_R_en_S_F_Yh.melt, GCAM_reg
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L111.nonghg_tg_R_en_S_F_Yh <- c( "Non-GHG emissions by GCAM region / sector / technology / historical year", "Unit = Tg" )
-comments.L111.nonghg_tgej_R_en_S_F_Yh <- c( "Non-GHG emissions factors by GCAM region / sector / technology / historical year", "Unit = Tg" )
+comments.L111.nonghg_tg_R_en_S_F_Yh <- c( "Non-GHG emissions for the energy system by GCAM region / sector / technology / historical year", "Unit = Tg" )
+comments.L111.nonghg_tgej_R_en_S_F_Yh <- c( "Non-GHG emissions factors for the energy system by GCAM region / sector / technology / historical year", "Unit = Tg" )
 
 #write tables as CSV files
 writedata( L111.nonghg_tg_R_en_S_F_Yh, domain="EMISSIONS_LEVEL1_DATA", fn="L111.nonghg_tg_R_en_S_F_Yh", comments=comments.L111.nonghg_tg_R_en_S_F_Yh )

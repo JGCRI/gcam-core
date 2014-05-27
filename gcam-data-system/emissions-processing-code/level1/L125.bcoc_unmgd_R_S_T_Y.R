@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L125.bcoc_unmgd_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
+printlog( "Historical emissions from unmanaged land by land cover type, computed from RCP emissions data" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files

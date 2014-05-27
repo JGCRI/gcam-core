@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L112.ghg_en_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
+printlog( "Historical GHG emissions for the energy system by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -34,7 +34,6 @@ EDGAR_N2O <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_N2O" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-# Compute emissions using EPA emissions factors and IEA fuel consumption
 printlog( "Computing unscaled emissions by country and technology" )
 L112.ghg_tg_R_en_Si_F_Yh.melt <- melt( L101.in_EJ_R_en_Si_F_Yh, id.vars=c( "GCAM_region_ID", "sector", "fuel", "technology" ) ) 
 names( L112.ghg_tg_R_en_Si_F_Yh.melt )[ names( L112.ghg_tg_R_en_Si_F_Yh.melt ) == "variable" ] <- "xyear"
@@ -117,12 +116,11 @@ L112.ghg_tg_R_en_S_F_Yh.melt[ L112.ghg_tg_R_en_S_F_Yh.melt$emfact == "Inf" ] <- 
 #Reshape
 L112.ghg_tgej_R_en_S_F_Yh <- dcast( L112.ghg_tg_R_en_S_F_Yh.melt, GCAM_region_ID + Non.CO2 + supplysector + subsector + stub.technology ~ xyear, value = c( "emfact" ) )
 
-
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L112.ghg_tg_R_en_S_F_Yh <- c( "GHG emissions by GCAM region / sector / technology / historical year", "Unit = Tg" )
-comments.L112.ghg_tgej_R_en_S_F_Yh <- c( "GHG emissions factors by GCAM region / sector / technology / historical year", "Unit = Tg" )
+comments.L112.ghg_tg_R_en_S_F_Yh <- c( "GHG emissions for the energy system by GCAM region / sector / technology / historical year", "Unit = Tg" )
+comments.L112.ghg_tgej_R_en_S_F_Yh <- c( "GHG emissions factors for the energy system by GCAM region / sector / technology / historical year", "Unit = Tg" )
 
 #write tables as CSV files
 writedata( L112.ghg_tg_R_en_S_F_Yh, domain="EMISSIONS_LEVEL1_DATA", fn="L112.ghg_tg_R_en_S_F_Yh", comments=comments.L112.ghg_tg_R_en_S_F_Yh )

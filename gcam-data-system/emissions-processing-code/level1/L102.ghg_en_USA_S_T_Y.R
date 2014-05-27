@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L102.ghg_en_USA_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions factors by GCAM fuel, computed from EPA emissions data and IEA energy balances" )
+printlog( "Historical emissions factors for energy by GCAM fuel, computed from EPA emissions data and IEA energy balances" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -32,7 +32,6 @@ EPA_FCCC_GHG_2005 <- readdata( "EMISSIONS_LEVEL0_DATA", "EPA_FCCC_GHG_2005" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-# Combine all energy driver data into a single dataframe
 printlog( "Convert EPA GHG emissions inventory to Tg and aggregate by sector and fuel" )
 L102.ghg_tg_USA_en_Sepa_F_2005 <- EPA_FCCC_GHG_2005
 L102.ghg_tg_USA_en_Sepa_F_2005$sector <- EPA_tech$sector[ match( L102.ghg_tg_USA_en_Sepa_F_2005$Source_Category , EPA_tech$Source_Category )]
@@ -71,7 +70,7 @@ L102.ghg_tgej_USA_en_Sepa_F_2005 <- L102.ghg_tgej_USA_en_Sepa_F_2005[ names( L10
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L102.ghg_tgej_USA_en_Sepa_F_2005 <- c( "GHG emissions factors for the USA by sector / fuel / 2005", "Unit = Tg / EJ" )
+comments.L102.ghg_tgej_USA_en_Sepa_F_2005 <- c( "GHG emissions factors for the USA energy sector by sector / fuel / 2005", "Unit = Tg / EJ" )
 
 #write tables as CSV files
 writedata( L102.ghg_tgej_USA_en_Sepa_F_2005, domain="EMISSIONS_LEVEL1_DATA", fn="L102.ghg_tgej_USA_en_Sepa_F_2005", comments=comments.L102.ghg_tgej_USA_en_Sepa_F_2005 )

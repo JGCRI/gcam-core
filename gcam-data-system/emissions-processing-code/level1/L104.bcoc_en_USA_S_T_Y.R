@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L104.bcoc_en_USA_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions factors by GCAM technology, computed from EPA emissions data and IEA energy balances" )
+printlog( "Historical BC/OC emissions factors for energy by GCAM technology, computed from EPA emissions data and IEA energy balances" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -74,7 +74,7 @@ L104.bcoc_tgej_USA_en_T_1990 <- L104.bcoc_tgej_USA_en_T_1990[ names( L104.bcoc_t
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L104.bcoc_tgej_USA_en_T_1990 <- c( "BC/OC emissions factors for the USA by sector / technology / 1990", "Unit = Tg / EJ" )
+comments.L104.bcoc_tgej_USA_en_T_1990 <- c( "BC/OC emissions factors for energy technologies in the USA by sector / technology / 1990", "Unit = Tg / EJ" )
 
 #write tables as CSV files
 writedata( L104.bcoc_tgej_USA_en_T_1990, domain="EMISSIONS_LEVEL1_DATA", fn="L104.bcoc_tgej_USA_en_T_1990", comments=comments.L104.bcoc_tgej_USA_en_T_1990 )

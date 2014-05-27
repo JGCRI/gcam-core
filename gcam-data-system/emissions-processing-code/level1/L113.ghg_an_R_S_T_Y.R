@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L113.ghg_an_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
+printlog( "Historical GHG emissions for animals by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -34,7 +34,6 @@ EDGAR_N2O <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_N2O" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
-# Compute emissions using EPA emissions factors and IEA fuel consumption
 printlog( "Computing unscaled emissions by country and technology" )
 L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt <- melt( L107.an_Prod_Mt_R_C_Sys_Fd_Y, id.vars=c( "GCAM_region_ID", "GCAM_commodity", "system", "feed" ) ) 
 names( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt )[ names( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt ) == "variable" ] <- "xyear"

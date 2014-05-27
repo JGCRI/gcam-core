@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L151.ctrl_R_en_S_T.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Maximum reduction by GCAM technology" )
+printlog( "Maximum reduction of air pollutants for energy technologies by GCAM technology" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files

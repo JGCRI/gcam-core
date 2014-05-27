@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L122.ghg_agr_R_S_T_Y.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions by GCAM technology, computed from EDGAR emissions data and EPA emissions factors" )
+printlog( "Historical AGR GHG emissions by GCAM technology, computed from EDGAR emissions data" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -125,7 +125,6 @@ L122.ghgfert_tg_R_C_Y_AEZ.melt <- L122.ghgfert_tg_R_C_Y_AEZ.melt[ names( L122.gh
 L122.ghg_tg_R_agr_C_Y_AEZ.melt <- rbind( L122.ghg_tg_R_rice_Y_AEZ.melt, L122.ghgsoil_tg_R_C_Y_AEZ.melt, L122.ghgfert_tg_R_C_Y_AEZ.melt )
 L122.ghg_tg_R_agr_C_Y_AEZ.melt <- na.omit( L122.ghg_tg_R_agr_C_Y_AEZ.melt )
 L122.ghg_tg_R_agr_C_Y_AEZ.melt <- aggregate( L122.ghg_tg_R_agr_C_Y_AEZ.melt$emissions, by=as.list( L122.ghg_tg_R_agr_C_Y_AEZ.melt[ c( R_C_AEZ, "variable", "Non.CO2") ]), sum )
-
 
 #Reshape
 L122.ghg_tg_R_agr_C_Y_AEZ <- dcast( L122.ghg_tg_R_agr_C_Y_AEZ.melt, GCAM_region_ID + Non.CO2 + GCAM_commodity + AEZ ~ variable, value = c( "x" ) )
