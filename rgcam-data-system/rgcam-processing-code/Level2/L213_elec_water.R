@@ -3,7 +3,7 @@
 
 source( "rgcam-processing-code/headers/RGCAM_header.R" )
 source( "rgcam-data/Assumptions/A_RGCAM_data.R" )
-logstart( "L213_RGCAM_elec_water.R" )
+logstart( "L213_elec_water.R" )
 printlog( "RGCAM electricity generation water demands model input file" )
 
 # -----------------------------------------------------------------------------
