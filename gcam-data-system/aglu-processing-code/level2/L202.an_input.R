@@ -184,8 +184,9 @@ L202.StubTechCoef_an <- L202.StubTechCoef_an[ names_StubTechCoef ]
 #Supplemental calculation of non-input cost of animal production
 printlog( "Calculating non-feed costs of animal production based on US commodity prices and feed costs" )
 #First, calculate the weighted average price across the different feed types (supplysectors)
+Index_region <- GCAM_region_names$region[ 1 ]
 L202.ag_Feed_P_share_R_C <- L202.StubTechProd_in[
-      L202.StubTechProd_in$region == "USA" & L202.StubTechProd_in$year == max( model_base_years ),
+      L202.StubTechProd_in$region == Index_region & L202.StubTechProd_in$year == max( model_base_years ),
       c( names_StubTech, "calOutputValue" ) ]
 L202.ag_Feed_Mt_R_F <- aggregate( L202.ag_Feed_P_share_R_C[ "calOutputValue" ],
       by=as.list( L202.ag_Feed_P_share_R_C[ c( reg, supp ) ] ), sum )
@@ -204,7 +205,7 @@ L202.ag_FeedCost_USDkg_R_F <- aggregate( L202.ag_Feed_P_share_R_C[ "wtd_price" ]
       by=as.list( L202.ag_Feed_P_share_R_C[ c( reg, supp ) ] ), sum )
 
 #Calculate the total cost of all inputs, for each animal commodity, first matching in the feed quantity and the price
-L202.an_FeedCost_R_C_Sys_Fd <- subset( L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt, year == max( model_base_years ) & region == "USA" )
+L202.an_FeedCost_R_C_Sys_Fd <- subset( L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt, year == max( model_base_years ) & region == Index_region )
 L202.an_FeedCost_R_C_Sys_Fd$Feed_Mt <- L202.an_Feed_Mt_R_C_Sys_Fd_Y.melt$value[
       match( vecpaste( L202.an_FeedCost_R_C_Sys_Fd[ R_C_Sys_Fd_Y ] ),
              vecpaste( L202.an_Feed_Mt_R_C_Sys_Fd_Y.melt[ R_C_Sys_Fd_Y ] ) ) ]

@@ -66,7 +66,8 @@ L244.PriceExp_IntGains <- write_to_all_regions( A44.gcam_consumer, names_PriceEx
 
 printlog( "L244.Floorspace: base year floorspace" )
 #Building residential floorspace in the base years
-L244.Floorspace_resid <- interpolate_and_melt( L144.flsp_bm2_R_res_Yh, model_base_years, value.name="base.building.size", digits = digits_floorspace )
+# Keep all historical years for now - these are needed in calculating satiation adders later on
+L244.Floorspace_resid <- interpolate_and_melt( L144.flsp_bm2_R_res_Yh, historical_years, value.name="base.building.size", digits = digits_floorspace )
 L244.Floorspace_resid <- add_region_name( L244.Floorspace_resid )
 bld_nodes_noregion <- c( "gcam.consumer", "nodeInput", "building.node.input" )
 A44.gcam_consumer_resid <- subset( A44.gcam_consumer, grepl( "res", A44.gcam_consumer$gcam.consumer ) )
@@ -74,13 +75,15 @@ L244.Floorspace_resid[ bld_nodes_noregion ] <- A44.gcam_consumer_resid[ bld_node
 L244.Floorspace_resid <- L244.Floorspace_resid[ names_Floorspace ]
 
 #Commercial floorspace
-L244.Floorspace_comm <- interpolate_and_melt( L144.flsp_bm2_R_comm_Yh, model_base_years, value.name="base.building.size", digits = digits_floorspace ) 
+L244.Floorspace_comm <- interpolate_and_melt( L144.flsp_bm2_R_comm_Yh, historical_years, value.name="base.building.size", digits = digits_floorspace ) 
 L244.Floorspace_comm <- add_region_name( L244.Floorspace_comm )
 A44.gcam_consumer_comm <- subset( A44.gcam_consumer, grepl( "comm", A44.gcam_consumer$gcam.consumer ) )
 L244.Floorspace_comm[ bld_nodes_noregion ] <- A44.gcam_consumer_comm[ bld_nodes_noregion ]
 L244.Floorspace_comm <- L244.Floorspace_comm[ names_Floorspace ]
 
-L244.Floorspace <- rbind( L244.Floorspace_resid, L244.Floorspace_comm )
+L244.Floorspace_full <- rbind( L244.Floorspace_resid, L244.Floorspace_comm )
+L244.Floorspace <- subset( L244.Floorspace_full, year %in% model_base_years )
+
 
 #demand function
 printlog( "L244.DemandFunction_serv and L244.DemandFunction_flsp: demand function types" )
@@ -112,9 +115,9 @@ L101.Pop_thous_R_Yh <- add_region_name( L101.Pop_thous_R_Yh )
 L244.SatiationAdder <- L244.Satiation_flsp
 L244.SatiationAdder$pcGDP_thous90USD <- L102.pcgdp_thous90USD_SSP_R_Y[[ X_satiation_year ]][
       match( L244.SatiationAdder$region, L102.pcgdp_thous90USD_SSP_R_Y$region ) ]
-L244.SatiationAdder$Flsp_bm2 <- L244.Floorspace$base.building.size[
+L244.SatiationAdder$Flsp_bm2 <- L244.Floorspace_full$base.building.size[
       match( paste( L244.SatiationAdder$region, L244.SatiationAdder$gcam.consumer, satiation_year ),
-             paste( L244.Floorspace$region, L244.Floorspace$gcam.consumer, L244.Floorspace$year ) ) ]
+             paste( L244.Floorspace_full$region, L244.Floorspace_full$gcam.consumer, L244.Floorspace_full$year ) ) ]
 L244.SatiationAdder$pop_thous <- L101.Pop_thous_R_Yh[[ X_satiation_year ]][
       match( L244.SatiationAdder$region, L101.Pop_thous_R_Yh$region ) ]
 L244.SatiationAdder$pcFlsp_mm2 <- L244.SatiationAdder$Flsp_bm2 / L244.SatiationAdder$pop_thous
@@ -125,7 +128,17 @@ L244.SatiationAdder$satiation.adder <- round(
          exp( log( 2 ) * L244.SatiationAdder$pcGDP_thous90USD / gdp_mid_satiation ) *
          ( L244.SatiationAdder$satiation.level - L244.SatiationAdder$pcFlsp_mm2 ) ),
       digits_satiation_adder )
+
+#The satiation adder (million square meters of floorspace per person) needs to be less than the per-capita demand in the final calibration year
+# need to match in the demand in the final calibration year to check this. love the buildings model.
+L244.SatiationAdder$Flsp_bm2_fby <- L244.Floorspace_full$base.building.size[
+      match( paste( L244.SatiationAdder$region, L244.SatiationAdder$gcam.consumer, max( model_base_years ) ),
+             paste( L244.Floorspace_full$region, L244.Floorspace_full$gcam.consumer, L244.Floorspace_full$year ) ) ]
+L244.SatiationAdder$pcFlsp_mm2_fby <- L244.SatiationAdder$Flsp_bm2_fby / L244.SatiationAdder$pop_thous
+L244.SatiationAdder$satiation.adder[ L244.SatiationAdder$satiation.adder > L244.SatiationAdder$pcFlsp_mm2_fby ] <-
+      L244.SatiationAdder$pcFlsp_mm2_fby[ L244.SatiationAdder$satiation.adder > L244.SatiationAdder$pcFlsp_mm2_fby ] * 0.999
 L244.SatiationAdder <- L244.SatiationAdder[ names_SatiationAdder ]
+
 
 printlog( "L244.Satiation_flsp_SSPs: Satiation levels assumed for floorspace in the SSPs" )
 L244.Satiation_flsp_class_SSPs <- melt( A44.satiation_flsp_SSPs, id.vars = c( "SSP", "region.class"), variable.name = "sector" )
@@ -343,10 +356,14 @@ L244.ThermalServiceSatiation$variable[ L244.ThermalServiceSatiation$thermal.buil
 L244.ThermalServiceSatiation$degree.days <- L244.HDDCDD_normal_R_Y$value[
   match( vecpaste( L244.ThermalServiceSatiation[ c( "region", "variable" ) ] ),
          vecpaste( L244.HDDCDD_normal_R_Y[ c( "region", "variable" ) ] ) ) ]
+
+
+Index_region <- GCAM_region_names$region[ 1 ]
 L244.ThermalServiceSatiation$satiation_mult <- L244.ThermalServiceSatiation$degree.days /
-  L244.ThermalServiceSatiation$degree.days[ L244.ThermalServiceSatiation$region=="USA" ]
+  L244.ThermalServiceSatiation$degree.days[ L244.ThermalServiceSatiation$region == Index_region ]
 L244.ThermalServiceSatiation$satiation.level <- round( L244.ThermalServiceSatiation$satiation.level * L244.ThermalServiceSatiation$satiation_mult,
       digits = digits_calOutput )
+
 
 #This part here is bad. The service satiation in the final cal year can not be lower than the observed demand, so need to use pmax to set a floor on the quantity
 # TODO: fix model code.
@@ -510,7 +527,7 @@ L244.Intgains_scalar$degree.days <- L244.HDDCDD_normal_R_Y$value[
   match( vecpaste( L244.Intgains_scalar[ c( "region", "variable" ) ] ),
          vecpaste( L244.HDDCDD_normal_R_Y[ c( "region", "variable" ) ] ) ) ]
 L244.Intgains_scalar$scalar_mult <- L244.Intgains_scalar$degree.days /
-  L244.Intgains_scalar$degree.days[ L244.Intgains_scalar$region=="USA" ]
+  L244.Intgains_scalar$degree.days[ L244.Intgains_scalar$region == Index_region ]
 L244.Intgains_scalar$internal.gains.scalar <- round(
   L244.Intgains_scalar$InternalGainsScalar_USA *
   L244.Intgains_scalar$scalar_mult,

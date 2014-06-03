@@ -54,7 +54,7 @@ $(ENERGYPROC)/logs/L2%.log: $(ENERGYPROC)/level2/L2%
 
 $(ENERGYXML)/%.xml: $(ENERGYPROC)/xml-batch/batch_%.xml
 	@echo $?
-	java -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
+	java -Xmx2g -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
 clean:
 	-rm -f $(ENERGYPROC)/logs/*.log

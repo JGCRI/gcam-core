@@ -75,11 +75,11 @@ L120.LCi_bm2_R_LT_year_AEZ <- aggregate( Sage_Hyde15_Area[ "Area_bm2" ], by=as.l
 L120.LCi_bm2_R_LT_year_AEZ$Xyear <- paste( "X", L120.LCi_bm2_R_LT_year_AEZ$year, sep = "" )
 L120.LCi_bm2_R_LT_year_AEZ.cast <- dcast( L120.LCi_bm2_R_LT_year_AEZ, GCAM_region_ID + Land_Type + AEZ ~ Xyear, value.var = "Area_bm2" )
 
-###TEMPORARY STEP: SET 2010 EQUAL TO 2005 IN ABSENCE OF ANY REAL DATA FOR 2010
-L120.LCi_bm2_R_LT_year_AEZ.cast$X2010 <- L120.LCi_bm2_R_LT_year_AEZ.cast$X2005
+#Missing values should be set to 0 before interpolation, so that in-between years are interpolated correctly
+L120.LCi_bm2_R_LT_year_AEZ.cast[ is.na( L120.LCi_bm2_R_LT_year_AEZ.cast ) ] <- 0
 L120.LCi_bm2_R_LT_allyear_AEZ.cast <- gcam_interp( L120.LCi_bm2_R_LT_year_AEZ.cast, land_cover_years )
 
-#Reset to a data frame, melt, and drop the "X" prefix from the year vector
+#Reset to a data frame and re-sort the years
 L120.LCi_bm2_R_LT_allyear_AEZ.cast <- data.frame( L120.LCi_bm2_R_LT_allyear_AEZ.cast[ R_LT_AEZ ], L120.LCi_bm2_R_LT_allyear_AEZ.cast[ X_land_cover_years ] )
 
 #Create "complete" table with all possible combinations of regions, land types, AEZs, and years
