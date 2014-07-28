@@ -50,6 +50,12 @@ clean:
 	-rm -f $(EMISSIONSPROC)/xml-batch/*.xml
 	-rm -f $(EMISSIONSXML)/*.xml
 
+level2clean:
+	-rm -f $(EMISSIONSPROC)/logs/L2*.log
+	-rm -f $(EMISSIONSPROC)/logs/L2*.d
+	-rm -f $(EMISSIONSPROC)/xml-batch/*.xml
+	-rm -f $(EMISSIONSXML)/*.xml
+
 test:
 	echo 'deps:  ' $(L1DEPS)
 	echo 'logfiles:  ' $(L1LOGS)

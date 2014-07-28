@@ -61,6 +61,12 @@ clean:
 	-rm -f $(AGLUPROC)/xml-batch/*.xml
 	-rm -f $(AGLUXML)/*.xml
 
+level2clean:
+	-rm -f $(AGLUPROC)/logs/L2*.d
+	-rm -f $(AGLUPROC)/logs/L2*.log
+	-rm -f $(AGLUXML)/*.xml
+	-rm -f $(AGLUPROC)/xml-batch/*.xml
+
 test:
 	echo 'deps:  ' $(L1DEPS)
 	echo 'l1A logs:  ' $(L1ALOGS)

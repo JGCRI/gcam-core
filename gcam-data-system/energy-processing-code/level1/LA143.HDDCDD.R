@@ -33,6 +33,9 @@ for( i in GISfiles){
   GISfiles.list[[index]] <- readdata( "ENERGY_GIS_DATA", i )
 }
 names(GISfiles.list) <- GISfiles
+base_year_HDDCDD_name <- GISfiles[ grepl( "_2010", GISfiles )]
+base_year_HDDCDD_data <- GISfiles.list[[ base_year_HDDCDD_name ]]
+GISfiles.list <- GISfiles.list[ names( GISfiles.list ) != base_year_HDDCDD_name ]
 HDDCDD_data <- do.call( rbind, GISfiles.list )
 
 # -----------------------------------------------------------------------------
@@ -58,20 +61,14 @@ HDDCDD_data$SRES <- substr( row.names( HDDCDD_data ),
 row.names( HDDCDD_data ) <- 1:nrow( HDDCDD_data )
 HDDCDD_data[ HDDCDD_data < 0 ] <- 0
 
-#Calculate rolling 5-year averages from the HDDCDD data
 HDDCDD_IDstrings <- c( "country", "SRES", "GCM", "variable" )
-HDDCDD_future_years <- 2011:2100
-X_HDDCDD_future_years <- paste0( "X", HDDCDD_future_years )
-L143.HDDCDD_scen_ctry_Yfut <- HDDCDD_data[ c( HDDCDD_IDstrings, X_HDDCDD_future_years ) ]
-rolling_avg_years <- 2  #Number of years averaged equals 2 times this number plus 1
-for( i in 1:length( X_HDDCDD_future_years ) ){
-	left <- max( 1, i - rolling_avg_years )
-	right <- min( length( X_HDDCDD_future_years ), i + rolling_avg_years )
-	L143.HDDCDD_scen_ctry_Yfut[ X_HDDCDD_future_years ][i] <- rowMeans( HDDCDD_data[ X_HDDCDD_future_years ][ left:right ] )
-}
+L143.HDDCDD_scen_ctry_Y <- HDDCDD_data[ c( HDDCDD_IDstrings, X_historical_years, X_future_years ) ]
 
-L143.HDDCDD_scen_ctry_Y <- cbind( HDDCDD_data[ c( HDDCDD_IDstrings, X_historical_years ) ],
-      L143.HDDCDD_scen_ctry_Yfut[ X_future_years ] )
+#Replace the base year value (2010) with actual data from re-analysis dataset
+base_year_HDDCDD_data.melt <- melt( base_year_HDDCDD_data, id.vars = c( "id", "country" ) )
+L143.HDDCDD_scen_ctry_Y[[ "X2010" ]] <- base_year_HDDCDD_data.melt$value[
+      match( vecpaste( L143.HDDCDD_scen_ctry_Y[ c( "country", "variable" ) ] ),
+             vecpaste( base_year_HDDCDD_data.melt[ c( "country", "variable" ) ] ) ) ]
 
 # 4. Multiply HDD/CDD by population in each year matching on the iso name
 L143.HDDCDD_scen_ctry_Y$iso <- GIS_ctry$iso[ match( L143.HDDCDD_scen_ctry_Y$country, GIS_ctry$country ) ]

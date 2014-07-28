@@ -49,6 +49,13 @@ clean:
 	$(MAKE) -C modeltime-data clean
 	$(MAKE) -C socioeconomics-data clean
 
+level2clean:
+	$(MAKE) -C emissions-data level2clean
+	$(MAKE) -C energy-data level2clean
+	$(MAKE) -C aglu-data level2clean
+	$(MAKE) -C modeltime-data level2clean
+	$(MAKE) -C socioeconomics-data level2clean
+
 
 ## add water-data build commands here eventually
 

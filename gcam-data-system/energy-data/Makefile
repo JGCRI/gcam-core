@@ -62,6 +62,12 @@ clean:
 	-rm -f $(ENERGYPROC)/xml-batch/*.xml
 	-rm -f $(ENERGYXML)/*.xml
 
+level2clean:
+	-rm -f $(ENERGYPROC)/logs/L2*.log
+	-rm -f $(ENERGYPROC)/logs/L2*.d
+	-rm -f $(ENERGYPROC)/xml-batch/*.xml
+	-rm -f $(ENERGYXML)/*.xml
+
 test:
 	echo 'deps:  ' $(L1DEPS)
 	echo 'logfiles:  ' $(L1LOGS)

@@ -81,7 +81,7 @@ L101.IEA_en_bal_ctry_hist_clean <- na.omit( L101.IEA_en_bal_ctry_hist )
 
 #Aggregate by relevant categories, multiplying through by conversion factors (to EJ)
 printlog( "Converting energy balance data to EJ and aggregating by GCAM region, intermediate sector, and intermediate fuel")
-L101.en_bal_EJ_R_Si_Fi_Yh <- aggregate( L101.IEA_en_bal_ctry_hist_clean[ X_historical_years ] * L101.IEA_en_bal_ctry_hist_clean$conv,
+L101.en_bal_EJ_R_Si_Fi_Yh <- aggregate( L101.IEA_en_bal_ctry_hist_clean[ X_historical_years ] * L101.IEA_en_bal_ctry_hist_clean$conversion,
       by=as.list( L101.IEA_en_bal_ctry_hist_clean[ R_S_F ] ), sum )
                
 printlog( "Setting to zero net fuel production from energy transformation sectors modeled under the industrial sector" )
@@ -127,23 +127,36 @@ L101.en_bal_EJ_R_Si_Fi_Yh_full <- rbind( L101.en_bal_EJ_R_Si_Fi_Yh_full, L101.in
 #For downscaling of buildings and transportation energy, aggregate by fuel and country
 L101.in_ktoe_ctry_trn_Fiea <- subset( L101.IEA_en_bal_ctry_hist_clean, grepl( "trn", sector ) )
 L101.in_ktoe_ctry_trn_Fiea$fuel <- enduse_fuel_aggregation$trn[ match( L101.in_ktoe_ctry_trn_Fiea$fuel, enduse_fuel_aggregation$fuel ) ]
-L101.in_EJ_ctry_trn_Fi_Yh <- aggregate( L101.in_ktoe_ctry_trn_Fiea[ X_historical_years ] * L101.in_ktoe_ctry_trn_Fiea$conv,
+L101.in_EJ_ctry_trn_Fi_Yh <- aggregate( L101.in_ktoe_ctry_trn_Fiea[ X_historical_years ] * L101.in_ktoe_ctry_trn_Fiea$conversion,
       by=as.list( L101.in_ktoe_ctry_trn_Fiea[ c( "iso", S_F ) ] ), sum )
 
 L101.in_ktoe_ctry_bld_Fiea <- subset( L101.IEA_en_bal_ctry_hist_clean, grepl( "bld", sector ) )
 L101.in_ktoe_ctry_bld_Fiea$fuel <- enduse_fuel_aggregation$bld[ match( L101.in_ktoe_ctry_bld_Fiea$fuel, enduse_fuel_aggregation$fuel ) ]
-L101.in_EJ_ctry_bld_Fi_Yh <- aggregate( L101.in_ktoe_ctry_bld_Fiea[ X_historical_years ] * L101.in_ktoe_ctry_bld_Fiea$conv,
+L101.in_EJ_ctry_bld_Fi_Yh <- aggregate( L101.in_ktoe_ctry_bld_Fiea[ X_historical_years ] * L101.in_ktoe_ctry_bld_Fiea$conversion,
       by=as.list( L101.in_ktoe_ctry_bld_Fiea[ c( "iso", S_F ) ] ), sum )
+
+printlog( "For country-level comparisons, keep the iso and aggregate all sectors and fuels")
+L101.en_bal_EJ_ctry_Si_Fi_Yh <- aggregate( L101.IEA_en_bal_ctry_hist_clean[ X_historical_years ] * L101.IEA_en_bal_ctry_hist_clean$conversion,
+      by=as.list( L101.IEA_en_bal_ctry_hist_clean[ c( "iso", R_S_F ) ] ), sum )
+L101.in_EJ_ctry_Si_Fi_Yh <- subset( L101.en_bal_EJ_ctry_Si_Fi_Yh, grepl( "in_", substr( sector, 1, 3 ) ) | grepl( "net_", substr( sector, 1, 4 ) ) )
+L101.in_EJ_ctry_Si_Fi_Yh$sector <- "TPES"
+L101.in_EJ_ctry_TPES_Fi_Yh <- aggregate( L101.in_EJ_ctry_Si_Fi_Yh[ X_historical_years ],
+      by = as.list( L101.in_EJ_ctry_Si_Fi_Yh[ c( "iso", R_S_F ) ] ), sum )
+                 
+#Append (rbind) TPES onto the end of the energy balances
+L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- rbind( L101.en_bal_EJ_ctry_Si_Fi_Yh, L101.in_EJ_ctry_TPES_Fi_Yh )
 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
 comments.L101.en_bal_EJ_R_Si_Fi_Yh_full <- c( "Energy balances by GCAM region / intermediate sector / intermediate fuel / historical year","Unit = EJ" )
+comments.L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- c( "Energy balances by country / GCAM region / intermediate sector / intermediate fuel / historical year","Unit = EJ" )
 comments.L101.in_EJ_ctry_trn_Fi_Yh <- c( "Transportation sector energy consumption by country / IEA mode / fuel / historical year","Unit = EJ" )
 comments.L101.in_EJ_ctry_bld_Fi_Yh <- c( "Building energy consumption by country / IEA sector / fuel / historical year","Unit = EJ" )
 
 #write tables as CSV files
 writedata( L101.en_bal_EJ_R_Si_Fi_Yh_full, domain="ENERGY_LEVEL1_DATA", fn="L101.en_bal_EJ_R_Si_Fi_Yh_full", comments=comments.L101.en_bal_EJ_R_Si_Fi_Yh_full )
+writedata( L101.en_bal_EJ_ctry_Si_Fi_Yh_full, domain="ENERGY_LEVEL1_DATA", fn="L101.en_bal_EJ_ctry_Si_Fi_Yh_full", comments=comments.L101.en_bal_EJ_ctry_Si_Fi_Yh_full )
 writedata( L101.in_EJ_ctry_trn_Fi_Yh, domain="ENERGY_LEVEL1_DATA", fn="L101.in_EJ_ctry_trn_Fi_Yh", comments=comments.L101.in_EJ_ctry_trn_Fi_Yh )
 writedata( L101.in_EJ_ctry_bld_Fi_Yh, domain="ENERGY_LEVEL1_DATA", fn="L101.in_EJ_ctry_bld_Fi_Yh", comments=comments.L101.in_EJ_ctry_bld_Fi_Yh )
 

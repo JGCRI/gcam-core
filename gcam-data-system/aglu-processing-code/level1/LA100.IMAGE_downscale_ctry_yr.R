@@ -34,6 +34,10 @@ L100.IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y <- interpolate_IMAGE_years( IMAGE_an_Feed
 L100.IMAGE_an_FeedIO_Rimg_C_Sys_Y <- interpolate_IMAGE_years( IMAGE_an_FeedIO_Rimg_C_Sys_Y, idvars = c( "commodity", Sys, Y ), AGLU_historical_years )
 L100.IMAGE_an_Prodmixfrac_Rimg_C_Y <- interpolate_IMAGE_years( IMAGE_an_Prodmixfrac_Rimg_C_Y, idvars = c( "commodity", Y ), AGLU_historical_years )
 
+#Re-set negative values in the feedfrac table to 0
+L100.IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y[ X_AGLU_historical_years ][
+      L100.IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y[ X_AGLU_historical_years ] < 0 ] <- 0
+
 #Downscale IMAGE region-level data to all countries
 L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y <- downscale_IMAGE_regions( L100.IMAGE_an_Feedfrac_Rimg_C_Sys_Fd_Y, idvars = c( "IMAGE_region_ID", "commodity", Sys, "input" ) )
 L100.IMAGE_an_FeedIO_ctry_C_Sys_Y <- downscale_IMAGE_regions( L100.IMAGE_an_FeedIO_Rimg_C_Sys_Y, idvars = c( "IMAGE_region_ID", "commodity", Sys ) )
