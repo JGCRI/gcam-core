@@ -50,6 +50,12 @@ clean:
 	-rm -f $(SOCIOPROC)/xml-batch/*.xml
 	-rm -f $(SOCIOXML)/*.xml
 
+level2clean:
+	-rm -f $(SOCIOPROC)/logs/L2*.log
+	-rm -f $(SOCIOPROC)/logs/L2*.d
+	-rm -f $(SOCIOPROC)/xml-batch/*.xml
+	-rm -f $(SOCIOXML)/*.xml
+
 test:
 	echo 'deps:  ' $(L1DEPS)
 	echo 'logfiles:  ' $(L1LOGS)
