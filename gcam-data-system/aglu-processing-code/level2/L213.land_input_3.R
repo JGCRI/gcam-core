@@ -27,6 +27,7 @@ sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 GCAMLandLeaf_CdensityLT <- readdata( "AGLU_MAPPINGS", "GCAMLandLeaf_CdensityLT" )
+A_bio_default_share <- readdata( "AGLU_ASSUMPTIONS", "A_bio_default_share" )
 A_biocrops_R_AEZ <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ" )
 A_Fodderbio_chars <- readdata( "AGLU_ASSUMPTIONS", "A_Fodderbio_chars" )
 A_LandNode_logit <- readdata( "AGLU_ASSUMPTIONS", "A_LandNode_logit" )
@@ -68,9 +69,9 @@ L213.LN3_Logit <- L213.LN3_Logit[ names_LN3_Logit ]
 
 printlog( "L213.LN3_DefaultShare: Default shares for new technologies in specified years" )
 L213.LN3_DefaultShare <- L213.LN3_Logit[ names( L213.LN3_Logit ) %in% names_LN3_DefaultShare ]
-L213.LN3_DefaultShare$default.share.2020 <- default_share_2020
-L213.LN3_DefaultShare$default.share.2025 <- default_share_2025
-L213.LN3_DefaultShare$default.share.2035 <- default_share
+#Default shares do not interpolate in the model, so write it out in all model future years (starting with first bio year)
+L213.LN3_DefaultShare <- repeat_and_add_vector( L213.LN3_DefaultShare, Y, model_future_years[ model_future_years >= Bio_start_year ] )
+L213.LN3_DefaultShare$default.share <- approx( x = A_bio_default_share$year, y = A_bio_default_share$default.share, xout = L213.LN3_DefaultShare$year, rule = 2 )$y
 
 #LAND USE HISTORY
 #Unmanaged land
@@ -326,6 +327,10 @@ L213.LN3_MgdCarbon_bio_hi <- remove_AEZ_nonexist( L213.LN3_MgdCarbon_bio_hi, AEZ
 L213.LN3_NewTech <- remove_AEZ_nonexist( L213.LN3_NewTech, AEZcol = "LandNode1" )
 L213.LN3_NoEmissCarbon <- remove_AEZ_nonexist( L213.LN3_NoEmissCarbon, AEZcol="LandNode1" )
 L213.LN3_NodeCarbon <- remove_AEZ_nonexist( L213.LN3_NodeCarbon, AEZcol="LandNode1" )
+
+#May as well remove the nodes from "default share" table that don't have new technologies
+L213.LN3_DefaultShare <- subset( L213.LN3_DefaultShare, paste( region, LandNode1, LandNode2, LandNode3 ) %in%
+      paste( L213.LN3_NewTech$region, L213.LN3_NewTech$LandNode1, L213.LN3_NewTech$LandNode2, L213.LN3_NewTech$LandNode3 ) )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

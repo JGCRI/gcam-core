@@ -36,10 +36,11 @@ $(MODELTIMEXML)/%.xml: $(MODELTIMEPROC)/xml-batch/batch_%.xml
 	java -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
 clean:
+	-rm -f $(MODELTIMEDAT)/level1/*.csv
+	-rm -f $(MODELTIMEDAT)/level2/*.csv
 	-rm -f $(MODELTIMEPROC)/logs/*.log
 	-rm -f $(MODELTIMEPROC)/logs/*.d
 	-rm -f $(MODELTIMEPROC)/xml-batch/*.xml
-	-rm -f $(MODELTIMEXML)/*.xml
 
 level2clean:
 	-rm -f $(MODELTIMEPROC)/logs/L2*.log

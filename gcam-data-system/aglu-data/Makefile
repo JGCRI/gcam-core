@@ -56,10 +56,11 @@ $(AGLUXML)/%.xml: $(AGLUPROC)/xml-batch/batch_%.xml
 	java -Xmx2g -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
 clean:
+	-rm -f $(AGLUDAT)/level1/*.csv
+	-rm -f $(AGLUDAT)/level2/*.csv
 	-rm -f $(AGLUPROC)/logs/*.d
 	-rm -f $(AGLUPROC)/logs/*.log
 	-rm -f $(AGLUPROC)/xml-batch/*.xml
-	-rm -f $(AGLUXML)/*.xml
 
 level2clean:
 	-rm -f $(AGLUPROC)/logs/L2*.d

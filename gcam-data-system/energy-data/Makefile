@@ -57,10 +57,11 @@ $(ENERGYXML)/%.xml: $(ENERGYPROC)/xml-batch/batch_%.xml
 	java -Xmx2g -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
 clean:
+	-rm -f $(ENERGYDAT)/level1/*.csv
+	-rm -f $(ENERGYDAT)/level2/*.csv
 	-rm -f $(ENERGYPROC)/logs/*.log
 	-rm -f $(ENERGYPROC)/logs/*.d
 	-rm -f $(ENERGYPROC)/xml-batch/*.xml
-	-rm -f $(ENERGYXML)/*.xml
 
 level2clean:
 	-rm -f $(ENERGYPROC)/logs/L2*.log

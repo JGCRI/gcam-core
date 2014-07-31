@@ -421,7 +421,7 @@ LN2_MgdCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocat
 
 LN3_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{year;fillout=1}logit-exponent, LandNode3/+logit-exponent, scenario, scenario/world
 
-LN3_DefaultShare, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{year=2020}default-share, LandNode3/+{year=2025}default-share, LandNode3/+{year=2035}default-share, scenario, scenario/world
+LN3_DefaultShare, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{year}default-share, LandNode3/+default-share, scenario, scenario/world
 
 LN3_HistUnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, UnmanagedLandLeaf/land-use-history
 

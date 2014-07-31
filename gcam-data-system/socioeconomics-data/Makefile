@@ -45,10 +45,11 @@ $(SOCIOXML)/%.xml: $(SOCIOPROC)/xml-batch/batch_%.xml
 	java -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
 clean:
+	-rm -f $(SOCIODAT)/level1/*.csv
+	-rm -f $(SOCIODAT)/level2/*.csv
 	-rm -f $(SOCIOPROC)/logs/*.log
 	-rm -f $(SOCIOPROC)/logs/*.d
 	-rm -f $(SOCIOPROC)/xml-batch/*.xml
-	-rm -f $(SOCIOXML)/*.xml
 
 level2clean:
 	-rm -f $(SOCIOPROC)/logs/L2*.log

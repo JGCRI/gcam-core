@@ -26,6 +26,7 @@ sourcedata( "ENERGY_ASSUMPTIONS", "A_ccs_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )
 calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions")
 A22.sector <- readdata( "ENERGY_ASSUMPTIONS", "A22.sector" )
 A22.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_logit" )
 A22.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_shrwt" )
@@ -76,8 +77,8 @@ names( L222.StubTech_en ) <- names_StubTech
 firstgenbio_techs <- c( "corn ethanol", "sugarbeet ethanol", "sugar cane ethanol", "biodiesel" )
 L222.StubTech_en <- subset( L222.StubTech_en, stub.technology %!in% firstgenbio_techs | 
       paste( region, stub.technology ) %in%
-      c( paste( GCAM_region_names$region, GCAM_region_names$ethanol ),
-         paste( GCAM_region_names$region, GCAM_region_names$biodiesel ) ) )
+      c( paste( A_regions$region, A_regions$ethanol ),
+         paste( A_regions$region, A_regions$biodiesel ) ) )
 
 printlog( "L222.GlobalTechInterp_en: Technology shareweight interpolation of energy transformation sectors" )
 L222.GlobalTechInterp_en <- set_years( A22.globaltech_interp )

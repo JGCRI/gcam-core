@@ -194,11 +194,6 @@ bio_maxYieldRate_adv <- 0.01
 min.veg.carbon.density <- 0
 min.soil.carbon.density <- 0
 
-#Default share on land uses
-default_share_2020 <- 0.02
-default_share_2025 <- 0.1
-default_share <- 0.25
-
 # Minimum non-input costs of animal production technologies, in $/kg
 min_an_noninput_cost <- 0.05
 

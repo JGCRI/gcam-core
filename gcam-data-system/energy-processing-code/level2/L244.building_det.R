@@ -156,9 +156,9 @@ L244.Satiation_flsp_SSPs$satiation.level <- L244.Satiation_flsp_class_SSPs$satia
 #Calculate pcFlsp and make sure it is smaller than the satiation level
 L244.Satiation_flsp_SSPs$pcGDP_thous90USD <- L102.pcgdp_thous90USD_SSP_R_Y[[ X_satiation_year ]][
   match( L244.Satiation_flsp_SSPs$region, L102.pcgdp_thous90USD_SSP_R_Y$region ) ]
-L244.Satiation_flsp_SSPs$Flsp_bm2 <- L244.Floorspace$base.building.size[
+L244.Satiation_flsp_SSPs$Flsp_bm2 <- L244.Floorspace_full$base.building.size[
   match( paste( L244.Satiation_flsp_SSPs$region, L244.Satiation_flsp_SSPs$gcam.consumer, satiation_year ),
-         paste( L244.Floorspace$region, L244.Floorspace$gcam.consumer, L244.Floorspace$year ) ) ]
+         paste( L244.Floorspace_full$region, L244.Floorspace_full$gcam.consumer, L244.Floorspace_full$year ) ) ]
 L244.Satiation_flsp_SSPs$pop_thous <- L101.Pop_thous_R_Yh[[ X_satiation_year ]][
   match( L244.Satiation_flsp_SSPs$region, L101.Pop_thous_R_Yh$region ) ]
 L244.Satiation_flsp_SSPs$pcFlsp_mm2 <- L244.Satiation_flsp_SSPs$Flsp_bm2 / L244.Satiation_flsp_SSPs$pop_thous

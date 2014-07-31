@@ -45,10 +45,11 @@ $(EMISSIONSXML)/%.xml: $(EMISSIONSPROC)/xml-batch/batch_%.xml
 	java -Xmx2g -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
 clean:
+	-rm -f $(EMISSIONSDAT)/level1/*.csv
+	-rm -f $(EMISSIONSDAT)/level2/*.csv
 	-rm -f $(EMISSIONSPROC)/logs/*.log
 	-rm -f $(EMISSIONSPROC)/logs/*.d
 	-rm -f $(EMISSIONSPROC)/xml-batch/*.xml
-	-rm -f $(EMISSIONSXML)/*.xml
 
 level2clean:
 	-rm -f $(EMISSIONSPROC)/logs/L2*.log
