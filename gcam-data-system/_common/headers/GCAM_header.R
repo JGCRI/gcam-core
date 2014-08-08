@@ -150,7 +150,7 @@ file_fqn <- function( domain, fn, extension=".csv" ) {
 # readdata: read an arbitrary data file
 # params: fn (filename )
 # TODO: error handling (probably using try/catch)
-readdata <- function( domain="none", fn="none", extension=".csv", na.strings="", ... ) {
+readdata <- function( domain="none", fn="none", extension=".csv", na.strings="", must.exist=TRUE, ... ) {
 
 	if( domain=="none" | fn=="none" ) {
 		printlog( "ERROR: no domain/file specified", fn )
@@ -167,6 +167,9 @@ readdata <- function( domain="none", fn="none", extension=".csv", na.strings="",
 	
 	printlog( "Reading", myfn, cr=F )
 	if( !file.exists( myfn ) ) {
+        if( !must.exist ) {
+            return(NULL)
+        }
 		printlog( "WARNING: file", myfn, "does not appear to exist" )
 	}
 	x <- ( read.csv( myfn, na.strings=na.strings, stringsAsFactors=F,

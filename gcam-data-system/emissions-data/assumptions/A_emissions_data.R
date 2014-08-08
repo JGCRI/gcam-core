@@ -74,7 +74,7 @@ MAC_taxes <- c( -30, -20, -15, -10, 0, 15, 20, 30, 45, 50, 60, 100, 120, 165, 20
 final_emiss_year <- 2005
 
 #Year to read in pollution controls
-ctrl_base_year <- 1990
+ctrl_base_year <- 1975
 
 #Regional coal CH4 emission coefficient - some of the calculated values are astronomical. Overwriting this for now
 coal_CH4_coef <- 0.38

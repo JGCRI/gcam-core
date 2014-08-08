@@ -25,7 +25,8 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
-A_region <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
+A_regions <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
+A_regions.en <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 L111.nonghg_tg_R_en_S_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L111.nonghg_tg_R_en_S_F_Yh" )
 L111.nonghg_tgej_R_en_S_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L111.nonghg_tgej_R_en_S_F_Yh" )
 L112.ghg_tg_R_en_S_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L112.ghg_tg_R_en_S_F_Yh" )
@@ -33,6 +34,7 @@ L112.ghg_tgej_R_en_S_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L112.ghg_tgej_R
 L114.bcoc_tgej_R_en_S_F_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L114.bcoc_tgej_R_en_S_F_2000" )
 L151.nonghg_ctrl_R_en_S_T <- readdata( "EMISSIONS_LEVEL1_DATA", "L151.nonghg_ctrl_R_en_S_T" )
 A51.steepness <- readdata( "EMISSIONS_ASSUMPTIONS", "A51.steepness" )
+EN.L244.DeleteThermalService <- readdata( "ENERGY_LEVEL2_DATA", "L244.DeleteThermalService", must.exist=FALSE, skip=4 )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -87,6 +89,16 @@ L201.nonghg_steepness$steepness <- L201.steepness$value[ match( vecpaste( L201.n
 L201.nonghg_steepness <- na.omit( L201.nonghg_steepness )
 L201.nonghg_steepness <- L201.nonghg_steepness[ c( names_StubTechYr, "Non.CO2", "ctrl.name", "steepness" )]
 
+# Remove rows where we only have a value for one of max.reduction or steepness
+# TODO: is this what we want or should we raise an error?
+L201.nonghg_gdp_control <- merge( L201.nonghg_max_reduction, L201.nonghg_steepness, all=TRUE )
+L201.nonghg_gdp_control <- na.omit( L201.nonghg_gdp_control )
+# No need to include a GDP control when the max.reduction is zero
+L201.nonghg_gdp_control <- L201.nonghg_gdp_control[ L201.nonghg_gdp_control$max.reduction > 0, ]
+
+L201.nonghg_max_reduction <- L201.nonghg_gdp_control[, names( L201.nonghg_gdp_control ) != "steepness" ]
+L201.nonghg_steepness <- L201.nonghg_gdp_control[, names( L201.nonghg_gdp_control ) != "max.reduction" ]
+
 printlog( "L201.nonghg_res: Pollutant emissions for energy resources in all regions" )
 #Interpolate and add region name
 L201.nonghg_coef <- subset( L111.nonghg_tgej_R_en_S_F_Yh, L111.nonghg_tgej_R_en_S_F_Yh$supplysector == "out_resources" )
@@ -110,10 +122,31 @@ L201.ghg_res <- L201.GHG_coef[ c( "region", "subsector", "Non.CO2" ) ]
 L201.ghg_res$input.emissions <- round( L201.GHG_coef$value, digits_emissions )
 
 printlog( "Rename to regional SO2" )
-L201.nonghg_en <- rename_SO2( L201.nonghg_en, A_region, FALSE )
-L201.nonghg_max_reduction <- rename_SO2( L201.nonghg_max_reduction, A_region, FALSE )
-L201.nonghg_steepness <- rename_SO2( L201.nonghg_steepness, A_region, FALSE )
-L201.nonghg_res <- rename_SO2( L201.nonghg_res, A_region, FALSE )
+L201.nonghg_en <- rename_SO2( L201.nonghg_en, A_regions, FALSE )
+L201.nonghg_max_reduction <- rename_SO2( L201.nonghg_max_reduction, A_regions, FALSE )
+L201.nonghg_steepness <- rename_SO2( L201.nonghg_steepness, A_regions, FALSE )
+L201.nonghg_res <- rename_SO2( L201.nonghg_res, A_regions, FALSE )
+
+printlog( "Remove district heat from regions that do have have it" )
+L201.distheat.regions <- A_regions.en[ A_regions.en$heat == 1, "region" ]
+L201.nonghg_en <- subset( L201.nonghg_en, supplysector != "district heat" | region %in% L201.distheat.regions )
+L201.ghg_en <- subset( L201.ghg_en, supplysector != "district heat" | region %in% L201.distheat.regions )
+L201.bcoc_en <- subset( L201.bcoc_en, supplysector != "district heat" | region %in% L201.distheat.regions )
+L201.nonghg_max_reduction <- subset( L201.nonghg_max_reduction, supplysector != "district heat" | region %in% L201.distheat.regions )
+L201.nonghg_steepness <- subset( L201.nonghg_steepness, supplysector != "district heat" | region %in% L201.distheat.regions )
+
+# It may be the case with certain regional aggregations that regions exist that have no
+# heating or cooling sectors.  We should delete those here.
+if( !is.null( EN.L244.DeleteThermalService ) ) {
+printlog( "Delete sectors that do not exist due to zero heating/cooling degree days" )
+L201.delete.sectors <- paste0( EN.L244.DeleteThermalService$region, EN.L244.DeleteThermalService$supplysector )
+L201.nonghg_en <- subset( L201.nonghg_en, paste0( region, supplysector ) %!in% L201.delete.sectors )
+L201.ghg_en <- subset( L201.ghg_en, paste0( region, supplysector ) %!in% L201.delete.sectors )
+L201.bcoc_en <- subset( L201.bcoc_en, paste0( region, supplysector ) %!in% L201.delete.sectors )
+L201.nonghg_max_reduction <- subset( L201.nonghg_max_reduction, paste0( region, supplysector ) %!in% L201.delete.sectors )
+L201.nonghg_steepness <- subset( L201.nonghg_steepness, paste0( region, supplysector ) %!in% L201.delete.sectors )
+}
+
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

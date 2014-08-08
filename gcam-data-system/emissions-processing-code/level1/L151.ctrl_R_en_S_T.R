@@ -46,6 +46,7 @@ L151.nonghg_ctrl_R_en_S_T$max_reduction <- 100 * ( L151.nonghg_ctrl_R_en_S_T$cur
 L151.nonghg_ctrl_R_en_S_T <- na.omit( L151.nonghg_ctrl_R_en_S_T )
 L151.nonghg_ctrl_R_en_S_T$max_reduction[ L151.nonghg_ctrl_R_en_S_T$max_reduction == "-Inf" ] <- 0
 L151.nonghg_ctrl_R_en_S_T$max_reduction[ L151.nonghg_ctrl_R_en_S_T$max_reduction > 100 ] <- 100
+L151.nonghg_ctrl_R_en_S_T$max_reduction[ L151.nonghg_ctrl_R_en_S_T$max_reduction < 0 ] <- 0
 
 printlog( "Compute max emissions reduction for BC & OC" )
 #Then, map in relevant information

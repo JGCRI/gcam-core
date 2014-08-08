@@ -95,9 +95,6 @@ L211.AGRBio$year <- ctrl_base_year
 #Format for csv file
 L211.AGRBio <- L211.AGRBio[ c( names_AgTech, "year", "Non.CO2", "bio_N2O_coef" ) ]
 
-L211.AGRBio <- rename_biocrops( L211.AGRBio, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-                                          lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-
 printlog( "L211.AnAGREmissions: an AGR emissions in all regions" )
 #Interpolate and add region name
 L211.AN <- L113.ghg_tg_R_an_C_Sys_Fd_Yh[ names( L113.ghg_tg_R_an_C_Sys_Fd_Yh ) %!in% c( "X2009", "X2010") ]
@@ -160,6 +157,17 @@ L211.nonghg_steepness$ctrl.name <- "GDP_control"
 L211.nonghg_steepness$steepness <- L211.steepness$value[ match( vecpaste( L211.nonghg_steepness[ c( names_AgTech, "Non.CO2" ) ]), vecpaste( L211.steepness[ c( names_AgTech, "variable" ) ]) )]
 L211.nonghg_steepness <- na.omit( L211.nonghg_steepness )
 L211.nonghg_steepness <- L211.nonghg_steepness[ c( names_AgTechYr, "Non.CO2", "ctrl.name", "steepness" )]
+
+printlog( "Rename bio-energy crops in some region/AEZs" )
+L211.AGRBio <- rename_biocrops( L211.AGRBio, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+  lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
+L211.AWB_BCOC_Emissions <- rename_biocrops( L211.AWB_BCOC_Emissions, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+  lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
+L211.nonghg_max_reduction <- rename_biocrops( L211.nonghg_max_reduction, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+  lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
+L211.nonghg_steepness <- rename_biocrops( L211.nonghg_steepness, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
+  lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
+
 
 printlog( "Removing non-existent regions and AEZs from all tables")
 L211.AnEmissions <- subset( L211.AnEmissions, !region %in% no_aglu_regions )
