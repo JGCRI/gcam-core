@@ -27,12 +27,12 @@ sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_region <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 GCAM_sector_tech <- readdata( "EMISSIONS_MAPPINGS", "GCAM_sector_tech" )
-MAC_AdipicAcid <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_AdipicAcid" )
-MAC_NitricAcid <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_NitricAcid" )
-MAC_NatGas <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_NatGas" )
-MAC_Coal <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_Coal" )
-MAC_Oil <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_Oil" )
-MAC_Landfill <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_Landfill" )
+MAC_AdipicAcid <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-NitricAdipic2030" ) # Note: maintaining separate processing in case these are split again in the future
+MAC_NitricAcid <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-NitricAdipic2030" ) # Note: maintaining separate processing in case these are split again in the future
+MAC_NatGas <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-OilGas2030" ) # Note: maintaining separate processing in case these are split again in the future
+MAC_Coal <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Coal2030" )
+MAC_Oil <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-OilGas2030" ) # Note: maintaining separate processing in case these are split again in the future
+MAC_Landfill <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Landfill2030" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -42,8 +42,9 @@ L221.MAC_AdipicAcid <- melt ( MAC_AdipicAcid, id.vars=c( "region" ) )
 L221.MAC_AdipicAcid$tax <- as.numeric( substr( L221.MAC_AdipicAcid$variable, 2, 5 ) ) 
 
 #Clean up negative tax information
-L221.MAC_AdipicAcid$tax[ L221.MAC_AdipicAcid$variable == "X.20.00" ] <- -20.00
-L221.MAC_AdipicAcid$tax[ L221.MAC_AdipicAcid$variable == "X.10.00" ] <- -10.00
+L221.MAC_AdipicAcid$tax[ L221.MAC_AdipicAcid$variable == "X.24" ] <- -24.00
+L221.MAC_AdipicAcid$tax[ L221.MAC_AdipicAcid$variable == "X.12" ] <- -12.00
+L221.MAC_AdipicAcid$tax[ L221.MAC_AdipicAcid$variable == "X.242" ] <- 243.00
 L221.MAC_AdipicAcid <- na.omit( L221.MAC_AdipicAcid ) 
 
 #Find any sector that uses the Adipic Acid MAC
@@ -56,11 +57,8 @@ names( L221.MAC_AdipicAcid_S )[ names( L221.MAC_AdipicAcid_S ) == "technology" ]
 L221.MAC_AdipicAcid_S_R <- repeat_and_add_vector( L221.MAC_AdipicAcid_S, "region", GCAM_region_names$region )
 L221.MAC_AdipicAcid_S_R_T <- repeat_and_add_vector( L221.MAC_AdipicAcid_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L221.MAC_AdipicAcid_S_R_T$MAC_region <- A_region$MAC_region[ match( L221.MAC_AdipicAcid_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L221.MAC_AdipicAcid_S_R_T$mac.reduction <- L221.MAC_AdipicAcid$value[ match( vecpaste( L221.MAC_AdipicAcid_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L221.MAC_AdipicAcid[ c( "region", "tax" ) ] ) )]
+L221.MAC_AdipicAcid_S_R_T$mac.reduction <- L221.MAC_AdipicAcid$value[ match( vecpaste( L221.MAC_AdipicAcid_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L221.MAC_AdipicAcid[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L221.MAC_AdipicAcid_S_R_T <- na.omit( L221.MAC_AdipicAcid_S_R_T )
@@ -77,8 +75,9 @@ L221.MAC_NitricAcid <- melt ( MAC_NitricAcid, id.vars=c( "region" ) )
 L221.MAC_NitricAcid$tax <- as.numeric( substr( L221.MAC_NitricAcid$variable, 2, 5 ) ) 
 
 #Clean up negative tax information
-L221.MAC_NitricAcid$tax[ L221.MAC_NitricAcid$variable == "X.20.00" ] <- -20.00
-L221.MAC_NitricAcid$tax[ L221.MAC_NitricAcid$variable == "X.10.00" ] <- -10.00
+L221.MAC_NitricAcid$tax[ L221.MAC_NitricAcid$variable == "X.24" ] <- -24.00
+L221.MAC_NitricAcid$tax[ L221.MAC_NitricAcid$variable == "X.12" ] <- -12.00
+L221.MAC_NitricAcid$tax[ L221.MAC_NitricAcid$variable == "X.242" ] <- 243.00
 L221.MAC_NitricAcid <- na.omit( L221.MAC_NitricAcid ) 
 
 #Find any sector that uses the Nitric Acid MAC
@@ -91,11 +90,8 @@ names( L221.MAC_NitricAcid_S )[ names( L221.MAC_NitricAcid_S ) == "technology" ]
 L221.MAC_NitricAcid_S_R <- repeat_and_add_vector( L221.MAC_NitricAcid_S, "region", GCAM_region_names$region )
 L221.MAC_NitricAcid_S_R_T <- repeat_and_add_vector( L221.MAC_NitricAcid_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L221.MAC_NitricAcid_S_R_T$MAC_region <- A_region$MAC_region[ match( L221.MAC_NitricAcid_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L221.MAC_NitricAcid_S_R_T$mac.reduction <- L221.MAC_NitricAcid$value[ match( vecpaste( L221.MAC_NitricAcid_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L221.MAC_NitricAcid[ c( "region", "tax" ) ] ) )]
+L221.MAC_NitricAcid_S_R_T$mac.reduction <- L221.MAC_NitricAcid$value[ match( vecpaste( L221.MAC_NitricAcid_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L221.MAC_NitricAcid[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L221.MAC_NitricAcid_S_R_T <- na.omit( L221.MAC_NitricAcid_S_R_T )
@@ -111,6 +107,12 @@ printlog( "Landfills" )
 L221.MAC_Landfill <- melt ( MAC_Landfill, id.vars=c( "region" ) )
 L221.MAC_Landfill$tax <- as.numeric( substr( L221.MAC_Landfill$variable, 2, 5 ) ) 
 
+#Clean up negative tax information
+L221.MAC_Landfill$tax[ L221.MAC_Landfill$variable == "X.24" ] <- -24.00
+L221.MAC_Landfill$tax[ L221.MAC_Landfill$variable == "X.12" ] <- -12.00
+L221.MAC_Landfill$tax[ L221.MAC_Landfill$variable == "X.242" ] <- 243.00
+L221.MAC_Landfill <- na.omit( L221.MAC_Landfill ) 
+
 #Find any sector that uses the Landfill MAC
 L221.MAC_Landfill_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "Landfill"  ) 
 L221.MAC_Landfill_S <- L221.MAC_Landfill_S[ names( L221.MAC_Landfill_S ) %in% c( "sector", "fuel", "technology" ) ]
@@ -121,11 +123,8 @@ names( L221.MAC_Landfill_S )[ names( L221.MAC_Landfill_S ) == "technology" ] <- 
 L221.MAC_Landfill_S_R <- repeat_and_add_vector( L221.MAC_Landfill_S, "region", GCAM_region_names$region )
 L221.MAC_Landfill_S_R_T <- repeat_and_add_vector( L221.MAC_Landfill_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L221.MAC_Landfill_S_R_T$MAC_region <- A_region$MAC_region[ match( L221.MAC_Landfill_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L221.MAC_Landfill_S_R_T$mac.reduction <- L221.MAC_Landfill$value[ match( vecpaste( L221.MAC_Landfill_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L221.MAC_Landfill[ c( "region", "tax" ) ] ) )]
+L221.MAC_Landfill_S_R_T$mac.reduction <- L221.MAC_Landfill$value[ match( vecpaste( L221.MAC_Landfill_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L221.MAC_Landfill[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L221.MAC_Landfill_S_R_T <- na.omit( L221.MAC_Landfill_S_R_T )
@@ -142,8 +141,9 @@ L221.MAC_NatGas <- melt ( MAC_NatGas, id.vars=c( "region" ) )
 L221.MAC_NatGas$tax <- as.numeric( substr( L221.MAC_NatGas$variable, 2, 5 ) ) 
 
 #Clean up negative tax information
-L221.MAC_NatGas$tax[ L221.MAC_NatGas$variable == "X.20.00" ] <- -20.00
-L221.MAC_NatGas$tax[ L221.MAC_NatGas$variable == "X.10.00" ] <- -10.00
+L221.MAC_NatGas$tax[ L221.MAC_NatGas$variable == "X.24" ] <- -24.00
+L221.MAC_NatGas$tax[ L221.MAC_NatGas$variable == "X.12" ] <- -12.00
+L221.MAC_NatGas$tax[ L221.MAC_NatGas$variable == "X.242" ] <- 243.00
 L221.MAC_NatGas <- na.omit( L221.MAC_NatGas ) 
 
 #Find any sector that uses the Natural Gas MAC
@@ -154,11 +154,8 @@ names( L221.MAC_NatGas_S )[ names( L221.MAC_NatGas_S ) == "fuel" ] <- "depresour
 L221.MAC_NatGas_S_R <- repeat_and_add_vector( L221.MAC_NatGas_S, "region", GCAM_region_names$region )
 L221.MAC_NatGas_S_R_T <- repeat_and_add_vector( L221.MAC_NatGas_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L221.MAC_NatGas_S_R_T$MAC_region <- A_region$MAC_region[ match( L221.MAC_NatGas_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L221.MAC_NatGas_S_R_T$mac.reduction <- L221.MAC_NatGas$value[ match( vecpaste( L221.MAC_NatGas_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L221.MAC_NatGas[ c( "region", "tax" ) ] ) )]
+L221.MAC_NatGas_S_R_T$mac.reduction <- L221.MAC_NatGas$value[ match( vecpaste( L221.MAC_NatGas_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L221.MAC_NatGas[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L221.MAC_NatGas_S_R_T <- na.omit( L221.MAC_NatGas_S_R_T )
@@ -173,6 +170,12 @@ printlog( "Coal" )
 L221.MAC_Coal <- melt ( MAC_Coal, id.vars=c( "region" ) )
 L221.MAC_Coal$tax <- as.numeric( substr( L221.MAC_Coal$variable, 2, 5 ) ) 
 
+#Clean up negative tax information
+L221.MAC_Coal$tax[ L221.MAC_Coal$variable == "X.24" ] <- -24.00
+L221.MAC_Coal$tax[ L221.MAC_Coal$variable == "X.12" ] <- -12.00
+L221.MAC_Coal$tax[ L221.MAC_Coal$variable == "X.242" ] <- 243.00
+L221.MAC_Coal <- na.omit( L221.MAC_Coal ) 
+
 #Find any sector that uses the Coal MAC
 L221.MAC_Coal_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "Coal"  ) 
 L221.MAC_Coal_S <- L221.MAC_Coal_S[ names( L221.MAC_Coal_S ) %in% c( "sector", "fuel", "technology" ) ]
@@ -181,11 +184,8 @@ names( L221.MAC_Coal_S )[ names( L221.MAC_Coal_S ) == "fuel" ] <- "depresource"
 L221.MAC_Coal_S_R <- repeat_and_add_vector( L221.MAC_Coal_S, "region", GCAM_region_names$region )
 L221.MAC_Coal_S_R_T <- repeat_and_add_vector( L221.MAC_Coal_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L221.MAC_Coal_S_R_T$MAC_region <- A_region$MAC_region[ match( L221.MAC_Coal_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L221.MAC_Coal_S_R_T$mac.reduction <- L221.MAC_Coal$value[ match( vecpaste( L221.MAC_Coal_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L221.MAC_Coal[ c( "region", "tax" ) ] ) )]
+L221.MAC_Coal_S_R_T$mac.reduction <- L221.MAC_Coal$value[ match( vecpaste( L221.MAC_Coal_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L221.MAC_Coal[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L221.MAC_Coal_S_R_T <- na.omit( L221.MAC_Coal_S_R_T )
@@ -200,6 +200,12 @@ printlog( "Oil" )
 L221.MAC_Oil <- melt ( MAC_Oil, id.vars=c( "region" ) )
 L221.MAC_Oil$tax <- as.numeric( substr( L221.MAC_Oil$variable, 2, 5 ) ) 
 
+#Clean up negative & greater than tax information
+L221.MAC_Oil$tax[ L221.MAC_Oil$variable == "X.24" ] <- -24.00
+L221.MAC_Oil$tax[ L221.MAC_Oil$variable == "X.12" ] <- -12.00
+L221.MAC_Oil$tax[ L221.MAC_Oil$variable == "X.242" ] <- 243.00
+L221.MAC_Oil <- na.omit( L221.MAC_Oil ) 
+
 #Find any sector that uses the Coal MAC
 L221.MAC_Oil_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "Oil"  ) 
 L221.MAC_Oil_S <- L221.MAC_Oil_S[ names( L221.MAC_Oil_S ) %in% c( "sector", "fuel", "technology" ) ]
@@ -208,11 +214,8 @@ names( L221.MAC_Oil_S )[ names( L221.MAC_Oil_S ) == "fuel" ] <- "depresource"
 L221.MAC_Oil_S_R <- repeat_and_add_vector( L221.MAC_Oil_S, "region", GCAM_region_names$region )
 L221.MAC_Oil_S_R_T <- repeat_and_add_vector( L221.MAC_Oil_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L221.MAC_Oil_S_R_T$MAC_region <- A_region$MAC_region[ match( L221.MAC_Oil_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L221.MAC_Oil_S_R_T$mac.reduction <- L221.MAC_Oil$value[ match( vecpaste( L221.MAC_Oil_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L221.MAC_Oil[ c( "region", "tax" ) ] ) )]
+L221.MAC_Oil_S_R_T$mac.reduction <- L221.MAC_Oil$value[ match( vecpaste( L221.MAC_Oil_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L221.MAC_Oil[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L221.MAC_Oil_S_R_T <- na.omit( L221.MAC_Oil_S_R_T )
@@ -221,7 +224,6 @@ L221.MAC_Oil_S_R_T <- na.omit( L221.MAC_Oil_S_R_T )
 L221.MAC_Oil_S_R_T$Non.CO2 <- "CH4"
 L221.MAC_Oil_S_R_T$name <- "Oil"
 L221.MAC_Oil_S_R_T <- L221.MAC_Oil_S_R_T[ c( "region", "depresource", "Non.CO2", "name", "tax", "mac.reduction" )]
-
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

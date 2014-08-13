@@ -27,12 +27,12 @@ sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_region <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 GCAM_sector_tech <- readdata( "EMISSIONS_MAPPINGS", "gcam_fgas_tech" )
-MAC_Aluminum <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_Aluminum" )
-MAC_ElectTD <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_ElectTD" )
-MAC_Foams <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_Foams" )
-MAC_HFC23 <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_HFC23" )
-MAC_Refrigeration <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_Refrigeration" )
-MAC_Semiconductors <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC_Semiconductors" )
+MAC_Aluminum <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Aluminum2030" )
+MAC_ElectTD <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-EPS2030" )
+MAC_Foams <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Foams2030" )
+MAC_HFC23 <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-HFC232030" )
+MAC_Refrigeration <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Cooling2030" )
+MAC_Semiconductors <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Semi2030" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -41,17 +41,20 @@ printlog( "Aluminum" )
 L223.MAC_Aluminum <- melt ( MAC_Aluminum, id.vars=c( "region" ) )
 L223.MAC_Aluminum$tax <- as.numeric( substr( L223.MAC_Aluminum$variable, 2, 5 ) ) 
 
+#Clean up negative tax information
+L223.MAC_Aluminum$tax[ L223.MAC_Aluminum$variable == "X.24" ] <- -24.00
+L223.MAC_Aluminum$tax[ L223.MAC_Aluminum$variable == "X.12" ] <- -12.00
+L223.MAC_Aluminum$tax[ L223.MAC_Aluminum$variable == "X.242" ] <- 243.00
+L223.MAC_Aluminum <- na.omit( L223.MAC_Aluminum ) 
+
 #Find any sector that uses the Aluminum MAC
 L223.MAC_Aluminum_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "Aluminum"  ) 
 L223.MAC_Aluminum_S <- L223.MAC_Aluminum_S[ names( L223.MAC_Aluminum_S ) %in% c( "supplysector", "subsector", "stub.technology" ) ]
 L223.MAC_Aluminum_S_R <- repeat_and_add_vector( L223.MAC_Aluminum_S, "region", GCAM_region_names$region )
 L223.MAC_Aluminum_S_R_T <- repeat_and_add_vector( L223.MAC_Aluminum_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L223.MAC_Aluminum_S_R_T$MAC_region <- A_region$MAC_region[ match( L223.MAC_Aluminum_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L223.MAC_Aluminum_S_R_T$mac.reduction <- L223.MAC_Aluminum$value[ match( vecpaste( L223.MAC_Aluminum_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L223.MAC_Aluminum[ c( "region", "tax" ) ] ) )]
+L223.MAC_Aluminum_S_R_T$mac.reduction <- L223.MAC_Aluminum$value[ match( vecpaste( L223.MAC_Aluminum_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L223.MAC_Aluminum[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L223.MAC_Aluminum_S_R_T <- na.omit( L223.MAC_Aluminum_S_R_T )
@@ -67,17 +70,20 @@ printlog( "ElectTD" )
 L223.MAC_ElectTD <- melt ( MAC_ElectTD, id.vars=c( "region" ) )
 L223.MAC_ElectTD$tax <- as.numeric( substr( L223.MAC_ElectTD$variable, 2, 5 ) ) 
 
+#Clean up negative tax information
+L223.MAC_ElectTD$tax[ L223.MAC_ElectTD$variable == "X.24" ] <- -24.00
+L223.MAC_ElectTD$tax[ L223.MAC_ElectTD$variable == "X.12" ] <- -12.00
+L223.MAC_ElectTD$tax[ L223.MAC_ElectTD$variable == "X.242" ] <- 243.00
+L223.MAC_ElectTD <- na.omit( L223.MAC_ElectTD ) 
+
 #Find any sector that uses the ElectTD MAC
 L223.MAC_ElectTD_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "ElectTD"  ) 
 L223.MAC_ElectTD_S <- L223.MAC_ElectTD_S[ names( L223.MAC_ElectTD_S ) %in% c( "supplysector", "subsector", "stub.technology" ) ]
 L223.MAC_ElectTD_S_R <- repeat_and_add_vector( L223.MAC_ElectTD_S, "region", GCAM_region_names$region )
 L223.MAC_ElectTD_S_R_T <- repeat_and_add_vector( L223.MAC_ElectTD_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L223.MAC_ElectTD_S_R_T$MAC_region <- A_region$MAC_region[ match( L223.MAC_ElectTD_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L223.MAC_ElectTD_S_R_T$mac.reduction <- L223.MAC_ElectTD$value[ match( vecpaste( L223.MAC_ElectTD_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L223.MAC_ElectTD[ c( "region", "tax" ) ] ) )]
+L223.MAC_ElectTD_S_R_T$mac.reduction <- L223.MAC_ElectTD$value[ match( vecpaste( L223.MAC_ElectTD_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L223.MAC_ElectTD[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L223.MAC_ElectTD_S_R_T <- na.omit( L223.MAC_ElectTD_S_R_T )
@@ -93,17 +99,20 @@ printlog( "Foams" )
 L223.MAC_Foams <- melt ( MAC_Foams, id.vars=c( "region" ) )
 L223.MAC_Foams$tax <- as.numeric( substr( L223.MAC_Foams$variable, 2, 5 ) ) 
 
+#Clean up negative tax information
+L223.MAC_Foams$tax[ L223.MAC_Foams$variable == "X.24" ] <- -24.00
+L223.MAC_Foams$tax[ L223.MAC_Foams$variable == "X.12" ] <- -12.00
+L223.MAC_Foams$tax[ L223.MAC_Foams$variable == "X.242" ] <- 243.00
+L223.MAC_Foams <- na.omit( L223.MAC_Foams ) 
+
 #Find any sector that uses the Foams MAC
 L223.MAC_Foams_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "Foams"  ) 
 L223.MAC_Foams_S <- L223.MAC_Foams_S[ names( L223.MAC_Foams_S ) %in% c( "supplysector", "subsector", "stub.technology" ) ]
 L223.MAC_Foams_S_R <- repeat_and_add_vector( L223.MAC_Foams_S, "region", GCAM_region_names$region )
 L223.MAC_Foams_S_R_T <- repeat_and_add_vector( L223.MAC_Foams_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L223.MAC_Foams_S_R_T$MAC_region <- A_region$MAC_region[ match( L223.MAC_Foams_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L223.MAC_Foams_S_R_T$mac.reduction <- L223.MAC_Foams$value[ match( vecpaste( L223.MAC_Foams_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L223.MAC_Foams[ c( "region", "tax" ) ] ) )]
+L223.MAC_Foams_S_R_T$mac.reduction <- L223.MAC_Foams$value[ match( vecpaste( L223.MAC_Foams_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L223.MAC_Foams[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L223.MAC_Foams_S_R_T <- na.omit( L223.MAC_Foams_S_R_T )
@@ -119,17 +128,20 @@ printlog( "HFC23" )
 L223.MAC_HFC23 <- melt ( MAC_HFC23, id.vars=c( "region" ) )
 L223.MAC_HFC23$tax <- as.numeric( substr( L223.MAC_HFC23$variable, 2, 5 ) ) 
 
+#Clean up negative tax information
+L223.MAC_HFC23$tax[ L223.MAC_HFC23$variable == "X.24" ] <- -24.00
+L223.MAC_HFC23$tax[ L223.MAC_HFC23$variable == "X.12" ] <- -12.00
+L223.MAC_HFC23$tax[ L223.MAC_HFC23$variable == "X.242" ] <- 243.00
+L223.MAC_HFC23 <- na.omit( L223.MAC_HFC23 ) 
+
 #Find any sector that uses the HFC23 MAC
 L223.MAC_HFC23_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "HFC23"  ) 
 L223.MAC_HFC23_S <- L223.MAC_HFC23_S[ names( L223.MAC_HFC23_S ) %in% c( "supplysector", "subsector", "stub.technology" ) ]
 L223.MAC_HFC23_S_R <- repeat_and_add_vector( L223.MAC_HFC23_S, "region", GCAM_region_names$region )
 L223.MAC_HFC23_S_R_T <- repeat_and_add_vector( L223.MAC_HFC23_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L223.MAC_HFC23_S_R_T$MAC_region <- A_region$MAC_region[ match( L223.MAC_HFC23_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L223.MAC_HFC23_S_R_T$mac.reduction <- L223.MAC_HFC23$value[ match( vecpaste( L223.MAC_HFC23_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L223.MAC_HFC23[ c( "region", "tax" ) ] ) )]
+L223.MAC_HFC23_S_R_T$mac.reduction <- L223.MAC_HFC23$value[ match( vecpaste( L223.MAC_HFC23_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L223.MAC_HFC23[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L223.MAC_HFC23_S_R_T <- na.omit( L223.MAC_HFC23_S_R_T )
@@ -145,17 +157,20 @@ printlog( "Refrigeration" )
 L223.MAC_Refrigeration <- melt ( MAC_Refrigeration, id.vars=c( "region" ) )
 L223.MAC_Refrigeration$tax <- as.numeric( substr( L223.MAC_Refrigeration$variable, 2, 5 ) ) 
 
+#Clean up negative tax information
+L223.MAC_Refrigeration$tax[ L223.MAC_Refrigeration$variable == "X.24" ] <- -24.00
+L223.MAC_Refrigeration$tax[ L223.MAC_Refrigeration$variable == "X.12" ] <- -12.00
+L223.MAC_Refrigeration$tax[ L223.MAC_Refrigeration$variable == "X.242" ] <- 243.00
+L223.MAC_Refrigeration <- na.omit( L223.MAC_Refrigeration ) 
+
 #Find any sector that uses the Refrigeration MAC
 L223.MAC_Refrigeration_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "Refrigeration"  ) 
 L223.MAC_Refrigeration_S <- L223.MAC_Refrigeration_S[ names( L223.MAC_Refrigeration_S ) %in% c( "supplysector", "subsector", "stub.technology" ) ]
 L223.MAC_Refrigeration_S_R <- repeat_and_add_vector( L223.MAC_Refrigeration_S, "region", GCAM_region_names$region )
 L223.MAC_Refrigeration_S_R_T <- repeat_and_add_vector( L223.MAC_Refrigeration_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L223.MAC_Refrigeration_S_R_T$MAC_region <- A_region$MAC_region[ match( L223.MAC_Refrigeration_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L223.MAC_Refrigeration_S_R_T$mac.reduction <- L223.MAC_Refrigeration$value[ match( vecpaste( L223.MAC_Refrigeration_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L223.MAC_Refrigeration[ c( "region", "tax" ) ] ) )]
+L223.MAC_Refrigeration_S_R_T$mac.reduction <- L223.MAC_Refrigeration$value[ match( vecpaste( L223.MAC_Refrigeration_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L223.MAC_Refrigeration[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L223.MAC_Refrigeration_S_R_T <- na.omit( L223.MAC_Refrigeration_S_R_T )
@@ -171,17 +186,20 @@ printlog( "Semiconductors" )
 L223.MAC_Semiconductors <- melt ( MAC_Semiconductors, id.vars=c( "region" ) )
 L223.MAC_Semiconductors$tax <- as.numeric( substr( L223.MAC_Semiconductors$variable, 2, 5 ) ) 
 
+#Clean up negative tax information
+L223.MAC_Semiconductors$tax[ L223.MAC_Semiconductors$variable == "X.24" ] <- -24.00
+L223.MAC_Semiconductors$tax[ L223.MAC_Semiconductors$variable == "X.12" ] <- -12.00
+L223.MAC_Semiconductors$tax[ L223.MAC_Semiconductors$variable == "X.242" ] <- 243.00
+L223.MAC_Semiconductors <- na.omit( L223.MAC_Semiconductors ) 
+
 #Find any sector that uses the Semiconductors MAC
 L223.MAC_Semiconductors_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "Semiconductors"  ) 
 L223.MAC_Semiconductors_S <- L223.MAC_Semiconductors_S[ names( L223.MAC_Semiconductors_S ) %in% c( "supplysector", "subsector", "stub.technology" ) ]
 L223.MAC_Semiconductors_S_R <- repeat_and_add_vector( L223.MAC_Semiconductors_S, "region", GCAM_region_names$region )
 L223.MAC_Semiconductors_S_R_T <- repeat_and_add_vector( L223.MAC_Semiconductors_S_R, "tax", MAC_taxes)
 
-#Map in MAC region name
-L223.MAC_Semiconductors_S_R_T$MAC_region <- A_region$MAC_region[ match( L223.MAC_Semiconductors_S_R_T$region, A_region$region )]
-
 #Map in MAC reduction
-L223.MAC_Semiconductors_S_R_T$mac.reduction <- L223.MAC_Semiconductors$value[ match( vecpaste( L223.MAC_Semiconductors_S_R_T[ c( "MAC_region", "tax" ) ] ), vecpaste( L223.MAC_Semiconductors[ c( "region", "tax" ) ] ) )]
+L223.MAC_Semiconductors_S_R_T$mac.reduction <- L223.MAC_Semiconductors$value[ match( vecpaste( L223.MAC_Semiconductors_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L223.MAC_Semiconductors[ c( "region", "tax" ) ] ) )]
 
 #Drop missing values
 L223.MAC_Semiconductors_S_R_T <- na.omit( L223.MAC_Semiconductors_S_R_T )
