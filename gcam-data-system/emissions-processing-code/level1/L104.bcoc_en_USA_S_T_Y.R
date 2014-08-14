@@ -28,15 +28,15 @@ IEA_product_fuel <- readdata( "ENERGY_MAPPINGS", "IEA_product_fuel" )
 bc.oc_tech <- readdata( "EMISSIONS_MAPPINGS", "bc.oc_tech" )
 GCAM_sector_tech <- readdata( "EMISSIONS_MAPPINGS", "GCAM_sector_tech" )
 L101.in_EJ_R_en_Si_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L101.in_EJ_R_en_Si_F_Yh" )
-Smith_BC_1990 <- readdata( "EMISSIONS_LEVEL0_DATA", "Smith_BC_1990" )
-Smith_OC_1990 <- readdata( "EMISSIONS_LEVEL0_DATA", "Smith_OC_1990" )
+Bond_BC_1990 <- readdata( "EMISSIONS_LEVEL0_DATA", "Bond_BC_1990" )
+Bond_OC_1990 <- readdata( "EMISSIONS_LEVEL0_DATA", "Bond_OC_1990" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 # First subset for USA, then combine BC & OC data frames
-L104.bcoc_tg_USA_en_T_1990 <- Smith_BC_1990[ names( Smith_BC_1990 ) %in% c( "Technology", "USA" ) ]
+L104.bcoc_tg_USA_en_T_1990 <- Bond_BC_1990[ names( Bond_BC_1990 ) %in% c( "Technology", "USA" ) ]
 names( L104.bcoc_tg_USA_en_T_1990 )[ names( L104.bcoc_tg_USA_en_T_1990 ) == "USA" ] <- "BC"
-L104.bcoc_tg_USA_en_T_1990$OC <- Smith_OC_1990$USA
+L104.bcoc_tg_USA_en_T_1990$OC <- Bond_OC_1990$USA
 
 printlog( "Convert BC/OC emissions inventory to Tg and aggregate by sector and technology" )
 L104.bcoc_tg_USA_en_T_1990$sector <- bc.oc_tech$sector[ match( L104.bcoc_tg_USA_en_T_1990$Technology , bc.oc_tech$BCOC.Technology )]
@@ -49,7 +49,7 @@ L104.bcoc_tg_USA_en_T_1990  <- na.omit( L104.bcoc_tg_USA_en_T_1990  )
 #Convert to Tg
 L104.bcoc_tg_USA_en_T_1990[ c( "BC", "OC" ) ] <- L104.bcoc_tg_USA_en_T_1990[ c( "BC", "OC" ) ] * gg_to_tg  
 
-printlog( "Compute BC/OC emissions factors by dividing Smith inventory by IEA energy balances" )
+printlog( "Compute BC/OC emissions factors by dividing Bond inventory by IEA energy balances" )
 #Subset for USA only in 1990 and aggregate to BC/OC categories
 L104.in_EJ_USA_en_Si_F_Yh <- subset( L101.in_EJ_R_en_Si_F_Yh, L101.in_EJ_R_en_Si_F_Yh$GCAM_region_ID == "1" )
 L104.in_EJ_USA_en_Si_F_Yh.melt <- melt( L104.in_EJ_USA_en_Si_F_Yh, id.vars = c( "GCAM_region_ID", "sector", "fuel", "technology" ) )
