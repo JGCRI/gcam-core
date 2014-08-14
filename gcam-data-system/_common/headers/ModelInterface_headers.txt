@@ -45,6 +45,8 @@ LaborForceFillout, world/+{name}region, GDP/+{year;fillout=1}laborforce, GDP/+la
 
 LaborProductivity, world/+{name}region, GDP/+{year}laborproductivity, GDP/+laborproductivity, scenario, scenario/world, region/GDP
 
+PPPConvert, world/+{name}region, GDP/+{constRatio}PPPConvert, GDP/+PPPConvert, scenario, scenario/world, region/GDP
+
 
 #####, RESOURCES
 

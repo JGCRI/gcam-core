@@ -31,7 +31,8 @@ L101.Pop_thous_SSP_R_Yfut <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_SSP_
 L102.gdp_mil90usd_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_R_Y" )
 L102.gdp_mil90usd_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_SSP_R_Y" )
 L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
-
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.PPP_MER_R <- readdata( "SOCIO_LEVEL1_DATA", "L102.PPP_MER_R" )
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
 printlog( "L201.InterestRate: Interest rates by region" )
@@ -153,6 +154,12 @@ L201.LaborProductivity_SSP5 <- interpolate_and_melt( L201.pcgdpGrowth_SSP_R_Y[
       L201.pcgdpGrowth_SSP_R_Y[[Scen]] == "SSP5", ], model_years[ 2:length( model_years ) ], value.name = "laborproductivity" )
 L201.LaborProductivity_SSP5 <- L201.LaborProductivity_SSP5[ names_LaborProductivity ]
 
+# Write out the PPP:MER conversion factors (purely used for reporting)
+L201.PPPConvert <- add_region_name( L102.PPP_MER_R )
+L201.PPPConvert <- data.frame( region = L201.PPPConvert$region,
+      constRatio = 1,
+      PPPConvert = round( L201.PPPConvert$PPP_MER, digits_LaborProductivity ) )
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L201.InterestRate, "InterestRate", "SOCIO_LEVEL2_DATA", "L201.InterestRate", "SOCIO_XML_BATCH", "batch_interest_rate.xml" ) 
@@ -161,31 +168,37 @@ write_mi_data( L201.Pop_GCAM3, "Pop", "SOCIO_LEVEL2_DATA", "L201.Pop_GCAM3", "SO
 write_mi_data( L201.BaseGDP_GCAM3, "BaseGDP", "SOCIO_LEVEL2_DATA", "L201.BaseGDP_GCAM3", "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml" ) 
 write_mi_data( L201.LaborForceFillout, "LaborForceFillout", "SOCIO_LEVEL2_DATA", "L201.LaborForceFillout", "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml" ) 
 write_mi_data( L201.LaborProductivity_GCAM3, "LaborProductivity", "SOCIO_LEVEL2_DATA", "L201.LaborProductivity_GCAM3", "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml" ) 
+write_mi_data( L201.PPPConvert, "PPPConvert", "SOCIO_LEVEL2_DATA", "L201.PPPConvert", "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml" ) 
 
 write_mi_data( L201.Pop_SSP1, "Pop", "SOCIO_LEVEL2_DATA", "L201.Pop_SSP1", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP1.xml" ) 
 write_mi_data( L201.BaseGDP_SSP, "BaseGDP", "SOCIO_LEVEL2_DATA", "L201.BaseGDP_SSP", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP1.xml" ) 
 write_mi_data( L201.LaborForceFillout, "LaborForceFillout", "SOCIO_LEVEL2_DATA", "L201.LaborForceFillout", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP1.xml" ) 
 write_mi_data( L201.LaborProductivity_SSP1, "LaborProductivity", "SOCIO_LEVEL2_DATA", "L201.LaborProductivity_SSP1", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP1.xml" ) 
+write_mi_data( L201.PPPConvert, "PPPConvert", "SOCIO_LEVEL2_DATA", "L201.PPPConvert", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP1.xml" ) 
 
 write_mi_data( L201.Pop_SSP2, "Pop", "SOCIO_LEVEL2_DATA", "L201.Pop_SSP2", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP2.xml" ) 
 write_mi_data( L201.BaseGDP_SSP, "BaseGDP", "SOCIO_LEVEL2_DATA", "L201.BaseGDP_SSP", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP2.xml" ) 
 write_mi_data( L201.LaborForceFillout, "LaborForceFillout", "SOCIO_LEVEL2_DATA", "L201.LaborForceFillout", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP2.xml" ) 
 write_mi_data( L201.LaborProductivity_SSP2, "LaborProductivity", "SOCIO_LEVEL2_DATA", "L201.LaborProductivity_SSP2", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP2.xml" ) 
+write_mi_data( L201.PPPConvert, "PPPConvert", "SOCIO_LEVEL2_DATA", "L201.PPPConvert", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP2.xml" ) 
 
 write_mi_data( L201.Pop_SSP3, "Pop", "SOCIO_LEVEL2_DATA", "L201.Pop_SSP3", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP3.xml" ) 
 write_mi_data( L201.BaseGDP_SSP, "BaseGDP", "SOCIO_LEVEL2_DATA", "L201.BaseGDP_SSP", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP3.xml" ) 
 write_mi_data( L201.LaborForceFillout, "LaborForceFillout", "SOCIO_LEVEL2_DATA", "L201.LaborForceFillout", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP3.xml" ) 
 write_mi_data( L201.LaborProductivity_SSP3, "LaborProductivity", "SOCIO_LEVEL2_DATA", "L201.LaborProductivity_SSP3", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP3.xml" ) 
+write_mi_data( L201.PPPConvert, "PPPConvert", "SOCIO_LEVEL2_DATA", "L201.PPPConvert", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP3.xml" ) 
 
 write_mi_data( L201.Pop_SSP4, "Pop", "SOCIO_LEVEL2_DATA", "L201.Pop_SSP4", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP4.xml" ) 
 write_mi_data( L201.BaseGDP_SSP, "BaseGDP", "SOCIO_LEVEL2_DATA", "L201.BaseGDP_SSP", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP4.xml" ) 
 write_mi_data( L201.LaborForceFillout, "LaborForceFillout", "SOCIO_LEVEL2_DATA", "L201.LaborForceFillout", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP4.xml" ) 
 write_mi_data( L201.LaborProductivity_SSP4, "LaborProductivity", "SOCIO_LEVEL2_DATA", "L201.LaborProductivity_SSP4", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP4.xml" ) 
+write_mi_data( L201.PPPConvert, "PPPConvert", "SOCIO_LEVEL2_DATA", "L201.PPPConvert", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP4.xml" ) 
 
 write_mi_data( L201.Pop_SSP5, "Pop", "SOCIO_LEVEL2_DATA", "L201.Pop_SSP5", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP5.xml" ) 
 write_mi_data( L201.BaseGDP_SSP, "BaseGDP", "SOCIO_LEVEL2_DATA", "L201.BaseGDP_SSP", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP5.xml" ) 
 write_mi_data( L201.LaborForceFillout, "LaborForceFillout", "SOCIO_LEVEL2_DATA", "L201.LaborForceFillout", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP5.xml" ) 
 write_mi_data( L201.LaborProductivity_SSP5, "LaborProductivity", "SOCIO_LEVEL2_DATA", "L201.LaborProductivity_SSP5", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP5.xml" ) 
+write_mi_data( L201.PPPConvert, "PPPConvert", "SOCIO_LEVEL2_DATA", "L201.PPPConvert", "SOCIO_XML_BATCH", "batch_socioeconomics_SSP5.xml" ) 
 
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_interest_rate.xml", "SOCIO_XML_FINAL", "interest_rate.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml", "SOCIO_XML_FINAL", "socioeconomics_GCAM3.xml", "", xml_tag="outFile" )
