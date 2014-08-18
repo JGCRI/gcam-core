@@ -68,7 +68,7 @@ R_G_StubTechYr <- c( "GCAM_region_ID", "Non.CO2", "supplysector", "subsector", "
 R_StubTechYr <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
 
 #Taxes to use in MAC curve
-MAC_taxes <- c( -30, -20, -15, -10, 0, 15, 20, 30, 45, 50, 60, 100, 120, 165, 200 )
+MAC_taxes <- c( -30, -24, -20, -15, -12, -10, 0, 12, 15, 20, 24, 30, 36, 45, 48, 50, 60, 73, 100, 120, 121, 165, 200, 242, 243 )
 
 #Final calibration year where we have emissions data
 final_emiss_year <- 2005
