@@ -32,6 +32,7 @@ A322.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A322.globaltech_coef" )
 A322.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A322.globaltech_shrwt" )
 A322.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A322.globaltech_co2capture" )
 A322.globaltech_renew <- readdata( "ENERGY_ASSUMPTIONS", "A322.globaltech_renew" )
+A322.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A322.globaltech_retirement" )
 L1322.Fert_Prod_MtN_R_F_Y <- readdata( "ENERGY_LEVEL1_DATA", "L1322.Fert_Prod_MtN_R_F_Y")
 L1322.IO_R_Fert_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.IO_R_Fert_F_Yh" )
 L1322.Fert_NEcost_75USDkgN_F <- readdata( "ENERGY_LEVEL1_DATA", "L1322.Fert_NEcost_75USDkgN_F" )
@@ -101,6 +102,53 @@ L2322.globaltech_co2capture.melt <- interpolate_and_melt( A322.globaltech_co2cap
 L2322.globaltech_co2capture.melt[ c( "sector.name", "subsector.name" ) ] <- L2322.globaltech_co2capture.melt[ c( "supplysector", "subsector" ) ]
 L2322.GlobalTechCapture_Fert <- L2322.globaltech_co2capture.melt[ c( names_GlobalTechYr, "remove.fraction" ) ]
 L2322.GlobalTechCapture_Fert$storage.market <- CO2.storage.market
+
+#Retirement information
+L2322.globaltech_retirement <- set_years ( A322.globaltech_retirement )
+L2322.globaltech_retirement[ c( "sector.name", "subsector.name" ) ] <- L2322.globaltech_retirement[ c( "supplysector", "subsector" ) ]
+#Copy the data in the first future period through to the end year
+L2322.globaltech_retirement <- rbind(
+      subset( L2322.globaltech_retirement, year == max( model_base_years ) ),
+      repeat_and_add_vector( subset( L2322.globaltech_retirement, year == min(model_future_years ) ), "year", model_future_years ) )
+
+#Retirement may consist of any of three types of retirement function (phased, s-curve, or none), with and without profit shutdown decider
+# All of these options have different headers, and all are allowed
+if( any( !is.na( L2322.globaltech_retirement$shutdown.rate ) & L2322.globaltech_retirement$profit.shutdown == 1 ) ){
+	printlog( "L2322.GlobalTechShutdownProfit_Fert: Global tech lifetime and shutdown rate, including profit shutdown decider" )
+	L2322.GlobalTechShutdownProfit_Fert <- L2322.globaltech_retirement[
+	     !is.na( L2322.globaltech_retirement$shutdown.rate ) & L2322.globaltech_retirement$profit.shutdown == 1,
+	      c( names_GlobalTechYr, "lifetime", "shutdown.rate") ]
+	}
+if( any( !is.na( L2322.globaltech_retirement$shutdown.rate ) & L2322.globaltech_retirement$profit.shutdown == 0 ) ){
+	printlog( "L2322.GlobalTechShutdown_Fert: Global tech lifetime and shutdown rate" )
+	L2322.GlobalTechShutdown_Fert <- L2322.globaltech_retirement[
+	     !is.na( L2322.globaltech_retirement$shutdown.rate ) & L2322.globaltech_retirement$profit.shutdown == 1,
+	      c( names_GlobalTechYr, "lifetime", "shutdown.rate") ]
+	}
+if( any( !is.na( L2322.globaltech_retirement$half.life ) & L2322.globaltech_retirement$profit.shutdown == 1 ) ){
+	printlog( "L2322.GlobalTechSCurveProfit_Fert: Global tech lifetime, s-curve retirement function, and profit shutdown" )
+	L2322.GlobalTechSCurveProfit_Fert <- L2322.globaltech_retirement[
+	     !is.na( L2322.globaltech_retirement$half.life ) & L2322.globaltech_retirement$profit.shutdown == 1,
+	      c( names_GlobalTechYr, "lifetime", "steepness", "half.life" ) ]
+	}
+if( any( !is.na( L2322.globaltech_retirement$half.life ) & L2322.globaltech_retirement$profit.shutdown == 0 ) ){
+	printlog( "L222.GlobalTechSCurve_en: Global tech lifetime and s-curve retirement function" )
+	L222.GlobalTechSCurve_en <- L2322.globaltech_retirement[
+	     !is.na( L2322.globaltech_retirement$half.life ) & L2322.globaltech_retirement$profit.shutdown == 1,
+	      c( names_GlobalTechYr, "lifetime", "steepness", "half.life" ) ]
+	}
+if( any( is.na( L2322.globaltech_retirement$shutdown.rate ) & is.na( L2322.globaltech_retirement$half.life ) & L2322.globaltech_retirement$profit.shutdown == 1 ) ){
+	printlog( "L2322.GlobalTechLifetimeProfit_Fert: Global tech lifetime and profit shutdown decider" )
+	L2322.GlobalTechLifetimeProfit_Fert <- L2322.globaltech_retirement[
+	     is.na( L2322.globaltech_retirement$shutdown.rate ) & is.na( L2322.globaltech_retirement$half.life ) & L2322.globaltech_retirement$profit.shutdown == 1,
+	      c( names_GlobalTechYr, "lifetime" ) ]
+	}
+if( any( is.na( L2322.globaltech_retirement$shutdown.rate ) & is.na( L2322.globaltech_retirement$half.life ) & L2322.globaltech_retirement$profit.shutdown == 0 ) ){
+	printlog( "L2322.GlobalTechLifetime_Fert: Global tech lifetime" )
+	L2322.GlobalTechLifetime_Fert <- L2322.globaltech_retirement[
+	     is.na( L2322.globaltech_retirement$shutdown.rate ) & is.na( L2322.globaltech_retirement$half.life ) & L2322.globaltech_retirement$profit.shutdown == 0,
+	      c( names_GlobalTechYr, "lifetime" ) ]
+	}
 
 #Calibration and region-specific data
 printlog( "L2322.StubTechProd_Fert: calibrated output of fertilizer technologies" )
@@ -192,6 +240,30 @@ write_mi_data( L2322.GlobalTechShrwt_Fert, "GlobalTechShrwt", "ENERGY_LEVEL2_DAT
 write_mi_data( L2322.GlobalTechCoef_Fert, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L2322.GlobalTechCoef_Fert", "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
 write_mi_data( L2322.GlobalTechCost_Fert, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L2322.GlobalTechCost_Fert", "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
 write_mi_data( L2322.GlobalTechCapture_Fert, "GlobalTechCapture", "ENERGY_LEVEL2_DATA", "L2322.GlobalTechCapture_Fert", "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
+if( exists( "L2322.GlobalTechShutdownProfit_Fert" ) ) {
+	write_mi_data( L2322.GlobalTechShutdownProfit_Fert, "GlobalTechShutdownProfit", "ENERGY_LEVEL2_DATA", "L2322.GlobalTechShutdownProfit_Fert",
+	               "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
+	}
+if( exists( "L2322.GlobalTechShutdown_Fert" ) ) {
+	write_mi_data( L2322.GlobalTechShutdown_Fert, "GlobalTechShutdown", "ENERGY_LEVEL2_DATA", "L2322.GlobalTechShutdown_Fert",
+	               "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
+	}
+if( exists( "L2322.GlobalTechSCurveProfit_Fert" ) ) {
+	write_mi_data( L2322.GlobalTechSCurveProfit_Fert, "GlobalTechSCurveProfit", "ENERGY_LEVEL2_DATA", "L2322.GlobalTechSCurveProfit_Fert",
+	               "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
+	}
+if( exists( "L222.GlobalTechSCurve_en" ) ) {
+	write_mi_data( L222.GlobalTechSCurve_en, "GlobalTechSCurve", "ENERGY_LEVEL2_DATA", "L222.GlobalTechSCurve_en",
+	               "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
+	}
+if( exists( "L2322.GlobalTechLifetimeProfit_Fert" ) ) {
+	write_mi_data( L2322.GlobalTechLifetimeProfit_Fert, "GlobalTechLifetimeProfit", "ENERGY_LEVEL2_DATA", "L2322.GlobalTechLifetimeProfit_Fert",
+	               "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
+	}
+if( exists( "L2322.GlobalTechLifetime_Fert" ) ) {
+	write_mi_data( L2322.GlobalTechLifetime_Fert, "GlobalTechLifetime", "ENERGY_LEVEL2_DATA", "L2322.GlobalTechLifetime_Fert",
+	               "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
+	}
 write_mi_data( L2322.StubTechProd_Fert, "StubTechProd", "ENERGY_LEVEL2_DATA", "L2322.StubTechProd_Fert", "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
 write_mi_data( L2322.StubTechCoef_Fert, "StubTechCoef", "ENERGY_LEVEL2_DATA", "L2322.StubTechCoef_Fert", "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
 write_mi_data( L2322.StubTechFixOut_Fert_imp, "StubTechFixOut", "ENERGY_LEVEL2_DATA", "L2322.StubTechFixOut_Fert_imp", "ENERGY_XML_BATCH", "batch_en_Fert.xml" )
