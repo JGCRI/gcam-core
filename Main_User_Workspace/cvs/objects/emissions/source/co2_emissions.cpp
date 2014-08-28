@@ -41,22 +41,19 @@
 #include "util/base/include/definitions.h"
 
 #include "emissions/include/co2_emissions.h"
-#include "containers/include/scenario.h"
-#include "marketplace/include/marketplace.h"
-#include "util/base/include/xml_helper.h"
 #include "containers/include/iinfo.h"
+#include "functions/include/iinput.h"
 #include "technologies/include/ioutput.h"
 #include "technologies/include/icapture_component.h"
 #include "marketplace/include/cached_market.h"
+#include "marketplace/include/marketplace.h"
 
 using namespace std;
 using namespace xercesc;
 
-
-extern Scenario* scenario;
-
 //! Default Constructor with default emissions unit and name.
-CO2Emissions::CO2Emissions(): mName("CO2"){
+CO2Emissions::CO2Emissions() {
+    mName = "CO2";
     mEmissionsUnit = "MTC";
 }
 
@@ -91,61 +88,68 @@ const string& CO2Emissions::getXMLNameStatic(){
     return XML_NAME;
 }
 
-/*!
- * \brief Set the name of the CO2 object.
- * \author Sonny Kim
- */
-void CO2Emissions::parseName( const string& aNameAttr ){
-    mName = aNameAttr;
-}
-
-/*!
- * \brief Get the name of the CO2 object.
- * \details This public function accesses the private string mName.
- *          The CO2 object name can be different from "CO2" in order to
- *          allow specific technology / sector carbon policies.
- * \author Sonny Kim
- * \return The unique name of CO2 gas.
- */
-const string& CO2Emissions::getName() const {
-    return mName;
-}
-
-
-bool CO2Emissions::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
+bool CO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
     return false;
 }
 
-void CO2Emissions::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // write the xml for the class members.
-    XMLWriteElementCheckDefault( mEmissionsUnit, "emissions-unit", out, tabs, string("MTC") );
+void CO2Emissions::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 }
 
-void CO2Emissions::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-    // write the xml for the class members.
-    XMLWriteElement( mEmissionsUnit, "emissions-unit", out, tabs );
+void CO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 }
 
-void CO2Emissions::initCalc( const string& aRegionName,
-                             const IInfo* aLocalInfo,
-                             const int aPeriod )
-{
-    mCachedMarket = scenario->getMarketplace()->locateMarket( getName(), aRegionName, aPeriod );
+/*!
+ * \brief Calculate the aggregate output emissions coefficient for the gas.
+ * \details The output coefficient is the sum of all output coefficients of all
+ *          the outputs.
+ * \param aOutputs Vector of Technology outputs.
+ * \param aPeriod Period.
+ * \return Aggregate output coefficient.
+ */
+double CO2Emissions::calcOutputCoef( const vector<IOutput*>& aOutputs, const int aPeriod ) const {
+    // The output coefficient is the sum of the output coefficients of all outputs.
+    double outputCoef = 0;
+    for( unsigned int i = 0; i < aOutputs.size(); ++i ){
+        outputCoef += aOutputs[ i ]->getEmissionsPerOutput( getName(), aPeriod );
+    }
+    return outputCoef;
+}
+
+/*!
+ * \brief Calculate the aggregate input emissions coefficient for the gas.
+ * \details The input coefficient is the weighted sum of all input coefficients
+ *          of all the inputs.
+ * \param aOutputs Vector of Technology inputs.
+ * \param aPeriod Period.
+ * \return Aggregate input coefficient.
+ */
+double CO2Emissions::calcInputCoef( const vector<IInput*>& aInputs, const int aPeriod ) const {
+    // Calculate an aggregate coefficient.
+    double coefFuel = 0;
+    for( unsigned int i = 0; i < aInputs.size(); ++i ){
+        // Input coefficients must be greater than zero if they contribute
+        // to the aggregate emissions.
+        if( aInputs[ i ]->getCoefficient( aPeriod ) > 0 ){
+            coefFuel += aInputs[ i ]->getCO2EmissionsCoefficient( getName(), aPeriod )
+                * aInputs[ i ]->getCoefficient( aPeriod );
+        }
+    }
+    return coefFuel;
 }
 
 double CO2Emissions::getGHGValue( const std::string& aRegionName,
-                                const std::vector<IInput*>& aInputs,
-                                const std::vector<IOutput*>& aOutputs,
-                                const ICaptureComponent* aSequestrationDevice,
-                                const int aPeriod ) const
+                                  const std::vector<IInput*>& aInputs,
+                                  const std::vector<IOutput*>& aOutputs,
+                                  const ICaptureComponent* aSequestrationDevice,
+                                  const int aPeriod ) const
 {
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     // Conversion from teragrams of carbon per EJ to metric tons of carbon per GJ
-    const double CVRT_TG_MT = 1e-3; 
+    const double CVRT_TG_MT = 1e-3;
 
     // Get carbon storage cost from the sequestrion device if there is one.
-    double storageCost = aSequestrationDevice ? 
+    double storageCost = aSequestrationDevice ?
         aSequestrationDevice->getStorageCost( aRegionName, getName(), aPeriod ) : 0;
 
     // Get the remove fraction from the sequestration device. The remove
@@ -188,12 +192,55 @@ double CO2Emissions::getGHGValue( const std::string& aRegionName,
     return generalizedCost;
 }
 
-void CO2Emissions::calcEmission( const std::string& aRegionName, 
-                               const std::vector<IInput*>& aInputs,
-                               const std::vector<IOutput*>& aOutputs,
-                               const GDP* aGDP,
-                               ICaptureComponent* aSequestrationDevice,
-                               const int aPeriod )
+/*!
+ * \brief Calculate the sum of all emissions contained in all outputs.
+ * \details Determines the emissions in each output by multiplying the output's
+ *          coefficient by its physical output. These emissions are then summed.
+ * \param aOutputs Vector of technology outputs.
+ * \param aPeriod Period.
+ * \return Sum of emissions in all outputs
+ */
+double CO2Emissions::calcOutputEmissions( const vector<IOutput*>& aOutputs,
+                                          const int aPeriod ) const
+{
+    double emissions = 0;
+    for( unsigned int i = 0; i < aOutputs.size(); ++i ){
+        emissions += aOutputs[ i ]->getEmissionsPerOutput( getName(), aPeriod )
+            * aOutputs[ i ]->getPhysicalOutput( aPeriod );
+    }
+    return emissions;
+}
+
+/*! \brief Calculate the input CO2 emissions for a good.
+ * \details Calculates the sum of all emissions contained in the inputs to the production of a good. This is calculated
+ * by looping over all the inputs and for each input, determining its carbon by multiplying its coefficient and its
+ * physical demand. This amount of carbon is then added to the total, which is returned by the function. This carbon
+ * may not all be emitted, as a portion may remain in the output good. This function may or may not work for non-CO2
+ * gases, depending on when it is called as their emissions coefficients are not available
+ * \param aInputs Vector of inputs to determine the amount of carbon in.
+ * \param aRegionName Name of the region in which the emission is occurring.
+ * \param aPeriod Period in which the emission is occurring.
+ */
+double CO2Emissions::calcInputCO2Emissions( const vector<IInput*>& aInputs, const string& aRegionName, const int aPeriod ) const {
+    double totalEmissions = 0;
+
+    // Loop over the inputs calculating the amount of carbon in each.
+    typedef vector<IInput*>::const_iterator CInputIterator;
+    for( CInputIterator input = aInputs.begin(); input != aInputs.end(); ++input ){
+        // Add on the physical amount of the input multplied by the amount of
+        // emissions per unit of physical output.
+        totalEmissions += (*input)->getPhysicalDemand( aPeriod )
+            * (*input)->getCO2EmissionsCoefficient( getName(), aPeriod );
+    }
+    return totalEmissions;
+}
+
+void CO2Emissions::calcEmission( const std::string& aRegionName,
+                                 const std::vector<IInput*>& aInputs,
+                                 const std::vector<IOutput*>& aOutputs,
+                                 const GDP* aGDP,
+                                 ICaptureComponent* aSequestrationDevice,
+                                 const int aPeriod )
 {
     // Calculate the aggregate emissions of all inputs.
     double inputEmissions = calcInputCO2Emissions( aInputs, aRegionName, aPeriod );
@@ -211,7 +258,7 @@ void CO2Emissions::calcEmission( const std::string& aRegionName,
     // and subtract from total emissions.
     if( aSequestrationDevice ){
         mEmissionsSequestered[ aPeriod ] = aSequestrationDevice->calcSequesteredAmount( 
-                                           aRegionName, getName(), totalEmissions, aPeriod );
+                                               aRegionName, getName(), totalEmissions, aPeriod );
 
         totalEmissions -= mEmissionsSequestered[ aPeriod ];
     }

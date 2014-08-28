@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
 	<Files>
-		<Value name="xmlInputFileName">../cvs/objects/model_data/base/core_model_input_2010-05-03.xml</Value>
+		<Value name="xmlInputFileName">../input/gcam-data-system/xml/modeltime-xml/modeltime.xml</Value>
 		<Value name="xmlOutputFileName">../output/output.xml</Value>
 		<Value name="xmldb-location">../output/database.dbxml</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="BatchFileName">batch_ag.xml</Value>
 		<Value name="policy-target-file">../input/policy_target.xml</Value>
 		<Value name="climatFileName">gas.emk</Value>
-		<Value name="GHGInputFileName">../cvs/objects/magicc/inputs/input_gases.emk</Value>
+		<Value name="GHGInputFileName">../input/magicc/inputs/input_gases.emk</Value>
 		<Value name="outFileName">outFile.csv</Value>
 		<Value name="dbFileName">../output/output.mdb</Value>
 		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
@@ -17,76 +17,49 @@
 		<Value name="ObjectSGMGenFileName">ObjectSGMGen.csv</Value>
 	</Files>
 	<ScenarioComponents>
-		<Value name="CC">../input/aglu/CCcycle_Start_1700.xml</Value>
-		<Value name = "emissions">../input/nonco2/Historical Emissions/Default Emissions Module/Default_Emissions_Input.xml</Value>
-
-		<Value name="socioeconomics">../input/energy/socioeconomics/gdp_population.xml</Value>
-		<Value name="demand">../input/energy/socioeconomics/agg_demand_elasticities.xml</Value>
-		<Value name="ind_aeei">../input/energy/socioeconomics/agg_industry_aeei_ref.xml</Value>
-		<Value name="resources">../input/energy/fossil/resources.xml</Value>
-		<Value name="gas">../input/energy/fossil/gas_processing_input.xml</Value>
-		<Value name="liquids">../input/energy/refined liquids/ref_liquids_supply.xml</Value>
-		<Value name="liquids">../input/energy/refined liquids/ref_liquids_ccs.xml</Value>
-		<Value name="liquids">../input/energy/refined liquids/cal_unconv_oil.xml</Value>
-		<Value name="h2">../input/energy/hydrogen/h2_input_ref_bioccs.xml</Value>
-		<Value name="delete">../input/energy/electric sector/delete_elec_solar_wind.xml</Value>
-		<Value name="elec_fossil_bio">../input/energy/electric sector/fossil_elec_input_bioccs.xml</Value>
-		<Value name="elec_nuclear">../input/energy/nuclear/nuclear_input_ref.xml</Value>
-		<Value name="elec_hydro">../input/energy/electric sector/hydro_input.xml</Value>
-		<Value name="elec_central_pv">../input/energy/solar/central_pv_input_ref.xml</Value>
-		<Value name="elec_solar_csp">../input/energy/solar/csp_input_ref.xml</Value>
-		<Value name="elec_rooftop_pv">../input/energy/solar/rooftop_resource_input.xml</Value>
-		<Value name="elec_rooftop_pv">../input/energy/solar/rooftop_pv_tech_input.xml</Value>
-		<Value name="elec_wind">../input/energy/wind/global_wind_input_ref.xml</Value>
-		<Value name="elec_geothermal">../input/energy/geothermal/geothermal_rsrc_input_ref.xml</Value>
-		<Value name="elec_geothermal">../input/energy/geothermal/geothermal_tech_input.xml</Value>
-		<Value name="bld_tradbio">../input/energy/tradbio/tradbio.xml</Value>
-		<Value name="ind">../input/energy/industry/global_ind_input_ref.xml</Value>
-		<Value name="cal">../input/energy/calibration_minicam/cal_1990_2005.xml</Value>
-		<Value name="bld">../input/energy/buildings/global_det_bld_input.xml</Value>
-		<Value name="bld_nonco2">../input/energy/buildings/global_bld_nonco2.xml</Value>
-		<Value name="ind_cement">../input/energy/cement/cement_input_ref.xml</Value>
-		<Value name="trn">../input/energy/transportation/global_det_trn_input_ref.xml</Value>
-		<Value name="ind_cal_adj">../input/energy/industry/ind_cal_adj_cement.xml</Value>
-		<Value name="energy_nonco2">../input/nonco2/all_energy.xml</Value>
-		<Value name="trn_nonco2">../input/energy/transportation/global_det_trn_nonco2.xml</Value>
-		<Value name="elec_sectors_elec">../input/energy/electric sector/elec_cal_input.xml</Value>
-		<Value name="elec_sectors_sub">../input/energy/electric sector/gen_subsector_input.xml</Value>
-		<Value name="elec_sectors_fossil">../input/energy/electric sector/gen_fossil_tech_input.xml</Value>
-		<Value name="elec_sectors_nonfossil">../input/energy/electric sector/gen_nonfossil_tech_input.xml</Value>
-		<Value name="elec_sectors_cal">../input/energy/electric sector/gen_cal_input.xml</Value>
-		<Value name="elec_nonco2">../input/energy/electric sector/elec_nonco2.xml</Value>
-		<Value name="elec_nonco2">../input/energy/electric sector/renewable_shareweights.xml</Value>
-		<Value name="co2_storage">../input/energy/ccs/ccs_supply_curves_ref.xml</Value>
-		<Value name="keywords">../input/keywords/keywords_agg.xml</Value>
-		<Value name="solver_config">../input/solution/cal_broyden_config.xml</Value>
-
-		<Value name="aglu">../input/aglu/SmoothWasteBio.xml</Value>
-		<Value name="aglu">../input/aglu/Add_On_bioadder_0.xml</Value>
-		<Value name="aglu">../input/aglu/ag_For_Past_bio_base.xml</Value>
-		<Value name="aglu">../input/aglu/an_input.xml</Value>
-		<Value name="aglu">../input/aglu/demand_input.xml</Value>
-		<Value name="aglu">../input/aglu/land_input_1.xml</Value>
-		<Value name="aglu">../input/aglu/land_input_2.xml</Value>
-		<Value name="aglu">../input/aglu/land_input_3.xml</Value>
-		<Value name="aglu">../input/aglu/resbio_input.xml</Value>
-		<Value name="aglu">../input/aglu/bio_hi.xml</Value>
-		<Value name="aglu">../input/aglu/ag_cost.xml</Value>
-		<Value name="aglu">../input/aglu/ag_prodchange_ref.xml</Value>
-		<Value name="aglu">../input/aglu/Fert_input.xml</Value>
-		<Value name="aglu">../input/aglu/protected_land_input_2.xml</Value>
-		<Value name="aglu">../input/aglu/protected_land_input_3.xml</Value>
-
-		<Value name="ag_nonco2">../input/aglu/nonco2_ag.xml</Value>
-		<Value name="livestock_nonco2">../input/aglu/nonco2_an.xml</Value>
-		<Value name="unmanaged_nonco2">../input/aglu/nonco2_unmgd.xml</Value>
-		<Value name="aglu">../input/aglu/delete_AEZs.xml</Value>
-
+        <Value name = "hist_emissions">../input/magicc/Historical Emissions/Default Emissions Module/Default_Emissions_Input.xml</Value>
+		<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/interest_rate.xml</Value>
+		<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_GCAM3.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/resources.xml</Value>
+		<Value name = "energy_supply">../input/gcam-data-system/xml/energy-xml/en_supply.xml</Value>
+		<Value name = "energy_transformation">../input/gcam-data-system/xml/energy-xml/en_transformation.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/electricity.xml</Value>
+		<Value name = "heat">../input/gcam-data-system/xml/energy-xml/heat.xml</Value>
+		<Value name = "hydrogen">../input/gcam-data-system/xml/energy-xml/hydrogen.xml</Value>
+		<Value name = "energy_distribution">../input/gcam-data-system/xml/energy-xml/en_distribution.xml</Value>
+		<Value name = "industry">../input/gcam-data-system/xml/energy-xml/industry.xml</Value>
+		<Value name = "industry">../input/gcam-data-system/xml/energy-xml/industry_incelas_gcam3.xml</Value>
+		<Value name = "cement">../input/gcam-data-system/xml/energy-xml/cement.xml</Value>
+		<Value name = "cement">../input/gcam-data-system/xml/energy-xml/cement_incelas_gcam3.xml</Value>
+		<Value name = "fertilizer">../input/gcam-data-system/xml/energy-xml/en_Fert.xml</Value>
+		<Value name = "hddcdd">../input/gcam-data-system/xml/energy-xml/HDDCDD_constdd_no_GCM.xml</Value>
+		<Value name = "building">../input/gcam-data-system/xml/energy-xml/building_det.xml</Value>
+		<Value name = "transportation">../input/gcam-data-system/xml/energy-xml/transportation_UCD.xml</Value>
+		<Value name = "carbon_content">../input/gcam-data-system/xml/energy-xml/Ccoef.xml</Value>
+		<Value name = "ag_base">../input/gcam-data-system/xml/aglu-xml/ag_For_Past_bio_base.xml</Value>
+		<Value name = "ag_cost">../input/gcam-data-system/xml/aglu-xml/ag_cost.xml</Value>
+		<Value name = "ag_prodchange">../input/gcam-data-system/xml/aglu-xml/ag_prodchange_ref.xml</Value>
+		<Value name = "residue_bio">../input/gcam-data-system/xml/aglu-xml/resbio_input.xml</Value>
+		<Value name = "animal">../input/gcam-data-system/xml/aglu-xml/an_input.xml</Value>
+		<Value name = "fertilizer">../input/gcam-data-system/xml/aglu-xml/ag_Fert.xml</Value>
+		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/land_input_1.xml</Value>
+		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/land_input_2.xml</Value>
+		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/land_input_3.xml</Value>
+		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/protected_land_input_2.xml</Value>
+		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/protected_land_input_3.xml</Value>
+		<Value name = "bio">../input/gcam-data-system/xml/aglu-xml/bio_hi.xml</Value>
+		<Value name = "demand">../input/gcam-data-system/xml/aglu-xml/demand_input.xml</Value>
+		<Value name = "ind_urb_proc">../input/gcam-data-system/xml/emissions-xml/ind_urb_processing_sectors.xml</Value>
+		<Value name = "nonco2_aglu">../input/gcam-data-system/xml/emissions-xml/all_aglu_emissions.xml</Value>
+		<Value name = "nonco2_energy">../input/gcam-data-system/xml/emissions-xml/all_energy_emissions.xml</Value>
+		<Value name = "nonco2_fgas">../input/gcam-data-system/xml/emissions-xml/all_fgas_emissions.xml</Value>
+		<Value name = "nonco2_unmgd">../input/gcam-data-system/xml/emissions-xml/all_unmgd_emissions.xml</Value>
+		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 	</ScenarioComponents>
 	<Strings>
 		<Value name="scenarioName">Reference</Value>
 		<Value name="debug-region">USA</Value>
-		<Value name="MAGICC-input-dir">../cvs/objects/magicc/inputs</Value>
+		<Value name="MAGICC-input-dir">../input/magicc/inputs</Value>
 		<Value name="MAGICC-output-dir">../output</Value>
 	</Strings>
 	<Bools>

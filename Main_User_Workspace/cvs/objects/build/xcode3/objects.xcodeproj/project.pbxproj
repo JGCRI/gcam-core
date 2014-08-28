@@ -55,23 +55,14 @@
 		CD48874C122873C200F5A88A /* population_mini_cam.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48848C122873C000F5A88A /* population_mini_cam.cpp */; };
 		CD48874D122873C200F5A88A /* population_sgm_fixed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48848D122873C000F5A88A /* population_sgm_fixed.cpp */; };
 		CD48874E122873C200F5A88A /* population_sgm_rate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48848E122873C000F5A88A /* population_sgm_rate.cpp */; };
-		CD48874F122873C200F5A88A /* acomplex_emissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884BA122873C100F5A88A /* acomplex_emissions.cpp */; };
-		CD488750122873C200F5A88A /* aemissions_coef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884BB122873C100F5A88A /* aemissions_coef.cpp */; };
 		CD488752122873C200F5A88A /* aghg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884BD122873C100F5A88A /* aghg.cpp */; };
-		CD488753122873C200F5A88A /* by_product.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884BE122873C100F5A88A /* by_product.cpp */; };
 		CD488754122873C200F5A88A /* co2_emissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884BF122873C100F5A88A /* co2_emissions.cpp */; };
 		CD488755122873C200F5A88A /* emissions_driver_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C0122873C100F5A88A /* emissions_driver_factory.cpp */; };
 		CD488756122873C200F5A88A /* emissions_summer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C1122873C100F5A88A /* emissions_summer.cpp */; };
-		CD488757122873C200F5A88A /* generic_emissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C2122873C100F5A88A /* generic_emissions.cpp */; };
 		CD488758122873C200F5A88A /* ghg_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C3122873C100F5A88A /* ghg_factory.cpp */; };
-		CD488759122873C200F5A88A /* ghg_mac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C4122873C100F5A88A /* ghg_mac.cpp */; };
-		CD48875A122873C200F5A88A /* indirect_emiss_coef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C5122873C100F5A88A /* indirect_emiss_coef.cpp */; };
 		CD48875B122873C200F5A88A /* input_driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C6122873C100F5A88A /* input_driver.cpp */; };
-		CD48875C122873C200F5A88A /* input_emissions_coef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C7122873C100F5A88A /* input_emissions_coef.cpp */; };
 		CD48875D122873C200F5A88A /* input_output_driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C8122873C100F5A88A /* input_output_driver.cpp */; };
 		CD48875E122873C200F5A88A /* output_driver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884C9122873C100F5A88A /* output_driver.cpp */; };
-		CD48875F122873C200F5A88A /* read_emissions_coef.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884CA122873C100F5A88A /* read_emissions_coef.cpp */; };
-		CD488760122873C200F5A88A /* so2_emissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884CB122873C100F5A88A /* so2_emissions.cpp */; };
 		CD488762122873C200F5A88A /* ademand_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884F5122873C100F5A88A /* ademand_function.cpp */; };
 		CD488763122873C200F5A88A /* aproduction_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884F6122873C100F5A88A /* aproduction_function.cpp */; };
 		CD488765122873C200F5A88A /* ces_production_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4884F8122873C100F5A88A /* ces_production_function.cpp */; };
@@ -302,6 +293,11 @@
 		CDE074B1146895AA00432712 /* building_service_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AC146895AA00432712 /* building_service_function.cpp */; };
 		CDE074B2146895AA00432712 /* building_service_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AD146895AA00432712 /* building_service_input.cpp */; };
 		CDE074B3146895AA00432712 /* satiation_demand_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AE146895AA00432712 /* satiation_demand_function.cpp */; };
+		CDE29983198C82C400556032 /* aemissions_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE2997F198C82C400556032 /* aemissions_control.cpp */; };
+		CDE29984198C82C400556032 /* gdp_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE29980198C82C400556032 /* gdp_control.cpp */; };
+		CDE29985198C82C400556032 /* mac_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE29981198C82C400556032 /* mac_control.cpp */; };
+		CDE29986198C82C400556032 /* nonco2_emissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE29982198C82C400556032 /* nonco2_emissions.cpp */; };
+		CDE29989198C831E00556032 /* emissions_control_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE29988198C831E00556032 /* emissions_control_factory.cpp */; };
 		CDF0CA10139FD0C100B20B01 /* luc_emissions_summer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF0CA0F139FD0C100B20B01 /* luc_emissions_summer.cpp */; };
 		CDF83C0E13A30C7C00DF178D /* market_RES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C0D13A30C7C00DF178D /* market_RES.cpp */; };
 		CDF83C1313A30CA600DF178D /* res_secondary_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C1113A30CA600DF178D /* res_secondary_output.cpp */; };
@@ -446,41 +442,23 @@
 		CD4884A0122873C000F5A88A /* FAQ.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FAQ.txt; sourceTree = "<group>"; };
 		CD4884A1122873C000F5A88A /* ReviewChecklist.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReviewChecklist.txt; sourceTree = "<group>"; };
 		CD4884A2122873C000F5A88A /* STLDefs.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = STLDefs.txt; sourceTree = "<group>"; };
-		CD4884A5122873C000F5A88A /* acomplex_emissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acomplex_emissions.h; sourceTree = "<group>"; };
-		CD4884A6122873C000F5A88A /* aemissions_coef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aemissions_coef.h; sourceTree = "<group>"; };
 		CD4884A7122873C000F5A88A /* aemissions_driver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aemissions_driver.h; sourceTree = "<group>"; };
 		CD4884A9122873C000F5A88A /* aghg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aghg.h; sourceTree = "<group>"; };
-		CD4884AA122873C000F5A88A /* by_product.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = by_product.h; sourceTree = "<group>"; };
 		CD4884AB122873C000F5A88A /* co2_emissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = co2_emissions.h; sourceTree = "<group>"; };
 		CD4884AC122873C000F5A88A /* emissions_driver_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emissions_driver_factory.h; sourceTree = "<group>"; };
 		CD4884AD122873C000F5A88A /* emissions_summer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emissions_summer.h; sourceTree = "<group>"; };
-		CD4884AE122873C100F5A88A /* generic_emissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = generic_emissions.h; sourceTree = "<group>"; };
 		CD4884AF122873C100F5A88A /* ghg_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ghg_factory.h; sourceTree = "<group>"; };
-		CD4884B0122873C100F5A88A /* ghg_mac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ghg_mac.h; sourceTree = "<group>"; };
-		CD4884B1122873C100F5A88A /* indirect_emiss_coef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = indirect_emiss_coef.h; sourceTree = "<group>"; };
 		CD4884B2122873C100F5A88A /* input_driver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input_driver.h; sourceTree = "<group>"; };
-		CD4884B3122873C100F5A88A /* input_emissions_coef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input_emissions_coef.h; sourceTree = "<group>"; };
 		CD4884B4122873C100F5A88A /* input_output_driver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input_output_driver.h; sourceTree = "<group>"; };
 		CD4884B5122873C100F5A88A /* output_driver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = output_driver.h; sourceTree = "<group>"; };
-		CD4884B6122873C100F5A88A /* read_emissions_coef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = read_emissions_coef.h; sourceTree = "<group>"; };
-		CD4884B7122873C100F5A88A /* so2_emissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = so2_emissions.h; sourceTree = "<group>"; };
-		CD4884BA122873C100F5A88A /* acomplex_emissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acomplex_emissions.cpp; sourceTree = "<group>"; };
-		CD4884BB122873C100F5A88A /* aemissions_coef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aemissions_coef.cpp; sourceTree = "<group>"; };
 		CD4884BD122873C100F5A88A /* aghg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aghg.cpp; sourceTree = "<group>"; };
-		CD4884BE122873C100F5A88A /* by_product.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = by_product.cpp; sourceTree = "<group>"; };
 		CD4884BF122873C100F5A88A /* co2_emissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = co2_emissions.cpp; sourceTree = "<group>"; };
 		CD4884C0122873C100F5A88A /* emissions_driver_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = emissions_driver_factory.cpp; sourceTree = "<group>"; };
 		CD4884C1122873C100F5A88A /* emissions_summer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = emissions_summer.cpp; sourceTree = "<group>"; };
-		CD4884C2122873C100F5A88A /* generic_emissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = generic_emissions.cpp; sourceTree = "<group>"; };
 		CD4884C3122873C100F5A88A /* ghg_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ghg_factory.cpp; sourceTree = "<group>"; };
-		CD4884C4122873C100F5A88A /* ghg_mac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ghg_mac.cpp; sourceTree = "<group>"; };
-		CD4884C5122873C100F5A88A /* indirect_emiss_coef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = indirect_emiss_coef.cpp; sourceTree = "<group>"; };
 		CD4884C6122873C100F5A88A /* input_driver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input_driver.cpp; sourceTree = "<group>"; };
-		CD4884C7122873C100F5A88A /* input_emissions_coef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input_emissions_coef.cpp; sourceTree = "<group>"; };
 		CD4884C8122873C100F5A88A /* input_output_driver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input_output_driver.cpp; sourceTree = "<group>"; };
 		CD4884C9122873C100F5A88A /* output_driver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = output_driver.cpp; sourceTree = "<group>"; };
-		CD4884CA122873C100F5A88A /* read_emissions_coef.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = read_emissions_coef.cpp; sourceTree = "<group>"; };
-		CD4884CB122873C100F5A88A /* so2_emissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = so2_emissions.cpp; sourceTree = "<group>"; };
 		CD4884CF122873C100F5A88A /* ademand_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ademand_function.h; sourceTree = "<group>"; };
 		CD4884D0122873C100F5A88A /* aproduction_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aproduction_function.h; sourceTree = "<group>"; };
 		CD4884D2122873C100F5A88A /* ces_production_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ces_production_function.h; sourceTree = "<group>"; };
@@ -593,7 +571,6 @@
 		CD488545122873C100F5A88A /* land_node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = land_node.cpp; sourceTree = "<group>"; };
 		CD488546122873C100F5A88A /* land_use_history.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = land_use_history.cpp; sourceTree = "<group>"; };
 		CD488547122873C100F5A88A /* unmanaged_land_leaf.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = unmanaged_land_leaf.cpp; sourceTree = "<group>"; };
-		CD48854B122873C100F5A88A /* input_gases.emk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = input_gases.emk; sourceTree = "<group>"; };
 		CD488559122873C100F5A88A /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CD48855C122873C100F5A88A /* cached_market.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cached_market.h; sourceTree = "<group>"; };
 		CD48855D122873C100F5A88A /* calibration_market.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calibration_market.h; sourceTree = "<group>"; };
@@ -620,40 +597,6 @@
 		CD488573122873C100F5A88A /* normal_market.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = normal_market.cpp; sourceTree = "<group>"; };
 		CD488574122873C100F5A88A /* price_market.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = price_market.cpp; sourceTree = "<group>"; };
 		CD488575122873C100F5A88A /* trial_value_market.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trial_value_market.cpp; sourceTree = "<group>"; };
-		CD488578122873C100F5A88A /* base_multi_input.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = base_multi_input.xml; sourceTree = "<group>"; };
-		CD488579122873C100F5A88A /* ccsp_multi_input.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ccsp_multi_input.xml; sourceTree = "<group>"; };
-		CD48857A122873C100F5A88A /* core_model_input_2009-03-13.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "core_model_input_2009-03-13.xml"; sourceTree = "<group>"; };
-		CD48857B122873C100F5A88A /* core_model_input_2009-11-17.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "core_model_input_2009-11-17.xml"; sourceTree = "<group>"; };
-		CD48857C122873C100F5A88A /* core_model_input_2010-05-03.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "core_model_input_2010-05-03.xml"; sourceTree = "<group>"; };
-		CD48857D122873C100F5A88A /* demog_rates.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = demog_rates.xml; sourceTree = "<group>"; };
-		CD48857E122873C100F5A88A /* input.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = input.xsd; sourceTree = "<group>"; };
-		CD48857F122873C100F5A88A /* model_time.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = model_time.xml; sourceTree = "<group>"; };
-		CD488580122873C100F5A88A /* Project3.prj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Project3.prj; sourceTree = "<group>"; };
-		CD488581122873C100F5A88A /* sgm_8region_base_input.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = sgm_8region_base_input.xml; sourceTree = "<group>"; };
-		CD488582122873C100F5A88A /* Untitled2.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Untitled2.xsl; sourceTree = "<group>"; };
-		CD488586122873C100F5A88A /* b2_calibration.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = b2_calibration.xml; sourceTree = "<group>"; };
-		CD488588122873C100F5A88A /* CarbonCaptureTechs.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CarbonCaptureTechs.xml; sourceTree = "<group>"; };
-		CD488589122873C100F5A88A /* CarbonStorageRsc.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CarbonStorageRsc.xml; sourceTree = "<group>"; };
-		CD48858A122873C100F5A88A /* CarbonStorageRsc100revised.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CarbonStorageRsc100revised.xml; sourceTree = "<group>"; };
-		CD48858C122873C100F5A88A /* tran_h2_med_eff.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = tran_h2_med_eff.xml; sourceTree = "<group>"; };
-		CD48858D122873C100F5A88A /* transportationUS.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = transportationUS.xml; sourceTree = "<group>"; };
-		CD48858F122873C100F5A88A /* s450.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = s450.xml; sourceTree = "<group>"; };
-		CD488590122873C100F5A88A /* s550.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = s550.xml; sourceTree = "<group>"; };
-		CD488591122873C100F5A88A /* s650.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = s650.xml; sourceTree = "<group>"; };
-		CD488592122873C100F5A88A /* s750.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = s750.xml; sourceTree = "<group>"; };
-		CD488594122873C100F5A88A /* fixedTax_100.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = fixedTax_100.xml; sourceTree = "<group>"; };
-		CD488595122873C100F5A88A /* no_policy.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = no_policy.xml; sourceTree = "<group>"; };
-		CD488596122873C100F5A88A /* wre_450.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = wre_450.xml; sourceTree = "<group>"; };
-		CD488597122873C100F5A88A /* wre_550.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = wre_550.xml; sourceTree = "<group>"; };
-		CD488598122873C100F5A88A /* wre_550_sgm.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = wre_550_sgm.xml; sourceTree = "<group>"; };
-		CD488599122873C100F5A88A /* wre_650.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = wre_650.xml; sourceTree = "<group>"; };
-		CD48859A122873C100F5A88A /* wre_750.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = wre_750.xml; sourceTree = "<group>"; };
-		CD48859C122873C100F5A88A /* ciam.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ciam.xsd; sourceTree = "<group>"; };
-		CD48859D122873C100F5A88A /* configuration.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = configuration.xsd; sourceTree = "<group>"; };
-		CD48859E122873C100F5A88A /* logger_factory.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = logger_factory.xsd; sourceTree = "<group>"; };
-		CD4885A0122873C100F5A88A /* b2tklm.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = b2tklm.xsl; sourceTree = "<group>"; };
-		CD4885A1122873C100F5A88A /* ciam.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ciam.xsl; sourceTree = "<group>"; };
-		CD4885A2122873C100F5A88A /* ciam_merge.xsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ciam_merge.xsl; sourceTree = "<group>"; };
 		CD4885A5122873C100F5A88A /* policy_ghg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = policy_ghg.h; sourceTree = "<group>"; };
 		CD4885A6122873C100F5A88A /* policy_portfolio_standard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = policy_portfolio_standard.h; sourceTree = "<group>"; };
 		CD4885A8122873C100F5A88A /* policy_ghg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = policy_ghg.cpp; sourceTree = "<group>"; };
@@ -1004,16 +947,6 @@
 		CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MAGICC_IO_helpers.cpp; sourceTree = "<group>"; };
 		CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjECTS_MAGICC_others.cpp; sourceTree = "<group>"; };
 		CDAF62EF130DAB6900D93AFB /* ObjECTS_MAGICC.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjECTS_MAGICC.cpp; sourceTree = "<group>"; };
-		CDB28D3C130DDA1B00EDF70A /* BCOCHist_c.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = BCOCHist_c.csv; sourceTree = "<group>"; };
-		CDB28D3D130DDA1B00EDF70A /* co2hist_c.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = co2hist_c.in; sourceTree = "<group>"; };
-		CDB28D3E130DDA1B00EDF70A /* maggas_c.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = maggas_c.cfg; sourceTree = "<group>"; };
-		CDB28D3F130DDA1B00EDF70A /* magice_c.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = magice_c.cfg; sourceTree = "<group>"; };
-		CDB28D40130DDA1B00EDF70A /* magmod_c.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = magmod_c.cfg; sourceTree = "<group>"; };
-		CDB28D41130DDA1B00EDF70A /* magrun_c.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = magrun_c.cfg; sourceTree = "<group>"; };
-		CDB28D42130DDA1B00EDF70A /* maguser_c.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = maguser_c.cfg; sourceTree = "<group>"; };
-		CDB28D43130DDA1B00EDF70A /* magxtra_c.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = magxtra_c.cfg; sourceTree = "<group>"; };
-		CDB28D44130DDA1B00EDF70A /* qextra_c.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = qextra_c.in; sourceTree = "<group>"; };
-		CDB28D45130DDA1B00EDF70A /* qhalos_c.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = qhalos_c.in; sourceTree = "<group>"; };
 		CDBAAD7B165151FC00BB9E56 /* gcam_parallel.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gcam_parallel.hpp; sourceTree = "<group>"; };
 		CDBAAD7E1651520D00BB9E56 /* gcam_parallel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gcam_parallel.cpp; sourceTree = "<group>"; };
 		CDCB3330146992B000BEA539 /* consumer_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = consumer_activity.h; sourceTree = "<group>"; };
@@ -1042,6 +975,16 @@
 		CDE074AC146895AA00432712 /* building_service_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = building_service_function.cpp; sourceTree = "<group>"; };
 		CDE074AD146895AA00432712 /* building_service_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = building_service_input.cpp; sourceTree = "<group>"; };
 		CDE074AE146895AA00432712 /* satiation_demand_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = satiation_demand_function.cpp; sourceTree = "<group>"; };
+		CDE2997B198C82A200556032 /* aemissions_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aemissions_control.h; sourceTree = "<group>"; };
+		CDE2997C198C82A200556032 /* gdp_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gdp_control.h; sourceTree = "<group>"; };
+		CDE2997D198C82A200556032 /* mac_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mac_control.h; sourceTree = "<group>"; };
+		CDE2997E198C82A200556032 /* nonco2_emissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nonco2_emissions.h; sourceTree = "<group>"; };
+		CDE2997F198C82C400556032 /* aemissions_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aemissions_control.cpp; sourceTree = "<group>"; };
+		CDE29980198C82C400556032 /* gdp_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gdp_control.cpp; sourceTree = "<group>"; };
+		CDE29981198C82C400556032 /* mac_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mac_control.cpp; sourceTree = "<group>"; };
+		CDE29982198C82C400556032 /* nonco2_emissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nonco2_emissions.cpp; sourceTree = "<group>"; };
+		CDE29987198C831400556032 /* emissions_control_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emissions_control_factory.h; sourceTree = "<group>"; };
+		CDE29988198C831E00556032 /* emissions_control_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = emissions_control_factory.cpp; sourceTree = "<group>"; };
 		CDF0CA0E139FD0BB00B20B01 /* luc_emissions_summer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luc_emissions_summer.h; sourceTree = "<group>"; };
 		CDF0CA0F139FD0C100B20B01 /* luc_emissions_summer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luc_emissions_summer.cpp; sourceTree = "<group>"; };
 		CDF83C0C13A30C7200DF178D /* market_RES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_RES.h; sourceTree = "<group>"; };
@@ -1100,10 +1043,8 @@
 				CD4884CD122873C100F5A88A /* functions */,
 				CD488516122873C100F5A88A /* investment */,
 				CD488536122873C100F5A88A /* land_allocator */,
-				CD488548122873C100F5A88A /* magicc */,
 				CD488557122873C100F5A88A /* main */,
 				CD48855A122873C100F5A88A /* marketplace */,
-				CD488576122873C100F5A88A /* model_data */,
 				CDD20FEE161B9F5D00945527 /* parallel */,
 				CD4885A3122873C100F5A88A /* policy */,
 				CD4885AA122873C100F5A88A /* reporting */,
@@ -1422,25 +1363,21 @@
 		CD4884A4122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDE29987198C831400556032 /* emissions_control_factory.h */,
+				CDE2997B198C82A200556032 /* aemissions_control.h */,
+				CDE2997C198C82A200556032 /* gdp_control.h */,
+				CDE2997D198C82A200556032 /* mac_control.h */,
+				CDE2997E198C82A200556032 /* nonco2_emissions.h */,
 				CDF0CA0E139FD0BB00B20B01 /* luc_emissions_summer.h */,
-				CD4884A5122873C000F5A88A /* acomplex_emissions.h */,
-				CD4884A6122873C000F5A88A /* aemissions_coef.h */,
 				CD4884A7122873C000F5A88A /* aemissions_driver.h */,
 				CD4884A9122873C000F5A88A /* aghg.h */,
-				CD4884AA122873C000F5A88A /* by_product.h */,
 				CD4884AB122873C000F5A88A /* co2_emissions.h */,
 				CD4884AC122873C000F5A88A /* emissions_driver_factory.h */,
 				CD4884AD122873C000F5A88A /* emissions_summer.h */,
-				CD4884AE122873C100F5A88A /* generic_emissions.h */,
 				CD4884AF122873C100F5A88A /* ghg_factory.h */,
-				CD4884B0122873C100F5A88A /* ghg_mac.h */,
-				CD4884B1122873C100F5A88A /* indirect_emiss_coef.h */,
 				CD4884B2122873C100F5A88A /* input_driver.h */,
-				CD4884B3122873C100F5A88A /* input_emissions_coef.h */,
 				CD4884B4122873C100F5A88A /* input_output_driver.h */,
 				CD4884B5122873C100F5A88A /* output_driver.h */,
-				CD4884B6122873C100F5A88A /* read_emissions_coef.h */,
-				CD4884B7122873C100F5A88A /* so2_emissions.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1448,24 +1385,20 @@
 		CD4884B9122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDE29988198C831E00556032 /* emissions_control_factory.cpp */,
+				CDE2997F198C82C400556032 /* aemissions_control.cpp */,
+				CDE29980198C82C400556032 /* gdp_control.cpp */,
+				CDE29981198C82C400556032 /* mac_control.cpp */,
+				CDE29982198C82C400556032 /* nonco2_emissions.cpp */,
 				CDF0CA0F139FD0C100B20B01 /* luc_emissions_summer.cpp */,
-				CD4884BA122873C100F5A88A /* acomplex_emissions.cpp */,
-				CD4884BB122873C100F5A88A /* aemissions_coef.cpp */,
 				CD4884BD122873C100F5A88A /* aghg.cpp */,
-				CD4884BE122873C100F5A88A /* by_product.cpp */,
 				CD4884BF122873C100F5A88A /* co2_emissions.cpp */,
 				CD4884C0122873C100F5A88A /* emissions_driver_factory.cpp */,
 				CD4884C1122873C100F5A88A /* emissions_summer.cpp */,
-				CD4884C2122873C100F5A88A /* generic_emissions.cpp */,
 				CD4884C3122873C100F5A88A /* ghg_factory.cpp */,
-				CD4884C4122873C100F5A88A /* ghg_mac.cpp */,
-				CD4884C5122873C100F5A88A /* indirect_emiss_coef.cpp */,
 				CD4884C6122873C100F5A88A /* input_driver.cpp */,
-				CD4884C7122873C100F5A88A /* input_emissions_coef.cpp */,
 				CD4884C8122873C100F5A88A /* input_output_driver.cpp */,
 				CD4884C9122873C100F5A88A /* output_driver.cpp */,
-				CD4884CA122873C100F5A88A /* read_emissions_coef.cpp */,
-				CD4884CB122873C100F5A88A /* so2_emissions.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -1663,32 +1596,6 @@
 			path = source;
 			sourceTree = "<group>";
 		};
-		CD488548122873C100F5A88A /* magicc */ = {
-			isa = PBXGroup;
-			children = (
-				CD488549122873C100F5A88A /* inputs */,
-			);
-			path = magicc;
-			sourceTree = "<group>";
-		};
-		CD488549122873C100F5A88A /* inputs */ = {
-			isa = PBXGroup;
-			children = (
-				CDB28D3C130DDA1B00EDF70A /* BCOCHist_c.csv */,
-				CDB28D3D130DDA1B00EDF70A /* co2hist_c.in */,
-				CDB28D3E130DDA1B00EDF70A /* maggas_c.cfg */,
-				CDB28D3F130DDA1B00EDF70A /* magice_c.cfg */,
-				CDB28D40130DDA1B00EDF70A /* magmod_c.cfg */,
-				CDB28D41130DDA1B00EDF70A /* magrun_c.cfg */,
-				CDB28D42130DDA1B00EDF70A /* maguser_c.cfg */,
-				CDB28D43130DDA1B00EDF70A /* magxtra_c.cfg */,
-				CDB28D44130DDA1B00EDF70A /* qextra_c.in */,
-				CDB28D45130DDA1B00EDF70A /* qhalos_c.in */,
-				CD48854B122873C100F5A88A /* input_gases.emk */,
-			);
-			path = inputs;
-			sourceTree = "<group>";
-		};
 		CD488557122873C100F5A88A /* main */ = {
 			isa = PBXGroup;
 			children = (
@@ -1755,127 +1662,6 @@
 				CD83E61514F4584900A1D301 /* linked_market.cpp */,
 			);
 			path = source;
-			sourceTree = "<group>";
-		};
-		CD488576122873C100F5A88A /* model_data */ = {
-			isa = PBXGroup;
-			children = (
-				CD488577122873C100F5A88A /* base */,
-				CD488583122873C100F5A88A /* scenario_components */,
-				CD48859B122873C100F5A88A /* schemas */,
-				CD48859F122873C100F5A88A /* xslt */,
-			);
-			path = model_data;
-			sourceTree = "<group>";
-		};
-		CD488577122873C100F5A88A /* base */ = {
-			isa = PBXGroup;
-			children = (
-				CD488578122873C100F5A88A /* base_multi_input.xml */,
-				CD488579122873C100F5A88A /* ccsp_multi_input.xml */,
-				CD48857A122873C100F5A88A /* core_model_input_2009-03-13.xml */,
-				CD48857B122873C100F5A88A /* core_model_input_2009-11-17.xml */,
-				CD48857C122873C100F5A88A /* core_model_input_2010-05-03.xml */,
-				CD48857D122873C100F5A88A /* demog_rates.xml */,
-				CD48857E122873C100F5A88A /* input.xsd */,
-				CD48857F122873C100F5A88A /* model_time.xml */,
-				CD488580122873C100F5A88A /* Project3.prj */,
-				CD488581122873C100F5A88A /* sgm_8region_base_input.xml */,
-				CD488582122873C100F5A88A /* Untitled2.xsl */,
-			);
-			path = base;
-			sourceTree = "<group>";
-		};
-		CD488583122873C100F5A88A /* scenario_components */ = {
-			isa = PBXGroup;
-			children = (
-				CD488584122873C100F5A88A /* samples */,
-				CD488585122873C100F5A88A /* sres_scenarios */,
-				CD488587122873C100F5A88A /* technologies */,
-				CD48858B122873C100F5A88A /* transportation */,
-				CD48858E122873C100F5A88A /* wg1 */,
-				CD488593122873C100F5A88A /* wre */,
-			);
-			path = scenario_components;
-			sourceTree = "<group>";
-		};
-		CD488584122873C100F5A88A /* samples */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = samples;
-			sourceTree = "<group>";
-		};
-		CD488585122873C100F5A88A /* sres_scenarios */ = {
-			isa = PBXGroup;
-			children = (
-				CD488586122873C100F5A88A /* b2_calibration.xml */,
-			);
-			path = sres_scenarios;
-			sourceTree = "<group>";
-		};
-		CD488587122873C100F5A88A /* technologies */ = {
-			isa = PBXGroup;
-			children = (
-				CD488588122873C100F5A88A /* CarbonCaptureTechs.xml */,
-				CD488589122873C100F5A88A /* CarbonStorageRsc.xml */,
-				CD48858A122873C100F5A88A /* CarbonStorageRsc100revised.xml */,
-			);
-			path = technologies;
-			sourceTree = "<group>";
-		};
-		CD48858B122873C100F5A88A /* transportation */ = {
-			isa = PBXGroup;
-			children = (
-				CD48858C122873C100F5A88A /* tran_h2_med_eff.xml */,
-				CD48858D122873C100F5A88A /* transportationUS.xml */,
-			);
-			path = transportation;
-			sourceTree = "<group>";
-		};
-		CD48858E122873C100F5A88A /* wg1 */ = {
-			isa = PBXGroup;
-			children = (
-				CD48858F122873C100F5A88A /* s450.xml */,
-				CD488590122873C100F5A88A /* s550.xml */,
-				CD488591122873C100F5A88A /* s650.xml */,
-				CD488592122873C100F5A88A /* s750.xml */,
-			);
-			path = wg1;
-			sourceTree = "<group>";
-		};
-		CD488593122873C100F5A88A /* wre */ = {
-			isa = PBXGroup;
-			children = (
-				CD488594122873C100F5A88A /* fixedTax_100.xml */,
-				CD488595122873C100F5A88A /* no_policy.xml */,
-				CD488596122873C100F5A88A /* wre_450.xml */,
-				CD488597122873C100F5A88A /* wre_550.xml */,
-				CD488598122873C100F5A88A /* wre_550_sgm.xml */,
-				CD488599122873C100F5A88A /* wre_650.xml */,
-				CD48859A122873C100F5A88A /* wre_750.xml */,
-			);
-			path = wre;
-			sourceTree = "<group>";
-		};
-		CD48859B122873C100F5A88A /* schemas */ = {
-			isa = PBXGroup;
-			children = (
-				CD48859C122873C100F5A88A /* ciam.xsd */,
-				CD48859D122873C100F5A88A /* configuration.xsd */,
-				CD48859E122873C100F5A88A /* logger_factory.xsd */,
-			);
-			path = schemas;
-			sourceTree = "<group>";
-		};
-		CD48859F122873C100F5A88A /* xslt */ = {
-			isa = PBXGroup;
-			children = (
-				CD4885A0122873C100F5A88A /* b2tklm.xsl */,
-				CD4885A1122873C100F5A88A /* ciam.xsl */,
-				CD4885A2122873C100F5A88A /* ciam_merge.xsl */,
-			);
-			path = xslt;
 			sourceTree = "<group>";
 		};
 		CD4885A3122873C100F5A88A /* policy */ = {
@@ -2648,23 +2434,14 @@
 				CD48874C122873C200F5A88A /* population_mini_cam.cpp in Sources */,
 				CD48874D122873C200F5A88A /* population_sgm_fixed.cpp in Sources */,
 				CD48874E122873C200F5A88A /* population_sgm_rate.cpp in Sources */,
-				CD48874F122873C200F5A88A /* acomplex_emissions.cpp in Sources */,
-				CD488750122873C200F5A88A /* aemissions_coef.cpp in Sources */,
 				CD488752122873C200F5A88A /* aghg.cpp in Sources */,
-				CD488753122873C200F5A88A /* by_product.cpp in Sources */,
 				CD488754122873C200F5A88A /* co2_emissions.cpp in Sources */,
 				CD488755122873C200F5A88A /* emissions_driver_factory.cpp in Sources */,
 				CD488756122873C200F5A88A /* emissions_summer.cpp in Sources */,
-				CD488757122873C200F5A88A /* generic_emissions.cpp in Sources */,
 				CD488758122873C200F5A88A /* ghg_factory.cpp in Sources */,
-				CD488759122873C200F5A88A /* ghg_mac.cpp in Sources */,
-				CD48875A122873C200F5A88A /* indirect_emiss_coef.cpp in Sources */,
 				CD48875B122873C200F5A88A /* input_driver.cpp in Sources */,
-				CD48875C122873C200F5A88A /* input_emissions_coef.cpp in Sources */,
 				CD48875D122873C200F5A88A /* input_output_driver.cpp in Sources */,
 				CD48875E122873C200F5A88A /* output_driver.cpp in Sources */,
-				CD48875F122873C200F5A88A /* read_emissions_coef.cpp in Sources */,
-				CD488760122873C200F5A88A /* so2_emissions.cpp in Sources */,
 				CD488762122873C200F5A88A /* ademand_function.cpp in Sources */,
 				CD488763122873C200F5A88A /* aproduction_function.cpp in Sources */,
 				CD488765122873C200F5A88A /* ces_production_function.cpp in Sources */,
@@ -2912,6 +2689,11 @@
 				CDBAAD7F1651520D00BB9E56 /* gcam_parallel.cpp in Sources */,
 				0E440957183C7EDF000DA5FF /* node_carbon_calc.cpp in Sources */,
 				0E44096E183D501B000DA5FF /* no_emiss_carbon_calc.cpp in Sources */,
+				CDE29983198C82C400556032 /* aemissions_control.cpp in Sources */,
+				CDE29984198C82C400556032 /* gdp_control.cpp in Sources */,
+				CDE29985198C82C400556032 /* mac_control.cpp in Sources */,
+				CDE29986198C82C400556032 /* nonco2_emissions.cpp in Sources */,
+				CDE29989198C831E00556032 /* emissions_control_factory.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

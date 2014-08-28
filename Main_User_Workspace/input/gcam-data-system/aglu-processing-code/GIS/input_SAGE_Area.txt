@@ -1,0 +1,7 @@
+LandArea:	RawData/GIS/landAreakm2.img
+AEZ2GCAM:	RawData/GIS/AEZ_GCAM_LUT.txt
+AEZ:		RawData/GIS/AEZ.img
+Protected:	RawData/GIS/ProArea_0408_ENVI.img
+Sage:		RawData/GIS/sage.img
+GridResult:	GIS/SAGE15_Area.csv
+Summary: 	GIS/SAGE15_Area_By_AEZ.csv

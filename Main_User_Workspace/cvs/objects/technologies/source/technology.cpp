@@ -51,7 +51,6 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
-#include "emissions/include/indirect_emiss_coef.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
@@ -1052,21 +1051,6 @@ const map<string, double> Technology::getEmissions( const string& aGoodName,
     }
 
     return emissions;
-}
-
-/* \brief Get a map containing emissions by fuel from the Technology.
-* \param aGoodName Name of the sector.
-* \param aPeriod Period for which to get emissions.
-* \return A map of fuel name to emissions.
-*/
-const map<string, double> Technology::getEmissionsByFuel( const string& aGoodName,
-                                                          const int aPeriod ) const
-{
-    map<string, double> emissionsByFuel;
-    for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        emissionsByFuel[ ghg[ i ]->getName() ] = ghg[ i ]->getEmissFuel( aPeriod );
-    }
-    return emissionsByFuel;
 }
 
 /*! \brief Returns Technology name

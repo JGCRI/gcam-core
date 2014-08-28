@@ -43,13 +43,13 @@
 #include <cassert>
 #include <cmath>
 #include "technologies/include/nuke_fuel_technology.h"
-#include "emissions/include/by_product.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "util/logger/include/ilogger.h"
 #include "technologies/include/iproduction_state.h"
+#include "technologies/include/ioutput.h"
 #include "technologies/include/marginal_profit_calculator.h"
 
 using namespace std;

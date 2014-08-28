@@ -1217,7 +1217,6 @@ void Subsector::emission( const int period ){
         ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( period );
         for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
             summary[period].updateemiss( (*vintageIter).second->getEmissions( sectorName, period ) );
-            summary[period].updateemfuelmap( (*vintageIter).second->getEmissionsByFuel( sectorName, period ) );
         }
     }
 }

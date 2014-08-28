@@ -1,0 +1,2885 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Africa_Eastern">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Africa_Northern">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Africa_Southern">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Africa_Western">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Australia_NZ">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Brazil">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Canada">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Central America and Caribbean">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Central Asia">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="China">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="EU-12">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="EU-15">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Europe_Eastern">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Europe_Non_EU">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="European Free Trade Association">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="India">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Indonesia">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Japan">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Mexico">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Middle East">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Pakistan">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Russia">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="South Africa">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="South America_Northern">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="South America_Southern">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="South Asia">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="South Korea">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Southeast Asia">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Taiwan">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Argentina">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+      <region name="Colombia">
+         <depresource name="coal">
+            <subresource name="coal">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+         <depresource name="unconventional oil">
+            <subresource name="unconventional oil">
+               <techChange fillout="1" year="2015">0.0025</techChange>
+               <techChange fillout="1" year="2020">0.0025</techChange>
+               <techChange fillout="1" year="2025">0.0025</techChange>
+               <techChange fillout="1" year="2030">0.0025</techChange>
+               <techChange fillout="1" year="2035">0.0025</techChange>
+               <techChange fillout="1" year="2040">0.0025</techChange>
+               <techChange fillout="1" year="2045">0.0025</techChange>
+               <techChange fillout="1" year="2050">0.0025</techChange>
+               <techChange fillout="1" year="2055">0.0025</techChange>
+               <techChange fillout="1" year="2060">0.0025</techChange>
+               <techChange fillout="1" year="2065">0.0025</techChange>
+               <techChange fillout="1" year="2070">0.0025</techChange>
+               <techChange fillout="1" year="2075">0.0025</techChange>
+               <techChange fillout="1" year="2080">0.0025</techChange>
+               <techChange fillout="1" year="2085">0.0025</techChange>
+               <techChange fillout="1" year="2090">0.0025</techChange>
+               <techChange fillout="1" year="2095">0.0025</techChange>
+               <techChange fillout="1" year="2100">0.0025</techChange>
+            </subresource>
+         </depresource>
+      </region>
+   </world>
+</scenario>

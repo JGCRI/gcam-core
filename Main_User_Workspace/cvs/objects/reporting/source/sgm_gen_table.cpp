@@ -341,14 +341,6 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
                 addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->getName(), CO2Emiss );
             }
         }
-        else if( mName == "EmissBySource" ){
-            unsigned int CO2index = util::searchForValue( prodTech->mGhgNameMap, string( "CO2" ) );
-            const double emissFuel = prodTech->mGhgs[ CO2index ]->getEmissFuel( aPeriod );
-            // Only primary energy sectors will have getEmissFuel > 0.
-            if( emissFuel > 0 ){
-                addToType( mModeltime->getper_to_yr( aPeriod ), mCurrentSectorName, emissFuel );
-            }
-        }
         else if( mName == "PEC" ) {
             for( unsigned int i=0; i<prodTech->mLeafInputs.size(); i++ ){
                 // get primary energy input only

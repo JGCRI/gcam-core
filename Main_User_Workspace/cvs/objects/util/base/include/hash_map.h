@@ -309,7 +309,7 @@ HashMap<Key, Value>::insert( const std::pair<Key, Value> aKeyValuePair ){
 	// value existed.
 	if( update ){
 		curr->mKeyValuePair.second = aKeyValuePair.second;
-		return make_pair( iterator( curr, bucketSpot, this ), false );
+		return std::make_pair( iterator( curr, bucketSpot, this ), false );
 	}
 
 	// We are not updating, so a new value must be added.
@@ -357,7 +357,7 @@ HashMap<Key, Value>::insert( const std::pair<Key, Value> aKeyValuePair ){
 		resize( mNumEntries * RESIZE_MULTIPLE + ADDITIONAL_INCREMENT );
 	}
 	// Return that an add and not an update occurred.
-	return make_pair( iterator( newValue.get(), bucketSpot, this ), true );
+	return std::make_pair( iterator( newValue.get(), bucketSpot, this ), true );
 }
 
 /*!

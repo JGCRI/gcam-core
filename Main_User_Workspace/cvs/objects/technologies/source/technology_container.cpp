@@ -411,7 +411,7 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
 {
     
     // Pass forward any emissions information
-    if( aPeriod > 1 && mVintagesByPeriod[ aPeriod - 1 ] != EmptyTechnology::getInstance() 
+    if( aPeriod > 0 && mVintagesByPeriod[ aPeriod - 1 ] != EmptyTechnology::getInstance()
         && mVintagesByPeriod[ aPeriod ] != EmptyTechnology::getInstance() )
     {
         vector<string> ghgNames = mVintagesByPeriod[ aPeriod -1]->getGHGNames();

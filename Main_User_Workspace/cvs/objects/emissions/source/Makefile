@@ -7,23 +7,20 @@
 PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       = acomplex_emissions.o \
-             aemissions_coef.o \
+OBJS       = nonco2_emissions.o \
              aghg.o \
-             by_product.o \
              co2_emissions.o \
              emissions_driver_factory.o \
              emissions_summer.o \
-             generic_emissions.o \
              ghg_factory.o \
-             ghg_mac.o \
              input_driver.o \
-             input_emissions_coef.o \
              input_output_driver.o \
              luc_emissions_summer.o \
              output_driver.o \
-             read_emissions_coef.o \
-             so2_emissions.o
+             emissions_control_factory.o \
+             aemissions_control.o \
+             mac_control.o \
+             gdp_control.o
 
 emissions_dir: ${OBJS}
 

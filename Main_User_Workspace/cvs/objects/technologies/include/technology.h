@@ -208,7 +208,6 @@ public:
     double getCost( const int aPeriod ) const;
 
     const std::map<std::string,double> getEmissions( const std::string& aGoodName, const int aPeriod ) const;
-    const std::map<std::string,double> getEmissionsByFuel( const std::string& aGoodName, const int aPeriod ) const;
 
     const std::string& getName() const;
 

@@ -128,10 +128,7 @@ public:
     
     virtual const std::map<std::string,double> getEmissions( const std::string& aGoodName,
                                                             const int aPeriod ) const;
-    
-    virtual const std::map<std::string,double> getEmissionsByFuel( const std::string& aGoodName,
-                                                                  const int aPeriod ) const;
-    
+       
     virtual const std::string& getName() const;
     
     virtual void setShareWeight( double shareWeightValue );

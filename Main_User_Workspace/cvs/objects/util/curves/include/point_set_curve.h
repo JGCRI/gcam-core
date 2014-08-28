@@ -93,6 +93,7 @@ public:
                                const double aDiscountRate ) const;
 
     void invertAxises();
+    PointSet* getPointSet();
 protected:
     static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
     PointSet* pointSet;

@@ -1,0 +1,1029 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>6.6e-05</satiation-level>
+                     <satiation-adder>-1.008e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>3e-05</satiation-level>
+                     <satiation-adder>-3.0267e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Africa_Eastern">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>8.433e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>2.65e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Africa_Northern">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>5.294e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>9.72e-07</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Africa_Southern">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>7.733e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>2.277e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Africa_Western">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>8.027e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>2.432e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Australia_NZ">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>5.5e-05</satiation-level>
+                     <satiation-adder>5.951e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.6e-05</satiation-level>
+                     <satiation-adder>-2.0685e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Brazil">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>9.496e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>4.016e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Canada">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>5.5e-05</satiation-level>
+                     <satiation-adder>1.871e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.6e-05</satiation-level>
+                     <satiation-adder>-5.437e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Central America and Caribbean">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>1.3026e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>5.73e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Central Asia">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>2.2514e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>6.138e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="China">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>2.6643e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>7.181e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="EU-12">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>5e-05</satiation-level>
+                     <satiation-adder>1.4181e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.3e-05</satiation-level>
+                     <satiation-adder>-1.14e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="EU-15">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>5e-05</satiation-level>
+                     <satiation-adder>-1.6746e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.3e-05</satiation-level>
+                     <satiation-adder>-4.578e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Europe_Eastern">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>2.191e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>5.763e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Europe_Non_EU">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>5e-05</satiation-level>
+                     <satiation-adder>3.2254e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.3e-05</satiation-level>
+                     <satiation-adder>1.1826e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="European Free Trade Association">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>5e-05</satiation-level>
+                     <satiation-adder>-4.7087e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.3e-05</satiation-level>
+                     <satiation-adder>-6.3919e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="India">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>9.212e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>-2.5e-07</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Indonesia">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>6.145e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>3.907e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Japan">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>-9.902e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>-2.1242e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Mexico">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>4.999e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>1.792e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Middle East">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>1.2125e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>6.391e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Pakistan">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>7.327e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>4.452e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Russia">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>1.7491e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>2.715e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="South Africa">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>4.79e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>-3.642e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.41760507966667</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="South America_Northern">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>9.253e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>3.906e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="South America_Southern">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>1.1676e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>5.08e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="South Asia">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>7.603e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>4.578e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="South Korea">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>-1.5662e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>1.558e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Southeast Asia">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>3.9e-05</satiation-level>
+                     <satiation-adder>1.2312e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>1.9e-05</satiation-level>
+                     <satiation-adder>4.917e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Taiwan">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>-4.3159e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.463079636666667</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>-1.8323e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.14810962706897</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Argentina">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>8.371e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>3.45e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+      <region name="Colombia">
+         <gcam-consumer name="resid">
+            <nodeInput name="resid">
+               <building-node-input name="resid_building">
+                  <satiation-demand-function>
+                     <satiation-level>4.4e-05</satiation-level>
+                     <satiation-adder>1.2116e-05</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="resid others">
+                     <satiation-demand-function>
+                        <satiation-level>0.385508</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+         <gcam-consumer name="comm">
+            <nodeInput name="comm">
+               <building-node-input name="comm_building">
+                  <satiation-demand-function>
+                     <satiation-level>2.1e-05</satiation-level>
+                     <satiation-adder>5.287e-06</satiation-adder>
+                  </satiation-demand-function>
+                  <building-service-input name="comm others">
+                     <satiation-demand-function>
+                        <satiation-level>1.1196345</satiation-level>
+                     </satiation-demand-function>
+                  </building-service-input>
+               </building-node-input>
+            </nodeInput>
+         </gcam-consumer>
+      </region>
+   </world>
+</scenario>

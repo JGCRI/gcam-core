@@ -1,0 +1,1 @@
+# File: A_an_input_supplysector,,,,# Description: Supplysectors of inputs to animal production - name / unit,,,,# Original source: NA,,,,# ----------,,,,supplysector,output.unit,input.unit,price.unit,logit.exponentFodderHerb_Residue,Mt,Mt,1975$/kg,-1.5Pasture_FodderGrass,Mt,Mt,1975$/kg,-1.5FeedCrops,Mt,Mt,1975$/kg,-1.5Scavenging_Other,Mt,Mt,1975$/kg,-1.5

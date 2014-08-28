@@ -65,4 +65,3 @@ public:
 
 
 #endif // _GHG_FACTORY_H_
-

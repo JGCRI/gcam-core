@@ -1,0 +1,6 @@
+LandArea:	RawData/GIS/landAreakm2.img
+AEZ2GCAM:	RawData/GIS/AEZ_GCAM_LUT.txt
+AEZ:		RawData/GIS/AEZ.img
+Protected:	RawData/GIS/ProArea_0408_ENVI.img
+Nfert:		RawData/GIS/Nfert_0083d.img
+GridResult:	GIS/Nfert_By_AEZ.csv

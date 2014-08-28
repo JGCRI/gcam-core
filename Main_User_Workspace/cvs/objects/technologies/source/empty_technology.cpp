@@ -145,14 +145,6 @@ const map<string, double> EmptyTechnology::getEmissions( const string& aGoodName
     return emissions;
 }
 
-const map<string, double> EmptyTechnology::getEmissionsByFuel( const string& aGoodName,
-                                                         const int aPeriod ) const
-{
-    const map<string, double> emissionsByFuel;
-    
-    return emissionsByFuel;
-}
-
 const string& EmptyTechnology::getName() const
 {
     const static string name = "empty";

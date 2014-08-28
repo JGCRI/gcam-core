@@ -896,16 +896,7 @@
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp">
       <Filter>Source Files\climate</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\emissions\source\acomplex_emissions.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\aemissions_coef.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\emissions\source\aghg.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\by_product.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\emissions\source\co2_emissions.cpp">
@@ -917,22 +908,10 @@
     <ClCompile Include="..\..\emissions\source\emissions_summer.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\emissions\source\generic_emissions.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\emissions\source\ghg_factory.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\emissions\source\ghg_mac.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\indirect_emiss_coef.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\emissions\source\input_driver.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\input_emissions_coef.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\emissions\source\input_output_driver.cpp">
@@ -942,12 +921,6 @@
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\emissions\source\output_driver.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\read_emissions_coef.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\so2_emissions.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\land_allocator\source\carbon_land_leaf.cpp">
@@ -1063,6 +1036,21 @@
     </ClCompile>
     <ClCompile Include="..\..\target_finder\source\cumulative_emissions_target.cpp">
       <Filter>Source Files\target_finder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\emissions\source\aemissions_control.cpp">
+      <Filter>Source Files\emissions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\emissions\source\emissions_control_factory.cpp">
+      <Filter>Source Files\emissions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\emissions\source\gdp_control.cpp">
+      <Filter>Source Files\emissions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\emissions\source\mac_control.cpp">
+      <Filter>Source Files\emissions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\emissions\source\nonco2_emissions.cpp">
+      <Filter>Source Files\emissions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1939,19 +1927,10 @@
     <ClInclude Include="..\..\climate\include\MAGICC_array.h">
       <Filter>Header Files\climate</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\emissions\include\acomplex_emissions.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\aemissions_coef.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\emissions\include\aemissions_driver.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\aghg.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\by_product.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\co2_emissions.h">
@@ -1963,22 +1942,10 @@
     <ClInclude Include="..\..\emissions\include\emissions_summer.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\emissions\include\generic_emissions.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\emissions\include\ghg_factory.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\emissions\include\ghg_mac.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\indirect_emiss_coef.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\emissions\include\input_driver.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\input_emissions_coef.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\input_output_driver.h">
@@ -1988,12 +1955,6 @@
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\output_driver.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\read_emissions_coef.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\so2_emissions.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\land_allocator\include\carbon_land_leaf.h">
@@ -2166,6 +2127,21 @@
     </ClInclude>
     <ClInclude Include="..\..\target_finder\include\cumulative_emissions_target.h">
       <Filter>Header Files\target_finder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\emissions\include\aemissions_control.h">
+      <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\emissions\include\emissions_control_factory.h">
+      <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\emissions\include\gdp_control.h">
+      <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\emissions\include\mac_control.h">
+      <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\emissions\include\nonco2_emissions.h">
+      <Filter>Header Files\emissions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

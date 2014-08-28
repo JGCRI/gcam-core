@@ -45,9 +45,6 @@
  */
 
 #include "emissions/include/aghg.h"
-#include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include "util/base/include/value.h"
 
 /*! 
  * \ingroup Objects
@@ -66,12 +63,6 @@ public:
     
     static const std::string& getXMLNameStatic();
 
-    virtual const std::string& getName() const;
-    
-    virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const int aPeriod );
-
     virtual double getGHGValue( const std::string& aRegionName,
                                 const std::vector<IInput*>& aInputs,
                                 const std::vector<IOutput*>& aOutputs,
@@ -88,13 +79,16 @@ public:
 protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual void parseName( const std::string& aNameAttr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 private:
-    std::string mName; //!< name of ghg gas
+    double calcOutputCoef( const std::vector<IOutput*>& aOutputs, const int aPeriod ) const;
+    double calcInputCoef( const std::vector<IInput*>& aInputs, const int aPeriod ) const;
+    double calcOutputEmissions( const std::vector<IOutput*>& aOutputs,
+                                const int aPeriod ) const;
+    double calcInputCO2Emissions( const std::vector<IInput*>& aInputs, const std::string& aRegionName,
+                                  const int aPeriod ) const;
 };
 
 #endif // _CO2_EMISSIONS_H_
-

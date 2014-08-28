@@ -1,4 +1,0 @@
-
-1,world/+{name}region,region/+{name}depresource,depresource/+{name}subresource,subresource/+{year=1975}cal-production,subresource/+{year=1990}cal-production,subresource/+{year=2005}cal-production,subresource/+{year=1975;fillout=1}severanceTax,subresource/+{year=1975;fillout=1}environCost,scenario,scenario/world
-
-2,world/+{name}region,region/+{name}depresource,depresource/+{year=1975}price,depresource/+{year=1990}price,depresource/+{year=2005}price,scenario,scenario/world

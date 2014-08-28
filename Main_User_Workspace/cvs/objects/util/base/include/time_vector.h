@@ -280,7 +280,7 @@ namespace objects {
     typename TimeVectorBase<T>::const_iterator& TimeVectorBase<T>::const_iterator::operator++(){
         ++mPos;
         // If the end iterator is incremented it should remain at the end.
-        mPos = min( mPos, mParent->size() );
+        mPos = std::min( mPos, mParent->size() );
         return *this;
     }
 
@@ -439,7 +439,7 @@ namespace objects {
     typename TimeVectorBase<T>::iterator& TimeVectorBase<T>::iterator::operator++(){
         ++mPos;
         // If the end iterator is incremented it should remain at the end.
-        mPos = min( mPos, mParent->size() );
+        mPos = std::min( mPos, mParent->size() );
         return *this;
     }
 

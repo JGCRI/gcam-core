@@ -125,6 +125,11 @@ const string& PointSetCurve::getXMLName() const {
     return XML_NAME;
 }
 
+//! Get the underlying PointSet
+PointSet* PointSetCurve::getPointSet() {
+    return pointSet;
+}
+
 //! Get the Y value corresponding to a given X value.
 double PointSetCurve::getY( const double xValue ) const {
     double retValue;

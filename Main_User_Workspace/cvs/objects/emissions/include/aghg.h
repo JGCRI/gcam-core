@@ -50,6 +50,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 
@@ -57,8 +58,8 @@
 class GDP;
 class IInfo;
 class IOutput;
-class Input;
 class AEmissionsDriver;
+class AEmissionsControl;
 class ICaptureComponent;
 class IInput;
 class CachedMarket;
@@ -73,9 +74,6 @@ class CachedMarket;
  *          emissions. Through an emissions coefficient or a read-in input
  *          emissions for a base year (or years). These are mutually exclusive.
  *          The last one of these read in determines the method used.
- *
- *          Emissions emitted indirectly through use of technology are also
- *          calculated.
  * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
 class AGHG: public IVisitable, public IRoundTrippable
@@ -85,19 +83,38 @@ class AGHG: public IVisitable, public IRoundTrippable
 public:
     //! Virtual Destructor.
     virtual ~AGHG();
+    
     //! Clone operator.
     virtual AGHG* clone() const = 0;
     
-    virtual void copyGHGParameters( const AGHG* prevGHG ) = 0;
+    virtual void copyGHGParameters( const AGHG* aPrevGHG ) = 0;
 
-    void XMLParse( const xercesc::DOMNode* tempnode );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    static const std::string& getXMLNameStatic();
+    // IRoundTrippable methods
+    void XMLParse( const xercesc::DOMNode* aNode );
 
+    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+
+    void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
+
+    virtual const std::string& getName() const;
+
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
+                               const IInfo* aTechIInfo );
+
+    virtual void initCalc( const std::string& aRegionName,
+                           const IInfo* aLocalInfo,
+                           const int aPeriod );
+
+    /*!
+     * \note This is only used by SGM inputs.
+     */
     double getGHGValue( const IInput* aInput, const std::string& aRegionName, const std::string& aProdName,
                         const ICaptureComponent* aSequestrationDevice, const int aPeriod ) const;
-                        
+    
+    /*!
+     * \note This is only used by SGM outputs.
+     */
     double getGHGValue( const IOutput* aOutput, const std::string& aRegionName, const std::string& aProdName,
                         const ICaptureComponent* aSequestrationDevice, const int aPeriod ) const;
     /*! 
@@ -108,11 +125,10 @@ public:
      *          is a difference in the emissions coefficients.
      * \author Sonny Kim
      * \param aRegionName Name of the region for GHG
-     * \param aFuelName Name of the fuel
+     * \param aInputs Vector of Technology inputs.
      * \param aOutputs Vector of Technology outputs.
-     * \param aEfficiency The efficiency of the technology this ghg emitted by.
-     * \param aPeriod The period in which this calculation is occurring.
      * \param aSequestrationDevice The device responsible for capturing emissions.
+     * \param aPeriod The period in which this calculation is occurring.
      * \return Generalized cost or value of the GHG
      */
     virtual double getGHGValue( const std::string& aRegionName,
@@ -133,14 +149,11 @@ public:
      *          if emissions are read in.  
      * \author Nick Fernandez, Steve Smith
      * \param aRegionName Name of the region for GHG
-     * \param aFuelname The name of the fuel
-     * \param aInput The amount of fuel sent out
+     * \param aInputs Vector of Technology inputs.
      * \param aOutputs Vector of Technology outputs.
      * \param aGDP Regional GDP.
      * \param aSequestrationDevice The object potentially capturing emissions.
      * \param aPeriod The period in which this calculation is occurring.
-     * \todo Emissions calc will not work properly with vintaging (base-year emissions will not work,
-     *       and some thought needs to be given to how emissions controls should work)
      */
     virtual void calcEmission( const std::string& aRegionName, 
                                const std::vector<IInput*>& aInputs,
@@ -148,50 +161,12 @@ public:
                                const GDP* aGDP,
                                ICaptureComponent* aSequestrationDevice,
                                const int aPeriod ) = 0;
-
-    /*!
-     * \brief Returns the name of ghg gas.
-     * \return A string representing the name of the ghg gas.
-     */
-    virtual const std::string& getName() const = 0;
-    /*!
-     * \brief Returns GHG emissions.
-     * \return GHG emissions amount.
-     */
+    
     double getEmission( const int aPeriod ) const;
-    /*!
-     * \brief Returns the name of ghg gas.
-     * \return A string representing the name of the ghg gas.
-     */
-    double getEmissFuel( const int aPeriod ) const;
-    /*!
-     * \brief Returns the sequestered amount of GHG gas.
-     * \return Sequestered amount of GHG gas.
-     * \author Sonny Kim
-     * \param aPeriod Period for sequestered amount.
-     */
+    
     double getEmissionsSequestered( const int aPeriod ) const;
 
-    bool getEmissionsCoefInputStatus() const;
-    void setEmissionsCoefInputStatus();
-    std::string getGHGDriverName() const ;  // return a GHG driver name
-    
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const IInfo* aTechIInfo );
-
-    /*!
-     * \brief Perform initializations that only need to be done once per period.
-     * \param aRegionName Region name.
-     * \param aLocalInfo The local information object.
-     * \param aPeriod Model period.
-     */
-    virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const int aPeriod ) = 0;
-
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    void setEmissionsDriver( std::auto_ptr<AEmissionsDriver>& aEmissionsDriver );
     
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const AGHG* aPreviousGHG,
@@ -200,8 +175,8 @@ public:
 protected:
 
     AGHG();
-    AGHG( const AGHG& other );
-    AGHG& operator=( const AGHG& other );
+    AGHG( const AGHG& aOther );
+    AGHG& operator=( const AGHG& aOther );
 
     /*!
      * \brief Get the XML node name for output to XML.
@@ -213,16 +188,18 @@ protected:
      * \return The constant XML_NAME.
      */
     virtual const std::string& getXMLName() const = 0;
+
+    //! GHG name
+    std::string mName;
+
     //! Unit of emissions
-    std::string mEmissionsUnit; 
+    std::string mEmissionsUnit;
 
-    double calcInputCO2Emissions( const std::vector<IInput*>& aInputs, const std::string& aRegionName, const int aPeriod ) const;
+    //! Emissions (calculated)
+    std::vector<double> mEmissions;
 
-    std::vector<double> mEmissions; //!< emissions (calculated)
-    std::vector<double> mEmissionsByFuel; //!< Emissions by primary fuel.
+    //! Emissions sequestered by a ICaptureComponent
     std::vector<double> mEmissionsSequestered;
-
-    std::auto_ptr<AEmissionsDriver> mEmissionsDriver; //!< emissions driver delegate
     
     //! Pre-located market which has been cached from the marketplace to get the price
     //! of this ghg and add demands to the market.
@@ -233,49 +210,39 @@ protected:
      * \details Method parses any input data from child nodes that are specific
      *          to the classes derived from this class.
      * \author Josh Lurz, Steve Smith
-     * \param nodeName name of current node
-     * \param curr pointer to the current node in the XML input tree
+     * \param aNodeName name of current node
+     * \param aCurrNode pointer to the current node in the XML input tree
      * \return Whether any node was parsed.
      */
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
-    /*!
-     * \brief Parses the name attribute of the GHG node.
-     * \param nodeName The name to parse.
-     */
-    virtual void parseName( const std::string& aNameAttr ) = 0;
+    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode ) = 0;
+
     /*!
      * \brief XML output stream for derived classes
      * \details Function writes output due to any variables specific to derived
      *          classes to XML
      * \author Jim Naslund
-     * \param out reference to the output stream
-     * \param tabs A tabs object responsible for printing the correct number of
+     * \param aOut reference to the output stream
+     * \param aTabs A tabs object responsible for printing the correct number of
      *        tabs. 
      */
-    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
+    virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
+    
     /*!
      * \brief XML debug output stream for derived classes
      * \details Function writes output due to any variables specific to derived
      *          classes to XML
      * \author Jim Naslund
-     * \param out reference to the output stream
-     * \param tabs A tabs object responsible for printing the correct number of
+     * \param aPeriod The model period.
+     * \param aOut reference to the output stream
+     * \param aTabs A tabs object responsible for printing the correct number of
      *        tabs. 
      */
-    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+    virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
 
-    virtual double emissionsDriver( const double inputIn, const double outputIn ) const;
-    double calcOutputCoef( const std::vector<IOutput*>& aOutputs, const int aPeriod ) const;
-    double calcOutputEmissions( const std::vector<IOutput*>& aOutputs,
-                                const int aPeriod ) const;
-    double calcInputCoef( const std::vector<IInput*>& aInputs, const int aPeriod ) const;
     void addEmissionsToMarket( const std::string& aRegionName, const int aPeriod );
     
 private:
     void copy( const AGHG& other );
-
 };
 
 #endif // _AGHG_H_
-
-

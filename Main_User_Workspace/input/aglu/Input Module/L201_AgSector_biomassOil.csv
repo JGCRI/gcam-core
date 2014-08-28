@@ -1,7 +1,0 @@
-INPUT_TABLE
-Variable ID
-AgSector
-
-region,AgSupplySector,output.unit,input.unit,price.unit,price,calPrice,market,logit.exponent
-Africa,biomassOil,EJ,thous km2,1975$/GJ,1,0.701,global,-3
-India,biomassOil,EJ,thous km2,1975$/GJ,1,0.701,global,-3

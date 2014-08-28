@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>78.46082</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Africa_Eastern">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.11078</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Africa_Northern">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.09645</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Africa_Southern">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.06708</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Africa_Western">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>2.1806</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Australia_NZ">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>7.03603</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Brazil">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>15.46069</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Canada">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>3.01769</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Central America and Caribbean">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.22383</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Central Asia">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>6.83418</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="China">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>11.75595</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="EU-12">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>7.01449</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="EU-15">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>31.45348</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Europe_Eastern">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.99858</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Europe_Non_EU">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>9.88046</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="European Free Trade Association">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>4.37684</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="India">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>5.74418</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Indonesia">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>15.72485</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Japan">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>5.74418</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Mexico">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>3.51173</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Middle East">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>5.74418</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Pakistan">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>8.19529</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Russia">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>19.67872</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="South Africa">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.23447</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="South America_Northern">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>2.47628</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="South America_Southern">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>7.19135</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="South Asia">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>12.5646</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="South Korea">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.001</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Southeast Asia">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>21.28141</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Taiwan">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.35133</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Argentina">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>5.0703</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+      <region name="Colombia">
+         <renewresource name="geothermal">
+            <sub-renewable-resource name="EGS">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>2.13128</available>
+                  <extractioncost>1.352</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+      </region>
+   </world>
+</scenario>

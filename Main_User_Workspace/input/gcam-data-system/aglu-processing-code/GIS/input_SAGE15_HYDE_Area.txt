@@ -1,0 +1,11 @@
+LandArea:	RawData/GIS/landAreakm2.img
+AEZ2GCAM:	RawData/GIS/AEZ_GCAM_LUT.txt
+AEZ:		RawData/GIS/AEZ.img
+Protected:	RawData/GIS/ProArea_0408_ENVI.img
+HydeUrban:	RawData/GIS/Urban_BSQ_32_float.img
+HydeCrop:	RawData/GIS/crop_BSQ_32_float.img
+HydeGrass:	RawData/GIS/grass_BSQ_32_float.img
+Sage:		RawData/GIS/sage.img
+GridResult:	GIS/Sage_Hyde15_Area.csv
+Summary: 	GIS/Sage_Hyde15_Area_By_AEZ.csv
+GCAMSummary:	GIS/Sage_Hyde15_Area_By_GCAM.csv
