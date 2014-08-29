@@ -609,6 +609,43 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>12t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_1">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-2.7t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -684,43 +721,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (4.5-12t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_1">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>12t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -1884,6 +1884,52 @@
                   </period>
                </stub-technology>
             </subsector>
+            <subsector name="Truck (>14t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-2t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -2136,52 +2182,6 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Truck (>14t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
          </supplysector>
          <supplysector name="trn_pass" nocreate="1">
             <subsector name="Domestic Aviation" nocreate="1">
@@ -2266,6 +2266,100 @@
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                      <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="trn_pass_road_bus" nocreate="1">
+            <subsector name="Heavy Bus" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
+            <subsector name="Light Bus" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                   </period>
@@ -2556,100 +2650,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Subcompact Car" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="trn_pass_road_bus" nocreate="1">
-            <subsector name="Heavy Bus" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Light Bus" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_2">
@@ -3419,6 +3419,49 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>32t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_1">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-3.5t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -3506,49 +3549,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (3.5-16t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_1">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>32t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -3709,7 +3709,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -3733,7 +3733,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -4692,6 +4692,80 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_1">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
+            <subsector name="Truck (>32t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_1">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-1t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -4877,80 +4951,6 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_1">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>32t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_1">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
          </supplysector>
          <supplysector name="trn_pass" nocreate="1">
             <subsector name="Domestic Aviation" nocreate="1">
@@ -5069,7 +5069,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -5093,7 +5093,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -5983,6 +5983,49 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>32t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_1">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-3.5t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -6070,49 +6113,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (3.5-16t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_1">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>32t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -6273,7 +6273,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -6297,7 +6297,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -7192,6 +7192,43 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>32t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_1">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-3.5t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -7267,43 +7304,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (3.5-16t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_1">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>32t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -7458,7 +7458,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -7482,7 +7482,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -8525,7 +8525,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_2">
@@ -8549,7 +8549,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_2">
@@ -9425,6 +9425,40 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-1t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -9460,40 +9494,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (6-15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -9592,7 +9592,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -9613,7 +9613,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -11569,6 +11569,27 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-1t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -11591,27 +11612,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (6-15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -11678,7 +11678,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -11699,7 +11699,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -12436,6 +12436,43 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_1">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-4.5t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -12474,43 +12511,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (4.5-15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_1">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -13632,6 +13632,74 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
+            <subsector name="Truck (>32t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-1t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -13802,74 +13870,6 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>32t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
          </supplysector>
          <supplysector name="trn_pass_road" nocreate="1">
             <subsector name="Bus" nocreate="1">
@@ -13929,7 +13929,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -13950,7 +13950,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -14858,6 +14858,43 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>32t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_1">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-3.5t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -14933,43 +14970,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (3.5-16t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_1">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>32t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -15124,7 +15124,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -15148,7 +15148,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_1">
@@ -15823,6 +15823,43 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_3">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-1t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -15861,43 +15898,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (6-15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_3">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_3">
@@ -16052,7 +16052,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_3">
@@ -16076,7 +16076,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_3">
@@ -18013,6 +18013,52 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>32t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_4">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_4">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-3.5t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -18106,52 +18152,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (3.5-16t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_4">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_4">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>32t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_4">
@@ -18318,7 +18318,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_4">
@@ -18342,7 +18342,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="SO2_4">
@@ -19963,6 +19963,40 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-1t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -19998,40 +20032,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (6-15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -20130,7 +20130,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -20151,7 +20151,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -23176,6 +23176,40 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-1t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -23211,40 +23245,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (6-15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -23343,7 +23343,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -23364,7 +23364,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -24246,6 +24246,40 @@
             </subsector>
          </supplysector>
          <supplysector name="trn_freight_road" nocreate="1">
+            <subsector name="Truck (>15t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-1t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -24281,40 +24315,6 @@
                </stub-technology>
             </subsector>
             <subsector name="Truck (6-15t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>15t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -24413,7 +24413,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -24434,7 +24434,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -28656,6 +28656,80 @@
                   </period>
                </stub-technology>
             </subsector>
+            <subsector name="Truck (>14t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
+            <subsector name="Truck (>32t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-3.5t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -28844,41 +28918,9 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Truck (>14t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Truck (>32t)" nocreate="1">
+         </supplysector>
+         <supplysector name="trn_pass_road" nocreate="1">
+            <subsector name="Bus" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -28919,8 +28961,8 @@
                </stub-technology>
             </subsector>
          </supplysector>
-         <supplysector name="trn_pass_road" nocreate="1">
-            <subsector name="Bus" nocreate="1">
+         <supplysector name="trn_pass_road_bus" nocreate="1">
+            <subsector name="Heavy Bus" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -28951,10 +28993,38 @@
                      <Non-CO2 name="NOx">
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
+            <subsector name="Light Bus" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
                      <Non-CO2 name="BC">
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                      <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                   </period>
@@ -29006,7 +29076,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (50-250cc)" nocreate="1">
+            <subsector name="Motorcycle (>250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -29027,7 +29097,7 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Motorcycle (>250cc)" nocreate="1">
+            <subsector name="Motorcycle (50-250cc)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
                      <Non-CO2 name="CO">
@@ -29239,76 +29309,6 @@
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                      <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="trn_pass_road_bus" nocreate="1">
-            <subsector name="Heavy Bus" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Light Bus" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                   </period>
@@ -34724,6 +34724,46 @@
                   </period>
                </stub-technology>
             </subsector>
+            <subsector name="Truck (>14t)" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
             <subsector name="Truck (0-2t)" nocreate="1">
                <stub-technology name="Liquids" nocreate="1">
                   <period year="1975">
@@ -34964,46 +35004,6 @@
                   </period>
                </stub-technology>
             </subsector>
-            <subsector name="Truck (>14t)" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
          </supplysector>
          <supplysector name="trn_pass" nocreate="1">
             <subsector name="Domestic Aviation" nocreate="1">
@@ -35094,6 +35094,88 @@
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                      <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="trn_pass_road_bus" nocreate="1">
+            <subsector name="Heavy Bus" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+            </subsector>
+            <subsector name="Light Bus" nocreate="1">
+               <stub-technology name="Liquids" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="BC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="OC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                  </period>
+               </stub-technology>
+               <stub-technology name="NG" nocreate="1">
+                  <period year="1975">
+                     <Non-CO2 name="SO2_2">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="CO">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NMVOC">
+                        <gdp-control delete="1" name="GDP_control"/>
+                     </Non-CO2>
+                     <Non-CO2 name="NOx">
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                   </period>
@@ -35442,88 +35524,6 @@
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                      <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="trn_pass_road_bus" nocreate="1">
-            <subsector name="Heavy Bus" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-            </subsector>
-            <subsector name="Light Bus" nocreate="1">
-               <stub-technology name="Liquids" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="BC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="OC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                  </period>
-               </stub-technology>
-               <stub-technology name="NG" nocreate="1">
-                  <period year="1975">
-                     <Non-CO2 name="SO2_2">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="CO">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NMVOC">
-                        <gdp-control delete="1" name="GDP_control"/>
-                     </Non-CO2>
-                     <Non-CO2 name="NOx">
                         <gdp-control delete="1" name="GDP_control"/>
                      </Non-CO2>
                   </period>

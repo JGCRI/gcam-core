@@ -159,24 +159,28 @@ readdata <- function( domain="none", fn="none", extension=".csv", na.strings="",
 
 	myfn <- file_fqn( domain, fn, extension )
 
-	# Update dependency list, if necessary
-	deps <- DEPENDENCIES[[ GCAM_SOURCE_FN[ GCAM_SOURCE_RD ] ]]
-	if( !( fn %in% deps ) ) {
-		DEPENDENCIES[[ GCAM_SOURCE_FN[ GCAM_SOURCE_RD ] ]] <<- c( deps, myfn )
-	}
-	
 	printlog( "Reading", myfn, cr=F )
-	if( !file.exists( myfn ) ) {
-        if( !must.exist ) {
-            return(NULL)
-        }
-		printlog( "WARNING: file", myfn, "does not appear to exist" )
+
+	if( file.exists( myfn ) ) {
+	
+		x <- ( read.csv( myfn, na.strings=na.strings, stringsAsFactors=F,
+							comment.char=GCAM_DATA_COMMENT,	# Our comment signal
+							... ) )	
+		printlog( "...OK.", nrow( x ), "rows,", ncol( x ), "cols", ts=F )
+
+		# Update dependency list, if necessary
+		deps <- DEPENDENCIES[[ GCAM_SOURCE_FN[ GCAM_SOURCE_RD ] ]]
+		if( !( fn %in% deps ) ) {
+			DEPENDENCIES[[ GCAM_SOURCE_FN[ GCAM_SOURCE_RD ] ]] <<- c( deps, myfn )
+		}
+	
+		return( x )
+		
+	} else {
+		printlog( "...does not exist" )
+		stopifnot( !must.exist )
+		return( NULL )
 	}
-	x <- ( read.csv( myfn, na.strings=na.strings, stringsAsFactors=F,
-						comment.char=GCAM_DATA_COMMENT,	# Our comment signal
-						... ) )	
-	printlog( "...OK.", nrow( x ), "rows,", ncol( x ), "cols", ts=F )
-	return( x )
 }
 
 # -----------------------------------------------------------------------------

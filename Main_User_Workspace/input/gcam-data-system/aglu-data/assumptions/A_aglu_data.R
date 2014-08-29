@@ -100,7 +100,7 @@ digits_water_content <- 2
 
 #Land cover data
 digits_land_total <- 2
-digits_land_use <- 5
+digits_land_use <- 7
 digits_land_value <- 0
 
 digits_AgProdChange <- 4 #rate of change in yield
