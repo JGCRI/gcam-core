@@ -79,7 +79,11 @@ rcp_gcm_cm_aezid <- c( rcp_gcm_cm, "ID" )
 rcp_gcm_cm_aezid_irr <- c( rcp_gcm_cm, "ID", "irr" )
 rcp_gcm_cm_aezid_crop <- c( rcp_gcm_cm, "ID", "crop" )
 rcp_gcm_cm_aezid_crop_irr <- c( rcp_gcm_cm, "ID", "crop", "irr" )
-
+irr <- "Irr_Rfd"
+R_C_irr <- c( R_C, irr )
+R_C_Y_irr <- c( R_C_Y, irr )
+R_C_AEZ_irr <- c( R_C_AEZ, irr )
+R_AEZ_irr <- c( R, AEZ, irr )
 
 #-----------------------------------------------------------------
 #NUMBERS OF DIGITS FOR MODEL INPUT DATA
@@ -100,7 +104,7 @@ digits_water_content <- 2
 
 #Land cover data
 digits_land_total <- 2
-digits_land_use <- 5
+digits_land_use <- 7
 digits_land_value <- 0
 
 digits_AgProdChange <- 4 #rate of change in yield
@@ -253,3 +257,9 @@ high_meat_mult <- 1.15
 #GDP per capita thressholds for SSP4 region groupings
 hi_growth_pcgdp <- 12.275
 lo_growth_pcgdp <- 2.75
+
+#Ghost share on land uses
+ghost_share_node <- 0.25
+ghost_share_bio <- 0.5
+ghost_share_tree <- 0.05
+
