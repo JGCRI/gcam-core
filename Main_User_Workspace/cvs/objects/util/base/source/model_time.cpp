@@ -64,7 +64,7 @@ Modeltime::Modeltime()
 :mIsInitialized( false ),
 mStartYear( -1 ),
 mEndYear( -1 ),
-mFinalCalibrationYear( 2005 )
+mFinalCalibrationYear( 2010 )
 {
 }
 
@@ -117,7 +117,7 @@ bool Modeltime::XMLParse( const DOMNode* aNode ) {
         }
         else if ( nodeName == "final-calibration-year" ){
             int tempCalibrationYear = XMLHelper<int>::getValue( curr ); 
-            // mFinalCalibrationYear is initialized to 2005
+            // mFinalCalibrationYear is initialized to 2010
             if ( tempCalibrationYear != mFinalCalibrationYear ){
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::WARNING );
