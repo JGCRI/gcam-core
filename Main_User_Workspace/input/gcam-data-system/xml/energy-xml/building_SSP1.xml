@@ -839,7 +839,7 @@
                <building-node-input name="resid_building">
                   <satiation-demand-function>
                      <satiation-level>3.2e-05</satiation-level>
-                     <satiation-adder>7.814e-06</satiation-adder>
+                     <satiation-adder>7.812e-06</satiation-adder>
                   </satiation-demand-function>
                   <building-service-input name="resid others">
                      <satiation-demand-function>
@@ -854,7 +854,7 @@
                <building-node-input name="comm_building">
                   <satiation-demand-function>
                      <satiation-level>1.5e-05</satiation-level>
-                     <satiation-adder>4.698e-06</satiation-adder>
+                     <satiation-adder>4.7e-06</satiation-adder>
                   </satiation-demand-function>
                   <building-service-input name="comm others">
                      <satiation-demand-function>
@@ -903,7 +903,7 @@
                <building-node-input name="resid_building">
                   <satiation-demand-function>
                      <satiation-level>3.2e-05</satiation-level>
-                     <satiation-adder>1.31e-05</satiation-adder>
+                     <satiation-adder>1.3009e-05</satiation-adder>
                   </satiation-demand-function>
                   <building-service-input name="resid others">
                      <satiation-demand-function>
@@ -918,7 +918,7 @@
                <building-node-input name="comm_building">
                   <satiation-demand-function>
                      <satiation-level>1.5e-05</satiation-level>
-                     <satiation-adder>5.368e-06</satiation-adder>
+                     <satiation-adder>5.354e-06</satiation-adder>
                   </satiation-demand-function>
                   <building-service-input name="comm others">
                      <satiation-demand-function>

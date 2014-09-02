@@ -399,7 +399,7 @@
                   <extractioncost>0.569</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>12.5646</available>
+                  <available>10.12349</available>
                   <extractioncost>1.352</extractioncost>
                </grade>
                <maxSubResource>1</maxSubResource>
@@ -429,7 +429,7 @@
                   <extractioncost>0.569</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>21.28141</available>
+                  <available>23.72252</available>
                   <extractioncost>1.352</extractioncost>
                </grade>
                <maxSubResource>1</maxSubResource>

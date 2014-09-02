@@ -5058,7 +5058,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>4.54e-05</calibrated-value>
+                        <calibrated-value>4.51e-05</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -5129,25 +5129,25 @@
                <stub-technology name="refined liquids">
                   <period year="1975">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>0.0748383</calibrated-value>
+                        <calibrated-value>0.0698351</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>0.1190303</calibrated-value>
+                        <calibrated-value>0.1074528</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>0.2631916</calibrated-value>
+                        <calibrated-value>0.2497519</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>0.3463999</calibrated-value>
+                        <calibrated-value>0.33085</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -5179,10 +5179,10 @@
             <price-elasticity year="2090">-1</price-elasticity>
             <price-elasticity year="2095">-1</price-elasticity>
             <price-elasticity year="2100">-1</price-elasticity>
-            <base-service year="1975">0.012049</base-service>
-            <base-service year="1990">0.019759</base-service>
-            <base-service year="2005">0.045335</base-service>
-            <base-service year="2010">0.0669891</base-service>
+            <base-service year="1975">0.0112435</base-service>
+            <base-service year="1990">0.0178372</base-service>
+            <base-service year="2005">0.0430501</base-service>
+            <base-service year="2010">0.0642834</base-service>
          </energy-final-demand>
       </region>
       <region name="South Korea">
@@ -5436,19 +5436,19 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.0006693</calibrated-value>
+                        <calibrated-value>0.000671</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.0019448</calibrated-value>
+                        <calibrated-value>0.0019478</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="elect_td_trn">
-                        <calibrated-value>0.0075698</calibrated-value>
+                        <calibrated-value>0.0075777</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -5513,25 +5513,25 @@
                <stub-technology name="refined liquids">
                   <period year="1975">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>0.6913444</calibrated-value>
+                        <calibrated-value>0.6963476</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>1.744363</calibrated-value>
+                        <calibrated-value>1.7559406</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>3.8065682</calibrated-value>
+                        <calibrated-value>3.8200079</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>5.257537</calibrated-value>
+                        <calibrated-value>5.2730868</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -5563,10 +5563,10 @@
             <price-elasticity year="2090">-1</price-elasticity>
             <price-elasticity year="2095">-1</price-elasticity>
             <price-elasticity year="2100">-1</price-elasticity>
-            <base-service year="1975">0.1113064</base-service>
-            <base-service year="1990">0.2899332</base-service>
-            <base-service year="2005">0.6494819</base-service>
-            <base-service year="2010">0.932309</base-service>
+            <base-service year="1975">0.112112</base-service>
+            <base-service year="1990">0.2918559</base-service>
+            <base-service year="2005">0.6517682</base-service>
+            <base-service year="2010">0.9350188</base-service>
          </energy-final-demand>
       </region>
       <region name="Taiwan">

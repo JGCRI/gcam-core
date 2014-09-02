@@ -19148,25 +19148,25 @@
                   </interpolation-rule>
                   <period year="1975">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0220809</calibrated-value>
+                        <calibrated-value>0.0214811</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0381467</calibrated-value>
+                        <calibrated-value>0.035454</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0789174</calibrated-value>
+                        <calibrated-value>0.0762962</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0863082</calibrated-value>
+                        <calibrated-value>0.0841352</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -19218,25 +19218,25 @@
                   </interpolation-rule>
                   <period year="1975">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0319868</calibrated-value>
+                        <calibrated-value>0.0269407</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0161414</calibrated-value>
+                        <calibrated-value>0.0148369</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0156917</calibrated-value>
+                        <calibrated-value>0.0146612</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0284171</calibrated-value>
+                        <calibrated-value>0.0257816</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -19284,25 +19284,25 @@
                <stub-technology name="electricity">
                   <period year="1975">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.0097165</calibrated-value>
+                        <calibrated-value>0.0088715</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.0247381</calibrated-value>
+                        <calibrated-value>0.0222659</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.0740603</calibrated-value>
+                        <calibrated-value>0.0704767</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.1203552</calibrated-value>
+                        <calibrated-value>0.1162123</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -19324,7 +19324,7 @@
                   </interpolation-rule>
                   <period year="1975">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0007461</calibrated-value>
+                        <calibrated-value>0.0007486</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -19336,13 +19336,13 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0298224</calibrated-value>
+                        <calibrated-value>0.0298968</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0502619</calibrated-value>
+                        <calibrated-value>0.0503789</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -19403,25 +19403,25 @@
                   </interpolation-rule>
                   <period year="1975">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0212571</calibrated-value>
+                        <calibrated-value>0.0209426</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0292613</calibrated-value>
+                        <calibrated-value>0.0277367</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0772645</calibrated-value>
+                        <calibrated-value>0.0735146</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0878854</calibrated-value>
+                        <calibrated-value>0.0865324</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -19519,7 +19519,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0319301</calibrated-value>
+                        <calibrated-value>0.0319311</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -19550,25 +19550,25 @@
                <stub-technology name="refined liquids">
                   <period year="1975">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0037348</calibrated-value>
+                        <calibrated-value>0.0034866</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0083327</calibrated-value>
+                        <calibrated-value>0.0079812</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0233049</calibrated-value>
+                        <calibrated-value>0.0230752</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0167977</calibrated-value>
+                        <calibrated-value>0.0165406</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -19592,226 +19592,226 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0791301</calOutputValue>
+                        <calOutputValue>0.0732329</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.9115798</coefficient>
+                        <coefficient>0.9078488</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.0884202</coefficient>
+                        <coefficient>0.0921512</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.13533</calOutputValue>
+                        <calOutputValue>0.1279409</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7024843</coefficient>
+                        <coefficient>0.6880411</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2975157</coefficient>
+                        <coefficient>0.3119589</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.3411216</calOutputValue>
+                        <calOutputValue>0.330706</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.741452</coefficient>
+                        <coefficient>0.7340036</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.258548</coefficient>
+                        <coefficient>0.2659964</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.410814</calOutputValue>
+                        <calOutputValue>0.401123</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.8426711</coefficient>
+                        <coefficient>0.8395111</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.1573289</coefficient>
+                        <coefficient>0.1604889</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.834745</coefficient>
+                        <coefficient>0.8317605</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.165255</coefficient>
+                        <coefficient>0.1682395</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.8268188</coefficient>
+                        <coefficient>0.8240098</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.1731812</coefficient>
+                        <coefficient>0.1759902</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.8188926</coefficient>
+                        <coefficient>0.8162592</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.1811074</coefficient>
+                        <coefficient>0.1837408</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.8109664</coefficient>
+                        <coefficient>0.8085086</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.1890336</coefficient>
+                        <coefficient>0.1914914</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.8030403</coefficient>
+                        <coefficient>0.800758</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.1969597</coefficient>
+                        <coefficient>0.199242</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7951141</coefficient>
+                        <coefficient>0.7930074</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2048859</coefficient>
+                        <coefficient>0.2069926</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7871879</coefficient>
+                        <coefficient>0.7852568</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2128121</coefficient>
+                        <coefficient>0.2147432</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7792617</coefficient>
+                        <coefficient>0.7775062</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2207383</coefficient>
+                        <coefficient>0.2224938</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7713356</coefficient>
+                        <coefficient>0.7697555</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2286644</coefficient>
+                        <coefficient>0.2302445</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7634094</coefficient>
+                        <coefficient>0.7620049</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2365906</coefficient>
+                        <coefficient>0.2379951</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7554832</coefficient>
+                        <coefficient>0.7542543</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2445168</coefficient>
+                        <coefficient>0.2457457</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.747557</coefficient>
+                        <coefficient>0.7465037</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.252443</coefficient>
+                        <coefficient>0.2534963</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7396309</coefficient>
+                        <coefficient>0.7387531</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2603691</coefficient>
+                        <coefficient>0.2612469</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7317047</coefficient>
+                        <coefficient>0.7310025</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2682953</coefficient>
+                        <coefficient>0.2689975</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7237785</coefficient>
+                        <coefficient>0.7232518</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2762215</coefficient>
+                        <coefficient>0.2767482</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7158523</coefficient>
+                        <coefficient>0.7155012</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2841477</coefficient>
+                        <coefficient>0.2844988</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7079262</coefficient>
+                        <coefficient>0.7077506</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2920738</coefficient>
+                        <coefficient>0.2922494</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -19853,10 +19853,10 @@
             <price-elasticity year="2090">-0.65</price-elasticity>
             <price-elasticity year="2095">-0.65</price-elasticity>
             <price-elasticity year="2100">-0.65</price-elasticity>
-            <base-service year="1975">0.0791301</base-service>
-            <base-service year="1990">0.13533</base-service>
-            <base-service year="2005">0.3411216</base-service>
-            <base-service year="2010">0.410814</base-service>
+            <base-service year="1975">0.0732329</base-service>
+            <base-service year="1990">0.1279409</base-service>
+            <base-service year="2005">0.330706</base-service>
+            <base-service year="2010">0.401123</base-service>
          </energy-final-demand>
       </region>
       <region name="South Korea">
@@ -20605,25 +20605,25 @@
                   </interpolation-rule>
                   <period year="1975">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.4035058</calibrated-value>
+                        <calibrated-value>0.4040992</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.6772041</calibrated-value>
+                        <calibrated-value>0.6798923</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.7947778</calibrated-value>
+                        <calibrated-value>0.7974019</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.8994965</calibrated-value>
+                        <calibrated-value>0.9016728</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -20675,25 +20675,25 @@
                   </interpolation-rule>
                   <period year="1975">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.4875242</calibrated-value>
+                        <calibrated-value>0.492266</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.8091948</calibrated-value>
+                        <calibrated-value>0.8102678</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.7121675</calibrated-value>
+                        <calibrated-value>0.7132218</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.9311298</calibrated-value>
+                        <calibrated-value>0.9337765</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -20741,25 +20741,25 @@
                <stub-technology name="electricity">
                   <period year="1975">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.0794627</calibrated-value>
+                        <calibrated-value>0.0803068</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.1934767</calibrated-value>
+                        <calibrated-value>0.1959263</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.5089952</calibrated-value>
+                        <calibrated-value>0.512516</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.6894221</calibrated-value>
+                        <calibrated-value>0.6934819</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -20781,25 +20781,25 @@
                   </interpolation-rule>
                   <period year="1975">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0070868</calibrated-value>
+                        <calibrated-value>0.0070764</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.1182458</calibrated-value>
+                        <calibrated-value>0.1182421</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.8654555</calibrated-value>
+                        <calibrated-value>0.8653821</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.7317464</calibrated-value>
+                        <calibrated-value>0.7316288</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -20860,25 +20860,25 @@
                   </interpolation-rule>
                   <period year="1975">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.3235897</calibrated-value>
+                        <calibrated-value>0.323894</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.5244035</calibrated-value>
+                        <calibrated-value>0.5259239</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.9253667</calibrated-value>
+                        <calibrated-value>0.9291184</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.8568537</calibrated-value>
+                        <calibrated-value>0.8582069</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -21007,25 +21007,25 @@
                <stub-technology name="refined liquids">
                   <period year="1975">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0478073</calibrated-value>
+                        <calibrated-value>0.0480554</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.1366655</calibrated-value>
+                        <calibrated-value>0.137017</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.8891151</calibrated-value>
+                        <calibrated-value>0.8893448</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>1.4824957</calibrated-value>
+                        <calibrated-value>1.4827527</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -21049,226 +21049,226 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.1290571</calOutputValue>
+                        <calOutputValue>1.1346844</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.9576573</coefficient>
+                        <coefficient>0.9576487</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.0423427</coefficient>
+                        <coefficient>0.0423513</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.1455857</calOutputValue>
+                        <calOutputValue>2.1527488</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.9294951</coefficient>
+                        <coefficient>0.9295664</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.0705049</coefficient>
+                        <coefficient>0.0704336</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>4.3651111</calOutputValue>
+                        <calOutputValue>4.3754893</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7873495</coefficient>
+                        <coefficient>0.7878014</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2126505</coefficient>
+                        <coefficient>0.2121986</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>5.2864546</calOutputValue>
+                        <calOutputValue>5.296074</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7046786</coefficient>
+                        <coefficient>0.7051664</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2953214</coefficient>
+                        <coefficient>0.2948336</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7044187</coefficient>
+                        <coefficient>0.7048794</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2955813</coefficient>
+                        <coefficient>0.2951206</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7041587</coefficient>
+                        <coefficient>0.7045924</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2958413</coefficient>
+                        <coefficient>0.2954076</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7038988</coefficient>
+                        <coefficient>0.7043054</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2961012</coefficient>
+                        <coefficient>0.2956946</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7036389</coefficient>
+                        <coefficient>0.7040183</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2963611</coefficient>
+                        <coefficient>0.2959817</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.703379</coefficient>
+                        <coefficient>0.7037313</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.296621</coefficient>
+                        <coefficient>0.2962687</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7031191</coefficient>
+                        <coefficient>0.7034443</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2968809</coefficient>
+                        <coefficient>0.2965557</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7028591</coefficient>
+                        <coefficient>0.7031573</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2971409</coefficient>
+                        <coefficient>0.2968427</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7025992</coefficient>
+                        <coefficient>0.7028702</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2974008</coefficient>
+                        <coefficient>0.2971298</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7023393</coefficient>
+                        <coefficient>0.7025832</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2976607</coefficient>
+                        <coefficient>0.2974168</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7020794</coefficient>
+                        <coefficient>0.7022962</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2979206</coefficient>
+                        <coefficient>0.2977038</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7018194</coefficient>
+                        <coefficient>0.7020092</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2981806</coefficient>
+                        <coefficient>0.2979908</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7015595</coefficient>
+                        <coefficient>0.7017221</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2984405</coefficient>
+                        <coefficient>0.2982779</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7012996</coefficient>
+                        <coefficient>0.7014351</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2987004</coefficient>
+                        <coefficient>0.2985649</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7010397</coefficient>
+                        <coefficient>0.7011481</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2989603</coefficient>
+                        <coefficient>0.2988519</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7007798</coefficient>
+                        <coefficient>0.7008611</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2992202</coefficient>
+                        <coefficient>0.2991389</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7005198</coefficient>
+                        <coefficient>0.700574</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2994802</coefficient>
+                        <coefficient>0.299426</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.7002599</coefficient>
+                        <coefficient>0.700287</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.2997401</coefficient>
+                        <coefficient>0.299713</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -21310,10 +21310,10 @@
             <price-elasticity year="2090">-0.65</price-elasticity>
             <price-elasticity year="2095">-0.65</price-elasticity>
             <price-elasticity year="2100">-0.65</price-elasticity>
-            <base-service year="1975">1.1290571</base-service>
-            <base-service year="1990">2.1455857</base-service>
-            <base-service year="2005">4.3651111</base-service>
-            <base-service year="2010">5.2864546</base-service>
+            <base-service year="1975">1.1346844</base-service>
+            <base-service year="1990">2.1527488</base-service>
+            <base-service year="2005">4.3754893</base-service>
+            <base-service year="2010">5.296074</base-service>
          </energy-final-demand>
       </region>
       <region name="Taiwan">

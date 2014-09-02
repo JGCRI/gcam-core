@@ -10107,25 +10107,25 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0243593</calOutputValue>
+                        <calOutputValue>0.0231648</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.1632416</calOutputValue>
+                        <calOutputValue>0.161519</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.4592982</calOutputValue>
+                        <calOutputValue>0.4580896</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.7010635</calOutputValue>
+                        <calOutputValue>0.6993323</calOutputValue>
                      </CalDataOutput>
                   </period>
                </stub-technology>
@@ -10252,7 +10252,7 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.169396</calOutputValue>
+                        <calOutputValue>0.1571331</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0</coefficient>
@@ -10263,14 +10263,14 @@
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.0548591</coefficient>
+                        <coefficient>1.0591404</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.2478279</calOutputValue>
+                        <calOutputValue>0.2222239</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0</coefficient>
@@ -10281,14 +10281,14 @@
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.0415512</coefficient>
+                        <coefficient>1.0463387</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.580454</calOutputValue>
+                        <calOutputValue>0.5511764</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0</coefficient>
@@ -10299,14 +10299,14 @@
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.0287944</coefficient>
+                        <coefficient>1.0299766</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.6627827</calOutputValue>
+                        <calOutputValue>0.6318142</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0</coefficient>
@@ -10317,7 +10317,7 @@
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.0111592</coefficient>
+                        <coefficient>1.0116564</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -10882,25 +10882,25 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0462447</calOutputValue>
+                        <calOutputValue>0.0474393</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.5659793</calOutputValue>
+                        <calOutputValue>0.5677018</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.9144708</calOutputValue>
+                        <calOutputValue>2.9156794</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>3.4197389</calOutputValue>
+                        <calOutputValue>3.4214702</calOutputValue>
                      </CalDataOutput>
                   </period>
                </stub-technology>
@@ -11027,72 +11027,72 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.4682012</calOutputValue>
+                        <calOutputValue>1.4804641</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
-                        <coefficient>0.0011119</coefficient>
+                        <coefficient>0.0011027</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.0001711</coefficient>
+                        <coefficient>0.0001696</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.0624653</coefficient>
+                        <coefficient>1.0619479</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>3.1138595</calOutputValue>
+                        <calOutputValue>3.1394635</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
-                        <coefficient>0.0013981</coefficient>
+                        <coefficient>0.0013867</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.0004033</coefficient>
+                        <coefficient>4e-04</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.0443358</coefficient>
+                        <coefficient>1.0439742</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>6.2363655</calOutputValue>
+                        <calOutputValue>6.2656431</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
-                        <coefficient>0.0014498</coefficient>
+                        <coefficient>0.0014431</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.000349</coefficient>
+                        <coefficient>0.0003474</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.0745367</coefficient>
+                        <coefficient>1.074219</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>8.2089716</calOutputValue>
+                        <calOutputValue>8.2399401</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.0002499</coefficient>
+                        <coefficient>0.0002489</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.0424237</coefficient>
+                        <coefficient>1.0422681</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>

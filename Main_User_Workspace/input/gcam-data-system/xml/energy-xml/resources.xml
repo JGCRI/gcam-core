@@ -13,8 +13,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">14.820741</cal-production>
-               <cal-production year="1990">22.4543124</cal-production>
+               <cal-production year="1975">14.8206957</cal-production>
+               <cal-production year="1990">22.4542682</cal-production>
                <cal-production year="2005">23.6084627</cal-production>
                <cal-production year="2010">21.1880386</cal-production>
                <grade name="grade 1">
@@ -613,8 +613,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0233822</cal-production>
-               <cal-production year="1990">0.0122299</cal-production>
+               <cal-production year="1975">0.0233821</cal-production>
+               <cal-production year="1990">0.0122298</cal-production>
                <cal-production year="2005">0.0009642</cal-production>
                <cal-production year="2010">5.27e-05</cal-production>
                <grade name="grade 1">
@@ -908,8 +908,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0996042</cal-production>
-               <cal-production year="1990">0.1741183</cal-production>
+               <cal-production year="1975">0.0996039</cal-production>
+               <cal-production year="1990">0.174118</cal-production>
                <cal-production year="2005">0.1302394</cal-production>
                <cal-production year="2010">0.1087811</cal-production>
                <grade name="grade 1">
@@ -1203,8 +1203,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0123315</cal-production>
-               <cal-production year="1990">0.0090664</cal-production>
+               <cal-production year="1975">0.0123314</cal-production>
+               <cal-production year="1990">0.0090663</cal-production>
                <cal-production year="2005">0.0113242</cal-production>
                <cal-production year="2010">0.0125788</cal-production>
                <grade name="grade 1">
@@ -1498,8 +1498,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">1.8778465</cal-production>
-               <cal-production year="1990">4.451984</cal-production>
+               <cal-production year="1975">1.8778408</cal-production>
+               <cal-production year="1990">4.4519752</cal-production>
                <cal-production year="2005">8.6003596</cal-production>
                <cal-production year="2010">9.5800094</cal-production>
                <grade name="grade 1">
@@ -1769,8 +1769,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0410835</cal-production>
-               <cal-production year="1990">0.0799929</cal-production>
+               <cal-production year="1975">0.0410834</cal-production>
+               <cal-production year="1990">0.0799927</cal-production>
                <cal-production year="2005">0.1037003</cal-production>
                <cal-production year="2010">0.0834219</cal-production>
                <grade name="grade 1">
@@ -2064,8 +2064,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.5956904</cal-production>
-               <cal-production year="1990">1.5703776</cal-production>
+               <cal-production year="1975">0.5956886</cal-production>
+               <cal-production year="1990">1.5703745</cal-production>
                <cal-production year="2005">1.3308136</cal-production>
                <cal-production year="2010">1.3448688</cal-production>
                <grade name="grade 1">
@@ -2630,8 +2630,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">2.0566175</cal-production>
-               <cal-production year="1990">2.706798</cal-production>
+               <cal-production year="1975">2.0566112</cal-production>
+               <cal-production year="1990">2.7067926</cal-production>
                <cal-production year="2005">1.7884648</cal-production>
                <cal-production year="2010">2.5731702</cal-production>
                <grade name="grade 1">
@@ -2901,8 +2901,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">9.6603734</cal-production>
-               <cal-production year="1990">21.6895345</cal-production>
+               <cal-production year="1975">9.6603439</cal-production>
+               <cal-production year="1990">21.6894918</cal-production>
                <cal-production year="2005">49.531369</cal-production>
                <cal-production year="2010">64.6671977</cal-production>
                <grade name="grade 1">
@@ -3196,8 +3196,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">7.2236457</cal-production>
-               <cal-production year="1990">6.6904179</cal-production>
+               <cal-production year="1975">7.2236236</cal-production>
+               <cal-production year="1990">6.6904047</cal-production>
                <cal-production year="2005">4.5592218</cal-production>
                <cal-production year="2010">3.7556971</cal-production>
                <grade name="grade 1">
@@ -3467,8 +3467,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">10.1258391</cal-production>
-               <cal-production year="1990">8.6164159</cal-production>
+               <cal-production year="1975">10.1258082</cal-production>
+               <cal-production year="1990">8.616399</cal-production>
                <cal-production year="2005">3.63636</cal-production>
                <cal-production year="2010">2.7812468</cal-production>
                <grade name="grade 1">
@@ -3738,8 +3738,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">3.1170394</cal-production>
-               <cal-production year="1990">3.6290346</cal-production>
+               <cal-production year="1975">3.1170298</cal-production>
+               <cal-production year="1990">3.6290274</cal-production>
                <cal-production year="2005">1.4721434</cal-production>
                <cal-production year="2010">1.2576225</cal-production>
                <grade name="grade 1">
@@ -4009,8 +4009,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.3659944</cal-production>
-               <cal-production year="1990">1.1658174</cal-production>
+               <cal-production year="1975">0.3659933</cal-production>
+               <cal-production year="1990">1.1658151</cal-production>
                <cal-production year="2005">1.0033829</cal-production>
                <cal-production year="2010">1.2544354</cal-production>
                <grade name="grade 1">
@@ -4551,8 +4551,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">1.9447143</cal-production>
-               <cal-production year="1990">4.3347273</cal-production>
+               <cal-production year="1975">1.9447084</cal-production>
+               <cal-production year="1990">4.3347188</cal-production>
                <cal-production year="2005">7.8418397</cal-production>
                <cal-production year="2010">9.7415944</cal-production>
                <grade name="grade 1">
@@ -4847,7 +4847,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.0052629</cal-production>
-               <cal-production year="1990">0.2421316</cal-production>
+               <cal-production year="1990">0.2421311</cal-production>
                <cal-production year="2005">4.1025311</cal-production>
                <cal-production year="2010">7.4230323</cal-production>
                <grade name="grade 1">
@@ -5141,8 +5141,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.541062</cal-production>
-               <cal-production year="1990">0.1848696</cal-production>
+               <cal-production year="1975">0.5410603</cal-production>
+               <cal-production year="1990">0.1848693</cal-production>
                <cal-production year="2005">0</cal-production>
                <cal-production year="2010">0</cal-production>
                <grade name="grade 1">
@@ -5412,8 +5412,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.073477</cal-production>
-               <cal-production year="1990">0.1402359</cal-production>
+               <cal-production year="1975">0.0734768</cal-production>
+               <cal-production year="1990">0.1402357</cal-production>
                <cal-production year="2005">0.2382225</cal-production>
                <cal-production year="2010">0.1927388</cal-production>
                <grade name="grade 1">
@@ -5707,7 +5707,7 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0243156</cal-production>
+               <cal-production year="1975">0.0243155</cal-production>
                <cal-production year="1990">0.023973</cal-production>
                <cal-production year="2005">0.0435182</cal-production>
                <cal-production year="2010">0.0284845</cal-production>
@@ -5978,8 +5978,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.023622</cal-production>
-               <cal-production year="1990">0.0454204</cal-production>
+               <cal-production year="1975">0.0236219</cal-production>
+               <cal-production year="1990">0.0454203</cal-production>
                <cal-production year="2005">0.0775142</cal-production>
                <cal-production year="2010">0.0545389</cal-production>
                <grade name="grade 1">
@@ -6273,8 +6273,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">8.5043549</cal-production>
-               <cal-production year="1990">7.9662048</cal-production>
+               <cal-production year="1975">8.5043289</cal-production>
+               <cal-production year="1990">7.9661891</cal-production>
                <cal-production year="2005">6.5747999</cal-production>
                <cal-production year="2010">7.1726073</cal-production>
                <grade name="grade 1">
@@ -6544,8 +6544,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">1.5967081</cal-production>
-               <cal-production year="1990">4.1471664</cal-production>
+               <cal-production year="1975">1.5967032</cal-production>
+               <cal-production year="1990">4.1471583</cal-production>
                <cal-production year="2005">5.7786923</cal-production>
                <cal-production year="2010">5.729417</cal-production>
                <grade name="grade 1">
@@ -6840,7 +6840,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.0019583</cal-production>
-               <cal-production year="1990">0.0661639</cal-production>
+               <cal-production year="1990">0.0661637</cal-production>
                <cal-production year="2005">0.2193452</cal-production>
                <cal-production year="2010">0.0793982</cal-production>
                <grade name="grade 1">
@@ -7134,8 +7134,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0418995</cal-production>
-               <cal-production year="1990">0.0628929</cal-production>
+               <cal-production year="1975">0.0418993</cal-production>
+               <cal-production year="1990">0.0628928</cal-production>
                <cal-production year="2005">0.0124875</cal-production>
                <cal-production year="2010">0.0126687</cal-production>
                <grade name="grade 1">
@@ -7429,32 +7429,32 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0306685</cal-production>
-               <cal-production year="1990">0.0020008</cal-production>
-               <cal-production year="2005">0.0138906</cal-production>
-               <cal-production year="2010">0.0407289</cal-production>
+               <cal-production year="1975">0.025196</cal-production>
+               <cal-production year="1990">0.0015348</cal-production>
+               <cal-production year="2005">0.0118772</cal-production>
+               <cal-production year="2010">0.0367196</cal-production>
                <grade name="grade 1">
                   <available>0.1</available>
                   <extractioncost>0.34</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>12.5</available>
+                  <available>10.4</available>
                   <extractioncost>0.37</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>5.3</available>
+                  <available>4.4</available>
                   <extractioncost>1.2</extractioncost>
                </grade>
                <grade name="grade 4">
-                  <available>7.6</available>
+                  <available>6.3</available>
                   <extractioncost>1.7</extractioncost>
                </grade>
                <grade name="grade 5">
-                  <available>10.4</available>
+                  <available>8.6</available>
                   <extractioncost>2</extractioncost>
                </grade>
                <grade name="grade 6">
-                  <available>10.4</available>
+                  <available>8.6</available>
                   <extractioncost>2.3</extractioncost>
                </grade>
                <grade name="grade 7">
@@ -7474,32 +7474,32 @@
             <subresource name="crude oil">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0002713</cal-production>
-               <cal-production year="1990">0.1418952</cal-production>
-               <cal-production year="2005">0.1899195</cal-production>
-               <cal-production year="2010">0.1510115</cal-production>
+               <cal-production year="1975">0.0002598</cal-production>
+               <cal-production year="1990">0.109774</cal-production>
+               <cal-production year="2005">0.1587746</cal-production>
+               <cal-production year="2010">0.1272307</cal-production>
                <grade name="grade 1">
-                  <available>1.2</available>
+                  <available>1</available>
                   <extractioncost>0.5</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>0.8</available>
+                  <available>0.6</available>
                   <extractioncost>0.55</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>2.4</available>
+                  <available>2</available>
                   <extractioncost>0.92</extractioncost>
                </grade>
                <grade name="grade 4">
-                  <available>1.6</available>
+                  <available>1.3</available>
                   <extractioncost>1.3</extractioncost>
                </grade>
                <grade name="grade 5">
-                  <available>1</available>
+                  <available>0.8</available>
                   <extractioncost>2.1</extractioncost>
                </grade>
                <grade name="grade 6">
-                  <available>5.2</available>
+                  <available>4.2</available>
                   <extractioncost>2.7</extractioncost>
                </grade>
                <grade name="grade 7">
@@ -7519,36 +7519,36 @@
             <subresource name="natural gas">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0902051</cal-production>
-               <cal-production year="1990">0.1621713</cal-production>
-               <cal-production year="2005">0.456798</cal-production>
-               <cal-production year="2010">0.8571457</cal-production>
+               <cal-production year="1975">0.0769169</cal-production>
+               <cal-production year="1990">0.1604605</cal-production>
+               <cal-production year="2005">0.455596</cal-production>
+               <cal-production year="2010">0.8303999</cal-production>
                <grade name="grade 1">
-                  <available>2.9</available>
+                  <available>2.8</available>
                   <extractioncost>0.62</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>18.5</available>
+                  <available>17.8</available>
                   <extractioncost>0.68</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>19.4</available>
+                  <available>18.7</available>
                   <extractioncost>1.1</extractioncost>
                </grade>
                <grade name="grade 4">
-                  <available>21.8</available>
+                  <available>21.1</available>
                   <extractioncost>1.7</extractioncost>
                </grade>
                <grade name="grade 5">
-                  <available>30.8</available>
+                  <available>29.7</available>
                   <extractioncost>3.1</extractioncost>
                </grade>
                <grade name="grade 6">
-                  <available>57.5</available>
+                  <available>55.5</available>
                   <extractioncost>3.7</extractioncost>
                </grade>
                <grade name="grade 7">
-                  <available>138.4</available>
+                  <available>133.6</available>
                   <extractioncost>6.5</extractioncost>
                </grade>
                <grade name="grade 8">
@@ -7569,15 +7569,15 @@
                <techChange fillout="1" year="1975">0</techChange>
                <techChange fillout="1" year="2005">0</techChange>
                <grade name="grade 1">
-                  <available>24.8</available>
+                  <available>20.3</available>
                   <extractioncost>1.8</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>48.4</available>
+                  <available>39.8</available>
                   <extractioncost>2.1</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>13.2</available>
+                  <available>10.8</available>
                   <extractioncost>3.6</extractioncost>
                </grade>
                <grade name="grade 4">
@@ -7606,7 +7606,7 @@
             <smooth-renewable-subresource name="generic waste biomass">
                <techChange fillout="1" year="1975">0</techChange>
                <techChange fillout="1" year="2005">0</techChange>
-               <maxSubResource>0.0055</maxSubResource>
+               <maxSubResource>0.00535</maxSubResource>
                <mid-price>0.9</mid-price>
                <curve-exponent>15</curve-exponent>
                <gdpSupplyElast>0.588</gdpSupplyElast>
@@ -7627,7 +7627,7 @@
                <techChange fillout="1" year="2055">0.0149</techChange>
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
-               <maxSubResource>2.02046</maxSubResource>
+               <maxSubResource>1.96729</maxSubResource>
                <mid-price>21.334</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -7647,7 +7647,7 @@
                   <extractioncost>0.064</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>1.23765</available>
+                  <available>0.99719</available>
                   <extractioncost>0.569</extractioncost>
                </grade>
                <maxSubResource>1</maxSubResource>
@@ -7662,9 +7662,9 @@
             <price year="2005">0.05</price>
             <price year="2010">0.05</price>
             <smooth-renewable-subresource name="onshore wind resource">
-               <maxSubResource>15.13693</maxSubResource>
-               <mid-price>4</mid-price>
-               <curve-exponent>2.014</curve-exponent>
+               <maxSubResource>14.49685</maxSubResource>
+               <mid-price>3.8</mid-price>
+               <curve-exponent>2.031</curve-exponent>
             </smooth-renewable-subresource>
          </renewresource>
          <renewresource name="traditional biomass">
@@ -7681,11 +7681,11 @@
                   <extractioncost>0.2</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>0.98608</available>
+                  <available>0.96579</available>
                   <extractioncost>0.25</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>4.93041</available>
+                  <available>4.82893</available>
                   <extractioncost>1.5</extractioncost>
                </grade>
                <maxSubResource>1</maxSubResource>
@@ -7724,8 +7724,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.337358</cal-production>
-               <cal-production year="1990">0.313678</cal-production>
+               <cal-production year="1975">0.3373569</cal-production>
+               <cal-production year="1990">0.3136774</cal-production>
                <cal-production year="2005">0.0526646</cal-production>
                <cal-production year="2010">0.0382051</cal-production>
                <grade name="grade 1">
@@ -7995,32 +7995,32 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.9030387</cal-production>
-               <cal-production year="1990">1.3908008</cal-production>
-               <cal-production year="2005">1.9775968</cal-production>
-               <cal-production year="2010">2.1531543</cal-production>
+               <cal-production year="1975">0.9085084</cal-production>
+               <cal-production year="1990">1.3912639</cal-production>
+               <cal-production year="2005">1.9796102</cal-production>
+               <cal-production year="2010">2.1571636</cal-production>
                <grade name="grade 1">
                   <available>13.3</available>
                   <extractioncost>0.34</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>406.4</available>
+                  <available>408.5</available>
                   <extractioncost>0.37</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>251.4</available>
+                  <available>252.3</available>
                   <extractioncost>1.2</extractioncost>
                </grade>
                <grade name="grade 4">
-                  <available>357.2</available>
+                  <available>358.4</available>
                   <extractioncost>1.7</extractioncost>
                </grade>
                <grade name="grade 5">
-                  <available>489.6</available>
+                  <available>491.3</available>
                   <extractioncost>2</extractioncost>
                </grade>
                <grade name="grade 6">
-                  <available>489.6</available>
+                  <available>491.3</available>
                   <extractioncost>2.3</extractioncost>
                </grade>
                <grade name="grade 7">
@@ -8040,32 +8040,32 @@
             <subresource name="crude oil">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.6322187</cal-production>
-               <cal-production year="1990">1.9443017</cal-production>
-               <cal-production year="2005">3.5347356</cal-production>
-               <cal-production year="2010">3.4153827</cal-production>
+               <cal-production year="1975">0.6322301</cal-production>
+               <cal-production year="1990">1.9764229</cal-production>
+               <cal-production year="2005">3.5658805</cal-production>
+               <cal-production year="2010">3.4391635</cal-production>
                <grade name="grade 1">
-                  <available>30.6</available>
+                  <available>30.8</available>
                   <extractioncost>0.5</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>22.4</available>
+                  <available>22.6</available>
                   <extractioncost>0.55</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>60.1</available>
+                  <available>60.5</available>
                   <extractioncost>0.92</extractioncost>
                </grade>
                <grade name="grade 4">
-                  <available>44.9</available>
+                  <available>45.2</available>
                   <extractioncost>1.3</extractioncost>
                </grade>
                <grade name="grade 5">
-                  <available>29.6</available>
+                  <available>29.8</available>
                   <extractioncost>2.1</extractioncost>
                </grade>
                <grade name="grade 6">
-                  <available>123.3</available>
+                  <available>124.2</available>
                   <extractioncost>2.7</extractioncost>
                </grade>
                <grade name="grade 7">
@@ -8085,36 +8085,36 @@
             <subresource name="natural gas">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.2372831</cal-production>
-               <cal-production year="1990">1.15149</cal-production>
-               <cal-production year="2005">4.0525891</cal-production>
-               <cal-production year="2010">4.3255035</cal-production>
+               <cal-production year="1975">0.2505713</cal-production>
+               <cal-production year="1990">1.1532008</cal-production>
+               <cal-production year="2005">4.0537911</cal-production>
+               <cal-production year="2010">4.3522494</cal-production>
                <grade name="grade 1">
-                  <available>18.8</available>
+                  <available>18.9</available>
                   <extractioncost>0.62</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>119.9</available>
+                  <available>120.5</available>
                   <extractioncost>0.68</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>133.6</available>
+                  <available>134.3</available>
                   <extractioncost>1.1</extractioncost>
                </grade>
                <grade name="grade 4">
-                  <available>161.9</available>
+                  <available>162.7</available>
                   <extractioncost>1.7</extractioncost>
                </grade>
                <grade name="grade 5">
-                  <available>210.2</available>
+                  <available>211.3</available>
                   <extractioncost>3.1</extractioncost>
                </grade>
                <grade name="grade 6">
-                  <available>392.7</available>
+                  <available>394.7</available>
                   <extractioncost>3.7</extractioncost>
                </grade>
                <grade name="grade 7">
-                  <available>1086.5</available>
+                  <available>1091.3</available>
                   <extractioncost>6.5</extractioncost>
                </grade>
                <grade name="grade 8">
@@ -8135,15 +8135,15 @@
                <techChange fillout="1" year="1975">0</techChange>
                <techChange fillout="1" year="2005">0</techChange>
                <grade name="grade 1">
-                  <available>647.1</available>
+                  <available>651.5</available>
                   <extractioncost>1.8</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>1265</available>
+                  <available>1273.7</available>
                   <extractioncost>2.1</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>344.2</available>
+                  <available>346.5</available>
                   <extractioncost>3.6</extractioncost>
                </grade>
                <grade name="grade 4">
@@ -8172,7 +8172,7 @@
             <smooth-renewable-subresource name="generic waste biomass">
                <techChange fillout="1" year="1975">0</techChange>
                <techChange fillout="1" year="2005">0</techChange>
-               <maxSubResource>0.03083</maxSubResource>
+               <maxSubResource>0.03097</maxSubResource>
                <mid-price>0.9</mid-price>
                <curve-exponent>15</curve-exponent>
                <gdpSupplyElast>0.588</gdpSupplyElast>
@@ -8193,7 +8193,7 @@
                <techChange fillout="1" year="2055">0.0149</techChange>
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
-               <maxSubResource>3.54788</maxSubResource>
+               <maxSubResource>3.60105</maxSubResource>
                <mid-price>21.334</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -8213,7 +8213,7 @@
                   <extractioncost>0.064</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>2.09627</available>
+                  <available>2.33673</available>
                   <extractioncost>0.569</extractioncost>
                </grade>
                <maxSubResource>1</maxSubResource>
@@ -8228,9 +8228,9 @@
             <price year="2005">0.05</price>
             <price year="2010">0.05</price>
             <smooth-renewable-subresource name="onshore wind resource">
-               <maxSubResource>12.99635</maxSubResource>
+               <maxSubResource>13.64367</maxSubResource>
                <mid-price>10.4</mid-price>
-               <curve-exponent>4.044</curve-exponent>
+               <curve-exponent>4.05</curve-exponent>
             </smooth-renewable-subresource>
          </renewresource>
          <renewresource name="traditional biomass">
@@ -8247,11 +8247,11 @@
                   <extractioncost>0.2</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>1.30729</available>
+                  <available>1.32759</available>
                   <extractioncost>0.25</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>6.53644</available>
+                  <available>6.63793</available>
                   <extractioncost>1.5</extractioncost>
                </grade>
                <maxSubResource>1</maxSubResource>
@@ -8290,7 +8290,7 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0807391</cal-production>
+               <cal-production year="1975">0.0807388</cal-production>
                <cal-production year="1990">0.0121314</cal-production>
                <cal-production year="2005">0</cal-production>
                <cal-production year="2010">0</cal-production>
@@ -8561,7 +8561,7 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0120762</cal-production>
+               <cal-production year="1975">0.0120761</cal-production>
                <cal-production year="1990">0.0067489</cal-production>
                <cal-production year="2005">0.0006265</cal-production>
                <cal-production year="2010">0.0015139</cal-production>
@@ -8856,8 +8856,8 @@
             <subresource name="coal">
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
-               <cal-production year="1975">0.0984862</cal-production>
-               <cal-production year="1990">0.5752696</cal-production>
+               <cal-production year="1975">0.0984859</cal-production>
+               <cal-production year="1990">0.5752685</cal-production>
                <cal-production year="2005">1.6033663</cal-production>
                <cal-production year="2010">1.9252763</cal-production>
                <grade name="grade 1">

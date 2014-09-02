@@ -575,24 +575,24 @@
       </region>
       <region name="South Asia">
          <energy-final-demand name="cement">
-            <income-elasticity year="2015">1.183</income-elasticity>
-            <income-elasticity year="2020">1.155</income-elasticity>
-            <income-elasticity year="2025">1.122</income-elasticity>
+            <income-elasticity year="2015">1.185</income-elasticity>
+            <income-elasticity year="2020">1.158</income-elasticity>
+            <income-elasticity year="2025">1.126</income-elasticity>
             <income-elasticity year="2030">1.101</income-elasticity>
             <income-elasticity year="2035">1.103</income-elasticity>
-            <income-elasticity year="2040">1.106</income-elasticity>
-            <income-elasticity year="2045">1.109</income-elasticity>
-            <income-elasticity year="2050">0.93</income-elasticity>
-            <income-elasticity year="2055">0.731</income-elasticity>
-            <income-elasticity year="2060">0.576</income-elasticity>
-            <income-elasticity year="2065">0.496</income-elasticity>
-            <income-elasticity year="2070">0.423</income-elasticity>
-            <income-elasticity year="2075">0.358</income-elasticity>
-            <income-elasticity year="2080">0.315</income-elasticity>
-            <income-elasticity year="2085">0.285</income-elasticity>
-            <income-elasticity year="2090">0.257</income-elasticity>
-            <income-elasticity year="2095">0.232</income-elasticity>
-            <income-elasticity year="2100">0.209</income-elasticity>
+            <income-elasticity year="2040">1.105</income-elasticity>
+            <income-elasticity year="2045">1.108</income-elasticity>
+            <income-elasticity year="2050">0.966</income-elasticity>
+            <income-elasticity year="2055">0.764</income-elasticity>
+            <income-elasticity year="2060">0.59</income-elasticity>
+            <income-elasticity year="2065">0.509</income-elasticity>
+            <income-elasticity year="2070">0.435</income-elasticity>
+            <income-elasticity year="2075">0.368</income-elasticity>
+            <income-elasticity year="2080">0.321</income-elasticity>
+            <income-elasticity year="2085">0.29</income-elasticity>
+            <income-elasticity year="2090">0.262</income-elasticity>
+            <income-elasticity year="2095">0.236</income-elasticity>
+            <income-elasticity year="2100">0.213</income-elasticity>
          </energy-final-demand>
       </region>
       <region name="South Korea">
@@ -619,24 +619,24 @@
       </region>
       <region name="Southeast Asia">
          <energy-final-demand name="cement">
-            <income-elasticity year="2015">0.376</income-elasticity>
-            <income-elasticity year="2020">0.312</income-elasticity>
-            <income-elasticity year="2025">0.274</income-elasticity>
-            <income-elasticity year="2030">0.242</income-elasticity>
-            <income-elasticity year="2035">0.216</income-elasticity>
-            <income-elasticity year="2040">0.192</income-elasticity>
-            <income-elasticity year="2045">0.169</income-elasticity>
-            <income-elasticity year="2050">0.145</income-elasticity>
-            <income-elasticity year="2055">0.125</income-elasticity>
-            <income-elasticity year="2060">0.108</income-elasticity>
-            <income-elasticity year="2065">0.093</income-elasticity>
-            <income-elasticity year="2070">0.081</income-elasticity>
-            <income-elasticity year="2075">0.071</income-elasticity>
-            <income-elasticity year="2080">0.062</income-elasticity>
-            <income-elasticity year="2085">0.055</income-elasticity>
-            <income-elasticity year="2090">0.048</income-elasticity>
-            <income-elasticity year="2095">0.043</income-elasticity>
-            <income-elasticity year="2100">0.038</income-elasticity>
+            <income-elasticity year="2015">0.386</income-elasticity>
+            <income-elasticity year="2020">0.317</income-elasticity>
+            <income-elasticity year="2025">0.279</income-elasticity>
+            <income-elasticity year="2030">0.247</income-elasticity>
+            <income-elasticity year="2035">0.22</income-elasticity>
+            <income-elasticity year="2040">0.196</income-elasticity>
+            <income-elasticity year="2045">0.173</income-elasticity>
+            <income-elasticity year="2050">0.149</income-elasticity>
+            <income-elasticity year="2055">0.128</income-elasticity>
+            <income-elasticity year="2060">0.111</income-elasticity>
+            <income-elasticity year="2065">0.096</income-elasticity>
+            <income-elasticity year="2070">0.083</income-elasticity>
+            <income-elasticity year="2075">0.073</income-elasticity>
+            <income-elasticity year="2080">0.064</income-elasticity>
+            <income-elasticity year="2085">0.056</income-elasticity>
+            <income-elasticity year="2090">0.049</income-elasticity>
+            <income-elasticity year="2095">0.044</income-elasticity>
+            <income-elasticity year="2100">0.039</income-elasticity>
          </energy-final-demand>
       </region>
       <region name="Taiwan">

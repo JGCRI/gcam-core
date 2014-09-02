@@ -9492,11 +9492,11 @@
                <share-weight fillout="1" year="1975">0</share-weight>
                <stub-technology name="Imports">
                   <period year="1975">
-                     <fixedOutput>0.1208923</fixedOutput>
+                     <fixedOutput>0.1207923</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
-                     <fixedOutput>0.1032413</fixedOutput>
+                     <fixedOutput>0.1020243</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
@@ -10238,11 +10238,11 @@
                <share-weight fillout="1" year="1975">0</share-weight>
                <stub-technology name="Imports">
                   <period year="1975">
-                     <fixedOutput>0.4689939</fixedOutput>
+                     <fixedOutput>0.4690939</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
-                     <fixedOutput>1.2808385</fixedOutput>
+                     <fixedOutput>1.2820555</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2005">

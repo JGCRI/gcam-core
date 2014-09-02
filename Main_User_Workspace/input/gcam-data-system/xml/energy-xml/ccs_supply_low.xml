@@ -789,19 +789,19 @@
                   <extractioncost>0</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>11</available>
+                  <available>8.8</available>
                   <extractioncost>0.7953</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>219.3</available>
+                  <available>176.7</available>
                   <extractioncost>39.7686</extractioncost>
                </grade>
                <grade name="grade 4">
-                  <available>1316</available>
+                  <available>1060.3</available>
                   <extractioncost>79.5372</extractioncost>
                </grade>
                <grade name="grade 5">
-                  <available>647</available>
+                  <available>521.3</available>
                   <extractioncost>596.5293</extractioncost>
                </grade>
                <grade name="grade 6">
@@ -849,19 +849,19 @@
                   <extractioncost>0</extractioncost>
                </grade>
                <grade name="grade 2">
-                  <available>136.1</available>
+                  <available>138.2</available>
                   <extractioncost>0.7953</extractioncost>
                </grade>
                <grade name="grade 3">
-                  <available>2722</available>
+                  <available>2764.6</available>
                   <extractioncost>39.7686</extractioncost>
                </grade>
                <grade name="grade 4">
-                  <available>16332</available>
+                  <available>16587.7</available>
                   <extractioncost>79.5372</extractioncost>
                </grade>
                <grade name="grade 5">
-                  <available>8029.9</available>
+                  <available>8155.6</available>
                   <extractioncost>596.5293</extractioncost>
                </grade>
                <grade name="grade 6">

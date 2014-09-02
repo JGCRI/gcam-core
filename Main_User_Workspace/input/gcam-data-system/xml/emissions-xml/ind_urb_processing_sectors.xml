@@ -13254,112 +13254,112 @@
                <stub-technology name="industry">
                   <period year="1975">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.101099390414127</coefficient>
+                        <coefficient>0.109240595704298</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0591147208758771</coefficient>
+                        <coefficient>0.0625288888226608</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0234520474049292</coefficient>
+                        <coefficient>0.0241906723755999</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.0194735347925981</coefficient>
+                        <coefficient>0.019944006113359</coefficient>
                      </minicam-energy-input>
                   </period>
                </stub-technology>
@@ -14244,112 +14244,112 @@
                <stub-technology name="industry">
                   <period year="1975">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00708555851382672</coefficient>
+                        <coefficient>0.00705041789544145</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00372858571260121</coefficient>
+                        <coefficient>0.00371617884781561</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00183399446197463</coefficient>
+                        <coefficient>0.00182964140048522</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="industrial processes">
-                        <coefficient>0.00151435645812608</coefficient>
+                        <coefficient>0.00151160393788831</coefficient>
                      </minicam-energy-input>
                   </period>
                </stub-technology>

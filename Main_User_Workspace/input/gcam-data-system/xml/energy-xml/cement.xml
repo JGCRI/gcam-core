@@ -7201,7 +7201,7 @@
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>0.0043314</coefficient>
+                        <coefficient>0.0042924</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone">
@@ -7219,7 +7219,7 @@
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>0.0035696</coefficient>
+                        <coefficient>0.0035582</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone">
@@ -7230,14 +7230,14 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>8.517</calOutputValue>
+                        <calOutputValue>8.228</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.0004068</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>0.0032533</coefficient>
+                        <coefficient>0.0032544</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone">
@@ -7248,14 +7248,14 @@
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>9.044</calOutputValue>
+                        <calOutputValue>8.585</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.0004068</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>0.0032187</coefficient>
+                        <coefficient>0.0032204</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone">
@@ -7286,25 +7286,25 @@
                <stub-technology name="biomass">
                   <period year="1975">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>3.57e-05</calibrated-value>
+                        <calibrated-value>3.54e-05</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>3.94e-05</calibrated-value>
+                        <calibrated-value>3.93e-05</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0002771</calibrated-value>
+                        <calibrated-value>0.0002678</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0002911</calibrated-value>
+                        <calibrated-value>0.0002765</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7323,25 +7323,25 @@
                <stub-technology name="coal">
                   <period year="1975">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0029284</calibrated-value>
+                        <calibrated-value>0.0029021</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0032344</calibrated-value>
+                        <calibrated-value>0.0032241</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0227208</calibrated-value>
+                        <calibrated-value>0.0219575</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0238702</calibrated-value>
+                        <calibrated-value>0.0226707</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7360,25 +7360,25 @@
                <stub-technology name="gas">
                   <period year="1975">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0002857</calibrated-value>
+                        <calibrated-value>0.0002831</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0003156</calibrated-value>
+                        <calibrated-value>0.0003145</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0022167</calibrated-value>
+                        <calibrated-value>0.0021422</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0023288</calibrated-value>
+                        <calibrated-value>0.0022118</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7397,25 +7397,25 @@
                <stub-technology name="refined liquids">
                   <period year="1975">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0003214</calibrated-value>
+                        <calibrated-value>0.0003185</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.000355</calibrated-value>
+                        <calibrated-value>0.0003539</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0024937</calibrated-value>
+                        <calibrated-value>0.00241</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0026199</calibrated-value>
+                        <calibrated-value>0.0024882</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7431,8 +7431,8 @@
             <final-energy-consumer/>
             <base-service year="1975">0.8245</base-service>
             <base-service year="1990">1.105</base-service>
-            <base-service year="2005">8.517</base-service>
-            <base-service year="2010">9.044</base-service>
+            <base-service year="2005">8.228</base-service>
+            <base-service year="2010">8.585</base-service>
             <price-elasticity year="2015">-0.4</price-elasticity>
             <price-elasticity year="2020">-0.4</price-elasticity>
             <price-elasticity year="2025">-0.4</price-elasticity>
@@ -7746,72 +7746,72 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>21.6694787</calOutputValue>
+                        <calOutputValue>21.6695118</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.0004248</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>0.0039158</coefficient>
+                        <coefficient>0.0039234</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.4957674</coefficient>
+                        <coefficient>1.4957651</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>58.2560494</calOutputValue>
+                        <calOutputValue>58.2561385</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.0004248</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>0.0035196</coefficient>
+                        <coefficient>0.0035208</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.4957674</coefficient>
+                        <coefficient>1.4957651</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>123.6572606</calOutputValue>
+                        <calOutputValue>123.9415851</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.0004068</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>0.003342</coefficient>
+                        <coefficient>0.0033416</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.4957674</coefficient>
+                        <coefficient>1.4957651</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>137.2372463</calOutputValue>
+                        <calOutputValue>137.6887301</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
                         <coefficient>0.0004068</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
-                        <coefficient>0.003389</coefficient>
+                        <coefficient>0.0033884</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.4957674</coefficient>
+                        <coefficient>1.4957651</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -7838,25 +7838,25 @@
                <stub-technology name="biomass">
                   <period year="1975">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0035041</calibrated-value>
+                        <calibrated-value>0.0035109</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0129126</calibrated-value>
+                        <calibrated-value>0.0129171</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0257116</calibrated-value>
+                        <calibrated-value>0.0257182</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.0226677</calibrated-value>
+                        <calibrated-value>0.0226791</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7875,25 +7875,25 @@
                <stub-technology name="coal">
                   <period year="1975">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.0692263</calibrated-value>
+                        <calibrated-value>0.0693608</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.1666824</calibrated-value>
+                        <calibrated-value>0.1667414</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.3359958</calibrated-value>
+                        <calibrated-value>0.3367354</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.3789768</calibrated-value>
+                        <calibrated-value>0.3801651</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7912,25 +7912,25 @@
                <stub-technology name="gas">
                   <period year="1975">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.005372</calibrated-value>
+                        <calibrated-value>0.0053825</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0106098</calibrated-value>
+                        <calibrated-value>0.0106136</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.021552</calibrated-value>
+                        <calibrated-value>0.0216254</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0275988</calibrated-value>
+                        <calibrated-value>0.0277163</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7949,25 +7949,25 @@
                <stub-technology name="refined liquids">
                   <period year="1975">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0067517</calibrated-value>
+                        <calibrated-value>0.0067648</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0148326</calibrated-value>
+                        <calibrated-value>0.0148379</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0300004</calibrated-value>
+                        <calibrated-value>0.0300823</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0358531</calibrated-value>
+                        <calibrated-value>0.0359845</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7981,10 +7981,10 @@
          <energy-final-demand name="cement">
             <perCapitaBased>1</perCapitaBased>
             <final-energy-consumer/>
-            <base-service year="1975">21.6694787</base-service>
-            <base-service year="1990">58.2560494</base-service>
-            <base-service year="2005">123.6572606</base-service>
-            <base-service year="2010">137.2372463</base-service>
+            <base-service year="1975">21.6695118</base-service>
+            <base-service year="1990">58.2561385</base-service>
+            <base-service year="2005">123.9415851</base-service>
+            <base-service year="2010">137.6887301</base-service>
             <price-elasticity year="2015">-0.4</price-elasticity>
             <price-elasticity year="2020">-0.4</price-elasticity>
             <price-elasticity year="2025">-0.4</price-elasticity>

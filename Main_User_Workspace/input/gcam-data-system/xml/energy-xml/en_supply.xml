@@ -18295,25 +18295,25 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.1786889</calOutputValue>
+                        <calOutputValue>0.166426</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.2577051</calOutputValue>
+                        <calOutputValue>0.2321347</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.5951257</calOutputValue>
+                        <calOutputValue>0.5658206</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.6677764</calOutputValue>
+                        <calOutputValue>0.6369691</calOutputValue>
                      </CalDataOutput>
                   </period>
                </stub-technology>
@@ -18347,7 +18347,7 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0004204</calOutputValue>
+                        <calOutputValue>0.0003867</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
@@ -18357,7 +18357,7 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0020421</calOutputValue>
+                        <calOutputValue>0.0018782</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
@@ -18367,7 +18367,7 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0024025</calOutputValue>
+                        <calOutputValue>0.0022097</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2015">
@@ -19039,25 +19039,25 @@
                   <period year="1975">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.5599128</calOutputValue>
+                        <calOutputValue>1.5721757</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>3.240508</calOutputValue>
+                        <calOutputValue>3.2660783</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>6.6457984</calOutputValue>
+                        <calOutputValue>6.6751035</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>8.4920434</calOutputValue>
+                        <calOutputValue>8.5228507</calOutputValue>
                      </CalDataOutput>
                   </period>
                </stub-technology>
@@ -19091,7 +19091,7 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.011407</calOutputValue>
+                        <calOutputValue>0.0114408</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2005">
@@ -19101,7 +19101,7 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0554055</calOutputValue>
+                        <calOutputValue>0.0555694</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
@@ -19111,7 +19111,7 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0651829</calOutputValue>
+                        <calOutputValue>0.0653757</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2015">

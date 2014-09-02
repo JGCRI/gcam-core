@@ -21984,133 +21984,133 @@
                <stub-technology name="electricity_net_ownuse">
                   <period year="1975">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0217597</coefficient>
+                        <coefficient>1.0224661</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.035545</coefficient>
+                        <coefficient>1.0371894</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.072041</coefficient>
+                        <coefficient>1.0743357</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0392382</coefficient>
+                        <coefficient>1.0402656</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -22131,133 +22131,133 @@
                <stub-technology name="elect_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1492069</coefficient>
+                        <coefficient>1.1612648</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.2351262</coefficient>
+                        <coefficient>1.2611934</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0956981</coefficient>
+                        <coefficient>1.100605</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0513707</coefficient>
+                        <coefficient>1.0535545</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0500571</coefficient>
+                        <coefficient>1.0522382</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0487452</coefficient>
+                        <coefficient>1.0509236</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0474349</coefficient>
+                        <coefficient>1.0496106</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0461263</coefficient>
+                        <coefficient>1.0482992</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0448193</coefficient>
+                        <coefficient>1.0469895</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0435139</coefficient>
+                        <coefficient>1.0456814</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0422102</coefficient>
+                        <coefficient>1.044375</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.040908</coefficient>
+                        <coefficient>1.0430701</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0396076</coefficient>
+                        <coefficient>1.0417669</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0383087</coefficient>
+                        <coefficient>1.0404654</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0370115</coefficient>
+                        <coefficient>1.0391655</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0357159</coefficient>
+                        <coefficient>1.0378672</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0344219</coefficient>
+                        <coefficient>1.0365705</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0331295</coefficient>
+                        <coefficient>1.0352754</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0318387</coefficient>
+                        <coefficient>1.033982</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0305496</coefficient>
+                        <coefficient>1.0326901</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.029262</coefficient>
+                        <coefficient>1.0313999</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0279761</coefficient>
+                        <coefficient>1.0301113</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -22278,133 +22278,133 @@
                <stub-technology name="elect_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1492069</coefficient>
+                        <coefficient>1.1612648</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.2351262</coefficient>
+                        <coefficient>1.2611934</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0956981</coefficient>
+                        <coefficient>1.100605</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0513707</coefficient>
+                        <coefficient>1.0535545</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0500571</coefficient>
+                        <coefficient>1.0522382</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0487452</coefficient>
+                        <coefficient>1.0509236</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0474349</coefficient>
+                        <coefficient>1.0496106</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0461263</coefficient>
+                        <coefficient>1.0482992</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0448193</coefficient>
+                        <coefficient>1.0469895</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0435139</coefficient>
+                        <coefficient>1.0456814</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0422102</coefficient>
+                        <coefficient>1.044375</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.040908</coefficient>
+                        <coefficient>1.0430701</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0396076</coefficient>
+                        <coefficient>1.0417669</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0383087</coefficient>
+                        <coefficient>1.0404654</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0370115</coefficient>
+                        <coefficient>1.0391655</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0357159</coefficient>
+                        <coefficient>1.0378672</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0344219</coefficient>
+                        <coefficient>1.0365705</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0331295</coefficient>
+                        <coefficient>1.0352754</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0318387</coefficient>
+                        <coefficient>1.033982</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0305496</coefficient>
+                        <coefficient>1.0326901</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.029262</coefficient>
+                        <coefficient>1.0313999</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0279761</coefficient>
+                        <coefficient>1.0301113</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -22425,133 +22425,133 @@
                <stub-technology name="elect_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1492069</coefficient>
+                        <coefficient>1.1612648</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.2351262</coefficient>
+                        <coefficient>1.2611934</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0956981</coefficient>
+                        <coefficient>1.100605</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0513707</coefficient>
+                        <coefficient>1.0535545</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0500571</coefficient>
+                        <coefficient>1.0522382</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0487452</coefficient>
+                        <coefficient>1.0509236</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0474349</coefficient>
+                        <coefficient>1.0496106</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0461263</coefficient>
+                        <coefficient>1.0482992</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0448193</coefficient>
+                        <coefficient>1.0469895</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0435139</coefficient>
+                        <coefficient>1.0456814</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0422102</coefficient>
+                        <coefficient>1.044375</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.040908</coefficient>
+                        <coefficient>1.0430701</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0396076</coefficient>
+                        <coefficient>1.0417669</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0383087</coefficient>
+                        <coefficient>1.0404654</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0370115</coefficient>
+                        <coefficient>1.0391655</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0357159</coefficient>
+                        <coefficient>1.0378672</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0344219</coefficient>
+                        <coefficient>1.0365705</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0331295</coefficient>
+                        <coefficient>1.0352754</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0318387</coefficient>
+                        <coefficient>1.033982</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0305496</coefficient>
+                        <coefficient>1.0326901</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.029262</coefficient>
+                        <coefficient>1.0313999</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0279761</coefficient>
+                        <coefficient>1.0301113</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -22578,127 +22578,127 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0523094</coefficient>
+                        <coefficient>1.0528963</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0585849</coefficient>
+                        <coefficient>1.0587478</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0610294</coefficient>
+                        <coefficient>1.0611891</coefficient>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -23670,133 +23670,133 @@
                <stub-technology name="electricity_net_ownuse">
                   <period year="1975">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0498348</coefficient>
+                        <coefficient>1.0494778</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0478692</coefficient>
+                        <coefficient>1.0475734</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0429869</coefficient>
+                        <coefficient>1.0428751</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="electricity">
-                        <coefficient>1.0428077</coefficient>
+                        <coefficient>1.0426518</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -23817,133 +23817,133 @@
                <stub-technology name="elect_td_bld">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1016838</coefficient>
+                        <coefficient>1.1010562</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1312967</coefficient>
+                        <coefficient>1.1298822</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1116</coefficient>
+                        <coefficient>1.1109141</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0950868</coefficient>
+                        <coefficient>1.0945281</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0937186</coefficient>
+                        <coefficient>1.0931606</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0923521</coefficient>
+                        <coefficient>1.0917949</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0909874</coefficient>
+                        <coefficient>1.0904308</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0896243</coefficient>
+                        <coefficient>1.0890685</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.088263</coefficient>
+                        <coefficient>1.0877078</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0869033</coefficient>
+                        <coefficient>1.0863489</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0855454</coefficient>
+                        <coefficient>1.0849916</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0841891</coefficient>
+                        <coefficient>1.083636</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0828345</coefficient>
+                        <coefficient>1.0822822</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0814817</coefficient>
+                        <coefficient>1.08093</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0801305</coefficient>
+                        <coefficient>1.0795795</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.078781</coefficient>
+                        <coefficient>1.0782307</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0774332</coefficient>
+                        <coefficient>1.0768836</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0760871</coefficient>
+                        <coefficient>1.0755382</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0747427</coefficient>
+                        <coefficient>1.0741944</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0733999</coefficient>
+                        <coefficient>1.0728523</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0720588</coefficient>
+                        <coefficient>1.0715119</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0707194</coefficient>
+                        <coefficient>1.0701732</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -23964,133 +23964,133 @@
                <stub-technology name="elect_td_ind">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1016838</coefficient>
+                        <coefficient>1.1010562</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1312967</coefficient>
+                        <coefficient>1.1298822</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1116</coefficient>
+                        <coefficient>1.1109141</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0950868</coefficient>
+                        <coefficient>1.0945281</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0937186</coefficient>
+                        <coefficient>1.0931606</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0923521</coefficient>
+                        <coefficient>1.0917949</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0909874</coefficient>
+                        <coefficient>1.0904308</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0896243</coefficient>
+                        <coefficient>1.0890685</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.088263</coefficient>
+                        <coefficient>1.0877078</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0869033</coefficient>
+                        <coefficient>1.0863489</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0855454</coefficient>
+                        <coefficient>1.0849916</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0841891</coefficient>
+                        <coefficient>1.083636</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0828345</coefficient>
+                        <coefficient>1.0822822</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0814817</coefficient>
+                        <coefficient>1.08093</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0801305</coefficient>
+                        <coefficient>1.0795795</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.078781</coefficient>
+                        <coefficient>1.0782307</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0774332</coefficient>
+                        <coefficient>1.0768836</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0760871</coefficient>
+                        <coefficient>1.0755382</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0747427</coefficient>
+                        <coefficient>1.0741944</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0733999</coefficient>
+                        <coefficient>1.0728523</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0720588</coefficient>
+                        <coefficient>1.0715119</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0707194</coefficient>
+                        <coefficient>1.0701732</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -24111,133 +24111,133 @@
                <stub-technology name="elect_td_trn">
                   <period year="1975">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1016838</coefficient>
+                        <coefficient>1.1010562</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1312967</coefficient>
+                        <coefficient>1.1298822</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.1116</coefficient>
+                        <coefficient>1.1109141</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0950868</coefficient>
+                        <coefficient>1.0945281</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0937186</coefficient>
+                        <coefficient>1.0931606</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0923521</coefficient>
+                        <coefficient>1.0917949</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0909874</coefficient>
+                        <coefficient>1.0904308</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0896243</coefficient>
+                        <coefficient>1.0890685</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.088263</coefficient>
+                        <coefficient>1.0877078</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0869033</coefficient>
+                        <coefficient>1.0863489</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0855454</coefficient>
+                        <coefficient>1.0849916</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0841891</coefficient>
+                        <coefficient>1.083636</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0828345</coefficient>
+                        <coefficient>1.0822822</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0814817</coefficient>
+                        <coefficient>1.08093</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0801305</coefficient>
+                        <coefficient>1.0795795</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.078781</coefficient>
+                        <coefficient>1.0782307</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0774332</coefficient>
+                        <coefficient>1.0768836</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0760871</coefficient>
+                        <coefficient>1.0755382</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0747427</coefficient>
+                        <coefficient>1.0741944</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0733999</coefficient>
+                        <coefficient>1.0728523</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0720588</coefficient>
+                        <coefficient>1.0715119</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="electricity_net_ownuse">
-                        <coefficient>1.0707194</coefficient>
+                        <coefficient>1.0701732</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
@@ -24258,133 +24258,133 @@
                <stub-technology name="gas pipeline">
                   <period year="1975">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.4974599</coefficient>
+                        <coefficient>1.4789343</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.3476608</coefficient>
+                        <coefficient>1.3462407</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0177754</coefficient>
+                        <coefficient>1.0177679</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2015">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2025">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2030">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2040">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2045">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2055">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2060">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2070">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2075">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2085">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2090">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>
                   <period year="2100">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.0088846</coefficient>
+                        <coefficient>1.0088801</coefficient>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                   </period>

@@ -46657,16 +46657,16 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <calibrated-value>0.003904</calibrated-value>
-                        <efficiency>0.3194047</efficiency>
+                        <calibrated-value>0.0033899</calibrated-value>
+                        <efficiency>0.3165067</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="regional coal">
-                        <calibrated-value>0.0118817</calibrated-value>
-                        <efficiency>0.2707095</efficiency>
+                        <calibrated-value>0.0114463</calibrated-value>
+                        <efficiency>0.2681184</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
@@ -46705,7 +46705,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.1816415</calibrated-value>
+                        <calibrated-value>0.1812787</calibrated-value>
                         <efficiency>0.33</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
@@ -46713,7 +46713,7 @@
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.3668027</calibrated-value>
+                        <calibrated-value>0.3661249</calibrated-value>
                         <efficiency>0.33</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
@@ -46739,7 +46739,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0531634</calibrated-value>
+                        <calibrated-value>0.0529138</calibrated-value>
                         <efficiency>0.5</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
@@ -46747,7 +46747,7 @@
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.0337649</calibrated-value>
+                        <calibrated-value>0.0334406</calibrated-value>
                         <efficiency>0.55</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
@@ -46770,32 +46770,32 @@
                <stub-technology name="refined liquids (steam/CT)">
                   <period year="1975">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0173775</calibrated-value>
-                        <efficiency>0.5828987</efficiency>
+                        <calibrated-value>0.015554</calibrated-value>
+                        <efficiency>0.5594399</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.0298587</calibrated-value>
-                        <efficiency>0.3717476</efficiency>
+                        <calibrated-value>0.0240653</calibrated-value>
+                        <efficiency>0.3656376</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.1387924</calibrated-value>
-                        <efficiency>0.3326678</efficiency>
+                        <calibrated-value>0.1291399</calibrated-value>
+                        <efficiency>0.3321665</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.143672</calibrated-value>
-                        <efficiency>0.3083741</efficiency>
+                        <calibrated-value>0.1339874</calibrated-value>
+                        <efficiency>0.3081088</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
@@ -46821,7 +46821,7 @@
                <stub-technology name="biomass (conv)">
                   <period year="1975">
                      <minicam-energy-input name="regional biomass">
-                        <calibrated-value>6.47e-05</calibrated-value>
+                        <calibrated-value>5.31e-05</calibrated-value>
                         <efficiency>0.2150024</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
@@ -46829,7 +46829,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
-                        <calibrated-value>0.0002415</calibrated-value>
+                        <calibrated-value>0.0001853</calibrated-value>
                         <efficiency>0.3117535</efficiency>
                         <market-name>South Asia</market-name>
                      </minicam-energy-input>
@@ -46914,91 +46914,91 @@
                <share-weight fillout="1" year="1975">0</share-weight>
                <stub-technology name="hydro">
                   <period year="1975">
-                     <fixedOutput>0.0088328</fixedOutput>
+                     <fixedOutput>0.0082929</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
-                     <fixedOutput>0.0295845</fixedOutput>
+                     <fixedOutput>0.0268079</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.0503707</fixedOutput>
+                     <fixedOutput>0.0463089</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2010">
-                     <fixedOutput>0.0773892</fixedOutput>
+                     <fixedOutput>0.0710383</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2015">
-                     <fixedOutput>0.0825941</fixedOutput>
+                     <fixedOutput>0.0749133</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
-                     <fixedOutput>0.0877991</fixedOutput>
+                     <fixedOutput>0.0787882</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2025">
-                     <fixedOutput>0.093004</fixedOutput>
+                     <fixedOutput>0.0826631</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2030">
-                     <fixedOutput>0.098209</fixedOutput>
+                     <fixedOutput>0.0865381</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <fixedOutput>0.1034139</fixedOutput>
+                     <fixedOutput>0.090413</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2040">
-                     <fixedOutput>0.1191604</fixedOutput>
+                     <fixedOutput>0.1021358</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2045">
-                     <fixedOutput>0.1349069</fixedOutput>
+                     <fixedOutput>0.1138586</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <fixedOutput>0.1506534</fixedOutput>
+                     <fixedOutput>0.1255814</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2055">
-                     <fixedOutput>0.1663999</fixedOutput>
+                     <fixedOutput>0.1373042</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2060">
-                     <fixedOutput>0.1821464</fixedOutput>
+                     <fixedOutput>0.149027</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <fixedOutput>0.1978929</fixedOutput>
+                     <fixedOutput>0.1607498</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2070">
-                     <fixedOutput>0.2136394</fixedOutput>
+                     <fixedOutput>0.1724726</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2075">
-                     <fixedOutput>0.2293859</fixedOutput>
+                     <fixedOutput>0.1841955</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <fixedOutput>0.2451324</fixedOutput>
+                     <fixedOutput>0.1959183</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2085">
-                     <fixedOutput>0.2608789</fixedOutput>
+                     <fixedOutput>0.2076411</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2090">
-                     <fixedOutput>0.2766254</fixedOutput>
+                     <fixedOutput>0.2193639</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <fixedOutput>0.2923719</fixedOutput>
+                     <fixedOutput>0.2310867</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2100">
-                     <fixedOutput>0.2923719</fixedOutput>
+                     <fixedOutput>0.2310867</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                </stub-technology>
@@ -47069,7 +47069,7 @@
                      </input-OM-fixed>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>5.77e-05</calOutputValue>
+                        <calOutputValue>4.92e-05</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
@@ -47081,7 +47081,7 @@
                      </input-OM-fixed>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0001542</calOutputValue>
+                        <calOutputValue>0.0001312</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2015">
@@ -47425,10 +47425,10 @@
                <stub-technology name="PV">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -47437,10 +47437,10 @@
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -47449,358 +47449,358 @@
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0005919</calOutputValue>
+                        <calOutputValue>0.0005012</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0006406</calOutputValue>
+                        <calOutputValue>0.0005476</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
                <stub-technology name="PV_storage">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
                <stub-technology name="CSP">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -47809,10 +47809,10 @@
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -47821,10 +47821,10 @@
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -47833,10 +47833,10 @@
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -47845,324 +47845,324 @@
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.34078863221556</capacity-factor>
+                        <capacity-factor>0.341023635488729</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
                <stub-technology name="CSP_storage">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.802502262959222</capacity-factor>
+                        <capacity-factor>0.803055657763782</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
@@ -48234,178 +48234,178 @@
                <stub-technology name="rooftop_pv">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.317987348146128</capacity-factor>
+                        <capacity-factor>0.31832694372201</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
@@ -50243,16 +50243,16 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <calibrated-value>0.8703904</calibrated-value>
-                        <efficiency>0.3207787</efficiency>
+                        <calibrated-value>0.8709045</calibrated-value>
+                        <efficiency>0.3207892</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="regional coal">
-                        <calibrated-value>1.3764605</calibrated-value>
-                        <efficiency>0.3257979</efficiency>
+                        <calibrated-value>1.376896</calibrated-value>
+                        <efficiency>0.3258021</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
@@ -50291,7 +50291,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.7621463</calibrated-value>
+                        <calibrated-value>0.7625092</calibrated-value>
                         <efficiency>0.33</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
@@ -50299,7 +50299,7 @@
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.1681164</calibrated-value>
+                        <calibrated-value>1.1687942</calibrated-value>
                         <efficiency>0.33</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
@@ -50325,7 +50325,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.1127</calibrated-value>
+                        <calibrated-value>1.1129497</calibrated-value>
                         <efficiency>0.5</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
@@ -50333,7 +50333,7 @@
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.2268069</calibrated-value>
+                        <calibrated-value>1.2271311</calibrated-value>
                         <efficiency>0.55</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
@@ -50356,32 +50356,32 @@
                <stub-technology name="refined liquids (steam/CT)">
                   <period year="1975">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.2474071</calibrated-value>
-                        <efficiency>0.3845476</efficiency>
+                        <calibrated-value>0.2492306</calibrated-value>
+                        <efficiency>0.3874629</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.5540685</calibrated-value>
-                        <efficiency>0.3447953</efficiency>
+                        <calibrated-value>0.5598619</calibrated-value>
+                        <efficiency>0.3453368</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.3298925</calibrated-value>
-                        <efficiency>0.3369123</efficiency>
+                        <calibrated-value>0.339545</calibrated-value>
+                        <efficiency>0.3369823</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.2826117</calibrated-value>
-                        <efficiency>0.3489812</efficiency>
+                        <calibrated-value>0.2922963</calibrated-value>
+                        <efficiency>0.3477574</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
@@ -50407,7 +50407,7 @@
                <stub-technology name="biomass (conv)">
                   <period year="1975">
                      <minicam-energy-input name="regional biomass">
-                        <calibrated-value>1.81e-05</calibrated-value>
+                        <calibrated-value>2.96e-05</calibrated-value>
                         <efficiency>0.2150024</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
@@ -50415,8 +50415,8 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional biomass">
-                        <calibrated-value>0.0106372</calibrated-value>
-                        <efficiency>0.205993</efficiency>
+                        <calibrated-value>0.0106935</calibrated-value>
+                        <efficiency>0.2065493</efficiency>
                         <market-name>Southeast Asia</market-name>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
@@ -50449,22 +50449,22 @@
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">0</share-weight>
                <share-weight year="2020">0.05</share-weight>
-               <share-weight year="2025">0.104441767049623</share-weight>
-               <share-weight year="2030">0.158883534099246</share-weight>
-               <share-weight year="2035">0.213325301148869</share-weight>
-               <share-weight year="2040">0.223689424264657</share-weight>
-               <share-weight year="2045">0.234053547380444</share-weight>
-               <share-weight year="2050">0.244417670496231</share-weight>
-               <share-weight year="2055">0.265306023906156</share-weight>
-               <share-weight year="2060">0.286194377316081</share-weight>
-               <share-weight year="2065">0.307082730726005</share-weight>
-               <share-weight year="2070">0.32797108413593</share-weight>
-               <share-weight year="2075">0.348859437545855</share-weight>
-               <share-weight year="2080">0.369747790955779</share-weight>
-               <share-weight year="2085">0.390636144365704</share-weight>
-               <share-weight year="2090">0.411524497775628</share-weight>
-               <share-weight year="2095">0.432412851185553</share-weight>
-               <share-weight year="2100">0.453301204595478</share-weight>
+               <share-weight year="2025">0.104420818237534</share-weight>
+               <share-weight year="2030">0.158841636475069</share-weight>
+               <share-weight year="2035">0.213262454712603</share-weight>
+               <share-weight year="2040">0.22357769726685</share-weight>
+               <share-weight year="2045">0.233892939821097</share-weight>
+               <share-weight year="2050">0.244208182375344</share-weight>
+               <share-weight year="2055">0.265092346022851</share-weight>
+               <share-weight year="2060">0.285976509670358</share-weight>
+               <share-weight year="2065">0.306860673317864</share-weight>
+               <share-weight year="2070">0.327744836965371</share-weight>
+               <share-weight year="2075">0.348629000612878</share-weight>
+               <share-weight year="2080">0.369513164260385</share-weight>
+               <share-weight year="2085">0.390397327907892</share-weight>
+               <share-weight year="2090">0.411281491555399</share-weight>
+               <share-weight year="2095">0.432165655202906</share-weight>
+               <share-weight year="2100">0.453049818850413</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -50500,91 +50500,91 @@
                <share-weight fillout="1" year="1975">0</share-weight>
                <stub-technology name="hydro">
                   <period year="1975">
-                     <fixedOutput>0.0639254</fixedOutput>
+                     <fixedOutput>0.0644654</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
-                     <fixedOutput>0.1382549</fixedOutput>
+                     <fixedOutput>0.1410315</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
-                     <fixedOutput>0.195508</fixedOutput>
+                     <fixedOutput>0.1995697</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2010">
-                     <fixedOutput>0.2477813</fixedOutput>
+                     <fixedOutput>0.2541321</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2015">
-                     <fixedOutput>0.2572589</fixedOutput>
+                     <fixedOutput>0.2649398</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
-                     <fixedOutput>0.2667366</fixedOutput>
+                     <fixedOutput>0.2757474</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2025">
-                     <fixedOutput>0.2762142</fixedOutput>
+                     <fixedOutput>0.2865551</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2030">
-                     <fixedOutput>0.2856919</fixedOutput>
+                     <fixedOutput>0.2973628</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <fixedOutput>0.2951695</fixedOutput>
+                     <fixedOutput>0.3081704</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2040">
-                     <fixedOutput>0.3214959</fixedOutput>
+                     <fixedOutput>0.3385205</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2045">
-                     <fixedOutput>0.3478223</fixedOutput>
+                     <fixedOutput>0.3688706</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <fixedOutput>0.3741487</fixedOutput>
+                     <fixedOutput>0.3992207</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2055">
-                     <fixedOutput>0.4004751</fixedOutput>
+                     <fixedOutput>0.4295708</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2060">
-                     <fixedOutput>0.4268015</fixedOutput>
+                     <fixedOutput>0.4599208</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <fixedOutput>0.4531279</fixedOutput>
+                     <fixedOutput>0.4902709</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2070">
-                     <fixedOutput>0.4794543</fixedOutput>
+                     <fixedOutput>0.520621</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2075">
-                     <fixedOutput>0.5057807</fixedOutput>
+                     <fixedOutput>0.5509711</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <fixedOutput>0.532107</fixedOutput>
+                     <fixedOutput>0.5813212</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2085">
-                     <fixedOutput>0.5584334</fixedOutput>
+                     <fixedOutput>0.6116712</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2090">
-                     <fixedOutput>0.5847598</fixedOutput>
+                     <fixedOutput>0.6420213</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <fixedOutput>0.6110862</fixedOutput>
+                     <fixedOutput>0.6723714</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                   <period year="2100">
-                     <fixedOutput>0.6110862</fixedOutput>
+                     <fixedOutput>0.6723714</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
                </stub-technology>
@@ -50655,7 +50655,7 @@
                      </input-OM-fixed>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>7.48e-05</calOutputValue>
+                        <calOutputValue>8.33e-05</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
@@ -50667,7 +50667,7 @@
                      </input-OM-fixed>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0002615</calOutputValue>
+                        <calOutputValue>0.0002845</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2015">
@@ -51011,10 +51011,10 @@
                <stub-technology name="PV">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -51023,10 +51023,10 @@
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -51035,358 +51035,358 @@
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0001601</calOutputValue>
+                        <calOutputValue>0.0002509</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.0002405</calOutputValue>
+                        <calOutputValue>0.0003334</calOutputValue>
                      </CalDataOutput>
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
                <stub-technology name="PV_storage">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
                <stub-technology name="CSP">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -51395,10 +51395,10 @@
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -51407,10 +51407,10 @@
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -51419,10 +51419,10 @@
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                      <share-weight>0</share-weight>
                      <CalDataOutput>
@@ -51431,324 +51431,324 @@
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.352049265643061</capacity-factor>
+                        <capacity-factor>0.348080063287647</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
                <stub-technology name="CSP_storage">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.829019238449788</capacity-factor>
+                        <capacity-factor>0.819672407096718</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
@@ -51820,178 +51820,178 @@
                <stub-technology name="rooftop_pv">
                   <period year="1975">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="1990">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2005">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2010">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2015">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2020">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2025">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2030">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2035">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2040">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2045">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2050">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2055">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2060">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2065">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2070">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2075">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2080">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2085">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2090">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2095">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                   <period year="2100">
                      <input-capital name="capital">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <capacity-factor>0.291988469169773</capacity-factor>
+                        <capacity-factor>0.296084698727557</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </stub-technology>
