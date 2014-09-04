@@ -440,7 +440,8 @@
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;lapack.lib;blas.lib;libf2c.lib;tbb.lib;tbbmalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;lapack.lib;blas.lib;libf2c.lib;tbb.lib;tbbmalloc.lib;tbbmalloc_proxy.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/INCLUDE:"__TBB_malloc_proxy" %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">

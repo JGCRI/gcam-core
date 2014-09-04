@@ -46,13 +46,15 @@ endif
 ifneq ($(strip $(TBB_LINK_DEBUG)),1)
 LIBTBB          = tbb
 LIBTBBMALLOC    = tbbmalloc
+LIBTBBMALLOC_PROXY = tbbmalloc_proxy
 else
 LIBTBB          = tbb_debug
 LIBTBBMALLOC    = tbbmalloc_debug
+LIBTBBMALLOC_PROXY = tbbmalloc_proxy_debug
 endif
 #
 ifneq ($(GCAM_PARALLEL_ENABLED),0) 
-TBB_LIB		= -l$(LIBTBB) -l$(LIBTBBMALLOC)
+TBB_LIB		= -l$(LIBTBB) -l$(LIBTBBMALLOC) -l$(LIBTBBMALLOC_PROXY)
 endif
 
 

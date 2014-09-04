@@ -2883,6 +2883,7 @@
 					"-lblas",
 					"-ltbb",
 					"-ltbbmalloc",
+					"-ltbbmalloc_proxy",
 				);
 				PREBINDING = NO;
 				SDKROOT = "";
