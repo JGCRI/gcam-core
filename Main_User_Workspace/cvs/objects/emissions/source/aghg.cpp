@@ -103,7 +103,7 @@ void AGHG::copy( const AGHG& aOther ){
 //! \brief initialize Ghg object with xml data
 void AGHG::XMLParse( const DOMNode* aNode ) {
     /*! \pre Assume we are passed a valid node. */
-    assert( node );
+    assert( aNode );
 
     DOMNodeList* nodeList = aNode->getChildNodes();
 

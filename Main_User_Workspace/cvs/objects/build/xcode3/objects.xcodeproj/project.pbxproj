@@ -271,6 +271,7 @@
 		CD48883B122873C200F5A88A /* plain_text_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871C122873C200F5A88A /* plain_text_logger.cpp */; };
 		CD48883C122873C200F5A88A /* xml_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871D122873C200F5A88A /* xml_logger.cpp */; };
 		CD548E5A12AFFD9400ADCE8C /* generic_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD548E5912AFFD9400ADCE8C /* generic_output.cpp */; };
+		CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */; };
 		CD83E61614F4584900A1D301 /* linked_market.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E61514F4584900A1D301 /* linked_market.cpp */; };
 		CD83E63A14F54B1000A1D301 /* linked_ghg_policy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E63914F54B1000A1D301 /* linked_ghg_policy.cpp */; };
 		CDAF62F0130DAB6900D93AFB /* MAGICC_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */; };
@@ -937,6 +938,8 @@
 		CD52798D16418A9F00A425BF /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
 		CD548E5812AFFD8C00ADCE8C /* generic_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = generic_output.h; sourceTree = "<group>"; };
 		CD548E5912AFFD9400ADCE8C /* generic_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = generic_output.cpp; sourceTree = "<group>"; };
+		CD6B455319B138870020AC72 /* has_market_flag_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = has_market_flag_solution_info_filter.h; sourceTree = "<group>"; };
+		CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = has_market_flag_solution_info_filter.cpp; sourceTree = "<group>"; };
 		CD83E61214F456C000A1D301 /* linked_market.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linked_market.h; sourceTree = "<group>"; };
 		CD83E61514F4584900A1D301 /* linked_market.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linked_market.cpp; sourceTree = "<group>"; };
 		CD83E63814F548E000A1D301 /* linked_ghg_policy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linked_ghg_policy.h; sourceTree = "<group>"; };
@@ -1922,6 +1925,7 @@
 		CD488635122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD6B455319B138870020AC72 /* has_market_flag_solution_info_filter.h */,
 				CD52797E16418A8300A425BF /* edfun.hpp */,
 				CD52797F16418A8300A425BF /* fdjac.hpp */,
 				CD52798016418A8300A425BF /* functor-subs.hpp */,
@@ -1955,6 +1959,7 @@
 		CD488646122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */,
 				CDD21002161B9FA300945527 /* jacobian-precondition.cpp */,
 				CDD21003161B9FA300945527 /* svd_invert_solve.cpp */,
 				0EF7AF6713E1F0130034AA71 /* edfun.cpp */,
@@ -2694,6 +2699,7 @@
 				CDE29985198C82C400556032 /* mac_control.cpp in Sources */,
 				CDE29986198C82C400556032 /* nonco2_emissions.cpp in Sources */,
 				CDE29989198C831E00556032 /* emissions_control_factory.cpp in Sources */,
+				CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

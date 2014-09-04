@@ -653,6 +653,7 @@
     <ClCompile Include="..\..\solution\util\source\and_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\calc_counter.cpp" />
     <ClCompile Include="..\..\solution\util\source\edfun.cpp" />
+    <ClCompile Include="..\..\solution\util\source\has_market_flag_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_type_solution_info_filter.cpp" />
@@ -974,6 +975,7 @@
     <ClInclude Include="..\..\solution\util\include\fdjac.hpp" />
     <ClInclude Include="..\..\solution\util\include\functor-subs.hpp" />
     <ClInclude Include="..\..\solution\util\include\functor.hpp" />
+    <ClInclude Include="..\..\solution\util\include\has_market_flag_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\isolution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\jacobian-precondition.hpp" />
     <ClInclude Include="..\..\solution\util\include\linesearch.hpp" />

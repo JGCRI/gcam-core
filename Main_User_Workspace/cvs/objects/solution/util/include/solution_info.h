@@ -54,6 +54,7 @@
 #include "solution/util/include/solution_info_param_parser.h"
 
 class Market;
+class IInfo;
 class SolutionInfoSet;
 class SupplyDemandCurve;
 class IActivity;
@@ -128,6 +129,7 @@ public:
     bool hasBisected() const;
     const std::vector<const objects::Atom*>& getContainedRegions() const;
     const std::vector<IActivity*>& getDependencies() const;
+    const IInfo* getMarketInfo() const;
 #if GCAM_PARALLEL_ENABLED
     GcamFlowGraph* getFlowGraph() const;
 #endif

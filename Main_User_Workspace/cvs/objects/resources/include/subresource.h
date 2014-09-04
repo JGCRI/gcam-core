@@ -66,7 +66,7 @@ class Tabs;
 class SubResource: public IVisitable
 {
 	friend class XMLDBOutputter;
-    friend class CalibrateResourceVisitor;    
+    friend class CalibrateResourceVisitor;
     friend class EnergyBalanceTable;
 public:
     SubResource();

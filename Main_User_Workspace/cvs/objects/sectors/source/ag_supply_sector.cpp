@@ -199,10 +199,12 @@ void AgSupplySector::setMarket() {
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
             marketplace->setMarketToSolve( name, regionName, per );
         }
-        // Don't set mCalPrice if not valid
+        // Don't set calPrice or indicate the market is fully calibrated if mCalPrice is not valid.
         if ( mCalPrice > 0 ) {
             for( int per = 0; per < modeltime->getmaxper(); ++per ){
-                marketplace->getMarketInfo( name, regionName, per, true )->setDouble( "calPrice", mCalPrice );
+                IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, per, true );
+                marketInfo->setDouble( "calPrice", mCalPrice );
+                marketInfo->setBoolean( "fully-calibrated", true );
             }
         }
     }

@@ -48,6 +48,7 @@
 
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "marketplace/include/marketplace.h"
 #include "resources/include/subresource.h"
 #include "resources/include/grade.h"
 #include "util/base/include/xml_helper.h"
@@ -218,8 +219,16 @@ void SubResource::initCalc( const string& aRegionName, const string& aResourceNa
     // Fill price added after it is calibrated.  This will interpolate to any
     // price adders read in the future or just copy forward if there is nothing
     // to interpolate to.
-    if( aPeriod == scenario->getModeltime()->getFinalCalibrationPeriod() + 1 ) {
+    const int finalCalPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
+    if( aPeriod == finalCalPeriod + 1 ) {
         SectorUtils::fillMissingPeriodVectorInterpolated( mPriceAdder );
+    }
+
+    // If we are in a calibration period and a calibrated value was read in set the
+    // flag on the market that this resource is fully calibrated.
+    if( aPeriod <= finalCalPeriod && mCalProduction[ aPeriod ] > 0 ) {
+        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
+        marketInfo->setBoolean( "fully-calibrated", true );
     }
     
 }

@@ -579,6 +579,14 @@ const vector<IActivity*>& SolutionInfo::getDependencies() const {
     return mDependencies;
 }
 
+/*!
+ * \brief Get the market info from the associated market.
+ * \return The appropriate market info object.
+ */
+const IInfo* SolutionInfo::getMarketInfo() const {
+    return linkedMarket->getMarketInfo();
+}
+
 #if GCAM_PARALLEL_ENABLED
 /*
  * \brief Get a flow graph with the items which are affected by changing the price

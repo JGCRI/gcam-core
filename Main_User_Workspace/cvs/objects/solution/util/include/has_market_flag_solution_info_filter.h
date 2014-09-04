@@ -1,5 +1,5 @@
-#ifndef _RENEWABLE_SUBRESOURCE_H_
-#define _RENEWABLE_SUBRESOURCE_H_
+#ifndef _HAS_MARKET_FLAG_SOLUTION_INFO_FILTER_H_
+#define _HAS_MARKET_FLAG_SOLUTION_INFO_FILTER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -37,51 +37,51 @@
 */
 
 
-
 /*! 
-* \file renewable_subresource.h
-* \ingroup Objects
-* \brief The SubRenewableResource class header file.
-* \author Sonny Kim
-*/
+ * \file has_market_flag_solution_info_filter.h  
+ * \ingroup Objects
+ * \brief Header file for the HasMarketFlagSolutionInfoFilter class.
+ * \author Pralit Patel
+ */
 #include <xercesc/dom/DOMNode.hpp>
-#include "resources/include/subresource.h"
+#include <string>
 
-// Forward declarations.
-class Grade;
-class SubResource;
-class Tabs;
-class IInfo;
+#include "solution/util/include/isolution_info_filter.h"
 
-/*! 
-* \ingroup Objects
-* \brief A class which defines a SubRenewableResource object, which is a container for multiple grade objects.
-* \author Steve Smith
-* \date $ Date $
-* \version $ Revision $
-*/
-class SubRenewableResource: public SubResource {
-    friend class CalibrateResourceVisitor;
-protected:
-    double maxSubResource;
-    double gdpSupplyElasticity;
-    //! subresource variance now read in rather than computed
-    double subResourceVariance;
-    //! read in average capacity factor for each subresource
-    double subResourceCapacityFactor;  
-    virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
-    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
-public: 
-    SubRenewableResource();
-    virtual void completeInit( const IInfo* aSectorInfo );
-    virtual void cumulsupply(double prc,int per);
-    virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
-    virtual double getVariance() const;
-    virtual double getMaxSubResource() const;
-    virtual double getAverageCapacityFactor() const;
-    //! Return the XML tag name
-    static const std::string& getXMLNameStatic( void );
-    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+class SolutionInfo;
+
+/*!
+ * \ingroup Objects
+ * \brief A solution info filter which will accept any solution info which
+ *        has the market info boolean set to true for the given key.
+ * \details
+ *          <b>XML specification for HasMarketFlagSolutionInfoFilter</b>
+ *          - XML name: \c has-market-flag-solution-info-filter
+ *          - Contained by:
+ *          - Parsing inherited from class: None.
+ *          - Elements:
+ *              - \c has-market-flag string HasMarketFlagSolutionInfoFilter::mMarketInfoKey
+ *                      The market info key to check to see if the boolean flag is
+ *                      set to true.
+ *
+ * \author Pralit Patel
+ */
+class HasMarketFlagSolutionInfoFilter : public ISolutionInfoFilter {
+public:
+    HasMarketFlagSolutionInfoFilter();
+    ~HasMarketFlagSolutionInfoFilter();
+    
+    static const std::string& getXMLNameStatic();
+    
+    // ISolutionInfoFilter methods
+    virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
+    
+    // IParsable methods
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+private:
+    //! The market info key to check.
+    std::string mMarketInfoKey;
 };
-#endif // _RENEWABLE_SUBRESOURCE_H_
+
+#endif // _HAS_MARKET_FLAG_SOLUTION_INFO_FILTER_H_

@@ -1052,6 +1052,9 @@
     <ClCompile Include="..\..\emissions\source\nonco2_emissions.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\has_market_flag_solution_info_filter.cpp">
+      <Filter>Source Files\solution\util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2142,6 +2145,9 @@
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\nonco2_emissions.h">
       <Filter>Header Files\emissions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\has_market_flag_solution_info_filter.h">
+      <Filter>Header Files\solution\util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

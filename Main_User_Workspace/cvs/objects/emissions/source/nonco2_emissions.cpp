@@ -331,7 +331,7 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     
     // Primary output is always stored at position zero and used to drive
     // emissions.
-    assert( aOutput.size() > 0 && aOutputs[ 0 ] );
+    assert( aOutputs.size() > 0 && aOutputs[ 0 ] );
     double primaryOutput = aOutputs[ 0 ]->getPhysicalOutput( aPeriod );
 
     /*!
