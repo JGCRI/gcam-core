@@ -122,27 +122,27 @@ auto_ptr<IScenarioRunner> ScenarioRunnerFactory::createDefault( const list<strin
     // Determine the correct type of ScenarioRunner to create. Note that this
     // ordering must be preserved because certain scenario runners can contain
     // other scenario runners.
-    if( conf->getBool( "BatchMode" )
+    if( conf->getBool( "BatchMode", false, false )
         && !isExcluded( aExcludedTypes, BatchRunner::getXMLNameStatic() ) )
     {
         defaultRunner.reset( new BatchRunner );
     }
-    else if( conf->getBool( "find-path" )
+    else if( conf->getBool( "find-path", false, false )
         && !isExcluded( aExcludedTypes, PolicyTargetRunner::getXMLNameStatic() ) )
     {
         defaultRunner.reset( new PolicyTargetRunner );
     }
-    else if( conf->getBool( "simple-find-path" )
+    else if( conf->getBool( "simple-find-path", false, false )
         && !isExcluded( aExcludedTypes, SimplePolicyTargetRunner::getXMLNameStatic() ) )
     {
         defaultRunner.reset( new SimplePolicyTargetRunner );
     }
-    else if( conf->getBool( "mergeFilesOnly" )
+    else if( conf->getBool( "mergeFilesOnly", false, false )
         && !isExcluded( aExcludedTypes, MergeRunner::getXMLNameStatic() ) )
     {
         defaultRunner.reset( new MergeRunner );
     }
-    else if( conf->getBool( "createCostCurve" )
+    else if( conf->getBool( "createCostCurve", false, false )
         && !isExcluded( aExcludedTypes, MACGeneratorScenarioRunner::getXMLNameStatic() ) )
     {
         defaultRunner.reset( new MACGeneratorScenarioRunner );

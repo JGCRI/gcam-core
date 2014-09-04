@@ -886,7 +886,7 @@ void Scenario::csvSGMGenFile( ostream& aFile ) const {
  */
 void Scenario::initSolvers() {
     // check the config file for a solver config file
-    const string solverConfigFile = Configuration::getInstance()->getFile( "solver-config", "" );
+    const string solverConfigFile = Configuration::getInstance()->getFile( "solver-config", "", false );
     
     // parse the solver config if the user specified one
     if( solverConfigFile != "" ) {

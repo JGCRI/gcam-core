@@ -190,17 +190,20 @@ void Configuration::toDebugXML( ostream& out, Tabs* tabs ) const {
 * \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
 * \param key Key to lookup, as specified in the Configuration.xml file as a name value.
 * \param defaultValue Optional default argument which will be returned if the key is not found.
+* \param mustExist If a warning message should be generated when the key is not found.
 * \return Returns the value found in the map for the specified key, or if none is found the default value.
 */
-const string& Configuration::getFile( const string& key, const string& defaultValue ) const {
+const string& Configuration::getFile( const string& key, const string& defaultValue, const bool mustExist ) const {
 	map<string,string>::const_iterator found = fileMap.find( key );
 	if ( found != fileMap.end() ) {
 		return found->second;
 	}
 	else {
-		ILogger& log = ILogger::getLogger( mLogFile );
-        log.setLevel( ILogger::WARNING );
-        log << "Could not find filename: " << key << endl;
+        if( mustExist ) {
+            ILogger& log = ILogger::getLogger( mLogFile );
+            log.setLevel( ILogger::WARNING );
+            log << "Could not find filename: " << key << endl;
+        }
 		return defaultValue;
 	}
 }
@@ -216,17 +219,20 @@ const string& Configuration::getFile( const string& key, const string& defaultVa
 * \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
 * \param key Key to lookup, as specified in the Configuration.xml file as a name value.
 * \param defaultValue Optional default argument which will be returned if the key is not found.
+* \param mustExist If a warning message should be generated when the key is not found.
 * \return Returns the value found in the map for the specified key, or if none is found the default value.
 */
-const string& Configuration::getString( const string& key, const string& defaultValue ) const {
+const string& Configuration::getString( const string& key, const string& defaultValue, const bool mustExist ) const {
 	map<string,string>::const_iterator found = stringMap.find( key );
 	if ( found != stringMap.end() ) {
 		return found->second;
 	}
 	else {
-		ILogger& log = ILogger::getLogger( mLogFile );
-        log.setLevel( ILogger::WARNING );
-		log << "Could not find String: " << key << endl;
+        if( mustExist ) {
+            ILogger& log = ILogger::getLogger( mLogFile );
+            log.setLevel( ILogger::WARNING );
+            log << "Could not find String: " << key << endl;
+        }
 		return defaultValue;
 	}
 }
@@ -242,9 +248,10 @@ const string& Configuration::getString( const string& key, const string& default
 * \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
 * \param key Key to lookup, as specified in the Configuration.xml file as a name value.
 * \param defaultValue Optional default argument which will be returned if the key is not found.
+* \param mustExist If a warning message should be generated when the key is not found.
 * \return Returns the value found in the map for the specified key, or if none is found the default value.
 */
-bool Configuration::getBool( const string& key, const bool defaultValue ) const {
+bool Configuration::getBool( const string& key, const bool defaultValue, const bool mustExist ) const {
 
 	map<string,bool>::const_iterator found = boolMap.find( key );
 
@@ -252,9 +259,11 @@ bool Configuration::getBool( const string& key, const bool defaultValue ) const 
 		return found->second;
 	}
 	else {
-        ILogger& log = ILogger::getLogger( mLogFile );
-        log.setLevel( ILogger::WARNING );
-		log << "Could not find bool: " << key << endl;
+        if( mustExist ) {
+            ILogger& log = ILogger::getLogger( mLogFile );
+            log.setLevel( ILogger::WARNING );
+            log << "Could not find bool: " << key << endl;
+        }
 		return defaultValue;
 	}
 }
@@ -270,9 +279,10 @@ bool Configuration::getBool( const string& key, const bool defaultValue ) const 
 * \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
 * \param key Key to lookup, as specified in the Configuration.xml file as a name value.
 * \param defaultValue Optional default argument which will be returned if the key is not found.
+* \param mustExist If a warning message should be generated when the key is not found.
 * \return Returns the value found in the map for the specified key, or if none is found the default value.
 */
-int Configuration::getInt( const string& key, const int defaultValue ) const {
+int Configuration::getInt( const string& key, const int defaultValue, const bool mustExist ) const {
 
 	map<string,int>::const_iterator found = intMap.find( key );
 
@@ -280,9 +290,11 @@ int Configuration::getInt( const string& key, const int defaultValue ) const {
 		return found->second;
 	}
 	else {
-        ILogger& log = ILogger::getLogger( mLogFile );
-        log.setLevel( ILogger::WARNING );
-		log << "Could not find int: " << key << endl;
+        if( mustExist ) {
+            ILogger& log = ILogger::getLogger( mLogFile );
+            log.setLevel( ILogger::WARNING );
+            log << "Could not find int: " << key << endl;
+        }
 		return defaultValue;
 	}
 }
@@ -298,18 +310,21 @@ int Configuration::getInt( const string& key, const int defaultValue ) const {
 * \warning The xmlParse function must be called before this function, otherwise the Configuration object will be empty.
 * \param key Key to lookup, as specified in the Configuration.xml file as a name value.
 * \param defaultValue Optional default argument which will be returned if the key is not found.
+* \param mustExist If a warning message should be generated when the key is not found.
 * \return Returns the value found in the map for the specified key, or if none is found the default value.
 */
-double Configuration::getDouble( const string& key, const double defaultValue ) const {
+double Configuration::getDouble( const string& key, const double defaultValue, const bool mustExist ) const {
 
 	map<string,double>::const_iterator found = doubleMap.find( key );
 	if ( found != doubleMap.end() ) {
 		return found->second;
 	}
 	else {
-        ILogger& log = ILogger::getLogger( mLogFile );
-        log.setLevel( ILogger::WARNING );
-		log << "Could not find double: " << key << endl;
+        if( mustExist ) {
+            ILogger& log = ILogger::getLogger( mLogFile );
+            log.setLevel( ILogger::WARNING );
+            log << "Could not find double: " << key << endl;
+        }
 		return defaultValue;
 	}
 }

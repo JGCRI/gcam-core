@@ -599,7 +599,7 @@ void SolutionInfoSet::printMarketInfo( const string& aLocation,
 {
     // Use statics here to avoid reinitialization.
     const static Configuration* conf = Configuration::getInstance();
-    const static string monitorMarketGoodName = conf->getString( "monitorMktGood" );
+    const static string monitorMarketGoodName = conf->getString( "monitorMktGood", "", false );
 
     if( !monitorMarketGoodName.empty() ){
         const static string monitorMktGood = conf->getString( "monitorMktName" )

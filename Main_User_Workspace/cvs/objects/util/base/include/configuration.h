@@ -76,11 +76,11 @@ public:
 	static Configuration* getInstance();
 	bool XMLParse( const xercesc::DOMNode* tempnode );
 	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
-	const std::string& getFile( const std::string& key, const std::string& defaultValue = "" ) const;
-	const std::string& getString( const std::string& key, const std::string& defaultValue = "" ) const;
-	bool getBool( const std::string& key, const bool defaultValue = false ) const;
-	int getInt( const std::string& key, const int defaultValue = 0 ) const;
-	double getDouble( const std::string& key, const double defaultValue = 0 ) const;
+	const std::string& getFile( const std::string& key, const std::string& defaultValue = "", const bool mustExist = true ) const;
+	const std::string& getString( const std::string& key, const std::string& defaultValue = "", const bool mustExist = true ) const;
+	bool getBool( const std::string& key, const bool defaultValue = false, const bool mustExist = true ) const;
+	int getInt( const std::string& key, const int defaultValue = 0, const bool mustExist = true ) const;
+	double getDouble( const std::string& key, const double defaultValue = 0, const bool mustExist = true ) const;
     const std::list<std::string>& getScenarioComponents() const;
 private:
     const std::string mLogFile; //!< The name of the log to use.

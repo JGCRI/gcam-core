@@ -704,7 +704,7 @@ void Marketplace::init_to_last( const int period ) {
     // Get the last period to allow using parsed prices, the default is the
     // final calibration period.
     const static int restartPeriod = Configuration::getInstance()->getInt(
-        "restart-period", scenario->getModeltime()->getFinalCalibrationPeriod() + 1 );
+        "restart-period", scenario->getModeltime()->getFinalCalibrationPeriod() + 1, false );
     if ( period > 0 && period < restartPeriod ) {
         for ( unsigned int i = 0; i < markets.size(); i++ ) {
             markets[ i ][ period ]->set_price_to_last_if_default( markets[ i ][ period - 1 ]->getPrice() );
