@@ -363,8 +363,8 @@ void MarketDependencyFinder::findVerticesToCalculate( CalcVertex* aVertex, std::
 bool MarketDependencyFinder::DependencyItemComp::operator()( const DependencyItem* aLHS,
                                                              const DependencyItem* aRHS ) const
 {
-    return ( aLHS->mName + aLHS->mLocatedInRegion )
-        < ( aRHS->mName + aRHS->mLocatedInRegion );
+    return aLHS->mName != aRHS->mName ? aLHS->mName < aRHS->mName :
+        aLHS->mLocatedInRegion < aRHS->mLocatedInRegion;
 }
 
 /*!
@@ -552,6 +552,10 @@ void MarketDependencyFinder::createOrdering() {
     // Create a global ordering by performing a topological sort on the graph.
     // Cycles will be broken when they are no longer possible to avoid.
     ILogger& depLog = ILogger::getLogger( "dependency_finder_log" );
+    // A map which will be populated with vertices in cycles the first time one is
+    // found and can be used there after to break cycles as needed while
+    // performing the topological sort.
+    map<CalcVertex*, int> totalVisits;
     while( !numDependencies.empty() ) {
         // We can clear a vertex and add it to the ordering list if the number of
         // dependencies on it is equal to zero.
@@ -570,7 +574,10 @@ void MarketDependencyFinder::createOrdering() {
             // When a vertex is cleared we can reduce the number of remaining
             // dependencies from it's direct dependents.
             for( VertexIterator depIter = (*removedIter)->mOutEdges.begin(); depIter != (*removedIter)->mOutEdges.end(); ++ depIter ) {
-                --numDependencies[ *depIter ];
+                NumDepIterator dependCountIter = numDependencies.find( *depIter );
+                if( dependCountIter != numDependencies.end() ) {
+                    --(*dependCountIter).second;
+                }
             }
             mGlobalOrdering.push_back( (*removedIter)->mCalcItem );
         }
@@ -581,23 +588,47 @@ void MarketDependencyFinder::createOrdering() {
         if( justRemoved.empty() && !numDependencies.empty() ) {
             depLog.setLevel( ILogger::WARNING );
             depLog << "Cycle detected attempting to break it." << endl;
+
+            list<CalcVertex*> hasVisited;
+            if( totalVisits.empty() ) {
+                // We will need to create the list of possible vertices to use to break the
+                // cycle.  We will do this by finding the strongly coupled components of the
+                // graph that we have left, or put another way the vertices that are part of
+                // a cycle.  Once we have these we can quickly find a suitable vertex to break
+                // the cycle without having to search through a potentially large number of
+                // extraneous vertices.
+                int index = 0;
+                for( NumDepIterator it = numDependencies.begin(); it != numDependencies.end(); ++it ) {
+                    if( (*it).first->mIndex == -1 ) {
+                        findStronglyConnected( (*it).first, index, hasVisited, totalVisits );
+                    }
+                }
+            }
+            else {
+                // Since we have already determined which vertices are in a cycle we 
+                // can just use them again.  We just need to update the list to remove
+                // vertices which have been cleared since the last time it was used.
+                for( NumDepIterator it = totalVisits.begin(); it != totalVisits.end(); ) {
+                    if( numDependencies.find( (*it).first ) == numDependencies.end() ) {
+                        totalVisits.erase( it++ );
+                    }
+                    else {
+                        (*it).second = 0;
+                        ++it;
+                    }
+                }
+            }
+
             // The vertex chosen to break the cycle will be the one most visited
-            // when searching the graph from all of the vertices which have not
-            // yet been cleared.
-            map<CalcVertex*, int> totalVisits;
-            /*!
-             * \warning Searching from every vertex to every other vertex to find a
-             *          cycle is expensive however a search threshold has been placed
-             *          in markCycles to avoid excessive searching.  This keeps total
-             *          time spent here reasonable while still finding at least one
-             *          cycle.
-             */
-            for( NumDepIterator it = numDependencies.begin(); it != numDependencies.end(); ++it ) {
-                list<CalcVertex*> hasVisited;
+            // when searching the graph from all of the vertices which are part of
+            // a strongly connected component.
+            for( NumDepIterator it = totalVisits.begin(); it != totalVisits.end(); ++it ) {
+                hasVisited.clear();
                 markCycles( (*it).first, hasVisited, totalVisits );
             }
+
             // We will choose the vertex with the most visits to break a cycle unless
-            // it has a depenency which can not be broken when creating trial markets.
+            // it has a dependency which can not be broken when creating trial markets.
             int max = 0;
             CalcVertex* maxVertex = 0;
             for( NumDepIterator it = totalVisits.begin(); it != totalVisits.end(); ++it ) {            
@@ -671,7 +702,10 @@ void MarketDependencyFinder::createOrdering() {
             
             // Make dependencies from these price vertices implied only.
             for( VertexIterator dependIter = (*maxItem)->getLastPriceVertex()->mOutEdges.begin(); dependIter != (*maxItem)->getLastPriceVertex()->mOutEdges.end(); ) {
-                --numDependencies[ *dependIter ];
+                NumDepIterator dependCountIter = numDependencies.find( *dependIter );
+                if( dependCountIter != numDependencies.end() ) {
+                    --(*dependCountIter).second;
+                }
                 (*priceMrktIter)->mImpliedVertices.insert( *dependIter );
                 dependIter = (*maxItem)->getLastPriceVertex()->mOutEdges.erase( dependIter );
             }
@@ -679,7 +713,20 @@ void MarketDependencyFinder::createOrdering() {
             // The price vertex still must be calculated before the demand vertex
             // so add that dependency back in.
             (*maxItem)->getLastPriceVertex()->mOutEdges.push_back( (*maxItem)->getFirstDemandVertex() );
-            ++numDependencies[ (*maxItem)->getFirstDemandVertex() ];
+            if( numDependencies.find( (*maxItem)->getFirstPriceVertex() ) != numDependencies.end() ) {
+                ++numDependencies[ (*maxItem)->getFirstDemandVertex() ];
+            }
+
+            // Remove both the price and demand vertex from totalVisits since they can not be
+            // used again to try to break a dependency.
+            NumDepIterator delIt = totalVisits.find( (*maxItem)->getFirstDemandVertex() );
+            if( delIt != totalVisits.end() ) {
+                totalVisits.erase( delIt );
+            }
+            delIt = totalVisits.find( (*maxItem)->getFirstPriceVertex() );
+            if( delIt != totalVisits.end() ) {
+                totalVisits.erase( delIt );
+            }
         }
     }
     
@@ -692,56 +739,117 @@ void MarketDependencyFinder::createOrdering() {
 }
 
 /*!
+ * \brief An implementation of Tarjan's strongly connected components algorithm which
+ *        is used to identify vertices that are part of a cycle.
+ * \details This is an efficient algorithm to quickly identify activities that are
+ *          part of a cycle and can give us a small subset of vertices to run
+ *          markCycles on to figure out which is the best to use to break the cycles.
+ * \param aCurrVertex The current vertex being visited.
+ * \param aMaxIndex The current max index which can be used to give an index to an 
+ *                  unprocessed vertex.
+ * \param aHasVisited The list of vertices which make up the current search path.
+ * \param aTotalVisits The map of vertices to the total number of times that node
+ *                      has been visited to be used in markCycles but will be
+ *                      initialized here.
+ */
+void MarketDependencyFinder::findStronglyConnected( CalcVertex* aCurrVertex, int& aMaxIndex,
+                                                    list<CalcVertex*>& aHasVisited,
+                                                    map<CalcVertex*, int>& aTotalVisits ) const
+{
+    // Initialize the newly found vertex with an index, increase the max count,
+    // and add it to the current search patch.
+    aCurrVertex->mIndex = aCurrVertex->mLowLink = aMaxIndex++;
+    aHasVisited.push_back( aCurrVertex );
+
+    for( VertexIterator it = aCurrVertex->mOutEdges.begin(); it != aCurrVertex->mOutEdges.end(); ++it ) {
+        if( (*it)->mIndex == -1 ) {
+            // This successor has not been processed recurse on it.
+            findStronglyConnected( *it, aMaxIndex, aHasVisited, aTotalVisits );
+            aCurrVertex->mLowLink = min( aCurrVertex->mLowLink, (*it)->mLowLink );
+        }
+        else if( find( aHasVisited.begin(), aHasVisited.end(), *it ) != aHasVisited.end() ) {
+            // This successor is in the path thus we have found a cycle.
+            aCurrVertex->mLowLink = min( aCurrVertex->mLowLink, (*it)->mIndex );
+        }
+    }
+
+    // If the current vertex was part of a cycle then initialize aTotalVisits
+    // with the members of the strongly connected component.
+    /*
+     * \note We are not currently keeping track of each set of strongly connected
+     *       components and instead are just interested in any vertex that is part
+     *       of a set of strongly connected components.  This is because we use
+     *       markCycles to perform searches on this set to understand how they relate
+     *       however if we want replace markCycles with a method that does not require
+     *       searching this information may be valuable.
+     */
+    if( aCurrVertex->mIndex == aCurrVertex->mLowLink ) {
+        if( aHasVisited.back() != aCurrVertex ) {
+            aTotalVisits[ aCurrVertex ] = 0;
+        }
+        while( aHasVisited.back() != aCurrVertex ) {
+            CalcVertex* w = aHasVisited.back();
+            aTotalVisits[ w ] = 0;
+            aHasVisited.pop_back();
+        }
+        aHasVisited.pop_back();
+    }
+}
+
+/*!
  * \brief A helper method to perform a depth first search and count the total
  *        number of times each vertex has been visited in a cycle.
- * \details Since this graph can have a cycle the stop point for searching is 
+ * \details Since this graph can have a cycle the stop point for searching is
  *          when the current search path has returned to a vertex that is already
  *          in the search path.  Note an arbitrary threshold is placed on the number
  *          of times a vertex can be found to be in a cycle to avoid excessive searching
  *          when a good vertex to break a cycle has already been found.
  * \param aCurrVertex The current vertex being visited.
  * \param aHasVisited The list of vertices which make up the current search path.
- * \param aTotalVisists The map of vertices to the total number of times that node
+ * \param aTotalVisits The map of vertices to the total number of times that node
  *                      has been visited.
  * \return The maximum number of cycle-visits so far.
  */
 int MarketDependencyFinder::markCycles( CalcVertex* aCurrVertex, list<CalcVertex*>& aHasVisited,
-                                         map<CalcVertex*, int>& aTotalVisists ) const
+                                        map<CalcVertex*, int>& aTotalVisits ) const
 {
+    if( aTotalVisits.find( aCurrVertex ) == aTotalVisits.end() ) {
+        return 0;
+    }
     typedef map<CalcVertex*, int>::iterator NumDepIterator;
     if( find( aHasVisited.begin(), aHasVisited.end(), aCurrVertex ) != aHasVisited.end() ) {
         // This search path has just formed a cycle, increase the visit count and
         // indicate that this path leads to a cycle.
-        NumDepIterator it = aTotalVisists.find( aCurrVertex );
-        if( it == aTotalVisists.end() ) {
-            aTotalVisists[ aCurrVertex ] = 1;
+        NumDepIterator it = aTotalVisits.find( aCurrVertex );
+        if( it == aTotalVisits.end() ) {
+            aTotalVisits[ aCurrVertex ] = 1;
         }
         else {
-            ++aTotalVisists[ aCurrVertex ];
+            ++aTotalVisits[ aCurrVertex ];
         }
-        return aTotalVisists[ aCurrVertex ];
+        return aTotalVisits[ aCurrVertex ];
     }
     else {
         // Have not yet created a cycle so add this vertex to the search path and
         // keep searching.
         aHasVisited.push_back( aCurrVertex );
-        const int MAX_CYCLE_VISITS = 100000;
+        const int MAX_CYCLE_VISITS = 1000;
         int cycleVisits = 0;
         for( VertexIterator it = aCurrVertex->mOutEdges.begin(); it != aCurrVertex->mOutEdges.end() && cycleVisits < MAX_CYCLE_VISITS; ++it ) {
-            int currCycleVisits = markCycles( *it, aHasVisited, aTotalVisists );
+            int currCycleVisits = markCycles( *it, aHasVisited, aTotalVisits );
             cycleVisits = max( cycleVisits, currCycleVisits );
         }
         aHasVisited.pop_back();
-        
+
         // If any searches from this vertex eventually leads to a cycle then we
         // must increase the visit count for this vertex.
         if( cycleVisits ) {
-            NumDepIterator it = aTotalVisists.find( aCurrVertex );
-            if( it == aTotalVisists.end() ) {
-                aTotalVisists[ aCurrVertex ] = 1;
+            NumDepIterator it = aTotalVisits.find( aCurrVertex );
+            if( it == aTotalVisits.end() ) {
+                aTotalVisits[ aCurrVertex ] = 1;
             }
             else {
-                ++aTotalVisists[ aCurrVertex ];
+                ++aTotalVisits[ aCurrVertex ];
             }
         }
         return cycleVisits;

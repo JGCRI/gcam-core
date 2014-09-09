@@ -116,7 +116,7 @@ public:
      */
     struct CalcVertex {
         CalcVertex( IActivity* aCalcItem, DependencyItem* aDepItem )
-        :mCalcItem( aCalcItem ), mDepItem( aDepItem ) {}
+        :mCalcItem( aCalcItem ), mDepItem( aDepItem ), mIndex( -1 ), mLowLink( -1 ) {}
         ~CalcVertex();
         
         //! The object which does the calculations for this vertex.
@@ -128,6 +128,13 @@ public:
         //! Pointer back to the DependencyItem which contains this vertex for
         //! convenience.
         DependencyItem* mDepItem;
+
+        //! A sequential unique identifier for use in a Tarjan's algorithm.
+        int mIndex;
+
+        //! A identifier for use in a Tarjan's algorithm that represents the
+        //! the smallest index of a vertex know to be reachable from this vertex.
+        int mLowLink;
     };
     // Some typedefs to make the syntax of using vectors of calc vertices cleaner.
     typedef std::vector<CalcVertex*> VertexList;
@@ -305,7 +312,10 @@ public:
 #endif
     
     void findVerticesToCalculate( CalcVertex* aVertex, std::set<IActivity*>& aVisited ) const;
-    int markCycles( CalcVertex* aCurrVertex, std::list<CalcVertex*>& aHasVisited, std::map<CalcVertex*, int>& aTotalVisists ) const;
+    void findStronglyConnected( CalcVertex* aCurrVertex, int& aMaxIndex,std::list<CalcVertex*>& aHasVisited,
+                                std::map<CalcVertex*, int>& aTotalVisits ) const;
+    int markCycles( CalcVertex* aCurrVertex, std::list<CalcVertex*>& aHasVisited, std::map<CalcVertex*,
+                    int>& aTotalVisits ) const;
 };
 
 #endif // _MARKET_DEPENDENCY_FINDER_H_
