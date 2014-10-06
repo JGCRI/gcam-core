@@ -54,7 +54,9 @@ nonghg_gases <- c( "SO2", "NOx", "CO", "NMVOC", "NH3" )
 awb_gases <- c( "SO2_AWB", "NOx_AWB", "CO_AWB", "NMVOC_AWB", "CH4_AWB", "N2O_AWB", "NH3_AWB" )
 agr_gases <- c( "CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR" )
 GHG_names <- c( "CH4", "N2O" )
-F_Gases <- c( "HFC23", "HFC32", "HFC125", "HFC134a", "HFC143a", "HFC236fa", "CF4", "C2F6", "SF6" )
+HFCs <- c( "HFC23", "HFC32", "HFC43", "HFC125", "HFC134a", "HFC143a", "HFC152a", "HFC227ea", "HFC236fa", "HFC245fa", "HFC365mfc"  )
+PFCs <- c( "CF4", "C2F6", "SF6" )
+F_Gases <- c( HFCs, PFCs )
 
 #Sectors
 awb_sectors <- "ag_waste_burning"
