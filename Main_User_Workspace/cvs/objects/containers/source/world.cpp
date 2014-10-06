@@ -412,6 +412,14 @@ void World::runClimateModel() {
     EmissionsSummer hfc125Summer( "HFC125" );
     EmissionsSummer hfc134aSummer( "HFC134a" );
     EmissionsSummer hfc245faSummer( "HFC245fa" );
+    EmissionsSummer hfc23Summer( "HFC23" );
+    EmissionsSummer hfc32Summer( "HFC32" );
+    EmissionsSummer hfc43Summer( "HFC43" );
+    EmissionsSummer hfc143aSummer( "HFC143a" );
+    EmissionsSummer hfc152aSummer( "HFC152a" );
+    EmissionsSummer hfc227eaSummer( "HFC227ea" );
+    EmissionsSummer hfc236faSummer( "HFC236fa" );
+    EmissionsSummer hfc365mfcSummer( "HFC365mfc" );
     EmissionsSummer vocSummer( "NMVOC" );
     EmissionsSummer vocagrSummer( "NMVOC_AGR" );
     EmissionsSummer vocawbSummer( "NMVOC_AWB" );
@@ -449,6 +457,14 @@ void World::runClimateModel() {
     allSummer.addEmissionsSummer( &hfc125Summer );
     allSummer.addEmissionsSummer( &hfc134aSummer );
     allSummer.addEmissionsSummer( &hfc245faSummer );
+    allSummer.addEmissionsSummer( &hfc23Summer );
+    allSummer.addEmissionsSummer( &hfc32Summer );
+    allSummer.addEmissionsSummer( &hfc43Summer );
+    allSummer.addEmissionsSummer( &hfc143aSummer );
+    allSummer.addEmissionsSummer( &hfc152aSummer );
+    allSummer.addEmissionsSummer( &hfc227eaSummer );
+    allSummer.addEmissionsSummer( &hfc236faSummer );
+    allSummer.addEmissionsSummer( &hfc365mfcSummer );
     allSummer.addEmissionsSummer( &vocSummer );
     allSummer.addEmissionsSummer( &vocagrSummer );
     allSummer.addEmissionsSummer( &vocawbSummer );
@@ -461,7 +477,13 @@ void World::runClimateModel() {
    const double N_TO_N2O = 1.571132; 
    const double N_TO_NO2 = 3.2857;
    const double S_TO_SO2 = 2.0; 
-   const double HFC_CA_TO_FA = ( 950 / 640 ); 
+   const double HFC_CA_TO_FA = ( 950 / 640 );
+    const double HFC23_TO_143 = ( 14800.0 / 4470.0 );
+    const double HFC236_TO_143 = ( 9810.0 / 4470.0 );
+    const double HFC32_TO_245 = ( 675.0 / 1030.0 );
+    const double HFC152_TO_245 = ( 124.0 / 1030.0 );
+    const double HFC365_TO_245 = ( 794.0 / 1030.0 );
+    const double HFC43_TO_134 = ( 1640.0 / 1430.0 );
     
     // Update all emissions values.
     accept( &allSummer, -1 );
@@ -572,16 +594,31 @@ void World::runClimateModel() {
                                           hfc125Summer.getEmissions( period ) );
         }
 
-        if( hfc134aSummer.areEmissionsSet( period ) ){
+        if( hfc134aSummer.areEmissionsSet( period ) && hfc43Summer.areEmissionsSet( period )  ){
             mClimateModel->setEmissions( "HFC134a", period,
-                                          hfc134aSummer.getEmissions( period ) );
+                                          hfc134aSummer.getEmissions( period ) +
+                                          hfc43Summer.getEmissions( period ) * HFC43_TO_134);
         }
 
         // MAGICC needs HFC245fa in kton of HFC245ca
-        if( hfc245faSummer.areEmissionsSet( period ) ){
+        if( hfc245faSummer.areEmissionsSet( period ) && hfc32Summer.areEmissionsSet( period ) && hfc365mfcSummer.areEmissionsSet( period ) && hfc152aSummer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "HFC245ca", period,
-                                          hfc245faSummer.getEmissions( period ) 
-                                          / HFC_CA_TO_FA );
+                                          hfc245faSummer.getEmissions( period ) / HFC_CA_TO_FA +
+                                          hfc32Summer.getEmissions( period ) * HFC32_TO_245 +
+                                        hfc365mfcSummer.getEmissions( period ) * HFC365_TO_245 +
+                                        hfc152aSummer.getEmissions( period ) * HFC152_TO_245);
+        }
+        
+        if( hfc227eaSummer.areEmissionsSet( period ) ){
+            mClimateModel->setEmissions( "HFC227ea", period,
+                                        hfc227eaSummer.getEmissions( period ) );
+        }
+        
+        if( hfc143aSummer.areEmissionsSet( period ) && hfc23Summer.areEmissionsSet( period ) && hfc236faSummer.areEmissionsSet( period ) ){
+            mClimateModel->setEmissions( "HFC143a", period,
+                                        hfc143aSummer.getEmissions( period ) +
+                                        hfc23Summer.getEmissions( period ) * HFC23_TO_143 +
+                                        hfc236faSummer.getEmissions( period ) * HFC236_TO_143);
         }
 
         // MAGICC needs this in tons of VOC. Input is in TgC

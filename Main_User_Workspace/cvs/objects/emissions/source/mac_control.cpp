@@ -125,6 +125,9 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
         XYDataPoint* currPoint = new XYDataPoint( taxVal, reductionVal );
         mMacCurve->getPointSet()->addPoint( currPoint );
     }
+    else if ( aNodeName == "no-zero-cost-reductions" ){
+        mNoZeroCostReductions = true;
+    }
     else{
         return false;
     }    
