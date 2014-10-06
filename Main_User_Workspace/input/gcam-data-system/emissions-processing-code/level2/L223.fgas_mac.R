@@ -33,6 +33,8 @@ MAC_Foams <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Foams2030" )
 MAC_HFC23 <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-HFC232030" )
 MAC_Refrigeration <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Cooling2030" )
 MAC_Semiconductors <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Semi2030" )
+MAC_FireExt <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Fire2030" )
+MAC_Solvents <- readdata( "EMISSIONS_LEVEL0_DATA", "MAC-Solvents2030" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -210,6 +212,64 @@ L223.MAC_Semiconductors_S_R_T <- repeat_and_add_vector( L223.MAC_Semiconductors_
 L223.MAC_Semiconductors_S_R_T$name <- "Semiconductors"
 L223.MAC_Semiconductors_S_R_T <- L223.MAC_Semiconductors_S_R_T[ c( names_StubTechYr, "Non.CO2", "name", "tax", "mac.reduction" )]
 
+printlog( "Fire Extinguishers" )
+#Prepare MAC data for use
+L223.MAC_FireExt <- melt ( MAC_FireExt, id.vars=c( "region" ) )
+L223.MAC_FireExt$tax <- as.numeric( substr( L223.MAC_FireExt$variable, 2, 5 ) ) 
+
+#Clean up negative tax information
+L223.MAC_FireExt$tax[ L223.MAC_FireExt$variable == "X.24" ] <- -24.00
+L223.MAC_FireExt$tax[ L223.MAC_FireExt$variable == "X.12" ] <- -12.00
+L223.MAC_FireExt$tax[ L223.MAC_FireExt$variable == "X.242" ] <- 243.00
+L223.MAC_FireExt <- na.omit( L223.MAC_FireExt ) 
+
+#Find any sector that uses the Semiconductors MAC
+L223.MAC_FireExt_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "FireExt"  ) 
+L223.MAC_FireExt_S <- L223.MAC_FireExt_S[ names( L223.MAC_FireExt_S ) %in% c( "supplysector", "subsector", "stub.technology" ) ]
+L223.MAC_FireExt_S_R <- repeat_and_add_vector( L223.MAC_FireExt_S, "region", GCAM_region_names$region )
+L223.MAC_FireExt_S_R_T <- repeat_and_add_vector( L223.MAC_FireExt_S_R, "tax", MAC_taxes)
+
+#Map in MAC reduction
+L223.MAC_FireExt_S_R_T$mac.reduction <- L223.MAC_FireExt$value[ match( vecpaste( L223.MAC_FireExt_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L223.MAC_FireExt[ c( "region", "tax" ) ] ) )]
+
+#Drop missing values
+L223.MAC_FireExt_S_R_T <- na.omit( L223.MAC_FireExt_S_R_T )
+
+#Add extra columns and re-order
+L223.MAC_FireExt_S_R_T$year <- ctrl_base_year
+L223.MAC_FireExt_S_R_T <- repeat_and_add_vector( L223.MAC_FireExt_S_R_T, "Non.CO2", c( "HFC125", "HFC23", "HFC236fa", "HFC227ea" ) )
+L223.MAC_FireExt_S_R_T$name <- "FireExt"
+L223.MAC_FireExt_S_R_T <- L223.MAC_FireExt_S_R_T[ c( names_StubTechYr, "Non.CO2", "name", "tax", "mac.reduction" )]
+
+printlog( "Solvents" )
+#Prepare MAC data for use
+L223.MAC_Solvents <- melt ( MAC_Solvents, id.vars=c( "region" ) )
+L223.MAC_Solvents$tax <- as.numeric( substr( L223.MAC_Solvents$variable, 2, 5 ) ) 
+
+#Clean up negative tax information
+L223.MAC_Solvents$tax[ L223.MAC_Solvents$variable == "X.24" ] <- -24.00
+L223.MAC_Solvents$tax[ L223.MAC_Solvents$variable == "X.12" ] <- -12.00
+L223.MAC_Solvents$tax[ L223.MAC_Solvents$variable == "X.242" ] <- 243.00
+L223.MAC_Solvents <- na.omit( L223.MAC_Solvents ) 
+
+#Find any sector that uses the Solvents MAC
+L223.MAC_Solvents_S <- subset( GCAM_sector_tech, GCAM_sector_tech$MAC_type1 == "Solvents"  ) 
+L223.MAC_Solvents_S <- L223.MAC_Solvents_S[ names( L223.MAC_Solvents_S ) %in% c( "supplysector", "subsector", "stub.technology" ) ]
+L223.MAC_Solvents_S_R <- repeat_and_add_vector( L223.MAC_Solvents_S, "region", GCAM_region_names$region )
+L223.MAC_Solvents_S_R_T <- repeat_and_add_vector( L223.MAC_Solvents_S_R, "tax", MAC_taxes)
+
+#Map in MAC reduction
+L223.MAC_Solvents_S_R_T$mac.reduction <- L223.MAC_Solvents$value[ match( vecpaste( L223.MAC_Solvents_S_R_T[ c( "region", "tax" ) ] ), vecpaste( L223.MAC_Solvents[ c( "region", "tax" ) ] ) )]
+
+#Drop missing values
+L223.MAC_Solvents_S_R_T <- na.omit( L223.MAC_Solvents_S_R_T )
+
+#Add extra columns and re-order
+L223.MAC_Solvents_S_R_T$year <- ctrl_base_year
+L223.MAC_Solvents_S_R_T$Non.CO2 <- "HFC43"
+L223.MAC_Solvents_S_R_T$name <- "Solvents"
+L223.MAC_Solvents_S_R_T <- L223.MAC_Solvents_S_R_T[ c( names_StubTechYr, "Non.CO2", "name", "tax", "mac.reduction" )]
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L223.MAC_Aluminum_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L223.MAC_Aluminum_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
@@ -218,5 +278,7 @@ write_mi_data( L223.MAC_Foams_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L223.MAC_F
 write_mi_data( L223.MAC_HFC23_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L223.MAC_HFC23_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
 write_mi_data( L223.MAC_Refrigeration_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L223.MAC_Refrigeration_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
 write_mi_data( L223.MAC_Semiconductors_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L223.MAC_Semiconductors_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
+write_mi_data( L223.MAC_FireExt_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L223.MAC_FireExt_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
+write_mi_data( L223.MAC_Solvents_S_R_T, "MAC", "EMISSIONS_LEVEL2_DATA", "L223.MAC_Solvents_S_R_T", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
 
 logstop()
