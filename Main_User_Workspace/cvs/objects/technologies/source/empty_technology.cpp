@@ -88,6 +88,9 @@ void EmptyTechnology::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     assert( false );
 }
 
+void EmptyTechnology::toInputXMLForRestart( ostream& aOut, Tabs* aTabs ) const {
+}
+
 void EmptyTechnology::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 }
 

@@ -282,8 +282,11 @@ bool TechnologyContainer::XMLParse( const DOMNode* aNode ) {
 }
 
 void TechnologyContainer::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // Note that we are assuming there is atleast 1 vintage and that the tech type
-    // is the same for all vintages.
+    if( mVintages.empty() ) {
+        return;
+    }
+
+    // Note that we are assuming that the tech type is the same for all vintages.
     const string techType = ( *mVintages.begin() ).second->getXMLName();
     XMLWriteOpeningTag( techType, aOut, aTabs, mName );
     
@@ -297,10 +300,12 @@ void TechnologyContainer::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     for( CVintageIterator vintageIt = mVintages.begin(); vintageIt != mVintages.end(); ++vintageIt ) {
         // only write technologies that were not interpolated in toInputXML
         if( find( mInterpolatedTechYears.begin(), mInterpolatedTechYears.end(), ( *vintageIt ).first )
-            == mInterpolatedTechYears.end() || techType == IntermittentTechnology::getXMLNameStatic() )
+            == mInterpolatedTechYears.end() )
         {
             ( *vintageIt ).second->toInputXML( aOut, aTabs );
         }
+        // always write data that is required for restart
+        ( *vintageIt ).second->toInputXMLForRestart( aOut, aTabs );
     }
     
     XMLWriteClosingTag( techType, aOut, aTabs );
@@ -487,8 +492,11 @@ ITechnologyContainer::TechRangeIterator TechnologyContainer::getVintageBegin( co
     // year.  In those cases decrease the iterator to make sure we don't go include
     // a technology beyond aPeriod.
     VintageIterator vintageIter = mVintages.lower_bound( year );
-    if( vintageIter == mVintages.end() || ( *vintageIter ).first > year ) {
+    if( vintageIter == mVintages.end() ) {
         --vintageIter;
+    }
+    else if( ( *vintageIter ).first > year ) {
+        return mVintages.rend();
     }
     
     // Converting a forward iterator to a reverse in not completely intuitive.  We
@@ -509,8 +517,11 @@ ITechnologyContainer::CTechRangeIterator TechnologyContainer::getVintageBegin( c
     // year.  In those cases decrease the iterator to make sure we don't go include
     // a technology beyond aPeriod.
     CVintageIterator vintageIter = mVintages.lower_bound( year );
-    if( vintageIter == mVintages.end() || ( *vintageIter ).first > year ) {
+    if( vintageIter == mVintages.end() ) {
         --vintageIter;
+    }
+    else if( ( *vintageIter ).first > year ) {
+        return mVintages.rend();
     }
     
     // Converting a forward iterator to a reverse in not completely intuitive.  We

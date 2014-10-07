@@ -486,7 +486,7 @@ void Technology::toInputXML( ostream& out,
                              Tabs* tabs ) const
 {
     XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", year );
-    
+
     // write the xml for the class members.
     if( mParsedShareWeight.isInited() ) {
         XMLWriteElement( mParsedShareWeight, "share-weight", out, tabs );
@@ -528,6 +528,16 @@ void Technology::toInputXML( ostream& out,
     // finished writing xml for the class members.
     toInputXMLDerived( out, tabs );
     XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
+}
+
+void Technology::toInputXMLForRestart( ostream& out, Tabs* tabs ) const {
+    // make sure calibrated share weights get written out
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( year <= modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) ) {
+        XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", year );
+        XMLWriteElement( mShareWeight, "share-weight", out, tabs );
+        XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
+    }
 }
 
 //! write object to xml debugging output stream
@@ -780,12 +790,6 @@ void Technology::postCalc( const string& aRegionName,
         for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
             mOutputs[ i ]->postCalc( aRegionName, aPeriod );
         }
-    }
-
-    // make sure calibrated share weights get written out
-    if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() &&
-        mProductionState[ aPeriod ]->isNewInvestment() ){
-            mParsedShareWeight = mShareWeight;
     }
 }
 

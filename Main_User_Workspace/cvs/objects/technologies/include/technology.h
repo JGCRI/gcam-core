@@ -168,6 +168,7 @@ public:
     bool XMLParse( const xercesc::DOMNode* tempnode );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual void toInputXMLForRestart( std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLVintageNameStatic();
     
     virtual const std::string& getXMLName() const = 0;

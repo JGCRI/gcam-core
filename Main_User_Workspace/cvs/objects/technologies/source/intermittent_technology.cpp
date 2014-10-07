@@ -183,9 +183,6 @@ bool IntermittentTechnology::XMLDerivedClassParse( const string& aNodeName,
 void IntermittentTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
     XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
-    if( mTrialMarketPrice.isInited() ){
-        XMLWriteElementCheckDefault( mTrialMarketPrice.get(), "trial-market-price", aOut, aTabs, 0.001 );
-    }
     if( mBackupCapacityFactor.isInited() ){
         XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs);
     }
@@ -196,6 +193,16 @@ void IntermittentTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) con
         mBackupCalculator->toInputXML( aOut, aTabs );
     }
 }   
+
+void IntermittentTechnology::toInputXMLForRestart( ostream& aOut, Tabs* aTabs ) const {
+    Technology::toInputXMLForRestart( aOut, aTabs );
+
+    XMLWriteOpeningTag( getXMLVintageNameStatic(), aOut, aTabs, "", year );
+    if( mTrialMarketPrice.isInited() ){
+        XMLWriteElementCheckDefault( mTrialMarketPrice.get(), "trial-market-price", aOut, aTabs, 0.001 );
+    }
+    XMLWriteClosingTag( getXMLVintageNameStatic(), aOut, aTabs );
+}
 
 void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);

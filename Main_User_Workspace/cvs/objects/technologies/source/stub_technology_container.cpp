@@ -107,18 +107,16 @@ void StubTechnologyContainer::toInputXML( ostream& aOut, Tabs* aTabs ) const {
         XMLHelper<void>::serializeNode( *xmlIter, aOut, aTabs, true );
     }
 
-    // We must write out any calibrated values here otherwise they will be lost.
+    // We must write out any data needed for restart otherwise they will be lost.
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     const Modeltime* modeltime = scenario->getModeltime();
     ITechnologyContainer::CTechRangeIterator it =
-        mTechnology->getVintageBegin( modeltime->getFinalCalibrationPeriod() );
+        mTechnology->getVintageBegin( modeltime->getmaxper() - 1 );
     ITechnologyContainer::CTechRangeIterator endIter =
-        mTechnology->getVintageEnd( modeltime->getFinalCalibrationPeriod() );
+        mTechnology->getVintageEnd( 0 );
 
     for( ; it != endIter; ++it ) {
-        XMLWriteOpeningTag( Technology::getXMLVintageNameStatic(), aOut, aTabs, "", ( *it ).first );
-        XMLWriteElement( ( *it ).second->getShareWeight(), "share-weight", aOut, aTabs );
-        XMLWriteClosingTag( Technology::getXMLVintageNameStatic(), aOut, aTabs );
+        (*it).second->toInputXMLForRestart( aOut, aTabs );
     }
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }

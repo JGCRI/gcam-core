@@ -98,6 +98,19 @@ public:
     virtual bool XMLParse( const xercesc::DOMNode* tempnode ) = 0;
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+
+    /*!
+     * \brief Write any data that should go into the output XML that is necessary
+     *        for restarts.
+     * \details Most data written to the output XML is to replicate the input data
+     *          set however that file is also used as a restart file thus additional
+     *          data may be required to be able to fully restart the state of the
+     *          model.  Any such data should be written here to ensure they get
+     *          written out which may not be the case when using global technologies.
+     * \param aOut The output stream to write data into.
+     * \param aTabs The tabs object keeping track of indentation formatting.
+     */
+    virtual void toInputXMLForRestart( std::ostream& aOut, Tabs* aTabs ) const = 0;
     
     virtual const std::string& getXMLName() const = 0;
     
