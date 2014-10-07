@@ -17,6 +17,7 @@
 		0E44096E183D501B000DA5FF /* no_emiss_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E44096D183D501B000DA5FF /* no_emiss_carbon_calc.cpp */; };
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
 		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
+		981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */; };
 		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
@@ -341,6 +342,8 @@
 		0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_dependency_finder.cpp; sourceTree = "<group>"; };
 		0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lognrbt.cpp; sourceTree = "<group>"; };
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
+		981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rcp_forcing_target.cpp; sourceTree = "<group>"; };
+		981AC63E19E31D9A000CB162 /* rcp_forcing_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rcp_forcing_target.h; sourceTree = "<group>"; };
 		CD177C39159A0ADA000A996F /* cumulative_emissions_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cumulative_emissions_target.h; sourceTree = "<group>"; };
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1996,6 +1999,7 @@
 		CD488657122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				981AC63E19E31D9A000CB162 /* rcp_forcing_target.h */,
 				CDF83C1513A30CB800DF178D /* itarget_solver.h */,
 				CDF83C1613A30CB800DF178D /* kyoto_forcing_target.h */,
 				CDF83C1713A30CB800DF178D /* secanter.h */,
@@ -2016,6 +2020,7 @@
 		CD488661122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */,
 				CDF83C1813A30CC500DF178D /* kyoto_forcing_target.cpp */,
 				CDF83C1913A30CC500DF178D /* secanter.cpp */,
 				CD488662122873C200F5A88A /* bisecter.cpp */,
@@ -2700,6 +2705,7 @@
 				CDE29986198C82C400556032 /* nonco2_emissions.cpp in Sources */,
 				CDE29989198C831E00556032 /* emissions_control_factory.cpp in Sources */,
 				CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */,
+				981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

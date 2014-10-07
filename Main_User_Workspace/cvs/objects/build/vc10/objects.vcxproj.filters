@@ -1055,6 +1055,9 @@
     <ClCompile Include="..\..\solution\util\source\has_market_flag_solution_info_filter.cpp">
       <Filter>Source Files\solution\util</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\target_finder\source\rcp_forcing_target.cpp">
+      <Filter>Source Files\target_finder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2148,6 +2151,9 @@
     </ClInclude>
     <ClInclude Include="..\..\solution\util\include\has_market_flag_solution_info_filter.h">
       <Filter>Header Files\solution\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\target_finder\include\rcp_forcing_target.h">
+      <Filter>Header Files\target_finder</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

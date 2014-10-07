@@ -672,6 +672,7 @@
     <ClCompile Include="..\..\solution\util\source\unsolved_solution_info_filter.cpp" />
     <ClCompile Include="..\..\target_finder\source\cumulative_emissions_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\kyoto_forcing_target.cpp" />
+    <ClCompile Include="..\..\target_finder\source\rcp_forcing_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\secanter.cpp" />
     <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\base_technology.cpp" />
@@ -1000,6 +1001,7 @@
     <ClInclude Include="..\..\target_finder\include\emissions_stabalization_target.h" />
     <ClInclude Include="..\..\target_finder\include\itarget_solver.h" />
     <ClInclude Include="..\..\target_finder\include\kyoto_forcing_target.h" />
+    <ClInclude Include="..\..\target_finder\include\rcp_forcing_target.h" />
     <ClInclude Include="..\..\target_finder\include\secanter.h" />
     <ClInclude Include="..\..\target_finder\include\simple_policy_target_runner.h" />
     <ClInclude Include="..\..\technologies\include\ag_production_technology.h" />

@@ -1,9 +1,9 @@
-#ifndef _VERSION_H_ 
-#define _VERSION_H_ 
-#if defined(_MSC_VER) 
-#pragma once 
-#endif 
-  
+#ifndef _RCP_FORCING_TARGET_H_
+#define _RCP_FORCING_TARGET_H_
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 /*
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
@@ -36,15 +36,46 @@
 *
 */
 
-/******************************************************************************
- * PLEASE UPDATE THE REVISION NUMBER BELOW
- * NOTE: ADD 1 TO LATEST SUBVERSION REVISION NUMBER
+
+/*!
+* \file rcp_forcing_target.h
+* \ingroup Objects
+* \brief The RCPForcingTarget class header file.
+* \author Josh Lurz, Kate Calvin
+*/
+
+#include "target_finder/include/itarget.h"
+#include <string>
+
+class IClimateModel;
+
+/*!
+ * \brief A class representing the RCP forcing target.
+ * \details A target for the climate forcing for the RCP set of gases.
  */
-//! The latest SVN revision number for identification of the build.
-#define __REVISION_NUMBER__ "5449" 
-/*****************************************************************************/
+class RCPForcingTarget: public ITarget {
+public:
+    RCPForcingTarget( const IClimateModel* aClimateModel,
+                      const double aTargetValue,
+                      const int aFirstTaxYear );
+    
+    static const std::string& getXMLNameStatic();
 
-//! GCAM model version.
-#define __ObjECTS_VER__ "4.0" 
+    // ITarget methods
+    virtual double getStatus( const int aYear ) const;
+    
+    virtual int getYearOfMaxTargetValue() const;
+private:
+    //! The climate model.
+    const IClimateModel* mClimateModel;
 
-#endif // _VERSION_H_ 
+    //! The target value.
+    const double mTargetValue;
+    
+    //! The first policy year which would be the first valid year to check
+    //! getStatus in.
+    const int mFirstTaxYear;
+};
+
+#endif // _RCP_FORCING_TARGET_H_
+

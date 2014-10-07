@@ -1399,7 +1399,12 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         writeItemUsingYear( "forcing-total", "W/m^2",
                             aClimateModel->getTotalForcing( year ),
                              year );
-    }
+        
+        // RCP Forcing
+        writeItemUsingYear( "forcing-RCP", "W/m^2",
+                           aClimateModel->getForcing( "RCP", year ),
+                           year );
+     }
 
     // Write net terrestrial uptake
     for( int year = scenario->getModeltime()->getStartYear();

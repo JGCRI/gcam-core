@@ -11,6 +11,7 @@ OBJS       = bisecter.o \
              concentration_target.o \
              emissions_stabalization_target.o \
              forcing_target.o \
+             rcp_forcing_target.o \
              policy_target_runner.o \
              simple_policy_target_runner.o \
              target_factory.o \

@@ -6,7 +6,7 @@
 		<Value name="xmldb-location">../output/database.dbxml</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="BatchFileName">batch_ag.xml</Value>
-		<Value name="policy-target-file">../input/policy_target.xml</Value>
+		<Value name="policy-target-file">../input/policy/forcing_target_4p5.xml</Value>
 		<Value name="climatFileName">gas.emk</Value>
 		<Value name="GHGInputFileName">../input/magicc/inputs/input_gases.emk</Value>
 		<Value name="outFileName">outFile.csv</Value>
@@ -36,6 +36,7 @@
 		<Value name = "building">../input/gcam-data-system/xml/energy-xml/building_det.xml</Value>
 		<Value name = "transportation">../input/gcam-data-system/xml/energy-xml/transportation_UCD.xml</Value>
 		<Value name = "carbon_content">../input/gcam-data-system/xml/energy-xml/Ccoef.xml</Value>
+		<Value name = "carbon_storage">../input/gcam-data-system/xml/energy-xml/Cstorage.xml</Value>
 		<Value name = "ag_base">../input/gcam-data-system/xml/aglu-xml/ag_For_Past_bio_base.xml</Value>
 		<Value name = "ag_cost">../input/gcam-data-system/xml/aglu-xml/ag_cost.xml</Value>
 		<Value name = "ag_prodchange">../input/gcam-data-system/xml/aglu-xml/ag_prodchange_ref.xml</Value>

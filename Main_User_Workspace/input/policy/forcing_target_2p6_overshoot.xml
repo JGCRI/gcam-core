@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policy-target-runner name="forcing_2p6">
+    <!-- tax-name | default: CO2 | The market name to change the price on --> 
+	<tax-name>CO2</tax-name> 
+    <!-- target-value | no default | The target value such as concentration 
+         or forcing.
+     -->
+    <target-value>2.6</target-value>
+    <!-- target-tolerance | default: 0.01 | The solution tolerance -->
+    <target-tolerance>0.005</target-tolerance> 
+    <!-- path-discount-rate | default: 0.05 | The hotelling rate -->
+	<path-discount-rate>0.05</path-discount-rate>
+    <!-- max-iterations | default: 100 | The maximum  number of attempts to
+         solve any given period.
+     -->
+	<max-iterations>100</max-iterations>
+    <!-- target-type | default: concentration | The climate parameter which
+         we are targeting.  The available ones are:
+            concentration | CO2 (or possibly other gasses via the configuration
+                            string: concentration-target-gas)
+            forcing | Total radiative forcing
+            stabilization | Stabilize CO2 (or possibly other gasses via the
+                           configuration string: concentration-target-gas)
+                           with disregards to what that concentration might be
+            kyoto-forcing | Radiative forcing from Kyoto GHGs only
+            rcp-forcing | Radiative forcing using the RCP definition
+            temperature | Global mean temperature
+            cumulative-emissions | Reach a cumulative emission goal for CO2
+                                   emissions (or possibly other gasses via the
+                                   configuration string: cumulative-target-gas)
+     -->
+    <target-type>rcp-forcing</target-type>
+    <!-- first-tax-year | default: 2020 | The first year to start a tax in -->
+    <first-tax-year>2020</first-tax-year>
+    <!-- forward-look | default: 0 | Allow forward looking behavior by skipping
+         this many periods.
+     -->
+    <forward-look>1</forward-look>
+    <!-- stabilization | This is the default behavior is to stabilize the target
+         overshoot year="2100" | Allow for an overshoot to hit in the target in
+                                 given year.  If the year is not provided the 
+                                 last model year will be assumed.  If it is 
+                                 provided and before the last model year then 
+                                 it will have to stay on target after that year.
+     --> 
+	<overshoot year="2100"/>
+    <!-- max-tax | default: 4999 | Set a maximum tax to try in any given period
+                                   to avoid extremely large taxes for which GCAM
+                                   may have trouble solving.  Note that it may
+                                   be possible the algorithm finds a solution
+                                   with tax values capped at max-target for some
+                                   years in which case the user should increase
+                                   the max-tax.  If the actual solution price
+                                   lies above max-tax the algorithm will fail.
+     -->
+    <max-tax>4999</max-tax>
+</policy-target-runner>
