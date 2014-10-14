@@ -65,10 +65,11 @@ HDDCDD_IDstrings <- c( "country", "SRES", "GCM", "variable" )
 L143.HDDCDD_scen_ctry_Y <- HDDCDD_data[ c( HDDCDD_IDstrings, X_historical_years, X_future_years ) ]
 
 #Replace the base year value (2010) with actual data from re-analysis dataset
-base_year_HDDCDD_data.melt <- melt( base_year_HDDCDD_data, id.vars = c( "id", "country" ) )
-L143.HDDCDD_scen_ctry_Y[[ "X2010" ]] <- base_year_HDDCDD_data.melt$value[
-      match( vecpaste( L143.HDDCDD_scen_ctry_Y[ c( "country", "variable" ) ] ),
-             vecpaste( base_year_HDDCDD_data.melt[ c( "country", "variable" ) ] ) ) ]
+#NOTE: NOT DOING THIS BECAUSE RE-ANALYSIS DATASET IS FUNDAMENTALLY INCONSISTENT WITH ALL OTHERS
+#base_year_HDDCDD_data.melt <- melt( base_year_HDDCDD_data, id.vars = c( "id", "country" ) )
+#L143.HDDCDD_scen_ctry_Y[[ "X2010" ]] <- base_year_HDDCDD_data.melt$value[
+#      match( vecpaste( L143.HDDCDD_scen_ctry_Y[ c( "country", "variable" ) ] ),
+#             vecpaste( base_year_HDDCDD_data.melt[ c( "country", "variable" ) ] ) ) ]
 
 # 4. Multiply HDD/CDD by population in each year matching on the iso name
 L143.HDDCDD_scen_ctry_Y$iso <- GIS_ctry$iso[ match( L143.HDDCDD_scen_ctry_Y$country, GIS_ctry$country ) ]
