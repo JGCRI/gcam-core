@@ -291,6 +291,12 @@ L213.LN3_MgdCarbon_bio_hi$hist.veg.carbon.density <-
       digits_C_density_crop ) 
 L213.LN3_MgdCarbon_bio_hi$veg.carbon.density <- L213.LN3_MgdCarbon_bio_hi$hist.veg.carbon.density
 
+#Set minimum carbon densities for biomassOil technologies
+L213.LN3_MgdCarbon_bio_ref$min.veg.carbon.density <- ifelse( grepl( "Jatropha", L213.LN3_MgdCarbon_bio_ref$LandLeaf ),  L213.LN3_MgdCarbon_bio_ref$veg.carbon.density, 0 )
+L213.LN3_MgdCarbon_bio_ref$min.soil.carbon.density <- ifelse( grepl( "Jatropha", L213.LN3_MgdCarbon_bio_ref$LandLeaf ),  L213.LN3_MgdCarbon_bio_ref$soil.carbon.density, 0 )
+L213.LN3_MgdCarbon_bio_hi$min.veg.carbon.density <- ifelse( grepl( "Jatropha", L213.LN3_MgdCarbon_bio_hi$LandLeaf ),  L213.LN3_MgdCarbon_bio_hi$veg.carbon.density, 0 )
+L213.LN3_MgdCarbon_bio_hi$min.soil.carbon.density <- ifelse( grepl( "Jatropha", L213.LN3_MgdCarbon_bio_hi$LandLeaf ),  L213.LN3_MgdCarbon_bio_hi$soil.carbon.density, 0 )
+
 #Write out only the names to be written to XML
 L213.LN3_MgdCarbon_bio_ref <- L213.LN3_MgdCarbon_bio_ref[ names_LN3_MgdCarbon ]
 L213.LN3_MgdCarbon_bio_hi <- L213.LN3_MgdCarbon_bio_hi[ names_LN3_MgdCarbon ]

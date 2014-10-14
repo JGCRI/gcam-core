@@ -921,8 +921,8 @@
                <LandNode name="AgroForest_NonPastureAEZ01">
                   <LandNode name="CropLandAEZ01">
                      <LandLeaf name="JatrophaAEZ01">
-                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
-                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <minAboveGroundCDensity>0.739</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>8.4</minBelowGroundCDensity>
                         <land-carbon-densities>
                            <above-ground-carbon-density>0.739</above-ground-carbon-density>
                            <below-ground-carbon-density>8.4</below-ground-carbon-density>
@@ -940,8 +940,8 @@
                <LandNode name="AgroForest_NonPastureAEZ02">
                   <LandNode name="CropLandAEZ02">
                      <LandLeaf name="JatrophaAEZ02">
-                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
-                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <minAboveGroundCDensity>0.225</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>8.6</minBelowGroundCDensity>
                         <land-carbon-densities>
                            <above-ground-carbon-density>0.225</above-ground-carbon-density>
                            <below-ground-carbon-density>8.6</below-ground-carbon-density>
@@ -5440,8 +5440,8 @@
                <LandNode name="AgroForest_NonPastureAEZ01">
                   <LandNode name="CropLandAEZ01">
                      <LandLeaf name="JatrophaAEZ01">
-                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
-                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <minAboveGroundCDensity>0.83</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>6</minBelowGroundCDensity>
                         <land-carbon-densities>
                            <above-ground-carbon-density>0.83</above-ground-carbon-density>
                            <below-ground-carbon-density>6</below-ground-carbon-density>
@@ -5459,8 +5459,8 @@
                <LandNode name="AgroForest_NonPastureAEZ02">
                   <LandNode name="CropLandAEZ02">
                      <LandLeaf name="JatrophaAEZ02">
-                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
-                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <minAboveGroundCDensity>0.253</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>9.5</minBelowGroundCDensity>
                         <land-carbon-densities>
                            <above-ground-carbon-density>0.253</above-ground-carbon-density>
                            <below-ground-carbon-density>9.5</below-ground-carbon-density>
@@ -5478,8 +5478,8 @@
                <LandNode name="AgroForest_NonPastureAEZ03">
                   <LandNode name="CropLandAEZ03">
                      <LandLeaf name="JatrophaAEZ03">
-                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
-                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <minAboveGroundCDensity>0.387</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>9.5</minBelowGroundCDensity>
                         <land-carbon-densities>
                            <above-ground-carbon-density>0.387</above-ground-carbon-density>
                            <below-ground-carbon-density>9.5</below-ground-carbon-density>
@@ -5497,8 +5497,8 @@
                <LandNode name="AgroForest_NonPastureAEZ04">
                   <LandNode name="CropLandAEZ04">
                      <LandLeaf name="JatrophaAEZ04">
-                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
-                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <minAboveGroundCDensity>0.34</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>9.5</minBelowGroundCDensity>
                         <land-carbon-densities>
                            <above-ground-carbon-density>0.34</above-ground-carbon-density>
                            <below-ground-carbon-density>9.5</below-ground-carbon-density>
@@ -5516,8 +5516,8 @@
                <LandNode name="AgroForest_NonPastureAEZ05">
                   <LandNode name="CropLandAEZ05">
                      <LandLeaf name="JatrophaAEZ05">
-                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
-                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <minAboveGroundCDensity>0.352</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>9.9</minBelowGroundCDensity>
                         <land-carbon-densities>
                            <above-ground-carbon-density>0.352</above-ground-carbon-density>
                            <below-ground-carbon-density>9.9</below-ground-carbon-density>
@@ -5535,8 +5535,8 @@
                <LandNode name="AgroForest_NonPastureAEZ06">
                   <LandNode name="CropLandAEZ06">
                      <LandLeaf name="JatrophaAEZ06">
-                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
-                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <minAboveGroundCDensity>0.423</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>13.5</minBelowGroundCDensity>
                         <land-carbon-densities>
                            <above-ground-carbon-density>0.423</above-ground-carbon-density>
                            <below-ground-carbon-density>13.5</below-ground-carbon-density>
