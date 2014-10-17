@@ -110,7 +110,7 @@ void ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear ) {
             // BelowGroundCarbon affects future model periods that are not overwritten
             const double aboveGroundCarbonDensity = mLandUseHistory->getHistoricAboveGroundCarbonDensity();
             const double belowGroundCarbonDensity = mLandUseHistory->getHistoricBelowGroundCarbonDensity();
-			
+            
             double currCarbonStock = aboveGroundCarbonDensity * mLandUseHistory->getAllocation( CarbonModelUtils::getStartYear() );
             
             double prevLand = mLandUseHistory->getAllocation( CarbonModelUtils::getStartYear() - 1 );
@@ -263,7 +263,7 @@ void ASimpleCarbonCalc::calcAboveGroundCarbonEmission( const double aPrevCarbonS
 /*!
  * \brief Calculate the emission from below ground carbon for the given year.
  * \details Below ground, or soil carbon, is not emitted as a pulse but at a
- *          constant rate such that all carbon is emitted at the soil time scale.
+ *          exponential rate with a half-life computed from the soil time scale.
  * \param aYear Year.
  * \param aEndYear The last future year to calculate to.
  * \param aEmissVector A vector to accumulate emissions into.
@@ -278,11 +278,23 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const double aCarbonDiff,
         return;
     }
     
-    // Set emissions (or, if negative, uptake) from now until the end year.
-    const int endYear = std::min( static_cast<int> ( aYear + mSoilTimeScale ), aEndYear + 1);
-    const double annualEmissions = ( 1.0 / mSoilTimeScale ) * aCarbonDiff;
-    for( int currYear = aYear; currYear < endYear; ++currYear ){
-        aEmissVector[ currYear ] += annualEmissions;
+    // Exponential Soil carbon accumulation and decay, with half-life assumed to be
+    // the soil time scale divided by ten.  At the half-life, half of the change will
+    // have occured, at twice the half-life 75% would have occurred, etc. 
+    // Note also that the aCarbonDiff is passed here as previous carbon minus current carbon
+    // so a positive difference means that emissions will occur and a negative means uptake.
+    
+    const double halfLife = mSoilTimeScale / 10.0;
+    const double log2 = log( 2.0 );
+    const double lambda = log2 / halfLife;
+    int yearCounter = 0;
+    double cumStockDiff_t1, cumStockDiff_t2;
+    cumStockDiff_t1 = 0.0;
+    for( int currYear = aYear; currYear <= aEndYear; ++currYear ) {
+        yearCounter += 1;
+        cumStockDiff_t2 = aCarbonDiff * ( 1.0 - exp( -1.0 * lambda * yearCounter ) );
+        aEmissVector[ currYear ] += cumStockDiff_t2 - cumStockDiff_t1;
+        cumStockDiff_t1 = cumStockDiff_t2;
     }
 }
 
@@ -327,21 +339,13 @@ double ASimpleCarbonCalc::getBelowGroundCarbonSubsidyDiscountFactor( ){
         return 1.0;
     }
 
-    // We are approximating this curve as alpha / (SoilTimeScale - beta)
-    // Alpha and beta are chosen by minimizing least squared error 
-    // between actual carbon subsidy discount and functional estimate
-    // Note: these parameters assume a discount rate of 0.05
-    const double ALPHA = 28.27;
-    const double BETA = -25.39;
-    return ALPHA / ( mSoilTimeScale - BETA ); 
-	
-	// We are approximating this curve as alpha / (SoilTimeScale - beta)
-    // Alpha and beta are chosen by minimizing least squared error 
-    // between actual carbon subsidy discount and functional estimate
-    // Note: these parameters assume a discount rate of 0.025
-    /* const double ALPHA = 59.9;
-    const double BETA = -56.19;
-    return ALPHA / ( mSoilTimeScale - BETA );*/
+    // Exponential soil carbon with a fixed discount rate set here/
+    const double halfLife = mSoilTimeScale / 10.0;
+    const double log2 = log( 2.0 );
+    const double lambda = log2 / halfLife;
+    const double discountrate = 0.05;
+    return 1.0 - discountrate / ( discountrate + lambda );
+        
 }
 
 /*!
@@ -369,8 +373,8 @@ double ASimpleCarbonCalc::getAboveGroundCarbonSubsidyDiscountFactor( ){
     /* const double QUADCOEF = 2.7e-10;
     const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
     return QUADCOEF * pow( double(getMatureAge() - MAXMATUREAGE), 4); */
-	
-	// We are approximating this curve as a quadratic with an offset of
+    
+    // We are approximating this curve as a quadratic with an offset of
     // 250 (If the mature age is 250, all carbon uptake occurs far enough 
     // in the future that you wouldn't base decisions on it. So, for a 
     // mature age of 250 the multiplier is zero
