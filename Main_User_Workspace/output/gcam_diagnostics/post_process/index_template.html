@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>GCAM Diagnostics Figures</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <script type="text/javascript" src="figures_filter.js"></script>
+        <style>
+            body {
+                background-color: #FFFFFF;
+            }
+            td {
+                vertical-align: top;
+                text-align: left;
+            }
+            .initializeBox {
+                z-index: 2;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+                width: 400px;
+                height: 100px;
+                background-color: #FFFFFF;
+                text-align: center;
+                line-height: 4em;
+                visibility: visible;
+            }
+        </style>
+    </head>
+    <body onLoad="populateAvailableFiltersMenu(); doFilter(); hideInitializeBanner()">
+        <!-- Show a loading banner since initializing with a lot of figures can be slow -->
+        <div id="initializingBanner" class="initializeBox">
+            <h2>Initializing.  Please Wait..</h2>
+        </div>
+        <h1>GCAM Diagnostics Figures</h1>
+        <h3>Filters:</h3>
+        <table>
+            <tr id="activeFiltersArea">
+                <td id="availableFilterMenu">
+                    <!-- To be populated on load by javascript -->
+                </td>
+                <!-- The active filter select forms will be populated here as
+                     they become active
+                  -->
+              </tr>
+          </table>
+        <p><input type="submit" onClick="doFilter();" value="Filter Figures" id="doFilterButton" disabled /></p>
+        <hr/>
+        <h3>Figures matching filters:</h3>
+        <table id="figuresTable">
+            <!-- Figures that match the active filters will be populated here -->
+        </table>
+    </body>
+</html>

@@ -1,0 +1,1837 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+   
+   <aQuery>
+       <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+      <supplyDemandQuery title="Final energy by aggregate end-use sector and fuel">
+         <axis1 name="fuel">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not (@name='renewable')]/demand-physical[@unit='EJ']/node()</xPath>
+         <comments/>
+         <labelRewriteList append-values="true">
+            <level name="sector">
+               <rewrite to="building" from="comm cooling"/>
+               <rewrite to="building" from="comm heating"/>
+               <rewrite to="building" from="comm others"/>
+               <rewrite to="building" from="resid cooling"/>
+               <rewrite to="building" from="resid heating"/>
+               <rewrite to="building" from="resid others"/>
+               <rewrite to="industry" from="industrial energy use"/>
+               <rewrite to="industry" from="industrial feedstocks"/>
+               <rewrite to="industry" from="N fertilizer"/>
+               <rewrite to="industry" from="process heat cement"/>
+               <rewrite to="industry" from="cement"/>
+               <rewrite to="transportation" from="trn_aviation_intl"/>
+               <rewrite to="transportation" from="trn_freight"/>
+               <rewrite to="transportation" from="trn_freight_road"/>
+               <rewrite to="transportation" from="trn_pass_road"/>
+               <rewrite to="transportation" from="trn_pass_road_bus"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV_4W"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV_2W"/>
+               <rewrite to="transportation" from="trn_passenger"/>
+               <rewrite to="transportation" from="trn_pass"/>
+               <rewrite to="transportation" from="trn_shipping_intl"/>
+            </level>
+            <level name="input">
+               <rewrite to="1 liquids" from="refined liquids enduse"/>
+               <rewrite to="1 liquids" from="refined liquids industrial"/>
+               <rewrite to="2 gas" from="delivered gas"/>
+               <rewrite to="2 gas" from="wholesale gas"/>
+               <rewrite to="3 coal" from="delivered coal"/>
+               <rewrite to="4 biomass" from="delivered biomass"/>
+               <rewrite to="5 electricity" from="elect_td_bld"/>
+               <rewrite to="5 electricity" from="elect_td_ind"/>
+               <rewrite to="5 electricity" from="elect_td_trn"/>
+               <rewrite to="6 hydrogen" from="H2 Enduse"/>
+               <rewrite to="6 hydrogen" from="H2 enduse"/>
+               <rewrite to="7 trad biomass" from="traditional biomass"/>
+               <rewrite to="8 district heat" from="district heat"/>
+               <rewrite to="" from="process heat cement"/>
+               <rewrite to="" from="limestone"/>
+               <rewrite to="" from="industrial energy use"/>
+               <rewrite to="" from="industrial feedstocks"/>
+               <rewrite to="" from="industrial processes"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+   </aQuery>
+      
+   <aQuery>
+      <region name="USA"/>
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+      <supplyDemandQuery title="Industry feedstocks (liquids only)">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="true">*[@type = 'sector' (:collapse:) and contains(@name,'feedstock')]//*[@type='input' and (@name='refined liquids industrial')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </aQuery>
+      
+      <aQuery>
+         <region name="USA"/>
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+         <supplyDemandQuery title="Refined liquid fuel production by technology">
+            <axis1 name="technology">technology</axis1>
+            <axis2 name="Year">physical-output[@vintage]</axis2>
+            <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refining'))]/*[@type = 'subsector']/*[@type = 'technology' and not (@name='refined liquids enduse' or @name = 'refined liquids industrial')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+            <comments/>
+         </supplyDemandQuery>
+      </aQuery>
+      
+      <aQuery>
+         <region name="USA"/>
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+         <gdpQueryBuilder title="GDP by region">
+            <axis1 name="region">region</axis1>
+            <axis2 name="Year">gdp-mer</axis2>
+            <xPath buildList="true" dataName="gdp-mer" group="false" sumAll="false">GDP/gdp-mer/text()</xPath>
+            <comments/>
+         </gdpQueryBuilder>
+      </aQuery>
+      
+      <aQuery>
+         <region name="USA"/>
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+         <demographicsQuery title="Population by region">
+            <axis1 name="region">region</axis1>
+            <axis2 name="Year">populationMiniCAM</axis2>
+            <xPath buildList="true" dataName="total-population" group="false" sumAll="false">demographics/populationMiniCAM/total-population/node()</xPath>
+            <comments/>
+         </demographicsQuery>
+      </aQuery>
+      
+      <aQuery>
+         <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+       <supplyDemandQuery title="Primary energy with CCS (Direct Equivalent)">
+         <axis1 name="fuel">input[@name]</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">
+               declare function local:append-heirarchy($parent as node(), $append as node()*) as node() {
+	       	 		 let $scn := $parent/ancestor::scenario,
+	       			   	  $rgn := $parent (: /ancestor::region :)
+	       			   return
+	       			   	  document { element scenario {
+	       			 	  					$scn/@*,
+	       			 						element region {
+	       			 							$rgn/@*,
+	       			 							$append
+	       			 						}
+	       			 	  				}
+	       				}
+	       	 		 (: I can get by with just the scenario and region
+	       			 let $new_node := element {local-name($parent)} {$parent/@*, $append} 	
+	       	 		 return
+	       	 		 if(local-name($parent) != 'scenario')
+	       	 		 then local:append-heirarchy($parent/parent::*, $new_node)
+	       	 		 else document { $new_node } :)
+	       	 	 }; 
+	       	 	 declare function local:generate-sector-input-coefs($outputNameQueue as xs:string*, $currTree as node(), $coefs as node()*, $is_usa as xs:boolean) as node()* {
+                 if(empty($outputNameQueue)) then $coefs
+                 else if( exists($coefs[@name = $outputNameQueue[1]]) or exists(index-of(('biomass',
+'traded unconventional oil', 'regional corn for ethanol', 'regional biomassOil', 'regional sugar for ethanol', 'regional sugarbeet for ethanol'),
+$outputNameQueue[1])) or not($currTree/*[@type='sector' and @name=$outputNameQueue[1]]))
+then 
+(:if(not($is_usa) and string-length($currTree/@name) = 2) then
+local:trace-inputs($outputName, $currTree/parent::*/*[@type='region' and @name='USA'], $outputs, true())
+else:)
+local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs, $is_usa)
+	       				else
+                    let $outputName := $outputNameQueue[1],
+                        $newOutputNameQueue := remove($outputNameQueue, 1),
+                        $useOutputs := $currTree//output-primary[@type='output' and @name=$outputName],
+                        $useInputs := for $out in $useOutputs[not(following-sibling::keyword[exists(@primary-renewable)])]
+                                      return $out/following-sibling::*[@type='input'],
+                        $renewOutputs := for $out in $useOutputs[following-sibling::keyword[exists(@primary-renewable)]]
+                                         return element output {
+                                             attribute name { $out/following-sibling::keyword/@primary-renewable },
+                                             $out/child::*
+                                         },
+                        $totalOutputSum := for $vintage in distinct-values($useOutputs/physical-output/@vintage)
+                                          return element output {
+                                                     attribute vintage { $vintage },
+                                                     text {
+                                                         sum($useOutputs/physical-output[@vintage=$vintage])
+                                                     }
+                                                 },
+                       $new_coefs := $coefs | element sector {
+                                            attribute name { $outputName },
+                                            for $input in distinct-values($useInputs/@name)
+                                            return element input {
+                                                       attribute name { $input },
+                                                       for $outputSum in $totalOutputSum
+                                                       let $inputSum := sum($useInputs[@name=$input]/demand-physical[@vintage=$outputSum/@vintage])
+                                                       where $inputSum &gt; 0
+                                                       return element coef {
+                                                                  attribute vintage { $outputSum/@vintage },
+                                                                  text { $inputSum div $outputSum }
+                                                              }
+                                                    },
+                                            for $input in distinct-values($renewOutputs/@name)
+                                            return element input {
+                                                       attribute name { concat($input, ' renewable') },
+                                                       attribute is-renewable { true() },
+                                                       for $outputSum in $totalOutputSum
+                                                       let $inputSum := sum($renewOutputs[@name=$input]/physical-output[@vintage=$outputSum/@vintage])
+                                                       where $inputSum &gt; 0
+                                                       return element coef {
+                                                                  attribute vintage { $outputSum/@vintage },
+                                                                  text { $inputSum div $outputSum }
+                                                              }
+                                                    }
+                                        }
+                        return 
+                              local:generate-sector-input-coefs(distinct-values(($newOutputNameQueue, $useInputs/@name)), $currTree, $new_coefs, $is_usa)
+		};
+        declare function local:generate-ccs-coefs($currTree as node(), $coefs as node()*) as node()* {
+            for $sector in $coefs/@name
+            let $currSector := $currTree/*[@type='sector' and @name=$sector],
+                $useInputs := $currSector//*[@type='technology' and not(contains(@name, 'CCS')) and not(child::keyword/@primary-renewable)]/*[@type='input'],
+                $useInputsCCS := $currSector//*[@type='technology' and contains(@name, 'CCS')]/*[@type='input'],
+                $totalOutputSum := for $vintage in distinct-values($useInputs/demand-physical/@vintage)
+                                          return element output {
+                                                     attribute vintage { $vintage },
+                                                     text {
+                                                         sum($currSector//output-primary/physical-output[@vintage=$vintage])
+                                                     }
+                                                 }
+            return if(exists($useInputsCCS)) then
+                element sector {
+                                            attribute name { $sector },
+                                            $coefs[@name=$sector]/input[@is-renewable],
+                                            for $input in distinct-values(($useInputs/@name, $useInputsCCS/@name))
+                                            return element input {
+                                                       attribute name { $input },
+                                                       for $outputSum in $totalOutputSum
+                                                       let $inputSum := sum($useInputs[@name=$input]/demand-physical[@vintage=$outputSum/@vintage]),
+                                                           $inputSumCCS := sum($useInputsCCS[@name=$input]/demand-physical[@vintage=$outputSum/@vintage])
+                                                       return (element coef {
+                                                                  attribute vintage { $outputSum/@vintage },
+                                                                  text { $inputSum div $outputSum }
+                                                              },
+                                                              element coef_ccs {
+                                                                  attribute vintage { $outputSum/@vintage },
+                                                                  text { $inputSumCCS div $outputSum }
+                                                              })
+                                                    }
+                                        }
+                    else
+                        $coefs[@name=$sector]
+        };
+        declare function local:apply-coefs($outputName as xs:string, $outputs as node()*, $coefs as node()*, $isCCS as xs:boolean) as node()* {
+            if(exists($coefs[@name=$outputName]) and sum($outputs) &gt; 0.001) then
+                for $input in $coefs[@name=$outputName]/input
+                return local:apply-coefs($input/@name,
+                    for $vintage in distinct-values($outputs/@vintage)
+                    let $outputThisVintage := $outputs[@vintage=$vintage],
+                        $firstOutput := $outputThisVintage[1],
+                        $outputSum := sum($outputThisVintage),
+                        $coefThisVintage := $input/coef[@vintage=$vintage]
+                    where $coefThisVintage &gt; 0
+	       		    return element { local-name($firstOutput) } {
+	       				$firstOutput/@*,
+                        text{ $outputSum * $coefThisVintage }
+                        }, $coefs, $isCCS)
+                    | local:apply-coefs($input/@name,
+                    for $vintage in distinct-values($outputs/@vintage)
+                    let $outputThisVintage := $outputs[@vintage=$vintage],
+                        $firstOutput := $outputThisVintage[1],
+                        $outputSum := sum($outputThisVintage),
+                        $coefThisVintage := $input/coef_ccs[@vintage=$vintage]
+                    where exists($coefThisVintage) and $coefThisVintage &gt; 0
+	       		    return element { local-name($firstOutput) } {
+	       				$firstOutput/@*,
+                        text{ $outputSum * $coefThisVintage }
+	       			}, $coefs, true())
+            else if( sum($outputs) &gt; 0.001) then
+                element input {
+                    attribute name { if($isCCS) then concat($outputName, ' CCS') else $outputName },
+                    attribute type { 'input' },
+                    $outputs
+                }
+            else
+                (: These are the residuals from chasing simulenaties, I've left this here
+                   for debuging purposes :)
+                element input {
+                    attribute name { $outputName },
+                    attribute type { 'input' } (:,
+                    $outputs :)
+                }
+        };
+		declare function local:run-input-by-primary($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 unordered { 	
+			 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 		  then $regions
+			 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 return
+			 	 for $scenario in $scenarios, 	    
+			 	 $region in $regionsG 	
+			 	 let $scenario_split := tokenize($scenario, ' '), 	    
+				 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
+                 $currInputs := $currTree/*[@type='sector' and exists(child::keyword/@final-energy)]//*[@type='input'],
+                 $coefs := local:generate-sector-input-coefs(distinct-values($currInputs/@name), $currTree, (), false()),
+                 $ccs_coefs := local:generate-ccs-coefs($currTree, $coefs)
+				 return 
+				    for $inputName in distinct-values($currInputs/@name)
+				    return local:append-heirarchy($currTree, local:apply-coefs($inputName, $currInputs[@name=$inputName]/demand-physical, $ccs_coefs, false()))//text()
+			 	 } 
+	 	 };
+		 local:run-input-by-primary((:scenarios:), (:regions:), (:collection:))
+               </xPath>
+         <comments/>
+         <labelRewriteList append-values="false">
+            <level name="input">
+               <rewrite from="traditional biomass" to="j traditional biomass"/>
+               <rewrite from="geothermal-elect" to="i geothermal"/>
+               <rewrite from="geothermal-elect renewable" to="i geothermal"/>
+               <rewrite from="geothermal-elect renewable CCS" to="i geothermal"/>
+               <rewrite from="biomass" to="d biomass"/>
+               <rewrite from="biomass CCS" to="d biomass CCS"/>
+               <rewrite from="regional biomassOil" to="d biomass"/>
+               <rewrite from="regional corn for ethanol" to="d biomass"/>
+               <rewrite from="regional sugar for ethanol" to="d biomass"/>
+               <rewrite from="regional sugarbeet for ethanol" to="d biomass"/>
+               <rewrite from="nuclear-H2 renewable" to="e nuclear"/>
+               <rewrite from="natural gas" to="b natural gas"/>
+               <rewrite from="natural gas CCS" to="b natural gas CCS"/>
+               <rewrite from="wind-elect" to="g wind"/>
+               <rewrite from="wind-elect renewable" to="g wind"/>
+               <rewrite from="wind-elect renewable CCS" to="g wind"/>
+               <rewrite from="exotic-elect" to="j breakthrough"/>
+               <rewrite from="elect_td_ind" to=""/>
+               <rewrite from="solar-elect renewable" to="h solar"/>
+               <rewrite from="solar-elect renewable CCS" to="h solar"/>
+               <rewrite from="solar-H2 renewable" to="h solar"/>
+               <rewrite from="regional natural gas" to=""/>
+               <rewrite from="coal" to="c coal"/>
+               <rewrite from="coal CCS" to="c coal CCS"/>
+               <rewrite from="crude oil" to="a oil"/>
+               <rewrite from="crude oil CCS" to="a oil CCS"/>
+               <rewrite from="hydro-elect renewable" to="f hydro"/>
+               <rewrite from="hydro-elect renewable CCS" to="f hydro"/>
+               <rewrite from="nuclear-elect renewable" to="e nuclear"/>
+               <rewrite from="nuclear-elect renewable CCS" to="e nuclear"/>
+               <rewrite from="traded unconventional oil" to="a oil"/>
+               <rewrite from="traded unconventional oil CCS" to="a oil CCS"/>
+               <rewrite from="wind-H2 renewable" to="g wind"/>
+               <rewrite from="regional biomassOil CCS" to="d biomass CCS"/>
+               <rewrite from="regional sugar for ethanol CCS" to="d biomass CCS"/>
+               <rewrite from="limestone" to=""/>
+               <rewrite from="renewable" to=""/>
+            </level>
+         </labelRewriteList>
+     </supplyDemandQuery>
+
+
+      </aQuery>
+      
+      <aQuery>
+         <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+         <supplyDemandQuery title="Electricity generation by aggregate technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='electricity' or @name='elect_td_bld' or @name='industrial energy use' or (@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation')) )]//*[@type = 'technology' and not (@name='electricity_td_bld' or @name='electricity' or @name='elect_td_bld')]/*[@type='output' (:collapse:) and (@name='electricity' or @name='elect_td_bld' or @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation')]/physical-output/node()</xPath>
+         <comments/>
+         <labelRewriteList append-values="true">
+            <level name="technology">
+               <rewrite to="a Coal" from="Coal (IGCC)"/>
+               <rewrite to="a Coal" from="Coal (conv pul)"/>
+               <rewrite to="a Coal" from="Coal (existing)"/>
+               <rewrite to="a Coal" from="coal_base_IGCC"/>
+               <rewrite to="a Coal" from="coal_base_conv"/>
+               <rewrite to="a Coal" from="coal_base_exist"/>
+               <rewrite to="a Coal" from="coal_int_IGCC"/>
+               <rewrite to="a Coal" from="coal_int_conv"/>
+               <rewrite to="a Coal" from="coal_int_exist"/>
+               <rewrite to="a Coal" from="coal (conv pul)"/>
+               <rewrite to="a Coal" from="coal (IGCC)"/>
+               <rewrite to="b Coal w/CCS" from="Coal (IGCC)_CCS"/>
+               <rewrite to="b Coal w/CCS" from="coal_base_IGCC_CCS"/>
+               <rewrite to="b Coal w/CCS" from="coal_int_IGCC_CCS"/>
+               <rewrite to="b Coal w/CCS" from="coal (IGCC CCS)"/>
+               <rewrite to="c Gas" from="Gas (CC)"/>
+               <rewrite to="c Gas" from="Gas (base load conv)"/>
+               <rewrite to="c Gas" from="Gas (existing)"/>
+               <rewrite to="c Gas" from="Gas (peak load conv)"/>
+               <rewrite to="c Gas" from="gas_base_CC"/>
+               <rewrite to="c Gas" from="gas_base_exist"/>
+               <rewrite to="c Gas" from="gas_int_CC"/>
+               <rewrite to="c Gas" from="gas_int_exist"/>
+               <rewrite to="c Gas" from="gas_peak_CC"/>
+               <rewrite to="c Gas" from="gas_peak_exist"/>
+               <rewrite to="c Gas" from="gas_peak_turbine"/>
+               <rewrite to="c Gas" from="gas_subpeak_CC"/>
+               <rewrite to="c Gas" from="gas_subpeak_exist"/>
+               <rewrite to="c Gas" from="gas (steam/CT)"/>
+               <rewrite to="c Gas" from="gas (CC)"/>
+               <rewrite to="d Gas w/CCS" from="Gas (CC)_CCS"/>
+               <rewrite to="d Gas w/CCS" from="gas_base_CC_CCS"/>
+               <rewrite to="d Gas w/CCS" from="gas_int_CC_CCS"/>
+               <rewrite to="d Gas w/CCS" from="gas_peak_CC_CCS"/>
+               <rewrite to="d Gas w/CCS" from="gas_subpeak_CC_CCS"/>
+               <rewrite to="d Gas w/CCS" from="gas (CC CCS)"/>
+               <rewrite to="e Oil" from="Oil (IGCC)"/>
+               <rewrite to="e Oil" from="Oil (base load conv)"/>
+               <rewrite to="e Oil" from="Oil (existing)"/>
+               <rewrite to="e Oil" from="Oil (peak load conv)"/>
+               <rewrite to="e Oil" from="oil_base_IGCC"/>
+               <rewrite to="e Oil" from="oil_base_exist"/>
+               <rewrite to="e Oil" from="oil_int_IGCC"/>
+               <rewrite to="e Oil" from="oil_int_exist"/>
+               <rewrite to="e Oil" from="oil_peak_IGCC"/>
+               <rewrite to="e Oil" from="oil_peak_exist"/>
+               <rewrite to="e Oil" from="oil_peak_turbine"/>
+               <rewrite to="e Oil" from="oil_subpeak_IGCC"/>
+               <rewrite to="e Oil" from="oil_subpeak_exist"/>
+               <rewrite to="e Oil" from="refined liquids (steam/CT)"/>
+               <rewrite to="e Oil" from="refined liquids (IGCC)"/>
+               <rewrite to="f Oil w/CCS" from="Oil (IGCC)_CCS"/>
+               <rewrite to="f Oil w/CCS" from="oil_base_IGCC_CCS"/>
+               <rewrite to="f Oil w/CCS" from="oil_int_IGCC_CCS"/>
+               <rewrite to="f Oil w/CCS" from="oil_peak_IGCC_CCS"/>
+               <rewrite to="f Oil w/CCS" from="oil_subpeak_IGCC_CCS"/>
+               <rewrite to="f Oil w/CCS" from="refined liquids (IGCC CCS)"/>
+               <rewrite to="g Biomass" from="Biomass (IGCC)"/>
+               <rewrite to="g Biomass" from="Biomass (conv)"/>
+               <rewrite to="g Biomass" from="Biomass (existing)"/>
+               <rewrite to="g Biomass" from="bio_base_IGCC"/>
+               <rewrite to="g Biomass" from="bio_base_conv"/>
+               <rewrite to="g Biomass" from="bio_base_exist"/>
+               <rewrite to="g Biomass" from="bio_int_IGCC"/>
+               <rewrite to="g Biomass" from="bio_int_conv"/>
+               <rewrite to="g Biomass" from="bio_int_exist"/>
+               <rewrite to="g Biomass" from="biomass (conv)"/>
+               <rewrite to="g Biomass" from="biomass (IGCC)"/>
+               <rewrite to="h Biomass w/CCS" from="Biomass (IGCC)_CCS"/>
+               <rewrite to="h Biomass w/CCS" from="bio_base_IGCC_CCS"/>
+               <rewrite to="h Biomass w/CCS" from="bio_int_IGCC_CCS"/>
+               <rewrite to="h Biomass w/CCS" from="biomass (IGCC CCS)"/>
+               <rewrite to="i Nuclear" from="Gen_III"/>
+               <rewrite to="i Nuclear" from="Gen_II_LWR"/>
+               <rewrite to="i Nuclear" from="nuc_base_gen2"/>
+               <rewrite to="i Nuclear" from="nuc_base_gen3"/>
+               <rewrite to="j Geothermal" from="geo_base"/>
+               <rewrite to="j Geothermal" from="geothermal"/>
+               <rewrite to="k Hydro" from="hydro"/>
+               <rewrite to="k Hydro" from="hydro_base"/>
+               <rewrite to="k Hydro" from="hydro_int"/>
+               <rewrite to="k Hydro" from="hydro_peak"/>
+               <rewrite to="k Hydro" from="hydro_subpeak"/>
+               <rewrite to="l Wind" from="wind"/>
+               <rewrite to="l Wind" from="wind_base"/>
+               <rewrite to="l Wind" from="wind_base_storage"/>
+               <rewrite to="l Wind" from="wind_storage"/>
+               <rewrite to="m Solar" from="CSP"/>
+               <rewrite to="m Solar" from="CSP_storage"/>
+               <rewrite to="m Solar" from="PV"/>
+               <rewrite to="m Solar" from="PV_storage"/>
+               <rewrite to="m Solar" from="csp_base_storage"/>
+               <rewrite to="m Solar" from="csp_int"/>
+               <rewrite to="m Solar" from="csp_subpeak"/>
+               <rewrite to="m Solar" from="pv_base_storage"/>
+               <rewrite to="m Solar" from="pv_subpeak"/>
+               <rewrite to="m Solar" from="rooftop_pv"/>
+               <rewrite to="n CHP" from="biomass cogen"/>
+               <rewrite to="n CHP" from="coal cogen"/>
+               <rewrite to="n CHP" from="gas cogen"/>
+               <rewrite to="n CHP" from="hydrogen cogen"/>
+               <rewrite to="n CHP" from="refined liquids cogen"/>
+               <rewrite to="o Battery" from="battery"/>
+               <rewrite to="" from="exotic"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery> 
+         
+      </aQuery>
+      
+      
+      <aQuery>
+         <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+         <supplyDemandQuery title="Hydrogen production by technology">
+            <axis1 name="technology">technology</axis1>
+            <axis2 name="Year">physical-output[@vintage]</axis2>
+            <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='H2 Central Production' or @name='H2 Forecourt Production' or @name='H2 central production' or @name='H2 forecourt production') )]/*[@type = 'subsector']//*[@type = 'technology']//*[@type='output']/physical-output/node()</xPath>
+            <comments/>
+         </supplyDemandQuery>
+      </aQuery>
+      
+      <aQuery>
+         <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+         <supplyDemandQuery title="Biomass Consumption by use">
+            <axis1 name="sector">sector</axis1>
+            <axis2 name="Year">demand-physical[@vintage]</axis2>
+            <chartLabelColumn>demand</chartLabelColumn>
+            <xPath buildList="true" dataName="demand-physical[@vintage]" group="false" sumAll="false">*[@type='sector']//*[@type='input' and (@name='regional biomass' or @name='delivered biomass')]/demand-physical/node()</xPath>
+            <comments/>
+         <labelRewriteList append-values="true">
+               <level name="sector">
+                  <rewrite to="" from="delivered biomass"/>
+                  <rewrite to="building" from="comm cooling"/>
+                  <rewrite to="building" from="comm heating"/>
+                  <rewrite to="building" from="comm others"/>
+                  <rewrite to="building" from="resid cooling"/>
+                  <rewrite to="building" from="resid heating"/>
+                  <rewrite to="building" from="resid others"/>
+                  <rewrite to="industry" from="process heat cement"/>
+                  <rewrite to="electricity" from="base load generation"/>
+                  <rewrite to="electricity" from="intermediate generation"/>
+                  <rewrite to="hydrogen" from="H2 central production"/>
+                  <rewrite to="hydrogen" from="H2 Central Production"/>
+                  <rewrite to="refining" from="refined liquids enduse"/>
+                  <rewrite to="refining" from="refined liquids industrial"/>
+                  <rewrite to="industry" from="industrial energy use"/>
+                  <rewrite to="industry" from="industrial feedstocks"/>
+               </level>
+            </labelRewriteList>
+         </supplyDemandQuery>
+      </aQuery>
+
+      <aQuery>
+         <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+         <supplyDemandQuery title="Electricity generation by technology (inc solar roofs)">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='electricity' or @name='elect_td_bld' or @name='industrial energy use' or (@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation')) )]//*[@type = 'technology' and not (@name='electricity_td_bld' or @name='electricity' or @name='elect_td_bld')]/*[@type='output' (:collapse:) and (@name='electricity' or @name='elect_td_bld' or @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation')]/physical-output/node()</xPath>
+         <comments/>
+         <labelRewriteList append-values="true">
+            <level name="technology">
+               <rewrite from="nuc_base_gen3" to="Gen_III"/>
+               <rewrite from="nuc_base_gen2" to="Gen_II_LWR"/>
+               <rewrite from="coal_int_IGCC" to="Coal (IGCC)"/>
+               <rewrite from="csp_base_storage" to="CSP_storage"/>
+               <rewrite from="oil_int_IGCC" to="Oil (IGCC)"/>
+               <rewrite from="coal_int_exist" to="Coal (existing)"/>
+               <rewrite from="oil_peak_turbine" to="Oil (conv)"/>
+               <rewrite from="pv_base_storage" to="PV_storage"/>
+               <rewrite from="oil_int_IGCC_CCS" to="Oil (IGCC)_CCS"/>
+               <rewrite from="gas_base_CC" to="Gas (CC)"/>
+               <rewrite from="coal_base_IGCC_CCS" to="Coal (IGCC)_CCS"/>
+               <rewrite from="bio_base_IGCC_CCS" to="Biomass (IGCC)_CCS"/>
+               <rewrite from="gas_subpeak_CC" to="Gas (CC)"/>
+               <rewrite from="gas_base_CC_CCS" to="Gas (CC)_CCS"/>
+               <rewrite from="oil_peak_exist" to="Oil (existing)"/>
+               <rewrite from="oil_base_CC_CCS" to="Oil (IGCC)_CCS"/>
+               <rewrite from="bio_int_exist" to="Biomass (existing)"/>
+               <rewrite from="coal_base_conv" to="Coal (conv pul)"/>
+               <rewrite from="geo_base" to="geothermal"/>
+               <rewrite from="oil_subpeak_IGCC" to="Oil (IGCC)"/>
+               <rewrite from="oil_subpeak_IGCC_CCS" to="Oil (IGCC)_CCS"/>
+               <rewrite from="gas_subpeak_CC_CCS" to="Gas (CC)_CCS"/>
+               <rewrite from="csp_subpeak" to="CSP"/>
+               <rewrite from="gas_int_CC_CCS" to="Gas (CC)_CCS"/>
+               <rewrite from="oil_peak_IGCC_CCS" to="Oil (IGCC)_CCS"/>
+               <rewrite from="wind_base" to="wind"/>
+               <rewrite from="coal_base_exist" to="Coal (existing)"/>
+               <rewrite from="gas_int_exist" to="Gas (existing)"/>
+               <rewrite from="bio_base_conv" to="Biomass (conv)"/>
+               <rewrite from="gas_peak_CC_CCS" to="Gas (CC)_CCS"/>
+               <rewrite from="oil_int_exist" to="Oil (existing)"/>
+               <rewrite from="bio_int_IGCC_CCS" to="Biomass (IGCC)_CCS"/>
+               <rewrite from="oil_base_exist" to="Oil (existing)"/>
+               <rewrite from="coal_int_conv" to="Coal (conv pul)"/>
+               <rewrite from="csp_int" to="CSP"/>
+               <rewrite from="gas_peak_CC" to="Gas (CC)"/>
+               <rewrite from="bio_base_exist" to="Biomass (existing)"/>
+               <rewrite from="oil_peak_IGCC" to="Oil (IGCC)"/>
+               <rewrite from="hydro_subpeak" to="hydro"/>
+               <rewrite from="gas_base_exist" to="Gas (existing)"/>
+               <rewrite from="oil_subpeak_exist" to="Oil (existing)"/>
+               <rewrite from="battery" to="Battery"/>
+               <rewrite from="hydro_peak" to="hydro"/>
+               <rewrite from="gas_int_CC" to="Gas (CC)"/>
+               <rewrite from="hydro_int" to="hydro"/>
+               <rewrite from="gas_subpeak_exist" to="Gas (existing)"/>
+               <rewrite from="bio_base_IGCC" to="Biomass (IGCC)"/>
+               <rewrite from="hydro_base" to="hydro"/>
+               <rewrite from="gas_peak_exist" to="Gas (existing)"/>
+               <rewrite from="bio_int_IGCC" to="Biomass (IGCC)"/>
+               <rewrite from="pv_subpeak" to="PV"/>
+               <rewrite from="coal_base_IGCC" to="Coal (IGCC)"/>
+               <rewrite from="wind_base_storage" to="wind_storage"/>
+               <rewrite from="coal_int_IGCC_CCS" to="Coal (IGCC)_CCS"/>
+               <rewrite from="bio_int_conv" to="Biomass (conv)"/>
+               <rewrite from="oil_base_IGCC" to="Oil (IGCC)"/>
+               <rewrite from="gas_peak_turbine" to="Gas (conv)"/>
+               <rewrite from="Gas (peak load conv)" to="Gas (conv)"/>
+               <rewrite from="Oil (peak load conv)" to="Oil (conv)"/>
+               <rewrite from="biomass (IGCC)" to="Biomass (IGCC)"/>
+               <rewrite from="biomass (IGCC CCS)" to="Biomass (IGCC)_CCS"/>
+               <rewrite from="biomass (conv)" to="Biomass (conv)"/>
+               <rewrite from="coal (IGCC)" to="Coal (IGCC)"/>
+               <rewrite from="coal (IGCC CCS)" to="Coal (IGCC)_CCS"/>
+               <rewrite from="coal (conv pul)" to="Coal (conv pul)"/>
+               <rewrite from="gas (CC)" to="Gas (CC)"/>
+               <rewrite from="gas (CC CCS)" to="Gas (CC)_CCS"/>
+               <rewrite from="gas (steam/CT)" to="Gas (conv)"/>
+               <rewrite from="refined liquids (IGCC)" to="Oil (IGCC)"/>
+               <rewrite from="refined liquids (IGCC CCS)" to="Oil (IGCC)_CCS"/>
+               <rewrite from="refined liquids (steam/CT)" to="Oil (conv)"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery> 
+      </aQuery>
+   
+
+   <aQuery>
+      <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+
+<supplyDemandQuery title="CO2 Emissions by enduse">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">emissions[@year]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">
+               declare function local:append-heirarchy($parent as node(), $append as node()*) as node() {
+	       	 		 let $scn := $parent/ancestor::scenario,
+	       			   	  $rgn := $parent (: /ancestor::region :)
+	       			   return
+	       			   	  document { element scenario {
+	       			 	  					$scn/@*,
+	       			 						element region {
+	       			 							$rgn/@*,
+	       			 							$append
+	       			 						}
+	       			 	  				}
+	       				}
+	       	 		 (: I can get by with just the scenario and region
+	       			 let $new_node := element {local-name($parent)} {$parent/@*, $append} 	
+	       	 		 return
+	       	 		 if(local-name($parent) != 'scenario')
+	       	 		 then local:append-heirarchy($parent/parent::*, $new_node)
+	       	 		 else document { $new_node } :)
+	       	 	 }; 
+	       	 	 declare function local:generate-sector-output-coefs($inputNameQueue as xs:string*, $currTree as node(), $coefs as node()*, $is_usa as xs:boolean) as node()* {
+                 if(empty($inputNameQueue)) then $coefs
+                 else if( exists($coefs[@name = $inputNameQueue[1]]) or exists(index-of(('unconventional oil production', "electricity", "cement", "N fertilizer"),
+$inputNameQueue[1])) or not($currTree/*[@type='sector' and @name=$inputNameQueue[1]]))
+then 
+local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs, $is_usa)
+	       				else
+                    let $inputName := $inputNameQueue[1],
+                        $newInputNameQueue := remove($inputNameQueue, 1),
+                        $useInputs := $currTree//*[@type='input' and @name=$inputName],
+                        $useSectors := distinct-values($useInputs/ancestor::*[@type='sector']/@name),
+                        $totalInputSum := for $vintage in distinct-values($useInputs/demand-physical/@vintage)
+                                          return element input {
+                                                     attribute vintage { $vintage },
+                                                     text {
+                                                         sum($useInputs/demand-physical[@vintage=$vintage])
+                                                     }
+                                                 },
+                       $new_coefs := if(empty($useSectors)) then
+                                         $coefs
+                                     else
+                                         $coefs | element sector {
+                                            attribute name { $inputName },
+                                            for $output in $useSectors
+                                            return element output {
+                                                       attribute name { $output },
+                                                       for $inputSum in $totalInputSum
+                                                       let $outputSum := sum($useInputs[ancestor::*[@type='sector' and @name=$output]]/demand-physical[@vintage=$inputSum/@vintage])
+                                                       return element coef {
+                                                                  attribute vintage { $inputSum/@vintage },
+                                                                  text { $outputSum div $inputSum }
+                                                              }
+                                                    }
+                                        }
+                        return 
+                              local:generate-sector-output-coefs(distinct-values(($newInputNameQueue, $useSectors)), $currTree, $new_coefs, $is_usa)
+		};
+        declare function local:apply-coefs($outputName as xs:string, $emissions as node()*, $coefs as node()*) as node()* {
+            if(exists($coefs[@name=$outputName]) and abs(sum($emissions)) &gt; 0.001) then
+                for $output in $coefs[@name=$outputName]/output
+                return local:apply-coefs($output/@name,
+                    for $year in distinct-values($emissions/@year)
+                    let $emissThisVintage := $emissions[@year=$year],
+                        $firstEmiss := $emissThisVintage[1],
+                        $emissSum := sum($emissThisVintage),
+                        $coefThisVintage := $output/coef[@vintage=$year]
+                    where $coefThisVintage &gt; 0
+                    return element { local-name($firstEmiss) } {
+                            $firstEmiss/@*,
+                            text{ $emissSum * $coefThisVintage }
+                        }
+	       			, $coefs)
+            else if( abs(sum($emissions)) &gt; 0.001) then
+                element sector {
+                    attribute name { $outputName },
+                    attribute type { 'sector' },
+                    $emissions
+                }
+            else
+                (: These are the residuals from chasing simulenaties, I've left this here
+                   for debuging purposes :)
+                element sector {
+                    attribute name { $outputName },
+                    attribute type { 'sector' }(:,
+                    $emissions:)
+                }
+        };
+		declare function local:run-emiss-by-enduse($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 unordered { 	
+			 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 		  then $regions
+			 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 return
+			 	 for $scenario in $scenarios, 	    
+			 	 $region in $regionsG 	
+			 	 let $scenario_split := tokenize($scenario, ' '), 	    
+				 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
+                 $currEmissSectors := $currTree/*[@type='sector' and descendant::CO2],
+                 $coefs := local:generate-sector-output-coefs(distinct-values($currEmissSectors/@name), $currTree, (), false())
+				 return
+				    for $sectorName in distinct-values($currEmissSectors/@name)
+                    return local:append-heirarchy($currTree, local:apply-coefs($sectorName, $currEmissSectors[@name=$sectorName]//CO2/emissions, $coefs))//text()
+			 	 } 
+	 	 };
+		 local:run-emiss-by-enduse((:scenarios:), (:regions:), (:collection:))
+               </xPath>
+         <comments/>
+         <labelRewriteList append-values="false">
+            <level name="sector">
+               <rewrite from="N fertilizer" to="industry"/>
+               <rewrite from="unconventional oil production" to="industry"/>
+               <rewrite from="comm cooling" to="buildings"/>
+               <rewrite from="comm heating" to="buildings"/>
+               <rewrite from="comm others" to="buildings"/>
+               <rewrite from="resid cooling" to="buildings"/>
+               <rewrite from="resid heating" to="buildings"/>
+               <rewrite from="resid others" to="buildings"/>
+               <rewrite to="transportation" from="trn_aviation_intl"/>
+               <rewrite to="transportation" from="trn_freight"/>
+               <rewrite to="transportation" from="trn_freight_road"/>
+               <rewrite to="transportation" from="trn_pass_road"/>
+               <rewrite to="transportation" from="trn_pass_road_bus"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV_4W"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV_2W"/>
+               <rewrite to="transportation" from="trn_passenger"/>
+               <rewrite to="transportation" from="trn_pass"/>
+               <rewrite to="transportation" from="trn_shipping_intl"/>
+           </level>
+       </labelRewriteList>
+      </supplyDemandQuery>
+   </aQuery>
+   
+   <aQuery>
+      <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+      <emissionsQueryBuilder title="CO2 emissions by region">
+      	<axis1 name="region">region</axis1>
+      	<axis2 name="Year">emissions</axis2>
+      	<xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:)]//*[@type = 'GHG' and ((@name='CO2') )]/emissions/node()</xPath>
+      	<comments/>
+      </emissionsQueryBuilder>
+      </aQuery>   
+   
+      <aQuery>
+      <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+          <query title="Aggregated Land Allocation">
+         <axis1 name="land-allocation">LandLeaf</axis1>
+         <axis2 name="Year">land-allocation[@year]</axis2>
+         <xPath buildList="true" dataName="land-allocation" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//land-allocation/text()</xPath>
+         <comments/>
+         <labelRewriteList append-values="false">
+            <level name="LandLeaf">
+               <rewrite from="UnmanagedForestAEZ18" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ17" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ16" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ15" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ14" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ13" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ12" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ11" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ10" to="forest (unmanaged)"/>
+               <rewrite from="CornAEZ01" to="crops"/>
+               <rewrite from="CornAEZ02" to="crops"/>
+               <rewrite from="CornAEZ03" to="crops"/>
+               <rewrite from="CornAEZ04" to="crops"/>
+               <rewrite from="CornAEZ05" to="crops"/>
+               <rewrite from="CornAEZ06" to="crops"/>
+               <rewrite from="CornAEZ07" to="crops"/>
+               <rewrite from="CornAEZ08" to="crops"/>
+               <rewrite from="CornAEZ09" to="crops"/>
+               <rewrite from="UnmanagedForestAEZ09" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ06" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ05" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ08" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ07" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ02" to="forest (unmanaged)"/>
+               <rewrite from="OtherGrainAEZ08" to="crops"/>
+               <rewrite from="UnmanagedForestAEZ01" to="forest (unmanaged)"/>
+               <rewrite from="OtherGrainAEZ07" to="crops"/>
+               <rewrite from="UnmanagedForestAEZ04" to="forest (unmanaged)"/>
+               <rewrite from="OtherGrainAEZ06" to="crops"/>
+               <rewrite from="UnmanagedForestAEZ03" to="forest (unmanaged)"/>
+               <rewrite from="OtherGrainAEZ05" to="crops"/>
+               <rewrite from="OtherGrainAEZ09" to="crops"/>
+               <rewrite from="OtherGrainAEZ03" to="crops"/>
+               <rewrite from="OtherGrainAEZ04" to="crops"/>
+               <rewrite from="OtherGrainAEZ01" to="crops"/>
+               <rewrite from="OtherGrainAEZ02" to="crops"/>
+               <rewrite from="FodderHerbAEZ02" to="crops"/>
+               <rewrite from="FodderHerbAEZ01" to="crops"/>
+               <rewrite from="FodderHerbAEZ04" to="crops"/>
+               <rewrite from="FodderHerbAEZ03" to="crops"/>
+               <rewrite from="RockIceDesert" to="rock and desert"/>
+               <rewrite from="FodderHerbAEZ09" to="crops"/>
+               <rewrite from="FodderHerbAEZ06" to="crops"/>
+               <rewrite from="RiceAEZ02" to="crops"/>
+               <rewrite from="OtherGrainAEZ17" to="crops"/>
+               <rewrite from="FodderHerbAEZ05" to="crops"/>
+               <rewrite from="RiceAEZ01" to="crops"/>
+               <rewrite from="OtherGrainAEZ16" to="crops"/>
+               <rewrite from="FodderHerbAEZ08" to="crops"/>
+               <rewrite from="FodderHerbAEZ07" to="crops"/>
+               <rewrite from="OtherGrainAEZ18" to="crops"/>
+               <rewrite from="OtherGrainAEZ12" to="crops"/>
+               <rewrite from="OtherGrainAEZ13" to="crops"/>
+               <rewrite from="OtherGrainAEZ14" to="crops"/>
+               <rewrite from="OtherGrainAEZ15" to="crops"/>
+               <rewrite from="OtherGrainAEZ10" to="crops"/>
+               <rewrite from="OtherGrainAEZ11" to="crops"/>
+               <rewrite from="RiceAEZ11" to="crops"/>
+               <rewrite from="RiceAEZ10" to="crops"/>
+               <rewrite from="RiceAEZ13" to="crops"/>
+               <rewrite from="RiceAEZ12" to="crops"/>
+               <rewrite from="RiceAEZ03" to="crops"/>
+               <rewrite from="RiceAEZ04" to="crops"/>
+               <rewrite from="RiceAEZ05" to="crops"/>
+               <rewrite from="RiceAEZ06" to="crops"/>
+               <rewrite from="RiceAEZ07" to="crops"/>
+               <rewrite from="RiceAEZ08" to="crops"/>
+               <rewrite from="RiceAEZ09" to="crops"/>
+               <rewrite from="UrbanLandAEZ11" to="urban"/>
+               <rewrite from="RockIceDesertAEZ02" to="desert"/>
+               <rewrite from="UrbanLandAEZ10" to="urban"/>
+               <rewrite from="RockIceDesertAEZ01" to="desert"/>
+               <rewrite from="UrbanLandAEZ13" to="urban"/>
+               <rewrite from="RockIceDesertAEZ04" to="desert"/>
+               <rewrite from="UrbanLandAEZ12" to="urban"/>
+               <rewrite from="RockIceDesertAEZ03" to="desert"/>
+               <rewrite from="UrbanLandAEZ15" to="urban"/>
+               <rewrite from="UrbanLandAEZ14" to="urban"/>
+               <rewrite from="UrbanLandAEZ17" to="urban"/>
+               <rewrite from="UrbanLandAEZ16" to="urban"/>
+               <rewrite from="UrbanLandAEZ07" to="urban"/>
+               <rewrite from="ShrublandAEZ08" to="shrubs"/>
+               <rewrite from="UrbanLandAEZ08" to="urban"/>
+               <rewrite from="ShrublandAEZ07" to="shrubs"/>
+               <rewrite from="UrbanLandAEZ09" to="urban"/>
+               <rewrite from="ShrublandAEZ09" to="shrubs"/>
+               <rewrite from="ShrublandAEZ02" to="shrubs"/>
+               <rewrite from="ShrublandAEZ01" to="shrubs"/>
+               <rewrite from="ShrublandAEZ04" to="shrubs"/>
+               <rewrite from="ShrublandAEZ03" to="shrubs"/>
+               <rewrite from="ShrublandAEZ06" to="shrubs"/>
+               <rewrite from="ShrublandAEZ05" to="shrubs"/>
+               <rewrite from="FodderHerbAEZ18" to="crops"/>
+               <rewrite from="FodderHerbAEZ16" to="crops"/>
+               <rewrite from="FodderHerbAEZ17" to="crops"/>
+               <rewrite from="UrbanLandAEZ02" to="urban"/>
+               <rewrite from="FodderHerbAEZ10" to="crops"/>
+               <rewrite from="RockIceDesertAEZ15" to="desert"/>
+               <rewrite from="UrbanLandAEZ01" to="urban"/>
+               <rewrite from="FodderHerbAEZ11" to="crops"/>
+               <rewrite from="RockIceDesertAEZ14" to="desert"/>
+               <rewrite from="RockIceDesertAEZ13" to="desert"/>
+               <rewrite from="RockIceDesertAEZ12" to="desert"/>
+               <rewrite from="UrbanLandAEZ06" to="urban"/>
+               <rewrite from="FodderHerbAEZ14" to="crops"/>
+               <rewrite from="RockIceDesertAEZ11" to="desert"/>
+               <rewrite from="UrbanLandAEZ05" to="urban"/>
+               <rewrite from="FodderHerbAEZ15" to="crops"/>
+               <rewrite from="RockIceDesertAEZ10" to="desert"/>
+               <rewrite from="UrbanLandAEZ04" to="urban"/>
+               <rewrite from="FodderHerbAEZ12" to="crops"/>
+               <rewrite from="UrbanLandAEZ03" to="urban"/>
+               <rewrite from="FodderHerbAEZ13" to="crops"/>
+               <rewrite from="RockIceDesertAEZ09" to="desert"/>
+               <rewrite from="ShrublandAEZ18" to="shrubs"/>
+               <rewrite from="RockIceDesertAEZ07" to="desert"/>
+               <rewrite from="RockIceDesertAEZ08" to="desert"/>
+               <rewrite from="RockIceDesertAEZ05" to="desert"/>
+               <rewrite from="RockIceDesertAEZ06" to="desert"/>
+               <rewrite from="biomassAEZ01" to="biomass"/>
+               <rewrite from="ShrublandAEZ13" to="shrubs"/>
+               <rewrite from="ShrublandAEZ12" to="shrubs"/>
+               <rewrite from="ShrublandAEZ11" to="shrubs"/>
+               <rewrite from="ShrublandAEZ10" to="shrubs"/>
+               <rewrite from="biomassAEZ05" to="biomass"/>
+               <rewrite from="ShrublandAEZ17" to="shrubs"/>
+               <rewrite from="biomassAEZ04" to="biomass"/>
+               <rewrite from="ShrublandAEZ16" to="shrubs"/>
+               <rewrite from="biomassAEZ03" to="biomass"/>
+               <rewrite from="ShrublandAEZ15" to="shrubs"/>
+               <rewrite from="biomassAEZ02" to="biomass"/>
+               <rewrite from="ShrublandAEZ14" to="shrubs"/>
+               <rewrite from="biomassAEZ06" to="biomass"/>
+               <rewrite from="biomassAEZ07" to="biomass"/>
+               <rewrite from="biomassAEZ08" to="biomass"/>
+               <rewrite from="biomassAEZ09" to="biomass"/>
+               <rewrite from="RockIceDesertAEZ16" to="desert"/>
+               <rewrite from="RockIceDesertAEZ17" to="desert"/>
+               <rewrite from="RockIceDesertAEZ18" to="desert"/>
+               <rewrite from="biomassAEZ14" to="biomass"/>
+               <rewrite from="biomassAEZ13" to="biomass"/>
+               <rewrite from="biomassAEZ16" to="biomass"/>
+               <rewrite from="biomassAEZ15" to="biomass"/>
+               <rewrite from="biomassAEZ10" to="biomass"/>
+               <rewrite from="biomassAEZ12" to="biomass"/>
+               <rewrite from="biomassAEZ11" to="biomass"/>
+               <rewrite from="CornAEZ11" to="crops"/>
+               <rewrite from="CornAEZ12" to="crops"/>
+               <rewrite from="CornAEZ10" to="crops"/>
+               <rewrite from="biomassAEZ17" to="biomass"/>
+               <rewrite from="biomassAEZ18" to="biomass"/>
+               <rewrite from="UrbanLandAEZ18" to="urban"/>
+               <rewrite from="CornAEZ18" to="crops"/>
+               <rewrite from="CornAEZ17" to="crops"/>
+               <rewrite from="CornAEZ16" to="crops"/>
+               <rewrite from="CornAEZ15" to="crops"/>
+               <rewrite from="CornAEZ14" to="crops"/>
+               <rewrite from="CornAEZ13" to="crops"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ01" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ02" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ03" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ04" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ05" to="forest (unmanaged)"/>
+               <rewrite from="PastureAEZ10" to="pasture (grazed)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ06" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ07" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ08" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ09" to="forest (unmanaged)"/>
+               <rewrite from="PastureAEZ08" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ09" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ01" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ02" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ03" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ04" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ05" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ06" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ07" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ13" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ14" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ11" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ12" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ17" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ18" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ15" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ16" to="pasture (grazed)"/>
+               <rewrite from="ProtectedGrasslandAEZ12" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ13" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ14" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ15" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ10" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ11" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ16" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ17" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ18" to="grass"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ16" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ17" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ14" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ15" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ12" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ13" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ10" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ11" to="forest (unmanaged)"/>
+               <rewrite from="ProtectedUnmanagedForestAEZ18" to="forest (unmanaged)"/>
+               <rewrite from="Root_TuberAEZ12" to="crops"/>
+               <rewrite from="Root_TuberAEZ13" to="crops"/>
+               <rewrite from="Root_TuberAEZ10" to="crops"/>
+               <rewrite from="Root_TuberAEZ11" to="crops"/>
+               <rewrite from="Root_TuberAEZ18" to="crops"/>
+               <rewrite from="Root_TuberAEZ16" to="crops"/>
+               <rewrite from="Root_TuberAEZ17" to="crops"/>
+               <rewrite from="Root_TuberAEZ14" to="crops"/>
+               <rewrite from="Root_TuberAEZ15" to="crops"/>
+               <rewrite from="ProtectedGrasslandAEZ08" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ07" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ06" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ05" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ09" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ04" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ03" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ02" to="grass"/>
+               <rewrite from="ProtectedGrasslandAEZ01" to="grass"/>
+               <rewrite from="Root_TuberAEZ01" to="crops"/>
+               <rewrite from="Root_TuberAEZ02" to="crops"/>
+               <rewrite from="Root_TuberAEZ07" to="crops"/>
+               <rewrite from="Root_TuberAEZ08" to="crops"/>
+               <rewrite from="Root_TuberAEZ09" to="crops"/>
+               <rewrite from="Root_TuberAEZ03" to="crops"/>
+               <rewrite from="Root_TuberAEZ04" to="crops"/>
+               <rewrite from="Root_TuberAEZ05" to="crops"/>
+               <rewrite from="Root_TuberAEZ06" to="crops"/>
+               <rewrite from="OtherArableLandAEZ14" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ13" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ12" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ11" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ18" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ17" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ16" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ15" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ10" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ01" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ03" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ02" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ05" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ04" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ07" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ06" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ09" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ08" to="otherarable"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ06" to="pasture (other)"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ07" to="pasture (other)"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ04" to="pasture (other)"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ05" to="pasture (other)"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ02" to="pasture (other)"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ03" to="pasture (other)"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ01" to="pasture (other)"/>
+               <rewrite from="WheatAEZ17" to="crops"/>
+               <rewrite from="WheatAEZ16" to="crops"/>
+               <rewrite from="WheatAEZ18" to="crops"/>
+               <rewrite from="WheatAEZ13" to="crops"/>
+               <rewrite from="WheatAEZ12" to="crops"/>
+               <rewrite from="WheatAEZ15" to="crops"/>
+               <rewrite from="WheatAEZ14" to="crops"/>
+               <rewrite from="WheatAEZ10" to="crops"/>
+               <rewrite from="WheatAEZ11" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ10" to="pasture (other)"/>
+               <rewrite from="WheatAEZ09" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ18" to="pasture (other)"/>
+               <rewrite from="WheatAEZ08" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ17" to="pasture (other)"/>
+               <rewrite from="WheatAEZ07" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ16" to="pasture (other)"/>
+               <rewrite from="WheatAEZ06" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ15" to="pasture (other)"/>
+               <rewrite from="WheatAEZ05" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ14" to="pasture (other)"/>
+               <rewrite from="WheatAEZ04" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ13" to="pasture (other)"/>
+               <rewrite from="WheatAEZ03" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ12" to="pasture (other)"/>
+               <rewrite from="WheatAEZ02" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ11" to="pasture (other)"/>
+               <rewrite from="WheatAEZ01" to="crops"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ08" to="pasture (other)"/>
+               <rewrite from="ProtectedUnmanagedPastureAEZ09" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ14" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ13" to="pasture (other)"/>
+               <rewrite from="GrasslandAEZ18" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ16" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ15" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ18" to="pasture (other)"/>
+               <rewrite from="GrasslandAEZ15" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ17" to="pasture (other)"/>
+               <rewrite from="GrasslandAEZ14" to="grass"/>
+               <rewrite from="GrasslandAEZ17" to="grass"/>
+               <rewrite from="GrasslandAEZ16" to="grass"/>
+               <rewrite from="GrasslandAEZ11" to="grass"/>
+               <rewrite from="GrasslandAEZ10" to="grass"/>
+               <rewrite from="GrasslandAEZ13" to="grass"/>
+               <rewrite from="GrasslandAEZ12" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ10" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ12" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ11" to="pasture (other)"/>
+               <rewrite from="TundraAEZ18" to="tundra"/>
+               <rewrite from="UnmanagedPastureAEZ05" to="pasture (other)"/>
+               <rewrite from="TundraAEZ17" to="tundra"/>
+               <rewrite from="GrasslandAEZ09" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ04" to="pasture (other)"/>
+               <rewrite from="TundraAEZ16" to="tundra"/>
+               <rewrite from="GrasslandAEZ08" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ03" to="pasture (other)"/>
+               <rewrite from="TundraAEZ15" to="tundra"/>
+               <rewrite from="GrasslandAEZ07" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ02" to="pasture (other)"/>
+               <rewrite from="TundraAEZ14" to="tundra"/>
+               <rewrite from="GrasslandAEZ06" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ09" to="pasture (other)"/>
+               <rewrite from="TundraAEZ13" to="tundra"/>
+               <rewrite from="GrasslandAEZ05" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ08" to="pasture (other)"/>
+               <rewrite from="TundraAEZ12" to="tundra"/>
+               <rewrite from="GrasslandAEZ04" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ07" to="pasture (other)"/>
+               <rewrite from="TundraAEZ11" to="tundra"/>
+               <rewrite from="GrasslandAEZ03" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ06" to="pasture (other)"/>
+               <rewrite from="GrasslandAEZ02" to="grass"/>
+               <rewrite from="MiscCropAEZ04" to="crops"/>
+               <rewrite from="GrasslandAEZ01" to="grass"/>
+               <rewrite from="MiscCropAEZ05" to="crops"/>
+               <rewrite from="MiscCropAEZ02" to="crops"/>
+               <rewrite from="MiscCropAEZ03" to="crops"/>
+               <rewrite from="UnmanagedPastureAEZ01" to="pasture (other)"/>
+               <rewrite from="MiscCropAEZ01" to="crops"/>
+               <rewrite from="TundraAEZ10" to="tundra"/>
+               <rewrite from="TundraAEZ08" to="tundra"/>
+               <rewrite from="TundraAEZ09" to="tundra"/>
+               <rewrite from="ForestAEZ09" to="forest (managed)"/>
+               <rewrite from="TundraAEZ01" to="tundra"/>
+               <rewrite from="ForestAEZ08" to="forest (managed)"/>
+               <rewrite from="TundraAEZ02" to="tundra"/>
+               <rewrite from="ForestAEZ07" to="forest (managed)"/>
+               <rewrite from="TundraAEZ03" to="tundra"/>
+               <rewrite from="TundraAEZ04" to="tundra"/>
+               <rewrite from="TundraAEZ05" to="tundra"/>
+               <rewrite from="TundraAEZ06" to="tundra"/>
+               <rewrite from="TundraAEZ07" to="tundra"/>
+               <rewrite from="ForestAEZ12" to="forest (managed)"/>
+               <rewrite from="ForestAEZ13" to="forest (managed)"/>
+               <rewrite from="ForestAEZ10" to="forest (managed)"/>
+               <rewrite from="ForestAEZ11" to="forest (managed)"/>
+               <rewrite from="ForestAEZ16" to="forest (managed)"/>
+               <rewrite from="ForestAEZ17" to="forest (managed)"/>
+               <rewrite from="ForestAEZ14" to="forest (managed)"/>
+               <rewrite from="Tundra" to="tundra"/>
+               <rewrite from="ForestAEZ15" to="forest (managed)"/>
+               <rewrite from="FiberCropAEZ03" to="crops"/>
+               <rewrite from="FiberCropAEZ02" to="crops"/>
+               <rewrite from="FiberCropAEZ05" to="crops"/>
+               <rewrite from="FiberCropAEZ04" to="crops"/>
+               <rewrite from="FiberCropAEZ01" to="crops"/>
+               <rewrite from="ForestAEZ01" to="forest (managed)"/>
+               <rewrite from="ForestAEZ02" to="forest (managed)"/>
+               <rewrite from="ForestAEZ03" to="forest (managed)"/>
+               <rewrite from="ForestAEZ04" to="forest (managed)"/>
+               <rewrite from="ForestAEZ05" to="forest (managed)"/>
+               <rewrite from="ForestAEZ06" to="forest (managed)"/>
+               <rewrite from="FiberCropAEZ12" to="crops"/>
+               <rewrite from="FiberCropAEZ11" to="crops"/>
+               <rewrite from="FiberCropAEZ10" to="crops"/>
+               <rewrite from="OilCropAEZ16" to="crops"/>
+               <rewrite from="FiberCropAEZ16" to="crops"/>
+               <rewrite from="OilCropAEZ15" to="crops"/>
+               <rewrite from="FiberCropAEZ15" to="crops"/>
+               <rewrite from="OilCropAEZ18" to="crops"/>
+               <rewrite from="FiberCropAEZ14" to="crops"/>
+               <rewrite from="OilCropAEZ17" to="crops"/>
+               <rewrite from="FiberCropAEZ13" to="crops"/>
+               <rewrite from="OilCropAEZ12" to="crops"/>
+               <rewrite from="OilCropAEZ11" to="crops"/>
+               <rewrite from="OilCropAEZ14" to="crops"/>
+               <rewrite from="OilCropAEZ13" to="crops"/>
+               <rewrite from="OilCropAEZ10" to="crops"/>
+               <rewrite from="FiberCropAEZ08" to="crops"/>
+               <rewrite from="FiberCropAEZ09" to="crops"/>
+               <rewrite from="FiberCropAEZ06" to="crops"/>
+               <rewrite from="FiberCropAEZ07" to="crops"/>
+               <rewrite from="OilCropAEZ09" to="crops"/>
+               <rewrite from="OilCropAEZ08" to="crops"/>
+               <rewrite from="OilCropAEZ07" to="crops"/>
+               <rewrite from="OilCropAEZ06" to="crops"/>
+               <rewrite from="OilCropAEZ05" to="crops"/>
+               <rewrite from="OilCropAEZ04" to="crops"/>
+               <rewrite from="OilCropAEZ03" to="crops"/>
+               <rewrite from="OilCropAEZ02" to="crops"/>
+               <rewrite from="OilCropAEZ01" to="crops"/>
+               <rewrite from="ForestAEZ18" to="forest (managed)"/>
+               <rewrite from="FiberCropAEZ17" to="crops"/>
+               <rewrite from="FiberCropAEZ18" to="crops"/>
+               <rewrite from="PalmFruitAEZ10" to="crops"/>
+               <rewrite from="PalmFruitAEZ13" to="crops"/>
+               <rewrite from="PalmFruitAEZ14" to="crops"/>
+               <rewrite from="PalmFruitAEZ11" to="crops"/>
+               <rewrite from="PalmFruitAEZ12" to="crops"/>
+               <rewrite from="PalmFruitAEZ17" to="crops"/>
+               <rewrite from="SugarCropAEZ13" to="crops"/>
+               <rewrite from="PalmFruitAEZ18" to="crops"/>
+               <rewrite from="SugarCropAEZ14" to="crops"/>
+               <rewrite from="PalmFruitAEZ15" to="crops"/>
+               <rewrite from="SugarCropAEZ11" to="crops"/>
+               <rewrite from="PalmFruitAEZ16" to="crops"/>
+               <rewrite from="SugarCropAEZ12" to="crops"/>
+               <rewrite from="SugarCropAEZ17" to="crops"/>
+               <rewrite from="SugarCropAEZ18" to="crops"/>
+               <rewrite from="SugarCropAEZ15" to="crops"/>
+               <rewrite from="SugarCropAEZ16" to="crops"/>
+               <rewrite from="SugarCropAEZ10" to="crops"/>
+               <rewrite from="PalmFruitAEZ01" to="crops"/>
+               <rewrite from="PalmFruitAEZ02" to="crops"/>
+               <rewrite from="PalmFruitAEZ03" to="crops"/>
+               <rewrite from="PalmFruitAEZ04" to="crops"/>
+               <rewrite from="PalmFruitAEZ05" to="crops"/>
+               <rewrite from="PalmFruitAEZ06" to="crops"/>
+               <rewrite from="PalmFruitAEZ07" to="crops"/>
+               <rewrite from="PalmFruitAEZ08" to="crops"/>
+               <rewrite from="PalmFruitAEZ09" to="crops"/>
+               <rewrite from="FodderGrassAEZ10" to="crops"/>
+               <rewrite from="FodderGrassAEZ11" to="crops"/>
+               <rewrite from="FodderGrassAEZ12" to="crops"/>
+               <rewrite from="FodderGrassAEZ17" to="crops"/>
+               <rewrite from="FodderGrassAEZ18" to="crops"/>
+               <rewrite from="FodderGrassAEZ13" to="crops"/>
+               <rewrite from="FodderGrassAEZ14" to="crops"/>
+               <rewrite from="FodderGrassAEZ15" to="crops"/>
+               <rewrite from="FodderGrassAEZ16" to="crops"/>
+               <rewrite from="miscanthusAEZ17" to="biomass"/>
+               <rewrite from="miscanthusAEZ16" to="biomass"/>
+               <rewrite from="ProtectedShrublandAEZ10" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ11" to="shrubs"/>
+               <rewrite from="miscanthusAEZ18" to="biomass"/>
+               <rewrite from="willowAEZ17" to="biomass"/>
+               <rewrite from="willowAEZ18" to="biomass"/>
+               <rewrite from="willowAEZ15" to="biomass"/>
+               <rewrite from="willowAEZ16" to="biomass"/>
+               <rewrite from="ProtectedShrublandAEZ17" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ16" to="shrubs"/>
+               <rewrite from="miscanthusAEZ10" to="biomass"/>
+               <rewrite from="ProtectedShrublandAEZ18" to="shrubs"/>
+               <rewrite from="miscanthusAEZ11" to="biomass"/>
+               <rewrite from="ProtectedShrublandAEZ13" to="shrubs"/>
+               <rewrite from="miscanthusAEZ12" to="biomass"/>
+               <rewrite from="ProtectedShrublandAEZ12" to="shrubs"/>
+               <rewrite from="miscanthusAEZ13" to="biomass"/>
+               <rewrite from="ProtectedShrublandAEZ15" to="shrubs"/>
+               <rewrite from="miscanthusAEZ14" to="biomass"/>
+               <rewrite from="ProtectedShrublandAEZ14" to="shrubs"/>
+               <rewrite from="miscanthusAEZ15" to="biomass"/>
+               <rewrite from="SugarCropAEZ08" to="crops"/>
+               <rewrite from="SugarCropAEZ09" to="crops"/>
+               <rewrite from="SugarCropAEZ04" to="crops"/>
+               <rewrite from="SugarCropAEZ05" to="crops"/>
+               <rewrite from="willowAEZ10" to="biomass"/>
+               <rewrite from="SugarCropAEZ06" to="crops"/>
+               <rewrite from="SugarCropAEZ07" to="crops"/>
+               <rewrite from="willowAEZ12" to="biomass"/>
+               <rewrite from="willowAEZ11" to="biomass"/>
+               <rewrite from="UrbanLand" to="urban"/>
+               <rewrite from="SugarCropAEZ01" to="crops"/>
+               <rewrite from="willowAEZ14" to="biomass"/>
+               <rewrite from="SugarCropAEZ02" to="crops"/>
+               <rewrite from="willowAEZ13" to="biomass"/>
+               <rewrite from="SugarCropAEZ03" to="crops"/>
+               <rewrite from="willowAEZ07" to="biomass"/>
+               <rewrite from="willowAEZ08" to="biomass"/>
+               <rewrite from="willowAEZ09" to="biomass"/>
+               <rewrite from="ProtectedShrublandAEZ09" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ08" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ07" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ06" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ05" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ04" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ03" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ02" to="shrubs"/>
+               <rewrite from="ProtectedShrublandAEZ01" to="shrubs"/>
+               <rewrite from="eucalyptusAEZ14" to="biomass"/>
+               <rewrite from="MiscCropAEZ08" to="crops"/>
+               <rewrite from="eucalyptusAEZ15" to="biomass"/>
+               <rewrite from="MiscCropAEZ09" to="crops"/>
+               <rewrite from="eucalyptusAEZ16" to="biomass"/>
+               <rewrite from="MiscCropAEZ06" to="crops"/>
+               <rewrite from="eucalyptusAEZ17" to="biomass"/>
+               <rewrite from="MiscCropAEZ07" to="crops"/>
+               <rewrite from="eucalyptusAEZ10" to="biomass"/>
+               <rewrite from="eucalyptusAEZ11" to="biomass"/>
+               <rewrite from="eucalyptusAEZ12" to="biomass"/>
+               <rewrite from="eucalyptusAEZ13" to="biomass"/>
+               <rewrite from="MiscCropAEZ12" to="crops"/>
+               <rewrite from="MiscCropAEZ11" to="crops"/>
+               <rewrite from="MiscCropAEZ10" to="crops"/>
+               <rewrite from="MiscCropAEZ16" to="crops"/>
+               <rewrite from="eucalyptusAEZ08" to="biomass"/>
+               <rewrite from="MiscCropAEZ15" to="crops"/>
+               <rewrite from="eucalyptusAEZ07" to="biomass"/>
+               <rewrite from="MiscCropAEZ14" to="crops"/>
+               <rewrite from="MiscCropAEZ13" to="crops"/>
+               <rewrite from="eucalyptusAEZ09" to="biomass"/>
+               <rewrite from="JatrophaAEZ01" to="biomass"/>
+               <rewrite from="JatrophaAEZ02" to="biomass"/>
+               <rewrite from="JatrophaAEZ03" to="biomass"/>
+               <rewrite from="JatrophaAEZ04" to="biomass"/>
+               <rewrite from="JatrophaAEZ05" to="biomass"/>
+               <rewrite from="JatrophaAEZ06" to="biomass"/>
+               <rewrite from="MiscCropAEZ17" to="crops"/>
+               <rewrite from="eucalyptusAEZ05" to="biomass"/>
+               <rewrite from="MiscCropAEZ18" to="crops"/>
+               <rewrite from="eucalyptusAEZ06" to="biomass"/>
+               <rewrite from="miscanthusAEZ09" to="biomass"/>
+               <rewrite from="eucalyptusAEZ03" to="biomass"/>
+               <rewrite from="eucalyptusAEZ04" to="biomass"/>
+               <rewrite from="miscanthusAEZ07" to="biomass"/>
+               <rewrite from="eucalyptusAEZ01" to="biomass"/>
+               <rewrite from="miscanthusAEZ08" to="biomass"/>
+               <rewrite from="eucalyptusAEZ02" to="biomass"/>
+               <rewrite from="miscanthusAEZ05" to="biomass"/>
+               <rewrite from="miscanthusAEZ06" to="biomass"/>
+               <rewrite from="miscanthusAEZ04" to="biomass"/>
+               <rewrite from="miscanthusAEZ03" to="biomass"/>
+               <rewrite from="miscanthusAEZ02" to="biomass"/>
+               <rewrite from="miscanthusAEZ01" to="biomass"/>
+               <rewrite from="FodderGrassAEZ05" to="crops"/>
+               <rewrite from="FodderGrassAEZ04" to="crops"/>
+               <rewrite from="FodderGrassAEZ03" to="crops"/>
+               <rewrite from="FodderGrassAEZ02" to="crops"/>
+               <rewrite from="FodderGrassAEZ09" to="crops"/>
+               <rewrite from="FodderGrassAEZ08" to="crops"/>
+               <rewrite from="FodderGrassAEZ07" to="crops"/>
+               <rewrite from="FodderGrassAEZ06" to="crops"/>
+               <rewrite from="FodderGrassAEZ01" to="crops"/>
+               <rewrite from="RiceAEZ15" to="crops"/>
+               <rewrite from="RiceAEZ14" to="crops"/>
+               <rewrite from="RiceAEZ17" to="crops"/>
+               <rewrite from="RiceAEZ16" to="crops"/>
+               <rewrite from="RiceAEZ18" to="crops"/>
+               <rewrite from="eucalyptusAEZ18" to="biomass"/>
+            </level>
+         </labelRewriteList>
+     </query>
+
+
+      </aQuery>
+   
+   <aQuery>
+<!-- note the different region list and re-write list. energy prices can't be added-->
+      <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Indonesia" />
+       <region name="Russia" />
+       <region name="South Korea" />
+      <supplyDemandQuery title="Regional energy costs">
+          <axis1 name="sector">sector</axis1>
+          <axis2 name="Year">cost</axis2>
+          <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='regional oil' or @name='regional natural gas' or @name='regional coal' or @name='regional biomass' or @name='nuclearFuelGenIII' or @name='electricity'))]/cost/text()</xPath>
+          <comments/>
+      </supplyDemandQuery>
+   </aQuery>
+   <aQuery>
+      <region name="USA" />
+       <region name="Canada" />
+       <region name="Western Europe" />
+       <region name="Japan" />
+       <region name="Australia_NZ" />
+       <region name="Former Soviet Union" />
+       <region name="China" />
+       <region name="Middle East" />
+       <region name="Africa" />
+       <region name="Latin America" />
+       <region name="Southeast Asia" />
+       <region name="Eastern Europe" />
+       <region name="Korea" />
+       <region name="India" />
+       <region name="Africa_Eastern" />
+       <region name="Africa_Northern" />
+       <region name="Africa_Southern" />
+       <region name="Africa_Western" />
+       <region name="Brazil" />
+       <region name="Central America and Caribbean" />
+       <region name="Central Asia" />
+       <region name="EU-12" />
+       <region name="EU-15" />
+       <region name="Europe_Eastern" />
+       <region name="Europe_Non_EU" />
+       <region name="European Free Trade Association" />
+       <region name="Indonesia" />
+       <region name="Mexico" />
+       <region name="Pakistan" />
+       <region name="Russia" />
+       <region name="South Africa" />
+       <region name="South America_Northern" />
+       <region name="South America_Southern" />
+       <region name="Argentina" />
+       <region name="Colombia" />
+       <region name="South Asia" />
+       <region name="South Korea" />
+       <region name="Taiwan" />
+       <supplyDemandQuery title="Regional oil production by fuel">
+           <axis1 name="fuel">technology</axis1>
+           <axis2 name="Year">physical-output[@vintage]</axis2>
+           <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and @name='regional oil']//*[@type = 'technology']/*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+           <comments/>
+       </supplyDemandQuery>
+   </aQuery>
+</queries>
+   

@@ -1,0 +1,28 @@
+<ModelInterfaceBatch>
+    <!-- Note multiple sets of the following are allowed to run several
+         batch queries sequentially.
+      -->
+    <class name="ModelInterface.ModelGUI2.DbViewer">
+        <command name="XMLDB Batch File">
+            <!-- List all the scenarios to query, if no scenario are given then
+                 the last scenario in the database will be queries. Note that if
+                 multiple scenarios have the same name the latest one will be used,
+                 to differentiate explicitly define the date with date="..." in the
+                 scenario tag.
+              -->
+            <scenario name="Core_Ref"/>
+
+            <!-- The Batch queries to run -->
+            <queryFile>batch_queries/Model_verification_queries.xml</queryFile>
+            <!-- Where to write results -->
+            <outFile>gcam_data/Core/reference.csv</outFile>
+            <!-- Which database to query -->
+            <xmldbLocation>../database.dbxml</xmldbLocation>
+            <!-- Additinoal query options which will be ignored when saving to CSV -->
+            <batchQueryResultsInDifferentSheets>false</batchQueryResultsInDifferentSheets>
+            <batchQueryIncludeCharts>false</batchQueryIncludeCharts>
+            <batchQuerySplitRunsInDifferentSheets>false</batchQuerySplitRunsInDifferentSheets>
+            <batchQueryReplaceResults>true</batchQueryReplaceResults>
+        </command>
+    </class>
+</ModelInterfaceBatch>

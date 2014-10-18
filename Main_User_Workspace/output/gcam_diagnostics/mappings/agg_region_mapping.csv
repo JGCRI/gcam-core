@@ -1,0 +1,26 @@
+# A rough mapping of GCAM 4 regions to the old GCAM regions
+region,GCAM3_region
+Africa_Eastern,Africa
+Africa_Northern,Africa
+Africa_Southern,Africa
+Africa_Western,Africa
+South Africa,Africa
+Brazil,Latin America
+Central America and Caribbean,Latin America
+Mexico,Latin America
+South America_Northern,Latin America
+South America_Southern,Latin America
+Argentina,Latin America
+Colombia,Latin America
+Indonesia,Southeast Asia
+Pakistan,Southeast Asia
+South Asia,Southeast Asia
+Taiwan,Southeast Asia
+Central Asia,Former Soviet Union
+Russia,Former Soviet Union
+Europe_Eastern,Eastern Europe
+EU-12,Eastern Europe
+EU-15,Western Europe
+Europe_Non_EU,Western Europe
+European Free Trade Association,Western Europe
+South Korea,Korea
