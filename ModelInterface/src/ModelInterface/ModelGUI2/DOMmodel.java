@@ -55,7 +55,6 @@ import org.w3c.dom.events.EventListener;
 import ModelInterface.ModelGUI2.undo.NodeInsertUndoableEdit;
 import ModelInterface.ModelGUI2.undo.NodeDeleteUndoableEdit;
 import ModelInterface.ModelGUI2.undo.NodeEditUndoableEdit;
-import ModelInterface.ModelGUI2.csvconv.DOMTreeBuilder;
 import ModelInterface.InterfaceMain;
 
 public class DOMmodel implements TreeModel {
@@ -206,7 +205,7 @@ public class DOMmodel implements TreeModel {
 				}
 				else if (((DOMNodeAdapter)child).getNode().getNodeType() != Node.TEXT_NODE && 
 						((DOMNodeAdapter)child).getNode().getNodeType() == Node.ELEMENT_NODE 
-						&& DOMTreeBuilder.compareHelper( ((Element)childlist.item(counter)),
+						&& compareHelper( ((Element)childlist.item(counter)),
 					((Element)((DOMNodeAdapter)child).getNode() ))){
 					return counter;
 				}
@@ -218,6 +217,28 @@ public class DOMmodel implements TreeModel {
 			}
 			return -1;
 		}
+	}
+	private boolean compareHelper(Element e1, Element e2){ // helper for compare function
+		// first make sure tag names are the same
+		if( !((e1.getTagName()).equals(e2.getTagName()) ) ){
+            // Not the same
+            return false;
+		}
+
+		// go through all the attributes, make sure have the same ammount and the have the same values
+		NamedNodeMap attrs1 = e1.getAttributes();
+		NamedNodeMap attrs2 = e2.getAttributes();
+		String temp;
+		if (attrs1.getLength() != attrs2.getLength()) {
+			return false;
+		}
+		for (int i = 0; i < attrs1.getLength(); i++) {
+			temp = attrs1.item(i).getNodeName();
+			if (!(e1.getAttribute(temp).equals(e2.getAttribute(temp)))) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 
