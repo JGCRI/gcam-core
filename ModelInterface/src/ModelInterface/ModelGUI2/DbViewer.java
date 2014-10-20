@@ -359,14 +359,12 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			} else {
 				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", batchFiles[0].getParent());
 
-                // TODO: we are currently limiting oursleves to xls files.  Figoure out the best way to switch
-                // between xls and csv.
 				final FileFilter xlsFilter = (new javax.swing.filechooser.FileFilter() {
 					public boolean accept(File f) {
-						return f.getName().toLowerCase().endsWith(".xls") || f.isDirectory();
+						return f.getName().toLowerCase().endsWith(".xls") || f.getName().toLowerCase().endsWith(".csv") || f.isDirectory();
 					}
 					public String getDescription() {
-						return "Microsoft Excel File(*.xls)";
+						return "Microsoft Excel File(*.xls) or CSV (*.csv)";
 					}
 				});
 				File[] xlsFiles = fc.doFilePrompt(parentFrame, "Select Where to Save Output", FileChooser.SAVE_DIALOG, 
@@ -376,7 +374,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					return;
 				} else {
                     for(int i = 0; i < xlsFiles.length; ++i) {
-                        if(!xlsFiles[i].getName().endsWith(".xls")) {
+                        if(!xlsFiles[i].getName().endsWith(".xls") && !xlsFiles[i].getName().endsWith(".csv")) {
                             xlsFiles[i] = new File(xlsFiles[i].getAbsolutePath()+".xls");
                         }
                     }
