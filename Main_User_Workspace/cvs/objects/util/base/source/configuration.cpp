@@ -119,7 +119,9 @@ bool Configuration::XMLParse( const DOMNode* root ) {
                 scenarioComponents.push_back( XMLHelper<string>::getValue( currValueNode ) );
             }
 			else {
-                cout << "Unrecognized text string: " << sectionName << " found while parsing configuration." << endl;
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << sectionName << " found while parsing configuration." << endl;
             }
 		} // for ( int j = 0;...
 	} // for ( int i = 0;...

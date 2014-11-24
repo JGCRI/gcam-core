@@ -150,7 +150,9 @@ void XYDataPoint::XMLParse( const xercesc::DOMNode* node ) {
             y = XMLHelper<double>::getValue( curr );
         } 
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << endl;
         }
     }
 }

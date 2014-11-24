@@ -111,7 +111,9 @@ void MoreSectorInfo::XMLParse( const DOMNode* node ) {
 			setType( MoreSectorInfo::ADDITIVE_TAX, XMLHelper<double>::getValue( curr ) );
 		}
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
 		}
 	}
 }

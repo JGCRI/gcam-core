@@ -91,7 +91,9 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
             mExtractCost = XMLHelper<double>::getValue( tNode );
         }
         else {
-            cout << "Unrecognized text string: " << tNodeName << " found while parsing grade." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << tNodeName << " found while parsing grade." << endl;
         }
     }
 }

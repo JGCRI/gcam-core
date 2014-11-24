@@ -360,7 +360,9 @@ void ExplicitPointSet::XMLParse( const xercesc::DOMNode* node ) {
             addPoint( currPoint );
         } 
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing ExplicitPointSet." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing ExplicitPointSet." << endl;
         }
     }
 }

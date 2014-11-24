@@ -181,7 +181,9 @@ void SGMInput::XMLParse( const xercesc::DOMNode* node ) {
             mSalesTaxRate.init( XMLHelper<double>::getValue( curr ) );
         }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
         }
     }
 }

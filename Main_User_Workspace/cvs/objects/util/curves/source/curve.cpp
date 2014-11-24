@@ -154,7 +154,9 @@ void Curve::XMLParse( const xercesc::DOMNode* node ) {
             // Do nothing, action was taken care of in the derived parse. 
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing Curve." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing Curve." << endl;
         }
     }
 }

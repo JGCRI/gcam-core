@@ -136,7 +136,9 @@ void LinkedGHGPolicy::XMLParse( const DOMNode* node ){
             XMLHelper<Value>::insertValueIntoVector( curr, mDemandAdjust, modeltime );
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
         }
     }
 }

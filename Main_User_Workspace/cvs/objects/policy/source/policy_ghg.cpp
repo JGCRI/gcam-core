@@ -179,7 +179,9 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
             }
         }
         else {
-            cout << "Unrecognized text string: " << nodeName << " found while parsing ghgmarket." << endl;
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing ghgmarket." << endl;
         }
     }
 }
