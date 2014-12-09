@@ -47,7 +47,8 @@ L241.hfc_all$input.emissions <- round( L241.hfc$value, digits_emissions )
 
 printlog( "L241.pfc: F-gas emissions for technologies in all regions" )
 #Interpolate and add region name
-L241.pfc <- L142.pfc_R_S_T_Yh
+#Because no future coefs are read in for any techs, anything that's zero in all base years can be dropped
+L241.pfc <- L142.pfc_R_S_T_Yh[ rowSums( L142.pfc_R_S_T_Yh[ names( L142.pfc_R_S_T_Yh ) %in% X_historical_years ] ) > 0, ]
 L241.pfc <- melt( L241.pfc, id.vars = grep( "X[0-9]{4}", names( L241.pfc ), invert = T ) )
 L241.pfc$year <- as.numeric( substr( L241.pfc$variable, 2, 5 ) )
 L241.pfc <- subset( L241.pfc, L241.pfc$year %in% emiss_model_base_years )
@@ -66,7 +67,9 @@ L241.hfc_ef_2005 <- subset( L241.hfc_ef, L241.hfc_ef$year == max(emiss_model_bas
 L241.hfc_ef_2005 <- add_region_name( L241.hfc_ef_2005 )
 
 #Determine which regions need updated emissions factors
-L241.hfc_ef_2005$USA_factor <- L241.hfc_ef_2005$value[ match( paste( vecpaste( L241.hfc_ef_2005[ c( "supplysector", "Non.CO2", "year" )]), "USA"),
+#Assume that USA is in region 1
+Index_region <- GCAM_region_names$region[ GCAM_region_names$GCAM_region_ID == 1 ]
+L241.hfc_ef_2005$USA_factor <- L241.hfc_ef_2005$value[ match( paste( vecpaste( L241.hfc_ef_2005[ c( "supplysector", "Non.CO2", "year" )]), Index_region),
                                                               vecpaste( L241.hfc_ef_2005[ c( "supplysector", "Non.CO2", "year", "region" )]) )]
 L241.hfc_ef_update <- subset( L241.hfc_ef_2005, L241.hfc_ef_2005$USA_factor > L241.hfc_ef_2005$value )
 names( L241.hfc_ef_update )[ names( L241.hfc_ef_update) == "value" ] <- "X2005"
@@ -82,6 +85,12 @@ L241.hfc_ef_update.melt <- subset( L241.hfc_ef_update.melt, L241.hfc_ef_update.m
 #Format for csv file
 L241.hfc_future <- L241.hfc_ef_update.melt[ c( names_StubTechYr, "Non.CO2" ) ]
 L241.hfc_future$emiss.coeff <- round( L241.hfc_ef_update.melt$value, digits_emissions )
+
+#Subset only the relevant technologies and gases (i.e., drop ones whose values would be zero in all years)
+L241.hfc_delete <- aggregate( L241.hfc_all[ "input.emissions" ], by=as.list( L241.hfc_all[ c( names_StubTech, "Non.CO2" ) ] ), max )
+L241.hfc_delete <- L241.hfc_delete[ L241.hfc_delete$input.emissions == 0 &
+      vecpaste( L241.hfc_delete[ c( names_StubTech, "Non.CO2" ) ] ) %!in% vecpaste( L241.hfc_future[ c( names_StubTech, "Non.CO2" ) ] ), ]
+L241.hfc_all <- L241.hfc_all[ vecpaste( L241.hfc_all[ c( names_StubTech, "Non.CO2" ) ] ) %!in% vecpaste( L241.hfc_delete[ c( names_StubTech, "Non.CO2" ) ] ), ]
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

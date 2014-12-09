@@ -13,6 +13,8 @@ NH3_extra_years <- 1971:1989
 X_NH3_extra_years <- paste( "X", NH3_extra_years, sep = "" )
 GAINS_years <- c( 2010, 2020, 2030 )
 GAINS_base_year <- 2005
+EPA_MACC_year <- 2030       #this needs to be either 2020 or 2030
+X_EPA_MACC_year <- paste0( "X", EPA_MACC_year )
 
 #At present the CO2 emissions inventory from CDIAC stops at 2009
 CO2_historical_years <- historical_years[ historical_years < 2010 ]
@@ -42,6 +44,7 @@ kg_to_tg <- 0.000000001
 #Significant digits
 digits_emissions <- 7
 digits_CO2coef <- 1
+digits_MACC <- 3
 
 #Base years for emissions data
 emiss_model_base_years <- c( "1975", "1990", "2005" )
@@ -54,6 +57,7 @@ nonghg_gases <- c( "SO2", "NOx", "CO", "NMVOC", "NH3" )
 awb_gases <- c( "SO2_AWB", "NOx_AWB", "CO_AWB", "NMVOC_AWB", "CH4_AWB", "N2O_AWB", "NH3_AWB" )
 agr_gases <- c( "CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR" )
 GHG_names <- c( "CH4", "N2O" )
+ag_MACC_GHG_names <- paste( GHG_names, "AGR", sep = "_" ) #Note: only including the AGR emissions, as reducing AWB was not an option considered by the EPA
 HFCs <- c( "HFC23", "HFC32", "HFC43", "HFC125", "HFC134a", "HFC143a", "HFC152a", "HFC227ea", "HFC236fa", "HFC245fa", "HFC365mfc"  )
 PFCs <- c( "CF4", "C2F6", "SF6" )
 F_Gases <- c( HFCs, PFCs )
@@ -69,8 +73,8 @@ R_G_Sedgar <- c( "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector")
 R_G_StubTechYr <- c( "GCAM_region_ID", "Non.CO2", "supplysector", "subsector", "stub.technology", "xyear" )
 R_StubTechYr <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "xyear" )
 
-#Taxes to use in MAC curve
-MAC_taxes <- c( -30, -24, -20, -15, -12, -10, 0, 12, 15, 20, 24, 30, 36, 45, 48, 50, 60, 73, 100, 120, 121, 165, 200, 242, 243 )
+#Taxes to use in MAC curves (1990$/tC)
+MAC_taxes <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 )
 
 #Final calibration year where we have emissions data
 final_emiss_year <- 2005
@@ -91,3 +95,6 @@ coal_so2_thresshold <- 0.1
 #Marker region for SSP non-CO2 pollution controls in low income regions
 #Note: this is the region whose air pollution controls are applied to low income regions in SSP1 & SSP5. The protocol states Western Europe
 ssp_marker_region <- 13
+
+EPA_MACC_names <- c( "Sector", "Process", "EPA_region" )
+

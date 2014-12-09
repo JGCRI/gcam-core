@@ -29,6 +29,7 @@ GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 A_regions <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 A_agSupplySector <- readdata( "AGLU_ASSUMPTIONS", "A_agSupplySector" )
 A_biocrops_R_AEZ <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ" )
+L104.ag_Prod_Mt_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L104.ag_Prod_Mt_R_C_Y_AEZ" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
 L121.nonco2_tg_R_awb_C_Y_AEZ <- readdata( "EMISSIONS_LEVEL1_DATA", "L121.nonco2_tg_R_awb_C_Y_AEZ" )
 L122.ghg_tg_R_agr_C_Y_AEZ <- readdata( "EMISSIONS_LEVEL1_DATA", "L122.ghg_tg_R_agr_C_Y_AEZ" )
@@ -168,16 +169,20 @@ L211.nonghg_max_reduction <- rename_biocrops( L211.nonghg_max_reduction, lookup 
 L211.nonghg_steepness <- rename_biocrops( L211.nonghg_steepness, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
   lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 
-
 printlog( "Removing non-existent regions and AEZs from all tables")
+printlog( "NOTE: also removing nonco2s from agricultural supply subsectors (crop&AEZ) with zero output in all years" )
+AgSubs_nonexist <- L104.ag_Prod_Mt_R_C_Y_AEZ[ rowSums( L104.ag_Prod_Mt_R_C_Y_AEZ[ X_historical_years ] ) == 0, R_C_AEZ ]
+AgSubs_nonexist <- add_region_name( AgSubs_nonexist )
+AgSubs_nonexist$AgSupplySubsector <- paste( AgSubs_nonexist[[C]], AgSubs_nonexist[[AEZ]], sep = AEZ_delimiter )
+
 L211.AnEmissions <- subset( L211.AnEmissions, !region %in% no_aglu_regions )
 L211.AnNH3Emissions <- subset( L211.AnNH3Emissions, !region %in% no_aglu_regions )
-L211.AWBEmissions <- remove_AEZ_nonexist( L211.AWBEmissions )
-L211.AGREmissions <- remove_AEZ_nonexist( L211.AGREmissions )
+L211.AWBEmissions <- remove_AEZ_nonexist( L211.AWBEmissions[ vecpaste( L211.AWBEmissions[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
+L211.AGREmissions <- remove_AEZ_nonexist( L211.AGREmissions[ vecpaste( L211.AGREmissions[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
 L211.AGRBio <- remove_AEZ_nonexist( L211.AGRBio )
-L211.AWB_BCOC_Emissions <- remove_AEZ_nonexist( L211.AWB_BCOC_Emissions )
-L211.nonghg_max_reduction <- remove_AEZ_nonexist( L211.nonghg_max_reduction )
-L211.nonghg_steepness <- remove_AEZ_nonexist( L211.nonghg_steepness )
+L211.AWB_BCOC_Emissions <- remove_AEZ_nonexist( L211.AWB_BCOC_Emissions[ vecpaste( L211.AWB_BCOC_Emissions[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
+L211.nonghg_max_reduction <- remove_AEZ_nonexist( L211.nonghg_max_reduction[ vecpaste( L211.nonghg_max_reduction[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
+L211.nonghg_steepness <- remove_AEZ_nonexist( L211.nonghg_steepness[ vecpaste( L211.nonghg_steepness[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
 
 printlog( "Rename to regional SO2" )
 L211.AWBEmissions <- rename_SO2( L211.AWBEmissions, A_regions, TRUE )

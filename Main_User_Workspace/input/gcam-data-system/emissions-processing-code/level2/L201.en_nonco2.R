@@ -15,7 +15,7 @@ source(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
 logstart( "L201.en_nonco2.R" )
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(EMISSPROC_DIR,"/../_common/headers/EMISSIONS_header.R",sep=""))
-printlog( "Historical emissions in the energy system" )
+printlog( "NonCO2 emissions in the energy system" )
 
 # -----------------------------------------------------------------------------
 # 1. Read files
@@ -108,9 +108,10 @@ L201.nonghg_coef <- add_region_name( L201.nonghg_coef )
 
 #Format for csv file
 L201.nonghg_res <- L201.nonghg_coef[ c( "region", "subsector", "Non.CO2" ) ]
+names( L201.nonghg_res )[ names( L201.nonghg_res ) == "subsector" ] <- "depresource"
 L201.nonghg_res$emiss.coef <- round( L201.nonghg_coef$value, digits_emissions )
 
-printlog( "L201.ghg_en: GHG emissions for energy technologies in all regions" )
+printlog( "L201.ghg_res: GHG emissions from resource production in all regions" )
 #Interpolate and add region name
 L201.GHG_coef <- subset( L112.ghg_tgej_R_en_S_F_Yh, L112.ghg_tgej_R_en_S_F_Yh$supplysector == "out_resources" )
 L201.GHG_coef <- interpolate_and_melt( L201.GHG_coef, emiss_model_base_years )
@@ -119,7 +120,8 @@ L201.GHG_coef <- add_region_name( L201.GHG_coef )
 
 #Format for csv file
 L201.ghg_res <- L201.GHG_coef[ c( "region", "subsector", "Non.CO2" ) ]
-L201.ghg_res$input.emissions <- round( L201.GHG_coef$value, digits_emissions )
+names( L201.ghg_res )[ names( L201.ghg_res ) == "subsector" ] <- "depresource"
+L201.ghg_res$emiss.coef <- round( L201.GHG_coef$value, digits_emissions )
 
 printlog( "Rename to regional SO2" )
 L201.nonghg_en <- rename_SO2( L201.nonghg_en, A_regions, FALSE )
