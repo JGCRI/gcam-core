@@ -36,6 +36,7 @@ L121.SoilC_kgm2_R_LT_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L121.SoilC_kgm2_R_LT_
 L121.MatureAge_R_LT_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L121.MatureAge_R_LT_AEZ" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
 L125.LC_bm2_R_LT_Yh_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R_LT_Yh_AEZ" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -140,6 +141,18 @@ L212.LN2_MgdAllocation <- remove_AEZ_nonexist( L212.LN2_MgdAllocation, AEZcol = 
 L212.LN2_UnmgdCarbon <- remove_AEZ_nonexist( L212.LN2_UnmgdCarbon, AEZcol = "LandNode1" )
 L212.LN2_MgdCarbon <- remove_AEZ_nonexist( L212.LN2_MgdCarbon, AEZcol = "LandNode1" )
 
+printlog( "Adjust pasture logit exponent in SSP3 & 4")
+L212.LN2_Logit_SSP3 <- subset( L212.LN2_Logit, grepl( "AllPastureLand", LandNode2 ) )
+L212.LN2_Logit_SSP3$logit.exponent <- 0.1
+
+#Determine which regions in SSP4 need low logits
+L212.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L212.pcgdp_2010 <- L212.pcgdp_2010[ names( L212.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
+L212.pcgdp_2010 <- add_region_name( L212.pcgdp_2010 )
+L212.pcgdp_2010$X2010 <- L212.pcgdp_2010$X2010 * conv_1990_2010_USD
+L212.low_reg <- L212.pcgdp_2010$region[ L212.pcgdp_2010$X2010 < lo_growth_pcgdp ]
+L212.LN2_Logit_SSP4 <- subset( L212.LN2_Logit_SSP3, L212.LN2_Logit_SSP3$region %in% L212.low_reg )
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
@@ -153,5 +166,14 @@ write_mi_data( L212.LN2_UnmgdCarbon, "LN2_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L21
 write_mi_data( L212.LN2_MgdCarbon, "LN2_MgdCarbon", "AGLU_LEVEL2_DATA", "L212.LN2_MgdCarbon", "AGLU_XML_BATCH", "batch_land_input_2.xml", node_rename=T )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_2.xml", "AGLU_XML_FINAL", "land_input_2.xml", "", xml_tag="outFile" )
+
+write_mi_data( L212.LN2_Logit_SSP3, IDstring="LN2_Logit", domain="AGLU_LEVEL2_DATA", fn="L212.LN2_Logit_SSP3",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_SSP3_logit.xml", node_rename=T )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_SSP3_logit.xml", "AGLU_XML_FINAL", "SSP3_logit.xml", "", xml_tag="outFile" )
+
+write_mi_data( L212.LN2_Logit_SSP4, IDstring="LN2_Logit", domain="AGLU_LEVEL2_DATA", fn="L212.LN2_Logit_SSP4",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_SSP4_logit.xml", node_rename=T )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_SSP4_logit.xml", "AGLU_XML_FINAL", "SSP4_logit.xml", "", xml_tag="outFile" )
+
 
 logstop()

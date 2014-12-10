@@ -27,7 +27,25 @@ USE_LAPACK = 0
 NOCLEARNULL = 0
 NOCLEARRESTORE = 0
 
+#### flag indicating whether or not to use hector
+#### If we are using hector, there are some other variables to set.
+USE_HECTOR = 1
+ifeq ($(USE_HECTOR),1)
 
+ifeq ($(strip $(GSLROOT)),)
+GSLROOT	= /usr/local
+endif
+
+## Set the GSL library locations.  There is a special case for Evergreen users.
+ifeq ($(strip $(GSLROOT)),EVERGREEN)
+GSLLIB  = $(GSL_LIB)
+else
+GSLLIB	= $(GSLROOT)/lib
+endif 
+
+HECTOR_INCLUDE = -I../../climate/source/hector/headers
+HECTOR_LIB = -L$(GSLLIB) -Wl,-rpath,$(GSLLIB) -lhector -lgsl -lgslcblas
+endif
 
 ### TBB setup:  On Evergreen, using tap intel-tbb-gnu (or variants for other compilers) will set
 ### the TBB_INCDIR and TBB_LIBDIR environment variables.  These lines will create the necessary 
@@ -104,8 +122,8 @@ LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(DBXML_LIB) $(TBB_RPATH) $(LAPACK_RPAT
 AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
-LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c -ldb -ldb_cxx -ldbxml -lxqilla $(TBB_LIB) $(LAPACKLINK)
-INCLUDE         = -I$(BOOSTINC) $(TBB_INCLUDE) $(BOOSTBIND) \
+LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c -ldb -ldb_cxx -ldbxml -lxqilla $(HECTOR_LIB) $(TBB_LIB) $(LAPACKLINK) -lm
+INCLUDE         = -I$(BOOSTINC) $(TBB_INCLUDE) $(BOOSTBIND) $(HECTOR_INCLUDE) \
                   -I$(DBXMLINC) \
                   -I${PATHOFFSET} \
 		  -I${HOME}/include \

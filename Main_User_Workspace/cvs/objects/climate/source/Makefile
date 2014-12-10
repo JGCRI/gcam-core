@@ -7,15 +7,35 @@
 PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       = magicc_model.o \
-             ObjECTS_MAGICC_others.o \
-             MAGICC_array.o \
-             MAGICC_IO_helpers.o \
-             ObjECTS_MAGICC.o
+SRCS = $(wildcard *.cpp)
+OBJS = $(SRCS:.cpp=.o)
+DEPS = $(SRCS:.cpp=.d)
 
-climate_dir: ${OBJS}
+ifeq ($(USE_HECTOR),1)
+TARGS = $(OBJS) hector_dir
+else
+TARGS = $(OBJS)
+endif
+
+climate_dir: $(TARGS)
+
+##
+## The hector climate model lives in its own self-contained
+## repository.  To use hector in GCAM, clone (i.e., check out ) the
+## hector repository into a subdirectory called hector under this
+## source directory.  Making the install_hector target should do this
+## automatically as well as switching to the official gcam branch.
+##
+install_hector:
+	git clone https://github.com/JGCRI/hector.git hector
+	cd hector && git checkout gcam-devel
+
+hector_dir:
+	$(MAKE) -C ./hector/source libhector.a
+	cp ./hector/source/libhector.a ../../build/linux/
 
 -include $(DEPS)
 
 clean:
 	rm *.o
+	$(MAKE) -C ./hector/source clean

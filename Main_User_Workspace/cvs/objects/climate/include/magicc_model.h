@@ -95,7 +95,7 @@ public:
     virtual double getEmissions( const std::string& aGasName,
                                  const int aYear ) const;
 
-    virtual bool runModel();
+    virtual enum runModelStatus runModel();
 
     virtual double getConcentration( const std::string& aGasName,
                                      const int aYear ) const;

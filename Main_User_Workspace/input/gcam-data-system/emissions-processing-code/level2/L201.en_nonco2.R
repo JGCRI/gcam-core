@@ -105,9 +105,10 @@ L201.nonghg_coef <- subset( L111.nonghg_tgej_R_en_S_F_Yh, L111.nonghg_tgej_R_en_
 L201.nonghg_coef <- interpolate_and_melt( L201.nonghg_coef, emiss_model_base_years )
 L201.nonghg_coef <- subset( L201.nonghg_coef, L201.nonghg_coef$year == final_emiss_year )
 L201.nonghg_coef <- add_region_name( L201.nonghg_coef )
+names( L201.nonghg_coef )[ names( L201.nonghg_coef ) == "subsector" ] <- "depresource"
 
 #Format for csv file
-L201.nonghg_res <- L201.nonghg_coef[ c( "region", "subsector", "Non.CO2" ) ]
+L201.nonghg_res <- L201.nonghg_coef[ c( "region", "depresource", "Non.CO2" ) ]
 names( L201.nonghg_res )[ names( L201.nonghg_res ) == "subsector" ] <- "depresource"
 L201.nonghg_res$emiss.coef <- round( L201.nonghg_coef$value, digits_emissions )
 
@@ -117,9 +118,10 @@ L201.GHG_coef <- subset( L112.ghg_tgej_R_en_S_F_Yh, L112.ghg_tgej_R_en_S_F_Yh$su
 L201.GHG_coef <- interpolate_and_melt( L201.GHG_coef, emiss_model_base_years )
 L201.GHG_coef <- subset( L201.GHG_coef, L201.GHG_coef$year == final_emiss_year )
 L201.GHG_coef <- add_region_name( L201.GHG_coef )
+names( L201.GHG_coef )[ names( L201.GHG_coef ) == "subsector" ] <- "depresource"
 
 #Format for csv file
-L201.ghg_res <- L201.GHG_coef[ c( "region", "subsector", "Non.CO2" ) ]
+L201.ghg_res <- L201.GHG_coef[ c( "region", "depresource", "Non.CO2" ) ]
 names( L201.ghg_res )[ names( L201.ghg_res ) == "subsector" ] <- "depresource"
 L201.ghg_res$emiss.coef <- round( L201.GHG_coef$value, digits_emissions )
 

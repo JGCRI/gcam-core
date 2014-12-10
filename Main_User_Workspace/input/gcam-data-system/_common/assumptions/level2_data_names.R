@@ -78,6 +78,7 @@ names_StubTechInterp <- c( names_StubTech, "apply.to", "from.year", "to.year", "
 names_StubTechYr <- c( names_StubTech, "year" )
 names_StubTechProd <- c( names_StubTechYr, "calOutputValue", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 names_StubTechCoef <- c( names_StubTechYr, input, "coefficient", "market.name" )
+names_StubTechCoef_NM <- c( names_StubTechYr, input, "coefficient" )
 names_StubTechEff <- c( names_StubTechYr, input, "efficiency", "market.name" )
 names_StubTechCalInput <- c( names_StubTechYr, input, "calibrated.value", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 names_StubTechCalorieContent <- c( names_StubTechEff )
@@ -100,6 +101,7 @@ names_AgCoef <- c( names_AgTechYr, input, "coefficient", "market.name" )
 names_AgProdChange <- c( names_AgTechYr, "AgProdChange" )
 names_AgCost <- c( names_AgTechYr, "nonLandVariableCost" )
 names_AgCoef <- c( names_AgTechYr, input, "coefficient" )
+names_AgRES <- c( names_AgTechYr, "res.secondary.output", "output.ratio" )
 names_UnmgdTech <- c( "region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology" )
 
 #Demands
@@ -139,3 +141,16 @@ names_LN3_UnmgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNod
 names_LN3_MgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
       "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
 names_LN3_NewTech <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year.fillout", "isNewTechnology" )
+
+names_LN4_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "logit.year.fillout", "logit.exponent" )
+names_LN4_DefaultShare <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "year", "default.share" )
+names_LN4_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "UnmanagedLandLeaf", "year", "allocation" )
+names_LN4_UnmgdAllocation <- names_LN4_HistUnmgdAllocation
+names_LN4_HistMgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "year", "allocation" )
+names_LN4_MgdAllocation <- names_LN4_HistMgdAllocation
+names_LN4_UnmgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "UnmanagedLandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
+      "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+names_LN4_MgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
+      "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+names_LN4_NewTech <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "newTechStartYear", "isNewTechnology", "GhostShareLeaf" )
+

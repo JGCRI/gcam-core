@@ -71,6 +71,18 @@ public:
 	
 	//! Destructor.
     virtual inline ~IClimateModel();
+
+    //! Enum indicating the success or failure of a climate model run
+    enum runModelStatus {
+        SUCCESS,                //!< model successfully completed the requested run
+        NOT_IMPLEMENTED,        //!< this model does not support the type of run requested
+        INVALID,                //!< unable to attempt the run due to invalid input, bad setup, etc.
+        FAILURE,                //!< model run failed; results may not be valid (use
+                                //   this code when the model ran to completion, but
+                                //   generated some kind of failure code)
+        EXCEPTION               //!< Model failed to run to completion.
+    };
+
     
 	/*! \brief Read in any data needed for this climate model.
 	* \details Climate model is not required to read in data
@@ -80,12 +92,12 @@ public:
 	/*! \brief Write out any data needed for this climate model.
     */
 	virtual void toInputXML( std::ostream& out,
-                             Tabs* tabs ) const = 0;
+                                 Tabs* tabs ) const = 0;
     
 	/*! \brief Write out debugging info for this climate model.
     */
 	virtual void toDebugXML( const int period, std::ostream& out,
-                             Tabs* tabs ) const = 0;
+                                 Tabs* tabs ) const = 0;
 
 	/*! \brief Complete the initialization of the climate model.
 	* \details Completes the initialization of the climate model, which must be
@@ -149,8 +161,27 @@ public:
 	* \pre Emissions must be set before the model can be run.
 	* \return Whether the model completed successfully.
     */
-    virtual bool runModel() = 0;
+    virtual enum runModelStatus runModel() = 0;
 
+    /*! \brief Run the climate model up through a particular year 
+     *  \details This method performs climate calculations through the
+     *           year given in the argument.  All emissions levels up
+     *           through the year requested must be set before
+     *           calling; however, emissions for later times need not
+     *           be.  The return flag value indicates whether or not
+     *           the run was successful. 
+     *  \note Implementing this method is optional.  A climate model
+     *        that does not implement it must not override the base
+     *        class method.
+     *
+     *  \warning The rest of the model has no way of telling the climate model when it
+     *           is starting a new scenario or rerunning a period that's already been
+     *           run.  Therefore, the climate model must maintain enough state to
+     *           detect when it is being asked to roll back its run and to perform the
+     *           necessary reset.
+     */
+    virtual enum runModelStatus runModel(int aYear) {return NOT_IMPLEMENTED;}
+    
     /*! \brief Returns the concentrations for a given gas in a given period from
     *          the climate model.
     * \details Queries the climate model for the concentration for a given gas
@@ -181,7 +212,7 @@ public:
     *          the value returned is -1.
     * \param aGasName Name of the gas for which to get the forcing.
     * \param aYear The year for which to return the forcing.
-    * \return The forcint for the period, -1 if the climate model is
+    * \return The forcing for the period, -1 if the climate model is
     *         unavailable.
     */
     virtual double getForcing( const std::string& aGasName,

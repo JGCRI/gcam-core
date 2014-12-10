@@ -90,6 +90,8 @@ protected:
 
     // TODO: Should this be a vector?
     double mCalPrice;
+	
+	objects::PeriodVector<double> mSubsidy;
 
     //! Name of the market for this good.
     std::string mMarketName;

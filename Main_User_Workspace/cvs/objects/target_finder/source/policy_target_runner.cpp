@@ -424,7 +424,7 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
     // to know how low the solution tax might be.
     
     // Increment is 1+ this number, which is used to increase the initial trial price
-    const double INCREASE_INCREMENT = 4;
+    const double INCREASE_INCREMENT = 35;
     auto_ptr<ITargetSolver> solver;
     /* Note that the following code is left commented out incase a user wanted
        to use the bisection routine rather then the secant.

@@ -18,6 +18,7 @@
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
 		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
 		981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */; };
+		986B16101A38D62800B6BF64 /* hector_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 986B160F1A38D62800B6BF64 /* hector_model.cpp */; };
 		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
@@ -344,6 +345,8 @@
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
 		981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rcp_forcing_target.cpp; sourceTree = "<group>"; };
 		981AC63E19E31D9A000CB162 /* rcp_forcing_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rcp_forcing_target.h; sourceTree = "<group>"; };
+		986B160F1A38D62800B6BF64 /* hector_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hector_model.cpp; sourceTree = "<group>"; };
+		986B16111A38D63600B6BF64 /* hector_model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = hector_model.hpp; sourceTree = "<group>"; };
 		CD177C39159A0ADA000A996F /* cumulative_emissions_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cumulative_emissions_target.h; sourceTree = "<group>"; };
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1111,6 +1114,7 @@
 		CD488435122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				986B16111A38D63600B6BF64 /* hector_model.hpp */,
 				CDAF62EA130DAB6100D93AFB /* MAGICC_array.h */,
 				CDAF62EB130DAB6100D93AFB /* ObjECTS_MAGICC.h */,
 				CD488436122873C000F5A88A /* iclimate_model.h */,
@@ -1122,6 +1126,7 @@
 		CD488438122873C000F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				986B160F1A38D62800B6BF64 /* hector_model.cpp */,
 				CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */,
 				CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */,
 				CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */,
@@ -2706,6 +2711,7 @@
 				CDE29989198C831E00556032 /* emissions_control_factory.cpp in Sources */,
 				CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */,
 				981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */,
+				986B16101A38D62800B6BF64 /* hector_model.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2789,14 +2795,43 @@
 				HEADER_SEARCH_PATHS = (
 					"../../../../libs/boost-lib",
 					../../../../libs/dbxml/include,
+					../../climate/source/hector/headers,
+					/usr/local/include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../../../libs/dbxml/lib;
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					"../../../../libs/boost-lib",
+					../../../../libs/dbxml/include,
+					../../climate/source/hector/headers,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					../../../../libs/dbxml/lib,
+					/usr/local/lib,
+					../../climate/source/hector/source,
+				);
+				"LIBRARY_SEARCH_PATHS[arch=*]" = (
+					../../../../libs/dbxml/lib,
+					/usr/local/lib,
+					../../climate/source/hector/source,
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lxerces-c",
 					"-ldbxml",
 					"-lxqilla",
 					"-ldb_cxx",
+					"-lhector",
+					"-lgsl",
+					"-lgslcblas",
+				);
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-lxerces-c",
+					"-ldbxml",
+					"-lxqilla",
+					"-ldb_cxx",
+					"-lhector",
+					"-lgsl",
+					"-lgslcblas",
 				);
 				PREBINDING = NO;
 				SDKROOT = "";
@@ -2824,6 +2859,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"../../../../libs/boost-lib",
+					../../../../libs/dbxml/include,
+					"../../../../libs/boost-numeric-bindings",
+				);
+				"HEADER_SEARCH_PATHS[arch=*]" = (
 					"../../../../libs/boost-lib",
 					../../../../libs/dbxml/include,
 					"../../../../libs/boost-numeric-bindings",

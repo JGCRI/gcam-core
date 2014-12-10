@@ -281,7 +281,7 @@ L161.SSP34_HM_EF$X2100[ L161.SSP34_HM_EF$X2100 > L161.SSP34_HM_EF$X2050 ] <- L16
 
 printlog( "SSPs 3 and 4: Low Income Countries")
 #Low Income Countries. 2030 = CLE2030; 2050 = W.Eur CLE2030; 2100 = SLE2030
-L161.SSP34_L_EF <- subset( L161.em_fact_2010, L161.em_fact_2010$GCAM_region_ID %in% L161.highmed_reg )
+L161.SSP34_L_EF <- subset( L161.em_fact_2010, L161.em_fact_2010$GCAM_region_ID %!in% L161.highmed_reg )
 L161.SSP34_L_EF <- na.omit( L161.SSP34_L_EF )
 L161.SSP34_L_EF <- L161.SSP34_L_EF[ names( L161.SSP34_L_EF ) %!in% c( "TIMER_REGION", "year", "SLE_em_fact", "MFR_em_fact" )]
 names( L161.SSP34_L_EF )[ names( L161.SSP34_L_EF ) == "CLE_em_fact" ] <- "X2010"

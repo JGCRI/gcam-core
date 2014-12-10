@@ -125,6 +125,10 @@ protected:
     //! A demand adjustment factor by period.  Could be useful for unit conversion (GWP) or
     //! "turning off" participation in the linked market.
     objects::PeriodVector<Value> mDemandAdjust;
+
+    int mStartYear;
+
+    std::string mPolicyName;
 };
 
 #endif // _LINKED_GHG_POLICY_H_

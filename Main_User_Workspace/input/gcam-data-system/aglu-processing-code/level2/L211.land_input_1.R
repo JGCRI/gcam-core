@@ -38,6 +38,7 @@ L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
 L125.LC_bm2_R_LT_Yh_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R_LT_Yh_AEZ" )
 L125.LC_bm2_R <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R" )
 L131.LV_USD75_m2_R_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L131.LV_USD75_m2_R_AEZ" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -128,11 +129,25 @@ L211.LN1_UnmgdCarbon <- add_carbon_info( L211.LN1_UnmgdCarbon,
       veg_data = L211.VegC_kgm2_R_LT_AEZ.melt, soil_data = L211.SoilC_kgm2_R_LT_AEZ.melt, age_data = L211.MatureAge_R_LT_AEZ.melt )
 L211.LN1_UnmgdCarbon <- L211.LN1_UnmgdCarbon[ names_LN1_UnmgdCarbon ]
 
+#SSP3 & 4 need higher logits for pasture vs other
+L211.LN1_ValueLogit_SSP3 <- L211.LN1_ValueLogit
+L211.LN1_ValueLogit_SSP3$logit.exponent <- L211.LN1_ValueLogit_SSP3$logit.exponent * 5
+
+#Determine which regions in SSP4 need high logits
+L211.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L211.pcgdp_2010 <- L211.pcgdp_2010[ names( L211.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
+L211.pcgdp_2010 <- add_region_name( L211.pcgdp_2010 )
+L211.pcgdp_2010$X2010 <- L211.pcgdp_2010$X2010 * conv_1990_2010_USD
+L211.low_reg <- L211.pcgdp_2010$region[ L211.pcgdp_2010$X2010 < lo_growth_pcgdp ]
+L211.LN1_ValueLogit_SSP4 <- subset( L211.LN1_ValueLogit_SSP3, L211.LN1_ValueLogit_SSP3$region %in% L211.low_reg )
+
 printlog( "Removing non-existent AEZs from all tables" )
 L211.LN0_Logit <- subset( L211.LN0_Logit, !region %in% no_aglu_regions )
 L211.LN0_Land <- subset( L211.LN0_Land, !region %in% no_aglu_regions )
 L211.LN0_SoilTimeScale <- subset( L211.LN0_SoilTimeScale, !region %in% no_aglu_regions )
 L211.LN1_ValueLogit <- remove_AEZ_nonexist( L211.LN1_ValueLogit, AEZcol = "LandNode1" )
+L211.LN1_ValueLogit_SSP3 <- remove_AEZ_nonexist( L211.LN1_ValueLogit_SSP3, AEZcol = "LandNode1" )
+L211.LN1_ValueLogit_SSP4 <- remove_AEZ_nonexist( L211.LN1_ValueLogit_SSP4, AEZcol = "LandNode1" )
 L211.LN1_HistUnmgdAllocation <- remove_AEZ_nonexist( L211.LN1_HistUnmgdAllocation, AEZcol = "LandNode1" )
 L211.LN1_UnmgdAllocation <- remove_AEZ_nonexist( L211.LN1_UnmgdAllocation, AEZcol = "LandNode1" )
 L211.LN1_UnmgdCarbon <- remove_AEZ_nonexist( L211.LN1_UnmgdCarbon, AEZcol = "LandNode1" )
@@ -150,5 +165,10 @@ write_mi_data( L211.LN1_UnmgdAllocation, "LN1_UnmgdAllocation", "AGLU_LEVEL2_DAT
 write_mi_data( L211.LN1_UnmgdCarbon, "LN1_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L211.LN1_UnmgdCarbon", "AGLU_XML_BATCH", "batch_land_input_1.xml", node_rename=T )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_1.xml", "AGLU_XML_FINAL", "land_input_1.xml", "", xml_tag="outFile"  )
+
+write_mi_data( L211.LN1_ValueLogit_SSP3, IDstring="LN1_ValueLogit", domain="AGLU_LEVEL2_DATA", fn="L211.LN1_ValueLogit_SSP3",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_SSP3_logit.xml", node_rename=T )
+write_mi_data( L211.LN1_ValueLogit_SSP4, IDstring="LN1_ValueLogit", domain="AGLU_LEVEL2_DATA", fn="L211.LN1_ValueLogit_SSP4",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_SSP4_logit.xml", node_rename=T )
 
 logstop()

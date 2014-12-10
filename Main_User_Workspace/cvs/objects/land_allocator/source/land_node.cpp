@@ -65,8 +65,7 @@ LandNode::LandNode( const ALandAllocatorItem* aParent )
 : ALandAllocatorItem( aParent, eNode ),
 mLogitExponent( 1.0 ),
 mUnManagedLandValue( 0.0 ),
-mNewTechProfitScaler( 0.0 ),
-mGhostShareNumerator( 0.25 ),
+mGhostShareNumeratorForNode( 0.25 ),
 mAdjustScalersForNewTech( false )
  {
     mType = eNode;
@@ -135,9 +134,14 @@ bool LandNode::XMLParse( const xercesc::DOMNode* aNode ){
         else if( nodeName == NodeCarbonCalc::getXMLNameStatic() ){
             parseSingleNode( curr, mCarbonCalc, new NodeCarbonCalc );
         }
-        else if( nodeName == "default-share" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mGhostShareNumerator,
-                                                  scenario->getModeltime() );
+        else if( nodeName == "ghost-share-node" ){
+			mGhostShareNumeratorForNode = XMLHelper<double>::getValue( curr );
+        }
+		else if( nodeName == "isNewTechnology" ){
+			mIsNewTech = XMLHelper<bool>::getValue( curr );
+        } 
+		else if( nodeName == "default-share" ){
+            // KVC_IRR: Not sure what to do here.
         }
         else if( nodeName == "unManagedLandValue" ){
             mUnManagedLandValue = XMLHelper<double>::getValue( curr );
@@ -168,10 +172,7 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteVector( mLogitExponent, "logit-exponent", out, tabs, modeltime );
-    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
-        XMLWriteElementCheckDefault( mGhostShareNumerator[ period ], "default-share",
-                                     out, tabs, 0.25, modeltime->getper_to_yr( period ) );
-    }
+	XMLWriteElement( mGhostShareNumeratorForNode, "ghost-share-node", out, tabs );  
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
 
     if( mLandUseHistory.get() ){
@@ -465,77 +466,14 @@ void LandNode::calculateProfitScalers( const string& aRegionName,
 
     // profit scaler of a node is calibrated as equal to 1 (the leaf
     // calibration guarantees the node profits will equal what the 
-    // calibration shares would imply)
-   
+    // calibration shares would imply)   
     mProfitScaler[ aPeriod ] = 1.0;
+	
+	calcCalibrationProfitForNewTech( aPeriod );
     
     // Call share profit scalers calculation for each child
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->calculateProfitScalers( aRegionName, aPeriod );
-    }
-
-    /* New Technologies or Land Leaves
-    Compute shareProfit scaler for new techs based on the share
-    a new leaf would get of the node if its profit equaled the average crop land profit.
-    */ 
-    double newTechCalibrationProfitRate = 0.0;
-    double landValue = 0.0;
-    int maxPeriod = scenario->getModeltime()->getmaxper();
-    double maxShare = 0.0;
-    double profitAtMaxShare = 0.0;
-
-    // First, cycle through all the managed leafs in this node
-    // and calculate the profit of the one with the largest share.
-    // We are not including other arable land in this calculation
-    double totalManagedShare = 0.0;
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        if ( mChildren[ i ]->isManagedLandLeaf() ) {
-            if( mChildren[ i ]->getShare( aPeriod ) > maxShare ) {
-                maxShare = mChildren[ i ]->getShare( aPeriod );
-                profitAtMaxShare = mChildren[ i ]->getProfitRate( aPeriod );
-            }
-            totalManagedShare += mChildren[ i ]->getShare( aPeriod );
-        }
-    }
-    
-    if ( totalManagedShare == 0 ) {
-        profitAtMaxShare = mUnManagedLandValue;
-    }
-    
-    landValue = profitAtMaxShare;
-
-    // Then, set the scaler by period.  This is so we can allow a new technology to 
-    // gradually enter the market by having its default share increase over time
-    for ( int per = aPeriod; per < maxPeriod; per++ ) {
-        // Next, compute calibration profit rate of a node in this node for this period
-        // Note: we are interpreting the defaultShare as relating to managed land leafs
-        // in this node. So, we have to multiply it by the % of managed land in the node
-        // to get the correct share of the whole node.
-        if (mLogitExponent[aPeriod] < util::getTinyNumber()) {
-            newTechCalibrationProfitRate = 0;
-        }
-        else {
-            if ( totalManagedShare > 0.0 ) {
-                newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
-                    * pow ( totalManagedShare * mGhostShareNumerator[ per ],
-                            1.0 / mLogitExponent[ aPeriod ] ); 
-            }
-            
-            else {
-                newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
-                    * pow ( mGhostShareNumerator[ per ],
-                            1.0 / mLogitExponent[ aPeriod ] ); 
-            }
-        }
-
-        // Finally, compute the scaler
-        if ( landValue > 0.0 ) {
-            mNewTechProfitScaler[ per ] = newTechCalibrationProfitRate / landValue;
-            
-        }
-        else {
-            mNewTechProfitScaler[ per ] = 0.0;
-        }
     }
 
 }
@@ -631,7 +569,6 @@ void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
         avgProfitRate = mUnManagedLandValue;
     }
 
-
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         // assign the unmanaged land value to this node and to children. 
         mUnManagedLandValue = avgProfitRate;
@@ -664,10 +601,13 @@ void LandNode::calculateCalibrationProfitRate( const string& aRegionName,
                                             && mUnManagedLandValue > 0.0 ) {
         avgProfitRate = mUnManagedLandValue;
     }
-    else if(aLogitExponentAbove < util::getTinyNumber()) {
+    else if( aLogitExponentAbove < util::getTinyNumber() ) {
         // avoid floating point exception
         // 0 < share < 1 => pow(share, infinity) = 0
         avgProfitRate = 0;
+    }
+	else if ( mIsNewTech ) { 
+		avgProfitRate *= pow( mGhostShareNumeratorForNode,  1.0 / aLogitExponentAbove ); 
     }
     else { 
         avgProfitRate *= pow( mShare[ aPeriod ],  1.0 / aLogitExponentAbove ); 
@@ -799,8 +739,8 @@ double LandNode::getLogitExponent( const int aPeriod ) const {
 }
 
 // To be called by contained leaf for new tech
-double LandNode::getNewTechProfitScaler( const int aPeriod ) const {
-    return mNewTechProfitScaler[ aPeriod ];
+double LandNode::getCalibrationProfitForNewTech( const int aPeriod ) const {
+	return mCalibrationProfitForNewTech[ aPeriod ];
 }
 
 
@@ -821,3 +761,47 @@ bool LandNode::isManagedLandLeaf( )  const
     return false;
 }
 
+bool LandNode::isUnmanagedLandLeaf( )  const 
+{
+    return false;
+}
+
+void LandNode::calcCalibrationProfitForNewTech( const int aPeriod ) {
+	if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+		if ( mIsNewTech ) {
+			mCalibrationProfitForNewTech[ aPeriod ] = getParent()->getCalibrationProfitForNewTech( aPeriod );
+		}
+		else {
+			mCalibrationProfitForNewTech[ aPeriod ] = getProfitForChildWithHighestShare( aPeriod );
+		}
+	}
+	else {
+		mCalibrationProfitForNewTech[ aPeriod ] = mCalibrationProfitForNewTech[ aPeriod - 1 ];
+	}
+
+}
+ 
+double LandNode::getProfitForChildWithHighestShare( const int aPeriod ) const {
+	
+	double maxShare = 0.0;
+	double profitAtMaxShare = 0.0;
+	int indexOfMaxShare = 0;
+	
+	// First, cycle through all the nodes in this node
+	// and calculate the profit of the one with the largest share.
+	for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+		if( mChildren[ i ]->getShare( aPeriod ) > maxShare ) {
+			maxShare = mChildren[ i ]->getShare( aPeriod );
+			indexOfMaxShare = i;
+		}
+	}
+	
+	// Then, call this method on the child with highest share.
+	profitAtMaxShare = mChildren[ indexOfMaxShare ]->getProfitForChildWithHighestShare( aPeriod );
+	
+	if ( profitAtMaxShare == 0 ) {
+		profitAtMaxShare = mUnManagedLandValue;
+	}
+	
+	return profitAtMaxShare;
+}

@@ -1,9 +1,1 @@
-# File: A_bio_cost_yield,,,
-# Description: Assumed non-land variable cost of biomass production,,,
-# Original source: Patrick Luckow's biomass work,,,
-GCAM_commodity,cost_USDGJ,cost_hi_USDGJ,yield_GJm2
-biomass,0.75,6,
-eucalyptus,0.74,5.92,0.03492
-Jatropha,1.296,10.368,0.0056
-miscanthus,1.106,8.848,0.0412848
-willow,0.671,5.368,0.0285
+# File: A_bio_cost_yield,,,# Description: Assumed non-land variable cost of biomass production,,,# Original source: Patrick Luckow's biomass work,,,GCAM_commodity,cost_USDGJ,cost_hi_USDGJ,yield_GJm2biomass,0.75,6,eucalyptus,0.74,5.92,0.03492Jatropha,1.296,10.368,0miscanthus,1.106,8.848,0.0412848willow,0.671,5.368,0.0285

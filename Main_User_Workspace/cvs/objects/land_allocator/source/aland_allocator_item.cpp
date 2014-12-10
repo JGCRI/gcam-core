@@ -152,7 +152,7 @@ LandAllocatorItemType ALandAllocatorItem::getType() const {
  * \brief Returns an boolean indicating whether this is a new technology.
  */
 bool ALandAllocatorItem::isNewTech( const double aPeriod ) const {
-    return mIsNewTech[ aPeriod ];
+    return mIsNewTech;
 }
 
 

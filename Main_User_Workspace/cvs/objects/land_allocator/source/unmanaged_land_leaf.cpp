@@ -154,3 +154,8 @@ bool UnmanagedLandLeaf::isManagedLandLeaf( )  const
 {
     return false;
 }
+
+bool UnmanagedLandLeaf::isUnmanagedLandLeaf( )  const 
+{
+    return true;
+}

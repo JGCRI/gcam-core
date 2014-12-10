@@ -37,9 +37,11 @@ L109.ag_ALL_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L109.ag_ALL_Mt_R_C_Y" )
 L109.an_ALL_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L109.an_ALL_Mt_R_C_Y" )
 L110.For_ALL_bm3_R_Y <- readdata( "AGLU_LEVEL1_DATA", "L110.For_ALL_bm3_R_Y" )
 L134.pcFood_kcald_R_Dmnd_Y <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y" )
-L134.pcFood_kcald_R_Dmnd_Y_low <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_low" )
-L134.pcFood_kcald_R_Dmnd_Y_high <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_high" )
+L134.pcFood_kcald_R_Dmnd_Y_ssp1 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_ssp1" )
+L134.pcFood_kcald_R_Dmnd_Y_ssp2 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_ssp2" )
+L134.pcFood_kcald_R_Dmnd_Y_ssp3 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_ssp3" )
 L134.pcFood_kcald_R_Dmnd_Y_ssp4 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_ssp4" )
+L134.pcFood_kcald_R_Dmnd_Y_ssp5 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_ssp5" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
 L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
@@ -58,9 +60,11 @@ L203.ag_kcalg_R_C_Y.melt <- interpolate_and_melt( L101.ag_kcalg_R_C_Y, aglu_dema
 L203.an_Food_Pcal_R_C_Y.melt <- interpolate_and_melt( L105.an_Food_Pcal_R_C_Y, aglu_demand_calyears )
 L203.an_kcalg_R_C_Y.melt <- interpolate_and_melt( L105.an_kcalg_R_C_Y, aglu_demand_calyears )
 L203.pcFood_kcald_R_Dmnd_Y.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y, aglu_demand_futureyears )
-L203.pcFood_kcald_R_Dmnd_Y_low.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_low, aglu_demand_futureyears )
-L203.pcFood_kcald_R_Dmnd_Y_high.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_high, aglu_demand_futureyears )
+L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_ssp1, aglu_demand_futureyears )
+L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_ssp2, aglu_demand_futureyears )
+L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_ssp3, aglu_demand_futureyears )
 L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_ssp4, aglu_demand_futureyears )
+L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_ssp5, aglu_demand_futureyears )
 L203.Pop_thous_R_Yh <- interpolate_and_melt( L101.Pop_thous_R_Yh, aglu_demand_calyears )
 L203.pcgdp_thous90USD_SSP_R_Y.melt <- interpolate_and_melt( L102.pcgdp_thous90USD_SSP_R_Y, c( model_base_years, model_future_years ) )
 
@@ -74,9 +78,11 @@ L203.ag_ALL_Mt_R_C_Y <- add_region_name( L109.ag_ALL_Mt_R_C_Y )
 L203.an_ALL_Mt_R_C_Y <- add_region_name( L109.an_ALL_Mt_R_C_Y )
 L203.For_ALL_bm3_R_Y <- add_region_name( L110.For_ALL_bm3_R_Y )
 L203.pcFood_kcald_R_Dmnd_Y.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y.melt )
-L203.pcFood_kcald_R_Dmnd_Y_high.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_high.melt )
-L203.pcFood_kcald_R_Dmnd_Y_low.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_low.melt )
+L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt )
+L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt )
+L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt )
 L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt )
+L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt )
 L203.Pop_thous_R_Yh <- add_region_name( L203.Pop_thous_R_Yh )
 L203.pcgdp_thous90USD_SSP_R_Y.melt <- add_region_name( L203.pcgdp_thous90USD_SSP_R_Y.melt )
 
@@ -246,23 +252,32 @@ L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand
       L203.pcFood_kcald_R_Dmnd_Yfut[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
 L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
 
-L203.pcFood_kcald_R_Dmnd_Y_high.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_high.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
-L203.pcFood_kcald_R_Dmnd_Y_high.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_high.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
-L203.pcFood_kcald_R_Dmnd_Yfut_high <- dcast( L203.pcFood_kcald_R_Dmnd_Y_high.melt, region + energy.final.demand ~ variable )
-L203.pcFoodRatio_R_Dmnd_Yfut_high <- L203.pcFood_kcald_R_Dmnd_Yfut_high
-L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
-  L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
-  L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
-L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
+L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
+L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
+L203.pcFood_kcald_R_Dmnd_Yfut_ssp1 <- dcast( L203.pcFood_kcald_R_Dmnd_Y_ssp1.melt, region + energy.final.demand ~ variable )
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp1 <- L203.pcFood_kcald_R_Dmnd_Yfut_ssp1
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp1[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp1[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp1[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp1[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
 
-L203.pcFood_kcald_R_Dmnd_Y_low.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_low.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
-L203.pcFood_kcald_R_Dmnd_Y_low.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_low.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
-L203.pcFood_kcald_R_Dmnd_Yfut_low <- dcast( L203.pcFood_kcald_R_Dmnd_Y_low.melt, region + energy.final.demand ~ variable )
-L203.pcFoodRatio_R_Dmnd_Yfut_low <- L203.pcFood_kcald_R_Dmnd_Yfut_low
-L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
-  L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
-  L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
-L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
+L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
+L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
+L203.pcFood_kcald_R_Dmnd_Yfut_ssp2 <- dcast( L203.pcFood_kcald_R_Dmnd_Y_ssp2.melt, region + energy.final.demand ~ variable )
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp2 <- L203.pcFood_kcald_R_Dmnd_Yfut_ssp2
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp2[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp2[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp2[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp2[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
+
+L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
+L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
+L203.pcFood_kcald_R_Dmnd_Yfut_ssp3 <- dcast( L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt, region + energy.final.demand ~ variable )
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp3 <- L203.pcFood_kcald_R_Dmnd_Yfut_ssp3
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp3[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp3[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp3[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp3[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
 
 L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
 L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
@@ -273,18 +288,33 @@ L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears[ 2:length( X_aglu_d
   L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
 L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
 
+L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt$GCAM_demand == "crops" ] <- "FoodDemand_Crops"
+L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt$energy.final.demand[ L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt$GCAM_demand == "meat" ] <- "FoodDemand_Meat"
+L203.pcFood_kcald_R_Dmnd_Yfut_ssp5 <- dcast( L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt, region + energy.final.demand ~ variable )
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp5 <- L203.pcFood_kcald_R_Dmnd_Yfut_ssp5
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp5[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] <-
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp5[ X_aglu_demand_futureyears[ 2:length( X_aglu_demand_futureyears ) ] ] / 
+  L203.pcFoodRatio_R_Dmnd_Yfut_ssp5[ X_aglu_demand_futureyears[ 1:( length( X_aglu_demand_futureyears ) - 1 ) ] ]
+L203.pcFoodRatio_R_Dmnd_Yfut_ssp5[ X_aglu_demand_futureyears[1] ] <- L203.pcFoodRatio_R_Yh[ X_aglu_demand_futureyears[1] ]
+
 printlog( "Step 3: Merging the historical and future caloric demand trajectories" )
 L203.pcFoodRatio_R_Dmnd_Y <- L203.pcFoodRatio_R_Yh
 L203.pcFoodRatio_R_Dmnd_Y[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut[ X_aglu_demand_futureyears ]
 
-L203.pcFoodRatio_R_Dmnd_Y_high <- L203.pcFoodRatio_R_Yh
-L203.pcFoodRatio_R_Dmnd_Y_high[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_high[ X_aglu_demand_futureyears ]
+L203.pcFoodRatio_R_Dmnd_Y_ssp1 <- L203.pcFoodRatio_R_Yh
+L203.pcFoodRatio_R_Dmnd_Y_ssp1[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_ssp1[ X_aglu_demand_futureyears ]
 
-L203.pcFoodRatio_R_Dmnd_Y_low <- L203.pcFoodRatio_R_Yh
-L203.pcFoodRatio_R_Dmnd_Y_low[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_low[ X_aglu_demand_futureyears ]
+L203.pcFoodRatio_R_Dmnd_Y_ssp2 <- L203.pcFoodRatio_R_Yh
+L203.pcFoodRatio_R_Dmnd_Y_ssp2[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_ssp2[ X_aglu_demand_futureyears ]
+
+L203.pcFoodRatio_R_Dmnd_Y_ssp3 <- L203.pcFoodRatio_R_Yh
+L203.pcFoodRatio_R_Dmnd_Y_ssp3[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_ssp3[ X_aglu_demand_futureyears ]
 
 L203.pcFoodRatio_R_Dmnd_Y_ssp4 <- L203.pcFoodRatio_R_Yh
 L203.pcFoodRatio_R_Dmnd_Y_ssp4[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_ssp4[ X_aglu_demand_futureyears ]
+
+L203.pcFoodRatio_R_Dmnd_Y_ssp5 <- L203.pcFoodRatio_R_Yh
+L203.pcFoodRatio_R_Dmnd_Y_ssp5[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_R_Dmnd_Yfut_ssp5[ X_aglu_demand_futureyears ]
 
 printlog( "Step 4: Calculating the per-capita GDP trajectories over the same time period" )
 printlog( "NOTE: only computing elasticities based on the specified GDP scenario" )
@@ -350,24 +380,24 @@ L203.IncElas_R_Dmnd_Y[ X_model_years ] <-
              digits_IncElas )
 L203.IncElas_R_Dmnd_Y[ is.na( L203.IncElas_R_Dmnd_Y ) ] <- 0
 
-L203.IncElas_R_Dmnd_Y_SSP1 <- L203.pcFoodRatio_R_Dmnd_Y_low
+L203.IncElas_R_Dmnd_Y_SSP1 <- L203.pcFoodRatio_R_Dmnd_Y_ssp1
 L203.IncElas_R_Dmnd_Y_SSP1[ X_model_years ] <-
-  round( log( L203.pcFoodRatio_R_Dmnd_Y_low[ X_model_years ] ) / 
-           log( L203.pcgdpRatio_R_Y_SSP1[ match( L203.pcFoodRatio_R_Dmnd_Y_low$region, L203.pcgdpRatio_R_Y_SSP1$region ), X_model_years ] ),
+  round( log( L203.pcFoodRatio_R_Dmnd_Y_ssp1[ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP1[ match( L203.pcFoodRatio_R_Dmnd_Y_ssp1$region, L203.pcgdpRatio_R_Y_SSP1$region ), X_model_years ] ),
          digits_IncElas )
 L203.IncElas_R_Dmnd_Y_SSP1[ is.na( L203.IncElas_R_Dmnd_Y_SSP1 ) ] <- 0
 
-L203.IncElas_R_Dmnd_Y_SSP2 <- L203.pcFoodRatio_R_Dmnd_Y
+L203.IncElas_R_Dmnd_Y_SSP2 <- L203.pcFoodRatio_R_Dmnd_Y_ssp2
 L203.IncElas_R_Dmnd_Y_SSP2[ X_model_years ] <-
-  round( log( L203.pcFoodRatio_R_Dmnd_Y[ X_model_years ] ) / 
-           log( L203.pcgdpRatio_R_Y_SSP2[ match( L203.pcFoodRatio_R_Dmnd_Y$region, L203.pcgdpRatio_R_Y_SSP2$region ), X_model_years ] ),
+  round( log( L203.pcFoodRatio_R_Dmnd_Y_ssp2[ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP2[ match( L203.pcFoodRatio_R_Dmnd_Y_ssp2$region, L203.pcgdpRatio_R_Y_SSP2$region ), X_model_years ] ),
          digits_IncElas )
 L203.IncElas_R_Dmnd_Y_SSP2[ is.na( L203.IncElas_R_Dmnd_Y_SSP2 ) ] <- 0
 
-L203.IncElas_R_Dmnd_Y_SSP3 <- L203.pcFoodRatio_R_Dmnd_Y_high
+L203.IncElas_R_Dmnd_Y_SSP3 <- L203.pcFoodRatio_R_Dmnd_Y_ssp3
 L203.IncElas_R_Dmnd_Y_SSP3[ X_model_years ] <-
-  round( log( L203.pcFoodRatio_R_Dmnd_Y_high [ X_model_years ] ) / 
-           log( L203.pcgdpRatio_R_Y_SSP3[ match( L203.pcFoodRatio_R_Dmnd_Y_high$region, L203.pcgdpRatio_R_Y_SSP3$region ), X_model_years ] ),
+  round( log( L203.pcFoodRatio_R_Dmnd_Y_ssp3 [ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP3[ match( L203.pcFoodRatio_R_Dmnd_Y_ssp3$region, L203.pcgdpRatio_R_Y_SSP3$region ), X_model_years ] ),
          digits_IncElas )
 L203.IncElas_R_Dmnd_Y_SSP3[ is.na( L203.IncElas_R_Dmnd_Y_SSP3 ) ] <- 0
 
@@ -378,10 +408,10 @@ L203.IncElas_R_Dmnd_Y_SSP4[ X_model_years ] <-
          digits_IncElas )
 L203.IncElas_R_Dmnd_Y_SSP4[ is.na( L203.IncElas_R_Dmnd_Y_SSP4 ) ] <- 0
 
-L203.IncElas_R_Dmnd_Y_SSP5 <- L203.pcFoodRatio_R_Dmnd_Y_high
+L203.IncElas_R_Dmnd_Y_SSP5 <- L203.pcFoodRatio_R_Dmnd_Y_ssp5
 L203.IncElas_R_Dmnd_Y_SSP5[ X_model_years ] <-
-  round( log( L203.pcFoodRatio_R_Dmnd_Y_high[ X_model_years ] ) / 
-           log( L203.pcgdpRatio_R_Y_SSP5[ match( L203.pcFoodRatio_R_Dmnd_Y_high$region, L203.pcgdpRatio_R_Y_SSP5$region ), X_model_years ] ),
+  round( log( L203.pcFoodRatio_R_Dmnd_Y_ssp5[ X_model_years ] ) / 
+           log( L203.pcgdpRatio_R_Y_SSP5[ match( L203.pcFoodRatio_R_Dmnd_Y_ssp5$region, L203.pcgdpRatio_R_Y_SSP5$region ), X_model_years ] ),
          digits_IncElas )
 L203.IncElas_R_Dmnd_Y_SSP5[ is.na( L203.IncElas_R_Dmnd_Y_SSP5 ) ] <- 0
 

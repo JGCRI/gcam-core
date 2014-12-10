@@ -68,6 +68,7 @@
 #include "climate/include/iclimate_model.h"
 // Could hide with a factory method.
 #include "climate/include/magicc_model.h"
+#include "climate/include/hector_model.hpp"
 #include "emissions/include/emissions_summer.h"
 #include "emissions/include/luc_emissions_summer.h"
 #include "technologies/include/global_technology_database.h"
@@ -133,7 +134,17 @@ void World::XMLParse( const DOMNode* node ){
         }
 		// Read in parameters for climate model
         else if( nodeName == MagiccModel::getXMLNameStatic() ){
-            parseSingleNode( curr, mClimateModel, new MagiccModel( scenario->getModeltime() ) );
+          parseSingleNode( curr, mClimateModel, new MagiccModel( scenario->getModeltime() ) ); 
+        }
+        else if(nodeName == HectorModel::getXMLNameStatic()) {
+            if(mClimateModel.get()) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Duplicate climate model definition.  This is unlikely to work.\n";
+            }
+            parseSingleNode(curr, mClimateModel,
+                            new HectorModel(scenario->getModeltime()));
+                
         }
 		// SGM regions
         else if( nodeName == RegionCGE::getXMLNameStatic() ){
@@ -381,8 +392,8 @@ void World::updateSummary( const list<string> aPrimaryFuelList, const int period
 }
 
 /*! Calculates the global emissions.
-*/
-void World::runClimateModel() {
+ */
+void World::setEmissions(int period) {
     // Declare visitors which will aggregate emissions by period.
     EmissionsSummer co2Summer( "CO2" );
     LUCEmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
@@ -486,170 +497,176 @@ void World::runClimateModel() {
     const double HFC43_TO_134 = ( 1640.0 / 1430.0 );
     
     // Update all emissions values.
-    accept( &allSummer, -1 );
-	
-    // The Climate model reads in data for the base period, so skip passing it in.
-    for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period){
+    accept( &allSummer, period );
+    accept( &co2LandUseSummer, period );
         
-        accept( &co2LandUseSummer, period );
-        
-        // Only set emissions if they are valid. If these are not set
-        // MAGICC will use the default values.
-        if( co2Summer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "CO2", period,
-                                          co2Summer.getEmissions( period )
-                                          / TG_TO_PG );
-        }
-        
-        const int currYear = scenario->getModeltime()->getper_to_yr( period );
-        const int startYear = currYear - scenario->getModeltime()->gettimestep( period ) + 1;
-        for ( int i = startYear; i <= currYear; i++ ) {
-            if( co2LandUseSummer.areEmissionsSet( i ) ){
-                mClimateModel->setLUCEmissions( "CO2NetLandUse", i,
-                                                co2LandUseSummer.getEmissions( i )
-                                                / TG_TO_PG );
-            }
-        }
-        
-        if( ch4Summer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "CH4", period,
-                                          ch4Summer.getEmissions( period ) +
-                                          ch4agrSummer.getEmissions( period ) + 
-                                          ch4awbSummer.getEmissions( period ));
-        }
-
-        if( coSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "CO", period,
-                                          coSummer.getEmissions( period ) +
-                                          coagrSummer.getEmissions( period ) +
-                                          coawbSummer.getEmissions( period ));
-        }
-
-        // MAGICC wants N2O emissions in Tg N, but miniCAM calculates Tg N2O
-        if( n2oSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "N2O", period,
-                                          ( n2oSummer.getEmissions( period ) +
-                                          n2oawbSummer.getEmissions( period ) +
-                                          n2oagrSummer.getEmissions( period )  )
-                                        / N_TO_N2O );
-        }
-
-        // MAGICC wants NOx emissions in Tg N, but miniCAM calculates Tg NOx
-        // FORTRAN code uses the conversion for NO2
-        if( noxSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "NOx", period,
-                                          ( noxSummer.getEmissions( period ) +
-                                            noxagrSummer.getEmissions( period ) +
-                                            noxawbSummer.getEmissions( period ))
-                                          / N_TO_NO2 );
-        }
-
-        // MAGICC wants SO2 emissions in Tg S, but miniCAM calculates Tg SO2
-        // Region 1 includes SO21 and 60% of SO24 (FSU)
-        if( so21Summer.areEmissionsSet( period ) && so24Summer.areEmissionsSet( period )){
-            mClimateModel->setEmissions( "SOXreg1", period,
-                                          ( so21Summer.getEmissions( period ) +
-                                            so21awbSummer.getEmissions( period )
-                                            + 0.6*so24Summer.getEmissions( period ) 
-                                            + 0.6*so24awbSummer.getEmissions( period ))
-                                          / S_TO_SO2 );
-        }
-
-        // MAGICC wants SO2 emissions in Tg S, but miniCAM calculates Tg SO2
-        // Region 2 includes SO22 and 40% of SO24 (FSU)
-        if( so22Summer.areEmissionsSet( period ) && so24Summer.areEmissionsSet( period )){
-            mClimateModel->setEmissions( "SOXreg2", period,
-                                          ( so22Summer.getEmissions( period ) +
-                                            so22awbSummer.getEmissions( period )
-                                            + 0.4*so24Summer.getEmissions( period ) 
-                                            + 0.4*so24awbSummer.getEmissions( period ))
-                                          / S_TO_SO2 );
-        }
-
-        // MAGICC wants SO2 emissions in Tg S, but miniCAM calculates Tg SO2
-        if( so23Summer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "SOXreg3", period,
-                                          ( so23Summer.getEmissions( period ) +
-                                          so23awbSummer.getEmissions( period ) )
-                                          / S_TO_SO2 );
-        }
-
-        if( cf4Summer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "CF4", period,
-                                          cf4Summer.getEmissions( period ) );
-        }
-
-        if( c2f6Summer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "C2F6", period,
-                                          c2f6Summer.getEmissions( period ) );
-        }
-
-        if( sf6Summer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "SF6", period,
-                                          sf6Summer.getEmissions( period ) );
-        }
-
-        if( hfc125Summer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "HFC125", period,
-                                          hfc125Summer.getEmissions( period ) );
-        }
-
-        if( hfc134aSummer.areEmissionsSet( period ) && hfc43Summer.areEmissionsSet( period )  ){
-            mClimateModel->setEmissions( "HFC134a", period,
-                                          hfc134aSummer.getEmissions( period ) +
-                                          hfc43Summer.getEmissions( period ) * HFC43_TO_134);
-        }
-
-        // MAGICC needs HFC245fa in kton of HFC245ca
-        if( hfc245faSummer.areEmissionsSet( period ) && hfc32Summer.areEmissionsSet( period ) && hfc365mfcSummer.areEmissionsSet( period ) && hfc152aSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "HFC245ca", period,
-                                          hfc245faSummer.getEmissions( period ) / HFC_CA_TO_FA +
-                                          hfc32Summer.getEmissions( period ) * HFC32_TO_245 +
-                                        hfc365mfcSummer.getEmissions( period ) * HFC365_TO_245 +
-                                        hfc152aSummer.getEmissions( period ) * HFC152_TO_245);
-        }
-        
-        if( hfc227eaSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "HFC227ea", period,
-                                        hfc227eaSummer.getEmissions( period ) );
-        }
-        
-        if( hfc143aSummer.areEmissionsSet( period ) && hfc23Summer.areEmissionsSet( period ) && hfc236faSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "HFC143a", period,
-                                        hfc143aSummer.getEmissions( period ) +
-                                        hfc23Summer.getEmissions( period ) * HFC23_TO_143 +
-                                        hfc236faSummer.getEmissions( period ) * HFC236_TO_143);
-        }
-
-        // MAGICC needs this in tons of VOC. Input is in TgC
-        if( vocSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "NMVOCs", period,
-                                          ( vocSummer.getEmissions( period ) +
-                                          vocagrSummer.getEmissions( period ) +
-                                          vocawbSummer.getEmissions( period ) ));
-        }
-        
-        // MAGICC needs this in GgC. Model output is in TgC
-        if( bcSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "BC", period,
-                                         ( bcSummer.getEmissions( period ) +
-                                         bcawbSummer.getEmissions( period ) )
-                                         * TG_TO_PG );
-        }
-        
-        // MAGICC needs this in GgC. Model output is in TgC
-        if( ocSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "OC", period,
-                                         ( ocSummer.getEmissions( period ) +
-                                         ocawbSummer.getEmissions( period ) )
-                                         * TG_TO_PG );
-        }
-
+    // Only set emissions if they are valid. If these are not set
+    // MAGICC will use the default values.
+    if( co2Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "CO2", period,
+                                     co2Summer.getEmissions( period )
+                                     / TG_TO_PG );
     }
-	
+    
+    const int currYear = scenario->getModeltime()->getper_to_yr( period );
+    const int startYear = currYear - scenario->getModeltime()->gettimestep( period ) + 1;
+    for ( int i = startYear; i <= currYear; i++ ) {
+        if( co2LandUseSummer.areEmissionsSet( i ) ){
+            mClimateModel->setLUCEmissions( "CO2NetLandUse", i,
+                                            co2LandUseSummer.getEmissions( i )
+                                            / TG_TO_PG );
+        }
+    }
+    
+    if( ch4Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "CH4", period,
+                                     ch4Summer.getEmissions( period ) +
+                                     ch4agrSummer.getEmissions( period ) + 
+                                     ch4awbSummer.getEmissions( period ));
+    }
+    
+    if( coSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "CO", period,
+                                     coSummer.getEmissions( period ) +
+                                     coagrSummer.getEmissions( period ) +
+                                     coawbSummer.getEmissions( period ));
+    }
+    
+    // MAGICC wants N2O emissions in Tg N, but miniCAM calculates Tg N2O
+    if( n2oSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "N2O", period,
+                                     ( n2oSummer.getEmissions( period ) +
+                                       n2oawbSummer.getEmissions( period ) +
+                                       n2oagrSummer.getEmissions( period )  )
+                                     / N_TO_N2O );
+    }
+    
+    // MAGICC wants NOx emissions in Tg N, but miniCAM calculates Tg NOx
+    // FORTRAN code uses the conversion for NO2
+    if( noxSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "NOx", period,
+                                     ( noxSummer.getEmissions( period ) +
+                                       noxagrSummer.getEmissions( period ) +
+                                       noxawbSummer.getEmissions( period ))
+                                     / N_TO_NO2 );
+    }
+    
+    double so2total=0.0;
+    // MAGICC wants SO2 emissions in Tg S, but miniCAM calculates Tg SO2
+    // Region 1 includes SO21 and 60% of SO24 (FSU)
+    if( so21Summer.areEmissionsSet( period ) && so24Summer.areEmissionsSet( period )){
+        double so21 = so21Summer.getEmissions( period ) +
+            so21awbSummer.getEmissions( period )
+            + 0.6*so24Summer.getEmissions( period ) 
+            + 0.6*so24awbSummer.getEmissions( period ); 
+        
+        mClimateModel->setEmissions( "SOXreg1", period, so21/S_TO_SO2);
+        so2total += so21;
+    }
+    
+    // MAGICC wants SO2 emissions in Tg S, but miniCAM calculates Tg SO2
+    // Region 2 includes SO22 and 40% of SO24 (FSU)
+    if( so22Summer.areEmissionsSet( period ) && so24Summer.areEmissionsSet( period )){
+        double so22 = so22Summer.getEmissions( period ) +
+            so22awbSummer.getEmissions( period )
+            + 0.4*so24Summer.getEmissions( period ) 
+            + 0.4*so24awbSummer.getEmissions( period );
+        
+        mClimateModel->setEmissions( "SOXreg2", period, so22 / S_TO_SO2);
+        so2total += so22;
+    }
+    
+    // MAGICC wants SO2 emissions in Tg S, but miniCAM calculates Tg SO2
+    if( so23Summer.areEmissionsSet( period ) ){
+        double so23 = so23Summer.getEmissions( period ) +
+            so23awbSummer.getEmissions( period );
+        
+        mClimateModel->setEmissions( "SOXreg3", period, so23 / S_TO_SO2 );
+        so2total += so23;
+    }
+    
+    // set total SO2 emissions for those models that want it.
+    // Emissions are in Tg SO2; it is up to models that want
+    // something different to make their own conversion.
+    mClimateModel->setEmissions("SO2tot", period, so2total);
+    
+    if( cf4Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "CF4", period,
+                                     cf4Summer.getEmissions( period ) );
+    }
+    
+    if( c2f6Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "C2F6", period,
+                                     c2f6Summer.getEmissions( period ) );
+    }
+    
+    if( sf6Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "SF6", period,
+                                     sf6Summer.getEmissions( period ) );
+    }
+    
+    if( hfc125Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC125", period,
+                                     hfc125Summer.getEmissions( period ) );
+    }
+    
+    if( hfc134aSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC134a", period,
+                                     hfc134aSummer.getEmissions( period ) );
+    }
+    
+    if( hfc245faSummer.areEmissionsSet( period ) ){
+        // MAGICC needs HFC245fa in kton of HFC245ca
+        mClimateModel->setEmissions( "HFC245ca", period,
+                                     hfc245faSummer.getEmissions( period ) 
+                                     / HFC_CA_TO_FA );
+        // For models that need ktonnes of HFC245fa:
+        mClimateModel->setEmissions("HFC245fa", period,
+                                    hfc245faSummer.getEmissions(period));
+    }
+    
+    // MAGICC needs this in tons of VOC. Input is in TgC
+    if( vocSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "NMVOCs", period,
+                                     ( vocSummer.getEmissions( period ) +
+                                       vocagrSummer.getEmissions( period ) +
+                                       vocawbSummer.getEmissions( period ) ));
+    }
+    
+    // MAGICC needs this in GgC. Model output is in TgC
+    if( bcSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "BC", period,
+                                     ( bcSummer.getEmissions( period ) +
+                                       bcawbSummer.getEmissions( period ) )
+                                     * TG_TO_PG );
+    }
+    
+    // MAGICC needs this in GgC. Model output is in TgC
+    if( ocSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "OC", period,
+                                     ( ocSummer.getEmissions( period ) +
+                                       ocawbSummer.getEmissions( period ) )
+                                     * TG_TO_PG );
+    }
+    
+}    
+
+void World::runClimateModel() {
+    // The Climate model reads in data for the base period, so skip passing it in.
+    for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period)
+        setEmissions(period);
+    
     // Run the model.
     mClimateModel->runModel();
 }
+
+void World::runClimateModel(int period) {
+    if(period > 0) {
+        setEmissions(period);
+        mClimateModel->runModel(scenario->getModeltime()->getper_to_yr(period));
+    }
+}
+
 
 //! write results for all regions to file
 void World::csvOutputFile() const {

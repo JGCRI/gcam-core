@@ -505,6 +505,18 @@ bool Scenario::calculatePeriod( const int aPeriod,
 
     // Mark that the period is now valid.
     mIsValidPeriod[ aPeriod ] = true;
+
+    // Run the climate model for this period (only if the solver is successful)
+    if(success) {
+        world->runClimateModel(aPeriod);
+    }
+    else {
+        ILogger &climatelog = ILogger::getLogger("climate-log");
+        climatelog.setLevel(ILogger::WARNING);
+        climatelog << "Solver unsuccessful for period " << aPeriod
+                   << ".  Climate model run skipped.\n";
+    }
+
     logPeriodEnding( aPeriod );
     
     // Write out the results for debugging.

@@ -60,6 +60,7 @@
 	<Strings>
 		<Value name="scenarioName">Reference</Value>
 		<Value name="debug-region">USA</Value>
+		<Value name="climate-model">MAGICC</Value>
 		<Value name="MAGICC-input-dir">../input/magicc/inputs</Value>
 		<Value name="MAGICC-output-dir">../output</Value>
 	</Strings>
