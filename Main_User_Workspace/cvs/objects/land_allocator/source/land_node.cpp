@@ -790,10 +790,12 @@ double LandNode::getProfitForChildWithHighestShare( const int aPeriod ) const {
 	// First, cycle through all the nodes in this node
 	// and calculate the profit of the one with the largest share.
 	for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-		if( mChildren[ i ]->getShare( aPeriod ) > maxShare ) {
-			maxShare = mChildren[ i ]->getShare( aPeriod );
-			indexOfMaxShare = i;
-		}
+        if( !mChildren[ i ]->isUnmanagedLandLeaf() ) {
+            if( mChildren[ i ]->getShare( aPeriod ) > maxShare ) {
+                maxShare = mChildren[ i ]->getShare( aPeriod );
+                indexOfMaxShare = i;
+            }
+        }
 	}
 	
 	// Then, call this method on the child with highest share.

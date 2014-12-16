@@ -102,6 +102,7 @@ names_AgProdChange <- c( names_AgTechYr, "AgProdChange" )
 names_AgCost <- c( names_AgTechYr, "nonLandVariableCost" )
 names_AgCoef <- c( names_AgTechYr, input, "coefficient" )
 names_AgRES <- c( names_AgTechYr, "res.secondary.output", "output.ratio" )
+names_AgConstraint <- c( names_AgTechYr, "input.tax", "coefficient" )
 names_UnmgdTech <- c( "region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology" )
 
 #Demands

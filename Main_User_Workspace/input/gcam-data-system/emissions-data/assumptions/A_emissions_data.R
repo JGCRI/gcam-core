@@ -1,5 +1,6 @@
 #Lookup
 C_S_F <- c( "iso", "sector", "fuel")
+S_S_T <- c( "supplysector", "subsector", "stub.technology" )
 
 #------------------------------------------------------------------------------------
 #Historical years for data write-out
