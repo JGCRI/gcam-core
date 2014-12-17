@@ -306,9 +306,9 @@ L161.SSP34_L_EF$X2100[ L161.SSP34_L_EF$X2100 > L161.SSP34_L_EF$X2050 ] <- L161.S
 L161.SSP34_EF <- rbind( L161.SSP34_HM_EF, L161.SSP34_L_EF )
 
 #Remove coal power from this list...we'll use our GDP control instead.
-L161.SSP15_EF <- subset( L161.SSP15_EF, stub.technology != "coal (conv pul)")
-L161.SSP2_EF <- subset( L161.SSP2_EF, stub.technology != "coal (conv pul)")
-L161.SSP34_L_EF <- subset( L161.SSP34_L_EF, stub.technology != "coal (conv pul)")
+#L161.SSP15_EF <- subset( L161.SSP15_EF, stub.technology != "coal (conv pul)")
+#L161.SSP2_EF <- subset( L161.SSP2_EF, stub.technology != "coal (conv pul)")
+#L161.SSP34_L_EF <- subset( L161.SSP34_L_EF, stub.technology != "coal (conv pul)")
 
 # -----------------------------------------------------------------------------
 # 3. Output

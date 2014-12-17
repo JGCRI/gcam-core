@@ -227,8 +227,8 @@ void HectorModel::completeInit(const std::string &aScenarioName)
     
     // Hector is not yet accepting emissions for CH4 or N2O.
     // Uncomment below when they are working. 
-    //mHectorEmissionsMsg["CH4"] = D_EMISSIONS_CH4;
-    //mHectorEmissionsMsg["N2O"] = D_EMISSIONS_N2O;
+    mHectorEmissionsMsg["CH4"] = D_EMISSIONS_CH4;
+    mHectorEmissionsMsg["N2O"] = D_EMISSIONS_N2O;
 
     // Not implemented in hector at all: regional SO2 (total
     // SO2 is in)
@@ -669,7 +669,7 @@ void HectorModel::storeConc(int aYear)
     // These are all of the atmospheric concentrations that Hector is
     // set up to provide.
     Hector::message_data date(aYear);
-    mConcTable["CH4"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_CH4,date); 
+    mConcTable["CH4"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_CH4,date);
     mConcTable["N2O"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_N2O,date);
     mConcTable["O3"][i]    = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_O3);
     mConcTable["CO2"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_CO2);

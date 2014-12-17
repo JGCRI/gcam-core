@@ -61,11 +61,33 @@ L251.ctrl.delete <- L251.ssp2_ef[ c( names_StubTechYr, "Non.CO2" ) ]
 L251.ctrl.delete$year <- ctrl_base_year
 L251.ctrl.delete$ctrl.name <- "GDP_control"
 
+#Add emissions controls for future years of vintaged technologies
+L251.ssp15_ef_vin <- subset( L251.ssp15_ef, supplysector == "electricity" )
+L251.ssp15_ef_vin$future.emiss.coeff.year <- L251.ssp15_ef_vin$year
+L251.ssp15_ef_vin$future.emiss.coeff.name <- "SSP_GAINS"
+L251.ssp15_ef_vin$year <- 1975
+L251.ssp15_ef_vin <- L251.ssp15_ef_vin[ c( names_StubTechYr, "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coeff" ) ]
+
+L251.ssp2_ef_vin <- subset( L251.ssp2_ef, supplysector == "electricity" )
+L251.ssp2_ef_vin$future.emiss.coeff.year <- L251.ssp2_ef_vin$year
+L251.ssp2_ef_vin$future.emiss.coeff.name <- "SSP_GAINS"
+L251.ssp2_ef_vin$year <- 1975
+L251.ssp2_ef_vin <- L251.ssp2_ef_vin[ c( names_StubTechYr, "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coeff" ) ]
+
+L251.ssp34_ef_vin <- subset( L251.ssp34_ef, supplysector == "electricity" )
+L251.ssp34_ef_vin$future.emiss.coeff.year <- L251.ssp34_ef_vin$year
+L251.ssp34_ef_vin$future.emiss.coeff.name <- "SSP_GAINS"
+L251.ssp34_ef_vin$year <- 1975
+L251.ssp34_ef_vin <- L251.ssp34_ef_vin[ c( names_StubTechYr, "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coeff" ) ]
+
 printlog( "Rename to regional SO2" )
 L251.ctrl.delete <- rename_SO2( L251.ctrl.delete, A_region, FALSE )
 L251.ssp15_ef <- rename_SO2( L251.ssp15_ef, A_region, FALSE )
 L251.ssp2_ef <- rename_SO2( L251.ssp2_ef, A_region, FALSE )
 L251.ssp34_ef <- rename_SO2( L251.ssp34_ef, A_region, FALSE )
+L251.ssp15_ef_vin <- rename_SO2( L251.ssp15_ef_vin, A_region, FALSE )
+L251.ssp2_ef_vin <- rename_SO2( L251.ssp2_ef_vin, A_region, FALSE )
+L251.ssp34_ef_vin <- rename_SO2( L251.ssp34_ef_vin, A_region, FALSE )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -73,6 +95,9 @@ write_mi_data( L251.ctrl.delete, "DelEmCtrl", "EMISSIONS_LEVEL2_DATA", "L251.ctr
 write_mi_data( L251.ssp15_ef, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L251.ssp15_ef", "EMISSIONS_XML_BATCH", "batch_ssp15_emissions_factors.xml" ) 
 write_mi_data( L251.ssp2_ef, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L251.ssp2_ef", "EMISSIONS_XML_BATCH", "batch_ssp2_emissions_factors.xml" ) 
 write_mi_data( L251.ssp34_ef, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L251.ssp34_ef", "EMISSIONS_XML_BATCH", "batch_ssp34_emissions_factors.xml" ) 
+write_mi_data( L251.ssp15_ef_vin, "ReadInControl", "EMISSIONS_LEVEL2_DATA", "L251.ssp15_ef_vin", "EMISSIONS_XML_BATCH", "batch_ssp15_emissions_factors.xml" ) 
+write_mi_data( L251.ssp2_ef_vin, "ReadInControl", "EMISSIONS_LEVEL2_DATA", "L251.ssp2_ef_vin", "EMISSIONS_XML_BATCH", "batch_ssp2_emissions_factors.xml" ) 
+write_mi_data( L251.ssp34_ef_vin, "ReadInControl", "EMISSIONS_LEVEL2_DATA", "L251.ssp34_ef_vin", "EMISSIONS_XML_BATCH", "batch_ssp34_emissions_factors.xml" ) 
 
 insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_delete_gdp_control.xml", "EMISSIONS_XML_FINAL", "delete_gdp_control.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_ssp15_emissions_factors.xml", "EMISSIONS_XML_FINAL", "ssp15_emissions_factors.xml", "", xml_tag="outFile" )
