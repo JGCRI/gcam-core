@@ -154,6 +154,10 @@ void HectorModel::XMLParse(const xercesc::DOMNode *node)
             Hector::Logger::getGlobalLogger().open("hector", true, Hector::Logger::DEBUG);
             hector_log_is_init = true;
         }
+        if(mHcore.get()) {
+          // delete all hector components
+          mHcore->shutDown();
+        }
         mHcore.reset(new Hector::Core); 
         mHcore->init();
         climatelog << "Parsing ini file= " << mHectorIniFile << "\n";
@@ -221,7 +225,7 @@ void HectorModel::completeInit(const std::string &aScenarioName)
     mHectorEmissionsMsg["SF6"]           = D_EMISSIONS_SF6;
     mHectorEmissionsMsg["BC"]            = D_EMISSIONS_BC;
     mHectorEmissionsMsg["OC"]            = D_EMISSIONS_OC;
-    mHectorEmissionsMsg["NOX"]           = D_EMISSIONS_NOX;
+    mHectorEmissionsMsg["NOx"]           = D_EMISSIONS_NOX;
     mHectorEmissionsMsg["CO"]            = D_EMISSIONS_CO;
     mHectorEmissionsMsg["NMVOCs"]         = D_EMISSIONS_NMVOC;
     
@@ -302,14 +306,14 @@ void HectorModel::completeInit(const std::string &aScenarioName)
     setupRFTbl();
     
     // Set conversion factors for gasses that require them
-    mUnitConvFac["CH4"] = TG_TO_GG;            // GCAM in Tg-CH4; Hector in Gg-CH4
-    mUnitConvFac["N2O"] = TG_TO_GG / N_TO_N2O; // GCAM in Tg-N2O; Hector in Gg-N
     mUnitConvFac["SO2tot"] = TG_TO_GG / S_TO_SO2; // GCAM in Tg-SO2; Hector in Gg-S
     mUnitConvFac["BC"]  = GG_TO_KG;            // GCAM produces BC/OC in Tg but converts
     mUnitConvFac["OC"]  = GG_TO_KG;            // to Gg for MAGICC. Hector wants kg
     mUnitConvFac["NOX"] = NOX_TO_N;            // GCAM in TG-NOX; Hector in TG-N
+    mUnitConvFac["N2O"] = 1.0 / N_TO_N2O; // GCAM in Tg-N2O; Hector in Tg-N 
     // Already in correct units:
-    //  CO2 - produced in Mt C, but converted to Gt C before passing in,
+    // CO2 - produced in Mt C, but converted to Gt C before passing in,
+    // CH4 - produced in Mt CH4, which is what Hector wants.
     // halocarbons - produced in Gg, which is what Hector wants.
     // CO and NMVOC - produced in Tg of the relevant gas
 
@@ -319,7 +323,9 @@ void HectorModel::completeInit(const std::string &aScenarioName)
     mHectorUnits["BC"]  = mHectorUnits["OC"]            = Hector::U_KG;
     mHectorUnits["NOX"]                                 = Hector::U_TG_N;
     mHectorUnits["CO"]                                  = Hector::U_TG_CO;
-    mHectorUnits["NMVOCs"]                               = Hector::U_TG_NMVOC;
+    mHectorUnits["NMVOCs"]                              = Hector::U_TG_NMVOC;
+    mHectorUnits["CH4"]                                 = Hector::U_TG_CH4;
+    mHectorUnits["N2O"]                                 = Hector::U_TG_N2O;
     
     // reset up to (but not including) period 1.
     reset(1);

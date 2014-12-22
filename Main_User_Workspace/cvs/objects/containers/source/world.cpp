@@ -625,6 +625,45 @@ void World::setEmissions(int period) {
                                     hfc245faSummer.getEmissions(period));
     }
     
+    if( hfc23Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC23", period,
+                                    hfc23Summer.getEmissions( period ) );
+    }
+    
+
+    if( hfc32Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC32", period,
+                                    hfc32Summer.getEmissions( period ) );
+    }
+    
+
+    if( hfc43Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC43", period,
+                                    hfc43Summer.getEmissions( period ) );
+    }
+    
+    if( hfc152aSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC152a", period,
+                                    hfc152aSummer.getEmissions( period ) );
+    }
+    
+    if( hfc227eaSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC227ea", period,
+                                    hfc227eaSummer.getEmissions( period ) );
+    }
+    
+    if( hfc236faSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC236fa", period,
+                                    hfc236faSummer.getEmissions( period ) );
+    }
+    
+    if( hfc365mfcSummer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC365mfc", period,
+                                    hfc365mfcSummer.getEmissions( period ) );
+    }
+    
+
+    
     // MAGICC needs this in tons of VOC. Input is in TgC
     if( vocSummer.areEmissionsSet( period ) ){
         mClimateModel->setEmissions( "NMVOCs", period,
