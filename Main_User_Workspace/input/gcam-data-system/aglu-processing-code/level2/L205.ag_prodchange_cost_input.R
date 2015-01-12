@@ -89,8 +89,8 @@ L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ rcp_gcm_cm ] <- L205.all_rcp_gcm_cm[
 #Then, multiply the base yield ratios by the climate impact yield ratios
 L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ X_yieldratio_years ] <- L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ X_yieldratio_years ] *
       L205.ag_CCI_rcp_gcm_cm_R_C_AEZ[ match(
-          vecpaste( L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ R_C_AEZ ] ),
-          vecpaste( L205.ag_CCI_rcp_gcm_cm_R_C_AEZ[ R_C_AEZ ] ) ),
+          vecpaste( L205.ag_EcYield_kgm2_scen_R_C_Y_AEZ[ c( R_C_AEZ, rcp_gcm_cm ) ] ),
+          vecpaste( L205.ag_CCI_rcp_gcm_cm_R_C_AEZ[ c( R_C_AEZ, rcp_gcm_cm ) ] ) ),
       X_yieldratio_years ]
 
 printlog( "Translating yields to rates of agricultural productivity change" )
