@@ -181,6 +181,7 @@ protected:
 	BatchRunner();
 	bool runSingleScenario( IScenarioRunner* aScenarioRunner,
                             const Component& aCurrComponent,
+                            const int aSinglePeriod,
                             Timer& aTimer );
 
     bool XMLParseComponentSet( const xercesc::DOMNode* aNode );

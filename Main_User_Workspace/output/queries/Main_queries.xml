@@ -2613,6 +2613,13 @@
          <xPath buildList="true" dataName="Discounted Cost" group="false" sumAll="false">/text()</xPath>
          <comments/>
       </costCurveQuery>
+      <costCurveQuery title="Regional CO2 MAC curves by period">
+         <axis1 name="Region">Curve</axis1>
+         <axis2 name="Tax">DataPoint</axis2>
+         <chartLabelColumn>CostCurves</chartLabelColumn>
+         <xPath buildList="true" dataName="Cost" group="false" sumAll="false">PointSet/DataPoint/x/text()</xPath>
+         <comments/>
+      </costCurveQuery>
    </queryGroup>
    <queryGroup name="Markets and Prices General">
       <marketQuery title="Prices for all markets">

@@ -486,7 +486,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 			 	 $region in $regionsG 	
 			 	 let $scenario_split := tokenize($scenario, ' '), 	    
 				 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
-                 $currInputs := $currTree/*[@type='sector' and exists(child::keyword/@final-energy)]//*[@type='input'],
+                 $currInputs := $currTree/*[@type='sector' and (@name='unconventional oil production' or exists(child::keyword/@final-energy))]//*[@type='input' and empty(index-of(('trn_pass_road', 'limestone', 'process heat cement', 'industrial energy use', 'industrial feedstocks', 'renewable', 'trn_freight_road', 'trn_pass_road_LDV', 'trn_pass_road_LDV_2W', 'trn_pass_road_LDV_4W', 'unconventional oil'), @name))],
                  $coefs := local:generate-sector-input-coefs(distinct-values($currInputs/@name), $currTree, (), false()),
                  $ccs_coefs := local:generate-ccs-coefs($currTree, $coefs)
 				 return 

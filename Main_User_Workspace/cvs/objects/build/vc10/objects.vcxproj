@@ -105,6 +105,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -153,7 +154,7 @@
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../exe/Debug\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../exe/Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../exe/</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">../../../../exe/Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../exe/Debug\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../exe/Debug\</IntDir>
@@ -194,6 +195,7 @@
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">Objects-Main</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Itanium'">Objects-Main</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Itanium'">Objects-Main</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Objects-MainD</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -224,10 +226,10 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalOptions>/WL %(AdditionalOptions)</AdditionalOptions>
-      <Optimization>MaxSpeed</Optimization>
+      <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>Disabled</Optimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>C:\PNNL\ObjECTS\Libs\xerces-c-src_2_7_0\lib;C:\PNNL\ObjECTS\Libs\dbxml2.5.16\include;..\..\..\..\..\libs\boost-lib\;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../libs/dbxml/include;../../../../libs\boost-lib;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;_DEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -239,9 +241,8 @@
       </DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libdb48d.lib;libdbxml25d.lib;ddao36D.lib;xerces-c_3D.lib;magiccd.lib;aglud.lib;xqilla22d.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)../Objects-Main-D.exe</OutputFile>
-      <AdditionalLibraryDirectories>..\..\..\..\..\libs\access;..\..\..\..\..\libs\dbxml2.5.16\lib;..\..\..\..\..\libs\AgLib\lib;..\..\..\..\..\libs\magicclib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libdb48d.lib;libdbxml25d.lib;xerces-c_3D.lib;xqilla22d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../../../libs/dbxml/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)Object-main-d.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>

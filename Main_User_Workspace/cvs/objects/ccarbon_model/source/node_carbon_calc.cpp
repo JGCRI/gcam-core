@@ -225,6 +225,11 @@ void NodeCarbonCalc::calcLandUseHistory()
             if( diffLand[ i ] > 0 ) {
                 totalLandGain += diffLand[ i ];
             }
+            else if( diffLand[ i ] == 0 ) {
+                // Explicit check where the land did not change since if prevLand
+                // was also zero we may generate NaN.
+                carbonStock[ i ] = carbonStock[ i - 1 ];
+            }
             else {
                 // Calculate the carbon that will be moved out of this land type by
                 // computing the average from the current carbon stock.
@@ -365,6 +370,11 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear ) {
             // carbon.
             if( diffLandFromInternalByYear[ i ] > 0 ) {
                 totalInternalLandGainByYear += diffLandFromInternalByYear[ i ];
+            }
+            else if( diffLandFromInternalByYear[ i ] == 0 ) {
+                // Explicit check where the land did not change since if prevLand
+                // was also zero we may generate NaN.
+                internalCarbonAboveMovedByYear[ i ] = 0;
             }
             else {
                 // Calculate the carbon that will be moved out of this land type by

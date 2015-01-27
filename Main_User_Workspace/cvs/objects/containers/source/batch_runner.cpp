@@ -149,7 +149,7 @@ bool BatchRunner::runScenarios( const int aSinglePeriod,
 
         // Run it using each possible type of IScenarioRunner.
         for( RunnerIterator runner = mScenarioRunners.begin(); runner != mScenarioRunners.end(); ++runner ){
-            bool scenarioSuccess = runSingleScenario( *runner, fileSetsToRun, aTimer );
+            bool scenarioSuccess = runSingleScenario( *runner, fileSetsToRun, aSinglePeriod, aTimer );
             success &= scenarioSuccess;
             (*runner)->getInternalScenario()->accept( &csvOutputter, -1 );
             csvOutputter.writeDidScenarioSolve( scenarioSuccess );
@@ -210,12 +210,14 @@ void BatchRunner::cleanup() {
  * \param aScenarioRunner The scenario runner to use for the scenario.
  * \param aComponent A named list of FileSets which is expanded to create the
  *        list of scenario files to read in.
+ * \param aSinglePeriod The model period to run.
  * \param aTimer The timer used to print out the amount of time spent performing
  *        operations.
  * \return Whether the model run solved successfully.
  */
 bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
                                      const Component& aComponent,
+                                     const int aSinglePeriod,
                                      Timer& aTimer )
 {
     // Set the current scenario runner.
@@ -251,7 +253,7 @@ bool BatchRunner::runSingleScenario( IScenarioRunner* aScenarioRunner,
     }
 
     // Run the scenario.
-    success = mInternalRunner->runScenarios( Scenario::RUN_ALL_PERIODS, false, aTimer );
+    success = mInternalRunner->runScenarios( aSinglePeriod, false, aTimer );
     
     // Print the output.
     mInternalRunner->printOutput( aTimer );
