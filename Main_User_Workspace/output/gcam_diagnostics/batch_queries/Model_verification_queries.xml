@@ -495,8 +495,8 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 			 	 } 
 	 	 };
 		 local:run-input-by-primary((:scenarios:), (:regions:), (:collection:))
-               </xPath>
-         <comments/>
+         </xPath>
+         <comments>WARNING: Results are slightly inflated due to improper secondary-output accounting</comments>
          <labelRewriteList append-values="false">
             <level name="input">
                <rewrite from="traditional biomass" to="j traditional biomass"/>

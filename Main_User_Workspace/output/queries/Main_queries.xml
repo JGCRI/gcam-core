@@ -213,6 +213,224 @@
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
+      <supplyDemandQuery title="Primary energy with CCS (Direct Equivalent)">
+         <axis1 name="fuel">input[@name]</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">
+               declare function local:append-heirarchy($parent as node(), $append as node()*) as node() {
+	       	 		 let $scn := $parent/ancestor::scenario,
+	       			   	  $rgn := $parent (: /ancestor::region :)
+	       			   return
+	       			   	  document { element scenario {
+	       			 	  					$scn/@*,
+	       			 						element region {
+	       			 							$rgn/@*,
+	       			 							$append
+	       			 						}
+	       			 	  				}
+	       				}
+	       	 		 (: I can get by with just the scenario and region
+	       			 let $new_node := element {local-name($parent)} {$parent/@*, $append} 	
+	       	 		 return
+	       	 		 if(local-name($parent) != 'scenario')
+	       	 		 then local:append-heirarchy($parent/parent::*, $new_node)
+	       	 		 else document { $new_node } :)
+	       	 	 }; 
+	       	 	 declare function local:generate-sector-input-coefs($outputNameQueue as xs:string*, $currTree as node(), $coefs as node()*, $is_usa as xs:boolean) as node()* {
+                 if(empty($outputNameQueue)) then $coefs
+                 else if( exists($coefs[@name = $outputNameQueue[1]]) or exists(index-of(('biomass',
+'traded unconventional oil', 'regional corn for ethanol', 'regional biomassOil', 'regional sugar for ethanol', 'regional sugarbeet for ethanol'),
+$outputNameQueue[1])) or not($currTree/*[@type='sector' and @name=$outputNameQueue[1]]))
+then 
+(:if(not($is_usa) and string-length($currTree/@name) = 2) then
+local:trace-inputs($outputName, $currTree/parent::*/*[@type='region' and @name='USA'], $outputs, true())
+else:)
+local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs, $is_usa)
+	       				else
+                    let $outputName := $outputNameQueue[1],
+                        $newOutputNameQueue := remove($outputNameQueue, 1),
+                        $useOutputs := $currTree//output-primary[@type='output' and @name=$outputName],
+                        $useInputs := for $out in $useOutputs[not(following-sibling::keyword[exists(@primary-renewable)])]
+                                      return $out/following-sibling::*[@type='input'],
+                        $renewOutputs := for $out in $useOutputs[following-sibling::keyword[exists(@primary-renewable)]]
+                                         return element output {
+                                             attribute name { $out/following-sibling::keyword/@primary-renewable },
+                                             $out/child::*
+                                         },
+                        $totalOutputSum := for $vintage in distinct-values($useOutputs/physical-output/@vintage)
+                                          return element output {
+                                                     attribute vintage { $vintage },
+                                                     text {
+                                                         sum($useOutputs/physical-output[@vintage=$vintage])
+                                                     }
+                                                 },
+                       $new_coefs := $coefs | element sector {
+                                            attribute name { $outputName },
+                                            for $input in distinct-values($useInputs/@name)
+                                            return element input {
+                                                       attribute name { $input },
+                                                       for $outputSum in $totalOutputSum
+                                                       let $inputSum := sum($useInputs[@name=$input]/demand-physical[@vintage=$outputSum/@vintage])
+                                                       where $inputSum &gt; 0
+                                                       return element coef {
+                                                                  attribute vintage { $outputSum/@vintage },
+                                                                  text { $inputSum div $outputSum }
+                                                              }
+                                                    },
+                                            for $input in distinct-values($renewOutputs/@name)
+                                            return element input {
+                                                       attribute name { concat($input, ' renewable') },
+                                                       attribute is-renewable { true() },
+                                                       for $outputSum in $totalOutputSum
+                                                       let $inputSum := sum($renewOutputs[@name=$input]/physical-output[@vintage=$outputSum/@vintage])
+                                                       where $inputSum &gt; 0
+                                                       return element coef {
+                                                                  attribute vintage { $outputSum/@vintage },
+                                                                  text { $inputSum div $outputSum }
+                                                              }
+                                                    }
+                                        }
+                        return 
+                              local:generate-sector-input-coefs(distinct-values(($newOutputNameQueue, $useInputs/@name)), $currTree, $new_coefs, $is_usa)
+		};
+        declare function local:generate-ccs-coefs($currTree as node(), $coefs as node()*) as node()* {
+            for $sector in $coefs/@name
+            let $currSector := $currTree/*[@type='sector' and @name=$sector],
+                $useInputs := $currSector//*[@type='technology' and not(contains(@name, 'CCS')) and not(child::keyword/@primary-renewable)]/*[@type='input'],
+                $useInputsCCS := $currSector//*[@type='technology' and contains(@name, 'CCS')]/*[@type='input'],
+                $totalOutputSum := for $vintage in distinct-values($useInputs/demand-physical/@vintage)
+                                          return element output {
+                                                     attribute vintage { $vintage },
+                                                     text {
+                                                         sum($currSector//output-primary/physical-output[@vintage=$vintage])
+                                                     }
+                                                 }
+            return if(exists($useInputsCCS)) then
+                element sector {
+                                            attribute name { $sector },
+                                            $coefs[@name=$sector]/input[@is-renewable],
+                                            for $input in distinct-values(($useInputs/@name, $useInputsCCS/@name))
+                                            return element input {
+                                                       attribute name { $input },
+                                                       for $outputSum in $totalOutputSum
+                                                       let $inputSum := sum($useInputs[@name=$input]/demand-physical[@vintage=$outputSum/@vintage]),
+                                                           $inputSumCCS := sum($useInputsCCS[@name=$input]/demand-physical[@vintage=$outputSum/@vintage])
+                                                       return (element coef {
+                                                                  attribute vintage { $outputSum/@vintage },
+                                                                  text { $inputSum div $outputSum }
+                                                              },
+                                                              element coef_ccs {
+                                                                  attribute vintage { $outputSum/@vintage },
+                                                                  text { $inputSumCCS div $outputSum }
+                                                              })
+                                                    }
+                                        }
+                    else
+                        $coefs[@name=$sector]
+        };
+        declare function local:apply-coefs($outputName as xs:string, $outputs as node()*, $coefs as node()*, $isCCS as xs:boolean) as node()* {
+            if(exists($coefs[@name=$outputName]) and sum($outputs) &gt; 0.001) then
+                for $input in $coefs[@name=$outputName]/input
+                return local:apply-coefs($input/@name,
+                    for $vintage in distinct-values($outputs/@vintage)
+                    let $outputThisVintage := $outputs[@vintage=$vintage],
+                        $firstOutput := $outputThisVintage[1],
+                        $outputSum := sum($outputThisVintage),
+                        $coefThisVintage := $input/coef[@vintage=$vintage]
+                    where $coefThisVintage &gt; 0
+	       		    return element { local-name($firstOutput) } {
+	       				$firstOutput/@*,
+                        text{ $outputSum * $coefThisVintage }
+                        }, $coefs, $isCCS)
+                    | local:apply-coefs($input/@name,
+                    for $vintage in distinct-values($outputs/@vintage)
+                    let $outputThisVintage := $outputs[@vintage=$vintage],
+                        $firstOutput := $outputThisVintage[1],
+                        $outputSum := sum($outputThisVintage),
+                        $coefThisVintage := $input/coef_ccs[@vintage=$vintage]
+                    where exists($coefThisVintage) and $coefThisVintage &gt; 0
+	       		    return element { local-name($firstOutput) } {
+	       				$firstOutput/@*,
+                        text{ $outputSum * $coefThisVintage }
+	       			}, $coefs, true())
+            else if( sum($outputs) &gt; 0.001) then
+                element input {
+                    attribute name { if($isCCS) then concat($outputName, ' CCS') else $outputName },
+                    attribute type { 'input' },
+                    $outputs
+                }
+            else
+                (: These are the residuals from chasing simulenaties, I've left this here
+                   for debuging purposes :)
+                element input {
+                    attribute name { $outputName },
+                    attribute type { 'input' } (:,
+                    $outputs :)
+                }
+        };
+		declare function local:run-input-by-primary($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 unordered { 	
+			 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 		  then $regions
+			 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 return
+			 	 for $scenario in $scenarios, 	    
+			 	 $region in $regionsG 	
+			 	 let $scenario_split := tokenize($scenario, ' '), 	    
+				 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
+                 $currInputs := $currTree/*[@type='sector' and (@name='unconventional oil production' or exists(child::keyword/@final-energy))]//*[@type='input' and empty(index-of(('trn_pass_road', 'limestone', 'process heat cement', 'industrial energy use', 'industrial feedstocks', 'renewable', 'trn_freight_road', 'trn_pass_road_LDV', 'trn_pass_road_LDV_2W', 'trn_pass_road_LDV_4W', 'unconventional oil'), @name))],
+                 $coefs := local:generate-sector-input-coefs(distinct-values($currInputs/@name), $currTree, (), false()),
+                 $ccs_coefs := local:generate-ccs-coefs($currTree, $coefs)
+				 return 
+				    for $inputName in distinct-values($currInputs/@name)
+				    return local:append-heirarchy($currTree, local:apply-coefs($inputName, $currInputs[@name=$inputName]/demand-physical, $ccs_coefs, false()))//text()
+			 	 } 
+	 	 };
+		 local:run-input-by-primary((:scenarios:), (:regions:), (:collection:))
+         </xPath>
+         <comments>WARNING: Results are slightly inflated due to improper secondary-output accounting</comments>
+         <labelRewriteList append-values="false">
+            <level name="input">
+               <rewrite from="traditional biomass" to="j traditional biomass"/>
+               <rewrite from="geothermal-elect" to="i geothermal"/>
+               <rewrite from="geothermal-elect renewable" to="i geothermal"/>
+               <rewrite from="geothermal-elect renewable CCS" to="i geothermal"/>
+               <rewrite from="biomass" to="d biomass"/>
+               <rewrite from="biomass CCS" to="d biomass CCS"/>
+               <rewrite from="regional biomassOil" to="d biomass"/>
+               <rewrite from="regional corn for ethanol" to="d biomass"/>
+               <rewrite from="regional sugar for ethanol" to="d biomass"/>
+               <rewrite from="regional sugarbeet for ethanol" to="d biomass"/>
+               <rewrite from="nuclear-H2 renewable" to="e nuclear"/>
+               <rewrite from="natural gas" to="b natural gas"/>
+               <rewrite from="natural gas CCS" to="b natural gas CCS"/>
+               <rewrite from="wind-elect" to="g wind"/>
+               <rewrite from="wind-elect renewable" to="g wind"/>
+               <rewrite from="wind-elect renewable CCS" to="g wind"/>
+               <rewrite from="exotic-elect" to="j breakthrough"/>
+               <rewrite from="elect_td_ind" to=""/>
+               <rewrite from="solar-elect renewable" to="h solar"/>
+               <rewrite from="solar-elect renewable CCS" to="h solar"/>
+               <rewrite from="solar-H2 renewable" to="h solar"/>
+               <rewrite from="regional natural gas" to=""/>
+               <rewrite from="coal" to="c coal"/>
+               <rewrite from="coal CCS" to="c coal CCS"/>
+               <rewrite from="crude oil" to="a oil"/>
+               <rewrite from="crude oil CCS" to="a oil CCS"/>
+               <rewrite from="hydro-elect renewable" to="f hydro"/>
+               <rewrite from="hydro-elect renewable CCS" to="f hydro"/>
+               <rewrite from="nuclear-elect renewable" to="e nuclear"/>
+               <rewrite from="nuclear-elect renewable CCS" to="e nuclear"/>
+               <rewrite from="traded unconventional oil" to="a oil"/>
+               <rewrite from="traded unconventional oil CCS" to="a oil CCS"/>
+               <rewrite from="wind-H2 renewable" to="g wind"/>
+               <rewrite from="regional biomassOil CCS" to="d biomass CCS"/>
+               <rewrite from="regional sugar for ethanol CCS" to="d biomass CCS"/>
+               <rewrite from="limestone" to=""/>
+               <rewrite from="renewable" to=""/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
       <supplyDemandQuery title="Resource production">
          <axis1 name="resource">resource</axis1>
          <axis2 name="Year">output</axis2>
@@ -2537,6 +2755,140 @@
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]/*[@type='subsector']/*[@type='technology']//CO2/emissions/node()</xPath>
          <comments/>
       </emissionsQueryBuilder>
+      <supplyDemandQuery title="CO2 Emissions by enduse">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">emissions[@year]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">
+               declare function local:append-heirarchy($parent as node(), $append as node()*) as node() {
+	       	 		 let $scn := $parent/ancestor::scenario,
+	       			   	  $rgn := $parent (: /ancestor::region :)
+	       			   return
+	       			   	  document { element scenario {
+	       			 	  					$scn/@*,
+	       			 						element region {
+	       			 							$rgn/@*,
+	       			 							$append
+	       			 						}
+	       			 	  				}
+	       				}
+	       	 		 (: I can get by with just the scenario and region
+	       			 let $new_node := element {local-name($parent)} {$parent/@*, $append} 	
+	       	 		 return
+	       	 		 if(local-name($parent) != 'scenario')
+	       	 		 then local:append-heirarchy($parent/parent::*, $new_node)
+	       	 		 else document { $new_node } :)
+	       	 	 }; 
+	       	 	 declare function local:generate-sector-output-coefs($inputNameQueue as xs:string*, $currTree as node(), $coefs as node()*, $is_usa as xs:boolean) as node()* {
+                 if(empty($inputNameQueue)) then $coefs
+                 else if( exists($coefs[@name = $inputNameQueue[1]]) or exists(index-of(('unconventional oil production', "electricity", "cement", "N fertilizer"),
+$inputNameQueue[1])) or not($currTree/*[@type='sector' and @name=$inputNameQueue[1]]))
+then 
+local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs, $is_usa)
+	       				else
+                    let $inputName := $inputNameQueue[1],
+                        $newInputNameQueue := remove($inputNameQueue, 1),
+                        $useInputs := $currTree//*[@type='input' and @name=$inputName],
+                        $useSectors := distinct-values($useInputs/ancestor::*[@type='sector']/@name),
+                        $totalInputSum := for $vintage in distinct-values($useInputs/demand-physical/@vintage)
+                                          return element input {
+                                                     attribute vintage { $vintage },
+                                                     text {
+                                                         sum($useInputs/demand-physical[@vintage=$vintage])
+                                                     }
+                                                 },
+                       $new_coefs := if(empty($useSectors)) then
+                                         $coefs
+                                     else
+                                         $coefs | element sector {
+                                            attribute name { $inputName },
+                                            for $output in $useSectors
+                                            return element output {
+                                                       attribute name { $output },
+                                                       for $inputSum in $totalInputSum
+                                                       let $outputSum := sum($useInputs[ancestor::*[@type='sector' and @name=$output]]/demand-physical[@vintage=$inputSum/@vintage])
+                                                       return element coef {
+                                                                  attribute vintage { $inputSum/@vintage },
+                                                                  text { $outputSum div $inputSum }
+                                                              }
+                                                    }
+                                        }
+                        return 
+                              local:generate-sector-output-coefs(distinct-values(($newInputNameQueue, $useSectors)), $currTree, $new_coefs, $is_usa)
+		};
+        declare function local:apply-coefs($outputName as xs:string, $emissions as node()*, $coefs as node()*) as node()* {
+            if(exists($coefs[@name=$outputName]) and abs(sum($emissions)) &gt; 0.001) then
+                for $output in $coefs[@name=$outputName]/output
+                return local:apply-coefs($output/@name,
+                    for $year in distinct-values($emissions/@year)
+                    let $emissThisVintage := $emissions[@year=$year],
+                        $firstEmiss := $emissThisVintage[1],
+                        $emissSum := sum($emissThisVintage),
+                        $coefThisVintage := $output/coef[@vintage=$year]
+                    where $coefThisVintage &gt; 0
+                    return element { local-name($firstEmiss) } {
+                            $firstEmiss/@*,
+                            text{ $emissSum * $coefThisVintage }
+                        }
+	       			, $coefs)
+            else if( abs(sum($emissions)) &gt; 0.001) then
+                element sector {
+                    attribute name { $outputName },
+                    attribute type { 'sector' },
+                    $emissions
+                }
+            else
+                (: These are the residuals from chasing simulenaties, I've left this here
+                   for debuging purposes :)
+                element sector {
+                    attribute name { $outputName },
+                    attribute type { 'sector' }(:,
+                    $emissions:)
+                }
+        };
+		declare function local:run-emiss-by-enduse($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 unordered { 	
+			 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 		  then $regions
+			 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 return
+			 	 for $scenario in $scenarios, 	    
+			 	 $region in $regionsG 	
+			 	 let $scenario_split := tokenize($scenario, ' '), 	    
+				 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
+                 $currEmissSectors := $currTree/*[@type='sector' and descendant::CO2],
+                 $coefs := local:generate-sector-output-coefs(distinct-values($currEmissSectors/@name), $currTree, (), false())
+				 return
+				    for $sectorName in distinct-values($currEmissSectors/@name)
+                    return local:append-heirarchy($currTree, local:apply-coefs($sectorName, $currEmissSectors[@name=$sectorName]//CO2/emissions, $coefs))//text()
+			 	 } 
+	 	 };
+		 local:run-emiss-by-enduse((:scenarios:), (:regions:), (:collection:))
+               </xPath>
+         <comments/>
+         <labelRewriteList append-values="false">
+            <level name="sector">
+               <rewrite from="N fertilizer" to="industry"/>
+               <rewrite from="unconventional oil production" to="industry"/>
+               <rewrite from="comm cooling" to="buildings"/>
+               <rewrite from="comm heating" to="buildings"/>
+               <rewrite from="comm others" to="buildings"/>
+               <rewrite from="resid cooling" to="buildings"/>
+               <rewrite from="resid heating" to="buildings"/>
+               <rewrite from="resid others" to="buildings"/>
+               <rewrite to="transportation" from="trn_aviation_intl"/>
+               <rewrite to="transportation" from="trn_freight"/>
+               <rewrite to="transportation" from="trn_freight_road"/>
+               <rewrite to="transportation" from="trn_pass_road"/>
+               <rewrite to="transportation" from="trn_pass_road_bus"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV_4W"/>
+               <rewrite to="transportation" from="trn_pass_road_LDV_2W"/>
+               <rewrite to="transportation" from="trn_passenger"/>
+               <rewrite to="transportation" from="trn_pass"/>
+               <rewrite to="transportation" from="trn_shipping_intl"/>
+           </level>
+       </labelRewriteList>
+      </supplyDemandQuery>
       <emissionsQueryBuilder title="CO2 sequestration by sector">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions-sequestered</axis2>
