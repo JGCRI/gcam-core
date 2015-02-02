@@ -43,8 +43,6 @@
 
 #include "util/base/include/definitions.h"
 
-// Only compile this code if the XML database is turned on.
-#if( __USE_XML_DB__ )
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "containers/include/world.h"
@@ -118,20 +116,19 @@
 // into the XML database.
 #define DEBUG_XML_DB 0
 
-// Whether to write/update one region at a time when writing to the database.
-// This is a trade of between memeory usage and speed.  Splitting the regions
-// tends to be safer so that is the default.
-#define SPLIT_REGIONS_FOR_INSERT 0
-
 #ifdef DEBUG_XML_DB
-#include "util/base/include/auto_file.h"
+#include <boost/iostreams/tee.hpp>
+#include <boost/iostreams/device/file.hpp>
+#endif
+
+#if( !__HAVE_JAVA__ )
+#include <boost/iostreams/device/null.hpp>
 #endif
 
 #include <ctime>
-#include "dbxml/DbXml.hpp"
-#include <db_cxx.h>
 
 #include <string>
+#include <sstream>
 
 #include "reporting/include/xml_db_outputter.h"
 
@@ -140,38 +137,67 @@ extern Scenario* scenario; // for modeltime
 // TODO: Remove global time variable.
 extern time_t gGlobalTime;
 
-using namespace DbXml;
 using namespace std;
+using namespace boost::iostreams;
 
 
+#if( __HAVE_JAVA__ )
+// Static initialize the JavaVM to be null
+JavaVM* XMLDBOutputter::JNIContainer::mJavaVM = 0;
 
-XMLDBOutputter::DBContainer::DBContainer():mDBEnvironment( 0 ){
+/*!
+ * \brief Constructor for the JNI container.
+ * \see createContainer()
+ */
+XMLDBOutputter::JNIContainer::JNIContainer():
+mJavaEnv( 0 )
+{
 }
 
-/*! \brief Destructor for the database container.
-* \details This is a workaround for memory deallocation problems. Forcing the
-*          container to deallocate first is necessary, and would not work with
-*          simple class ordering.
-*/
-XMLDBOutputter::DBContainer::~DBContainer() {
-    mContainerWrapper.reset();
-    mManager.reset();
-}
+/*!
+ * \brief Destructor for the JNI container.
+ */
+XMLDBOutputter::JNIContainer::~JNIContainer() {
+    if( mJavaEnv ) {
+        mJavaEnv->DeleteGlobalRef( mWriteDBClass );
+        mJavaEnv->DeleteGlobalRef( mWriteDBInstance );
+    }
 
-/*! \brief Constructor
-* \param aContainer XmlContainer to wrap.
-*/
-XMLDBOutputter::DBContainer::XMLContainerWrapper::XMLContainerWrapper( DbXml::XmlContainer aContainer )
-:mContainer( aContainer )
-{}
+    // Apparently this is a bug since the beginning of time for Java, the DestroyJavaVM
+    // does not actually close it.  So if you try to close then reopen the VM it will
+    // give an error.  The best advice is to just not close it. Resources may be leaked.
+    /*
+    if( mJavaVM ) {
+        mJavaVM->DestroyJavaVM();
+    }*/
+}
+#endif
 
 /*! \brief Constructor
 */
 XMLDBOutputter::XMLDBOutputter():
 mTabs( new Tabs ),
-mGDP( 0 ),
-mIsFirstRegion( true )
-{}
+mGDP( 0 )
+#if( __HAVE_JAVA__ )
+,mJNIContainer( createContainer( false ) )
+#endif
+{
+#if( DEBUG_XML_DB )
+    // Have data written to mBuffer go to the debug_db file as well.
+    file_sink debugDBSink( "debug_db.xml" );
+    // Use a "tee" filter to ensure data gets to all sinks.
+    tee_filter<file_sink> teeDebugFilter( debugDBSink );
+    mBuffer.push( teeDebugFilter );
+#endif
+
+#if( __HAVE_JAVA__ )
+    // Set Java as the sink of data for mBuffer.
+    SendToJavaIOSink sendToJavaSink( mJNIContainer.get() );
+    mBuffer.push( sendToJavaSink );
+#else
+    mBuffer.push( null_sink() );
+#endif
+}
 
 /*!
  * \brief Destructor
@@ -181,141 +207,128 @@ mIsFirstRegion( true )
 XMLDBOutputter::~XMLDBOutputter(){
 }
 
-/*! \brief Write the output to the database.
-* \details Write the accumulated output to the database. This will open the
-*          database, create a unique ID for the scenario and a container with
-*          that name, and then write the output as a complete XML document to
-*          the database.
-* \author Josh Lurz
-*/
+/*!
+ * \brief Write the output to the database.
+ * \details In order to keep the memory usage down data has been writing to the
+ *          database as XML was being generated.  We will signal that no more data
+ *          will be generated and wait for it to finish here.
+ */
 void XMLDBOutputter::finish() const {
-    if( !mIsFirstRegion ) {
+    // Close mBuffer so that no more data can be written.
+    close( mBuffer, ios_base::out );
+
+#if( __HAVE_JAVA__ )
+    if( !mJNIContainer.get() ) {
+        // Failed to start Java, just return as an appropriate error message would
+        // have already been given.
         return;
     }
-    // Create the database container and its related structures.
-    auto_ptr<DBContainer> dbContainer( createContainer() );
-
-    // Check if creating the container failed.
-    if( !dbContainer.get() ){
-        // An error message will have been printed by create container.
-        return;
-    }
-
-    // Create an update context which is needed to insert the document.
-    XmlUpdateContext context = dbContainer->mManager->createUpdateContext();
-
-    // Create a unique document name.
-    const string docName = createContainerName( scenario->getName() );
-
-#if DEBUG_XML_DB
-    {
-        // TODO: Avoid copying memory here
-        AutoOutputFile debugOutput( "debug_db.xml" );
-        debugOutput << mBuffer.str() << endl;
-    }
-#endif
-
-    // Insert the document into the database.
-    try {
-        // bufferAdapter's memory is adopted by mContainer once putDocument is called
-        // with it.  Do not delete it's memory here.
-        StringStreamXmlInputStream* bufferAdapter = new StringStreamXmlInputStream( mBuffer );
-        dbContainer->mContainerWrapper->mContainer.putDocument( docName,  // The document's name
-                               bufferAdapter, // the XmlInputStream that will read from mBuffer
-                               context, // The update context
-                               0 ); // Flags
-    } catch ( const DbXml::XmlException& e ) {
+    // First we need to look up the appropriate "finish" Java method with no
+    // arguments and void return: "()V" then call it.
+    jmethodID finishMID = mJNIContainer->mJavaEnv->GetMethodID( mJNIContainer->mWriteDBClass, "finish", "()V" );
+    if( !finishMID ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
-        mainLog << "Failed to insert the document into the database. " << e.what() << endl;
+        mainLog << "Failed to find JNI method: finish" << endl;
+        return;
     }
+
+    // The java method will wait until the database is done processing all data
+    // before returning.
+    mJNIContainer->mJavaEnv->CallVoidMethod( mJNIContainer->mWriteDBInstance, finishMID );
+#endif
 }
 
-/*! \brief Create an initialized XML database manager.
-* \return An auto pointer to an initialized XML database manager, null if one
-*         could not be created.
-*/
-auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
-    // Create a database container.
-    auto_ptr<DBContainer> dbContainer( new DBContainer );
+#if( __HAVE_JAVA__ )
+/*!
+ * \brief Create an initialized Java environment.
+ * \param aAppendOnly If we are only looking to append data and not add a new file.
+ * \return An initialized Java environment with the Write DB class loaded and
+ *         ready to accept data to write/alter to the database.  If an error occurs
+ *         a null container will be returned.
+ */
+auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bool aAppendOnly ) {
+    // Create a Java instance.
+    auto_ptr<JNIContainer> jniContainer( new JNIContainer );
 
-    // Create a database environment.
-    if( db_env_create( &dbContainer->mDBEnvironment, 0 ) ) {
+    // Start the Java VM with the following settings
+    JavaVMInitArgs vmArgs;
+    JavaVMOption* options = new JavaVMOption[ 1 ];
+    const string classpath = "-Djava.class.path=." + string( PATH_SEPARATOR ) + string( BASEX_LIB );
+    options[ 0 ].optionString = const_cast<char*>( classpath.c_str() );
+    vmArgs.version = JNI_VERSION_1_6;
+    vmArgs.nOptions = 1;
+    vmArgs.options = options;
+    vmArgs.ignoreUnrecognized = false;
+    if( !jniContainer->mJavaVM ) {
+        JNI_CreateJavaVM( &jniContainer->mJavaVM, (void**)&jniContainer->mJavaEnv, &vmArgs );
+    }
+    else {
+        jniContainer->mJavaVM->AttachCurrentThread( (void**)&jniContainer->mJavaEnv, &vmArgs );
+    }
+    delete options;
+
+    // Ensure that the Java VM opened successfully.
+    if( !jniContainer->mJavaVM || !jniContainer->mJavaEnv ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
-        mainLog << "Failed to create a database environment." << endl;
-        return auto_ptr<DBContainer>();
+        mainLog << "Failed to start Java." << endl;
+        jniContainer.reset( 0 );
+        return jniContainer;
     }
 
-    // Set the database cache size to 100 megabytes. This will ensure maximum
-    // database performance.
-    const unsigned int CACHE_SIZE = 100 * 1024 * 1024;
-    dbContainer->mDBEnvironment->set_cachesize(
-        dbContainer->mDBEnvironment, 0, CACHE_SIZE, 1);
+    // Find the Java class that will do the work of putting the XML document into
+    // the database.
+    // Note that we need to make this class reference "global" so that we can use
+    // it again in later.
+    const string writeDBClassName = "WriteLocalBaseXDB";
+    jniContainer->mWriteDBClass = reinterpret_cast<jclass>( jniContainer->mJavaEnv->NewGlobalRef(
+        jniContainer->mJavaEnv->FindClass( writeDBClassName.c_str() ) ) );
+    if( !jniContainer->mWriteDBClass ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Failed to find Java class " << writeDBClassName << " to write to the XML database." << endl;
+        jniContainer.reset( 0 );
+        return jniContainer;
+    }
+
+    // Find the constructor: "<init>" for the class which takes two string and a boolean argument:
+    // "(Ljava/lang/String;Ljava/lang/String;Z)V".  The arguments are the database, and
+    // a unique name to call the document that we will put into the database and a flag
+    // if we are opening the database only to append data to an existing document.
+    jmethodID writeDBCtorMID = jniContainer->mJavaEnv->GetMethodID( jniContainer->mWriteDBClass,
+        "<init>", "(Ljava/lang/String;Ljava/lang/String;Z)V" );
+    if( !writeDBCtorMID ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Failed to find the appropriate constructor of Java class " << writeDBClassName << "." << endl;
+        jniContainer.reset( 0 );
+        return jniContainer;
+    }
 
     // Get the location to open the environment.
     const Configuration* conf = Configuration::getInstance();
-    string xmldbContainerName = conf->getFile( "xmldb-location", "database.dbxml" );
-    string environmentLocation;
+    const string xmldbContainerName = conf->getFile( "xmldb-location", "database_basexdb" );
+    const string docName = createContainerName( scenario->getName() );
 
-    // The path separator could go either way.
-    int indexOfDir = xmldbContainerName.find_last_of( '/' );
-    // string::npos means that it was not found.
-    if( indexOfDir == string::npos ) {
-        // was not a UNIX path separator, try Windows
-        indexOfDir = xmldbContainerName.find_last_of( '\\' );
-        if( indexOfDir == string::npos ) {
-            // No path separators mean current directory.
-            environmentLocation = ".";
-        }
-    }
- 
-    // if indexOfDir has a real value then substring out the path
-    // otherwise it will already have been set to "."
-    if( indexOfDir != string::npos ) {
-        environmentLocation = xmldbContainerName.substr( 0, 
-            indexOfDir );
-        // The container name is just the file name without the path
-        // information since it is relative to the environment path.
-        xmldbContainerName = xmldbContainerName.substr( indexOfDir + 1 );
-    }
+    // Convert the C++ string to a Java String so that they can be passed to the constructor.
+    jstring jXMLDBContainerName = jniContainer->mJavaEnv->NewStringUTF( xmldbContainerName.c_str() );
+    jstring jDocName = jniContainer->mJavaEnv->NewStringUTF( docName.c_str() );
 
-    try {
-        // Open the environment.
-        dbContainer->mDBEnvironment->open( dbContainer->mDBEnvironment, environmentLocation.c_str(),
-                                        DB_INIT_MPOOL | DB_CREATE | DB_INIT_LOCK, 0 );
-    }
-    catch( const DbException& e ) {
+    // Call the constructor to get an instance of writeDBClassName.
+    jniContainer->mWriteDBInstance = jniContainer->mJavaEnv->NewGlobalRef(
+        jniContainer->mJavaEnv->NewObject( jniContainer->mWriteDBClass, writeDBCtorMID, jXMLDBContainerName, jDocName, aAppendOnly ) );
+    if( !jniContainer->mWriteDBInstance ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
-        mainLog << "Failed to open the database environment: " << e.what() << endl;
-        return auto_ptr<DBContainer>();
+        mainLog << "Failed to construct the Java class " << writeDBClassName << "." << endl;
+        jniContainer.reset( 0 );
+        return jniContainer;
     }
 
-    // Create a manager object from the environment.
-    dbContainer->mManager.reset( new XmlManager( dbContainer->mDBEnvironment,
-                                                 DBXML_ADOPT_DBENV ) );
-
-    // Open the container. It will be closed automatically when the manager goes out of scope.
-    try {
-        dbContainer->mContainerWrapper.reset( new DBContainer::XMLContainerWrapper(
-                                             dbContainer->mManager->openContainer( xmldbContainerName, 
-                                             DB_CREATE | DBXML_INDEX_NODES) ) );
-        // TODO: Automatically creating indecies for all nodes in the database will lead to
-        // very large databases and most likely we would rarely utilize most of that
-        // functionality.  So for the moment turn this feature off and in the future
-        // determine if and which indecies would be helpful.
-        XmlUpdateContext uc = dbContainer->mManager->createUpdateContext();
-        dbContainer->mContainerWrapper->mContainer.setAutoIndexing( false, uc );
-    }
-    catch ( const DbXml::XmlException& e ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::SEVERE );
-        mainLog << "Failed to open the container: " << e.what() << endl;
-        return auto_ptr<DBContainer>();
-    }
-    return dbContainer;
+    return jniContainer;
 }
+#endif
 
 /*! \brief Create a unique name for the container given a scenario name.
 * \param aScenarioName Name of the scenario.
@@ -352,106 +365,39 @@ bool XMLDBOutputter::appendData( const string& aData, const string& aLocation ) 
         return false;
     }
 
-    // Create a database container to use for the update.
-    auto_ptr<DBContainer> dbContainer( createContainer() );
+#if( __HAVE_JAVA__ )
+    // Create a Java container to use for the update indicating that we intend
+    // open to append data.
+    auto_ptr<JNIContainer> jniContainer( createContainer( true ) );
 
     // Check if creating the container failed.
-    if( !dbContainer.get() ){
+    if( !jniContainer.get() ){
         // An error message will have been printed by create container.
         return false;
     }
 
-    // Create a unique document name.
-    const string docName = createContainerName( scenario->getName() );
-
-    // Try to get the document from the database.
-    try {
-        // Get the document which will be modified.
-        const string docXPath = "doc('dbxml:"
-                                      + dbContainer->mContainerWrapper->mContainer.getName()
-                                      + "/" + docName + "')";
-
-        // Create the XPath will which locate where to insert the content.
-        const string locationXPath = docXPath + aLocation;
-
-        // finally the XQuery-Update query to insert the node after the given location
-        const string insertAfterQuery = "insert node " + aData + " after " + locationXPath;
-
-        // set the var dataToInsertVar to aData and run the query
-        XmlQueryContext queryContext = dbContainer->mManager->createQueryContext();
-        XmlQueryExpression updateExpr = dbContainer->mManager->prepare( insertAfterQuery,
-                                                                          queryContext );
-        updateExpr.execute( queryContext );
-    }
-    catch ( const DbXml::XmlException& e ) {
+    // Find the appendData method for the class which takes two string arguments:
+    // "(Ljava/lang/String;Ljava/lang/String;)Z".  The arguments are the data, and
+    // an XPath which gives the location after which to insert the data.  It will
+    // return a bool "Z" if it successfully appended the data or not.
+    jmethodID appendDataMID = jniContainer->mJavaEnv->GetMethodID( jniContainer->mWriteDBClass,
+        "appendData", "(Ljava/lang/String;Ljava/lang/String;)Z" );
+    if( !appendDataMID ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
-        mainLog << "Failed to insert the cost information into the XML database. "
-                << e.what() << endl;
+        mainLog << "Failed to find the appendData Java method" << endl;
         return false;
     }
-    return true;
-}
 
-/*! \brief Append data at a given location to an already written database container.
- * \details
- * \param aLocation XPath of the location to add the data.
- * \return Whether the data was added successfully.
- */
-bool XMLDBOutputter::appendBuffer( const string& aLocation ) {
-    // Check that both data and a location have been set.
-    if( aLocation.empty() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Cannot append data to the XML database because location string is empty." << endl;
-        return false;
-    }
-    
-    // Create a database container to use for the update.
-    auto_ptr<DBContainer> dbContainer( createContainer() );
-    
-    // Check if creating the container failed.
-    if( !dbContainer.get() ){
-        // An error message will have been printed by create container.
-        return false;
-    }
-    
-    // Create a unique document name.
-    const string docName = createContainerName( scenario->getName() );
-    
-    // Try to get the document from the database.
-    try {
-        // Get the document which will be modified.
-        const string docXPath = "doc('dbxml:"
-        + dbContainer->mContainerWrapper->mContainer.getName()
-        + "/" + docName + "')";
-        
-        // Create the XPath will which locate where to insert the content.
-        const string locationXPath = docXPath + aLocation;
-        
-        // finally the XQuery-Update query to insert the node after the given location
-        //const string insertAfterQuery = "insert node " + aData + " after " + locationXPath;
-        const string insertAfterQuery = "insert node $dataToInsertVar after " + locationXPath;
-        
-        // set the var dataToInsertVar to aData and run the query
-        XmlQueryContext queryContext = dbContainer->mManager->createQueryContext();
-        XmlDocument dataAsDoc = dbContainer->mManager->createDocument();
-        XmlInputStream* bufferStream = new StringStreamXmlInputStream( mBuffer );
-        dataAsDoc.setContentAsXmlInputStream( bufferStream );
-        XmlValue dataAsValue( dataAsDoc );
-        queryContext.setVariableValue( "dataToInsertVar", dataAsValue );
-        XmlQueryExpression updateExpr = dbContainer->mManager->prepare( insertAfterQuery,
-                                                                       queryContext );
-        updateExpr.execute( queryContext );
-    }
-    catch ( const DbXml::XmlException& e ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::SEVERE );
-        mainLog << "Failed to insert the cost information into the XML database. "
-        << e.what() << endl;
-        return false;
-    }
-    return true;
+    // Convert the C++ string to a Java String so that they can be passed to the Java method.
+    jstring jData = jniContainer->mJavaEnv->NewStringUTF( aData.c_str() );
+    jstring jLocation = jniContainer->mJavaEnv->NewStringUTF( aLocation.c_str() );
+
+    // Call the appendData method
+    return jniContainer->mJavaEnv->CallBooleanMethod( jniContainer->mWriteDBInstance, appendDataMID, jData, jLocation );
+#else
+    return false;
+#endif
 }
 
 void XMLDBOutputter::startVisitScenario( const Scenario* aScenario, const int aPeriod ){
@@ -462,7 +408,7 @@ void XMLDBOutputter::startVisitScenario( const Scenario* aScenario, const int aP
             << util::XMLCreateDate( gGlobalTime ) << "\">" << endl;
     mTabs->increaseIndent();
 
-    //Write model version information
+    // Write model version information
     mTabs->writeTabs( mBuffer );
     mBuffer << "<model-version>ver_" << __ObjECTS_VER__ << "_r" << __REVISION_NUMBER__
         << "</model-version>" << endl;
@@ -540,22 +486,6 @@ void XMLDBOutputter::endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM,
 
     // Write the closing region tag.
     XMLWriteClosingTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get() );
-    
-#if SPLIT_REGIONS_FOR_INSERT
-    if( mIsFirstRegion ) {
-        mBuffer << "</world></scenario>" << endl;
-        finish();
-        mIsFirstRegion = false;
-    }
-    else {
-        mBuffer.put(0);
-        appendBuffer( "/scenario/world/region[last()]" );
-    }
-
-    mBuffer.clear();
-    mBuffer.seekg(0);
-    mBuffer.seekp(0);
-#endif
 }
 
 void XMLDBOutputter::startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) {
@@ -606,11 +536,13 @@ void XMLDBOutputter::endVisitResource( const AResource* aResource,
                                        const int aPeriod )
 {
     // Write the ghgs which put their output into the buffer stack.  We
-    // are not too concerned with writting empty tags at the resource
+    // are not too concerned with writing empty tags at the resource
     // level so we are not doing the full parent child buffers as in
     // technology.
-    stringstream* childBuffer = popBufferStack();
-    mBuffer << childBuffer->str();
+    ostream* childBuffer = popBufferStack();
+    if( childBuffer->rdbuf()->in_avail() ) {
+        mBuffer << childBuffer->rdbuf();
+    }
     delete childBuffer;
     // the buffer stack should be empty by now
     assert( mBufferStack.empty() );
@@ -781,8 +713,10 @@ void XMLDBOutputter::startVisitBaseTechnology( const BaseTechnology* aBaseTech, 
 
 void XMLDBOutputter::endVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod ){
     // write out anything written to the child buffer
-    stringstream* childBuffer = popBufferStack();
-    mBuffer << childBuffer->str();
+    ostream* childBuffer = popBufferStack();
+    if( childBuffer->rdbuf()->in_avail() ) {
+        mBuffer << childBuffer->rdbuf();
+    }
     
     // clean up the child buffer
     delete childBuffer;
@@ -843,10 +777,10 @@ void XMLDBOutputter::endVisitTechnology( const Technology* aTechnology,
 
     // Write the technology (open tag, children, and closing tag) 
     // if the child buffer is not empty
-    stringstream* childBuffer = popBufferStack();
-    stringstream* parentBuffer = popBufferStack();
-    if( !childBuffer->str().empty() ){
-        mBuffer << parentBuffer->str() << childBuffer->str();
+    iostream* childBuffer = popBufferStack();
+    iostream* parentBuffer = popBufferStack();
+    if( /*!childBuffer->str().empty()*/ childBuffer->rdbuf()->in_avail() ){
+        mBuffer << parentBuffer->rdbuf() << childBuffer->rdbuf();
         // We want to write the keywords last due to limitations in 
         // XPath we could be searching for them using following-sibling
         if( !aTechnology->mKeywordMap.empty() ) {
@@ -888,7 +822,7 @@ void XMLDBOutputter::startVisitMiniCAMInput( const MiniCAMInput* aInput, const i
     // We want to write the keywords last due to limitations in 
     // XPath we could be searching for them using following-sibling
     // note that mBufferStack.top() is the child buffer for input
-    if( !aInput->mKeywordMap.empty() && !mBufferStack.top()->str().empty() ) {
+    if( !aInput->mKeywordMap.empty() && mBufferStack.top()->rdbuf()->in_avail()/*->str().empty()*/ ) {
         XMLWriteElementWithAttributes( "", "keyword", *mBufferStack.top(), mTabs.get(), 
             aInput->mKeywordMap );
     }
@@ -990,12 +924,12 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
 void XMLDBOutputter::endVisitInput( const IInput* aInput, const int aPeriod ) {
     // Write the input (open tag, children, and closing tag) to the buffer at
     // the top of the stack only if the child buffer is not empty
-    stringstream* childBuffer = popBufferStack();
-    stringstream* parentBuffer = popBufferStack();
-    if( !childBuffer->str().empty() ){
+    iostream* childBuffer = popBufferStack();
+    iostream* parentBuffer = popBufferStack();
+    if( /*!childBuffer->str().empty()*/ childBuffer->rdbuf()->in_avail() ){
         // retBuffer is still on the top of the stack
-        stringstream* retBuffer = mBufferStack.top();
-        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        ostream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
         XMLWriteClosingTag( aInput->getXMLReportingName(), *retBuffer, mTabs.get() );
     }
     else {
@@ -1061,12 +995,12 @@ void XMLDBOutputter::startVisitOutput( const IOutput* aOutput, const int aPeriod
 void XMLDBOutputter::endVisitOutput( const IOutput* aOutput, const int aPeriod ) {
     // Write the output (open tag, children, and closing tag) to the buffer at
     // the top of the stack only if the child buffer is not empty
-    stringstream* childBuffer = popBufferStack();
-    stringstream* parentBuffer = popBufferStack();
-    if( !childBuffer->str().empty() ){
+    iostream* childBuffer = popBufferStack();
+    iostream* parentBuffer = popBufferStack();
+    if( /*!childBuffer->str().empty()*/childBuffer->rdbuf()->in_avail() ){
         // retBuffer is still at the top of the stack
-        stringstream* retBuffer = mBufferStack.top();
-        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        iostream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
         XMLWriteClosingTag( aOutput->getXMLReportingName(), *retBuffer, mTabs.get() );
     }
     else {
@@ -1156,12 +1090,12 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
 void XMLDBOutputter::endVisitGHG( const AGHG* aGHG, const int aPeriod ){
     // Write the ghg (open tag, children, and closing tag) to the buffer at
     // the top of the stack only if the child buffer is not empty
-    stringstream* childBuffer = popBufferStack();
-    stringstream* parentBuffer = popBufferStack();
-    if( !childBuffer->str().empty() ){
+    iostream* childBuffer = popBufferStack();
+    iostream* parentBuffer = popBufferStack();
+    if( /*!childBuffer->str().empty()*/childBuffer->rdbuf()->in_avail() ){
         // retBuffer is still on the top of the stack
-        stringstream* retBuffer = mBufferStack.top();
-        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        iostream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
         XMLWriteClosingTag( aGHG->getXMLName(), *retBuffer, mTabs.get() );
     }
     else {
@@ -1654,12 +1588,12 @@ void XMLDBOutputter::startVisitExpenditure( const Expenditure* aExpenditure, con
 void XMLDBOutputter::endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) {
     // Write the expenditure (open tag, children, and closing tag) to the buffer at
     // the top of the stack only if the child buffer is not empty
-    stringstream* childBuffer = popBufferStack();
-    stringstream* parentBuffer = popBufferStack();
-    if( !childBuffer->str().empty() ){
+    iostream* childBuffer = popBufferStack();
+    iostream* parentBuffer = popBufferStack();
+    if( /*!childBuffer->str().empty()*/childBuffer->rdbuf()->in_avail() ){
         // retBuffer is still at the top of the stack
-        stringstream* retBuffer = mBufferStack.top();
-        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        iostream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
         XMLWriteClosingTag( "expenditure", *retBuffer, mTabs.get() );
     }
     else {
@@ -1673,13 +1607,18 @@ void XMLDBOutputter::endVisitExpenditure( const Expenditure* aExpenditure, const
 }
 
 void XMLDBOutputter::startVisitSGMInput( const SGMInput* aInput, const int aPeriod ) {
-    mBufferStack.push( &mBuffer );
+    stringstream* parentBuffer = new stringstream();
+    mBufferStack.push( parentBuffer );
     startVisitInput( aInput, aPeriod );
 }
 
 void XMLDBOutputter::endVisitSGMInput( const SGMInput* aInput, const int aPeriod ) {
     endVisitInput( aInput, aPeriod );
-    mBufferStack.pop();
+    iostream* parentBuffer = popBufferStack();
+    if( parentBuffer->rdbuf()->in_avail() ) {
+        mBuffer << parentBuffer->rdbuf();
+    }
+    delete parentBuffer;
 }
 
 void XMLDBOutputter::startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) {
@@ -1711,12 +1650,12 @@ void XMLDBOutputter::startVisitNodeInput( const NodeInput* aNodeInput, const int
 void XMLDBOutputter::endVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) {
     // Write the nodeInput (open tag, children, and closing tag) to the buffer at
     // the top of the stack only if the child buffer is not empty
-    stringstream* childBuffer = popBufferStack();
-    stringstream* parentBuffer = popBufferStack();
-    if( !childBuffer->str().empty() ){
+    iostream* childBuffer = popBufferStack();
+    iostream* parentBuffer = popBufferStack();
+    if( /*!childBuffer->str().empty()*/childBuffer->rdbuf()->in_avail() ){
         // retBuffer is still at the top of the stack
-        stringstream* retBuffer = mBufferStack.top();
-        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        iostream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
         XMLWriteClosingTag( NodeInput::getXMLNameStatic(), *retBuffer, mTabs.get() );
     }
     else {
@@ -1758,15 +1697,21 @@ void XMLDBOutputter::startVisitHouseholdConsumer( const HouseholdConsumer* aHous
     XMLWriteElement( aHouseholdConsumer->workingAgePopMale, "working-age-pop-male", mBuffer, mTabs.get() );
     XMLWriteElement( aHouseholdConsumer->workingAgePopFemale, "working-age-pop-female", mBuffer, mTabs.get() );
 
-    // need to put mBuffer on the stack for the node inputs to write AIDADS/LES params
-    mBufferStack.push( &mBuffer );
+    // need to put a buffer on the stack for the node inputs to write AIDADS/LES params
+    stringstream* parentBuffer = new stringstream();
+    mBufferStack.push( parentBuffer );
 }
 
 void XMLDBOutputter::endVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer,
                                                const int aPeriod )
 {
     // the node inputs would have written themselves so we just need to pop the stack
-    mBufferStack.pop();
+    // and copy the data to mBuffer
+    iostream* parentBuffer = popBufferStack();
+    if( parentBuffer->rdbuf()->in_avail() ) {
+        mBuffer << parentBuffer->rdbuf();
+    }
+    delete parentBuffer;
 
     XMLWriteClosingTag( aHouseholdConsumer->getXMLName(), mBuffer, mTabs.get() );
 }
@@ -1931,12 +1876,12 @@ void XMLDBOutputter::startVisitBuildingNodeInput( const BuildingNodeInput* aBuil
 void XMLDBOutputter::endVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ) {
     // Write the BuildingNodeInput (open tag, children, and closing tag) to the buffer at
     // the top of the stack only if the child buffer is not empty
-    stringstream* childBuffer = popBufferStack();
-    stringstream* parentBuffer = popBufferStack();
-    if( !childBuffer->str().empty() ){
+    iostream* childBuffer = popBufferStack();
+    iostream* parentBuffer = popBufferStack();
+    if( /*!childBuffer->str().empty()*/childBuffer->rdbuf()->in_avail() ){
         // retBuffer is still at the top of the stack
-        stringstream* retBuffer = mBufferStack.top();
-        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        iostream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
         XMLWriteClosingTag( BuildingNodeInput::getXMLNameStatic(), *retBuffer, mTabs.get() );
     }
     else {
@@ -2077,30 +2022,60 @@ bool XMLDBOutputter::isTechnologyOperating( const int aPeriod ){
  * \return The buffer that was at the top of the stack.
  * \author Pralit Patel
  */
- stringstream* XMLDBOutputter::popBufferStack(){
-    stringstream* ret = mBufferStack.top();
+ iostream* XMLDBOutputter::popBufferStack(){
+    iostream* ret = mBufferStack.top();
     mBufferStack.pop();
     return ret;
 }
 
-XMLDBOutputter::StringStreamXmlInputStream::StringStreamXmlInputStream( stringstream& aStream )
-:mWrappedStringStream( &aStream )
+#if( __HAVE_JAVA__ )
+/*!
+ * \brief Constructs a boost IO sink that sends data to Java.
+ * \details The constructor will need to initialize JNI boiler plate and set up
+ *          a buffer to pass the data over to Java.  It will also do a bunch of
+ *          error checking and set the error flag as appropriate.
+ * \param aJNIContainer A weak pointer to the container which holds the Java VM
+ *                      references.  May be null if it did not initialize properly.
+ */
+XMLDBOutputter::SendToJavaIOSink::SendToJavaIOSink( const JNIContainer* aJNIContainer )
+:mJNIContainer( aJNIContainer ),
+// Get the receiveDataFromGCAM method from the write DB class with arguments of a byte
+// array "[B", an integer "I", and a return type of bool "Z" 
+mReceiveDataMID( aJNIContainer ? aJNIContainer->mJavaEnv->GetMethodID( aJNIContainer->mWriteDBClass, "receiveDataFromGCAM", "([BI)Z") : 0 ),
+// The same buffer size as the one used in Java, if we try to tune this we should
+// adjust it both here and in Java.
+BUFFER_SIZE( 1024 * 1024 ),
+mJNIBuffer( aJNIContainer ? aJNIContainer->mJavaEnv->NewByteArray( BUFFER_SIZE  ) : 0 ),
+// If any of the required JNI data structures were not properly set then set the error flag.
+mErrorFlag( !mJNIContainer || !mReceiveDataMID || !mJNIBuffer )
 {
 }
 
-XMLDBOutputter::StringStreamXmlInputStream::~StringStreamXmlInputStream() {
-    // nothing to do since this class does not manage the memory for
-    // the wrapped stringstream
+/*!
+ * \brief Destructor
+ */
+XMLDBOutputter::SendToJavaIOSink::~SendToJavaIOSink() {
+    // Nothing to do since this class does not manage the memory for
+    // the JNI Container data.
 }
 
-unsigned int XMLDBOutputter::StringStreamXmlInputStream::curPos() const {
-    return mWrappedStringStream->tellg();
+/*!
+ * \brief Read bytes as they are generated and pass them through to Java.
+ * \param aData The current buffer of data that needs to be sent.
+ * \param aLength How many chars from the buffer should be read.
+ * \warning If there was an error for any reason while dealing with Java the error flag
+ *          will be set and no more data will be sent.
+ */
+streamsize XMLDBOutputter::SendToJavaIOSink::write( const char *aData, std::streamsize aLength ) {
+    streamsize offset = 0;
+    const jbyte* jniData = reinterpret_cast<const jbyte*>( aData );
+    while( !mErrorFlag && offset < aLength ) {
+        streamsize numRead = min( aLength - offset, BUFFER_SIZE );
+        mJNIContainer->mJavaEnv->SetByteArrayRegion( mJNIBuffer, 0, numRead, jniData+offset );
+        mErrorFlag = mJNIContainer->mJavaEnv->CallBooleanMethod( mJNIContainer->mWriteDBInstance,
+            mReceiveDataMID, mJNIBuffer, numRead );
+        offset += numRead;
+    }
+    return offset;
 }
-
-unsigned int XMLDBOutputter::StringStreamXmlInputStream::readBytes( char* aToFill,
-                                                                    const unsigned int aMaxToRead )
-{
-    return mWrappedStringStream->read( aToFill, aMaxToRead ).gcount();
-}
-
 #endif

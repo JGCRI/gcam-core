@@ -17,7 +17,7 @@
             <!-- Where to write results -->
             <outFile>gcam_data/Core/reference.csv</outFile>
             <!-- Which database to query -->
-            <xmldbLocation>../database.dbxml</xmldbLocation>
+            <xmldbLocation>../database_basexdb</xmldbLocation>
             <!-- Additinoal query options which will be ignored when saving to CSV -->
             <batchQueryResultsInDifferentSheets>false</batchQueryResultsInDifferentSheets>
             <batchQueryIncludeCharts>false</batchQueryIncludeCharts>

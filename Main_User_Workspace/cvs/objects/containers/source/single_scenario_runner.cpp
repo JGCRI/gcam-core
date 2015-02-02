@@ -218,7 +218,6 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         outFile.close();
     }
 
-#if( __USE_XML_DB__ )
     static const bool printXMLDB = Configuration::getInstance()->getBool( "write-xml-db", true );
     if( printXMLDB ){
         mainLog.setLevel( ILogger::NOTICE );
@@ -226,9 +225,8 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         // Print the XML file for the XML database.
         scenario->printOutputXML();
     }
-#endif
 
-     // Print the timestamps.
+    // Print the timestamps.
     aTimer.stop();
     mainLog.setLevel( ILogger::DEBUG );
     aTimer.print( mainLog, "Data Readin, Model Run & Write Time:" );

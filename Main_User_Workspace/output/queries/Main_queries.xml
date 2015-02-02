@@ -357,7 +357,9 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                 element input {
                     attribute name { if($isCCS) then concat($outputName, ' CCS') else $outputName },
                     attribute type { 'input' },
-                    $outputs
+                    (: $outputs :) (: TODO: not sure why this doesn't work and we need to create these explicitly :)
+                    for $o in $outputs
+                    return element demand-physical { $o/@*, text{ $o/text() } }
                 }
             else
                 (: These are the residuals from chasing simulenaties, I've left this here
@@ -2834,7 +2836,9 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                 element sector {
                     attribute name { $outputName },
                     attribute type { 'sector' },
-                    $emissions
+                    (: $emissions :) (: TODO: not sure why this doesn't work and we need to create these explicitly :)
+                    for $e in $emissions
+                    return element emissions { $e/@*, text{ $e/text() } }
                 }
             else
                 (: These are the residuals from chasing simulenaties, I've left this here

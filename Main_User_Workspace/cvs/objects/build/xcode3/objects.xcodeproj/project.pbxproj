@@ -19,6 +19,7 @@
 		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
 		981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */; };
 		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
+		CD1C993F1A3AE1E800E5F460 /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
 		CD48872C122873C200F5A88A /* land_carbon_densities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488433122873C000F5A88A /* land_carbon_densities.cpp */; };
@@ -346,6 +347,7 @@
 		981AC63E19E31D9A000CB162 /* rcp_forcing_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rcp_forcing_target.h; sourceTree = "<group>"; };
 		CD177C39159A0ADA000A996F /* cumulative_emissions_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cumulative_emissions_target.h; sourceTree = "<group>"; };
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
+		CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = ../../../../../../../../../System/Library/Frameworks/JavaVM.framework; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD48842C122873C000F5A88A /* asimple_carbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asimple_carbon_calc.h; sourceTree = "<group>"; };
 		CD48842D122873C000F5A88A /* carbon_model_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carbon_model_utils.h; sourceTree = "<group>"; };
@@ -1011,6 +1013,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD1C993F1A3AE1E800E5F460 /* JavaVM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1020,6 +1023,7 @@
 		08FB7794FE84155DC02AAC07 /* objects */ = {
 			isa = PBXGroup;
 			children = (
+				CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */,
 				CD488409122873C000F5A88A /* objects */,
 				CD299E9711B9C11800E6D196 /* Products */,
 			);
@@ -2733,6 +2737,10 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
+				LIBRARY_SEARCH_PATHS = (
+					../../../../libs/xercesc/lib,
+					/System/Library/Frameworks/JavaVM.framework/Libraries,
+				);
 				PRODUCT_NAME = objects;
 			};
 			name = Release;
@@ -2748,22 +2756,19 @@
 				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = "BASEX_LIB=\"\\\"../libs/basex/BaseX.jar\\\"\"";
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../../libs/boost-lib",
-					../../../../libs/dbxml/include,
+					../../../../libs/xercesc/include,
+					../../../../libs/java/include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../../../libs/dbxml/lib;
+				LD_RUNPATH_SEARCH_PATHS = ../libs;
+				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lxerces-c",
-					"-ldbxml",
-					"-lxqilla",
-					"-ldb_cxx",
-				);
+				OTHER_LDFLAGS = "-lxerces-c";
 				PREBINDING = NO;
 				SDKROOT = "";
 				SYMROOT = ../../../../exe;
@@ -2782,22 +2787,22 @@
 				GCC_ENABLE_SSE42_EXTENSIONS = YES;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					"BASEX_LIB=\"\\\"../libs/basex/BaseX.jar\\\"\"",
+				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../../libs/boost-lib",
-					../../../../libs/dbxml/include,
+					../../../../libs/xercesc/include,
+					../../../../libs/java/include,
 				);
-				LIBRARY_SEARCH_PATHS = ../../../../libs/dbxml/lib;
+				LD_RUNPATH_SEARCH_PATHS = ../libs;
+				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"-lxerces-c",
-					"-ldbxml",
-					"-lxqilla",
-					"-ldb_cxx",
-				);
+				OTHER_LDFLAGS = "-lxerces-c";
 				PREBINDING = NO;
 				SDKROOT = "";
 				SYMROOT = ../../../../exe;
@@ -2818,6 +2823,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
+					"BASEX_LIB=\"\\\"../libs/basex/BaseX.jar\\\"\"",
 					USE_LAPACK,
 				);
 				GCC_UNROLL_LOOPS = YES;
@@ -2825,16 +2831,15 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../../libs/boost-lib",
-					../../../../libs/dbxml/include,
+					../../../../libs/xercesc/include,
+					../../../../libs/java/include,
 					"../../../../libs/boost-numeric-bindings",
 				);
-				LIBRARY_SEARCH_PATHS = ../../../../libs/dbxml/lib;
+				LD_RUNPATH_SEARCH_PATHS = ../libs;
+				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lxerces-c",
-					"-ldbxml",
-					"-lxqilla",
-					"-ldb_cxx",
 					"-llapack",
 					"-lblas",
 				);
@@ -2869,6 +2874,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
+					"BASEX_LIB=\"\\\"../libs/basex/BaseX.jar\\\"\"",
 					USE_LAPACK,
 					GCAM_PARALLEL_ENABLED,
 				);
@@ -2877,20 +2883,19 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"../../../../libs/boost-lib",
-					../../../../libs/dbxml/include,
+					../../../../libs/xercesc/include,
+					../../../../libs/java/include,
 					"../../../../libs/boost-numeric-bindings",
 					../../../../libs/tbb/include,
 				);
+				LD_RUNPATH_SEARCH_PATHS = ../libs;
 				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/dbxml/lib,
+					../../../../libs/xercesc/lib,
 					../../../../libs/tbb/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lxerces-c",
-					"-ldbxml",
-					"-lxqilla",
-					"-ldb_cxx",
 					"-llapack",
 					"-lblas",
 					"-ltbb",

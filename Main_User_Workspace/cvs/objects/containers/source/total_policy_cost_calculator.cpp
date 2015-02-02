@@ -61,18 +61,8 @@
 #include "policy/include/policy_ghg.h"
 #include "reporting/include/xml_db_outputter.h"
 
-// Only compile this code if the XML database is turned on.
-#if( __USE_XML_DB__ )
-#include "dbxml/DbXml.hpp"
-#endif
-
 using namespace std;
 using namespace xercesc;
-
-// Only compile this code if the XML database is turned on.
-#if( __USE_XML_DB__ )
-using namespace DbXml;
-#endif
 
 /*! \brief Constructor.
 * \param aSingleScenario The single scenario runner.
@@ -349,12 +339,10 @@ void TotalPolicyCostCalculator::printOutput() const {
     const string UPDATE_LOCATION = "/scenario/world/region[last()]";
     
     // Append the data to the XML database.
-#if __USE_XML_DB__
     static const bool printXMLDB = Configuration::getInstance()->getBool( "write-xml-db", true );
     if( printXMLDB ){
         XMLDBOutputter::appendData( xmlString, UPDATE_LOCATION );
     }
-#endif
 
     static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
 

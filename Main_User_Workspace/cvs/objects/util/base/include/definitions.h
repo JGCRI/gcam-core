@@ -56,9 +56,6 @@
 
 // Configuration constants.
 
-//! A flag which tells whether to attempt linking of Fortran portions.
-#define __HAVE_FORTRAN__ 0
-
 #define __ACCESS_DB_OVERRIDE__ 0
 
 //! A flag which turns on or off compilation of database code. Database
@@ -70,7 +67,9 @@
 #endif
 
 //! A flag which turns on or off the compilation of the XML database code.
-#define __USE_XML_DB__ 1
+#ifndef __HAVE_JAVA__
+#define __HAVE_JAVA__ 1
+#endif
 
 // This allows for memory leak debugging.
 #if defined(_MSC_VER)
@@ -86,6 +85,12 @@
 // Remove the _stdcall needed for WIN32 from externs
 #if !defined(WIN32) && !defined(_stdcall)
 #define _stdcall
+#endif
+
+#if defined(WIN32)
+#define PATH_SEPARATOR ";"
+#else
+#define PATH_SEPARATOR ":"
 #endif
 
 #endif // _DEFINITIONS_H_

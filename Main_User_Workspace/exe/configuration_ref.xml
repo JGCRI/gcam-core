@@ -3,7 +3,7 @@
 	<Files>
 		<Value name="xmlInputFileName">../input/gcam-data-system/xml/modeltime-xml/modeltime.xml</Value>
 		<Value name="xmlOutputFileName">../output/output.xml</Value>
-		<Value name="xmldb-location">../output/database.dbxml</Value>
+		<Value name="xmldb-location">../output/database_basexdb</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="BatchFileName">batch_ag.xml</Value>
 		<Value name="policy-target-file">../input/policy/forcing_target_4p5.xml</Value>

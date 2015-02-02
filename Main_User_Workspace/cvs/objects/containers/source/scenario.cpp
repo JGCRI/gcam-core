@@ -628,7 +628,6 @@ void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
 /*! \brief A function which writes output to an XML file so that it can be read by the XML database.
 */
 void Scenario::printOutputXML() const {
-#if( __USE_XML_DB__ )	
     // Create a graph printer.
     XMLDBOutputter xmlDBOutputter;
     
@@ -639,7 +638,6 @@ void Scenario::printOutputXML() const {
     
     // Print the output.
     xmlDBOutputter.finish();
-#endif
 }
 
 /*! \brief A function which print dependency graphs showing fuel usage by

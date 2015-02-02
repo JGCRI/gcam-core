@@ -284,43 +284,37 @@
       
       <aQuery>
          <region name="USA" />
-       <region name="Canada" />
-       <region name="Western Europe" />
-       <region name="Japan" />
-       <region name="Australia_NZ" />
-       <region name="Former Soviet Union" />
-       <region name="China" />
-       <region name="Middle East" />
-       <region name="Africa" />
-       <region name="Latin America" />
-       <region name="Southeast Asia" />
-       <region name="Eastern Europe" />
-       <region name="Korea" />
-       <region name="India" />
-       <region name="Africa_Eastern" />
-       <region name="Africa_Northern" />
-       <region name="Africa_Southern" />
-       <region name="Africa_Western" />
-       <region name="Brazil" />
-       <region name="Central America and Caribbean" />
-       <region name="Central Asia" />
-       <region name="EU-12" />
-       <region name="EU-15" />
-       <region name="Europe_Eastern" />
-       <region name="Europe_Non_EU" />
-       <region name="European Free Trade Association" />
-       <region name="Indonesia" />
-       <region name="Mexico" />
-       <region name="Pakistan" />
-       <region name="Russia" />
-       <region name="South Africa" />
-       <region name="South America_Northern" />
-       <region name="South America_Southern" />
-       <region name="Argentina" />
-       <region name="Colombia" />
-       <region name="South Asia" />
-       <region name="South Korea" />
-       <region name="Taiwan" />
+         <region name="Africa_Eastern" />
+         <region name="Africa_Northern" />
+         <region name="Africa_Southern" />
+         <region name="Africa_Western" />
+         <region name="Australia_NZ" />
+         <region name="Brazil" />
+         <region name="Canada" />
+         <region name="Central America and Caribbean" />
+         <region name="Central Asia" />
+         <region name="China" />
+         <region name="EU-12" />
+         <region name="EU-15" />
+         <region name="Europe_Eastern" />
+         <region name="Europe_Non_EU" />
+         <region name="European Free Trade Association" />
+         <region name="India" />
+         <region name="Indonesia" />
+         <region name="Japan" />
+         <region name="Mexico" />
+         <region name="Middle East" />
+         <region name="Pakistan" />
+         <region name="Russia" />
+         <region name="South Africa" />
+         <region name="South America_Northern" />
+         <region name="South America_Southern" />
+         <region name="South Asia" />
+         <region name="South Korea" />
+         <region name="Southeast Asia" />
+         <region name="Taiwan" />
+         <region name="Argentina" />
+         <region name="Colombia" />
        <supplyDemandQuery title="Primary energy with CCS (Direct Equivalent)">
          <axis1 name="fuel">input[@name]</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
@@ -465,7 +459,9 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                 element input {
                     attribute name { if($isCCS) then concat($outputName, ' CCS') else $outputName },
                     attribute type { 'input' },
-                    $outputs
+                    (: $outputs :) (: TODO: not sure why this doesn't work and we need to create these explicitly :)
+                    for $o in $outputs
+                    return element demand-physical { $o/@*, text{ $o/text() } }
                 }
             else
                 (: These are the residuals from chasing simulenaties, I've left this here
@@ -939,45 +935,38 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
    
 
    <aQuery>
-      <region name="USA" />
-       <region name="Canada" />
-       <region name="Western Europe" />
-       <region name="Japan" />
-       <region name="Australia_NZ" />
-       <region name="Former Soviet Union" />
-       <region name="China" />
-       <region name="Middle East" />
-       <region name="Africa" />
-       <region name="Latin America" />
-       <region name="Southeast Asia" />
-       <region name="Eastern Europe" />
-       <region name="Korea" />
-       <region name="India" />
-       <region name="Africa_Eastern" />
-       <region name="Africa_Northern" />
-       <region name="Africa_Southern" />
-       <region name="Africa_Western" />
-       <region name="Brazil" />
-       <region name="Central America and Caribbean" />
-       <region name="Central Asia" />
-       <region name="EU-12" />
-       <region name="EU-15" />
-       <region name="Europe_Eastern" />
-       <region name="Europe_Non_EU" />
-       <region name="European Free Trade Association" />
-       <region name="Indonesia" />
-       <region name="Mexico" />
-       <region name="Pakistan" />
-       <region name="Russia" />
-       <region name="South Africa" />
-       <region name="South America_Northern" />
-       <region name="South America_Southern" />
-       <region name="Argentina" />
-       <region name="Colombia" />
-       <region name="South Asia" />
-       <region name="South Korea" />
-       <region name="Taiwan" />
-
+         <region name="USA" />
+         <region name="Africa_Eastern" />
+         <region name="Africa_Northern" />
+         <region name="Africa_Southern" />
+         <region name="Africa_Western" />
+         <region name="Australia_NZ" />
+         <region name="Brazil" />
+         <region name="Canada" />
+         <region name="Central America and Caribbean" />
+         <region name="Central Asia" />
+         <region name="China" />
+         <region name="EU-12" />
+         <region name="EU-15" />
+         <region name="Europe_Eastern" />
+         <region name="Europe_Non_EU" />
+         <region name="European Free Trade Association" />
+         <region name="India" />
+         <region name="Indonesia" />
+         <region name="Japan" />
+         <region name="Mexico" />
+         <region name="Middle East" />
+         <region name="Pakistan" />
+         <region name="Russia" />
+         <region name="South Africa" />
+         <region name="South America_Northern" />
+         <region name="South America_Southern" />
+         <region name="South Asia" />
+         <region name="South Korea" />
+         <region name="Southeast Asia" />
+         <region name="Taiwan" />
+         <region name="Argentina" />
+         <region name="Colombia" />
 <supplyDemandQuery title="CO2 Emissions by enduse">
          <axis1 name="sector">sector[@name]</axis1>
          <axis2 name="Year">emissions[@year]</axis2>
@@ -1057,7 +1046,9 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                 element sector {
                     attribute name { $outputName },
                     attribute type { 'sector' },
-                    $emissions
+                    (: $emissions :) (: TODO: not sure why this doesn't work and we need to create these explicitly :)
+                    for $e in $emissions
+                    return element emissions { $e/@*, text{ $e/text() } }
                 }
             else
                 (: These are the residuals from chasing simulenaties, I've left this here
