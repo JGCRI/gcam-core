@@ -255,10 +255,10 @@ write_mi_data( L213.GRASSEmissionsProtect, "InputEmissionsUnmgd", "EMISSIONS_LEV
 write_mi_data( L213.FORESTEmissionsProtect, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.FORESTEmissionsProtect", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
 write_mi_data( L213.GRASSEmissionsFactorsProtect_BCOC, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.GRASSEmissionsFactorsProtect_BCOC", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
 write_mi_data( L213.FORESTEmissionsFactorsProtect_BCOC, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.FORESTEmissionsFactorsProtect_BCOC", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
-write_mi_data( L213.GRASSEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.GRASSEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
-write_mi_data( L213.FORESTEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.FORESTEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
-write_mi_data( L213.GRASSEmissionsFactorsProtect, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.GRASSEmissionsFactorsProtect", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
-write_mi_data( L213.FORESTEmissionsFactorsProtect, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.FORESTEmissionsFactorsProtect", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
+#write_mi_data( L213.GRASSEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.GRASSEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
+#write_mi_data( L213.FORESTEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.FORESTEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
+#write_mi_data( L213.GRASSEmissionsFactorsProtect, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.GRASSEmissionsFactorsProtect", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
+#write_mi_data( L213.FORESTEmissionsFactorsProtect, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L213.FORESTEmissionsFactorsProtect", "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml" ) 
 
 insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_protected_unmgd_emissions.xml", "EMISSIONS_XML_FINAL", "all_protected_unmgd_emissions.xml", "", xml_tag="outFile" )
 

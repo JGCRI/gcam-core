@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policy-target-runner name="old">
+	<target-value>3.7</target-value>
+	<target-tolerance>0.1</target-tolerance>
+	<target-type>forcing</target-type>
+	<first-tax-year>2025</first-tax-year>
+	<tax-name>CO2_tf</tax-name>
+</policy-target-runner>

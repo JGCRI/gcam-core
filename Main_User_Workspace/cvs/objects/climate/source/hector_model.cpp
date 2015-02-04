@@ -294,7 +294,8 @@ void HectorModel::completeInit(const std::string &aScenarioName)
                    << it->second << "\n";
     }
     // Land Use CO2 is special; it can be set each year, rather than each period.
-    mEmissionsTable["CO2NetLandUse"].resize(nrslt);
+    // KVC_TEMP: TURN THIS OFF
+    // mEmissionsTable["CO2NetLandUse"].resize(nrslt);
 
     // tables for temperature and total forcing and land and ocean fluxes
     mTotRFTable.resize(nrslt);
@@ -369,7 +370,8 @@ void HectorModel::reset(int aperiod)
     for(it=mEmissionsTable.begin(); it != mEmissionsTable.end(); ++it) {
         const std::string &gas = it->first;
         std::vector<double> &emissions = it->second;
-        if(gas != "CO2NetLandUse") {
+        // KVC_TEMP: Send CO2NetLandUse emissions by time step
+        if( 1 == 1 /* gas != "CO2NetLandUse" */ ) {
             // Replay emissions up to, but not including, the aperiod
             // argument.  We also skip period 0, since it's not a "real"
             // period.
@@ -478,6 +480,7 @@ bool HectorModel::setEmissions(const std::string &aGasName, int aPeriod,
         // // XXX end debug
         mEmissionsTable[aGasName][aPeriod] = aEmissions;
     }
+       
     return valid;
 }
 
@@ -512,6 +515,7 @@ bool HectorModel::setLUCEmissions(const std::string &aGasName,
         // // XXX end debug 
         mEmissionsTable[aGasName][yearlyDataIndex(aYear)] = aEmissions;
     }
+
     return valid;
 }
 
@@ -877,7 +881,8 @@ double HectorModel::getEmissions(const std::string &aGasName, int aYear) const
     ILogger &climatelog = ILogger::getLogger("climate-log");
     
     if(aYear < mModeltime->getEndYear() && aYear > mModeltime->getStartYear()) {
-        if(aGasName == "CO2NetLandUse")
+        // KVC_TEMP: Turn off annual emissions
+        if( 1 == 0 /* aGasName == "CO2NetLandUse" */ )
             return (mEmissionsTable.find(aGasName)->second)[yearlyDataIndex(aYear)]; 
         else {
             std::map<std::string, std::vector<double> >::const_iterator it =

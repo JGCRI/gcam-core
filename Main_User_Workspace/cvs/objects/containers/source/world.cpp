@@ -396,7 +396,9 @@ void World::updateSummary( const list<string> aPrimaryFuelList, const int period
 void World::setEmissions(int period) {
     // Declare visitors which will aggregate emissions by period.
     EmissionsSummer co2Summer( "CO2" );
-    LUCEmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
+    // KVC_TEMP: Turn off annual emissions
+    // LUCEmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
+    EmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
     EmissionsSummer ch4Summer( "CH4" );
     EmissionsSummer ch4agrSummer( "CH4_AGR" );
     EmissionsSummer ch4awbSummer( "CH4_AWB" );
@@ -483,6 +485,9 @@ void World::setEmissions(int period) {
     allSummer.addEmissionsSummer( &ocSummer );
     allSummer.addEmissionsSummer( &bcawbSummer );
     allSummer.addEmissionsSummer( &ocawbSummer );
+    
+    // KVC_TEMP: Turn off annual emissions
+    allSummer.addEmissionsSummer( &co2LandUseSummer );
 
    const double TG_TO_PG = 1000;
    const double N_TO_N2O = 1.571132; 
@@ -508,15 +513,24 @@ void World::setEmissions(int period) {
                                      / TG_TO_PG );
     }
     
+    // KVC_TEMP: Turn off annual emissions.
+    if( co2Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "CO2NetLandUse", period,
+                                    co2LandUseSummer.getEmissions( period )
+                                    / TG_TO_PG );
+    }
+    /*
     const int currYear = scenario->getModeltime()->getper_to_yr( period );
     const int startYear = currYear - scenario->getModeltime()->gettimestep( period ) + 1;
     for ( int i = startYear; i <= currYear; i++ ) {
         if( co2LandUseSummer.areEmissionsSet( i ) ){
-            mClimateModel->setLUCEmissions( "CO2NetLandUse", i,
-                                            co2LandUseSummer.getEmissions( i )
-                                            / TG_TO_PG );
+           mClimateModel->setLUCEmissions( "CO2NetLandUse", i,
+                                           co2LandUseSummer.getEmissions( i )
+                                           / TG_TO_PG );
+            
         }
     }
+    */
     
     if( ch4Summer.areEmissionsSet( period ) ){
         mClimateModel->setEmissions( "CH4", period,

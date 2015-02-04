@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+  <world>
+    <MagiccModel>
+      <last-historical-year>2005</last-historical-year>
+      <bc-unit-forcing>0</bc-unit-forcing>
+      <carbon-model-start-year>1705</carbon-model-start-year>
+    </MagiccModel>
+  </world>
+</scenario>
