@@ -29,6 +29,8 @@ min_weight_EJ <- 1e-8    #Minimum weighting in EJ, for country-level aggregation
 digits_speed <- 1
 digits_LoadFactor <- 2
 digits_mpkm <- 0
+# reduce rounding in detailed USA transport for compatability w model
+digits_trnUSA_default <- 1
 
 #Level2 data names (specific to the transportation sector)
 #Transportation subsectors and technologies

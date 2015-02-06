@@ -134,6 +134,8 @@ protected:
 
     //! Name of the electricity sector which this Technology will supply.
     std::string mElectricSectorName; 
+    
+    std::string mElectricSectorMarket;
 
     //! Name of trial market associated with this Intermittent Technology.
     std::string mTrialMarketName ;

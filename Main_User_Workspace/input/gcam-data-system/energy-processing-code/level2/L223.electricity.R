@@ -495,7 +495,7 @@ write_mi_data( L223.PrimaryRenewKeywordInt_elec, "PrimaryRenewKeywordInt", "ENER
 write_mi_data( L223.AvgFossilEffKeyword_elec, "AvgFossilEffKeyword", "ENERGY_LEVEL2_DATA", "L223.AvgFossilEffKeyword_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalTechCapture_elec, "GlobalTechCapture", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapture_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalIntTechBackup_elec, "GlobalIntTechBackup", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechBackup_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
-write_mi_data( L223.StubTechCapFactor_elec, "StubTechCapFac", "ENERGY_LEVEL2_DATA", "L223.StubTechCapFactor_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
+write_mi_data( L223.StubTechCapFactor_elec, "StubTechCapFactor", "ENERGY_LEVEL2_DATA", "L223.StubTechCapFactor_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 if( exists( "L223.GlobalTechShutdownProfit_elec" ) ) {
 	write_mi_data( L223.GlobalTechShutdownProfit_elec, "GlobalTechShutdownProfit", "ENERGY_LEVEL2_DATA", "L223.GlobalTechShutdownProfit_elec",
 	               "ENERGY_XML_BATCH", "batch_electricity.xml" )

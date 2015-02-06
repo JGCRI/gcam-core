@@ -4,7 +4,7 @@
 #Resources
 names_DepRsrc <- c( "region", "depresource", "output.unit", "price.unit", "market" )
 names_RenewRsrc <- c( "region", "renewresource", "output.unit", "price.unit", "market" )
-names_UnlimitRsrc <- c( "region", "unlimited.resource", "output.unit", "price.unit", "market" )
+names_UnlimitRsrc <- c( "region", "unlimited.resource", "output.unit", "price.unit", "market", "capacity.factor" )
 names_DepRsrcPrice <- c( "region", "depresource", "year", "price" )
 names_RenewRsrcPrice <- c( "region", "renewresource", "year", "price" )
 names_UnlimitRsrcPrice <- c( "region", "unlimited.resource", "year", "price" )
@@ -56,6 +56,7 @@ names_FixedOutput <- c( names_TechYr, "fixedOutput" )
 #Global technologies
 names_GlobalTech <- c( "sector.name", "subsector.name", "technology" )
 names_GlobalTechInterp <- c( "sector.name", "subsector.name", "technology", "apply.to","from.year", "to.year", "interpolation.function" )
+names_GlobalTechInterpTo <- c( "sector.name", "subsector.name", "technology", "apply.to","from.year", "to.year", "to.value", "interpolation.function" )
 names_GlobalTechYr <- c( names_GlobalTech, "year" )
 names_GlobalTechInput <- c( names_GlobalTechYr, input )
 names_GlobalTechCoef <- c( names_GlobalTechYr, input, "coefficient" )
@@ -71,6 +72,7 @@ names_GlobalRenewTech <- c( names_GlobalTechYr, "renewable.input" )
 names_GlobalTechSecOut <- c( names_GlobalTechYr, "secondary.output", "output.ratio" )
 names_GlobalTechCSeq <- c( names_GlobalTechYr, "remove.fraction", "target.gas" )
 names_GlobalTechShutdown <- c( names_GlobalTechYr, "lifetime", "shutdown.rate" )
+names_GlobalTechSCurve <- c( names_GlobalTechYr, "lifetime", "steepness", "half.life" )
 
 #Stub technologies
 names_StubTech <- c( "region", "supplysector", "subsector", "stub.technology" )
@@ -84,6 +86,7 @@ names_StubTechCalorieContent <- c( names_StubTechEff )
 names_StubTechCost <- c( names_StubTechYr, "minicam.non.energy.input", "input.cost" )
 names_StubTechFixOut <- c( names_StubTechYr, "fixedOutput", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 names_StubTechCapFactor <- c( names_StubTechYr, "input.capital", "capacity.factor.capital", "input.OM.fixed", "capacity.factor.OM" )
+names_StubTechMarket <- c( names_StubTechYr, input, "market.name" )
 
 #Agricultural sectors, subsectors, and technologies
 names_AgSupplySector <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent" )

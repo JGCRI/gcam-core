@@ -130,7 +130,10 @@ bool SecondaryOutput::XMLParse( const DOMNode* aNode )
             mOutputRatio.set( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "pMultiplier" ) {
-            mPriceMult = XMLHelper<double>::getValue( curr );;
+            mPriceMult = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "market-name" ) {
+            mMarketName = XMLHelper<string>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -148,7 +151,8 @@ void SecondaryOutput::toInputXML( ostream& aOut,
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElement( mOutputRatio, "output-ratio", aOut, aTabs );
-    XMLWriteElement( mPriceMult, "pMultiplier", aOut, aTabs );
+    XMLWriteElementCheckDefault( mPriceMult, "pMultiplier", aOut, aTabs, 1.0 );
+    XMLWriteElementCheckDefault( mMarketName, "market-name", aOut, aTabs, string() );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -161,6 +165,7 @@ void SecondaryOutput::toDebugXML( const int aPeriod,
     XMLWriteElement( mPriceMult, "pMultiplier", aOut, aTabs );
     XMLWriteElement( mPhysicalOutputs[ aPeriod ], "output", aOut, aTabs );
     XMLWriteElement( mCachedCO2Coef, "cached-co2-coef", aOut, aTabs );
+    XMLWriteElement( mMarketName, "market-name", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -174,7 +179,7 @@ void SecondaryOutput::completeInit( const string& aSectorName,
         scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
                                                                           aRegionName,
                                                                           getName(),
-                                                                          aRegionName );
+                                                                          mMarketName.empty() ? aRegionName : mMarketName );
     }
 }
 
@@ -184,7 +189,7 @@ void SecondaryOutput::initCalc( const string& aRegionName,
 {
     // Initialize the cached CO2 coefficient. Output ratio is determined by the
     // CO2 coefficient and the ratio of output to the primary good.
-    const double CO2Coef = FunctionUtils::getCO2Coef( aRegionName, mName, aPeriod );
+    const double CO2Coef = FunctionUtils::getCO2Coef( mMarketName.empty() ? aRegionName : mMarketName, mName, aPeriod );
     mCachedCO2Coef.set( CO2Coef * mOutputRatio );
 }
 
@@ -222,7 +227,7 @@ void SecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
     // fill all of demand. If this technology also added to supply, supply would
     // not equal demand.
     Marketplace* marketplace = scenario->getMarketplace();
-    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, -1 * mPhysicalOutputs[ aPeriod ], mLastCalcValue, aPeriod, true );
+    mLastCalcValue = marketplace->addToDemand( mName, mMarketName.empty() ? aRegionName : mMarketName, -1 * mPhysicalOutputs[ aPeriod ], mLastCalcValue, aPeriod, true );
 }
 
 double SecondaryOutput::getPhysicalOutput( const int aPeriod ) const
@@ -235,7 +240,7 @@ double SecondaryOutput::getValue( const string& aRegionName,
                                   const ICaptureComponent* aCaptureComponent,
                                   const int aPeriod ) const
 {
-    double price = scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod, true );
+    double price = scenario->getMarketplace()->getPrice( mName, mMarketName.empty() ? aRegionName : mMarketName, aPeriod, true );
 
     // Market price should exist or there is not a sector with this good as the
     // primary output. This can be caused by incorrect input files.
@@ -250,7 +255,7 @@ double SecondaryOutput::getValue( const string& aRegionName,
 }
 
 string SecondaryOutput::getOutputUnits( const string& aRegionName ) const {
-    return scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, true )
+    return scenario->getMarketplace()->getMarketInfo( getName(), mMarketName.empty() ? aRegionName : mMarketName, 0, true )
         ->getString( "output-unit", false );
 }
 

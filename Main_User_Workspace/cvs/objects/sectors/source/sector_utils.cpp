@@ -70,12 +70,16 @@ typedef HashMap<string, string>::const_iterator NameIterator;
  * \param aSectorName Name of the sector for which to create the market.
  * \param aTechnologyInfo Technology Info object for passing information from
  *        technology to SectorUtil and market.
+ * \param aMarketName The market name which may differ from aRegionName when the
+ *                    trial value is shared amongst different regions.
  * \return Whether the market was created and did not already exist.
  */
 bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
                                            const string& aSectorName,
-                                           const IInfo* aTechnologyInfo )
+                                           const IInfo* aTechnologyInfo,
+                                           const string& aMarketName )
 {
+    const string& marketName = aMarketName.empty() ? aRegionName : aMarketName;
     // Add the trial market name to the cached list of trial names.
     const string trialName = getTrialMarketName( aSectorName );
     sTrialMarketNames.insert( make_pair( aSectorName, trialName ) );
@@ -83,7 +87,7 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
     // Create the additional market.
     Marketplace* marketplace = scenario->getMarketplace();
     bool isNewMarket = marketplace->createMarket( aRegionName,
-                                                  aRegionName,
+                                                  marketName,
                                                   trialName,
                                                   IMarketType::TRIAL_VALUE );
 

@@ -6,7 +6,7 @@
 
 # -----------------------------------------------------------------------------
 # Load required libraries
-libs <- c( "reshape2" )
+libs <- c( "reshape2", "stringr" )
 for( i in libs ) {
 	if( !require( i, character.only=T ) ) {
 		cat( "Couldn't load", i, "; trying to download it...\n" )
@@ -399,7 +399,7 @@ write_mi_data <- function( x, IDstring, domain="none", fn=GCAM_SOURCE_FN[ GCAM_S
 		write( "from,to", myfn, append=T )
 		write( "LandNode1,LandNode", myfn, append=T )
 		write( "LandNode2,LandNode", myfn, append=T )
-		write( "LandNode3,LandNode", myfn, append=T )		
+		write( "LandNode3,LandNode", myfn, append=T )	
 	}
 }
 

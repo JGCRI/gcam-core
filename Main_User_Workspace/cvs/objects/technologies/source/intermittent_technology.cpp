@@ -85,6 +85,7 @@ mAveGridCapacityFactor( 0.60 )
  */
 IntermittentTechnology::IntermittentTechnology( const IntermittentTechnology& aOther )
 : Technology( aOther ),mElectricSectorName( aOther.mElectricSectorName ),
+mElectricSectorMarket( aOther.mElectricSectorMarket ),
 mTrialMarketNameParsed( aOther.mTrialMarketNameParsed ),
 mBackupCapacityFactor( aOther.mBackupCapacityFactor ),
 mBackupCapitalCost( aOther.mBackupCapitalCost )
@@ -149,6 +150,9 @@ bool IntermittentTechnology::XMLDerivedClassParse( const string& aNodeName,
     if( aNodeName == "electric-sector-name" ){
         mElectricSectorName = XMLHelper<string>::getValue( aCurr );
     }
+    else if( aNodeName == "electric-sector-market" ){
+        mElectricSectorMarket = XMLHelper<string>::getValue( aCurr );
+    }
     // Dependent trial market name to allow multiple and different intermittent
     // technologies to contribute to same trial market.
     else if( aNodeName == "trial-market-name" ){
@@ -182,6 +186,7 @@ bool IntermittentTechnology::XMLDerivedClassParse( const string& aNodeName,
 
 void IntermittentTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
+    XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
     XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
     if( mBackupCapacityFactor.isInited() ){
         XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs);
@@ -206,6 +211,7 @@ void IntermittentTechnology::toInputXMLForRestart( ostream& aOut, Tabs* aTabs ) 
 
 void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
+    XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
     XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
     if( mTrialMarketPrice.isInited() ){
         XMLWriteElementCheckDefault( mTrialMarketPrice.get(), "trial-market-price", aOut, aTabs, 0.001 );
@@ -274,11 +280,15 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     else {
         mTrialMarketName = mTrialMarketNameParsed;
     }
+    
+    if( mElectricSectorMarket.empty() ) {
+        mElectricSectorMarket = aRegionName;
+    }
 
     // Create trial market for intermettent technology if backup exists and needs to be
     // calculated.
     if( mBackupCalculator.get() ){
-        SectorUtils::createTrialSupplyMarket( aRegionName, mTrialMarketName, mIntermittTechInfo.get() );
+        SectorUtils::createTrialSupplyMarket( aRegionName, mTrialMarketName, mIntermittTechInfo.get(), mElectricSectorMarket );
         MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
         depFinder->addDependency( aSectorName, aRegionName,
                                   SectorUtils::getTrialMarketName( mTrialMarketName ),
@@ -286,7 +296,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
         if( aSectorName != mElectricSectorName ) {
             // This dependency can not be removed since it is inherently different
             // than sector dependencies.
-            depFinder->addDependency( mElectricSectorName, aRegionName, aSectorName, aRegionName, false );
+            depFinder->addDependency( mElectricSectorName, mElectricSectorMarket, aSectorName, aRegionName, false );
         }
     }
 
@@ -307,6 +317,10 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
             SectorUtils::getTrialMarketName(mTrialMarketName),
             aRegionName, mTrialMarketPrice.get(), period, true );
     }
+    
+    initializeInputLocations( aRegionName, aSectorName, 0 );
+    MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
+    depFinder->addDependency( aSectorName, aRegionName, (*mResourceInput)->getName(), aRegionName );
 }
 
 void IntermittentTechnology::initCalc( const string& aRegionName,
@@ -364,7 +378,7 @@ void IntermittentTechnology::production( const string& aRegionName,
     
     // For the trial intermittent technology market, set the trial supply amount to
     // the ratio of intermittent-technology output to the electricity output.
-    double dependentSectorOutput = scenario->getMarketplace()->getDemand( mElectricSectorName, aRegionName, aPeriod );
+    double dependentSectorOutput = scenario->getMarketplace()->getDemand( mElectricSectorName, mElectricSectorMarket, aPeriod );
 
     double currentTechRatio = 0;
     if ( dependentSectorOutput > 0 ){
@@ -567,13 +581,10 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
         // the other energy input.
         
         // Use period 0 marketInfo object to determine which input has a resource variance and is therefore a resource.
-        const IInfo* info = marketplace->getMarketInfo( ( *i )->getName(), aRegionName, 0, true );
-        if( !info ){
-            continue;
-        }
+        const IInfo* info = marketplace->getMarketInfo( ( *i )->getName(), aRegionName, 0, false );
 
         // If the good has a variance it must be the resource input.
-        if( info->hasValue( "resourceVariance" ) ){
+        if( info && info->hasValue( "resourceVariance" ) ){
             if( mResourceInput != mInputs.end() ){
                 // There already was a resource input.
                 ILogger& mainLog = ILogger::getLogger( "main_log" );

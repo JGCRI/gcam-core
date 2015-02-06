@@ -38,6 +38,8 @@ names_DemandFunction_serv <- c("region", "gcam.consumer", "nodeInput", "building
 names_Satiation_flsp <- c( "region", "gcam.consumer", "nodeInput", "building.node.input", "satiation.level" )
 names_SatiationAdder <- c( "region", "gcam.consumer", "nodeInput", "building.node.input", "satiation.adder" )
 names_ShellConductance <- c( names_BldNodes, "year", "shell.conductance", "shell.year", "floor.to.surface.ratio" )
+names_GenericBaseService <- c( names_BldNodes, "building.service.input", "year", "base.service" )
+names_ThermalBaseService <- c( names_BldNodes, "thermal.building.service.input", "year", "base.service" )
 names_GenericServiceSatiation <- c( names_BldNodes, "building.service.input", "satiation.level" )
 names_ThermalServiceSatiation <- c( names_BldNodes, "thermal.building.service.input", "satiation.level" )
 names_HDDCDD <- c( names_BldNodes, "thermal.building.service.input", "year", "degree.days" )

@@ -1,0 +1,2208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <renewresource delete="1" name="distributed_solar"/>
+         <renewresource delete="1" name="geothermal"/>
+         <renewresource delete="1" name="onshore wind resource"/>
+         <unlimited-resource delete="1" name="global solar resource"/>
+      </region>
+      <region name="AK">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AK</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.00288864</maxSubResource>
+               <mid-price>81.8700897365246</mid-price>
+               <curve-exponent>11.5634035311701</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AK</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3165</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.555732</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AK</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>18.338829</maxSubResource>
+               <mid-price>0.069636</mid-price>
+               <curve-exponent>3.536482</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="AL">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AL</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.095405255352288</maxSubResource>
+               <mid-price>23.2176831321766</mid-price>
+               <curve-exponent>13.912544292914</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AL</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.133142</maxSubResource>
+               <mid-price>0.039745</mid-price>
+               <curve-exponent>4.569628</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="AR">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AR</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0484818333684156</maxSubResource>
+               <mid-price>22.0877276937973</mid-price>
+               <curve-exponent>12.5191290913459</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AR</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.697659</maxSubResource>
+               <mid-price>0.024669</mid-price>
+               <curve-exponent>2.825933</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="AZ">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AZ</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.109938064195346</maxSubResource>
+               <mid-price>3.493799445469</mid-price>
+               <curve-exponent>2.085103232911</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AZ</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3165</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.29988</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>AZ</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>3.519324</maxSubResource>
+               <mid-price>0.035565</mid-price>
+               <curve-exponent>2.2761</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="CA">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CA</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.591067386817956</maxSubResource>
+               <mid-price>14.0197908498507</mid-price>
+               <curve-exponent>6.9015477301107</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CA</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>4.713156</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CA</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>5.247948</maxSubResource>
+               <mid-price>0.066781</mid-price>
+               <curve-exponent>3.024004</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="CO">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CO</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.094728984206904</maxSubResource>
+               <mid-price>14.6227092621534</mid-price>
+               <curve-exponent>4.84658837786445</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CO</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3165</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.322344</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CO</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>4.35083</maxSubResource>
+               <mid-price>0.018672</mid-price>
+               <curve-exponent>2.16841</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="CT">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CT</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.04508603246466</maxSubResource>
+               <mid-price>35.3277549673562</mid-price>
+               <curve-exponent>13.1836342404576</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CT</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.117508</maxSubResource>
+               <mid-price>0.020393</mid-price>
+               <curve-exponent>2.413221</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="DC">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>DC</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.012003522226776</maxSubResource>
+               <mid-price>29.2832959064252</mid-price>
+               <curve-exponent>12.6176268339113</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>DC</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.000133</maxSubResource>
+               <mid-price>100</mid-price>
+               <curve-exponent>2</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="DE">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>DE</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.01216232658054</maxSubResource>
+               <mid-price>30.5363891187838</mid-price>
+               <curve-exponent>14.9999212195936</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>DE</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.102627</maxSubResource>
+               <mid-price>0.0039</mid-price>
+               <curve-exponent>0.988859</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="FL">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>FL</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.300163410628128</maxSubResource>
+               <mid-price>18.0791832932161</mid-price>
+               <curve-exponent>10.9694947266222</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>FL</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>1.947663</maxSubResource>
+               <mid-price>0.073587</mid-price>
+               <curve-exponent>3.912349</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="GA">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>GA</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.150997361204628</maxSubResource>
+               <mid-price>21.3594186121524</mid-price>
+               <curve-exponent>10.8603356194812</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>GA</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.682967</maxSubResource>
+               <mid-price>0.012586</mid-price>
+               <curve-exponent>2.309999</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="HI">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>HI</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.01137168</maxSubResource>
+               <mid-price>7.52324328707371</mid-price>
+               <curve-exponent>6.6185129727395</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>HI</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.291</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.742752</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>HI</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.063481</maxSubResource>
+               <mid-price>0.041209</mid-price>
+               <curve-exponent>1.555354</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="IA">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>IA</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0513284688519552</maxSubResource>
+               <mid-price>28.7981952551183</mid-price>
+               <curve-exponent>10.3180673322874</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>IA</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>5.597551</maxSubResource>
+               <mid-price>0.004687</mid-price>
+               <curve-exponent>2.932831</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="ID">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>ID</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0265789844958708</maxSubResource>
+               <mid-price>22.0984992724783</mid-price>
+               <curve-exponent>7.66563635678423</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>ID</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3055</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.61938</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>ID</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.916774</maxSubResource>
+               <mid-price>0.035454</mid-price>
+               <curve-exponent>3.332757</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="IL">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>IL</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.177502450633812</maxSubResource>
+               <mid-price>31.0966336247045</mid-price>
+               <curve-exponent>9.06570117372751</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>IL</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>4.797552</maxSubResource>
+               <mid-price>0.022381</mid-price>
+               <curve-exponent>6.3851</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="IN">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>IN</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.103838457814524</maxSubResource>
+               <mid-price>30.4921877186114</mid-price>
+               <curve-exponent>10.2800289016734</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>IN</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.875249</maxSubResource>
+               <mid-price>0.014244</mid-price>
+               <curve-exponent>4.063657</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="KS">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>KS</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0550907633691504</maxSubResource>
+               <mid-price>20.2166073150288</mid-price>
+               <curve-exponent>6.08545277819141</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>KS</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>9.107443</maxSubResource>
+               <mid-price>0.00546</mid-price>
+               <curve-exponent>2.428037</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="KY">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>KY</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0753265076373756</maxSubResource>
+               <mid-price>29.2832959064252</mid-price>
+               <curve-exponent>12.6760867588168</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>KY</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.199534</maxSubResource>
+               <mid-price>0.005816</mid-price>
+               <curve-exponent>2.472147</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="LA">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>LA</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.07647511987602</maxSubResource>
+               <mid-price>21.6476402895997</mid-price>
+               <curve-exponent>14.9999271098479</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>LA</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>1.686164</maxSubResource>
+               <mid-price>0.054559</mid-price>
+               <curve-exponent>4.046113</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="MA">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MA</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.087598534662756</maxSubResource>
+               <mid-price>32.9099713429838</mid-price>
+               <curve-exponent>13.1451904179401</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MA</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.207187</maxSubResource>
+               <mid-price>0.019805</mid-price>
+               <curve-exponent>2.228154</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="MD">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MD</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0754787406417768</maxSubResource>
+               <mid-price>30.6836976142219</mid-price>
+               <curve-exponent>14.7058517638104</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MD</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.472123</maxSubResource>
+               <mid-price>0.020344</mid-price>
+               <curve-exponent>1.906103</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="ME">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>ME</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0192489622338312</maxSubResource>
+               <mid-price>32.9099713429838</mid-price>
+               <curve-exponent>12.8648079301382</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>ME</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.723219</maxSubResource>
+               <mid-price>0.02695</mid-price>
+               <curve-exponent>3.187683</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="MI">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MI</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.149506122854556</maxSubResource>
+               <mid-price>36.8168540798414</mid-price>
+               <curve-exponent>14.491148366607</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MI</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>3.338878</maxSubResource>
+               <mid-price>0.020204</mid-price>
+               <curve-exponent>2.814435</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="MN">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MN</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.076897051192476</maxSubResource>
+               <mid-price>32.3055254368907</mid-price>
+               <curve-exponent>13.2098101314384</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MN</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>5.83468</maxSubResource>
+               <mid-price>0.022824</mid-price>
+               <curve-exponent>4.54994</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="MO">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MO</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0980897167779048</maxSubResource>
+               <mid-price>24.8089201135076</mid-price>
+               <curve-exponent>11.1290064415305</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MO</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>5.395404</maxSubResource>
+               <mid-price>0.008109</mid-price>
+               <curve-exponent>2.763293</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="MS">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MS</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0566294814304344</maxSubResource>
+               <mid-price>22.821134074575</mid-price>
+               <curve-exponent>12.6435926080242</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MS</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.155524</maxSubResource>
+               <mid-price>0.026228</mid-price>
+               <curve-exponent>4.85941</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="MT">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MT</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0178004342950452</maxSubResource>
+               <mid-price>31.3122715181897</mid-price>
+               <curve-exponent>7.73174613640945</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MT</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3165</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.235728</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MT</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>10.655218</maxSubResource>
+               <mid-price>0.023072</mid-price>
+               <curve-exponent>3.079691</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="NC">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NC</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.157750144017624</maxSubResource>
+               <mid-price>23.40787657411</mid-price>
+               <curve-exponent>10.9543902751682</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NC</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.110889</maxSubResource>
+               <mid-price>0.045253</mid-price>
+               <curve-exponent>4.579638</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="ND">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>ND</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0115251300038484</maxSubResource>
+               <mid-price>33.5144172490769</mid-price>
+               <curve-exponent>9.84651516891943</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>ND</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>6.972243</maxSubResource>
+               <mid-price>0.004549</mid-price>
+               <curve-exponent>2.856284</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="NE">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NE</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0340681012075584</maxSubResource>
+               <mid-price>23.6586087353119</mid-price>
+               <curve-exponent>8.61293897811007</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NE</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>8.701496</maxSubResource>
+               <mid-price>0.006138</mid-price>
+               <curve-exponent>2.28142</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="NH">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NH</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.019586313937296</maxSubResource>
+               <mid-price>33.6014442353318</mid-price>
+               <curve-exponent>14.9999430988406</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NH</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.207304</maxSubResource>
+               <mid-price>0.018863</mid-price>
+               <curve-exponent>3.413099</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="NJ">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NJ</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.107629817639472</maxSubResource>
+               <mid-price>32.4995556952696</mid-price>
+               <curve-exponent>13.1364152038006</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NJ</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.211019</maxSubResource>
+               <mid-price>0.020917</mid-price>
+               <curve-exponent>3.016222</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="NM">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NM</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.042395107852638</maxSubResource>
+               <mid-price>5.10545966270132</mid-price>
+               <curve-exponent>2.90146316102962</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NM</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3165</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.465588</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NM</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>5.468071</maxSubResource>
+               <mid-price>0.025456</mid-price>
+               <curve-exponent>2.041536</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="NV">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NV</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0507525748009272</maxSubResource>
+               <mid-price>5.70990556879443</mid-price>
+               <curve-exponent>2.46588137115411</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NV</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.1967</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.631556</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NV</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>4.229856</maxSubResource>
+               <mid-price>0.032988</mid-price>
+               <curve-exponent>2.437621</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="NY">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NY</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.194168203617146</maxSubResource>
+               <mid-price>32.9099713429838</mid-price>
+               <curve-exponent>9.31827041741903</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NY</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.335501</maxSubResource>
+               <mid-price>0.013709</mid-price>
+               <curve-exponent>3.381429</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="OH">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OH</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.184898904192328</maxSubResource>
+               <mid-price>35.0859385425551</mid-price>
+               <curve-exponent>11.7160980084534</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OH</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.874893</maxSubResource>
+               <mid-price>0.018394</mid-price>
+               <curve-exponent>4.106877</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="OK">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OK</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.06921150938712</maxSubResource>
+               <mid-price>19.6121614089356</mid-price>
+               <curve-exponent>8.51048836188313</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OK</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>7.423615</maxSubResource>
+               <mid-price>0.010812</mid-price>
+               <curve-exponent>3.033486</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="OR">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OR</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0546378673460112</maxSubResource>
+               <mid-price>37.8059634392991</mid-price>
+               <curve-exponent>6.84269607343475</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OR</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3165</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.6552</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OR</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>4.108006</maxSubResource>
+               <mid-price>0.057762</mid-price>
+               <curve-exponent>4.244022</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="PA">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>PA</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.169022395707185</maxSubResource>
+               <mid-price>34.11886315517</mid-price>
+               <curve-exponent>10.7012835161118</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>PA</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.092167</maxSubResource>
+               <mid-price>0.016262</mid-price>
+               <curve-exponent>3.605313</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="RI">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>RI</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0135569395073412</maxSubResource>
+               <mid-price>31.7010795307976</mid-price>
+               <curve-exponent>14.9999258427905</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>RI</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.016565</maxSubResource>
+               <mid-price>0.005385</mid-price>
+               <curve-exponent>1.081601</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="SC">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>SC</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.078004533147408</maxSubResource>
+               <mid-price>22.0201916202169</mid-price>
+               <curve-exponent>12.3544168481918</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>SC</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>1.242667</maxSubResource>
+               <mid-price>0.023977</mid-price>
+               <curve-exponent>3.931401</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="SD">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>SD</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0135105113176884</maxSubResource>
+               <mid-price>25.6566204698666</mid-price>
+               <curve-exponent>8.44297000498866</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>SD</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>7.914671</maxSubResource>
+               <mid-price>0.008373</mid-price>
+               <curve-exponent>2.734424</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="TN">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>TN</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.122015656624694</maxSubResource>
+               <mid-price>25.1393921474421</mid-price>
+               <curve-exponent>9.59833335064668</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>TN</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.150819</maxSubResource>
+               <mid-price>0.007877</mid-price>
+               <curve-exponent>1.873774</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="TX">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>TX</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.40331049484968</maxSubResource>
+               <mid-price>19.8219511344828</mid-price>
+               <curve-exponent>7.24689495827048</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>TX</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>22.57918</maxSubResource>
+               <mid-price>0.024632</mid-price>
+               <curve-exponent>3.522502</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="UT">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>UT</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0400509120422304</maxSubResource>
+               <mid-price>18.0680425296213</mid-price>
+               <curve-exponent>8.59761582504625</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>UT</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.2605</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.467352</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>UT</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.340026</maxSubResource>
+               <mid-price>0.049487</mid-price>
+               <curve-exponent>2.64995</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="VA">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>VA</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.111401970299165</maxSubResource>
+               <mid-price>27.5719043715946</mid-price>
+               <curve-exponent>11.3659319032703</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>VA</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>1.449786</maxSubResource>
+               <mid-price>0.043613</mid-price>
+               <curve-exponent>4.591162</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="VT">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>VT</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0094043022027228</maxSubResource>
+               <mid-price>36.5366467795424</mid-price>
+               <curve-exponent>14.1575503952148</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>VT</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.291006</maxSubResource>
+               <mid-price>0.01428</mid-price>
+               <curve-exponent>2.002082</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="WA">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WA</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.079907785792668</maxSubResource>
+               <mid-price>43.1855517465664</mid-price>
+               <curve-exponent>7.37697467829409</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WA</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3165</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.091692</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WA</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>2.148674</maxSubResource>
+               <mid-price>0.075436</mid-price>
+               <curve-exponent>5.442119</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="WI">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WI</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0891606746247624</maxSubResource>
+               <mid-price>33.6004028402253</mid-price>
+               <curve-exponent>12.8885435011885</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WI</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>3.614632</maxSubResource>
+               <mid-price>0.022426</mid-price>
+               <curve-exponent>2.479009</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="WV">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WV</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0281171559141072</maxSubResource>
+               <mid-price>35.7034972211299</mid-price>
+               <curve-exponent>12.8019601054164</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WV</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>0.522611</maxSubResource>
+               <mid-price>0.014901</mid-price>
+               <curve-exponent>1.653921</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+      <region name="WY">
+         <renewresource name="distributed_solar">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WY</market>
+            <smooth-renewable-subresource name="distributed_solar">
+               <techChange fillout="1" year="2010">0.0308</techChange>
+               <techChange fillout="1" year="2025">0.0234</techChange>
+               <techChange fillout="1" year="2040">0.0183</techChange>
+               <techChange fillout="1" year="2055">0.0149</techChange>
+               <techChange fillout="1" year="2070">0.0056</techChange>
+               <techChange fillout="1" year="2085">0.004</techChange>
+               <maxSubResource>0.0126825035377248</maxSubResource>
+               <mid-price>19.7787165207556</mid-price>
+               <curve-exponent>5.71994858227947</curve-exponent>
+               <gdpSupplyElast>0.1</gdpSupplyElast>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <renewresource name="geothermal">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WY</market>
+            <sub-renewable-resource name="hydrothermal">
+               <grade name="grade 1">
+                  <available>0</available>
+                  <extractioncost>0.3165</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>0.049428</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+               <maxSubResource>1</maxSubResource>
+            </sub-renewable-resource>
+         </renewresource>
+         <renewresource name="onshore wind resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WY</market>
+            <smooth-renewable-subresource name="onshore wind resource">
+               <maxSubResource>4.148326</maxSubResource>
+               <mid-price>0.018314</mid-price>
+               <curve-exponent>1.96696</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+         <unlimited-resource name="global solar resource">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>global</market>
+            <capacity-factor>0.3</capacity-factor>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2010">0.001</price>
+         </unlimited-resource>
+      </region>
+   </world>
+</scenario>

@@ -192,6 +192,10 @@ protected:
     
     //! State value necessary to use Marketplace::addToDemand
     double mLastCalcValue;
+    
+    //! The market name in which this output is adjusting the value.  If empty
+    //! the current region is assumed.
+    std::string mMarketName;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

@@ -95,9 +95,16 @@ RenewRsrcTechChange, world/+{name}region, region/+{name}renewresource, renewreso
 
 SmthRenewRsrcTechChange, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}techChange, smooth-renewable-subresource/+techChange, scenario, scenario/world
 
+DeleteDepRsrc, world/+{name}region, region/+{name; delete=1}depresource, scenario, scenario/world
+
+DeleteRenewRsrc, world/+{name}region, region /+{name; delete=1}renewresource, scenario, scenario/world
+
+DeleteUnlimitRsrc, world/+{name}region, region/+{name; delete=1}unlimited-resource, scenario, scenario/world
+
 
 #####, SUPPLYSECTOR
 
+DeleteSupplysector, world/+{name}region, region/+{name; delete=1}supplysector, scenario, scenario/world
 
 Supplysector, world/+{name}region, region/+{name}supplysector, supplysector/+output-unit, supplysector/+input-unit, supplysector/+price-unit, supplysector/+{year;fillout=1}logit-exponent, supplysector/+logit-exponent, scenario, scenario/world
 
@@ -108,6 +115,7 @@ ElecReserve,world/+{name}region,region/+{name}supplysector,{name=electricity-res
 
 #####, SUBSECTOR
 
+DeleteSubsector, world/+{name}region, region/+{name}supplysector, supplysector/+{name;delete=1}subsector, scenario, scenario/world
 
 Subsector, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, scenario, scenario/world
 
@@ -153,6 +161,10 @@ Tech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subse
 
 TechYr, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, scenario, scenario/world, period/{name=CO2}CO2
 
+TechInterp, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{apply-to}interpolation-rule, technology/+{from-year}interpolation-rule, technology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario, scenario/world
+
+TechInterpTo, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{apply-to}interpolation-rule, technology/+{from-year}interpolation-rule, technology/+{to-year}interpolation-rule, interpolation-rule/+to-value, interpolation-rule/+{name}interpolation-function, scenario, scenario/world
+
 Production, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, CalDataOutput/+calOutputValue, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, period/CalDataOutput, scenario, scenario/world
 
 CalInput, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+calibrated-value, scenario, scenario/world
@@ -176,6 +188,8 @@ CalorieContent, world/+{name}region, region/+{name}supplysector, supplysector/+{
 
 
 GlobalTechInterp, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{apply-to}interpolation-rule, technology/+{from-year}interpolation-rule, technology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario, scenario/world, world/global-technology-database
+
+GlobalTechInterpTo, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{apply-to}interpolation-rule, technology/+{from-year}interpolation-rule, technology/+{to-year}interpolation-rule, interpolation-rule/+to-value, interpolation-rule/+{name}interpolation-function, scenario, scenario/world, world/global-technology-database
 
 GlobalTechInput, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
@@ -206,6 +220,8 @@ GlobalTechShutdownProfit, global-technology-database/+{sector-name}location-info
 GlobalTechLifetimeProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database, period/profit-shutdown-decider
 
 GlobalTechSecOut, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}secondary-output, secondary-output/+output-ratio, scenario, scenario/world, world/global-technology-database
+
+GlobalTechIntGainOutputRatio, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, internal-gains/+output-ratio, internal-gains/+internal-gains-market-name, scenario, scenario/world, world/global-technology-database, period/internal-gains
 
 GlobalTechCapture, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, standard-capture-component/+remove-fraction, standard-capture-component/+storage-market, scenario, scenario/world, world/global-technology-database, period/standard-capture-component
 
@@ -257,6 +273,8 @@ GlobalTranTechSCurve, global-technology-database/+{sector-name}location-info, gl
 #####, STUB TECHNOLOGY
 
 
+DeleteStubTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name;delete=1}stub-technology, scenario, scenario/world
+
 StubTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, scenario, scenario/world
 
 StubTechShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+share-weight, scenario, scenario/world
@@ -266,6 +284,8 @@ StubTechInterp, world/+{name}region, region/+{name}supplysector, supplysector/+{
 StubTechProd, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, CalDataOutput/+calOutputValue, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, period/CalDataOutput, scenario, scenario/world
 
 StubTechCalInput, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+calibrated-value, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, scenario, scenario/world
+
+StubTechMarket, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+market-name, scenario, scenario/world
 
 StubTechCoef, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, minicam-energy-input/+market-name, scenario, scenario/world
 
@@ -277,9 +297,13 @@ StubCalorieContent, world/+{name}region, region/+{name}supplysector, supplysecto
 
 StubTechFixOut, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+fixedOutput, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, scenario, scenario/world
 
-StubTechCapFac, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}input-capital, input-capital/+capacity-factor, period/+{name}input-OM-fixed, input-OM-fixed/+capacity-factor, scenario, scenario/world
+StubTechCapFactor, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}input-capital, input-capital/+capacity-factor, period/+{name}input-OM-fixed, input-OM-fixed/+capacity-factor, scenario, scenario/world
 
 StubTechSecOut, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}secondary-output, secondary-output/+output-ratio, scenario, scenario/world
+
+StubTechSecMarket, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}secondary-output, secondary-output/+market-name, scenario, scenario/world
+
+StubTechElecMarket, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+electric-sector-market, scenario, scenario/world
 
 StubResBioCurve, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+{price}fract-harvested, residue-biomass-production/+fract-harvested, scenario, scenario/world
 
@@ -315,9 +339,13 @@ PriceElasticity, world/+{name}region, region/+{name}energy-final-demand, energy-
 
 aeei, world/+{name}region, region/+{name}energy-final-demand, final-energy-consumer/+{year}aeei, final-energy-consumer/+aeei, scenario, scenario/world, energy-final-demand/final-energy-consumer
 
+DeleteFinalDemand, world/+{name}region, region/+{name; delete=1}energy-final-demand, scenario, scenario/world
 
 #####, BUILDING FINAL DEMAND
 
+DeleteConsumer, world/+{name}region, region/+{name; delete=1}gcam-consumer, scenario, scenario/world
+
+DeleteFinalDemand, world/+{name}region,region/+{name; delete=1}energy-final-demand, scenario, scenario/world
 
 SubregionalShares, world/+{name}region, region/+{name}gcam-consumer, gcam-consumer/+{year;fillout=1}subregional-population-share, gcam-consumer/+{year;fillout=1}subregional-income-share, gcam-consumer/+subregional-population-share, gcam-consumer/+subregional-income-share, scenario, scenario/world
 

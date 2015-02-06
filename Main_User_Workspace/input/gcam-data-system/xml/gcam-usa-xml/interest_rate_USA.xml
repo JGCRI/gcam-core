@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="AK">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="AL">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="AR">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="AZ">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="CA">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="CO">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="CT">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="DC">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="DE">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="FL">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="GA">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="HI">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="IA">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="ID">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="IL">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="IN">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="KS">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="KY">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="LA">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="MA">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="MD">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="ME">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="MI">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="MN">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="MO">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="MS">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="MT">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="NC">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="ND">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="NE">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="NH">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="NJ">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="NM">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="NV">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="NY">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="OH">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="OK">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="OR">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="PA">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="RI">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="SC">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="SD">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="TN">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="TX">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="UT">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="VA">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="VT">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="WA">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="WI">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="WV">
+         <interest-rate>0.05</interest-rate>
+      </region>
+      <region name="WY">
+         <interest-rate>0.05</interest-rate>
+      </region>
+   </world>
+</scenario>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="H2 central production">
+            <subsector delete="1" name="electricity"/>
+            <subsector delete="1" name="wind"/>
+            <subsector delete="1" name="solar"/>
+         </supplysector>
+         <supplysector name="H2 forecourt production">
+            <subsector delete="1" name="electricity"/>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

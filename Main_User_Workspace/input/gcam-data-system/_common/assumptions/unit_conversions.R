@@ -1,6 +1,7 @@
 #---------------------------------------------------------------------
 #UNIT CONVERSIONS
 conv_ones_mil <- 1e-6
+conv_ones_thous <- 1e-3
 conv_thous_mil <- 1e-3
 conv_mil_bil <- 1e-3
 conv_bil_mil <- 1e3
@@ -8,6 +9,7 @@ conv_mil_thous <- 1e3
 conv_bil_thous <- 1e6
 conv_thous_bil <- 1e-6
 conv_C_CO2 <- 44/12
+conv_CO2_C <- 12/44
 
 #Dollar conversion factors
 conv_1990_2005_USD <- 1.383
@@ -54,6 +56,11 @@ conv_Ha_m2 <- 1e4
 conv_m2_acr <- 1/4046.85
 conv_km2_bm2 <- 1e-3
 conv_bm2_m2 <- 1e9
+conv_milft2_bm2 <- 0.0929/1e3     #million square feet to billion square meters
+conv_milft2_m2 <- 0.0929 * 1e6
+conv_ft2_bm2 <- 0.0929/1e9        #square feet to billion square meters
+conv_ft2_m2 <- 0.0929
+
 
 #yield conversions
 conv_tha_kgm2 <- 0.1
@@ -71,8 +78,10 @@ conv_tonne_GJ_RFO <- 40.87
 conv_tonne_GJ_distillate <- 42.91
 conv_GJ_EJ <- 1e-9
 conv_kwh_GJ <- 0.0036
+conv_TWh_EJ <- 3.6e-3
 conv_GWh_EJ <- 3.6e-6
 conv_MWh_EJ <- 3.6e-9
+conv_MWh_GJ <- 3.6
 conv_MJ_btu <- 947.777
 conv_EJ_GJ <- 1e9
 conv_btu_kJ <- 1.0551
@@ -80,3 +89,5 @@ conv_btu_kJ <- 1.0551
 #from billion barrels a day to EJ per year
 conv_bbld_EJyr <- 6.119 * 365.25 * 1e-3
 
+conv_Tbtu_EJ <- 0.0010551         #trillion btu to EJ
+conv_kbtu_EJ <- 1.0551e-12        #thousand btu to EJ

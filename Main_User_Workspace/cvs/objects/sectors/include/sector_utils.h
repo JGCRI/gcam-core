@@ -62,7 +62,8 @@ class SectorUtils {
 public:
     static bool createTrialSupplyMarket( const std::string& aRegionName,
                                          const std::string& aSectorName,
-                                         const IInfo* aTechnologyInfo);
+                                         const IInfo* aTechnologyInfo,
+                                         const std::string& aMarketName = std::string() );
 
     static void addToTrialDemand( const std::string& aRegionName,
                                   const std::string& aSectorName,
