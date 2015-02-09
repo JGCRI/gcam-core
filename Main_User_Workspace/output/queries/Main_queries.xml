@@ -2014,6 +2014,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2031,7 +2042,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type='GHG']
+													local:deep-copy($resource/*[@type='GHG'])
 			 			 						}
 			 			 	  				}
 										}
@@ -2039,10 +2050,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2068,6 +2076,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2085,7 +2104,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type='GHG']
+													local:deep-copy($resource/*[@type='GHG'])
 			 			 						}
 			 			 	  				}
 										}
@@ -2093,10 +2112,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2122,6 +2138,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2139,7 +2166,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='CH4' or @name='CH4_AWB' or @name='CH4_AGR') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='CH4' or @name='CH4_AWB' or @name='CH4_AGR') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2147,10 +2174,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2176,6 +2200,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2193,7 +2228,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='N2O' or @name='N2O_AWB' or @name='N2O_AGR') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='N2O' or @name='N2O_AWB' or @name='N2O_AGR') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2201,10 +2236,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2230,6 +2262,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2247,7 +2290,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='NOx' or @name='NOx_AWB' or @name='NOx_AGR') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='NOx' or @name='NOx_AWB' or @name='NOx_AGR') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2255,10 +2298,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2284,6 +2324,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2301,7 +2352,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='SO2_1' or @name='SO2_2' or @name='SO2_3' or @name='SO2_4' or @name='SO2_1_AWB' or @name='SO2_2_AWB' or @name='SO2_3_AWB' or @name='SO2_4_AWB') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='SO2_1' or @name='SO2_2' or @name='SO2_3' or @name='SO2_4' or @name='SO2_1_AWB' or @name='SO2_2_AWB' or @name='SO2_3_AWB' or @name='SO2_4_AWB') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2309,10 +2360,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2338,6 +2386,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2355,7 +2414,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='BC' or @name='BC_AWB' or @name='BC_AGR') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='BC' or @name='BC_AWB' or @name='BC_AGR') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2363,10 +2422,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2392,6 +2448,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2409,7 +2476,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='OC' or @name='OC_AWB' or @name='OC_AGR') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='OC' or @name='OC_AWB' or @name='OC_AGR') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2417,10 +2484,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2446,6 +2510,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2463,7 +2538,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='CO' or @name='CO_AWB' or @name='CO_AGR') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='CO' or @name='CO_AWB' or @name='CO_AGR') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2471,10 +2546,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2500,6 +2572,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2517,7 +2600,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='NMVOC' or @name='NMVOC_AWB' or @name='NMVOC_AGR') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='NMVOC' or @name='NMVOC_AWB' or @name='NMVOC_AGR') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2525,10 +2608,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2554,6 +2634,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2571,7 +2662,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type = 'GHG' and ((@name='NH3' or @name='NH3_AWB' or @name='NH3_AGR') )]
+													local:deep-copy($resource/*[@type = 'GHG' and ((@name='NH3' or @name='NH3_AWB' or @name='NH3_AGR') )])
 			 			 						}
 			 			 	  				}
 										}
@@ -2579,10 +2670,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
@@ -2608,6 +2696,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:deep-copy($nodes as node()*) as node()* {
+                         for $node in $nodes
+                         return typeswitch($node)
+                         case $e as element()
+                             return element { local-name($e) } {
+                                 $e/@*,
+                                 for $c in $e/(* | text())
+                                 return local:deep-copy($c)
+                             }
+                         default return $node
+                     };
 			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
 					         for $resource in $resources
 			 	 		 let $scn := $resource/ancestor::scenario,
@@ -2625,7 +2724,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 												element technology {
 													attribute type { 'technology' },
 													$resource/@name,
-													$resource/*[@type='GHG']
+													local:deep-copy($resource/*[@type='GHG'])
 			 			 						}
 			 			 	  				}
 										}
@@ -2633,10 +2732,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 								}
 							}
 			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
+						     $retDoc//text()
 			 	 	 };  
 			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
 			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
