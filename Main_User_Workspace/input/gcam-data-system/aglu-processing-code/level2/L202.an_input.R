@@ -293,7 +293,6 @@ L202.StubTechFixOut_imp_an <- subset( L202.StubTechFixOut_imp_an, !region %in% n
 write_mi_data( L202.RenewRsrc, IDstring="RenewRsrc", domain="AGLU_LEVEL2_DATA", fn="L202.RenewRsrc",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_an_input.xml" ) 
 write_mi_data( L202.RenewRsrcPrice, "RenewRsrcPrice", "AGLU_LEVEL2_DATA", "L202.RenewRsrcPrice", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
-write_mi_data( L202.RenewRsrcCalProd, "RenewRsrcCalProd", "AGLU_LEVEL2_DATA", "L202.RenewRsrcCalProd", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.maxSubResource, "maxSubResource", "AGLU_LEVEL2_DATA", "L202.maxSubResource", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.RenewRsrcCurves, "RenewRsrcCurves", "AGLU_LEVEL2_DATA", "L202.RenewRsrcCurves", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.Supplysector_in, "Supplysector", "AGLU_LEVEL2_DATA", "L202.Supplysector_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
