@@ -123,7 +123,7 @@ L2232.elec_flows_FERC$ownuse <- L2232.net_EJ_sR_ownuse_elec.melt$ownuse[
 printlog( "Indicating the sum of all demands in each FERC region (equal to the input to the elect_td sectors)" )
 L2232.in_EJ_state_td_elec.melt <- interpolate_and_melt( L126.in_EJ_state_td_elec, model_base_years, value.name = "consumption" )
 L2232.in_EJ_state_td_elec.melt$grid_region <- states_subregions$grid_region[
-      match( L2232.in_EJ_state_td_elec.melt$state, L2232.in_EJ_state_td_elec.melt$state ) ]
+      match( L2232.in_EJ_state_td_elec.melt$state, states_subregions$state ) ]
 L2232.in_EJ_sR_td_elec.melt <- aggregate( L2232.in_EJ_state_td_elec.melt[ "consumption" ],
       by=as.list( L2232.in_EJ_state_td_elec.melt[ c( "grid_region", Y ) ] ), sum )
 
