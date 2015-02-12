@@ -228,7 +228,6 @@ void NodeCarbonCalc::calcLandUseHistory()
             else if( diffLand[ i ] == 0 ) {
                 // Explicit check where the land did not change since if prevLand
                 // was also zero we may generate NaN.
-                carbonStock[ i ] = carbonStock[ i - 1 ];
             }
             else {
                 // Calculate the carbon that will be moved out of this land type by
