@@ -489,7 +489,12 @@ OutputEmissionsAg, world/+{name}region, region/+{name;nocreate=1}AgSupplySector,
 
 InputEmissionsUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, Non-CO2/input-driver, scenario, scenario/world
 
+OutputEmissionsUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, Non-CO2/output-driver, scenario, scenario/world
+
 InputEmFactUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/input-driver, scenario, scenario/world
+
+OutputEmFactUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/output-driver, scenario, scenario/world
+
 
 ItemNameUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+itemName, period/{name=CO2}CO2, scenario, scenario/world
 
