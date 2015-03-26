@@ -27,7 +27,7 @@ ENVLIBS         =
 HAVE_JAVA = 1
 
 ## set this to a nonzero value to enable parallel execution (TBB required)
-GCAM_PARALLEL_ENABLED = 1
+GCAM_PARALLEL_ENABLED = 0
 ## set this to a nonzero value to enable lapack, which switches to an SVD
 ## solver for the N-R and Broyden solvers
 USE_LAPACK = 0
