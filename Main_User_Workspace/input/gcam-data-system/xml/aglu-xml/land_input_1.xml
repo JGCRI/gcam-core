@@ -4171,11 +4171,11 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="AgroForestLandAEZ07">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">1</logit-exponent>
             </LandNode>
             <LandNode name="RockIceDesertAEZ07">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="RockIceDesertAEZ07">
                   <land-use-history>
@@ -4203,7 +4203,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="TundraAEZ07">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="TundraAEZ07">
                   <land-use-history>
@@ -4231,7 +4231,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="UrbanLandAEZ07">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="UrbanLandAEZ07">
                   <land-use-history>
@@ -12520,11 +12520,11 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="AgroForestLandAEZ13">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">1</logit-exponent>
             </LandNode>
             <LandNode name="RockIceDesertAEZ13">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="RockIceDesertAEZ13">
                   <land-use-history>
@@ -12552,7 +12552,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="TundraAEZ13">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="TundraAEZ13">
                   <land-use-history>
@@ -12580,7 +12580,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="UrbanLandAEZ13">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="UrbanLandAEZ13">
                   <land-use-history>
@@ -21302,11 +21302,11 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="AgroForestLandAEZ18">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">2</logit-exponent>
             </LandNode>
             <LandNode name="RockIceDesertAEZ18">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="RockIceDesertAEZ18">
                   <land-use-history>
@@ -21334,7 +21334,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="TundraAEZ18">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="TundraAEZ18">
                   <land-use-history>
@@ -21362,7 +21362,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="UrbanLandAEZ18">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="UrbanLandAEZ18">
                   <land-use-history>
@@ -24410,11 +24410,11 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="AgroForestLandAEZ16">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">2</logit-exponent>
             </LandNode>
             <LandNode name="RockIceDesertAEZ16">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="RockIceDesertAEZ16">
                   <land-use-history>
@@ -24442,7 +24442,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="TundraAEZ16">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="TundraAEZ16">
                   <land-use-history>
@@ -24470,7 +24470,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="UrbanLandAEZ16">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="UrbanLandAEZ16">
                   <land-use-history>
@@ -24505,11 +24505,11 @@
             <landAllocation fillout="1" year="1975">1149.04</landAllocation>
             <soilTimeScale>25</soilTimeScale>
             <LandNode name="AgroForestLandAEZ02">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">2</logit-exponent>
             </LandNode>
             <LandNode name="RockIceDesertAEZ02">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="RockIceDesertAEZ02">
                   <land-use-history>
@@ -24537,7 +24537,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="TundraAEZ02">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="TundraAEZ02">
                   <land-use-history>
@@ -24565,7 +24565,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="UrbanLandAEZ02">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="UrbanLandAEZ02">
                   <land-use-history>
@@ -24593,11 +24593,11 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="AgroForestLandAEZ03">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">2</logit-exponent>
             </LandNode>
             <LandNode name="RockIceDesertAEZ03">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="RockIceDesertAEZ03">
                   <land-use-history>
@@ -24625,7 +24625,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="TundraAEZ03">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="TundraAEZ03">
                   <land-use-history>
@@ -24653,7 +24653,7 @@
                </UnmanagedLandLeaf>
             </LandNode>
             <LandNode name="UrbanLandAEZ03">
-               <unManagedLandValue>0</unManagedLandValue>
+               <unManagedLandValue>321930</unManagedLandValue>
                <logit-exponent fillout="1" year="1975">0</logit-exponent>
                <UnmanagedLandLeaf name="UrbanLandAEZ03">
                   <land-use-history>

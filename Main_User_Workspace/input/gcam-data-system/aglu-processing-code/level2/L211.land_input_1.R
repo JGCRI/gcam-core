@@ -74,10 +74,15 @@ L211.LN1_ValueLogit <- data.frame(
 L211.LN1_ValueLogit <- repeat_and_add_vector( L211.LN1_ValueLogit, AEZ, AEZs )
       
 #Paste in values for unManagedLandValue using AEZ identifier, and set logit exponents using land type identifier
-L211.LN1_ValueLogit$unManagedLandValue <- round( L211.LV_USD75_m2_R_AEZ.melt$value[
-      match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),
-             vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,
-      digits_land_value )
+# Note: setting a minimum threshold on the land values to ensure that no AEZs get a value of zero
+min_LV_USD75_bm2 <- min( L211.LV_USD75_m2_R_AEZ.melt$value[ L211.LV_USD75_m2_R_AEZ.melt$value > 0 ] ) * conv_bm2_m2
+L211.LN1_ValueLogit$unManagedLandValue <- round(
+      pmax( min_LV_USD75_bm2, 
+        L211.LV_USD75_m2_R_AEZ.melt$value[
+           match( vecpaste( L211.LN1_ValueLogit[ c( reg, AEZ ) ] ),
+                  vecpaste( L211.LV_USD75_m2_R_AEZ.melt[ c( reg, AEZ ) ] ) ) ] * conv_bm2_m2,
+           digits_land_value )
+      )
 L211.LN1_ValueLogit$logit.year.fillout <- min( model_base_years )
 L211.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[
       match( L211.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]
