@@ -58,6 +58,13 @@ L1011.in_EJ_ctry_intlship_TOT_Yh[ is.na( L1011.in_EJ_ctry_intlship_TOT_Yh ) ] <-
 L1011.in_EJ_ctry_intlship_TOT_Yh[ L1011.in_EJ_ctry_intlship_TOT_Yh$Country=="Russia", paste( "X", 2006:2010, sep = "" ) ] <-
       L1011.in_EJ_ctry_intlship_TOT_Yh$X2005[ L1011.in_EJ_ctry_intlship_TOT_Yh$Country=="Russia" ]
 
+#Russia's energy use prior to 1991 is assigned to Former Soviet Union; need to re-map this to Russia
+# for country-level information being written out
+XSU_yearcols <- paste0( "X", 1986:1991 )
+L1011.in_EJ_ctry_intlship_TOT_Yh[ L1011.in_EJ_ctry_intlship_TOT_Yh$Country=="Russia", XSU_yearcols ] <-
+  L1011.in_EJ_ctry_intlship_TOT_Yh[ L1011.in_EJ_ctry_intlship_TOT_Yh$Country=="Former U.S.S.R.", XSU_yearcols ]
+L1011.in_EJ_ctry_intlship_TOT_Yh[ L1011.in_EJ_ctry_intlship_TOT_Yh$Country=="Former U.S.S.R.", XSU_yearcols ] <- 0
+
 #Match in the countries and aggregate by region
 L1011.in_EJ_ctry_intlship_TOT_Yh$iso <- EIA_ctry$iso[ match( L1011.in_EJ_ctry_intlship_TOT_Yh$Country, EIA_ctry$EIA_ctry ) ]
 L1011.in_EJ_ctry_intlship_TOT_Yh$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L1011.in_EJ_ctry_intlship_TOT_Yh$iso, iso_GCAM_regID$iso)]

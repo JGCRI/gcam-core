@@ -8718,10 +8718,10 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>9.4612809</calOutputValue>
+                        <calOutputValue>9.6371417</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="elect_td_ind">
-                        <coefficient>0.005557</coefficient>
+                        <coefficient>0.0054556</coefficient>
                         <market-name>Russia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -8729,7 +8729,7 @@
                         <market-name>Russia</market-name>
                      </minicam-energy-input>
                      <minicam-energy-input name="regional oil">
-                        <coefficient>1.1940209</coefficient>
+                        <coefficient>1.1904804</coefficient>
                         <market-name>Russia</market-name>
                      </minicam-energy-input>
                   </period>

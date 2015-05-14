@@ -59,7 +59,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">20.1363456</cal-production>
-               <cal-production year="1990">18.2405955</cal-production>
+               <cal-production year="1990">18.2640775</cal-production>
                <cal-production year="2005">13.5564087</cal-production>
                <cal-production year="2010">14.9929343</cal-production>
                <grade name="grade 1">
@@ -659,7 +659,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">5.7683453</cal-production>
-               <cal-production year="1990">7.5997386</cal-production>
+               <cal-production year="1990">7.6095221</cal-production>
                <cal-production year="2005">9.0856176</cal-production>
                <cal-production year="2010">8.3262948</cal-production>
                <grade name="grade 1">
@@ -954,7 +954,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.3296943</cal-production>
-               <cal-production year="1990">1.0047941</cal-production>
+               <cal-production year="1990">1.0060876</cal-production>
                <cal-production year="2005">2.7872597</cal-production>
                <cal-production year="2010">4.0032696</cal-production>
                <grade name="grade 1">
@@ -1249,7 +1249,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">4.2698214</cal-production>
-               <cal-production year="1990">5.0957446</cal-production>
+               <cal-production year="1990">5.1023046</cal-production>
                <cal-production year="2005">7.4716365</cal-production>
                <cal-production year="2010">7.8964777</cal-production>
                <grade name="grade 1">
@@ -1544,7 +1544,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.8803315</cal-production>
-               <cal-production year="1990">1.306945</cal-production>
+               <cal-production year="1990">1.3086275</cal-production>
                <cal-production year="2005">1.1118452</cal-production>
                <cal-production year="2010">1.1466221</cal-production>
                <grade name="grade 1">
@@ -1815,7 +1815,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.3699788</cal-production>
-               <cal-production year="1990">1.4081962</cal-production>
+               <cal-production year="1990">1.410009</cal-production>
                <cal-production year="2005">3.6541605</cal-production>
                <cal-production year="2010">4.7436524</cal-production>
                <grade name="grade 1">
@@ -2110,7 +2110,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">3.5299052</cal-production>
-               <cal-production year="1990">3.1879368</cal-production>
+               <cal-production year="1990">3.1930478</cal-production>
                <cal-production year="2005">3.7385608</cal-production>
                <cal-production year="2010">4.0117123</cal-production>
                <grade name="grade 1">
@@ -2381,7 +2381,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.4652828</cal-production>
-               <cal-production year="1990">0.3858459</cal-production>
+               <cal-production year="1990">0.3863426</cal-production>
                <cal-production year="2005">0.5569482</cal-production>
                <cal-production year="2010">0.5105448</cal-production>
                <grade name="grade 1">
@@ -2676,7 +2676,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">2.1988861</cal-production>
-               <cal-production year="1990">1.9607127</cal-production>
+               <cal-production year="1990">1.9632369</cal-production>
                <cal-production year="2005">4.2756489</cal-production>
                <cal-production year="2010">6.4081541</cal-production>
                <grade name="grade 1">
@@ -2947,7 +2947,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">3.251272</cal-production>
-               <cal-production year="1990">5.8351753</cal-production>
+               <cal-production year="1990">5.8426872</cal-production>
                <cal-production year="2005">7.6278704</cal-production>
                <cal-production year="2010">8.7930997</cal-production>
                <grade name="grade 1">
@@ -3242,7 +3242,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">1.1349626</cal-production>
-               <cal-production year="1990">0.4434639</cal-production>
+               <cal-production year="1990">0.4440348</cal-production>
                <cal-production year="2005">0.3912515</cal-production>
                <cal-production year="2010">0.2873262</cal-production>
                <grade name="grade 1">
@@ -3513,7 +3513,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.6958651</cal-production>
-               <cal-production year="1990">5.1151732</cal-production>
+               <cal-production year="1990">5.1217582</cal-production>
                <cal-production year="2005">5.1840636</cal-production>
                <cal-production year="2010">3.917651</cal-production>
                <grade name="grade 1">
@@ -3784,7 +3784,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">4.1997447</cal-production>
-               <cal-production year="1990">0.3089825</cal-production>
+               <cal-production year="1990">0.3093803</cal-production>
                <cal-production year="2005">0.2602039</cal-production>
                <cal-production year="2010">0.2297312</cal-production>
                <grade name="grade 1">
@@ -4055,7 +4055,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.309267</cal-production>
-               <cal-production year="1990">0.3641414</cal-production>
+               <cal-production year="1990">0.3646102</cal-production>
                <cal-production year="2005">0.1827017</cal-production>
                <cal-production year="2010">0.2132878</cal-production>
                <grade name="grade 1">
@@ -4326,7 +4326,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.3740818</cal-production>
-               <cal-production year="1990">3.5109388</cal-production>
+               <cal-production year="1990">3.5154586</cal-production>
                <cal-production year="2005">5.6594242</cal-production>
                <cal-production year="2010">4.2803821</cal-production>
                <grade name="grade 1">
@@ -4597,7 +4597,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.3578354</cal-production>
-               <cal-production year="1990">1.489585</cal-production>
+               <cal-production year="1990">1.4915026</cal-production>
                <cal-production year="2005">1.5610973</cal-production>
                <cal-production year="2010">1.8540764</cal-production>
                <grade name="grade 1">
@@ -4892,7 +4892,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">2.7277803</cal-production>
-               <cal-production year="1990">3.1454479</cal-production>
+               <cal-production year="1990">3.1494972</cal-production>
                <cal-production year="2005">2.2462603</cal-production>
                <cal-production year="2010">2.0961834</cal-production>
                <grade name="grade 1">
@@ -5187,7 +5187,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.0291772</cal-production>
-               <cal-production year="1990">0.0293084</cal-production>
+               <cal-production year="1990">0.0293462</cal-production>
                <cal-production year="2005">0.031522</cal-production>
                <cal-production year="2010">0.0300308</cal-production>
                <grade name="grade 1">
@@ -5458,7 +5458,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">1.7383657</cal-production>
-               <cal-production year="1990">6.4417816</cal-production>
+               <cal-production year="1990">6.4500744</cal-production>
                <cal-production year="2005">8.289791</cal-production>
                <cal-production year="2010">6.9502228</cal-production>
                <grade name="grade 1">
@@ -5753,7 +5753,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">41.5880701</cal-production>
-               <cal-production year="1990">36.285436</cal-production>
+               <cal-production year="1990">36.332148</cal-production>
                <cal-production year="2005">53.1910814</cal-production>
                <cal-production year="2010">53.3854324</cal-production>
                <grade name="grade 1">
@@ -6024,7 +6024,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.0140913</cal-production>
-               <cal-production year="1990">0.1139866</cal-production>
+               <cal-production year="1990">0.1141333</cal-production>
                <cal-production year="2005">0.150213</cal-production>
                <cal-production year="2010">0.1513223</cal-production>
                <grade name="grade 1">
@@ -6319,7 +6319,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">13.6337503</cal-production>
-               <cal-production year="1990">22.1922571</cal-production>
+               <cal-production year="1990">22.2208263</cal-production>
                <cal-production year="2005">19.699465</cal-production>
                <cal-production year="2010">21.9190113</cal-production>
                <grade name="grade 1">
@@ -6885,7 +6885,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">5.5142194</cal-production>
-               <cal-production year="1990">5.1815021</cal-production>
+               <cal-production year="1990">5.1881725</cal-production>
                <cal-production year="2005">6.7505091</cal-production>
                <cal-production year="2010">5.5974342</cal-production>
                <grade name="grade 1">
@@ -7180,7 +7180,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.6457947</cal-production>
-               <cal-production year="1990">1.0126378</cal-production>
+               <cal-production year="1990">1.0139414</cal-production>
                <cal-production year="2005">1.5304999</cal-production>
                <cal-production year="2010">1.5336038</cal-production>
                <grade name="grade 1">
@@ -7475,7 +7475,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.0002598</cal-production>
-               <cal-production year="1990">0.109774</cal-production>
+               <cal-production year="1990">0.1099153</cal-production>
                <cal-production year="2005">0.1587746</cal-production>
                <cal-production year="2010">0.1272307</cal-production>
                <grade name="grade 1">
@@ -8041,7 +8041,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.6322301</cal-production>
-               <cal-production year="1990">1.9764229</cal-production>
+               <cal-production year="1990">1.9789673</cal-production>
                <cal-production year="2005">3.5658805</cal-production>
                <cal-production year="2010">3.4391635</cal-production>
                <grade name="grade 1">
@@ -8336,7 +8336,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.007916</cal-production>
-               <cal-production year="1990">0.0070003</cal-production>
+               <cal-production year="1990">0.0070093</cal-production>
                <cal-production year="2005">0.0012189</cal-production>
                <cal-production year="2010">0.0005193</cal-production>
                <grade name="grade 1">
@@ -8607,7 +8607,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.8661574</cal-production>
-               <cal-production year="1990">1.1000992</cal-production>
+               <cal-production year="1990">1.1015154</cal-production>
                <cal-production year="2005">1.5871975</cal-production>
                <cal-production year="2010">1.5119678</cal-production>
                <grade name="grade 1">
@@ -8902,7 +8902,7 @@
                <techChange fillout="1" year="1975">0.005</techChange>
                <techChange fillout="1" year="2005">0.0075</techChange>
                <cal-production year="1975">0.3432054</cal-production>
-               <cal-production year="1990">0.9711</cal-production>
+               <cal-production year="1990">0.9723501</cal-production>
                <cal-production year="2005">1.1523616</cal-production>
                <cal-production year="2010">1.7708211</cal-production>
                <grade name="grade 1">

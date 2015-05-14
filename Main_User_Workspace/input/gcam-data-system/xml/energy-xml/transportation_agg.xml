@@ -4367,7 +4367,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>3.4232271</calibrated-value>
+                        <calibrated-value>3.5990878</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -4412,7 +4412,7 @@
             <price-elasticity year="2095">-1</price-elasticity>
             <price-elasticity year="2100">-1</price-elasticity>
             <base-service year="1975">0.5278926</base-service>
-            <base-service year="1990">0.696634</base-service>
+            <base-service year="1990">0.7258269</base-service>
             <base-service year="2005">0.6520318</base-service>
             <base-service year="2010">0.7409302</base-service>
          </energy-final-demand>
