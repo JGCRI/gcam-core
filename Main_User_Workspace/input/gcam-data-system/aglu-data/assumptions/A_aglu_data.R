@@ -203,6 +203,9 @@ Cost_index_crop <- "Corn"
 #Forestry cost (1975$/GJ)
 cost_For_75USDm3 <- 29.59
 
+#Palm fruit cost (no FAO data for USA, and Indonesia estimates are incorrect)
+cost_OilPalmFruit_05USDt <- 105
+
 #Start year for purpose-grown biomass
 Bio_start_year <- 2020
 

@@ -59,6 +59,7 @@ L132.FAO_ag_Prod_t <- L100.FAO_ag_Prod_t[
 
 printlog( "Computing average prices and production quantities of all commodities" )
 FAO_USA_ag_an_P_USDt_PRICESTAT$avg <- rowMeans( FAO_USA_ag_an_P_USDt_PRICESTAT[ X_model_price_years ], na.rm = TRUE )
+FAO_USA_ag_an_P_USDt_PRICESTAT$avg[ FAO_USA_ag_an_P_USDt_PRICESTAT$item == "Oil palm fruit" ] <- cost_OilPalmFruit_05USDt
 L132.FAO_ag_Prod_t$avg <- rowMeans( L132.FAO_ag_Prod_t[ X_model_price_years ], na.rm = TRUE )
 FAO_USA_an_Prod_t_PRODSTAT$avg <- rowMeans( FAO_USA_an_Prod_t_PRODSTAT[ X_model_price_years ], na.rm = TRUE )
 FAO_USA_For_Exp_t_USD_FORESTAT$avg <- rowMeans( FAO_USA_For_Exp_t_USD_FORESTAT[ X_model_price_years ], na.rm = TRUE )

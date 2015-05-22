@@ -61269,7 +61269,10 @@
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <minicam-energy-input name="regional coal">
@@ -61291,7 +61294,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="regional coal">
@@ -61313,7 +61319,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="regional coal">
@@ -61335,7 +61344,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="regional coal">
@@ -61357,7 +61369,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="regional coal">
@@ -61379,7 +61394,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="regional coal">
@@ -61401,7 +61419,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="regional coal">
@@ -61423,7 +61444,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="regional coal">
@@ -61445,7 +61469,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="regional coal">
@@ -61467,7 +61494,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="regional coal">
@@ -61489,7 +61519,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="regional coal">
@@ -61511,7 +61544,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="regional coal">
@@ -61533,7 +61569,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="regional coal">
@@ -61555,7 +61594,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="regional coal">
@@ -61577,7 +61619,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="regional coal">
@@ -61599,7 +61644,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="regional coal">
@@ -61621,7 +61669,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="regional coal">
@@ -61643,7 +61694,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="regional coal">
@@ -61665,7 +61719,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="coal (IGCC)">
@@ -61769,7 +61826,10 @@
                   <share-weight>0</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="regional coal">
@@ -61791,7 +61851,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="regional coal">
@@ -61813,7 +61876,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="regional coal">
@@ -61835,7 +61901,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="regional coal">
@@ -61857,7 +61926,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="regional coal">
@@ -61879,7 +61951,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="regional coal">
@@ -61901,7 +61976,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="regional coal">
@@ -61923,7 +62001,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="regional coal">
@@ -61945,7 +62026,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="regional coal">
@@ -61967,7 +62051,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="regional coal">
@@ -61989,7 +62076,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="regional coal">
@@ -62011,7 +62101,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="regional coal">
@@ -62033,7 +62126,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="regional coal">
@@ -62055,7 +62151,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="regional coal">
@@ -62077,7 +62176,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="regional coal">
@@ -62099,7 +62201,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="regional coal">
@@ -62121,7 +62226,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="regional coal">
@@ -62143,7 +62251,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="coal (IGCC CCS)">
@@ -62251,7 +62362,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="regional coal">
@@ -62277,7 +62391,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="regional coal">
@@ -62303,7 +62420,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="regional coal">
@@ -62329,7 +62449,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="regional coal">
@@ -62355,7 +62478,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="regional coal">
@@ -62381,7 +62507,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="regional coal">
@@ -62407,7 +62536,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="regional coal">
@@ -62433,7 +62565,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="regional coal">
@@ -62459,7 +62594,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="regional coal">
@@ -62485,7 +62623,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="regional coal">
@@ -62511,7 +62652,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="regional coal">
@@ -62537,7 +62681,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="regional coal">
@@ -62563,7 +62710,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="regional coal">
@@ -62589,7 +62739,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="regional coal">
@@ -62615,7 +62768,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="regional coal">
@@ -62641,7 +62797,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="regional coal">
@@ -62667,7 +62826,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="regional coal">
@@ -62693,7 +62855,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>
@@ -62783,7 +62948,10 @@
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <minicam-energy-input name="wholesale gas">
@@ -62805,7 +62973,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="wholesale gas">
@@ -62827,7 +62998,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="wholesale gas">
@@ -62849,7 +63023,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="wholesale gas">
@@ -62871,7 +63048,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="wholesale gas">
@@ -62893,7 +63073,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="wholesale gas">
@@ -62915,7 +63098,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="wholesale gas">
@@ -62937,7 +63123,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="wholesale gas">
@@ -62959,7 +63148,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="wholesale gas">
@@ -62981,7 +63173,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="wholesale gas">
@@ -63003,7 +63198,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="wholesale gas">
@@ -63025,7 +63223,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="wholesale gas">
@@ -63047,7 +63248,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="wholesale gas">
@@ -63069,7 +63273,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="wholesale gas">
@@ -63091,7 +63298,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="wholesale gas">
@@ -63113,7 +63323,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="wholesale gas">
@@ -63135,7 +63348,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="wholesale gas">
@@ -63157,7 +63373,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="wholesale gas">
@@ -63179,7 +63398,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="gas (CC)">
@@ -63267,7 +63489,10 @@
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <minicam-energy-input name="wholesale gas">
@@ -63289,7 +63514,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="wholesale gas">
@@ -63311,7 +63539,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="wholesale gas">
@@ -63333,7 +63564,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="wholesale gas">
@@ -63355,7 +63589,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="wholesale gas">
@@ -63377,7 +63614,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="wholesale gas">
@@ -63399,7 +63639,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="wholesale gas">
@@ -63421,7 +63664,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="wholesale gas">
@@ -63443,7 +63689,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="wholesale gas">
@@ -63465,7 +63714,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="wholesale gas">
@@ -63487,7 +63739,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="wholesale gas">
@@ -63509,7 +63764,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="wholesale gas">
@@ -63531,7 +63789,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="wholesale gas">
@@ -63553,7 +63814,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="wholesale gas">
@@ -63575,7 +63839,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="wholesale gas">
@@ -63597,7 +63864,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="wholesale gas">
@@ -63619,7 +63889,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="wholesale gas">
@@ -63641,7 +63914,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="wholesale gas">
@@ -63663,7 +63939,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="gas (CC CCS)">
@@ -63771,7 +64050,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="wholesale gas">
@@ -63797,7 +64079,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="wholesale gas">
@@ -63823,7 +64108,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="wholesale gas">
@@ -63849,7 +64137,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="wholesale gas">
@@ -63875,7 +64166,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="wholesale gas">
@@ -63901,7 +64195,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="wholesale gas">
@@ -63927,7 +64224,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="wholesale gas">
@@ -63953,7 +64253,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="wholesale gas">
@@ -63979,7 +64282,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="wholesale gas">
@@ -64005,7 +64311,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="wholesale gas">
@@ -64031,7 +64340,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="wholesale gas">
@@ -64057,7 +64369,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="wholesale gas">
@@ -64083,7 +64398,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="wholesale gas">
@@ -64109,7 +64427,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="wholesale gas">
@@ -64135,7 +64456,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="wholesale gas">
@@ -64161,7 +64485,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="wholesale gas">
@@ -64187,7 +64514,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="wholesale gas">
@@ -64213,7 +64543,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>
@@ -64303,7 +64636,10 @@
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64325,7 +64661,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64347,7 +64686,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64369,7 +64711,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64391,7 +64736,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64413,7 +64761,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64435,7 +64786,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64457,7 +64811,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64479,7 +64836,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64501,7 +64861,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64523,7 +64886,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64545,7 +64911,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64567,7 +64936,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64589,7 +64961,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64611,7 +64986,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64633,7 +65011,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64655,7 +65036,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64677,7 +65061,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64699,7 +65086,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.5</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="refined liquids (IGCC)">
@@ -64803,7 +65193,10 @@
                   <share-weight>0</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64825,7 +65218,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64847,7 +65243,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64869,7 +65268,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64891,7 +65293,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64913,7 +65318,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64935,7 +65343,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64957,7 +65368,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="refined liquids industrial">
@@ -64979,7 +65393,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65001,7 +65418,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65023,7 +65443,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65045,7 +65468,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65067,7 +65493,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65089,7 +65518,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65111,7 +65543,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65133,7 +65568,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65155,7 +65593,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65177,7 +65618,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="refined liquids (IGCC CCS)">
@@ -65285,7 +65729,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65311,7 +65758,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65337,7 +65787,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65363,7 +65816,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65389,7 +65845,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65415,7 +65874,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65441,7 +65903,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65467,7 +65932,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65493,7 +65961,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65519,7 +65990,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65545,7 +66019,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65571,7 +66048,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65597,7 +66077,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65623,7 +66106,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65649,7 +66135,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65675,7 +66164,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65701,7 +66193,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="refined liquids industrial">
@@ -65727,7 +66222,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>
@@ -65817,7 +66315,10 @@
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <minicam-energy-input name="regional biomass">
@@ -65839,7 +66340,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="regional biomass">
@@ -65861,7 +66365,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="regional biomass">
@@ -65883,7 +66390,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="regional biomass">
@@ -65905,7 +66415,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="regional biomass">
@@ -65927,7 +66440,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="regional biomass">
@@ -65949,7 +66465,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="regional biomass">
@@ -65971,7 +66490,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="regional biomass">
@@ -65993,7 +66515,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="regional biomass">
@@ -66015,7 +66540,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="regional biomass">
@@ -66037,7 +66565,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="regional biomass">
@@ -66059,7 +66590,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="regional biomass">
@@ -66081,7 +66615,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="regional biomass">
@@ -66103,7 +66640,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="regional biomass">
@@ -66125,7 +66665,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="regional biomass">
@@ -66147,7 +66690,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="regional biomass">
@@ -66169,7 +66715,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="regional biomass">
@@ -66191,7 +66740,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="regional biomass">
@@ -66213,7 +66765,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="biomass (IGCC)">
@@ -66317,7 +66872,10 @@
                   <share-weight>0</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="regional biomass">
@@ -66339,7 +66897,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="regional biomass">
@@ -66361,7 +66922,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="regional biomass">
@@ -66383,7 +66947,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="regional biomass">
@@ -66405,7 +66972,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="regional biomass">
@@ -66427,7 +66997,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="regional biomass">
@@ -66449,7 +67022,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="regional biomass">
@@ -66471,7 +67047,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="regional biomass">
@@ -66493,7 +67072,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="regional biomass">
@@ -66515,7 +67097,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="regional biomass">
@@ -66537,7 +67122,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="regional biomass">
@@ -66559,7 +67147,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="regional biomass">
@@ -66581,7 +67172,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="regional biomass">
@@ -66603,7 +67197,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="regional biomass">
@@ -66625,7 +67222,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="regional biomass">
@@ -66647,7 +67247,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="regional biomass">
@@ -66669,7 +67272,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="regional biomass">
@@ -66691,7 +67297,10 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="biomass (IGCC CCS)">
@@ -66799,7 +67408,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="regional biomass">
@@ -66825,7 +67437,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="regional biomass">
@@ -66851,7 +67466,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="regional biomass">
@@ -66877,7 +67495,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="regional biomass">
@@ -66903,7 +67524,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="regional biomass">
@@ -66929,7 +67553,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="regional biomass">
@@ -66955,7 +67582,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="regional biomass">
@@ -66981,7 +67611,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="regional biomass">
@@ -67007,7 +67640,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="regional biomass">
@@ -67033,7 +67669,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="regional biomass">
@@ -67059,7 +67698,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="regional biomass">
@@ -67085,7 +67727,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="regional biomass">
@@ -67111,7 +67756,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="regional biomass">
@@ -67137,7 +67785,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="regional biomass">
@@ -67163,7 +67814,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="regional biomass">
@@ -67189,7 +67843,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="regional biomass">
@@ -67215,7 +67872,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="regional biomass">
@@ -67241,7 +67901,10 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>
@@ -67331,7 +67994,10 @@
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <minicam-energy-input name="nuclearFuelGenII">
@@ -67795,7 +68461,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67817,7 +68486,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67839,7 +68511,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67861,7 +68536,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67883,7 +68561,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67905,7 +68586,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67927,7 +68611,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67949,7 +68636,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67971,7 +68661,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -67993,7 +68686,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -68015,7 +68711,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -68037,7 +68736,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -68059,7 +68761,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -68081,7 +68786,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -68103,7 +68811,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -68125,7 +68836,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -68147,7 +68861,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="nuclearFuelGenIII">
@@ -68169,7 +68886,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>

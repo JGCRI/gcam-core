@@ -21918,6 +21918,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2020">
                   <minicam-energy-input name="Corn">
@@ -21928,6 +21931,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2025">
                   <minicam-energy-input name="Corn">
@@ -21938,6 +21944,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2030">
                   <minicam-energy-input name="Corn">
@@ -21948,6 +21957,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2035">
                   <minicam-energy-input name="Corn">
@@ -21958,6 +21970,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2040">
                   <minicam-energy-input name="Corn">
@@ -21968,6 +21983,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2045">
                   <minicam-energy-input name="Corn">
@@ -21978,6 +21996,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2050">
                   <minicam-energy-input name="Corn">
@@ -21988,6 +22009,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2055">
                   <minicam-energy-input name="Corn">
@@ -21998,6 +22022,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2060">
                   <minicam-energy-input name="Corn">
@@ -22008,6 +22035,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2065">
                   <minicam-energy-input name="Corn">
@@ -22018,6 +22048,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2070">
                   <minicam-energy-input name="Corn">
@@ -22028,6 +22061,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2075">
                   <minicam-energy-input name="Corn">
@@ -22038,6 +22074,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2080">
                   <minicam-energy-input name="Corn">
@@ -22048,6 +22087,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2085">
                   <minicam-energy-input name="Corn">
@@ -22058,6 +22100,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2090">
                   <minicam-energy-input name="Corn">
@@ -22068,6 +22113,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2095">
                   <minicam-energy-input name="Corn">
@@ -22078,6 +22126,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2100">
                   <minicam-energy-input name="Corn">
@@ -22088,6 +22139,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>30</output-ratio>
+                  </secondary-output>
                </period>
             </technology>
          </location-info>
@@ -22588,6 +22642,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2020">
                   <minicam-energy-input name="OilCrop">
@@ -22598,6 +22655,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2025">
                   <minicam-energy-input name="OilCrop">
@@ -22608,6 +22668,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2030">
                   <minicam-energy-input name="OilCrop">
@@ -22618,6 +22681,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2035">
                   <minicam-energy-input name="OilCrop">
@@ -22628,6 +22694,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2040">
                   <minicam-energy-input name="OilCrop">
@@ -22638,6 +22707,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2045">
                   <minicam-energy-input name="OilCrop">
@@ -22648,6 +22720,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2050">
                   <minicam-energy-input name="OilCrop">
@@ -22658,6 +22733,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2055">
                   <minicam-energy-input name="OilCrop">
@@ -22668,6 +22746,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2060">
                   <minicam-energy-input name="OilCrop">
@@ -22678,6 +22759,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2065">
                   <minicam-energy-input name="OilCrop">
@@ -22688,6 +22772,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2070">
                   <minicam-energy-input name="OilCrop">
@@ -22698,6 +22785,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2075">
                   <minicam-energy-input name="OilCrop">
@@ -22708,6 +22798,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2080">
                   <minicam-energy-input name="OilCrop">
@@ -22718,6 +22811,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2085">
                   <minicam-energy-input name="OilCrop">
@@ -22728,6 +22824,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2090">
                   <minicam-energy-input name="OilCrop">
@@ -22738,6 +22837,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2095">
                   <minicam-energy-input name="OilCrop">
@@ -22748,6 +22850,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
                <period year="2100">
                   <minicam-energy-input name="OilCrop">
@@ -22758,6 +22863,9 @@
                      <input-cost>0</input-cost>
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
+                  <secondary-output name="FeedCrops">
+                     <output-ratio>90</output-ratio>
+                  </secondary-output>
                </period>
             </technology>
             <technology name="PalmFruit">

@@ -11544,7 +11544,10 @@
                      <steepness>0.15</steepness>
                      <half-life>20</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <share-weight>1</share-weight>
@@ -11560,7 +11563,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <share-weight>1</share-weight>
@@ -11576,7 +11582,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <share-weight>1</share-weight>
@@ -11592,7 +11601,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <share-weight>1</share-weight>
@@ -11608,7 +11620,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <share-weight>1</share-weight>
@@ -11624,7 +11639,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <share-weight>1</share-weight>
@@ -11640,7 +11658,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <share-weight>1</share-weight>
@@ -11656,7 +11677,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <share-weight>1</share-weight>
@@ -11672,7 +11696,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <share-weight>1</share-weight>
@@ -11688,7 +11715,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <share-weight>1</share-weight>
@@ -11704,7 +11734,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <share-weight>1</share-weight>
@@ -11720,7 +11753,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <share-weight>1</share-weight>
@@ -11736,7 +11772,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <share-weight>1</share-weight>
@@ -11752,7 +11791,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <share-weight>1</share-weight>
@@ -11768,7 +11810,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <share-weight>1</share-weight>
@@ -11784,7 +11829,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <share-weight>1</share-weight>
@@ -11800,7 +11848,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <share-weight>1</share-weight>
@@ -11816,7 +11867,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <share-weight>1</share-weight>
@@ -11832,7 +11886,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="coal CCS">
@@ -11894,7 +11951,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <share-weight>1</share-weight>
@@ -11914,7 +11974,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <share-weight>1</share-weight>
@@ -11934,7 +11997,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <share-weight>1</share-weight>
@@ -11954,7 +12020,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <share-weight>1</share-weight>
@@ -11974,7 +12043,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <share-weight>1</share-weight>
@@ -11994,7 +12066,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <share-weight>1</share-weight>
@@ -12014,7 +12089,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <share-weight>1</share-weight>
@@ -12034,7 +12112,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <share-weight>1</share-weight>
@@ -12054,7 +12135,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <share-weight>1</share-weight>
@@ -12074,7 +12158,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <share-weight>1</share-weight>
@@ -12094,7 +12181,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <share-weight>1</share-weight>
@@ -12114,7 +12204,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <share-weight>1</share-weight>
@@ -12134,7 +12227,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <share-weight>1</share-weight>
@@ -12154,7 +12250,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <share-weight>1</share-weight>
@@ -12174,7 +12273,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <share-weight>1</share-weight>
@@ -12194,7 +12296,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <share-weight>1</share-weight>
@@ -12214,7 +12319,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <share-weight>1</share-weight>
@@ -12234,7 +12342,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>
@@ -12284,7 +12395,10 @@
                      <steepness>0.15</steepness>
                      <half-life>20</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <share-weight>1</share-weight>
@@ -12300,7 +12414,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <share-weight>1</share-weight>
@@ -12316,7 +12433,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <share-weight>1</share-weight>
@@ -12332,7 +12452,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <share-weight>1</share-weight>
@@ -12348,7 +12471,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <share-weight>1</share-weight>
@@ -12364,7 +12490,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <share-weight>1</share-weight>
@@ -12380,7 +12509,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <share-weight>1</share-weight>
@@ -12396,7 +12528,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <share-weight>1</share-weight>
@@ -12412,7 +12547,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <share-weight>1</share-weight>
@@ -12428,7 +12566,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <share-weight>1</share-weight>
@@ -12444,7 +12585,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <share-weight>1</share-weight>
@@ -12460,7 +12604,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <share-weight>1</share-weight>
@@ -12476,7 +12623,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <share-weight>1</share-weight>
@@ -12492,7 +12642,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <share-weight>1</share-weight>
@@ -12508,7 +12661,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <share-weight>1</share-weight>
@@ -12524,7 +12680,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <share-weight>1</share-weight>
@@ -12540,7 +12699,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <share-weight>1</share-weight>
@@ -12556,7 +12718,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <share-weight>1</share-weight>
@@ -12572,7 +12737,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
             <technology name="gas CCS">
@@ -12634,7 +12802,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <share-weight>1</share-weight>
@@ -12654,7 +12825,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <share-weight>1</share-weight>
@@ -12674,7 +12848,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <share-weight>1</share-weight>
@@ -12694,7 +12871,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <share-weight>1</share-weight>
@@ -12714,7 +12894,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <share-weight>1</share-weight>
@@ -12734,7 +12917,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <share-weight>1</share-weight>
@@ -12754,7 +12940,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <share-weight>1</share-weight>
@@ -12774,7 +12963,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <share-weight>1</share-weight>
@@ -12794,7 +12986,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <share-weight>1</share-weight>
@@ -12814,7 +13009,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <share-weight>1</share-weight>
@@ -12834,7 +13032,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <share-weight>1</share-weight>
@@ -12854,7 +13055,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <share-weight>1</share-weight>
@@ -12874,7 +13078,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <share-weight>1</share-weight>
@@ -12894,7 +13101,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <share-weight>1</share-weight>
@@ -12914,7 +13124,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <share-weight>1</share-weight>
@@ -12934,7 +13147,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <share-weight>1</share-weight>
@@ -12954,7 +13170,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <share-weight>1</share-weight>
@@ -12974,7 +13193,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>
@@ -13024,7 +13246,10 @@
                      <steepness>0.15</steepness>
                      <half-life>20</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <share-weight>1</share-weight>
@@ -13040,7 +13265,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <share-weight>1</share-weight>
@@ -13056,7 +13284,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <share-weight>1</share-weight>
@@ -13072,7 +13303,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <share-weight>1</share-weight>
@@ -13088,7 +13322,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <share-weight>1</share-weight>
@@ -13104,7 +13341,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <share-weight>1</share-weight>
@@ -13120,7 +13360,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <share-weight>1</share-weight>
@@ -13136,7 +13379,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <share-weight>1</share-weight>
@@ -13152,7 +13398,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <share-weight>1</share-weight>
@@ -13168,7 +13417,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <share-weight>1</share-weight>
@@ -13184,7 +13436,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <share-weight>1</share-weight>
@@ -13200,7 +13455,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <share-weight>1</share-weight>
@@ -13216,7 +13474,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <share-weight>1</share-weight>
@@ -13232,7 +13493,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <share-weight>1</share-weight>
@@ -13248,7 +13512,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <share-weight>1</share-weight>
@@ -13264,7 +13531,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <share-weight>1</share-weight>
@@ -13280,7 +13550,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <share-weight>1</share-weight>
@@ -13296,7 +13569,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <share-weight>1</share-weight>
@@ -13312,7 +13588,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>
@@ -13574,7 +13853,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <lifetime>40</lifetime>
@@ -13582,7 +13864,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <lifetime>40</lifetime>
@@ -13590,7 +13875,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <lifetime>40</lifetime>
@@ -13598,7 +13886,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <lifetime>40</lifetime>
@@ -13606,7 +13897,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <lifetime>40</lifetime>
@@ -13614,7 +13908,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <lifetime>40</lifetime>
@@ -13622,7 +13919,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <lifetime>40</lifetime>
@@ -13630,7 +13930,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <lifetime>40</lifetime>
@@ -13638,7 +13941,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <lifetime>40</lifetime>
@@ -13646,7 +13952,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <lifetime>40</lifetime>
@@ -13654,7 +13963,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <lifetime>40</lifetime>
@@ -13662,7 +13974,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <lifetime>40</lifetime>
@@ -13670,7 +13985,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <lifetime>40</lifetime>
@@ -13678,7 +13996,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <lifetime>40</lifetime>
@@ -13686,7 +14007,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <lifetime>40</lifetime>
@@ -13694,7 +14018,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <lifetime>40</lifetime>
@@ -13702,7 +14029,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <lifetime>40</lifetime>
@@ -13710,7 +14040,10 @@
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider/>
+                  <profit-shutdown-decider>
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>

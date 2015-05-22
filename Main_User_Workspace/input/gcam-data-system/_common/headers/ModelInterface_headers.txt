@@ -211,13 +211,9 @@ GlobalTechLifetime, global-technology-database/+{sector-name}location-info, glob
 
 GlobalTechSCurve, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, world/global-technology-database, period/s-curve-shutdown-decider
 
-GlobalTechSCurveProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, world/global-technology-database, period/s-curve-shutdown-decider, period/profit-shutdown-decider
-
 GlobalTechShutdown, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider
 
-GlobalTechShutdownProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider, period/profit-shutdown-decider
-
-GlobalTechLifetimeProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database, period/profit-shutdown-decider
+GlobalTechProfitShutdown, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, profit-shutdown-decider/+median-shutdown-point, profit-shutdown-decider/+steepness, scenario, scenario/world, world/global-technology-database, period/profit-shutdown-decider
 
 GlobalTechSecOut, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}secondary-output, secondary-output/+output-ratio, scenario, scenario/world, world/global-technology-database
 
@@ -243,15 +239,11 @@ GlobalIntTechOMvar, global-technology-database/+{sector-name}location-info, glob
 
 GlobalIntTechSCurve, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, world/global-technology-database, period/s-curve-shutdown-decider
 
-GlobalIntTechSCurveProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, world/global-technology-database, period/s-curve-shutdown-decider, period/profit-shutdown-decider
-
 GlobalIntTechShutdown, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider
-
-GlobalIntTechShutdownProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, phased-shutdown-decider/+shutdown-rate, scenario, scenario/world, world/global-technology-database, period/phased-shutdown-decider, period/profit-shutdown-decider
 
 GlobalIntTechLifetime, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database
 
-GlobalIntTechLifetimeProfit, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+lifetime, scenario, scenario/world, world/global-technology-database, period/profit-shutdown-decider
+GlobalIntTechProfitShutdown, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, profit-shutdown-decider/+median-shutdown-point, profit-shutdown-decider/+steepness, scenario, scenario/world, world/global-technology-database, period/profit-shutdown-decider
 
 GlobalIntTechBackup, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+electric-sector-name, period/+trial-market-name, period/+backup-capital-cost, period/+backup-capacity-factor, capacity-limit-backup-calculator/+capacity-limit, period/+{name}minicam-energy-input, period/+{name}minicam-non-energy-input, scenario, scenario/world, world/global-technology-database, period/capacity-limit-backup-calculator
 

@@ -119,43 +119,31 @@ L222.globaltech_retirement <- rbind(
       subset( L222.globaltech_retirement, year == max( model_base_years ) ),
       repeat_and_add_vector( subset( L222.globaltech_retirement, year == min(model_future_years ) ), "year", model_future_years ) )
 
-#Retirement may consist of any of three types of retirement function (phased, s-curve, or none), with and without profit shutdown decider
+#Retirement may consist of any of three types of retirement function (phased, s-curve, or none)
 # All of these options have different headers, and all are allowed
-if( any( !is.na( L222.globaltech_retirement$shutdown.rate ) & L222.globaltech_retirement$profit.shutdown == 1 ) ){
-	printlog( "L222.GlobalTechShutdownProfit_en: Global tech lifetime and shutdown rate, including profit shutdown decider" )
-	L222.GlobalTechShutdownProfit_en <- L222.globaltech_retirement[
-	     !is.na( L222.globaltech_retirement$shutdown.rate ) & L222.globaltech_retirement$profit.shutdown == 1,
-	      c( names_GlobalTechYr, "lifetime", "shutdown.rate") ]
-	}
-if( any( !is.na( L222.globaltech_retirement$shutdown.rate ) & L222.globaltech_retirement$profit.shutdown == 0 ) ){
+if( any( !is.na( L222.globaltech_retirement$shutdown.rate ) ) ){
 	printlog( "L222.GlobalTechShutdown_en: Global tech lifetime and shutdown rate" )
 	L222.GlobalTechShutdown_en <- L222.globaltech_retirement[
-	     !is.na( L222.globaltech_retirement$shutdown.rate ) & L222.globaltech_retirement$profit.shutdown == 1,
+	     !is.na( L222.globaltech_retirement$shutdown.rate ),
 	      c( names_GlobalTechYr, "lifetime", "shutdown.rate") ]
 	}
-if( any( !is.na( L222.globaltech_retirement$half.life ) & L222.globaltech_retirement$profit.shutdown == 1 ) ){
-	printlog( "L222.GlobalTechSCurveProfit_en: Global tech lifetime, s-curve retirement function, and profit shutdown" )
-	L222.GlobalTechSCurveProfit_en <- L222.globaltech_retirement[
-	     !is.na( L222.globaltech_retirement$half.life ) & L222.globaltech_retirement$profit.shutdown == 1,
-	      c( names_GlobalTechYr, "lifetime", "steepness", "half.life" ) ]
-	}
-if( any( !is.na( L222.globaltech_retirement$half.life ) & L222.globaltech_retirement$profit.shutdown == 0 ) ){
+if( any( !is.na( L222.globaltech_retirement$half.life ) ) ){
 	printlog( "L222.GlobalTechSCurve_en: Global tech lifetime and s-curve retirement function" )
 	L222.GlobalTechSCurve_en <- L222.globaltech_retirement[
-	     !is.na( L222.globaltech_retirement$half.life ) & L222.globaltech_retirement$profit.shutdown == 1,
+	     !is.na( L222.globaltech_retirement$half.life ),
 	      c( names_GlobalTechYr, "lifetime", "steepness", "half.life" ) ]
 	}
-if( any( is.na( L222.globaltech_retirement$shutdown.rate ) & is.na( L222.globaltech_retirement$half.life ) & L222.globaltech_retirement$profit.shutdown == 1 ) ){
-	printlog( "L222.GlobalTechLifetimeProfit_en: Global tech lifetime and profit shutdown decider" )
-	L222.GlobalTechLifetimeProfit_en <- L222.globaltech_retirement[
-	     is.na( L222.globaltech_retirement$shutdown.rate ) & is.na( L222.globaltech_retirement$half.life ) & L222.globaltech_retirement$profit.shutdown == 1,
-	      c( names_GlobalTechYr, "lifetime" ) ]
-	}
-if( any( is.na( L222.globaltech_retirement$shutdown.rate ) & is.na( L222.globaltech_retirement$half.life ) & L222.globaltech_retirement$profit.shutdown == 0 ) ){
+if( any( is.na( L222.globaltech_retirement$shutdown.rate ) & is.na( L222.globaltech_retirement$half.life ) ) ){
 	printlog( "L222.GlobalTechLifetime_en: Global tech lifetime" )
 	L222.GlobalTechLifetime_en <- L222.globaltech_retirement[
-	     is.na( L222.globaltech_retirement$shutdown.rate ) & is.na( L222.globaltech_retirement$half.life ) & L222.globaltech_retirement$profit.shutdown == 0,
+	     is.na( L222.globaltech_retirement$shutdown.rate ) & is.na( L222.globaltech_retirement$half.life ),
 	      c( names_GlobalTechYr, "lifetime" ) ]
+	}
+if( any( !is.na( L222.globaltech_retirement$median.shutdown.point ) ) ){
+	printlog( "L222.GlobalTechProfitShutdown_en: Global tech profit shutdown decider and parameters" )
+	L222.GlobalTechProfitShutdown_en <- L222.globaltech_retirement[
+	     !is.na( L222.globaltech_retirement$median.shutdown.point ),
+	      c( names_GlobalTechYr, "median.shutdown.point", "profit.shutdown.steepness") ]
 	}
 
 #2d. Calibration and region-specific data
@@ -237,28 +225,20 @@ write_mi_data( L222.GlobalTechCoef_en, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "
 write_mi_data( L222.GlobalTechCost_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCost_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 write_mi_data( L222.GlobalTechShrwt_en, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L222.GlobalTechShrwt_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 write_mi_data( L222.GlobalTechCapture_en, "GlobalTechCapture", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCapture_en", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
-if( exists( "L222.GlobalTechShutdownProfit_en" ) ) {
-	write_mi_data( L222.GlobalTechShutdownProfit_en, "GlobalTechShutdownProfit", "ENERGY_LEVEL2_DATA", "L222.GlobalTechShutdownProfit_en",
-	               "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
-	}
 if( exists( "L222.GlobalTechShutdown_en" ) ) {
 	write_mi_data( L222.GlobalTechShutdown_en, "GlobalTechShutdown", "ENERGY_LEVEL2_DATA", "L222.GlobalTechShutdown_en",
-	               "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
-	}
-if( exists( "L222.GlobalTechSCurveProfit_en" ) ) {
-	write_mi_data( L222.GlobalTechSCurveProfit_en, "GlobalTechSCurveProfit", "ENERGY_LEVEL2_DATA", "L222.GlobalTechSCurveProfit_en",
 	               "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 	}
 if( exists( "L222.GlobalTechSCurve_en" ) ) {
 	write_mi_data( L222.GlobalTechSCurve_en, "GlobalTechSCurve", "ENERGY_LEVEL2_DATA", "L222.GlobalTechSCurve_en",
 	               "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 	}
-if( exists( "L222.GlobalTechLifetimeProfit_en" ) ) {
-	write_mi_data( L222.GlobalTechLifetimeProfit_en, "GlobalTechLifetimeProfit", "ENERGY_LEVEL2_DATA", "L222.GlobalTechLifetimeProfit_en",
-	               "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
-	}
 if( exists( "L222.GlobalTechLifetime_en" ) ) {
 	write_mi_data( L222.GlobalTechLifetime_en, "GlobalTechLifetime", "ENERGY_LEVEL2_DATA", "L222.GlobalTechLifetime_en",
+	               "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
+	}
+if( exists( "L222.GlobalTechProfitShutdown_en" ) ) {
+	write_mi_data( L222.GlobalTechProfitShutdown_en, "GlobalTechProfitShutdown", "ENERGY_LEVEL2_DATA", "L222.GlobalTechProfitShutdown_en",
 	               "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 	}
 write_mi_data( L222.StubTechProd_gasproc, "StubTechProd", "ENERGY_LEVEL2_DATA", "L222.StubTechProd_gasproc", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )

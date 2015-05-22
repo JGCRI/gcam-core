@@ -256,67 +256,47 @@ L223.globaltech_retirement <- rbind(
       subset( L223.globaltech_retirement, year == max( model_base_years ) ),
       repeat_and_add_vector( subset( L223.globaltech_retirement, year > max(model_base_years ) ), "year", model_future_years ) )
 
-#Retirement may consist of any of three types of retirement function (phased, s-curve, or none), with and without profit shutdown decider
+#Retirement may consist of any of three types of retirement function (phased, s-curve, or none)
 # All of these options have different headers, and all are allowed
-if( any( !is.na( L223.globaltech_retirement$shutdown.rate ) & L223.globaltech_retirement$profit.shutdown == 1 ) ){
-	printlog( "L223.GlobalTechShutdownProfit_elec: Global tech lifetime and shutdown rate, including profit shutdown decider" )
-	L223.GlobalTechShutdownProfit_elec <- L223.globaltech_retirement[
-	     !is.na( L223.globaltech_retirement$shutdown.rate ) & L223.globaltech_retirement$profit.shutdown == 1,
-	      c( names_GlobalTechYr, "lifetime", "shutdown.rate") ]
-	L223.GlobalIntTechShutdownProfit_elec <- subset_inttechs( L223.GlobalTechShutdownProfit_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-	if( nrow( L223.GlobalIntTechShutdownProfit_elec ) == 0 ) rm( L223.GlobalIntTechShutdownProfit_elec )
-	L223.GlobalTechShutdownProfit_elec <- subset_techs( L223.GlobalTechShutdownProfit_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-	if( nrow( L223.GlobalTechShutdownProfit_elec ) == 0 ) rm( L223.GlobalTechShutdownProfit_elec )
-	}
-if( any( !is.na( L223.globaltech_retirement$shutdown.rate ) & L223.globaltech_retirement$profit.shutdown == 0 ) ){
+if( any( !is.na( L223.globaltech_retirement$shutdown.rate ) ) ){
 	printlog( "L223.GlobalTechShutdown_elec: Global tech lifetime and shutdown rate" )
 	L223.GlobalTechShutdown_elec <- L223.globaltech_retirement[
-	     !is.na( L223.globaltech_retirement$shutdown.rate ) & L223.globaltech_retirement$profit.shutdown == 1,
+	     !is.na( L223.globaltech_retirement$shutdown.rate ),
 	      c( names_GlobalTechYr, "lifetime", "shutdown.rate") ]
 	L223.GlobalIntTechShutdown_elec <- subset_inttechs( L223.GlobalTechShutdown_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 	if( nrow( L223.GlobalIntTechShutdown_elec ) == 0 ) rm( L223.GlobalIntTechShutdown_elec )
 	L223.GlobalTechShutdown_elec <- subset_techs( L223.GlobalTechShutdown_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 	if( nrow( L223.GlobalTechShutdown_elec ) == 0 ) rm( L223.GlobalTechShutdown_elec )
 	}
-if( any( !is.na( L223.globaltech_retirement$half.life ) & L223.globaltech_retirement$profit.shutdown == 1 ) ){
-	printlog( "L223.GlobalTechSCurveProfit_elec: Global tech lifetime, s-curve retirement function, and profit shutdown" )
-	L223.GlobalTechSCurveProfit_elec <- L223.globaltech_retirement[
-	     !is.na( L223.globaltech_retirement$half.life ) & L223.globaltech_retirement$profit.shutdown == 1,
-	      c( names_GlobalTechYr, "lifetime", "steepness", "half.life" ) ]
-	L223.GlobalIntTechSCurveProfit_elec <- subset_inttechs( L223.GlobalTechSCurveProfit_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-	if( nrow( L223.GlobalIntTechSCurveProfit_elec ) == 0 ) rm( L223.GlobalIntTechSCurveProfit_elec )
-	L223.GlobalTechSCurveProfit_elec <- subset_techs( L223.GlobalTechSCurveProfit_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-	if( nrow( L223.GlobalTechSCurveProfit_elec ) == 0 ) rm( L223.GlobalTechSCurveProfit_elec )
-	}
-if( any( !is.na( L223.globaltech_retirement$half.life ) & L223.globaltech_retirement$profit.shutdown == 0 ) ){
+if( any( !is.na( L223.globaltech_retirement$half.life ) ) ){
 	printlog( "L223.GlobalTechSCurve_elec: Global tech lifetime and s-curve retirement function" )
 	L223.GlobalTechSCurve_elec <- L223.globaltech_retirement[
-	     !is.na( L223.globaltech_retirement$half.life ) & L223.globaltech_retirement$profit.shutdown == 1,
+	     !is.na( L223.globaltech_retirement$half.life ),
 	      c( names_GlobalTechYr, "lifetime", "steepness", "half.life" ) ]
 	L223.GlobalIntTechSCurve_elec <- subset_inttechs( L223.GlobalTechSCurve_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 	if( nrow( L223.GlobalIntTechSCurve_elec ) == 0 ) rm( L223.GlobalIntTechSCurve_elec )
 	L223.GlobalTechSCurve_elec <- subset_techs( L223.GlobalTechSCurve_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 	if( nrow( L223.GlobalTechSCurve_elec ) == 0 ) rm( L223.GlobalTechSCurve_elec )
 	}
-if( any( is.na( L223.globaltech_retirement$shutdown.rate ) & is.na( L223.globaltech_retirement$half.life ) & L223.globaltech_retirement$profit.shutdown == 1 ) ){
-	printlog( "L223.GlobalTechLifetimeProfit_elec: Global tech lifetime and profit shutdown decider" )
-	L223.GlobalTechLifetimeProfit_elec <- L223.globaltech_retirement[
-	     is.na( L223.globaltech_retirement$shutdown.rate ) & is.na( L223.globaltech_retirement$half.life ) & L223.globaltech_retirement$profit.shutdown == 1,
-	      c( names_GlobalTechYr, "lifetime" ) ]
-	L223.GlobalIntTechLifetimeProfit_elec <- subset_inttechs( L223.GlobalTechLifetimeProfit_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-	if( nrow( L223.GlobalIntTechLifetimeProfit_elec ) == 0 ) rm( L223.GlobalIntTechLifetimeProfit_elec )
-	L223.GlobalTechLifetimeProfit_elec <- subset_techs( L223.GlobalTechLifetimeProfit_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
-	if( nrow( L223.GlobalTechLifetimeProfit_elec ) == 0 ) rm( L223.GlobalTechLifetimeProfit_elec )
-	}
-if( any( is.na( L223.globaltech_retirement$shutdown.rate ) & is.na( L223.globaltech_retirement$half.life ) & L223.globaltech_retirement$profit.shutdown == 0 ) ){
+if( any( is.na( L223.globaltech_retirement$shutdown.rate ) & is.na( L223.globaltech_retirement$half.life ) ) ){
 	printlog( "L223.GlobalTechLifetime_elec: Global tech lifetime" )
 	L223.GlobalTechLifetime_elec <- L223.globaltech_retirement[
-	     is.na( L223.globaltech_retirement$shutdown.rate ) & is.na( L223.globaltech_retirement$half.life ) & L223.globaltech_retirement$profit.shutdown == 0,
+	     is.na( L223.globaltech_retirement$shutdown.rate ) & is.na( L223.globaltech_retirement$half.life ),
 	      c( names_GlobalTechYr, "lifetime" ) ]
 	L223.GlobalIntTechLifetime_elec <- subset_inttechs( L223.GlobalTechLifetime_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 	if( nrow( L223.GlobalIntTechLifetime_elec ) == 0 ) rm( L223.GlobalIntTechLifetime_elec )
 	L223.GlobalTechLifetime_elec <- subset_techs( L223.GlobalTechLifetime_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 	if( nrow( L223.GlobalTechLifetime_elec ) == 0 ) rm( L223.GlobalTechLifetime_elec )
+	}
+if( any( !is.na( L223.globaltech_retirement$median.shutdown.point ) ) ){
+	printlog( "L223.GlobalTechProfitShutdown_elec: Global tech lifetime and shutdown rate" )
+	L223.GlobalTechProfitShutdown_elec <- L223.globaltech_retirement[
+	     !is.na( L223.globaltech_retirement$median.shutdown.point ),
+	      c( names_GlobalTechYr, "median.shutdown.point", "profit.shutdown.steepness") ]
+	L223.GlobalIntTechProfitShutdown_elec <- subset_inttechs( L223.GlobalTechProfitShutdown_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+	if( nrow( L223.GlobalIntTechProfitShutdown_elec ) == 0 ) rm( L223.GlobalIntTechProfitShutdown_elec )
+	L223.GlobalTechProfitShutdown_elec <- subset_techs( L223.GlobalTechProfitShutdown_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+	if( nrow( L223.GlobalTechProfitShutdown_elec ) == 0 ) rm( L223.GlobalTechProfitShutdown_elec )
 	}
 
 #2d. Calibration and region-specific data
@@ -496,28 +476,12 @@ write_mi_data( L223.AvgFossilEffKeyword_elec, "AvgFossilEffKeyword", "ENERGY_LEV
 write_mi_data( L223.GlobalTechCapture_elec, "GlobalTechCapture", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapture_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalIntTechBackup_elec, "GlobalIntTechBackup", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechBackup_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.StubTechCapFactor_elec, "StubTechCapFactor", "ENERGY_LEVEL2_DATA", "L223.StubTechCapFactor_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
-if( exists( "L223.GlobalTechShutdownProfit_elec" ) ) {
-	write_mi_data( L223.GlobalTechShutdownProfit_elec, "GlobalTechShutdownProfit", "ENERGY_LEVEL2_DATA", "L223.GlobalTechShutdownProfit_elec",
-	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
-	}
-if( exists( "L223.GlobalIntTechShutdownProfit_elec" ) ) {
-	write_mi_data( L223.GlobalIntTechShutdownProfit_elec, "GlobalIntTechShutdownProfit", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechShutdownProfit_elec",
-	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
-	}
 if( exists( "L223.GlobalTechShutdown_elec" ) ) {
 	write_mi_data( L223.GlobalTechShutdown_elec, "GlobalTechShutdown", "ENERGY_LEVEL2_DATA", "L223.GlobalTechShutdown_elec",
 	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
 	}
 if( exists( "L223.GlobalIntTechShutdown_elec" ) ) {
 	write_mi_data( L223.GlobalIntTechShutdown_elec, "GlobalIntTechShutdown", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechShutdown_elec",
-	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
-	}
-if( exists( "L223.GlobalTechSCurveProfit_elec" ) ) {
-	write_mi_data( L223.GlobalTechSCurveProfit_elec, "GlobalTechSCurveProfit", "ENERGY_LEVEL2_DATA", "L223.GlobalTechSCurveProfit_elec",
-	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
-	}
-if( exists( "L223.GlobalIntTechSCurveProfit_elec" ) ) {
-	write_mi_data( L223.GlobalIntTechSCurveProfit_elec, "GlobalIntTechSCurveProfit", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechSCurveProfit_elec",
 	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
 	}
 if( exists( "L223.GlobalTechSCurve_elec" ) ) {
@@ -528,20 +492,20 @@ if( exists( "L223.GlobalIntTechSCurve_elec" ) ) {
 	write_mi_data( L223.GlobalIntTechSCurve_elec, "GlobalIntTechSCurve", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechSCurve_elec",
 	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
 	}
-if( exists( "L223.GlobalTechLifetimeProfit_elec" ) ) {
-	write_mi_data( L223.GlobalTechLifetimeProfit_elec, "GlobalTechLifetimeProfit", "ENERGY_LEVEL2_DATA", "L223.GlobalTechLifetimeProfit_elec",
-	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
-	}
-if( exists( "L223.GlobalIntTechLifetimeProfit_elec" ) ) {
-	write_mi_data( L223.GlobalIntTechLifetimeProfit_elec, "GlobalIntTechLifetimeProfit", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechLifetimeProfit_elec",
-	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
-	}
 if( exists( "L223.GlobalTechLifetime_elec" ) ) {
 	write_mi_data( L223.GlobalTechLifetime_elec, "GlobalTechLifetime", "ENERGY_LEVEL2_DATA", "L223.GlobalTechLifetime_elec",
 	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
 	}
 if( exists( "L223.GlobalIntTechLifetime_elec" ) ) {
 	write_mi_data( L223.GlobalIntTechLifetime_elec, "GlobalIntTechLifetime", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechLifetime_elec",
+	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
+	}
+if( exists( "L223.GlobalTechProfitShutdown_elec" ) ) {
+	write_mi_data( L223.GlobalTechProfitShutdown_elec, "GlobalTechProfitShutdown", "ENERGY_LEVEL2_DATA", "L223.GlobalTechProfitShutdown_elec",
+	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
+	}
+if( exists( "L223.GlobalIntTechProfitShutdown_elec" ) ) {
+	write_mi_data( L223.GlobalIntTechProfitShutdown_elec, "GlobalIntTechProfitShutdown", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechProfitShutdown_elec",
 	               "ENERGY_XML_BATCH", "batch_electricity.xml" )
 	}
 write_mi_data( L223.StubTechCalInput_elec, "StubTechCalInput", "ENERGY_LEVEL2_DATA", "L223.StubTechCalInput_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
