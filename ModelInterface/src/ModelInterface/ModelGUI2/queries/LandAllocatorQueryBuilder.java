@@ -53,9 +53,9 @@ import java.util.Hashtable;
 import java.util.TreeMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.value.node.ANode;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXElem;
 
 public class LandAllocatorQueryBuilder extends QueryBuilder {
 	public static Map<String, Boolean> varList;
@@ -132,6 +132,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	}
 	*/
 	private JTreeAdapter getLandUseTree() {
+        /*
 		// region query portion!!
 		queryFilter = "/scenario/world/"+regionQueryPortion+"/";
 		queryFunctions.clear();
@@ -155,7 +156,11 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 			retTree.expandRow(i);
 		}
 		return new JTreeAdapter(retTree);
+        */
+        // TODO: reimplement?
+        return null;
 	}
+    /*
 	private void addToLandUseTree(XmlValue curr, Hashtable<String, Hashtable> tree) throws XmlException{
 		Hashtable<String, Hashtable> currTree;
 		String attr = XMLDB.getAttr(curr, "name");
@@ -179,6 +184,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 			val = val.getNextSibling();
 		}
 	}
+    */
 
 	public JComponentAdapter updateList(JComponentAdapter list, JLabel label) {
 		Map temp = null;
@@ -291,19 +297,21 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		return ret.append(qg.getXPath()).toString();
 	}
 	private boolean passedIt;
-	private Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+        /*
+	private Map addToDataTree(ANode currNode, Map dataTree) throws Exception {
+        BXNode currDOM = new BXElem(currNode);
+		if (currDOM.getNodeType() == BXNode.DOCUMENT_NODE) {
 			passedIt = false;
 			return dataTree;
 		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+		Map tempMap = addToDataTree(currNode.parent(), dataTree);
 		// is the nodeLevel always going to be the same as year if not need to add the check here
 		String[] nodeLevelSplit = qg.nodeLevel.getKey().split(" ", 2);
-		if(!passedIt && (nodeLevelSplit[0].equals(currNode.getNodeName()) && nodeLevelSplit[1].equals(XMLDB.getAttr(currNode, "name"))) ) {
+		if(!passedIt && (nodeLevelSplit[0].equals(currDOM.getNodeName()) && nodeLevelSplit[1].equals(XMLDB.getAttr(currDOM, "name"))) ) {
 			passedIt = true;
 		}
 		if(!passedIt && XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.yearLevel.getKey()) /*&& 
-				!(nodeLevelSplit.equals(currNode.getNodeName()) && nodeLevelSplit.equals(XMLDB.getAttr(currNode, "name")))*/ ) {
+				!(nodeLevelSplit.equals(currNode.getNodeName()) && nodeLevelSplit.equals(XMLDB.getAttr(currNode, "name")))* / ) {
 			String attr = XMLDB.getAllAttr(currNode);
 			attr = currNode.getNodeName()+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
@@ -313,19 +321,25 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		} 
 		return tempMap;
 	}
+    */
 	public String getXMLName() {
 		return xmlName;
 	}
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
-		axisValue.setKey(XMLDB.getAttr(currNode, "year"));
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+        throw new Exception("What is going on here?");
+        /*
+		axisValue.setKey(XMLDB.getAttrMap(new BXElem(currNode)).get("year"));
 		axisValue.setValue(qg.nodeLevel.getKey().split(" ", 2)[1]);
 		return addToDataTreeHelper(currNode, dataTree);
+        */
 	}
-	private Map addToDataTreeHelper(XmlValue currNode, Map dataTree) throws Exception {
+    /*
+	private Map addToDataTreeHelper(ANode currNode, Map dataTree) throws Exception {
 		// TODO: actually convert this to get better performance
 		return addToDataTree(currNode, dataTree);
 	}
+    */
 }

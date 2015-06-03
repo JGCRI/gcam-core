@@ -49,9 +49,9 @@ import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.value.node.ANode;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXElem;
 
 public class CostCurveQueryBuilder extends QueryBuilder {
 	public static Map varList;
@@ -264,16 +264,17 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		ret.add("PointSet");
 		return ret;
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+        BXNode currDOM = new BXElem(currNode);
 		// stop condition for recursion when we hit the root of the tree
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+		if(currDOM.getNodeType() == BXNode.DOCUMENT_NODE) {
 			return dataTree;
 		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
+		Map tempMap = addToDataTree(currNode.parent(), dataTree, axisValue, isGlobal);
 
 		// cache node properties
-		final String nodeName = currNode.getNodeName();
-		final Map<String, String> attrMap = XMLDB.getAttrMap(currNode);
+		final String nodeName = currDOM.getNodeName();
+		final Map<String, String> attrMap = XMLDB.getAttrMap(currDOM);
 		boolean addedNodeLevel = false;
 		boolean addedYearLevel = false;
 
@@ -289,86 +290,24 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 					// TODO: check if it should be key
 					axisValue.setValue(attrMap.get("name"));
 				}
-				/*
-				   } else if(qg.yearLevel.equals("DataPoint")) {
-				// check the locks after this line, It might leave some
-				ret.add(n.getFirstChild().getFirstChild().getNodeValue());
-				*/
 			} else if(isGlobal) {
 				axisValue.setValue("Global");
 			} else {
-				// check the locks after this line, It might leave some
-				//ret.add(n.getFirstChild().getFirstChild().getNodeValue());
-				/*
-				   System.out.println("Nodel level node name: "+n.getNodeName());
-				   System.out.println("FC Node Name: "+n.getFirstChild().getNodeName());
-				   System.out.println("FC Node Value: "+n.getFirstChild().getNodeValue());
-				   System.out.println("FC Node Type: "+n.getFirstChild().getNodeType());
-				   XmlValue tn = n.getFirstChild();
-				   while((tn = tn.getNextSibling()).getNodeType() != 3) {
-				   System.out.println("FC Node Name: "+tn.getNodeName());
-				   System.out.println("FC Node Value: "+tn.getNodeValue());
-				   System.out.println("FC Node Type: "+tn.getNodeType());
-				   }
-				   System.out.println("after FC Node Name: "+tn.getNodeName());
-				   System.out.println("after FC Node Value: "+tn.getNodeValue());
-				   System.out.println("after FC Node Type: "+tn.getNodeType());
-
-				   ret.add(tn.getFirstChild().getFirstChild().getNodeValue());
-				   */
-				/*
-				XmlValue delValue = currNode.getFirstChild();
-				XmlValue nBefore = delValue.getNextSibling();
-				delValue.delete();
-				delValue = nBefore;
-				nBefore = delValue.getFirstChild();
-				delValue.delete();
-				axisValue.setValue(nBefore.getNodeValue());
-				nBefore.delete();
-				*/
-				axisValue.setValue(currNode.getFirstChild().getFirstChild().getNodeValue());
+				axisValue.setValue(currDOM.getFirstChild().getFirstChild().getNodeValue());
 			}
 
-			//ret.add(XMLDB.getAttr(n, "name"));
 		} 
 		if(nodeName.equals(qg.yearLevel.getKey())) {
 			addedYearLevel = true;
 			if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
 				axisValue.setKey(qg.nodeLevel.getKey());
-				/*
-				   } else if(qg.yearLevel.equals("DataPoint")) {
-			// check the locks after this line, It might leave some
-			ret.add(0, n.getFirstChild().getFirstChild().getNodeValue());
-			*/
 		} else {
-			// check the locks after this line, It might leave some
-			//ret.add(0, n.getFirstChild().getFirstChil!().getNodeValue());
-			//ret.add(0, n.getFirstChild().getNodeValue());
-			/*
-			XmlValue delValue = currNode.getFirstChild();
-			XmlValue nBefore = delValue.getNextSibling();
-			delValue.delete();
-			delValue = nBefore;
-			nBefore = delValue.getFirstChild();
-			delValue.delete();
-			axisValue.setKey(nBefore.getNodeValue());
-			nBefore.delete();
-			*/
             if(qg.axis2Name.equals("Year")) {
-                axisValue.setKey(currNode.getFirstChild().getFirstChild().getNodeValue());
+                axisValue.setKey(currDOM.getFirstChild().getFirstChild().getNodeValue());
             } else {
-                axisValue.setKey(currNode.getFirstChild().getNextSibling().getFirstChild().getNodeValue());
+                axisValue.setKey(currDOM.getFirstChild().getNextSibling().getFirstChild().getNodeValue());
             }
 		}
-
-		/*
-		//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-		if(!getOneAttrVal(n).equals("fillout=1")) {
-		ret.add(getOneAttrVal(n));
-		} else {
-		ret.add(getOneAttrVal(n, 1));
-		}
-		*/
 
 		} 
 

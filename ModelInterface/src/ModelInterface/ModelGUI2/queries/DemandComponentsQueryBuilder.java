@@ -48,9 +48,9 @@ import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.value.node.ANode;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXElem;
 
 public class DemandComponentsQueryBuilder extends QueryBuilder {
 	/*
@@ -435,17 +435,18 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+        BXNode currDOM = new BXElem(currNode);
 		// stop point for recursion is when we reach the root
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+		if (currDOM.getNodeType() == BXNode.DOCUMENT_NODE) {
 			return dataTree;
 		}
 
 		// recursively process parents first
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
+		Map tempMap = addToDataTree(currNode.parent(), dataTree, axisValue, isGlobal);
 
-		final String nodeName = currNode.getNodeName();
-		final Map<String, String> attrMap = XMLDB.getAttrMap(currNode);
+		final String nodeName = currDOM.getNodeName();
+		final Map<String, String> attrMap = XMLDB.getAttrMap(currDOM);
 
 		// attemp to find axis values at the current node
 		String type = attrMap.get("type");

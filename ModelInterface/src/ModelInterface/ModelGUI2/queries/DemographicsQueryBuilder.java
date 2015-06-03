@@ -49,9 +49,9 @@ import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.value.node.ANode;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXElem;
 
 public class DemographicsQueryBuilder extends QueryBuilder {
 	public static Map<String, Boolean> varList;
@@ -237,9 +237,10 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 	}
 	private String expandGroupName(String gName) {
+        /*
 		StringBuffer ret = new StringBuffer();
 		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+
-				"*/ageCohort[child::group[@name='"+gName+"']]/@ageGroup",
+				"* /ageCohort[child::group[@name='"+gName+"']]/@ageGroup",
 				queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
@@ -250,6 +251,9 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 		ret.delete(ret.length()-4, ret.length());
 		return ret.toString();
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	private void createXPath() {
 		qg.xPath = createListPath(0);
@@ -346,6 +350,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		return ret.toString();
 	}
 	private Map createList(String path, boolean isGroupNames) { 
+        /*
 		System.out.println("Query path: "+path);
 		LinkedHashMap ret = new LinkedHashMap();
 		/*
@@ -353,7 +358,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		*/
+		* /
 		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
@@ -368,6 +373,9 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 		res.delete();
 		return ret;
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	public String getCompleteXPath(Object[] regions)  {
 		boolean added = false;
@@ -403,18 +411,19 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		ret.add("total-population");
 		return ret;
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+        BXNode currDOM = new BXElem(currNode);
 		// stop point for recursion is the root
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+		if (currDOM.getNodeType() == BXNode.DOCUMENT_NODE) {
 			return dataTree;
 		}
 
 		// recursively process parents first
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
+		Map tempMap = addToDataTree(currNode.parent(), dataTree, axisValue, isGlobal);
 
 		// cache node properties
-		final String nodeName = currNode.getNodeName();
-		final Map<String, String> attrMap = XMLDB.getAttrMap(currNode);
+		final String nodeName = currDOM.getNodeName();
+		final Map<String, String> attrMap = XMLDB.getAttrMap(currDOM);
 
 		// attempt to find the axis at this node
 		String type = attrMap.get("type");

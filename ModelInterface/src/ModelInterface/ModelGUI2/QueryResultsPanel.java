@@ -47,9 +47,6 @@ import javax.swing.JTable;
 
 import org.jfree.chart.JFreeChart;
 
-import com.sleepycat.dbxml.XmlException;
-import com.sleepycat.dbxml.XmlQueryContext;
-
 import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.tables.BaseTableModel;
@@ -58,6 +55,7 @@ import ModelInterface.ModelGUI2.tables.CopyPaste;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.ModelGUI2.xmldb.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.DbProcInterrupt;
 
 /**
  * Adds capability of running many queries parallel and will display
@@ -77,7 +75,7 @@ public class QueryResultsPanel extends JPanel {
 	Thread runThread;
 
 	/** The context for running queries which can be used to cancel it */
-	XmlQueryContext context	= null;
+	DbProcInterrupt context	= null;
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -94,7 +92,7 @@ public class QueryResultsPanel extends JPanel {
 	 */
 	public QueryResultsPanel(final QueryGenerator qg, final QueryBinding singleBinding, final JFrame parentFrame,final Object[] scenarioListValues, final Object[] regionListValues, final TabCloseIcon icon){  
 		initializeWaiting();
-		context = XMLDB.getInstance().createQueryContext();
+		context = new DbProcInterrupt();
 		final QueryResultsPanel thisThread= this;
 		runThread = new Thread(){
 			public void run(){
@@ -148,11 +146,7 @@ public class QueryResultsPanel extends JPanel {
 	 * @see killThreadAndWait
 	 */
 	public void killThread(){
-		try {
-			context.interruptQuery();
-		} catch (XmlException e) {
-			e.printStackTrace();
-		}
+        context.interrupt();
 		runThread.interrupt();
 	}
 

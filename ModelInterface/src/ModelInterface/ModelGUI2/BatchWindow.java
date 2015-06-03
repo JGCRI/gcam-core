@@ -88,14 +88,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.xpath.XPathResult;
 
-import com.sleepycat.dbxml.XmlException;
-import com.sleepycat.dbxml.XmlQueryContext;
-
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.tables.BaseTableModel;
 import ModelInterface.ModelGUI2.tables.ComboTableModel;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
 import ModelInterface.ModelGUI2.xmldb.XMLDB;
+import ModelInterface.ModelGUI2.xmldb.DbProcInterrupt;
 import ModelInterface.InterfaceMain;
 
 
@@ -117,6 +115,7 @@ public class BatchWindow extends Window {
 
 	final File outputFile;
 	final Vector<Object[]> toRunScns; 
+	final Vector<String> allRegions; 
 	final boolean singleSheet; 
 	final boolean drawPics; 
 	final int numQueries; 
@@ -138,7 +137,7 @@ public class BatchWindow extends Window {
      */
     private class FutureQueryTask implements RunnableFuture<BaseTableModel>, Callable<BaseTableModel> {
         final FutureTask<BaseTableModel> futureDelegate;
-        final XmlQueryContext context;
+        final DbProcInterrupt context;
         final QueryGenerator qg;
         final Object[] scenarios;
         final Object[] regions;
@@ -149,7 +148,7 @@ public class BatchWindow extends Window {
             // copy the region as an array the way the table model wants it
             this.regions = regions.toArray();
             this.isExtraRun = isExtraRun;
-            context = XMLDB.getInstance().createQueryContext();
+            context = new DbProcInterrupt();
             // we must compose rather then extend FutureTask due to limitations with
             // the super type constructor, alternately we could have broken the Callable
             // aspect into a seperate class
@@ -165,11 +164,7 @@ public class BatchWindow extends Window {
         // RunnableFuture methods
         public boolean cancel(boolean mayInterruptIfRunning) {
             if(mayInterruptIfRunning) {
-                try {
-                    context.interruptQuery();
-                } catch (XmlException e) {
-                    e.printStackTrace();
-                }
+                context.interrupt();
             }
             return futureDelegate.cancel(mayInterruptIfRunning);
         }
@@ -219,6 +214,7 @@ public class BatchWindow extends Window {
 	 * @param outputFile that the results will be saved in. This may be xls or csv
      *  determined by the filename extension.
 	 * @param toRunScns the scans to run
+	 * @param allRegions A list of all regions in the database that may be useful if a user does not want to list them all.
 	 * @param singleSheet Boolean corresponding to single or multiple sheets
 	 * @param drawPics Boolean option to draw charts
 	 * @param numQueries the number of queries
@@ -228,7 +224,7 @@ public class BatchWindow extends Window {
 	 * @param suppressMessages Boolean to indicate to avoid popping up dialog boxes which require user intervention.
 	 */
 	public BatchWindow(final File outputFile, final Vector<Object[]> toRunScns,
-			final boolean singleSheet, final boolean drawPics,
+			final Vector<String> allRegions, final boolean singleSheet, final boolean drawPics,
 			final int numQueries, final XPathResult res, final JFrame parentFrame,
 			final boolean overwriteFile, final boolean suppressMessages) {
 
@@ -238,6 +234,7 @@ public class BatchWindow extends Window {
         this.outputFile = outputFile;
         final boolean isExcelOutput = outputFile.getName().endsWith(".xls");
 		this.toRunScns = toRunScns;
+        this.allRegions = allRegions;
 		this.singleSheet = singleSheet;
 		this.drawPics = drawPics;
 		this.numQueries = numQueries;
@@ -323,6 +320,7 @@ public class BatchWindow extends Window {
 						tempRegions.clear();
 						NodeList nl = tempNode.getChildNodes();
 						boolean isGlobal = false;
+                        boolean isAllRegions = false;
 						for(int i = 0; i < nl.getLength(); ++i) {
 							Node currEl = nl.item(i);
 							if(currEl.getNodeName().equals("region")) {
@@ -333,6 +331,8 @@ public class BatchWindow extends Window {
 								} else {
 									isGlobal = true;
 								}
+                            } else if(currEl.getNodeName().equals("all-regions")) {
+                                isAllRegions = true;
 							} else {
 								try {
 									qgTemp = new QueryGenerator(currEl);
@@ -351,6 +351,13 @@ public class BatchWindow extends Window {
 
                         FutureQueryTask task;
                         boolean extraTask = false;
+                        if(isAllRegions) {
+                            if(tempRegions.size() > 0 || isGlobal) {
+                                System.out.println("Warning: specified regions to query are overrriden by all-regions");
+                            }
+                            tempRegions.addAll(allRegions);
+                            isGlobal = false;
+                        }
                         if(tempRegions.size() > 0) {
                             task = new FutureQueryTask(qgTemp, currScns, tempRegions, extraTask);
                             results.add(task);

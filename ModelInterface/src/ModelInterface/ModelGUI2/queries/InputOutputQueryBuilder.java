@@ -48,9 +48,7 @@ import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.value.node.ANode;
 
 public class InputOutputQueryBuilder extends QueryBuilder {
 	/*
@@ -351,6 +349,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 			"Marketplace/market[child::MarketGoodOrFuel[ child::text() = /scenario/world/regionCGE/factorSupply/@name]]/supply/text()";
 	}
 	private Map createList(String path, boolean isGroupNames) {
+        /*
 		LinkedHashMap ret = new LinkedHashMap();
 		if(!isGroupNames && qg.isSumable) {
 			ret.put("Sum All", new Boolean(false));
@@ -370,6 +369,9 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		}
 		res.delete();
 		return ret;
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
@@ -431,7 +433,7 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		throw new UnsupportedOperationException("Yet to convert this query builder");
 	}
 }

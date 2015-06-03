@@ -56,16 +56,17 @@ import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding;
 import ModelInterface.ModelGUI2.xmldb.SingleQueryListQueryBinding;
 import ModelInterface.ModelGUI2.xmldb.QueryBindingFactory;
+import ModelInterface.ModelGUI2.xmldb.DbProcInterrupt;
 import ModelInterface.ModelGUI2.QueryTreeModel;
 import ModelInterface.ModelGUI2.ScenarioListItem;
 import ModelInterface.ModelGUI2.undo.MiUndoableEditListener;
 import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlDocument;
-import com.sleepycat.dbxml.XmlQueryContext;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.QueryException;
+import org.basex.query.QueryProcessor;
+import org.basex.query.iter.Iter;
+import org.basex.query.value.item.Item;
+import org.basex.query.value.node.ANode;
 
 /**
  * This class extends a Query to create, display, and execute a
@@ -165,7 +166,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	 * start a new gather this context must be interrupted
 	 * and reset.
 	 */
-	private XmlQueryContext gatherContext = null;
+	private DbProcInterrupt gatherContext = null;
 
 	/**
 	 * A simple class which holds a single query value which
@@ -546,15 +547,10 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		       // should I join?
 	       }
 	       if(gatherContext != null) {
-		       try {
-			       gatherContext.interruptQuery();
-		       } catch(XmlException e) {
-			       System.out.println("Error while interrupting gather list query:");
-			       e.printStackTrace();
-		       }
+               gatherContext.interrupt();
 	       }
 	       gatherThread = newThread;
-	       gatherContext = XMLDB.getInstance().createQueryContext();
+	       gatherContext = new DbProcInterrupt();
        }
 
        /**
@@ -642,26 +638,21 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			       Object[] regions = currSelection.getValue().toArray();
 			       List<SingleQueryValue> tempValues;
 			       final long startTime = System.currentTimeMillis();
-			       XmlResults res = null;
-			       try {
-				       res = XMLDB.getInstance().createQuery(new SingleQueryListQueryBinding(qg, 
+			       QueryProcessor queryProc = XMLDB.getInstance().createQuery(new SingleQueryListQueryBinding(qg, 
 						       XMLDB.getInstance().getContainer(), qg.getCollapseOnList()), scenarios, regions, gatherContext);
-				       // createQuery won't pass along the XmlException so we will
-				       // have to check for null
-				       if(res == null) {
-					       throw new XmlException(XmlException.QUERY_PARSER_ERROR,
-						       "Probably invalid syntax", null, 0);
-				       }
-				       if(!res.hasNext()) {
+			       try {
+                       Iter res = queryProc.iter();
+				       if(res.size() == 0) {
 					       tempValues = noResultsList;
 				       } else {
 					       tempValues =  new ArrayList<SingleQueryValue>();
 					       Set<String> actualValues = new TreeSet<String>();
-					       while(res.hasNext()) {
-						       XmlValue curr = res.next();
-						       SingleQueryValue tempValue = new SingleQueryValue(curr.asString());
+                           Item curr = null;
+					       while((curr = res.next()) != null) {
+                               String currStr = (String)curr.toJava();
+						       SingleQueryValue tempValue = new SingleQueryValue(currStr);
 						       tempValues.add(tempValue);
-						       actualValues.add(curr.asString());
+						       actualValues.add(currStr);
 					       }
 					       if(qt != null) {
 						       Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
@@ -671,13 +662,11 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 						       tempValues.add(new SingleQueryValue("Total"));
 					       }
 				       }
-			       } catch(XmlException e) {
+			       } catch(QueryException e) {
 				       e.printStackTrace();
 				       tempValues = noResultsList;
 			       } finally {
-				       if(res != null) {
-					       res.delete();
-				       }
+                       queryProc.close();
 			       }
 			       System.out.println("Time : "+(System.currentTimeMillis()-startTime));
 			       singleLevelCache.put(currSelection, tempValues);
@@ -717,16 +706,14 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		       public void run() {
 			       List<SingleQueryValue> tempValues = null;
 			       final long startTime = System.currentTimeMillis();
-			       XmlResults res = null;
+                   QueryProcessor queryProc = XMLDB.getInstance().createQuery("/singleQueryListCache/cache[@id="
+					       +qg.getStorageHashCode()+"]/text()", null, null, null);
 			       try {
-				       // I am putting a Q in from of the hash code because otherwise it complains that
-				       // it is not a valid QName
-				       res = XMLDB.getInstance().createQuery("/singleQueryListCache/dbxml:metadata('Q"
-					       +qg.getStorageHashCode()+"')", null, null, null);
 				       boolean hasResults = false;
-				       if(res.hasNext()) {
-					       XmlValue curr = res.next();
-					       String[] values = curr.asString().split(";");
+                       Iter res = queryProc.iter();
+                       ANode curr = (ANode)res.next();
+				       if(curr != null) {
+					       String[] values = curr.toJava().getNodeValue().split(";");
 					       if(!(values.length == 1 && values[0].equals(""))) {
 						       hasResults = true;
 						       tempValues =  new ArrayList<SingleQueryValue>(values.length+1);
@@ -749,13 +736,11 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 				       if(!hasResults) {
 					       tempValues = noResultsList;
 				       }
-			       } catch(XmlException e) {
+			       } catch(QueryException e) {
 				       e.printStackTrace();
 				       tempValues = noResultsList;
 			       } finally {
-				       if(res != null) {
-					       res.delete();
-				       }
+                       queryProc.close();
 			       }
 			       System.out.println("Time : "+(System.currentTimeMillis()-startTime));
 			       singleLevelCache.put(currSelection, tempValues);
@@ -774,12 +759,12 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
        }
 
        /**
-	* Set up and run whatever is needed to cache the query list.
-	* @doc The cahce document that we will set the metadata on.
-	* @param scenarions The list of scenarios to scan.
-	* @param regions The list of regions to scan.
-	*/
-       public void createSingleQueryListCache(XmlDocument doc, ScenarioListItem[] currScenario, String[] currRegion) {
+        * Set up and run whatever is needed to cache the query list.
+        * @param doc An XML document on which to add cache values.
+        * @param scenarions The list of scenarios to scan.
+        * @param regions The list of regions to scan.
+        */
+       public void createSingleQueryListCache(ANode doc, ScenarioListItem[] currScenario, String[] currRegion) {
 	       // set the scenarios and regions to scan
 	       setSelection(currScenario, currRegion);
 	       boolean isSelectedBefore = isSelected;
@@ -798,15 +783,9 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			       for(Iterator<SingleQueryValue> it = currValues.iterator(); it.hasNext(); ) {
 				       buff.append(it.next().toString()).append(";");
 			       }
-			       System.out.println("About to cache Q"+qg.getStorageHashCode()+" -> "+buff.toString());
-			       // I have to put a letter in front of the hash code because otherwise
-			       // it says it is not a valid QName
-			       doc.setMetaData("", "Q"+qg.getStorageHashCode(), new XmlValue(buff.toString()));
-			       //XMLDB.getInstance().setMetaData(doc, "Q"+qg.getStorageHashCode(), new XmlValue(buff.toString()));
+                   System.out.println("About to cache "+qg.getStorageHashCode()+" -> "+buff.toString());
+			       XMLDB.getInstance().updateSingleCacheValue(doc, qg.getStorageHashCode(), buff.toString());
 		       }
-	       } catch(XmlException e) {
-		       // TODO: should I warn the user?
-		       e.printStackTrace();
 	       } catch(InterruptedException ie) {
 		       // I need to interrupt myself again because getting this exception already
 		       // cleared the status and the scanThread needs to know not to try to scan

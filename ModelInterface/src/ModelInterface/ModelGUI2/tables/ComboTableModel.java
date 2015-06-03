@@ -39,6 +39,7 @@ import ModelInterface.ModelGUI2.undo.FlipUndoableEdit;
 import ModelInterface.ModelGUI2.undo.FilterUndoableEdit;
 import ModelInterface.ModelGUI2.undo.TableUndoableEdit;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
+import ModelInterface.ModelGUI2.xmldb.DbProcInterrupt;
 import ModelInterface.common.DataPair;
 
 import java.io.IOException;
@@ -64,10 +65,12 @@ import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
 import javax.swing.undo.CompoundEdit;
 
-import com.sleepycat.dbxml.XmlQueryContext;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.QueryException;
+import org.basex.query.QueryProcessor;
+import org.basex.query.iter.Iter;
+import org.basex.query.value.node.ANode;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXElem;
 
 public class ComboTableModel extends BaseTableModel{
 
@@ -378,7 +381,6 @@ public class ComboTableModel extends BaseTableModel{
 				} else {
 					return temp;
 				}
-				//return new Double(((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue());
 			}
 		} catch(NullPointerException e) {
 			return "";
@@ -388,15 +390,7 @@ public class ComboTableModel extends BaseTableModel{
 				return ((Node)temp).getNodeValue();
 			} else {
 				nf.printStackTrace();
-				/*
-				try {
-					return ((XmlValue)temp).getNodeValue();
-				} catch(XmlException xe) {
-					xe.printStackTrace();
-				}
-				*/
 			}
-			//return ((Node)((TreeMap)TreeMapVector.get( ((Integer)activeRows.get( row )).intValue() / (indRow.size()))).get( getKey( row, col ) )).getNodeValue();
 		} catch(IndexOutOfBoundsException indEx) {
 			// can happen when the data is not at the same level in the XML in which case
 			// the label would be not applicable
@@ -704,14 +698,7 @@ public class ComboTableModel extends BaseTableModel{
 			
 			// Split out the name attribute if it contains it.
 			String rowName;
-            /*
-			if( !(qg != null && qg.isGroup()) && rowNameFull.indexOf('=') != -1 ){
-				rowName = rowNameFull.split("=")[ 1 ];
-			}
-			else {
-            */
-				rowName = rowNameFull;
-			//}
+            rowName = rowNameFull;
 			XYSeries currSeries = new XYSeries(rowName);
 			// Skip column 1 because it contained the label.
 			for( int col = leftHeaderVector.size() + 1; col < getColumnCount(); ++col ){
@@ -729,10 +716,6 @@ public class ComboTableModel extends BaseTableModel{
 				if(yValue != 0 || hasValueAt(row, col)) {
 					currSeries.add( year, yValue);
 				}
-				/*
-				int year = Integer.parseInt( fullColumn );
-				currSeries.add( year, yValue);
-				*/
 			}
 			// Add the series to the set.
 			chartData.addSeries(currSeries);
@@ -803,145 +786,148 @@ public class ComboTableModel extends BaseTableModel{
 
 	protected QueryGenerator qg;
 	public ComboTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn, 
-			QueryBinding singleBinding, XmlQueryContext context) throws Exception {
-		qg = qgIn;
-		parentFrame = parentFrameIn;
-		//title = qgIn.getVariable();
-		title = qgIn.toString();
-		boolean isTotal = false;
+            QueryBinding singleBinding, DbProcInterrupt interrupt) throws Exception 
+    {
+        qg = qgIn;
+        parentFrame = parentFrameIn;
+        //title = qgIn.getVariable();
+        title = qgIn.toString();
+        boolean isTotal = false;
         boolean isGlobal = regions.length == 1 && regions[0].equals("Global");
-		System.out.println("Before Function: "+System.currentTimeMillis());
-		if(singleBinding == null) {
-			buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, context), qgIn.isSumAll(), 
-					isTotal, isGlobal);
-		} else {
-			// TODO: figure out a better way of telling if this is a Total
-			isTotal = !(singleBinding instanceof ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding);
-			buildTable(XMLDB.getInstance().createQuery(singleBinding, scenarios, regions, context), 
-					qgIn.isSumAll(), isTotal, isGlobal);
-		}
-		ind2Name = qgIn.getVariable();
-		indCol.add(0, ind1Name);
-		// adjust active rows to remove any rows that are all blank
-		// we should make sure we don't remove any rows which were added
-		// because of the shouldAppendRewriteValues flag unless this is
-		// a single query
-		activeRows = new Vector( leftSideVector.size() * indRow.size() );
-		Collection<String> rewriteValues = singleBinding == null && qg.shouldAppendRewriteValues()
-			? qg.getNodeLevelRewriteMap().values() : null;
-		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
-			boolean allNulls = true;
-			for( int col = leftHeaderVector.size() + 1; col < getColumnCount() && allNulls; ++col ) {
-				if(((Map)TreeMapVector.get( i 
-						/ (indRow.size()))).get( getKey( i, col ) ) != null) {
-					allNulls = false;
-				}
-			}
-			if(!allNulls || (rewriteValues != null && rewriteValues.contains(indRow.get(i % indRow.size())))) {
-				activeRows.add(new Integer(i));
-			}
-		}
-		setColNameIndex(qg.getChartLabelColumnName());
-	}
-	private void buildTable(XmlResults res, boolean sumAll, boolean isTotal, boolean isGlobal) throws Exception{
-		System.out.println("In Function: "+System.currentTimeMillis());
-	  XmlValue tempNode;
-	  final Set<String> yearLevelAxis = new TreeSet<String>();
-	  final Set<String> nodeLevelAxis = new TreeSet/*LinkedHashSet*/<String>();
-	  yearLevelAxis.addAll(getDefaultYearList());
-	  final Map dataTree = new TreeMap();
-	  final Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
-	  // axisValues will be passed to the query generator which will set the
-	  // year level value as the key and the node level value as the value
-	  final DataPair<String, String> axisValues = new DataPair<String, String>();
-	  try {
-		  while((tempNode = res.next()) != null) {
-			  // catgorize this result
-			  axisValues.setKey(null);
-			  axisValues.setValue(null);
-			  Map retMap = qg.addToDataTree(tempNode.getParentNode(), dataTree, axisValues, isGlobal);
-			  if(axisValues.getKey() == null || axisValues.getValue() == null) {
-				  System.out.println("Key: "+axisValues.getKey());
-				  System.out.println("Value: "+axisValues.getValue());
-				  throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
-			  }
+        System.out.println("Before Function: "+System.currentTimeMillis());
+        if(singleBinding == null) {
+            buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, interrupt), qgIn.isSumAll(), 
+                    isTotal, isGlobal);
+        } else {
+            // TODO: figure out a better way of telling if this is a Total
+            isTotal = !(singleBinding instanceof ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding);
+            buildTable(XMLDB.getInstance().createQuery(singleBinding, scenarios, regions, interrupt), 
+                    qgIn.isSumAll(), isTotal, isGlobal);
+        }
+        ind2Name = qgIn.getVariable();
+        indCol.add(0, ind1Name);
+        // adjust active rows to remove any rows that are all blank
+        // we should make sure we don't remove any rows which were added
+        // because of the shouldAppendRewriteValues flag unless this is
+        // a single query
+        activeRows = new Vector( leftSideVector.size() * indRow.size() );
+        Collection<String> rewriteValues = singleBinding == null && qg.shouldAppendRewriteValues()
+            ? qg.getNodeLevelRewriteMap().values() : null;
+        for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
+            boolean allNulls = true;
+            for( int col = leftHeaderVector.size() + 1; col < getColumnCount() && allNulls; ++col ) {
+                if(((Map)TreeMapVector.get( i 
+                                / (indRow.size()))).get( getKey( i, col ) ) != null) {
+                    allNulls = false;
+                                }
+            }
+            if(!allNulls || (rewriteValues != null && rewriteValues.contains(indRow.get(i % indRow.size())))) {
+                activeRows.add(new Integer(i));
+            }
+        }
+        setColNameIndex(qg.getChartLabelColumnName());
+    }
+    private void buildTable(QueryProcessor queryProc, boolean sumAll, boolean isTotal, boolean isGlobal) throws Exception {
+        System.out.println("In Function: "+System.currentTimeMillis());
+        Iter res = queryProc.iter();
+        ANode tempNode;
+        final Set<String> yearLevelAxis = new TreeSet<String>();
+        final Set<String> nodeLevelAxis = new TreeSet/*LinkedHashSet*/<String>();
+        yearLevelAxis.addAll(getDefaultYearList());
+        final Map dataTree = new TreeMap();
+        final Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
+        // axisValues will be passed to the query generator which will set the
+        // year level value as the key and the node level value as the value
+        final DataPair<String, String> axisValues = new DataPair<String, String>();
+        try {
+            while((tempNode = (ANode)res.next()) != null) {
+                BXNode domNode = tempNode.toJava();
+                // catgorize this result
+                axisValues.setKey(null);
+                axisValues.setValue(null);
+                Map retMap = qg.addToDataTree(tempNode.parent(), dataTree, axisValues, isGlobal);
+                if(axisValues.getKey() == null || axisValues.getValue() == null) {
+                    System.out.println("Key: "+axisValues.getKey());
+                    System.out.println("Value: "+axisValues.getValue());
+                    throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
+                }
 
-			  // special case for the total single query value
-			  if(isTotal) {
-				  axisValues.setValue("Total");
-			  }
+                // special case for the total single query value
+                if(isTotal) {
+                    axisValues.setValue("Total");
+                }
 
-			  // if we did sum all we will collapse them all by always setting the node level
-			  // to All + whatever the node level was
-			  if(sumAll) {
-				  axisValues.setValue("All "+qg.getNodeLevel());
-			  }
-			  // check for rewrites
-			  if(rewriteMap != null && rewriteMap.containsKey(axisValues.getValue())) {
-				  axisValues.setValue(rewriteMap.get(axisValues.getValue()));
-				  if(axisValues.getValue().equals("")) {
-					  continue;
-				  }
-			  }
+                // if we did sum all we will collapse them all by always setting the node level
+                // to All + whatever the node level was
+                if(sumAll) {
+                    axisValues.setValue("All "+qg.getNodeLevel());
+                }
+                // check for rewrites
+                if(rewriteMap != null && rewriteMap.containsKey(axisValues.getValue())) {
+                    axisValues.setValue(rewriteMap.get(axisValues.getValue()));
+                    if(axisValues.getValue().equals("")) {
+                        continue;
+                    }
+                }
 
-			  // check if the row has already set it's units, we will only overwrite
-			  // it the very first time around for performance reasons, this means
-			  // there will be no checking for mismatched units
-			  if((units = (String)retMap.get("Units;"+axisValues.getValue())) == null) {
-				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
-				  if(units == null) {
-					  units = "None Specified";
-				  }
-			  }
+                // check if the row has already set it's units, we will only overwrite
+                // it the very first time around for performance reasons, this means
+                // there will be no checking for mismatched units
+                if((units = (String)retMap.get("Units;"+axisValues.getValue())) == null) {
+                    units = XMLDB.getAttrMap(new BXElem(tempNode.parent())).get("unit");
+                    if(units == null) {
+                        units = "None Specified";
+                    }
+                }
 
-			  // add the node level and year level (into a set so we only have unique values)
-			  yearLevelAxis.add(axisValues.getKey());
-			  nodeLevelAxis.add(axisValues.getValue());
+                // add the node level and year level (into a set so we only have unique values)
+                yearLevelAxis.add(axisValues.getKey());
+                nodeLevelAxis.add(axisValues.getValue());
 
-			  // add number into the lowest level table
-			  // if there was already an entry in it's spot sum the values
-			  double currNumber = tempNode.asNumber();
-			  String currKey = axisValues.getKey()+";"+axisValues.getValue();
-			  Double ret = (Double)retMap.get(currKey);
-			  retMap.put(currKey, ret == null ? currNumber : ret + currNumber);
+                // add number into the lowest level table
+                // if there was already an entry in it's spot sum the values
+                double currNumber = Double.parseDouble(domNode.getNodeValue());
+                String currKey = axisValues.getKey()+";"+axisValues.getValue();
+                Double ret = (Double)retMap.get(currKey);
+                retMap.put(currKey, ret == null ? currNumber : ret + currNumber);
 
-			  // add the units for the current row under the Units column
-			  // This will use the unit seen from the first value in the
-			  retMap.put("Units;"+axisValues.getValue(), units);
-		  }
-	  } catch(Exception e) {
-		  e.printStackTrace();
-		  throw e;
-	  } finally {
-		  res.delete();
-	  }
+                // add the units for the current row under the Units column
+                // This will use the unit seen from the first value in the
+                retMap.put("Units;"+axisValues.getValue(), units);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            queryProc.close();
+        }
 
-	  // check if we had no results
-	  if(dataTree.isEmpty()) {
-		  throw new Exception("The query returned no results.");
-	  }
+        // check if we had no results
+        if(dataTree.isEmpty()) {
+            throw new Exception("The query returned no results.");
+        }
 
-	  if(remove1975) {
-		  yearLevelAxis.remove("1975");
-	  }
-	  yearLevelAxis.add("Units");
-	  if(qg.shouldAppendRewriteValues()) {
-		  for(Iterator<String> rewriteValueIt = rewriteMap.values().iterator(); rewriteValueIt.hasNext(); ) {
-			  String currRewriteValue = rewriteValueIt.next();
-			  // the empty string is a special case which meant that we wanted to delete that row
-			  // and we definitely do not want the empty string as a row so skip it
-			  if(!currRewriteValue.equals("")) {
-				  nodeLevelAxis.add(currRewriteValue);
-			  }
-		  }
-	  }
-	  System.out.println("After build Tree: "+System.currentTimeMillis());
-	  recAddTables(dataTree, null, yearLevelAxis, nodeLevelAxis, "");
-	  System.out.println("After Add table: "+System.currentTimeMillis());
-	  indRow = new Vector(nodeLevelAxis);
-	  indCol = new Vector(yearLevelAxis);
-	  ind1Name = qg.getAxis1Name();
-	}
+        if(remove1975) {
+            yearLevelAxis.remove("1975");
+        }
+        yearLevelAxis.add("Units");
+        if(qg.shouldAppendRewriteValues()) {
+            for(Iterator<String> rewriteValueIt = rewriteMap.values().iterator(); rewriteValueIt.hasNext(); ) {
+                String currRewriteValue = rewriteValueIt.next();
+                // the empty string is a special case which meant that we wanted to delete that row
+                // and we definitely do not want the empty string as a row so skip it
+                if(!currRewriteValue.equals("")) {
+                    nodeLevelAxis.add(currRewriteValue);
+                }
+            }
+        }
+        System.out.println("After build Tree: "+System.currentTimeMillis());
+        recAddTables(dataTree, null, yearLevelAxis, nodeLevelAxis, "");
+        System.out.println("After Add table: "+System.currentTimeMillis());
+        indRow = new Vector(nodeLevelAxis);
+        indCol = new Vector(yearLevelAxis);
+        ind1Name = qg.getAxis1Name();
+    }
   public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
 	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
 	  row.createCell((short)0).setCellValue("title");

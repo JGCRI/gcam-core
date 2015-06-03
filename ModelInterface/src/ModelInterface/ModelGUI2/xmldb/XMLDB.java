@@ -36,6 +36,7 @@ import ModelInterface.ModelGUI2.xmldb.QueryBindingFactory;
 
 import java.io.*;
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 import javax.swing.*;
 import java.awt.Frame;
@@ -43,15 +44,40 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 
-import com.sleepycat.db.*;
-import com.sleepycat.dbxml.*;
+import org.basex.core.BaseXException;
+import org.basex.core.Context;
+import org.basex.core.MainOptions;
+import org.basex.core.cmd.Check;
+import org.basex.core.cmd.Open;
+import org.basex.core.cmd.CreateDB;
+import org.basex.core.cmd.Close;
+import org.basex.core.cmd.Add;
+import org.basex.core.cmd.Delete;
+import org.basex.query.QueryProcessor;
+import org.basex.query.QueryException;
+import org.basex.query.value.node.ANode;
+import org.basex.query.value.node.DBNode;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXElem;
+import org.basex.api.dom.BXNNode;
+import org.basex.io.out.PrintOutput;
+import org.basex.io.serial.Serializer;
 
 public class XMLDB {
-	Environment dbEnv;
-	XmlManager manager;
-	XmlContainer myContainer;
-	String contName;
+    /**
+     * The static instance of the XMLDB.
+     */
 	private static XMLDB xmldbInstance = null;
+
+    /**
+     * The database context need to run commands on the DB.
+     */
+    private Context context = null;
+
+    /**
+     * The name of the currently open database.
+     */
+    private String contName = null;
 
 	/**
 	 * Gets the instance of the xml database.
@@ -60,7 +86,7 @@ public class XMLDB {
 	 * @return The instance of the xml database.
 	 */
 	public static XMLDB getInstance() {
-		// TODO: not thread safe
+		// WARNING: not thread safe
 		if(xmldbInstance == null) {
 			// should throw an exception..
 			System.out.println("The database is not open.");
@@ -74,7 +100,7 @@ public class XMLDB {
 	 * @throws Exception If a database is already open or there was an error opening the database.
 	 */ 
 	public static void openDatabase(String dbLocation, JFrame parentFrame) throws Exception {
-		// TODO: not thread safe
+		// WARNING: not thread safe
 		if(xmldbInstance != null) {
 			throw new Exception("Could not open databse because "+xmldbInstance.contName+
 					" is still open");
@@ -86,13 +112,15 @@ public class XMLDB {
 	 * Closes the database. Note that all errors on close are ignored.
 	 */
 	public static void closeDatabase() {
-		// TODO: not thread safe
+		// WARNING: not thread safe
 		if(xmldbInstance != null) {
 			try {
-				xmldbInstance.closeDB();
-			} catch(XmlException e) {
-				e.printStackTrace();
+                new Close().execute(xmldbInstance.context);
+            } catch (BaseXException e) {
+                e.printStackTrace();
 			} finally {
+                xmldbInstance.context = null;
+                xmldbInstance.contName = null;
 				xmldbInstance = null;
 			}
 		}
@@ -102,120 +130,72 @@ public class XMLDB {
 		openDB(db, parentFrame);
 	}
 	private void openDB(String dbPath, JFrame parentFrame) throws Exception {
-		EnvironmentConfig envConfig = new EnvironmentConfig();
-		envConfig.setAllowCreate(true);
-		envConfig.setCacheSize(100 * 1024 * 1024 );
-		envConfig.setCacheMax( 4 * 1024 * 1024 * 1024 );
-		envConfig.setInitializeCache(true);
-		envConfig.setInitializeLocking(true);
-
-		//XmlManager.setLogCategory(XmlManager.CATEGORY_ALL, true);
-		//XmlManager.setLogLevel(XmlManager.LEVEL_ALL, true);
 		String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
-		boolean didUpgradeEnv = false;
-		try {
-			dbEnv = new Environment(new File(path), envConfig);
-		} catch(VersionMismatchException vme) {
-			int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the database environment does not match the current version\nWould you like to reset the environment?", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-			if(ans == JOptionPane.YES_OPTION) {
-				System.out.println("Remove Env");
-				Environment.remove(new File(path), true, envConfig);
-				dbEnv = new Environment(new File(path), envConfig);
-				System.out.println("Done Remove env");
-				didUpgradeEnv = true;
-			} else {
-				throw vme;
-			}
-		}
-		LockStats ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
-		System.out.println("Current Locks: "+ls.getNumLocks());
-		System.out.println("Current Lockers: "+ls.getNumLockers());
-		System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-		//System.out.println("Current Conflicts: "+ls.getNumConflicts());
-		if(ls.getNumLocks() > 0) {
-			Object[] opts = {"Fix", "Continue"};
-			JOptionPane lockErrMess = new JOptionPane(
-					"The current Database is locked.  This could be because\nanother application is using it.  You may be able to continue\nwithout writing to it.  If there are no other applications using\nit you can try to reset the locking subsystem.",
-					JOptionPane.ERROR_MESSAGE, JOptionPane.YES_NO_OPTION, null, opts);
-			lockErrMess.createDialog(parentFrame, "DB Locking Error").setVisible(true);
-			//System.out.println(lockErrMess.getValue());
-			if(lockErrMess.getValue().equals("Fix")) {
-				dbEnv.close();
-				System.out.println("Locking problem, attempting to reset locking subsystem");
-				Environment.remove(new File(dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")))), true, envConfig);
-				dbEnv = new Environment(new File(path), envConfig);
-				ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
-				System.out.println("Current Locks: "+ls.getNumLocks());
-				System.out.println("Current Lockers: "+ls.getNumLockers());
-				System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-				//System.out.println("Current Conflicts: "+ls.getNumConflicts());
-			}
-		}
-		XmlManagerConfig mc = new XmlManagerConfig();
-		mc.setAdoptEnvironment(true);
-		manager = new XmlManager(dbEnv, mc);
-		XmlContainerConfig cconfig = new XmlContainerConfig();
-		cconfig.setAllowCreate(true);
+        // The db Context will check the org.basex.DBPATH property when it is created
+        // and use it as the base path for finding all collections/containers
+        System.setProperty("org.basex.DBPATH", path);
+
+        context = new Context();
+        // Set some default behaviors such as no indexing etc
+        // TODO: experiment with these
+        context.options.set(MainOptions.ATTRINDEX, false);
+        context.options.set(MainOptions.FTINDEX, false);
+        context.options.set(MainOptions.UPDINDEX, false);
+        context.options.set(MainOptions.CHOP, true);
+        context.options.set(MainOptions.ADDCACHE, true);
+        context.options.set(MainOptions.INTPARSE, true);
+
+        // TODO: worry about spaces?
 		// spaces in a database name is illegal for a URI and must be escaped by a %20
 		// TODO: any other invalid URI characters are not taken care of here,  need to find a 
 		// good util to take care of this but there does not seem to be one in the standard
 		// java api
 		final String contNameUnmodified = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
 		contName = contNameUnmodified.replaceAll(" ", "%20");
-		final XmlUpdateContext uc = manager.createUpdateContext();
-		try {
-			myContainer = manager.openContainer(contNameUnmodified, cconfig);
-			myContainer.addAlias(contName);
-		} catch(XmlException ve) {
-			if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {
-				int ans;
-				if(didUpgradeEnv) {
-					ans = JOptionPane.YES_NO_OPTION;
-				} else {
-					ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-				}
-				if(ans == JOptionPane.YES_OPTION) {
-					System.out.println("Do upgrade");
-					parentFrame.getGlassPane().setVisible(true);
-					try {
-						manager.upgradeContainer(contNameUnmodified, uc);
-					} finally {
-						parentFrame.getGlassPane().setVisible(false);
-					}
-					System.out.println("Done upgrade");
-					myContainer = manager.openContainer(contNameUnmodified, cconfig);
-					System.out.println("Done open");
-				} else {
-					throw ve;
-				}
-			} else {
-				throw ve;
-			}
-		}
-		// TODO: auto indexing leads to a ton of indexes most of which would not be utilized so
-		// turn it off by default for now util farther evaulations
-		myContainer.setAutoIndexing(false);
-		// will just get any that has already been cached, users will have to 
-		// tell use the gui search manually since they will rarely be used now
-		getVarMetaData(); 
+        /*
+        // The Check command will opent the container if it already exists or create
+        // an empty one if it does not.
+        new Check(contName).execute(context);
+        */
+        // Check does not seem to check if the db is simply an empty directory so we will have
+        // to do that explicitly here.
+        try {
+            new Open(contName).execute(context);
+        }
+        catch(BaseXException e) {
+            e.printStackTrace();
+            // Ask the user if we should attempt to create a new database since doing so
+            // will delete all files in the directory.
+            int ans = JOptionPane.showConfirmDialog(parentFrame,
+                    "Could not open the database.  Attempt to create a new one?\nWARNING doing so will delete all files in the directory.",
+                    "Open DB Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+            if(ans == JOptionPane.YES_OPTION) {
+                // If this generates and exception let it pass along.
+                new CreateDB(contName).execute(context);
+            } else {
+                throw e;
+            }
+        }
+
+		//getVarMetaData(); 
 	}
 	public void addFile(String fileName) {
-	    XmlDocumentConfig docConfig = new XmlDocumentConfig();
-	    docConfig.setGenerateName(true);
+        // try to generate a unique name for this file to be added
+        SimpleDateFormat format = new SimpleDateFormat("ddMMyy-hhmmss");
+        addFile("run_"+format.format(new Date())+".xml", fileName);
+	}
+    public void addFile(String docName, String fileName) {
 	    try {
-		    final XmlUpdateContext uc = manager.createUpdateContext();
-		    myContainer.putDocument("run", manager.createLocalFileInputStream(fileName), uc, docConfig);
-		    //myContainer.sync();
-	    } catch(XmlException e) {
+            new Add(docName, fileName).execute(context);
+	    } catch(BaseXException e) {
 		    e.printStackTrace();
 	    }
 	}
 	public void removeDoc(String docName) {
 		try {
 			System.out.println("Removing :"+docName);
-			final XmlUpdateContext uc = manager.createUpdateContext();
-			myContainer.deleteDocument(docName, uc);
-		} catch(XmlException e) {
+            new Delete(docName).execute(context);
+		} catch(BaseXException e) {
 			e.printStackTrace();
 		}
 	}
@@ -228,203 +208,70 @@ public class XMLDB {
 	 */
 	public boolean exportDoc(final String aDocName, final File aLocation) {
 		try {
-			XmlDocument doc = myContainer.getDocument(aDocName);
-            final int BUFFER_SIZE = 10 * 1024 * 1024;
-            byte[] buffer = new byte[BUFFER_SIZE];
-            int numRead;
-            InputStream in = doc.getContentAsInputStream();
-			OutputStream fileOutput = new FileOutputStream(aLocation);
-            do {
-                numRead = in.read(buffer, 0, BUFFER_SIZE);
-                if(numRead > 0) {
-                    fileOutput.write(buffer, 0 , numRead);
-                }
-            } while(numRead >= 0 );
-			fileOutput.close();
-            in.close();
+            final int docPre = context.data().resources.doc(aDocName);
+            final PrintOutput out = new PrintOutput(aLocation.getPath());
+            final Serializer outputter = Serializer.get(out);
+            outputter.serialize(new DBNode(context.data(), docPre));
+            outputter.close();
+            out.close();
 			return true;
-		}
-		catch(XmlException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return false;
 	}
 
-	public XmlDocument getDocument(String docName) throws XmlException {
-		return myContainer.getDocument(docName);
-	}
-
-	public XmlDocument createDocument(String docName, String content) {
-		XmlDocumentConfig docConfig = new XmlDocumentConfig();
-		docConfig.setGenerateName(false);
-		try {
-			final XmlUpdateContext uc = manager.createUpdateContext();
-			myContainer.putDocument("cache", content, uc, docConfig);
-			return getDocument(docName);
-		} catch(XmlException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public void updateDocument(XmlDocument doc) {
-		try {
-			final XmlUpdateContext uc = manager.createUpdateContext();
-			myContainer.updateDocument(doc, uc);
-		} catch(XmlException e) {
-			e.printStackTrace();
-			// TODO: warn the users
-		}
-	}
-
 	public String getContainer() {
 		return contName;
 	}
 
-	public XmlResults createQuery(String query, Vector<String> queryFunctions, 
+	public QueryProcessor createQuery(String query, Vector<String> queryFunctions, 
 			Object[] scenarios, Object[] regions) {
 		return createQuery(QueryBindingFactory.getQueryBinding(query, queryFunctions, contName),
 				scenarios, regions);
 	}
-	public XmlResults createQuery(String query, Vector<String> queryFunctions, 
-			Object[] scenarios, Object[] regions, XmlQueryContext context) throws XmlException {
-		return createQuery(QueryBindingFactory.getQueryBinding(query, queryFunctions, contName),
-				scenarios, regions, context);
-	}
-
-	public XmlResults createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions) {
+	public QueryProcessor createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions) {
+        return createQuery(qg, scenarios, regions, null);
+    }
+	public QueryProcessor createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions, DbProcInterrupt interrupt) {
 		return createQuery(QueryBindingFactory.getQueryBinding(qg, contName), scenarios,
-				regions);
+				regions, interrupt);
 	}
-	public XmlResults createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions, XmlQueryContext context) throws XmlException {
-		return createQuery(QueryBindingFactory.getQueryBinding(qg, contName), scenarios,
-				regions,context);
-	}
-	
-	public XmlQueryContext createQueryContext(){
-		try {
-			return manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-		} catch (XmlException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public XmlResults createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions, XmlQueryContext context) throws XmlException {
+	public QueryProcessor createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions) {
+        return createQuery(queryBinding, scenarios, regions, null);
+    }
+	public QueryProcessor createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions, DbProcInterrupt interrupt) {
 		String queryComplete = queryBinding.bindToQuery(scenarios, regions);
 		System.out.println("About to perform query: "+queryComplete);
-		if(context == null){
-			return createQuery(queryBinding, scenarios, regions);
-		}
-		//XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-		/*
-		   XmlQueryExpression qeTemp = manager.prepare(queryBuff.toString(), qc);
-		   System.out.println("Query Plan: "+qeTemp.getQueryPlan());
-		   return qeTemp.execute(qc);
-		   */
-		return manager.query(queryComplete, context);
+        QueryProcessor ret = new QueryProcessor(queryComplete, context);
+        if(interrupt != null) {
+            interrupt.setProc(ret);
+        }
+        return ret;
 	}
 	
-	public XmlResults createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions) {
-		String queryComplete = queryBinding.bindToQuery(scenarios, regions);
-		System.out.println("About to perform query: "+queryComplete);
-		try {
-			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-			/* Use when you need to see the query plan
-			XmlQueryExpression qeTemp = manager.prepare(queryComplete, qc);
-			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
-			return qeTemp.execute(qc);
-			*/
-			return manager.query(queryComplete, qc);
-		} catch(XmlException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	private void closeDB() throws XmlException {
-		System.out.println("Closing DB");
-		if(myContainer == null) {
-			// didn't open sucessfully
-			return;
-		}
-		myContainer.close();
-		manager.close();
-	}
-
-	public static boolean hasAttr(XmlValue val) throws XmlException {
-		XmlResults attrRes = val.getAttributes();
-		boolean ret = attrRes.hasNext();
-		attrRes.delete();
-		if(!ret) {
-			return ret;
-		} else {
-			// have to make sure the values getAllAttr ignores
-			// are ignored here as well
-			if(getAllAttr(val).equals("")) {
-				return false;
-			} else {
-				return true;
-			}
-		}
-	}
-
-	public static String getAttr(XmlValue node) throws XmlException {
-		final XmlResults attrRes = node.getAttributes();
-		try {
-			while(attrRes.hasNext()) {
-				XmlValue temp = attrRes.next();
-				if(!temp.getNodeName().equals("fillout")) {
-					return temp.getNodeValue();
-				}
-			}
-			return null;
-		} finally {
-			attrRes.delete();
-		}
-	}
-
-	public static String getAttr(XmlValue node, String attrKey) throws XmlException {
-		final XmlResults attrRes = node.getAttributes();
-		try {
-			while(attrRes.hasNext()) {
-				XmlValue temp = attrRes.next();
-				if(temp.getNodeName().equals(attrKey)) {
-					return temp.getNodeValue();
-				}
-			}
-			return null;
-		} finally {
-			attrRes.delete();
-		}
-	}
-	private static ThreadLocal<Map<String, Map<String, String>>> attrCache = 
-        new ThreadLocal<Map<String, Map<String, String>>>() {
-            protected Map<String, Map<String, String>> initialValue() {
+    /*
+	private static ThreadLocal<Map<Integer, Map<String, String>>> attrCache = 
+        new ThreadLocal<Map<Integer, Map<String, String>>>() {
+            protected Map<Integer, Map<String, String>> initialValue() {
                 final int cacheSize = 500;
-                return new LRUCacheMap<String, Map<String, String>>(cacheSize);
+                return new LRUCacheMap<Integer, Map<String, String>>(cacheSize);
             }
         };
+        */
 	//private static Map<String, Map<String, String>> attrCache = new TreeMap<String, Map<String, String>>();
-	public static Map<String, String> getAttrMap(XmlValue node) throws XmlException {
-		final XmlResults attrRes = node.getAttributes();
-		try {
-			final Map<String, String> ret = new TreeMap<String, String>();
-			while(attrRes.hasNext()) {
-				XmlValue temp = attrRes.next();
+	public static Map<String, String> getAttrMap(BXNode node) {
+		final BXNNode attrs = node.getAttributes();
+        final Map<String, String> ret = new TreeMap<String, String>();
+        for(int i = 0; i < attrs.getLength(); ++i) {
+				BXNode temp = attrs.item(i);
 				ret.put(temp.getNodeName(), temp.getNodeValue());
-			}
-			return ret;
-		} finally {
-			attrRes.delete();
-		}
+        }
+        return ret;
 	}
-	public static Map<String, String> getAttrMapWithCache(XmlValue node) throws XmlException {
-		String nodeId = node.getNodeHandle();
+	public static Map<String, String> getAttrMapWithCache(BXNode node) {
+        /*
+		int nodeId = node.getNode().id;
 		Map<String, String> ret = attrCache.get().get(nodeId);
 		// null means a cahce miss so we will need to go back to the database
 		if(ret == null) {
@@ -433,6 +280,8 @@ public class XMLDB {
 			attrCache.get().put(nodeId, ret);
 		}
 		return ret;
+        */
+        return getAttrMap(node);
 	}
 	public static String getAllAttr(Map<String, String> attrMap, List<String> showAttrList) {
 		String ret;
@@ -452,70 +301,60 @@ public class XMLDB {
 		}
 		return !ret.equals("") ? ret.substring(1) : ret;
 	}
-	public static String getAllAttr(XmlValue node) throws XmlException {
-		final XmlResults attrRes = node.getAttributes();
-		String ret;
-		if((ret = getAttr(node, "name")) != null) {
-			ret = "," + ret;
-		} else {
-			ret = "";
-		}
-		try {
-			while(attrRes.hasNext()) {
-				XmlValue temp = attrRes.next();
-				if(temp.getNodeName().indexOf(":") == -1 && !temp.getNodeName().equals("name") &&
-						!temp.getNodeName().equals("type") && 
-						!temp.getNodeName().equals("unit") && 
-						!temp.getNodeName().equals("year")) {
-					ret += ","+temp.getNodeName()+"="+temp.getNodeValue();
-				}
-			}
-		} finally {
-			attrRes.delete();
-		}
-		if(!ret.equals("")) {
-			return ret.substring(1);
-		} else {
-			return ret;
-		}
-	}
 	public String getQueryFunctionAsDistinctNames() {
 		return "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; local:distinct-node-names";
 	}
 	/**
 	 * Sets the value of the given node to the passed in string content back into the
-	 * database.  WARNING: the given val must an Eager result otherwise there will be
-	 * a deadlock when the query executes.
+	 * database.
 	 * @param val The node for which to set the value.
 	 * @param content The new value to set.
 	 */
-	public void setValue(XmlValue val, String content) {
+	public void setValue(ANode val, String content) {
 		// simple XQuery update query to replace the value of the given val
-		final String setValueXQuery = "replace value of node self::node() with $newValue";
-		XmlQueryContext qc = null;
-		XmlQueryExpression qe = null;
-		XmlResults res = null;
+		final String setValueXQuery = "declare variable $newValue as xs:string external; replace value of node self::node() with $newValue";
+        QueryProcessor queryProc = new QueryProcessor(setValueXQuery, context);
 		try {
-			qc = manager.createQueryContext();
+            // set val as the context so that it knows which node to update
+            queryProc.context(val);
 			// setting the new value through the variable is safer and allows us to use
 			// the same query
-			qc.setVariableValue("newValue", new XmlValue(content));
-			qe = manager.prepare(setValueXQuery, qc);
-			// not expecting anything to be in the results but we should still get it
-			// so that we can make sure it gets deleted
-			res = qe.execute(val, qc);
-		} catch(XmlException e) {
+			queryProc.bind("newValue", content, "xs:string");
+			// not expecting anything to be in the results
+			queryProc.execute();
+		} catch(QueryException e) {
 			e.printStackTrace();
 		} finally {
-			if(res != null) {
-				res.delete();
-			}
-			if(qe != null) {
-				qe.delete();
-			}
+            queryProc.close();
+		}
+	}
+	/**
+	 * Inserts a single query cache onto the cache document.
+     * @param doc The cache document to add the cache value.
+	 * @param hash The hash value to use as an id
+	 * @param content The new value to set.
+	 */
+	public void updateSingleCacheValue(ANode doc, int hash, String content) {
+		// simple XQuery update query to replace the value of the given val
+		final String setValueXQuery = "declare variable $hashId as xs:integer external; declare variable $newCacheValue as xs:string external; if(exists(self::node()/cache[@id=$hashId])) then replace value of node self::node()/cache[@id=$hashId] with $newCacheValue else insert node element cache{ attribute id { $hashId }, text { $newCacheValue } } into self::node()";
+        QueryProcessor queryProc = new QueryProcessor(setValueXQuery, context);
+		try {
+            // set doc as the context so that it knows which node to update
+            queryProc.context(doc);
+			// setting the new value through the variable is safer and allows us to use
+			// the same query
+			queryProc.bind("hashId", hash, "xs:integer");
+			queryProc.bind("newCacheValue", content, "xs:string");
+			// not expecting anything to be in the results
+			queryProc.execute();
+		} catch(QueryException e) {
+			e.printStackTrace();
+		} finally {
+            queryProc.close();
 		}
 	}
 	public void addVarMetaData(final Frame parentFrame) {
+        /*
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Eager);
 			final XmlResults res = manager.query(
@@ -657,8 +496,11 @@ public class XMLDB {
 			e.printStackTrace();
 			//closeDB();
 		}
+        */
+        // TODO: still necessary?
 	}
 
+    /*
 	protected XmlResults getVars(XmlValue contextVal, String path) {
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
@@ -668,7 +510,7 @@ public class XMLDB {
 			 *	fn:distinct-values(for $nname in $args return fn:local-name($nname))
 			 * }; 
 			 * local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1])
-			 */ 
+			 * / 
 			String queryStr = "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; "+path;
 			XmlQueryExpression qe = manager.prepare(queryStr, qc);
 			return qe.execute(contextVal, qc);
@@ -677,6 +519,8 @@ public class XMLDB {
 			return null;
 		}
 	}
+    */
+    /*
 	protected void getVarMetaData() {
 		XmlResults res = createQuery("/*[fn:exists(dbxml:metadata('var'))]", null, null, null);
 		// TODO: is is safe to assume if one is null they are all null?
@@ -766,6 +610,7 @@ public class XMLDB {
 			e.printStackTrace();
 		}
 	}
+    */
 	// TODO: this is a util method and should be moved somewhere else
 	public static JDialog createProgressBarGUI(Frame parentFrame, JProgressBar progBar, String title, String labelStr) {
 		if(progBar.getMaximum() == 0) {

@@ -49,10 +49,6 @@ import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
-
 public class EmissionsQueryBuilder extends QueryBuilder {
 	public static Map<String, Boolean> ghgList;
 	public static Map<String, Boolean> fuelList;
@@ -345,6 +341,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		return ret.toString();
 	}
 	private String expandGroupName(String gName) {
+        /*
 		String query;
 		StringBuffer ret = new StringBuffer();
 		if(qg.currSel == 3) {
@@ -369,6 +366,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		}
 		ret.delete(ret.length()-4, ret.length());
 		return ret.toString();
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	private void createXPath() {
 		qg.xPath = createListPath(8);
@@ -388,6 +388,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		qg.axis2Name = "Year";
 	}
 	private Map createList(String path, boolean isGroupNames) {
+        /*
 		System.out.println("createing "+path);
 		LinkedHashMap ret = new LinkedHashMap();
 		if(!isGroupNames && qg.isSumable) {
@@ -408,6 +409,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		}
 		res.delete();
 		return ret;
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
