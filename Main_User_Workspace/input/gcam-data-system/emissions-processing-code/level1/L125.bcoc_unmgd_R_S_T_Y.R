@@ -51,6 +51,10 @@ L125.RCP <- L125.RCP[ names( L125.RCP ) %in% c( "GCAM_region_ID", "Non.CO2", "lc
 L125.RCP$lcf <- L125.RCP$lcf * kg_to_tg 
 L125.RCP$sav <- L125.RCP$sav * kg_to_tg 
 
+#Drop NAs and aggregate by region
+L125.RCP <- na.omit( L125.RCP )
+L125.RCP <- aggregate( L125.RCP[ c( "lcf", "sav")], by=as.list( L125.RCP[ c( "GCAM_region_ID", "Non.CO2" ) ] ), sum)
+
 printlog( "Compute grassland emissions factors by GCAM region and AEZ" )
 L125.bcoc_tgbkm2_R_grass_2000.melt <- L125.grass_bm2_R_Y
 L125.bcoc_tgbkm2_R_grass_2000.melt <- subset( L125.bcoc_tgbkm2_R_grass_2000.melt, L125.bcoc_tgbkm2_R_grass_2000.melt$variable == "X2000" )

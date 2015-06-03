@@ -78,11 +78,11 @@ names( L114.RCP )[ names( L114.RCP ) == "x" ] <- "RCP_emissions"
 printlog( "Scale emissions by tech to match RCP totals")
 #First compute scalers
 L114.emiss_scaler <- L114.bcoc_tg_R_en_Srcp_2000.melt
-L114.emiss_scaler$RCP_emissions <- L114.RCP$RCP_emissions[ match( vecpaste( L114.emiss_scaler[ c( "GCAM_region_ID", "RCP_agg_sector" )]), vecpaste( L114.RCP[ c( "GCAM_region_ID", "RCP_agg_sector" ) ]))]
+L114.emiss_scaler$RCP_emissions <- L114.RCP$RCP_emissions[ match( vecpaste( L114.emiss_scaler[ c( "GCAM_region_ID", "RCP_agg_sector", "Non.CO2" )]), vecpaste( L114.RCP[ c( "GCAM_region_ID", "RCP_agg_sector", "Non.CO2" ) ]))]
 L114.emiss_scaler$scaler <- L114.emiss_scaler$RCP_emissions / L114.emiss_scaler$unscaled_emissions * kg_to_tg 
 
 #Now, scale EPA emissions
-L114.bcoc_tg_R_en_Si_F_2000.melt$scaler <- L114.emiss_scaler$scaler[ match( vecpaste( L114.bcoc_tg_R_en_Si_F_2000.melt[ c( "GCAM_region_ID", "RCP_agg_sector" ) ]), vecpaste( L114.emiss_scaler[ c( "GCAM_region_ID", "RCP_agg_sector" ) ]) ) ]
+L114.bcoc_tg_R_en_Si_F_2000.melt$scaler <- L114.emiss_scaler$scaler[ match( vecpaste( L114.bcoc_tg_R_en_Si_F_2000.melt[ c( "GCAM_region_ID", "RCP_agg_sector", "Non.CO2" ) ]), vecpaste( L114.emiss_scaler[ c( "GCAM_region_ID", "RCP_agg_sector", "Non.CO2" ) ]) ) ]
 L114.bcoc_tg_R_en_Si_F_2000.melt$emissions <- L114.bcoc_tg_R_en_Si_F_2000.melt$unscaled_emissions * L114.bcoc_tg_R_en_Si_F_2000.melt$scaler
 L114.bcoc_tg_R_en_Si_F_2000.melt[ is.na( L114.bcoc_tg_R_en_Si_F_2000.melt ) ] <- 0
 

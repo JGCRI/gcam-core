@@ -57,7 +57,7 @@ L104.in_EJ_USA_en_Si_F_Yh.melt$BCOC_agg_sector <- GCAM_sector_tech$BCOC_agg_sect
 L104.in_EJ_USA_en_Si_F_Yh.melt$BCOC_agg_fuel <- GCAM_sector_tech$BCOC_agg_fuel[ match( vecpaste( L104.in_EJ_USA_en_Si_F_Yh.melt[ c( "sector", "technology" )] ), vecpaste( GCAM_sector_tech[ c( "sector", "technology" )]) )]
 L104.in_EJ_USA_en_T_Yh.melt <- aggregate( L104.in_EJ_USA_en_Si_F_Yh.melt$value, by=as.list( L104.in_EJ_USA_en_Si_F_Yh.melt[ c( "BCOC_agg_sector", "BCOC_agg_fuel", "variable" )]), sum )
 names( L104.in_EJ_USA_en_T_Yh.melt )[ names( L104.in_EJ_USA_en_T_Yh.melt ) == "x" ] <- "energy"
-L104.in_EJ_USA_en_T_1990.melt <- subset( L104.in_EJ_USA_en_T_Yh.melt, L104.in_EJ_USA_en_T_Yh.melt$variable == "X1990" )
+L104.in_EJ_USA_en_T_1990.melt <- subset( L104.in_EJ_USA_en_T_Yh.melt, L104.in_EJ_USA_en_T_Yh.melt$variable == "X2000" )
 
 L104.bcoc_tgej_USA_en_T_1990 <- L104.bcoc_tg_USA_en_T_1990
 L104.bcoc_tgej_USA_en_T_1990$energy <- L104.in_EJ_USA_en_T_1990.melt$energy[ match( vecpaste( L104.bcoc_tgej_USA_en_T_1990[ c( "sector", "technology" )]), vecpaste( L104.in_EJ_USA_en_T_1990.melt[ c( "BCOC_agg_sector", "BCOC_agg_fuel" ) ] )  )]
