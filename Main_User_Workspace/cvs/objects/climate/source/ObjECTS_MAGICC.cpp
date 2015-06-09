@@ -56,7 +56,7 @@ void CLIMAT()
     // will be done relative to these paths.
     const Configuration* conf = Configuration::getInstance();
     const string BASE_OUTPUT_DIR = conf->getString( "MAGICC-output-dir", "../output" );
-    const string BASE_INPUT_DIR = conf->getString( "MAGICC-input-dir", "../cvs/objects/magicc/inputs" );
+    const string BASE_INPUT_DIR = conf->getString( "MAGICC-input-dir", "../input/magicc/inputs" );
     ofstream outfile8; // need to do this here; see line F395 and F658
     openfile_write( &outfile8, BASE_OUTPUT_DIR + "/mag_c.csv", DEBUG_IO );
     
