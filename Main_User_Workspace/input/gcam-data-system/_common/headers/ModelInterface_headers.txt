@@ -295,6 +295,8 @@ StubTechSecOut, world/+{name}region, region/+{name}supplysector, supplysector/+{
 
 StubTechSecMarket, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}secondary-output, secondary-output/+market-name, scenario, scenario/world
 
+StubTechSecPmult, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}secondary-output, secondary-output/+pMultiplier, scenario, scenario/world
+
 StubTechElecMarket, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+electric-sector-market, scenario, scenario/world
 
 StubResBioCurve, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+{name}residue-biomass-production, residue-biomass-production/+{price}fract-harvested, residue-biomass-production/+fract-harvested, scenario, scenario/world

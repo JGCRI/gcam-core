@@ -41,6 +41,9 @@ A21.tradedtech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_shrwt" )
 L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )
 L121.in_EJ_R_TPES_unoil_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_unoil_Yh" )
 L121.in_EJ_R_TPES_crude_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_crude_Yh" )
+A_an_input_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_subsector" )
+L108.ag_Feed_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L108.ag_Feed_Mt_R_C_Y" )
+L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -113,6 +116,31 @@ printlog( "NOTE: secondary outputs are only considered in future time periods" )
 L221.GlobalTechSecOut_en <- interpolate_and_melt( A21.globaltech_secout, model_future_years, value.name="output.ratio" )
 L221.GlobalTechSecOut_en[ c( "sector.name", "subsector.name" ) ] <- L221.GlobalTechSecOut_en[ c( "supplysector", "subsector" ) ]
 L221.GlobalTechSecOut_en <- L221.GlobalTechSecOut_en[ names_GlobalTechSecOut ]
+
+# Pmultipliers of secondary outputs
+# This is designed to correct for behavioral distortions from anomalously high feedcrops prices in regions that use misc crops for this purpose. See proposal 211
+# first, calculate the approximate price of feed in each region. Share of each feed type times the price of the commodity
+# Subset only the feed items that are considered "FeedCrops"
+L221.ag_Feed_Mt_R_C_Y <- subset( L108.ag_Feed_Mt_R_C_Y, GCAM_commodity %in% A_an_input_subsector$subsector[ A_an_input_subsector$supplysector == "FeedCrops" ] )
+L221.ag_Feed_Mt_R_Yf <- aggregate( L221.ag_Feed_Mt_R_C_Y[ X_final_historical_year ], by = L221.ag_Feed_Mt_R_C_Y[ R ], sum )
+L221.ag_FeedShares_R_C_Yf <- data.frame( L221.ag_Feed_Mt_R_C_Y[ c( R, "GCAM_commodity" ) ],
+      L221.ag_Feed_Mt_R_C_Y[ X_final_historical_year ] / L221.ag_Feed_Mt_R_Yf[[X_final_historical_year]][
+          match( L221.ag_Feed_Mt_R_C_Y[[R]], L221.ag_Feed_Mt_R_Yf[[R]] ) ] )
+L221.ag_FeedShares_R_C_Yf$price <- L132.ag_an_For_Prices$calPrice[ match( L221.ag_FeedShares_R_C_Yf$GCAM_commodity, L132.ag_an_For_Prices$GCAM_commodity ) ]
+L221.ag_FeedShares_R_C_Yf$feed_price <- L221.ag_FeedShares_R_C_Yf$price * L221.ag_FeedShares_R_C_Yf[[X_final_historical_year]]
+L221.ag_FeedPrice_R_Yf <- aggregate( L221.ag_FeedShares_R_C_Yf["feed_price"], by = L221.ag_FeedShares_R_C_Yf[R], sum )
+L221.ag_FeedPrice_R_Yf$pMultiplier <- L221.ag_FeedPrice_R_Yf$feed_price[ L221.ag_FeedPrice_R_Yf[[R]] == 1 ] / L221.ag_FeedPrice_R_Yf$feed_price
+
+#Extract only the PMultipliers that are significant (less than some assumed threshold) and in regions where the relevant technologies exist
+L221.PMult_R <- subset( L221.ag_FeedPrice_R_Yf, pMultiplier < max_bioliquid_Pmult &
+      GCAM_region_ID %in% A_regions[[R]][ A_regions$ethanol == "corn ethanol" | A_regions$biodiesel == "biodiesel" ] )
+
+printlog( "L221.StubTechSecPmult_en: Secondary (feed) outputs pMultipliers in regions with high feedcrop prices" )
+L221.StubTechSecPmult_en <- repeat_and_add_vector( L221.GlobalTechSecOut_en, R, L221.PMult_R[[R]] )
+L221.StubTechSecPmult_en <- add_region_name( L221.StubTechSecPmult_en )
+L221.StubTechSecPmult_en[ c( supp, subs, "stub.technology" ) ] <- L221.StubTechSecPmult_en[ c( "sector.name", "subsector.name", "technology" ) ]
+L221.StubTechSecPmult_en$pMultiplier <- round( L221.PMult_R$pMultiplier[ match( L221.StubTechSecPmult_en[[R]], L221.PMult_R[[R]] ) ], digits_efficiency )
+L221.StubTechSecPmult_en <- L221.StubTechSecPmult_en[ c( names_StubTechYr, "secondary.output", "pMultiplier" ) ]
 
 #Coefficients of traded technologies
 printlog( "L221.TechCoef_en_Traded: Energy inputs, coefficients, and market names of traded technologies for upstream energy handling" )
@@ -242,6 +270,7 @@ write_mi_data( L221.GlobalTechCost_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "
 write_mi_data( L221.GlobalTechShrwt_en, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L221.GlobalTechShrwt_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.PrimaryConsKeyword_en, "PrimaryConsKeyword", "ENERGY_LEVEL2_DATA", "L221.PrimaryConsKeyword_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.GlobalTechSecOut_en, "GlobalTechSecOut", "ENERGY_LEVEL2_DATA", "L221.GlobalTechSecOut_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
+write_mi_data( L221.StubTechSecPmult_en, "StubTechSecPmult", "ENERGY_LEVEL2_DATA", "L221.StubTechSecPmult_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechCoef_en_Traded, "TechCoef", "ENERGY_LEVEL2_DATA", "L221.TechCoef_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechCost_en_Traded, "TechCost", "ENERGY_LEVEL2_DATA", "L221.TechCost_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechShrwt_en_Traded, "TechShrwt", "ENERGY_LEVEL2_DATA", "L221.TechShrwt_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )

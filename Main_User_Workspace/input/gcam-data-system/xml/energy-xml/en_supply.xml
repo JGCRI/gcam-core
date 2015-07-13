@@ -12544,7 +12544,98 @@
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
-               <stub-technology name="regional corn for ethanol"/>
+               <stub-technology name="regional corn for ethanol">
+                  <period year="2015">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2020">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2025">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2030">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2035">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2040">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2045">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2050">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2055">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2060">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2065">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2070">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2075">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2080">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2085">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2090">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2095">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2100">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                  </period>
+               </stub-technology>
             </subsector>
          </supplysector>
          <supplysector name="regional sugar for ethanol">
@@ -12573,6 +12664,114 @@
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <stub-technology name="OilCrop">
+                  <period year="2015">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2025">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2030">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2040">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2045">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2055">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2060">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2070">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2075">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2085">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2090">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2100">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.687</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
                   <period year="1975">
                      <share-weight>1</share-weight>
                   </period>
@@ -12583,60 +12782,6 @@
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2015">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2020">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2025">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2030">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2035">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2040">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2045">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2050">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2055">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2060">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2065">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2070">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2075">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2080">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2085">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2090">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2095">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2100">
                      <share-weight>1</share-weight>
                   </period>
                </stub-technology>
@@ -14032,7 +14177,98 @@
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
-               <stub-technology name="regional corn for ethanol"/>
+               <stub-technology name="regional corn for ethanol">
+                  <period year="2015">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2020">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2025">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2030">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2035">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2040">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2045">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2050">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2055">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2060">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2065">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2070">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2075">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2080">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2085">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2090">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2095">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+                  <period year="2100">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                  </period>
+               </stub-technology>
             </subsector>
          </supplysector>
          <supplysector name="regional sugar for ethanol">
@@ -14061,6 +14297,114 @@
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <stub-technology name="OilCrop">
+                  <period year="2015">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2025">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2030">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2040">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2045">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2055">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2060">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2070">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2075">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2085">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2090">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2100">
+                     <secondary-output name="FeedCrops">
+                        <pMultiplier>0.674</pMultiplier>
+                     </secondary-output>
+                     <share-weight>1</share-weight>
+                  </period>
                   <period year="1975">
                      <share-weight>1</share-weight>
                   </period>
@@ -14071,60 +14415,6 @@
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2010">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2015">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2020">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2025">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2030">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2035">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2040">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2045">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2050">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2055">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2060">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2065">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2070">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2075">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2080">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2085">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2090">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2095">
-                     <share-weight>1</share-weight>
-                  </period>
-                  <period year="2100">
                      <share-weight>1</share-weight>
                   </period>
                </stub-technology>

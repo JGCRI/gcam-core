@@ -20,3 +20,5 @@ digits_cost <- 4
 digits_efficiency <- 3
 digits_shrwt <- 4
 
+#Range of PMultipliers to use for secondary output feedcrops from biodiesel and corn ethanol
+max_bioliquid_Pmult <- 0.80
