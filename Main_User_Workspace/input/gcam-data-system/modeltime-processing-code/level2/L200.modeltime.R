@@ -49,13 +49,6 @@ L200.ModelTimeInterYears <- data.frame(
       inter.year.timestep = GCAM_interyear.timesteps,
       inter.year = GCAM_interyears )
 
-#Magicc model data
-printlog( "L200.MAGICC: Input parameters from GCAM to MAGICC" )
-L200.MAGICC <- data.frame( 
-      last.historical.year = Magicc_last_historical_year,
-      bc.unit.forcing = Magicc_bc_unit_forcing,
-      carbon.model.start.year = Magicc_C_start_year )
-
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
@@ -63,7 +56,6 @@ write_mi_data( L200.ModelTime, IDstring="ModelTime", domain="MODELTIME_LEVEL2_DA
 if( nrow( L200.ModelTimeInterYears ) != 0 ){
   write_mi_data( L200.ModelTimeInterYears, "ModelTimeInterYears", "MODELTIME_LEVEL2_DATA", "L200.ModelTimeInterYears", "MODELTIME_XML_BATCH", "batch_modeltime.xml" )
 }
-write_mi_data( L200.MAGICC, "MAGICC", "MODELTIME_LEVEL2_DATA", "L200.MAGICC", "MODELTIME_XML_BATCH", "batch_modeltime.xml" ) 
 
 insert_file_into_batchxml( "MODELTIME_XML_BATCH", "batch_modeltime.xml", "MODELTIME_XML_FINAL", "modeltime.xml", "", xml_tag="outFile" )
 
