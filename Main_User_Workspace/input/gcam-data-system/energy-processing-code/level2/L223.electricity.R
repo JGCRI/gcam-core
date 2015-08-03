@@ -33,10 +33,12 @@ A23.sector <- readdata( "ENERGY_ASSUMPTIONS", "A23.sector" )
 A23.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_logit" )
 A23.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt" )
 A23.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_interp" )
+A23.subsector_interp_R <- readdata("ENERGY_ASSUMPTIONS","A23.subsector_interp_R")
 A23.subsector_shrwt_nuc_R <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt_nuc_R" )
 A23.subsector_shrwt_renew_R <- readdata( "ENERGY_ASSUMPTIONS", "A23.subsector_shrwt_renew_R" )
 A23.globalinttech <- readdata( "ENERGY_ASSUMPTIONS", "A23.globalinttech" )
 A23.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_shrwt" )
+A23.globaltech_interp <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_interp" )
 A23.globaltech_keyword <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_keyword" )
 A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )
 A23.globaltech_capital <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital" )
@@ -139,6 +141,19 @@ if( any( !is.na( A23.subsector_interp$to.value ) ) ){
 	L223.SubsectorInterpTo_elec <- write_to_all_regions( A23.subsector_interp[ !is.na( A23.subsector_interp$to.value ), ], names_SubsectorInterpTo )
 	}
 
+printlog( "Adjust subsector interp rules regionally" )
+# Any global interp rules that match by region + sector + subsector name will be replaced by a regionally specific
+# interp rule.
+L223.SubsectorInterp_elec <- L223.SubsectorInterp_elec[ vecpaste( L223.SubsectorInterp_elec[, names_Subsector ] ) %!in%
+                                                        vecpaste( A23.subsector_interp_R[, names_Subsector ] ), ]
+L223.SubsectorInterp_elec <- rbind( L223.SubsectorInterp_elec, A23.subsector_interp_R[, names( L223.SubsectorInterp_elec ) ] )
+L223.SubsectorInterp_elec <- set_years( L223.SubsectorInterp_elec )
+L223.SubsectorInterpTo_elec <- L223.SubsectorInterpTo_elec[ vecpaste( L223.SubsectorInterpTo_elec[, names_Subsector ] ) %!in%
+                                                            vecpaste( A23.subsector_interp_R[, names_Subsector ] ), ]
+L223.SubsectorInterpTo_elec <- rbind( L223.SubsectorInterpTo_elec,
+                                      A23.subsector_interp_R[ !is.na( A23.subsector_interp_R$to.value ), names( L223.SubsectorInterpTo_elec ) ] )
+L223.SubsectorInterpTo_elec <- set_years( L223.SubsectorInterpTo_elec )
+
 # 2c. Technology information
 printlog( "L223.StubTech_elec: Identification of stub technologies of electricity generation" )
 #Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
@@ -147,7 +162,7 @@ names( L223.StubTech_elec ) <- names_StubTech
 
 #Efficiencies of global technologies
 printlog( "L223.GlobalTechEff_elec: Energy inputs and coefficients of global electricity generation technologies" )
-L223.globaltech_eff.melt <- interpolate_and_melt( A23.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency", digits = digits_efficiency )
+L223.globaltech_eff.melt <- interpolate_and_melt( A23.globaltech_eff, c( model_base_years, model_future_years ), value.name="efficiency", digits = digits_efficiency, rule=3 )
 #Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
 L223.globaltech_eff.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_eff.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechEff_elec <- L223.globaltech_eff.melt[ names_GlobalTechEff ]
@@ -157,7 +172,7 @@ L223.GlobalTechEff_elec <- subset_techs( L223.GlobalTechEff_elec, inttech.table 
 
 #Costs of global technologies
 printlog( "L223.GlobalTechCapital_elec: Capital costs of global electricity generation technologies" )
-L223.globaltech_capital.melt <- interpolate_and_melt( A23.globaltech_capital, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital )
+L223.globaltech_capital.melt <- interpolate_and_melt( A23.globaltech_capital, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital, rule=3 )
 L223.globaltech_capital.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_capital.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechCapital_elec <- L223.globaltech_capital.melt[ names_GlobalTechCapital ]
 L223.GlobalIntTechCapital_elec <- subset_inttechs( L223.GlobalTechCapital_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
@@ -165,7 +180,7 @@ L223.GlobalTechCapital_elec <- subset_techs( L223.GlobalTechCapital_elec, inttec
 
 #Costs of global technologies - advanced
 printlog( "L223.GlobalTechCapital_elec_adv: Capital costs of global electricity generation technologies - advanced case" )
-L223.globaltech_capital_adv.melt <- interpolate_and_melt( A23.globaltech_capital_adv, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital )
+L223.globaltech_capital_adv.melt <- interpolate_and_melt( A23.globaltech_capital_adv, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital, rule=3 )
 L223.globaltech_capital_adv.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_capital_adv.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechCapital_elec_adv <- L223.globaltech_capital_adv.melt[ names_GlobalTechCapital ]
 L223.GlobalIntTechCapital_elec_adv <- subset_inttechs( L223.GlobalTechCapital_elec_adv, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
@@ -183,7 +198,7 @@ L223.GlobalTechCapital_nuc_adv <- subset( L223.GlobalTechCapital_elec_adv, L223.
 
 #Costs of global technologies - low
 printlog( "L223.GlobalTechCapital_elec_low: Capital costs of global electricity generation technologies - lowanced case" )
-L223.globaltech_capital_low.melt <- interpolate_and_melt( A23.globaltech_capital_low, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital )
+L223.globaltech_capital_low.melt <- interpolate_and_melt( A23.globaltech_capital_low, c( model_base_years, model_future_years ), value.name="capital.overnight", digits = digits_capital, rule=3 )
 L223.globaltech_capital_low.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_capital_low.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechCapital_elec_low <- L223.globaltech_capital_low.melt[ names_GlobalTechCapital ]
 L223.GlobalIntTechCapital_elec_low <- subset_inttechs( L223.GlobalTechCapital_elec_low, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
@@ -200,14 +215,14 @@ L223.GlobalTechCapital_geo_low <- subset( L223.GlobalTechCapital_elec_low, L223.
 L223.GlobalTechCapital_nuc_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "nuclear") 
 
 printlog( "L223.GlobalTechOMfixed_elec: Fixed O&M costs of global electricity generation technologies" )
-L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed", digits = digits_OM )
+L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed", digits = digits_OM, rule=3 )
 L223.globaltech_OMfixed.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_OMfixed.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechOMfixed_elec <- L223.globaltech_OMfixed.melt[ names_GlobalTechOMfixed ]
 L223.GlobalIntTechOMfixed_elec <- subset_inttechs( L223.GlobalTechOMfixed_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechOMfixed_elec <- subset_techs( L223.GlobalTechOMfixed_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 
 printlog( "L223.GlobalTechOMvar_elec: Variable O&M costs of global electricity generation technologies" )
-L223.globaltech_OMvar.melt <- interpolate_and_melt( A23.globaltech_OMvar, c( model_base_years, model_future_years ), value.name="OM.var", digits = digits_OM )
+L223.globaltech_OMvar.melt <- interpolate_and_melt( A23.globaltech_OMvar, c( model_base_years, model_future_years ), value.name="OM.var", digits = digits_OM, rule=3 )
 L223.globaltech_OMvar.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_OMvar.melt[ c( "supplysector", "subsector" ) ]
 L223.GlobalTechOMvar_elec <- L223.globaltech_OMvar.melt[ names_GlobalTechOMvar ]
 L223.GlobalIntTechOMvar_elec <- subset_inttechs( L223.GlobalTechOMvar_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
@@ -220,6 +235,11 @@ L223.globaltech_shrwt.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globa
 L223.GlobalTechShrwt_elec <- L223.globaltech_shrwt.melt[ c( names_GlobalTechYr, "share.weight" ) ]
 L223.GlobalIntTechShrwt_elec <- subset_inttechs( L223.GlobalTechShrwt_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechShrwt_elec <- subset_techs( L223.GlobalTechShrwt_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+
+#Interpolation rules
+#TODO: we should subset_inttechs only at the moment there are none
+L223.GlobalTechInterp_elec <- set_years( A23.globaltech_interp )
+names( L223.GlobalTechInterp_elec )[ names( L223.GlobalTechInterp_elec ) %in% c( "supplysector", "subsector" ) ] <- c( "sector.name", "subsector.name" )
 
 printlog( "L223.PrimaryRenewKeyword_elec: Keywords of primary renewable electric generation technologies" )
 L223.AllKeyword_elec <- repeat_and_add_vector( A23.globaltech_keyword, Y, c( model_base_years, model_future_years ) )
@@ -417,7 +437,7 @@ L223.StubTechCapFactor_elec <- rbind( L223.StubTechCapFactor_elec, L223.StubTech
 # to scale the capacitfy factors for central PV and CSP respectively.
 printlog( "Regional capacity factor adjustment for solar technologies" )
 L223.StubTechCapFactor_solar <- subset( A23.globaltech_capital, subsector %in% c( "solar", "rooftop_pv" ), select=
-    names( A23.globaltech_capital )[ !grepl( '^X|fixed', names( A23.globaltech_capital ) ) ] )
+    names( A23.globaltech_capital )[ !grepl( '^X|fixed|improvement', names( A23.globaltech_capital ) ) ] )
 names( L223.StubTechCapFactor_solar )[ names( L223.StubTechCapFactor_solar ) == "capacity.factor" ] <- "capacity.factor.capital"
 L223.StubTechCapFactor_solar.om <- subset( A23.globaltech_OMfixed, subsector %in% c( "solar", "rooftop_pv" ), select=
     names( A23.globaltech_OMfixed )[ !grepl( '^X', names( A23.globaltech_OMfixed ) ) ] )
@@ -469,6 +489,7 @@ write_mi_data( L223.GlobalIntTechOMfixed_elec, "GlobalIntTechOMfixed", "ENERGY_L
 write_mi_data( L223.GlobalTechOMvar_elec, "GlobalTechOMvar", "ENERGY_LEVEL2_DATA", "L223.GlobalTechOMvar_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalIntTechOMvar_elec, "GlobalIntTechOMvar", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechOMvar_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalTechShrwt_elec, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L223.GlobalTechShrwt_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
+write_mi_data( L223.GlobalTechInterp_elec, "GlobalTechInterp", "ENERGY_LEVEL2_DATA", "L223.GlobalTechInterp_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalIntTechShrwt_elec, "GlobalIntTechShrwt", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechShrwt_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.PrimaryRenewKeyword_elec, "PrimaryRenewKeyword", "ENERGY_LEVEL2_DATA", "L223.PrimaryRenewKeyword_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.PrimaryRenewKeywordInt_elec, "PrimaryRenewKeywordInt", "ENERGY_LEVEL2_DATA", "L223.PrimaryRenewKeywordInt_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )

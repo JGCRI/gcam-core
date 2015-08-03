@@ -1,1 +1,16 @@
-# GCAM 3.0 wind resource supply curves,,,,,,region_GCAM3,resource,subresource,maxSubResource,mid-price,curve-exponent,base-priceAfrica,onshore wind resource,onshore wind resource,680.241577,6.473844444,4.136444,4.975138889Australia_NZ,onshore wind resource,onshore wind resource,190.272919,3.924900278,3.557898,4.99275Canada,onshore wind resource,onshore wind resource,158.976273,4.804223056,3.038668,4.975138889China,onshore wind resource,onshore wind resource,180.451874,5.238865278,3.347413,5.019166667Eastern Europe,onshore wind resource,onshore wind resource,24.024664,4.563655278,3.439183,5.168861111Former Soviet Union,onshore wind resource,onshore wind resource,414.576385,4.371165833,3.865475,5.098416667India,onshore wind resource,onshore wind resource,44.653652,8.456151111,3.938476,5.283333333Japan,onshore wind resource,onshore wind resource,2.385547,4.202451389,2.450271,4.99275Korea,onshore wind resource,onshore wind resource,0.84307,6.071430556,3.60107,6.384027778Latin America,onshore wind resource,onshore wind resource,221.132233,4.724708889,2.952085,4.983944444Middle East,onshore wind resource,onshore wind resource,124.069275,5.943045556,4.718652,5.30975Southeast Asia,onshore wind resource,onshore wind resource,40.51096,5.492553333,2.826844,5.256916667USA,onshore wind resource,onshore wind resource,194.771622,3.738398611,3.746311,5.080805556Western Europe,onshore wind resource,onshore wind resource,85.908813,3.054118889,2.851166,5.001555556
+# GCAM 3.0 wind resource supply curves NOT USED,,,,,,
+region_GCAM3,resource,subresource,maxSubResource,mid-price,curve-exponent,base-price
+Africa,onshore wind resource,onshore wind resource,680.241577,6.473844444,4.136444,4.975138889
+Australia_NZ,onshore wind resource,onshore wind resource,190.272919,3.924900278,3.557898,4.99275
+Canada,onshore wind resource,onshore wind resource,158.976273,4.804223056,3.038668,4.975138889
+China,onshore wind resource,onshore wind resource,180.451874,5.238865278,3.347413,5.019166667
+Eastern Europe,onshore wind resource,onshore wind resource,24.024664,4.563655278,3.439183,5.168861111
+Former Soviet Union,onshore wind resource,onshore wind resource,414.576385,4.371165833,3.865475,5.098416667
+India,onshore wind resource,onshore wind resource,44.653652,8.456151111,3.938476,5.283333333
+Japan,onshore wind resource,onshore wind resource,2.385547,4.202451389,2.450271,4.99275
+Korea,onshore wind resource,onshore wind resource,0.84307,6.071430556,3.60107,6.384027778
+Latin America,onshore wind resource,onshore wind resource,221.132233,4.724708889,2.952085,4.983944444
+Middle East,onshore wind resource,onshore wind resource,124.069275,5.943045556,4.718652,5.30975
+Southeast Asia,onshore wind resource,onshore wind resource,40.51096,5.492553333,2.826844,5.256916667
+USA,onshore wind resource,onshore wind resource,194.771622,3.738398611,3.746311,5.080805556
+Western Europe,onshore wind resource,onshore wind resource,85.908813,3.054118889,2.851166,5.001555556

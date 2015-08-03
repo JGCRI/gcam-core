@@ -1,1 +1,27 @@
-# Electricity technology shareweights,,,,supplysector,subsector,technology,primary.renewable,average.fossil.efficiencyelectricity,coal,coal (conv pul),,1electricity,coal,coal (IGCC),,1electricity,coal,coal (IGCC CCS),,1electricity,gas,gas (steam/CT),,1electricity,gas,gas (CC),,1electricity,gas,gas (CC CCS),,1electricity,refined liquids,refined liquids (steam/CT),,1electricity,refined liquids,refined liquids (IGCC),,1electricity,refined liquids,refined liquids (IGCC CCS),,1electricity,biomass,biomass (conv),,1electricity,biomass,biomass (IGCC),,1electricity,biomass,biomass (IGCC CCS),,1electricity,nuclear,Gen_II_LWR,nuclear-elect,electricity,nuclear,Gen_III,nuclear-elect,electricity,hydro,hydro,hydro-elect,electricity,wind,wind,wind-elect,electricity,wind,wind_storage,wind-elect,electricity,solar,PV,solar-elect,electricity,solar,PV_storage,solar-elect,electricity,solar,CSP,solar-elect,electricity,solar,CSP_storage,solar-elect,electricity,geothermal,geothermal,geothermal-elect,elect_td_bld,rooftop_pv,rooftop_pv,solar-elect,
+# Electricity technology shareweights,,,,
+supplysector,subsector,technology,primary.renewable,average.fossil.efficiency
+electricity,coal,coal (conv pul),,1
+electricity,coal,coal (conv pul CCS),,1
+electricity,coal,coal (IGCC),,1
+electricity,coal,coal (IGCC CCS),,1
+electricity,gas,gas (steam/CT),,1
+electricity,gas,gas (CC),,1
+electricity,gas,gas (CC CCS),,1
+electricity,refined liquids,refined liquids (steam/CT),,1
+electricity,refined liquids,refined liquids (CC),,1
+electricity,refined liquids,refined liquids (CC CCS),,1
+electricity,biomass,biomass (conv),,1
+electricity,biomass,biomass (conv CCS),,1
+electricity,biomass,biomass (IGCC),,1
+electricity,biomass,biomass (IGCC CCS),,1
+electricity,nuclear,Gen_II_LWR,nuclear-elect,
+electricity,nuclear,Gen_III,nuclear-elect,
+electricity,hydro,hydro,hydro-elect,
+electricity,wind,wind,wind-elect,
+electricity,wind,wind_storage,wind-elect,
+electricity,solar,PV,solar-elect,
+electricity,solar,PV_storage,solar-elect,
+electricity,solar,CSP,solar-elect,
+electricity,solar,CSP_storage,solar-elect,
+electricity,geothermal,geothermal,geothermal-elect,
+elect_td_bld,rooftop_pv,rooftop_pv,solar-elect,

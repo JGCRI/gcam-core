@@ -578,121 +578,46 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
        <region name="South Asia" />
        <region name="South Korea" />
        <region name="Taiwan" />
-         <supplyDemandQuery title="Electricity generation by aggregate technology">
-         <axis1 name="technology">technology</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='electricity' or @name='elect_td_bld' or @name='industrial energy use' or (@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation')) )]//*[@type = 'technology' and not (@name='electricity_td_bld' or @name='electricity' or @name='elect_td_bld')]/*[@type='output' (:collapse:) and (@name='electricity' or @name='elect_td_bld' or @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation')]/physical-output/node()</xPath>
-         <comments/>
-         <labelRewriteList append-values="true">
-            <level name="technology">
-               <rewrite to="a Coal" from="Coal (IGCC)"/>
-               <rewrite to="a Coal" from="Coal (conv pul)"/>
-               <rewrite to="a Coal" from="Coal (existing)"/>
-               <rewrite to="a Coal" from="coal_base_IGCC"/>
-               <rewrite to="a Coal" from="coal_base_conv"/>
-               <rewrite to="a Coal" from="coal_base_exist"/>
-               <rewrite to="a Coal" from="coal_int_IGCC"/>
-               <rewrite to="a Coal" from="coal_int_conv"/>
-               <rewrite to="a Coal" from="coal_int_exist"/>
-               <rewrite to="a Coal" from="coal (conv pul)"/>
-               <rewrite to="a Coal" from="coal (IGCC)"/>
-               <rewrite to="b Coal w/CCS" from="Coal (IGCC)_CCS"/>
-               <rewrite to="b Coal w/CCS" from="coal_base_IGCC_CCS"/>
-               <rewrite to="b Coal w/CCS" from="coal_int_IGCC_CCS"/>
-               <rewrite to="b Coal w/CCS" from="coal (IGCC CCS)"/>
-               <rewrite to="c Gas" from="Gas (CC)"/>
-               <rewrite to="c Gas" from="Gas (base load conv)"/>
-               <rewrite to="c Gas" from="Gas (existing)"/>
-               <rewrite to="c Gas" from="Gas (peak load conv)"/>
-               <rewrite to="c Gas" from="gas_base_CC"/>
-               <rewrite to="c Gas" from="gas_base_exist"/>
-               <rewrite to="c Gas" from="gas_int_CC"/>
-               <rewrite to="c Gas" from="gas_int_exist"/>
-               <rewrite to="c Gas" from="gas_peak_CC"/>
-               <rewrite to="c Gas" from="gas_peak_exist"/>
-               <rewrite to="c Gas" from="gas_peak_turbine"/>
-               <rewrite to="c Gas" from="gas_subpeak_CC"/>
-               <rewrite to="c Gas" from="gas_subpeak_exist"/>
-               <rewrite to="c Gas" from="gas (steam/CT)"/>
-               <rewrite to="c Gas" from="gas (CC)"/>
-               <rewrite to="d Gas w/CCS" from="Gas (CC)_CCS"/>
-               <rewrite to="d Gas w/CCS" from="gas_base_CC_CCS"/>
-               <rewrite to="d Gas w/CCS" from="gas_int_CC_CCS"/>
-               <rewrite to="d Gas w/CCS" from="gas_peak_CC_CCS"/>
-               <rewrite to="d Gas w/CCS" from="gas_subpeak_CC_CCS"/>
-               <rewrite to="d Gas w/CCS" from="gas (CC CCS)"/>
-               <rewrite to="e Oil" from="Oil (IGCC)"/>
-               <rewrite to="e Oil" from="Oil (base load conv)"/>
-               <rewrite to="e Oil" from="Oil (existing)"/>
-               <rewrite to="e Oil" from="Oil (peak load conv)"/>
-               <rewrite to="e Oil" from="oil_base_IGCC"/>
-               <rewrite to="e Oil" from="oil_base_exist"/>
-               <rewrite to="e Oil" from="oil_int_IGCC"/>
-               <rewrite to="e Oil" from="oil_int_exist"/>
-               <rewrite to="e Oil" from="oil_peak_IGCC"/>
-               <rewrite to="e Oil" from="oil_peak_exist"/>
-               <rewrite to="e Oil" from="oil_peak_turbine"/>
-               <rewrite to="e Oil" from="oil_subpeak_IGCC"/>
-               <rewrite to="e Oil" from="oil_subpeak_exist"/>
-               <rewrite to="e Oil" from="refined liquids (steam/CT)"/>
-               <rewrite to="e Oil" from="refined liquids (IGCC)"/>
-               <rewrite to="f Oil w/CCS" from="Oil (IGCC)_CCS"/>
-               <rewrite to="f Oil w/CCS" from="oil_base_IGCC_CCS"/>
-               <rewrite to="f Oil w/CCS" from="oil_int_IGCC_CCS"/>
-               <rewrite to="f Oil w/CCS" from="oil_peak_IGCC_CCS"/>
-               <rewrite to="f Oil w/CCS" from="oil_subpeak_IGCC_CCS"/>
-               <rewrite to="f Oil w/CCS" from="refined liquids (IGCC CCS)"/>
-               <rewrite to="g Biomass" from="Biomass (IGCC)"/>
-               <rewrite to="g Biomass" from="Biomass (conv)"/>
-               <rewrite to="g Biomass" from="Biomass (existing)"/>
-               <rewrite to="g Biomass" from="bio_base_IGCC"/>
-               <rewrite to="g Biomass" from="bio_base_conv"/>
-               <rewrite to="g Biomass" from="bio_base_exist"/>
-               <rewrite to="g Biomass" from="bio_int_IGCC"/>
-               <rewrite to="g Biomass" from="bio_int_conv"/>
-               <rewrite to="g Biomass" from="bio_int_exist"/>
-               <rewrite to="g Biomass" from="biomass (conv)"/>
-               <rewrite to="g Biomass" from="biomass (IGCC)"/>
-               <rewrite to="h Biomass w/CCS" from="Biomass (IGCC)_CCS"/>
-               <rewrite to="h Biomass w/CCS" from="bio_base_IGCC_CCS"/>
-               <rewrite to="h Biomass w/CCS" from="bio_int_IGCC_CCS"/>
-               <rewrite to="h Biomass w/CCS" from="biomass (IGCC CCS)"/>
-               <rewrite to="i Nuclear" from="Gen_III"/>
-               <rewrite to="i Nuclear" from="Gen_II_LWR"/>
-               <rewrite to="i Nuclear" from="nuc_base_gen2"/>
-               <rewrite to="i Nuclear" from="nuc_base_gen3"/>
-               <rewrite to="j Geothermal" from="geo_base"/>
-               <rewrite to="j Geothermal" from="geothermal"/>
-               <rewrite to="k Hydro" from="hydro"/>
-               <rewrite to="k Hydro" from="hydro_base"/>
-               <rewrite to="k Hydro" from="hydro_int"/>
-               <rewrite to="k Hydro" from="hydro_peak"/>
-               <rewrite to="k Hydro" from="hydro_subpeak"/>
-               <rewrite to="l Wind" from="wind"/>
-               <rewrite to="l Wind" from="wind_base"/>
-               <rewrite to="l Wind" from="wind_base_storage"/>
-               <rewrite to="l Wind" from="wind_storage"/>
-               <rewrite to="m Solar" from="CSP"/>
-               <rewrite to="m Solar" from="CSP_storage"/>
-               <rewrite to="m Solar" from="PV"/>
-               <rewrite to="m Solar" from="PV_storage"/>
-               <rewrite to="m Solar" from="csp_base_storage"/>
-               <rewrite to="m Solar" from="csp_int"/>
-               <rewrite to="m Solar" from="csp_subpeak"/>
-               <rewrite to="m Solar" from="pv_base_storage"/>
-               <rewrite to="m Solar" from="pv_subpeak"/>
-               <rewrite to="m Solar" from="rooftop_pv"/>
-               <rewrite to="n CHP" from="biomass cogen"/>
-               <rewrite to="n CHP" from="coal cogen"/>
-               <rewrite to="n CHP" from="gas cogen"/>
-               <rewrite to="n CHP" from="hydrogen cogen"/>
-               <rewrite to="n CHP" from="refined liquids cogen"/>
-               <rewrite to="o Battery" from="battery"/>
-               <rewrite to="" from="exotic"/>
-            </level>
-         </labelRewriteList>
-      </supplyDemandQuery> 
-         
+       <supplyDemandQuery title="Electricity generation by aggregate technology">
+           <axis1 name="technology">technology</axis1>
+           <axis2 name="Year">physical-output[@vintage]</axis2>
+           <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='electricity' or @name='elect_td_bld' or @name='industrial energy use' )]//*[@type = 'technology' and not (@name='elect_td_bld' or @name='electricity')]/*[@type='output' (:collapse:) and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
+           <comments/>
+           <labelRewriteList append-values="false">
+               <level name="technology">
+                   <rewrite from="coal (IGCC)" to="a Coal"/>
+                   <rewrite from="coal (conv pul)" to="a Coal"/>
+                   <rewrite from="coal (IGCC CCS)" to="b Coal w/CCS"/>
+                   <rewrite from="coal (conv pul CCS)" to="b Coal w/CCS"/>
+                   <rewrite from="gas (CC)" to="c Gas"/>
+                   <rewrite from="gas (steam/CT)" to="c Gas"/>
+                   <rewrite from="gas (CC CCS)" to="d Gas w/CCS"/>
+                   <rewrite from="refined liquids (CC)" to="e Oil"/>
+                   <rewrite from="refined liquids (steam/CT)" to="e Oil"/>
+                   <rewrite from="refined liquids (CC CCS)" to="f Oil w/CCS"/>
+                   <rewrite from="biomass (IGCC)" to="g Biomass"/>
+                   <rewrite from="biomass (conv)" to="g Biomass"/>
+                   <rewrite from="biomass (IGCC CCS)" to="h Biomass w/CCS"/>
+                   <rewrite from="biomass (conv CCS)" to="h Biomass w/CCS"/>
+                   <rewrite from="Gen_III" to="i Nuclear"/>
+                   <rewrite from="Gen_II_LWR" to="i Nuclear"/>
+                   <rewrite from="geothermal" to="j Geothermal"/>
+                   <rewrite from="hydro" to="k Hydro"/>
+                   <rewrite from="wind" to="l Wind"/>
+                   <rewrite from="wind_storage" to="l Wind"/>
+                   <rewrite from="CSP" to="m Solar"/>
+                   <rewrite from="CSP_storage" to="m Solar"/>
+                   <rewrite from="PV" to="m Solar"/>
+                   <rewrite from="PV_storage" to="m Solar"/>
+                   <rewrite from="rooftop_pv" to="m Solar"/>
+                   <rewrite from="biomass cogen" to="n CHP"/>
+                   <rewrite from="coal cogen" to="n CHP"/>
+                   <rewrite from="gas cogen" to="n CHP"/>
+                   <rewrite from="refined liquids cogen" to="n CHP"/>
+                   <rewrite from="hydrogen cogen" to="n CHP"/>
+               </level>
+           </labelRewriteList>
+       </supplyDemandQuery>
       </aQuery>
       
       
@@ -850,87 +775,12 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
        <region name="South Asia" />
        <region name="South Korea" />
        <region name="Taiwan" />
-         <supplyDemandQuery title="Electricity generation by technology (inc solar roofs)">
-         <axis1 name="technology">technology</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='electricity' or @name='elect_td_bld' or @name='industrial energy use' or (@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation')) )]//*[@type = 'technology' and not (@name='electricity_td_bld' or @name='electricity' or @name='elect_td_bld')]/*[@type='output' (:collapse:) and (@name='electricity' or @name='elect_td_bld' or @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation')]/physical-output/node()</xPath>
-         <comments/>
-         <labelRewriteList append-values="true">
-            <level name="technology">
-               <rewrite from="nuc_base_gen3" to="Gen_III"/>
-               <rewrite from="nuc_base_gen2" to="Gen_II_LWR"/>
-               <rewrite from="coal_int_IGCC" to="Coal (IGCC)"/>
-               <rewrite from="csp_base_storage" to="CSP_storage"/>
-               <rewrite from="oil_int_IGCC" to="Oil (IGCC)"/>
-               <rewrite from="coal_int_exist" to="Coal (existing)"/>
-               <rewrite from="oil_peak_turbine" to="Oil (conv)"/>
-               <rewrite from="pv_base_storage" to="PV_storage"/>
-               <rewrite from="oil_int_IGCC_CCS" to="Oil (IGCC)_CCS"/>
-               <rewrite from="gas_base_CC" to="Gas (CC)"/>
-               <rewrite from="coal_base_IGCC_CCS" to="Coal (IGCC)_CCS"/>
-               <rewrite from="bio_base_IGCC_CCS" to="Biomass (IGCC)_CCS"/>
-               <rewrite from="gas_subpeak_CC" to="Gas (CC)"/>
-               <rewrite from="gas_base_CC_CCS" to="Gas (CC)_CCS"/>
-               <rewrite from="oil_peak_exist" to="Oil (existing)"/>
-               <rewrite from="oil_base_CC_CCS" to="Oil (IGCC)_CCS"/>
-               <rewrite from="bio_int_exist" to="Biomass (existing)"/>
-               <rewrite from="coal_base_conv" to="Coal (conv pul)"/>
-               <rewrite from="geo_base" to="geothermal"/>
-               <rewrite from="oil_subpeak_IGCC" to="Oil (IGCC)"/>
-               <rewrite from="oil_subpeak_IGCC_CCS" to="Oil (IGCC)_CCS"/>
-               <rewrite from="gas_subpeak_CC_CCS" to="Gas (CC)_CCS"/>
-               <rewrite from="csp_subpeak" to="CSP"/>
-               <rewrite from="gas_int_CC_CCS" to="Gas (CC)_CCS"/>
-               <rewrite from="oil_peak_IGCC_CCS" to="Oil (IGCC)_CCS"/>
-               <rewrite from="wind_base" to="wind"/>
-               <rewrite from="coal_base_exist" to="Coal (existing)"/>
-               <rewrite from="gas_int_exist" to="Gas (existing)"/>
-               <rewrite from="bio_base_conv" to="Biomass (conv)"/>
-               <rewrite from="gas_peak_CC_CCS" to="Gas (CC)_CCS"/>
-               <rewrite from="oil_int_exist" to="Oil (existing)"/>
-               <rewrite from="bio_int_IGCC_CCS" to="Biomass (IGCC)_CCS"/>
-               <rewrite from="oil_base_exist" to="Oil (existing)"/>
-               <rewrite from="coal_int_conv" to="Coal (conv pul)"/>
-               <rewrite from="csp_int" to="CSP"/>
-               <rewrite from="gas_peak_CC" to="Gas (CC)"/>
-               <rewrite from="bio_base_exist" to="Biomass (existing)"/>
-               <rewrite from="oil_peak_IGCC" to="Oil (IGCC)"/>
-               <rewrite from="hydro_subpeak" to="hydro"/>
-               <rewrite from="gas_base_exist" to="Gas (existing)"/>
-               <rewrite from="oil_subpeak_exist" to="Oil (existing)"/>
-               <rewrite from="battery" to="Battery"/>
-               <rewrite from="hydro_peak" to="hydro"/>
-               <rewrite from="gas_int_CC" to="Gas (CC)"/>
-               <rewrite from="hydro_int" to="hydro"/>
-               <rewrite from="gas_subpeak_exist" to="Gas (existing)"/>
-               <rewrite from="bio_base_IGCC" to="Biomass (IGCC)"/>
-               <rewrite from="hydro_base" to="hydro"/>
-               <rewrite from="gas_peak_exist" to="Gas (existing)"/>
-               <rewrite from="bio_int_IGCC" to="Biomass (IGCC)"/>
-               <rewrite from="pv_subpeak" to="PV"/>
-               <rewrite from="coal_base_IGCC" to="Coal (IGCC)"/>
-               <rewrite from="wind_base_storage" to="wind_storage"/>
-               <rewrite from="coal_int_IGCC_CCS" to="Coal (IGCC)_CCS"/>
-               <rewrite from="bio_int_conv" to="Biomass (conv)"/>
-               <rewrite from="oil_base_IGCC" to="Oil (IGCC)"/>
-               <rewrite from="gas_peak_turbine" to="Gas (conv)"/>
-               <rewrite from="Gas (peak load conv)" to="Gas (conv)"/>
-               <rewrite from="Oil (peak load conv)" to="Oil (conv)"/>
-               <rewrite from="biomass (IGCC)" to="Biomass (IGCC)"/>
-               <rewrite from="biomass (IGCC CCS)" to="Biomass (IGCC)_CCS"/>
-               <rewrite from="biomass (conv)" to="Biomass (conv)"/>
-               <rewrite from="coal (IGCC)" to="Coal (IGCC)"/>
-               <rewrite from="coal (IGCC CCS)" to="Coal (IGCC)_CCS"/>
-               <rewrite from="coal (conv pul)" to="Coal (conv pul)"/>
-               <rewrite from="gas (CC)" to="Gas (CC)"/>
-               <rewrite from="gas (CC CCS)" to="Gas (CC)_CCS"/>
-               <rewrite from="gas (steam/CT)" to="Gas (conv)"/>
-               <rewrite from="refined liquids (IGCC)" to="Oil (IGCC)"/>
-               <rewrite from="refined liquids (IGCC CCS)" to="Oil (IGCC)_CCS"/>
-               <rewrite from="refined liquids (steam/CT)" to="Oil (conv)"/>
-            </level>
-         </labelRewriteList>
-      </supplyDemandQuery> 
+       <supplyDemandQuery title="Electricity generation by technology (inc solar roofs)">
+           <axis1 name="technology">technology</axis1>
+           <axis2 name="Year">physical-output[@vintage]</axis2>
+           <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='electricity' or @name='elect_td_bld' or @name='industrial energy use')]//*[@type = 'technology' and not (@name='elect_td_bld' or @name='electricity')]/*[@type='output' (:collapse:) and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
+           <comments/>
+       </supplyDemandQuery>
       </aQuery>
    
 
@@ -1749,7 +1599,6 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
       </aQuery>
    
    <aQuery>
-<!-- note the different region list and re-write list. energy prices can't be added-->
       <region name="USA" />
        <region name="Canada" />
        <region name="Western Europe" />

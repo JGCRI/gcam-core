@@ -11,7 +11,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -784,7 +784,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -1557,7 +1557,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -2330,7 +2330,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -3103,7 +3103,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -3876,7 +3876,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -4649,7 +4649,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -5422,7 +5422,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -6195,7 +6195,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -6968,7 +6968,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -7741,7 +7741,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -8514,7 +8514,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -9287,7 +9287,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -10060,7 +10060,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -10833,7 +10833,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -11606,7 +11606,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -12379,7 +12379,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -13152,7 +13152,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -13925,7 +13925,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -14698,7 +14698,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -15471,7 +15471,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -16244,7 +16244,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -17017,7 +17017,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -17790,7 +17790,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -18563,7 +18563,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -19336,7 +19336,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -20109,7 +20109,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -20882,7 +20882,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -21655,7 +21655,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -22428,7 +22428,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -23201,7 +23201,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -23974,7 +23974,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -24747,7 +24747,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -25520,7 +25520,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -26293,7 +26293,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -27066,7 +27066,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -27839,7 +27839,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -28612,7 +28612,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -29385,7 +29385,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -30158,7 +30158,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -30931,7 +30931,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -31704,7 +31704,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -32477,7 +32477,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -33250,7 +33250,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -34023,7 +34023,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -34796,7 +34796,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -35569,7 +35569,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -36342,7 +36342,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -37115,7 +37115,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -37888,7 +37888,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>
@@ -38661,7 +38661,7 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
             <subsector name="elect_td_bld">
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <share-weight fillout="1" year="1975">1</share-weight>

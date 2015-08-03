@@ -1,1 +1,4 @@
-# Electricity sector - supplysector characteristics,,,,,,supplysector,output.unit,input.unit,price.unit,logit.exponent,electricity.reserve.margin,average.grid.capacity.factorelectricity,EJ,EJ,1975$/GJ,-3,0.15,0.6elect_td_bld,EJ,EJ,1975$/GJ,-3,0.15,0.6
+# Electricity sector - supplysector characteristics,,,,,,
+supplysector,output.unit,input.unit,price.unit,logit.exponent,electricity.reserve.margin,average.grid.capacity.factor
+electricity,EJ,EJ,1975$/GJ,-3,0.15,0.6
+elect_td_bld,EJ,EJ,1975$/GJ,-6,0.15,0.6

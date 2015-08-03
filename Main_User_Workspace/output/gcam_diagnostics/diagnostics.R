@@ -200,10 +200,10 @@ do_graph(split_neg_geom_bar(p), page_variables=c("region", "scenario"))
 
 printlog("Electricity Production by Fuel: Renewables Focus")
 elec.renew.d <- extract_data("Electricity generation by technology (inc solar roofs)")
-elec.renew.d[ grepl("Oil", elec.renew.d$technology), "technology"] <- "liquids"
-elec.renew.d[ grepl("Gas", elec.renew.d$technology), "technology"] <- "gas"
-elec.renew.d[ grepl("Coal", elec.renew.d$technology), "technology"] <- "coal"
-elec.renew.d[ grepl("Biomass", elec.renew.d$technology), "technology"] <- "biomass"
+elec.renew.d[ grepl("liquids", elec.renew.d$technology), "technology"] <- "liquids"
+elec.renew.d[ grepl("gas", elec.renew.d$technology), "technology"] <- "gas"
+elec.renew.d[ grepl("coal", elec.renew.d$technology), "technology"] <- "coal"
+elec.renew.d[ grepl("biomass", elec.renew.d$technology), "technology"] <- "biomass"
 elec.renew.d[ grepl("Gen_", elec.renew.d$technology), "technology"] <- "nuclear"
 elec.renew.d[ elec.renew.d$technology == "wind" , "technology"] <- "wind w/ backup"
 elec.renew.d[ elec.renew.d$technology == "wind_storage" , "technology"] <- "wind w/ storage"
@@ -214,7 +214,7 @@ elec.renew.d[ elec.renew.d$technology == "PV_storage" , "technology"] <- "pv w/ 
 elec.renew.d[ elec.renew.d$technology == "rooftop_pv" , "technology"] <- "rooftop solar"
 elec.renew.d[ grepl("cogen", elec.renew.d$technology), "technology"] <- "cogen"
 elec.renew.d[ elec.renew.d$technology == "Battery" , "technology"] <- "battery"
-stopifnot(sum(is.na(elec.renew.d$technology)) == 0 )
+stopifnot(sum(elec.renew.d[is.na(elec.renew.d$technology), "value"]) == 0 )
 elec.renew.d <- aggregate(value ~ scenario + region + technology + Year + Units + date, elec.renew.d, FUN=sum)
 elec.renew.d <- add_global_sum(elec.renew.d)
 elec.renew.d$value <- elec.renew.d$value * Conversion_GJ_kWh

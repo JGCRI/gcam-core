@@ -469,15 +469,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                 <rewrite from="coal (IGCC)" to="a Coal"/>
                 <rewrite from="coal (conv pul)" to="a Coal"/>
                 <rewrite from="coal (IGCC CCS)" to="b Coal w/CCS"/>
+                <rewrite from="coal (conv pul CCS)" to="b Coal w/CCS"/>
                 <rewrite from="gas (CC)" to="c Gas"/>
                 <rewrite from="gas (steam/CT)" to="c Gas"/>
                 <rewrite from="gas (CC CCS)" to="d Gas w/CCS"/>
-                <rewrite from="refined liquids (IGCC)" to="e Oil"/>
+                <rewrite from="refined liquids (CC)" to="e Oil"/>
                 <rewrite from="refined liquids (steam/CT)" to="e Oil"/>
-                <rewrite from="refined liquids (IGCC CCS)" to="f Oil w/CCS"/>
+                <rewrite from="refined liquids (CC CCS)" to="f Oil w/CCS"/>
                 <rewrite from="biomass (IGCC)" to="g Biomass"/>
                 <rewrite from="biomass (conv)" to="g Biomass"/>
                 <rewrite from="biomass (IGCC CCS)" to="h Biomass w/CCS"/>
+                <rewrite from="biomass (conv CCS)" to="h Biomass w/CCS"/>
                 <rewrite from="Gen_III" to="i Nuclear"/>
                 <rewrite from="Gen_II_LWR" to="i Nuclear"/>
                 <rewrite from="geothermal" to="j Geothermal"/>
@@ -551,12 +553,24 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
          <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and (@name='electricity')]/*[@type = 'subsector']/share-weight/text()</xPath>
          <comments>doesn't include rooftop PV</comments>
       </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity share-weights by technology">
+         <axis1 name="subsector">technology</axis1>
+         <axis2 name="Year">technology</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false"> *[@type = 'sector' and @name='electricity']//*[@type = 'technology']/share-weight/text()</xPath>
+         <comments>doesn't include rooftop PV</comments>
+      </supplyDemandQuery>
       <supplyDemandQuery title="Electricity production by technology by vintage">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
          <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and @name='electricity']/*[@type = 'subsector']/*[@type = 'technology']/output-primary[@type='output'(:collapse:)]/physical-output/node()</xPath>
          <comments/>
          <showAttribute attribute-name="year" level="technology"/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity IO coefficients by technology">
+         <axis1 name="fuel">input</axis1>
+         <axis2 name="Year">IO-coefficient[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and @name='electricity']/*[@type='subsector']/*[@type = 'technology']/*[@type='input']/IO-coefficient[@vintage=parent::*/parent::*/@year]/node()</xPath>
+         <comments/>
       </supplyDemandQuery>
    </queryGroup>
    <queryGroup name="Refining">
@@ -3109,6 +3123,13 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <axis2 name="Year">price-paid[@vintage]</axis2>
          <xPath buildList="true" dataName="non energy cost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' (: collapse :) and @name='non-energy']/price-paid/text()</xPath>
          <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Prices: technology levelized capital cost by vintage">
+         <axis1 name="technology">input</axis1>
+         <axis2 name="Year">price-paid[@vintage]</axis2>
+         <xPath buildList="true" dataName="fuel cost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' and @name!='non-energy']/price-paid/text()</xPath>
+         <comments/>
+         <showAttribute attribute-name="year" level="technology"/>
       </supplyDemandQuery>
    </queryGroup>
    <queryGroup name="Socioeconomics">

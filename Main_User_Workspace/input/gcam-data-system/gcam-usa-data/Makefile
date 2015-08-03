@@ -28,7 +28,8 @@ XML_FILES = $(subst batch_,,$(subst $(GCAMUSAPROC)/xml-batch,$(GCAMUSAXML),$(XML
 
 include $(LOGDEPS)
 
-#all: level1A level1B level2 XML_BATCH
+xml: level1A level1B level2
+	$(MAKE) XML_BATCH
 
 level1A: $(L1ALOGS)
 
@@ -37,8 +38,6 @@ level1B: $(L1BLOGS)
 level2: level1B $(L2LOGS)
 
 XML_BATCH: level2 $(XML_FILES)
-
-xml: XML_BATCH
 
 $(GCAMUSAPROC)/logs/LA1%.log: $(GCAMUSAPROC)/level1/LA1%
 	@echo $?

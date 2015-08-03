@@ -1791,10 +1791,10 @@
                   </period>
                   <period year="2010">
                      <secondary-output name="district heat">
-                        <output-ratio>0.7013483</output-ratio>
+                        <output-ratio>0.3713712</output-ratio>
                      </secondary-output>
                      <minicam-non-energy-input name="heat plant">
-                        <input-cost>2.2443</input-cost>
+                        <input-cost>1.1884</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2015">

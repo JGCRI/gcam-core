@@ -246,7 +246,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>4.71954</maxSubResource>
-               <mid-price>25.973</mid-price>
+               <mid-price>13.409</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -517,7 +517,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>2.30173</maxSubResource>
-               <mid-price>19.418</mid-price>
+               <mid-price>10.025</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -812,7 +812,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.4772</maxSubResource>
-               <mid-price>19.418</mid-price>
+               <mid-price>10.025</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -1107,7 +1107,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.20666</maxSubResource>
-               <mid-price>19.418</mid-price>
+               <mid-price>10.025</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -1402,7 +1402,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>3.66714</maxSubResource>
-               <mid-price>19.418</mid-price>
+               <mid-price>10.025</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -1697,7 +1697,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.38362</maxSubResource>
-               <mid-price>22.318</mid-price>
+               <mid-price>11.523</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -1968,7 +1968,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.95041</maxSubResource>
-               <mid-price>21.29</mid-price>
+               <mid-price>10.992</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -2263,7 +2263,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.37408</maxSubResource>
-               <mid-price>32.014</mid-price>
+               <mid-price>16.528</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -2534,7 +2534,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.80332</maxSubResource>
-               <mid-price>21.29</mid-price>
+               <mid-price>10.992</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -2829,7 +2829,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.81197</maxSubResource>
-               <mid-price>32.453</mid-price>
+               <mid-price>16.755</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -3100,7 +3100,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>14.72238</maxSubResource>
-               <mid-price>21.334</mid-price>
+               <mid-price>11.014</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -3395,7 +3395,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.37828</maxSubResource>
-               <mid-price>32.122</mid-price>
+               <mid-price>16.584</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -3666,7 +3666,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>4.3453</maxSubResource>
-               <mid-price>31.125</mid-price>
+               <mid-price>16.069</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -3937,7 +3937,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.59244</maxSubResource>
-               <mid-price>32.453</mid-price>
+               <mid-price>16.755</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -4208,7 +4208,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.11994</maxSubResource>
-               <mid-price>32.122</mid-price>
+               <mid-price>16.584</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -4479,7 +4479,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.1411</maxSubResource>
-               <mid-price>31.125</mid-price>
+               <mid-price>16.069</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -4750,7 +4750,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>10.49707</maxSubResource>
-               <mid-price>21.619</mid-price>
+               <mid-price>11.162</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -5045,7 +5045,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>2.03434</maxSubResource>
-               <mid-price>21.334</mid-price>
+               <mid-price>11.014</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -5340,7 +5340,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.12688</maxSubResource>
-               <mid-price>27.952</mid-price>
+               <mid-price>14.431</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -5611,7 +5611,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.13478</maxSubResource>
-               <mid-price>21.29</mid-price>
+               <mid-price>10.992</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -5906,7 +5906,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.9129</maxSubResource>
-               <mid-price>19.595</mid-price>
+               <mid-price>10.116</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -6177,7 +6177,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.47224</maxSubResource>
-               <mid-price>21.334</mid-price>
+               <mid-price>11.014</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -6472,7 +6472,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.44487</maxSubResource>
-               <mid-price>32.453</mid-price>
+               <mid-price>16.755</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -6743,7 +6743,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.44637</maxSubResource>
-               <mid-price>19.418</mid-price>
+               <mid-price>10.025</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -7038,7 +7038,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.30505</maxSubResource>
-               <mid-price>21.29</mid-price>
+               <mid-price>10.992</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -7333,7 +7333,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.80447</maxSubResource>
-               <mid-price>21.29</mid-price>
+               <mid-price>10.992</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -7628,7 +7628,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>1.96729</maxSubResource>
-               <mid-price>21.334</mid-price>
+               <mid-price>11.014</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -7923,7 +7923,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.57004</maxSubResource>
-               <mid-price>26.108</mid-price>
+               <mid-price>13.479</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -8194,7 +8194,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>3.60105</maxSubResource>
-               <mid-price>21.334</mid-price>
+               <mid-price>11.014</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -8489,7 +8489,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.1969</maxSubResource>
-               <mid-price>21.334</mid-price>
+               <mid-price>11.014</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -8760,7 +8760,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.40432</maxSubResource>
-               <mid-price>21.29</mid-price>
+               <mid-price>10.992</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
@@ -9055,7 +9055,7 @@
                <techChange fillout="1" year="2070">0.0056</techChange>
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.46317</maxSubResource>
-               <mid-price>21.29</mid-price>
+               <mid-price>10.992</mid-price>
                <curve-exponent>4.24</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>

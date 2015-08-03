@@ -269,9 +269,63 @@ gcam_interp <- function( d, years, pattern= "X[0-9]{4}",rule=1) {
 	x<-as.numeric( substr( names( d )[ yearcols ], 2, 5 ) )
 	d.out=matrix(data=NA,nrow=length(d[,1]),ncol=length(years))
 	colnames(d.out)=paste("X", years,sep="");
-	for(i in 1:nrow(d)){
+    if(rule == 3) {
+        # rule 3 means we will extrapolate data using a exponential growth/decay
+        # formulation.  Note that this only will only apply to extrapolation
+        # and any interpolations we still rely on the approx method (aka rule=1)
+        do.exp.extrapolate <- TRUE
+        rule <- 1
+        stopifnot(any( "improvement.max" %in% colnames(d)))
+        stopifnot(any( "improvement.rate" %in% colnames(d)))
+        shadow.colname <- colnames(d)[grep('improvement.shadow.', colnames(d))]
+        shadow.colvalues <- d[,sub( 'improvement.shadow.', '', shadow.colname)]
+        shadow.rows <- match( d[, shadow.colname], shadow.colvalues )
+    } else {
+        do.exp.extrapolate <- FALSE
+    }
+    for(i in 1:nrow(d)) {
 		y <- d[i , yearcols ]; 
-		d.out[i, paste( "X", years, sep="" )]=approx( x, y, xout=years,rule=rule)$y;
+        d.out[i, paste( "X", years, sep="" )]=approx( x, y, xout=years,rule=rule)$y;
+    }
+    if(do.exp.extrapolate) {
+        rowstoprocess <- 1:nrow(d)
+        while(length(rowstoprocess) > 0 ) {
+            i <- rowstoprocess[1]
+            rowstoprocess <- rowstoprocess[-1]
+            if(is.na(shadow.rows[i]) || shadow.rows[i] %!in% rowstoprocess) {
+                # get the last year which is not NA
+                extrap.base.year <- years[max(which(!is.na(d.out[i, paste0("X", years)])))]
+                extrap.Xbase.year <- paste0("X", extrap.base.year)
+
+                # get the years that need to be extrapolated
+                extrap.years <- years[years > extrap.base.year]
+                extrap.Xyears <- paste0("X", extrap.years)
+                if(length(extrap.years) == 0) {
+                    # All values were provided, no extrapolation to do for this row so just
+                    # skip to the next
+                    next
+                }
+
+                # get the base value to extrapolate from
+                extrap.value <- d.out[i, extrap.Xbase.year]
+
+                if(!is.na(shadow.rows[i])) {
+                    # if this row has a shadow row then it's value is the same as that row
+                    # plus the improvements calculated from the difference of the value in
+                    # extrap.base.year from the shadow row
+                    d.out[i,extrap.Xyears] <- d.out[shadow.rows[i],extrap.Xyears]
+                    extrap.value <- extrap.value - d.out[shadow.rows[i],extrap.Xbase.year]
+                } else {
+                    d.out[i,extrap.Xyears] <- 0
+                }
+                d.out[i,extrap.Xyears] <- d.out[i,extrap.Xyears] + extrap.value * d[i,"improvement.max"] + (extrap.value - extrap.value * d[i, "improvement.max"]) *
+                    (1-d[i,"improvement.rate"]) ^ (extrap.years - extrap.base.year)
+            } else {
+                # this row shadows another row which has yet to he processed so add it back
+                # to the end of the list 
+                rowstoprocess <- c(rowstoprocess, i)
+            }
+        }
 	}
 	d[ , paste( "X", years, sep="" ) ] =d.out[,paste( "X", years, sep="" )]
 	return( d )
@@ -447,9 +501,9 @@ vecpaste <- function (x) {
 
 # -----------------------------------------------------------------------------
 # interpolate_and_melt: melt a table with years as columns and interpolate to all specified years
-interpolate_and_melt <- function( data, years, value.name="value", digits = NA ){
-	data_new <- gcam_interp( data, years )
-	if( any(is.na( data_new[ grep( "X[0-9]{4}", names( data_new ) ) ] ) ) ) stop( "Provided years in input data do not span range of desired output years" )
+interpolate_and_melt <- function( data, years, value.name="value", digits = NA, rule=1 ){
+	data_new <- gcam_interp( data, years, rule=rule )
+	if( any(is.na( data_new[, paste0('X', years) ] ) ) ) stop( "Provided years in input data do not span range of desired output years" )
 	data_new.melt <- melt( data_new, id.vars = grep( "X[0-9]{4}", names( data_new ), invert = T ) )
 	if( !is.na( digits ) ) data_new.melt$value <- round( data_new.melt$value, digits )
 	names( data_new.melt )[ names( data_new.melt ) == "value" ] <- value.name
