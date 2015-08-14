@@ -6,9 +6,7 @@
                  policy that ensure there is something to link to.  The actual policy
                  can be filled in later.
              -->
-            <ghgpolicy name="CO2">
-                <market>global</market>
-            </ghgpolicy>
+            
             <linked-ghg-policy name="CO2_LUC">
                 <market>global</market>
                 <linked-policy>CO2</linked-policy>

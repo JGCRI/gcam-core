@@ -27,6 +27,7 @@ sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_regions <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 GCAM_sector_tech <- readdata( "EMISSIONS_MAPPINGS", "GCAM_sector_tech" )
+HFC_Abate_GV <- readdata( "EMISSIONS_LEVEL0_DATA", "HFC_Abate_GV" )
 L152.MAC_pct_R_S_Proc_EPA <- readdata( "EMISSIONS_LEVEL1_DATA", "L152.MAC_pct_R_S_Proc_EPA" )
 L201.ghg_res <- readdata( "EMISSIONS_LEVEL2_DATA", "L201.ghg_res", skip = 4 )
 L211.agr_emissions <- readdata( "EMISSIONS_LEVEL2_DATA", "L211.agr_emissions", skip = 4 )
@@ -126,6 +127,38 @@ L252.MAC_higwp$mac.reduction <- round(
                 vecpaste( L252.MAC_pct_R_S_Proc_EPA[ c( "EPA_region", "Process", "tax" ) ] ) ) ],
       digits_MACC )
 L252.MAC_higwp <- na.omit( L252.MAC_higwp )
+
+if ( use_GV_MAC ) {
+  printlog( "L252.MAC_higwp_GV: Abatement from HFCs, PFCs, and SF6 using Guus Velders data for HFCs" )
+  L252.MAC_pfc <- subset( L252.MAC_higwp, Non.CO2 %in% c( "C2F6", "CF4", "SF6" ))
+  
+  L252.HFC_Abate_GV <- subset( HFC_Abate_GV, Species == "Total_HFCs" & Year %in% c( 2020, 2025, 2030, 2035, 2050, 2100 ))
+  L252.MAC_hfc_gv_0 <- subset( L252.MAC_higwp, Non.CO2 %!in% c( "C2F6", "CF4", "SF6" ) & tax == 0 )
+  L252.MAC_hfc_gv_0$mac.reduction <- 0
+  
+  L252.MAC_hfc_gv_10 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_10$tax <- 10
+  L252.MAC_hfc_gv_10$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2020 ]
+  
+  L252.MAC_hfc_gv_25 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_25$tax <- 25
+  L252.MAC_hfc_gv_25$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2025 ]
+  
+  L252.MAC_hfc_gv_50 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_50$tax <- 50
+  L252.MAC_hfc_gv_50$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2035 ]
+  
+  L252.MAC_hfc_gv_100 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_100$tax <- 100
+  L252.MAC_hfc_gv_100$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2050 ]
+  
+  L252.MAC_hfc_gv_200 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_200$tax <- 200
+  L252.MAC_hfc_gv_200$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2100 ]
+  
+  L252.MAC_higwp <- rbind( L252.MAC_pfc, L252.MAC_hfc_gv_0, L252.MAC_hfc_gv_10, L252.MAC_hfc_gv_25,
+                           L252.MAC_hfc_gv_50, L252.MAC_hfc_gv_100, L252.MAC_hfc_gv_200)
+}
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

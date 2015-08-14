@@ -145,7 +145,7 @@ L161.highmed_strong_reg <- L161.coal_so2$GCAM_region_ID[ L161.coal_so2$CLE_em_fa
 L161.highmed_weak_reg <- L161.coal_so2$GCAM_region_ID[ L161.coal_so2$CLE_em_fact > coal_so2_thresshold ]
 
 printlog( "SSPs 1 and 5: High and Medium Income Countries")
-#High-Med Income Countries. 2030 = 0.75*CLE2030; 2050 = SLE2030; 2100 = MFR
+#High-Med Income Countries. 2030 = 0.75*CLE2030; 2050 = SLE2030; 2100 = MFR  #KVC/SJS Adjust -- using 75% of MFR in 2100
 L161.SSP15_HM_EF <- subset( L161.em_fact_2010, L161.em_fact_2010$GCAM_region_ID %in% L161.highmed_reg )
 L161.SSP15_HM_EF <- na.omit( L161.SSP15_HM_EF )
 L161.SSP15_HM_EF <- L161.SSP15_HM_EF[ names( L161.SSP15_HM_EF ) %!in% c( "TIMER_REGION", "year", "SLE_em_fact", "MFR_em_fact" )]
@@ -162,12 +162,12 @@ L161.SSP15_HM_EF$X2050[ is.na( L161.SSP15_HM_EF$X2050 ) ] <- L161.SSP15_HM_EF$X2
 L161.SSP15_HM_EF$X2050[ L161.SSP15_HM_EF$X2050 > L161.SSP15_HM_EF$X2030 ] <- L161.SSP15_HM_EF$X2030[ L161.SSP15_HM_EF$X2050 > L161.SSP15_HM_EF$X2030 ]
 
 # Map 2100 information. Then, ensure that it is not bigger than 2050 ( emissions factors can only decline )
-L161.SSP15_HM_EF$X2100 <- L161.em_fact_2030$MFR_em_fact[ match( vecpaste( L161.SSP15_HM_EF[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )]), vecpaste( L161.em_fact_2030[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )] ) )]
+L161.SSP15_HM_EF$X2100 <- 0.75 * L161.em_fact_2030$MFR_em_fact[ match( vecpaste( L161.SSP15_HM_EF[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )]), vecpaste( L161.em_fact_2030[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )] ) )]
 L161.SSP15_HM_EF$X2100[ is.na( L161.SSP15_HM_EF$X2100 ) ] <- L161.SSP15_HM_EF$X2050[ is.na( L161.SSP15_HM_EF$X2100 ) ]
 L161.SSP15_HM_EF$X2100[ L161.SSP15_HM_EF$X2100 > L161.SSP15_HM_EF$X2050 ] <- L161.SSP15_HM_EF$X2050[ L161.SSP15_HM_EF$X2100 > L161.SSP15_HM_EF$X2050 ]
 
 printlog( "SSPs 1 and 5: Low Income Countries")
-#Low Income Countries. 2030 = CLE2030; 2050 = W.Eur CLE2030; 2100 = SLE2030
+#Low Income Countries. 2030 = CLE2030; 2050 = W.Eur CLE2030; 2100 = SLE2030 #KVC/SJS Adjust -- using MFR in 2100
 L161.SSP15_L_EF <- subset( L161.em_fact_2010, L161.em_fact_2010$GCAM_region_ID %in% L161.low_reg )
 L161.SSP15_L_EF <- na.omit( L161.SSP15_L_EF )
 L161.SSP15_L_EF <- L161.SSP15_L_EF[ names( L161.SSP15_L_EF ) %!in% c( "TIMER_REGION", "year", "SLE_em_fact", "MFR_em_fact" )]
@@ -184,7 +184,7 @@ L161.SSP15_L_EF$X2050[ is.na( L161.SSP15_L_EF$X2050 ) ] <- L161.SSP15_L_EF$X2030
 L161.SSP15_L_EF$X2050[ L161.SSP15_L_EF$X2050 > L161.SSP15_L_EF$X2030 ] <- L161.SSP15_L_EF$X2030[ L161.SSP15_L_EF$X2050 > L161.SSP15_L_EF$X2030 ]
 
 # Map 2100 information. Then, ensure that it is not bigger than 2050 ( emissions factors can only decline )
-L161.SSP15_L_EF$X2100 <- L161.em_fact_2030$SLE_em_fact[ match( vecpaste( L161.SSP15_L_EF[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )]), vecpaste( L161.em_fact_2030[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )] ) )]
+L161.SSP15_L_EF$X2100 <- L161.em_fact_2030$MFR_em_fact[ match( vecpaste( L161.SSP15_L_EF[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )]), vecpaste( L161.em_fact_2030[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )] ) )]
 L161.SSP15_L_EF$X2100[ is.na( L161.SSP15_L_EF$X2100 ) ] <- L161.SSP15_L_EF$X2050[ is.na( L161.SSP15_L_EF$X2100 ) ]
 L161.SSP15_L_EF$X2100[ L161.SSP15_L_EF$X2100 > L161.SSP15_L_EF$X2050 ] <- L161.SSP15_L_EF$X2050[ L161.SSP15_L_EF$X2100 > L161.SSP15_L_EF$X2050 ]
 
@@ -242,7 +242,7 @@ L161.SSP2_HM2_EF$X2100[ is.na( L161.SSP2_HM2_EF$X2100 ) ] <- L161.SSP2_HM2_EF$X2
 L161.SSP2_HM2_EF$X2100[ L161.SSP2_HM2_EF$X2100 > L161.SSP2_HM2_EF$X2050 ] <- L161.SSP2_HM2_EF$X2050[ L161.SSP2_HM2_EF$X2100 > L161.SSP2_HM2_EF$X2050 ]
 
 printlog( "SSPs 2: Low Income Countries")
-#Low Income Countries. 2030 = CLE2020; 2050 = min( CLE2030 ); 2100 = W.Eur CLE2030
+#Low Income Countries. 2030 = CLE2020; 2050 = min( CLE2030 ); 2100 = W.Eur CLE2030 #KVC/SJS Adjust - use SLE2030 in 2100
 L161.SSP2_L_EF <- subset( L161.em_fact_2010, L161.em_fact_2010$GCAM_region_ID %in% L161.low_reg )
 L161.SSP2_L_EF <- na.omit( L161.SSP2_L_EF )
 L161.SSP2_L_EF <- L161.SSP2_L_EF[ names( L161.SSP2_L_EF ) %!in% c( "TIMER_REGION", "year", "SLE_em_fact", "MFR_em_fact" )]
@@ -262,7 +262,7 @@ L161.SSP2_L_EF$X2050[ is.na( L161.SSP2_L_EF$X2050 ) ] <- L161.SSP2_L_EF$X2030[ i
 L161.SSP2_L_EF$X2050[ L161.SSP2_L_EF$X2050 > L161.SSP2_L_EF$X2030 ] <- L161.SSP2_L_EF$X2030[ L161.SSP2_L_EF$X2050 > L161.SSP2_L_EF$X2030 ]
 
 # Map 2100 information. Then, ensure that it is not bigger than 2050 ( emissions factors can only decline )
-L161.SSP2_L_EF$X2100 <- L161.em_fact_2030$CLE_em_fact[ match( paste( ssp_marker_region, vecpaste( L161.SSP2_L_EF[ c( S_S_T, "Non.CO2" )]), sep=" "), vecpaste( L161.em_fact_2030[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )] ) )]
+L161.SSP2_L_EF$X2100 <- L161.em_fact_2030$SLE_em_fact[ match( vecpaste( L161.SSP2_L_EF[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )]), vecpaste( L161.em_fact_2030[ c( "GCAM_region_ID", S_S_T, "Non.CO2" )] ) )]
 L161.SSP2_L_EF$X2100[ is.na( L161.SSP2_L_EF$X2100 ) ] <- L161.SSP2_L_EF$X2050[ is.na( L161.SSP2_L_EF$X2100 ) ]
 L161.SSP2_L_EF$X2100[ L161.SSP2_L_EF$X2100 > L161.SSP2_L_EF$X2050 ] <- L161.SSP2_L_EF$X2050[ L161.SSP2_L_EF$X2100 > L161.SSP2_L_EF$X2050 ]
 

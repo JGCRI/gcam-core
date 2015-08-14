@@ -2,6 +2,9 @@
 C_S_F <- c( "iso", "sector", "fuel")
 S_S_T <- c( "supplysector", "subsector", "stub.technology" )
 
+#Choice of MACs for HFCs
+use_GV_MAC <- 1 #Uses a MAC constructed from Guus Velders Data
+
 #------------------------------------------------------------------------------------
 #Historical years for data write-out
 EPA_historical_years <- 1971:2002
@@ -49,6 +52,7 @@ digits_MACC <- 3
 
 #Base years for emissions data
 emiss_model_base_years <- c( "1975", "1990", "2005" )
+hfc_model_base_years <- c( "1975", "1990", "2005", "2010" )
 
 #Years for ssp inputs
 ssp_model_years <- c( 2010, future_years )

@@ -52,7 +52,7 @@ printlog( "L231.FinalDemand_urb: Final demand information for urban processes se
 L231.FinalDemand_urb <- data.frame( region = A_region$region )
 L231.FinalDemand_urb$energy.final.demand <- "urban processes"
 L231.FinalDemand_urb$perCapitaBased <- 1
-L231.FinalDemand_urb$income.elasticity <- 0
+L231.FinalDemand_urb$income.elasticity <- 1
 L231.FinalDemand_urb <- repeat_and_add_vector( L231.FinalDemand_urb, "year", model_base_years )
 L231.FinalDemand_urb$base.service <- 0.004
 L231.FinalDemand_urb$aeei <- 0

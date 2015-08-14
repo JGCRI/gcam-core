@@ -31,6 +31,7 @@ A44.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A44.subsector_logit" )
 A44.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A44.subsector_shrwt" )
 A44.fuelprefElasticity <- readdata( "ENERGY_ASSUMPTIONS", "A44.fuelprefElasticity" )
 A44.fuelprefElasticity_SSP34 <- readdata( "ENERGY_ASSUMPTIONS", "A44.fuelprefElasticity_SSP34" )
+A44.fuelprefElasticity_SSP15 <- readdata( "ENERGY_ASSUMPTIONS", "A44.fuelprefElasticity_SSP15" )
 A44.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A44.globaltech_shrwt" )
 A44.gcam_consumer <- readdata( "ENERGY_ASSUMPTIONS", "A44.gcam_consumer" )
 A44.demandFn_serv <- readdata( "ENERGY_ASSUMPTIONS", "A44.demandFn_serv" )
@@ -451,6 +452,13 @@ A44.fuelprefElasticity_SSP34$year.fillout <- min( model_base_years )
 L244.FuelPrefElast_bld_SSP34 <- write_to_all_regions( A44.fuelprefElasticity_SSP34, names_FuelPrefElasticity )
 L244.FuelPrefElast_bld_SSP34 <- subset( L244.FuelPrefElast_bld_SSP34,
                                   paste( region, supplysector, subsector ) %in% paste( L244.Tech_bld$region, L244.Tech_bld$supplysector, L244.Tech_bld$subsector ) )
+
+printlog( "L244.FuelPrefElast_bld_SSP15: Fuel preference elasticities for buildings in SSP 1 & 5" )
+A44.fuelprefElasticity_SSP15$year.fillout <- min( model_base_years )
+L244.FuelPrefElast_bld_SSP15 <- write_to_all_regions( A44.fuelprefElasticity_SSP15, names_FuelPrefElasticity )
+L244.FuelPrefElast_bld_SSP15 <- subset( L244.FuelPrefElast_bld_SSP15,
+                                        paste( region, supplysector, subsector ) %in% paste( L244.Tech_bld$region, L244.Tech_bld$supplysector, L244.Tech_bld$subsector ) )
+
 #technology 
 printlog( "L244.StubTech_bld: Identification of stub technologies for buildings" )
 L244.StubTech_bld <- L244.Tech_bld
@@ -620,6 +628,11 @@ insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_det.xml", "ENERGY
 write_mi_data( L244.Satiation_flsp_SSP1, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP1", "ENERGY_XML_BATCH", "batch_building_SSP1.xml" ) 
 write_mi_data( L244.SatiationAdder_SSP1, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP1", "ENERGY_XML_BATCH", "batch_building_SSP1.xml" ) 
 write_mi_data( L244.GenericServiceSatiation_SSP1, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP1", "ENERGY_XML_BATCH", "batch_building_SSP1.xml" ) 
+write_mi_data( L244.FuelPrefElast_bld_SSP15, "FuelPrefElast", "ENERGY_LEVEL2_DATA", "L244.FuelPrefElast_bld_SSP15", "ENERGY_XML_BATCH", "batch_building_SSP1.xml" )
+if( nrow( L244.DeleteThermalService ) > 0 ){
+  write_mi_data( L244.DeleteThermalService, "DeleteThermalService", "ENERGY_LEVEL2_DATA", "L244.DeleteThermalService", "ENERGY_XML_BATCH", "batch_building_SSP1.xml" )
+}
+
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP1.xml", "ENERGY_XML_FINAL", "building_SSP1.xml", "", xml_tag="outFile" )
 
 write_mi_data( L244.Satiation_flsp_SSP2, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP2", "ENERGY_XML_BATCH", "batch_building_SSP2.xml" ) 
@@ -648,6 +661,10 @@ insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP4.xml", "ENERG
 write_mi_data( L244.Satiation_flsp_SSP5, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP5", "ENERGY_XML_BATCH", "batch_building_SSP5.xml" ) 
 write_mi_data( L244.SatiationAdder_SSP5, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP5", "ENERGY_XML_BATCH", "batch_building_SSP5.xml" ) 
 write_mi_data( L244.GenericServiceSatiation_SSP5, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP5", "ENERGY_XML_BATCH", "batch_building_SSP5.xml" ) 
+write_mi_data( L244.FuelPrefElast_bld_SSP15, "FuelPrefElast", "ENERGY_LEVEL2_DATA", "L244.FuelPrefElast_bld_SSP15", "ENERGY_XML_BATCH", "batch_building_SSP5.xml" )
+if( nrow( L244.DeleteThermalService ) > 0 ){
+  write_mi_data( L244.DeleteThermalService, "DeleteThermalService", "ENERGY_LEVEL2_DATA", "L244.DeleteThermalService", "ENERGY_XML_BATCH", "batch_building_SSP5.xml" )
+}
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP5.xml", "ENERGY_XML_FINAL", "building_SSP5.xml", "", xml_tag="outFile" )
 
 logstop()

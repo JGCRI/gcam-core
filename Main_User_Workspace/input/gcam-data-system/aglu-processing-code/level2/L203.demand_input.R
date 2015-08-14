@@ -421,18 +421,28 @@ L203.IncomeElasticity <- L203.IncomeElasticity[ names_IncomeElasticity ]
 
 L203.IncomeElasticity_SSP1 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP1, model_future_years, value.name = "income.elasticity" )
 L203.IncomeElasticity_SSP1 <- L203.IncomeElasticity_SSP1[ names_IncomeElasticity ]
+L203.IncomeElasticity_SSP1$income.elasticity[ L203.IncomeElasticity_SSP1$income.elasticity > 1 ] <- 1
+L203.IncomeElasticity_SSP1$income.elasticity[ L203.IncomeElasticity_SSP1$income.elasticity < 0 ] <- 0
 
 L203.IncomeElasticity_SSP2 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP2, model_future_years, value.name = "income.elasticity" )
 L203.IncomeElasticity_SSP2 <- L203.IncomeElasticity_SSP2[ names_IncomeElasticity ]
+L203.IncomeElasticity_SSP2$income.elasticity[ L203.IncomeElasticity_SSP2$income.elasticity > 1 ] <- 1
+L203.IncomeElasticity_SSP2$income.elasticity[ L203.IncomeElasticity_SSP2$income.elasticity < 0 ] <- 0
 
 L203.IncomeElasticity_SSP3 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP3, model_future_years, value.name = "income.elasticity" )
 L203.IncomeElasticity_SSP3 <- L203.IncomeElasticity_SSP3[ names_IncomeElasticity ]
+L203.IncomeElasticity_SSP3$income.elasticity[ L203.IncomeElasticity_SSP3$income.elasticity > 1 ] <- 1
+L203.IncomeElasticity_SSP3$income.elasticity[ L203.IncomeElasticity_SSP3$income.elasticity < 0 ] <- 0
 
 L203.IncomeElasticity_SSP4 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP4, model_future_years, value.name = "income.elasticity" )
 L203.IncomeElasticity_SSP4 <- L203.IncomeElasticity_SSP4[ names_IncomeElasticity ]
+L203.IncomeElasticity_SSP4$income.elasticity[ L203.IncomeElasticity_SSP4$income.elasticity > 1 ] <- 1
+L203.IncomeElasticity_SSP4$income.elasticity[ L203.IncomeElasticity_SSP4$income.elasticity < 0 ] <- 0
 
 L203.IncomeElasticity_SSP5 <- interpolate_and_melt( L203.IncElas_R_Dmnd_Y_SSP5, model_future_years, value.name = "income.elasticity" )
 L203.IncomeElasticity_SSP5 <- L203.IncomeElasticity_SSP5[ names_IncomeElasticity ]
+L203.IncomeElasticity_SSP5$income.elasticity[ L203.IncomeElasticity_SSP5$income.elasticity > 1 ] <- 1
+L203.IncomeElasticity_SSP5$income.elasticity[ L203.IncomeElasticity_SSP5$income.elasticity < 0 ] <- 0
 
 printlog( "L203.PriceElasticity: Price elasticities" )
 L203.PriceElasticity <- write_to_all_regions_ag( A_demand_supplysector, c( names_EnergyFinalDemand, "price.elasticity" ) )
