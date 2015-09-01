@@ -4,7 +4,6 @@
 #pragma once
 #endif
 
-
 /*
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
@@ -50,6 +49,7 @@
 
 #include "climate/include/iclimate_model.h"
 #include "climate/source/hector/headers/core/core.hpp"
+#include "climate/source/hector/headers/visitors/csv_outputstream_visitor.hpp"
 
 class Modeltime;
 class IVisitor;
@@ -170,6 +170,12 @@ private:
 
     //! Hector core object
     std::auto_ptr<Hector::Core> mHcore;
+
+    //! file handle for the outputstream visitor
+    std::auto_ptr<std::ofstream> mOfile;
+
+    //! output stream visitor
+    std::auto_ptr<Hector::CSVOutputStreamVisitor> mHosv;
     
     // private functions
     

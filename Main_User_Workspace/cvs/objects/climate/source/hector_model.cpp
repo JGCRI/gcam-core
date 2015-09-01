@@ -40,6 +40,7 @@
 
 #include <memory>
 #include <limits>
+#include <fstream>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
@@ -56,6 +57,7 @@
 #include "climate/source/hector/headers/core/core.hpp"
 #include "climate/source/hector/headers/input/ini_to_core_reader.hpp"
 #include "climate/source/hector/headers/h_exception.hpp"
+#include "visitors/csv_outputstream_visitor.hpp"
 
 using namespace xercesc;
 
@@ -64,7 +66,7 @@ namespace {
     // the first unit, multiply by the factor to get the second.
     const double TG_TO_PG = 1.0e-3; // 1 Pg = 1000 Tg
     const double TG_TO_GG = 1.0e3;  // Also, 1Tg = 1Mt
-    const double GG_TO_KG = 1.0e6;
+    const double GG_TO_TG = 1.0e-3;
     const double N_TO_N2O = 44.0/28.0; // 44g N2O has 28 g of N
     const double S_TO_SO2 = 2.0;       // 2g SO2 has 1g of S
     const double NOX_TO_N = 14.0/38.0; // TODO: get better factor here
@@ -114,7 +116,7 @@ void HectorModel::XMLParse(const xercesc::DOMNode *node)
     ILogger &climatelog = ILogger::getLogger("climate-log");
   
     DOMNodeList *nodeList = node->getChildNodes();
-    for(unsigned i; i<nodeList->getLength(); ++i) {
+    for(unsigned i=0; i<nodeList->getLength(); ++i) {
         DOMNode *chnode = nodeList->item(i); 
         std::string chname = XMLHelper<std::string>::safeTranscode(chnode->getNodeName());
 
@@ -152,7 +154,7 @@ void HectorModel::XMLParse(const xercesc::DOMNode *node)
         // XXX FIXME shouldn't have to fool with the hector logger here.
         if(!hector_log_is_init) {
             Hector::Logger::getGlobalLogger().open("hector", true, Hector::Logger::DEBUG);
-            hector_log_is_init = true;
+            hector_log_is_init = true; 
         }
         if(mHcore.get()) {
           // delete all hector components
@@ -162,7 +164,7 @@ void HectorModel::XMLParse(const xercesc::DOMNode *node)
         mHcore->init();
         climatelog << "Parsing ini file= " << mHectorIniFile << "\n";
         Hector::INIToCoreReader coreParser(mHcore.get());
-        coreParser.parse(mHectorIniFile);
+        coreParser.parse(mHectorIniFile); 
     }
     catch(const h_exception& e) {
         std::cerr << "Exception:\n" << e << "\n";
@@ -294,8 +296,7 @@ void HectorModel::completeInit(const std::string &aScenarioName)
                    << it->second << "\n";
     }
     // Land Use CO2 is special; it can be set each year, rather than each period.
-    // KVC_TEMP: TURN THIS OFF
-    // mEmissionsTable["CO2NetLandUse"].resize(nrslt);
+    mEmissionsTable["CO2NetLandUse"].resize(nrslt);
 
     // tables for temperature and total forcing and land and ocean fluxes
     mTotRFTable.resize(nrslt);
@@ -307,9 +308,9 @@ void HectorModel::completeInit(const std::string &aScenarioName)
     setupRFTbl();
     
     // Set conversion factors for gasses that require them
-    mUnitConvFac["SO2tot"] = TG_TO_GG / S_TO_SO2; // GCAM in Tg-SO2; Hector in Gg-S
-    mUnitConvFac["BC"]  = GG_TO_KG;            // GCAM produces BC/OC in Tg but converts
-    mUnitConvFac["OC"]  = GG_TO_KG;            // to Gg for MAGICC. Hector wants kg
+    mUnitConvFac["SO2tot"] = TG_TO_GG / S_TO_SO2; // GCAM in Tg-SO2; Hector in Tg-S
+    mUnitConvFac["BC"]  = GG_TO_TG;            // GCAM produces BC/OC in Tg but converts
+    mUnitConvFac["OC"]  = GG_TO_TG;            // to Gg for MAGICC. Hector wants Tg.
     mUnitConvFac["NOX"] = NOX_TO_N;            // GCAM in TG-NOX; Hector in TG-N
     mUnitConvFac["N2O"] = 1.0 / N_TO_N2O; // GCAM in Tg-N2O; Hector in Tg-N 
     // Already in correct units:
@@ -321,12 +322,13 @@ void HectorModel::completeInit(const std::string &aScenarioName)
     // set units for gasses that are not in Gg.  These units are
     // defined in the Hector header files.
     mHectorUnits["CO2"] = mHectorUnits["CO2NetLandUse"] = Hector::U_PGC_YR;
-    mHectorUnits["BC"]  = mHectorUnits["OC"]            = Hector::U_KG;
+    mHectorUnits["BC"]  = mHectorUnits["OC"]            = Hector::U_TG;
     mHectorUnits["NOX"]                                 = Hector::U_TG_N;
     mHectorUnits["CO"]                                  = Hector::U_TG_CO;
     mHectorUnits["NMVOCs"]                              = Hector::U_TG_NMVOC;
     mHectorUnits["CH4"]                                 = Hector::U_TG_CH4;
     mHectorUnits["N2O"]                                 = Hector::U_TG_N2O;
+    mHectorUnits["SO2tot"]                              = Hector::U_GG_S;
     
     // reset up to (but not including) period 1.
     reset(1);
@@ -355,6 +357,13 @@ void HectorModel::reset(int aperiod)
         mHcore->shutDown();
         mHcore.release();
     }
+    if(!mOfile.get()) {
+        mOfile.reset(new std::ofstream("logs/gcam-hector-outputstream.csv"));
+        mHosv.reset(new Hector::CSVOutputStreamVisitor(*mOfile,true));
+    }
+    else
+        // log the core reset
+        (*mOfile) << "\n\n################ Hector Core Reset ################\n\n";
 
     // set up a new core
     climatelog << "Setting up new Hector core.\n";
@@ -363,6 +372,7 @@ void HectorModel::reset(int aperiod)
     climatelog << "Parsing ini file= " << mHectorIniFile << "\n";
     Hector::INIToCoreReader coreParser(mHcore.get());
     coreParser.parse(mHectorIniFile);
+    mHcore->addVisitor(mHosv.get()); 
     mHcore->prepareToRun();
 
     // loop over all gasses
@@ -370,8 +380,7 @@ void HectorModel::reset(int aperiod)
     for(it=mEmissionsTable.begin(); it != mEmissionsTable.end(); ++it) {
         const std::string &gas = it->first;
         std::vector<double> &emissions = it->second;
-        // KVC_TEMP: Send CO2NetLandUse emissions by time step
-        if( 1 == 1 /* gas != "CO2NetLandUse" */ ) {
+        if(gas != "CO2NetLandUse") {
             // Replay emissions up to, but not including, the aperiod
             // argument.  We also skip period 0, since it's not a "real"
             // period.
@@ -480,7 +489,6 @@ bool HectorModel::setEmissions(const std::string &aGasName, int aPeriod,
         // // XXX end debug
         mEmissionsTable[aGasName][aPeriod] = aEmissions;
     }
-       
     return valid;
 }
 
@@ -515,7 +523,6 @@ bool HectorModel::setLUCEmissions(const std::string &aGasName,
         // // XXX end debug 
         mEmissionsTable[aGasName][yearlyDataIndex(aYear)] = aEmissions;
     }
-
     return valid;
 }
 
@@ -679,11 +686,10 @@ void HectorModel::storeConc(int aYear)
     // These are all of the atmospheric concentrations that Hector is
     // set up to provide.
     Hector::message_data date(aYear);
-    mConcTable["CH4"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_CH4,date);
+    mConcTable["CH4"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_CH4,date); 
     mConcTable["N2O"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_N2O,date);
-    mConcTable["O3"][i]    = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_O3);
+    mConcTable["O3"][i]    = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_O3, date);
     mConcTable["CO2"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_CO2);
-    mConcTable["SO2"][i]   = mHcore->sendMessage(M_GETDATA, D_ATMOSPHERIC_SO2);
 
     // Hector doesn't actually compute concentrations for these
     // gasses. (we use their emissions to compute O3 concentration,
@@ -703,7 +709,6 @@ void HectorModel::setupConcTbl(void)
     //mConcTable["CO"].resize(size);
     //mConcTable["NOX"].resize(size);
     mConcTable["CO2"].resize(size);
-    mConcTable["SO2"].resize(size);
     //mConcTable["NMVOC"].resize(size); 
 }    
 
@@ -881,8 +886,7 @@ double HectorModel::getEmissions(const std::string &aGasName, int aYear) const
     ILogger &climatelog = ILogger::getLogger("climate-log");
     
     if(aYear < mModeltime->getEndYear() && aYear > mModeltime->getStartYear()) {
-        // KVC_TEMP: Turn off annual emissions
-        if( 1 == 0 /* aGasName == "CO2NetLandUse" */ )
+        if(aGasName == "CO2NetLandUse")
             return (mEmissionsTable.find(aGasName)->second)[yearlyDataIndex(aYear)]; 
         else {
             std::map<std::string, std::vector<double> >::const_iterator it =

@@ -26,7 +26,7 @@ sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 A_region <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
-FUT_EF_GV <- readdata( "EMISSIONS_LEVEL0_DATA", "FUT_EF_GV")
+FUT_EMISS_GV <- readdata( "EMISSIONS_LEVEL0_DATA", "FUT_EMISS_GV")
 L141.hfc_R_S_T_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L141.hfc_R_S_T_Yh" )
 L142.pfc_R_S_T_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L142.pfc_R_S_T_Yh" )
 L141.hfc_ef_R_cooling_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L141.hfc_ef_R_cooling_Yh" )
@@ -94,16 +94,16 @@ L241.hfc_ef_2010 <- add_region_name( L241.hfc_ef_2010 )
 L241.hfc_ef_2010 <- subset( L241.hfc_ef_2010, value > 0 )
 
 #Use Data from Guus Velders to Update EF in the near term for non-cooling
-L241.FUT_EF_GV <- dcast( FUT_EF_GV, Species + Scenario ~ Year, value.var=c( "EF" ) )
-names( L241.FUT_EF_GV )[ names( L241.FUT_EF_GV ) == 2010 ] <- "X2010"
-names( L241.FUT_EF_GV )[ names( L241.FUT_EF_GV ) == 2020 ] <- "X2020"
-names( L241.FUT_EF_GV )[ names( L241.FUT_EF_GV ) == 2030 ] <- "X2030"
-L241.FUT_EF_GV <- L241.FUT_EF_GV[ names( L241.FUT_EF_GV ) %in% c( "Species", "Scenario", "X2010", "X2020", "X2030" ) ]
-L241.FUT_EF_GV$Ratio_2020 <- L241.FUT_EF_GV$X2020 / L241.FUT_EF_GV$X2010
-L241.FUT_EF_GV$Ratio_2030 <- L241.FUT_EF_GV$X2030 / L241.FUT_EF_GV$X2010
-L241.FUT_EF_GV$Species <- gsub( "-", "", L241.FUT_EF_GV$Species )
-L241.hfc_ef_2010$X2020 <- L241.hfc_ef_2010$value * L241.FUT_EF_GV$Ratio_2020[ match( L241.hfc_ef_2010$Non.CO2, L241.FUT_EF_GV$Species )]
-L241.hfc_ef_2010$X2030 <- L241.hfc_ef_2010$value * L241.FUT_EF_GV$Ratio_2030[ match( L241.hfc_ef_2010$Non.CO2, L241.FUT_EF_GV$Species )]
+L241.FUT_EMISS_GV <- dcast( FUT_EMISS_GV, Species + Scenario ~ Year, value.var=c( "EF" ) )
+names( L241.FUT_EMISS_GV )[ names( L241.FUT_EMISS_GV ) == 2010 ] <- "X2010"
+names( L241.FUT_EMISS_GV )[ names( L241.FUT_EMISS_GV ) == 2020 ] <- "X2020"
+names( L241.FUT_EMISS_GV )[ names( L241.FUT_EMISS_GV ) == 2030 ] <- "X2030"
+L241.FUT_EMISS_GV <- L241.FUT_EMISS_GV[ names( L241.FUT_EMISS_GV ) %in% c( "Species", "Scenario", "X2010", "X2020", "X2030" ) ]
+L241.FUT_EMISS_GV$Ratio_2020 <- L241.FUT_EMISS_GV$X2020 / L241.FUT_EMISS_GV$X2010
+L241.FUT_EMISS_GV$Ratio_2030 <- L241.FUT_EMISS_GV$X2030 / L241.FUT_EMISS_GV$X2010
+L241.FUT_EMISS_GV$Species <- gsub( "-", "", L241.FUT_EMISS_GV$Species )
+L241.hfc_ef_2010$X2020 <- L241.hfc_ef_2010$value * L241.FUT_EMISS_GV$Ratio_2020[ match( L241.hfc_ef_2010$Non.CO2, L241.FUT_EMISS_GV$Species )]
+L241.hfc_ef_2010$X2030 <- L241.hfc_ef_2010$value * L241.FUT_EMISS_GV$Ratio_2030[ match( L241.hfc_ef_2010$Non.CO2, L241.FUT_EMISS_GV$Species )]
 L241.hfc_ef_2010 <- na.omit( L241.hfc_ef_2010 )
 L241.hfc_ef_update <- L241.hfc_ef_2010[ names( L241.hfc_ef_2010 ) %!in% c( "variable", "value", "year" ) ]
 L241.hfc_ef_update.melt <- melt( L241.hfc_ef_update, id.vars = grep( "X[0-9]{4}", names( L241.hfc_ef_update ), invert = T ) )

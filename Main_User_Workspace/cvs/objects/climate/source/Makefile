@@ -28,7 +28,7 @@ climate_dir: $(TARGS)
 ##
 install_hector:
 	git clone https://github.com/JGCRI/hector.git hector
-	cd hector && git checkout gcam-devel
+	cd hector && git checkout gcam
 
 hector_dir:
 	$(MAKE) -C ./hector/source libhector.a
@@ -37,5 +37,5 @@ hector_dir:
 -include $(DEPS)
 
 clean:
-	rm *.o
+	rm *.o *.d
 	$(MAKE) -C ./hector/source clean
