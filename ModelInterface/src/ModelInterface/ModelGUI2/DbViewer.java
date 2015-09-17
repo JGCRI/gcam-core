@@ -59,6 +59,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.net.URI;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.ListSelectionListener;
@@ -129,7 +130,8 @@ import org.basex.query.iter.Iter;
 import org.basex.query.value.node.ANode;
 import org.basex.query.value.node.DBNode;
 import org.basex.query.value.item.Item;
-import org.basex.api.dom.BXElem;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXDoc;
 import org.basex.util.Token;
 
 public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
@@ -449,9 +451,17 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
             Iter res = queryProc.iter();
             ANode temp;
 			while((temp = (ANode)res.next()) != null) {
-				Map<String, String> scnAttrMap = XMLDB.getAttrMap(new BXElem(temp));
-                DBNode tempDoc = (DBNode)temp.parent();
-                String docName = Token.string(tempDoc.data.text(tempDoc.pre, true));
+                BXNode tempNode = BXNode.get(temp);
+                BXDoc doc = new BXDoc(temp.parent());
+                String docName = "";
+                try {
+                    URI baseURI = new URI(tempNode.getBaseURI()+"/"+XMLDB.getInstance().getContainer());
+                    URI fullDocURI = new URI(doc.getDocumentURI());
+                    docName = baseURI.relativize(fullDocURI).getPath();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+				Map<String, String> scnAttrMap = XMLDB.getAttrMap(tempNode);
 				ret.add(new ScenarioListItem(docName, scnAttrMap.get("name"), scnAttrMap.get("date")));
 			}
 		} catch(QueryException e) {

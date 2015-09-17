@@ -299,7 +299,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	private boolean passedIt;
         /*
 	private Map addToDataTree(ANode currNode, Map dataTree) throws Exception {
-        BXNode currDOM = new BXElem(currNode);
+        BXNode currDOM = BXNode.get(currNode);
 		if (currDOM.getNodeType() == BXNode.DOCUMENT_NODE) {
 			passedIt = false;
 			return dataTree;
@@ -331,7 +331,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
         throw new Exception("What is going on here?");
         /*
-		axisValue.setKey(XMLDB.getAttrMap(new BXElem(currNode)).get("year"));
+		axisValue.setKey(XMLDB.getAttrMap(BXNode.get(currNode)).get("year"));
 		axisValue.setValue(qg.nodeLevel.getKey().split(" ", 2)[1]);
 		return addToDataTreeHelper(currNode, dataTree);
         */

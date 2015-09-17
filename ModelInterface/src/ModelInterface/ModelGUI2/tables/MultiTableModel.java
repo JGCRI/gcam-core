@@ -530,7 +530,7 @@ public class MultiTableModel extends BaseTableModel{
         try {
             while((tempNode = (ANode)res.next()) != null) {
                 // catgorize this result
-                BXNode domNode = tempNode.toJava();
+                BXNode domNode = BXNode.get(tempNode);
                 axisValues.setKey(null);
                 axisValues.setValue(null);
                 Map retMap = qg.addToDataTree(tempNode.parent(), dataTree, axisValues, isGlobal);
@@ -555,7 +555,7 @@ public class MultiTableModel extends BaseTableModel{
                 // it the very first time around for performance reasons, this means
                 // there will be no checking for mismatched units
                 if((units = (String)retMap.get("Units;"+axisValues.getValue())) == null) {
-                    units = XMLDB.getAttrMap(new BXElem(tempNode.parent())).get("unit");
+                    units = XMLDB.getAttrMap(BXNode.get(tempNode.parent())).get("unit");
                     if(units == null) {
                         units = "None Specified";
                     }

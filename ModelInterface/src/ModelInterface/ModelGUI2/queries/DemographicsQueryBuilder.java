@@ -412,7 +412,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		return ret;
 	}
 	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
-        BXNode currDOM = new BXElem(currNode);
+        BXNode currDOM = BXNode.get(currNode);
 		// stop point for recursion is the root
 		if (currDOM.getNodeType() == BXNode.DOCUMENT_NODE) {
 			return dataTree;

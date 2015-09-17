@@ -338,7 +338,7 @@ public class BatchWindow extends Window {
 									qgTemp = new QueryGenerator(currEl);
 								} catch (NullPointerException e) {
 									e.printStackTrace();
-									// don’t warn the user just yet
+									// don't warn the user just yet
 								} catch(ClassCastException ce) {
 									ce.printStackTrace();
 									// don't want the user yet since this may have just

@@ -841,7 +841,7 @@ public class ComboTableModel extends BaseTableModel{
         final DataPair<String, String> axisValues = new DataPair<String, String>();
         try {
             while((tempNode = (ANode)res.next()) != null) {
-                BXNode domNode = tempNode.toJava();
+                BXNode domNode = BXNode.get(tempNode);
                 // catgorize this result
                 axisValues.setKey(null);
                 axisValues.setValue(null);
@@ -874,7 +874,7 @@ public class ComboTableModel extends BaseTableModel{
                 // it the very first time around for performance reasons, this means
                 // there will be no checking for mismatched units
                 if((units = (String)retMap.get("Units;"+axisValues.getValue())) == null) {
-                    units = XMLDB.getAttrMap(new BXElem(tempNode.parent())).get("unit");
+                    units = XMLDB.getAttrMap(BXNode.get(tempNode.parent())).get("unit");
                     if(units == null) {
                         units = "None Specified";
                     }

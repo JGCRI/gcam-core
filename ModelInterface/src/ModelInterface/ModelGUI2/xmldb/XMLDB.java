@@ -57,9 +57,8 @@ import org.basex.query.QueryProcessor;
 import org.basex.query.QueryException;
 import org.basex.query.value.node.ANode;
 import org.basex.query.value.node.DBNode;
-import org.basex.api.dom.BXNode;
-import org.basex.api.dom.BXElem;
-import org.basex.api.dom.BXNNode;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
 import org.basex.io.out.PrintOutput;
 import org.basex.io.serial.Serializer;
 
@@ -260,16 +259,16 @@ public class XMLDB {
         };
         */
 	//private static Map<String, Map<String, String>> attrCache = new TreeMap<String, Map<String, String>>();
-	public static Map<String, String> getAttrMap(BXNode node) {
-		final BXNNode attrs = node.getAttributes();
+	public static Map<String, String> getAttrMap(Node node) {
+		final NamedNodeMap attrs = node.getAttributes();
         final Map<String, String> ret = new TreeMap<String, String>();
         for(int i = 0; i < attrs.getLength(); ++i) {
-				BXNode temp = attrs.item(i);
+				Node temp = attrs.item(i);
 				ret.put(temp.getNodeName(), temp.getNodeValue());
         }
         return ret;
 	}
-	public static Map<String, String> getAttrMapWithCache(BXNode node) {
+	public static Map<String, String> getAttrMapWithCache(Node node) {
         /*
 		int nodeId = node.getNode().id;
 		Map<String, String> ret = attrCache.get().get(nodeId);
@@ -321,7 +320,7 @@ public class XMLDB {
 			// the same query
 			queryProc.bind("newValue", content, "xs:string");
 			// not expecting anything to be in the results
-			queryProc.execute();
+			queryProc.iter();
 		} catch(QueryException e) {
 			e.printStackTrace();
 		} finally {
@@ -346,7 +345,7 @@ public class XMLDB {
 			queryProc.bind("hashId", hash, "xs:integer");
 			queryProc.bind("newCacheValue", content, "xs:string");
 			// not expecting anything to be in the results
-			queryProc.execute();
+			queryProc.iter();
 		} catch(QueryException e) {
 			e.printStackTrace();
 		} finally {

@@ -265,7 +265,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		return ret;
 	}
 	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
-        BXNode currDOM = new BXElem(currNode);
+        BXNode currDOM = BXNode.get(currNode);
 		// stop condition for recursion when we hit the root of the tree
 		if(currDOM.getNodeType() == BXNode.DOCUMENT_NODE) {
 			return dataTree;

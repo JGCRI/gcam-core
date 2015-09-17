@@ -48,7 +48,7 @@ import java.util.TreeMap;
 import java.util.EventListener;
 
 import org.basex.query.value.node.ANode;
-import org.basex.api.dom.BXElem;
+import org.basex.api.dom.BXNode;
 
 public class ClimateQueryBuilder extends QueryBuilder {
 	public static Map<String, Boolean> varList;
@@ -167,7 +167,7 @@ public class ClimateQueryBuilder extends QueryBuilder {
 		return new Vector<String>();
 	}
 	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
-		axisValue.setValue(new BXElem(currNode).getNodeName());
+		axisValue.setValue(BXNode.get(currNode).getNodeName());
 		return qg.defaultAddToDataTree(currNode, dataTree, axisValue, isGlobal);
 	}
 }
