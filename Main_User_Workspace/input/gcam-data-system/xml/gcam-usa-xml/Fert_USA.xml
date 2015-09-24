@@ -8,7 +8,9 @@
             <subsector delete="1" name="refined liquids"/>
             <keyword final-energy="none"/>
             <subsector name="CA N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -209,7 +211,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="FL N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -410,7 +414,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="GA N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -611,7 +617,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="IA N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -812,7 +820,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="LA N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1013,7 +1023,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="MO N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1214,7 +1226,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="NC N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1415,7 +1429,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="OH N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1616,7 +1632,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="TX N fertilizer">
-               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1820,9 +1838,13 @@
       </region>
       <region name="CA">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -2076,13 +2098,21 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
       <region name="FL">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -2336,13 +2366,21 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
       <region name="GA">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -2596,13 +2634,21 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
       <region name="IA">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -2856,13 +2902,21 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
       <region name="LA">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -3116,13 +3170,21 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
       <region name="MO">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -3376,13 +3438,21 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
       <region name="NC">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -3636,13 +3706,21 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
       <region name="OH">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -3896,13 +3974,21 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
       <region name="TX">
          <supplysector name="N fertilizer">
-            <keyword final-energy="industry"/>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-12</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -4156,6 +4242,10 @@
                <share-weight year="2005">1</share-weight>
                <share-weight year="2010">1</share-weight>
             </subsector>
+            <keyword final-energy="industry"/>
+            <output-unit>Mt N</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/kgN</price-unit>
          </supplysector>
       </region>
    </world>

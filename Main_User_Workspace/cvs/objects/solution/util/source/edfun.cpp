@@ -39,6 +39,7 @@
 #include "util/base/include/fltcmp.hpp"
 #include "containers/include/iactivity.h"
 #include "util/base/include/util.h"
+#include "util/logger/include/ilogger.h"
 
 #include "util/base/include/timer.h"
 
@@ -46,6 +47,62 @@
 
 const double LogEDFun::PMAX = 1.0e24;
 const double LogEDFun::ARGMAX = 55.262042; // log(PMAX)
+
+// constructor
+LogEDFun::LogEDFun(SolutionInfoSet &sisin,
+                   World *w, Marketplace *m, int per, bool aLogPricep) :
+    mkts(sisin.getSolvableSet()),
+    solnset(sisin),
+    world(w), mktplc(m), period(per), partj(-1),
+    mLogPricep(aLogPricep)
+{
+    na=nr=mkts.size();
+    mdiagnostic=false;
+
+    // set up the scale vectors
+    mxscl.resize(na);
+    mfxscl.resize(nr);          // note na==nr
+
+    if(!mLogPricep) {
+        // linear prices & outputs, so x0 is the price, and fx0 is
+        // 1/demand(forecast), for all markets
+        for(int i=0; i<na; ++i) {
+            // forecast demands has been constrained so that it
+            // doesn't give nonsensical results here, but forecast
+            // price is used for other things and so hasn't been
+            // so-modified.
+            mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), 1.0);
+            mfxscl[i] = 1.0/mkts[i].getForecastDemand();
+        }
+    } else {
+        // for log prices & outputs the situtation is more
+        // complicated.  We can probably leave the (log) inputs alone.
+        // On the output side, we can probably leave the normal market
+        // outputs alone, but we need to rescale the outputs for other
+        // market types (which are returned as linear).  (Why don't we
+        // do the prices for constraint markets as linear too?)
+        for(int i=0; i<na; ++i) {
+            mxscl[i] = 1.0;
+            if(mkts[i].getType() != IMarketType::NORMAL)
+                mfxscl[i] = 1.0/mkts[i].getForecastDemand();
+            else
+                mfxscl[i] = 1.0;
+        }
+    } 
+}
+
+/*!
+ * \brief scale a solver's initial inputs as necessary using the xscl vector 
+ * \details When a solver sets up its initial-guess input vector, we
+ *          need to scale those values so that when this function
+ *          applies the scale vector we get back the initial guess
+ *          values that the solver intended to use.
+ */
+void LogEDFun::scaleInitInputs(UBVECTOR<double> &ax)
+{
+    for(unsigned i=0; i<ax.size(); ++i)
+        ax[i] /= mxscl[i];
+}
 
 
 void LogEDFun::partial(int ip)
@@ -59,7 +116,7 @@ double LogEDFun::partialSize(int ip) const
   return double(mkts[ip].getDependencies().size()) / double(world->global_size());
 }
 
-void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
+void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
 {
   assert(x.size() == mkts.size());
   assert(fx.size() == mkts.size());
@@ -68,22 +125,56 @@ void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
   Timer& edfunPreTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_PRE );
   edfunMiscTimer.start();
   edfunPreTimer.start();
+
+  // copy x so we can scale it without destroying the original.  This
+  // is probably going to incur enough overhead that we will
+  // eventually want to do the scaling inline when we assign the
+  // prices, but this is easier for now.
+  UBVECTOR<double> x(ax.size()); 
+  for(unsigned int i=0; i<x.size(); ++i)
+      x[i] = ax[i]*mxscl[i];
+  
+
+  /**** The way we do this is kind of ugly.  We have two procedures
+   **** that are almost but not quite identical, so we have two blocks
+   **** (one for partial derivatives, one for regular evals) that are
+   **** mostly duplicative.  Should really be cleaned up at some
+   **** point.
+   ****/
   
   if(partj < 0) {               // not a partial derivative calculation
+    /****
+     * 1A Set the model inputs using the solutionInfo objects (full eval version)
+     ****/
+
     mktplc->nullSuppliesAndDemands(period);
 
-    for(size_t i=0; i<x.size(); ++i) {
-      // It would be better to have a list of markets and operate on
-      // them directly; however, that's not easy to get, starting from
-      // a SolutionInfoSet instance, so we will work through the
-      // SolutionInfo class.
-      if(x[i] > ARGMAX)
-        mkts[i].setPrice(PMAX);
-      else
-        mkts[i].setPrice(exp(x[i])); // input vector = log(price)
+    /* set prices into the marketplace. If the inputs are log-prices,
+       we have to exp() them first*/
+    if(mLogPricep) {
+      /***** In part 3 we make some exceptions for certain market
+       ***** types.  Perhaps we should consider doing that here too.
+       ***** E.g., we could make the inputs for price and demand
+       ***** markets always linear.
+       *****/
+      for(size_t i=0; i<x.size(); ++i) {
+        if(x[i] > ARGMAX)
+          mkts[i].setPrice(PMAX);
+        else
+          mkts[i].setPrice(exp(x[i])); // input vector = log(price)
+      }
+    }
+    else {
+      for(size_t i=0; i<x.size(); ++i) {
+        mkts[i].setPrice(x[i]); // input vector = price
+      }
     }
     edfunMiscTimer.stop();
-    edfunPreTimer.stop();
+    edfunPreTimer.stop(); 
+
+    /****
+     * 2A Evaluate the model (full eval version)
+     ****/ 
     Timer& evalFullTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EVAL_FULL );
     evalFullTimer.start();
 #if GCAM_PARALLEL_ENABLED
@@ -92,18 +183,49 @@ void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
     world->calc(period);
 #endif
     evalFullTimer.stop();
+    // Proceed to part 3 below.
   }
   else {                        // partial derivative calculation
+    /****
+     * 1B Set the model inputs using the solutionInfo objects (partial derivative version)
+     ****/ 
     mktplc->mIsDerivativeCalc = true;
     solnset.storeValues();      // store all market values
-    // In theory this loop is unnecessary, and we need only to set mkts[partj].
-    for(size_t i=0; i<x.size(); ++i) {
-      if(x[i] > ARGMAX)
-        mkts[i].setPrice(PMAX);
-      else
-        mkts[i].setPrice(exp(x[i])); // input vector = log(price)
+
+    if(mdiagnostic) {
+      ILogger &solverlog = ILogger::getLogger("solver_log");
+      solverlog.setLevel(ILogger::DEBUG);
+
+      solverlog << "j= " << partj <<"\tprice  \tsupply \tdemand\tmarket"
+                << "old   \t" << mkts[partj].getPrice() << "\t" << mkts[partj].getSupply()
+                << "\t" << mkts[partj].getDemand()
+                << "\t" << mkts[partj].getName() << "\n";
+    }
+    
+    // In theory the loop over markets is unnecessary, and we need
+    // only to set mkts[partj].  We should try that sometime.
+    if(mLogPricep) {            
+      /***** In part 3 we make some exceptions for certain market
+       ***** types.  Perhaps we should consider doing that here too.
+       ***** E.g., we could make the inputs for price and demand
+       ***** markets always linear.
+       *****/
+      for(size_t i=0; i<x.size(); ++i) {
+        if(x[i] > ARGMAX)
+          mkts[i].setPrice(PMAX);
+        else
+          mkts[i].setPrice(exp(x[i])); // input vector = log(price)
+      }
+    }
+    else {
+        for(size_t i=0; i<x.size(); ++i) {
+            mkts[i].setPrice(x[i]);
+        }
     }
 
+    /****
+     * 2B Evaluate the model (partial derivative version)
+     ****/
     const std::vector<IActivity*>& affectedNodes = mkts[partj].getDependencies();
     /* \invariant At least one node is affected */
     assert(!affectedNodes.empty());
@@ -117,19 +239,84 @@ void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
     world->calc(period, affectedNodes);
 #endif
     evalPartTimer.stop();
+
+    if(mdiagnostic) {
+      ILogger &solverlog = ILogger::getLogger("solver_log");
+      solverlog.setLevel(ILogger::DEBUG);
+      
+      solverlog << "new   \t" << mkts[partj].getPrice() << "\t" << mkts[partj].getSupply()
+                << "\t" << mkts[partj].getDemand()
+                << "\t" << mkts[partj].getName() << "\n";
+    }
   }
 
+  
   edfunMiscTimer.start();
   Timer& edfunPostTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_POST );
   edfunPostTimer.start();
+
+  /****
+   * 3 Collect the outputs from the solutionInfo objects and repack them in the
+   *   output vector
+   ****/
+  
   // at this point we've recalculated all the supplies and demands.
-  // Retrieve them, calculate log relative excesses, and store them in fx
+  // Retrieve them, calculate output according to market type, and
+  // store them in fx
   for(size_t i=0; i<mkts.size(); ++i) {
     const double TINY = util::getTinyNumber();
-    double d = std::max(mkts[i].getDemand(), TINY);
-    double s = std::max(mkts[i].getSupply(), TINY);
-    fx[i] = log(d/s);
+    if(mLogPricep && mkts[i].getType() == IMarketType::NORMAL) { // LOG CASE (NORMAL markets only)
+      // for normal markets, output log(demand/supply), if we are using log prices
+      double d = std::max(mkts[i].getDemand(), TINY);
+      double s = std::max(mkts[i].getSupply(), TINY);
+      double p0 = mkts[i].getLowerBoundSupplyPrice();
+      double p  = x[i]>=ARGMAX ? PMAX : exp(x[i]);
+      double c  = std::max(0.0, p0-p);
+      double fxi = log(d/s);
+      if(c>0.0) {
+        ILogger &solverlog = ILogger::getLogger("solver_log");
+        solverlog.setLevel(ILogger::DEBUG);
+        solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << p
+                  << "  p0= " << p0 << "  c= " << c
+                  << "  unmodified fx= " << fxi << "  modified fx= " << fxi+c
+                  << "\n";
+      }      
+      fx[i] = log(d/s)+c;
+    }
+    else if(mkts[i].getType() == IMarketType::NORMAL) { // LINEAR CASE (NORMAL markets only)
+        double d = mkts[i].getDemand();
+        double s = mkts[i].getSupply();
+
+        // generate a correction if the input price is less than the
+        // supply curve lower bound.  This is most effective if we transform the
+        // price correction from it's price scale into a scale relevant for the demands.
+        // Note that the lower bound limit is an estimate
+        // and in some cases may not be exact, thus we will only apply the correction
+        // if the supply was indeed zero.  If the actual lower bound price is significantly
+        // different than the estimated this may generate a discontinuity.
+        double p0 = mkts[i].getLowerBoundSupplyPrice();
+        double c = s == 0 ? std::max(0.0, (p0-x[i])*mfxscl[i]/mxscl[i]) : 0;
+        // give difference as a fraction of demand
+        fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
+        if(c>0.0) {
+          ILogger &solverlog = ILogger::getLogger("solver_log");
+          solverlog.setLevel(ILogger::DEBUG);
+          solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
+                    << "  p0= " << p0 << "  c= " << c << "  modified supply= " << s-c
+                    << "\n";
+        }
+    }
+    else {                      // All markets besides NORMAL
+      // for other types of markets (mostly price, demand, and
+      // trial-value), output fractional demand - supply
+        fx[i] = mkts[i].getDemand() - mkts[i].getSupply();
+    }
   }
+
+  // Do the scaling for fx
+  for(unsigned i=0; i<fx.size(); ++i)
+      fx[i] *= mfxscl[i];
+  
   edfunPostTimer.stop();
 
   Timer& edfunAnResetTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_AN_RESET );
@@ -148,3 +335,4 @@ void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
   edfunAnResetTimer.stop();
   edfunMiscTimer.stop();
 }
+

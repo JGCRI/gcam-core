@@ -96,9 +96,13 @@ printlog( "L202.RenewRsrcCurves" )
 L202.RenewRsrcCurves <- write_to_all_regions_ag( A_agRsrcCurves, names_RenewRsrcCurves )
 
 printlog( "L202.Supplysector_in: generic supplysector info for inputs to animal production" )
+L202.SectorLogitTables_in <- get_logit_fn_tables( A_an_input_supplysector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L202.Supplysector_in <- write_to_all_regions_ag( A_an_input_supplysector, names_Supplysector )
 
 printlog( "L202.SubsectorAll_in: generic subsector info for inputs to animal production technologies" )
+L202.SubsectorLogitTables_in <- get_logit_fn_tables( A_an_input_subsector, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L202.SubsectorAll_in <- write_to_all_regions_ag( A_an_input_subsector, names_SubsectorAll )
 
 printlog( "L202.StubTech_in: identification of stub technologies for inputs to animal production" )
@@ -129,9 +133,13 @@ L202.StubTechProd_in$tech.share.weight <- ifelse( L202.StubTechProd_in$calOutput
 L202.StubTechProd_in <- L202.StubTechProd_in[ names_StubTechProd]
 
 printlog( "L202.Supplysector_an: generic animal production supplysector info" )
+L202.SectorLogitTables_an <- get_logit_fn_tables( A_an_supplysector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=F, write.all.regions=T )
 L202.Supplysector_an <- write_to_all_regions_ag( A_an_supplysector, names_Supplysector )
 
 printlog( "L202.SubsectorAll_an: generic animal production subsector info" )
+L202.SubsectorLogitTables_an <- get_logit_fn_tables( A_an_subsector, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L202.SubsectorAll_an <- write_to_all_regions_ag( A_an_subsector, names_SubsectorAll )
 
 printlog( "L202.StubTech_an: identification of stub technologies for animal production" )
@@ -274,12 +282,36 @@ L202.RenewRsrcPrice <- subset( L202.RenewRsrcPrice, !region %in% no_aglu_regions
 L202.RenewRsrcCalProd <- subset( L202.RenewRsrcCalProd, !region %in% no_aglu_regions )
 L202.maxSubResource <- subset( L202.maxSubResource, !region %in% no_aglu_regions )
 L202.RenewRsrcCurves <- subset( L202.RenewRsrcCurves, !region %in% no_aglu_regions )
+for( curr_table in names( L202.SectorLogitTables_in ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L202.SectorLogitTables_in[[ curr_table ]]$data <- subset( L202.SectorLogitTables_in[[ curr_table ]]$data,
+            !region %in% no_aglu_regions )
+    }
+}
 L202.Supplysector_in <- subset( L202.Supplysector_in, !region %in% no_aglu_regions )
+for( curr_table in names( L202.SubsectorLogitTables_in ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L202.SubsectorLogitTables_in[[ curr_table ]]$data <- subset( L202.SubsectorLogitTables_in[[ curr_table ]]$data,
+            !region %in% no_aglu_regions )
+    }
+}
 L202.SubsectorAll_in <- subset( L202.SubsectorAll_in, !region %in% no_aglu_regions )
 L202.StubTech_in <- subset( L202.StubTech_in, !region %in% no_aglu_regions )
 L202.StubTechInterp_in <- subset( L202.StubTechInterp_in, !region %in% no_aglu_regions )
 L202.StubTechProd_in <- subset( L202.StubTechProd_in, !region %in% no_aglu_regions )
+for( curr_table in names( L202.SectorLogitTables_an ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L202.SectorLogitTables_an[[ curr_table ]]$data <- subset( L202.SectorLogitTables_an[[ curr_table ]]$data,
+            !region %in% no_aglu_regions )
+    }
+}
 L202.Supplysector_an <- subset( L202.Supplysector_an, !region %in% no_aglu_regions )
+for( curr_table in names( L202.SubsectorLogitTables_an) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L202.SubsectorLogitTables_an[[ curr_table ]]$data <- subset( L202.SubsectorLogitTables_an[[ curr_table ]]$data,
+            !region %in% no_aglu_regions )
+    }
+}
 L202.SubsectorAll_an <- subset( L202.SubsectorAll_an, !region %in% no_aglu_regions )
 L202.StubTech_an <- subset( L202.StubTech_an, !region %in% no_aglu_regions )
 L202.StubTechInterp_an <- subset( L202.StubTechInterp_an, !region %in% no_aglu_regions )
@@ -295,13 +327,33 @@ write_mi_data( L202.RenewRsrc, IDstring="RenewRsrc", domain="AGLU_LEVEL2_DATA", 
 write_mi_data( L202.RenewRsrcPrice, "RenewRsrcPrice", "AGLU_LEVEL2_DATA", "L202.RenewRsrcPrice", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.maxSubResource, "maxSubResource", "AGLU_LEVEL2_DATA", "L202.maxSubResource", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.RenewRsrcCurves, "RenewRsrcCurves", "AGLU_LEVEL2_DATA", "L202.RenewRsrcCurves", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+for( curr_table in names ( L202.SectorLogitTables_in ) ) {
+write_mi_data( L202.SectorLogitTables_in[[ curr_table ]]$data, L202.SectorLogitTables_in[[ curr_table ]]$header,
+    "AGLU_LEVEL2_DATA", paste0("L202.", L202.SectorLogitTables_in[[ curr_table ]]$header, "_in" ), "AGLU_XML_BATCH",
+    "batch_an_input.xml" )
+}
 write_mi_data( L202.Supplysector_in, "Supplysector", "AGLU_LEVEL2_DATA", "L202.Supplysector_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+for( curr_table in names ( L202.SubsectorLogitTables_in ) ) {
+write_mi_data( L202.SubsectorLogitTables_in[[ curr_table ]]$data, L202.SubsectorLogitTables_in[[ curr_table ]]$header,
+    "AGLU_LEVEL2_DATA", paste0("L202.", L202.SubsectorLogitTables_in[[ curr_table ]]$header, "_in" ), "AGLU_XML_BATCH",
+    "batch_an_input.xml" )
+}
 write_mi_data( L202.SubsectorAll_in, "SubsectorAll", "AGLU_LEVEL2_DATA", "L202.SubsectorAll_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTech_in, "StubTech", "AGLU_LEVEL2_DATA", "L202.StubTech_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTechInterp_in, "StubTechInterp", "AGLU_LEVEL2_DATA", "L202.StubTechInterp_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.GlobalTechCoef_in, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L202.GlobalTechCoef_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTechProd_in, "StubTechProd", "AGLU_LEVEL2_DATA", "L202.StubTechProd_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+for( curr_table in names ( L202.SectorLogitTables_an ) ) {
+write_mi_data( L202.SectorLogitTables_an[[ curr_table ]]$data, L202.SectorLogitTables_an[[ curr_table ]]$header,
+    "AGLU_LEVEL2_DATA", paste0("L202.", L202.SectorLogitTables_an[[ curr_table ]]$header, "_an" ), "AGLU_XML_BATCH",
+    "batch_an_input.xml" )
+}
 write_mi_data( L202.Supplysector_an, "Supplysector", "AGLU_LEVEL2_DATA", "L202.Supplysector_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+for( curr_table in names ( L202.SubsectorLogitTables_an ) ) {
+write_mi_data( L202.SubsectorLogitTables_an[[ curr_table ]]$data, L202.SubsectorLogitTables_an[[ curr_table ]]$header,
+    "AGLU_LEVEL2_DATA", paste0("L202.", L202.SubsectorLogitTables_an[[ curr_table ]]$header, "_an" ), "AGLU_XML_BATCH",
+    "batch_an_input.xml" )
+}
 write_mi_data( L202.SubsectorAll_an, "SubsectorAll", "AGLU_LEVEL2_DATA", "L202.SubsectorAll_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTech_an, "StubTech", "AGLU_LEVEL2_DATA", "L202.StubTech_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTechInterp_an, "StubTechInterp", "AGLU_LEVEL2_DATA", "L202.StubTechInterp_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 

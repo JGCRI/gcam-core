@@ -52,6 +52,7 @@
 #include "technologies/include/ioutput.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/market_dependency_finder.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -63,15 +64,15 @@ extern Scenario* scenario;
  * \param aName Technology name.
  * \param aYear Technology year.
  */
-AgProductionTechnology::AgProductionTechnology( const string& aName, const int aYear )
-:Technology( aName, aYear ),
-   mLandAllocator( 0 ),
-   mProductLeaf( 0 ),
-   mNonLandVariableCost( 0 ), 
-   mNonLandCostTechChange( 0),
-   mAgProdChange ( 0 ),
-   mHarvestsPerYear( 1 ),
-   mYield ( 0 )
+AgProductionTechnology::AgProductionTechnology( const string& aName, const int aYear ):
+    Technology( aName, aYear ),
+    mNonLandVariableCost( 0 ), 
+    mNonLandCostTechChange( 0),
+    mYield ( 0 ), 
+    mAgProdChange ( 0 ),
+    mHarvestsPerYear( 1 ),
+    mLandAllocator( 0 ),
+    mProductLeaf( 0 )
 {
 }
 
@@ -81,16 +82,16 @@ AgProductionTechnology::AgProductionTechnology( const string& aName, const int a
  *          model operations.
  * \param aAgTech Tech AgProductionTechnology to copy.
  */
-AgProductionTechnology::AgProductionTechnology( const AgProductionTechnology& aAgTech )
-:Technology( aAgTech ),
-mNonLandVariableCost( aAgTech.mNonLandVariableCost ),
-mNonLandCostTechChange( aAgTech.mNonLandCostTechChange ),
-mAgProdChange( aAgTech.mAgProdChange ),
-mHarvestsPerYear( aAgTech.mHarvestsPerYear ),
+AgProductionTechnology::AgProductionTechnology( const AgProductionTechnology& aAgTech ) :
+    Technology( aAgTech ),
+    mNonLandVariableCost( aAgTech.mNonLandVariableCost ),
+    mNonLandCostTechChange( aAgTech.mNonLandCostTechChange ),
+    mYield( 0 ),
+    mAgProdChange( aAgTech.mAgProdChange ),
+    mHarvestsPerYear( aAgTech.mHarvestsPerYear ),
 // The following do not get copied as they are initialized through other means
-mLandAllocator( 0 ),
-mProductLeaf( 0 ),
-mYield( 0 )
+    mLandAllocator( 0 ),
+    mProductLeaf( 0 )
 {
 }
 
@@ -254,6 +255,12 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
     // And this is what is now passed in ($/kHa)
     double profitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
     mLandAllocator->setProfitRate( aRegionName, mName, profitRate, aPeriod );
+
+    // TODO: it may be useful to inform the solver about the minimum price required
+    // to have some supply however we can not know that information for sure due to
+    // the costs of variable inputs, etc.  In the mean time we will just set that
+    // prices should not drop below zero.
+    SectorUtils::setSupplyBehaviorBounds( aSectorName, aRegionName, 0, util::getLargeNumber(), aPeriod );
 }
 
 void AgProductionTechnology::completeInit( const std::string& aRegionName,
@@ -349,18 +356,15 @@ void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
 *          facilitate this the technology sets the profit rate for the land
 *          use into the land allocator. The technology share itself is set to 1
            but is not used.
-* \param aRegionName Region name.
-* \param aSectorName Sector name, also the name of the product.
+* \param aChoiceFn The discrete choice function.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 * \return The log of the technology share, always 1 for AgProductionTechnologies.
 * \author James Blackwood, Steve Smith
 */
-double AgProductionTechnology::calcShare( const string& aRegionName,
-                                            const string& aSectorName,
-                                            const GDP* aGDP,
-                                            const double aLogitExp,
-                                            const int aPeriod ) const
+double AgProductionTechnology::calcShare( const IDiscreteChoice* aChoiceFn,
+                                          const GDP* aGDP,
+                                          int aPeriod ) const
 {
     assert( mProductionState[ aPeriod ]->isNewInvestment() );
     

@@ -222,25 +222,6 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
 
 }
 
-/*!
-* \brief Calculate unnormalized technology unnormalized shares.
-* \details No actual share for this technology as it is driven by amount of land
-*          which is determined through other means.
-* \param aRegionName Region name.
-* \param aSectorName Sector name, also the name of the product.
-* \param aGDP Regional GDP container.
-* \param aPeriod Model period.
-* \return log of the technology share, always 0 (==log(1)) for UnmanagedLandTechnologies.
-* \author Steve Smith
-*/
-double UnmanagedLandTechnology::calcShare( const string& aRegionName,
-                                              const string& aSectorName,
-                                              const GDP* aGDP,
-                                              const double aLogitExp,
-                                              const int aPeriod ) const
-{
-    return 0.0;
-}
 
 void UnmanagedLandTechnology::calcCost( const string& aRegionName,
                                            const string& aSectorName,

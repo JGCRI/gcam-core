@@ -8,12 +8,13 @@
       </region>
       <region name="AK">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -263,14 +264,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -520,14 +525,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -777,16 +786,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="AL">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -1036,14 +1049,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -1293,14 +1310,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -1550,16 +1571,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="AR">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -1809,14 +1834,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -2066,14 +2095,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -2323,16 +2356,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="AZ">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -2582,14 +2619,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -2839,14 +2880,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -3096,16 +3141,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="CA">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -3355,14 +3404,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -3612,14 +3665,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -3869,16 +3926,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="CO">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -4128,14 +4189,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -4385,14 +4450,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -4642,16 +4711,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="CT">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -4901,14 +4974,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -5158,14 +5235,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -5415,16 +5496,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="DC">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -5674,14 +5759,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -5931,14 +6020,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -6188,16 +6281,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="DE">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -6447,14 +6544,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -6704,14 +6805,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -6961,16 +7066,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="FL">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -7220,14 +7329,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -7477,14 +7590,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -7734,16 +7851,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="GA">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -7993,14 +8114,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -8250,14 +8375,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -8507,16 +8636,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="HI">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -8766,14 +8899,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -9023,14 +9160,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -9280,16 +9421,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="IA">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -9539,14 +9684,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -9796,14 +9945,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -10053,16 +10206,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="ID">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -10312,14 +10469,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -10569,14 +10730,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -10826,16 +10991,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="IL">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -11085,14 +11254,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -11342,14 +11515,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -11599,16 +11776,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="IN">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -11858,14 +12039,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -12115,14 +12300,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -12372,16 +12561,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="KS">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -12631,14 +12824,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -12888,14 +13085,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -13145,16 +13346,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="KY">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -13404,14 +13609,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -13661,14 +13870,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -13918,16 +14131,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="LA">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -14177,14 +14394,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -14434,14 +14655,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -14691,16 +14916,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="MA">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -14950,14 +15179,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -15207,14 +15440,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -15464,16 +15701,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="MD">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -15723,14 +15964,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -15980,14 +16225,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -16237,16 +16486,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="ME">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -16496,14 +16749,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -16753,14 +17010,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -17010,16 +17271,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="MI">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -17269,14 +17534,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -17526,14 +17795,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -17783,16 +18056,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="MN">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -18042,14 +18319,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -18299,14 +18580,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -18556,16 +18841,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="MO">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -18815,14 +19104,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -19072,14 +19365,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -19329,16 +19626,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="MS">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -19588,14 +19889,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -19845,14 +20150,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -20102,16 +20411,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="MT">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -20361,14 +20674,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -20618,14 +20935,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -20875,16 +21196,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="NC">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -21134,14 +21459,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -21391,14 +21720,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -21648,16 +21981,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="ND">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -21907,14 +22244,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -22164,14 +22505,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -22421,16 +22766,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="NE">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -22680,14 +23029,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -22937,14 +23290,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -23194,16 +23551,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="NH">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -23453,14 +23814,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -23710,14 +24075,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -23967,16 +24336,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="NJ">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -24226,14 +24599,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -24483,14 +24860,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -24740,16 +25121,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="NM">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -24999,14 +25384,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -25256,14 +25645,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -25513,16 +25906,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="NV">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -25772,14 +26169,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -26029,14 +26430,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -26286,16 +26691,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="NY">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -26545,14 +26954,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -26802,14 +27215,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -27059,16 +27476,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="OH">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -27318,14 +27739,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -27575,14 +28000,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -27832,16 +28261,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="OK">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -28091,14 +28524,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -28348,14 +28785,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -28605,16 +29046,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="OR">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -28864,14 +29309,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -29121,14 +29570,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -29378,16 +29831,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="PA">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -29637,14 +30094,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -29894,14 +30355,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -30151,16 +30616,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="RI">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -30410,14 +30879,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -30667,14 +31140,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -30924,16 +31401,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="SC">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -31183,14 +31664,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -31440,14 +31925,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -31697,16 +32186,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="SD">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -31956,14 +32449,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -32213,14 +32710,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -32470,16 +32971,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="TN">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -32729,14 +33234,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -32986,14 +33495,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -33243,16 +33756,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="TX">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -33502,14 +34019,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -33759,14 +34280,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -34016,16 +34541,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="UT">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -34275,14 +34804,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -34532,14 +35065,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -34789,16 +35326,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="VA">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -35048,14 +35589,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -35305,14 +35850,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -35562,16 +36111,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="VT">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -35821,14 +36374,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -36078,14 +36635,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -36335,16 +36896,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="WA">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -36594,14 +37159,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -36851,14 +37420,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -37108,16 +37681,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="WI">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -37367,14 +37944,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -37624,14 +38205,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -37881,16 +38466,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="WV">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -38140,14 +38729,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -38397,14 +38990,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -38654,16 +39251,20 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
       <region name="WY">
          <supplysector name="elect_td_bld">
-            <output-unit>EJ</output-unit>
-            <input-unit>EJ</input-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-8</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_bld">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -38913,14 +39514,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_ind">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_ind">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_ind">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -39170,14 +39775,18 @@
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-         <supplysector name="elect_td_trn">
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+         </supplysector>
+         <supplysector name="elect_td_trn">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <subsector name="elect_td_trn">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="linear"/>
@@ -39427,6 +40036,9 @@
                   </period>
                </technology>
             </subsector>
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
          </supplysector>
       </region>
    </world>

@@ -87,7 +87,7 @@ void magicc_array::init( const char* s, int l1, int h1, int l2, int h2 )
     if( l1 > h1 || l2 > h2 || initialized )    // Could get fancier and allow this
     {
         cout << "init error! " << s << " " << initialized << " " << l1 << " " << h1 << " " << l2 << " " << h2 << endl;
-        exit( -1 );        
+        abort();        
     }
     else
     {
@@ -111,7 +111,7 @@ void magicc_array::setval( float v, int i1, int i2 )
     if( !initialized || i1 < low1 || i1 > high1 || i2 < low2 || i2 > high2 )
     {
         cout << "setval error! " << name << " " << initialized << " " << i1 << " " << i2 << " " << v << endl;
-        exit( -1 );
+        abort();
     }
     else
         data[ computepos( i1, i2 ) ] = v;
@@ -123,7 +123,7 @@ float magicc_array::getval( int i1, int i2 )
     if( !initialized || i1 < low1 || i1 > high1 || i2 < low2 || i2 > high2 )
     {
         cout << "getval error! " << i1 << " " << i2 << endl;
-        exit( -1 );
+        abort();
     }
     else
         return data[ computepos( i1, i2 ) ];
@@ -134,7 +134,7 @@ float* magicc_array::getptr( int i1, int i2 )
     if( !initialized || i1 < low1 || i1 > high1 || i2 < low2 || i2 > high2 )
     {
         cout << "getptr error! " << i1 << " " << i2 << endl;
-        exit( -1 );
+        abort();
     }
     else
         return &data[ computepos( i1, i2 ) ];

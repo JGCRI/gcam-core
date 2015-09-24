@@ -450,7 +450,7 @@ void HouseholdConsumer::calcFactorDemand( const string& regionName, int period )
     householdLandDemand = landDemand * FunctionUtils::getPricePaid( regionName, "Land", period );
 
     // *******  Labor  *******
-    /*
+    
     laborDemand = ( laborSupplyMale + laborSupplyFemale ) * baseLaborDemandPerHH;
     assert( laborDemand >= 0 );
     assert( util::isValidNumber( laborDemand ) );

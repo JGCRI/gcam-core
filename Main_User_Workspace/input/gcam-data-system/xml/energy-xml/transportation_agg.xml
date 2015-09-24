@@ -3,13 +3,17 @@
    <world>
       <region name="USA">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -46,7 +50,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -83,7 +89,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -92,7 +100,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -129,7 +139,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -195,13 +207,17 @@
       </region>
       <region name="Africa_Eastern">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -238,7 +254,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -275,7 +293,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -284,7 +304,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -321,7 +343,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -387,13 +411,17 @@
       </region>
       <region name="Africa_Northern">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -430,7 +458,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -467,7 +497,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -476,7 +508,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -513,7 +547,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -579,13 +615,17 @@
       </region>
       <region name="Africa_Southern">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -622,7 +662,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -659,7 +701,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -668,7 +712,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -705,7 +751,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -771,13 +819,17 @@
       </region>
       <region name="Africa_Western">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -814,7 +866,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -851,7 +905,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -860,7 +916,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -897,7 +955,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -963,13 +1023,17 @@
       </region>
       <region name="Australia_NZ">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1006,7 +1070,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1043,7 +1109,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -1052,7 +1120,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1089,7 +1159,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1155,13 +1227,17 @@
       </region>
       <region name="Brazil">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1198,7 +1274,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1235,7 +1313,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -1244,7 +1324,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1281,7 +1363,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1347,13 +1431,17 @@
       </region>
       <region name="Canada">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1390,7 +1478,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1427,7 +1517,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -1436,7 +1528,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1473,7 +1567,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1539,13 +1635,17 @@
       </region>
       <region name="Central America and Caribbean">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1582,7 +1682,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1619,7 +1721,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -1628,7 +1732,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1665,7 +1771,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1731,13 +1839,17 @@
       </region>
       <region name="Central Asia">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1774,7 +1886,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1811,7 +1925,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -1820,7 +1936,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1857,7 +1975,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1923,13 +2043,17 @@
       </region>
       <region name="China">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -1966,7 +2090,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2003,7 +2129,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -2012,7 +2140,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2049,7 +2179,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2115,13 +2247,17 @@
       </region>
       <region name="EU-12">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2158,7 +2294,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2195,7 +2333,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -2204,7 +2344,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2241,7 +2383,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2307,13 +2451,17 @@
       </region>
       <region name="EU-15">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2350,7 +2498,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2387,7 +2537,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -2396,7 +2548,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2433,7 +2587,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2499,13 +2655,17 @@
       </region>
       <region name="Europe_Eastern">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2542,7 +2702,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2579,7 +2741,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -2588,7 +2752,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2625,7 +2791,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2691,13 +2859,17 @@
       </region>
       <region name="Europe_Non_EU">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2734,7 +2906,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2771,7 +2945,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -2780,7 +2956,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2817,7 +2995,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2883,13 +3063,17 @@
       </region>
       <region name="European Free Trade Association">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2926,7 +3110,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -2963,7 +3149,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -2972,7 +3160,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3009,7 +3199,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3075,13 +3267,17 @@
       </region>
       <region name="India">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3118,7 +3314,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3155,7 +3353,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -3164,7 +3364,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3201,7 +3403,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3267,13 +3471,17 @@
       </region>
       <region name="Indonesia">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3310,7 +3518,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3347,7 +3557,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -3356,7 +3568,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3393,7 +3607,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3459,13 +3675,17 @@
       </region>
       <region name="Japan">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3502,7 +3722,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3539,7 +3761,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -3548,7 +3772,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3585,7 +3811,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3651,13 +3879,17 @@
       </region>
       <region name="Mexico">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3694,7 +3926,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3731,7 +3965,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -3740,7 +3976,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3777,7 +4015,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3843,13 +4083,17 @@
       </region>
       <region name="Middle East">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3886,7 +4130,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3923,7 +4169,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -3932,7 +4180,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -3969,7 +4219,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4035,13 +4287,17 @@
       </region>
       <region name="Pakistan">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4078,7 +4334,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4115,7 +4373,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -4124,7 +4384,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4161,7 +4423,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4227,13 +4491,17 @@
       </region>
       <region name="Russia">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4270,7 +4538,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4307,7 +4577,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -4316,7 +4588,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4353,7 +4627,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4419,13 +4695,17 @@
       </region>
       <region name="South Africa">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4462,7 +4742,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4499,7 +4781,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -4508,7 +4792,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4545,7 +4831,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4611,13 +4899,17 @@
       </region>
       <region name="South America_Northern">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4654,7 +4946,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4691,7 +4985,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -4700,7 +4996,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4737,7 +5035,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4803,13 +5103,17 @@
       </region>
       <region name="South America_Southern">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4846,7 +5150,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4883,7 +5189,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -4892,7 +5200,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4929,7 +5239,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -4995,13 +5307,17 @@
       </region>
       <region name="South Asia">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5038,7 +5354,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5075,7 +5393,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -5084,7 +5404,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5121,7 +5443,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5187,13 +5511,17 @@
       </region>
       <region name="South Korea">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5230,7 +5558,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5267,7 +5597,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -5276,7 +5608,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5313,7 +5647,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5379,13 +5715,17 @@
       </region>
       <region name="Southeast Asia">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5422,7 +5762,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5459,7 +5801,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -5468,7 +5812,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5505,7 +5851,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5571,13 +5919,17 @@
       </region>
       <region name="Taiwan">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5614,7 +5966,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5651,7 +6005,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -5660,7 +6016,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5697,7 +6055,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5763,13 +6123,17 @@
       </region>
       <region name="Argentina">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5806,7 +6170,9 @@
                <share-weight year="2010">0</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5843,7 +6209,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -5852,7 +6220,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5889,7 +6259,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5955,13 +6327,17 @@
       </region>
       <region name="Colombia">
          <supplysector name="transportation">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-1.5</logit-exponent>
             <keyword final-energy="transportation"/>
             <subsector name="coal">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -5998,7 +6374,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="electricity">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -6035,7 +6413,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="hydrogen">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight year="2020">0.01</share-weight>
                <share-weight fillout="1" year="2050">0.05</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2050">
@@ -6044,7 +6424,9 @@
                <stub-technology name="hydrogen"/>
             </subsector>
             <subsector name="gas">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>
@@ -6081,7 +6463,9 @@
                <share-weight year="2010">1</share-weight>
             </subsector>
             <subsector name="refined liquids">
-               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2100">
                   <interpolation-function name="fixed"/>

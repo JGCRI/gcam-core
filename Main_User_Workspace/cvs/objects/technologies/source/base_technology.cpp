@@ -74,9 +74,12 @@ typedef vector<AGHG*>::const_iterator CGHGIterator;
 typedef vector<AGHG*>::iterator GHGIterator;
 
 //!< Default Constructor
-BaseTechnology::BaseTechnology(): doCalibration( false ),
-mShareWeight( 1.0 ), mNestedInputRoot( 0 ), mIsInitialYear( false ),
-mSequestrationDevice( 0 )
+BaseTechnology::BaseTechnology():
+  mShareWeight( 1.0 ),
+  mNestedInputRoot( 0 ),
+  mIsInitialYear( false ),
+  mSequestrationDevice( 0 ),
+  doCalibration( false )
 {
     const int maxper = scenario->getModeltime()->getmaxper();
     expenditures.resize( maxper );

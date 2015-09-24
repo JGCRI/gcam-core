@@ -73,15 +73,29 @@ L2321.tables <- list( L2321.Supplysector_cement = L2321.Supplysector_cement,
                       L2321.PriceElasticity_cement = L2321.PriceElasticity_cement,
                       L2321.IncomeElasticity_cement_gcam3 = L2321.IncomeElasticity_cement_gcam3 )
 
+# The logit functions should be processed before any other table that needs to read logit exponents
+L2321.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2321.Supplysector_", skip=4, include.equiv.table=T ),
+                   read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2321.SubsectorLogit_", skip=4, include.equiv.table=F ),
+                   L2321.tables )
+
 for( i in 1:length( L2321.tables ) ){
   if( !is.null( L2321.tables[[i]] ) ){
   	  objectname <- paste0( names( L2321.tables[i] ), "_USA" )
-	  object <- write_to_all_states( subset( L2321.tables[[i]], region == "USA" ), names( L2321.tables[[i]] ) )
+      if( substr( objectname, 7, 17 ) == "EQUIV_TABLE" || nrow( subset( L2321.tables[[i]], region == "USA" ) ) == 0 ) {
+          # Just use the object as is
+          object <- L2321.tables[[i]]
+      } else {
+          object <- write_to_all_states( subset( L2321.tables[[i]], region == "USA" ), names( L2321.tables[[i]] ) )
 # Note that the cement sector is not created in states where production is omitted from the census data. subset only the states where it exists
-	  object <- subset( object, region %in% cement_states )
+          object <- subset( object, region %in% cement_states )
+      }
 	  assign( objectname, object )
-	  IDstringendpoint <- if( grepl( "_", names( L2321.tables )[i] ) ) { regexpr( "_", names( L2321.tables )[i], fixed = T ) - 1
-	                       } else nchar( names( L2321.tables )[i] )
+      curr_table_name <- names( L2321.tables )[i]
+      IDstringendpoint <- if( grepl( "_", curr_table_name ) & !grepl( 'EQUIV_TABLE', curr_table_name ) & !grepl( '-logit$', curr_table_name ) ) {
+          regexpr( "_", curr_table_name, fixed = T ) - 1
+      } else {
+          nchar( curr_table_name )
+      }
 	  IDstring <- substr( names( L2321.tables )[i], 7, IDstringendpoint )
 	  write_mi_data( object, IDstring, "GCAMUSA_LEVEL2_DATA", objectname, "GCAMUSA_XML_BATCH", "batch_cement_USA.xml" )
 	  }

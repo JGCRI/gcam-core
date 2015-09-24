@@ -43,11 +43,25 @@ L124.heatoutratio_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L124.heat
 heat_regions <- A_regions$region[ A_regions$heat == 1]
 # 2a. Supplysector information
 printlog( "L224.Supplysector_heat: Supply sector information for district heat sectors" )
+L224.SectorLogitTables <- get_logit_fn_tables( A24.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
+for( curr_table in names( L224.SectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L224.SectorLogitTables[[ curr_table ]]$data <- subset( L224.SectorLogitTables[[ curr_table ]]$data, region %in% heat_regions )
+    }
+}
 L224.Supplysector_heat <- write_to_all_regions( A24.sector, names_Supplysector )
 L224.Supplysector_heat <- subset( L224.Supplysector_heat, region %in% heat_regions)
 
 # 2b. Subsector information
 printlog( "L224.SubsectorLogit_heat: Subsector logit exponents of district heat sectors" )
+L224.SubsectorLogitTables <- get_logit_fn_tables( A24.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
+for( curr_table in names( L224.SubsectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L224.SubsectorLogitTables[[ curr_table ]]$data <- subset( L224.SubsectorLogitTables[[ curr_table ]]$data, region %in% heat_regions )
+    }
+}
 L224.SubsectorLogit_heat <- write_to_all_regions( A24.subsector_logit, names_SubsectorLogit )
 L224.SubsectorLogit_heat <- subset( L224.SubsectorLogit_heat, region %in% heat_regions)
 
@@ -166,8 +180,18 @@ L224.StubTechCost_elec <- rbind( L224.StubTechCost_elec, L224.StubTechCost_elec_
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L224.SectorLogitTables) ) {
+write_mi_data( L224.SectorLogitTables[[ curr_table ]]$data, L224.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L224.", L224.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_heat.xml" )
+}
 write_mi_data( L224.Supplysector_heat, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L224.Supplysector_heat",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_heat.xml" ) 
+for( curr_table in names ( L224.SubsectorLogitTables ) ) {
+write_mi_data( L224.SubsectorLogitTables[[ curr_table ]]$data, L224.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L224.", L224.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_heat.xml" )
+}
 write_mi_data( L224.SubsectorLogit_heat, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L224.SubsectorLogit_heat", "ENERGY_XML_BATCH", "batch_heat.xml" ) 
 if( exists( "L224.SubsectorShrwt_heat" ) ){
 	write_mi_data( L224.SubsectorShrwt_heat, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L224.SubsectorShrwt_heat", "ENERGY_XML_BATCH", "batch_heat.xml" )

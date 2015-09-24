@@ -36,6 +36,7 @@ digits_trnUSA_default <- 1
 #Transportation subsectors and technologies
 names_tranSubsector <- c( "region", "supplysector", "tranSubsector" )
 names_tranSubsectorLogit <- c( names_tranSubsector, "logit.year.fillout", "logit.exponent" )
+names_tranSubsectorLogitType <- c( names_tranSubsector, "logit.type" )
 names_tranSubsectorShrwt <- c( names_tranSubsector, "year", "share.weight" )
 names_tranSubsectorShrwtFllt <- c( names_tranSubsector, "year.fillout", "share.weight" )
 names_tranSubsectorInterp <- c( names_tranSubsector, "apply.to","from.year", "to.year", "interpolation.function" )

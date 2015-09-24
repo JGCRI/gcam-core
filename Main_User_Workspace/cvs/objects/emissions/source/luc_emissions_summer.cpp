@@ -51,8 +51,8 @@ using namespace std;
 * \param aGHG GHG that is being summed.
 */
 LUCEmissionsSummer::LUCEmissionsSummer( const string& aGHGName ):
-mEmissionsByYear( scenario->getModeltime()->getStartYear(), scenario->getModeltime()->getEndYear() ),
-mGHGName( aGHGName )
+    mGHGName( aGHGName ),
+    mEmissionsByYear( scenario->getModeltime()->getStartYear(), scenario->getModeltime()->getEndYear() )
 {
 }
 

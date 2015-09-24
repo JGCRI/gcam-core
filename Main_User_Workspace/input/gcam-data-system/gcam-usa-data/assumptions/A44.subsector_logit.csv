@@ -1,1 +1,39 @@
-# Building default subsector logit exponents,,supplysector,subsector,logit.exponentresid heating,biomass,-6resid heating,coal,-6resid heating,gas,-6resid heating,electricity,-6resid heating,refined liquids,-6resid cooling,electricity,-6resid hot water,gas,-6resid hot water,electricity,-6resid hot water,refined liquids,-6resid lighting,electricity,-2resid appliances,gas,-6resid appliances,electricity,-6resid appliances,refined liquids,-6resid other appliances,electricity,-6resid other,gas,-6resid other,electricity,-6resid other,refined liquids,-6comm heating,biomass,-6comm heating,coal,-6comm heating,gas,-6comm heating,electricity,-6comm heating,refined liquids,-6comm cooling,gas,-6comm cooling,electricity,-6comm hot water,gas,-6comm hot water,electricity,-6comm hot water,refined liquids,-6comm ventilation,electricity,-6comm cooking,gas,-6comm cooking,electricity,-6comm lighting,electricity,-2comm refrigeration,electricity,-6comm office,electricity,-6comm other,gas,-6comm other,electricity,-6comm other,refined liquids,-6comm non-building,electricity,-6
+# Building default subsector logit exponents,,,
+supplysector,subsector,logit.exponent,logit.type
+resid heating,biomass,-6,
+resid heating,coal,-6,
+resid heating,gas,-6,
+resid heating,electricity,-6,
+resid heating,refined liquids,-6,
+resid cooling,electricity,-6,
+resid hot water,gas,-6,
+resid hot water,electricity,-6,
+resid hot water,refined liquids,-6,
+resid lighting,electricity,-2,
+resid appliances,gas,-6,
+resid appliances,electricity,-6,
+resid appliances,refined liquids,-6,
+resid other appliances,electricity,-6,
+resid other,gas,-6,
+resid other,electricity,-6,
+resid other,refined liquids,-6,
+comm heating,biomass,-6,
+comm heating,coal,-6,
+comm heating,gas,-6,
+comm heating,electricity,-6,
+comm heating,refined liquids,-6,
+comm cooling,gas,-6,
+comm cooling,electricity,-6,
+comm hot water,gas,-6,
+comm hot water,electricity,-6,
+comm hot water,refined liquids,-6,
+comm ventilation,electricity,-6,
+comm cooking,gas,-6,
+comm cooking,electricity,-6,
+comm lighting,electricity,-2,
+comm refrigeration,electricity,-6,
+comm office,electricity,-6,
+comm other,gas,-6,
+comm other,electricity,-6,
+comm other,refined liquids,-6,
+comm non-building,electricity,-6,

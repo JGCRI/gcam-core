@@ -535,5 +535,83 @@ translate_to_full_table <- function( data, var1, var1_values, var2, var2_values,
 	return( data_new )
 }
 
+# Gets a list of all valid logit types.
+# WARNING: this needs to be kept in sync with the model and headers
+get_logit_types <- function() {
+    return( c( "relative-cost-logit", "absolute-cost-logit" ) )
+}
 
+# -----------------------------------------------------------------------------
+# Generates a list of tables that sets the appropriate discrete choice function to use.
+# The data has to be partitioned into multiple tables, one for each logit.type.  The returned
+# list has fore each element containing two variables: 1) The header for the table 2) The data for the table
+# If requested an additional table will be added for an EQUIV_TABLE so that the tables that contain the logit
+# exponents do not themselves have to know what logit.type they are using and thus do not need to be
+# partitioned.
+# data: The data to partition by logit.type
+# names: The column names to use out of data
+# default.logit.type: The default logit function to use if the user did not specify (NA value)
+# base.header: The base header that is used for the logit type tables which will get pasted with
+#              what the logit.type for each table.
+# include.equiv.table: If the EQUIV_TABLE should be included as well.
+# write.all.regions: If each table should be written to all regions
+# ...: Any additional params to be passed to write.all.regions
+get_logit_fn_tables <- function( data, names, default.logit.type="relative-cost-logit", base.header,
+                                 include.equiv.table, write.all.regions, ... )
+{
+    # Set the logit type to the default logit if the user did not explicitly set one.
+    data[ is.na( data$logit.type ), "logit.type" ] <- default.logit.type
+    # Note it is safer to create tables for all valid logit types rather than just the
+    # ones included in unique( data$logit.type ) even if it results in an empty table
+    # since if we switch all from one type to the other and do not clean out the level
+    # 2 CSV and batch file we will be left with both defined for all rows which is bad.
+    all_logit_types <- get_logit_types()
+
+    # Create the EQUIV_TABLE table which allows the Model Interface to be ambiguous about what the
+    # actual logit type is when setting the logit exponent.
+    tables <- list()
+    if( include.equiv.table ) {
+        tables[[ "EQUIV_TABLE" ]]$header <- "EQUIV_TABLE"
+        tables[[ "EQUIV_TABLE" ]]$data <- data.frame( group.name=c("LogitType"), tag1=c("dummy-logit-tag"),
+            tag2=c("relative-cost-logit"), tag3=c("absolute-cost-logit"), stringsAsFactors=FALSE )
+    }
+
+    # Loop through each of the logit types that were found in data and create a table for it
+    # using the appropriate header name and writing to all regions if requested.
+    for( curr_logit_type in all_logit_types ) {
+        tables[[ curr_logit_type ]]$header <- paste0( base.header, curr_logit_type )
+        curr.data <- data[ data$logit.type == curr_logit_type, ]
+        if( write.all.regions ) {
+            if( nrow( curr.data ) > 0 ) {
+                curr.data <- write_to_all_regions( curr.data, names, ... )
+            } else {
+                curr.data <- cbind( curr.data, data.frame( region=character(0) ) )
+            }
+        }
+        tables[[ curr_logit_type ]]$data <- curr.data[, names ]
+    }
+
+    return(tables)
+}
+
+# Read all logit function type tables given a base table name and return them in a list
+# where the full table name -> the read data.
+# domain: The data domain to read the table from
+# table.name: The base table name to generate all logit type table names
+# skip: Whether to skip any lines (such as head information) when reading the table
+# include.equiv.table: Whether to include the EQUIV_TABLE in the list of results
+read_logit_fn_tables <- function( domain, table.name, skip=0, include.equiv.table=F ) {
+    all_logit_types <- get_logit_types()
+    all_table_names <- paste0( table.name, all_logit_types )
+    if( include.equiv.table ) {
+        # need to include the appropraite processing code number to append
+        proc_number <- regmatches( table.name, regexpr( '^L[[:digit:]]+.', table.name ) )
+        all_table_names <- c( paste0( proc_number, "EQUIV_TABLE" ), all_table_names )
+    }
+    ret_tables <- list()
+    for( curr_table_name in all_table_names ) {
+        ret_tables[[ curr_table_name ]] <- readdata( domain, curr_table_name, skip=skip )
+    }
+    return( ret_tables )
+}
 

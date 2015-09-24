@@ -87,8 +87,7 @@ const string& AgSupplySubsector::getXMLNameStatic() {
 
 // subsector shares not used for AgSupplySectors, so overridden to return 1
 
-double AgSupplySubsector::calcShare( const int aPeriod,
-                                       const GDP* aGDP ) const
+double AgSupplySubsector::calcShare( const IDiscreteChoice* aChoiceFn, const GDP* aGDP, const int aPeriod ) const
 {
     return 1;
 }

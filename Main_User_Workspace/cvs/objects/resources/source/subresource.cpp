@@ -69,12 +69,12 @@ const Value VALUE_DEFAULT = 0.0;
 //! Default constructor.
 SubResource::SubResource():
 //mPriceAdder( scenario->getModeltime()->getmaxper() , 0.0 ),
-mEffectivePrice( scenario->getModeltime()->getmaxper() , -1.0 ),
-mCalProduction( scenario->getModeltime()->getmaxper() , -1.0 ),
-mCumulativeTechChange( scenario->getModeltime()->getmaxper() , 1.0 ),
-mAnnualProd( scenario->getModeltime()->getmaxper() , 0.0 ),
 mAvailable( scenario->getModeltime()->getmaxper() , 0.0 ),
-mCumulProd( scenario->getModeltime()->getmaxper() , 0.0 )
+mAnnualProd( scenario->getModeltime()->getmaxper() , 0.0 ),
+mCumulProd( scenario->getModeltime()->getmaxper() , 0.0 ),
+mCumulativeTechChange( scenario->getModeltime()->getmaxper() , 1.0 ),
+mEffectivePrice( scenario->getModeltime()->getmaxper() , -1.0 ),
+mCalProduction( scenario->getModeltime()->getmaxper() , -1.0 )
 {
 }
 
@@ -370,7 +370,7 @@ void SubResource::cumulsupply( double aPrice, int aPeriod )
         if ( mEffectivePrice[ aPeriod ] <= mGrade[0]->getCost( aPeriod )) {
             mCumulProd[ aPeriod ] = mCumulProd[ aPeriod - 1 ];
         }
-
+        
         // Case 2
         // if market price is in between cost of first and last grade, then calculate 
         // cumulative production in between those grades
@@ -391,7 +391,7 @@ void SubResource::cumulsupply( double aPrice, int aPeriod )
                 / ( mGrade[iU]->getCost( aPeriod ) - mGrade[iL]->getCost( aPeriod ) );
             mCumulProd[ aPeriod ] -= slope * ( mGrade[iU]->getCost( aPeriod ) - mEffectivePrice[ aPeriod ] );
         }
-
+        
         // Case 3
         // if market price greater than the cost of the last grade, then
         // cumulative production is the amount in all grades
@@ -564,4 +564,88 @@ double SubResource::getVariance() const {
 */
 double SubResource::getAverageCapacityFactor() const {
     return 0.0;
+}
+
+/*!
+ * \brief Calculate the highest price for which a price change produces a nonzero supply response 
+ * \details This is simply the cost of the highest grade for the
+ *          subresource, adjusted by the price adder. 
+ * \param aPeriod The current model period.
+ * \author Robert Link
+ */
+double SubResource::getHighestPrice( const int aPeriod ) const
+{
+    if( mGrade.size() > 0 ) {
+        double cost = mGrade[ mGrade.size() - 1 ]->getCost( aPeriod );
+        return cost - mPriceAdder[ aPeriod ];
+    }
+    else {
+        // We may have subresources with no grades in the case where we are simply
+        // attempting to add a region to a global market and that region does not
+        // have any supply potential.
+        // In that case we return some small number and let another region set the
+        // high price for the market.
+        return -util::getLargeNumber();
+    }
+}
+
+/*!
+ * \brief Calculate the lowest price for which a price change produces a nonzero supply response 
+ * \details This one is slightly more complicated than the upper
+ *          bound.  For a depletable resource we have to back out the
+ *          production that has occurred in previous time periods so
+ *          that we produce the minimum price that will produce a
+ *          change in the annual supply.
+ * \param aPeriod The current model period.
+ */
+double SubResource::getLowestPrice( const int aPeriod ) const
+{
+    if(mGrade.size() == 0) {
+        // We may have subresources with no grades in the case where we are simply
+        // attempting to add a region to a global market and that region does not
+        // have any supply potential.
+        // In that case we return some large number and let another region set the
+        // low price for the market.
+        return util::getLargeNumber();
+    }
+
+    double depleted = aPeriod != 0 ? mCumulProd[ aPeriod - 1 ] : 0;
+
+
+    // figure out what's the lowest grade that hasn't been fully
+    // depleted, and how much has been used from that grade.
+    unsigned i;
+    double avail = 0.0;
+    for( i=0; i < mGrade.size(); ++i ) {
+        avail = mGrade[i]->getAvail();
+        if( avail > 0 && avail >= depleted ) {
+            // this grade still has some left in it
+            break;
+        }
+        else {
+            depleted -= avail;
+        }
+    }
+
+    // check to see if we're on the highest grade.  This shouldn't
+    // happen because the highest grade should be a dummy with
+    // availability zero, but you never know.
+    if( i >= mGrade.size() - 1 ) {
+        // the resource is wholly depleted (or the dummy is missing,
+        // which will cause similar problems).  That means there isn't
+        // any price where we will have a real supply response.
+        // Arbitrarily pick 95% of the last grade cost.
+        double value = 0.95 * mGrade[ mGrade.size() - 1 ]->getCost( aPeriod );
+        return value;
+    }
+    else {
+        // reverse-interpolate the price at which annual supply will
+        // be > 0.
+        double priceLow = mGrade[ i ]->getCost( aPeriod );
+        double priceHigh = mGrade[ i + 1 ]->getCost( aPeriod );
+        double deltaPrice = priceHigh - priceLow;
+        double value = priceLow + deltaPrice * depleted / avail - mPriceAdder[aPeriod];
+
+        return value;
+    }
 }

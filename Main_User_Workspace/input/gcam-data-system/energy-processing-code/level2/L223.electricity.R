@@ -60,6 +60,8 @@ L102.gdp_mil90usd_GCAM3_ctry_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90
 # 2. Build tables for CSVs
 # 2a. Supplysector information
 printlog( "L223.Supplysector_elec: Supply sector information for electricity sector" )
+L223.SectorLogitTables <- get_logit_fn_tables( A23.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L223.Supplysector_elec <- write_to_all_regions( A23.sector, names_Supplysector )
 
 printlog( "L223.ElecReserve: Electricity reserve margin and average grid capacity factor" )
@@ -67,6 +69,8 @@ L223.ElecReserve <- write_to_all_regions( A23.sector, names_ElecReserve )
 
 # 2b. Subsector information
 printlog( "L223.SubsectorLogit_elec: Subsector logit exponents of electricity sector" )
+L223.SubsectorLogitTables <- get_logit_fn_tables( A23.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L223.SubsectorLogit_elec <- write_to_all_regions( A23.subsector_logit, names_SubsectorLogit )
 
 printlog( "L223.SubsectorShrwt_elec and L223.SubsectorShrwtFllt_elec: Subsector shareweights of electricity sector" )
@@ -460,9 +464,19 @@ L223.StubTechCapFactor_elec <- rbind( L223.StubTechCapFactor_elec,
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L223.SectorLogitTables) ) {
+write_mi_data( L223.SectorLogitTables[[ curr_table ]]$data, L223.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L223.", L223.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_electricity.xml" )
+}
 write_mi_data( L223.Supplysector_elec, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L223.Supplysector_elec",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_electricity.xml" ) 
 write_mi_data( L223.ElecReserve, "ElecReserve", "ENERGY_LEVEL2_DATA", "L223.ElecReserve", "ENERGY_XML_BATCH", "batch_electricity.xml" ) 
+for( curr_table in names ( L223.SubsectorLogitTables ) ) {
+write_mi_data( L223.SubsectorLogitTables[[ curr_table ]]$data, L223.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L223.", L223.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_electricity.xml" )
+}
 write_mi_data( L223.SubsectorLogit_elec, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L223.SubsectorLogit_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" ) 
 if( exists( "L223.SubsectorShrwt_elec" ) ){
 	write_mi_data( L223.SubsectorShrwt_elec, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L223.SubsectorShrwt_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )

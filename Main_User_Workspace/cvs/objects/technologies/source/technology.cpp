@@ -67,6 +67,8 @@
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
 #include "containers/include/info_factory.h"
+#include "sectors/include/subsector.h"
+#include "functions/include/idiscrete_choice.hpp"
 
 #include "technologies/include/ioutput.h"
 #include "technologies/include/output_factory.h"
@@ -820,27 +822,30 @@ double Technology::getTotalGHGCost( const string& aRegionName,
 }
 
 /*!
-* \brief Calculate unnormalized technology unnormalized shares.
-* \author Sonny Kim, Steve Smith
-* \param aRegionName Region name.
-* \param aSectorName Sector name, also the name of the product.
-* \param aGDP Regional GDP container.
-* \param aLogitExp The logit exponent for this technology nest.
-* \param aPeriod Model period.
-* \return Log of the numerator of the technology share.
-*/ 
-double Technology::calcShare( const string& aRegionName,
-                              const string& aSectorName,
+ * \brief Calculate unnormalized technology shares. 
+ * \details The discrete choice function has been moved to the
+ *            DiscreteChoice class.  Different subsectors may
+ *            implement it differently, depending on how we are trying
+ *            to model the subsector.  This function calls the
+ *            discrete choice function, adds the adjustment for fuel
+ *            preference elasticity, and returns the result. 
+ * \author Sonny Kim, Steve Smith
+ * \param aChoiceFn The discrete choice function from the subsector.
+ * \param aGDP Regional GDP container.
+ * \param aPeriod Model period.
+ * \return Log of the numerator of the technology share.
+ * \sa Subsector::calcShare()
+ */ 
+double Technology::calcShare( const IDiscreteChoice* aChoiceFn,
                               const GDP* aGDP,
-                              const double aLogitExp,
-                              const int aPeriod ) const
+                              int aPeriod ) const
 {
     const double mininf = -numeric_limits<double>::infinity();
+
     // A Technology which is not operating does not have a share.
     if( !mProductionState[ aPeriod ] || !mProductionState[ aPeriod ]->isOperating() ){
         return mininf;
-    }
-
+    } 
     // Vintages and fixed output technologies should never have a share.
     if( !mProductionState[ aPeriod ]->isNewInvestment() ||
         mFixedOutput != IProductionState::fixedOutputDefault() )
@@ -848,18 +853,9 @@ double Technology::calcShare( const string& aRegionName,
         return mininf;
     }
 
-    // Calculate the new vintage share.
-    double cost = getCost( aPeriod );
-    
-    // We want to allow negative costs for biomass
-    if( cost < 0.0 && ( aSectorName == "regional biomass"  || aSectorName == "delivered biomass" ) ) {
-        // This assumes that there is only one technology in regional biomass
-        // so we give a share of 1 thus return log( 1 ) which is zero.
-        return 0.0;
-    }
-    
-    double logsharewt = mShareWeight > 0.0 ? log( mShareWeight ) : mininf;
-    double logshare = cost > 0.0 ? logsharewt + aLogitExp * log( cost ) : mininf;
+    /* Calculation for regular cases */
+    double cost = getCost( aPeriod ); 
+    double logshare = aChoiceFn->calcUnnormalizedShare( mShareWeight, cost, aPeriod );
 
     double fuelPrefElasticity = calcFuelPrefElasticity( aPeriod );
     if( fuelPrefElasticity != 0 ) {
@@ -1390,27 +1386,27 @@ void Technology::calcCost( const string& aRegionName,
                            const string& aSectorName,
                            const int aPeriod )
 {
-    // If technology is not operating set cost zero.
+    // If technology is not operating set cost to NaN.  The value
+    // should never be used; therefore, if the NaNs escape into the
+    // rest of the code, you know instantly that you have a problem.
     if( !mProductionState[ aPeriod ]->isOperating() )
     {
-        mCosts[ aPeriod ] = 0;
+        mCosts[ aPeriod ] = numeric_limits<double>::signaling_NaN();
     }
     else {
-        const double techCost = getTotalInputCost( aRegionName, aSectorName, aPeriod )
-                                * mPMultiplier -
-                                calcSecondaryValue( aRegionName, aPeriod );
+        // Note we now allow costs in any sector to be <= 0.  If,
+        // however, you are using the relative cost logit, costs will be
+        // clamped on the low end for market share purposes (not for
+        // other purposes, though).
+        
+        double cost = getTotalInputCost( aRegionName, aSectorName, aPeriod )
+            * mPMultiplier -
+            calcSecondaryValue( aRegionName, aPeriod );
 
-        // We want to allow regional and delivered biomass prices to be negative
-        if ( ( aSectorName == "regional biomass" || aSectorName == "delivered biomass" ) ){
-            mCosts[ aPeriod ] = techCost;
-        }
-        else {
-            // techcost can drift below zero in disequilibrium.
-            mCosts[ aPeriod ] = max( techCost, 0.001 );
-        }
-    }
-
-    assert( util::isValidNumber( mCosts[ aPeriod ] ) );
+        mCosts[ aPeriod ] = cost;
+        
+        assert( util::isValidNumber( mCosts[ aPeriod ] ) );
+    } 
 }
 
 /*!
@@ -1597,7 +1593,8 @@ bool Technology::isAllCalibrated( const int aPeriod,
     if( relativeDiff > aCalAccuracy && ( fabs( output - calOutput ) ) > aCalAccuracy * sectorOutput ) {
         // Print warning then return false.
         if( aPrintWarnings ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            double sectorShare = sectorOutput > 0.0 ? calOutput / sectorOutput : numeric_limits<double>::quiet_NaN();
+            ILogger& mainLog = ILogger::getLogger( "main_log" ); 
             mainLog.setLevel( ILogger::WARNING );
             mainLog.setf(ios_base::left,ios_base::adjustfield); // left alignment
             mainLog << "Calibration failed by ";
@@ -1612,7 +1609,7 @@ bool Technology::isAllCalibrated( const int aPeriod,
             mainLog << " Calibration: "; mainLog.width(8); mainLog << calOutput;
             mainLog << " relativeDiff: "; mainLog.width(8); mainLog << relativeDiff;
             mainLog << " SectorOutput: "; mainLog.width(8); mainLog << sectorOutput;
-            mainLog << " SectorShare: "; mainLog.width(8); mainLog << calOutput/sectorOutput;
+            mainLog << " SectorShare: "; mainLog.width(8); mainLog << sectorShare;
             mainLog << endl;
             mainLog.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
         }

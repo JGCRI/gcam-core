@@ -87,6 +87,7 @@ base_CDD_USA <- 1215
 
 #logit exponent regulating competition between different grid regions in USA electricity market (single market approach only)
 grid_region_logit <- -6
+grid_region_logit_type <- "relative-cost-logit"
 
 #Resources that will be modeled at the state level
 state_renewable_resources <- c( "distributed_solar", "geothermal", "onshore wind resource" )

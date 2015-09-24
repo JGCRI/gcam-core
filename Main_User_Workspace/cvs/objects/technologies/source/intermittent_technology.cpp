@@ -336,6 +336,13 @@ void IntermittentTechnology::initCalc( const string& aRegionName,
     if ( mBackupCalculator.get() ) {
         mBackupCalculator->initCalc( mIntermittTechInfo.get() );
     }
+
+    if( mBackupCalculator.get() ) {
+        // The renewable trial market is a share calculation so we can give the
+        // solver some additional hints that the range should be between 0 and 1.
+        SectorUtils::setSupplyBehaviorBounds( SectorUtils::getTrialMarketName( mTrialMarketName ),
+                                              aRegionName, 0, 1, aPeriod );
+    }
     initializeInputLocations( aRegionName, aSectorName, aPeriod );
 }
 

@@ -59,9 +59,9 @@ using namespace std;
 LogNewtonRaphsonSaveDeriv::LogNewtonRaphsonSaveDeriv( Marketplace* aMarketplaceIn, World* aWorld,
                                                       CalcCounter* aCalcCounter ):
 LogNewtonRaphson( aMarketplaceIn, aWorld, aCalcCounter ),
-mSavedMatrixSize( 0 ),
+mDerivativesCalculated( false ),
 mPermSave( 0 ),
-mDerivativesCalculated( false )
+mSavedMatrixSize( 0 )
 {
 }
 

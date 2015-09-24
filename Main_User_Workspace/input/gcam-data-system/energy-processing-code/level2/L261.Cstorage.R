@@ -28,6 +28,7 @@ sourcedata( "ENERGY_ASSUMPTIONS", "A_rsrc_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 A61.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A61.rsrc_info")
 A61.sector <- readdata( "ENERGY_ASSUMPTIONS", "A61.sector")
+A61.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A61.subsector_logit")
 A61.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A61.subsector_shrwt")
 A61.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_coef")
 A61.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A61.globaltech_cost")
@@ -84,14 +85,21 @@ L261.DepRsrcCurves_C_lowest$extractioncost <- L261.DepRsrcCurves_C_lowest$extrac
 
 #2c. Carbon storage sector information
 printlog( "L261.Supplysector_C: Carbon storage supplysector information" )
+L261.SectorLogitTables <- get_logit_fn_tables( A61.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L261.Supplysector_C <- write_to_all_regions( A61.sector, names_Supplysector )
 
 # 2d. Subsector information
-printlog( "L261.SubsectorShrwtFllt_C: Subsector shareweights of energy transformation sectors" )
+printlog( "L261.SubsectorLogit_C: Subsector logit exponents of carbon stroage sector" )
+L261.SubsectorLogitTables <- get_logit_fn_tables( A61.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
+L261.SubsectorLogit_C <- write_to_all_regions( A61.subsector_logit, names_SubsectorLogit )
+
+printlog( "L261.SubsectorShrwtFllt_C: Subsector shareweights of carbon storage sectors" )
 L261.SubsectorShrwtFllt_C <- write_to_all_regions( A61.subsector_shrwt, names_SubsectorShrwtFllt )
 
 #2e. Technology information
-printlog( "L261.StubTech_C: Identification of stub technologies of energy transformation" )
+printlog( "L261.StubTech_C: Identification of stub technologies of carbon storage" )
 #Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
 L261.StubTech_C <- write_to_all_regions( A61.globaltech_shrwt, names_Tech )
 names( L261.StubTech_C ) <- names_StubTech
@@ -133,7 +141,18 @@ L261.GlobalTechShrwt_C_nooffshore$share.weight <- 0
 write_mi_data( L261.DepRsrc, IDstring="DepRsrc", domain="ENERGY_LEVEL2_DATA", fn="L261.DepRsrc", batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_Cstorage.xml" ) 
 write_mi_data( L261.UnlimitRsrc, "UnlimitRsrc", "ENERGY_LEVEL2_DATA", "L261.UnlimitRsrc", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) 
 write_mi_data( L261.DepRsrcCurves_C, "DepRsrcCurves", "ENERGY_LEVEL2_DATA", "L261.DepRsrcCurves_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) 
+for( curr_table in names ( L261.SectorLogitTables) ) {
+write_mi_data( L261.SectorLogitTables[[ curr_table ]]$data, L261.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L261.", L261.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_Cstorage.xml" )
+}
 write_mi_data( L261.Supplysector_C, "Supplysector", "ENERGY_LEVEL2_DATA", "L261.Supplysector_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) 
+for( curr_table in names ( L261.SubsectorLogitTables ) ) {
+write_mi_data( L261.SubsectorLogitTables[[ curr_table ]]$data, L261.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L261.", L261.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_Cstorage.xml" )
+}
+write_mi_data( L261.SubsectorLogit_C, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L261.SubsectorLogit_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) 
 write_mi_data( L261.SubsectorShrwtFllt_C, "SubsectorShrwtFllt", "ENERGY_LEVEL2_DATA", "L261.SubsectorShrwtFllt_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) 
 write_mi_data( L261.StubTech_C, "StubTech", "ENERGY_LEVEL2_DATA", "L261.StubTech_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) 
 write_mi_data( L261.GlobalTechCoef_C, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "L261.GlobalTechCoef_C", "ENERGY_XML_BATCH", "batch_Cstorage.xml" ) 

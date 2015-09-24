@@ -103,10 +103,13 @@ DeleteUnlimitRsrc, world/+{name}region, region/+{name; delete=1}unlimited-resour
 
 
 #####, SUPPLYSECTOR
-
 DeleteSupplysector, world/+{name}region, region/+{name; delete=1}supplysector, scenario, scenario/world
 
-Supplysector, world/+{name}region, region/+{name}supplysector, supplysector/+output-unit, supplysector/+input-unit, supplysector/+price-unit, supplysector/+{year;fillout=1}logit-exponent, supplysector/+logit-exponent, scenario, scenario/world
+Supplysector, world/+{name}region, region/+{name}supplysector, supplysector/+output-unit, supplysector/+input-unit, supplysector/+price-unit, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, supplysector/dummy-logit-tag, scenario, scenario/world
+
+Supplysector_relative-cost-logit, world/+{name}region, region/+{name}supplysector, supplysector/relative-cost-logit, scenario/world, scenario
+
+Supplysector_absolute-cost-logit, world/+{name}region, region/+{name}supplysector, supplysector/absolute-cost-logit, scenario/world, scenario
 
 SupplysectorPrice, world/+{name}region, region/+{name}supplysector, supplysector/+{year}price, supplysector/+price, scenario, scenario/world
 
@@ -119,9 +122,13 @@ DeleteSubsector, world/+{name}region, region/+{name}supplysector, supplysector/+
 
 Subsector, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, scenario, scenario/world
 
-SubsectorAll, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year;fillout=1}logit-exponent, subsector/+logit-exponent, subsector/+{year;fillout=1}share-weight, subsector/+share-weight, subsector/+{apply-to}interpolation-rule, subsector/+{from-year}interpolation-rule, subsector/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario/world, scenario
+SubsectorAll, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, subsector/+{year;fillout=1}share-weight, subsector/+share-weight, subsector/+{apply-to}interpolation-rule, subsector/+{from-year}interpolation-rule, subsector/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, subsector/dummy-logit-tag, scenario/world, scenario
 
-SubsectorLogit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year;fillout=1}logit-exponent, subsector/+logit-exponent, scenario/world, scenario
+SubsectorLogit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, subsector/dummy-logit-tag, scenario/world, scenario
+
+SubsectorLogit_relative-cost-logit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/relative-cost-logit, scenario/world, scenario
+
+SubsectorLogit_absolute-cost-logit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/absolute-cost-logit, scenario/world, scenario
 
 SubsectorShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year}share-weight, subsector/+share-weight, scenario/world, scenario
 
@@ -136,8 +143,11 @@ FuelPrefElast, world/+{name}region, region/+{name}supplysector, supplysector/+{n
 
 #####, TRANSPORTATION SUBSECTOR (MODE)
 
+tranSubsectorLogit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}tranSubsector, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, tranSubsector/dummy-logit-tag, scenario/world, scenario
 
-tranSubsectorLogit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}tranSubsector, tranSubsector/+{year;fillout=1}logit-exponent, tranSubsector/+logit-exponent, scenario/world, scenario
+tranSubsector_relative-cost-logit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}tranSubsector, tranSubsector/relative-cost-logit, scenario/world, scenario
+
+tranSubsector_absolute-cost-logit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}tranSubsector, tranSubsector/absolute-cost-logit, scenario/world, scenario
 
 tranSubsectorShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}tranSubsector, tranSubsector/+{year}share-weight, tranSubsector/+share-weight, scenario/world, scenario
 
@@ -377,11 +387,19 @@ DeleteGenericService, world/+{name}region, region/+{name}gcam-consumer, gcam-con
 #####, AGRICULTURE
 
 
-AgSupplySector, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+output-unit, AgSupplySector/+input-unit, AgSupplySector/+price-unit, AgSupplySector/+calPrice, AgSupplySector/+market, AgSupplySector/+{year;fillout=1}logit-exponent, AgSupplySector/+logit-exponent, scenario, scenario/world
+AgSupplySector, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+output-unit, AgSupplySector/+input-unit, AgSupplySector/+price-unit, AgSupplySector/+calPrice, AgSupplySector/+market, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, AgSupplySector/dummy-logit-tag, scenario, scenario/world
 
-AgSupplySubsector, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, scenario/world, scenario
+AgSupplySector_relative-cost-logit, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/relative-cost-logit, scenario/world, scenario
 
-AgSupplySubsectorAll, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{year;fillout=1}logit-exponent, AgSupplySubsector/+logit-exponent, AgSupplySubsector/+{year;fillout=1}share-weight, AgSupplySubsector/+share-weight, scenario/world, scenario
+AgSupplySector_absolute-cost-logit, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/absolute-cost-logit, scenario/world, scenario
+
+AgSupplySubsector, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, AgSupplySubsector/dummy-logit-tag, scenario/world, scenario
+
+AgSupplySubsectorAll, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, AgSupplySubsector/+{year;fillout=1}share-weight, AgSupplySubsector/+share-weight, AgSupplySubsector/dummy-logit-tag, scenario/world, scenario
+
+AgSupplySubsector_relative-cost-logit, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/relative-cost-logit, scenario/world, scenario
+
+AgSupplySubsector_absolute-cost-logit, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/absolute-cost-logit, scenario/world, scenario
 
 AgTechInterp, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}AgProductionTechnology, AgProductionTechnology/+{apply-to}interpolation-rule, AgProductionTechnology/+{from-year}interpolation-rule, AgProductionTechnology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario/world, scenario
 
@@ -482,8 +500,6 @@ InputEmissionsUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupply
 InputEmFactUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/input-driver, scenario, scenario/world
 
 ItemNameUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+itemName, period/{name=CO2}CO2, scenario, scenario/world
-
-SectorUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+input-unit, AgSupplySector/+market, scenario, scenario/world
 
 OutputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/output-driver, scenario, scenario/world
 

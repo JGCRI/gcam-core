@@ -69,6 +69,8 @@
 #include "reporting/include/sector_report.h"
 #include "sectors/include/tran_subsector.h"
 #include "sectors/include/sector_utils.h"
+#include "functions/include/idiscrete_choice.hpp"
+#include "functions/include/discrete_choice_factory.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -84,8 +86,7 @@ extern Scenario* scenario;
 */
 Sector::Sector( const string& aRegionName )
     : regionName( aRegionName ),
-      mObjectMetaInfo(),
-      mSubsectorLogitExp( getDefaultSubsectorLogitExp() )
+      mObjectMetaInfo()
 {
     mSectorType = getDefaultSectorType();
     mBaseOutput = 0;
@@ -131,15 +132,6 @@ const string& Sector::getDefaultSectorType() {
     return DEFAULT_SECTOR_TYPE;
 }
 
-/*!
- * \brief Returns the default logit exponent for the subsector
- *        competition.
- * \return Default logit exponent.
- */
-double Sector::getDefaultSubsectorLogitExp() {
-    return -3;
-}
-
 /*! \brief Return the type of the sector.
 * \author Steve Smith
 * \return The sector type.
@@ -169,7 +161,7 @@ void Sector::XMLParse( const DOMNode* node ){
         mainLog << "The perCapitaBased attribute is no longer supported and will not be read."
             << " Convert the attribute to an element." << endl;
     }
-
+    
     // get all child nodes.
     DOMNodeList* nodeList = node->getChildNodes();
     const Modeltime* modeltime = scenario->getModeltime();
@@ -237,15 +229,16 @@ void Sector::XMLParse( const DOMNode* node ){
                     XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
             }
         }
-        else if( nodeName == "logit-exponent" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mSubsectorLogitExp, modeltime );
+        else if( DiscreteChoiceFactory::isOfType( nodeName ) ) {
+            parseSingleNode( curr, mDiscreteChoiceModel, DiscreteChoiceFactory::create( nodeName ).release() );
         }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
+                    << getXMLName() << "." << endl;
         }
     }
 }
@@ -268,7 +261,7 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    XMLWriteVector( mSubsectorLogitExp, "logit-exponent", aOut, aTabs, modeltime, getDefaultSubsectorLogitExp() );
+    mDiscreteChoiceModel->toInputXML( aOut, aTabs );
     XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
 
     XMLWriteElementCheckDefault( mBaseOutput, "output", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
@@ -318,7 +311,7 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    XMLWriteElement( mSubsectorLogitExp[ aPeriod ], "logit-exponent", aOut, aTabs );
+    mDiscreteChoiceModel->toDebugXML( aPeriod, aOut, aTabs );
 
     // Write out the data in the vectors for the current period.
     XMLWriteElement( getOutput( aPeriod ), "output", aOut, aTabs );
@@ -363,6 +356,13 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 */
 void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAllocator )
 {
+    if( !mDiscreteChoiceModel.get() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "No Discrete Choice function set in " << regionName << ", " << name << endl;
+        abort();
+    }
+
     // Allocate the sector info.
     // Do not reset if mSectorInfo contains information from derived sector classes.
     // This assumes that info from derived sector contains region info (parent).
@@ -457,7 +457,7 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
     // Calculate unnormalized shares.
     vector<double> subsecShares( subsec.size() );
     for( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsecShares[ i ] = subsec[ i ]->calcShare( aPeriod, aGDP, mSubsectorLogitExp[ aPeriod ] );
+        subsecShares[ i ] = subsec[ i ]->calcShare( mDiscreteChoiceModel.get(), aGDP, aPeriod );
     }
 
     // Normalize the shares.  After normalization they will be true shares, not log(shares).
@@ -507,18 +507,10 @@ double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         if( subsecShares[ i ] > util::getSmallNumber() ){
             sumSubsecShares += subsecShares[ i ];
             double currPrice = subsec[ i ]->getPrice( aGDP, aPeriod );
-            // Check for negative prices returned by fixed investment.
-            if( currPrice >= util::getSmallNumber() ){
-                sectorPrice += subsecShares[ i ] * currPrice;
-            }
-            // We want to allow regional biomass to have a negative price. These are
-            // not solved markets.
-            else if ( ( name == "regional biomass" || name == "delivered biomass" ) ) {
-                sectorPrice += subsecShares[ i ] * currPrice;
-            }
+            sectorPrice += subsecShares[ i ] * currPrice;
         }
     }
-
+    
     return sectorPrice;
 }
 

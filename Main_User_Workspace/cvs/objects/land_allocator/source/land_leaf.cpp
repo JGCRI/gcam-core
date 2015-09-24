@@ -70,16 +70,20 @@ extern Scenario* scenario;
  * \param aName Product name.
 */
 LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName ):
-ALandAllocatorItem( aParent, eLeaf ),
-mLandUseHistory( 0 ),
-mCarbonPriceIncreaseRate( 0.0 ),
-mLandAllocation( 0.0 ),
-mMinAboveGroundCDensity( 0.0 ),
-mMinBelowGroundCDensity( 0.0 )
+    ALandAllocatorItem( aParent, eLeaf ),
+    mLandAllocation( 0.0 ),
+    mCarbonContentCalc(0),
+    mMinAboveGroundCDensity( 0.0 ),
+    mMinBelowGroundCDensity( 0.0 ),
+    mCarbonPriceIncreaseRate( 0.0 ),
+    mLandUseHistory(0),
+    mReadinLandAllocation(0.0),
+    mLastCalcCO2Value(0.0),
+    mLastCalcExpansionValue(0.0)
 {
     // Can't use initializer because mName is a member of ALandAllocatorItem,
     // not LandLeaf.
-    this->mName = aName;
+    mName = aName;
 }
 
 //! Destructor

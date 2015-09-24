@@ -54,17 +54,18 @@
 using namespace std;
 using namespace xercesc;
 
+
 const Modeltime* Modeltime::getInstance() {
     const static Modeltime modeltime;
     return &modeltime;
 }
 
 //! Default constructor.
-Modeltime::Modeltime()
-:mIsInitialized( false ),
+Modeltime::Modeltime() :
 mStartYear( -1 ),
 mEndYear( -1 ),
-mFinalCalibrationYear( 2010 )
+mFinalCalibrationYear( 2010 ),
+mIsInitialized( false )
 {
 }
 

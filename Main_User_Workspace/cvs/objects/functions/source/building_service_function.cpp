@@ -50,6 +50,7 @@
 #include "functions/include/building_node_input.h"
 #include "functions/include/building_service_input.h"
 #include "functions/include/satiation_demand_function.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 
@@ -73,7 +74,8 @@ double BuildingServiceFunction::calcCoefficient( InputSet& input, double consump
             BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
             double servicePerFloorspace = buildingServiceInput->getPhysicalDemand( period ) / floorSpace;
-            buildingServiceInput->getSatiationDemandFunction()->calibrateSatiationImpedance( servicePerFloorspace, income / buildingServiceInput->getPricePaid( regionName, period ), period );
+            double servicePrice = max( buildingServiceInput->getPricePaid( regionName, period ), SectorUtils::getDemandPriceThreshold() );
+            buildingServiceInput->getSatiationDemandFunction()->calibrateSatiationImpedance( servicePerFloorspace, income / servicePrice, period );
             double serviceDensity = calcServiceDensity( buildingServiceInput, income, regionName, period );
             coefficient =  servicePerFloorspace / ( serviceDensity * thermalLoad );
         }
@@ -149,6 +151,14 @@ double BuildingServiceFunction::calcServiceDensity( BuildingServiceInput* aBuild
                                                     const string& aRegionName,
                                                     const int aPeriod ) const
 {
-    const double serviceAffordability = aIncome / aBuildingServiceInput->getPricePaid( aRegionName, aPeriod );
-    return aBuildingServiceInput->getSatiationDemandFunction()->calcDemand( serviceAffordability );
+    const double servicePrice = aBuildingServiceInput->getPricePaid( aRegionName, aPeriod );
+    const double cappedPrice = max( servicePrice, SectorUtils::getDemandPriceThreshold() );
+
+    const double serviceAffordability = aIncome / cappedPrice;
+    double serviceDensity = aBuildingServiceInput->getSatiationDemandFunction()->calcDemand( serviceAffordability );
+    // May need to make an adjustment in case of negative prices.
+    if( servicePrice < cappedPrice ) {
+        serviceDensity = SectorUtils::adjustDemandForNegativePrice( serviceDensity, servicePrice );
+    }
+    return serviceDensity;
 }

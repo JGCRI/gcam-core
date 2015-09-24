@@ -57,6 +57,8 @@ L232.rm_heat_techs_R <- add_region_name( L232.rm_heat_techs_R )
 
 # 2a. Supplysector information
 printlog( "L232.Supplysector_ind: Supply sector information for industry sector" )
+L232.SectorLogitTables <- get_logit_fn_tables( A32.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L232.Supplysector_ind <- write_to_all_regions( A32.sector, names_Supplysector )
 
 printlog( "L232.FinalEnergyKeyword_ind: Supply sector keywords for industry sector" )
@@ -64,6 +66,15 @@ L232.FinalEnergyKeyword_ind <- na.omit( write_to_all_regions( A32.sector, names_
 
 # 2b. Subsector information
 printlog( "L232.SubsectorLogit_ind: Subsector logit exponents of industry sector" )
+L232.SubsectorLogitTables <- get_logit_fn_tables( A32.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
+for( curr_table in names( L232.SubsectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L232.SubsectorLogitTables[[ curr_table ]]$data <- L232.SubsectorLogitTables[[ curr_table ]]$data[
+            vecpaste( L232.SubsectorLogitTables[[ curr_table ]]$data[ c( "region", "subsector" ) ] ) %!in%
+            vecpaste( L232.rm_heat_techs_R[ c( "region", "subsector" ) ] ), ]
+    }
+}
 L232.SubsectorLogit_ind <- write_to_all_regions( A32.subsector_logit, names_SubsectorLogit )
 #Remove non-existent heat subsectors from each region
 L232.SubsectorLogit_ind <- L232.SubsectorLogit_ind[
@@ -346,8 +357,18 @@ L232.IncomeElasticity_ind$energy.final.demand <- A32.demand$energy.final.demand
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L232.SectorLogitTables) ) {
+write_mi_data( L232.SectorLogitTables[[ curr_table ]]$data, L232.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L232.", L232.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_industry.xml" )
+}
 write_mi_data( L232.Supplysector_ind, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L232.Supplysector_ind",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_industry.xml" ) 
+for( curr_table in names ( L232.SubsectorLogitTables ) ) {
+write_mi_data( L232.SubsectorLogitTables[[ curr_table ]]$data, L232.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L232.", L232.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_industry.xml" )
+}
 write_mi_data( L232.SubsectorLogit_ind, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L232.SubsectorLogit_ind", "ENERGY_XML_BATCH", "batch_industry.xml" ) 
 write_mi_data( L232.FinalEnergyKeyword_ind, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L232.FinalEnergyKeyword_ind", "ENERGY_XML_BATCH", "batch_industry.xml" ) 
 if( exists( "L232.SubsectorShrwt_ind" ) ){

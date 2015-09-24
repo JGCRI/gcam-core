@@ -45,7 +45,7 @@
 
 
 int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double,double> &F,
-                          std::ostream *diagnostic=0, double FTOL=1.0e-4);
+                          std::ostream *diagnostic=0, bool logpricep=true, double FTOL=1.0e-4);
 
 void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec<double,double> &F,
                              std::ostream *diagnostic, double FTOL=1.0e-4);

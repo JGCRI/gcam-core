@@ -41,8 +41,13 @@ L124.nonco2_tgbm2_forest_fy.melt <- readdata( "EMISSIONS_LEVEL1_DATA", "L124.non
 printlog( "L212.Sector: Sector info for unmanaged land technology" )
 L212.Sector <- GCAM_region_names[ names( GCAM_region_names ) == "region" ]
 L212.Sector$AgSupplySector <- "UnmanagedLand"
+L212.Sector$output.unit <- "none"
 L212.Sector$input.unit <- "thous km2"
+L212.Sector$price.unit <- "none"
+L212.Sector$calPrice <- -1
 L212.Sector$market <- L212.Sector$region
+L212.Sector$logit.year.fillout <- min( model_base_years )
+L212.Sector$logit.exponent <- -3
 
 printlog( "L212.ItemName: Land item to relate emissions to" )
 L212.LandItem <- L212.Sector[ names( L212.Sector ) %in% c( "region", "AgSupplySector" )]
@@ -191,9 +196,34 @@ L212.GRASSEmissionsFactors <- rename_SO2( L212.GRASSEmissionsFactors, A_regions,
 L212.FORESTEmissions <- rename_SO2( L212.FORESTEmissions, A_regions, FALSE )
 L212.FORESTEmissionsFactors <- rename_SO2( L212.FORESTEmissionsFactors, A_regions, FALSE )
 
+# Add logit tags to avoid errors
+L212.SectorLogitType <- L212.Sector
+L212.SectorLogitType$logit.type <- NA
+L212.SectorLogitTables <- get_logit_fn_tables( L212.SectorLogitType, names_AgSupplySectorLogitType,
+    base.header="AgSupplySector_", include.equiv.table=T, write.all.regions=F )
+# We do not actually care about the logit here but we need a value to avoid errors
+L212.AgSupplySubsector <- L212.LandItem[, names_AgSupplySubsector ]
+L212.AgSupplySubsector$logit.year.fillout <- min( model_base_years )
+L212.AgSupplySubsector$logit.exponent <- -3
+L212.SubsectorLogitType <- L212.LandItem
+L212.SubsectorLogitType$logit.type <- NA
+L212.SubsectorLogitTables <- get_logit_fn_tables( L212.SubsectorLogitType, names_AgSupplySubsectorLogitType,
+    base.header="AgSupplySubsector_", include.equiv.table=F, write.all.regions=F )
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L212.Sector, "SectorUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.Sector", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+for( curr_table in names ( L212.SectorLogitTables ) ) {
+write_mi_data( L212.SectorLogitTables[[ curr_table ]]$data, L212.SectorLogitTables[[ curr_table ]]$header,
+    "EMISSIONS_LEVEL2_DATA", paste0("L212.", L212.SectorLogitTables[[ curr_table ]]$header ), "EMISSIONS_XML_BATCH",
+    "batch_all_unmgd_emissions.xml" )
+}
+write_mi_data( L212.Sector, "AgSupplySector", "EMISSIONS_LEVEL2_DATA", "L212.Sector", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+for( curr_table in names ( L212.SubsectorLogitTables ) ) {
+write_mi_data( L212.SubsectorLogitTables[[ curr_table ]]$data, L212.SubsectorLogitTables[[ curr_table ]]$header,
+    "EMISSIONS_LEVEL2_DATA", paste0("L212.", L212.SubsectorLogitTables[[ curr_table ]]$header ), "EMISSIONS_XML_BATCH",
+    "batch_all_unmgd_emissions.xml" )
+}
+write_mi_data( L212.AgSupplySubsector, "AgSupplySubsector", "EMISSIONS_LEVEL2_DATA", "L212.AgSupplySubsector", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 write_mi_data( L212.LandItem, "ItemNameUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.LandItem", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 write_mi_data( L212.GRASSEmissions, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissions", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 write_mi_data( L212.FORESTEmissions, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissions", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 

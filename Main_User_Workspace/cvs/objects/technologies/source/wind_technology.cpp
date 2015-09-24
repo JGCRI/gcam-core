@@ -103,7 +103,7 @@ std::string WindTechnology::sXMLTagNames[] =
 WindTechnology::WindTechnology(
    const std::string& aName,
    const int          aYear )
-   : parent( aName, aYear ),
+   : IntermittentTechnology( aName, aYear ),
      mCapitalCost( 261.83 ),
      mConnectCost( -1 ),
      mCutOutSpeed( -1 ),
@@ -111,8 +111,6 @@ WindTechnology::WindTechnology(
      mGenerationCost( -1 ),
      mGridConnectionCost( 392.75 ),
      mOM( 2.62 ),
-     mMaxLoss( 0.0 ),
-     mEfficiencyLossExponent( 3.0 ),
      mRealizedTurbineOutput( -1 ),
      mRotorDiameter( -1 ),
      mTurbineDensity( -1 ),
@@ -120,6 +118,8 @@ WindTechnology::WindTechnology(
      mTurbineHubHeight( -1 ),
      mTurbineRating( -1 ),
      mWindCapacityFactor( -1 ),
+     mMaxLoss( 0.0 ),
+     mEfficiencyLossExponent( 3.0 ),
      mWindFarmLoss( -1 )
 {
 }
@@ -128,7 +128,7 @@ WindTechnology::WindTechnology(
  *  \param other the instance to copy
  */
 WindTechnology::WindTechnology(const WindTechnology& other)
-   : parent( other )
+   : IntermittentTechnology( other )
 {
 }
 
@@ -190,7 +190,7 @@ void WindTechnology::calcCost(
    ( *mTechCostInput )->setPrice( aRegionName, totalTechCapOMCost, aPeriod );
     
    // Call parent function to set costs and coefficients
-   parent::calcCost( aRegionName, aSectorName, aPeriod );
+   IntermittentTechnology::calcCost( aRegionName, aSectorName, aPeriod );
   
 }
 
@@ -380,7 +380,7 @@ void WindTechnology::completeInit(
         mInputs.push_back( new NonEnergyInput( getTechCostName() ) );
     }
 
-   parent::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorIInfo, aLandAllocator );
+   IntermittentTechnology::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorIInfo, aLandAllocator );
 
    // Validate input parameters
    typedef ObjECTS::TValidatorInfo<> validator_type;
@@ -458,7 +458,7 @@ void WindTechnology::initCalc(
    PreviousPeriodInfo& aPrevPeriodInfo,
    const int          aPeriod )
 {
-   parent::initCalc( aRegionName, aSectorName, aSubsectorIInfo, aDemographics, 
+   IntermittentTechnology::initCalc( aRegionName, aSectorName, aSubsectorIInfo, aDemographics, 
        aPrevPeriodInfo, aPeriod );
 
    // Get marketplace and make sure we have the correct type of resource
@@ -479,7 +479,7 @@ void WindTechnology::initCalc(
    else
    {
       typedef ObjECTS::TValidatorInfo<> validator_type;
-      double           notUsed;
+      double           notUsed=0.0;
       validator_type   validator[] =
       {
          validator_type( notUsed, sXMLTagNames[ AVERAGE_WIND_SPEED_KEY ], pInfo->hasValue( sXMLTagNames[ AVERAGE_WIND_SPEED_KEY ] ) ),
@@ -518,7 +518,7 @@ double WindTechnology::getCalibrationOutput( const bool aHasRequiredInput,
                                          const std::string& aRequiredInput,
                                          const int aPeriod ) const
 {
-   return parent::getCalibrationOutput( aHasRequiredInput, aRequiredInput, aPeriod );
+   return IntermittentTechnology::getCalibrationOutput( aHasRequiredInput, aRequiredInput, aPeriod );
 }
 
 // WindTechnology::toDebugXMLDerived ***************************************
@@ -529,7 +529,7 @@ void WindTechnology::toDebugXMLDerived(
    std::ostream& out,
    Tabs*         tabs ) const
 {
-   parent::toDebugXMLDerived( period, out,  tabs );
+   IntermittentTechnology::toDebugXMLDerived( period, out,  tabs );
    XMLWriteElement( mCapitalCost, sXMLTagNames[ CAPITAL_COST_KEY ], out, tabs );
    XMLWriteElement( mConnectCost, "connection-cost", out, tabs );
    XMLWriteElement( mCutOutSpeed, sXMLTagNames[ CUTOUT_SPEED_KEY ], out, tabs );
@@ -555,7 +555,7 @@ void WindTechnology::toInputXMLDerived(
    std::ostream& out,
    Tabs*         tabs ) const
 {
-   parent::toInputXMLDerived( out,  tabs );
+   IntermittentTechnology::toInputXMLDerived( out,  tabs );
    XMLWriteElementCheckDefault( mCapitalCost, sXMLTagNames[ CAPITAL_COST_KEY ], out, tabs, double( 1000.0 ) );
    XMLWriteElement( mCutOutSpeed, sXMLTagNames[ CUTOUT_SPEED_KEY ], out, tabs );
    XMLWriteElementCheckDefault( mFCR, sXMLTagNames[ FCR_KEY ], out, tabs, double( 0.0856 ) );

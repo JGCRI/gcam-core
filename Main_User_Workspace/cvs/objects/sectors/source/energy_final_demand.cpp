@@ -393,11 +393,16 @@ double EnergyFinalDemand::calcMacroScaler( const string& aRegionName,
 
     const double priceRatio = SectorUtils::calcPriceRatio( aRegionName, mName,
                                                      previousPeriod, aPeriod );
+    const double cappedPriceRatio = max( priceRatio, SectorUtils::getDemandPriceThreshold() );
 
-    const double macroScaler = mDemandFunction->calcDemand( aDemographics,
-                                   aGDP, mPriceElasticity[ aPeriod ],
-                                   mIncomeElasticity[ aPeriod ], priceRatio,
-                                   aPeriod );
+    double macroScaler = mDemandFunction->calcDemand( aDemographics,
+                                                      aGDP, mPriceElasticity[ aPeriod ],
+                                                      mIncomeElasticity[ aPeriod ], cappedPriceRatio,
+                                                      aPeriod );
+    // May need to make an adjustment in case of negative prices.
+    if( priceRatio < cappedPriceRatio && mPriceElasticity[ aPeriod ] != 0 ) {
+        macroScaler = SectorUtils::adjustDemandForNegativePrice( macroScaler, priceRatio );
+    }
 
     return macroScaler;
 }
@@ -513,6 +518,9 @@ double EnergyFinalDemand::PerCapitaGDPDemandFunction::calcDemand(
     double populationRatio = aDemographics->getTotal( aPeriod )
                            / aDemographics->getTotal( aPeriod - 1);
 
+    //! \pre aPriceRatio > 0.  Prices calculated by
+    //! calcMacroScaler will automatically meet this
+    //! condition.
     double macroEconomicScaler = pow( aPriceRatio, aPriceElasticity )
                          * pow( GDPperCapRatio, aIncomeElasticity )
                          * populationRatio;
@@ -538,7 +546,11 @@ double EnergyFinalDemand::TotalGDPDemandFunction::calcDemand( const Demographic*
     double GDPRatio = aGDP->getGDP( aPeriod )
                     / aGDP->getGDP( aPeriod - 1 );
 
-    double macroEconomicScaler = pow( aPriceRatio, aPriceElasticity ) 
+
+    //! \pre aPriceRatio > 0.  Prices calculated by
+    //! calcMacroScaler will automatically meet this
+    //! condition.
+    double macroEconomicScaler = pow( aPriceRatio , aPriceElasticity ) 
                                * pow( GDPRatio, aIncomeElasticity );
 
     return macroEconomicScaler;

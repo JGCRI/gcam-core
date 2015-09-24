@@ -102,7 +102,10 @@ public :
     virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
 
    //! Return the XML tag name
-   static const std::string& getXMLNameStatic( void );
+    static const std::string& getXMLNameStatic( void );
+
+    virtual double getLowestPrice( const int aPeriod ) const;
+    virtual double getHighestPrice( const int aPeriod ) const;
 
 protected :
 

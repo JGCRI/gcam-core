@@ -70,7 +70,8 @@
 using namespace std;
 using namespace objects;
 
-extern Scenario* scenario;
+extern Scenario* scenario; 
+
 
 /*! \brief Constructor
 * \details This is the constructor for the market class. No default constructor
@@ -88,6 +89,8 @@ region( regionNameIn ),
 solveMarket( false ),
 period( periodIn ),
 price( 0 ),
+mForecastPrice( 0 ),
+mForecastDemand( 0 ),
 storedPrice( 0 ),
 storedDemand( 0 ),
 storedSupply( 0 ),
@@ -96,6 +99,9 @@ mMarketInfo( InfoFactory::constructInfo( 0, regionNameIn+goodNameIn ) )
 #if !GCAM_PARALLEL_ENABLED
     supply = 0.0;
     demand = 0.0;
+#else
+    supply.local() = 0.0;
+    demand.local() = 0.0;
 #endif
     // Store the market name so that it can be returned without any allocations.
     mName = region + good;
@@ -113,9 +119,9 @@ Market::~Market(){
 * \author Josh Lurz
 */
 Market::Market( const Market& aMarket ): 
+mName( aMarket.mName ),
 good( aMarket.good ),
 region( aMarket.region ),
-mName( aMarket.mName ),
 solveMarket( aMarket.solveMarket ),
 period( aMarket.period ),
 price( aMarket.price ),
@@ -302,6 +308,7 @@ void Market::initPrice() {
 */
 void Market::setRawPrice( const double priceIn ) {
     price = priceIn;
+    // trigger special actions in price, supply, and trial value markets
 }
 
 /*! \brief Set the price of the market based on the type.
@@ -369,7 +376,44 @@ void Market::set_price_to_last( const double lastPrice ) {
     }
 }
 
-/*! \brief Get the market price. 
+/*!
+ * \brief Sets a forecasted price for this market intended to give the solution
+ *        algorithm a better starting point.
+ * \details The forecasted price may not be used in all circumstances.
+ * \sa Marketplace::init_to_last
+ * \param aForecastPrice The forecasted price to set.
+ */
+void Market::setForecastPrice( double aForecastPrice ) {
+    mForecastPrice = aForecastPrice;
+}
+
+/*!
+ * \brief Get the forecasted price for this market.
+ * \return The forecasted price for this market.
+ */
+double Market::getForecastPrice() const {
+    return mForecastPrice;
+}
+
+/*!
+ * \brief Sets a forecasted demand for this market which may be used in some
+ *        solution algorithms to rescale supplies and demands such that all markets
+ *        are in a similar scale.
+ * \param aForecastDemand The forecasted demand to set.
+ */
+void Market::setForecastDemand( double aForecastDemand ) {
+    mForecastDemand = aForecastDemand;
+}
+
+/*!
+ * \brief Get the forecasted demand for this market.
+ * \return The forecasted demand for this market.
+ */
+double Market::getForecastDemand() const {
+    return mForecastDemand;
+}
+
+/*! \brief Get the market price.
 * \details This method is used to get the price out of a Market.
 * \return The price for the Market.
 * \sa getRawPrice
@@ -719,15 +763,19 @@ bool Market::shouldSolve() const {
 *          market that should because the market could be removed from set of
 *          markets to solve when its supply or demand temporarily became less
 *          than zero. If another market were adjusted however, supply or demand
-*          could become positive again.
+*          could become positive again. 
+* \warning With the introduction of the linear price NR family of solvers I
+*          have removed the price constraint.  That means that if you
+*          are using the log price version, you must explicitly supply
+*          a price-greater-than filter to prevent the solver trying to
+*          take the log of a negative number. 
 * \todo This is not the best design right now, this should be contained in the
 *       solution mechanism.
 * \return Whether or not to solve the market for Newton-Rhaphson.
 */
 bool Market::shouldSolveNR() const {
-    // Solves all solvable markets with the following conditions
-    // including those with null demand.
-    return ( solveMarket && price > util::getTinyNumber() && getRawSupply() > util::getTinyNumber());
+    // Solves all solvable markets where there is nonzero supply.
+    return solveMarket && getRawSupply() > util::getTinyNumber();
 }
 
 /*! \brief Return whether a market is solved according to market type specific

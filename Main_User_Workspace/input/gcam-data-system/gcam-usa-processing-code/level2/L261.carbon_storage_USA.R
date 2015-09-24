@@ -26,6 +26,7 @@ states_subregions <- readdata( "GCAMUSA_MAPPINGS", "states_subregions" )
 L161.Cstorage_FERC <- readdata( "GCAMUSA_LEVEL1_DATA", "L161.Cstorage_FERC" )
 L261.DepRsrc <- readdata( "ENERGY_LEVEL2_DATA", "L261.DepRsrc", skip = 4 )
 L261.Supplysector_C <- readdata( "ENERGY_LEVEL2_DATA", "L261.Supplysector_C", skip = 4 )
+L261.SubsectorLogit_C <- readdata( "ENERGY_LEVEL2_DATA", "L261.SubsectorLogit_C", skip = 4, must.exist = F )
 L261.SubsectorShrwtFllt_C <- readdata( "ENERGY_LEVEL2_DATA", "L261.SubsectorShrwtFllt_C", skip = 4, must.exist = F )
 L261.StubTech_C <- readdata( "ENERGY_LEVEL2_DATA", "L261.StubTech_C", skip = 4 )
 L261.GlobalTechCoef_C <- readdata( "ENERGY_LEVEL2_DATA", "L261.GlobalTechCoef_C", skip = 4 )
@@ -62,6 +63,31 @@ L261.DepRsrcCurves_FERC <- data.frame(
 
 printlog( "L261.Supplysector_C_USA: supplysector info in the states" )
 L261.Supplysector_C_USA <- write_to_all_states( subset( L261.Supplysector_C, region == "USA" ), names_Supplysector)
+L261.SectorLogitTables_C_USA <- read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L261.Supplysector_", skip=4, include.equiv.table=T )
+for( curr_table_name in names( L261.SectorLogitTables_C_USA ) ) {
+    if( substr( curr_table_name, 6, 16 ) != "EQUIV_TABLE" && nrow( L261.SectorLogitTables_C_USA[[ curr_table_name ]] ) > 0 ) {
+        L261.SectorLogitTables_C_USA[[ curr_table_name ]] <- write_to_all_states(
+            subset( L261.SectorLogitTables_C_USA[[ curr_table_name ]], region == "USA" ), names_SupplysectorLogitType )
+    }
+}
+
+printlog( "L261.SubsectorLogit_C: subsector logit info in the states" )
+L261.SubsectorLogit_C_USA <- write_to_all_states( subset( L261.SubsectorLogit_C, region == "USA" ), names_SubsectorLogit )
+#NOTE: This table contains logit values in states where no C storage resources may exist at the grid level
+L261.SubsectorLogit_C_USA$grid_region <- states_subregions$grid_region[
+      match( L261.SubsectorLogit_C_USA$region, states_subregions$state ) ]
+L261.SubsectorLogit_C_USA <- subset( L261.SubsectorLogit_C_USA, !paste( grid_region, subsector ) %in% grid_Cstorage_nonexist )
+L261.SubsectorLogitTables_C_USA <- read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L261.SubsectorLogit_", skip=4, include.equiv.table=F )
+for( curr_table_name in names( L261.SubsectorLogitTables_C_USA ) ) {
+    if( substr( curr_table_name, 6, 16 ) != "EQUIV_TABLE" && nrow( L261.SubsectorLogitTables_C_USA[[ curr_table_name ]] ) > 0 ) {
+        L261.SubsectorLogitTables_C_USA[[ curr_table_name ]] <- write_to_all_states(
+            subset( L261.SubsectorLogitTables_C_USA[[ curr_table_name ]], region == "USA" ), names_SubsectorLogitType )
+        L261.SubsectorLogitTables_C_USA[[ curr_table_name ]]$grid_region <- states_subregions$grid_region[
+            match( L261.SubsectorLogitTables_C_USA[[ curr_table_name ]]$region, states_subregions$state ) ]
+        L261.SubsectorLogitTables_C_USA[[ curr_table_name ]] <- subset( L261.SubsectorLogitTables_C_USA[[ curr_table_name ]],
+            !paste( grid_region, subsector ) %in% grid_Cstorage_nonexist )
+    }
+}
 
 printlog( "L261.SubsectorShrwtFllt_C_USA: subsector shareweight info in the states" )
 L261.SubsectorShrwtFllt_C_USA <- write_to_all_states( subset( L261.SubsectorShrwtFllt_C, region == "USA" ), names_SubsectorShrwtFllt)
@@ -93,7 +119,18 @@ write_mi_data( L261.DeleteDepRsrc_USAC, "DeleteDepRsrc", "GCAMUSA_LEVEL2_DATA", 
 write_mi_data( L261.DeleteSubsector_USAC, "DeleteSubsector", "GCAMUSA_LEVEL2_DATA", "L261.DeleteSubsector_USAC", "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
 write_mi_data( L261.DepRsrc_FERC, "DepRsrc", "GCAMUSA_LEVEL2_DATA", "L261.DepRsrc_FERC", "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
 write_mi_data( L261.DepRsrcCurves_FERC, "DepRsrcCurves", "GCAMUSA_LEVEL2_DATA", "L261.DepRsrcCurves_FERC", "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
+for( curr_table in names ( L261.SectorLogitTables_C_USA ) ) {
+curr_header <- substr( curr_table, 6, nchar( curr_table ) )
+write_mi_data( L261.SectorLogitTables_C_USA[[ curr_table ]], curr_header, "GCAMUSA_LEVEL2_DATA", paste0( "L261.", curr_header, "_C_USA" ),
+    "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
+}
 write_mi_data( L261.Supplysector_C_USA, "Supplysector", "GCAMUSA_LEVEL2_DATA", "L261.Supplysector_C_USA", "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
+for( curr_table in names ( L261.SubsectorLogitTables_C_USA ) ) {
+curr_header <- substr( curr_table, 6, nchar( curr_table ) )
+write_mi_data( L261.SubsectorLogitTables_C_USA[[ curr_table ]], curr_header, "GCAMUSA_LEVEL2_DATA", paste0( "L261.", curr_header, "_C_USA" ),
+    "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
+}
+write_mi_data( L261.SubsectorLogit_C_USA, "SubsectorLogit", "GCAMUSA_LEVEL2_DATA", "L261.SubsectorLogit_C_USA", "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
 write_mi_data( L261.SubsectorShrwtFllt_C_USA, "SubsectorShrwtFllt", "GCAMUSA_LEVEL2_DATA", "L261.SubsectorShrwtFllt_C_USA", "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
 write_mi_data( L261.StubTech_C_USA, "StubTech", "GCAMUSA_LEVEL2_DATA", "L261.StubTech_C_USA", "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )
 write_mi_data( L261.StubTechMarket_C_USA, "StubTechMarket", "GCAMUSA_LEVEL2_DATA", "L261.StubTechMarket_C_USA", "GCAMUSA_XML_BATCH", "batch_Cstorage_USA.xml" )

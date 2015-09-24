@@ -79,8 +79,6 @@ class WindTechnology : public IntermittentTechnology
 {
 public :
 
-   typedef IntermittentTechnology   parent;
-
    /*! Default constructor
     *  \param aName the name of the technology
     *  \param aYear the year

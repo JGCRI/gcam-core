@@ -58,10 +58,14 @@ L231.FinalDemand_urb$base.service <- 0.004
 L231.FinalDemand_urb$aeei <- 0
 
 printlog( "L231.Supplysector_ind: Supply sector information for urban & industrial processes sectors" )
+L231.SectorLogitTables <- get_logit_fn_tables( A31.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L231.Supplysector_urb_ind <- write_to_all_regions( A31.sector, names_Supplysector )
 
 # 2b. Subsector information
 printlog( "L231.SubsectorLogit_urb_ind: Subsector logit exponents of urban & industrial processes sectors" )
+L231.SubsectorLogitTables <- get_logit_fn_tables( A31.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L231.SubsectorLogit_urb_ind <- write_to_all_regions( A31.subsector_logit, names_SubsectorLogit )
 
 printlog( "L231.SubsectorShrwt_urb_ind and L231.SubsectorShrwtFllt_urb_ind: Subsector shareweights of urban & industrial processes sectors" )
@@ -190,8 +194,18 @@ L231.IndCoef <- rbind( L231.IndCoef, L231.IndCoef.fy )
 write_mi_data( L231.UnlimitRsrc, "UnlimitRsrc", "EMISSIONS_LEVEL2_DATA", "L231.UnlimitRsrc", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" ) 
 write_mi_data( L231.UnlimitRsrcPrice, "UnlimitRsrcPrice", "EMISSIONS_LEVEL2_DATA", "L231.UnlimitRsrcPrice", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" ) 
 write_mi_data( L231.FinalDemand_urb, "FinalDemandInfo", "EMISSIONS_LEVEL2_DATA", "L231.FinalDemand_urb", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )
+for( curr_table in names ( L231.SectorLogitTables ) ) {
+write_mi_data( L231.SectorLogitTables[[ curr_table ]]$data, L231.SectorLogitTables[[ curr_table ]]$header,
+    "EMISSIONS_LEVEL2_DATA", paste0( "L231.", L231.SectorLogitTables[[ curr_table ]]$header ), "EMISSIONS_XML_BATCH",
+    "batch_ind_urb_processing_sectors.xml" )
+}
 write_mi_data( L231.Supplysector_urb_ind, IDstring="Supplysector", domain="EMISSIONS_LEVEL2_DATA", fn="L231.Supplysector_urb_ind",
                batch_XML_domain="EMISSIONS_XML_BATCH", batch_XML_file="batch_ind_urb_processing_sectors.xml" )  
+for( curr_table in names ( L231.SubsectorLogitTables ) ) {
+write_mi_data( L231.SubsectorLogitTables[[ curr_table ]]$data, L231.SubsectorLogitTables[[ curr_table ]]$header,
+    "EMISSIONS_LEVEL2_DATA", paste0("L231.", L231.SubsectorLogitTables[[ curr_table ]]$header ), "EMISSIONS_XML_BATCH",
+    "batch_ind_urb_processing_sectors.xml" )
+}
 write_mi_data( L231.SubsectorLogit_urb_ind, "SubsectorLogit", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorLogit_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" ) 
 if( exists( "L231.SubsectorShrwt_urb_ind" ) ){
 	write_mi_data( L231.SubsectorShrwt_ind, "SubsectorShrwt", "EMISSIONS_LEVEL2_DATA", "L231.SubsectorShrwt_urb_ind", "EMISSIONS_XML_BATCH", "batch_ind_urb_processing_sectors.xml" )

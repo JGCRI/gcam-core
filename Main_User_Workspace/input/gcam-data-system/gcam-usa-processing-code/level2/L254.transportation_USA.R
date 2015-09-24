@@ -106,21 +106,35 @@ L254.tables <- list( L254.Supplysector_trn = L254.Supplysector_trn,
                      L254.PriceElasticity_trn = L254.PriceElasticity_trn,
                      L254.IncomeElasticity_trn = L254.IncomeElasticity_trn )
 
+# The logit functions should be processed before any other table that needs to read logit exponents
+L254.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L254.Supplysector_", skip=4, include.equiv.table=T ),
+                  read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L254.tranSubsector_", skip=4, include.equiv.table=F ),
+                  L254.tables )
+
 for( i in 1:length( L254.tables ) ){
   if( !is.null( L254.tables[[i]] ) ){
   	  objectname <- paste0( names( L254.tables[i] ), "_USA" )
-	  object <- write_to_all_states( subset( L254.tables[[i]], region == "USA" ), names( L254.tables[[i]] ) )
-	if( use_regional_fuel_markets & "market.name" %in% names( object ) ){
-		object$market.name[ object[[input]] %in% regional_fuel_markets ] <- states_subregions$grid_region[
-		      match( object$region[ object[[input]] %in% regional_fuel_markets], states_subregions$state ) ]
-	}
-	#NOTE: electricity is always consumed from state markets
-	if( "market.name" %in% names( object ) ){
-		object$market.name[ object[[input]] %in% elect_td_sectors ] <- object$region[ object[[input]] %in% elect_td_sectors ]
-	}
+      if( substr( objectname, 6, 16 ) == "EQUIV_TABLE" || nrow( subset( L254.tables[[i]], region == "USA" ) ) == 0 ) {
+          # Just use the object as is
+          object <- L254.tables[[i]]
+      } else {
+          object <- write_to_all_states( subset( L254.tables[[i]], region == "USA" ), names( L254.tables[[i]] ) )
+        if( use_regional_fuel_markets & "market.name" %in% names( object ) ){
+            object$market.name[ object[[input]] %in% regional_fuel_markets ] <- states_subregions$grid_region[
+                  match( object$region[ object[[input]] %in% regional_fuel_markets], states_subregions$state ) ]
+        }
+        #NOTE: electricity is always consumed from state markets
+        if( "market.name" %in% names( object ) ){
+            object$market.name[ object[[input]] %in% elect_td_sectors ] <- object$region[ object[[input]] %in% elect_td_sectors ]
+        }
+      }
 	  assign( objectname, object )
-	  IDstringendpoint <- if( grepl( "_", names( L254.tables )[i] ) ) { regexpr( "_", names( L254.tables )[i], fixed = T ) - 1
-	                       } else nchar( names( L254.tables )[i] )
+      curr_table_name <- names( L254.tables )[i]
+      IDstringendpoint <- if( grepl( "_", curr_table_name ) & !grepl( 'EQUIV_TABLE', curr_table_name ) & !grepl( '-logit$', curr_table_name ) ) {
+          regexpr( "_", curr_table_name, fixed = T ) - 1
+      } else {
+          nchar( curr_table_name )
+      }
 	  IDstring <- substr( names( L254.tables )[i], 6, IDstringendpoint )
 	  write_mi_data( object, IDstring, "GCAMUSA_LEVEL2_DATA", objectname, "GCAMUSA_XML_BATCH", "batch_transportation_USA.xml" )
 	  }

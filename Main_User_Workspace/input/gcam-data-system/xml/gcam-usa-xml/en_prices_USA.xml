@@ -3,12 +3,17 @@
    <world>
       <region name="Alaska grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -256,12 +261,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -509,12 +519,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -762,12 +777,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -1015,12 +1035,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -1268,12 +1293,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -1529,12 +1559,17 @@
       </region>
       <region name="California grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -1782,12 +1817,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -2035,12 +2075,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -2288,12 +2333,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -2541,12 +2591,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -2794,12 +2849,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -3055,12 +3115,17 @@
       </region>
       <region name="Central East grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -3308,12 +3373,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -3561,12 +3631,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -3814,12 +3889,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -4067,12 +4147,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -4320,12 +4405,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -4581,12 +4671,17 @@
       </region>
       <region name="Central Northeast grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -4834,12 +4929,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -5087,12 +5187,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -5340,12 +5445,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -5593,12 +5703,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -5846,12 +5961,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -6107,12 +6227,17 @@
       </region>
       <region name="Central Northwest grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -6360,12 +6485,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -6613,12 +6743,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -6866,12 +7001,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -7119,12 +7259,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -7372,12 +7517,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -7633,12 +7783,17 @@
       </region>
       <region name="Central Southwest grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -7886,12 +8041,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -8139,12 +8299,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -8392,12 +8557,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -8645,12 +8815,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -8898,12 +9073,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -9159,12 +9339,17 @@
       </region>
       <region name="Florida grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -9412,12 +9597,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -9665,12 +9855,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -9918,12 +10113,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -10171,12 +10371,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -10424,12 +10629,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -10685,12 +10895,17 @@
       </region>
       <region name="Hawaii grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -10938,12 +11153,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -11191,12 +11411,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -11444,12 +11669,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -11697,12 +11927,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -11950,12 +12185,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -12211,12 +12451,17 @@
       </region>
       <region name="Mid-Atlantic grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -12464,12 +12709,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -12717,12 +12967,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -12970,12 +13225,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -13223,12 +13483,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -13476,12 +13741,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -13737,12 +14007,17 @@
       </region>
       <region name="New England grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -13990,12 +14265,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -14243,12 +14523,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -14496,12 +14781,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -14749,12 +15039,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -15002,12 +15297,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -15263,12 +15563,17 @@
       </region>
       <region name="New York grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -15516,12 +15821,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -15769,12 +16079,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -16022,12 +16337,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -16275,12 +16595,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -16528,12 +16853,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -16789,12 +17119,17 @@
       </region>
       <region name="Northwest grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -17042,12 +17377,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -17295,12 +17635,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -17548,12 +17893,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -17801,12 +18151,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -18054,12 +18409,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -18315,12 +18675,17 @@
       </region>
       <region name="Southeast grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -18568,12 +18933,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -18821,12 +19191,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -19074,12 +19449,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -19327,12 +19707,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -19580,12 +19965,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -19841,12 +20231,17 @@
       </region>
       <region name="Southwest grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -20094,12 +20489,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -20347,12 +20747,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -20600,12 +21005,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -20853,12 +21263,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -21106,12 +21521,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -21367,12 +21787,17 @@
       </region>
       <region name="Texas grid">
          <supplysector name="regional coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="regional coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="regional coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -21620,12 +22045,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered coal">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered coal">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered coal">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -21873,12 +22303,17 @@
             </subsector>
          </supplysector>
          <supplysector name="wholesale gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="wholesale gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="wholesale gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -22126,12 +22561,17 @@
             </subsector>
          </supplysector>
          <supplysector name="delivered gas">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="delivered gas">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="delivered gas">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -22379,12 +22819,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids enduse">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids enduse">
                   <period year="1975">
                      <share-weight>1</share-weight>
@@ -22632,12 +23077,17 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            </relative-cost-logit>
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="refined liquids industrial">
                <share-weight fillout="1" year="1975">1</share-weight>
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+               </relative-cost-logit>
                <technology name="refined liquids industrial">
                   <period year="1975">
                      <share-weight>1</share-weight>

@@ -362,7 +362,13 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
             SolutionInfo& currSol = aSolutionSet.getSolvable( i );
             double currBracketInterval = currSol.getBracketInterval( aDefaultBracketInterval );
             
-            // We know current market is not solved. Check if it is bracketed
+            // Check for special case where a resource with no supply can become "solved" during
+            // the bracketing procedure.
+            if( fabs( currSol.getSupply() ) < util::getSmallNumber() &&
+                fabs( currSol.getDemand() ) < util::getSmallNumber() )
+            {
+                currSol.setBracketed();
+            }
             if ( !currSol.isBracketed() ) {
                 // If a market is not bracketed, then EDL and EDR have the same sign
                 // Check if ED has the same sign as EDL and EDR.
@@ -402,13 +408,6 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
                 if( currSol.isCurrentlyBracketed() ){
                     currSol.setBracketed();
                 }
-
-                // Check if the market is unbracketable. Move this check into updateSolvable.-JPL
-                if( ( currSol.getPrice() < util::getVerySmallNumber() ) && ( currSol.getED() < 0 ) ) {
-                    currSol.setPrice( 0 );
-                    currSol.resetBrackets();
-                    currSol.setBracketed();
-                } // END: if statement testing if the market is unbracketable
 
             } // END: if statement testing if bracketed
             // If bracketed, but left and right prices are equal

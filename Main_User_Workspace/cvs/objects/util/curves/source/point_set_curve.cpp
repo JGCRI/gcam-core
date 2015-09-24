@@ -131,6 +131,9 @@ PointSet* PointSetCurve::getPointSet() {
 }
 
 //! Get the Y value corresponding to a given X value.
+//
+// \todo This is a terrible way to do interpolation.  We should
+//         replace this with something more orthodox.
 double PointSetCurve::getY( const double xValue ) const {
     double retValue;
 
@@ -150,24 +153,35 @@ double PointSetCurve::getY( const double xValue ) const {
             // Check if the point below is invalid.
             if( x1 == -DBL_MAX ){
                 // Get the next value above x2
+
+                // TODO: This formula isn't very good.  It amounts to
+                // an extrapolation using the slope of the last
+                // segment.  This is potentially problematic because
+                // sometimes we get some really large values in here
+                // from the solver.  Returning a wild extrapolation
+                // isn't the best idea in those cases.  Maybe we
+                // should clamp outputs to the endpoints instead.
                 x1 = pointSet->getNearestXAbove( x2 );
 
                 // Check if that is valid
                 if( x1 == -DBL_MAX ){
-                    // There is only one valid point.
-                    x1 = x2;
+                    // There is only one valid point.  Since we can't
+                    // compute a slope, just return the one value we
+                    // have.
+                    return pointSet->getY( x2 );
                 }
             }
 
             // Check if the point above is invalid
             if( x2 == DBL_MAX ){
                 // Get the next value below x1
+                // see notes above.
                 x2 = pointSet->getNearestXBelow( x1 );
 
                 // Check if that is valid.
                 if( x2 == -DBL_MAX ){
                     // There is only one valid point.
-                    x2 = x1;
+                    return pointSet->getY( x1 );
                 }
             }
             retValue = linearInterpolateY( xValue, x1, pointSet->getY( x1 ), x2, pointSet->getY( x2 ) );

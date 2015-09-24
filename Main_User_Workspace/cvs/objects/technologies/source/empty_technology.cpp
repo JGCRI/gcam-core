@@ -113,11 +113,9 @@ double EmptyTechnology::getTotalGHGCost( const string& aRegionName,
     return 0;
 }
 
-double EmptyTechnology::calcShare( const string& aRegionName,
-                             const string& aSectorName,
-                             const GDP* aGDP,
-                             const double aLogitExp,
-                             const int aPeriod ) const
+double EmptyTechnology::calcShare( const IDiscreteChoice* aChoiceFn,
+                                   const GDP* aGDP,
+                                   int aPeriod ) const
 {
     return -numeric_limits<double>::infinity();
 }

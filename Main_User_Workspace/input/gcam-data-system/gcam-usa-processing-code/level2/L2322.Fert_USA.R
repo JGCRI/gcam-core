@@ -61,6 +61,10 @@ L2322.SubsectorLogit_USAFert <- repeat_and_add_vector( subset( L2322.Supplysecto
 L2322.SubsectorLogit_USAFert[[subs]] <- paste( L2322.SubsectorLogit_USAFert$state, Fert_name, sep = " " )
 L2322.SubsectorLogit_USAFert$logit.year.fillout <- min( model_base_years )
 L2322.SubsectorLogit_USAFert$logit.exponent <- default_subsector_logit
+# TODO: some better way for a user to control the logit.type other than changing it here
+L2322.SubsectorLogit_USAFert$logit.type <- NA
+L2322.SubsectorLogitTables_USAFert <- get_logit_fn_tables( L2322.SubsectorLogit_USAFert, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=F )
 L2322.SubsectorLogit_USAFert <- L2322.SubsectorLogit_USAFert[ names_SubsectorLogit ]
 
 #Subsector shareweights
@@ -104,6 +108,7 @@ L2322.TechCoef_USAFert <- L2322.TechCoef_USAFert[ names_TechCoef ]
 printlog( "All tables for which processing is identical are done in a for loop")
 printlog( "NOTE: writing out the tables in this step as well")
 L2322.tables <- list( L2322.FinalEnergyKeyword_Fert = L2322.FinalEnergyKeyword_Fert,
+                      L2322.Supplysector_Fert = L2322.Supplysector_Fert,
                       L2322.SubsectorLogit_Fert = L2322.SubsectorLogit_Fert,
                       L2322.SubsectorShrwt_Fert = if( !is.null( L2322.SubsectorShrwt_Fert ) ) L2322.SubsectorShrwt_Fert,
                       L2322.SubsectorShrwtFllt_Fert = if( !is.null( L2322.SubsectorShrwtFllt_Fert ) ) L2322.SubsectorShrwtFllt_Fert,
@@ -111,18 +116,32 @@ L2322.tables <- list( L2322.FinalEnergyKeyword_Fert = L2322.FinalEnergyKeyword_F
                       L2322.SubsectorInterpTo_Fert = if( !is.null( L2322.SubsectorInterpTo_Fert ) ) L2322.SubsectorInterpTo_Fert,
                       L2322.StubTech_Fert = L2322.StubTech_Fert )
 
+# The logit functions should be processed before any other table that needs to read logit exponents
+L2322.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2322.Supplysector_", skip=4, include.equiv.table=T ),
+                   read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L2322.SubsectorLogit_", skip=4, include.equiv.table=F ),
+                   L2322.tables )
+
 for( i in 1:length( L2322.tables ) ){
   if( !is.null( L2322.tables[[i]] ) ){
   	  objectname <- paste0( names( L2322.tables[i] ), "_USA" )
+      if( substr( objectname, 7, 17 ) == "EQUIV_TABLE" || nrow( subset( L2322.tables[[i]], region == "USA" & supplysector == Fert_name ) ) == 0 ) {
+          # Just use the object as is
+          object <- L2322.tables[[i]]
+      } else {
 # state-level Exports_fertilizer sector should be excluded
-	  object <- write_to_all_states( subset( L2322.tables[[i]], region == "USA" & supplysector == Fert_name ), names( L2322.tables[[i]] ) )
+          object <- write_to_all_states( subset( L2322.tables[[i]], region == "USA" & supplysector == Fert_name ), names( L2322.tables[[i]] ) )
 # N fertilizer sector is not created in states where production is omitted from the census data. subset only the states where it exists
-	  object <- subset( object, region %in% Fert_states )
+          object <- subset( object, region %in% Fert_states )
 # state-level N fertilizer should not include the Imports subsector. no need for the alternative fuels either; just gas
-	  if( "subsector" %in% names( object ) ) object <- subset( object, subsector == "gas" )
+          if( "subsector" %in% names( object ) ) object <- subset( object, subsector == "gas" )
+      }
 	  assign( objectname, object )
-	  IDstringendpoint <- if( grepl( "_", names( L2322.tables )[i] ) ) { regexpr( "_", names( L2322.tables )[i], fixed = T ) - 1
-	                       } else nchar( names( L2322.tables )[i] )
+      curr_table_name <- names( L2322.tables )[i]
+      IDstringendpoint <- if( grepl( "_", curr_table_name ) & !grepl( 'EQUIV_TABLE', curr_table_name ) & !grepl( '-logit$', curr_table_name ) ) {
+          regexpr( "_", curr_table_name, fixed = T ) - 1
+      } else {
+          nchar( curr_table_name )
+      }
 	  IDstring <- substr( names( L2322.tables )[i], 7, IDstringendpoint )
 	  write_mi_data( object, IDstring, "GCAMUSA_LEVEL2_DATA", objectname, "GCAMUSA_XML_BATCH", "batch_Fert_USA.xml" )
 	  }
@@ -175,6 +194,11 @@ if( use_regional_fuel_markets ){
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L2322.FinalEnergyKeyword_USAFert, "FinalEnergyKeyword", "GCAMUSA_LEVEL2_DATA", "L2322.FinalEnergyKeyword_USAFert", "GCAMUSA_XML_BATCH", "batch_Fert_USA.xml" )
+for( curr_table in names ( L2322.SubsectorLogitTables_USAFert ) ) {
+write_mi_data( L2322.SubsectorLogitTables_USAFert[[ curr_table ]]$data, L2322.SubsectorLogitTables_USAFert[[ curr_table ]]$header,
+    "GCAMUSA_LEVEL2_DATA", paste0("L2322.", L2322.SubsectorLogitTables_USAFert[[ curr_table ]]$header, "_USAFert" ), "GCAMUSA_XML_BATCH",
+    "batch_Fert_USA.xml" )
+}
 write_mi_data( L2322.SubsectorLogit_USAFert, "SubsectorLogit", "GCAMUSA_LEVEL2_DATA", "L2322.SubsectorLogit_USAFert", "GCAMUSA_XML_BATCH", "batch_Fert_USA.xml" )
 write_mi_data( L2322.SubsectorShrwtFllt_USAFert, "SubsectorShrwtFllt", "GCAMUSA_LEVEL2_DATA", "L2322.SubsectorShrwtFllt_USAFert", "GCAMUSA_XML_BATCH", "batch_Fert_USA.xml" )
 write_mi_data( L2322.SubsectorInterp_USAFert, "SubsectorInterp", "GCAMUSA_LEVEL2_DATA", "L2322.SubsectorInterp_USAFert", "GCAMUSA_XML_BATCH", "batch_Fert_USA.xml" )

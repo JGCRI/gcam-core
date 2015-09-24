@@ -42,6 +42,7 @@
  */
 
 #include "functor.hpp"
+#include "solution/util/include/ublas-helpers.hpp"
 
 #define UBLAS boost::numeric::ublas
 
@@ -64,6 +65,19 @@ public:
   virtual Tr operator()(const UBLAS::vector<Ta> &x) {
     F(x,lstF);
     return inner_prod(lstF,lstF);
+  }
+  virtual void prn_diagnostic(std::ostream *out) {
+    int ifmax=0;
+    double fmax=fabs(lstF[0]);
+    for(int i=1;i<lstF.size();++i) {
+      if(fabs(lstF[i]) > fmax) {
+        fmax = fabs(lstF[i]);
+        ifmax = i;
+      }
+    }
+
+    (*out) << "last F: " << lstF << "\n\tfmax = " << fmax
+           << "  ifmax = " << ifmax << "\n";
   }
 };
 

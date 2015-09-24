@@ -63,7 +63,7 @@ varchk:
 	@echo LIB: $(LIB)
 
 clean :
-	-$(RM) libgcamlib.a
+	-$(RM) libgcam.a
 	-$(RM) objs/*.o
 	-$(MAKE) -C ../../containers/source  clean 
 	-$(MAKE) -C ../../demographics/source  clean 

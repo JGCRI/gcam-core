@@ -230,7 +230,7 @@
       <Optimization>Disabled</Optimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>../../../../libs/xercesc/include;../../../../libs\boost-lib;..\..\..\..\libs\java\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;_DEBUG;_WINDOWS;_AFXDLL;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;_DEBUG;_WINDOWS;_AFXDLL;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
@@ -370,7 +370,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -397,7 +397,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\boost-numeric-bindings;..\..\..\..\libs\java\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -424,7 +424,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\boost-numeric-bindings;..\..\..\..\libs\tbb\include;..\..\..\..\libs\java\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;GCAM_PARALLEL_ENABLED;NOGDI;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;GCAM_PARALLEL_ENABLED;NOGDI;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -584,10 +584,13 @@
     <ClCompile Include="..\..\emissions\source\mac_control.cpp" />
     <ClCompile Include="..\..\emissions\source\nonco2_emissions.cpp" />
     <ClCompile Include="..\..\emissions\source\output_driver.cpp" />
+    <ClCompile Include="..\..\functions\source\absolute_cost_logit.cpp" />
     <ClCompile Include="..\..\functions\source\building_function.cpp" />
     <ClCompile Include="..\..\functions\source\building_node_input.cpp" />
     <ClCompile Include="..\..\functions\source\building_service_function.cpp" />
     <ClCompile Include="..\..\functions\source\building_service_input.cpp" />
+    <ClCompile Include="..\..\functions\source\discrete_choice_factory.cpp" />
+    <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp" />
     <ClCompile Include="..\..\functions\source\satiation_demand_function.cpp" />
     <ClCompile Include="..\..\functions\source\thermal_building_service_input.cpp" />
     <ClCompile Include="..\..\land_allocator\source\carbon_land_leaf.cpp" />
@@ -646,6 +649,7 @@
     <ClCompile Include="..\..\solution\solvers\source\lognrbt.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson_sd.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\preconditioner.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\solver_component.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\solver_component_factory.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\solver_factory.cpp" />
@@ -891,10 +895,14 @@
     <ClInclude Include="..\..\emissions\include\mac_control.h" />
     <ClInclude Include="..\..\emissions\include\nonco2_emissions.h" />
     <ClInclude Include="..\..\emissions\include\output_driver.h" />
+    <ClInclude Include="..\..\functions\include\absolute_cost_logit.hpp" />
     <ClInclude Include="..\..\functions\include\building_function.h" />
     <ClInclude Include="..\..\functions\include\building_node_input.h" />
     <ClInclude Include="..\..\functions\include\building_service_function.h" />
     <ClInclude Include="..\..\functions\include\building_service_input.h" />
+    <ClInclude Include="..\..\functions\include\discrete_choice_factory.hpp" />
+    <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp" />
+    <ClInclude Include="..\..\functions\include\relative_cost_logit.hpp" />
     <ClInclude Include="..\..\functions\include\satiation_demand_function.h" />
     <ClInclude Include="..\..\functions\include\thermal_building_service_input.h" />
     <ClInclude Include="..\..\land_allocator\include\carbon_land_leaf.h" />
@@ -965,6 +973,7 @@
     <ClInclude Include="..\..\solution\solvers\include\lognrbt.hpp" />
     <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson.h" />
     <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson_sd.h" />
+    <ClInclude Include="..\..\solution\solvers\include\preconditioner.hpp" />
     <ClInclude Include="..\..\solution\solvers\include\solver.h" />
     <ClInclude Include="..\..\solution\solvers\include\solver_component.h" />
     <ClInclude Include="..\..\solution\solvers\include\solver_component_factory.h" />

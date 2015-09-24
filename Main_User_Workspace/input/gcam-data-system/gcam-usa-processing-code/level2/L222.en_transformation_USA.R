@@ -122,25 +122,40 @@ L222.tables <- list( L222.SubsectorLogit_en = L222.SubsectorLogit_en,
                      L222.GlobalTechLifetimeProfit_en = L222.GlobalTechLifetimeProfit_en,
                      L222.GlobalTechLifetime_en = L222.GlobalTechLifetime_en )
 
+# The logit functions should be processed before any other table that needs to read logit exponents
+L222.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L222.SubsectorLogit_", skip=4, include.equiv.table=T ),
+                  L222.tables )
+
 for( i in 1:length( L222.tables ) ){
   if( !is.null( L222.tables[[i]] ) ){
   	  objectname <- paste0( names( L222.tables[i] ), "_USA" )
 #Global technology database processing is simple: just set the sector name to the subsector name
-	if( substr( objectname, 6, 15 ) == "GlobalTech" ){
+    if( substr( objectname, 6, 16 ) == "EQUIV_TABLE" ) {
+        # no modifications necessary
+        object <- L222.tables[[i]]
+    }
+	else if( substr( objectname, 6, 15 ) == "GlobalTech" ){
 		object <- subset( L222.tables[[i]], sector.name %in% en_names )
 		object$sector.name <- object$subsector.name
 	}
-	if( substr( objectname, 6, 15 ) != "GlobalTech" ) {
-		object <- write_to_all_states( subset( L222.tables[[i]], region == "USA" & supplysector %in% en_names ), names( L222.tables[[i]] ) )
+	else if( substr( objectname, 6, 15 ) != "GlobalTech" ) {
+        object <- subset( L222.tables[[i]], region == "USA" & supplysector %in% en_names )
+        if( nrow( object ) > 0 ) {
+		object <- write_to_all_states( object, names( object ) )
+        }
 # oil refining sectors are not created in states where no refineries currently exist
 		object <- subset( object, subsector == "oil refining" & region %in% oil_refining_states | subsector != "oil refining" )
 # the subsector will be the supplysector at the state level
 		object[[supp]] <- object[[subs]]
 	}
 	  assign( objectname, object )
-	  IDstringendpoint <- if( grepl( "_", names( L222.tables )[i] ) ) { regexpr( "_", names( L222.tables )[i], fixed = T ) - 1
-	                       } else nchar( names( L222.tables )[i] )
-	  IDstring <- substr( names( L222.tables )[i], 6, IDstringendpoint )
+      curr_table_name <- names( L222.tables )[i]
+	  IDstringendpoint <- if( grepl( "_", curr_table_name ) & !grepl( 'EQUIV_TABLE', curr_table_name ) & !grepl( '-logit$', curr_table_name ) ) {
+        regexpr( "_", curr_table_name, fixed = T ) - 1
+      } else {
+        nchar( curr_table_name )
+      }
+	  IDstring <- substr( curr_table_name, 6, IDstringendpoint )
 	  write_mi_data( object, IDstring, "GCAMUSA_LEVEL2_DATA", objectname, "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 	  }
   }
@@ -153,6 +168,12 @@ L222.Supplysector_en_USA[ names_Supplysector[ !names_Supplysector %in% names( L2
       match( L222.Supplysector_en_USA$old_supplysector, L222.Supplysector_en$supplysector ),
       names_Supplysector[ !names_Supplysector %in% names( L222.Supplysector_en_USA ) ] ]
 L222.Supplysector_en_USA <- L222.Supplysector_en_USA[ names_Supplysector ]
+
+# Note there is no competition here so just use the default logit type
+L222.Supplysector_en_USA_logit.type <- L222.Supplysector_en_USA
+L222.Supplysector_en_USA_logit.type$logit.type <- NA
+L222.SectorLogitTables_USA <- get_logit_fn_tables( L222.Supplysector_en_USA_logit.type, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=F, write.all.regions=F )
 
 #Subsector shareweights: there is no competition here, so just fill out with 1s (will be over-ridden by base year calibration where necessary)
 printlog( "L222.SubsectorShrwtFllt_en_USA: filled out subsector shareweights of state refining sectors (no subsec competition)")
@@ -209,6 +230,11 @@ write_mi_data( L222.TechShrwt_USAen, "TechShrwt", "GCAMUSA_LEVEL2_DATA", "L222.T
 write_mi_data( L222.TechCoef_USAen, "TechCoef", "GCAMUSA_LEVEL2_DATA", "L222.TechCoef_USAen", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 write_mi_data( L222.Production_USArefining, "Production", "GCAMUSA_LEVEL2_DATA", "L222.Production_USArefining", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 
+for( curr_table in names ( L222.SectorLogitTables_USA ) ) {
+write_mi_data( L222.SectorLogitTables_USA[[ curr_table ]]$data, L222.SectorLogitTables_USA[[ curr_table ]]$header,
+    "GCAMUSA_LEVEL2_DATA", paste0("L222.", L222.SectorLogitTables_USA[[ curr_table ]]$header, "_USA" ), "GCAMUSA_XML_BATCH",
+    "batch_en_transformation_USA.xml" )
+}
 write_mi_data( L222.Supplysector_en_USA, "Supplysector", "GCAMUSA_LEVEL2_DATA", "L222.Supplysector_en_USA", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 write_mi_data( L222.SubsectorShrwtFllt_en_USA, "SubsectorShrwtFllt", "GCAMUSA_LEVEL2_DATA", "L222.SubsectorShrwtFllt_en_USA", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 write_mi_data( L222.StubTechProd_refining_USA, "StubTechProd", "GCAMUSA_LEVEL2_DATA", "L222.StubTechProd_refining_USA", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )

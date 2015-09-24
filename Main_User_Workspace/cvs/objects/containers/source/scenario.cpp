@@ -502,7 +502,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
                                           : list<string>();
 
     world->updateSummary( primaryFuelList, aPeriod ); // call to update summaries for reporting
-
+    
     // Mark that the period is now valid.
     mIsValidPeriod[ aPeriod ] = true;
     logPeriodEnding( aPeriod );

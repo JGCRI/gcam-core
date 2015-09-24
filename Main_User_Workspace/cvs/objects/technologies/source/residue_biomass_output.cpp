@@ -58,31 +58,33 @@ extern Scenario* scenario;
 // static initialize.
 const string ResidueBiomassOutput::XML_REPORTING_NAME = "output-residue-biomass";
 
-ResidueBiomassOutput::ResidueBiomassOutput( const std::string& sectorName ) : parent(),
-        mPhysicalOutputs( scenario->getModeltime()->getmaxper(), 0 ),
-        mName( sectorName ),
-        mCachedCO2Coef( ),
-        mProductLeaf( 0 ),
-        mHarvestIndex( 0 ),
-        mErosCtrl( 0 ),
-        mMassConversion( 0 ),
-        mMassToEnergy( 0 ),
-        mCostCurve( ),
-        mWaterContent( 0 )
+ResidueBiomassOutput::ResidueBiomassOutput( const std::string& sectorName ) :
+    parent(),
+    mPhysicalOutputs( scenario->getModeltime()->getmaxper(), 0 ),
+    mName( sectorName ),
+    mCachedCO2Coef( ),
+    mProductLeaf( 0 ),
+    mHarvestIndex( 0 ),
+    mErosCtrl( 0 ),
+    mMassConversion( 0 ),
+    mWaterContent( 0 ),
+    mMassToEnergy( 0 ),
+    mCostCurve( )
 
 {
 }
 
-ResidueBiomassOutput::ResidueBiomassOutput( const ResidueBiomassOutput& other ) : parent(),
-        mPhysicalOutputs( scenario->getModeltime()->getmaxper(), 0 ), // Do not copy results
-        mName( other.mName ),
-        mCachedCO2Coef( other.mCachedCO2Coef ),
-        mProductLeaf( other.mProductLeaf ),
-        mHarvestIndex( other.mHarvestIndex ),
-        mErosCtrl( other.mErosCtrl ),
-        mMassConversion( other.mMassConversion ),
-        mMassToEnergy( other.mMassToEnergy ),
-        mWaterContent( other.mWaterContent )
+ResidueBiomassOutput::ResidueBiomassOutput( const ResidueBiomassOutput& other ) :
+    parent(),
+    mPhysicalOutputs( scenario->getModeltime()->getmaxper(), 0 ), // Do not copy results
+    mName( other.mName ),
+    mCachedCO2Coef( other.mCachedCO2Coef ),
+    mProductLeaf( other.mProductLeaf ),
+    mHarvestIndex( other.mHarvestIndex ),
+    mErosCtrl( other.mErosCtrl ),
+    mMassConversion( other.mMassConversion ),
+    mWaterContent( other.mWaterContent ),
+    mMassToEnergy( other.mMassToEnergy )
 {
     mCostCurve.reset( other.mCostCurve->clone() );
 }

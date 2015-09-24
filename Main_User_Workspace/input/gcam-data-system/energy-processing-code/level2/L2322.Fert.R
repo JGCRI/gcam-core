@@ -43,6 +43,8 @@ L142.ag_Fert_NetExp_MtN_R_Y <- readdata( "AGLU_LEVEL1_DATA", "L142.ag_Fert_NetEx
 #Create tables to delete technologies and subsectors in regions where heat is not modeled as a fuel
 # 2a. Supplysector information
 printlog( "L2322.Supplysector_Fert: Supply sector information for fertilizer sector" )
+L2322.SectorLogitTables <- get_logit_fn_tables( A322.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L2322.Supplysector_Fert <- write_to_all_regions( A322.sector, names_Supplysector )
 
 printlog( "L2322.FinalEnergyKeyword_Fert: Supply sector keywords for fertilizer sector" )
@@ -50,6 +52,8 @@ L2322.FinalEnergyKeyword_Fert <- na.omit( write_to_all_regions( A322.sector, nam
 
 # 2b. Subsector information
 printlog( "L2322.SubsectorLogit_Fert: Subsector logit exponents of fertilizer sector" )
+L2322.SubsectorLogitTables <- get_logit_fn_tables( A322.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L2322.SubsectorLogit_Fert <- write_to_all_regions( A322.subsector_logit, names_SubsectorLogit )
 
 printlog( "L2322.SubsectorShrwt_Fert and L2322.SubsectorShrwtFllt_Fert: Subsector shareweights of fertilizer sector" )
@@ -206,9 +210,19 @@ L2322.BaseService_Fert <- data.frame(
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L2322.SectorLogitTables) ) {
+write_mi_data( L2322.SectorLogitTables[[ curr_table ]]$data, L2322.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L2322.", L2322.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_en_Fert.xml" )
+}
 write_mi_data( L2322.Supplysector_Fert, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L2322.Supplysector_Fert",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_en_Fert.xml" ) 
 write_mi_data( L2322.FinalEnergyKeyword_Fert, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L2322.FinalEnergyKeyword_Fert", "ENERGY_XML_BATCH", "batch_en_Fert.xml" ) 
+for( curr_table in names ( L2322.SubsectorLogitTables ) ) {
+write_mi_data( L2322.SubsectorLogitTables[[ curr_table ]]$data, L2322.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L2322.", L2322.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_en_Fert.xml" )
+}
 write_mi_data( L2322.SubsectorLogit_Fert, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L2322.SubsectorLogit_Fert", "ENERGY_XML_BATCH", "batch_en_Fert.xml" ) 
 if( exists( "L2322.SubsectorShrwt_Fert" ) ){
 	write_mi_data( L2322.SubsectorShrwt_Fert, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L2322.SubsectorShrwt_Fert", "ENERGY_XML_BATCH", "batch_en_Fert.xml" )

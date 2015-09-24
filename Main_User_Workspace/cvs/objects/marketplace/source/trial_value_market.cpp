@@ -124,6 +124,14 @@ double TrialValueMarket::getSupply() const {
     return Market::getSupply();
 }
 
+/*! Perform default Market::addToSupply behavior
+ *
+ * \todo I believe this function should be a no-op, rather than
+ *       running the default addToSupply.  Since supply should always
+ *       equal price, it should never be possible to add to it
+ *       independently.  (Arguably it's an error to call this method
+ *       at all.)
+ */
 void TrialValueMarket::addToSupply( const double supplyIn ) {
     Market::addToSupply( supplyIn );
 }
@@ -145,11 +153,8 @@ bool TrialValueMarket::shouldSolve() const {
 }
 
 bool TrialValueMarket::shouldSolveNR() const {
-    bool doSolveMarket = false;
-    // Check if this market is a type that is solved.
-    if ( solveMarket ) {
-        // Solve all solvable markets including those with null demand.
-        doSolveMarket = true;
-    }
-    return doSolveMarket;
+    // Allow NR to solve trial value markets, even if they don't
+    // otherwise meet the NR criteria.  The edfun.cpp module makes
+    // special allowance for this type of market.
+    return shouldSolve();
 }

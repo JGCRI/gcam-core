@@ -282,7 +282,7 @@ double ExplicitPointSet::getNearestXBelow( const double x ) const {
     double closestX = -DBL_MAX;
     for( DataPointConstIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         double currX = ( *pointsIter )->getX();
-        if( ( currX < x ) && ( fabs( x - currX ) < fabs( x - closestX ) ) ){
+        if( ( currX < x ) && currX > closestX ){
             closestX = currX;
         }
     }
@@ -294,7 +294,7 @@ double ExplicitPointSet::getNearestXAbove( const double x ) const {
     double closestX = DBL_MAX;
     for( DataPointConstIterator pointsIter = points.begin(); pointsIter != points.end(); pointsIter++ ){
         double currX = ( *pointsIter )->getX();
-        if( ( currX > x ) && ( fabs( currX - x ) < fabs( closestX - x ) ) ){
+        if( ( currX > x ) && currX < closestX ){
             closestX = currX;
         }
     }

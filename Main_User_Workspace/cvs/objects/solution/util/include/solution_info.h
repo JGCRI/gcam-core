@@ -129,6 +129,12 @@ public:
     bool hasBisected() const;
     const std::vector<const objects::Atom*>& getContainedRegions() const;
     const std::vector<IActivity*>& getDependencies() const;
+
+    double getLowerBoundSupplyPrice() const;
+    double getUpperBoundSupplyPrice() const;
+    double getForecastPrice() const;
+    double getForecastDemand() const;
+
     const IInfo* getMarketInfo() const;
 #if GCAM_PARALLEL_ENABLED
     GcamFlowGraph* getFlowGraph() const;

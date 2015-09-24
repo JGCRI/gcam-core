@@ -81,7 +81,7 @@ class LogNRbt: public SolverComponent {
 public:
     LogNRbt( Marketplace* mktplc, World* world, CalcCounter* ccounter, int itmax=250,
              double ftol=1.0e-7 ) : SolverComponent(mktplc,world,ccounter),
-                                    mMaxIter(itmax), mFTOL(ftol) {}
+                                    mMaxIter(itmax), mFTOL(ftol), mLogPricep(true) {}
     virtual ~LogNRbt() {}
     
     // SolverComponent methods
@@ -126,6 +126,8 @@ protected:
     //! A filter which will be used to determine which SolutionInfos with solver component
     //! will work on.
     std::auto_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
+
+  bool mLogPricep;              //<! flag indicating whether we should work in price or log-price 
 
 private:
     static std::string SOLVER_NAME;

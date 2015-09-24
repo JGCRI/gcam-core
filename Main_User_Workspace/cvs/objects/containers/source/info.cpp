@@ -56,9 +56,9 @@ using namespace std;
 *        which may be null.
 */
 Info::Info( const IInfo* aParentInfo, const string& aOwnerName ) :
-mParentInfo( aParentInfo ),
 mOwnerName( aOwnerName ),
-mInfoMap( new InfoMap( getInitialSize() ) )
+mInfoMap( new InfoMap( getInitialSize() ) ),
+mParentInfo( aParentInfo )
 {
 }
 

@@ -1070,7 +1070,8 @@ void runmod( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, CARB_bl
     //F3650 !
     //F3651       DIMENSION AA(40),BB(40),A(40),B(40),C(40),D(40),XLLGLOBE(2), &
     //F3652       XLLDIFF(2)
-    float AA[ 40+1 ], BB[ 40+1 ], A[ 40+1 ], B[ 40+1 ], C[ 40+1 ], D[ 40+1 ], XLLGLOBE[ 2+1 ], XLLDIFF[ 2+1 ];
+    float AA[ 40+1 ]={0.0f}, BB[ 40+1 ]={0.0f}, A[ 40+1 ]={0.0f}, B[ 40+1 ]={0.0f};
+    float C[ 40+1 ]={0.0f}, D[ 40+1 ]={0.0f}, XLLGLOBE[ 2+1 ]={0.0f}, XLLDIFF[ 2+1 ]={0.0f};
     //F3653 !
     //F3654       common /Limits/KEND
     //F3655 !
@@ -1940,7 +1941,7 @@ void runmod( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, CARB_bl
         if( VARW->IVARW == 2 && VARW->KEYDW >= 4 ) AW = 1.0 - NSIM->WTHRESH / CLIM->W0;
         //F4198 !
         //F4199       IF((KEYDW.EQ.1).OR.(KEYDW.EQ.4))THEN
-        float TNKEY, TSKEY;
+        float TNKEY=0.0f, TSKEY=0.0f;
         if( VARW->KEYDW == 1 || VARW->KEYDW == 4 )
             //F4200         TNKEY=GLOBET
             //F4201         TSKEY=GLOBET
@@ -2195,7 +2196,7 @@ void deltaq( Limits_block* Limits, OZ_block* OZ, CLIM_block* CLIM, CONCS_block* 
             //F4389 !   INITIALIZE FUTURE CONCS
             //F4390 !
             //F4391         if(j.ge.226)then
-            float ejkeep, ej1keep;
+            float ejkeep=0.0f, ej1keep=0.0f;
             if( J >= 226 ) {
                 //F4392           ejkeep=eso2(j)
                 ejkeep = CONCS->ESO2.getval( J );
@@ -2406,7 +2407,7 @@ void deltaq( Limits_block* Limits, OZ_block* OZ, CLIM_block* CLIM, CONCS_block* 
             //F4522 !  SET MODEL PARAMETERS FOR USER CASE
             //F4523 !
             //F4524         IF(LEVCH4.EQ.1)THEN
-            float SSUSER, ANOXUSER, ACOUSER, AVOCUSER;
+            float SSUSER=0.0f, ANOXUSER=0.0f, ACOUSER=0.0f, AVOCUSER=0.0f;
             if( METH2->LEVCH4 == 1 ) {
                 //F4525           SSUSER=SCH4-DELSS
                 SSUSER = METH3->SCH4 - METH3->DELSS;
@@ -3518,7 +3519,7 @@ void carbon( const int MM, float TEM, float EFOSS, float ENETDEF, float CPP, flo
     //F5285       parameter (iTp=740)
     //F5286 !
     //F5287       DIMENSION A1(4,5)
-    float A1[ 4+1 ][ 5+1 ];
+    float A1[ 4+1 ][ 5+1 ]={{0.0f}};
     //F5288 !
     //F5289       INTEGER FERTTYPE,TOTEM,CONVTERP
     //F5290 !
@@ -3967,7 +3968,7 @@ void history( const int JJJ, float* CO2, float* CH4, float* CN2O, float* eso2, f
     //F5573 !
     //F5574       Y=JJJ+1764.0
     const float Y = JJJ + 1764.0;
-    float Y1, YY, CONC0, A, B, D, YY2;
+    float Y1=0.0f, YY=0.0f, CONC0=0.0f, A=0.0f, B=0.0f, D=0.0f, YY2=0.0f;
     //F5575 !
     //F5576 !  Y CORRESPS TO END OF YEAR. E.G. IF JJJ=236, Y=2000.0, SO CONC
     //F5577 !   OUTPUT IS VALUE AT END OF YEAR 2000.
@@ -4127,7 +4128,7 @@ void history( const int JJJ, float* CO2, float* CH4, float* CN2O, float* eso2, f
         int J = JJJ+I;
         //F5691       ymid = J+1764.
         int ymid = J+1764;
-        float ee;
+        float ee=0.0f;
         //F5692       if(ymid.lt.1860.) then
         //F5693         ee = 0.0
         if( ymid < 1860 ) ee = 0.0;
@@ -4186,7 +4187,7 @@ void methane( float ICH4F, float CPREV, float E, float DEN, float DEC, float DEV
     //F5732 !
     //F5733       COMMON /METH4/GAM,TAUOTHER,BBCH4,CM00
     //F5734       Real TauSave(10)
-    float TauSave[ 10+1 ];
+    float TauSave[ 10+1 ]={0.0f};
     //F5735 !  ************************************************************
     //F5736 !
     //F5737 !  METHANE CONC PROJECTION.
@@ -4580,10 +4581,10 @@ void lamcalc( float Q, float FNHL, float FSHL, float XK, float XKH, float DT2X,
     //F5990 !   ARE USED HERE.
     //F5991 !
     //F5992       DIMENSION AEST(100),DIFF(100)
-    float AEST[ 100+1 ], DIFF[ 100+1 ];
+    float AEST[ 100+1 ]={0.0f}, DIFF[ 100+1 ]={0.0f};
     //F5993 !
     //F5994       REAL LAMO(100),LAML(100),LAMOBEST,LAMLBEST,LAM,KLO,KNS
-    float LAMO[ 100+1 ], LAML[ 100+1 ];
+    float LAMO[ 100+1 ]={0.0f}, LAML[ 100+1 ]={0.0f};
     //F5995 !
     //F5996       KLO=XK/2.0
     const float KLO = XK / 2.0;
@@ -5446,7 +5447,7 @@ float GETCARBONRESULTS( int iResultNumber, int inYear )
     //F6498 
     //F6499 	  REAL*4 getCarbonResults
     //F6500 	  REAL*4 NetDef, GrossDef
-    float NetDef, GrossDef, TOTE;
+    float NetDef=0.0f, GrossDef=0.0f, TOTE=0.0f;
     //F6501 
     //F6502         
     //F6503       IYR = inYear-1990+226
@@ -5484,7 +5485,7 @@ float GETCARBONRESULTS( int iResultNumber, int inYear )
     if( G_METH1->IMETH == 0.0 ) ECH4OX = 0.0;
     //F6523       
     //F6524       getCarbonResults = - 1.0
-    float returnValue;
+    float returnValue=0.0f;
     //F6525       
     //F6526       select case (iResultNumber)
     switch( iResultNumber ) {

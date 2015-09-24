@@ -55,9 +55,10 @@ extern Scenario* scenario;
 using namespace std;
 using namespace xercesc;
 
-SGMOutput::SGMOutput( const string& aSectorName )
-    : mName( aSectorName ), mPhysicalOutputs( scenario->getModeltime()->getmaxper() ),
-      mCachedCO2Coef( 0 )
+SGMOutput::SGMOutput( const string& aSectorName ) :
+  mPhysicalOutputs( scenario->getModeltime()->getmaxper() ),
+  mName( aSectorName ),
+  mCachedCO2Coef( 0 )
 {
 }
 

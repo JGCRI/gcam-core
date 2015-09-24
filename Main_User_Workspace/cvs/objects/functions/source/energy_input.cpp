@@ -93,11 +93,13 @@ const string& EnergyInput::getXMLReportingName() const{
 }
 
 //! Constructor
-EnergyInput::EnergyInput()
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() ),
-  mCarbonContent( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ),
-  mPriceUnitConversionFactor( 1 )
+EnergyInput::EnergyInput() :
+    mCoefficient( 0 ),
+    mPriceUnitConversionFactor( 1 ),
+    mPhysicalDemand( scenario->getModeltime()->getmaxper() ),
+    mCarbonContent( scenario->getModeltime()->getmaxper() ),
+    mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ),
+    mCachedMarket( 0 )
 {
 }
 

@@ -80,6 +80,17 @@ L254.StubTech_nonmotor <- L254.StubTech_nonmotor[ names_StubTranTech ]
 
 printlog( "L254.Supplysector_trn: Supply sector information for transportation sector" )
 #Writing the generic supplysector table to all regions may generate combinations that don't apply
+L254.SectorLogitTables <- get_logit_fn_tables( A54.sector, names_SupplysectorLogitType, base.header="Supplysector_",
+    include.equiv.table=T, write.all.regions=T )
+for( curr_table in names( L254.SectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L254.SectorLogitTables[[ curr_table ]]$data <- L254.SectorLogitTables[[ curr_table ]]$data[
+            vecpaste( L254.SectorLogitTables[[ curr_table ]]$data[ c( "region", "supplysector" ) ] ) %in%
+            c( vecpaste( L254.StubTranTech[ c( "region", "supplysector" ) ] ),
+               vecpaste( L254.StubTech_passthru[ c( "region", "supplysector" ) ] ),
+               vecpaste( L254.StubTech_nonmotor[ c( "region", "supplysector" ) ] ) ), ]
+    }
+}
 L254.Supplysector_trn <- write_to_all_regions( A54.sector, names_Supplysector )
 
 #Subset only the combinations of region and supplysector that are available in the stub technology table
@@ -97,6 +108,17 @@ L254.FinalEnergyKeyword_trn <- na.omit( L254.FinalEnergyKeyword_trn[ names_Final
 
 # 2b. Subsector information
 printlog( "L254.tranSubsectorLogit: Subsector logit exponents of transportation sector" )
+L254.SubsectorLogitTables <- get_logit_fn_tables( A54.tranSubsector_logit, names_tranSubsectorLogitType,
+    base.header="tranSubsector_", include.equiv.table=F, write.all.regions=T )
+for( curr_table in names( L254.SubsectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L254.SubsectorLogitTables[[ curr_table ]]$data <- L254.SubsectorLogitTables[[ curr_table ]]$data[
+            vecpaste( L254.SubsectorLogitTables[[ curr_table ]]$data[ names_tranSubsector ] ) %in%
+            c( vecpaste( L254.StubTranTech[ names_tranSubsector ] ),
+               vecpaste( L254.StubTech_passthru[ names_tranSubsector ] ),
+               vecpaste( L254.StubTech_nonmotor[ names_tranSubsector ] ) ), ]
+    }
+}
 L254.tranSubsectorLogit <- write_to_all_regions( A54.tranSubsector_logit, names_tranSubsectorLogit )
 L254.tranSubsectorLogit <- L254.tranSubsectorLogit[
       vecpaste( L254.tranSubsectorLogit[ names_tranSubsector ] ) %in%
@@ -388,9 +410,19 @@ L254.BaseService_trn <- aggregate( L254.AllTechOutput[ "base.service" ],
       
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L254.SectorLogitTables) ) {
+write_mi_data( L254.SectorLogitTables[[ curr_table ]]$data, L254.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L254.", L254.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_transportation_UCD.xml" )
+}
 write_mi_data( L254.Supplysector_trn, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L254.Supplysector_trn",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_transportation_UCD.xml" ) 
 write_mi_data( L254.FinalEnergyKeyword_trn, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L254.FinalEnergyKeyword_trn", "ENERGY_XML_BATCH", "batch_transportation_UCD.xml" ) 
+for( curr_table in names ( L254.SubsectorLogitTables ) ) {
+write_mi_data( L254.SubsectorLogitTables[[ curr_table ]]$data, L254.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L254.", L254.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_transportation_UCD.xml" )
+}
 write_mi_data( L254.tranSubsectorLogit, "tranSubsectorLogit", "ENERGY_LEVEL2_DATA", "L254.tranSubsectorLogit", "ENERGY_XML_BATCH", "batch_transportation_UCD.xml" ) 
 if( exists( "L254.SubsectorShrwt_trn" ) ){
 	write_mi_data( L254.tranSubsectorShrwt, "tranSubsectorShrwt", "ENERGY_LEVEL2_DATA", "L254.tranSubsectorShrwt", "ENERGY_XML_BATCH", "batch_transportation_UCD.xml" )

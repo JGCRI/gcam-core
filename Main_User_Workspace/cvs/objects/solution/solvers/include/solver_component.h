@@ -78,6 +78,7 @@ public:
         FAILURE_SOLUTION_SIZE_CHANGED,
         FAILURE_SINGULAR_MATRIX,
         FAILURE_ZERO_GRADIENT,
+        FAILURE_POOR_PROGRESS,
         FAILURE_UNKNOWN
     };
    SolverComponent( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );

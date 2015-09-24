@@ -49,8 +49,7 @@ using namespace std;
 
 //! Constructor
 PriceMarket::PriceMarket( const string& goodNameIn, const string& regionNameIn, int periodIn, Market* demandMarketIn ) :
-  Market( goodNameIn, regionNameIn, periodIn ),
-mIsPriceNegative( false )
+  Market( goodNameIn, regionNameIn, periodIn )
 {
     assert( demandMarketIn );
     demandMarketPointer = demandMarketIn;
@@ -59,8 +58,7 @@ mIsPriceNegative( false )
 
 //! Copy Constructor.
 PriceMarket::PriceMarket( Market& marketIn, Market* demandMarketIn ) : 
-Market( marketIn ),
-mIsPriceNegative( false )
+Market( marketIn )
 {
     assert( demandMarketIn );
     demandMarketPointer = demandMarketIn;
@@ -98,25 +96,14 @@ void PriceMarket::initPrice() {
 * \sa setPriceToLast
 */
 void PriceMarket::setPrice( const double priceIn ) {
-    // If the model thinks the price should be negative store that information
-    // and hide the fact from the solver.
-    double demandtmp;
-    if( priceIn < 0 ) {
-        mIsPriceNegative = true;
-        demandtmp = abs( priceIn );
-    }
-    else {
-        mIsPriceNegative = false;
-        demandtmp = priceIn;
-    }
 #if GCAM_PARALLEL_ENABLED
     demand.clear();
-    demand.local() = demandtmp;
+    demand.local() = priceIn;
     
     supply.clear();
     supply.local() = price;
 #else
-    demand = demandtmp;
+    demand = priceIn;
     supply = price;
 #endif
 }
@@ -130,8 +117,7 @@ void PriceMarket::set_price_to_last( const double lastPrice ) {
 }
 
 double PriceMarket::getPrice() const {
-    // This is the model facing price so if it should be negative make it so now.
-    return mIsPriceNegative ? -price : price; 
+    return price; 
 }
 
 void PriceMarket::addToDemand( const double demandIn ) {
@@ -163,5 +149,8 @@ bool PriceMarket::shouldSolve() const {
 }
 
 bool PriceMarket::shouldSolveNR() const {
-    return Market::shouldSolveNR();
+    // A price market is solving an equality constraint, so we should
+    // try to solve it even when price, supply, and demand are all
+    // negative.
+    return shouldSolve();
 }

@@ -41,10 +41,14 @@ L126.IO_R_gaspipe_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L126.IO_R_gaspipe_F_Y
 # 2. Build tables for CSVs
 # 2a. Supplysector information
 printlog( "L226.Supplysector_en: Supply sector information for energy distribution sectors" )
+L226.SectorLogitTables <- get_logit_fn_tables( A26.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L226.Supplysector_en <- write_to_all_regions( A26.sector, names_Supplysector )
 
 # 2b. Subsector information
 printlog( "L226.SubsectorLogit_en: Subsector logit exponents of energy distribution sectors" )
+L226.SubsectorLogitTables <- get_logit_fn_tables( A26.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L226.SubsectorLogit_en <- write_to_all_regions( A26.subsector_logit, names_SubsectorLogit )
 
 printlog( "L226.SubsectorShrwt_en and L226.SubsectorShrwtFllt_en: Subsector shareweights of energy distribution sectors" )
@@ -152,8 +156,18 @@ L226.StubTechCoef_gaspipe$market.name <- L226.IO_R_gaspipe_F_Y$region
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L226.SectorLogitTables) ) {
+write_mi_data( L226.SectorLogitTables[[ curr_table ]]$data, L226.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L226.", L226.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_en_distribution.xml" )
+}
 write_mi_data( L226.Supplysector_en, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L226.Supplysector_en",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_en_distribution.xml" ) 
+for( curr_table in names ( L226.SubsectorLogitTables ) ) {
+write_mi_data( L226.SubsectorLogitTables[[ curr_table ]]$data, L226.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L226.", L226.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_en_distribution.xml" )
+}
 write_mi_data( L226.SubsectorLogit_en, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L226.SubsectorLogit_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" ) 
 if( exists( "L226.SubsectorShrwt_en" ) ){
 	write_mi_data( L226.SubsectorShrwt_en, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L226.SubsectorShrwt_en", "ENERGY_XML_BATCH", "batch_en_distribution.xml" )

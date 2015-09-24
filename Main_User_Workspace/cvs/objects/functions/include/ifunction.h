@@ -69,18 +69,18 @@ struct TechChange {
      */
     TechChange( const double aMaterialTechChange,
                 const double aEnergyTechChange,
-                const double aHicksTechChange )
-    : mMaterialTechChange( aMaterialTechChange ),
-      mEnergyTechChange( aEnergyTechChange ),
-      mHicksTechChange( aHicksTechChange )
+                const double aHicksTechChange ) :
+        mEnergyTechChange( aEnergyTechChange ),
+        mMaterialTechChange( aMaterialTechChange ),
+        mHicksTechChange( aHicksTechChange )
     {}
 
     /*!
      * \brief Default constructor.
      */
-    TechChange()
-        : mMaterialTechChange( 0 ),
+    TechChange() :
           mEnergyTechChange( 0 ),
+          mMaterialTechChange( 0 ),
           mHicksTechChange( 0 )
     {}
 

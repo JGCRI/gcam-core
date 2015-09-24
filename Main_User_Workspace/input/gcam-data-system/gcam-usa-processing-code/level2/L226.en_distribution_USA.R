@@ -50,10 +50,12 @@ printlog( "L226.Supplysector_en_USA: Supply sector information for energy handli
 printlog( "NOTE: Currently using FERC regions as a proxy for regional energy markets")
 energy_market_regions <- sort( unique( states_subregions$grid_region ) )
 L226.Supplysector_en_USA <- repeat_and_add_vector(
-      rbind( subset( A21.sector[ names( A21.sector ) %in% names_Supplysector ], supplysector %in% regional_fuel_markets ),
-             subset( A26.sector[ names( A26.sector ) %in% names_Supplysector ], supplysector %in% regional_fuel_markets ) ),
+      rbind( subset( A21.sector[ names( A21.sector ) %in% c( names_Supplysector, "logit.type" ) ], supplysector %in% regional_fuel_markets ),
+             subset( A26.sector[ names( A26.sector ) %in% c( names_Supplysector, "logit.type" ) ], supplysector %in% regional_fuel_markets ) ),
       reg, energy_market_regions )
 L226.Supplysector_en_USA$logit.year.fillout <- min( model_base_years )
+L226.SectorLogitTables_en_USA <- get_logit_fn_tables( L226.Supplysector_en_USA, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=F )
 L226.Supplysector_en_USA <- L226.Supplysector_en_USA[ names_Supplysector ]
 
 printlog( "L226.SubsectorShrwtFllt_en_USA: subsector shareweights of energy handling and delivery" )
@@ -62,6 +64,15 @@ L226.SubsectorShrwtFllt_en_USA$subsector <- L226.SubsectorShrwtFllt_en_USA$suppl
 L226.SubsectorShrwtFllt_en_USA$year.fillout <- min( model_base_years )
 L226.SubsectorShrwtFllt_en_USA$share.weight <- 1
 L226.SubsectorShrwtFllt_en_USA <- L226.SubsectorShrwtFllt_en_USA[ names_SubsectorShrwtFllt ]
+
+# NOTE: There is only one tech per subsector so the logit choice does not matter
+L226.SubsectorLogit_en_USA <- data.frame(
+      L226.SubsectorShrwtFllt_en_USA[ names_Subsector ],
+      logit.year.fillout=min( model_base_years ), logit.exponent=-3,
+      logit.type=NA )
+L226.SubsectorLogitTables_en_USA <- get_logit_fn_tables( L226.SubsectorLogit_en_USA, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=F )
+L226.SubsectorLogit_en_USA <- L226.SubsectorLogit_en_USA[, names_SubsectorLogit ]
 
 printlog( "NOTE: can't use stub technologies because these would inherit the wrong energy-inputs" )
 printlog( "L226.TechShrwt_en_USA: technology shareweights of energy handling and delivery" )
@@ -133,13 +144,27 @@ L226.tables <- list( L226.Supplysector_electd = L226.Supplysector_en,
                      L226.SubsectorInterp_electd = L226.SubsectorInterp_en,
                      L226.SubsectorInterpTo_electd = L226.SubsectorInterpTo_en )
 
+# The logit functions should be processed before any other table that needs to read logit exponents
+L226.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L226.Supplysector_", skip=4, include.equiv.table=T ),
+                  read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L226.SubsectorLogit_", skip=4, include.equiv.table=F ),
+                  L226.tables )
+
 for( i in 1:length( L226.tables ) ){
   if( !is.null( L226.tables[[i]] ) ){
 	objectname <- paste0( names( L226.tables[i] ), "_USA" )
-	object <- write_to_all_states( subset( L226.tables[[i]], region == "USA" & supplysector %in% elect_td_sectors ), names( L226.tables[[i]] ) )
+    if( substr( objectname, 6, 16 ) == "EQUIV_TABLE" || nrow( subset( L226.tables[[i]], region == "USA" & supplysector %in% elect_td_sectors ) ) == 0 ) {
+        # Just use the object as is
+        object <- L226.tables[[i]]
+    } else {
+        object <- write_to_all_states( subset( L226.tables[[i]], region == "USA" & supplysector %in% elect_td_sectors ), names( L226.tables[[i]] ) )
+    }
 	assign( objectname, object )
-	IDstringendpoint <- if( grepl( "_", names( L226.tables )[i] ) ) { regexpr( "_", names( L226.tables )[i], fixed = T ) - 1
-	                       } else nchar( names( L226.tables )[i] )
+    curr_table_name <- names( L226.tables )[i]
+    IDstringendpoint <- if( grepl( "_", curr_table_name ) & !grepl( 'EQUIV_TABLE', curr_table_name ) & !grepl( '-logit$', curr_table_name ) ) {
+        regexpr( "_", curr_table_name, fixed = T ) - 1
+    } else {
+        nchar( curr_table_name )
+    }
 	IDstring <- substr( names( L226.tables )[i], 6, IDstringendpoint )
 	write_mi_data( object, IDstring, "GCAMUSA_LEVEL2_DATA", objectname, "GCAMUSA_XML_BATCH", "batch_electd_USA.xml" )
 	  }
@@ -178,9 +203,20 @@ insert_file_into_batchxml( "GCAMUSA_XML_BATCH", "batch_electd_USA.xml", "GCAMUSA
 
 ## if the regional fuel market are not being used, then don't even bother writing these out
 if( use_regional_fuel_markets ){
+    for( curr_table in names ( L226.SectorLogitTables_en_USA ) ) {
+    write_mi_data( L226.SectorLogitTables_en_USA[[ curr_table ]]$data, L226.SectorLogitTables_en_USA[[ curr_table ]]$header,
+        "GCAMUSA_LEVEL2_DATA", paste0("L226.", L226.SectorLogitTables_en_USA[[ curr_table ]]$header, "_en_USA" ), "GCAMUSA_XML_BATCH",
+        "batch_en_prices_USA.xml" )
+    }
 	write_mi_data( L226.Supplysector_en_USA, IDstring="Supplysector", domain="GCAMUSA_LEVEL2_DATA", fn="L226.Supplysector_en_USA",
                batch_XML_domain="GCAMUSA_XML_BATCH", batch_XML_file="batch_en_prices_USA.xml" ) 
 	write_mi_data( L226.SubsectorShrwtFllt_en_USA, "SubsectorShrwtFllt", "GCAMUSA_LEVEL2_DATA", "L226.SubsectorShrwtFllt_en_USA", "GCAMUSA_XML_BATCH", "batch_en_prices_USA.xml" ) 
+    for( curr_table in names ( L226.SubsectorLogitTables_en_USA ) ) {
+    write_mi_data( L226.SubsectorLogitTables_en_USA[[ curr_table ]]$data, L226.SubsectorLogitTables_en_USA[[ curr_table ]]$header,
+        "GCAMUSA_LEVEL2_DATA", paste0("L226.", L226.SubsectorLogitTables_en_USA[[ curr_table ]]$header, "_en_USA" ), "GCAMUSA_XML_BATCH",
+        "batch_en_prices_USA.xml" )
+    }
+    write_mi_data( L226.SubsectorLogit_en_USA, "SubsectorLogit", "GCAMUSA_LEVEL2_DATA", "L226.SubsectorLogit_en_USA", "GCAMUSA_XML_BATCH", "batch_en_prices_USA.xml" )
 	write_mi_data( L226.TechShrwt_en_USA, "TechShrwt", "GCAMUSA_LEVEL2_DATA", "L226.TechShrwt_en_USA", "GCAMUSA_XML_BATCH", "batch_en_prices_USA.xml" ) 
 	write_mi_data( L226.TechCoef_en_USA, "TechCoef", "GCAMUSA_LEVEL2_DATA", "L226.TechCoef_en_USA", "GCAMUSA_XML_BATCH", "batch_en_prices_USA.xml" ) 
 	write_mi_data( L226.TechCost_en_USA, "TechCost", "GCAMUSA_LEVEL2_DATA", "L226.TechCost_en_USA", "GCAMUSA_XML_BATCH", "batch_en_prices_USA.xml" ) 

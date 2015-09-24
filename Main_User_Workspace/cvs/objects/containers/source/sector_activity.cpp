@@ -83,7 +83,7 @@ SectorActivity::~SectorActivity() {
  * \param aPeriod Model period to calculate.
  */
 void SectorActivity::setPrices( const int aPeriod ) {
-    const bool calibrationPeriod = aPeriod > 0 && aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod();
+    const bool calibrationPeriod = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod();
     static const bool calibrationActive = Configuration::getInstance()->getBool( "CalibrationActive" );
     if( calibrationActive && calibrationPeriod ) {
         CalibrateShareWeightVisitor calibrator( mRegionName, mGDP );

@@ -1397,8 +1397,9 @@ void XMLHelper<T>::serializeNode( const xercesc::DOMNode* aNode, std::ostream& a
             }
             break;
         }
-            
-        // otherwise not handled by this serializer
+        default:
+            // otherwise not handled by this serializer
+            break;
     }
 }
 

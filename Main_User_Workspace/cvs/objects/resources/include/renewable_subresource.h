@@ -83,5 +83,6 @@ public:
     //! Return the XML tag name
     static const std::string& getXMLNameStatic( void );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual double getLowestPrice( const int aPeriod ) const;
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

@@ -76,7 +76,7 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
                FTYPE &fx, int &neval, std::ostream *solverlog = 0)
 {
   const FTYPE lseps = 1.0e-7;   // part of the definition of "sufficient" decrease
-  const FTYPE TOLX = 1.0e-14;    // tolerance for x values
+  const FTYPE TOLX = 1.0e-6;    // tolerance for x values
   // NB: This value of TOLX is way too small for single-precision,
   // but we're running GCAM in double precision anyhow, and the small
   // tolerance seems to be necessary for solving global unconventional
@@ -88,6 +88,15 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
   FTYPE lambda = 1.0;           // start with full step
   FTYPE maxval = 0.0;
 
+  if(g0dx >= 0) {
+    if(solverlog)
+      (*solverlog) << "Linesearch aborted.  Not an initial descent direction.  g0dx= "
+                   << g0dx << "\n";
+    return 1;                   // If we're being called by Broyden's
+                                // method, this will trigger a recalc
+                                // on the Jacobian
+  }
+  
   // set lmin (minimum admissable value for lambda)
   for(int i=0; i<n; ++i) {
     FTYPE tmp = fabs(dx[i] / (x0[i] + TOLX)); // fractional change in ith component of x over a unit step
@@ -105,8 +114,13 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
     fx = f(x);
     neval++;
 
-    if(solverlog)
-      (*solverlog) << "\tlambda = " << lambda << "  fx = " << fx << "\n";
+    if(solverlog) {
+        (*solverlog) << "\tlambda = " << lambda << "  fx = " << fx << std::endl;
+      if(fx > 10.0*f0) {
+        f.prn_diagnostic(solverlog);
+        (*solverlog) << std::endl;
+      }
+    }
 
     // check for exit condition.  The term after the + is negative, so
     // it specifies a minimum rate of decrease.  lseps is set fairly

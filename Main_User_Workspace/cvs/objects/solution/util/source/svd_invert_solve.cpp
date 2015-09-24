@@ -39,6 +39,8 @@
 #include <boost/numeric/bindings/traits/ublas_matrix.hpp>
 #include <boost/numeric/ublas/operation.hpp>
 
+#include "solution/util/include/ublas-helpers.hpp"
+
 #include "solution/util/include/svd_invert_solve.hpp"
 #include "util/base/include/util.h"
 
@@ -52,51 +54,60 @@ int svdInvertSolve(const ublas::matrix<double,ublas::column_major> &U,
                      ublas::vector<double> &b,
                      std::ostream &logf)
 {
+  const double small = 1.0e-8;
   int nsing = 0;
-  ublas::matrix<double,ublas::column_major> Utmp(U.size2(),U.size1()), VTtmp(VT.size2(),VT.size1());
-  ublas::matrix<double,ublas::column_major> Ainv(VTtmp.size1(),Utmp.size2());
+  ublas::matrix<double,ublas::column_major> Utmp(U.size2(),U.size1()), Vtmp(VT.size2(),VT.size1());
+  ublas::matrix<double,ublas::column_major> Ainv(Vtmp.size1(),Utmp.size2());
+  ublas::vector<double> tmpvec(Vtmp.size2()); // able to store a row of VT (== a column of V)
   
 
   Utmp = ublas::trans(U);
-  VTtmp = ublas::trans(VT);
+  Vtmp = ublas::trans(VT);
 
   int nrow = Utmp.size1();
   int ncol = Utmp.size2();
 
+  logf << "Largest singular value = " << S[0] << "\n"; 
+  
   // multiply Utmp from the left by the inverse of the diagonal matrix S
-  double singthresh = S[0]*util::getVerySmallNumber();
+  double singthresh = S[0]*small;
   for(int i=0;i<nrow;++i) {
     double sinv = S[i];
     if(sinv < singthresh) {
       // Note that the elements of S are all >=0.  For "sufficiently
-      // small" singular values we set 1/s = 0 and log the singular
+      // small" singular values we set 1/s = 1/singthresh and log the singular
       // component
-      double s= sinv;           // store for output without moving the meat of this branch down below all the output
-      sinv = 0.0;
+      double s= sinv;           // store for output without moving the meat of this branch down below all the output 
       nsing++;
-
+      sinv = 1.0/singthresh;    // keep the multiplier on this singular component "reasonable".
+      
       // log the singular component (everything between here and the
       // marker below is strictly diagnostic and not necessary for the
       // algorithm.)
-      logf << "Singular component:\ts= " << s << "\n";
-      // the columns of V (== trans(VT)) give the basis vectors for the nullspace
-      for(int k=0;k<VTtmp.size1();++k) {
-        if(k>0) {
-          if(k%50 == 0)
-            logf << " X ";
-          else if(k%10 == 0)
-            logf << " | ";
-          else
-            logf << ", ";
-        }
-        if(fabs(VTtmp(k,i)) > util::getSmallNumber())
-          logf << VTtmp(k,i);
-        else
-          logf << 0.0;
-      }
-      logf << "\n";
-      // end of singular component logging
       
+      // the columns of V (== trans(VT)) give the basis vectors for the nullspace
+      int kmax = 0;
+      double vtmax = fabs(Vtmp(0,i));
+      for(int k=0; k<Vtmp.size1(); ++k) {
+        tmpvec[k] = Vtmp(k,i);  // column i, kth entry
+        double vtabs = fabs(tmpvec[k]);
+        if(vtabs > vtmax) {
+          vtmax = vtabs;
+          kmax = k;
+        }
+      }
+      // suppress printing of small values.
+      double prnthresh = 1.0e-4*vtmax;
+      for(int k=0; k<tmpvec.size(); ++k)
+        if(fabs(tmpvec[k]) < prnthresh)
+          tmpvec[k] = 0.0;
+      
+      logf << "Singular component:  s= " << s
+           << "  kmax= " << kmax << "  vtval= " << vtmax
+           << "  sinv set to: " << sinv
+           << "\n";
+      logf << tmpvec << "\n"; 
+      // end of singular component logging 
     }
     else {
       sinv = 1.0/sinv;
@@ -105,7 +116,7 @@ int svdInvertSolve(const ublas::matrix<double,ublas::column_major> &U,
       Utmp(i,j) *= sinv;
   }
 
-  Ainv = prod(VTtmp,Utmp);
+  Ainv = prod(Vtmp,Utmp);
 
   ublas::vector<double> bb(b);
   axpy_prod(Ainv,bb,b);

@@ -46,6 +46,7 @@
 #include <algorithm>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
+#include <boost/math/tr1.hpp>
 
 #include "util/base/include/configuration.h"
 #include "sectors/include/subsector.h"
@@ -76,6 +77,8 @@
 #include "investment/include/investment_utils.h"
 #include "reporting/include/indirect_emissions_calculator.h"
 #include "util/base/include/interpolation_rule.h"
+#include "functions/include/idiscrete_choice.hpp"
+#include "functions/include/discrete_choice_factory.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -91,13 +94,10 @@ const string Subsector::XML_NAME = "subsector";
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-const Value LOGIT_EXP_DEFAULT = -6;
-
 Subsector::Subsector( const string& aRegionName, const string& aSectorName ):
-regionName( aRegionName ),
-sectorName( aSectorName ),
-doCalibration( false ),
-mTechLogitExp( LOGIT_EXP_DEFAULT )
+    doCalibration( false ),
+    regionName( aRegionName ),
+    sectorName( aSectorName )
 {
     // resize vectors.
     const Modeltime* modeltime = scenario->getModeltime();
@@ -156,8 +156,7 @@ const string& Subsector::getName() const {
 }
 
 //! Initialize Subsector with xml data
-void Subsector::XMLParse( const DOMNode* node ) {   
-
+void Subsector::XMLParse( const DOMNode* node ) {
     /*! \pre Make sure we were passed a valid node. */
     assert( node );
 
@@ -180,8 +179,8 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == "share-weight" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mParsedShareWeights, modeltime );
         }
-        else if( nodeName == "logit-exponent" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mTechLogitExp, modeltime );
+        else if( DiscreteChoiceFactory::isOfType( nodeName ) ) {
+            parseSingleNode( curr, mDiscreteChoiceModel, DiscreteChoiceFactory::create( nodeName ).release() );
         }
         else if( nodeName == "fuelprefElasticity" ){
             XMLHelper<double>::insertValueIntoVector( curr, fuelPrefElasticity, modeltime );  
@@ -230,7 +229,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
         // parsed derived classes
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
+            mainLog.setLevel(ILogger::WARNING);
             mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLName() << endl;
         }
     }
@@ -304,7 +303,7 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
         (*ruleIt)->toInputXML( out, tabs );
     }
 
-    XMLWriteVector( mTechLogitExp, "logit-exponent", out, tabs, modeltime, LOGIT_EXP_DEFAULT );
+    mDiscreteChoiceModel->toInputXML( out, tabs );
     
     XMLWriteVector( fuelPrefElasticity, "fuelprefElasticity", out, tabs, modeltime, 0.0 );
 
@@ -340,7 +339,7 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
     // Write the data for the current period within the vector.
     XMLWriteElement( mShareWeights[ period ], "share-weight", out, tabs );
-    XMLWriteElement( mTechLogitExp[ period ], "logit-exponent", out, tabs );
+    mDiscreteChoiceModel->toDebugXML( period, out, tabs );
     XMLWriteElement( fuelPrefElasticity[ period ], "fuelprefElasticity", out, tabs );
     XMLWriteElement( getEnergyInput( period ), "input", out, tabs );
     XMLWriteElement( getOutput( period ), "output", out, tabs );
@@ -406,6 +405,14 @@ const string& Subsector::getXMLNameStatic() {
 void Subsector::completeInit( const IInfo* aSectorInfo,
                               ILandAllocator* aLandAllocator )
 {
+    if( !mDiscreteChoiceModel.get() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "No Discrete Choice function set in " << regionName << ", "
+                << sectorName << ", " << name << endl;
+        abort();
+    }
+
     mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo, regionName + "-" + sectorName + "-" + name ) );
     
     for( unsigned int i = 0; i < baseTechs.size(); i++) {
@@ -436,10 +443,6 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
            mShareWeights[ per ] = mParsedShareWeights[ per ];
        }
     }
-
-    // Set missing technology logit exponent using the next available parsed
-    // technology logit exponent.
-    SectorUtils::fillMissingPeriodVectorNextAvailable( mTechLogitExp );
 }
 
 /*!
@@ -544,33 +547,33 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
 * \param aPeriod Model period
 */
 double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
-    double subsectorPrice = 0; // initialize to 0 for summing
+    double subsectorPrice = 0.0; // initialize to 0 for summing
+    double sharesum = 0.0;
     const vector<double> techShares = calcTechShares( aGDP, aPeriod );
     for ( unsigned int i = 0; i < mTechContainers.size(); ++i ) {
         // Technologies with zero share cannot affect the marginal price.
         if( techShares[ i ] > util::getSmallNumber() ){
             double currCost = mTechContainers[i]->getNewVintageTechnology(aPeriod)->getCost( aPeriod );
-            // calculate weighted average price for Subsector
-            if( currCost >= util::getSmallNumber() ) {
-                subsectorPrice += techShares[ i ] * currCost;
-            }
-            // We want to allow regional and delivered biomass prices to be negative
-            else if ( ( sectorName == "regional biomass"  || sectorName == "delivered biomass" ) ){
-                subsectorPrice += techShares[ i ] * currCost;
-            }
-
+            // calculate weighted average price for Subsector.
+            /*!
+             * \note Negative prices may be produced and are valid.
+             */
+            subsectorPrice += techShares[ i ] * currCost;
+            sharesum += techShares[i];
         }
     }
 
-    // We want to allow regional and delivered biomass prices to be negative
-    if ( ( sectorName == "regional biomass"  || sectorName == "delivered biomass" ) 
-        && ( subsectorPrice < 0 ) ){
+    if( sharesum < util::getSmallNumber() ) {
+        // None of the technologies have a valid share.  Set the price
+        // to NaN.  This gets tested in calcShare(), and any subsector
+        // with a NaN price gets a share of zero.  Therefore, as long
+        // as you use only subsectors with positive shares, you will
+        // never see the NaN price.
+        return numeric_limits<double>::signaling_NaN();
+    }
+    else {
         return subsectorPrice;
     }
-
-
-    // Check for the condition where all technologies were fixed.
-    return ( subsectorPrice >= util::getSmallNumber() ) ? subsectorPrice : -1;
 }
 
 /*! \brief Returns whether the subsector should be calibrated.
@@ -636,7 +639,7 @@ const vector<double> Subsector::calcTechShares( const GDP* aGDP, const int aPeri
     for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
         // determine shares based on Technology costs
         double lts = mTechContainers[ i ]->getNewVintageTechnology( aPeriod )->
-            calcShare( regionName, sectorName, aGDP, mTechLogitExp[ aPeriod ], aPeriod );
+            calcShare( mDiscreteChoiceModel.get(), aGDP, aPeriod );
 
         // Check that Technology shares are valid.
         assert( util::isValidNumber( lts ) || lts == -numeric_limits<double>::infinity() );
@@ -667,52 +670,46 @@ void Subsector::calcCost( const int aPeriod ){
     }
 }
 
-/*! \brief calculate Subsector unnormalized shares
-* \details Calculates the unnormalized share for this sector. Also calculates
-*          the sector aggregate price (or cost)
-* \author Sonny Kim, Josh Lurz
-* \param aPeriod model period
-* \param aGdp gdp object
-* \param aLogitExp The logit exponent which controls the behavoir of this
-*                  subsector nest.
-* \warning There is no difference between demand and supply technologies.
-*          Control behavior with value of parameter fuelPrefElasticity
-* \return The log of the subsector share.
+/*! \brief calculate Subsector unnormalized shares 
+ * \details Calculates the unormalized share using the discrete choice function
+ *          set in the Sector nested above.
+ * \author Sonny Kim, Josh Lurz
+ * \param aChoiceFn Discrete choice model for the subsector competition within
+ *                  the sector.
+ * \param aGDP gdp object
+ * \param aPeriod model period
+ * \warning There is no difference between demand and supply technologies.
+ *          Control behavior with value of parameter fuelPrefElasticity
+ * \return The log of the subsector share.
+ * \sa Technology::calcShare()
 */
-double Subsector::calcShare(const int aPeriod, const GDP* aGdp, const double aLogitExp ) const {
-    double subsectorPrice = getPrice( aGdp, aPeriod );
+double Subsector::calcShare( const IDiscreteChoice* aChoiceFn, const GDP* aGDP, const int aPeriod ) const {
+    double subsectorPrice = getPrice( aGDP, aPeriod );
 
-    if( subsectorPrice > 0.0 ){
-        double logprice = log( subsectorPrice );
-        double scaledGdpPerCapita = aGdp->getBestScaledGDPperCap( aPeriod );
-        assert( scaledGdpPerCapita > 0.0 );
-        // We have taken the log of the logit share equation in order to avoid the
-        // possibility of numerical underflow.  The sharing still behaves the same.
-        double logsharewt = mShareWeights[ aPeriod ] > 0.0
-            ? log( mShareWeights[ aPeriod ] ) : -numeric_limits<double>::infinity();
-        double logshare = logsharewt + aLogitExp * logprice + fuelPrefElasticity[ aPeriod ]
-            * log( scaledGdpPerCapita );
+    if( boost::math::isnan( subsectorPrice ) ) {
+        // Check for a NaN sentinel value.  If we find it, set the
+        // subsector's share to zero.
+        return -numeric_limits<double>::infinity();
+    }
 
-        /*! \post loghare is finite or minus-infinity. */
-        // Check for invalid shares.
-        if( !( util::isValidNumber( logshare ) || logshare == -numeric_limits<double>::infinity() ) ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Invalid share for " << name << " in " << regionName 
+    
+    double scaledGdpPerCapita = aGDP->getBestScaledGDPperCap( aPeriod );
+    assert( scaledGdpPerCapita > 0.0 );
+
+    double logshare = aChoiceFn->calcUnnormalizedShare( mShareWeights[ aPeriod ], subsectorPrice, aPeriod )
+        + fuelPrefElasticity[ aPeriod ] * log( scaledGdpPerCapita );
+
+    /*! \post logshare is finite or minus-infinity. */
+    // Check for invalid shares.
+    if( !( util::isValidNumber( logshare ) || logshare == -numeric_limits<double>::infinity() ) ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Invalid share for " << name << " in " << regionName 
                 << " log(share) =  " << logshare << endl;
-        }
-        return logshare;
     }
-
-    // We want to allow regional and delivered biomass prices to be negative
-    if( subsectorPrice < 0.0 && ( sectorName == "regional biomass"  || sectorName == "delivered biomass" ) ) {
-        // This assumes that there is only one subsector in regional biomass
-        // so we give a share of 1 thus return log( 1 ) which is zero.
-        return 0.0;
-    }
-
-    return -numeric_limits<double>::infinity();
+    return logshare;
 }
+
 
 /*! \brief Return the total exogenously fixed Technology output for this sector.
 * \author Steve Smith
@@ -1300,39 +1297,12 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
                                         const double aNewInvestment,
                                         const int aPeriod )
 {
-    // If investment is fixed used that instead of the passed in investment.
-    double actInvestment = aNewInvestment;
-    if( mFixedInvestments[ aPeriod ] != -1 ){
-        // Check that zero investment was passed in for this case.
-        if( aNewInvestment > 0 ){
-            cout << "Warning: Passed in positive investment to a fixed investment subsector." << endl;
-        }
-        actInvestment = mFixedInvestments[ aPeriod ];
-    }
+    // This function is not used.  I've retained the shell so that we
+    // don't need to rewrite the interface class.
+    std::cerr << "Subsector::distributeInvestment called.  That shouldn't happen!" << std::endl;
+    abort();
 
-    // Set the investment amount for the subsector to the quantity actually distributed.
-    // Ensure that distribute() for current period is not affected by looping thru future technologies.
-    vector<IInvestable*> investables = InvestmentUtils::getTechInvestables( baseTechs, aPeriod );
-    mInvestments[ aPeriod ] = aDistributor->distribute( aExpProfitRateCalc,
-                                                        investables,
-                                                        aNationalAccount,
-                                                        mTechLogitExp[ aPeriod ],
-                                                        aRegionName,
-                                                        aSectorName,
-                                                        actInvestment,
-                                                        aPeriod );
-
-    // Check that the full amount of investment was distributed.
-    if( !util::isEqual( mInvestments[ aPeriod ], actInvestment ) ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Warning: full amount of the investment was not distributed.  Actual: " << actInvestment
-            << "  Distributed: " << mInvestments[ aPeriod ] << "  Difference: " 
-            << fabs( mInvestments[ aPeriod ] - actInvestment ) 
-            << "  in " << name << " " << aSectorName << " " << aRegionName << endl;
-    }
-    // Return the actual amount of investment that occurred.
-    return mInvestments[ aPeriod ];
+    return 0.0;
 }
 
 /*! \brief returns gets fuel consumption map for this subsector
@@ -1411,23 +1381,12 @@ double Subsector::getExpectedProfitRate( const NationalAccount& aNationalAccount
                                          const bool aIsDistributing,
                                          const int aPeriod ) const
 {   
-    assert( aExpProfitRateCalc );
-
-    // Check for fixed investment.
-    if( mFixedInvestments[ aPeriod ] != -1 && aIsDistributing ){
-        return 0;
-    }
-
-    // Use the passed in expected profit calculator to determine the rate.
-    return aExpProfitRateCalc->calcSectorExpectedProfitRate( 
-                                         InvestmentUtils::getTechInvestables( baseTechs, aPeriod ),
-                                         aNationalAccount,
-                                         aRegionName,
-                                         aSectorName,
-                                         mTechLogitExp[ aPeriod ],
-                                         aIsShareCalc,
-                                         aIsDistributing,
-                                         aPeriod );
+    // No longer used.  I've retained the shell so that we don't have
+    // to rewrite the IInvestable interface.
+    std::cerr << "Subsector::getExpectedProfitRate called.  That shouldn't happen!" << std::endl;
+    abort();
+    
+    return 0;
 }
 
 /*! \brief Get the capital output ratio.

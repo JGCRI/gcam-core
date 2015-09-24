@@ -7,25 +7,8 @@
 PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       = backup_calculator_factory.o \
-             capacity_limit_backup_calculator.o \
-             CSP_backup_calculator.o \
-             energy_final_demand.o \
-             export_sector.o \
-             factor_supply.o \
-             final_demand_sector.o \
-             ag_supply_sector.o \
-             ag_supply_subsector.o \
-             more_sector_info.o \
-             production_sector.o \
-             sector.o \
-             sector_utils.o \
-             subsector.o \
-             subsector_add_techcosts.o \
-             supply_sector.o \
-             tran_sector.o \
-             tran_subsector.o \
-             wind_backup_calculator.o
+SRCS	= $(wildcard *.cpp)
+OBJS	= $(SRCS:.cpp=.o)
 
 sectors_dir: ${OBJS}
 

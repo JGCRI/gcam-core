@@ -37,10 +37,14 @@ A25.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A25.globaltech_co2
 # 2. Build tables for CSVs
 # 2a. Supplysector information
 printlog( "L225.Supplysector_h2: Supply sector information for hydrogen sectors" )
+L225.SectorLogitTables <- get_logit_fn_tables( A25.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L225.Supplysector_h2 <- write_to_all_regions( A25.sector, names_Supplysector )
 
 # 2b. Subsector information
 printlog( "L225.SubsectorLogit_h2: Subsector logit exponents of hydrogen sectors" )
+L225.SubsectorLogitTables <- get_logit_fn_tables( A25.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L225.SubsectorLogit_h2 <- write_to_all_regions( A25.subsector_logit, names_SubsectorLogit )
 
 printlog( "L225.SubsectorShrwt_h2 and L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors" )
@@ -104,8 +108,18 @@ L225.GlobalTechCapture_h2$storage.market <- CO2.storage.market
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L225.SectorLogitTables) ) {
+write_mi_data( L225.SectorLogitTables[[ curr_table ]]$data, L225.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L225.", L225.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_hydrogen.xml" )
+}
 write_mi_data( L225.Supplysector_h2, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L225.Supplysector_h2",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_hydrogen.xml" ) 
+for( curr_table in names ( L225.SubsectorLogitTables ) ) {
+write_mi_data( L225.SubsectorLogitTables[[ curr_table ]]$data, L225.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L225.", L225.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_hydrogen.xml" )
+}
 write_mi_data( L225.SubsectorLogit_h2, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L225.SubsectorLogit_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" ) 
 if( exists( "L225.SubsectorShrwt_h2" ) ){
 	write_mi_data( L225.SubsectorShrwt_h2, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L225.SubsectorShrwt_h2", "ENERGY_XML_BATCH", "batch_hydrogen.xml" )

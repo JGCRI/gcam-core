@@ -65,10 +65,10 @@ template<class FTYPE,class MTRAIT>
 inline void jacol(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
                   const UBLAS::vector<FTYPE> &fx, int j, 
                   UBLAS::matrix<FTYPE,MTRAIT> &J,
-                  bool usepartial=true, double cthresh=0.0, std::ostream *diagnostic=NULL) {
+                  bool usepartial=true, std::ostream *diagnostic=NULL) {
   const FTYPE heps = 1.0e-6;
   const FTYPE TINY = 1.0e-6;
-  UBLAS::vector<FTYPE> xx = x; // temporary, so we can respect the const on x
+  UBLAS::vector<FTYPE> xx(x); // temporary, so we can respect the const on x
   UBLAS::vector<FTYPE> fxx(fx.size());        // hold the values of F(xx)
   FTYPE t = xx[j];            // store the old value
   FTYPE h = heps * (fabs(t)+TINY);
@@ -77,18 +77,8 @@ inline void jacol(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
   h     = xx[j]-t; // reduce roundoff error, since (t+h)-t is not
                    // necessarily identical to the original h
   if(diagnostic) {
-    (*diagnostic) << "j= " << j << "\th= " << h << "\nxx:\n" << xx << "\n\tcthresh= " << cthresh
-                  << "partialsize = " << F.partialSize(j) << "\n";
-  }
-  double psize = F.partialSize(j);
-  if(psize < cthresh) {
-    /* For small markets (i.e., ones that aren't likely to generate many off-diagonal terms), just estimate
-       and move on */
-    for(size_t i=0; i<fxx.size(); ++i)
-      J(i,j) = 0.0;
-    J(j,j) = -1.0;
-    return;
-  }
+      (*diagnostic) << "j= " << j << "\th= " << h << "\nxx:\n" << xx << "\n";
+  } 
   if(usepartial) {F.partial(j);}    // hint to the function that this is a partial derivative calculation
   F(xx,fxx);       // eval the function
   xx[j] = t;       // restore the old value
@@ -101,7 +91,7 @@ inline void jacol(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
   FTYPE hinv = 1.0/h;
   for(size_t i=0; i<fxx.size(); ++i) {
     J(i,j) = (fxx[i] - fx[i]) * hinv;
-  }
+  } 
 }
 
 
@@ -119,12 +109,12 @@ inline void jacol(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
  */
 template <class FTYPE, class MTRAIT>
 void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
-           UBLAS::matrix<FTYPE,MTRAIT> &J, bool usepartial=true, double cthresh=0.0)
+           UBLAS::matrix<FTYPE,MTRAIT> &J, bool usepartial=true)
 {
   UBLAS::vector<FTYPE> fx(F.nrtn());
 
   F(x,fx);                      // fx = F(x)
-  fdjac(F,x,fx,J,usepartial, cthresh);
+  fdjac(F,x,fx,J,usepartial);
 }
 
 /*!
@@ -141,7 +131,7 @@ void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
 template<class FTYPE, class MTRAIT>
 void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
            const UBLAS::vector<FTYPE> &fx, UBLAS::matrix<FTYPE,MTRAIT> &J, bool usepartial=true,
-           double cthresh=0.0, std::ostream *diagnostic=NULL)
+           std::ostream *diagnostic=NULL)
 {
   if(diagnostic) {
     (*diagnostic) << "fdjac: usepartial = " << usepartial << "\nInitial x:\n" << x
@@ -152,7 +142,7 @@ void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
   jacTimer.start();
   
   for(size_t j=0; j<x.size(); ++j) {
-    jacol(F, x, fx, j, J, usepartial, cthresh, diagnostic);
+    jacol(F, x, fx, j, J, usepartial, diagnostic);
   }
 
   jacTimer.stop();

@@ -81,9 +81,9 @@ class SolutionInfoSet;
 class LogBroyden: public SolverComponent {
 public:
   LogBroyden(Marketplace *mktplc, World *world, CalcCounter *ccounter, int itmax=250,
-             double ftol=1.0e-4, bool shortcut=true) :
+             double ftol=1.0e-4) :
       SolverComponent(mktplc,world,ccounter), mMaxIter(itmax), mFTOL(ftol),
-      mShortcut(shortcut) {}
+      mLogPricep(true) {}
   virtual ~LogBroyden() {}
 
   // SolverComponent methods
@@ -98,11 +98,15 @@ public:
   virtual bool XMLParse( const xercesc::DOMNode* aNode );
   
   static const std::string & getXMLNameStatic(void) {return SOLVER_NAME;}
-  
+
 protected:
   //! Perform the Broyden's method iterations.
   int bsolve(VecFVec<double,double> &F, UBLAS::vector<double> &x, UBLAS::vector<double> &fx,
              UBMATRIX &B, int &neval);
+  //! Additional logging for visualizing solver progress.
+  void reportVec(const std::string &aname, const UBLAS::vector<double> &av);
+  void reportPSD(void);
+
   //! Maximum number of main-loop iterations for the root-finding algorithm
   unsigned int mMaxIter;
 
@@ -113,23 +117,17 @@ protected:
   //! might regard a market as unsolved when the solver says it's
   //! solved, or vice versa.
   double mFTOL;
-
-  //! Flag for using "shortcut" Jacobian reset. 
-  //! \details Since the Broyden solver requires only an approximate
-  //! Jacobian, we can save a lot of time when we encounter a singular
-  //! matrix by simply augmenting the diagonal elements anywhere they
-  //! appear to be nearly zero (since this is almost always the cause
-  //! of singularities in our calculations) without changing the
-  //! underlying x values.  This avoids additional evaluations that
-  //! would otherwise be required to update fx and B for the changed x
-  //! values.  However, this seems not to work too well in the first
-  //! two model years (1990 and 2005), so we include a flag to turn it
-  //! off in the solver config.
-  bool mShortcut;
   
   //! Filter which will be used to determine which markets the solver
   //! will attempt to solve
   std::auto_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
+
+  bool mLogPricep;              //<! flag indicating whether we should work in price or log-price
+
+  // These next two have to be class variables because we sometimes
+  // have multiple logbroyden solvers operating.
+  static int mLastPer;                 //<! used to detect when the period has changed, so we can reset mPerIter.
+  static int mPerIter;                 //<! total iteration count within the period
 
 private:
   static std::string SOLVER_NAME;

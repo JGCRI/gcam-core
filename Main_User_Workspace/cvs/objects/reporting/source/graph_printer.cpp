@@ -65,8 +65,8 @@ using namespace std;
 */
 GraphPrinter::GraphPrinter( const string& aRegionToPrint, ostream& aFile ):
 mFile( aFile ),
-mRegionToPrint( aRegionToPrint ),
-mCorrectRegion( false )
+mCorrectRegion( false ),
+mRegionToPrint( aRegionToPrint )
 {
 }
 

@@ -334,11 +334,16 @@
       </region>
       <region name="AK">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -457,11 +462,16 @@
       </region>
       <region name="AL">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -577,6 +587,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -695,11 +708,16 @@
       </region>
       <region name="AR">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -815,6 +833,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -933,11 +954,16 @@
       </region>
       <region name="AZ">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -1053,6 +1079,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -1171,11 +1200,16 @@
       </region>
       <region name="CA">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -1291,6 +1325,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -1409,11 +1446,16 @@
       </region>
       <region name="CO">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -1529,6 +1571,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -1647,11 +1692,16 @@
       </region>
       <region name="CT">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -1767,6 +1817,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -1885,11 +1938,16 @@
       </region>
       <region name="DC">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -2005,6 +2063,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -2123,11 +2184,16 @@
       </region>
       <region name="DE">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -2243,6 +2309,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -2361,11 +2430,16 @@
       </region>
       <region name="FL">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -2481,6 +2555,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -2599,11 +2676,16 @@
       </region>
       <region name="GA">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -2719,6 +2801,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -2837,11 +2922,16 @@
       </region>
       <region name="HI">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -2960,11 +3050,16 @@
       </region>
       <region name="IA">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -3080,6 +3175,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -3198,11 +3296,16 @@
       </region>
       <region name="ID">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -3318,6 +3421,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -3436,11 +3542,16 @@
       </region>
       <region name="IL">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -3556,6 +3667,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -3674,11 +3788,16 @@
       </region>
       <region name="IN">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -3794,6 +3913,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -3912,11 +4034,16 @@
       </region>
       <region name="KS">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -4032,6 +4159,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -4150,11 +4280,16 @@
       </region>
       <region name="KY">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -4270,6 +4405,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -4388,11 +4526,16 @@
       </region>
       <region name="LA">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -4508,6 +4651,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -4626,11 +4772,16 @@
       </region>
       <region name="MA">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -4746,6 +4897,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -4864,11 +5018,16 @@
       </region>
       <region name="MD">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -4984,6 +5143,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -5102,11 +5264,16 @@
       </region>
       <region name="ME">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -5222,6 +5389,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -5340,11 +5510,16 @@
       </region>
       <region name="MI">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -5460,6 +5635,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -5578,11 +5756,16 @@
       </region>
       <region name="MN">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -5698,6 +5881,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -5816,11 +6002,16 @@
       </region>
       <region name="MO">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -5936,6 +6127,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -6054,11 +6248,16 @@
       </region>
       <region name="MS">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -6174,6 +6373,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -6292,11 +6494,16 @@
       </region>
       <region name="MT">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -6412,6 +6619,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -6530,11 +6740,16 @@
       </region>
       <region name="NC">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -6650,6 +6865,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -6768,11 +6986,16 @@
       </region>
       <region name="ND">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -6888,6 +7111,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -7006,11 +7232,16 @@
       </region>
       <region name="NE">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -7126,6 +7357,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -7244,11 +7478,16 @@
       </region>
       <region name="NH">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -7364,6 +7603,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -7482,11 +7724,16 @@
       </region>
       <region name="NJ">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -7602,6 +7849,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -7720,11 +7970,16 @@
       </region>
       <region name="NM">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -7840,6 +8095,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -7958,11 +8216,16 @@
       </region>
       <region name="NV">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -8078,6 +8341,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -8196,11 +8462,16 @@
       </region>
       <region name="NY">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -8316,6 +8587,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -8434,11 +8708,16 @@
       </region>
       <region name="OH">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -8554,6 +8833,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -8672,11 +8954,16 @@
       </region>
       <region name="OK">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -8792,6 +9079,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -8910,11 +9200,16 @@
       </region>
       <region name="OR">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -9030,6 +9325,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -9148,11 +9446,16 @@
       </region>
       <region name="PA">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -9268,6 +9571,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -9386,11 +9692,16 @@
       </region>
       <region name="RI">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -9506,6 +9817,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -9624,11 +9938,16 @@
       </region>
       <region name="SC">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -9744,6 +10063,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -9862,11 +10184,16 @@
       </region>
       <region name="SD">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -9982,6 +10309,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -10100,11 +10430,16 @@
       </region>
       <region name="TN">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -10220,6 +10555,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -10338,11 +10676,16 @@
       </region>
       <region name="TX">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -10458,6 +10801,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -10576,11 +10922,16 @@
       </region>
       <region name="UT">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -10696,6 +11047,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -10814,11 +11168,16 @@
       </region>
       <region name="VA">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -10934,6 +11293,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -11052,11 +11414,16 @@
       </region>
       <region name="VT">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -11172,6 +11539,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -11290,11 +11660,16 @@
       </region>
       <region name="WA">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -11410,6 +11785,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -11528,11 +11906,16 @@
       </region>
       <region name="WI">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -11648,6 +12031,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -11766,11 +12152,16 @@
       </region>
       <region name="WV">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -11886,6 +12277,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">
@@ -12004,11 +12398,16 @@
       </region>
       <region name="WY">
          <supplysector name="carbon-storage">
+            <relative-cost-logit>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+            </relative-cost-logit>
             <output-unit>MtC</output-unit>
             <input-unit>MtC</input-unit>
             <price-unit>1990$/tC</price-unit>
-            <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="onshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="onshore carbon-storage">
                   <period year="1975">
@@ -12124,6 +12523,9 @@
                </stub-technology>
             </subsector>
             <subsector name="offshore carbon-storage">
+               <relative-cost-logit>
+                  <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               </relative-cost-logit>
                <share-weight fillout="1" year="1975">1</share-weight>
                <stub-technology name="offshore carbon-storage">
                   <period year="1975">

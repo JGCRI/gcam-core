@@ -166,6 +166,9 @@ private:
     //! The target for the climate parameter.
     Value mTargetValue;
 
+    //! An intial tax value to help speed target finding.
+    Value mInitialTaxGuess;
+
     //! The first year to tax.
     unsigned int mFirstTaxYear;
     
@@ -182,11 +185,15 @@ private:
     //! can be called directly from the BatchRunner and in that case the object
     //! should not parse data from its separate configuration file.
     bool mHasParsedConfig;
+
+    //! Unique identifier for each scenario run dispatched.  Used to
+    //! help identify output from a particular run in log files.
+    unsigned int mRunID;
     
     //! The number of periods to forward look when trying to stay on target
     //! which my change by period
     std::vector<int> mNumForwardLooking;
-
+    
     //! The number of periods to go backwards before stabalization to re-stabalizing
     int mNumBackwardsLook;
 
@@ -227,5 +234,6 @@ private:
                            Timer& aTimer );
     PolicyTargetRunner();
     static const std::string& getXMLNameStatic();
+    void logRunID();
 };
 #endif // _POLICY_TARGET_RUNNER_H_

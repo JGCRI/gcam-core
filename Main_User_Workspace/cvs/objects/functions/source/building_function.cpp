@@ -51,6 +51,7 @@
 #include "functions/include/satiation_demand_function.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 
@@ -83,13 +84,18 @@ double BuildingFunction::calcDemand( InputSet& input, double income, const std::
     for( InputSet::iterator inputIter = input.begin(); inputIter != input.end(); ++inputIter ) {
         BuildingNodeInput* buildingNodeInput = static_cast<BuildingNodeInput*>( *inputIter );
         // Compute energy service price change and raise it to the price exponenet.
-        double priceTerm = pow( period > modeltime->getFinalCalibrationPeriod() ? 
-                                    buildingNodeInput->getPricePaid( regionName, period ) / buildingNodeInput->getPricePaid( regionName, modeltime->getFinalCalibrationPeriod() )
-                                    : 1,
-                                    buildingNodeInput->getPriceElasticity( period ) );
+        double priceRatio = period > modeltime->getFinalCalibrationPeriod() ?
+            buildingNodeInput->getPricePaid( regionName, period ) / buildingNodeInput->getPricePaid( regionName, modeltime->getFinalCalibrationPeriod() )
+            : 1;
+        double cappedPriceRatio = max( priceRatio, SectorUtils::getDemandPriceThreshold() );
+        double priceTerm = pow( cappedPriceRatio, buildingNodeInput->getPriceElasticity( period ) );
         // Use the satiation demand function to calculate per capita demand.
         double perCapitaDemand =
             buildingNodeInput->getSatiationDemandFunction()->calcDemand( buildingNodeInput->getSubregionalIncome() * priceTerm );
+        // May need to make an adjustment in case of negative prices.
+        if( priceRatio < cappedPriceRatio && buildingNodeInput->getPriceElasticity( period ) != 0 ) {
+            perCapitaDemand = SectorUtils::adjustDemandForNegativePrice( perCapitaDemand, priceRatio );
+        }
         // Multiply by population to get total demand.
         double demand = perCapitaDemand * buildingNodeInput->getSubregionalPopulation();
         (*inputIter)->setPhysicalDemand( demand, regionName, period );

@@ -55,6 +55,7 @@
 #include "solution/solvers/include/bisect_policy.h"
 #include "solution/solvers/include/lognrbt.hpp"
 #include "solution/solvers/include/logbroyden.hpp"
+#include "solution/solvers/include/preconditioner.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -75,7 +76,8 @@ bool SolverComponentFactory::hasSolverComponent( const string& aXMLName ) {
         || BisectOne::getXMLNameStatic() == aXMLName
         || BisectPolicy::getXMLNameStatic() == aXMLName
         || LogNRbt::getXMLNameStatic() == aXMLName
-        || LogBroyden::getXMLNameStatic() == aXMLName;
+        || LogBroyden::getXMLNameStatic() == aXMLName
+        || Preconditioner::getXMLNameStatic() == aXMLName;
 }
 
 /*!
@@ -126,6 +128,9 @@ SolverComponentFactory::createAndParseSolverComponent( const string& aXMLName,
     }
     else if( LogBroyden::getXMLNameStatic() == aXMLName ) {
         retSolverComponent = new LogBroyden( aMarketplace, aWorld, aCalcCounter );
+    }
+    else if( Preconditioner::getXMLNameStatic() == aXMLName ) {
+        retSolverComponent = new Preconditioner( aMarketplace, aWorld, aCalcCounter );
     }
     else {
         // this must mean createAndParseSolverComponent and hasSolverComponent

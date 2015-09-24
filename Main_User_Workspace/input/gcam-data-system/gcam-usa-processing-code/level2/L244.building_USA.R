@@ -213,6 +213,8 @@ L244.ShellConductance_bld <- L244.shell_eff_state[ names_ShellConductance ]
 #supplysector
 printlog( "L244.Supplysector_bld: Supplysector info for buildings" )
 L244.Supplysector_bld <- write_to_all_states( A44.sector, names_Supplysector )
+L244.SectorLogitTables_bld <- get_logit_fn_tables( write_to_all_states( A44.sector, names_SupplysectorLogitType ),
+    names_SupplysectorLogitType, base.header="Supplysector_", include.equiv.table=T, write.all.regions=F )
 
 printlog( "L244.FinalEnergyKeyword_bld: Supply sector keywords for detailed building sector" )
 L244.FinalEnergyKeyword_bld <- na.omit( write_to_all_states( A44.sector, names_FinalEnergyKeyword ) )
@@ -221,6 +223,8 @@ L244.FinalEnergyKeyword_bld <- na.omit( write_to_all_states( A44.sector, names_F
 #logit
 printlog( "L244.SubsectorLogit_bld: Subsector logit exponents of building sector" )
 L244.SubsectorLogit_bld <- write_to_all_states( A44.subsector_logit, names_SubsectorLogit )
+L244.SubsectorLogitTables_bld <- get_logit_fn_tables( write_to_all_states( A44.subsector_logit, names_SubsectorLogitType ),
+    names_SubsectorLogitType, base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=F )
 
 #shareweight
 printlog( "L244.SubsectorShrwt_bld and L244.SubsectorShrwtFllt_bld: Subsector shareweights of building sector" )
@@ -495,6 +499,11 @@ write_mi_data( L244.GenericServiceSatiation, "GenericServiceSatiation", "GCAMUSA
 write_mi_data( L244.Intgains_scalar, "Intgains_scalar", "GCAMUSA_LEVEL2_DATA", "L244.Intgains_scalar", "GCAMUSA_XML_BATCH", "batch_building_USA.xml" ) 
 write_mi_data( L244.ShellConductance_bld, "ShellConductance", "GCAMUSA_LEVEL2_DATA", "L244.ShellConductance_bld", "GCAMUSA_XML_BATCH", "batch_building_USA.xml" ) 
 
+for( curr_table in names ( L244.SectorLogitTables_bld ) ) {
+write_mi_data( L244.SectorLogitTables_bld[[ curr_table ]]$data, L244.SectorLogitTables_bld[[ curr_table ]]$header,
+    "GCAMUSA_LEVEL2_DATA", paste0("L244.", L244.SectorLogitTables_bld[[ curr_table ]]$header ), "GCAMUSA_XML_BATCH",
+    "batch_building_USA.xml" )
+}
 write_mi_data( L244.Supplysector_bld, IDstring="Supplysector", domain="GCAMUSA_LEVEL2_DATA", fn="L244.Supplysector_bld", batch_XML_domain="GCAMUSA_XML_BATCH", batch_XML_file="batch_building_USA.xml" ) 
 write_mi_data( L244.FinalEnergyKeyword_bld, "FinalEnergyKeyword", "GCAMUSA_LEVEL2_DATA", "L244.FinalEnergyKeyword_bld", "GCAMUSA_XML_BATCH", "batch_building_USA.xml" ) 
  if( exists( "L244.SubsectorShrwt_bld" ) ){
@@ -510,6 +519,11 @@ write_mi_data( L244.FinalEnergyKeyword_bld, "FinalEnergyKeyword", "GCAMUSA_LEVEL
  if( exists( "L244.SubsectorInterpTo_bld" ) ) {
  	write_mi_data( L244.SubsectorInterpTo_bld, "SubsectorInterpTo", "GCAMUSA_LEVEL2_DATA", "L244.SubsectorInterpTo_bld", "GCAMUSA_XML_BATCH", "batch_building_USA.xml" )
  	}
+for( curr_table in names ( L244.SubsectorLogitTables_bld ) ) {
+write_mi_data( L244.SubsectorLogitTables_bld[[ curr_table ]]$data, L244.SubsectorLogitTables_bld[[ curr_table ]]$header,
+    "GCAMUSA_LEVEL2_DATA", paste0("L244.", L244.SubsectorLogitTables_bld[[ curr_table ]]$header ), "GCAMUSA_XML_BATCH",
+    "batch_building_USA.xml" )
+}
 write_mi_data( L244.SubsectorLogit_bld, "SubsectorLogit", "GCAMUSA_LEVEL2_DATA", "L244.SubsectorLogit_bld", "GCAMUSA_XML_BATCH", "batch_building_USA.xml" ) 
 write_mi_data( L244.StubTech_bld, "StubTech", "GCAMUSA_LEVEL2_DATA", "L244.StubTech_bld", "GCAMUSA_XML_BATCH", "batch_building_USA.xml" ) 
 write_mi_data( L244.StubTechCalInput_bld, "StubTechCalInput", "GCAMUSA_LEVEL2_DATA", "L244.StubTechCalInput_bld", "GCAMUSA_XML_BATCH", "batch_building_USA.xml" ) 

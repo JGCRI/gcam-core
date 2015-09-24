@@ -46,6 +46,7 @@
 
 #include "solution/solvers/include/user_configurable_solver.h"
 #include "containers/include/world.h"
+#include "marketplace/include/marketplace.h"
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/solver_component_factory.h"
 #include "solution/util/include/solution_info_set.h"
@@ -62,11 +63,12 @@ typedef vector<SolverComponent*>::iterator SolverComponentIterator;
 typedef vector<SolverComponent*>::const_iterator CSolverComponentIterator;
 
 //! Constructor
-UserConfigurableSolver::UserConfigurableSolver( Marketplace* aMarketplace, World* aWorld ):Solver( aMarketplace, aWorld ),
-mDefaultSolutionTolerance( 0.001),
-mDefaultSolutionFloor( 0.0001 ),
-mCalibrationTolerance( 0.01 ),
-mMaxModelCalcs( 2000 )
+UserConfigurableSolver::UserConfigurableSolver( Marketplace* aMarketplace, World* aWorld ) :
+    Solver( aMarketplace, aWorld ),
+    mDefaultSolutionTolerance( 0.001),
+    mDefaultSolutionFloor( 0.0001 ),
+    mCalibrationTolerance( 0.01 ),
+    mMaxModelCalcs( 2000 )
 {
     // get the calc counter from the world
     mCalcCounter = world->getCalcCounter();
@@ -131,6 +133,7 @@ bool UserConfigurableSolver::XMLParse( const DOMNode* aNode ) {
                 << getXMLNameStatic() << "." << endl;
         }
     }
+    
     return true;
 }
 
@@ -219,8 +222,8 @@ bool UserConfigurableSolver::solve( const int aPeriod, const SolutionInfoParamPa
         }
         
         // Determine if the model has solved. 
-    } while ( !solution_set.isAllSolved()
-             && mCalcCounter->getPeriodCount() < mMaxModelCalcs );
+    } while ( !solution_set.isAllSolved() &&
+              mCalcCounter->getPeriodCount() < mMaxModelCalcs );
     
     if( conf->getBool( "CalibrationActive" )
             && !world->isAllCalibrated( aPeriod, mCalibrationTolerance, true ) ) {
@@ -239,7 +242,8 @@ bool UserConfigurableSolver::solve( const int aPeriod, const SolutionInfoParamPa
     }
     
     mainLog.setLevel( ILogger::ERROR );
-    mainLog << "Model did not solve within set iteration " << mCalcCounter->getPeriodCount() << endl;
+    mainLog << "Model did not solve period " << aPeriod << " within set iteration " << mCalcCounter->getPeriodCount() << endl;
+    solverLog << "Model did not solve period " << aPeriod << " within set iteration " << mCalcCounter->getPeriodCount() << endl;
     solverLog << "Printing solution information after failed attempt to solve." << endl;
     solverLog << solution_set << endl;
     
@@ -253,5 +257,11 @@ bool UserConfigurableSolver::solve( const int aPeriod, const SolutionInfoParamPa
         sdLog << "Supply and demand curves for markets that did not solve in period: " << aPeriod << endl;
         solution_set.findAndPrintSD( world, marketplace, aPeriod, sdLog );
     }
+
+    // log price forecast performance
+    if( conf->getBool( "debugChecking" ) && aPeriod > 0 ) {
+        marketplace->logForecastEvaluation( aPeriod );
+    }
+
     return false;
 }

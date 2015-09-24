@@ -177,7 +177,12 @@ public:
   //! avoids doing a popcount on every word in the vector
   bool gt1set(void) const {
     int nwordset = 0;
+    // ignore the compiler warning about the following variable
+    // possibly being used uninitialized.  It's only referenced if
+    // nwordset==1, in which case setword is guaranteed to have been
+    // set.
     int setword;
+    
     for(unsigned i=0; i<dsize; ++i)
       if(data[i]) {
         ++nwordset;

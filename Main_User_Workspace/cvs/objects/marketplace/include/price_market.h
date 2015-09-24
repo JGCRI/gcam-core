@@ -81,10 +81,6 @@ protected:
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
     Market* demandMarketPointer; //!< A pointer to the companion DemandMarket
-    
-    //! Flag to indicate if the price was negative which will have to be
-    //! hidden since the solver will not work with negative prices
-    bool mIsPriceNegative;
 };
 
 #endif // _PRICE_MARKET_H_

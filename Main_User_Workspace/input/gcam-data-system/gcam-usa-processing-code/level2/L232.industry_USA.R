@@ -80,13 +80,27 @@ L232.tables <- list( L232.Supplysector_ind = L232.Supplysector_ind,
                      L232.PriceElasticity_ind = L232.PriceElasticity_ind,
                      L232.IncomeElasticity_ind_gcam3 = L232.IncomeElasticity_ind_gcam3 )
 
+# The logit functions should be processed before any other table that needs to read logit exponents
+L232.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L232.Supplysector_", skip=4, include.equiv.table=T ),
+                  read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L232.SubsectorLogit_", skip=4, include.equiv.table=F ),
+                  L232.tables )
+
 for( i in 1:length( L232.tables ) ){
   if( !is.null( L232.tables[[i]] ) ){
   	  objectname <- paste0( names( L232.tables[i] ), "_USA" )
-	  object <- write_to_all_states( subset( L232.tables[[i]], region == "USA" ), names( L232.tables[[i]] ) )
+      if( substr( objectname, 6, 16 ) == "EQUIV_TABLE" || nrow( subset( L232.tables[[i]], region == "USA" ) ) == 0 ) {
+          # Just use the object as is
+          object <- L232.tables[[i]]
+      } else {
+          object <- write_to_all_states( subset( L232.tables[[i]], region == "USA" ), names( L232.tables[[i]] ) )
+      }
 	  assign( objectname, object )
-	  IDstringendpoint <- if( grepl( "_", names( L232.tables )[i] ) ) { regexpr( "_", names( L232.tables )[i], fixed = T ) - 1
-	                       } else nchar( names( L232.tables )[i] )
+      curr_table_name <- names( L232.tables )[i]
+      IDstringendpoint <- if( grepl( "_", curr_table_name ) & !grepl( 'EQUIV_TABLE', curr_table_name ) & !grepl( '-logit$', curr_table_name ) ) {
+          regexpr( "_", curr_table_name, fixed = T ) - 1
+      } else {
+          nchar( curr_table_name )
+      }
 	  IDstring <- substr( names( L232.tables )[i], 6, IDstringendpoint )
 	  write_mi_data( object, IDstring, "GCAMUSA_LEVEL2_DATA", objectname, "GCAMUSA_XML_BATCH", "batch_industry_USA.xml" )
 	  }

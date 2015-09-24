@@ -144,25 +144,27 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
     // Move up the cost curve until a point is found above the current price.
     for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
         if( mGrade[ i ]->getCost( period ) > effectivePrice ){
-            // Determine the cost and available for the previous point. If
-            // this is the first point in the cost curve the previous grade
-            // is the bottom of the curve.
-            double prevGradeCost;
+            // Determine the cost and available for the previous
+            // point. If this is the first point in the cost curve the
+            // previous grade is the bottom of the curve (assumed to
+            // be zero available at a price of minus infinity).
             double prevGradeAvailable;
+            double gradeFraction;
             if( i == 0 ){
-                prevGradeCost = 0;
-                prevGradeAvailable = 0;
+                prevGradeAvailable = 0.0;
+                gradeFraction = 1.0;
             }
             else {
+                double prevGradeCost;
                 prevGradeCost = mGrade[ i - 1 ]->getCost( period );
                 prevGradeAvailable = mGrade[ i - 1 ]->getAvail();
-            }
 
-            // This should not be able to happen because the above if
-            // statement would fail.
-            assert( mGrade[ i ]->getCost( period ) > prevGradeCost );
-            double gradeFraction = ( effectivePrice - prevGradeCost )
-                / ( mGrade[ i ]->getCost( period ) - prevGradeCost ); 
+                // This should not be able to happen because the above if
+                // statement would fail.
+                assert( mGrade[ i ]->getCost( period ) > prevGradeCost );
+                gradeFraction = ( effectivePrice - prevGradeCost )
+                    / ( mGrade[ i ]->getCost( period ) - prevGradeCost ); 
+            }
             // compute production as fraction of total possible
             fractionAvailable = prevGradeAvailable + gradeFraction
                                 * ( mGrade[ i ]->getAvail() - prevGradeAvailable ); 
@@ -174,23 +176,10 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
     // If the fraction available has not been set there is not a point with a
     // cost greater than the price. This means the price is above the curve.
     if( fractionAvailable == -1 ){
-        double maxCost = mGrade[ mGrade.size() - 1 ]->getCost( period );
-
-        // Use the function 1-1/(p/pMax) to determine the amount of the
-        // additional percent to use.
-        double additionalFraction = 1 - 1 / ( effectivePrice / maxCost );
-
-        // Add up to an additional percent to the total resource to create a
-        // smooth derivative above the max price.
-        const double ADDITIONAL_PERCENT = 0.05;
-
         // Calculate the total fraction of the max subresource to use. Note that
         // the max fraction available can be more than 100 percent.
         double maxFraction = mGrade[ mGrade.size() - 1 ]->getAvail();
-
-        // Determine the maximum available fraction including the additional
-        // increment.
-        fractionAvailable = maxFraction * ( 1 + additionalFraction * ADDITIONAL_PERCENT );
+        fractionAvailable = maxFraction;
     }
 
     // Calculate the amount of resource expansion due to GDP increase.
@@ -247,3 +236,25 @@ void SubRenewableResource::accept( IVisitor* aVisitor, const int aPeriod ) const
     aVisitor->endVisitSubRenewableResource( this, aPeriod );
 }
 
+
+/*!
+ * \brief Calculate the lowest price for which a price change produces a nonzero supply response
+ * \details For renewable resources, it's simple; it's just the cost of the lowest grade.
+ * \param aPeriod The current model period.
+ */
+double SubRenewableResource::getLowestPrice( const int aPeriod ) const
+{
+    double cost = 0.0;
+    if( mGrade.size() > 0 ) {
+        cost = mGrade[0]->getCost( aPeriod );
+    }
+    else {
+        // We may have subresources with no grades in the case where we are simply
+        // attempting to add a region to a global market and that region does not
+        // have any supply potential.
+        // In that case we return some large number and let another region set the
+        // low price for the market.
+        cost = util::getLargeNumber();
+    }
+    return cost;
+}

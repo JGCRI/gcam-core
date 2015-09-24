@@ -51,6 +51,8 @@ L242.rm_techs_R <- add_region_name( L242.rm_techs_R )
 
 # 2a. Supplysector information
 printlog( "L242.Supplysector_bld: Supply sector information for building sector" )
+L242.SectorLogitTables <- get_logit_fn_tables( A42.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L242.Supplysector_bld <- write_to_all_regions( A42.sector, names_Supplysector )
 
 printlog( "L242.FinalEnergyKeyword_bld: Supply sector keywords for building sector" )
@@ -58,6 +60,15 @@ L242.FinalEnergyKeyword_bld <- na.omit( write_to_all_regions( A42.sector, names_
 
 # 2b. Subsector information
 printlog( "L242.SubsectorLogit_bld: Subsector logit exponents of building sector" )
+L242.SubsectorLogitTables <- get_logit_fn_tables( A42.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
+for( curr_table in names( L242.SubsectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L242.SubsectorLogitTables[[ curr_table ]]$data <- L242.SubsectorLogitTables[[ curr_table ]]$data[
+            vecpaste( L242.SubsectorLogitTables[[ curr_table ]]$data[ c( "region", "subsector" ) ] ) %!in%
+            vecpaste( L242.rm_techs_R[ c( "region", "subsector" ) ] ), ]
+    }
+}
 L242.SubsectorLogit_bld <- write_to_all_regions( A42.subsector_logit, names_SubsectorLogit )
 L242.SubsectorLogit_bld <- L242.SubsectorLogit_bld[
       vecpaste( L242.SubsectorLogit_bld[ c( "region", "subsector" ) ] ) %!in% vecpaste( L242.rm_techs_R[ c( "region", "subsector" ) ] ), ]
@@ -177,9 +188,19 @@ L242.BaseService_bld <- data.frame(
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L242.SectorLogitTables) ) {
+write_mi_data( L242.SectorLogitTables[[ curr_table ]]$data, L242.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L242.", L242.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_building_agg.xml" )
+}
 write_mi_data( L242.Supplysector_bld, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L242.Supplysector_bld",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_building_agg.xml" ) 
 write_mi_data( L242.FinalEnergyKeyword_bld, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L242.FinalEnergyKeyword_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" ) 
+for( curr_table in names ( L242.SubsectorLogitTables ) ) {
+write_mi_data( L242.SubsectorLogitTables[[ curr_table ]]$data, L242.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L242.", L242.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_building_agg.xml" )
+}
 write_mi_data( L242.SubsectorLogit_bld, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L242.SubsectorLogit_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" ) 
 if( exists( "L242.SubsectorShrwt_bld" ) ){
 	write_mi_data( L242.SubsectorShrwt_bld, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L242.SubsectorShrwt_bld", "ENERGY_XML_BATCH", "batch_building_agg.xml" )

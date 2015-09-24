@@ -68,6 +68,7 @@
 #include "technologies/include/ioutput.h"
 #include "technologies/include/primary_output.h"
 #include "functions/include/iinput.h"
+#include "sectors/include/sector_utils.h"
 
 
 using namespace std;
@@ -82,13 +83,13 @@ const string RenewableResource::XML_NAME = "renewresource";
 typedef vector<AGHG*>::const_iterator CGHGIterator;
 
 //! Default constructor.
-Resource::Resource()
-: mObjectMetaInfo(),
+Resource::Resource():
 mNumSubResource( 0 ), 
+mResourcePrice( scenario->getModeltime()->getmaxper(), 0.0 ),
 mAvailable( scenario->getModeltime()->getmaxper(), 0.0 ),
 mAnnualProd( scenario->getModeltime()->getmaxper(), 0.0 ),
 mCumulProd( scenario->getModeltime()->getmaxper(), 0.0 ),
-mResourcePrice( scenario->getModeltime()->getmaxper(), 0.0 )
+mObjectMetaInfo()
 {
 }
 
@@ -320,6 +321,14 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
     for( unsigned int i = 0; i < mOutputs.size(); i++ ) {
         mOutputs[ i ]->initCalc( aRegionName, mName, aPeriod );
     }
+    // setup supply curve boundaries here.
+    double minprice = util::getLargeNumber();
+    double maxprice = -util::getLargeNumber();
+    for( unsigned int i = 0; i < mSubResource.size(); ++i ) {
+        minprice = std::min( minprice, mSubResource[i]->getLowestPrice( aPeriod ) );
+        maxprice = std::max( maxprice, mSubResource[i]->getHighestPrice( aPeriod ) );
+    }
+    SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, minprice, maxprice, aPeriod );
 }
 
 /*! \brief Perform any calculations needed for each period after solution is

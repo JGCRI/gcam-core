@@ -18,6 +18,8 @@
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
 		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
 		981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */; };
+		CD165BC51A2513D5005F3A8B /* preconditioner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC41A2513D5005F3A8B /* preconditioner.cpp */; };
+		CD165BC81A2513F7005F3A8B /* spline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC71A2513F7005F3A8B /* spline.cpp */; };
 		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
 		CD1C993F1A3AE1E800E5F460 /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
@@ -273,6 +275,9 @@
 		CD48883B122873C200F5A88A /* plain_text_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871C122873C200F5A88A /* plain_text_logger.cpp */; };
 		CD48883C122873C200F5A88A /* xml_logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD48871D122873C200F5A88A /* xml_logger.cpp */; };
 		CD548E5A12AFFD9400ADCE8C /* generic_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD548E5912AFFD9400ADCE8C /* generic_output.cpp */; };
+		CD693FA01AEFE0CE00805384 /* relative_cost_logit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD693F9F1AEFE0CE00805384 /* relative_cost_logit.cpp */; };
+		CD693FA31AEFF0A100805384 /* absolute_cost_logit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */; };
+		CD693FA61AF0315E00805384 /* discrete_choice_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD693FA51AF0315E00805384 /* discrete_choice_factory.cpp */; };
 		CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */; };
 		CD83E61614F4584900A1D301 /* linked_market.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E61514F4584900A1D301 /* linked_market.cpp */; };
 		CD83E63A14F54B1000A1D301 /* linked_ghg_policy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E63914F54B1000A1D301 /* linked_ghg_policy.cpp */; };
@@ -345,6 +350,10 @@
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
 		981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rcp_forcing_target.cpp; sourceTree = "<group>"; };
 		981AC63E19E31D9A000CB162 /* rcp_forcing_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rcp_forcing_target.h; sourceTree = "<group>"; };
+		CD165BC31A2513CB005F3A8B /* preconditioner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = preconditioner.hpp; sourceTree = "<group>"; };
+		CD165BC41A2513D5005F3A8B /* preconditioner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = preconditioner.cpp; sourceTree = "<group>"; };
+		CD165BC61A2513ED005F3A8B /* spline.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = spline.hpp; sourceTree = "<group>"; };
+		CD165BC71A2513F7005F3A8B /* spline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spline.cpp; sourceTree = "<group>"; };
 		CD177C39159A0ADA000A996F /* cumulative_emissions_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cumulative_emissions_target.h; sourceTree = "<group>"; };
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
 		CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = ../../../../../../../../../System/Library/Frameworks/JavaVM.framework; sourceTree = "<group>"; };
@@ -943,6 +952,13 @@
 		CD52798D16418A9F00A425BF /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
 		CD548E5812AFFD8C00ADCE8C /* generic_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = generic_output.h; sourceTree = "<group>"; };
 		CD548E5912AFFD9400ADCE8C /* generic_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = generic_output.cpp; sourceTree = "<group>"; };
+		CD693F9D1AEFD0A900805384 /* idiscrete_choice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idiscrete_choice.hpp; sourceTree = "<group>"; };
+		CD693F9E1AEFE09200805384 /* relative_cost_logit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = relative_cost_logit.hpp; sourceTree = "<group>"; };
+		CD693F9F1AEFE0CE00805384 /* relative_cost_logit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = relative_cost_logit.cpp; sourceTree = "<group>"; };
+		CD693FA11AEFF09200805384 /* absolute_cost_logit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = absolute_cost_logit.hpp; sourceTree = "<group>"; };
+		CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = absolute_cost_logit.cpp; sourceTree = "<group>"; };
+		CD693FA41AF02DC200805384 /* discrete_choice_factory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = discrete_choice_factory.hpp; sourceTree = "<group>"; };
+		CD693FA51AF0315E00805384 /* discrete_choice_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = discrete_choice_factory.cpp; sourceTree = "<group>"; };
 		CD6B455319B138870020AC72 /* has_market_flag_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = has_market_flag_solution_info_filter.h; sourceTree = "<group>"; };
 		CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = has_market_flag_solution_info_filter.cpp; sourceTree = "<group>"; };
 		CD83E61214F456C000A1D301 /* linked_market.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linked_market.h; sourceTree = "<group>"; };
@@ -1425,6 +1441,10 @@
 		CD4884CE122873C100F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD693FA41AF02DC200805384 /* discrete_choice_factory.hpp */,
+				CD693FA11AEFF09200805384 /* absolute_cost_logit.hpp */,
+				CD693F9E1AEFE09200805384 /* relative_cost_logit.hpp */,
+				CD693F9D1AEFD0A900805384 /* idiscrete_choice.hpp */,
 				CDE074A5146895A000432712 /* building_function.h */,
 				CDE074A6146895A000432712 /* building_node_input.h */,
 				CDE074A7146895A000432712 /* building_service_function.h */,
@@ -1474,6 +1494,9 @@
 		CD4884F4122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD693FA51AF0315E00805384 /* discrete_choice_factory.cpp */,
+				CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */,
+				CD693F9F1AEFE0CE00805384 /* relative_cost_logit.cpp */,
 				CDE074AA146895AA00432712 /* building_function.cpp */,
 				CDE074AB146895AA00432712 /* building_node_input.cpp */,
 				CDE074AC146895AA00432712 /* building_service_function.cpp */,
@@ -1882,6 +1905,7 @@
 		CD48861B122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD165BC31A2513CB005F3A8B /* preconditioner.hpp */,
 				CD52797C16418A6400A425BF /* logbroyden.hpp */,
 				CD52797D16418A6400A425BF /* lognrbt.hpp */,
 				CD48861C122873C200F5A88A /* bisect_all.h */,
@@ -1903,6 +1927,7 @@
 		CD488628122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD165BC41A2513D5005F3A8B /* preconditioner.cpp */,
 				CDD20FFE161B9F9200945527 /* logbroyden.cpp */,
 				0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */,
 				CD488629122873C200F5A88A /* bisect_all.cpp */,
@@ -2256,6 +2281,7 @@
 		CD488700122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD165BC61A2513ED005F3A8B /* spline.hpp */,
 				CD488701122873C200F5A88A /* cost_curve.h */,
 				CD488702122873C200F5A88A /* curve.h */,
 				CD488703122873C200F5A88A /* data_point.h */,
@@ -2270,6 +2296,7 @@
 		CD488708122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD165BC71A2513F7005F3A8B /* spline.cpp */,
 				CD488709122873C200F5A88A /* curve.cpp */,
 				CD48870A122873C200F5A88A /* data_point.cpp */,
 				CD48870B122873C200F5A88A /* explicit_point_set.cpp */,
@@ -2386,6 +2413,8 @@
 /* Begin PBXProject section */
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "objects" */;
 			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = English;
@@ -2424,6 +2453,7 @@
 				CD488734122873C200F5A88A /* batch_runner.cpp in Sources */,
 				CD488735122873C200F5A88A /* dependency_finder.cpp in Sources */,
 				CD488736122873C200F5A88A /* gdp.cpp in Sources */,
+				CD693FA31AEFF0A100805384 /* absolute_cost_logit.cpp in Sources */,
 				CD488737122873C200F5A88A /* info.cpp in Sources */,
 				CD488738122873C200F5A88A /* info_factory.cpp in Sources */,
 				CD488739122873C200F5A88A /* mac_generator_scenario_runner.cpp in Sources */,
@@ -2453,6 +2483,7 @@
 				CD488755122873C200F5A88A /* emissions_driver_factory.cpp in Sources */,
 				CD488756122873C200F5A88A /* emissions_summer.cpp in Sources */,
 				CD488758122873C200F5A88A /* ghg_factory.cpp in Sources */,
+				CD693FA01AEFE0CE00805384 /* relative_cost_logit.cpp in Sources */,
 				CD48875B122873C200F5A88A /* input_driver.cpp in Sources */,
 				CD48875D122873C200F5A88A /* input_output_driver.cpp in Sources */,
 				CD48875E122873C200F5A88A /* output_driver.cpp in Sources */,
@@ -2510,6 +2541,7 @@
 				CD488797122873C200F5A88A /* main.cpp in Sources */,
 				CD488798122873C200F5A88A /* cached_market.cpp in Sources */,
 				CD488799122873C200F5A88A /* calibration_market.cpp in Sources */,
+				CD693FA61AF0315E00805384 /* discrete_choice_factory.cpp in Sources */,
 				CD48879A122873C200F5A88A /* demand_market.cpp in Sources */,
 				CD48879B122873C200F5A88A /* inverse_calibration_market.cpp in Sources */,
 				CD48879C122873C200F5A88A /* market.cpp in Sources */,
@@ -2710,6 +2742,8 @@
 				CDE29989198C831E00556032 /* emissions_control_factory.cpp in Sources */,
 				CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */,
 				981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */,
+				CD165BC51A2513D5005F3A8B /* preconditioner.cpp in Sources */,
+				CD165BC81A2513F7005F3A8B /* spline.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2720,6 +2754,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "libstdc++";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -2734,6 +2769,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
@@ -2854,6 +2890,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
@@ -2913,6 +2950,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;

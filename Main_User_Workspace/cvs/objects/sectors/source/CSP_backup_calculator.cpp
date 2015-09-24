@@ -57,9 +57,9 @@ using namespace xercesc;
 /*!
  * \brief Constructor.
  */
-CSPBackupCalculator::CSPBackupCalculator()
-: mMaxSectorLoadServed( 0.15 ),
+CSPBackupCalculator::CSPBackupCalculator():
   mMaxBackupFraction (  0.40 ), 
+  mMaxSectorLoadServed( 0.15 ),
   mBackupExponent ( 4.0 ) 
 {
 }

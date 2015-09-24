@@ -149,7 +149,7 @@ bool TechnologyContainer::createAndParseVintage( const DOMNode* aNode, const str
     /*! \pre Tech type should be known. */
     assert( hasTechnologyType( aTechType ) );
     
-    ITechnology* newVintage;
+    ITechnology* newVintage = 0;
     
     const int techYear = XMLHelper<int>::getAttr( aNode, "year" );
     if( techYear == 0 ) {

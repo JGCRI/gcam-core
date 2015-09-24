@@ -37,6 +37,8 @@ L152.in_EJ_R_trn_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L152.in_EJ_R_trn_F_Yh"
 # 2. Perform computations
 # 2a. Supplysector information
 printlog( "L252.Supplysector_trn: Supply sector information for transportation sector" )
+L252.SectorLogitTables <- get_logit_fn_tables( A52.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L252.Supplysector_trn <- write_to_all_regions( A52.sector, names_Supplysector )
 
 printlog( "L252.FinalEnergyKeyword_trn: Supply sector keywords for transportation sector" )
@@ -44,6 +46,8 @@ L252.FinalEnergyKeyword_trn <- na.omit( write_to_all_regions( A52.sector, names_
 
 # 2b. Subsector information
 printlog( "L252.SubsectorLogit_trn: Subsector logit exponents of transportation sector" )
+L252.SubsectorLogitTables <- get_logit_fn_tables( A52.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L252.SubsectorLogit_trn <- write_to_all_regions( A52.subsector_logit, names_SubsectorLogit )
 
 printlog( "L252.SubsectorShrwt_trn and L252.SubsectorShrwtFllt_trn: Subsector shareweights of transportation sector" )
@@ -135,9 +139,19 @@ L252.BaseService_trn <- data.frame(
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L252.SectorLogitTables) ) {
+write_mi_data( L252.SectorLogitTables[[ curr_table ]]$data, L252.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L252.", L252.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_transportation_agg.xml" )
+}
 write_mi_data( L252.Supplysector_trn, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L252.Supplysector_trn",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_transportation_agg.xml" ) 
 write_mi_data( L252.FinalEnergyKeyword_trn, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L252.FinalEnergyKeyword_trn", "ENERGY_XML_BATCH", "batch_transportation_agg.xml" ) 
+for( curr_table in names ( L252.SubsectorLogitTables ) ) {
+write_mi_data( L252.SubsectorLogitTables[[ curr_table ]]$data, L252.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L252.", L252.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_transportation_agg.xml" )
+}
 write_mi_data( L252.SubsectorLogit_trn, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L252.SubsectorLogit_trn", "ENERGY_XML_BATCH", "batch_transportation_agg.xml" ) 
 if( exists( "L252.SubsectorShrwt_trn" ) ){
 	write_mi_data( L252.SubsectorShrwt_trn, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L252.SubsectorShrwt_trn", "ENERGY_XML_BATCH", "batch_transportation_agg.xml" )

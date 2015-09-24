@@ -126,6 +126,12 @@ pair<double, bool> Secanter::getNextValue() {
             ( log(mCurrentTrial.first) - log(mPrevTrial.first) );
         double newPrice = log(mCurrentTrial.first) - mCurrentTrial.second / slope;
         newPrice = exp( newPrice );
+        // Very large changes in price are dangerous.  Limit ourselves
+        // to doubling the price in each step.
+        if( newPrice > 2.0 * mCurrentTrial.first ) {
+            newPrice = 2.0 * mCurrentTrial.first;
+        }
+        
         mPrevTrial = mCurrentTrial;
         mCurrentTrial.first = newPrice;
         mCurrentTrial.second = ITargetSolver::undefined();

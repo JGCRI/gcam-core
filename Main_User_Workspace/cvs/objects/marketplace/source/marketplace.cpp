@@ -41,6 +41,7 @@
 #include "util/base/include/definitions.h"
 
 #include <vector>
+#include <iomanip>
 
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market.h"
@@ -73,8 +74,8 @@ const double Marketplace::NO_MARKET_PRICE = util::getLargeNumber();
 */
 Marketplace::Marketplace():
 mMarketLocator( new MarketLocator() ),
-mIsDerivativeCalc( false ),
-mDependencyFinder( new MarketDependencyFinder( this ) )
+mDependencyFinder( new MarketDependencyFinder( this ) ),
+mIsDerivativeCalc( false )
 {
 }
 
@@ -345,6 +346,8 @@ void Marketplace::initPrices(){
         for( unsigned int j = 0; j < markets[ i ].size(); ++j ){
             markets[ i ][ j ]->initPrice();
         }
+        // no forecast in period 0
+        markets[i][0]->setForecastPrice(markets[i][0]->getRawPrice());
     }
 }
 
@@ -693,9 +696,9 @@ vector<Market*> Marketplace::getMarketsToSolve( const int period ) const {
  * \details Resuse parsed prices up to the configuration parameter restart-period
  *          which will allow users to resume the model at that period.  If the
  *          user did not intend on restarting the model we can resuse prices up to
- *          the final calibration year.  After which we would assume the scenario
- *          would change significantly enough that starting from previous period's
- *          prices would be closer to the solution. This only occurs for periods
+ *          the final calibration year.  After which we attempt to use the trend
+ *          in prices to forecast prices (and demands) to come up with a good
+ *          guess that would be closer to the solution. This only occurs for periods
  *          greater than 0.
  * \author Sonny Kim
  * \param period Period for which to initialize prices.
@@ -705,14 +708,36 @@ void Marketplace::init_to_last( const int period ) {
     // final calibration period.
     const static int restartPeriod = Configuration::getInstance()->getInt(
         "restart-period", scenario->getModeltime()->getFinalCalibrationPeriod() + 1, false );
-    if ( period > 0 && period < restartPeriod ) {
+
+    if( period == 0 ) {
+        for( unsigned i = 0; i < markets.size(); ++i ) {
+            markets[ i ][ period ]->setForecastPrice( 1.0 );
+            markets[ i ][ period ]->setForecastDemand( 1.0 );
+        }
+    }
+    else if ( period > 0 && period < restartPeriod ) {
         for ( unsigned int i = 0; i < markets.size(); i++ ) {
             markets[ i ][ period ]->set_price_to_last_if_default( markets[ i ][ period - 1 ]->getPrice() );
+            markets[ i ][ period ]->setForecastPrice( markets[ i ][ period - 1 ]->getRawPrice() );
+            markets[ i ][ period ]->setForecastDemand( 1.0 );
         }
     }
     else if( period >= restartPeriod ){
         for ( unsigned int i = 0; i < markets.size(); i++ ) {
-            markets[ i ][ period ]->set_price_to_last( markets[ i ][ period - 1 ]->getPrice() );
+            double forecastedPrice = forecastPrice( markets[ i ], period );
+            double lastPeriodPrice = markets[ i ][ period - 1 ]->getPrice();
+            // Only use the forecast price if it is reliable.
+            if( (forecastedPrice < 0.0 && lastPeriodPrice > 0.0) ||
+                abs( forecastedPrice ) > 5.0 * abs( lastPeriodPrice ) )
+            {
+                markets[ i ][ period ]->set_price_to_last( lastPeriodPrice );
+            }
+            else {
+                markets[ i ][ period ]->set_price_to_last( forecastedPrice );
+            }
+            // forecast function stores demand forecast in the market.
+            // We don't need to do anything further with it here.
+            forecastDemand( markets[ i ], period );
         }
     }
 }
@@ -1100,4 +1125,265 @@ void Marketplace::prnmktbl(int period, std::ostream &out) const
   }
   out << "\n";
 
+}
+
+/*!
+ * \brief Use the market price history to forecast a price in the upcoming period.
+ * \details Rather than setting the initial guess for a period to the
+ *          last period value (which is almost certainly wrong for
+ *          some markets), we extrapolate using the price history.
+ *          Right now we use a crude extrapolation, but in the future
+ *          we might adopt something more sophisticated.  To support
+ *          that possibility, we record the forecast for the period,
+ *          as future forecasting methods might try to estimate
+ *          forecast bias or otherwise use the forecast history in
+ *          addition to the price history. 
+ * \param aMarketHistory vector containing pointers to this market for
+ *                       all periods. 
+ * \param aPeriod period for which to forecast
+ */
+double Marketplace::forecastPrice( const std::vector<Market*>& aMarketHistory, const int aPeriod )
+{
+
+    double forecastedPrice = extrapolate( aMarketHistory, aPeriod, &Market::getRawPrice );
+    aMarketHistory[ aPeriod ]->setForecastPrice( forecastedPrice );
+
+    return forecastedPrice;
+}
+
+/*!
+ * \brief Use the market demand history to forecast a demand in the upcoming period.
+ * \details An estimate for a reasonable range of demand values is necessary so
+ *          that newton raphson algorithms can rescale supply/demand values from
+ *          all markets to be in a similar range.
+ * \param aMarketHistory vector containing pointers to this market for
+ *                       all periods.
+ * \param aPeriod period for which to forecast
+ */
+double Marketplace::forecastDemand( const std::vector<Market*>& aMarketHistory, const int aPeriod )
+{
+    double forecastedDemand = extrapolate( aMarketHistory, aPeriod, &Market::getSolverDemand );
+    // set some reasonable limits on what kinds of forecast you get
+    // this is going to use as a scale factor, so lose the sign
+    forecastedDemand = abs( forecastedDemand );
+    if( forecastedDemand < 1.0 ) {
+        // don't scale up small values
+        forecastedDemand = 1.0;
+    }
+
+    aMarketHistory[ aPeriod ]->setForecastDemand( forecastedDemand );
+    return forecastedDemand;
+}
+            
+/*!
+ * \brief extrapolate some arbitrary value  using the last three values from the
+ *        previous model periods.
+ * \param aMarketHistory A vector of a single market by period.
+ * \param aPeriod The current model period to extrapolate to.
+ * \param aDataFn A function pointer which will be used to look up the actual data
+ *                value that we are extrapolating.
+ * \return The extrapolated data point for aPeriod.
+ */
+double Marketplace::extrapolate( const std::vector<Market*>& aMarketHistory, const int aPeriod,
+                                 getpsd_t aDataFn )
+{
+    // for now, just do a simple extrapolation using the last 3 points
+    double x[ 3 ],y[ 3 ];
+    const Modeltime* modeltime = Modeltime::getInstance();
+
+
+    /*!
+     * \pre Period must be greater than zero.
+     */
+    assert( aPeriod > 0 );
+    
+    for( int i = 2; i >= 0; --i ) {
+        int currPeriod = aPeriod + i - 3;
+        if( currPeriod < 0 ) {
+            // not enough history.  Note that if aPeriod>0, then this
+            // can't happen for i==2, so referring to x[i+1] and y[i+1] is safe
+            x[ i ] = x[ i + 1 ] - 1.0;
+            y[ i ] = y[ i + 1 ];
+        }
+        else {
+            x[ i ] = modeltime->getper_to_yr( currPeriod );
+            // retrieve the data of the requested type.
+            y[ i ] = (aMarketHistory[ currPeriod ]->*aDataFn)();
+            if( i < 2 && y[ i ] < util::getTinyNumber() ) {
+                // We have a few cases where sectors don't come into
+                // use until some future period.  When that happens
+                // the price, demand, etc. is zero until the sector
+                // turns on, then it abruptly becomes nonzero.  Don't
+                // try to extrapolate in those cases.  Just use the
+                // last period value.
+                y[ i ] = y[ i + 1 ];
+            }
+        }
+    }
+
+    // second order extrapolation
+    double m, m1, m2;
+    m1 = ( y[ 1 ] - y[ 0 ] ) / ( x[ 1 ] - x[ 0 ] );
+    m2 = ( y[ 2 ] - y[ 1 ] ) / ( x[ 2 ] - x[ 1 ] );
+    m = m2 + 2.0 * ( m2 - m1 ) / ( x[ 2 ] - x[ 0 ] );
+
+    double currYear = modeltime->getper_to_yr( aPeriod );
+    return y[ 2 ] + m * ( currYear - x[ 2 ] );
+}
+
+
+/*!
+ * \brief Log the forecast and actual prices for this period
+ */
+void Marketplace::logForecastEvaluation(int aPeriod) const
+{
+    const double smallval=0.1;  // for cases where the actual price was nearly zero
+    double ld2=0.0, fd2=0.0;    // sum of squared differences for last val and forecast val
+    double ldmax=-1.0, fdmax=-1.0; // maximum difference
+    int limax=0, fimax=0;          // location of maximum differences
+    double missmax=0.0;            // worst "miss"
+    int mimax=0;                   // location of worst miss
+    int nmiss=0, nhit=0;
+    using std::setw;
+    ILogger &solverlog = ILogger::getLogger("solver_log");
+    solverlog.setLevel(ILogger::DEBUG);
+
+    solverlog << "\nPeriod " << aPeriod << " price forecasts and results\n"
+              << "last period\tforecast   \tthis period\tlast diff  \tfcst diff  \n"; 
+    for(unsigned i=0; i<markets.size(); ++i) {
+        double lprice = markets[i][aPeriod-1]->getRawPrice();
+        double fcst   = markets[i][aPeriod]->getForecastPrice();
+        double cprice = markets[i][aPeriod]->getRawPrice();
+        double ldiff = (lprice-cprice)/(fabs(cprice)+smallval);
+        double fdiff = (fcst-cprice)/(fabs(cprice)+smallval);
+        char marker = fabs(fdiff)<=fabs(ldiff) ? '+' : ' ';
+        if(fdiff > 0.1)
+            marker = '!';
+
+        ld2 += ldiff*ldiff;
+        fd2 += fdiff*fdiff;
+
+        if(markets[i][aPeriod]->shouldSolve()) {
+            // only compute statistics on solvable markets
+            if(fabs(ldiff) > ldmax) {
+                ldmax = fabs(ldiff);
+                limax = i;
+            }
+            if(fabs(fdiff) > fdmax) {
+                fdmax = fabs(fdiff);
+                fimax = i;
+            }
+
+            if(fabs(fdiff) > fabs(ldiff)) {
+                // this forecast was a miss.  Magnitude is the difference
+                // in delta-price divided by the delta-price for the
+                // persistence forecast
+                double miss=(fabs(fcst-cprice)-fabs(lprice-cprice)) / (fabs(lprice-cprice)+smallval);
+                if(miss>missmax) {
+                    missmax=miss;
+                    mimax = i;
+                }
+                nmiss++;
+            }
+            else {
+                nhit++;
+            }
+        }
+        
+        solverlog << setw(11) << lprice << "\t"
+                  << setw(11) << fcst << "\t"
+                  << setw(11) << cprice << "\t"
+                  << setw(11) << ldiff << "\t"
+                  << setw(11) << fdiff << "\t"
+                  << marker << "  > " // angle marker makes it easier to grep for these lines in the log.
+                  << markets[i][aPeriod]->getName() << "\n";
+    }
+
+    double fac= (nhit+nmiss > 0) ? 1.0/(nhit+nmiss) : 1.0;
+    
+    solverlog << "\nhit %= " << fac*nhit << "  miss %= " << fac*nmiss
+              << "\nworst miss= " << missmax << " in market= "
+              << markets[mimax][aPeriod]->getName();
+    solverlog << "\nMax ldiff= " << ldmax << " in market= "
+              << markets[limax][aPeriod]->getName();
+    solverlog << "\nMax fdiff= " << fdmax << " in market= "
+              << markets[fimax][aPeriod]->getName();
+    solverlog << "\nRMS initial guess differences:";
+    solverlog << "\nlast:     \t" << sqrt(fac*ld2)
+              << "\nforecast: \t" << sqrt(fac*fd2)
+              << "\n\n";
+
+
+    // Same thing for demand.  Should probably refactor all this crap.  Later.
+    nmiss = nhit;
+    mimax = 0;
+    missmax = 0.0; 
+    solverlog << "\nPeriod " << aPeriod << " demand forecasts and results\n"
+              << "last period\tforecast   \tthis period\tlast diff  \tfcst diff  \n";
+    for(unsigned i=0; i<markets.size(); ++i) {
+        // take absolute value of actuals, since we are only trying to
+        // forecast magnitude of demand, not actual value.  Also,
+        // values < 1 are forced to 1.
+        double ldemand      = std::max(fabs(markets[i][aPeriod-1]->getSolverDemand()), 1.0);
+        double fcstdemand   = markets[i][aPeriod]->getForecastDemand();
+        double cdemand      = std::max(fabs(markets[i][aPeriod]->getSolverDemand()), 1.0);
+        double lddiff       = (ldemand-cdemand)/(fabs(cdemand)+smallval);
+        double fddiff       = (fcstdemand-cdemand)/(fabs(cdemand)+smallval);
+        char marker = fabs(fddiff)<=fabs(lddiff) ? '+' : ' ';
+        if(fddiff > 0.1)
+            marker = '!';
+
+        ld2 += lddiff*lddiff;
+        fd2 += fddiff*fddiff;
+
+        
+        if(markets[i][aPeriod]->shouldSolve()) {
+            // only compute statistics on solvable markets
+            if(fabs(lddiff) > ldmax) {
+                ldmax = fabs(lddiff);
+                limax = i;
+            }
+            if(fabs(fddiff) > fdmax) {
+                fdmax = fabs(fddiff);
+                fimax = i;
+            }
+
+            if(fabs(fddiff) > fabs(lddiff)) {
+                // this forecast was a miss.  Magnitude is the difference
+                // in delta-price divided by the delta-price for the
+                // persistence forecast
+                double miss=(fabs(fcstdemand-cdemand)-fabs(ldemand-cdemand)) / (fabs(ldemand-cdemand)+smallval);
+                if(miss>missmax) {
+                    missmax=miss;
+                    mimax = i;
+                }
+                nmiss++;
+            }
+            else {
+                nhit++;
+            }
+        }
+        
+        solverlog << setw(11) << ldemand << "\t"
+                  << setw(11) << fcstdemand << "\t"
+                  << setw(11) << cdemand << "\t"
+                  << setw(11) << lddiff << "\t"
+                  << setw(11) << fddiff << "\t"
+                  << marker << "  > " // angle marker makes it easier to grep for these lines in the log.
+                  << markets[i][aPeriod]->getName() << "\n";
+    }
+
+    fac= (nhit+nmiss > 0) ? 1.0/(nhit+nmiss) : 1.0;
+    
+    solverlog << "\nhit %= " << fac*nhit << "  miss %= " << fac*nmiss
+              << "\nworst miss= " << missmax << " in market= "
+              << markets[mimax][aPeriod]->getName();
+    solverlog << "\nMax lddiff= " << ldmax << " in market= "
+              << markets[limax][aPeriod]->getName();
+    solverlog << "\nMax fddiff= " << fdmax << " in market= "
+              << markets[fimax][aPeriod]->getName();
+    solverlog << "\nRMS initial guess differences:";
+    solverlog << "\nlast:     \t" << sqrt(fac*ld2)
+              << "\nforecast: \t" << sqrt(fac*fd2)
+              << "\n\n"; 
 }

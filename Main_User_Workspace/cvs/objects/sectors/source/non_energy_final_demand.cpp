@@ -264,6 +264,7 @@ double NonEnergyFinalDemand::calcDemand( const string& aRegionName,
         const Modeltime* modeltime = scenario->getModeltime();
         const int normPeriod = modeltime->getyr_to_per( 1990 );
         double priceRatio = SectorUtils::calcPriceRatio( aRegionName, mName, normPeriod, aPeriod );
+        const double cappedPriceRatio = max( priceRatio, SectorUtils::getDemandPriceThreshold() );
 
         const int basePer = modeltime->getyr_to_per( modeltime->getStartYear() );
         double gdpRatio = aGDP->getGDP( aPeriod ) / aGDP->getGDP( basePer );
@@ -272,7 +273,7 @@ double NonEnergyFinalDemand::calcDemand( const string& aRegionName,
         double serviceDemand;
         if ( mIsPerCapitaBased ) { // demand based on per capita GDP
             double scaledGDPperCap = aGDP->getScaledGDPperCap( aPeriod );
-            serviceDemand = mServiceDemands[ 0 ] * pow( priceRatio, mPriceElasticity[ aPeriod ] ) 
+            serviceDemand = mServiceDemands[ 0 ] * pow( cappedPriceRatio, mPriceElasticity[ aPeriod ] )
                 * pow( scaledGDPperCap, mIncomeElasticity[ aPeriod ] );
             // need to multiply above by population ratio (aNodeent population/base year
             // population).  This ratio provides the population ratio.
@@ -281,8 +282,12 @@ double NonEnergyFinalDemand::calcDemand( const string& aRegionName,
         }
         // If not perCapitaBased, service_demand = B * P^r * GDP^r
         else { // demand based on scale of GDP    
-            serviceDemand = mServiceDemands[ 0 ] * pow( priceRatio, mPriceElasticity[ aPeriod ] ) 
+            serviceDemand = mServiceDemands[ 0 ] * pow( cappedPriceRatio, mPriceElasticity[ aPeriod ] )
                 * pow( gdpRatio, mIncomeElasticity[aPeriod] );
+        }
+        // May need to make an adjustment in case of negative prices.
+        if( priceRatio < cappedPriceRatio && mPriceElasticity[ aPeriod ] != 0 ) {
+            serviceDemand = SectorUtils::adjustDemandForNegativePrice( serviceDemand, priceRatio );
         }
 
         // demand sector output is total end-use sector demand for service

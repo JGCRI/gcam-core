@@ -81,9 +81,13 @@ L203.Pop_thous_R_Yh <- add_region_name( L203.Pop_thous_R_Yh )
 L203.pcgdp_thous90USD_SSP_R_Y.melt <- add_region_name( L203.pcgdp_thous90USD_SSP_R_Y.melt )
 
 printlog( "L203.Supplysector_demand: generic info for demand sectors" )
+L203.SectorLogitTables <- get_logit_fn_tables( A_demand_supplysector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L203.Supplysector_demand <- write_to_all_regions_ag( A_demand_supplysector, names_Supplysector )
 
 printlog( "L203.SubsectorAll_demand: generic info for demand subsectors" )
+L203.SubsectorLogitTables <- get_logit_fn_tables( A_demand_subsector, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L203.SubsectorAll_demand <- write_to_all_regions_ag( A_demand_subsector, names_SubsectorAll )
 
 printlog( "L203.StubTech_demand: identification of stub technologies for demands" )
@@ -415,7 +419,19 @@ L203.PriceElasticity <- L203.PriceElasticity[ names_PriceElasticity ]
 
 #Remove any regions for which agriculture and land use are not modeled
 ## ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
+for( curr_table in names( L203.SectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L203.SectorLogitTables[[ curr_table ]]$data <- subset( L203.SectorLogitTables[[ curr_table ]]$data,
+            !region %in% no_aglu_regions )
+    }
+}
 L203.Supplysector_demand         <- subset( L203.Supplysector_demand, !region %in% no_aglu_regions )
+for( curr_table in names( L203.SubsectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L203.SubsectorLogitTables[[ curr_table ]]$data <- subset( L203.SubsectorLogitTables[[ curr_table ]]$data,
+            !region %in% no_aglu_regions )
+    }
+}
 L203.SubsectorAll_demand         <- subset( L203.SubsectorAll_demand, !region %in% no_aglu_regions )
 L203.StubTech_demand             <- subset( L203.StubTech_demand, !region %in% no_aglu_regions )
 L203.StubTechProd_food_crop      <- subset( L203.StubTechProd_food_crop, !region %in% no_aglu_regions & year %in% model_base_years )
@@ -439,8 +455,18 @@ L203.PriceElasticity             <- subset( L203.PriceElasticity, !region %in% n
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
+for( curr_table in names ( L203.SectorLogitTables) ) {
+write_mi_data( L203.SectorLogitTables[[ curr_table ]]$data, L203.SectorLogitTables[[ curr_table ]]$header,
+    "AGLU_LEVEL2_DATA", paste0("L203.", L203.SectorLogitTables[[ curr_table ]]$header ), "AGLU_XML_BATCH",
+    "batch_demand_input.xml" )
+}
 write_mi_data( L203.Supplysector_demand, IDstring="Supplysector", domain="AGLU_LEVEL2_DATA", fn="L203.Supplysector_demand",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_demand_input.xml" )
+for( curr_table in names ( L203.SubsectorLogitTables ) ) {
+write_mi_data( L203.SubsectorLogitTables[[ curr_table ]]$data, L203.SubsectorLogitTables[[ curr_table ]]$header,
+    "AGLU_LEVEL2_DATA", paste0("L203.", L203.SubsectorLogitTables[[ curr_table ]]$header ), "AGLU_XML_BATCH",
+    "batch_demand_input.xml" )
+}
 write_mi_data( L203.SubsectorAll_demand, "SubsectorAll", "AGLU_LEVEL2_DATA", "L203.SubsectorAll_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )
 write_mi_data( L203.StubTech_demand, "StubTech", "AGLU_LEVEL2_DATA", "L203.StubTech_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )
 write_mi_data( L203.GlobalTechCoef_demand, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L203.GlobalTechCoef_demand", "AGLU_XML_BATCH", "batch_demand_input.xml" )

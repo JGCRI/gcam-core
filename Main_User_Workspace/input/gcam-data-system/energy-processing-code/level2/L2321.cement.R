@@ -49,6 +49,8 @@ L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thou
 #Create tables to delete technologies and subsectors in regions where heat is not modeled as a fuel
 # 2a. Supplysector information
 printlog( "L2321.Supplysector_cement: Supply sector information for cement sector" )
+L2321.SectorLogitTables <- get_logit_fn_tables( A321.sector, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
 L2321.Supplysector_cement <- write_to_all_regions( A321.sector, names_Supplysector )
 
 printlog( "L2321.FinalEnergyKeyword_cement: Supply sector keywords for cement sector" )
@@ -56,6 +58,8 @@ L2321.FinalEnergyKeyword_cement <- na.omit( write_to_all_regions( A321.sector, n
 
 # 2b. Subsector information
 printlog( "L2321.SubsectorLogit_cement: Subsector logit exponents of cement sector" )
+L2321.SubsectorLogitTables <- get_logit_fn_tables( A321.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
 L2321.SubsectorLogit_cement <- write_to_all_regions( A321.subsector_logit, names_SubsectorLogit )
 
 printlog( "L2321.SubsectorShrwt_cement and L2321.SubsectorShrwtFllt_cement: Subsector shareweights of cement sector" )
@@ -231,9 +235,19 @@ L2321.IncomeElasticity_cement$energy.final.demand <- A321.demand$energy.final.de
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L2321.SectorLogitTables) ) {
+write_mi_data( L2321.SectorLogitTables[[ curr_table ]]$data, L2321.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L2321.", L2321.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_cement.xml" )
+}
 write_mi_data( L2321.Supplysector_cement, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L2321.Supplysector_cement",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_cement.xml" ) 
 write_mi_data( L2321.FinalEnergyKeyword_cement, "FinalEnergyKeyword", "ENERGY_LEVEL2_DATA", "L2321.FinalEnergyKeyword_cement", "ENERGY_XML_BATCH", "batch_cement.xml" ) 
+for( curr_table in names ( L2321.SubsectorLogitTables ) ) {
+write_mi_data( L2321.SubsectorLogitTables[[ curr_table ]]$data, L2321.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L2321.", L2321.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_cement.xml" )
+}
 write_mi_data( L2321.SubsectorLogit_cement, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L2321.SubsectorLogit_cement", "ENERGY_XML_BATCH", "batch_cement.xml" ) 
 if( exists( "L2321.SubsectorShrwt_cement" ) ){
 	write_mi_data( L2321.SubsectorShrwt_cement, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L2321.SubsectorShrwt_cement", "ENERGY_XML_BATCH", "batch_cement.xml" )

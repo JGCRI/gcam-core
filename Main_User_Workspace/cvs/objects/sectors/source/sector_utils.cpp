@@ -259,7 +259,7 @@ double SectorUtils::normalizeLogShares( vector<double>& alogShares ){
 
     // in theory we could check for lfac == +Inf here, but in light of how the log
     // shares are calculated, it would seem like that can't happen.
-    
+
     // rescale and get normalization sum
     for( size_t i = 0; i < alogShares.size(); ++i ) {
         alogShares[ i ] -= lfac;
@@ -417,14 +417,16 @@ double SectorUtils::convertEnergyToCapacity( const double aCapacityFactor,
  * \brief Get the ratio of an sector's price in the current period to the base
  *        period.
  * \details Returns the ratio of the sector's price in the given region in the
- *          current period to the base period. If the sector's price in the base
- *          period is zero or if the base period is greater than or equal to the
- *          current period this will return 1.
+ *          current period to the base period. If the base period is greater than
+ *          or equal to the current period this will return 1.
  * \param aRegionName Name of the region in which to find the ratio.
  * \param aSectorName Sector for which to find the price ratio.
  * \param aBasePeriod Base period for the ratio.
  * \param aCurrentPeriod Current period for the ratio.
  * \return Price ratio for the sector.
+ * \warning No checks are made for negative prices and users of this method should
+ *          ensure proper behavior is such cases.
+ * \sa adjustDemandForNegativePrice
  * \author Josh Lurz
  */
 double SectorUtils::calcPriceRatio( const string& aRegionName,
@@ -443,18 +445,54 @@ double SectorUtils::calcPriceRatio( const string& aRegionName,
     if( aCurrentPeriod > internalBasePeriod ) {
         const Marketplace* marketplace = scenario->getMarketplace();
         double basePrice = marketplace->getPrice( aSectorName, aRegionName, internalBasePeriod );
-        if( basePrice > util::getSmallNumber() ){
-            priceRatio = marketplace->getPrice( aSectorName, aRegionName, aCurrentPeriod ) / basePrice;
-        }
+        double currentPrice = marketplace->getPrice( aSectorName, aRegionName, aCurrentPeriod );
+
+        priceRatio = currentPrice / basePrice;
+        
     }
+
     return priceRatio;
+}
+
+/*!
+ * \brief Defines an arbitrarily small price threshold which will be used to cap
+ *        negative prices which escape to the demand calculations.
+ * \return A small price threshold value to use.
+ * \sa adjustDemandForNegativePrice
+ */
+double SectorUtils::getDemandPriceThreshold() {
+    return util::getVerySmallNumber();
+}
+
+/*!
+ * \brief Increases some demand scalar the more negative the price driver becomes.
+ * \details Many demand formulations do not properly handle negative prices.  We
+ *          do not expect to have negative service prices in equilibrium however
+ *          during solution we may land in such scenarios so we will add some
+ *          behavior to the demand scalar that was calculated at a price value of
+ *          getDemandPriceThreshold() to give the solver some continuous (there is
+ *          still a discontinuity at the threshold value) behavior to get the prices
+ *          back into a reasonable range.
+ * \param aDemandScalar The demand scalar calculated at the price threshold.
+ * \param aPrice The negative (or really less than the threshold) price driver.
+ * \return An adjusted demand driver inflated the more negative aPrice is.
+ * \todo We do not expect that this function is called when we finally reach
+ *       equilibrium, maybe devise some signaling to raise an error if it was.
+ */
+double SectorUtils::adjustDemandForNegativePrice( const double aDemandScalar, const double aPrice ) {
+    /*!
+     * \pre aPrice is below the threshold value.
+     */
+    assert( aPrice <= getDemandPriceThreshold() );
+
+    return aDemandScalar * ( 1.0 + ( getDemandPriceThreshold() - aPrice ) );
 }
 
 /*!
  * \brief Create the name for the TFE market associated with a sector.
  * \param aSectorName Name of the sector.
  * \return The name of the TFE market.
- * \warning Due to the string concatonation, this function is slow.
+ * \warning Due to the string concatenation, this function is slow.
  */
 const string SectorUtils::createTFEMarketName( const string& aSectorName ){
     return aSectorName + "-tfe";
@@ -522,7 +560,52 @@ double SectorUtils::convertCapacityToEnergy( const double aCapacityFactor,
     return aCapacity * ( aCapacityFactor * EJ_PER_GWH * HOURS_PER_YEAR );
 }
 
-/*! \brief Fills missing period elements in a Value vector with values linearly 
+/*!
+ * \brief Make available to the solution mechanism some best guess bounds for which
+ *        we expect there to be supply behavior.
+ * \details Since this meta-data is only calculated at the start of the period and
+ *          performance is not critical it is passed via market-info.  Only valid
+ *          values that are smaller / greater than the currently set lower / upper
+ *          bounds are set.
+ * \param aGoodName The name of the good for which to set the bounds information.
+ * \param aRegionName The name of the region in which to set the bounds information.
+ * \param aLowerPriceBound The price below which zero supply is likely.
+ * \param aUpperPriceBound The price above which no additional supply is likely.
+ *\ param aPeriod The current model period.
+ */
+void SectorUtils::setSupplyBehaviorBounds( const string& aGoodName, const string& aRegionName,
+                                           const double aLowerPriceBound, const double aUpperPriceBound,
+                                           const int aPeriod )
+{
+    const string LOWER_BOUND_KEY = "lower-bound-supply-price";
+    const string UPPER_BOUND_KEY = "upper-bound-supply-price";
+
+    IInfo* sectorInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName, aPeriod, true );
+
+    /*!
+     * \pre the info object must exist.
+     */
+    assert( sectorInfo );
+
+    // Set the lower price bound.
+    double lowerPriceBound = sectorInfo->hasValue( LOWER_BOUND_KEY ) ? sectorInfo->getDouble( LOWER_BOUND_KEY, false ) :
+        util::getLargeNumber();
+    if( util::isValidNumber( aLowerPriceBound ) ) {
+        lowerPriceBound = min( lowerPriceBound, aLowerPriceBound );
+    }
+    sectorInfo->setDouble( LOWER_BOUND_KEY, lowerPriceBound );
+
+    // Set the upper price bound.
+    double upperPriceBound = sectorInfo->hasValue( UPPER_BOUND_KEY ) ? sectorInfo->getDouble( UPPER_BOUND_KEY, false ) :
+        -util::getLargeNumber();
+    if( util::isValidNumber( aUpperPriceBound ) ) {
+        upperPriceBound = max( upperPriceBound, aUpperPriceBound );
+    }
+    sectorInfo->setDouble( UPPER_BOUND_KEY, upperPriceBound );
+}
+
+
+/*! \brief Fills missing period elements in a Value vector with values linearly
 *        interpolated from initialized or read-in values.
 * \detail This method is intended for enabling variable time-step capability
 *         and filling in values that have not been read-in or initialized

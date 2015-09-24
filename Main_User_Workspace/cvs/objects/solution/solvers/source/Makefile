@@ -7,19 +7,8 @@
 PATHOFFSET = ../../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       = bisect_all.o \
-             bisect_one.o \
-             bisect_policy.o \
-             bisect_policy_nr_solver.o \
-             bisection_nr_solver.o \
-             log_newton_raphson.o \
-             log_newton_raphson_sd.o \
-             solver_factory.o \
-             user_configurable_solver.o \
-             solver_component_factory.o \
-             solver_component.o \
-             lognrbt.o \
-	     logbroyden.o
+SRCS	= $(wildcard *.cpp)
+OBJS       = $(SRCS:.cpp=.o)
 
 solution_solvers_dir: ${OBJS}
 

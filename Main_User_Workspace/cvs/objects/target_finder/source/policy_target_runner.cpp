@@ -72,24 +72,16 @@ extern void createMCvarid();
  * \brief Constructor.
  */
 PolicyTargetRunner::PolicyTargetRunner():
+mInitialTaxGuess( 5 ),
 mFirstTaxYear( 2020 ),
 mMaxIterations( 100 ),
 mInitialTargetYear( ITarget::getUseMaxTargetYearFlag() ),
 mHasParsedConfig( false ),
+mRunID( 0 ),
 mNumForwardLooking( 0 ),
-mMaxTax( 4999 ),
-mNumBackwardsLook( 0 )
+mNumBackwardsLook( 0 ),
+mMaxTax( 4999 )
 {
-    // Check to make sure calibration is off.
-    const Configuration* conf = Configuration::getInstance();
-    if( conf->getBool( "debugChecking" ) &&
-        conf->getBool( "CalibrationActive" ) )
-    {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Calibration may be incompatible with target finding."
-                << endl;
-    }
 }
 
 //! Destructor
@@ -172,6 +164,9 @@ bool PolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
         else if( nodeName == "backward-look" ) {
             mNumBackwardsLook = XMLHelper<int>::getValue( curr );
         }
+        else if( nodeName == "initial-tax-guess" ) {
+            mInitialTaxGuess = XMLHelper<double>::getValue( curr );
+        }
         // Handle unknown nodes.
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -249,6 +244,13 @@ bool PolicyTargetRunner::setupScenarios( Timer& aTimer,
             ->getModeltime()->getEndYear();
     }
     
+    ILogger& targetLog = ILogger::getLogger( "target_finder_log" );
+    targetLog.setLevel(ILogger::NOTICE);
+    targetLog << "Setting up scenario: name= " << aName << endl;
+    targetLog << "target type: " << mTargetType << endl;
+    targetLog << "tax name: " << mTaxName << endl;
+    targetLog << "target value: " << mTargetValue << endl << endl;
+
     return success;
 }
 
@@ -263,6 +265,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     
     // Run the model without a tax target once to get a baseline for the
     // solver and to calculate the initial non-tax periods.
+    logRunID();
     bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
                                                   true, aTimer );
     
@@ -320,7 +323,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
         
         // If the target was found successfully, iterate over each period past
         // the target period until the concentration in that period is equal to
-        // the target. Print the output now before it is overwritten.
+        // the target.
         for( int period = targetPeriod; period < modeltime->getmaxper() && success;
              ++period )
         {
@@ -407,6 +410,7 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
 
     // Run the model without a tax target once to get a baseline for the
     // solver and to calculate the initial non-tax periods.
+    logRunID();
     bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
                                                   false, aTimer );
     
@@ -424,7 +428,7 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
     // to know how low the solution tax might be.
     
     // Increment is 1+ this number, which is used to increase the initial trial price
-    const double INCREASE_INCREMENT = 4;
+    const double INCREASE_INCREMENT = mInitialTaxGuess - 1;
     auto_ptr<ITargetSolver> solver;
     /* Note that the following code is left commented out incase a user wanted
        to use the bisection routine rather then the secant.
@@ -444,7 +448,7 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
                        mInitialTargetYear ) );
     
 
-    while( solver->getIterations() < aLimitIterations ){
+    while( solver->getIterations() < aLimitIterations ) {
         pair<double, bool> trial = solver->getNextValue();
 
         // Check for solution.
@@ -458,6 +462,10 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
             return false;
         }
 
+        
+        targetLog << "Iteration " << solver->getIterations() << " trial value = "
+                  << trial.first << endl;
+
         // Set the trial tax.
         calculateHotellingPath( trial.first,
                                          mPathDiscountRate,
@@ -470,7 +478,10 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
 
         // Run the scenario at the trial tax.
         // TODO: If the run failed to solve then the target status may be unreliable.
+        logRunID();
         success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS, false, aTimer );
+
+        targetLog << "Scenario run complete.  Return status = " << success << endl;
     }
 
     if( solver->getIterations() >= aLimitIterations ){
@@ -538,6 +549,7 @@ bool PolicyTargetRunner::solveFutureTarget( vector<double>& aTaxes,
     // path.
     aTaxes[ aPeriod ] = aTaxes[ aPeriod - 1 ];
     setTrialTaxes( aTaxes );
+    logRunID();
     bool success = mSingleScenario->runScenarios( aPeriod, false, aTimer );
 
     // Construct a solver which has an initial trial equal to the current tax.
@@ -578,6 +590,7 @@ bool PolicyTargetRunner::solveFutureTarget( vector<double>& aTaxes,
 
         // Run the base scenario.
         // TODO: If the run failed to solve then the target status may be unreliable.
+        logRunID();
         success = mSingleScenario->runScenarios( aPeriod, false, aTimer );
     }
 
@@ -654,6 +667,7 @@ bool PolicyTargetRunner::skipFuturePeriod( vector<double>& aTaxes,
         getInternalScenario()->invalidatePeriod( period );
     }
     setTrialTaxes( aTaxes );
+    logRunID();
     bool success = mSingleScenario->runScenarios( lastPeriodToCalc, false, aTimer );
     
     // Construct a solver which has an initial trial equal to the current tax.
@@ -705,6 +719,7 @@ bool PolicyTargetRunner::skipFuturePeriod( vector<double>& aTaxes,
         
         // Run the base scenario.
         // TODO: If the run failed to solve then the target status may be unreliable.
+        logRunID();
         success = mSingleScenario->runScenarios( lastPeriodToCalc, false, aTimer );
     }
     
@@ -795,9 +810,6 @@ PolicyTargetRunner::calculateHotellingPath( const double aInitialTax,
                                             const int aFinalYear,
                                             vector<double>& aTaxes )
 {
-    // Initialize the tax vector.
-    const int maxPeriod = aModeltime->getmaxper();
-
     // Only set a tax for periods up to the period of the target year. Calculate
     // the tax for each year. Periods set to zero tax will not be solved.
     int targetPeriod = aModeltime->getyr_to_per( aFinalYear );
@@ -827,3 +839,27 @@ void PolicyTargetRunner::setTrialTaxes( const vector<double> aTaxes ) {
     GHGPolicy tax( mTaxName, "global", aTaxes );
     mSingleScenario->getInternalScenario()->setTax( &tax );
 }
+
+/*!
+ * \brief Write a unique identifier into each of several log files
+ */
+void PolicyTargetRunner::logRunID() {
+    ILogger& targetLog = ILogger::getLogger( "target_finder_log" );
+    ILogger& solverLog = ILogger::getLogger( "solver_log" );
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+
+    ILogger::WarningLevel oldTargetLevel = targetLog.setLevel( ILogger::NOTICE );
+    ILogger::WarningLevel oldSolverLevel = solverLog.setLevel( ILogger::NOTICE );
+    ILogger::WarningLevel oldMainLevel = mainLog.setLevel( ILogger::NOTICE );
+
+    targetLog << "Policy Target Runner:  scenario dispatch #" << mRunID << endl << endl;
+    solverLog << "Policy Target Runner:  scenario dispatch #" << mRunID  << endl << endl;
+    mainLog   << "Policy Target Runner:  scenario dispatch #" << mRunID  << endl << endl;
+
+    mRunID++;
+    
+    targetLog.setLevel( oldTargetLevel );
+    solverLog.setLevel( oldSolverLevel );
+    mainLog.setLevel( oldMainLevel ); 
+}
+

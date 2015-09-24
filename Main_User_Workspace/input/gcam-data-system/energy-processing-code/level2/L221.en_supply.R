@@ -49,10 +49,14 @@ L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
 # 2. Build tables for CSVs
 # 2a. Supplysector information
 printlog( "L221.Supplysector_en: Supply sector information for upstream energy handling sectors" )
+L221.SectorLogitTables <- get_logit_fn_tables( A21.sector, names_SupplysectorLogitType, base.header="Supplysector_",
+    include.equiv.table=T, write.all.regions=T, has.traded=T )
 L221.Supplysector_en <- write_to_all_regions( A21.sector, names_Supplysector, has.traded=T )
 
 # 2b. Subsector information
 printlog( "L221.SubsectorLogit_en: Subsector logit exponents of upstream energy handling sectors" )
+L221.SubsectorLogitTables <- get_logit_fn_tables( A21.subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T, has.traded=T )
 L221.SubsectorLogit_en <- write_to_all_regions( A21.subsector_logit, names_SubsectorLogit, has.traded=T )
 
 printlog( "L221.SubsectorShrwt_en and L221.SubsectorShrwtFllt_en: Subsector shareweights of upstream energy handling sectors" )
@@ -231,7 +235,21 @@ L221.StubTechShrwt_bio <- subset( L221.StubTechShrwt_bio,
 
 ###For regions with no agricultural and land use sector (Taiwan), need to remove the passthrough supplysectors for first-gen biofuels
 ag_en <- c( "regional corn for ethanol", "regional sugar for ethanol", "regional biomassOil" )
+for( curr_table in names( L221.SectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L221.SectorLogitTables[[ curr_table ]]$data <- L221.SectorLogitTables[[ curr_table ]]$data[
+            vecpaste( L221.SectorLogitTables[[ curr_table ]]$data[ c( "region", supp ) ] ) %!in%
+            paste( no_aglu_regions, ag_en ), ]
+    }
+}
 L221.Supplysector_en <- L221.Supplysector_en[ vecpaste( L221.Supplysector_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
+for( curr_table in names( L221.SubsectorLogitTables ) ) {
+    if( curr_table != "EQUIV_TABLE" ) {
+        L221.SubsectorLogitTables[[ curr_table ]]$data <- L221.SubsectorLogitTables[[ curr_table ]]$data[
+            vecpaste( L221.SubsectorLogitTables[[ curr_table ]]$data[ c( "region", supp ) ] ) %!in%
+            paste( no_aglu_regions, ag_en ), ]
+    }
+}
 L221.SubsectorLogit_en <- L221.SubsectorLogit_en[ vecpaste( L221.SubsectorLogit_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
 if( exists( "L221.SubsectorShrwt_en" ) ){
 	L221.SubsectorShrwt_en <- L221.SubsectorShrwt_en[ vecpaste( L221.SubsectorShrwt_en[ c( "region", supp ) ] ) %!in% paste( no_aglu_regions, ag_en ), ]
@@ -249,8 +267,18 @@ L221.StubTech_en <- L221.StubTech_en[ vecpaste( L221.StubTech_en[ c( "region", s
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L221.SectorLogitTables) ) {
+write_mi_data( L221.SectorLogitTables[[ curr_table ]]$data, L221.SectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L221.", L221.SectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_en_supply.xml" )
+}
 write_mi_data( L221.Supplysector_en, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L221.Supplysector_en",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_en_supply.xml" ) 
+for( curr_table in names ( L221.SubsectorLogitTables ) ) {
+write_mi_data( L221.SubsectorLogitTables[[ curr_table ]]$data, L221.SubsectorLogitTables[[ curr_table ]]$header,
+    "ENERGY_LEVEL2_DATA", paste0("L221.", L221.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",
+    "batch_en_supply.xml" )
+}
 write_mi_data( L221.SubsectorLogit_en, "SubsectorLogit", "ENERGY_LEVEL2_DATA", "L221.SubsectorLogit_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" ) 
 if( exists( "L221.SubsectorShrwt_en" ) ){
 	write_mi_data( L221.SubsectorShrwt_en, "SubsectorShrwt", "ENERGY_LEVEL2_DATA", "L221.SubsectorShrwt_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )

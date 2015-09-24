@@ -59,6 +59,7 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/math/tr1.hpp>
 #include <limits>
 #include <fstream>
 #include <iostream>
@@ -69,6 +70,7 @@
 #include <vector>
 #include <cassert>
 #include <algorithm>
+#include <math.h>
 
 #ifndef _MSC_VER
 #include "util/logger/include/ilogger.h"
@@ -357,12 +359,14 @@ namespace objects {
     template <class T>
     inline typename boost::enable_if<boost::is_convertible<T, double>, bool>::type isValidNumber( const T aNumber ) {
 
-        // Need to check whether the type supports not-a-number and infinity.
+        // We assume here that we're running on an implementation that
+        // has NaN and infinity.  We also assume that no legitimate
+        // value arising from the calculation can have an absolute
+        // value as large as HUGE_NUMBER.  If we see such a value we
+        // should take corrective action, or abort if none is
+        // possible.
         const double doubleValue( aNumber );
-        return ( aNumber == aNumber )  // check for NaN, by using the fact that == is always false for NaN
-            && ( !std::numeric_limits<double>::has_infinity ||
-            ( doubleValue != std::numeric_limits<double>::infinity()
-            && std::negate<double>()( doubleValue ) != std::numeric_limits<double>::infinity() ) );
+        return boost::math::isfinite( aNumber );
     }
 
     /*!
@@ -606,6 +610,7 @@ namespace objects {
    tm* getGMTime( const time_t& aTime );
    tm* getLocalTime( const time_t& aTime );
    void printTime( const time_t& aTime, std::ostream& aOut );
+   
 } // End util namespace.
 
 namespace util = objects;

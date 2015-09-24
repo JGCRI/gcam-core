@@ -27,11 +27,13 @@ names_SmthRenewRsrcTechChange <- c( names_SmthRenewRsrc, "year.fillout", "techCh
 names_Supplysector <- c( "region", "supplysector", "output.unit", "input.unit", "price.unit", "logit.year.fillout", "logit.exponent" )
 names_FinalEnergyKeyword <- c( "region", "supplysector", "final.energy" )
 names_SupplysectorPrice <- c( "region", "supplysector", "year", "price" )
+names_SupplysectorLogitType <- c( "region", "supplysector", "logit.type" )
 
 #Subsectors
 names_Subsector <- c( "region", "supplysector", "subsector")
 names_SubsectorAll <- c( names_Subsector, "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight", "apply.to","from.year", "to.year", "interpolation.function" )
 names_SubsectorLogit <- c( names_Subsector, "logit.year.fillout", "logit.exponent" )
+names_SubsectorLogitType <- c( names_Subsector, "logit.type" )
 names_SubsectorShrwt <- c( names_Subsector, "year", "share.weight" )
 names_SubsectorShrwtFllt <- c( names_Subsector, "year.fillout", "share.weight" )
 names_SubsectorInterp <- c( names_Subsector, "apply.to","from.year", "to.year", "interpolation.function" )
@@ -90,7 +92,9 @@ names_StubTechMarket <- c( names_StubTechYr, input, "market.name" )
 
 #Agricultural sectors, subsectors, and technologies
 names_AgSupplySector <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent" )
+names_AgSupplySectorLogitType <- c( "region", "AgSupplySector", "logit.type" )
 names_AgSupplySubsector <- c( "region", "AgSupplySector", "AgSupplySubsector" )
+names_AgSupplySubsectorLogitType <- c( "region", "AgSupplySector", "AgSupplySubsector", "logit.type" )
 names_AgSupplySubsectorAll <- c( "region", "AgSupplySector", "AgSupplySubsector", "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight" )
 names_AgTech <- c( "region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 names_AgTechInterp <- c( names_AgTech, "apply.to", "from.year", "to.year", "interpolation.function" )

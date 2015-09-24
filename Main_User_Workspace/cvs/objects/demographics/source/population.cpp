@@ -61,10 +61,10 @@ extern Scenario* scenario;
 
 //! Default constructor.
 Population::Population():
+    mIsParsed(true),
     mYear(-1),
     mTotalPop(-1),
     mPopulationUnit("thous"),
-    mIsParsed(true),
     mWorkingAgeMin(WORKING_AGE_MIN_DEFAULT),
     mWorkingAgeMax(WORKING_AGE_MAX_DEFAULT)
 

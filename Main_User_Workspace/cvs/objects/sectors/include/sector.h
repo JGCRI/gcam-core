@@ -72,6 +72,7 @@ class SocialAccountingMatrix;
 class ILandAllocator;
 class IndirectEmissionsCalculator;
 class AGHG;
+class IDiscreteChoice;
 
 /*! 
 * \ingroup Objects
@@ -128,10 +129,8 @@ protected:
     //! A map of a keyword to its keyword group
     std::map<std::string, std::string> mKeywordMap;
 
-    //! Logit exponential used for the subsector competition.
-    objects::PeriodVector<double> mSubsectorLogitExp;
-
-    static double getDefaultSubsectorLogitExp();
+    //! The discrete choice model used to calculate sector shares.
+    std::auto_ptr<IDiscreteChoice> mDiscreteChoiceModel;
 
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;

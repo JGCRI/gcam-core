@@ -81,43 +81,43 @@ const double DEFAULT_TOTAL_ANNUAL_IRRADIANCE = 1000.0;
  */
 SolarTechnology::SolarTechnology(
    const std::string& aName,
-   const int          aYear )
-   : parent( aName, aYear ),
-     mCapitalCost( 3486 ),
-     mCSPCapacityFactor( 1 ),
-     mElectricSectorName(),
-     mFCR( 0.0856 ),
-     mGridConnectionCost( 1500 ),
-     mOM( 47.87 ),
-     mRegionName(),
-     mSectorName(),
-     mSolarFieldFraction( 0.3 ),
-     mSolarFieldArea( 6.9 ),
-     mMaxLoss( 0.55 ),
-     mEfficiencyLossExponent( 3.0 ),
-     mMaxSectorLoadServed( 0.15 ),
-     mPlantAvailability( 0.98 ),
-     mScheduledMaintenance( 0.15 ),
-     mRandomMaintenanceFraction( 0.50 ),
-     mCSPEfficiency( 0.001 ) // non-sensical value -- this should always be read-in
+   const int          aYear ) :
+    parent( aName, aYear ),
+    mCapitalCost( 3486 ),
+    mCSPEfficiency( 0.001 ), // non-sensical value -- this should always be read-in
+    mPlantAvailability( 0.98 ),
+    mScheduledMaintenance( 0.15 ),
+    mRandomMaintenanceFraction( 0.50 ),
+    mCSPCapacityFactor( 1 ),
+    mElectricSectorName(),
+    mFCR( 0.0856 ),
+    mGridConnectionCost( 1500 ),
+    mOM( 47.87 ),
+    mRegionName(),
+    mSectorName(),
+    mSolarFieldFraction( 0.3 ),
+    mSolarFieldArea( 6.9 ),
+    mMaxLoss( 0.55 ),
+    mEfficiencyLossExponent( 3.0 ),
+    mMaxSectorLoadServed( 0.15 )
 {
 }
 
 /*! Copy constructor
  *  \param other the instance to copy
  */
-SolarTechnology::SolarTechnology( const SolarTechnology& other )
-   : parent( other ),
-     mCapitalCost( other.mCapitalCost ),
-     mCSPCapacityFactor( other.mCSPCapacityFactor ),
-     mElectricSectorName( other.mElectricSectorName ),
-     mFCR( other.mFCR ),
-     mGridConnectionCost( other.mGridConnectionCost ),
-     mOM( other.mOM ),
-     mRegionName( other.mRegionName ),
-     mSectorName( other.mSectorName ),
-     mSolarFieldFraction( other.mSolarFieldFraction ),
-     mSolarFieldArea( other.mSolarFieldArea )
+SolarTechnology::SolarTechnology( const SolarTechnology& other ) :
+    parent( other ),
+    mCapitalCost( other.mCapitalCost ),
+    mCSPCapacityFactor( other.mCSPCapacityFactor ),
+    mElectricSectorName( other.mElectricSectorName ),
+    mFCR( other.mFCR ),
+    mGridConnectionCost( other.mGridConnectionCost ),
+    mOM( other.mOM ),
+    mRegionName( other.mRegionName ),
+    mSectorName( other.mSectorName ),
+    mSolarFieldFraction( other.mSolarFieldFraction ),
+    mSolarFieldArea( other.mSolarFieldArea )
 {
 }
 

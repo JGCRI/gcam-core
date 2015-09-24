@@ -49,6 +49,7 @@
 #include <string>
 #include <memory>
 #include "marketplace/include/imarket_type.h"
+#include "marketplace/include/market.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/fltcmp.hpp"
 
@@ -58,7 +59,6 @@
 #endif 
 
 class Tabs;
-class Market;
 class MarketLocator;
 class IVisitor;
 class IInfo;
@@ -198,7 +198,14 @@ public:
     std::vector<double> fullstate(int period) const; //!< Return all supplies and demands in all markets in a single vector
     bool checkstate(int period, const std::vector<double>&, std::ostream *log=0, unsigned tol=0) const;
     void prnmktbl(int period, std::ostream &out) const;
+    void logForecastEvaluation(int aPeriod) const;
 private:
+
+    typedef double (Market::*getpsd_t)() const; // Can point to Market::getPrice, Market::getRawPrice, Market::getRawDemand, etc.
+    static double forecastDemand( const std::vector<Market*>& aMarketHIstory, const int aPeriod );
+    static double forecastPrice( const std::vector<Market*>& aMarketHistory, const int aPeriod );
+    static double extrapolate( const std::vector<Market*>& aMarketHistory, const int aPeriod, getpsd_t aDataFn );
+
     std::vector< std::vector<Market*> > markets; //!< no of market objects by period
     std::auto_ptr<MarketLocator> mMarketLocator; //!< An object which determines the correct market number.
     std::auto_ptr<MarketDependencyFinder> mDependencyFinder;

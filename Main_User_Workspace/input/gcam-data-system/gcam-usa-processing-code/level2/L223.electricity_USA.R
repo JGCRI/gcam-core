@@ -69,7 +69,10 @@ if( !use_regional_elec_markets ){
 	#All of the supplysector information is the same as before, except the logit exponent
 	L223.Supplysector_USAelec <- data.frame(
       region = "USA", supplysector = elec_gen_names, output.unit = "EJ", input.unit = "EJ", price.unit = "1975$/GJ",
-      logit.year.fillout = min( model_base_years ), logit.exponent = grid_region_logit )
+      logit.year.fillout = min( model_base_years ), logit.exponent = grid_region_logit, logit.type=grid_region_logit_type )
+    L223.SectorLogitTables_USAelec <- get_logit_fn_tables( L223.Supplysector_USAelec, names_SupplysectorLogitType,
+        base.header="Supplysector_", include.equiv.table=F, write.all.regions=F )
+    L223.Supplysector_USAelec <- L223.Supplysector_USAelec[, names_Supplysector ]
 
 	#No need to read in subsector logit exponents, which are applied to the technology competition
 	printlog( "L223.SubsectorShrwtFllt_USAelec: subsector (grid region) shareweights in USA electricity" )
@@ -85,6 +88,14 @@ if( !use_regional_elec_markets ){
       L223.SubsectorShrwtFllt_USAelec[ names_Subsector ],
       apply.to = "share-weight", from.year = max( model_base_years ), to.year = max( model_years ),
       interpolation.function = "fixed" )
+
+    # NOTE: There is only one tech per subsector in the FERC markets so the logit choice does not matter
+    L223.SubsectorLogit_USAelec <- data.frame(
+          L223.SubsectorShrwtFllt_USAelec[ names_Subsector ],
+          logit.year.fillout = min( model_base_years ), logit.exponent = grid_region_logit, logit.type=grid_region_logit_type )
+    L223.SubsectorLogitTables_USAelec <- get_logit_fn_tables( L223.SubsectorLogit_USAelec, names_SubsectorLogitType,
+        base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=F )
+    L223.SubsectorLogit_USAelec <- L223.SubsectorLogit_USAelec[, names_SubsectorLogit ]
 
 	printlog( "L223.TechShrwt_USAelec: technology shareweights, USA region" )
 	L223.TechShrwt_USAelec <- repeat_and_add_vector(
@@ -122,7 +133,10 @@ L223.Supplysector_elec_FERC <- data.frame(
       region = sort( rep( grid_regions, times = length( elec_gen_names ) ) ),
       supplysector = rep( elec_gen_names, times = length( grid_regions ) ),
       output.unit = "EJ", input.unit = "EJ", price.unit = "1975$/GJ",
-      logit.year.fillout = min( model_base_years ), logit.exponent = grid_region_logit )
+      logit.year.fillout = min( model_base_years ), logit.exponent = grid_region_logit, logit.type=grid_region_logit_type )
+L223.SectorLogitTables_elec_FERC <- get_logit_fn_tables( L223.Supplysector_elec_FERC, names_SupplysectorLogitType,
+    base.header="Supplysector_", include.equiv.table=F, write.all.regions=F )
+L223.Supplysector_elec_FERC <- L223.Supplysector_elec_FERC[, names_Supplysector ]
 
 printlog( "L223.SubsectorShrwtFllt_elec_FERC: subsector (grid region) shareweights in USA electricity" )
 L223.SubsectorShrwtFllt_elec_FERC <- data.frame(
@@ -141,6 +155,14 @@ L223.SubsectorInterp_elec_FERC <- data.frame(
       L223.SubsectorShrwtFllt_elec_FERC[ names_Subsector ],
       apply.to = "share-weight", from.year = max( model_base_years ), to.year = max( model_years ),
       interpolation.function = "fixed" )
+
+# NOTE: There is only one tech per subsector in the FERC markets so the logit choice does not matter
+L223.SubsectorLogit_elec_FERC <- data.frame(
+      L223.SubsectorShrwtFllt_elec_FERC[ names_Subsector ],
+      logit.year.fillout = min( model_base_years ), logit.exponent = grid_region_logit, logit.type=grid_region_logit_type )
+L223.SubsectorLogitTables_elec_FERC <- get_logit_fn_tables( L223.SubsectorLogit_elec_FERC, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=F )
+L223.SubsectorLogit_elec_FERC <- L223.SubsectorLogit_elec_FERC[, names_SubsectorLogit ]
 
 printlog( "L223.TechShrwt_elec_FERC: technology shareweights, USA region" )
 L223.TechShrwt_elec_FERC <- repeat_and_add_vector(
@@ -208,10 +230,20 @@ L223.tables <- list( L223.Supplysector_elec = L223.Supplysector_elec,
                      L223.StubTechEff_elec = L223.StubTechEff_elec,
                      L223.StubTechCapFactor_elec = L223.StubTechCapFactor_elec )
 
+# The logit functions should be processed before any other table that needs to read logit exponents
+L223.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L223.Supplysector_", skip=4, include.equiv.table=T ),
+                  read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L223.SubsectorLogit_", skip=4, include.equiv.table=F ),
+                  L223.tables )
+
 for( i in 1:length( L223.tables ) ){
   if( !is.null( L223.tables[[i]] ) ){
 	objectname <- paste0( names( L223.tables[i] ), "_USA" )
-	object <- write_to_all_states( subset( L223.tables[[i]], region == "USA" ), names( L223.tables[[i]] ) )
+    if( substr( objectname, 6, 16 ) == "EQUIV_TABLE" || nrow( subset( L223.tables[[i]], region == "USA" ) ) == 0 ) {
+        # Just use the object as is
+        object <- L223.tables[[i]]
+    } else {
+        object <- write_to_all_states( subset( L223.tables[[i]], region == "USA" ), names( L223.tables[[i]] ) )
+    }
 	if( subs %in% names( object ) ) object <- subset( object, !paste( region, subsector ) %in% geo_states_noresource )
 #Re-set markets from USA to regional markets, if called for in the GCAM-USA assumptions
 	if( use_regional_fuel_markets & "market.name" %in% names( object ) ){
@@ -219,9 +251,13 @@ for( i in 1:length( L223.tables ) ){
 		      match( object$region[ object[[input]] %in% regional_fuel_markets], states_subregions$state ) ]
 	}
 	assign( objectname, object )
-	IDstringendpoint <- if( grepl( "_", names( L223.tables )[i] ) ) { regexpr( "_", names( L223.tables )[i], fixed = T ) - 1
-	                       } else nchar( names( L223.tables )[i] )
-	IDstring <- substr( names( L223.tables )[i], 6, IDstringendpoint )
+    curr_table_name <- names( L223.tables )[i]
+    IDstringendpoint <- if( grepl( "_", curr_table_name ) & !grepl( 'EQUIV_TABLE', curr_table_name ) & !grepl( '-logit$', curr_table_name ) ) {
+        regexpr( "_", curr_table_name, fixed = T ) - 1
+    } else {
+        nchar( curr_table_name )
+    }
+    IDstring <- substr( curr_table_name, 6, IDstringendpoint )
 	write_mi_data( object, IDstring, "GCAMUSA_LEVEL2_DATA", objectname, "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 	  }
   }
@@ -379,17 +415,39 @@ L223.StubTechCapFactor_elec_solar_USA <- L223.StubTechCapFactor_elec_solar_USA[ 
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 #The USA region tables are only relevant when demands are resolved only at the level of the whole USA
 if( !use_regional_elec_markets ){	
+for( curr_table in names ( L223.SectorLogitTables_USAelec ) ) {
+write_mi_data( L223.SectorLogitTables_USAelec[[ curr_table ]]$data, L223.SectorLogitTables_USAelec[[ curr_table ]]$header,
+    "GCAMUSA_LEVEL2_DATA", paste0("L223.", L223.SectorLogitTables_USAelec[[ curr_table ]]$header, "_USA" ), "GCAMUSA_XML_BATCH",
+    "batch_electricity_USA.xml" )
+}
 write_mi_data( L223.Supplysector_USAelec, "Supplysector", "GCAMUSA_LEVEL2_DATA", "L223.Supplysector_USAelec", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.SubsectorShrwtFllt_USAelec, "SubsectorShrwtFllt", "GCAMUSA_LEVEL2_DATA", "L223.SubsectorShrwtFllt_USAelec", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.SubsectorInterp_USAelec, "SubsectorInterp", "GCAMUSA_LEVEL2_DATA", "L223.SubsectorInterp_USAelec", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
+for( curr_table in names ( L223.SubsectorLogitTables_USAelec ) ) {
+write_mi_data( L223.SubsectorLogitTables_USAelec[[ curr_table ]]$data, L223.SubsectorLogitTables_USAelec[[ curr_table ]]$header,
+    "GCAMUSA_LEVEL2_DATA", paste0("L223.", L223.SubsectorLogitTables_USAelec[[ curr_table ]]$header, "_USA" ), "GCAMUSA_XML_BATCH",
+    "batch_electricity_USA.xml" )
+}
+write_mi_data( L223.SubsectorLogit_USAelec, "SubsectorLogit", "GCAMUSA_LEVEL2_DATA", "L223.SubsectorLogit_USAelec", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.TechShrwt_USAelec, "TechShrwt", "GCAMUSA_LEVEL2_DATA", "L223.TechShrwt_USAelec", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.TechCoef_USAelec, "TechCoef", "GCAMUSA_LEVEL2_DATA", "L223.TechCoef_USAelec", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.Production_USAelec, "Production", "GCAMUSA_LEVEL2_DATA", "L223.Production_USAelec", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 }
 
+for( curr_table in names ( L223.SectorLogitTables_elec_FERC ) ) {
+write_mi_data( L223.SectorLogitTables_elec_FERC[[ curr_table ]]$data, L223.SectorLogitTables_elec_FERC[[ curr_table ]]$header,
+    "GCAMUSA_LEVEL2_DATA", paste0("L223.", L223.SectorLogitTables_elec_FERC[[ curr_table ]]$header, "_FERC" ), "GCAMUSA_XML_BATCH",
+    "batch_electricity_USA.xml" )
+}
 write_mi_data( L223.Supplysector_elec_FERC, "Supplysector", "GCAMUSA_LEVEL2_DATA", "L223.Supplysector_elec_FERC", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.SubsectorShrwtFllt_elec_FERC, "SubsectorShrwtFllt", "GCAMUSA_LEVEL2_DATA", "L223.SubsectorShrwtFllt_elec_FERC", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.SubsectorInterp_elec_FERC, "SubsectorInterp", "GCAMUSA_LEVEL2_DATA", "L223.SubsectorInterp_elec_FERC", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
+for( curr_table in names ( L223.SubsectorLogitTables_elec_FERC ) ) {
+write_mi_data( L223.SubsectorLogitTables_elec_FERC[[ curr_table ]]$data, L223.SubsectorLogitTables_elec_FERC[[ curr_table ]]$header,
+    "GCAMUSA_LEVEL2_DATA", paste0("L223.", L223.SubsectorLogitTables_elec_FERC[[ curr_table ]]$header, "_FERC" ), "GCAMUSA_XML_BATCH",
+    "batch_electricity_USA.xml" )
+}
+write_mi_data( L223.SubsectorLogit_elec_FERC, "SubsectorLogit", "GCAMUSA_LEVEL2_DATA", "L223.SubsectorLogit_elec_FERC", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.TechShrwt_elec_FERC, "TechShrwt", "GCAMUSA_LEVEL2_DATA", "L223.TechShrwt_elec_FERC", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.TechCoef_elec_FERC, "TechCoef", "GCAMUSA_LEVEL2_DATA", "L223.TechCoef_elec_FERC", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
 write_mi_data( L223.Production_elec_FERC, "Production", "GCAMUSA_LEVEL2_DATA", "L223.Production_elec_FERC", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )

@@ -90,6 +90,8 @@ public:
     virtual double getVariance() const;
     virtual double getAverageCapacityFactor() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual double getLowestPrice( const int aPeriod ) const;
+    virtual double getHighestPrice( const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
@@ -111,8 +113,8 @@ protected:
     
     // Cumulative technical change needs to be in sub-resource sector 
     std::vector<Grade*> mGrade; //!< amount of SubResource for each grade
-    std::map<std::string,int> mGradeNameMap; //!< Map of grade name to integer position in vector. 
-
+    std::map<std::string,int> mGradeNameMap; //!< Map of grade name to integer position in vector.
+    
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
 };

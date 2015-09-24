@@ -116,6 +116,11 @@ public:
     double getRawPrice() const;
     double getStoredRawPrice() const;
 
+    void setForecastPrice( double aForecastPrice );
+    double getForecastPrice() const;
+    void setForecastDemand( double aForecastDemand );
+    double getForecastDemand() const;
+
     virtual void nullDemand();
     virtual void addToDemand( const double demandIn );
     virtual double getSolverDemand() const;
@@ -181,6 +186,12 @@ protected:
     
     //! The original market price.
     double original_price;
+
+    //! Forecast price (used for setting solver initial guess)
+    double mForecastPrice;
+
+    //! Forecast demand (used for rescaling in solver)
+    double mForecastDemand;
     
     //! The market demand.
 #if GCAM_PARALLEL_ENABLED

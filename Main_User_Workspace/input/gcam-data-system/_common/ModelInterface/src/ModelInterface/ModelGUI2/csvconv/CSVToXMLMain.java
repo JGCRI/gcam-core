@@ -234,7 +234,10 @@ public class CSVToXMLMain {
                         stdInput.readLine(); // ignores this line
                         stdInput.readLine(); // ignores header line
 
-                        inputLine = stdInput.readLine().trim(); // start reading in
+                        inputLine = stdInput.readLine();
+                        if( inputLine != null) {
+                            inputLine.trim(); // start reading in
+                        }
                         // data
                         while (inputLine != null && !inputLine.equals("")
                                 && inputLine.charAt(0) != ',') {

@@ -1058,6 +1058,18 @@
     <ClCompile Include="..\..\target_finder\source\rcp_forcing_target.cpp">
       <Filter>Source Files\target_finder</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\functions\source\absolute_cost_logit.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\discrete_choice_factory.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\solvers\source\preconditioner.cpp">
+      <Filter>Source Files\solution\solvers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2154,6 +2166,21 @@
     </ClInclude>
     <ClInclude Include="..\..\target_finder\include\rcp_forcing_target.h">
       <Filter>Header Files\target_finder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\absolute_cost_logit.hpp">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\discrete_choice_factory.hpp">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\relative_cost_logit.hpp">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\solvers\include\preconditioner.hpp">
+      <Filter>Header Files\solution\solvers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

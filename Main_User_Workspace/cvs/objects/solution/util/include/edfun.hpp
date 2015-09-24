@@ -63,8 +63,9 @@
  *
  * An instance of this class computes a vector of log relative excess
  * demand (log(demand) - log(supply) as a function of a vector of
- * log(prices), for a set of markets determined at the time the object
- * is instantiated.  
+ * inputs, for a set of markets determined at the time the object is
+ * instantiated.  The inputs may be either prices or log(prices),
+ * depending on a flag set in the constructor.
  *
  * \author Robert Link
  *
@@ -100,25 +101,28 @@ class LogEDFun : public VecFVec<double,double>
   int period;
   int partj; //!< flag indicating which variable in the input vector
              //!has changed in a partial derivative calculation
+  bool mLogPricep;               //!< Flag indicating whether inputs are prices or log-prices
 
   // diagnostic variables
   std::vector<double> mstate;
 public:
-  // constructor
-  LogEDFun(SolutionInfoSet &sisin,
-           World *w, Marketplace *m, int per) :
-    solnset(sisin),mkts(sisin.getSolvableSet()),
-    world(w), mktplc(m), period(per), partj(-1) {na=nr=mkts.size();}
+  LogEDFun(SolutionInfoSet &sisin, World *w, Marketplace *m, int per, bool aLogPricep=true);
   
   // basic vector function interface
   virtual void operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx);
   virtual void partial(int ip);
   virtual double partialSize(int ip) const;
+  void scaleInitInputs(UBVECTOR<double> &ax);
 
   // Constants to protect against overflow: 
   static const double PMAX;            //!< Greatest allowable price
   static const double ARGMAX;          //!< log of greatest allowable price
 
+protected:
+  // scale factors for input and output
+  UBVECTOR<double> mxscl;
+  UBVECTOR<double> mfxscl;
+    
 };  
 
 

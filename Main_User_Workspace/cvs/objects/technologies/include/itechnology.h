@@ -61,6 +61,7 @@ class Demographic;
 class IOutput;
 class IInput;
 class Technology;
+class IDiscreteChoice;
 
 /*!
 * \brief A structure containing information about the same type Technology
@@ -137,11 +138,9 @@ public:
                              const GDP* aGDP,
                              const int aPeriod ) = 0;
 
-    virtual double calcShare( const std::string& aRegionName,
-                              const std::string& aSectorName, 
+    virtual double calcShare( const IDiscreteChoice* aChoiceFn,
                               const GDP* aGDP,
-                              const double aLogitExp,
-                              const int aPeriod ) const = 0;
+                              int aPeriod ) const = 0;
     
     virtual void calcCost( const std::string& aRegionName,
                            const std::string& aSectorName,

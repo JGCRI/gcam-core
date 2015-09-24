@@ -92,8 +92,19 @@ void SmoothRenewableSubresource::annualsupply(
    // Default mPriceExponent value is very small so as not to significantly change resource base 
    // The factor of 5 below is arbitary, but was chosen so as to not change results signifiantly.
    // The equation below changes max resource value (using default  mPriceExponent) by 1% at 2 * mid-price.
-   fractionAvailable *=
-      std::pow( ( 1 + ( aPrice / ( 5.0 * mCostCurve.getMidprice() ) ) ), mPriceExponent );
+   if( aPrice > 0 ) {
+       fractionAvailable *=
+           std::pow( ( 1 + ( aPrice / ( 5.0 * mCostCurve.getMidprice() ) ) ), mPriceExponent );
+   }
+   else {
+       // if aPrice <0, avoid NaN by using the first two terms in the
+       // series expansion of the above.
+       fractionAvailable *= 1.0 + mPriceExponent * aPrice / ( 5.0 * mCostCurve.getMidprice() );
+       // If the result is negative, clamp it to zero.
+       if( fractionAvailable < 0.0 ) {
+           fractionAvailable = 0.0;
+       }
+   }
     
    // Calculate expansion in supply due to GDP increase
    double gpdSupplyExpansion = std::pow(
@@ -219,6 +230,34 @@ bool SmoothRenewableSubresource::XMLDerivedClassParse(
    }
 
    return didParse;
+}
+
+double SmoothRenewableSubresource::getLowestPrice( const int aPeriod ) const
+{
+    // supply curve for smooth renewables extends down to zero, always.
+    return 0.0;
+}
+
+double SmoothRenewableSubresource::getHighestPrice( const int aPeriod ) const
+{
+    // technically this curve extends all the way up to infinite
+    // price, but since it's approaching an asymptotic maximum, the
+    // derivative isn't very good for very high prices.  Ideally we
+    // would want to calculate the price at which the elasticity is at
+    // some threshold, say 0.1, but that's not solvable in closed
+    // form.  Instead, we'll take the point at which the supply is 99%
+    // of maximum.
+
+    // TODO: add a member variable for the top price and calculate the
+    // elasticity condition when the object is set up.  We don't
+    // provide for changing the mid-price or exponent, so it only
+    // needs to be calculated once.
+
+    double curveExp = mCostCurve.getCurveExponent();
+    
+    double value = pow( 99.0 * pow( mMidPrice, curveExp ), 1.0 / curveExp );
+
+    return value;
 }
 
 // end of smooth_renewable_subresource.cpp *********************************

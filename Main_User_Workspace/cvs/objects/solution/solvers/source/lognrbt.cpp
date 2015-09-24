@@ -125,6 +125,12 @@ bool LogNRbt::XMLParse( const DOMNode* aNode ) {
             mSolutionInfoFilter.reset(
                 SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) ) );
         }
+        else if(nodeName == "linear-price") {
+          mLogPricep = false;
+        }
+        else if(nodeName == "log-price") {
+          mLogPricep = true;    // not strictly necessary, as this is the default.
+        } 
         else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
             mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
         }
@@ -200,10 +206,16 @@ SolverComponent::ReturnCode LogNRbt::solve( SolutionInfoSet& solnset, int period
 
     // set our initial x from the solutionInfoSet
     std::vector<SolutionInfo> smkts(solnset.getSolvableSet());
-    std::transform(smkts.begin(), smkts.end(), x.begin(), SI2lgprice);
+    if(mLogPricep)
+      std::transform(smkts.begin(), smkts.end(), x.begin(), SI2lgprice);
+    else
+      std::transform(smkts.begin(), smkts.end(), x.begin(), SI2price);
 
     // This is the closure that will evaluate the ED function
-    LogEDFun F(solnset, world, marketplace, period); 
+    LogEDFun F(solnset, world, marketplace, period, mLogPricep); 
+
+    // scale the initial guess for use in F
+    F.scaleInitInputs(x);
     
     // Call F(x), store the result in fx
     F(x,fx);
@@ -214,7 +226,7 @@ SolverComponent::ReturnCode LogNRbt::solve( SolutionInfoSet& solnset, int period
     solverLog.setLevel(ILogger::DEBUG);
     UBMATRIX J(F.narg(),F.nrtn());
     fdjac(F, x, fx, J, true);
-    int pcfail = jacobian_precondition(x,fx,J,F,&solverLog);
+    int pcfail = jacobian_precondition(x,fx,J,F,&solverLog, mLogPricep);
 
     if(pcfail) {
       solverLog.setLevel(ILogger::ERROR);
@@ -359,7 +371,7 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMAT
         // Try to reset the x value using the preconditioner
         solverLog << "Resetting singular matrix, singcount = " << singcount << "\n";
         J = Jtmp;
-        int fail = jacobian_precondition(x, fx, J, F, &solverLog);
+        int fail = jacobian_precondition(x, fx, J, F, &solverLog, mLogPricep);
         if(fail)
           return nsing;
 
@@ -393,7 +405,7 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMAT
       if(sing>0) {
         int fail=1;
         if(itrial == 0)
-          fail = jacobian_precondition(x, fx, J, F, &solverLog);
+          fail = jacobian_precondition(x, fx, J, F, &solverLog, mLogPricep);
         
         if(fail) {
           solverLog.setLevel(ILogger::WARNING);
@@ -444,13 +456,10 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMAT
         return 0;
       
       // We're not close enough to the solution, and we don't have a
-      // good descent direction.  In this bleak situation, take a unit
-      // step in the dx direction and hope for the best
-      double dxnorm = 1.0/inner_prod(dx,dx);
-      xnew = x + dxnorm*dx;
-      fnew = fnorm(xnew);
-      neval++;              // fnorm performs a function evaluation
+      // good descent direction.  There are no good options at this point
+      // so kick out and hope that the preconditioner can set us straight.
       solverLog << "linesearch failure\n";
+        return -4;
     }
 
     UBVECTOR xstep = xnew-x;    // step in x eventually taken

@@ -130,6 +130,8 @@
 #include <string>
 #include <sstream>
 
+#include <boost/math/tr1.hpp>
+
 #include "reporting/include/xml_db_outputter.h"
 
 extern Scenario* scenario; // for modeltime
@@ -618,7 +620,10 @@ void XMLDBOutputter::startVisitSector( const Sector* aSector, const int aPeriod 
     // Loop over the periods to output sector information.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "cost", mCurrentPriceUnit, aSector->getPrice( mGDP, i ), i );
+        double currCost = aSector->getPrice( mGDP, i );
+        if( !boost::math::isnan( currCost ) ) {
+            writeItem( "cost", mCurrentPriceUnit, currCost, i );
+        }
     }
 
     // We want to write the keywords last due to limitations in
@@ -655,7 +660,7 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
         double currValue = aSubsector->getPrice( mGDP, i );
-        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+        if( !objects::isEqual<double>( currValue, 0.0 ) && !boost::math::isnan( currValue ) ) {
             writeItem( "cost", mCurrentPriceUnit, currValue, i );
         }
     }
@@ -760,7 +765,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
         // "year" attribute in addition to the technology "year" attribute.
         if( mCurrentTechnology->mProductionState[ curr ] && mCurrentTechnology->mProductionState[ curr ]->isNewInvestment() ){
             double currValue = aTechnology->getCost( curr );
-            if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+            if( !objects::isEqual<double>( currValue, 0.0 ) && !boost::math::isnan( currValue ) ) {
                 writeItemToBuffer( aTechnology->getCost( curr ), "cost", 
                     *childBuffer, mTabs.get(), curr, mCurrentPriceUnit );
             }

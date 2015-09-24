@@ -1,23 +1,13 @@
-## system-specific valeus for evergreen.  Note you will have to execute 'tap java7' before
-## JAVA_HOME will be set.
-ifeq (evergreen,$(findstring evergreen,$(HOSTNAME)))
-XERCES_INCLUDE  = /homes/pralitp/libs/xerces-c-3.1.1/include
-XERCES_LIB      = /homes/pralitp/libs/xerces-c-3.1.1/lib
-JAVA_INCLUDE    = ${JAVA_HOME}/include
-JAVA_LIB        = ${JAVA_HOME}/jre/lib/amd64/server
-BASEX_LIB       = /homes/pralitp/libs/basex/BaseX.jar
-endif
-
-
 ## environment for PIC systems
+## Note you will hava to execute 'module load java' before JAVA_HOME will be set.
 ifeq (constance,$(findstring constance,$(HOSTNAME)))
-BOOST_INCLUDE   = $(HOME)/src/boost_1_45_0
-TBB_INCDIR      = $(HOME)/include/tbb40
-TBB_LIBDIR	= $(HOME)/lib/tbb40
-XERCES_INCLUDE  = $(HOME)/include
-XERCES_LIB      = $(HOME)/lib
-JAVA_HOME	= /usr/java/jdk1.7.0_51
+GCAMLIB_HOME    = /pic/projects/GCAM/GCAM-libraries
+BOOST_INCLUDE   = $(GCAMLIB_HOME)/include
+TBB_INCDIR      = $(GCAMLIB_HOME)/include
+TBB_LIBDIR	    = $(GCAMLIB_HOME)/lib
+XERCES_INCLUDE  = $(GCAMLIB_HOME)/include
+XERCES_LIB      = $(GCAMLIB_HOME)/lib
 JAVA_INCLUDE    = ${JAVA_HOME}/include
 JAVA_LIB        = ${JAVA_HOME}/jre/lib/amd64/server
-BASEX_LIB       = $(HOME)/lib/basex/BaseX.jar
+BASEX_LIB       = $(GCAMLIB_HOME)/lib/basex/BaseX.jar
 endif

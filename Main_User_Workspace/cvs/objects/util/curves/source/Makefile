@@ -7,12 +7,9 @@
 PATHOFFSET = ../../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       = curve.o \
-             data_point.o \
-             explicit_point_set.o \
-             point_set.o \
-             point_set_curve.o \
-             xy_data_point.o
+SRCS = $(wildcard *.cpp)
+
+OBJS = $(SRCS:.cpp=.o)
 
 util_curves_dir: ${OBJS}
 

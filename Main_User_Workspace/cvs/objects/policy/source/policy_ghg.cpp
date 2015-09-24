@@ -88,10 +88,11 @@ GHGPolicy::GHGPolicy( const string aName, const string aMarket,
                       const vector<double>& aTaxes ):
     mName( aName ), 
     mMarket( aMarket ),
-    mFixedTax( aTaxes ),
     isFixedTax( true ),
     mConstraint( scenario->getModeltime()->getmaxper(), -1 ),
-    mProportionalTaxRate( scenario->getModeltime()->getmaxper(), -1.0 ){
+    mFixedTax( aTaxes ),
+    mProportionalTaxRate( scenario->getModeltime()->getmaxper(), -1.0 )
+{
     // Ensure that the taxes vector passed in is the right size.
     assert( aTaxes.size() == mConstraint.size() );
 }

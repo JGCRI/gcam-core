@@ -46,10 +46,10 @@ std::ostream & operator<<(std::ostream &ostrm, const UBLAS::vector<FTYPE> &v) {
     if(i>0) {
       // print dividers to make the thing easier to read
       if(i%50 == 0)
-        ostrm << " X ";
+        ostrm << "\n" << i << ":\t";
       else if(i%10 == 0)
-        ostrm << " | ";
-      else ostrm << ", ";
+        ostrm << "\n\t";
+      else ostrm << " ";
     }
     ostrm << v[i];
   }
@@ -63,11 +63,14 @@ std::ostream & operator<<(std::ostream &ostrm, const UBLAS::matrix<FTYPE,MTRAIT>
   int n = M.size2();
   
   for(int i=0;i<m;++i) {
-    for(int j=0;j<n;++j)
-      ostrm << M(i,j) << "  ";
+    ostrm << i << ":   ";
+    for(int j=0;j<n;++j) {
+      if(j>0 && j%50==0) ostrm << "|";
+      if(j>0 && j%10==0) ostrm << "| ";
+      ostrm << M(i,j) << " ";
+    }
     ostrm << "\n";
-  }
-  
+  } 
   return ostrm;
 }
 

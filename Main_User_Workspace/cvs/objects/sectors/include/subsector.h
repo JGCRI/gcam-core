@@ -72,6 +72,7 @@ class ILandAllocator;
 class Demographics;
 class IndirectEmissionsCalculator;
 class InterpolationRule;
+class IDiscreteChoice;
 
 /*! 
 * \ingroup Objects
@@ -124,8 +125,9 @@ protected:
     std::vector<InterpolationRule*> mShareWeightInterpRules;
     // Some typedefs to make using interpolation rules more readable.
     typedef std::vector<InterpolationRule*>::const_iterator CInterpRuleIterator;
-    //! Logit exponential used for the technology competition.
-    objects::PeriodVector<Value> mTechLogitExp;
+    //! Discrete choice model used for allocating technology shares
+    std::auto_ptr<IDiscreteChoice> mDiscreteChoiceModel;
+
     std::vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
 
     std::vector<double> mInvestments; //!< Investment by period.
@@ -175,7 +177,7 @@ public:
 
     virtual void calcCost( const int aPeriod );
 
-    virtual double calcShare( const int aPeriod, const GDP* aGdp, const double aLogitExp ) const; 
+    virtual double calcShare( const IDiscreteChoice* aChoiceFn, const GDP* aGDP, const int aPeriod) const;
     virtual double getShareWeight( const int period ) const;
 
     virtual void setOutput( const double aVariableDemand,

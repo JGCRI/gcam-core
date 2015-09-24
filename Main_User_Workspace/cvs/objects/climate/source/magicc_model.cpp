@@ -112,21 +112,21 @@ const string MagiccModel::sInputGasUnits[] = { "(Pg C)",
 * \param aModeltime Pointer to the global modeltime object.
 */
 MagiccModel::MagiccModel( const Modeltime* aModeltime ):
+mGHGInputFileName(""),
 mModeltime( aModeltime ),
 mIsValid( false ),
-mGHGInputFileName(""),
-mCarbonModelStartYear( 1975 ), // Need to have first model year here, but should be 1990 for MAGICC. FIX.
+mClimateSensitivity( -1 ),
 mSoilTempFeedback( -1 ),
 mHumusTempFeedback( -1 ),
 mGPPTempFeedback( -1 ),
-mClimateSensitivity( -1 ),
-mNetDeforestCarbFlux80s( -1 ),
 mOceanCarbFlux80s( -1 ),
+mNetDeforestCarbFlux80s( -1 ),
 mSO2Dir1990( 0 ), // initialize to zero since -1 is a legit value
 mSO2Ind1990( 0 ), // initialize to zero since -1 is a legit value
-mOCUnitForcing( 0 ), // initialize to zero since -1 is a legit value
 mBCUnitForcing( 0 ),
+mOCUnitForcing( 0 ), // initialize to zero since -1 is a legit value
 mLastHistoricalYear ( 0 ), // default to zero -- use only model data
+mCarbonModelStartYear( 1975 ), // Need to have first model year here, but should be 1990 for MAGICC. FIX.
 mNumberHistoricalDataPoints( 0 ) // internal counter
 {
 

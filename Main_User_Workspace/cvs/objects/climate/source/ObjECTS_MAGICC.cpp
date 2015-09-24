@@ -163,35 +163,35 @@ void CLIMAT()
     // This is now defined in header file
     //F 101 !
     //F 102   	  REAL*4 MAGICCCResults(0:30,75) ! sjs pass data to ObjECTS
-    float MAGICCCResults[ 22 ][ 400+1 ];
+    float MAGICCCResults[ 22 ][ 400+1 ]={{0.0f}};
     //F 103 	  REAL*4 getForcing, getSLR
     //F 104   	  
     //F 105       INTEGER IY1(100),OVRWRITE
-    int IY1[ 400+1 ], OVRWRITE;
+    int IY1[ 400+1 ]={0}, OVRWRITE=0;
     //F 106 !
     //F 107 ! sjs removed TEMUSER(iTp), QSO2SAVE(0:iTp+1),QDIRSAVE(0:iTp+1) from dimension statement since now in common block
     //F 108       DIMENSION FOS(100),DEF(100),DCH4(100),DN2O(100), &
-    float FOS[ 400+1 ], DEF[ 400+1 ], DCH4[ 400+1 ], DN2O[ 400+1 ];
+    float FOS[ 400+1 ]={0.0f}, DEF[ 400+1 ]={0.0f}, DCH4[ 400+1 ]={0.0f}, DN2O[ 400+1 ]={0.0f};
     //F 109       DNOX(100),DVOC(100),DCO(100),DSO2(100), &
-    float DNOX[ 400+1 ], DVOC[ 400+1 ], DCO[ 400+1 ], DSO2[ 400+1 ]; 
+    float DNOX[ 400+1 ]={0.0f}, DVOC[ 400+1 ]={0.0f}, DCO[ 400+1 ]={0.0f}, DSO2[ 400+1 ]={0.0f}; 
     //F 110       DSO21(100),DSO22(100),DSO23(100),DCF4(100),DC2F6(100), &
-    float DSO21[ 400+1 ], DSO22[ 400+1 ], DSO23[ 400+1 ], DCF4[ 400+1 ], DC2F6[ 400+1 ]; 
+    float DSO21[ 400+1 ]={0.0f}, DSO22[ 400+1 ]={0.0f}, DSO23[ 400+1 ]={0.0f}, DCF4[ 400+1 ]={0.0f}, DC2F6[ 400+1 ]={0.0f}; 
     //F 111       D125(100),D134A(100),D143A(100),D227(100),D245(100),DSF6(100), &
-    float D125[ 400+1 ], D134A[ 400+1 ], D143A[ 400+1 ], D227[ 400+1 ], D245[ 400+1 ], DSF6[ 400+1 ];
+    float D125[ 400+1 ]={0.0f}, D134A[ 400+1 ]={0.0f}, D143A[ 400+1 ]={0.0f}, D227[ 400+1 ]={0.0f}, D245[ 400+1 ]={0.0f}, DSF6[ 400+1 ]={0.0f};
     //F 112       DBC(100),DOC(100), &
-    float DBC[ 400+1 ], DOC[ 400+1 ];
+    float DBC[ 400+1 ]={0.0f}, DOC[ 400+1 ]={0.0f};
     //F 113       TEMLO(iTp),TEMMID(iTp),TEMHI(iTp),TEMNOSO2(iTp), &
-    float TEMLO[ iTp+1 ], TEMMID[ iTp+1 ], TEMHI[ iTp+1 ], TEMNOSO2[ iTp+1 ];
+    float TEMLO[ iTp+1 ]={0.0f}, TEMMID[ iTp+1 ]={0.0f}, TEMHI[ iTp+1 ]={0.0f}, TEMNOSO2[ iTp+1 ]={0.0f};
     //F 114       SLUSER(iTp),SLLO(iTp),SLMID(iTp),SLHI(iTp), &
-    float SLUSER[ iTp+1 ], SLLO[ iTp+1 ], SLMID[ iTp+1 ], SLHI[ iTp+1 ];
+    float SLUSER[ iTp+1 ]={0.0f}, SLLO[ iTp+1 ]={0.0f}, SLMID[ iTp+1 ]={0.0f}, SLHI[ iTp+1 ]={0.0f};
     //F 115       TALL(4,iTp-225),TGHG(4,iTp-225),TSO21(4,iTp-225), &
-    float TALL[ 4+1 ][ iTp-225+1 ], TGHG[ 4+1 ][ iTp-225+1 ], TSO21[ 4+1 ][ iTp-225+1 ];
+    float TALL[ 4+1 ][ iTp-225+1 ]={{0.0f}}, TGHG[ 4+1 ][ iTp-225+1 ]={{0.0f}}, TSO21[ 4+1 ][ iTp-225+1 ]={{0.0f}};
     //F 116       TSO22(4,iTp-225),TSO23(4,iTp-225),TREF(4),XSO21(4,iTp-225), &
-    float TSO22[ 4+1 ][ iTp-225+1 ], TSO23[ 4+1 ][ iTp-225+1 ], TREF[ 4+1 ], XSO21[ 4+1 ][ iTp-225+1 ];
+    float TSO22[ 4+1 ][ iTp-225+1 ]={{0.0f}}, TSO23[ 4+1 ][ iTp-225+1 ]={{0.0f}}, TREF[ 4+1 ]={0.0f}, XSO21[ 4+1 ][ iTp-225+1 ]={{0.0f}};
     //F 117       XSO22(4,iTp-225),XSO23(4,iTp-225),XGHG(4,iTp-225), &
-    float XSO22[ 4+1 ][ iTp-225+1 ], XSO23[ 4+1 ][ iTp-225+1 ], XGHG[ 4+1 ][ iTp-225+1 ];
+    float XSO22[ 4+1 ][ iTp-225+1 ]={{0.0f}}, XSO23[ 4+1 ][ iTp-225+1 ]={{0.0f}}, XGHG[ 4+1 ][ iTp-225+1 ]={{0.0f}};
     //F 118       SCALER(197:iTp),SCALAR(197:iTp)
-    float SCALER[ iTp+1 ], SCALAR[ iTp+1 ];
+    float SCALER[ iTp+1 ]={0.0f}, SCALAR[ iTp+1 ]={0.0f};
     //F 119 !
     //F 120       REAL*4 FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing, &
     //F 121              aBCBaseEmissions, aOCBaseEmissions !sjs
@@ -201,9 +201,9 @@ void CLIMAT()
     //F 124       DATA aBCUnitForcing/0.0/,aOCUnitForcing/0.0/
     //F 125 
     //F 126       DIMENSION EESS1(iTp),EESS2(iTp),EESS3(iTp),EESST(iTp),QTROZ(iTp), &
-    float QTROZ[ iTp+1 ];
+    float QTROZ[ iTp+1 ]={0.0f};
     //F 127       QSTROZ(iTp),C11EFF(iTp)
-    float QSTROZ[ iTp+1 ], C11EFF[ iTp+1 ];
+    float QSTROZ[ iTp+1 ]={0.0f}, C11EFF[ iTp+1 ]={0.0f};
     //F 128 !
     //F 129       common /Limits/KEND
     Limits_block Limits;
@@ -382,8 +382,8 @@ void CLIMAT()
     STOREDVALS_block STOREDVALS;
     //F 231 
     
-    int NCOLS, IQFIRST, IQLAST;
-    float EQUIVCO2, TORREF;
+    int NCOLS=0, IQFIRST=0, IQLAST=0;
+    float EQUIVCO2=0.0f, TORREF=0.0f;
 
     // Input gas data will be read out of this string rather than through an actual file.
     string GAS_EMK_DATA;
@@ -1305,8 +1305,8 @@ void CLIMAT()
     //F 737 !
     //F 738       DO JCFC=L0+1,LAST
     for( int JCFC=L0+1; JCFC<=LAST; JCFC++ ) {
-        int IYCFC;
-        float JUNK;
+        int IYCFC=0;
+        float JUNK=0.0f;
         //F 739       IF(IHALOETC.EQ.2)THEN
         if( IHALOETC == 2 ) {
             
@@ -1465,8 +1465,8 @@ void CLIMAT()
         //F 838         IF(JQFIRST.LT.1)THEN
         if( QADD.JQFIRST < 1 ) {
             //F 839           DO JQ=JQFIRST,0
-            int JYEAR;
-            float QQQGL, QQQNH, QQQSH, QQQNHO, QQQNHL, QQQSHO, QQQSHL;
+            int JYEAR=0;
+            float QQQGL=0.0f, QQQNH=0.0f, QQQSH=0.0f, QQQNHO=0.0f, QQQNHL=0.0f, QQQSHO=0.0f, QQQSHL=0.0f;
             for( int JQ=QADD.JQFIRST; JQ<=0; JQ++ ) {
                 //F 840           IF(NCOLS.EQ.1)READ(lun,902)JYEAR,QQQGL
                 if( NCOLS == 1 ) infile >> JYEAR >> QQQGL;
@@ -1488,7 +1488,7 @@ void CLIMAT()
         //F 849         DO JQ=JQFIRST,JQLAST
         for( int JQ=QADD.JQFIRST; JQ<=QADD.JQLAST; JQ++ ) {
             //F 850           IF(NCOLS.EQ.1)THEN
-            int JYEAR;
+            int JYEAR=0;
             if( NCOLS == 1 ) {
                 //F 851             READ(lun,902)JYEAR,QEX(JQ)
                 infile >> JYEAR >> QADD.QEX[ JQ ];
@@ -1593,7 +1593,7 @@ void CLIMAT()
         openfile_read( &infile, BASE_INPUT_DIR + "/BCOCHist_c.csv", DEBUG_IO );  //FIX location
         //F 914 !
         //F 915         READ(LUN,*)QtempBCUnitForcing, aBCBaseEmissions
-        float QtempBCUnitForcing, QtempOCUnitForcing;
+        float QtempBCUnitForcing=0.0f, QtempOCUnitForcing=0.0f;
         QtempBCUnitForcing = read_csv_value( &infile, false );
         BCOC.aBCBaseEmissions = read_and_discard( &infile, false );
         //F 916         READ(LUN,*)QtempOCUnitForcing, aOCBaseEmissions
@@ -1711,6 +1711,7 @@ void CLIMAT()
     //F 982 
     //F 983 	! Maintain code to read in original magicc input file format
     //F 984     do i=1,NVAL
+    float DSO211990=0.0f, DSO221990=0.0f, DSO231990=0.0f; 
     for( int i=1; i<=NVAL; i++) {
         //F 985 	  if ( iReadNative .EQ. 1 )THEN
         if( iReadNative == 1 ) {
@@ -1772,7 +1773,9 @@ void CLIMAT()
         }
         //F 999  
         //F1000 	IF(i.eq.1) THEN !collect our 1990 values since MAGICC wants differences from 1990
-        float DSO211990, DSO221990, DSO231990;
+        // The following declaration had to be moved outside the loop, since the code appears to rely
+        //    on thse variables retaining their values from one iteration to the next.
+        //float DSO211990, DSO221990, DSO231990;
         if( i == 1 ) {
             //F1001 	  ES1990 = DSO21(1) + DSO22(1) + DSO23(1) !global 1990 emissions
             Sulph.ES1990 = DSO21[ 1 ] + DSO22[ 1 ] + DSO23[ 1 ];
@@ -1917,7 +1920,7 @@ void CLIMAT()
     //F1091 !  SPECIFY USER LIFETIME. NOTE, THIS IS RESPECIFIED IN DELTAQ.
     //F1092 !
     //F1093       IF(LEVCH4.EQ.1) TTUSER = TTLO
-    float TTUSER;
+    float TTUSER=0.0f;
     if( METH2.LEVCH4 == 1 ) TTUSER = TTLO;
     //F1094       IF(LEVCH4.EQ.2) TTUSER = TTMID
     if( METH2.LEVCH4 == 2 ) TTUSER = TTMID;
@@ -2027,6 +2030,7 @@ void CLIMAT()
     time_t rawtime;
     time ( &rawtime );
     struct tm * timeinfo = localtime ( &rawtime );    
+    
     //F1159 	myr = 0
     //F1160 	imon = 0
     //F1161 	iday = 0
@@ -2549,7 +2553,7 @@ void CLIMAT()
             //F1478 !  PRINTOUT OPTIONS
             //F1479 !
             //F1480         IF(NOUT.EQ.1)THEN
-            float COL9, COL10, COL11;
+            float COL9=0.0f, COL10=0.0f, COL11=0.0f;
             if( NOUT == 1 ) {
                 //F1481           COL9   = TNHAV(226)
                 COL9 = TANDSL.TNHAV[ 226 ];
@@ -2965,7 +2969,7 @@ void CLIMAT()
         //F1725 !   TO 'WILD' FLUCTUATIONS IN THE RATIO.
         //F1726 !
         //F1727           DO K=197,KEND
-        float TALLREF, TGHGREF, TSO21REF, TSO22REF, TSO23REF;
+        float TALLREF=0.0f, TGHGREF=0.0f, TSO21REF=0.0f, TSO22REF=0.0f, TSO23REF=0.0f;
         for( int K=197; K<=Limits.KEND; K++ ) {
             //F1728         KSG=K-196
             int KSG = K - 196;
@@ -3186,7 +3190,7 @@ void CLIMAT()
                 if( MID == 1 ) CONCOUT = ( CARB.CCO2.getval( CO2READ.LEVCO2, K-1 ) + CARB.CCO2.getval( CO2READ.LEVCO2, K ) ) / 2.0;
                 //F1825 !
                 //F1826             IF(IMETH.EQ.0)THEN
-                float TOTE;
+                float TOTE=0.0f;
                 if( METH1.IMETH == 0 )
                     //F1827               TOTE=EF(K)+EDNET(K)
                     TOTE = CARB.EF.getval( K ) + METH1.ednet.getval( K );
@@ -3199,7 +3203,7 @@ void CLIMAT()
                 //F1832             IF(TOTE.EQ.0.0)THEN
                 if( TOTE == 0.0 ) {
                     //F1833               IF(DELMASS(4,K).EQ.0.0)THEN
-                    float ABX;
+                    float ABX=0.0f;
                     if( CAR.DELMASS.getval( 4, K ) == 0.0 )
                         //F1834                 ABX=1.0
                         ABX = 1.0;
@@ -3961,7 +3965,7 @@ void CLIMAT()
             //F2320 !
             //F2321         DO K=1,KEND,IDIS
             for( int K=1; K<=Limits.KEND; K += IDIS ) {
-                float TOR;
+                float TOR=0.0f;
                 //F2322 !
                 //F2323 !  CONVERT END OF YEAR TO MIDYEAR CONCS
                 //F2324 !
@@ -3976,7 +3980,7 @@ void CLIMAT()
                 int IYEAR = 1764 + K;
                 //F2330 !
                 //F2331           IF(K.GE.226)THEN
-                float CH4LMID, CH4BMID, CH4HMID, CO2LMID, CO2BMID, CO2HMID;
+                float CH4LMID=0.0f, CH4BMID=0.0f, CH4HMID=0.0f, CO2LMID=0.0f, CO2BMID=0.0f, CO2HMID=0.0f;
                 if( K >= 226 ) {
                     //F2332 !
                     //F2333             CH4LMID=(CH4L(K)+CH4L(K-1))/2.
@@ -4318,7 +4322,7 @@ void CLIMAT()
                 //F2542 !   EXTRAPOLATION.
                 //F2543 !
                 //F2544         IF(KSG.EQ.KSGL-3)THEN
-                float DT21, DT22, DT23, DX21, DX22, DX23;
+                float DT21=0.0f, DT22=0.0f, DT23=0.0f, DX21=0.0f, DX22=0.0f, DX23=0.0f;
                 if( KSG == KSGL-3 ) {
                     //F2545           DT21=(TSO21(NCLIM,KSG)-TSO21(NCLIM,KSG-3))/3.0
                     DT21 = ( TSO21[ NSIM.NCLIM ][ KSG ] - TSO21[ NSIM.NCLIM ][ KSG-3 ] ) / 3.0;
@@ -4587,13 +4591,13 @@ void CLIMAT()
     //F2699 !   BEFORE WERE 37,28,10 TgSO4, SUMMING TO 75 TgSO4.
     //F2700 !
     //F2701         DO K=1,225
-    float EESS1[ iTp+1 ], EESS2[ iTp+1 ], EESS3[ iTp+1 ], EESST[ iTp+1 ];
-    for( int K=1; K<=225; K++ ) {
+    float EESS1[ iTp+1 ]={0.0f}, EESS2[ iTp+1 ]={0.0f}, EESS3[ iTp+1 ]={0.0f}, EESST[ iTp+1 ]={0.0f};
+    for( int K=1; K<=225; K++ ) {  
         //F2702           EESS1(K)=0.0
         //F2703           EESS2(K)=0.0
         //F2704           EESS3(K)=0.0
         //F2705           EESST(K)=0.0
-        EESS1[ K ] = EESS2[ K ] = EESS3[ K ] = EESST[ K ] = 0.0;
+        EESS1[ K ] = EESS2[ K ] = EESS3[ K ] = EESST[ K ] = 0.0f;
         //F2706         END DO
     }
     //F2707 ! 

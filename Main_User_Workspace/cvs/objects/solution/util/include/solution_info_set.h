@@ -78,6 +78,7 @@ public:
     void resetBrackets();
     bool checkAndResetBrackets();
     SolutionInfo* getWorstSolutionInfo( const bool aIgnoreBisected = false );
+    const SolutionInfo* getWorstSolutionInfo( const bool aIgnoreBisected = false ) const;
     SolutionInfo* getWorstSolutionInfoReverse( const bool aIgnoreBisected = false );
     SolutionInfo* getPolicyOrWorstSolutionInfo();
     SolutionInfo* getPolicySolutionInfo();

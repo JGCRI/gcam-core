@@ -56,8 +56,8 @@ using namespace std;
 
 //! Constructor
 SolutionInfoSet::SolutionInfoSet( Marketplace* aMarketplace ):
-marketplace( aMarketplace ),
-period( 0 )
+period( 0 ),
+marketplace( aMarketplace )
 {
     /*!\pre Marketplace is not null. */
     assert( aMarketplace );
@@ -263,7 +263,7 @@ double SolutionInfoSet::getMaxAbsoluteExcessDemand() const {
 * getRelativeED.
 * \return The SolutionInfo with the largest relative excess demand. 
 */
-SolutionInfo* SolutionInfoSet::getWorstSolutionInfo( const bool aIgnoreBisected ) {
+SolutionInfo* SolutionInfoSet::getWorstSolutionInfo( bool aIgnoreBisected )  {
 
     SetIterator worstMarket = solvable.begin();
     double largest = -1;
@@ -272,7 +272,7 @@ SolutionInfo* SolutionInfoSet::getWorstSolutionInfo( const bool aIgnoreBisected 
         if( aIgnoreBisected && iter->hasBisected() ){
             continue;
         }
-        const double relativeED = iter->getRelativeED();
+        double relativeED = iter->getRelativeED();
         
         if ( relativeED > largest ) {
             worstMarket = iter;
@@ -281,6 +281,11 @@ SolutionInfo* SolutionInfoSet::getWorstSolutionInfo( const bool aIgnoreBisected 
     }
     return &*worstMarket;
 }
+
+const SolutionInfo* SolutionInfoSet::getWorstSolutionInfo( bool aIgnoreBisected ) const {
+  return const_cast<SolutionInfoSet*>( this )->getWorstSolutionInfo( aIgnoreBisected );
+}
+
 
 /*! \brief Returns the best unsolved solution info. 
 * \author Josh Lurz
@@ -519,7 +524,6 @@ void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     // Unsolved Part 1:
     aOut << "Unsolved Part 1: Solvable Markets" << endl;
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.width(36); aOut << "Market,"; aOut << " ";
     aOut.width(10); aOut << "X,"; aOut << " ";
     aOut.width(10); aOut << "XL,"; aOut << " ";
     aOut.width(10); aOut << "XR,"; aOut << " ";
@@ -530,7 +534,8 @@ void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     aOut.width(3); aOut << "brk,"; aOut << " ";
     aOut.width(10); aOut << "Supply,"; aOut << " ";
     aOut.width(10); aOut << "Demand,"; aOut << " ";
-    aOut.width(10); aOut << "Mrk Type," << endl;
+    aOut.width(10); aOut << "Mrk Type," << " ";
+    aOut.width(36); aOut << "Market,"; aOut << endl;
     aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
     // Solvable markets that are not solved.
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
@@ -542,7 +547,6 @@ void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     // Unsolved Part 2:
     aOut << "Unsolved Part 2: Unsolvable Markets Not Cleared" << endl;
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.width(36); aOut << "Market,"; aOut << " ";
     aOut.width(10); aOut << "X,"; aOut << " ";
     aOut.width(10); aOut << "XL,"; aOut << " ";
     aOut.width(10); aOut << "XR,"; aOut << " ";
@@ -553,7 +557,8 @@ void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     aOut.width(3); aOut << "brk,"; aOut << " ";
     aOut.width(10); aOut << "Supply,"; aOut << " ";
     aOut.width(10); aOut << "Demand,"; aOut << " ";
-    aOut.width(10); aOut << "Mrk Type," << endl;
+    aOut.width(10); aOut << "Mrk Type," << " ";
+    aOut.width(36); aOut << "Market,"; aOut << endl;
     aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
     // Unsolvable markets that are not cleared.
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
@@ -577,7 +582,7 @@ void SolutionInfoSet::unsetBisectedFlag(){
 
 //! Print out all the SolutionInfo objects' information.
 void SolutionInfoSet::print( ostream& out ) const {
-    out << endl << "Market, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand, MRK type" << endl;
+    out << endl << "X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand, MRK type, Market" << endl;
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         out << *iter << endl;
     }

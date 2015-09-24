@@ -89,6 +89,11 @@ public:
                                   const int aBasePeriod,
                                   const int aCurrentPeriod );
 
+    static double getDemandPriceThreshold();
+
+    static double adjustDemandForNegativePrice( const double aDemandScalar,
+                                                const double aPrice );
+
     static const std::string createTFEMarketName( const std::string& aSectorName );
 
     static void setFinalEnergyFlag( const std::string& aRegionName,
@@ -114,6 +119,10 @@ public:
                                            const double aCapacity );
 
     static const std::string getTrialMarketName( const std::string& aSectorName );
+
+    static void setSupplyBehaviorBounds( const std::string& aGoodName, const std::string& aRegionName,
+                                         const double aLowerPriceBound, const double aUpperPriceBound,
+                                         const int aPeriod );
 
      /*! \brief Fills missing period elements in a Value vector with values linearly 
      *        interpolated from initialized or read-in values.

@@ -449,7 +449,7 @@ namespace objects {
         typename TimeVectorBase<T>::iterator prev = *this;
         ++mPos;
         // If the end iterator is incremented it should remain at the end.
-        mPos = min( mPos, mParent->size() );
+        mPos = std::min( mPos, mParent->size() );
         return prev;
     }
 

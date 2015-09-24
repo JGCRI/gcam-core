@@ -66,8 +66,8 @@ const string PolicyPortfolioStandard::XML_NAME = "policy-portfolio-standard";
 PolicyPortfolioStandard::PolicyPortfolioStandard():
     isFixedTax( false ),
     mIsShareBased( false ),
-    mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
     mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
+    mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
     mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 )
 {
 }
@@ -93,10 +93,10 @@ PolicyPortfolioStandard::PolicyPortfolioStandard( const string aName, const stri
                       const vector<double>& aShareOfTotal ):
     mName( aName ), 
     mMarket( aMarket ),
-    mShareOfSectorOutput( aShareOfTotal ),
-    mIsShareBased( true ),
     isFixedTax( false ),
-    mConstraint( scenario->getModeltime()->getmaxper(), -1.0 )
+    mIsShareBased( true ),
+    mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
+    mShareOfSectorOutput( aShareOfTotal )
 {
     // Ensure that the share vector passed in is the right size.
     assert( aShareOfTotal.size() == mConstraint.size() );

@@ -52,19 +52,16 @@ class GDP;
 /*! 
  * \ingroup Objects
  * \brief A visitor which determines if a logit nest has calibrated values
- *        and will adjust share weights algebraiclly to reproduce those values
+ *        and will adjust share weights algebraically to reproduce those values
  *        at the current set of prices.
  * \details For both subectors and technologies we first sum all of the calibration
  *          values and find the largest child in terms of largest calibration value
  *          so that we may make the share weights relative to that subsector/technology.
- *          We then back out the appropriate share weight to reproduce the calibration shares
- *          using the following equation: (TODO: figure out how to format this)
- *          
- *          s_i = ( cal_i / cal_total ) / ( scaled_gdp_percapita ^ fuel_pref_elasticity_i )
- *          sw_i = ( s_i / s_r ) * ( price_r / price_i ) ^ logit_exp
- *
- *          Where _i indicates the current child, and _r indicates the child we are
- *          making the share weights relative to.
+ *          We then back out the appropriate share weight to reproduce the calibration shares.
+ *          This visitor relies on the discrete choice function to invert to logit
+ *          formulation to back out the share weight so as to be flexible to which
+ *          ever formulation is used.
+ * \sa IDiscreteChoice
  * \author Pralit Patel
  * \warning This class never actually checks whether calibration is active.
  * \warning This methodology will not work if in a given nest there is a mix
@@ -80,7 +77,7 @@ public:
                                    const int aPeriod );
 
     virtual void endVisitSector( const Sector* aSector,
-                                const int aPeriod );
+                                 const int aPeriod );
 
     virtual void startVisitSubsector( const Subsector* aSubsector,
                                      const int aPeriod );

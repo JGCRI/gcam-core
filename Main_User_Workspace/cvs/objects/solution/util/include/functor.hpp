@@ -44,6 +44,7 @@
  * @brief Base class definitions for function-like objects
  */
 
+#include <iostream>
 #include <boost/numeric/ublas/vector.hpp> 
 
 #define UBVECTOR boost::numeric::ublas::vector
@@ -65,6 +66,7 @@ protected:
    * appropriately on initialization.
    */
   int na,nr;
+  bool mdiagnostic;
 public:
   /*!
    * Paren operator -- evaluates the function F(x)
@@ -108,6 +110,14 @@ public:
    * derivative.
    */
   virtual double partialSize(int ip) const {return 1.0;}
+  /*!
+   * Turns on implementation-defined diagnostics (default is no-op)
+   */
+  virtual void diagnosticOn(void) {mdiagnostic = true;}
+  /*!
+   * Turns off diagnostics
+   */
+  virtual void diagnosticOff(void) {mdiagnostic = false;}
 };
 
 
@@ -144,6 +154,8 @@ public:
    * Returns the length of the argument vector required by the function
    */
   int narg() const {return na;}
+  //! diagnostic output does nothing by default
+  virtual void prn_diagnostic(std::ostream *out) {}
 };
 
 

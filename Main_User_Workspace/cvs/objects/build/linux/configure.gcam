@@ -5,17 +5,16 @@
 include $(BUILDPATH)/config.system
 
 ### gcc compiler settings (testing with v4.1.2) ###
+ifeq ($(strip $(CXX)),)
 CXX             = g++
+endif
+ifeq ($(strip $(CC)),)
 CC		= gcc
+endif
 CFLAGS		= -O2
 CXXOPTIM        = -O2
 CXXDEBUG        = -ggdb -DNDEBUG
 CXXBASEOPTS     = $(CXXDEBUG)
-
-FC              = gfortran
-FCOPTIM         = -O3
-FCDEBUG         = -ffpe-trap=invalid,zero,overflow #-g -fbounds-check
-FCBASEOPTS      = -fno-underscoring $(FCDEBUG) #-fno-align-commons
 
 ARCH_FLAGS      = 
 ENVLIBS         = 
@@ -92,17 +91,17 @@ BOOSTINC	      = $(BOOST_INCLUDE)
 XERCESINC	      = $(XERCES_INCLUDE)
 # Same for the Boost Lapack bindings
 ifneq ($(USE_LAPACK),0)
-ifneq ($(strip $(LAPACKLIB)),)
-BOOST_NUMERIC_BINDINGS = $(HOME)/src/boost-numeric-bindings
-endif
+#ifneq ($(strip $(LAPACKLIB)),)
+BOOST_NUMERIC_BINDINGS = $(GCAMLIB_HOME)/src/boost-numeric-bindings
+#endif
 BOOSTBIND      = -I$(BOOST_NUMERIC_BINDINGS)
 # On evergreen, these variables are set by running 'tap lapack'.  On other systems, set 
 # manually or using shell scripts
 ifeq ($(strip $(LAPACKINC)),)
-LAPACKINC  = $(HOME)/include 
+LAPACKINC  = $(GCAMLIB_HOME)/include 
 endif
 ifeq ($(strip $(LAPACKLIB)),)
-LAPACKLIB  = $(HOME)/lib
+LAPACKLIB  = $(GCAMLIB_HOME)/lib
 endif
 
 LAPACKLD = -L$(LAPACKLIB)
@@ -112,7 +111,7 @@ LAPACKLINK = -llapack -lblas
 endif
 #
 ### locations of libraries
-LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY) -L$(HOME)/lib $(LAPACKLD)
+LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY) $(LAPACKLD)
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
@@ -120,7 +119,7 @@ CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(BASEXLIB) -DGCAM_PARALLEL_ENABLED=$(GCAM_P
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
-LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(LAPACK_RPATH) -Wl,-rpath,$(HOME)/lib
+LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(LAPACK_RPATH)
 AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
@@ -128,8 +127,7 @@ LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c $(JAVALINK) $(TBB_LIB) $(LAPAC
 INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INCLUDE) $(BOOSTBIND) \
                   -I$(XERCESINC) \
                   -I${PATHOFFSET} \
-		  -I${HOME}/include \
-		  $(LAPACKCF)
+                  $(LAPACKCF)
 
 ### rule for building the dependency information
 # %.d: %.cpp

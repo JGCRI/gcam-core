@@ -63,6 +63,22 @@ downscale_IMAGE_regions <- function( data, idvars, years = X_AGLU_historical_yea
 	data_new <- data_new[ c("iso", idvars, years ) ]
 }
 
+# TODO: figure out why there are two, can we move these to GCAM_header.R?  I just need the basic functionality to use in get_logit_fn_tables
+write_to_all_regions <- function( data, names, has.traded=F, apply.to = "selected", set.market = F ){
+	if ( "logit.year.fillout" %in% names ) data$logit.year.fillout <- "start-year"
+	if ( "price.exp.year.fillout" %in% names ) data$price.exp.year.fillout <- "start-year"
+	data_new <- set_years( data )
+	data_new <- repeat_and_add_vector( data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
+	data_new <- add_region_name( data_new )
+	if( has.traded==T){
+		if( set.market==T){
+			data_new$market.name <- data_new$region
+		}
+		data_new <- set_traded_names( data_new, apply.to )
+		}
+	return( data_new[ names ] ) 
+}
+
 # -----------------------------------------------------------------------------
 # write_to_all_regions_ag: write out ag table to all regions
 write_to_all_regions_ag <- function( data, names ){
