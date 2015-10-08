@@ -60,6 +60,7 @@ class Curve;
 class CalcCounter;
 class IClimateModel;
 class GHGPolicy;
+class GlobalTechnologyDatabase;
 class IActivity;
 
 #if GCAM_PARALLEL_ENABLED
@@ -107,6 +108,7 @@ public:
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     CalcCounter* getCalcCounter() const;
+    const GlobalTechnologyDatabase* getGlobalTechnologyDatabase() const;
 
 	void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
@@ -145,6 +147,9 @@ private:
     
     //! The global ordering of activities which can be used to calculate the model.
     std::vector<IActivity*> mGlobalOrdering;
+
+    //! The global technology database.
+    std::auto_ptr<GlobalTechnologyDatabase> mGlobalTechDB;
 
     void clear();
 

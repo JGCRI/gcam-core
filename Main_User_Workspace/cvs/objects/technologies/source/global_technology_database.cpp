@@ -55,14 +55,8 @@
 using namespace std;
 using namespace xercesc;
 
-/*!
- * \brief Get the instance of the global technology database.
- * \return The single instance of the global technology database.
- */
-GlobalTechnologyDatabase* GlobalTechnologyDatabase::getInstance() {
-    static GlobalTechnologyDatabase INSTANCE;
-    
-    return &INSTANCE;
+//! Default Constructor
+GlobalTechnologyDatabase::GlobalTechnologyDatabase() {
 }
 
 //! Destructor

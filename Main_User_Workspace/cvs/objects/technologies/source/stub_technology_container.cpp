@@ -47,6 +47,7 @@
 #include "technologies/include/global_technology_database.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
+#include "containers/include/world.h"
 #include "util/base/include/model_time.h"
 #include "technologies/include/technology.h"
 
@@ -137,7 +138,7 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
 {
     // get the technology from the global technology database
     const ITechnologyContainer* temp =
-        GlobalTechnologyDatabase::getInstance()->getTechnology( aSectorName, aSubsectorName, mName );
+        scenario->getWorld()->getGlobalTechnologyDatabase()->getTechnology( aSectorName, aSubsectorName, mName );
     if( temp ) {
         mTechnology = temp->clone();
     }

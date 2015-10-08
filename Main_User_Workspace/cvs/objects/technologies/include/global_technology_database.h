@@ -79,8 +79,7 @@ class ITechnologyContainer;
  */
 class GlobalTechnologyDatabase : public IParsable, public IRoundTrippable {
 public:
-    // Singleton class will only provide a getInstance method and no constructors
-    static GlobalTechnologyDatabase* getInstance();
+    GlobalTechnologyDatabase();
     ~GlobalTechnologyDatabase();
     
     static const std::string& getXMLNameStatic();
@@ -102,13 +101,6 @@ private:
     // some useful iterator typedefs
     typedef std::map<std::pair<std::string, std::string>, std::vector<ITechnologyContainer*> >::const_iterator CTechLocationIterator;
     typedef std::vector<ITechnologyContainer*>::const_iterator CTechListIterator;
-    
-    // private constructors to enforce a single instance
-    GlobalTechnologyDatabase() {}
-    
-    // intentionally undefined
-    GlobalTechnologyDatabase( const GlobalTechnologyDatabase& );
-    GlobalTechnologyDatabase& operator=( const GlobalTechnologyDatabase& );
 };
 
 #endif // _GLOBAL_TECHNOLOGY_DATABASE_H_

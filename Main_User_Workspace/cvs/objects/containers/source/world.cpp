@@ -73,6 +73,7 @@
 #include "technologies/include/global_technology_database.h"
 #include "reporting/include/energy_balance_table.h"
 #include "containers/include/market_dependency_finder.h"
+#include "technologies/include/global_technology_database.h"
 #include "containers/include/iactivity.h"
 
 #if GCAM_PARALLEL_ENABLED
@@ -93,7 +94,8 @@ extern Scenario* scenario;
 
 //! Default constructor.
 World::World():
-mCalcCounter( new CalcCounter() )
+mCalcCounter( new CalcCounter() ),
+mGlobalTechDB( new GlobalTechnologyDatabase() )
 {
 }
 
@@ -125,7 +127,7 @@ void World::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == GlobalTechnologyDatabase::getXMLNameStatic() ) {
-            GlobalTechnologyDatabase::getInstance()->XMLParse( curr );
+            mGlobalTechDB->XMLParse( curr );
         }
         // MiniCAM regions
         else if( nodeName == RegionMiniCAM::getXMLNameStatic() ){
@@ -183,7 +185,7 @@ void World::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag ( getXMLNameStatic(), out, tabs );
 
-    GlobalTechnologyDatabase::getInstance()->toInputXML( out, tabs );
+    mGlobalTechDB->toInputXML( out, tabs );
 	
     // Climate model parameters
     // note that due to a dependency in the carbon cycle model this
@@ -864,6 +866,14 @@ void World::csvSGMGenFile( ostream& aFile ) const {
     for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); ++rIter ){
         ( *rIter )->csvSGMGenFile( aFile );
     }
+}
+
+/*!
+ * \brief Get the global technology database to look up global techs.
+ * \return A reference to the global technologies database.
+ */
+const GlobalTechnologyDatabase* World::getGlobalTechnologyDatabase() const {
+    return mGlobalTechDB.get();
 }
 
 /*! \brief Update a visitor for the World.
