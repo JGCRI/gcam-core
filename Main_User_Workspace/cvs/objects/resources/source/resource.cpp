@@ -412,16 +412,30 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
         lastPeriodPrice = marketplace->getPrice( mName, aRegionName, aPeriod - 1 );
     }
 
+    // Create a dummy input vector for use in GHG calls
+    // The mOutputs vector does not contain a valid value at this point, however it is
+    // not used in the getGHGValue call.
+    vector<IInput*> inputs; // empty vector
+    
+    
+    double totalGHGCost = 0;
+    // totalGHGCost and carbontax must be in same unit as fuel price
+    for( unsigned int i = 0; i < ghg.size(); i++ ) {
+        totalGHGCost += ghg[ i ]->getGHGValue( aRegionName, inputs, mOutputs, 0 , aPeriod );
+    }
+    
+    // Subtract ghg cost from price paid for resource
+    price -= totalGHGCost;
+    
     // calculate annual supply
     annualsupply( aRegionName, aPeriod, aGDP, price, lastPeriodPrice ); 
 
     // There is only one primary output at the first position.
     // Setting market supply of resource occurs in setPhysicalOutput().
     mOutputs[0]->setPhysicalOutput( aPeriod > 0 ? mAnnualProd[ aPeriod ] : 0, aRegionName, 0, aPeriod );
-    vector<IInput*> inputs; // empty vector
 
     for( unsigned int i = 0; i < ghg.size(); ++i ) {
-        // no inputs and capture components
+        // no inputs or capture components
         ghg[i]->calcEmission( aRegionName, inputs, mOutputs, aGDP, 0, aPeriod );
     }
 }

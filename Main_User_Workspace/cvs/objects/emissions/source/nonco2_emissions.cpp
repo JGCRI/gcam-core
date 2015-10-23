@@ -270,6 +270,8 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
 {   
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
+    // Conversion from teragrams (Tg=MT) of X per EJ to metric tons of X per GJ
+    const double CVRT_Tg_per_EJ_to_Tonne_per_GJ = 1e-3;
     
     double GHGTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
@@ -302,10 +304,10 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
     // Adjust the GHG tax by taking into account the fraction sequestered, storage costs and adjusting
     // for the emissions intensity as well as reductions.
     double generalizedCost = ( ( 1.0 - removeFraction ) * GHGTax + removeFraction * storageCost ) *
-        mEmissionsCoef * emissMult / CVRT90;
+        mEmissionsCoef * emissMult / CVRT90 * CVRT_Tg_per_EJ_to_Tonne_per_GJ;
 
     // The generalized cost returned by the GHG may be negative if
-    // emissions crediting is occuring.
+    // emissions crediting is occurring.
     return generalizedCost;
 }
 
