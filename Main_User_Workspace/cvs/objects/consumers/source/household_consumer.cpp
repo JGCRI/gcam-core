@@ -690,15 +690,7 @@ void HouseholdConsumer::operate( NationalAccount& aNationalAccount, const Demogr
                 ghgTaxRate = 0;
             }
 
-            // Retrieve proportional tax rate.
-            const IInfo* ghgMarketInfo = marketplace->getMarketInfo( (*ghg)->getName(), aRegionName, aPeriod, false );
-            // Note: the key includes the region name.
-            const double proportionalTaxRate = 
-                ( ghgMarketInfo && ghgMarketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
-                ? ghgMarketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
-                : 1.0;
-
-            ghgTax += ghgTaxRate * proportionalTaxRate * (*ghg)->getEmission( aPeriod );
+            ghgTax += ghgTaxRate * (*ghg)->getEmission( aPeriod );
         }
         expenditures[ aPeriod ].setType( Expenditure::CARBON_TAX, ghgTax );
         aNationalAccount.addToAccount( NationalAccount::CARBON_TAX, ghgTax );

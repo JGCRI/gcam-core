@@ -112,9 +112,6 @@ protected:
 
     virtual const std::string& getXMLName() const;
 
-    //! Temporary hack for CCTP. Biomass adder.
-    std::vector<double> mBiomassAdder;
-
     //! The object responsible for setting final energy supply into the
     //! calibration market.
     std::auto_ptr<FinalEnergySupplier> mFinalEnergySupplier;

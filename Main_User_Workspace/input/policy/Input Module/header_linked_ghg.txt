@@ -3,4 +3,5 @@
 
 2,world/+{name}region,region/+{name}linked-ghg-policy,linked-ghg-policy/+market,linked-ghg-policy/+linked-policy,scenario,scenario/world
 
+3,world/+{name}region,region/+{name}linked-ghg-policy,linked-ghg-policy/+{year}price-adjust,linked-ghg-policy/+price-adjust,scenario,scenario/world
 

@@ -232,16 +232,6 @@ double AGHG::getGHGValue( const IInput* aInput, const string& aRegionName,
         ghgTax = 0;
     }
 
-    // Retrieve proportional tax rate.
-    const IInfo* marketInfo = mCachedMarket->getMarketInfo( getName(), aRegionName, aPeriod, false );
-    // Note: the key includes the region name.
-    const double proportionalTaxRate = 
-        ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
-        ? marketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
-        : 1.0;
-    // Adjust greenhouse gas tax with the proportional tax rate.
-    ghgTax *= proportionalTaxRate;
-
     // Get the emissions coef for the input.
     double currInputGasCoef = aInput->getCO2EmissionsCoefficient( getName(), aPeriod );
 
@@ -279,16 +269,6 @@ double AGHG::getGHGValue( const IOutput* aOutput, const string& aRegionName,
     if( ghgTax == Marketplace::NO_MARKET_PRICE ){
         ghgTax = 0;
     }
-
-    // Retrieve proportional tax rate.
-    const IInfo* ghgMarketInfo = mCachedMarket->getMarketInfo( getName(), aRegionName, aPeriod, false );
-    // Note: the key includes the region name.
-    const double proportionalTaxRate = 
-        ( ghgMarketInfo && ghgMarketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
-        ? ghgMarketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
-        : 1.0;
-    // Adjust greenhouse gas tax with the proportional tax rate.
-    ghgTax *= proportionalTaxRate;
 
     // Get the emissions coef for the output.
     double currOutputGasCoef = aOutput->getEmissionsPerOutput( getName(), aPeriod );

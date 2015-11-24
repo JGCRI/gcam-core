@@ -63,8 +63,7 @@ extern Scenario* scenario;
 GHGPolicy::GHGPolicy():
     isFixedTax( false ),
     mConstraint( scenario->getModeltime()->getmaxper(), -1 ),
-    mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
-    mProportionalTaxRate( scenario->getModeltime()->getmaxper(), -1.0 )
+    mFixedTax( scenario->getModeltime()->getmaxper(), -1 )
 {
 }
 
@@ -77,8 +76,7 @@ GHGPolicy::GHGPolicy( const string aName, const string aMarket ):
     mMarket( aMarket ),
     isFixedTax( false ),
     mConstraint( scenario->getModeltime()->getmaxper(), -1 ),
-    mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
-    mProportionalTaxRate( scenario->getModeltime()->getmaxper(), -1.0 )
+    mFixedTax( scenario->getModeltime()->getmaxper(), -1 )
 {
 }
 
@@ -90,8 +88,7 @@ GHGPolicy::GHGPolicy( const string aName, const string aMarket,
     mMarket( aMarket ),
     isFixedTax( true ),
     mConstraint( scenario->getModeltime()->getmaxper(), -1 ),
-    mFixedTax( aTaxes ),
-    mProportionalTaxRate( scenario->getModeltime()->getmaxper(), -1.0 )
+    mFixedTax( aTaxes )
 {
     // Ensure that the taxes vector passed in is the right size.
     assert( aTaxes.size() == mConstraint.size() );
@@ -167,18 +164,6 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
         else if( nodeName == "fixedTax" ){
             XMLHelper<double>::insertValueIntoVector( curr, mFixedTax, modeltime );
         }
-        else if( nodeName == "proportional-tax-rate" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mProportionalTaxRate, modeltime );
-            // Check to see if proportional tax rate is within valid range (between 0 and 1).
-            // This could be used in the future for subsidies (negative rates) or multipliers
-            // (greater than 1 ) on taxes.
-            double tempProportionalTaxRate = XMLHelper<double>::getValue( curr );
-            if ( tempProportionalTaxRate < 0 || tempProportionalTaxRate > 1 ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Proportional tax rate on ghg policy out of range (rate < 0 or rate > 1)." << endl;
-            }
-        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -197,10 +182,6 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();    
     XMLWriteVector( mConstraint, "constraint", out, tabs, modeltime, -1.0 );
     XMLWriteVector( mFixedTax, "fixedTax", out, tabs, modeltime, 0.0 );
-    for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        XMLWriteElementCheckDefault( mProportionalTaxRate[ per ],
-            "proportional-tax-rate", out, tabs, -1.0 );
-    }
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );
@@ -223,9 +204,6 @@ void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // Write out the fixed tax for the current year.
     XMLWriteElement( mFixedTax[ period ], "fixedTax", out, tabs );
     
-    // Write out the proportional tax rate for the current year.
-    XMLWriteElement( mProportionalTaxRate[ period ], "proportional-tax-rate", out, tabs );
-
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
@@ -251,15 +229,6 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
     marketInfo->setString( "price-unit", "1990$/tC" );
     marketInfo->setString( "output-unit", "MTC" );
 
-    // Set the proportional tax rate into the policy market info object for
-    // retrieval by the emissions object.
-    for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        IInfo* currMarketInfo = marketplace->getMarketInfo( mName, aRegionName, per, true );
-        // Note: the key includes the region name.
-        if( mProportionalTaxRate[ per ] != -1 ){
-            currMarketInfo->setDouble( "proportional-tax-rate" + aRegionName, mProportionalTaxRate[ per ] );
-        }
-    }
     // check for missing periods in which case interpolate
     for( int i = 1; i < modeltime->getmaxper(); ++i ) {
         if( mFixedTax[ i ] == -1 && mFixedTax[ i - 1 ] != -1 ) {

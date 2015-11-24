@@ -163,16 +163,6 @@ double CO2Emissions::getGHGValue( const std::string& aRegionName,
         GHGTax = 0;
     }
     
-    // Retrieve proportional tax rate.
-    const IInfo* marketInfo = mCachedMarket->getMarketInfo( getName(), aRegionName, aPeriod, false );
-    // Note: the key includes the region name.
-    const double proportionalTaxRate = 
-        ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
-        ? marketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
-        : 1.0;
-    // Adjust greenhouse gas tax with the proportional tax rate.
-    GHGTax *= proportionalTaxRate;
-
     // get the summation of emissions coefficients from all outputs
     // SHK 3/15/07: is this correct?
     double coefProduct = calcOutputCoef( aOutputs, aPeriod );

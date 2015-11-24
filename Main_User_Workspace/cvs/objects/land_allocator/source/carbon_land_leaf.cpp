@@ -122,22 +122,11 @@ void CarbonLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
     const Marketplace* marketplace = scenario->getMarketplace();
     double carbonPrice = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
 
-    // Retrieve proportional tax rate.
-    const IInfo* marketInfo = marketplace->getMarketInfo( "CO2", aRegionName, aPeriod, false );
-    // Note: the key includes the region name.
-    const double proportionalTaxRate = 
-            ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
-            ? marketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
-            : 1.0;
-
     // If a carbon price exists, calculate the subsidy
     if( carbonPrice != Marketplace::NO_MARKET_PRICE && carbonPrice > 0.0 ){
         // Carbon price is in 1990$, but land value is in 1975$ so we need to convert
         const double dollar_conversion_75_90 = 2.212;
         carbonPrice /= dollar_conversion_75_90;
-
-        // Adjust carbon price with the proportional tax rate.
-        carbonPrice *= proportionalTaxRate;
 
         // With carbon content in Tg C/KHa, convert to $/KHa.
         const double tC_in_TgC = 1000000.0;

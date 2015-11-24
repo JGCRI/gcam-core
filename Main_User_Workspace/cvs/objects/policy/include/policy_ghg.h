@@ -79,7 +79,6 @@ protected:
     bool isFixedTax; //!< Boolean to use fixed tax or constraint
     std::vector<double> mConstraint; //!< Emissions constraint by year(tgC or MTC)
     std::vector<double> mFixedTax; //!< Fixed tax on Emissions by year($/TC)
-    std::vector<double> mProportionalTaxRate; //!< Proportional tax rate by year(fraction)
 };
 
 #endif // _POLICY_GHG_H_

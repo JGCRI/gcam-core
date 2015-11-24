@@ -382,20 +382,9 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
 
     // If a carbon price exists, calculate the subsidy
     if( carbonPrice != Marketplace::NO_MARKET_PRICE && carbonPrice > 0.0 ){
-        // Retrieve proportional tax rate.
-        const IInfo* marketInfo = marketplace->getMarketInfo( "CO2_LUC", aRegionName, aPeriod, false );
-        // Note: the key includes the region name.
-        const double proportionalTaxRate =
-        ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) )
-            ? marketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
-            : 1.0;
-        
         // Carbon price is in 1990$, but land value is in 1975$ so we need to convert
         carbonPrice /= dollar_conversion_75_90;
 
-        // Adjust carbon price with the proportional tax rate.
-        carbonPrice *= proportionalTaxRate;
-        
         // Carbon content is in kgC/m2. Land profit rate is in $/billion m2 (or $/ thous km2).
         // We need to multiply by 1e9 to go from $/m2 to $/billion m2
         // We need to divide by 1e3 to go from kgC to tC

@@ -71,7 +71,6 @@ const string SupplySector::XML_NAME = "supplysector";
 */
 SupplySector::SupplySector( const string& aRegionName ):
 Sector( aRegionName ),
-mBiomassAdder( scenario->getModeltime()->getmaxper() ),
 // The default price for a trial supply market is 0.001
 mPriceTrialSupplyMarket( scenario->getModeltime()->getmaxper(), 0.001 )
 {
@@ -111,11 +110,7 @@ const std::string& SupplySector::getXMLNameStatic() {
 * \param curr pointer to the current node in the XML input tree
 */
 bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    // Temporary hack for CCTP.
-    if( nodeName == "biomass-price-adder" ){
-        XMLHelper<double>::insertValueIntoVector( curr, mBiomassAdder, scenario->getModeltime() );
-    }
-    else if( nodeName == "price-trial-supply" ){
+    if( nodeName == "price-trial-supply" ){
         XMLHelper<double>::insertValueIntoVector( curr, mPriceTrialSupplyMarket, scenario->getModeltime() );
     }        
     else {
@@ -136,8 +131,6 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
 void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
 
     const Modeltime* modeltime = scenario->getModeltime();
-    // Temporary CCTP hack.
-    XMLWriteVector( mBiomassAdder, "biomass-price-adder", aOut, aTabs, modeltime, 0.0 );
     for( int period = 0; period < modeltime->getmaxper(); ++period ) {
         XMLWriteElementCheckDefault( mPriceTrialSupplyMarket[ period ], "price-trial-supply",
                                      aOut, aTabs, 0.001, modeltime->getper_to_yr( period ) );
@@ -154,8 +147,6 @@ void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void SupplySector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
-
-    XMLWriteElement( mBiomassAdder[ aPeriod ], "biomass-price-adder", aOut, aTabs );
 }
 
 /*! \brief Complete the initialization of the supply sector.
@@ -296,31 +287,6 @@ void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 
     double avgMarginalPrice = getPrice( aGDP, aPeriod );
 
-    // Temporary hack for CCTP.
-    if( name == "regional biomass" ){
-        // Adjust for biomass carbon value adder.
-        // Prices must be adjusted by the price multiplier if there is a
-        // carbon tax in place.
-        double carbonPrice = marketplace->getPrice( "CO2", regionName, aPeriod, false );
-        // Retrieve proportional tax rate.
-        const IInfo* marketInfo = marketplace->getMarketInfo( "CO2", regionName, aPeriod, false );
-        // Note: the key includes the region name.
-        const double proportionalTaxRate = 
-            ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + regionName ) ) 
-            ? marketInfo->getDouble( "proportional-tax-rate" + regionName, true )
-            : 1.0;
-        if( carbonPrice != Marketplace::NO_MARKET_PRICE && carbonPrice > 0 ){
-            // Adjust carbon price with the proportional tax rate.
-            carbonPrice *= proportionalTaxRate;
-
-            // The carbon price and all crops except biomass are in 1990
-            // dollars. Biomass must be adjusted by a 1975 carbon price.
-            const double CONVERT_90_TO_75 = 2.212;
-            
-            avgMarginalPrice += mBiomassAdder[ aPeriod ] * carbonPrice / CONVERT_90_TO_75;
-        }
-    }
-    
     marketplace->setPrice( name, regionName, avgMarginalPrice, aPeriod, true );
 }
 
