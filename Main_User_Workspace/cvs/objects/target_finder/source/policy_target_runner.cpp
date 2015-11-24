@@ -273,8 +273,9 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     // be overridden.
     const Modeltime* modeltime = getInternalScenario()->getModeltime();
     const Marketplace* marketplace = getInternalScenario()->getMarketplace();
+    const int firstTaxPeriod = modeltime->getyr_to_per( mFirstTaxYear );
     vector<double> taxes( modeltime->getmaxper(), 0.0 );
-    for( int period = modeltime->getFinalCalibrationPeriod() + 1; period < modeltime->getmaxper(); ++period ) {
+    for( int period = modeltime->getFinalCalibrationPeriod() + 1; period < firstTaxPeriod; ++period ) {
         double tax = marketplace->getPrice( mTaxName, "USA", period, false );
         if( tax != Marketplace::NO_MARKET_PRICE ) {
             taxes[ period ] = tax;
