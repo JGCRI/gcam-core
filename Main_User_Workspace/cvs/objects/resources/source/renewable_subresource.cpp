@@ -109,6 +109,12 @@ void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {
             lastAvailable = (*i)->getAvail();
         }
     }
+    if( !mGrade.empty() && mGrade[ 0 ]->getAvail() != 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Non-zero initial grade available is ignored in " << getXMLNameStatic()
+                << " " << mName << "." << endl;
+    }
     SubResource::completeInit( aSectorInfo );
 }
 
@@ -143,31 +149,27 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 
     // Move up the cost curve until a point is found above the current price.
     for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
-        if( mGrade[ i ]->getCost( period ) > effectivePrice ){
-            // Determine the cost and available for the previous
-            // point. If this is the first point in the cost curve the
-            // previous grade is the bottom of the curve (assumed to
-            // be zero available at a price of minus infinity).
-            double prevGradeAvailable;
-            double gradeFraction;
-            if( i == 0 ){
-                prevGradeAvailable = 0.0;
-                gradeFraction = 1.0;
+        if( effectivePrice <= mGrade[ i ]->getCost( period ) ) {
+            if( i == 0 ) {
+                // Below the bottom of the supply curve which means the fraction
+                // available is zero.
+                fractionAvailable = 0;
             }
             else {
-                double prevGradeCost;
-                prevGradeCost = mGrade[ i - 1 ]->getCost( period );
-                prevGradeAvailable = mGrade[ i - 1 ]->getAvail();
+                // Determine the cost and available for the previous
+                // point. 
+                double prevGradeCost = mGrade[ i - 1 ]->getCost( period );
+                double prevGradeAvailable = mGrade[ i - 1 ]->getAvail();
 
                 // This should not be able to happen because the above if
                 // statement would fail.
                 assert( mGrade[ i ]->getCost( period ) > prevGradeCost );
-                gradeFraction = ( effectivePrice - prevGradeCost )
+                double gradeFraction = ( effectivePrice - prevGradeCost )
                     / ( mGrade[ i ]->getCost( period ) - prevGradeCost ); 
+                // compute production as fraction of total possible
+                fractionAvailable = prevGradeAvailable + gradeFraction
+                    * ( mGrade[ i ]->getAvail() - prevGradeAvailable ); 
             }
-            // compute production as fraction of total possible
-            fractionAvailable = prevGradeAvailable + gradeFraction
-                                * ( mGrade[ i ]->getAvail() - prevGradeAvailable ); 
 
             break;
         }
