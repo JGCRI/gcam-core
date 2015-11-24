@@ -9,7 +9,7 @@ electricity,nuclear,Gen_II_LWR,final-historical-year,60,,30,0.1,-0.1,6
 electricity,wind,wind,final-calibration-year,30,,,,,
 electricity,solar,PV,final-calibration-year,30,,,,,
 electricity,solar,CSP,final-calibration-year,30,,,,,
-electricity,geothermal,geothermal,final-calibration-year,30,,,,,
+electricity,geothermal,geothermal,final-calibration-year,30,,,,-0.1,6
 electricity,coal,coal (conv pul),initial-future-year,60,,,,-0.1,6
 electricity,coal,coal (conv pul CCS),initial-future-year,60,,,,-0.1,6
 electricity,coal,coal (IGCC),initial-future-year,60,,,,-0.1,6
@@ -31,4 +31,5 @@ electricity,solar,PV,initial-future-year,30,,,,,
 electricity,solar,PV_storage,initial-future-year,30,,,,,
 electricity,solar,CSP,initial-future-year,30,,,,,
 electricity,solar,CSP_storage,initial-future-year,30,,,,,
-electricity,geothermal,geothermal,initial-future-year,30,,,,,
+electricity,geothermal,geothermal,initial-future-year,30,,,,-0.1,6
+

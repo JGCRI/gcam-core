@@ -70803,6 +70803,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2015">
                   <minicam-energy-input name="geothermal">
@@ -70821,6 +70825,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2020">
                   <minicam-energy-input name="geothermal">
@@ -70839,6 +70847,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2025">
                   <minicam-energy-input name="geothermal">
@@ -70857,6 +70869,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2030">
                   <minicam-energy-input name="geothermal">
@@ -70875,6 +70891,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2035">
                   <minicam-energy-input name="geothermal">
@@ -70893,6 +70913,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2040">
                   <minicam-energy-input name="geothermal">
@@ -70911,6 +70935,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2045">
                   <minicam-energy-input name="geothermal">
@@ -70929,6 +70957,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2050">
                   <minicam-energy-input name="geothermal">
@@ -70947,6 +70979,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2055">
                   <minicam-energy-input name="geothermal">
@@ -70965,6 +71001,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2060">
                   <minicam-energy-input name="geothermal">
@@ -70983,6 +71023,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2065">
                   <minicam-energy-input name="geothermal">
@@ -71001,6 +71045,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2070">
                   <minicam-energy-input name="geothermal">
@@ -71019,6 +71067,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2075">
                   <minicam-energy-input name="geothermal">
@@ -71037,6 +71089,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2080">
                   <minicam-energy-input name="geothermal">
@@ -71055,6 +71111,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2085">
                   <minicam-energy-input name="geothermal">
@@ -71073,6 +71133,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2090">
                   <minicam-energy-input name="geothermal">
@@ -71091,6 +71155,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2095">
                   <minicam-energy-input name="geothermal">
@@ -71109,6 +71177,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
                <period year="2100">
                   <minicam-energy-input name="geothermal">
@@ -71127,6 +71199,10 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="geothermal-elect"/>
                   <lifetime>30</lifetime>
+                  <profit-shutdown-decider name="profit">
+                     <median-shutdown-point>-0.1</median-shutdown-point>
+                     <steepness>6</steepness>
+                  </profit-shutdown-decider>
                </period>
             </technology>
          </location-info>
