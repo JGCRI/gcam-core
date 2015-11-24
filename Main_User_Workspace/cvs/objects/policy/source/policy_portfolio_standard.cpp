@@ -163,7 +163,7 @@ void PolicyPortfolioStandard::XMLParse( const DOMNode* node ){
             mMarket = XMLHelper<string>::getValue( curr ); // should be only one market
         }
         else if( nodeName == "policyType" ){
-            mPolicyType = XMLHelper<string>::getValue( curr ); // should be only one market
+            mPolicyType = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "isShareBased" ) {
             mIsShareBased = XMLHelper<bool>::getValue( curr );
@@ -271,8 +271,15 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
 	else if ( mPolicyType == "RES") {
         marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::RES );	
 	} 
-    else {
+    else if( mPolicyType == "subsidy" ) {
         marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::SUBSIDY );
+    }
+    else {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Unrecognized policy type: " << mPolicyType << endl;
+        mainLog << "Valid policy type strings include: tax, RES, subsidy" << endl;
+        abort();
     }
 
     // Set price and output units for period 0 market info.

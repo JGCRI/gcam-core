@@ -101,8 +101,8 @@ public:
     const std::string& getName() const;
     bool run( const int aSinglePeriod, const bool aPrintDebugging, const std::string& aFilenameEnding = "" );
     void setTax( const GHGPolicy* aTax );
-    const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
-    const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
+    std::map<std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
+    std::map<std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     void writeOutputFiles() const;
     void dbOutput() const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;

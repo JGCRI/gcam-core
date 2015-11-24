@@ -400,7 +400,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             let $currSector := $currTree/*[@type='sector' and @name=$sector],
                 $useInputs := $currSector//*[@type='technology' and not(contains(@name, 'CCS')) and not(child::keyword/@primary-renewable)]/*[@type='input'],
                 $useInputsCCS := $currSector//*[@type='technology' and contains(@name, 'CCS')]/*[@type='input'],
-                $totalOutputSum := for $vintage in distinct-values($useInputs/demand-physical/@vintage)
+                $totalOutputSum := for $vintage in distinct-values($useInputs/demand-physical/@vintage | $useInputsCCS/demand-physical/@vintage)
                                           return element output {
                                                      attribute vintage { $vintage },
                                                      text {

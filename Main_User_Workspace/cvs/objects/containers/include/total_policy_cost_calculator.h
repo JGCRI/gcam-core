@@ -87,7 +87,7 @@ private:
     //! fixed taxed scenarios after. This is a weak reference.
     IScenarioRunner* mSingleScenario;
 
-    typedef std::map<const std::string, double> RegionalCosts;
+    typedef std::map<std::string, double> RegionalCosts;
     typedef RegionalCosts::const_iterator CRegionalCostsIterator;
 
     //! Total costs indexed by region name.
@@ -96,12 +96,12 @@ private:
     //! Total discounted costs indexed by region name.
     RegionalCosts mRegionalDiscountedCosts;
 
-    typedef std::vector<std::map<const std::string, const Curve*> > VectorRegionCurves;
-    typedef VectorRegionCurves::iterator VectorRegionCurvesIterator;
-    typedef VectorRegionCurves::const_iterator CVectorRegionCurvesIterator;
-    typedef std::map<const std::string, const Curve* > RegionCurves;
+    typedef std::map<std::string, const Curve* > RegionCurves;
     typedef RegionCurves::const_iterator CRegionCurvesIterator;
     typedef RegionCurves::iterator RegionCurvesIterator;
+    typedef std::vector<RegionCurves> VectorRegionCurves;
+    typedef VectorRegionCurves::iterator VectorRegionCurvesIterator;
+    typedef VectorRegionCurves::const_iterator CVectorRegionCurvesIterator;
     VectorRegionCurves mEmissionsQCurves;
     VectorRegionCurves mEmissionsTCurves;
     VectorRegionCurves mPeriodCostCurves;

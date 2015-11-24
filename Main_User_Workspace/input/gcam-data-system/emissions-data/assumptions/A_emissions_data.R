@@ -62,6 +62,9 @@ HFCs <- c( "HFC23", "HFC32", "HFC43", "HFC125", "HFC134a", "HFC143a", "HFC152a",
 PFCs <- c( "CF4", "C2F6", "SF6" )
 F_Gases <- c( HFCs, PFCs )
 
+# F Gas Units
+F_Gas_Units <- "Gg"
+
 #Sectors
 awb_sectors <- "ag_waste_burning"
 agr_sectors <- c( "rice", "fertilizer", "soil" )

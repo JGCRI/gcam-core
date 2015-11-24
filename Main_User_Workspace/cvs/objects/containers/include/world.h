@@ -105,8 +105,8 @@ public:
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setTax( const GHGPolicy* aTax );
     const IClimateModel* getClimateModel() const;
-    const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
-    const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
+    std::map<std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
+    std::map<std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
     CalcCounter* getCalcCounter() const;
     const GlobalTechnologyDatabase* getGlobalTechnologyDatabase() const;
 

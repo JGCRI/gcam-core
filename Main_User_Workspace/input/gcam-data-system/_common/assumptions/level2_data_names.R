@@ -89,6 +89,7 @@ names_StubTechCost <- c( names_StubTechYr, "minicam.non.energy.input", "input.co
 names_StubTechFixOut <- c( names_StubTechYr, "fixedOutput", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 names_StubTechCapFactor <- c( names_StubTechYr, "input.capital", "capacity.factor.capital", "input.OM.fixed", "capacity.factor.OM" )
 names_StubTechMarket <- c( names_StubTechYr, input, "market.name" )
+names_StubTechNonCO2 <- c( names_StubTechYr, "Non.CO2" )
 
 #Agricultural sectors, subsectors, and technologies
 names_AgSupplySector <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent" )

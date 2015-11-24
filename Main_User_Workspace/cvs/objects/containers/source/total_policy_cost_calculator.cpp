@@ -180,7 +180,9 @@ bool TotalPolicyCostCalculator::runTrials(){
             // Set the tax for each year. 
             for( int per = 0; per < maxPeriod; per++ ){
                 const int year = modeltime->getper_to_yr( per );
-                currTaxes[ per ] = rIter->second->getY( year ) * fraction;
+                double origTax = rIter->second->getY( year );
+                currTaxes[ per ] = origTax == Marketplace::NO_MARKET_PRICE ? Marketplace::NO_MARKET_PRICE :
+                    origTax * fraction;
             }
             // Set the fixed taxes into the world.
             GHGPolicy tax( mGHGName, rIter->first, currTaxes );
@@ -286,11 +288,7 @@ void TotalPolicyCostCalculator::createRegionalCostCurves() {
     mGlobalDiscountedCost = 0;
     
     
-    for( map<const string, const Curve*>::const_iterator rNameIter = mPeriodCostCurves[ 0 ].begin(); rNameIter != mPeriodCostCurves[ 0 ].end(); ++rNameIter ){
-        // Skip the global curve which is only calculated for reporting.
-        if( rNameIter->first == "global" ){
-            continue;
-        }
+    for( CRegionCurvesIterator rNameIter = mPeriodCostCurves[ 0 ].begin(); rNameIter != mPeriodCostCurves[ 0 ].end(); ++rNameIter ){
         ExplicitPointSet* costPoints = new ExplicitPointSet();
         // Loop through the periods. 
         for( int per = 0; per < maxPeriod; per++ ){
@@ -387,8 +385,7 @@ void TotalPolicyCostCalculator::writeToCSV() const {
     // Write out discounted costs by region.
     tempOutVec.clear();
     tempOutVec.resize( maxPeriod );
-    typedef map<const string,double>::const_iterator constDoubleMapIter;
-    for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
+    for( CRegionalCostsIterator iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
         // regional total cost of policy
         tempOutVec[maxPeriod-1] = iter->second;
         fileoutput3(iter->first,"PolicyCost","","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
@@ -426,8 +423,7 @@ void TotalPolicyCostCalculator::writeToDB() const {
     // Write out discounted costs by region.
     tempOutVec.clear();
     tempOutVec.resize( maxPeriod );
-    typedef map<const string,double>::const_iterator constDoubleMapIter;
-    for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
+    for( CRegionalCostsIterator iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
         // regional total cost of policy
         tempOutVec[maxPeriod-1] = iter->second;
         dboutput4(iter->first,"General","PolicyCostTotalDisc","AllYears","(millions)90US$",tempOutVec);
@@ -474,8 +470,7 @@ const string TotalPolicyCostCalculator::createXMLOutputString() const {
      
     // Write out discounted costs by region.
     XMLWriteOpeningTag( "RegionalDiscountedCosts", buffer, &tabs );
-    typedef map<const string,double>::const_iterator constDoubleMapIter;
-    for( constDoubleMapIter iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
+    for( CRegionalCostsIterator iter = mRegionalDiscountedCosts.begin(); iter != mRegionalDiscountedCosts.end(); iter++ ){
         XMLWriteElement( iter->second, "DiscountedCost", buffer, &tabs, 0, iter->first );
     }
     XMLWriteClosingTag( "RegionalDiscountedCosts", buffer, &tabs );

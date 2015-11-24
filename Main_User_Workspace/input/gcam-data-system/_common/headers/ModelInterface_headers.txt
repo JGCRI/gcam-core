@@ -538,4 +538,6 @@ AgGDPCtrlSteep, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, Ag
 
 ResEmissCoef, world/+{name}region, region/+{name;nocreate=1}depresource, depresource/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/output-driver, scenario, scenario/world
 
+StubTechEmissUnits, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emissions-unit, scenario, scenario/world
+
 EQUIV_TABLE,NODE_EQUIVALENCE

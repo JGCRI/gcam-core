@@ -68,7 +68,8 @@ endif
 # Set up Java paths for compiling via environment variables if we are using it
 ifneq ($(HAVE_JAVA),0) 
 ## custom values set by environment variables
-JAVAINC = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/linux
+OSNAME_LOWERCASE := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+JAVAINC = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/$(OSNAME_LOWERCASE)
 JAVALIB = -L$(JAVA_LIB)
 JAVA_RPATH = -Wl,-rpath,$(JAVA_LIB)
 JAVALINK = -ljvm

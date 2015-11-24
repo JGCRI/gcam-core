@@ -2350,7 +2350,7 @@ void CLIMAT()
         //F1367       ENDIF
         //F1368 !
         //F1369       XLAM=Q2X/TE
-        CLIM.XLAM - CLIM.Q2X / CLIM.TE;
+        CLIM.XLAM = CLIM.Q2X / CLIM.TE;
         //F1370 !
         //F1371       CALL INIT
         init( &Limits, &CLIM, &CONCS, &TANDSL, &FORCE, 
