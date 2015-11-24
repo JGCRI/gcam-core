@@ -43,7 +43,7 @@ L241.hfc <- subset( L241.hfc, L241.hfc$year %in% hfc_model_base_years )
 L241.hfc <- add_region_name( L241.hfc )
 
 #Format for csv file
-L241.hfc_all <- L241.hfc[ c( names_StubTechYr, "Non.CO2" ) ]
+L241.hfc_all <- L241.hfc[ names_StubTechNonCO2 ]
 L241.hfc_all$input.emissions <- round( L241.hfc$value, digits_emissions )
 
 printlog( "L241.pfc: F-gas emissions for technologies in all regions" )
@@ -56,7 +56,7 @@ L241.pfc <- subset( L241.pfc, L241.pfc$year %in% emiss_model_base_years )
 L241.pfc <- add_region_name( L241.pfc )
 
 #Format for csv file
-L241.pfc_all <- L241.pfc[ c( names_StubTechYr, "Non.CO2" ) ]
+L241.pfc_all <- L241.pfc[ names_StubTechNonCO2 ]
 L241.pfc_all$input.emissions <- round( L241.pfc$value, digits_emissions )
 
 printlog( "L241.hfc_future: F-gas emissions factors for future years" )
@@ -114,7 +114,7 @@ L241.hfc_ef_update.melt <- subset( L241.hfc_ef_update.melt, L241.hfc_ef_update.m
 L241.hfc_ef_update.melt <- rbind( L241.hfc_cool_ef_update.melt, L241.hfc_ef_update.melt )
 
 #Format for csv file
-L241.hfc_future <- L241.hfc_ef_update.melt[ c( names_StubTechYr, "Non.CO2" ) ]
+L241.hfc_future <- L241.hfc_ef_update.melt[ names_StubTechNonCO2 ]
 L241.hfc_future$emiss.coeff <- round( L241.hfc_ef_update.melt$value, digits_emissions )
 
 #Subset only the relevant technologies and gases (i.e., drop ones whose values would be zero in all years)
@@ -123,11 +123,18 @@ L241.hfc_delete <- L241.hfc_delete[ L241.hfc_delete$input.emissions == 0 &
       vecpaste( L241.hfc_delete[ c( names_StubTech, "Non.CO2" ) ] ) %!in% vecpaste( L241.hfc_all[ c( names_StubTech, "Non.CO2" ) ] ), ]
 L241.hfc_all <- L241.hfc_all[ vecpaste( L241.hfc_all[ c( names_StubTech, "Non.CO2" ) ] ) %!in% vecpaste( L241.hfc_delete[ c( names_StubTech, "Non.CO2" ) ] ), ]
 
+# Set the units string for all fgases
+L241.fgas_all_units <- rbind( L241.pfc_all[, names_StubTechNonCO2 ], L241.hfc_all[, names_StubTechNonCO2 ],
+                              L241.hfc_future[, names_StubTechNonCO2 ] )
+L241.fgas_all_units <- unique( L241.fgas_all_units )
+L241.fgas_all_units$emissions.unit <- F_Gas_Units
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L241.hfc_all, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L241.hfc_all", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
 write_mi_data( L241.pfc_all, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L241.pfc_all", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
 write_mi_data( L241.hfc_future, "OutputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L241.hfc_future", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
+write_mi_data( L241.fgas_all_units, "StubTechEmissUnits", "EMISSIONS_LEVEL2_DATA", "L241.fgas_all_units", "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml" ) 
 
 insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_fgas_emissions.xml", "EMISSIONS_XML_FINAL", "all_fgas_emissions.xml", "", xml_tag="outFile" )
 

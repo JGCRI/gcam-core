@@ -849,25 +849,14 @@ const IClimateModel* World::getClimateModel() const {
 * \param ghgName The name of the ghg to create a set of curves for.
 * \return A map with keys as region names and Curves as values representing the quantity of ghg emissions by time period.
 */
-const map<const string,const Curve*> World::getEmissionsQuantityCurves( const string& ghgName ) const {
+map<string,const Curve*> World::getEmissionsQuantityCurves( const string& ghgName ) const {
     /*! \pre The run has been completed. */
-    const string GLOBAL_NAME = "global";
-
-    map<const string,const Curve*> emissionsQCurves;
+    map<string,const Curve*> emissionsQCurves;
 
     for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
         emissionsQCurves[ (*rIter)->getName() ] = (*rIter)->getEmissionsQuantityCurve( ghgName );
     }
 
-    // Add an entry for the global emissions. Should do this better. 
-    ExplicitPointSet* globalQs = new ExplicitPointSet();
-    const Marketplace* marketplace = scenario->getMarketplace();
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    for( int per = 0; per < modeltime->getmaxper(); per++ ){
-        globalQs->addPoint( new XYDataPoint( modeltime->getper_to_yr( per ), marketplace->getDemand( ghgName, "USA", per ) ) );
-    }
-    emissionsQCurves[ GLOBAL_NAME ] = new PointSetCurve( globalQs );
     return emissionsQCurves;
 }
 
@@ -879,23 +868,14 @@ const map<const string,const Curve*> World::getEmissionsQuantityCurves( const st
 * \param ghgName The name of the ghg to create a set of Curves for.
 * \return A map with keys as region names and Curves as values representing the price of ghg emissions by time period. 
 */
-const map<const string,const Curve*> World::getEmissionsPriceCurves( const string& ghgName ) const {
+map<string,const Curve*> World::getEmissionsPriceCurves( const string& ghgName ) const {
     /*! \pre The run has been completed. */
-    map<const string,const Curve*> emissionsPCurves;
-    const string GLOBAL_NAME = "global";
+    map<string,const Curve*> emissionsPCurves;
     
     for( CRegionIterator rIter = regions.begin(); rIter != regions.end(); rIter++ ){
         emissionsPCurves[ (*rIter)->getName() ] = (*rIter)->getEmissionsPriceCurve( ghgName );
     }
 
-    // Add an entry for the global emissions. Should do this better. 
-    ExplicitPointSet* globalQs = new ExplicitPointSet();
-    const Marketplace* marketplace = scenario->getMarketplace();
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int per = 0; per < modeltime->getmaxper(); per++ ){
-        globalQs->addPoint( new XYDataPoint( modeltime->getper_to_yr( per ), marketplace->getPrice( ghgName, "USA", per ) ) );
-    }
-    emissionsPCurves[ GLOBAL_NAME ] = new PointSetCurve( globalQs );
     return emissionsPCurves;
 }
 

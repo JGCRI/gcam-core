@@ -740,7 +740,7 @@ const IClimateModel* Scenario::getClimateModel() const {
 *         period by region.
 * \todo Use a visitor to remove this method.
 */
-const map<const string, const Curve*> Scenario::getEmissionsQuantityCurves( const string& ghgName ) const {
+map<string, const Curve*> Scenario::getEmissionsQuantityCurves( const string& ghgName ) const {
     /*! \pre The run has been completed. */
     return world->getEmissionsQuantityCurves( ghgName );
 }
@@ -758,7 +758,7 @@ const map<const string, const Curve*> Scenario::getEmissionsQuantityCurves( cons
 *         time period by Region.
 * \todo Use a visitor to remove this method.
 */
-const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const string& ghgName ) const {
+map<string, const Curve*> Scenario::getEmissionsPriceCurves( const string& ghgName ) const {
     /*! \pre The run has been completed. */
     return world->getEmissionsPriceCurves( ghgName );
 }

@@ -75,7 +75,6 @@ ifneq ($(GCAM_PARALLEL_ENABLED),0)
 TBB_LIB		= -l$(LIBTBB) -l$(LIBTBBMALLOC) -l$(LIBTBBMALLOC_PROXY)
 endif
 
-
 ### locations of library include files
 # BOOST_INCLUDE should be set in the user environment on Evergreen by running 'tap boost'.
 BOOSTINC	      = $(BOOST_INCLUDE)
