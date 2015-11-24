@@ -61891,11 +61891,11 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -61920,7 +61920,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -61945,7 +61945,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -61970,7 +61970,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -61995,7 +61995,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62020,7 +62020,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62045,7 +62045,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62070,7 +62070,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62095,7 +62095,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62120,7 +62120,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62145,7 +62145,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62170,7 +62170,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62195,7 +62195,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62220,7 +62220,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62245,7 +62245,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62270,7 +62270,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62295,7 +62295,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62320,7 +62320,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62345,7 +62345,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62456,7 +62456,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62485,7 +62485,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62514,7 +62514,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62543,7 +62543,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62572,7 +62572,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62601,7 +62601,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62630,7 +62630,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62659,7 +62659,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62688,7 +62688,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62717,7 +62717,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62746,7 +62746,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62775,7 +62775,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62804,7 +62804,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62833,7 +62833,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62862,7 +62862,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62891,7 +62891,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62920,7 +62920,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -62949,7 +62949,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63056,7 +63056,7 @@
                   <share-weight>0</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63081,7 +63081,7 @@
                   <share-weight>0</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63106,7 +63106,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63131,7 +63131,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63156,7 +63156,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63181,7 +63181,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63206,7 +63206,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63231,7 +63231,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63256,7 +63256,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63281,7 +63281,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63306,7 +63306,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63331,7 +63331,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63356,7 +63356,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63381,7 +63381,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63406,7 +63406,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63431,7 +63431,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63456,7 +63456,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63481,7 +63481,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63592,7 +63592,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63621,7 +63621,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63650,7 +63650,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63679,7 +63679,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63708,7 +63708,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63737,7 +63737,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63766,7 +63766,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63795,7 +63795,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63824,7 +63824,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63853,7 +63853,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63882,7 +63882,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63911,7 +63911,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63940,7 +63940,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63969,7 +63969,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -63998,7 +63998,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64027,7 +64027,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64056,7 +64056,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64085,7 +64085,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64174,11 +64174,11 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64203,7 +64203,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64228,7 +64228,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64253,7 +64253,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64278,7 +64278,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64303,7 +64303,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64328,7 +64328,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64353,7 +64353,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64378,7 +64378,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64403,7 +64403,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64428,7 +64428,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64453,7 +64453,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64478,7 +64478,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64503,7 +64503,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64528,7 +64528,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64553,7 +64553,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64578,7 +64578,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64603,7 +64603,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64628,7 +64628,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64715,11 +64715,11 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64744,7 +64744,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64769,7 +64769,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64794,7 +64794,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64819,7 +64819,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64844,7 +64844,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64869,7 +64869,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64894,7 +64894,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64919,7 +64919,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64944,7 +64944,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64969,7 +64969,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -64994,7 +64994,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65019,7 +65019,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65044,7 +65044,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65069,7 +65069,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65094,7 +65094,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65119,7 +65119,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65144,7 +65144,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65169,7 +65169,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65283,7 +65283,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65312,7 +65312,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65341,7 +65341,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65370,7 +65370,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65399,7 +65399,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65428,7 +65428,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65457,7 +65457,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65486,7 +65486,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65515,7 +65515,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65544,7 +65544,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65573,7 +65573,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65602,7 +65602,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65631,7 +65631,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65660,7 +65660,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65689,7 +65689,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65718,7 +65718,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65747,7 +65747,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65776,7 +65776,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65865,11 +65865,11 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65894,7 +65894,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65919,7 +65919,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65944,7 +65944,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65969,7 +65969,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -65994,7 +65994,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66019,7 +66019,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66044,7 +66044,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66069,7 +66069,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66094,7 +66094,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66119,7 +66119,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66144,7 +66144,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66169,7 +66169,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66194,7 +66194,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66219,7 +66219,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66244,7 +66244,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66269,7 +66269,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66294,7 +66294,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66319,7 +66319,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.5</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66426,7 +66426,7 @@
                   <share-weight>0</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66451,7 +66451,7 @@
                   <share-weight>0.555555555555556</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66476,7 +66476,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66501,7 +66501,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66526,7 +66526,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66551,7 +66551,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66576,7 +66576,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66601,7 +66601,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66626,7 +66626,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66651,7 +66651,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66676,7 +66676,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66701,7 +66701,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66726,7 +66726,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66751,7 +66751,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66776,7 +66776,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66801,7 +66801,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66826,7 +66826,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66851,7 +66851,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66965,7 +66965,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -66994,7 +66994,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67023,7 +67023,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67052,7 +67052,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67081,7 +67081,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67110,7 +67110,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67139,7 +67139,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67168,7 +67168,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67197,7 +67197,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67226,7 +67226,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67255,7 +67255,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67284,7 +67284,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67313,7 +67313,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67342,7 +67342,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67371,7 +67371,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67400,7 +67400,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67429,7 +67429,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67458,7 +67458,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67547,11 +67547,11 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67576,7 +67576,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67601,7 +67601,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67626,7 +67626,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67651,7 +67651,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67676,7 +67676,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67701,7 +67701,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67726,7 +67726,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67751,7 +67751,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67776,7 +67776,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67801,7 +67801,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67826,7 +67826,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67851,7 +67851,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67876,7 +67876,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67901,7 +67901,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67926,7 +67926,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67951,7 +67951,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -67976,7 +67976,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68001,7 +68001,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68112,7 +68112,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68141,7 +68141,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68170,7 +68170,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68199,7 +68199,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68228,7 +68228,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68257,7 +68257,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68286,7 +68286,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68315,7 +68315,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68344,7 +68344,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68373,7 +68373,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68402,7 +68402,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68431,7 +68431,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68460,7 +68460,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68489,7 +68489,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68518,7 +68518,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68547,7 +68547,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68576,7 +68576,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68605,7 +68605,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68712,7 +68712,7 @@
                   <share-weight>0</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68737,7 +68737,7 @@
                   <share-weight>0</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68762,7 +68762,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68787,7 +68787,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68812,7 +68812,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68837,7 +68837,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68862,7 +68862,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68887,7 +68887,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68912,7 +68912,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68937,7 +68937,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68962,7 +68962,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -68987,7 +68987,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69012,7 +69012,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69037,7 +69037,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69062,7 +69062,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69087,7 +69087,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69112,7 +69112,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69137,7 +69137,7 @@
                   <share-weight>1</share-weight>
                   <keyword average-fossil-efficiency=""/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69248,7 +69248,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69277,7 +69277,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69306,7 +69306,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69335,7 +69335,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69364,7 +69364,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69393,7 +69393,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69422,7 +69422,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69451,7 +69451,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69480,7 +69480,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69509,7 +69509,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69538,7 +69538,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69567,7 +69567,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69596,7 +69596,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69625,7 +69625,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69654,7 +69654,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69683,7 +69683,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69712,7 +69712,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69741,7 +69741,7 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -69830,11 +69830,11 @@
                   <share-weight>0</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.1</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70301,7 +70301,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70326,7 +70326,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70351,7 +70351,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70376,7 +70376,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70401,7 +70401,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70426,7 +70426,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70451,7 +70451,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70476,7 +70476,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70501,7 +70501,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70526,7 +70526,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70551,7 +70551,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70576,7 +70576,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70601,7 +70601,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70626,7 +70626,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70651,7 +70651,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70676,7 +70676,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70701,7 +70701,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>
@@ -70726,7 +70726,7 @@
                   <share-weight>1</share-weight>
                   <keyword primary-renewable="nuclear-elect"/>
                   <lifetime>60</lifetime>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>-0.1</median-shutdown-point>
                      <steepness>6</steepness>
                   </profit-shutdown-decider>

@@ -70,7 +70,7 @@ bool S_CurveShutdownDecider::isSameType( const string& aType ) const {
 }
 
 const string& S_CurveShutdownDecider::getName() const {
-    return getXMLNameStatic();
+    return mName;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -90,6 +90,14 @@ const string& S_CurveShutdownDecider::getXMLNameStatic() {
 bool S_CurveShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     // Assume we have a valid node.
     assert( node );
+
+    // get the name attribute.
+    mName = XMLHelper<string>::getAttr( node, "name" );
+    if( mName.empty() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No name specified for " << getXMLNameStatic() << endl;
+    }
 
     const xercesc::DOMNodeList* nodeList = node->getChildNodes();
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
@@ -118,7 +126,7 @@ bool S_CurveShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
 void S_CurveShutdownDecider::toInputXML( ostream& aOut,
                                         Tabs* aTabs ) const
 {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 0.0 );
     XMLWriteElementCheckDefault( mHalfLife, "half-life", aOut, aTabs, 0.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
@@ -128,7 +136,7 @@ void S_CurveShutdownDecider::toDebugXML( const int aPeriod,
                                         ostream& aOut,
                                         Tabs* aTabs ) const
 {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 0.0 );
     XMLWriteElementCheckDefault( mHalfLife, "half-life", aOut, aTabs, 0.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );

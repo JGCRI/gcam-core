@@ -112,6 +112,9 @@ private:
 
     static const std::string& getXMLNameStatic();
 
+    //! The name of this shutdown decider in case we want to stack multiple.
+    std::string mName;
+
     //! Parameter for max rate of shutdown (e.g. 1 means entire vintage can be shutdown)
     double mMaxShutdown;
 

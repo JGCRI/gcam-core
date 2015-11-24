@@ -100,6 +100,9 @@ public:
                                      const int aInitialTechYear,
                                      const int aPeriod ) const;
 private:
+    //! The name of this shutdown decider in case we want to stack multiple.
+    std::string mName;
+
     //! The annual rate at which to shutdown production. This rate may be zero
     //! which is the equivalent to not reading in the phased shutdown decider.
     double mShutdownRate;

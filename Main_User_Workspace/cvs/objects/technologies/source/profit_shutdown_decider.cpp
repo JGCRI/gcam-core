@@ -68,7 +68,7 @@ bool ProfitShutdownDecider::isSameType( const std::string& aType ) const {
 }
 
 const string& ProfitShutdownDecider::getName() const {
-    return getXMLNameStatic();
+    return mName;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -89,6 +89,14 @@ bool ProfitShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     
     // Assume we have a valid node.
     assert( node );
+
+    // get the name attribute.
+    mName = XMLHelper<string>::getAttr( node, "name" );
+    if( mName.empty() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No name specified for " << getXMLNameStatic() << endl;
+    }
 
     const xercesc::DOMNodeList* nodeList = node->getChildNodes();
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
@@ -118,7 +126,7 @@ bool ProfitShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
 }
 
 void ProfitShutdownDecider::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElementCheckDefault( mMaxShutdown, "max-shutdown", aOut, aTabs, 1.0 );
     XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 6.0 );
     XMLWriteElementCheckDefault( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs, -0.1 );
@@ -126,7 +134,7 @@ void ProfitShutdownDecider::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 }
 
 void ProfitShutdownDecider::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElement( mMaxShutdown, "max-shutdown", aOut, aTabs );
     XMLWriteElement( mSteepness, "steepness", aOut, aTabs );
     XMLWriteElement( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs );

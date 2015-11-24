@@ -70,7 +70,7 @@ bool PhasedShutdownDecider::isSameType( const string& aType ) const {
 }
 
 const string& PhasedShutdownDecider::getName() const {
-    return getXMLNameStatic();
+    return mName;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -90,6 +90,14 @@ const string& PhasedShutdownDecider::getXMLNameStatic() {
 bool PhasedShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
     // Assume we have a valid node.
     assert( node );
+
+    // get the name attribute.
+    mName = XMLHelper<string>::getAttr( node, "name" );
+    if( mName.empty() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "No name specified for " << getXMLNameStatic() << endl;
+    }
 
     const xercesc::DOMNodeList* nodeList = node->getChildNodes();
     for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
@@ -115,7 +123,7 @@ bool PhasedShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
 void PhasedShutdownDecider::toInputXML( ostream& aOut,
                                         Tabs* aTabs ) const
 {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElementCheckDefault( mShutdownRate, "shutdown-rate", aOut, aTabs, 0.0 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -124,7 +132,7 @@ void PhasedShutdownDecider::toDebugXML( const int aPeriod,
                                         ostream& aOut,
                                         Tabs* aTabs ) const
 {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElement( mShutdownRate, "shutdown-rate", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }

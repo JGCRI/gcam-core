@@ -105,6 +105,9 @@ public:
                                      const int aInstallationYear,
                                      const int aPeriod ) const;
 private:
+    //! The name of this shutdown decider in case we want to stack multiple.
+    std::string mName;
+
     //! The steepness of the curve. This rate may be zero
     //! which is the equivalent to not reading in the s-curve shutdown decider.
     double mSteepness;

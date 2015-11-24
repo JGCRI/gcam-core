@@ -13298,11 +13298,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13317,11 +13317,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13336,11 +13336,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13355,11 +13355,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13374,11 +13374,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13393,11 +13393,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13412,11 +13412,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13431,11 +13431,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13450,11 +13450,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13469,11 +13469,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13488,11 +13488,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13507,11 +13507,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13526,11 +13526,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13545,11 +13545,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13564,11 +13564,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13583,11 +13583,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13602,11 +13602,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13621,11 +13621,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13640,11 +13640,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13694,11 +13694,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13713,11 +13713,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13732,11 +13732,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13751,11 +13751,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13770,11 +13770,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13789,11 +13789,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13808,11 +13808,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13827,11 +13827,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13846,11 +13846,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13865,11 +13865,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13884,11 +13884,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13903,11 +13903,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13922,11 +13922,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13941,11 +13941,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13960,11 +13960,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13979,11 +13979,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -13998,11 +13998,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14017,11 +14017,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14036,11 +14036,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14114,11 +14114,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0.886363636363636</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14139,11 +14139,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14164,11 +14164,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14189,11 +14189,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14214,11 +14214,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14239,11 +14239,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14264,11 +14264,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14289,11 +14289,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14314,11 +14314,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14339,11 +14339,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14364,11 +14364,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14389,11 +14389,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14414,11 +14414,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14439,11 +14439,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14464,11 +14464,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14489,11 +14489,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14514,11 +14514,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14539,11 +14539,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14564,11 +14564,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14618,11 +14618,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0.886363636363636</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14637,11 +14637,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14656,11 +14656,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14675,11 +14675,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14694,11 +14694,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14713,11 +14713,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14732,11 +14732,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14751,11 +14751,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14770,11 +14770,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14789,11 +14789,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14808,11 +14808,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14827,11 +14827,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14846,11 +14846,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14865,11 +14865,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14884,11 +14884,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14903,11 +14903,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14922,11 +14922,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14941,11 +14941,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -14960,11 +14960,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15026,11 +15026,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0.886363636363636</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15048,11 +15048,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15070,11 +15070,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15092,11 +15092,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15114,11 +15114,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15136,11 +15136,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15158,11 +15158,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15180,11 +15180,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15202,11 +15202,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15224,11 +15224,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15246,11 +15246,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15268,11 +15268,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15290,11 +15290,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15312,11 +15312,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15334,11 +15334,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15356,11 +15356,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15378,11 +15378,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15400,11 +15400,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15422,11 +15422,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15473,11 +15473,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15496,11 +15496,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15519,11 +15519,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15542,11 +15542,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15565,11 +15565,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15588,11 +15588,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15611,11 +15611,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15634,11 +15634,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15657,11 +15657,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15680,11 +15680,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15703,11 +15703,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15726,11 +15726,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15749,11 +15749,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15772,11 +15772,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15795,11 +15795,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15818,11 +15818,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15841,11 +15841,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15864,11 +15864,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15887,11 +15887,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15938,11 +15938,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15961,11 +15961,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -15984,11 +15984,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16007,11 +16007,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16030,11 +16030,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16053,11 +16053,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16076,11 +16076,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16099,11 +16099,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16122,11 +16122,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16145,11 +16145,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16168,11 +16168,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16191,11 +16191,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16214,11 +16214,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16237,11 +16237,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16260,11 +16260,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16283,11 +16283,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16306,11 +16306,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16329,11 +16329,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16352,11 +16352,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16403,11 +16403,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16426,11 +16426,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16449,11 +16449,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16472,11 +16472,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16495,11 +16495,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16518,11 +16518,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16541,11 +16541,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16564,11 +16564,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16587,11 +16587,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16610,11 +16610,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16633,11 +16633,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16656,11 +16656,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16679,11 +16679,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16702,11 +16702,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16725,11 +16725,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16748,11 +16748,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16771,11 +16771,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16794,11 +16794,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16817,11 +16817,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16868,11 +16868,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16891,11 +16891,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16914,11 +16914,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16937,11 +16937,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16960,11 +16960,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -16983,11 +16983,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17006,11 +17006,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17029,11 +17029,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17052,11 +17052,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17075,11 +17075,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17098,11 +17098,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17121,11 +17121,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17144,11 +17144,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17167,11 +17167,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17190,11 +17190,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17213,11 +17213,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17236,11 +17236,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17259,11 +17259,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -17282,11 +17282,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18479,11 +18479,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>50</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18504,11 +18504,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18529,11 +18529,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18554,11 +18554,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18579,11 +18579,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18604,11 +18604,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18629,11 +18629,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18654,11 +18654,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18679,11 +18679,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18704,11 +18704,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18729,11 +18729,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18754,11 +18754,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18779,11 +18779,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18804,11 +18804,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18829,11 +18829,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18854,11 +18854,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18879,11 +18879,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18904,11 +18904,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18929,11 +18929,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -18982,11 +18982,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19001,11 +19001,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19020,11 +19020,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19039,11 +19039,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19058,11 +19058,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19077,11 +19077,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19096,11 +19096,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19115,11 +19115,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19134,11 +19134,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19153,11 +19153,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19172,11 +19172,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19191,11 +19191,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19210,11 +19210,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19229,11 +19229,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19248,11 +19248,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19267,11 +19267,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19286,11 +19286,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19305,11 +19305,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19324,11 +19324,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19375,11 +19375,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19398,11 +19398,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19421,11 +19421,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19444,11 +19444,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19467,11 +19467,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19490,11 +19490,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19513,11 +19513,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19536,11 +19536,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19559,11 +19559,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19582,11 +19582,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19605,11 +19605,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19628,11 +19628,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19651,11 +19651,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19674,11 +19674,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19697,11 +19697,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19720,11 +19720,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19743,11 +19743,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19766,11 +19766,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19789,11 +19789,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19840,11 +19840,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19863,11 +19863,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19886,11 +19886,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19909,11 +19909,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19932,11 +19932,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19955,11 +19955,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -19978,11 +19978,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20001,11 +20001,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20024,11 +20024,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20047,11 +20047,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20070,11 +20070,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20093,11 +20093,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20116,11 +20116,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20139,11 +20139,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20162,11 +20162,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20185,11 +20185,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20208,11 +20208,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20231,11 +20231,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20254,11 +20254,11 @@
                      <storage-market>carbon-storage</storage-market>
                   </standard-capture-component>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20307,11 +20307,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.2</steepness>
                      <half-life>25</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20326,11 +20326,11 @@
                   </minicam-non-energy-input>
                   <share-weight>0</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20345,11 +20345,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20364,11 +20364,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20383,11 +20383,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20402,11 +20402,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20421,11 +20421,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20440,11 +20440,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20459,11 +20459,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20478,11 +20478,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20497,11 +20497,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20516,11 +20516,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20535,11 +20535,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20554,11 +20554,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20573,11 +20573,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20592,11 +20592,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20611,11 +20611,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20630,11 +20630,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
@@ -20649,11 +20649,11 @@
                   </minicam-non-energy-input>
                   <share-weight>1</share-weight>
                   <lifetime>45</lifetime>
-                  <s-curve-shutdown-decider>
+                  <s-curve-shutdown-decider name="s-curve">
                      <steepness>0.3</steepness>
                      <half-life>30</half-life>
                   </s-curve-shutdown-decider>
-                  <profit-shutdown-decider>
+                  <profit-shutdown-decider name="profit">
                      <median-shutdown-point>0</median-shutdown-point>
                      <steepness>50</steepness>
                   </profit-shutdown-decider>
