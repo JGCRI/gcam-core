@@ -1259,7 +1259,7 @@ double Technology::getTotalInputCost( const string& aRegionName,
     return cost;
 }
 
-/*! \brief Return the total input cost minus any non-energy costs.
+/*! \brief Return the total variable input costs which includes energy, taxes, etc.
 * \todo This assumes a leontief production function.
 * \param aRegionName The region containing the Technology.
 * \param aSectorName The sector containing the Technology.
@@ -1276,7 +1276,7 @@ double Technology::getEnergyCost( const string& aRegionName,
 
     // Deduct non-energy costs.
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        if( !mInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ) {
+        if( mInputs[ i ]->hasTypeFlag( IInput::CAPITAL ) || mInputs[ i ]->hasTypeFlag( IInput::OM_FIXED ) ) {
             // TODO: Leontief assumption.
             cost -= mInputs[ i ]->getPrice( aRegionName, aPeriod )
                     * mInputs[ i ]->getCoefficient( aPeriod )
