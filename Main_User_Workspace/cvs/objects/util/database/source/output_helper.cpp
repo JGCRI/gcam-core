@@ -189,6 +189,9 @@ void dboutput4(string var1name,string var2name,string var3name,string var4name,
 void openDB(void) {
     Configuration* conf = Configuration::getInstance();
     string dbFile = conf->getFile( "dbFileName" );
+    if( conf->shouldAppendScnToFile( "dbFileName" ) ) {
+        dbFile = util::appendScenarioToFileName( dbFile );
+    }
     // Open a global Jet database in exclusive, read/write mode.
     try {
         db = dben.OpenDatabase( dbFile.c_str()); 

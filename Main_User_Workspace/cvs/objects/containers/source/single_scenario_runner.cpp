@@ -49,6 +49,7 @@
 #include "util/base/include/configuration.h"
 #include "util/base/include/auto_file.h"
 #include "util/logger/include/ilogger.h"
+#include "util/logger/include/logger_factory.h"
 
 using namespace std;
 using namespace xercesc;
@@ -137,6 +138,10 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "XML parsing complete." << endl;
 
+    // Add to all loggers that a new scenario is starting so that users may more
+    // easily parse which scenario the messages pertain to.
+    LoggerFactory::logNewScenarioStarting( overrideName );
+
     // Print data read in time.
     timer.stop();
     mainLog.setLevel( ILogger::DEBUG );
@@ -198,7 +203,7 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     // Write csv file output
     mScenario->writeOutputFiles();
 
-    static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
+    static const bool printDB = Configuration::getInstance()->shouldWriteFile( "dbFileName" );
     if( printDB ){
         // Perform the database output. 
 	    // Open MS Access database
@@ -218,8 +223,7 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         outFile.close();
     }
 
-    static const bool printXMLDB = Configuration::getInstance()->getBool( "write-xml-db", true );
-    if( printXMLDB ){
+    if( Configuration::getInstance()->shouldWriteFile( "xmldb-location" ) ) {
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Starting output to XML Database." << endl;
         // Print the XML file for the XML database.

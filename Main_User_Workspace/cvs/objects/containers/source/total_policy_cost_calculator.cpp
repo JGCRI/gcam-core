@@ -329,7 +329,7 @@ void TotalPolicyCostCalculator::printOutput() const {
     {
         // Open the XML output file and write to it.
         AutoOutputFile ccOut( "costCurvesOutputFileName",
-                              "cost_curves_" + mSingleScenario->getInternalScenario()->getName() + ".xml" );
+                              "cost_curves.xml" );
         ccOut << xmlString;
     }
     
@@ -337,15 +337,12 @@ void TotalPolicyCostCalculator::printOutput() const {
     const string UPDATE_LOCATION = "/scenario/world/region[last()]";
     
     // Append the data to the XML database.
-    static const bool printXMLDB = Configuration::getInstance()->getBool( "write-xml-db", true );
-    if( printXMLDB ){
+    if( Configuration::getInstance()->shouldWriteFile( "xmldb-location" ) ) {
         XMLDBOutputter::appendData( xmlString, UPDATE_LOCATION );
     }
 
-    static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
-
     // Write to the database.
-    if( printDB ){
+    if( Configuration::getInstance()->shouldWriteFile( "dbFileName" ) ) {
         writeToDB();
     }
 

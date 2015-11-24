@@ -279,26 +279,6 @@ void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
-/*! \brief Write out object to output stream for debugging.
-* \param aXMLDebugFile XML debugging file.
-* \param aTabs Tabs container.
-*/
-void Scenario::toDebugXMLOpen( ostream& aXMLDebugFile, Tabs* aTabs ) const {
-    string dateString = util::XMLCreateDate( gGlobalTime );
-    aXMLDebugFile << "<" << getXMLNameStatic() << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
-
-    aTabs->increaseIndent();
-    XMLWriteElement( "Debugging output", "summary", aXMLDebugFile, aTabs );
-}
-
-/*! \brief Write out close scenario tag to output stream for debugging.
-* \param aXMLDebugFile XML debugging file.
-* \param aTabs Tabs container.
-*/
-void Scenario::toDebugXMLClose( ostream& aXMLDebugFile, Tabs* aTabs ) const {
-    XMLWriteClosingTag( getXMLNameStatic(), aXMLDebugFile, aTabs );
-}
-
 //! Return scenario name.
 const string& Scenario::getName() const {
     return name; 
@@ -320,11 +300,16 @@ bool Scenario::run( const int aSinglePeriod,
     unsolvedPeriods.clear();
     
     // Open the debugging files.
-    ofstream XMLDebugFile;
-    ofstream SGMDebugFile;
+    AutoOutputFile XMLDebugFile( "xmlDebugFileName", "debug.xml", aPrintDebugging );
+    AutoOutputFile SGMDebugFile( "ObjectSGMFileName", "ObjectSGMout.csv", aPrintDebugging );
     Tabs tabs;
-    if( aPrintDebugging ){
-        openDebuggingFiles( XMLDebugFile, SGMDebugFile, &tabs, aFilenameEnding );
+    if( aPrintDebugging ) {
+        // Write opening tags for debug XML
+        string dateString = util::XMLCreateDate( gGlobalTime );
+        XMLDebugFile << "<" << getXMLNameStatic() << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
+
+        tabs.increaseIndent();
+        XMLWriteElement( "Debugging output", "summary", *XMLDebugFile, &tabs );
     }
 
     Timer& fullScenarioTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::FULLSCENARIO );
@@ -339,7 +324,7 @@ bool Scenario::run( const int aSinglePeriod,
     // time steps and operate model.
     if( aSinglePeriod == RUN_ALL_PERIODS ){
         for( int per = 0; per < modeltime->getmaxper(); per++ ){
-            success &= calculatePeriod( per, XMLDebugFile, SGMDebugFile, &tabs, aPrintDebugging );
+            success &= calculatePeriod( per, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
         }
     }
     // Check if the single period is invalid.
@@ -353,7 +338,7 @@ bool Scenario::run( const int aSinglePeriod,
         // Run all periods up to the single period which are invalid.
         for( int per = 0; per < aSinglePeriod; per++ ){
             if( !mIsValidPeriod[ per ] ){
-                success &= calculatePeriod( per, XMLDebugFile, SGMDebugFile, &tabs, aPrintDebugging );
+                success &= calculatePeriod( per, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
             }
         }
         
@@ -364,7 +349,7 @@ bool Scenario::run( const int aSinglePeriod,
 
         // Now run the requested period. Results past this period will no longer
         // be valid. Do not attempt to use them!
-        success &= calculatePeriod( aSinglePeriod, XMLDebugFile, SGMDebugFile, &tabs, aPrintDebugging );
+        success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
     }
     
     // Print any unsolved periods.
@@ -394,7 +379,7 @@ bool Scenario::run( const int aSinglePeriod,
 
     // Close the debugging files.
     if( aPrintDebugging ){
-        closeDebuggingFiles( XMLDebugFile, SGMDebugFile, &tabs );
+        XMLWriteClosingTag( getXMLNameStatic(), *XMLDebugFile, &tabs );
     }
     
     // Log that the run has finished.
@@ -555,29 +540,6 @@ void Scenario::logRunEnding() const {
     mainLog << "Model run completed." << endl;
 }
 
-/*! \brief Open debugging files at the beginning of a scenario run.
-* \param aXMLDebugFile XML debugging file.
-* \param aSGMDebugFile SGM debugging file.
-* \param aTabs Tabs formatting object.
-* \param aFileNameEnding String to append to file names.
-*/
-void Scenario::openDebuggingFiles( ofstream& aXMLDebugFile,
-                                   ofstream& aSGMDebugFile,
-                                   Tabs* aTabs,
-                                   const string& aFileNameEnding ) const
-{
-    // Open the XML debugging file.
-    openDebugXMLFile( aXMLDebugFile, aTabs, aFileNameEnding );
-
-    // Write the opening XML tags.
-    toDebugXMLOpen( aXMLDebugFile, aTabs );
-
-    // Sgm output file for debugging.
-    const string sgmDebugName = Configuration::getInstance()->getFile( "ObjectSGMFileName", "ObjectSGMout.csv" );
-    aSGMDebugFile.open( sgmDebugName.c_str(), std::ios::out );
-    util::checkIsOpen( aSGMDebugFile, sgmDebugName );
-}
-
 /*! \brief Write to the debugging files for a given period.
 * \param aXMLDebugFile XML debugging file.
 * \param aSGMDebugFile SGM debugging file.
@@ -592,20 +554,6 @@ void Scenario::writeDebuggingFiles( ostream& aXMLDebugFile,
     modeltime->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
     world->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
     csvSGMOutputFile( aSGMDebugFile, aPeriod );
-}
-
-/*! \brief Close the debugging files.
-* \param aXMLDebugFile XML debugging file.
-* \param aSGMDebugFile SGM debugging file.
-* \param aTabs Tabs formatting object.
-*/
-void Scenario::closeDebuggingFiles( ofstream& aXMLDebugFile, ofstream& aSGMDebugFile, Tabs* aTabs ) const {
-    // Close the xml debugging tag.
-    toDebugXMLClose( aXMLDebugFile, aTabs );
-
-    // Close the files.
-    aXMLDebugFile.close();
-    aSGMDebugFile.close();
 }
 
 /*! \brief Update a visitor for the Scenario.
@@ -656,14 +604,13 @@ void Scenario::printOutputXML() const {
 */
 void Scenario::printGraphs( const int aPeriod ) const {
     // Determine which region to print. Default to the US.
-    const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
-    
-    // Create a unique filename for the period.
-    const string fileName = Configuration::getInstance()->getFile( "dependencyGraphName", "graph" ) 
-                            + "_" + util::toString( aPeriod ) + ".dot";
+    const string regionToGraph = Configuration::getInstance()->getString( "debug-region", "USA" );
     
     // Open the file. It will automatically close.
-    AutoOutputFile graphStream( fileName );
+    AutoOutputFile graphStream( "dependencyGraphName", "graph" );
+    if( !graphStream.shouldWrite() ) {
+        return;
+    }
     
     // Create a graph printer.
     GraphPrinter graphPrinter( regionToGraph, *graphStream );
@@ -677,15 +624,13 @@ void Scenario::printGraphs( const int aPeriod ) const {
 
 void Scenario::printLandAllocatorGraph( const int aPeriod, const bool aPrintValues ) const {
     // Determine which region to print.  Default to the US.
-    const string regionToGraph = Configuration::getInstance()->getString( "region-to-graph", "USA" );
+    const string regionToGraph = Configuration::getInstance()->getString( "debug-region", "USA" );
     
-    //Create a unique filename for the period.
-    const string laFileName = 
-        Configuration::getInstance()->getFile( "landAllocatorGraphName", "LandAllocatorGraph" )
-        + "_" + util::toString( aPeriod ) + ".dot";
-
     // Open the file.  It will automatically close.
-    AutoOutputFile landAllocatorStream( laFileName );
+    AutoOutputFile landAllocatorStream( "landAllocatorGraphName", "LandAllocatorGraph" );
+    if( !landAllocatorStream.shouldWrite() ) {
+        return;
+    }
 
     // Create the land allocator printer.
     LandAllocatorPrinter landAllocatorPrinter( regionToGraph, *landAllocatorStream,
@@ -786,36 +731,41 @@ void Scenario::writeOutputFiles() const {
     // Print out dependency graphs.
     const Configuration* conf = Configuration::getInstance();
     bool printValues = conf->getBool("PrintValuesOnGraphs");
-    if( conf->getBool( "PrintDependencyGraphs" ) ) {
-        for( int period = 0; period  < getModeltime()->getmaxper(); ++period  ){
-            printGraphs( period );
-            // We only need to print a graph for each period if we are printing
-            // values on the graphs.  Otherwise they are all the same.
-            if( period == 0 || printValues ){
-                printLandAllocatorGraph( period, printValues );
-            }
+    for( int period = 0; period  < getModeltime()->getmaxper(); ++period  ){
+        printGraphs( period );
+        // We only need to print a graph for each period if we are printing
+        // values on the graphs.  Otherwise they are all the same.
+        if( period == 0 || printValues ){
+            printLandAllocatorGraph( period, printValues );
         }
     }
 
     // Open the output file.
-    const string outFileName = conf->getFile( "outFileName", "outfile.csv" );
-    outFile.open( outFileName.c_str(), ios::out );
-    util::checkIsOpen( outFile, outFileName ); 
-    
-    // Write results to the output file.
-    // Minicam style output.
-    outFile << "Region,Sector,Subsector,Technology,Variable,Units,";
-    
-    for ( int t = 0; t < modeltime->getmaxper(); t++ ) { 
-        outFile << modeltime->getper_to_yr( t ) <<",";
+    // note that we can not use an AutoOutputFile here since the ofstream is a hardcoded
+    // global variable
+    if( conf->shouldWriteFile( "outFileName" ) ) {
+        string outFileName = conf->getFile( "outFileName", "outfile.csv" );
+        if( conf->shouldAppendScnToFile( "outFileName" ) ) {
+            outFileName = util::appendScenarioToFileName( outFileName );
+        }
+        outFile.open( outFileName.c_str(), ios::out );
+        util::checkIsOpen( outFile, outFileName ); 
+
+        // Write results to the output file.
+        // Minicam style output.
+        outFile << "Region,Sector,Subsector,Technology,Variable,Units,";
+
+        for ( int t = 0; t < modeltime->getmaxper(); t++ ) { 
+            outFile << modeltime->getper_to_yr( t ) <<",";
+        }
+        outFile << "Date,Notes" << endl;
+
+        // Write global market info to file
+        marketplace->csvOutputFile( "global" );
+
+        // Write world and regional info
+        world->csvOutputFile();
     }
-    outFile << "Date,Notes" << endl;
-
-    // Write global market info to file
-    marketplace->csvOutputFile( "global" );
-
-    // Write world and regional info
-    world->csvOutputFile();
 }
 
 //! Output Scenario members to the database.
@@ -826,27 +776,6 @@ void Scenario::dbOutput() const {
                                           : list<string>();
     world->dbOutput( primaryFuelList );
     marketplace->dbOutput();
-}
-
-/*! \brief Open the debugging XML file with the correct name and check for any
-*          errors.
-* \param aXMLDebugFile XML debugging file.
-* \param aTabs Tabs formatting container.
-* \param aFileNameEnding String to append of the name of the filename.
-*/
-void Scenario::openDebugXMLFile( ofstream& aXMLDebugFile, Tabs* aTabs, const string& aFileNameEnding ) const {
-    // Need to insert the filename ending before the file type.
-    const Configuration* conf = Configuration::getInstance();
-    string debugFileName = conf->getFile( "xmlDebugFileName", "debug.xml" );
-    size_t dotPos = debugFileName.find_last_of( "." );
-    debugFileName = debugFileName.insert( dotPos, aFileNameEnding );
-    aXMLDebugFile.open( debugFileName.c_str(), ios::out );
-    util::checkIsOpen( aXMLDebugFile, debugFileName );
-    
-    // Write in the main log where the debugging information is.
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::DEBUG );
-    mainLog << "Debugging information for this run in: " << debugFileName << endl;
 }
 
 /*! \brief Write SGM results to csv text file.

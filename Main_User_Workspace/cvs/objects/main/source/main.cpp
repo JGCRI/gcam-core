@@ -185,7 +185,7 @@ int main( int argc, char *argv[] ) {
     // configuration options with the defaults being to run all periods and print debug
     // information.
     const int stopPeriod = conf->getInt( "stop-period", Scenario::RUN_ALL_PERIODS );
-    const bool printDebug = conf->getBool( "print-debug-file", true );
+    const bool printDebug = conf->shouldWriteFile( "xmlDebugFileName" );
     success = runner->runScenarios( stopPeriod, printDebug, timer );
 
     // Print the output.

@@ -253,6 +253,13 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bo
     // Create a Java instance.
     auto_ptr<JNIContainer> jniContainer( new JNIContainer );
 
+    // Ensure the user wants this output
+    const Configuration* conf = Configuration::getInstance();
+    if( !conf->shouldWriteFile( "xmldb-location" ) ) {
+        jniContainer.reset( 0 );
+        return jniContainer;
+    }
+
     // Start the Java VM with the following settings
     JavaVMInitArgs vmArgs;
     JavaVMOption* options = new JavaVMOption[ 1 ];
@@ -309,8 +316,13 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bo
     }
 
     // Get the location to open the environment.
-    const Configuration* conf = Configuration::getInstance();
-    const string xmldbContainerName = conf->getFile( "xmldb-location", "database_basexdb" );
+    string xmldbContainerName = conf->getFile( "xmldb-location", "database_basexdb" );
+    if( conf->shouldAppendScnToFile( "xmldb-location") ) {
+        // note that util::appendScenarioToFileName searches for a '.' between which to insert
+        // the scenario name however a '.' is not a valid character in a BaseX DB name so we
+        // will just append it to the end.
+        xmldbContainerName = xmldbContainerName.append( scenario->getName() );
+    }
     const string docName = createContainerName( scenario->getName() );
 
     // Convert the C++ string to a Java String so that they can be passed to the constructor.

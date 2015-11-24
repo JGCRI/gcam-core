@@ -2,19 +2,22 @@
 <Configuration>
 	<Files>
 		<Value name="xmlInputFileName">../input/gcam-data-system/xml/modeltime-xml/modeltime.xml</Value>
-		<Value name="xmlOutputFileName">../output/output.xml</Value>
-		<Value name="xmldb-location">../output/database_basexdb</Value>
-		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="BatchFileName">batch_ag.xml</Value>
 		<Value name="policy-target-file">../input/policy/forcing_target_4p5.xml</Value>
-		<Value name="climatFileName">gas.emk</Value>
 		<Value name="GHGInputFileName">../input/magicc/inputs/input_gases.emk</Value>
-		<Value name="outFileName">outFile.csv</Value>
-		<Value name="dbFileName">../output/output.mdb</Value>
-		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
-		<Value name="dependencyGraphName">DependencyGraph</Value>
-		<Value name="ObjectSGMFileName">ObjectSGMout.csv</Value>
-		<Value name="ObjectSGMGenFileName">ObjectSGMGen.csv</Value>
+		<Value write-output="1" append-scenario-name="0" name="xmldb-location">../output/database_basexdb</Value>
+		<Value write-output="1" append-scenario-name="0" name="xmlOutputFileName">../output/output.xml</Value>
+		<Value write-output="1" append-scenario-name="1" name="xmlDebugFileName">debug.xml</Value>
+		<Value write-output="1" append-scenario-name="0" name="climatFileName">gas.emk</Value>
+		<Value write-output="1" append-scenario-name="0" name="outFileName">outFile.csv</Value>
+		<Value write-output="1" append-scenario-name="1" name="costCurvesOutputFileName">cost_curves.xml</Value>
+		<Value write-output="1" append-scenario-name="0" name="batchCSVOutputFile">batch-csv-out.csv</Value>
+		<Value write-output="0" append-scenario-name="0" name="supplyDemandOutputFileName">SDCurves.csv</Value>
+		<Value write-output="0" append-scenario-name="0" name="dependencyGraphName">DependencyGraph.dot</Value>
+		<Value write-output="0" append-scenario-name="0" name="landAllocatorGraphName">LandAllocatorGraph.dot</Value>
+		<Value write-output="0" append-scenario-name="0" name="ObjectSGMFileName">ObjectSGMout.csv</Value>
+		<Value write-output="0" append-scenario-name="0" name="ObjectSGMGenFileName">ObjectSGMGen.csv</Value>
+		<Value write-output="0" append-scenario-name="0" name="dbFileName">../output/output.mdb</Value>
 	</Files>
 	<ScenarioComponents>
         <Value name = "hist_emissions">../input/magicc/Historical Emissions/Default Emissions Module/Default_Emissions_Input.xml</Value>
@@ -68,14 +71,8 @@
 		<Value name="BatchMode">0</Value>
 		<Value name="find-path">0</Value>
 		<Value name="createCostCurve">0</Value>
-		<Value name="write-xml-db">1</Value>
-		<Value name="write-access-db">0</Value>
-		<Value name="print-debug-file">1</Value>
-		<Value name="write-gas-emk">1</Value>
 		<Value name="debugChecking">0</Value>
-		<Value name="debugFindSD">0</Value>
 		<Value name="simulActive">1</Value>
-		<Value name="PrintDependencyGraphs">0</Value>
 		<Value name="PrintValuesOnGraphs">1</Value>
 		<Value name="ShowNullPaths">0</Value>
 		<Value name="PrintPrices">1</Value>

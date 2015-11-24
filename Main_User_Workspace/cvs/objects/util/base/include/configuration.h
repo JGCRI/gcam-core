@@ -77,6 +77,8 @@ public:
 	bool XMLParse( const xercesc::DOMNode* tempnode );
 	void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 	const std::string& getFile( const std::string& key, const std::string& defaultValue = "", const bool mustExist = true ) const;
+	bool shouldWriteFile( const std::string& key, const bool defaultValue = true, const bool mustExist = false ) const;
+	bool shouldAppendScnToFile( const std::string& key, const bool defaultValue = false, const bool mustExist = false ) const;
 	const std::string& getString( const std::string& key, const std::string& defaultValue = "", const bool mustExist = true ) const;
 	bool getBool( const std::string& key, const bool defaultValue = false, const bool mustExist = true ) const;
 	int getInt( const std::string& key, const int defaultValue = 0, const bool mustExist = true ) const;
@@ -86,6 +88,11 @@ private:
     const std::string mLogFile; //!< The name of the log to use.
     static std::auto_ptr<Configuration> gInstance; //!< The static instance of the Configuration class.
 	std::map<std::string, std::string> fileMap; //!< A map of the file names the program uses.
+    //! Map file names to a flag if set indicates that the file should be written
+	std::map<std::string, bool> mShouldWriteFileMap;
+    //! Map file names to a flag if set indicates that the scenario name should be post-pended
+    //! to the file name when written.
+	std::map<std::string, bool> mShouldAppendScnFileMap;
 	std::map<std::string, std::string> stringMap; //!< A map of the strings the program uses.
 	std::map<std::string, bool> boolMap; //!< A map of the bools the program uses.
 	std::map<std::string, int> intMap;  //!< A map of the ints the program uses.

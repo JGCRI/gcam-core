@@ -68,6 +68,7 @@ class LoggerFactory {
 public:
     static Logger& getLogger( const std::string& aLogName );
     static void toDebugXML( std::ostream& aOut, Tabs* aTabs );
+    static void logNewScenarioStarting( const std::string& aScenarioName );
 private:
     static std::map<std::string,Logger*> mLoggers; //!< Map of logger names to loggers.
     static void XMLParse( const xercesc::DOMNode* aRoot );

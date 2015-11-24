@@ -44,6 +44,7 @@
 #include "util/base/include/timer.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
+#include "util/base/include/auto_file.h"
 #include "containers/include/scenario.h"
 #include "util/logger/include/ilogger.h"
 
@@ -132,16 +133,10 @@ bool MergeRunner::runScenarios( const int aSinglePeriod,
 void MergeRunner::printOutput( Timer& timer, const bool aCloseDB ) const {
     // Print output xml file.
     const Configuration* conf = Configuration::getInstance();
-    const string xmlOutFileName = conf->getFile( "xmlOutputFileName", "output.xml" );
-    ofstream xmlOut;
-    xmlOut.open( xmlOutFileName.c_str(), ios::out );
-    util::checkIsOpen( xmlOut, xmlOutFileName );
+    AutoOutputFile xmlOut( "xmlOutputFileName", "output.xml" );
 
     Tabs tabs;
-    mScenario->toInputXML( xmlOut, &tabs );
-
-    // Close the output file. 
-    xmlOut.close();
+    mScenario->toInputXML( *xmlOut, &tabs );
 }
 
 void MergeRunner::cleanup() {

@@ -465,6 +465,8 @@ namespace objects {
             abort();
         }
     }
+
+    std::string appendScenarioToFileName( const std::string& aFileName );
     
     std::string replaceSpaces( const std::string& aString );
 

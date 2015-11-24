@@ -140,3 +140,15 @@ void LoggerFactory::toDebugXML( ostream& aOut, Tabs* aTabs ) {
 	XMLWriteClosingTag( "LoggerFactory", aOut, aTabs );
 }
 
+/*!
+ * \brief Log to all configured loggers that the scenario identified by the given scenario
+ *        name is starting.
+ */
+void LoggerFactory::logNewScenarioStarting( const string& aScenarioName ) {
+	for( map<string,Logger*>::const_iterator logIter = mLoggers.begin(); logIter != mLoggers.end(); ++logIter ){
+        ILogger::WarningLevel oldLevel = logIter->second->setLevel( ILogger::WARNING );
+        (*logIter->second) << "Starting new scenario: " << aScenarioName << endl;
+        logIter->second->setLevel( oldLevel );
+    }
+}
+

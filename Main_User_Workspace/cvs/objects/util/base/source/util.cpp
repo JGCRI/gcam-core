@@ -40,11 +40,14 @@
 
 #include "util/base/include/definitions.h"
 #include "util/base/include/util.h"
+#include "containers/include/scenario.h"
 
 #include <string>
 #include <ctime>
 
 using namespace std;
+
+extern Scenario* scenario;
 
 namespace objects {
     /*!
@@ -76,6 +79,26 @@ namespace objects {
         }
         return ( aX - aX1 ) * ( aY2 - aY1 ) / ( aX2 - aX1 ) + aY1;
     }
+
+    /*!
+     * \brief Appends the scenario name to the given file name.
+     * \details Very simple implementation where we search for the
+     *          last '.' and insert the scenario->getName() before that.
+     *          Should no '.' be found we simply append it to the end.
+     * \return The modified file name which includes the scenario name.
+     */
+    string appendScenarioToFileName( const string& aFileName ) {
+        size_t dotPos = aFileName.find_last_of( '.' );
+        string modifiedFileName( aFileName );
+        if( dotPos == string::npos ) {
+            modifiedFileName.append( scenario->getName() );
+        }
+        else {
+            modifiedFileName.insert( dotPos, scenario->getName() );
+        }
+        return modifiedFileName;
+    }
+
     
     /*! \brief A function to replace spaces with underscores.
     * \details Returns a string equivalent to the string passed into the

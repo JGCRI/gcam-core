@@ -297,7 +297,7 @@ void SimplePolicyTargetRunner::printOutput( Timer& timer, const bool aCloseDB ) 
     Tabs tabs;
     mInterpolatedCurve->toInputXMLDerived( *out, &tabs );
 
-    static const bool printDB = Configuration::getInstance()->getBool( "write-access-db", true );
+    static const bool printDB = Configuration::getInstance()->shouldWriteFile( "dbFileName" );
     
     // Close the database.
     if( printDB && aCloseDB ){
@@ -367,7 +367,7 @@ bool SimplePolicyTargetRunner::XMLParse( const xercesc::DOMNode* aRoot ){
             mTolerance = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "tax-name" ){
-            mTaxName == XMLHelper<string>::getValue( curr );
+            mTaxName = XMLHelper<string>::getValue( curr );
         }
         // Read the lower-bound and upper-bound curves
         else if ( nodeName == Curve::getXMLNameStatic() ){

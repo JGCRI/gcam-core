@@ -45,8 +45,9 @@
 * \author Josh Lurz
 */
 
-#include <iostream>
-#include <fstream>
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/device/file.hpp>
+#include <boost/iostreams/device/null.hpp>
 #include <string>
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
@@ -66,12 +67,27 @@ public:
     * \param aConfVariableName Name of the configuration variable that stores
     *        the file name.
     * \param aDefaultName Filename to use if the variable is not found.
+    * \param aShouldWriteOverride If we should not write the file even if the user
+    *                             specified they want it, i.e. when target finding.
     */
-    AutoOutputFile( const std::string& aConfVariableName, const std::string& aDefaultName ){
+    AutoOutputFile( const std::string& aConfVariableName,
+                    const std::string& aDefaultName,
+                    const bool aShouldWriteOverride = true )
+        :mShouldWrite( aShouldWriteOverride && Configuration::getInstance()->shouldWriteFile( aConfVariableName ) )
+    {
         const Configuration* conf = Configuration::getInstance();
-        const std::string fileName = conf->getFile( aConfVariableName, aDefaultName );
-        mWrappedFile.open( fileName.c_str(), std::ios::out );
-        util::checkIsOpen( mWrappedFile, fileName );
+        if( mShouldWrite ) {
+            std::string fileName = conf->getFile( aConfVariableName, aDefaultName );
+            if( conf->shouldAppendScnToFile( aConfVariableName ) ) {
+                fileName = util::appendScenarioToFileName( fileName );
+            }
+            boost::iostreams::file_sink fileBuffer( fileName );
+            mWrappedFile.push( fileBuffer );
+            util::checkIsOpen( fileBuffer, fileName );
+        }
+        else {
+            mWrappedFile.push( boost::iostreams::null_sink() );
+        }
     }
     
     /*! \brief Open an output file with the given name.
@@ -80,14 +96,25 @@ public:
     * \todo This interface is dangerous because forgetting an argument calls a
     *       different function.
     */
-    explicit AutoOutputFile( const std::string& aFileName ){
-        mWrappedFile.open( aFileName.c_str(), std::ios::out );
-        util::checkIsOpen( mWrappedFile, aFileName );
+    explicit AutoOutputFile( const std::string& aFileName )
+        :mShouldWrite( true )
+    {
+        boost::iostreams::file_sink fileBuffer( aFileName );
+        mWrappedFile.push( fileBuffer );
+        util::checkIsOpen( fileBuffer, aFileName );
     }
 
     /*! \brief Destructor which closes the internal file stream.*/
     ~AutoOutputFile(){
-        mWrappedFile.close();
+        close( mWrappedFile );
+    }
+
+    /*!
+     * \brief Get the flag if this file should be written.
+     * \return True if this file is being written and false if the output is being ignored.
+     */
+    bool shouldWrite() const {
+        return mShouldWrite;
     }
 
     /*! \brief Write a value of type T to the output stream.
@@ -102,12 +129,15 @@ public:
     /*! \brief Dereference operator which returns the internal file stream.
     * \return The internal file stream.
     */
-    std::ofstream& operator*(){
+    std::ostream& operator*(){
         return mWrappedFile;
     }
 protected:
-    //! The wrapped file stream.
-    std::ofstream mWrappedFile;
+    //! The wrapped file/null stream.
+    boost::iostreams::filtering_ostream mWrappedFile;
+
+    //! The flag if this file was not to be written
+    const bool mShouldWrite;
 };
 
 #endif // _AUTO_OUTPUT_FILE_H_

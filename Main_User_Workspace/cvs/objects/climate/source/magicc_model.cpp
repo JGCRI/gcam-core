@@ -51,6 +51,7 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/util.h"
+#include "util/base/include/auto_file.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/ivisitor.h"
 
@@ -697,13 +698,9 @@ void MagiccModel::writeMAGICCEmissionsFile(){
     
     // Check if the users still wants the gas data saved as a file which may be
     // useful for debugging or to use as input for a stand alone MAGICC run.
-    const Configuration* config = Configuration::getInstance();
-    if( config->getBool( "write-gas-emk", true ) ) {
-        ofstream gasFile;
-        gasFile.open( config->getFile( "climatFileName" ).c_str(), ios::out );
-        gasFile << gasStream.str();
-        gasFile.close();
-    }
+    AutoOutputFile gasFile( "climatFileName", "gas.emk" );
+    string gasEMKData = gasStream.str();
+    gasFile << gasEMKData;
 }
 
 /*! \brief Write comma.

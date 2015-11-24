@@ -54,6 +54,8 @@
 #include "util/logger/include/ilogger.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/util.h"
+#include "util/base/include/auto_file.h"
 
 using namespace std;
 using namespace xercesc;
@@ -250,8 +252,11 @@ bool UserConfigurableSolver::solve( const int aPeriod, const SolutionInfoParamPa
     // Print unsolved markets.
     solution_set.printUnsolved( mainLog );
     
-    if( conf->getBool( "debugFindSD" ) ){
+    if( conf->shouldWriteFile( "supplyDemandOutputFileName" ) ) {
         string logName = conf->getFile( "supplyDemandOutputFileName", "supply_demand_curves" );
+        if( conf->shouldAppendScnToFile( "supplyDemandOutputFileName" ) ) {
+            logName = util::appendScenarioToFileName( logName );
+        }
         ILogger& sdLog = ILogger::getLogger( logName );
         sdLog.setLevel( ILogger::WARNING );
         sdLog << "Supply and demand curves for markets that did not solve in period: " << aPeriod << endl;

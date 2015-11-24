@@ -151,32 +151,16 @@ private:
     void csvSGMGenFile( std::ostream& aFile ) const;
     void csvSGMOutputFile( std::ostream& aSGMDebugFile, const int aPeriod ) const;
 
-    void openDebugXMLFile( std::ofstream& aXMLDebugFile,
-        Tabs* aTabs,
-        const std::string& aFileNameEnding ) const;
-
-    void toDebugXMLOpen( std::ostream& aXMLDebugFile, Tabs* aTabs ) const;
-    void toDebugXMLClose( std::ostream& aXMLDebugFile, Tabs* aTabs ) const;
-
     void logRunBeginning() const;
     void logPeriodBeginning( const int aPeriod ) const;
     void logPeriodEnding( const int aPeriod ) const;
     void logRunEnding() const;
-
-    void openDebuggingFiles( std::ofstream& aXMLDebugFile,
-        std::ofstream& aSGMDebugFile,
-        Tabs* aTabs,
-        const std::string& aFileNameEnding ) const;
 
     void writeDebuggingFiles( std::ostream& aXMLDebugFile,
         std::ostream& aSGMDebugFile,
         Tabs* aTabs,
         const int aPeriod ) const;
 
-    void closeDebuggingFiles( std::ofstream& aXMLDebugFile,
-        std::ofstream& aSGMDebugFile,
-        Tabs* aTabs ) const;
-    
     void initSolvers();
 };
 

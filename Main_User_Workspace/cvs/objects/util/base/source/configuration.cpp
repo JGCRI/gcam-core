@@ -98,6 +98,8 @@ bool Configuration::XMLParse( const DOMNode* root ) {
 			
 			if( sectionName == "Files" ){
 				fileMap[ valueName ] = XMLHelper<string>::getValue( currValueNode );
+				mShouldWriteFileMap[ valueName ] = XMLHelper<bool>::getAttr( currValueNode, "write-output" );
+				mShouldAppendScnFileMap[ valueName ] = XMLHelper<bool>::getAttr( currValueNode, "append-scenario-name" );
 			}
 			
 			else if(  sectionName == "Strings" ) {
@@ -136,9 +138,14 @@ void Configuration::toDebugXML( ostream& out, Tabs* tabs ) const {
 	
 	// Write each type.
 	// Write files.
+    map<string, string> attrs;
     XMLWriteOpeningTag( "Files", out, tabs );
 	for ( map<string,string>::const_iterator fileIter = fileMap.begin(); fileIter != fileMap.end(); fileIter++ ) {
-		XMLWriteElement( fileIter->second, "Value", out, tabs, 0, fileIter->first );
+        // we can rely on the defaults if the key did not exist in these maps
+        attrs[ "write-output" ] = shouldWriteFile( fileIter->first );
+        attrs[ "append-scenario-name" ] = shouldAppendScnToFile( fileIter->first );
+        attrs[ "name" ] = fileIter->first;
+		XMLWriteElementWithAttributes( fileIter->second, "Value", out, tabs, attrs );
 	}
     XMLWriteClosingTag( "Files", out, tabs );
     
@@ -208,6 +215,56 @@ const string& Configuration::getFile( const string& key, const string& defaultVa
         }
 		return defaultValue;
 	}
+}
+
+/*!
+ * \brief Get the flag if the file of given key should or should not be written.
+ * \details If the key is not found, the function will log a warning message
+ * and return the default value argument if one is passed. Otherwise, it will return the default value 
+ * defined in Configuration.h.
+ * \param aKey Key to lookup, as specified in the Configuration.xml file as a name value.
+ * \param aDefaultValue Optional default argument which will be returned if the key is not found.
+ * \param aMustExist If a warning message should be generated when the key is not found.
+ * \return Returns the value found in the map for the specified key, or if none is found the default value.
+ */
+bool Configuration::shouldWriteFile( const string& aKey, const bool aDefaultValue, const bool aMustExist ) const {
+    map<string,bool>::const_iterator found = mShouldWriteFileMap.find( aKey );
+    if ( found != mShouldWriteFileMap.end() ) {
+        return found->second;
+    }
+    else {
+        if( aMustExist ) {
+            ILogger& log = ILogger::getLogger( mLogFile );
+            log.setLevel( ILogger::WARNING );
+            log << "Could not find if should write the file with key: " << aKey << endl;
+        }
+        return aDefaultValue;
+    }
+}
+
+/*!
+ * \brief Get the flag if the scenario name should be post-pended to the filename of given key.
+ * \details If the key is not found, the function will log a warning message
+ * and return the default value argument if one is passed. Otherwise, it will return the default value 
+ * defined in Configuration.h.
+ * \param aKey Key to lookup, as specified in the Configuration.xml file as a name value.
+ * \param aDefaultValue Optional default argument which will be returned if the key is not found.
+ * \param aMustExist If a warning message should be generated when the key is not found.
+ * \return Returns the value found in the map for the specified key, or if none is found the default value.
+ */
+bool Configuration::shouldAppendScnToFile( const string& aKey, const bool aDefaultValue, const bool aMustExist ) const {
+    map<string,bool>::const_iterator found = mShouldAppendScnFileMap.find( aKey );
+    if ( found != mShouldAppendScnFileMap.end() ) {
+        return found->second;
+    }
+    else {
+        if( aMustExist ) {
+            ILogger& log = ILogger::getLogger( mLogFile );
+            log.setLevel( ILogger::WARNING );
+            log << "Could not find if should append the scenario name to file with key: " << aKey << endl;
+        }
+        return aDefaultValue;
+    }
 }
 
 /*! 

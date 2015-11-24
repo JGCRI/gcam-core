@@ -249,8 +249,12 @@ bool BisectPolicyNRSolver::solve( const int aPeriod, const SolutionInfoParamPars
     // Print unsolved markets.
     sol.printUnsolved( mainLog );
 
-    if( Configuration::getInstance()->getBool( "debugFindSD" ) ){
-        string logName = Configuration::getInstance()->getFile( "supplyDemandOutputFileName", "supply_demand_curves" );
+    const Configuration* conf = Configuration::getInstance();
+    if( conf->shouldWriteFile( "supplyDemandOutputFileName" ) ) {
+        string logName = conf->getFile( "supplyDemandOutputFileName", "supply_demand_curves" );
+        if( conf->shouldAppendScnToFile( "supplyDemandOutputFileName" ) ) {
+            logName = util::appendScenarioToFileName( logName );
+        }
         ILogger& sdLog = ILogger::getLogger( logName );
         sdLog.setLevel( ILogger::WARNING );
         sdLog << "Supply and demand curves for markets that did not solve in period: " << aPeriod << endl;
