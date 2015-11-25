@@ -355,8 +355,9 @@ double EnergyFinalDemand::calcFinalDemand( const string& aRegionName,
         // applied.
         // TODO: preferable to use actual previous service with technical change for
         // current period applied.
-        mServiceDemands[ aPeriod ] = mPreTechChangeServiceDemand[ aPeriod - 1]
-                                   * calcMacroScaler( aRegionName, aDemographics, aGDP, aPeriod);
+        mServiceDemands[ aPeriod ] = mPreTechChangeServiceDemand[ aPeriod - 1 ] > 0 ? 
+            mPreTechChangeServiceDemand[ aPeriod - 1] * calcMacroScaler( aRegionName, aDemographics, aGDP, aPeriod) :
+            0;
 
         assert( mServiceDemands[ aPeriod ] >= 0 );
         mPreTechChangeServiceDemand[ aPeriod ] = mServiceDemands[ aPeriod ];

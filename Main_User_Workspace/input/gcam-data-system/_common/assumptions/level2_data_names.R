@@ -28,6 +28,7 @@ names_Supplysector <- c( "region", "supplysector", "output.unit", "input.unit", 
 names_FinalEnergyKeyword <- c( "region", "supplysector", "final.energy" )
 names_SupplysectorPrice <- c( "region", "supplysector", "year", "price" )
 names_SupplysectorLogitType <- c( "region", "supplysector", "logit.type" )
+names_PassThroughSector <- c( "region", "pass.through.sector", "marginal.revenue.sector", "marginal.revenue.market" )
 
 #Subsectors
 names_Subsector <- c( "region", "supplysector", "subsector")

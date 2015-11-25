@@ -184,6 +184,13 @@ public:
     virtual const std::string& getName() const = 0;
 
     /*!
+     * \brief Get the market name for the input in case the input
+     *        demands from another region.
+     * \return The market name.
+     */
+    virtual const std::string& getMarketName( const std::string& aRegionName ) const = 0;
+
+    /*!
      * \brief Return the name of the input for reporting.
      * \return The name of the input for reporting.
      */

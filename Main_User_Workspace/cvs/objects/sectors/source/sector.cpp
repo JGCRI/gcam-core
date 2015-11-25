@@ -565,13 +565,14 @@ bool Sector::outputsAllFixed( const int period ) const {
  *       shutdown the marginal fixed output producer.
  *
  * \author Steve Smith, Josh Lurz
- * \param period Model period
+ * \param aPeriod Model period
  * \return Total fixed output.
  */
-double Sector::getFixedOutput( const int period ) const {
+double Sector::getFixedOutput( const int aPeriod ) const {
+    const double sectorPrice = scenario->getMarketplace()->getPrice( name, regionName, aPeriod );
     double totalfixedOutput = 0;
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        totalfixedOutput += subsec[ i ]->getFixedOutput( period );
+        totalfixedOutput += subsec[ i ]->getFixedOutput( aPeriod, sectorPrice );
     }
     return totalfixedOutput;
 }

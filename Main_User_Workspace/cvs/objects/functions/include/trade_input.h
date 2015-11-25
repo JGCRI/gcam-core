@@ -98,6 +98,7 @@ public:
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
                            const int aPeriod );
+    virtual const std::string& getMarketName( const std::string& aRegionName ) const;
     virtual void setPhysicalDemand( const double aPhysicalDemand, const std::string& aRegionName, const int aPeriod );
     virtual double getPrice( const std::string& aRegionName, const int aPeriod ) const;
     virtual void calcPricePaid( const std::string& aRegionName,

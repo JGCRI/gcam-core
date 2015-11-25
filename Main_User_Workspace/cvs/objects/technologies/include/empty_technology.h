@@ -158,6 +158,7 @@ public:
                                   const std::string& aSectorName,
                                   const bool aHasRequiredInput,
                                   const std::string& aRequiredInput,
+                                  const double aMarginalRevenue,
                                   const int aPeriod ) const;
     
     virtual bool isAllCalibrated( const int aPeriod,

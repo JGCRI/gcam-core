@@ -58,15 +58,20 @@ printlog( "NOTE: Oil refining sectors are only created in states where the produ
 oil_refining_states <- unique( L122.out_EJ_state_refining_F$state[
       rowSums( L122.out_EJ_state_refining_F[ L122.out_EJ_state_refining_F$sector == "oil refining", X_historical_years ] ) > 0 ] )
 
-printlog( "L222.TechInterp_USAen: technology shareweights, USA region")
+printlog( "L222.Tech_USAen: Just the technology pass-throughs used to set the proper node name, USA region")
+L222.TechEQUIV <- data.frame( group.name=c("technology"), tag1=c( tech ),
+        tag2=c("pass-through-technology"), stringsAsFactors=FALSE )
 L222.Tech_USAen <- repeat_and_add_vector(
       subset( L222.SubsectorLogit_en[ c( reg, supp, subs ) ], region == "USA" & supplysector %in% en_names ),
       state, states )
 L222.Tech_USAen <- subset( L222.Tech_USAen, subsector == "oil refining" & state %in% oil_refining_states | subsector != "oil refining" )
 L222.Tech_USAen[[tech]] <- paste( L222.Tech_USAen[[state]], L222.Tech_USAen[[subs]], sep = " " )
+# Save this information for the PassThroughSector information
+L222.PassThroughSector_USAen <- L222.Tech_USAen[, c( state, subs, supp, reg ) ]
 L222.Tech_USAen <- L222.Tech_USAen[ names_Tech ]
 
 #Technology interpolation only applies to calibrated technologies
+printlog( "L222.TechInterp_USAen: technology shareweights, USA region")
 L222.TechInterp_USAen <- subset( L222.Tech_USAen, subsector %in% c( "oil refining", "biomass liquids" ) )
 L222.TechInterp_USAen$apply.to <- "share-weight"
 L222.TechInterp_USAen$from.year <- max( model_base_years )
@@ -104,6 +109,15 @@ L222.Production_USArefining$share.weight.year <- L222.Production_USArefining$yea
 L222.Production_USArefining <- set_subsector_shrwt( L222.Production_USArefining )
 L222.Production_USArefining$tech.share.weight <- ifelse( L222.Production_USArefining$calOutputValue == 0, 0, 1 )
 L222.Production_USArefining <- L222.Production_USArefining[ names_Production ]
+
+printlog( "L222.PassThroughSector_USAen: PassThroughSector information to send vintaging info from states to USA." )
+L222.SectorEQUIV <- data.frame( group.name=c("sector"), tag1=c( supp ),
+        tag2=c("pass-through-sector"), stringsAsFactors=FALSE )
+names( L222.PassThroughSector_USAen ) <- names_PassThroughSector
+# NOTE: these tables which contain the NODE_EQUIVALENCE and the PassThroughSector must be written
+# before the other sector tables so that the node names are properly set
+write_mi_data( L222.SectorEQUIV, "EQUIV_TABLE", "GCAMUSA_LEVEL2_DATA", "L222.SectorEQUIV", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
+write_mi_data( L222.PassThroughSector_USAen, "PassThroughSector", "GCAMUSA_LEVEL2_DATA", "L222.PassThroughSector_USAen", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 
 printlog( "All tables for which processing is identical are done in a for loop")
 printlog( "NOTE: writing out the tables in this step as well")
@@ -194,6 +208,8 @@ L222.StubTechProd_refining_USA$share.weight.year <- L222.StubTechProd_refining_U
 L222.StubTechProd_refining_USA <- set_subsector_shrwt( L222.StubTechProd_refining_USA )
 L222.StubTechProd_refining_USA$tech.share.weight <- ifelse( L222.StubTechProd_refining_USA$calOutputValue > 0, 1, 0 )
 L222.StubTechProd_refining_USA <- L222.StubTechProd_refining_USA[ names_StubTechProd ]
+# Remove oil refining tech from states that do not have any
+L222.StubTechProd_refining_USA <- subset( L222.StubTechProd_refining_USA, subsector == "oil refining" & region %in% oil_refining_states | subsector != "oil refining" )
 
 printlog( "L222.StubTechMarket_en_USA: market names of inputs to state refining sectors" )
 L222.StubTechMarket_en_USA <- repeat_and_add_vector( L222.GlobalTechCoef_en_USA[ names_GlobalTechInput ], reg, states )
@@ -212,6 +228,8 @@ L222.StubTechMarket_en_USA$market.name[ L222.StubTechMarket_en_USA[[input]] %in%
 L222.StubTechMarket_en_USA <- L222.StubTechMarket_en_USA[ names_StubTechMarket ]
 L222.StubTechMarket_en_USA <- subset( L222.StubTechMarket_en_USA, paste( supplysector, subsector, stub.technology ) %in%
       paste( L222.StubTech_en_USA$supplysector, L222.StubTech_en_USA$subsector, L222.StubTech_en_USA$stub.technology ) )
+# Remove oil refining tech from states that do not have any
+L222.StubTechMarket_en_USA <- subset( L222.StubTechMarket_en_USA, subsector == "oil refining" & region %in% oil_refining_states | subsector != "oil refining" )
 
 L222.CarbonCoef_en_USA <- L222.Supplysector_en_USA[ c( reg, supp ) ]
 L222.CarbonCoef_en_USA$PrimaryFuelCO2Coef.name <- L222.CarbonCoef_en_USA[[ supp ]]
@@ -224,6 +242,10 @@ L222.CarbonCoef_en_USA <- L222.CarbonCoef_en_USA[ names_PrimaryFuelCO2Coef ]
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+# NOTE: these tables which contain the NODE_EQUIVALENCE and the PassThroughTech must be written
+# before the other USA agg technology tables to ensure the proper tags are used.
+write_mi_data( L222.TechEQUIV, "EQUIV_TABLE", "GCAMUSA_LEVEL2_DATA", "L222.TechEQUIV", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
+write_mi_data( L222.Tech_USAen, "PassThroughTech", "GCAMUSA_LEVEL2_DATA", "L222.Tech_USAen", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 write_mi_data( L222.TechShrwt_USAen, "TechShrwt", "GCAMUSA_LEVEL2_DATA", "L222.TechShrwt_USAen", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 write_mi_data( L222.TechInterp_USAen, "TechInterp", "GCAMUSA_LEVEL2_DATA", "L222.TechInterp_USAen", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )
 write_mi_data( L222.TechShrwt_USAen, "TechShrwt", "GCAMUSA_LEVEL2_DATA", "L222.TechShrwt_USAen", "GCAMUSA_XML_BATCH", "batch_en_transformation_USA.xml" )

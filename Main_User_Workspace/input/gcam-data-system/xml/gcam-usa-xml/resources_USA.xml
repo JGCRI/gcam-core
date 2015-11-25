@@ -264,7 +264,7 @@
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.094728984206904</maxSubResource>
                <mid-price>14.6227092621534</mid-price>
-               <curve-exponent>4.84658837786445</curve-exponent>
+               <curve-exponent>4.84658837786437</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
          </renewresource>
@@ -475,7 +475,7 @@
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.150997361204628</maxSubResource>
                <mid-price>21.3594186121524</mid-price>
-               <curve-exponent>10.8603356194812</curve-exponent>
+               <curve-exponent>10.8603356194634</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
          </renewresource>
@@ -569,7 +569,7 @@
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.0513284688519552</maxSubResource>
                <mid-price>28.7981952551183</mid-price>
-               <curve-exponent>10.3180673322874</curve-exponent>
+               <curve-exponent>10.3180673322871</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
          </renewresource>
@@ -608,7 +608,7 @@
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.0265789844958708</maxSubResource>
                <mid-price>22.0984992724783</mid-price>
-               <curve-exponent>7.66563635678423</curve-exponent>
+               <curve-exponent>7.66563635678369</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
          </renewresource>
@@ -858,7 +858,7 @@
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.087598534662756</maxSubResource>
                <mid-price>32.9099713429838</mid-price>
-               <curve-exponent>13.1451904179401</curve-exponent>
+               <curve-exponent>13.1451904179394</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
          </renewresource>
@@ -1014,7 +1014,7 @@
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.076897051192476</maxSubResource>
                <mid-price>32.3055254368907</mid-price>
-               <curve-exponent>13.2098101314384</curve-exponent>
+               <curve-exponent>13.2098101314325</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
          </renewresource>
@@ -1897,7 +1897,7 @@
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.0400509120422304</maxSubResource>
                <mid-price>18.0680425296213</mid-price>
-               <curve-exponent>8.59761582504625</curve-exponent>
+               <curve-exponent>8.5976158250455</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
          </renewresource>

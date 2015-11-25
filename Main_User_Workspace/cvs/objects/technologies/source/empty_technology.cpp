@@ -124,6 +124,7 @@ double EmptyTechnology::getFixedOutput( const string& aRegionName,
                                   const string& aSectorName,
                                   const bool aHasRequiredInput,
                                   const string& aRequiredInput,
+                                  const double aMarginalRevenue,
                                   const int aPeriod ) const
 {
     return -1;

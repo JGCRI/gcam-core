@@ -906,6 +906,8 @@ const IFunction* Technology::getProductionFunction() const
 *        input is.
 * \param aRequiredInput The input the technology is required to have if it
 *        returns a fixed output value.
+* \param aMarginalRevenue The marginal revenue that may be used when calculating
+*                         the profit rate of this technology.
 * \param aPeriod model period
 * \return Value of fixed output for this Technology
 * \author Steve Smith
@@ -914,6 +916,7 @@ double Technology::getFixedOutput( const string& aRegionName,
                                    const string& aSectorName,
                                    const bool aHasRequiredInput,
                                    const string& aRequiredInput,
+                                   const double aMarginalRevenue,
                                    const int aPeriod ) const
 {
     /*! \pre If the caller requests only output for a specific fixed input, the
@@ -922,6 +925,9 @@ double Technology::getFixedOutput( const string& aRegionName,
     assert( !aHasRequiredInput || !aRequiredInput.empty() );
     // Check that a state has been created for the period.
     assert( mProductionState[ aPeriod ] );
+
+    // Store the marginal profit rate for use later
+    mMarginalRevenue = aMarginalRevenue;
 
     // Construct a marginal profit calculator. This allows the calculation of 
     // marginal profits to be lazy.
@@ -1647,9 +1653,7 @@ double Technology::getMarginalRevenue( const string& aRegionName,
                                        const string& aSectorName,
                                        const int aPeriod ) const
 {
-    // TODO: Change to true when below is fixed.
-    double marginalRevenue = scenario->getMarketplace()->getPrice( aSectorName, aRegionName,
-                                                                   aPeriod, false );
+    double marginalRevenue = mMarginalRevenue;
 
     // Demand sectors won't have markets so the price could be wrong here. This
     // will be fixed by splitting demand and supply sectors.

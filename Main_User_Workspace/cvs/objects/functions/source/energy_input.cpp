@@ -316,6 +316,10 @@ void EnergyInput::initCalc( const string& aRegionName,
     mCachedMarket = scenario->getMarketplace()->locateMarket( mName, mMarketName, aPeriod );
 }
 
+const string& EnergyInput::getMarketName( const string& aRegionName ) const {
+    return mMarketName;
+}
+
 void EnergyInput::copyParam( const IInput* aInput,
                              const int aPeriod )
 {

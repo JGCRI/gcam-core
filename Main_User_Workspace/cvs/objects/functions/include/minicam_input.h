@@ -107,6 +107,8 @@ public:
 
     virtual const std::string& getName() const;
 
+    virtual const std::string& getMarketName( const std::string& aRegionName ) const;
+
     virtual double getConversionFactor( const int aPeriod ) const;
 
     virtual double getCO2EmissionsCoefficient( const std::string& aGHGName,

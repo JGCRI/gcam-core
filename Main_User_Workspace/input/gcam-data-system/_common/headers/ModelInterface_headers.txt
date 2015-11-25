@@ -115,6 +115,8 @@ SupplysectorPrice, world/+{name}region, region/+{name}supplysector, supplysector
 
 ElecReserve,world/+{name}region,region/+{name}supplysector,{name=electricity-reserve-margin}object-meta-info/+value,{name=average-grid-capacity-factor}object-meta-info/+value,@supplysector/object-meta-info,scenario,scenario/world
 
+PassThroughSector, world/+{name}region, region/+{name}pass-through-sector, pass-through-sector/+marginal-revenue-sector, pass-through-sector/+marginal-revenue-market, scenario, scenario/world
+
 
 #####, SUBSECTOR
 
@@ -168,6 +170,8 @@ tranSubsectorFuelPref, world/+{name}region, region/+{name}supplysector, supplyse
 
 
 Tech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, scenario, scenario/world
+
+PassThroughTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}pass-through-technology, scenario, scenario/world
 
 TechYr, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, scenario, scenario/world, period/{name=CO2}CO2
 

@@ -137,7 +137,7 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual const std::string& getXMLName() const = 0;
     
-    double getFixedOutput( const int period ) const;
+    virtual double getFixedOutput( const int aPeriod ) const;
     const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
     static const std::string& getDefaultSectorType();
     const std::string& getSectorType() const;

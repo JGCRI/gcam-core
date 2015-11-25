@@ -59,6 +59,10 @@ const string& MiniCAMInput::getName() const {
     return mName;
 }
 
+const string& MiniCAMInput::getMarketName( const string& aRegionName ) const {
+    return aRegionName;
+}
+
 double MiniCAMInput::getConversionFactor( const int aPeriod ) const {
     return 0; // check this.
 }

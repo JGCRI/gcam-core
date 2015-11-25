@@ -711,16 +711,20 @@ double Subsector::calcShare( const IDiscreteChoice* aChoiceFn, const GDP* aGDP, 
 }
 
 
-/*! \brief Return the total exogenously fixed Technology output for this sector.
+/*! \brief Return the total fixed Technology output for this subsector.
+* \details Fixed output may come from vintaged production or exogenously 
+*          specified.
 * \author Steve Smith
-* \param period model period
+* \param aPeriod model period
+* \param aMarginalRevenue The marginal revenue from the sector which may be necessary
+*                         for the technology to calculate it's level of fixed output.
 */
-double Subsector::getFixedOutput( const int aPeriod ) const {
+double Subsector::getFixedOutput( const int aPeriod, const double aMarginalRevenue ) const {
     double fixedOutput = 0;
     for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( aPeriod );
         for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod ); vintageIter != endIter ; ++vintageIter ) {
-            double currFixedOutput = (*vintageIter).second->getFixedOutput( regionName, sectorName, false, "", aPeriod );
+            double currFixedOutput = (*vintageIter).second->getFixedOutput( regionName, sectorName, false, "", aMarginalRevenue, aPeriod );
             /*! \invariant Fixed output for each Technology must be -1 or
             *              positive. 
             */

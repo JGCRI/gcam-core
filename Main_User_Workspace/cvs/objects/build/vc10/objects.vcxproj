@@ -631,6 +631,7 @@
     <ClCompile Include="..\..\sectors\source\final_demand_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\more_sector_info.cpp" />
     <ClCompile Include="..\..\sectors\source\non_energy_final_demand.cpp" />
+    <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\production_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\sector.cpp" />
     <ClCompile Include="..\..\sectors\source\sector_utils.cpp" />
@@ -697,6 +698,7 @@
     <ClCompile Include="..\..\technologies\source\non_energy_use_capture_component.cpp" />
     <ClCompile Include="..\..\technologies\source\nuke_fuel_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\output_factory.cpp" />
+    <ClCompile Include="..\..\technologies\source\pass_through_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\phased_shutdown_decider.cpp" />
     <ClCompile Include="..\..\technologies\source\power_plant_capture_component.cpp" />
     <ClCompile Include="..\..\technologies\source\primary_output.cpp" />
@@ -956,6 +958,7 @@
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\more_sector_info.h" />
     <ClInclude Include="..\..\sectors\include\non_energy_final_demand.h" />
+    <ClInclude Include="..\..\sectors\include\pass_through_sector.h" />
     <ClInclude Include="..\..\sectors\include\production_sector.h" />
     <ClInclude Include="..\..\sectors\include\sector.h" />
     <ClInclude Include="..\..\sectors\include\sector_utils.h" />
@@ -1042,6 +1045,7 @@
     <ClInclude Include="..\..\technologies\include\non_energy_use_capture_component.h" />
     <ClInclude Include="..\..\technologies\include\nuke_fuel_technology.h" />
     <ClInclude Include="..\..\technologies\include\output_factory.h" />
+    <ClInclude Include="..\..\technologies\include\pass_through_technology.h" />
     <ClInclude Include="..\..\technologies\include\phased_shutdown_decider.h" />
     <ClInclude Include="..\..\technologies\include\power_plant_capture_component.h" />
     <ClInclude Include="..\..\technologies\include\primary_output.h" />

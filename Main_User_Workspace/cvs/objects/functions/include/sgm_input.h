@@ -140,6 +140,7 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getName() const;
+    virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
     double getConversionFactor( const int aPeriod ) const;
     double getCO2EmissionsCoefficient( const std::string& aGHGName, const int aPeriod ) const;
     double getPhysicalDemand( const int aPeriod ) const;

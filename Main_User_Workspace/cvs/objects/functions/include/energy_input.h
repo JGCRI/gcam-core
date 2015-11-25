@@ -123,6 +123,8 @@ public:
                            const IInfo* aTechInfo,
                            const int aPeriod );
 
+    virtual const std::string& getMarketName( const std::string& aRegionName ) const;
+
     virtual  double getCO2EmissionsCoefficient( const std::string& aGHGName,
                                              const int aPeriod ) const;
     

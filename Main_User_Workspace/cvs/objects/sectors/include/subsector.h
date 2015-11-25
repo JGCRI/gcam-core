@@ -186,7 +186,7 @@ public:
                             const int aPeriod );
 
     bool isAllCalibrated( const int aPeriod, double aCalAccuracy, const bool aPrintWarnings ) const;
-    double getFixedOutput( const int period ) const;
+    double getFixedOutput( const int Period, const double aMarginalRevenue ) const;
 
     virtual double getTotalCalOutputs( const int period ) const;
 

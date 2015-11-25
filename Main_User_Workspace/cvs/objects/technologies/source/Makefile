@@ -50,6 +50,7 @@ OBJS       = base_technology.o \
              s_curve_shutdown_decider.o \
              empty_technology.o \
              generic_output.o \
+             pass_through_technology.o \
              input_factory.o
 
 technologies_dir: ${OBJS}

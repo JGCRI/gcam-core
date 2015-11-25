@@ -247,6 +247,7 @@ public:
                            const std::string& aSectorName,
                            const bool aHasRequiredInput,
                            const std::string& aRequiredInput,
+                           const double aMarginalRevenue,
                            const int aPeriod ) const;
     
     bool isAllCalibrated( const int aPeriod,
@@ -344,6 +345,10 @@ protected:
     //! Number of years for which the vintage exists.
     int mLifetimeYears;
 
+    //! The current marginal revenue.  TODO: cleaner solution for getting
+    //! this information to the profit shutdown decider.
+    mutable double mMarginalRevenue;
+
     static double getFixedOutputDefault();
 
     //! A map of a keyword to its keyword group
@@ -384,11 +389,11 @@ protected:
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 
     virtual const IInfo* getTechInfo() const;
+    int calcDefaultLifetime() const;
 private:
     void init();
     void copy( const Technology& techIn );
     void clear();
-    int calcDefaultLifetime() const;
 };
 
 #endif // _TECHNOLOGY_H_

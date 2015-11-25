@@ -190,6 +190,10 @@ void TradeInput::initCalc( const string& aRegionName,
     mTypeFlags |= IInput::TRADED;
 }
 
+const string& TradeInput::getMarketName( const string& aRegionName ) const {
+    return mTradingPartner;
+}
+
 void TradeInput::setPhysicalDemand( double aPhysicalDemand, const string& aRegionName, const int aPeriod )
 {
     // do the base set physical demand with the trading partner as the region name

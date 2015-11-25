@@ -58,6 +58,7 @@
 #include "technologies/include/nuke_fuel_technology.h"
 #include "technologies/include/tran_technology.h"
 #include "technologies/include/ag_production_technology.h"
+#include "technologies/include/pass_through_technology.h"
 #include "technologies/include/unmanaged_land_technology.h"
 #include "technologies/include/empty_technology.h"
 
@@ -130,6 +131,7 @@ bool TechnologyContainer::hasTechnologyType( const string& aTechNodeName ) {
              aTechNodeName == NukeFuelTechnology::getXMLNameStatic() ||
              aTechNodeName == TranTechnology::getXMLNameStatic() ||
              aTechNodeName == AgProductionTechnology::getXMLNameStatic() ||
+             aTechNodeName == PassThroughTechnology::getXMLNameStatic() ||
              aTechNodeName == UnmanagedLandTechnology::getXMLNameStatic() );
 }
 
@@ -183,6 +185,9 @@ bool TechnologyContainer::createAndParseVintage( const DOMNode* aNode, const str
         }
         else if( aTechType == AgProductionTechnology::getXMLNameStatic() ) {
             newVintage = new AgProductionTechnology( mName, techYear );
+        }
+        else if( aTechType == PassThroughTechnology::getXMLNameStatic() ) {
+            newVintage = new PassThroughTechnology( mName, techYear );
         }
         else if( aTechType == UnmanagedLandTechnology::getXMLNameStatic() ) {
             newVintage = new UnmanagedLandTechnology( mName, techYear );
