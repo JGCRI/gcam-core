@@ -43,10 +43,11 @@ names_FuelPrefElasticity <- c( names_Subsector, "year.fillout", "fuelprefElastic
 #Technologies
 names_Tech <- c( "region", "supplysector", "subsector", "technology" )
 names_TechInterp <- c( names_Tech, "apply.to", "from.year", "to.year", "interpolation.function" )
+names_TechInterpTo <- c( names_Tech, "apply.to","from.year", "to.year", "to.value", "interpolation.function" )
 names_TechYr <- c( names_Tech, "year" )
 names_Production <- c( names_TechYr, "calOutputValue", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 names_TechShrwt <- c( names_TechYr, "share.weight" )
-names_CalInput <- c( names_TechYr, input, "calibrated.value" )
+names_CalInput <- c( names_TechYr, input, "calibrated.value", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 #Market name is specified for efficiencies or coefficients
 names_TechCoef <- c( names_TechYr, input, "coefficient", "market.name" )
 names_TechEff <- c( names_TechYr, input, "efficiency", "market.name" )
@@ -54,6 +55,10 @@ names_TechCost <- c( names_TechYr, "minicam.non.energy.input", "input.cost" )
 names_CarbonCapture <- c( names_TechYr, "storage.market", "remove.fraction" )
 names_ImportTech <- c( names_TechYr ) #indicates a renewable input; nothing is specified in the table however
 names_FixedOutput <- c( names_TechYr, "fixedOutput" )
+names_TechCapital <- c( names_TechYr, "input.capital", "capital.overnight", "fixed.charge.rate", "capacity.factor" )
+names_TechOMfixed <- c( names_TechYr, "input.OM.fixed", "OM.fixed", "capacity.factor" )
+names_TechOMvar <- c( names_TechYr, "input.OM.var", "OM.var" )
+names_TechSCurve <- c( names_TechYr, "lifetime", "steepness", "half.life" )
 
 #Global technologies
 names_GlobalTech <- c( "sector.name", "subsector.name", "technology" )
@@ -85,10 +90,12 @@ names_StubTechCoef <- c( names_StubTechYr, input, "coefficient", "market.name" )
 names_StubTechEff <- c( names_StubTechYr, input, "efficiency", "market.name" )
 names_StubTechCalInput <- c( names_StubTechYr, input, "calibrated.value", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 names_StubTechCalorieContent <- c( names_StubTechEff )
+names_StubTechCapital <- c( names_StubTechYr, "input.capital", "capital.overnight", "fixed.charge.rate", "capacity.factor" )
 names_StubTechCost <- c( names_StubTechYr, "minicam.non.energy.input", "input.cost" )
 names_StubTechFixOut <- c( names_StubTechYr, "fixedOutput", "share.weight.year", "subs.share.weight", "tech.share.weight" )
 names_StubTechCapFactor <- c( names_StubTechYr, "input.capital", "capacity.factor.capital", "input.OM.fixed", "capacity.factor.OM" )
 names_StubTechMarket <- c( names_StubTechYr, input, "market.name" )
+names_StubTechFractSecOut <- c( names_StubTechYr, "fractional.secondary.output", "output.ratio" )
 names_StubTechNonCO2 <- c( names_StubTechYr, "Non.CO2" )
 
 #Agricultural sectors, subsectors, and technologies

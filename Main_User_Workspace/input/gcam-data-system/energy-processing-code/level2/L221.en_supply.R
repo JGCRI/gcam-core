@@ -25,6 +25,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
+calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
 A21.sector <- readdata( "ENERGY_ASSUMPTIONS", "A21.sector" )
 A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" )
 A21.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A21.subsector_logit" )
@@ -35,9 +36,11 @@ A21.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_cost" )
 A21.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_shrwt" )
 A21.globaltech_keyword <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_keyword" )
 A21.globaltech_secout <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_secout" )
+A21.rsrc_info <- readdata( "ENERGY_ASSUMPTIONS", "A21.rsrc_info" )
 A21.tradedtech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_coef" )
 A21.tradedtech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_cost" )
 A21.tradedtech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A21.tradedtech_shrwt" )
+A21.globaltech_secout <- readdata( "ENERGY_ASSUMPTIONS", "A21.globaltech_secout" )
 L111.Prod_EJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L111.Prod_EJ_R_F_Yh" )
 L121.in_EJ_R_TPES_unoil_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_unoil_Yh" )
 L121.in_EJ_R_TPES_crude_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L121.in_EJ_R_TPES_crude_Yh" )
@@ -87,7 +90,8 @@ L221.rm_biomassOil_techs_R <- repeat_and_add_vector( L221.rm_biomassOil_techs, R
 L221.rm_biomassOil_techs_R <- add_region_name( L221.rm_biomassOil_techs_R )
 L221.rm_biomassOil_techs_R <- subset( L221.rm_biomassOil_techs_R, paste( region, technology ) %!in% paste( A_regions$region, A_regions$biomassOil_tech ) )
 L221.StubTech_en <- L221.StubTech_en[
-      vecpaste( L221.StubTech_en[ c( "region", "stub.technology" ) ] ) %!in% vecpaste( L221.rm_biomassOil_techs_R[ c( "region", "technology" ) ] ), ]
+      vecpaste( L221.StubTech_en[ c( "region", "stub.technology" ) ] ) %!in%
+      vecpaste( L221.rm_biomassOil_techs_R[ c( "region", "technology" ) ] ), ]
 
 #Coefficients of global technologies
 printlog( "L221.GlobalTechCoef_en: Energy inputs and coefficients of global technologies for upstream energy handling" )
@@ -115,15 +119,28 @@ L221.PrimaryConsKeyword_en[ c( "sector.name", "subsector.name" ) ] <- L221.Prima
 L221.PrimaryConsKeyword_en <- L221.PrimaryConsKeyword_en[ c( names_GlobalTechYr, "primary.consumption" ) ]
 
 #Secondary feed outputs of biofuel production technologies
-printlog( "L221.GlobalTechSecOut_en: Secondary (feed) outputs of global technologies for upstream (bio)energy" )
+printlog( "L221.StubTechFractSecOut_en: Secondary (feed) outputs of global technologies for upstream (bio)energy" )
 printlog( "NOTE: secondary outputs are only considered in future time periods" )
-L221.GlobalTechSecOut_en <- interpolate_and_melt( A21.globaltech_secout, model_future_years, value.name="output.ratio" )
-L221.GlobalTechSecOut_en[ c( "sector.name", "subsector.name" ) ] <- L221.GlobalTechSecOut_en[ c( "supplysector", "subsector" ) ]
-L221.GlobalTechSecOut_en <- L221.GlobalTechSecOut_en[ names_GlobalTechSecOut ]
+printlog( "NOTE: secondary outputs are only written for the regions/technologies where applicable, so the global tech database can not be used" )
+# to get the appropriate region/tech combinations written out, first repeat by all regions, then subset as appropriate
+L221.globaltech_secout_R <- repeat_and_add_vector( A21.globaltech_secout, R, GCAM_region_names[[R]] )
+L221.globaltech_secout_R$sector <- calibrated_techs$sector[ match( L221.globaltech_secout_R$supplysector, calibrated_techs$minicam.energy.input ) ]
 
-# Pmultipliers of secondary outputs
-# This is designed to correct for behavioral distortions from anomalously high feedcrops prices in regions that use misc crops for this purpose. See proposal 211
-# first, calculate the approximate price of feed in each region. Share of each feed type times the price of the commodity
+#For corn ethanol, region + sector is checked. For biodiesel, need to also include the region-specific feedstocks (to exclude palm oil biodiesel producing regions)
+L221.globaltech_secout_R <- subset( L221.globaltech_secout_R,
+                                    paste( L221.globaltech_secout_R[[R]], L221.globaltech_secout_R[[ "sector" ]] ) %in%
+                                    paste( A_regions[[R]], A_regions$ethanol ) |
+                                    paste( L221.globaltech_secout_R[[R]], L221.globaltech_secout_R[[ "sector" ]], L221.globaltech_secout_R[[ tech ]] ) %in%
+                                    paste( A_regions[[R]], A_regions$biodiesel, A_regions$biomassOil_tech ) )
+#Store these regions in a separate object
+L221.ddgs_regions <- unique( L221.globaltech_secout_R[[R]] )
+L221.globaltech_secout_R <- add_region_name( L221.globaltech_secout_R )
+L221.StubTechFractSecOut_en <- interpolate_and_melt( L221.globaltech_secout_R, model_future_years, value.name="output.ratio" )
+names( L221.StubTechFractSecOut_en )[ names( L221.StubTechFractSecOut_en ) == tech ] <- "stub.technology"
+L221.StubTechFractSecOut_en <- L221.StubTechFractSecOut_en[ names_StubTechFractSecOut ]
+
+# Fraction produced as a fn of DDGS/feedcake price
+# Here we calculate the approximate price of feed in each region. Share of each feed type times the price of the commodity
 # Subset only the feed items that are considered "FeedCrops"
 L221.ag_Feed_Mt_R_C_Y <- subset( L108.ag_Feed_Mt_R_C_Y, GCAM_commodity %in% A_an_input_subsector$subsector[ A_an_input_subsector$supplysector == "FeedCrops" ] )
 L221.ag_Feed_Mt_R_Yf <- aggregate( L221.ag_Feed_Mt_R_C_Y[ X_final_historical_year ], by = L221.ag_Feed_Mt_R_C_Y[ R ], sum )
@@ -133,18 +150,28 @@ L221.ag_FeedShares_R_C_Yf <- data.frame( L221.ag_Feed_Mt_R_C_Y[ c( R, "GCAM_comm
 L221.ag_FeedShares_R_C_Yf$price <- L132.ag_an_For_Prices$calPrice[ match( L221.ag_FeedShares_R_C_Yf$GCAM_commodity, L132.ag_an_For_Prices$GCAM_commodity ) ]
 L221.ag_FeedShares_R_C_Yf$feed_price <- L221.ag_FeedShares_R_C_Yf$price * L221.ag_FeedShares_R_C_Yf[[X_final_historical_year]]
 L221.ag_FeedPrice_R_Yf <- aggregate( L221.ag_FeedShares_R_C_Yf["feed_price"], by = L221.ag_FeedShares_R_C_Yf[R], sum )
-L221.ag_FeedPrice_R_Yf$pMultiplier <- L221.ag_FeedPrice_R_Yf$feed_price[ L221.ag_FeedPrice_R_Yf[[R]] == 1 ] / L221.ag_FeedPrice_R_Yf$feed_price
+L221.ag_FeedPrice_R_Yf <- add_region_name( L221.ag_FeedPrice_R_Yf)
 
-#Extract only the PMultipliers that are significant (less than some assumed threshold) and in regions where the relevant technologies exist
-L221.PMult_R <- subset( L221.ag_FeedPrice_R_Yf, pMultiplier < max_bioliquid_Pmult &
-      GCAM_region_ID %in% A_regions[[R]][ A_regions$ethanol == "corn ethanol" | A_regions$biodiesel == "biodiesel" ] )
+# Indicate the price points for the DDG/feedcake commodity
+# This is important for ensuring that the secondary output of feedcrops from the bio-refinery feedstock pass-through sectors
+# does not exceed the indigenous market demand for feed in the animal-based commodity production sectors
+printlog( "L221.StubTechFractProd_en: cost curve points for producing secondary output feedcrops" )
+L221.StubTechFractProd_en <- L221.StubTechFractSecOut_en[ names( L221.StubTechFractSecOut_en ) != "output.ratio" ]
+L221.StubTechFractProd_en$P0 <- 0
+L221.StubTechFractProd_en$P1 <- round( L221.ag_FeedPrice_R_Yf$feed_price[
+  match( L221.StubTechFractProd_en$region, L221.ag_FeedPrice_R_Yf$region ) ],
+  digits_cost )
+L221.StubTechFractProd_en <- melt( L221.StubTechFractProd_en, measure.vars = c( "P0", "P1" ), value.name = "price" )
+L221.StubTechFractProd_en$fraction.produced <- as.numeric( sub( "P", "", L221.StubTechFractProd_en$variable ) )
+L221.StubTechFractProd_en$variable <- NULL
 
-printlog( "L221.StubTechSecPmult_en: Secondary (feed) outputs pMultipliers in regions with high feedcrop prices" )
-L221.StubTechSecPmult_en <- repeat_and_add_vector( L221.GlobalTechSecOut_en, R, L221.PMult_R[[R]] )
-L221.StubTechSecPmult_en <- add_region_name( L221.StubTechSecPmult_en )
-L221.StubTechSecPmult_en[ c( supp, subs, "stub.technology" ) ] <- L221.StubTechSecPmult_en[ c( "sector.name", "subsector.name", "technology" ) ]
-L221.StubTechSecPmult_en$pMultiplier <- round( L221.PMult_R$pMultiplier[ match( L221.StubTechSecPmult_en[[R]], L221.PMult_R[[R]] ) ], digits_efficiency )
-L221.StubTechSecPmult_en <- L221.StubTechSecPmult_en[ c( names_StubTechYr, "secondary.output", "pMultiplier" ) ]
+# Final tables for feedcrop secondary output: the resource
+L221.DepRsrc_en <- repeat_and_add_vector( A21.rsrc_info, R, L221.ddgs_regions )
+L221.DepRsrc_en <- add_region_name( L221.DepRsrc_en )[ names_DepRsrc ]
+L221.DepRsrc_en$market[ L221.DepRsrc_en$market == "regional" ] <- L221.DepRsrc_en$region[ L221.DepRsrc_en$market == "regional" ]
+L221.rsrc_prices <- interpolate_and_melt( A21.rsrc_info, model_base_years, digits = digits_cost, value.name = "price" )
+L221.DepRsrcPrice_en <- repeat_and_add_vector( L221.rsrc_prices, R, L221.ddgs_regions )
+L221.DepRsrcPrice_en <- add_region_name( L221.DepRsrcPrice_en )[ names_DepRsrcPrice ]
 
 #Coefficients of traded technologies
 printlog( "L221.TechCoef_en_Traded: Energy inputs, coefficients, and market names of traded technologies for upstream energy handling" )
@@ -297,8 +324,10 @@ write_mi_data( L221.GlobalTechCoef_en, "GlobalTechCoef", "ENERGY_LEVEL2_DATA", "
 write_mi_data( L221.GlobalTechCost_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L221.GlobalTechCost_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.GlobalTechShrwt_en, "GlobalTechShrwt", "ENERGY_LEVEL2_DATA", "L221.GlobalTechShrwt_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.PrimaryConsKeyword_en, "PrimaryConsKeyword", "ENERGY_LEVEL2_DATA", "L221.PrimaryConsKeyword_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
-write_mi_data( L221.GlobalTechSecOut_en, "GlobalTechSecOut", "ENERGY_LEVEL2_DATA", "L221.GlobalTechSecOut_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
-write_mi_data( L221.StubTechSecPmult_en, "StubTechSecPmult", "ENERGY_LEVEL2_DATA", "L221.StubTechSecPmult_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
+write_mi_data( L221.StubTechFractSecOut_en, "StubTechFractSecOut", "ENERGY_LEVEL2_DATA", "L221.StubTechFractSecOut_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
+write_mi_data( L221.StubTechFractProd_en, "StubTechFractProd", "ENERGY_LEVEL2_DATA", "L221.StubTechFractProd_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
+write_mi_data( L221.DepRsrc_en, "DepRsrc", "ENERGY_LEVEL2_DATA", "L221.DepRsrc_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
+write_mi_data( L221.DepRsrcPrice_en, "DepRsrcPrice", "ENERGY_LEVEL2_DATA", "L221.DepRsrcPrice_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechCoef_en_Traded, "TechCoef", "ENERGY_LEVEL2_DATA", "L221.TechCoef_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechCost_en_Traded, "TechCost", "ENERGY_LEVEL2_DATA", "L221.TechCost_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )
 write_mi_data( L221.TechShrwt_en_Traded, "TechShrwt", "ENERGY_LEVEL2_DATA", "L221.TechShrwt_en_Traded", "ENERGY_XML_BATCH", "batch_en_supply.xml" )

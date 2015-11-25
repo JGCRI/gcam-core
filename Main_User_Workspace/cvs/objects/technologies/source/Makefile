@@ -14,6 +14,7 @@ OBJS       = base_technology.o \
              default_technology.o \
              expenditure.o \
              fixed_production_state.o \
+             fractional_secondary_output.o \
              ag_production_technology.o \
              global_technology_database.o \
              intermittent_technology.o \

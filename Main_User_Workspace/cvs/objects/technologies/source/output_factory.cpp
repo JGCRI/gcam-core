@@ -50,6 +50,7 @@
 #include "technologies/include/residue_biomass_output.h"
 // #include "emissions/include/by_product.h"
 #include "technologies/include/internal_gains.h"
+#include "technologies/include/fractional_secondary_output.h"
 
 using namespace std;
 
@@ -64,7 +65,8 @@ bool OutputFactory::isOfType( const string& aType ) {
     return ( aType == SecondaryOutput::getXMLNameStatic() )
         || ( aType == RESSecondaryOutput::getXMLNameStatic() )
         || ( aType == InternalGains::getXMLNameStatic() )
-        || ( aType == ResidueBiomassOutput::getXMLNameStatic() );
+        || ( aType == ResidueBiomassOutput::getXMLNameStatic() )
+        || ( aType == FractionalSecondaryOutput::getXMLNameStatic() );
     // TODO: Enable byproducts code when nuclear is committed.
     //   || ( aType == ByProduct::getXMLNameStatic() );
 }
@@ -83,14 +85,17 @@ auto_ptr<IOutput> OutputFactory::create( const string& aType ) {
     if( aType == RESSecondaryOutput::getXMLNameStatic() ){
         return auto_ptr<IOutput>( new RESSecondaryOutput );
     }
-  if ( aType == ResidueBiomassOutput::getXMLNameStatic() ) {
-    return auto_ptr<IOutput>( new ResidueBiomassOutput );
-  }
+    if ( aType == ResidueBiomassOutput::getXMLNameStatic() ) {
+        return auto_ptr<IOutput>( new ResidueBiomassOutput );
+    }
     // if( aType == ByProduct::getXMLNameStatic() ){
     //    return auto_ptr<IOutput>( new ByProduct );
     //}
     if( aType == InternalGains::getXMLNameStatic() ){
         return auto_ptr<IOutput>( new InternalGains );
+    }
+    if( aType == FractionalSecondaryOutput::getXMLNameStatic() ) {
+        return auto_ptr<IOutput>( new FractionalSecondaryOutput );
     }
     // Check for consistency.
     assert( !isOfType( aType ) );

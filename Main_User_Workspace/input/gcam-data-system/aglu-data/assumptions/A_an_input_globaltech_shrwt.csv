@@ -1,0 +1,6 @@
+# File: A_an_globaltech_shrwt.csv,,,,,,
+# Description: Animal feed input default technology shareweights,,,,,,
+# Original source: NA,,,,,,
+# ----------,,,,,,
+supplysector,subsector,technology,1971,2010,2015,2100
+FeedCrops,DDGS and feedcakes,DDGS and feedcakes,0,0,1,1

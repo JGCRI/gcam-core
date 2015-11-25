@@ -1070,6 +1070,9 @@
     <ClCompile Include="..\..\solution\solvers\source\preconditioner.cpp">
       <Filter>Source Files\solution\solvers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\technologies\source\fractional_secondary_output.cpp">
+      <Filter>Source Files\technology</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2181,6 +2184,9 @@
     </ClInclude>
     <ClInclude Include="..\..\solution\solvers\include\preconditioner.hpp">
       <Filter>Header Files\solution\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\technologies\include\fractional_secondary_output.h">
+      <Filter>Header Files\technologies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

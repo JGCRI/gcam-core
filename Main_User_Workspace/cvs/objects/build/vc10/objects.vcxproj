@@ -688,6 +688,7 @@
     <ClCompile Include="..\..\technologies\source\empty_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\expenditure.cpp" />
     <ClCompile Include="..\..\technologies\source\fixed_production_state.cpp" />
+    <ClCompile Include="..\..\technologies\source\fractional_secondary_output.cpp" />
     <ClCompile Include="..\..\technologies\source\generic_output.cpp" />
     <ClCompile Include="..\..\technologies\source\global_technology_database.cpp" />
     <ClCompile Include="..\..\technologies\source\intermittent_technology.cpp" />
@@ -1023,6 +1024,7 @@
     <ClInclude Include="..\..\technologies\include\empty_technology.h" />
     <ClInclude Include="..\..\technologies\include\expenditure.h" />
     <ClInclude Include="..\..\technologies\include\fixed_production_state.h" />
+    <ClInclude Include="..\..\technologies\include\fractional_secondary_output.h" />
     <ClInclude Include="..\..\technologies\include\generic_output.h" />
     <ClInclude Include="..\..\technologies\include\global_technology_database.h" />
     <ClInclude Include="..\..\technologies\include\ical_data.h" />

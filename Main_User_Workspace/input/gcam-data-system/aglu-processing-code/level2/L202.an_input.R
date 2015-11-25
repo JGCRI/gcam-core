@@ -25,12 +25,14 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
+A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" ) # need this to tell which regions have ddgs available
 A_agRsrc <- readdata( "AGLU_ASSUMPTIONS", "A_agRsrc" )
 A_agSubRsrc <- readdata( "AGLU_ASSUMPTIONS", "A_agSubRsrc" )
 A_agRsrcCurves <- readdata( "AGLU_ASSUMPTIONS", "A_agRsrcCurves" )
 A_an_input_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_supplysector" )
 A_an_input_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_subsector" )
 A_an_input_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_technology" )
+A_an_input_globaltech_shrwt <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_globaltech_shrwt" )
 A_an_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_an_supplysector" )
 A_an_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_an_subsector" )
 A_an_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_technology" )
@@ -118,6 +120,11 @@ L202.GlobalTechCoef_in <- repeat_and_add_vector( A_an_input_technology, Y, c( mo
 L202.GlobalTechCoef_in[ c( "sector.name", "subsector.name" ) ] <- L202.GlobalTechCoef_in[ c( supp, subs ) ]
 L202.GlobalTechCoef_in <- L202.GlobalTechCoef_in[ names_GlobalTechCoef ]
 
+printlog( "L202.GlobalTechShrwt_in: Default shareweights for inputs to animal production" )
+L202.GlobalTechShrwt_in <- interpolate_and_melt( A_an_input_globaltech_shrwt, model_years, value.name="share.weight" )
+L202.GlobalTechShrwt_in[ c( "sector.name", "subsector.name" ) ] <- L202.GlobalTechShrwt_in[ c( supp, subs ) ]
+L202.GlobalTechShrwt_in <- L202.GlobalTechShrwt_in[ c( names_GlobalTechYr, "share.weight" ) ]
+
 printlog( "L202.StubTechProd_in: base year output of the inputs (feed types) to animal production" )
 L202.StubTechProd_in <- write_to_all_regions_ag( A_an_input_technology, names_Tech )
 L202.StubTechProd_in$stub.technology <- L202.StubTechProd_in$technology
@@ -126,6 +133,9 @@ L202.StubTechProd_in$calOutputValue <- round( L202.ag_Feed_Mt_R_C_Y.melt$value[
       match( vecpaste( L202.StubTechProd_in[ c( reg, tech, Y ) ] ),
              vecpaste( L202.ag_Feed_Mt_R_C_Y.melt[ c( reg, C, Y ) ] ) ) ],
       digits_calOutput )
+#This is a bit ad hoc. The DDGS/feedcake rows at this point are all missing values. They are not
+# available in the historical years so just set the calOutputValue to zero.
+L202.StubTechProd_in$calOutputValue[ is.na( L202.StubTechProd_in$calOutputValue ) ] <- 0
 #Subsector and technology shareweights (subsector requires the year as well)
 L202.StubTechProd_in$share.weight.year <- L202.StubTechProd_in$year
 L202.StubTechProd_in$subs.share.weight <- ifelse( L202.StubTechProd_in$calOutputValue > 0, 1, 0 )
@@ -208,6 +218,11 @@ L202.ag_Feed_P_share_R_C$price[ L202.ag_Feed_P_share_R_C$stub.technology %in% A_
       A_agRsrcCurves$extractioncost[
           match( paste( L202.ag_Feed_P_share_R_C$stub.technology[ L202.ag_Feed_P_share_R_C$stub.technology %in% A_agRsrcCurves$sub.renewable.resource ], "grade 2" ), 
                  paste( A_agRsrcCurves$sub.renewable.resource, A_agRsrcCurves$grade ) ) ]
+# remaining NA's are the ddgs/feedcakes. output is zero so no need for a price
+# Still go ahead and extract the name of this commodity for later use
+L202.ddgs_names <- unique( L202.ag_Feed_P_share_R_C[ is.na( L202.ag_Feed_P_share_R_C$price ), c( supp, subs, "stub.technology" ) ] )
+names( L202.ddgs_names )[ names( L202.ddgs_names ) == "stub.technology" ] <- tech
+L202.ag_Feed_P_share_R_C$price[ is.na( L202.ag_Feed_P_share_R_C$price ) ] <- 0
 L202.ag_Feed_P_share_R_C$wtd_price <- L202.ag_Feed_P_share_R_C$share_Fd * L202.ag_Feed_P_share_R_C$price
 L202.ag_FeedCost_USDkg_R_F <- aggregate( L202.ag_Feed_P_share_R_C[ "wtd_price" ],
       by=as.list( L202.ag_Feed_P_share_R_C[ c( reg, supp ) ] ), sum )
@@ -277,6 +292,12 @@ L202.StubTechFixOut_imp_an$fixedOutput[ L202.StubTechFixOut_imp_an$year > max( f
 L202.StubTechFixOut_imp_an <- L202.StubTechFixOut_imp_an[ names_StubTechFixOut ]
 
 #Remove any regions for which agriculture and land use are not modeled
+# Also, remove DDGS and feedcake subsectors and technologies in regions where these commodities are not available
+# First need to figure out what the names of these subsectors are, and which regions to exclude
+L202.no_ddgs_regions <- A_regions[[R]][ A_regions$ethanol != "corn ethanol" & paste( A_regions$biomassOil_tech, A_regions$biodiesel ) != "OilCrop biodiesel"]
+L202.no_ddgs_regions <- GCAM_region_names[[reg]][ match( L202.no_ddgs_regions, GCAM_region_names[[R]] ) ]
+L202.no_ddgs_regions_tech <- repeat_and_add_vector( L202.ddgs_names, reg, L202.no_ddgs_regions )[ c( reg, supp, subs, tech ) ]
+L202.no_ddgs_regions_subs <- unique( L202.no_ddgs_regions_tech[ c( reg, supp, subs ) ] )
 L202.RenewRsrc <- subset( L202.RenewRsrc, !region %in% no_aglu_regions )
 L202.RenewRsrcPrice <- subset( L202.RenewRsrcPrice, !region %in% no_aglu_regions )
 L202.RenewRsrcCalProd <- subset( L202.RenewRsrcCalProd, !region %in% no_aglu_regions )
@@ -292,13 +313,19 @@ L202.Supplysector_in <- subset( L202.Supplysector_in, !region %in% no_aglu_regio
 for( curr_table in names( L202.SubsectorLogitTables_in ) ) {
     if( curr_table != "EQUIV_TABLE" ) {
         L202.SubsectorLogitTables_in[[ curr_table ]]$data <- subset( L202.SubsectorLogitTables_in[[ curr_table ]]$data,
-            !region %in% no_aglu_regions )
+            !region %in% no_aglu_regions &
+            !vecpaste( L202.SubsectorLogitTables_in[[ curr_table ]]$data[ c( reg, supp, subs ) ] ) %in%
+             vecpaste( L202.no_ddgs_regions_subs[ c( reg, supp, subs ) ] ) )
     }
 }
-L202.SubsectorAll_in <- subset( L202.SubsectorAll_in, !region %in% no_aglu_regions )
-L202.StubTech_in <- subset( L202.StubTech_in, !region %in% no_aglu_regions )
-L202.StubTechInterp_in <- subset( L202.StubTechInterp_in, !region %in% no_aglu_regions )
-L202.StubTechProd_in <- subset( L202.StubTechProd_in, !region %in% no_aglu_regions )
+L202.SubsectorAll_in <- subset( L202.SubsectorAll_in, !region %in% no_aglu_regions &
+      !vecpaste( L202.SubsectorAll_in[ c( reg, supp, subs ) ] ) %in% vecpaste( L202.no_ddgs_regions_subs[ c( reg, supp, subs ) ] ) )
+L202.StubTech_in <- subset( L202.StubTech_in, !region %in% no_aglu_regions &
+      !vecpaste( L202.StubTech_in[ c( reg, supp, subs, "stub.technology" ) ] ) %in% vecpaste( L202.no_ddgs_regions_tech[ c( reg, supp, subs, tech ) ] ) )
+L202.StubTechInterp_in <- subset( L202.StubTechInterp_in, !region %in% no_aglu_regions &
+      !vecpaste( L202.StubTechInterp_in[ c( reg, supp, subs, "stub.technology" ) ] ) %in% vecpaste( L202.no_ddgs_regions_tech[ c( reg, supp, subs, tech ) ] ) )
+L202.StubTechProd_in <- subset( L202.StubTechProd_in, !region %in% no_aglu_regions &
+      !vecpaste( L202.StubTechProd_in[ c( reg, supp, subs, "stub.technology" ) ] ) %in% vecpaste( L202.no_ddgs_regions_tech[ c( reg, supp, subs, tech ) ] ) )
 for( curr_table in names( L202.SectorLogitTables_an ) ) {
     if( curr_table != "EQUIV_TABLE" ) {
         L202.SectorLogitTables_an[[ curr_table ]]$data <- subset( L202.SectorLogitTables_an[[ curr_table ]]$data,
@@ -342,6 +369,7 @@ write_mi_data( L202.SubsectorAll_in, "SubsectorAll", "AGLU_LEVEL2_DATA", "L202.S
 write_mi_data( L202.StubTech_in, "StubTech", "AGLU_LEVEL2_DATA", "L202.StubTech_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTechInterp_in, "StubTechInterp", "AGLU_LEVEL2_DATA", "L202.StubTechInterp_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.GlobalTechCoef_in, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L202.GlobalTechCoef_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+write_mi_data( L202.GlobalTechShrwt_in, "GlobalTechShrwt", "AGLU_LEVEL2_DATA", "L202.GlobalTechShrwt_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.StubTechProd_in, "StubTechProd", "AGLU_LEVEL2_DATA", "L202.StubTechProd_in", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 for( curr_table in names ( L202.SectorLogitTables_an ) ) {
 write_mi_data( L202.SectorLogitTables_an[[ curr_table ]]$data, L202.SectorLogitTables_an[[ curr_table ]]$header,
