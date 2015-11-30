@@ -1,9 +1,6 @@
 ### Compile settings for MiniCAM on Linux ###
 ### William.Gustafson@pnl.gov; 9-Sep-2008 ###
 
-### load file of system-specific library paths, etc.
-include $(BUILDPATH)/config.system
-
 ### gcc compiler settings (testing with v4.1.2) ###
 ifeq ($(strip $(CXX)),)
 CXX             = g++
@@ -35,7 +32,25 @@ USE_LAPACK = 0
 NOCLEARNULL = 0
 NOCLEARRESTORE = 0
 
+#### flag indicating whether or not to use hector
+#### If we are using hector, there are some other variables to set.
+USE_HECTOR = 0
+ifeq ($(USE_HECTOR),1)
 
+ifeq ($(strip $(GSLROOT)),)
+GSLROOT	= /usr/local
+endif
+
+## Set the GSL library locations.  There is a special case for Evergreen users.
+ifeq ($(strip $(GSLROOT)),EVERGREEN)
+GSLLIB  = $(GSL_LIB)
+else
+GSLLIB	= $(GSLROOT)/lib
+endif 
+
+HECTOR_INCLUDE = -I../../climate/source/hector/headers
+HECTOR_LIB = -L$(GSLLIB) -L$(BOOST_LIB) -Wl,-rpath,$(GSLLIB),-rpath,$(BOOST_LIB) -lhector -lgsl -lgslcblas -lboost_system -lboost_filesystem
+endif  # if(USE_HECTOR==1)
 
 ### TBB setup:  On Evergreen, using tap intel-tbb-gnu (or variants for other compilers) will set
 ### the TBB_INCDIR and TBB_LIBDIR environment variables.  These lines will create the necessary 
@@ -116,7 +131,7 @@ LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRA
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
-CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(BASEXLIB) -DGCAM_PARALLEL_ENABLED=$(GCAM_PARALLEL_ENABLED) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE)
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(BASEXLIB) -DGCAM_PARALLEL_ENABLED=$(GCAM_PARALLEL_ENABLED) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE) -DUSE_HECTOR=$(USE_HECTOR)
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
@@ -124,11 +139,12 @@ LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH
 AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
-LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c $(JAVALINK) $(TBB_LIB) $(LAPACKLINK)
-INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INCLUDE) $(BOOSTBIND) \
-                  -I$(XERCESINC) \
-                  -I${PATHOFFSET} \
-                  $(LAPACKCF)
+LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c $(JAVALINK) $(HECTOR_LIB) $(TBB_LIB) $(LAPACKLINK) -lm
+INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INCLUDE) $(BOOSTBIND) $(HECTOR_INCLUDE) \
+		 -I$(XERCESINC) \
+		 -I${PATHOFFSET} \
+		 -I${HOME}/include \
+		 $(LAPACKCF)
 
 ### rule for building the dependency information
 # %.d: %.cpp

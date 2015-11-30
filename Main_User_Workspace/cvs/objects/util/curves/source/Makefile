@@ -16,4 +16,4 @@ util_curves_dir: ${OBJS}
 -include $(DEPS)
 
 clean:
-	rm *.o
+	rm *.o *.d

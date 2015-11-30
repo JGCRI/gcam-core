@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <HectorModel>
+         <hector-end-year>2100</hector-end-year>
+         <emissions-switch-year>2005</emissions-switch-year>
+         <hector-ini-file>../input/climate/hector-gcam.ini</hector-ini-file>
+         <carbon-model-start-year>1705</carbon-model-start-year>
+      </HectorModel>
+   </world>
+</scenario>

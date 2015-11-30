@@ -70,6 +70,7 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include <typeinfo>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMNode.hpp>
@@ -1226,6 +1227,16 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
 * \param aNewNode An object to insert into the model tree if the node is unique.
 *        This node is deleted if it is not needed.
 * \param aAttrName Name of the attribute which contains the name identifier.
+
+* \remarks The attribute name isn't actually useful for this function
+*          most of the time, since the objects processed here are
+*          often unnamed singletons.  What *is* useful is the name of
+*          the class, since we occasionally have a choice as to which
+*          subclass of an abstract base we create.  Therefore, we have
+*          replaced the name attribute with typeid().name() in log
+*          messages.  The aAttrName argument is unused, but retained
+*          for backward compatibility.
+
 * \sa parseContainerNode
 */
 template<class T, class U>
@@ -1244,15 +1255,33 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
     // Check if the container has already been created.
     if( aContainer.get() ){
         // Modify or delete the node based on the contents of the delete attribute.
+
+        // get the type names of the old and new versions of the node.
+        const char *oldname = typeid(*aContainer).name();
+        const char *newname = typeid(*newNodePtr).name();
         if( shouldDelete ) {
-            // Perform deletion.
+            // Perform deletion.  Note that this will delete any
+            // object that happens to be here, even if it is of a
+            // different type than the one being parsed (e.g., a
+            // different subclass of the same base class).  This is
+            // actually what we want in a case like this.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Deleting node: " << XMLHelper<std::string>::getAttr( aNode, aAttrName ) << std::endl;
+            mainLog << "Deleting node: " << oldname << std::endl;
             aContainer.reset( 0 );
         }
         // Otherwise modify node.
         else {
+            // Check to see if the nodes are of a compatible type.  If
+            // not, it is a fatal error.
+            if(typeid(*aContainer) != typeid(*aNewNode)) {
+                ILogger &mainLog = ILogger::getLogger("main_log");
+                mainLog.setLevel(ILogger::SEVERE);
+                mainLog << "Incompatible node types:  Parsing node of type " << newname << " where node of type "
+                        << oldname << " already exists.\nError found here:" << std::endl;
+                XMLHelper<void>::printXMLTrace(aNode, mainLog);
+                abort();
+            } 
            aContainer->XMLParse( aNode );
         }
     }
@@ -1260,7 +1289,7 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
     else {
         if( shouldDelete ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
+            mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Could not delete node " << XMLHelper<std::string>::getAttr( aNode, aAttrName )
                     << " as it does not exist." << std::endl;
         }

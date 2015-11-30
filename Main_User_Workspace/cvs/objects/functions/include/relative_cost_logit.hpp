@@ -82,6 +82,8 @@ public:
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
     // IDiscreteChoice methods
+    virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
+
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut,
                              Tabs *aTabs ) const;
 

@@ -23,6 +23,7 @@
 		CD165BC81A2513F7005F3A8B /* spline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC71A2513F7005F3A8B /* spline.cpp */; };
 		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
 		CD1C993F1A3AE1E800E5F460 /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */; };
+		CD3B52C61BFE0E2800179FDD /* hector_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B52C51BFE0E2800179FDD /* hector_model.cpp */; settings = {ASSET_TAGS = (); }; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
 		CD48872C122873C200F5A88A /* land_carbon_densities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488433122873C000F5A88A /* land_carbon_densities.cpp */; };
@@ -363,6 +364,8 @@
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
 		CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = ../../../../../../../../../System/Library/Frameworks/JavaVM.framework; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD3B52C41BFE0E1F00179FDD /* hector_model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = hector_model.hpp; sourceTree = "<group>"; };
+		CD3B52C51BFE0E2800179FDD /* hector_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hector_model.cpp; sourceTree = "<group>"; };
 		CD48842C122873C000F5A88A /* asimple_carbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asimple_carbon_calc.h; sourceTree = "<group>"; };
 		CD48842D122873C000F5A88A /* carbon_model_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carbon_model_utils.h; sourceTree = "<group>"; };
 		CD48842E122873C000F5A88A /* icarbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icarbon_calc.h; sourceTree = "<group>"; };
@@ -1140,6 +1143,7 @@
 		CD488435122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD3B52C41BFE0E1F00179FDD /* hector_model.hpp */,
 				CDAF62EA130DAB6100D93AFB /* MAGICC_array.h */,
 				CDAF62EB130DAB6100D93AFB /* ObjECTS_MAGICC.h */,
 				CD488436122873C000F5A88A /* iclimate_model.h */,
@@ -1151,6 +1155,7 @@
 		CD488438122873C000F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD3B52C51BFE0E2800179FDD /* hector_model.cpp */,
 				CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */,
 				CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */,
 				CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */,
@@ -2596,6 +2601,7 @@
 				CD4887C0122873C200F5A88A /* ag_supply_subsector.cpp in Sources */,
 				CD4887C1122873C200F5A88A /* backup_calculator_factory.cpp in Sources */,
 				CD4887C4122873C200F5A88A /* capacity_limit_backup_calculator.cpp in Sources */,
+				CD3B52C61BFE0E2800179FDD /* hector_model.cpp in Sources */,
 				CD4887C5122873C200F5A88A /* CSP_backup_calculator.cpp in Sources */,
 				CD4887C6122873C200F5A88A /* energy_final_demand.cpp in Sources */,
 				CD4887C7122873C200F5A88A /* export_sector.cpp in Sources */,

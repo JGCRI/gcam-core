@@ -20,7 +20,8 @@
 		<Value write-output="0" append-scenario-name="0" name="dbFileName">../output/output.mdb</Value>
 	</Files>
 	<ScenarioComponents>
-        <Value name = "hist_emissions">../input/magicc/Historical Emissions/Default Emissions Module/Default_Emissions_Input.xml</Value>
+		<Value name = "climate">../input/climate/magicc.xml</Value>
+		<Value name = "hist_emissions">../input/magicc/Historical Emissions/Default Emissions Module/Default_Emissions_Input.xml</Value>
 		<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/interest_rate.xml</Value>
 		<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_GCAM3.xml</Value>
 		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/resources.xml</Value>

@@ -9,6 +9,7 @@ ModelTimeInterYears, modeltime/+{time-step}inter-year, modeltime/+inter-year, sc
 
 MAGICC, MagiccModel/+last-historical-year, MagiccModel/+bc-unit-forcing, MagiccModel/+carbon-model-start-year, scenario, scenario/world, world/MagiccModel
 
+hector, HectorModel/+hector-end-year, HectorModel/+emissions-switch-year, HectorModel/+hector-ini-file, HectorModel/+carbon-model-start-year, scenario, scenario/world, world/HectorModel
 
 #####, REGION
 

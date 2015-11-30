@@ -108,7 +108,6 @@ L214.LN2_HistUnmgdAllocation <- remove_AEZ_nonexist( L214.LN2_HistUnmgdAllocatio
 L214.LN2_UnmgdAllocation <- remove_AEZ_nonexist( L214.LN2_UnmgdAllocation, AEZcol = "LandNode1" )
 L214.LN1_HistProtectAllocation <- remove_AEZ_nonexist( L214.LN1_HistProtectAllocation, AEZcol = "LandNode1" )
 L214.LN1_ProtectAllocation <- remove_AEZ_nonexist( L214.LN1_ProtectAllocation, AEZcol = "LandNode1" )
-L214.LN2_UnmgdCarbon <- remove_AEZ_nonexist( L214.LN2_UnmgdCarbon, AEZcol = "LandNode1" )
 L214.LN1_ProtectCarbon <- remove_AEZ_nonexist( L214.LN1_ProtectCarbon, AEZcol = "LandNode1" )
 
 # -----------------------------------------------------------------------------
@@ -119,7 +118,7 @@ write_mi_data( L214.LN2_HistUnmgdAllocation, IDstring="LN2_HistUnmgdAllocation",
 write_mi_data( L214.LN2_UnmgdAllocation, "LN2_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L214.LN2_UnmgdAllocation","AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
 write_mi_data( L214.LN1_HistProtectAllocation, "LN1_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L214.LN1_HistProtectAllocation","AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
 write_mi_data( L214.LN1_ProtectAllocation, "LN1_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L214.LN1_ProtectAllocation","AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
-write_mi_data( L214.LN2_UnmgdCarbon, "LN2_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L214.LN2_UnmgdCarbon","AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
+# Note no need to write out managed carbon as that information is already specified elsewhere.
 write_mi_data( L214.LN1_ProtectCarbon, "LN1_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L214.LN1_ProtectCarbon","AGLU_XML_BATCH", "batch_protected_land_input_2.xml", node_rename=T  )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_protected_land_input_2.xml", "AGLU_XML_FINAL", "protected_land_input_2.xml", "", xml_tag="outFile" )

@@ -406,9 +406,9 @@ bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const
        
     // Check for error.
     if( gasIndex == INVALID_GAS_NAME ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Invalid gas name " << aGasName << " passed to the MAGICC model wrapper." << endl;
+        // no longer log an error when we get a gas we don't model.
+        // GCAM climate models are required to ignore gas names they
+        // don't understand.
         return false;
     }
 
@@ -724,7 +724,7 @@ void MagiccModel::writeComma( int gasNumber, int& numberOfDataPoints, ostringstr
 *          MAGICC input file and calls MAGICC.
 * \return Whether the model ran successfully.
 */
-bool MagiccModel::runModel(){
+enum MagiccModel::runModelStatus MagiccModel::runModel(){
     // Add on extra periods MAGICC needs. 
     // Loop through the gases and copy forward emissions.
     for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
@@ -748,7 +748,7 @@ bool MagiccModel::runModel(){
     mainLog.setLevel( ILogger::DEBUG );
     mainLog << "Finished with CLIMAT()" << endl;
     mIsValid = true;
-    return true;
+    return SUCCESS;
 }
 
 /* \brief Get the number of input gases to MAGICC.

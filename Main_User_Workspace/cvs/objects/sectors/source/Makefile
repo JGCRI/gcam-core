@@ -15,4 +15,4 @@ sectors_dir: ${OBJS}
 -include $(DEPS)
 
 clean:
-	rm *.o
+	rm *.o *.d

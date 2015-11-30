@@ -18,4 +18,4 @@ ccarbon_model_dir: ${OBJS}
 -include $(DEPS)
 
 clean:
-	rm *.o
+	rm *.o *.d

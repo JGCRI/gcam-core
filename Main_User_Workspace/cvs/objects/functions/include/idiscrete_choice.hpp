@@ -87,6 +87,11 @@ public:
                              Tabs* aTabs ) const = 0;
 
     /*!
+     * \brief Return the actual XML name of the object.
+     */
+    virtual const std::string& getXMLName() const = 0;
+  
+    /*!
      * \brief Compute the unnormalized share given the cost and share weight of the
      *        give option.
      * \param aShareWeight The weighting term used in the share calculation.

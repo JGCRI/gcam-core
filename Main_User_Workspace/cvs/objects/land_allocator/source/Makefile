@@ -20,4 +20,4 @@ land_allocator_dir: ${OBJS}
 -include $(DEPS)
 
 clean:
-	rm *.o
+	rm *.o *.d

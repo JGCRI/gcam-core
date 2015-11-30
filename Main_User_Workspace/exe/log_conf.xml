@@ -57,4 +57,18 @@
 		<minToScreenWarningLevel>3</minToScreenWarningLevel>
 		<headerMessage>{date}:{time}</headerMessage>
 	</Logger>
+	<Logger name="climate-log" type="PlainTextLogger">
+		<FileName>logs/climate-log.txt</FileName>
+		<printLogWarningLevel>0</printLogWarningLevel>
+		<minLogWarningLevel>0</minLogWarningLevel>
+		<minToScreenWarningLevel>3</minToScreenWarningLevel>
+		<headerMessage>{date}:{time}</headerMessage>
+	</Logger>
+	<Logger name="target_finder_log" type="PlainTextLogger">
+		<FileName>logs/target_finder_log.txt</FileName>
+		<printLogWarningLevel>0</printLogWarningLevel>
+		<minLogWarningLevel>0</minLogWarningLevel>
+		<minToScreenWarningLevel>3</minToScreenWarningLevel>
+		<headerMessage>{date}:{time}</headerMessage>
+	</Logger>
 </LoggerFactory>

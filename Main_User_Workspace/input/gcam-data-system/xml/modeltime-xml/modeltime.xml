@@ -6,11 +6,4 @@
       <end-year>2100</end-year>
       <inter-year time-step="5">2005</inter-year>
    </modeltime>
-   <world>
-      <MagiccModel>
-         <last-historical-year>2005</last-historical-year>
-         <bc-unit-forcing>0</bc-unit-forcing>
-         <carbon-model-start-year>1705</carbon-model-start-year>
-      </MagiccModel>
-   </world>
 </scenario>

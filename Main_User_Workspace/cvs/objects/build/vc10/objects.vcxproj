@@ -532,6 +532,7 @@
     <ClCompile Include="..\..\ccarbon_model\source\land_carbon_densities.cpp" />
     <ClCompile Include="..\..\ccarbon_model\source\node_carbon_calc.cpp" />
     <ClCompile Include="..\..\ccarbon_model\source\no_emiss_carbon_calc.cpp" />
+    <ClCompile Include="..\..\climate\source\hector_model.cpp" />
     <ClCompile Include="..\..\climate\source\MAGICC_array.cpp" />
     <ClCompile Include="..\..\climate\source\MAGICC_IO_helpers.cpp" />
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC.cpp" />
@@ -841,6 +842,7 @@
     <ClInclude Include="..\..\ccarbon_model\include\land_carbon_densities.h" />
     <ClInclude Include="..\..\ccarbon_model\include\node_carbon_calc.h" />
     <ClInclude Include="..\..\ccarbon_model\include\no_emiss_carbon_calc.h" />
+    <ClInclude Include="..\..\climate\include\hector_model.hpp" />
     <ClInclude Include="..\..\climate\include\MAGICC_array.h" />
     <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h" />
     <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />

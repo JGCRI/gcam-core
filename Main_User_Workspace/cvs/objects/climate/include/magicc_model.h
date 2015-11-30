@@ -80,6 +80,7 @@ public:
     virtual void completeInit( const std::string& aScenarioName );
     
     static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
     virtual void XMLParse( const xercesc::DOMNode* node );
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
@@ -95,7 +96,7 @@ public:
     virtual double getEmissions( const std::string& aGasName,
                                  const int aYear ) const;
 
-    virtual bool runModel();
+    virtual enum runModelStatus runModel();
 
     virtual double getConcentration( const std::string& aGasName,
                                      const int aYear ) const;

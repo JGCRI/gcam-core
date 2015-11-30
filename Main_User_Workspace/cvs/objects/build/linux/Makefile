@@ -1,7 +1,11 @@
 # Top level Makefile for MiniCAM
 # William.Gustafson@pnl.gov; 9-Sep-2008
 
+## pointer back to build directory for subsidiary makefiles
 export BUILDPATH = $(PWD)
+## Load system-specific paths
+include ./config.system
+## Load configuration
 include ./configure.gcam
 
 OBJDIR = ./objs
@@ -11,10 +15,7 @@ all: gcam
 gcam-prof: export PROF = -pg
 gcam-prof: libgcam.a main_dir
 
-gcam: libgcam.a
-	rm -f ../../main/source/gcam.exe
-	$(MAKE) -C ../../main/source  BUILDPATH=$(BUILDPATH) main_dir 
-	cp ../../main/source/gcam.exe ../../../../exe/
+gcam: libgcam.a main_dir
 
 libgcam.a: dirs
 	$(AR) libgcam.a $(OBJDIR)/*.o
@@ -38,17 +39,24 @@ solution_%_dir:
 	ln -sf $(PWD)/../../$*/source/*.o $(OBJDIR)
 
 # main has additional instructions and doesn't do the softlink
-main_dir :
+main_dir : libgcam.a
 	@ echo '----------------------------------------------------------------'
 	rm -f ../../main/source/gcam.exe
 	$(MAKE) -C ../../main/source  BUILDPATH=$(BUILDPATH) main_dir 
 	cp ../../main/source/gcam.exe ../../../../exe/
+	@echo BUILD COMPLETED
+	@date
 
+
+install_hector:
+	cd ../../climate/source && $(MAKE) install_hector
 
 # target for debugging configure.gcam 
 varchk:
+	@echo GCAMLIB_HOME:  $(GCAMLIB_HOME)
 	@echo INCLUDE: $(INCLUDE)
 	@echo BOOSTINC: $(BOOSTINC)
+	@echo BOOST_LIB: $(BOOST_LIB)
 	@echo TBB_INCLUDE: $(TBB_INCLUDE)
 	@echo BOOSTBIND: $(BOOSTBIND)
 	@echo DBXMLINC: $(DBXMLINC)
@@ -61,6 +69,7 @@ varchk:
 	@echo LAPACKLD: $(LAPACKLD)
 	@echo LDFLAGS: $(LDFLAGS)
 	@echo LIB: $(LIB)
+	@echo HECTOR_LIB: $(HECTOR_LIB)
 
 clean :
 	-$(RM) libgcam.a

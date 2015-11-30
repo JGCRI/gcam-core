@@ -98,7 +98,9 @@ public:
     void calc( const int period );
     void calc( const int period, const std::vector<IActivity*>& aRegionsToCalc );
     void updateSummary( const std::list<std::string> aPrimaryFuelList, const int period ); 
+    void setEmissions( int period );
     void runClimateModel();
+    void runClimateModel( int period );
     void csvOutputFile() const; 
     void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const; 
     const std::map<std::string,int> getOutputRegionMap() const;
