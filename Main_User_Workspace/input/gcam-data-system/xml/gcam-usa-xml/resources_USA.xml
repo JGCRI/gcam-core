@@ -264,7 +264,7 @@
                <techChange fillout="1" year="2085">0.004</techChange>
                <maxSubResource>0.094728984206904</maxSubResource>
                <mid-price>14.6227092621534</mid-price>
-               <curve-exponent>4.84658837786437</curve-exponent>
+               <curve-exponent>4.84658837786438</curve-exponent>
                <gdpSupplyElast>0.1</gdpSupplyElast>
             </smooth-renewable-subresource>
          </renewresource>

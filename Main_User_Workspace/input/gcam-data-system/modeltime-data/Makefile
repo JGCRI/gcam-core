@@ -9,6 +9,7 @@ RCMD	= R CMD BATCH --no-save --no-restore
 export MODELTIMEPROC = ../modeltime-processing-code
 export MODELTIMEDAT	= .
 export MODELTIMEXML = ../xml/modeltime-xml
+export CLIMATEXML = ../../climate
 export COMMON = ../_common
 
 L2SCRIPTS = $(wildcard $(MODELTIMEPROC)/level2/*.R)
@@ -17,7 +18,8 @@ L2LOGS	  = $(patsubst %.R,%.R.log,$(subst /level2/,/logs/,$(L2SCRIPTS)))
 LOGDEPS	  = $(wildcard $(MODELTIMEPROC)/logs/*.d)
 
 XML_BATCH_FILES = $(wildcard $(MODELTIMEPROC)/xml-batch/*.xml)
-XML_FILES = $(subst batch_,,$(subst $(MODELTIMEPROC)/xml-batch,$(MODELTIMEXML),$(XML_BATCH_FILES)))
+#XML_FILES = $(subst batch_,,$(subst $(MODELTIMEPROC)/xml-batch,$(MODELTIMEXML),$(XML_BATCH_FILES)))
+XML_FILES = $(MODELTIMEXML)/modeltime.xml ../../climate/magicc.xml ../../climate/hector.xml
 
 include $(LOGDEPS)
 
@@ -32,6 +34,10 @@ $(MODELTIMEPROC)/logs/L2%.log: $(MODELTIMEPROC)/level2/L2%
 	$(RCMD) $< $(MODELTIMEPROC)/logs/L2.Rout
 
 $(MODELTIMEXML)/%.xml: $(MODELTIMEPROC)/xml-batch/batch_%.xml
+	@echo $?
+	java -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
+
+$(CLIMATEXML)/%.xml: $(MODELTIMEPROC)/xml-batch/batch_%.xml
 	@echo $?
 	java -jar $(COMMON)/ModelInterface/src/CSVToXML.jar $<
 
