@@ -1,6 +1,9 @@
 ### Compile settings for MiniCAM on Linux ###
 ### William.Gustafson@pnl.gov; 9-Sep-2008 ###
 
+### load file of system-specific library paths, etc.
+include $(BUILDPATH)/config.system
+
 ### gcc compiler settings (testing with v4.1.2) ###
 ifeq ($(strip $(CXX)),)
 CXX             = g++
