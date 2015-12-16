@@ -59,6 +59,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.net.URI;
 import javax.swing.*;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.event.ListSelectionListener;
@@ -123,7 +124,15 @@ import org.jfree.ui.FloatDimension;
 
 import org.apache.poi.hssf.usermodel.*;
 
-import com.sleepycat.dbxml.*;
+import org.basex.query.QueryException;
+import org.basex.query.QueryProcessor;
+import org.basex.query.iter.Iter;
+import org.basex.query.value.node.ANode;
+import org.basex.query.value.node.DBNode;
+import org.basex.query.value.item.Item;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXDoc;
+import org.basex.util.Token;
 
 public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	private JFrame parentFrame;
@@ -327,10 +336,10 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			} else {
 				final FileFilter dbFilter = (new javax.swing.filechooser.FileFilter() {
 					public boolean accept(File f) {
-						return f.getName().toLowerCase().endsWith(".dbxml") || f.isDirectory();
+						return f.isDirectory();
 					}
 					public String getDescription() {
-						return "BDB XML Container (*.dbxml)";
+						return "Directory for a BaseX DB";
 					}
 				});
 				FileChooser fc = FileChooserFactory.getFileChooser();
@@ -359,14 +368,12 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			} else {
 				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", batchFiles[0].getParent());
 
-                // TODO: we are currently limiting oursleves to xls files.  Figoure out the best way to switch
-                // between xls and csv.
 				final FileFilter xlsFilter = (new javax.swing.filechooser.FileFilter() {
 					public boolean accept(File f) {
-						return f.getName().toLowerCase().endsWith(".xls") || f.isDirectory();
+						return f.getName().toLowerCase().endsWith(".xls") || f.getName().toLowerCase().endsWith(".csv") || f.isDirectory();
 					}
 					public String getDescription() {
-						return "Microsoft Excel File(*.xls)";
+						return "Microsoft Excel File(*.xls) or CSV (*.csv)";
 					}
 				});
 				File[] xlsFiles = fc.doFilePrompt(parentFrame, "Select Where to Save Output", FileChooser.SAVE_DIALOG, 
@@ -376,7 +383,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					return;
 				} else {
                     for(int i = 0; i < xlsFiles.length; ++i) {
-                        if(!xlsFiles[i].getName().endsWith(".xls")) {
+                        if(!xlsFiles[i].getName().endsWith(".xls") && !xlsFiles[i].getName().endsWith(".csv")) {
                             xlsFiles[i] = new File(xlsFiles[i].getAbsolutePath()+".xls");
                         }
                     }
@@ -438,20 +445,30 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	}
 
 	private Vector<ScenarioListItem> getScenarios() {
-		XmlValue temp;
 		Vector<ScenarioListItem> ret = new Vector<ScenarioListItem>();
+        QueryProcessor queryProc = XMLDB.getInstance().createQuery("/scenario", null, null, null);
 		try {
-			XmlResults res = XMLDB.getInstance().createQuery("/scenario", null, null, null);
-			while(res.hasNext()) {
-				temp = res.next();
-				Map<String, String> scnAttrMap = XMLDB.getAttrMap(temp);
-				XmlDocument tempDoc = temp.asDocument();
-				ret.add(new ScenarioListItem(tempDoc.getName(), scnAttrMap.get("name"), scnAttrMap.get("date")));
+            Iter res = queryProc.iter();
+            ANode temp;
+			while((temp = (ANode)res.next()) != null) {
+                BXNode tempNode = BXNode.get(temp);
+                BXDoc doc = new BXDoc(temp.parent());
+                String docName = "";
+                try {
+                    URI baseURI = new URI(tempNode.getBaseURI()+"/"+XMLDB.getInstance().getContainer());
+                    URI fullDocURI = new URI(doc.getDocumentURI());
+                    docName = baseURI.relativize(fullDocURI).getPath();
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+				Map<String, String> scnAttrMap = XMLDB.getAttrMap(tempNode);
+				ret.add(new ScenarioListItem(docName, scnAttrMap.get("name"), scnAttrMap.get("date")));
 			}
-			res.delete();
-		} catch(XmlException e) {
+		} catch(QueryException e) {
 			e.printStackTrace();
-		}
+		} finally {
+            queryProc.close();
+        }
 		return ret;
 	}
 
@@ -464,18 +481,20 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
 		Vector ret = new Vector();
+        QueryProcessor queryProc = XMLDB.getInstance().createQuery("/scenario/world/"+
+                ModelInterface.ModelGUI2.queries.QueryBuilder.regionQueryPortion+"/@name", funcTemp, null, null);
 		try {
-			XmlResults res = XMLDB.getInstance().createQuery("/scenario/world/"+
-					ModelInterface.ModelGUI2.queries.QueryBuilder.regionQueryPortion+"/@name", funcTemp, null, null);
-			while(res.hasNext()) {
-				ret.add(res.next().asString());
+            Iter res = queryProc.iter();
+            Item temp;
+			while((temp = res.next()) != null) {
+				ret.add(temp.toJava());
 			}
-			res.delete();
-		} catch(XmlException e) {
+		} catch(QueryException e) {
 			e.printStackTrace();
-		}
+		} finally {
+            queryProc.close();
+        }
 		ret.add("Global");
-		funcTemp = null;
 		return ret;
 	}
 
@@ -1318,7 +1337,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		}
 		//create window
 
-		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, singleSheetCheckBox.isSelected(), drawPicsCheckBox.isSelected(), 
+        // Provide the default set of all regions which does not include Global
+        Vector<String> allRegions = new Vector<String>(regions);
+        allRegions.remove("Global");
+
+		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, allRegions, singleSheetCheckBox.isSelected(), drawPicsCheckBox.isSelected(), 
 				numQueries,res, parentFrame, overwriteCheckBox.isSelected(), false);
 		//create listener for window
 
@@ -1550,25 +1573,28 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
 				// get the cache document, if there is an exception getting it then it 
 				// may not exsist so we can try to create it
-				XmlDocument doc = null;
 				XMLDB xmldbInstance = XMLDB.getInstance();
+                QueryProcessor queryProc = xmldbInstance.createQuery("/singleQueryListCache", null, null, null);
+				ANode doc = null;
 				try {
-					doc = xmldbInstance.getDocument("cache");
-				} catch(XmlException e) {
-					// might not exsist yet so create it.
-					doc = xmldbInstance.createDocument("cache", "<singleQueryListCache />");
-				}
-				// if it is still null there is a real problem so notify the user that it
-				// is not going to work and return
-				if(doc == null) {
-					scanDialog.setVisible(false);
-					JOptionPane.showMessageDialog(parentFrame,
-							"Could not get cache from the database.",
-							"Cache Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
+                    Iter res = queryProc.iter();
+                    doc = (ANode)res.next();
+                    if(doc == null) {
+                        // Try to create it then get the doc
+                        xmldbInstance.addFile("cache.xml", "<singleQueryListCache />");
+                        queryProc = xmldbInstance.createQuery("/singleQueryListCache", null, null, null);
+                        res = queryProc.iter();
+                        doc = (ANode)res.next();
+                    }
+				} catch(QueryException e) {
+                    // TODO: put error to screen?
+                    e.printStackTrace();
+				} finally {
+                    queryProc.close();
+                }
 
-				boolean wasInterrupted = false;
+                // a final check if we were not able to get the doc then do not scan
+				boolean wasInterrupted = doc == null;
 
 				// for each query that is enabled have the extension create and cache it's 
 				// single query list.  The cache will be set as metadata on the cache doc
@@ -1583,12 +1609,6 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					}
 					SwingUtilities.invokeLater(incProgress);
 					wasInterrupted = Thread.interrupted();
-				}
-
-				// don't forget to write the changes to the cache back to the db
-				// but only if we were not canceled
-				if(!wasInterrupted) {
-					xmldbInstance.updateDocument(doc);
 				}
 
 				// clean up and take down the progress bar
@@ -1796,9 +1816,13 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                         }
                     }
 
+                    // Provide the default set of all regions which does not include Global
+                    Vector<String> allRegions = getRegions();
+                    allRegions.remove("Global");
+
                     // run the queries and wait for them to finish so that we
                     // can close the database
-                    BatchWindow runner = new BatchWindow(outFile, toRunScns, singleSheet, includeCharts, numQueries, res, parentFrame, replaceResults, true);
+                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet, includeCharts, numQueries, res, parentFrame, replaceResults, true);
                     if(runner != null) {
                         runner.waitForFinish();
                     }

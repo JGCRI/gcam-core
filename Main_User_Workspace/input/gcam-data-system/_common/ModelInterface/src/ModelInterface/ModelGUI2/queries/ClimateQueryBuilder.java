@@ -47,7 +47,8 @@ import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlValue;
+import org.basex.query.value.node.ANode;
+import org.basex.api.dom.BXNode;
 
 public class ClimateQueryBuilder extends QueryBuilder {
 	public static Map<String, Boolean> varList;
@@ -165,8 +166,8 @@ public class ClimateQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
-		axisValue.setValue(currNode.getNodeName());
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+		axisValue.setValue(BXNode.get(currNode).getNodeName());
 		return qg.defaultAddToDataTree(currNode, dataTree, axisValue, isGlobal);
 	}
 }

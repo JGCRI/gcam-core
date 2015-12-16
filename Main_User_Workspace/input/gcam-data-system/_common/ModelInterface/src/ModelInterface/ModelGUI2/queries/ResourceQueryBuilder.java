@@ -49,10 +49,6 @@ import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
-
 public class ResourceQueryBuilder extends QueryBuilder {
 	static Map varList;
 	protected Map resourceList;
@@ -307,6 +303,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		return ret.toString();
 	}
 	private String expandGroupName(String gName) {
+        /*
 		String query;
 		StringBuffer ret = new StringBuffer();
 		if(qg.currSel == 3) {
@@ -314,7 +311,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		} else if(qg.currSel == 4) {
 			query = subresourceQueryPortion.substring(0, subresourceQueryPortion.length()-1)+" and child::group[@name='"+gName+"']]/@name";
 		} else {
-			query = "*/"+subresourceQueryPortion+"/grade[child::group[@name='"+gName+"']]/@name";
+			query = "* /"+subresourceQueryPortion+"/grade[child::group[@name='"+gName+"']]/@name";
 		}
 		//XmlResults res = XMLDB.getInstance().createQuery(query+"[child::group[@name='"+gName+"']]/@name");
 		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+query, queryFunctions, null, null);
@@ -327,6 +324,9 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		}
 		ret.delete(ret.length()-4, ret.length());
 		return ret.toString();
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	private void createXPath() {
 		qg.xPath = createListPath(6);
@@ -347,6 +347,7 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		qg.axis2Name = "Year";
 	}
 	private Map createList(String path, boolean isGroupNames) {
+        /*
 		LinkedHashMap ret = new LinkedHashMap();
 		if(!isGroupNames && qg.isSumable) {
 			ret.put("Sum All", new Boolean(false));
@@ -366,6 +367,9 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		}
 		res.delete();
 		return ret;
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;

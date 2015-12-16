@@ -33,7 +33,7 @@ import ModelInterface.common.DataPair;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import com.sleepycat.dbxml.XmlValue;
+import org.basex.query.value.node.ANode;
 import java.util.Map;
 import java.util.Vector;
 import java.util.EventListener;
@@ -85,7 +85,7 @@ public abstract class QueryBuilder implements java.io.Serializable {
 		qg = qgIn;
 	}
 	public abstract List<String> getDefaultCollpaseList();
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		return qg.defaultAddToDataTree(currNode, dataTree, axisValue, isGlobal);
 	}
 }

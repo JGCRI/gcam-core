@@ -32,14 +32,14 @@ package ModelInterface.ModelGUI2.undo;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CannotRedoException;
 
-import com.sleepycat.dbxml.XmlQueryContext;
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
-
 import ModelInterface.ModelGUI2.ScenarioListItem;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.xmldb.XMLDB;
+
+import org.basex.query.QueryProcessor;
+import org.basex.query.QueryException;
+import org.basex.query.iter.Iter;
+import org.basex.query.value.node.ANode;
 
 public class RenameScenarioUndoableEdit extends MiAbstractUndoableEdit {
 
@@ -89,32 +89,26 @@ public class RenameScenarioUndoableEdit extends MiAbstractUndoableEdit {
 	/**
 	 * Renames a scenario with the same date as in oldName and the
 	 * name of fromName then tells the DbViewer to refersh it's
-	 * scenario list.  First queries the db to the get the correct
+	 * scenario list.  First queries the db to get the correct
 	 * scenario context node then uses the xmldb's setValue to do 
 	 * the work.
 	 * @param fromName The scenario name that is going to be replaced.
 	 * @param toName The scenario will be named after this method.
 	 */
 	private void doRename(String fromName, String toName) {
-		// As of dbxml 2.4 we must get an eager result otherwise we will have a deadlock
-		// when we try to update
-		XmlQueryContext qc = XMLDB.getInstance().createQueryContext();
-		XmlResults res = null;
+        QueryProcessor queryProc = XMLDB.getInstance().createQuery(
+                "/scenario[@date='"+oldName.getScnDate()+"' and @name='"+fromName+"']/@name", null, null, null);
 		try { 
-			qc.setEvaluationType(XmlQueryContext.Eager);
-			res = XMLDB.getInstance().createQuery(
-					"/scenario[@date='"+oldName.getScnDate()+"' and @name='"+fromName+"']/@name", null, null, null, qc);
+            Iter res = queryProc.iter();
 			// if it has no results that is bad.. I'll just go with the null pointer exception
-			XmlValue context = res.next();
+			ANode context = (ANode)res.next();
 			XMLDB.getInstance().setValue(context, toName);
 			viewer.resetScenarioList();
-		} catch(XmlException e) {
+		} catch(QueryException e) {
 			// TODO: put an error up on the screen
 			e.printStackTrace();
 		} finally {
-			if(res != null) {
-				res.delete();
-			}
+            queryProc.close();
 		}
 	}
 }

@@ -49,10 +49,6 @@ import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
-
 public class MarketQueryBuilder extends QueryBuilder {
 	public static Map varList;
 	protected Map goodList;
@@ -192,6 +188,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 		}
 	}
 	private String expandGroupName(String gName) {
+        /*
 		StringBuffer ret = new StringBuffer();
 		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+"market/[child::group[@name='"+gName+"']]/@name",
 				queryFunctions, null, null);
@@ -204,6 +201,9 @@ public class MarketQueryBuilder extends QueryBuilder {
 		}
 		ret.delete(ret.length()-4, ret.length());
 		return ret.toString();
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	private void createXPath() {
 		qg.xPath = createListPath(0);
@@ -244,6 +244,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 		return ret.toString();
 	}
 	private Map createList(String path, boolean isGroupNames) {
+        /*
 		System.out.println("Query path: "+path);
 		LinkedHashMap ret = new LinkedHashMap();
 		/*
@@ -251,7 +252,7 @@ public class MarketQueryBuilder extends QueryBuilder {
 			ret.put("Sum All", new Boolean(false));
 			ret.put("Group All", new Boolean(false));
 		}
-		*/
+		* /
 		XmlResults res = XMLDB.getInstance().createQuery(queryFilter+path, queryFunctions, null, null);
 		try {
 			while(res.hasNext()) {
@@ -266,6 +267,9 @@ public class MarketQueryBuilder extends QueryBuilder {
 		}
 		res.delete();
 		return ret;
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	public String getCompleteXPath(Object[] regions) {
 		StringBuffer ins = new StringBuffer();

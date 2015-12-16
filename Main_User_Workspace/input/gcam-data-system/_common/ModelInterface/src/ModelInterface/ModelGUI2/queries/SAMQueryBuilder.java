@@ -48,9 +48,7 @@ import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.value.node.ANode;
 
 public class SAMQueryBuilder extends QueryBuilder {
 	/*
@@ -439,7 +437,7 @@ public class SAMQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		throw new UnsupportedOperationException("Have not converted this query builder yet");
 	}
 }

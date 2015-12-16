@@ -48,10 +48,6 @@ import java.util.LinkedHashMap;
 import java.util.HashMap;
 import java.util.EventListener;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
-
 public class InputQueryBuilder extends QueryBuilder {
 	public static Map varList;
 	protected Map sectorList;
@@ -315,6 +311,7 @@ public class InputQueryBuilder extends QueryBuilder {
 		return ret.toString();
 	}
 	private String expandGroupName(String gName) {
+        /*
 		String query;
 		StringBuffer ret = new StringBuffer();
 		if(qg.currSel == 4) {
@@ -339,6 +336,9 @@ public class InputQueryBuilder extends QueryBuilder {
 		}
 		ret.delete(ret.length()-4, ret.length());
 		return ret.toString();
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	private void createXPath() {
 		String yearLevel = null;
@@ -381,6 +381,7 @@ public class InputQueryBuilder extends QueryBuilder {
 		qg.axis2Name = "Year";
 	}
 	private Map createList(String path, boolean isGroupNames) {
+        /*
 		LinkedHashMap ret = new LinkedHashMap();
 		if(!isGroupNames && qg.isSumable) {
 			ret.put("Sum All", new Boolean(false));
@@ -400,6 +401,9 @@ public class InputQueryBuilder extends QueryBuilder {
 		}
 		res.delete();
 		return ret;
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;

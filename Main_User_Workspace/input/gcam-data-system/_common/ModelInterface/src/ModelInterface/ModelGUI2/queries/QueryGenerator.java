@@ -65,9 +65,9 @@ import java.awt.event.KeyEvent;
 
 import java.util.regex.*;
 
-import com.sleepycat.dbxml.XmlResults;
-import com.sleepycat.dbxml.XmlValue;
-import com.sleepycat.dbxml.XmlException;
+import org.basex.query.value.node.ANode;
+import org.basex.api.dom.BXNode;
+import org.basex.api.dom.BXElem;
 
 public class QueryGenerator implements java.io.Serializable{
 	private transient Frame parentFrame;
@@ -563,6 +563,7 @@ public class QueryGenerator implements java.io.Serializable{
 		list.setSelectedRows(selected);
 	}
 	private String expandGroupName(String gName) {
+        /*
 		String query;
 		StringBuffer ret = new StringBuffer();
 		if(currSel == 3) {
@@ -586,6 +587,9 @@ public class QueryGenerator implements java.io.Serializable{
 		}
 		ret.delete(ret.length()-4, ret.length());
 		return ret.toString();
+        */
+        // TODO: reimplement?
+        return null;
 	}
 	public String getXPath() {
 		return xPath;
@@ -807,26 +811,27 @@ public class QueryGenerator implements java.io.Serializable{
 			return defaultCompleteXPath(regions);
 		}
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+	public Map addToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		if(qb != null) {
 			return qb.addToDataTree(currNode, dataTree, axisValue, isGlobal);
 		} else {
 			return defaultAddToDataTree(currNode, dataTree, axisValue, isGlobal);
 		}
 	}
-	Map defaultAddToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+	Map defaultAddToDataTree(ANode currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+        BXNode currDOM = BXNode.get(currNode);
+		if (currDOM.getNodeType() == BXNode.DOCUMENT_NODE) {
 			return dataTree;
 		}
 		// recursively process parents first
-		Map tempMap = defaultAddToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
+		Map tempMap = defaultAddToDataTree(currNode.parent(), dataTree, axisValue, isGlobal);
 
 		// cache node properties since these may need to go back to the database which could
 		// be expensive
-		String nodeName = currNode.getNodeName();
+		String nodeName = currDOM.getNodeName();
 		// run functions can not utilize an attribute map cache since they rely on getNodeHandle
 		// which is not available in those kinds of queries
-		Map<String, String> attrMap = !isRunFunction ? XMLDB.getAttrMapWithCache(currNode) : XMLDB.getAttrMap(currNode);
+		Map<String, String> attrMap = !isRunFunction ? XMLDB.getAttrMapWithCache(currDOM) : XMLDB.getAttrMap(currDOM);
 
 		// set the type as the node name if it does not have a type attribute
 		String type = attrMap.get("type");
