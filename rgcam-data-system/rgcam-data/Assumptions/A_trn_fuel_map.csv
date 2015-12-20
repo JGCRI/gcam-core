@@ -1,7 +1,0 @@
-# Mapping between fuel names used in processing and the name used in the model,
-# Source: Tables_Trn_Data.xlsx,
-GCAM_name,Proc_name
-refined liquids enduse,refined liquids
-delivered coal,coal
-elect_td_trn,electricity
-delivered gas,gas

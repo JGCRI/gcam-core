@@ -1,4 +1,0 @@
-# This table contains subsector level interpolation rules,,,,,,,
-# Source: Tables_Dom_Data.xlsx,,,,,,,
-supplysector,subsector,sw_1975,sw_1990,sw_2005,from_year,to_year,interpolation_function
-domestic water,domestic water,1,1,1,2005,9999,fixed

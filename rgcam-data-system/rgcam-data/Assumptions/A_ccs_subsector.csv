@@ -1,4 +1,0 @@
-# Subsector level parameters,,,,,,,,
-# Source: Tables_CCS_Data.xlsx,,,,,,,,
-supplysector,subsector,sw_2020,sw_2035,sw_2050,sw_2065,sw_2080,sw_2095,logit
-carbon-storage,carbon-storage regional,1,1,1,1,1,1,-3

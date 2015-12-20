@@ -1,8 +1,0 @@
-# File: A_LandNode3.csv,,
-# Description: Third level land nodes,,
-# Original source: Land_nesting_structure.xls,,
-# ----------,,
-LandNode1,LandNode2,LandNode3
-AgroForestLand,AgroForest_NonPasture,AllForestLand
-AgroForestLand,AgroForest_NonPasture,GrassShrubLand
-AgroForestLand,AgroForest_NonPasture,CropLand

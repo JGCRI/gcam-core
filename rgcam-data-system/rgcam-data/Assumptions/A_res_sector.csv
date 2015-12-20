@@ -1,4 +1,0 @@
-# Sector level parameters,,,,,,
-# Source: Tables_Res_Data.xlsx,,,,,,
-supplysector,input_unit,output_unit,price_unit,electricity_reserve_margin,average_grid_capacity_factor,logit
-elect_td_bld,EJ,EJ,1975$/GJ,0.15,0.6,-3

@@ -1,1 +1,0 @@
-# Fuel preference elasticities for industrial energy use. Using rules rather than ad-hoc regional assignments,,,subsector,criteria,share,fuelprefElasticitybiomass,greater than,0.15,-0.1biomass,greater than,0.3,-0.4gas,lesser than,0.1,0.1

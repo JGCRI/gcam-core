@@ -1,6 +1,0 @@
-# This table contains sector level assumptions,,,,
-# Source: Tables_Ind_Data.xlsx,,,,
-supplysector,output_unit,input_unit,price_unit,logit
-industrial energy use,EJ,EJ,1975$/GJ,-3
-industrial feedstocks,EJ,EJ,1975$/GJ,-1
-industry,EJ,EJ,1975$/GJ,-3

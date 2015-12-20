@@ -1,5 +1,0 @@
-# Subsector level interpolation functions,,,,,,,
-# Source: Tables_Res_Data.xlsx,,,,,,,
-supplysector,subsector,sw_1975,sw_1990,sw_2005,from_year,to_year,interpolation_function
-elect_td_bld,elect_td_bld,1,1,1,2005,2095,fixed
-elect_td_bld,rooftop_pv,0,0,0,2005,2020,linear

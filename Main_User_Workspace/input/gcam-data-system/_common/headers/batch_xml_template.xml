@@ -1,6 +1,0 @@
-<ModelInterfaceBatch>
-	<class name="ModelInterface.ModelGUI2.InputViewer">
-	<command name="CSV file">
- 	</command>
-	</class>
-</ModelInterfaceBatch>

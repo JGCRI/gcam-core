@@ -1,5 +1,0 @@
-# Costs etc for a renewable subresource,,,,
-# Source: Tables_Res_Data.xlsx,,,,
-resource,subresource,grade,extractionCost,available
-geothermal,hydrothermal,grade 1,0.064442957,0
-geothermal,hydrothermal,grade 2,0.569094409,1.00

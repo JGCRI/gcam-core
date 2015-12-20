@@ -1,7 +1,0 @@
-# Assumed subsector logit exponents,
-# Source: Tables_ElecS_Data.xlsx,
-supplysector,subs_logit
-base load generation,-3
-intermediate generation,-3
-subpeak generation,-3
-peak generation,-3

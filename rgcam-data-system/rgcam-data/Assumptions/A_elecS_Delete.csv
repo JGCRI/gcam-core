@@ -1,7 +1,0 @@
-# This table lists the various elements to be deleted from the existing electricity generation sectors from the USA,
-# Source: Tables_ElecS_Data.xlsx,
-region,supplysector
-USA,base load generation
-USA,intermediate generation
-USA,subpeak generation
-USA,peak generation
