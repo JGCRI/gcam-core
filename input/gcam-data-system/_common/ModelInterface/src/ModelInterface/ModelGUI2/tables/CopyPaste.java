@@ -154,7 +154,7 @@ public class CopyPaste implements ActionListener{
 				(numCols-1==colsSelected[colsSelected.length-1]-colsSelected[0] &&
 				numCols==colsSelected.length)))
 			{
-				JOptionPane.showMessageDialog(null, "Invalid Copy Selection",
+				InterfaceMain.getInstance().showMessageDialog("Invalid Copy Selection",
 											  "Invalid Copy Selection",
 											  JOptionPane.ERROR_MESSAGE);
 				return; //cancel copy

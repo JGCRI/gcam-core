@@ -123,7 +123,6 @@ public class BatchWindow extends Window {
 	final JFrame parentFrame;
 	Thread exportThread;
 	final boolean overwriteFile;
-	final boolean suppressMessages;
 	final JProgressBar progressBar;
 	final Runnable increaseProgress;
 	final Window progressDialog;
@@ -221,12 +220,11 @@ public class BatchWindow extends Window {
 	 * @param res The XPath results which will contain the aQuery to run.
 	 * @param parentFrame the parent frame GUI
 	 * @param overwriteFile Boolean option to overwrite existing file
-	 * @param suppressMessages Boolean to indicate to avoid popping up dialog boxes which require user intervention.
 	 */
 	public BatchWindow(final File outputFile, final Vector<Object[]> toRunScns,
 			final Vector<String> allRegions, final boolean singleSheet, final boolean drawPics,
 			final int numQueries, final XPathResult res, final JFrame parentFrame,
-			final boolean overwriteFile, final boolean suppressMessages) {
+			final boolean overwriteFile) {
 
 
 
@@ -241,7 +239,6 @@ public class BatchWindow extends Window {
 		this.res = res;
 		this.parentFrame = parentFrame;
 		this.overwriteFile = overwriteFile;
-        this.suppressMessages = suppressMessages;
 
         // determine the proper number of threads to use for queries by
         // checking the configuration parameter which defaults to the
@@ -297,11 +294,9 @@ public class BatchWindow extends Window {
 						wb = new HSSFWorkbook(new FileInputStream(outputFile));
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
-                        if(!suppressMessages) {
-						JOptionPane.showMessageDialog(parentFrame,
+						InterfaceMain.getInstance().showMessageDialog(
 								"There was an error while trying to open "+outputFile,
 								"Batch Query Error", JOptionPane.ERROR_MESSAGE);
-                        }
 						progressDialog.dispose();
 						return;
 					}
@@ -541,29 +536,21 @@ public class BatchWindow extends Window {
                 wb.write(fos);
                 fos.close();
                 if(numErrors == 0) {
-                    System.out.println("Sucessfully ran batch query.");
-                    if(!suppressMessages) {
-                        JOptionPane.showMessageDialog(parentFrame,
-                                "Sucessfully ran batch query",
-                                "Batch Query", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    InterfaceMain.getInstance().showMessageDialog(
+                            "Sucessfully ran batch query",
+                            "Batch Query", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // warn the users that some queries had errors
                     final String message = "Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s.");
-                    System.out.println(message);
-                    if(!suppressMessages) {
-                        JOptionPane.showMessageDialog(parentFrame,
-                                message,
-                                "Batch Query", JOptionPane.WARNING_MESSAGE);
-                    }
+                    InterfaceMain.getInstance().showMessageDialog(
+                            message,
+                            "Batch Query", JOptionPane.WARNING_MESSAGE);
                 }
             } catch(IOException ioe) {
                 ioe.printStackTrace();
-                if(!suppressMessages) {
-                    JOptionPane.showMessageDialog(parentFrame,
-                            "There was an error while trying to write results",
-                            "Batch Query Error", JOptionPane.ERROR_MESSAGE);
-                }
+                InterfaceMain.getInstance().showMessageDialog(
+                        "There was an error while trying to write results",
+                        "Batch Query Error", JOptionPane.ERROR_MESSAGE);
             } finally {
                 progressDialog.dispose();
             }
@@ -631,29 +618,21 @@ public class BatchWindow extends Window {
                 outputStream.print(outputBuf.toString());
                 outputStream.close();
                 if(numErrors == 0) {
-                    System.out.println("Sucessfully ran batch query.");
-                    if(!suppressMessages) {
-                        JOptionPane.showMessageDialog(parentFrame,
-                                "Sucessfully ran batch query",
-                                "Batch Query", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    InterfaceMain.getInstance().showMessageDialog(
+                            "Sucessfully ran batch query",
+                            "Batch Query", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // warn the users that some queries had errors
                     final String message = "Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s.");
-                    System.out.println(message);
-                    if(!suppressMessages) {
-                        JOptionPane.showMessageDialog(parentFrame,
-                                message,
-                                "Batch Query", JOptionPane.WARNING_MESSAGE);
-                    }
+                    InterfaceMain.getInstance().showMessageDialog(
+                            message,
+                            "Batch Query", JOptionPane.WARNING_MESSAGE);
                 }
             } catch(IOException ioe) {
                 ioe.printStackTrace();
-                if(!suppressMessages) {
-                    JOptionPane.showMessageDialog(parentFrame,
-                            "There was an error while trying to write results",
-                            "Batch Query Error", JOptionPane.ERROR_MESSAGE);
-                }
+                InterfaceMain.getInstance().showMessageDialog(
+                        "There was an error while trying to write results",
+                        "Batch Query Error", JOptionPane.ERROR_MESSAGE);
             } finally {
                 progressDialog.dispose();
             }

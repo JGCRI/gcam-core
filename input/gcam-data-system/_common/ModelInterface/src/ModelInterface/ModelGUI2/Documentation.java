@@ -376,9 +376,9 @@ public class Documentation {
 
 	public void getDocumentation(Vector<Node> selectedNodes, int[] rows, int[] cols) {
 		if(documentationURI == null) {
-			JOptionPane.showMessageDialog(ModelInterface.InterfaceMain.getInstance(), 
-				"Please select a documentation file, or type in the name of a\nnew documentation file to create a new one.\nYou must save the XML to save the link to the documentation file.", "Add new Documentation File", JOptionPane.INFORMATION_MESSAGE);
 			final InterfaceMain parentFrame = InterfaceMain.getInstance();
+			parentFrame.showMessageDialog(
+				"Please select a documentation file, or type in the name of a\nnew documentation file to create a new one.\nYou must save the XML to save the link to the documentation file.", "Add new Documentation File", JOptionPane.INFORMATION_MESSAGE);
 			FileChooser fc = FileChooserFactory.getFileChooser();
 			File[] result = fc.doFilePrompt(parentFrame, "Select Documentation File", FileChooser.SAVE_DIALOG, 
 					new File(parentFrame.getProperties().getProperty("lastDirectory", ".")),
@@ -480,10 +480,6 @@ public class Documentation {
 			addToDocumentation(selectedNodes, notFoundNames, docMaps);
 		}
 		if(docMaps.size() == 0) {
-			/*
-			JOptionPane.showMessageDialog(ModelInterface.InterfaceMain.getInstance(), "Couldn't find any documentation", 
-					"Annotation Error", JOptionPane.WARNING_MESSAGE);
-			*/
 			return;
 		}
 		final JDialog docDialog = new JDialog(ModelInterface.InterfaceMain.getInstance(), "Annotation", false);
@@ -638,9 +634,9 @@ public class Documentation {
 
 	private void addToDocumentation(final Vector<Node> selectedNodes, final Vector<String> notFoundNames, 
 			final Map<Integer, LinkedList<String>> docMaps) {
-		if(JOptionPane.showConfirmDialog(ModelInterface.InterfaceMain.getInstance(), 
+		if(ModelInterface.InterfaceMain.getInstance().showConfirmDialog(
 			"Warning Some of the nodes selected did not have documentation\n Would you like to add documentation now?",
-			"Missing Documentation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.NO_OPTION) {
+			"Missing Documentation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, JOptionPane.NO_OPTION) == JOptionPane.NO_OPTION) {
 			return;
 		}
 		final Vector<String> docNames = new Vector<String>(documentations.size());

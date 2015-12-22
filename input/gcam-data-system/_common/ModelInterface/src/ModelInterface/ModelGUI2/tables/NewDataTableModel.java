@@ -392,7 +392,7 @@ public class NewDataTableModel extends BaseTableModel{
 			if( updown == null || side == null ) {
 				// throw some exception
 				System.out.println("Couldn't gather enough info to create Node");
-				JOptionPane.showMessageDialog(parentFrame, 
+				InterfaceMain.getInstance().showMessageDialog(
 						"Couldn't gather enough information to \ncreate the data",
 						"Set Value Error", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -697,20 +697,6 @@ public class NewDataTableModel extends BaseTableModel{
 
 			int where = wb.addPicture(new org.jfree.chart.encoders.SunJPEGEncoderAdapter().encode(chartImage), HSSFWorkbook.PICTURE_TYPE_JPEG);
 			dp.createPicture(new HSSFClientAnchor(0,0,255,255,firstCol,firstRow,colSpan,rowSpan), where);
-			
-			
-			//TODO: Make this a user selectable option
-			/*
-			try {
-				File outputfile = new File("saved.jpg");
-				ImageIO.write(chartImage, "jpg", outputfile);
-			} catch (IOException e3){
-				JOptionPane.showMessageDialog(parentFrame, 
-						"Image didn't save",
-						"Who knows why", JOptionPane.ERROR_MESSAGE);
-			}
-			*/	
-
 		} catch(java.io.IOException ioe) {
 			ioe.printStackTrace();
 		}

@@ -73,6 +73,7 @@ import java.awt.event.KeyEvent;
 import java.awt.Container;
 import java.awt.BorderLayout;
 import java.awt.Cursor;
+import java.awt.GraphicsEnvironment;
 
 public class InterfaceMain extends JFrame implements ActionListener {
 	/**
@@ -111,6 +112,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 	private List<MenuAdder> menuAdders;
 
+    private boolean isBatchMode;
+
 	/**
 	 * Main function, creates a new thread for the gui and runs it.
 	 */
@@ -120,29 +123,12 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		//Schedule a job for the event-dispatching thread:
 		//creating and showing this application's GUI.
 
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			// warn the user.. should be ok to keep going
-			System.out.println("Error setting look and feel: " + e);
-		}
-		/* does seem to work for ^C or end tasks..
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			public void run() {
-				System.out.println("IS this even running");
-				javax.swing.SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						main.fireControlChange("InterfaceMain");
-					}
-				});
-			}
-		});
-		*/
-
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread t, Throwable e) {
-				JOptionPane.showMessageDialog(null, e, "Unexpected Error", 
-					JOptionPane.ERROR_MESSAGE);
+                if(InterfaceMain.getInstance() != null ) {
+                    InterfaceMain.getInstance().showMessageDialog(e, "Unexpected Error", 
+                        JOptionPane.ERROR_MESSAGE);
+                }
 				// still print the stack trace to the console for debugging
 				e.printStackTrace();
 			}
@@ -155,14 +141,23 @@ public class InterfaceMain extends JFrame implements ActionListener {
             if(args[0].equals("-b")) {
                 File batchFile = new File(args[1]);
                 main  = new InterfaceMain("Model Interface");
+                main.isBatchMode = true;
                 main.initialize();
-                main.runBatch(batchFile, true);
+                main.runBatch(batchFile);
                 main.dispose();
             } else {
                 System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
             }
             return;
         }
+
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			// warn the user.. should be ok to keep going
+			System.out.println("Error setting look and feel: " + e);
+		}
+
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -206,6 +201,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		contentPane.setLayout(new BorderLayout());
 
 		oldControl = "ModelInterface";
+
+        isBatchMode = false;
 	}
 
 	private void initialize() {
@@ -373,7 +370,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
                 public void run() {
                     if(result != null) {
                         for(File file : result) {
-                            runBatch(file, false);
+                            runBatch(file);
                         }
                     }
                     // TODO: message that all were run
@@ -563,10 +560,9 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 * and if any of the class implements BatchRunner it will pass
 	 * it off the command to that class. 
 	 * @param file The batch file to run.
-	 * @param suppressMessages Boolean to indicate to avoid popping up dialog boxes which require user intervention.
 	 * @see BatchRunner 
 	 */
-	private void runBatch(File file, boolean suppressMessages) {
+	private void runBatch(File file) {
 		// don't really care about document element's name
 		Node doc = FileUtils.loadDocument(this, file, null).getDocumentElement();
 
@@ -587,20 +583,105 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				if(runner != null && runner instanceof BatchRunner) {
 					((BatchRunner)runner).runBatch(currClass);
 				} else {
-					System.out.println("could not find batch runner for class "+className);
-                    if(!suppressMessages) {
-					JOptionPane.showMessageDialog(this,
+					showMessageDialog(
 							"Could not find batch runner for class "+className,
 							"Batch File Error", JOptionPane.ERROR_MESSAGE);
-                    }
 				}
 			}
 		}
-		System.out.println("Finished running "+file);
-        if(!suppressMessages) {
-		JOptionPane.showMessageDialog(this,
+		showMessageDialog(
 				"Finished running batch file "+file.getName(),
 				"Batch File Complete", JOptionPane.INFORMATION_MESSAGE);
-        }
 	}
+    /**
+     * Convert JOptionPane message types to string so that they can be
+     * logged to the console.
+     * @param messageType The JOptionPane message type.
+     * @return A string representing the meaning of messageType.
+     */
+    private static String convertMessageTypeToString(int messageType) {
+        switch(messageType) {
+            case JOptionPane.ERROR_MESSAGE:
+                return "ERROR";
+            case JOptionPane.INFORMATION_MESSAGE:
+                return "INFO";
+            case JOptionPane.PLAIN_MESSAGE:
+                return "PLAIN";
+            case JOptionPane.QUESTION_MESSAGE:
+                return "QUESTION";
+            case JOptionPane.WARNING_MESSAGE:
+                return "WARNING";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
+    /**
+     * Wrapper for JOptionPane.showMessageDialog which checks if we are running
+     * headless.  If we are running headless a message is just written to stdout
+     * instead of popping up on screen.
+     * @param message The message to show.
+     * @param title The title of the dialog.
+     * @param messageType The message type.
+     */
+    public void showMessageDialog(Object message, String title, int messageType) {
+        //if(GraphicsEnvironment.isHeadless()) {
+        if(isBatchMode) {
+            // Convert the message dialog to a console log
+            System.out.print(convertMessageTypeToString(messageType));
+            System.out.print("; ");
+            System.out.println(message);
+        } else {
+            // Just forward to JOptionPane
+            JOptionPane.showMessageDialog(this, message, title, messageType);
+        }
+    }
+
+    /**
+     * Convert JOptionPane option types to string so that they can be
+     * logged to the console.
+     * @param optionType The JOptionPane option type.
+     * @return A string representing the meaning of optionType.
+     */
+    private static String convertOptionTypeToString(int optionType) {
+        switch(optionType) {
+            case JOptionPane.CANCEL_OPTION:
+                return "CANCEL";
+            case JOptionPane.CLOSED_OPTION:
+                return "CLOSED";
+            case JOptionPane.NO_OPTION:
+                return "NO";
+            case JOptionPane.YES_OPTION:
+                return "YES";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
+    /**
+     * Wrapper for JOptionPane.showConfirmDialog which checks if we are running
+     * headless.  If we are running headless a message is just written to stdout
+     * instead of popping up on screen and the defaultOption will be selected.
+     * @param message The message to show.
+     * @param title The title of the dialog.
+     * @param optionType The option types to choose from.
+     * @param messageType The message type.
+     * @param defaultOption The default option to choose when running headless.
+     * @return The option chosen.
+     */
+    public int showConfirmDialog(Object message, String title, int optionType, int messageType, int defaultOption) {
+        //if(GraphicsEnvironment.isHeadless()) {
+        if(isBatchMode) {
+            // Convert the message dialog to a console log
+            System.out.print("YES/NO/CANCEL");
+            System.out.print("; ");
+            System.out.print(message);
+            System.out.print("; ");
+            System.out.println(convertOptionTypeToString(defaultOption));
+            return defaultOption;
+        } else {
+            // Just forward to JOptionPane
+            return JOptionPane.showConfirmDialog(this, message, title, optionType, messageType);
+        }
+    }
 }

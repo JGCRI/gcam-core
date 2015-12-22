@@ -124,14 +124,14 @@ public abstract class BaseTableModel extends AbstractTableModel {
 						// is there a better way than to do this..
 						if(thisTableModel instanceof NewDataTableModel) {
 							//((NewDataTableModel)thisTableModel).filterData();
-							JOptionPane.showMessageDialog(parentFrame,
+							InterfaceMain.getInstance().showMessageDialog(
 								"This table does not support filtering",
 								"Table Filter Error", JOptionPane.ERROR_MESSAGE);
 						} else {
 							thisTableModel.filterData();
 						}
 					} catch (UnsupportedOperationException uoe) {
-						JOptionPane.showMessageDialog(parentFrame,
+						InterfaceMain.getInstance().showMessageDialog(
 							"This table does not support filtering",
 							"Table Filter Error", JOptionPane.ERROR_MESSAGE);
 					}
@@ -356,7 +356,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 				filterDialog.dispose();
 			}else{
 				// make user try again ..
-				JOptionPane.showMessageDialog(null, "Error: You must choose exactly two (2)!");
+				InterfaceMain.getInstance().showMessageDialog("Error: You must choose exactly two (2)!", null, JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	});

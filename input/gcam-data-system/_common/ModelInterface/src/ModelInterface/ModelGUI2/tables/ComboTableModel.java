@@ -569,7 +569,7 @@ public class ComboTableModel extends BaseTableModel{
 			if(/* updown == null ||*/ side == null ) {
 				// throw some exception
 				System.out.println("Couldn't gather enough info to create Node");
-				JOptionPane.showMessageDialog(parentFrame, 
+				InterfaceMain.getInstance().showMessageDialog(
 						"Couldn't gather enough information to \ncreate the data",
 						"Set Value Error", JOptionPane.ERROR_MESSAGE);
 				return;

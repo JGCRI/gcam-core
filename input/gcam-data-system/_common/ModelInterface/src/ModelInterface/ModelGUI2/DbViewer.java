@@ -173,11 +173,10 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 							((QueryResultsPanel)tablesTabs.getComponentAt(tab)).killThreadAndWait();
 						}
 
-						if(queries.hasChanges() && JOptionPane.showConfirmDialog(
-								parentFrame, 
+						if(queries.hasChanges() && InterfaceMain.getInstance().showConfirmDialog(
 								"The Queries have been modified.  Do you want to save them?",
 								"Confirm Save Queries", JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+								JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION) {
 							writeQueries();
 						}
 						Properties prop = ((InterfaceMain)parentFrame).getProperties();
@@ -243,14 +242,14 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
 			if (implls == null) {
 				System.out.println("Could not find a DOM3 Load-Save compliant parser.");
-				JOptionPane.showMessageDialog(parentFrame,
+				InterfaceMain.getInstance().showMessageDialog(
 						"Could not find a DOM3 Load-Save compliant parser.",
 						"Initialization Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 		} catch (Exception e) {
 			System.err.println("Couldn't initialize DOMImplementation: " + e);
-			JOptionPane.showMessageDialog(parentFrame,
+			InterfaceMain.getInstance().showMessageDialog(
 					"Couldn't initialize DOMImplementation\n" + e,
 					"Initialization Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
@@ -408,10 +407,10 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 						file = new File(file.getAbsolutePath() + ".xml");
 					}
 				}
-				if (!file.exists() || JOptionPane.showConfirmDialog(null,
+				if (!file.exists() || InterfaceMain.getInstance().showConfirmDialog(
 						"Overwrite existing file?", "Confirm Overwrite",
 						JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION) {
 					((InterfaceMain)parentFrame).getProperties().setProperty("queryFile", 
 							file.getAbsolutePath());
 					writeQueries();
@@ -430,7 +429,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			e.printStackTrace();
 			parentFrame.getGlassPane().setVisible(false);
 			// tell the user it didn't open.
-			JOptionPane.showMessageDialog(parentFrame, "Could not open the xml database.", 
+			InterfaceMain.getInstance().showMessageDialog("Could not open the xml database.", 
 					"DB Open Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
@@ -706,7 +705,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() != 1) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select one Query or Query Group before creating", 
+					InterfaceMain.getInstance().showMessageDialog("Please select one Query or Query Group before creating", 
 							"Create Query Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -725,7 +724,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select a Query or Query Group to Remove", 
+					InterfaceMain.getInstance().showMessageDialog("Please select a Query or Query Group to Remove", 
 							"Query Remove Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					TreePath[] selPaths = queryList.getSelectionPaths();
@@ -741,13 +740,13 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				int[] scnSel = scnList.getSelectedIndices();
 				int[] regionSel = regionList.getSelectedIndices();
 				if(scnSel.length == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select Scenarios to run the query against", 
+					InterfaceMain.getInstance().showMessageDialog("Please select Scenarios to run the query against", 
 							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else if(regionSel.length == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select Regions to run the query against", 
+					InterfaceMain.getInstance().showMessageDialog("Please select Regions to run the query against", 
 							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select a query to run", 
+					InterfaceMain.getInstance().showMessageDialog("Please select a query to run", 
 							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					parentFrame.getGlassPane().setVisible(true);
@@ -789,7 +788,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select a query to edit", 
+					InterfaceMain.getInstance().showMessageDialog("Please select a query to edit", 
 							"Edit Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					TreePath[] selPaths = queryList.getSelectionPaths();
@@ -1089,10 +1088,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 						}
 						jd.setVisible(false);
 						if(success) {
-							JOptionPane.showMessageDialog(parentFrame, "Scenario export succeeded.");
+							InterfaceMain.getInstance().showMessageDialog("Scenario export succeeded.",
+                                "Scenario Export", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else {
-							JOptionPane.showMessageDialog(parentFrame, "Scenario export failed.", null, JOptionPane.ERROR_MESSAGE);
+							InterfaceMain.getInstance().showMessageDialog("Scenario export failed.", null, JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}).start();
@@ -1321,7 +1321,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
 		final int numQueries = res.getSnapshotLength();
 		if(numQueries == 0) {
-			JOptionPane.showMessageDialog(parentFrame, "Could not find queries to run in batch file:\n"+queryFile,
+			InterfaceMain.getInstance().showMessageDialog("Could not find queries to run in batch file:\n"+queryFile,
 					"Batch Query Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
@@ -1342,7 +1342,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
         allRegions.remove("Global");
 
 		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, allRegions, singleSheetCheckBox.isSelected(), drawPicsCheckBox.isSelected(), 
-				numQueries,res, parentFrame, overwriteCheckBox.isSelected(), false);
+				numQueries,res, parentFrame, overwriteCheckBox.isSelected());
 		//create listener for window
 
 
@@ -1822,27 +1822,17 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
                     // run the queries and wait for them to finish so that we
                     // can close the database
-                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet, includeCharts, numQueries, res, parentFrame, replaceResults, true);
+                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet, includeCharts, numQueries, res, parentFrame, replaceResults);
                     if(runner != null) {
                         runner.waitForFinish();
                     }
                 } catch(Exception e) {
                     e.printStackTrace();
-                    /*
-                    JOptionPane.showMessageDialog(parentFrame,
-                            "Recieved error while running: "+e.getMessage(),
-                            "Batch File Error", JOptionPane.ERROR_MESSAGE);
-                            */
                 } finally {
                     XMLDB.closeDatabase();
                 }
 			} else {
 				System.out.println("Unknown command: "+actionCommand);
-                /*
-				JOptionPane.showMessageDialog(parentFrame,
-						"Unknown command: "+actionCommand,
-						"Batch File Error", JOptionPane.ERROR_MESSAGE);
-                        */
 			}
 		}
 	}

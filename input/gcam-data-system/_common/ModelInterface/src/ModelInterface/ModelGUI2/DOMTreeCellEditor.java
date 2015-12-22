@@ -49,6 +49,7 @@ import java.util.Iterator;
 
 import org.w3c.dom.Node;
 
+import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.DOMmodel.DOMNodeAdapter;
 
 /**
@@ -171,10 +172,9 @@ public class DOMTreeCellEditor implements TreeCellEditor {
 			// don't need to do anything
 		} else if (initEditVal.getNodeType() == Node.ELEMENT_NODE) {
 			if(!currVal.matches("^\\s*[\\w\\-_]+\\s*(?:,\\s*[\\w\\-_]+\\s*=\\s*\"[^\"]+\"\\s*)*\\s*$")) {
-				Object[] options = {"Edit", "Cancel"};
-				int ans = JOptionPane.showOptionDialog(SwingUtilities.getWindowAncestor(tf), 
+				int ans = InterfaceMain.getInstance().showConfirmDialog(
 						"Node names and attributes must be specified in the format:\nNodeName[, AttrName=\"AttrValue\"]..", 
-						"Invalid Format", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, null, options, options[1]);
+						"Invalid Format", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE, JOptionPane.YES_OPTION);
 				if(ans == 1) {
 					cancelCellEditing();
 					return true;

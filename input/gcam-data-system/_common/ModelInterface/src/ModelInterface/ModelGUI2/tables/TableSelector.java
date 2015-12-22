@@ -56,24 +56,6 @@ public class TableSelector extends JDialog implements ActionListener {
 	private void showDialog() {
 		setVisible(true);
 	}
-	/*
-	public static String showDialog(Component frameComp,
-									Component locationComp,
-									String labelText,
-									String title,
-									String[] possibleValues,
-									String initialValue) {
-		Frame frame = JOptionPane.getFrameForComponent(frameComp);
-		dialog = new TableSelector(frame,
-								locationComp,
-								labelText,
-								title,
-								possibleValues,
-								initialValue);
-		dialog.setVisible(true);
-		return value;
-	}
-	*/
 
 	/**
 	 * Initializes some of the data and creates the list of selections, and sets up

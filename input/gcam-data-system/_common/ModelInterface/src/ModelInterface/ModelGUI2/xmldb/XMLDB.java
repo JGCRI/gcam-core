@@ -29,6 +29,7 @@
 */
 package ModelInterface.ModelGUI2.xmldb;
 
+import ModelInterface.InterfaceMain;
 import ModelInterface.common.LRUCacheMap;
 import ModelInterface.ModelGUI2.queries.*;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
@@ -165,9 +166,9 @@ public class XMLDB {
             e.printStackTrace();
             // Ask the user if we should attempt to create a new database since doing so
             // will delete all files in the directory.
-            int ans = JOptionPane.showConfirmDialog(parentFrame,
+            int ans = InterfaceMain.getInstance().showConfirmDialog(
                     "Could not open the database.  Attempt to create a new one?\nWARNING doing so will delete all files in the directory.",
-                    "Open DB Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    "Open DB Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, JOptionPane.NO_OPTION);
             if(ans == JOptionPane.YES_OPTION) {
                 // If this generates and exception let it pass along.
                 new CreateDB(contName).execute(context);
@@ -484,7 +485,7 @@ public class XMLDB {
 						});
 					}
 					String message = gotVars ? "Finished getting new variables." : "There were no new variables.";
-					JOptionPane.showMessageDialog(parentFrame, message, "Get Variables", 
+					InterfaceMain.getInstance().showMessageDialog(message, "Get Variables", 
 							JOptionPane.INFORMATION_MESSAGE);
 					} catch(XmlException e) {
 						e.printStackTrace();
