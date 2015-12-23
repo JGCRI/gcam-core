@@ -177,6 +177,10 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			e.printStackTrace();
 		}
 		thisViewer = this;
+        if(parentFrame == null) {
+            // no gui components available such as in batch mode.
+            return;
+        }
 
 		// Create a window to display the chart in.
 		chartWindow = new JFrame( "Charts" );

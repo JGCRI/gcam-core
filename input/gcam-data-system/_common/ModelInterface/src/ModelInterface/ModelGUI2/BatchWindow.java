@@ -271,14 +271,14 @@ public class BatchWindow {
 		increaseProgress = new Runnable() {
             int numRun = 0;
 			public void run() {
+                ++numRun;
                 if(progressBar != null) {
                     progressBar.setValue(progressBar.getValue()+1);
                 } else {
-                    System.out.print("Complted ");
-                    System.out.print(numRun / totalQueriesToExcute);
+                    System.out.print("Completed ");
+                    System.out.print(numRun * 100.0 / totalQueriesToExcute);
                     System.out.println("% of batch queries.");
                 }
-                ++numRun;
 			}
 		};
 

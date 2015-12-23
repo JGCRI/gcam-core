@@ -163,6 +163,31 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
         final InterfaceMain main = InterfaceMain.getInstance();
         final JFrame parentFrame = main.getFrame();
 		final DbViewer thisViewer = this;
+
+		try {
+			DOMImplementationRegistry reg = DOMImplementationRegistry
+			.newInstance();
+			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
+			if (implls == null) {
+				System.out.println("Could not find a DOM3 Load-Save compliant parser.");
+				InterfaceMain.getInstance().showMessageDialog(
+						"Could not find a DOM3 Load-Save compliant parser.",
+						"Initialization Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		} catch (Exception e) {
+			System.err.println("Couldn't initialize DOMImplementation: " + e);
+			InterfaceMain.getInstance().showMessageDialog(
+					"Couldn't initialize DOMImplementation\n" + e,
+					"Initialization Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+        if(parentFrame == null) {
+            // no gui components available such as in batch mode.
+            return;
+        }
+
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
@@ -230,24 +255,6 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			}
 		});
 
-		try {
-			DOMImplementationRegistry reg = DOMImplementationRegistry
-			.newInstance();
-			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
-			if (implls == null) {
-				System.out.println("Could not find a DOM3 Load-Save compliant parser.");
-				InterfaceMain.getInstance().showMessageDialog(
-						"Could not find a DOM3 Load-Save compliant parser.",
-						"Initialization Error", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-		} catch (Exception e) {
-			System.err.println("Couldn't initialize DOMImplementation: " + e);
-			InterfaceMain.getInstance().showMessageDialog(
-					"Couldn't initialize DOMImplementation\n" + e,
-					"Initialization Error", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}
 	}
 
 	private JMenuItem makeMenuItem(String title) {

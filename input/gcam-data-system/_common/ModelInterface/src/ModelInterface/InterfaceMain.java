@@ -115,7 +115,9 @@ public class InterfaceMain implements ActionListener {
 
 	private List<MenuAdder> menuAdders;
 
-    private boolean isBatchMode;
+    /**
+     * The main GUI from the rest of the GUI components of the ModelInterface will rely on.
+     */
     private JFrame mainFrame;
 
 	/**
@@ -143,10 +145,21 @@ public class InterfaceMain implements ActionListener {
             return;
         } else if(args.length == 2) {
             if(args[0].equals("-b")) {
+                System.setProperty("java.awt.headless", "true");
+                System.out.println("Running headless? "+GraphicsEnvironment.isHeadless());
                 File batchFile = new File(args[1]);
                 main  = new InterfaceMain();
-                main.isBatchMode = true;
-                //main.initialize();
+
+                // Construct the subset of menu adders that are also BatchRunner while
+                // avoiding creating any GUI components
+                // TODO: avoid code duplication
+                final MenuAdder dbView = new DbViewer();
+                final MenuAdder inputView = new InputViewer();
+                main.menuAdders = new ArrayList<MenuAdder>(2);
+                main.menuAdders.add(dbView);
+                main.menuAdders.add(inputView);
+
+                // Run the batch file
                 main.runBatch(batchFile);
             } else {
                 System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
@@ -204,8 +217,6 @@ public class InterfaceMain implements ActionListener {
 			}
 		}
 		oldControl = "ModelInterface";
-
-        isBatchMode = false;
 	}
 
 	private void initialize() {
@@ -633,8 +644,7 @@ public class InterfaceMain implements ActionListener {
      * @param messageType The message type.
      */
     public void showMessageDialog(Object message, String title, int messageType) {
-        //if(GraphicsEnvironment.isHeadless()) {
-        if(isBatchMode) {
+        if(GraphicsEnvironment.isHeadless()) {
             // Convert the message dialog to a console log
             System.out.print(convertMessageTypeToString(messageType));
             System.out.print("; ");
@@ -678,8 +688,7 @@ public class InterfaceMain implements ActionListener {
      * @return The option chosen.
      */
     public int showConfirmDialog(Object message, String title, int optionType, int messageType, int defaultOption) {
-        //if(GraphicsEnvironment.isHeadless()) {
-        if(isBatchMode) {
+        if(GraphicsEnvironment.isHeadless()) {
             // Convert the message dialog to a console log
             System.out.print("YES/NO/CANCEL");
             System.out.print("; ");
