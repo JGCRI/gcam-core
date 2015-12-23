@@ -96,16 +96,15 @@ public class XMLDB {
 	/**
 	 * Opens a new xml database at the given location.
 	 * @param dbLocation The location of the database to open.
-	 * @param parentFrame The frame that can be used to display errors on.
 	 * @throws Exception If a database is already open or there was an error opening the database.
 	 */ 
-	public static void openDatabase(String dbLocation, JFrame parentFrame) throws Exception {
+	public static void openDatabase(String dbLocation) throws Exception {
 		// WARNING: not thread safe
 		if(xmldbInstance != null) {
 			throw new Exception("Could not open databse because "+xmldbInstance.contName+
 					" is still open");
 		}
-		xmldbInstance = new XMLDB(dbLocation, parentFrame);
+		xmldbInstance = new XMLDB(dbLocation);
 	}
 
 	/**
@@ -126,10 +125,10 @@ public class XMLDB {
 		}
 	}
 
-	private XMLDB(String db, JFrame parentFrame) throws Exception {
-		openDB(db, parentFrame);
+	private XMLDB(String db) throws Exception {
+		openDB(db);
 	}
-	private void openDB(String dbPath, JFrame parentFrame) throws Exception {
+	private void openDB(String dbPath) throws Exception {
 		String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
         // The db Context will check the org.basex.DBPATH property when it is created
         // and use it as the base path for finding all collections/containers
@@ -353,7 +352,7 @@ public class XMLDB {
             queryProc.close();
 		}
 	}
-	public void addVarMetaData(final Frame parentFrame) {
+	public void addVarMetaData() {
         /*
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Eager);
@@ -362,7 +361,7 @@ public class XMLDB {
 			// instead of having to determine the size of prog bar, should be figured out
 			// by the number of query builders..
 			final JProgressBar progBar = new JProgressBar(0, res.size()*7);
-			final JDialog jd = createProgressBarGUI(parentFrame, progBar, "Getting Variables", "Finding new variables");
+			final JDialog jd = createProgressBarGUI(progBar, "Getting Variables", "Finding new variables");
 			(new Thread(new Runnable() {
 				public void run() {
 					Runnable incProgress = (new Runnable() {
@@ -612,7 +611,8 @@ public class XMLDB {
 	}
     */
 	// TODO: this is a util method and should be moved somewhere else
-	public static JDialog createProgressBarGUI(Frame parentFrame, JProgressBar progBar, String title, String labelStr) {
+	public static JDialog createProgressBarGUI(JProgressBar progBar, String title, String labelStr) {
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		if(progBar.getMaximum() == 0) {
 			return null;
 		}

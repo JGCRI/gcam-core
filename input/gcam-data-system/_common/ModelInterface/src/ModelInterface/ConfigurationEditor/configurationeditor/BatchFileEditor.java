@@ -271,7 +271,7 @@ public class BatchFileEditor extends AbstractEditorPanel implements DOMDocumentE
 			mDocument = FileUtils.createDocument(getTopLevelAncestor(), newFile, ROOT_ELEMENT_NAME);
 		} else {
 			// Try and load the document
-			mDocument = FileUtils.loadDocument(getTopLevelAncestor(), newFile, ROOT_ELEMENT_NAME);
+			mDocument = FileUtils.loadDocument(newFile, ROOT_ELEMENT_NAME);
 		}
 		
 		// Fire a property changed event that the document was switched.

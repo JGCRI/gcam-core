@@ -69,7 +69,7 @@ public class CopyPaste implements ActionListener{
 	  //TODO: figure out how to do this
 	  //pasteMenu.setEnabled(ModelInterface.ModelGUI2.DbViewer.xmlDB == null);
 	  final CopyPaste thisCP = this;
-	  InterfaceMain.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+	  InterfaceMain.getInstance().getFrame().addPropertyChangeListener(new PropertyChangeListener() {
 		  public void propertyChange(PropertyChangeEvent e) {
 			  if(e.getPropertyName().equals("Control")) {
 				  System.out.println("Doing remove because of control");
@@ -77,7 +77,7 @@ public class CopyPaste implements ActionListener{
 				  copyMenu.removeActionListener(thisCP);
 				  pasteMenu.setEnabled(false);
 				  pasteMenu.removeActionListener(thisCP);
-				  InterfaceMain.getInstance().removePropertyChangeListener(this);
+				  InterfaceMain.getInstance().getFrame().removePropertyChangeListener(this);
 			  } else if(( e.getPropertyName().equals("Query") && e.getOldValue() != null && e.getOldValue().equals(getMyModel())) 
 					  || (e.getPropertyName().equals("Table") && !e.getNewValue().equals(getMyModel()))) {
 				  /*
@@ -94,7 +94,7 @@ public class CopyPaste implements ActionListener{
 				  //pasteMenu.setEnabled(false);
 				  copyMenu.removeActionListener(thisCP);
 				  pasteMenu.removeActionListener(thisCP);
-				  InterfaceMain.getInstance().removePropertyChangeListener(this);
+				  InterfaceMain.getInstance().getFrame().removePropertyChangeListener(this);
 			  }
 		  }
 	  });

@@ -85,12 +85,11 @@ public class QueryResultsPanel extends JPanel {
 	 * 
 	 * @param qg the query generator
 	 * @param singleBinding The single query binding which will filter the results from qg, or null if the user did not select a single query.
-	 * @param parentFrame the frame that JPanel will be inserted into
 	 * @param scenarioListValues list of selected scenarios
 	 * @param regionListValues Regions to be used. 
 	 * @param icon The icon that will be changing.
 	 */
-	public QueryResultsPanel(final QueryGenerator qg, final QueryBinding singleBinding, final JFrame parentFrame,final Object[] scenarioListValues, final Object[] regionListValues, final TabCloseIcon icon){  
+	public QueryResultsPanel(final QueryGenerator qg, final QueryBinding singleBinding, final Object[] scenarioListValues, final Object[] regionListValues, final TabCloseIcon icon){  
 		initializeWaiting();
 		context = new DbProcInterrupt();
 		final QueryResultsPanel thisThread= this;
@@ -101,9 +100,9 @@ public class QueryResultsPanel extends JPanel {
 				//do computations, return a JComponent
 				try{
 					if (qg.isGroup() && singleBinding == null) {
-						ret = createGroupTableContent(qg, parentFrame, scenarioListValues, regionListValues);
+						ret = createGroupTableContent(qg, scenarioListValues, regionListValues);
 					} else {
-						ret = createSingleTableContent(qg, singleBinding, parentFrame, scenarioListValues, regionListValues);
+						ret = createSingleTableContent(qg, singleBinding, scenarioListValues, regionListValues);
 					}
 				} catch(Exception e) {
 					errorMessage = e.getMessage();
@@ -191,7 +190,6 @@ public class QueryResultsPanel extends JPanel {
 	 * Creates the group table content.
 	 * 
 	 * @param qg the query generator
-	 * @param parentFrame the Frame that the JComponent will be added to
 	 * @param scnListValues 
 	 * @param regionListValues 
 	 * 
@@ -199,13 +197,13 @@ public class QueryResultsPanel extends JPanel {
 	 * @throws Exception thrown if the multiTableModel returns an invalid result
 	 * 
 	 */
-	private JComponent createGroupTableContent(QueryGenerator qg,final JFrame parentFrame,final Object[] scnListValues, final Object[] regionListValues) throws Exception {
-		BaseTableModel bt = new MultiTableModel(qg, scnListValues, regionListValues, parentFrame, context);
+	private JComponent createGroupTableContent(QueryGenerator qg,final Object[] scnListValues, final Object[] regionListValues) throws Exception {
+		BaseTableModel bt = new MultiTableModel(qg, scnListValues, regionListValues, context);
 		JTable jTable = new JTable(bt);
 		jTable.setCellSelectionEnabled(true);
 		jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
 		jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
-		((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
+		InterfaceMain.getInstance().fireProperty("Query", null, bt);
 		JScrollPane tableScrollPane = new JScrollPane(jTable);
 		tableScrollPane.getViewport().setBackground(getBackground());
 		return tableScrollPane;
@@ -216,7 +214,6 @@ public class QueryResultsPanel extends JPanel {
 	 * 
 	 * @param qg the qg
 	 * @param singleBinding 
-	 * @param parentFrame the Frame that the JComponent will be added to
 	 * @param scenarioListValues 
 	 * @param regionListValues 
 	 * 
@@ -225,8 +222,8 @@ public class QueryResultsPanel extends JPanel {
 	 * @throws Exception thrown if the multiTableModel returns an invalid result
 	 * 
 	 */
-	private JComponent createSingleTableContent(QueryGenerator qg, QueryBinding singleBinding, final JFrame parentFrame,final Object[] scenarioListValues, final Object[] regionListValues) throws Exception  {
-		BaseTableModel bt = new ComboTableModel(qg, scenarioListValues, regionListValues, parentFrame, singleBinding, context);
+	private JComponent createSingleTableContent(QueryGenerator qg, QueryBinding singleBinding, final Object[] scenarioListValues, final Object[] regionListValues) throws Exception  {
+		BaseTableModel bt = new ComboTableModel(qg, scenarioListValues, regionListValues, singleBinding, context);
 
 		JTable jTable = bt.getAsSortedTable();
 		new CopyPaste(jTable);
@@ -298,9 +295,11 @@ public class QueryResultsPanel extends JPanel {
 		// and it is pretty evedent that the resize is going on.  So if we do the following
 		// maybe it won't be as evident.
 		int chartWidth = (int)labelChart.getMinimumSize().getWidth();
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		sp.setDividerLocation(parentFrame.getWidth()-chartWidth-sp.getDividerSize()-2);
 
-		((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
+		main.fireProperty("Query", null, bt);
 		return sp;
 	}
 

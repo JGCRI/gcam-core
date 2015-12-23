@@ -88,7 +88,7 @@ public class RecentFilesList implements MenuAdder {
 	 * Private constructor.
 	 */
 	private RecentFilesList() {
-		InterfaceMain.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+		InterfaceMain.getInstance().getFrame().addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control") 
 					&& evt.getNewValue().equals("ModelInterface")) {

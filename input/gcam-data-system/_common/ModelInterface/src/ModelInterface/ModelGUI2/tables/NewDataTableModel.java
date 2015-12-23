@@ -97,16 +97,15 @@ public class NewDataTableModel extends BaseTableModel{
 	 * Constructor initializes data members, and calls buildTable to initialize data, and filterMaps
 	 * @param tp the Tree Path which was selected from the tree, needed to build table
 	 *        doc needed to run the XPath query against
-	 *        parentFrame needed to create dialogs
 	 *        tableTypeString to be able to display the type of table this is
 	 */
-	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
-		super(tp, doc, parentFrame, tableTypeString, documentationIn);
+	public NewDataTableModel(TreePath tp, Document doc, String tableTypeString, Documentation documentationIn) {
+		super(tp, doc, tableTypeString, documentationIn);
 		indCol = new Vector();
 		indRow = new Vector();
 		data = new TreeMap();
 		w3 = "";
-		wild = chooseTableHeaders(tp/*, parentFrame*/);
+		wild = chooseTableHeaders(tp);
 		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 		wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 1));
@@ -251,11 +250,12 @@ public class NewDataTableModel extends BaseTableModel{
 		indCol.add(0, ind1Name);
 		flipped = !flipped;
 		fireTableStructureChanged();
+        final InterfaceMain main = InterfaceMain.getInstance();
 		if(row >= 0 && col >= 0) {
-			UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+			UndoManager undoManager = main.getUndoManager();
 			undoManager.addEdit(new FlipUndoableEdit(this));
 		}
-		((InterfaceMain)parentFrame).refreshUndoRedo();
+		main.refreshUndoRedo();
 	}
 
 	/**

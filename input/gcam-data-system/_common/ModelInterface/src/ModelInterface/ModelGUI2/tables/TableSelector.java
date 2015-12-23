@@ -35,6 +35,7 @@ import javax.swing.tree.TreePath;
 import org.w3c.dom.Document;
 import javax.swing.event.TableModelListener;
 
+import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.InputViewer;
 
 public class TableSelector extends JDialog implements ActionListener {
@@ -46,7 +47,6 @@ public class TableSelector extends JDialog implements ActionListener {
 	private String value;
 	private JList list;
 	private static String[] data = { "Single Table", "Multi Tables", "Combo Tables" };
-	//private static Frame parentFrame;
 
 	/**
 	 * Creates and shows a short dialog to choose which type of table the use would
@@ -61,10 +61,9 @@ public class TableSelector extends JDialog implements ActionListener {
 	 * Initializes some of the data and creates the list of selections, and sets up
 	 * the layout.
 	 */
-	public TableSelector(Frame frame) {
-		super(frame, "Table Types", true);
+	public TableSelector() {
+		super(InterfaceMain.getInstance().getFrame(), "Table Types", true);
 
-		//parentFrame = frame;
 		//Create and initialize the buttons.
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(this);
@@ -141,21 +140,8 @@ public class TableSelector extends JDialog implements ActionListener {
 		if(value == null) {
 			return null;
 		}
-		/*
-	  	((FileChooserDemo)fcd).menuTableFilter.setEnabled(true);
-		((FileChooserDemo)fcd).copyMenu.setEnabled(true);
-		((FileChooserDemo)fcd).pasteMenu.setEnabled(true);
-		// check to see if there were any previous listeners, if so
-		// remove them from both copy and paste
-		ActionListener[] actns = ((FileChooserDemo)fcd).copyMenu.getActionListeners();
-		if(actns.length != 0) {
-			((FileChooserDemo)fcd).copyMenu.removeActionListener(actns[0]);
-			actns = ((FileChooserDemo)fcd).pasteMenu.getActionListeners();
-			((FileChooserDemo)fcd).pasteMenu.removeActionListener(actns[0]);
-		}
-		*/
 		if(value.equals("Single Table")) {
-			BaseTableModel bt = new NewDataTableModel(tp, doc, pf, "Single Table", ((InputViewer)fcd).getDocumentation());
+			BaseTableModel bt = new NewDataTableModel(tp, doc, "Single Table", ((InputViewer)fcd).getDocumentation());
 			TableSorter sorter = new TableSorter(bt);
 	  		//JTable jTable = new JTable(bt);
 	  		JTable jTable = new JTable(sorter);
@@ -180,32 +166,12 @@ public class TableSelector extends JDialog implements ActionListener {
 		  		j++;
 	  		}
 			new CopyPaste( jTable );
-			/*
-			((FileChooserDemo)fcd).copyMenu.addActionListener(copyPaste);
-			((FileChooserDemo)fcd).pasteMenu.addActionListener(copyPaste);
-			*/
 			return new JScrollPane(jTable);
 		} else if(value.equals("Multi Tables")) {
-			// disable the copy paste buttons becuase they try to copy/paste from all of
-			// the tables in the multitable, need to figure out how to only do it from
-			// the table that is in focus
-			// using ctrl-c, ctrl-v still works
-			/*
-			((FileChooserDemo)fcd).copyMenu.setEnabled(false);
-			((FileChooserDemo)fcd).pasteMenu.setEnabled(false);
-			*/
-
-			BaseTableModel bt = new MultiTableModel(tp, doc, pf, "Multi Tables", ((InputViewer)fcd).getDocumentation());
+			BaseTableModel bt = new MultiTableModel(tp, doc, "Multi Tables", ((InputViewer)fcd).getDocumentation());
 			JTable jTable = new JTable(bt);
 	  		jTable.getModel().addTableModelListener((TableModelListener)fcd);
 			jTable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			/*
-			jTable.setCellSelectionEnabled(false);
-			jTable.setColumnSelectionAllowed(false);
-			jTable.setRowSelectionAllowed(false);
-			*/
-
-			//jTable.setAutoResizeMode(JTABLE.AUTO_RESIZE_OFF);
 
 			jTable.setCellSelectionEnabled(true);
 			jTable.getColumnModel().getColumn(0).setCellRenderer(bt.getCellRenderer(0,0));
@@ -215,11 +181,10 @@ public class TableSelector extends JDialog implements ActionListener {
 				jTable.setRowHeight(j,200);
 				j += 2;
 			}
-			//jTable.setRowHeight(200);
 			new CopyPaste( jTable );
 			return new JScrollPane(jTable);
 		} else if(value.equals("Combo Tables")){
-			BaseTableModel bt = new ComboTableModel(tp, doc, pf, "Combo Tables", ((InputViewer)fcd).getDocumentation());
+			BaseTableModel bt = new ComboTableModel(tp, doc, "Combo Tables", ((InputViewer)fcd).getDocumentation());
 			TableSorter sorter = new TableSorter(bt);
 			JTable jTable = new JTable(sorter);
 			// Should the listener be set like so..
@@ -243,10 +208,6 @@ public class TableSelector extends JDialog implements ActionListener {
 				j++;
 			}
 			new CopyPaste( jTable );
-			/*
-			((FileChooserDemo)fcd).copyMenu.addActionListener(copyPaste);
-			((FileChooserDemo)fcd).pasteMenu.addActionListener(copyPaste);
-			*/
 			return new JScrollPane(jTable);		
 		}
 		return null;

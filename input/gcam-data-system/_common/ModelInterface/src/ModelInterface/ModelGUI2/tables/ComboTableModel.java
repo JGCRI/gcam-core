@@ -99,13 +99,12 @@ public class ComboTableModel extends BaseTableModel{
 	 * creates the filterMaps based on the path information.
 	 * @param tp the Tree Path which was selected from the tree, needed to build table
 	 *        doc needed to run the XPath query against
-	 *        parentFrame needed to create dialogs
 	 *        tableTypeString to be able to display the type of table this is
 	 */ 
-	public ComboTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
-		super(tp, doc, parentFrame, tableTypeString, documentationIn);
+	public ComboTableModel(TreePath tp, Document doc, String tableTypeString, Documentation documentationIn) {
+		super(tp, doc, tableTypeString, documentationIn);
 		leftHeaderVector = null;
-		wild = chooseTableHeaders(tp/*, parentFrame*/);
+		wild = chooseTableHeaders(tp);
 		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 		wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 0));
@@ -136,11 +135,12 @@ public class ComboTableModel extends BaseTableModel{
 		// to set active rows appropriatly
 		doFilter( new Vector(tableFilterMaps.keySet()) );
 		fireTableStructureChanged();
+        final InterfaceMain main = InterfaceMain.getInstance();
 		if(row >= 0 && col >= 0) {
-			UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+			UndoManager undoManager = main.getUndoManager();
 			undoManager.addEdit(new FlipUndoableEdit(this));
 		}
-		((InterfaceMain)parentFrame).refreshUndoRedo();
+		main.refreshUndoRedo();
 	}
 
 	public TableCellRenderer getCellRenderer(int row, int col) {
@@ -518,10 +518,11 @@ public class ComboTableModel extends BaseTableModel{
 					}
 				}
 			}
-		UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+        final InterfaceMain main = InterfaceMain.getInstance();
+		UndoManager undoManager = main.getUndoManager();
 		// what about changeing the filter map
 		undoManager.addEdit(new FilterUndoableEdit(this, oldActiveRows, activeRows));
-		((InterfaceMain)parentFrame).refreshUndoRedo();
+		main.refreshUndoRedo();
 	}
 	
 	/**
@@ -637,9 +638,10 @@ public class ComboTableModel extends BaseTableModel{
 			setEdit.addEdit(new TableUndoableEdit(this, row, col, n, null, data, getKey(row, col)));
 		}
 		setEdit.end();
-		UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+        final InterfaceMain main = InterfaceMain.getInstance();
+		UndoManager undoManager = main.getUndoManager();
 		undoManager.addEdit(setEdit);
-		((InterfaceMain)parentFrame).refreshUndoRedo();
+		main.refreshUndoRedo();
 		
 		fireTableCellUpdated(row, col);
 
@@ -785,11 +787,10 @@ public class ComboTableModel extends BaseTableModel{
 	}
 
 	protected QueryGenerator qg;
-	public ComboTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn, 
+	public ComboTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, 
             QueryBinding singleBinding, DbProcInterrupt interrupt) throws Exception 
     {
         qg = qgIn;
-        parentFrame = parentFrameIn;
         //title = qgIn.getVariable();
         title = qgIn.toString();
         boolean isTotal = false;

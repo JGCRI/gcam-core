@@ -290,8 +290,7 @@ final public class FileUtils {
 	 *            the check is skipped.
 	 * @return A loaded document or null if it failed.
 	 */
-	public static Document loadDocument(final Component aParentWindow,
-			final File aFile, final String aRootTag) {
+	public static Document loadDocument(final File aFile, final String aRootTag) {
 
 		// Check if the file exists.
 		if (!aFile.exists()) {
@@ -299,7 +298,7 @@ final public class FileUtils {
 			final String message = Messages.getString("BatchFileEditor.3"); //$NON-NLS-1$
 			final String messageTitle = Messages.getString("BatchFileEditor.4"); //$NON-NLS-1$
 			Logger.global.log(Level.SEVERE, message);
-			JOptionPane.showMessageDialog(aParentWindow, message, messageTitle,
+			InterfaceMain.getInstance().showMessageDialog(message, messageTitle,
 					JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
@@ -320,7 +319,7 @@ final public class FileUtils {
 			final String errorMessage = Messages.getString("LoadAction.1") //$NON-NLS-1$
 					+ e.getMessage() + "."; //$NON-NLS-1$
 			final String errorTitle = Messages.getString("LoadAction.3"); //$NON-NLS-1$
-			JOptionPane.showMessageDialog(aParentWindow, errorMessage,
+			InterfaceMain.getInstance().showMessageDialog(errorMessage,
 					errorTitle, JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
@@ -332,7 +331,7 @@ final public class FileUtils {
 			final String errorTitle = Messages.getString("LoadAction.5"); //$NON-NLS-1$
 			final String errorMessage = Messages.getString("LoadAction.6"); //$NON-NLS-1$
 			Logger.global.log(Level.SEVERE, errorMessage);
-			JOptionPane.showMessageDialog(aParentWindow, errorMessage,
+			InterfaceMain.getInstance().showMessageDialog(errorMessage,
 					errorTitle, JOptionPane.ERROR_MESSAGE);
 			return null;
 		}

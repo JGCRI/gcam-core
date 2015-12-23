@@ -44,6 +44,7 @@ import java.awt.Frame;
 import java.awt.Container;
 import java.awt.BorderLayout;
 
+import ModelInterface.InterfaceMain;
 import ModelInterface.InterfaceMain.MenuManager;
 
 /**
@@ -75,8 +76,8 @@ public class AboutDialog extends JDialog implements MenuAdder, ActionListener {
      * Constructor which forwards to the super class and sets the text to
      * display in the About dialog.
      */
-    public AboutDialog(Frame parentFrame) {
-        super(parentFrame, "About");
+    public AboutDialog() {
+        super(InterfaceMain.getInstance().getFrame(), "About");
 
 		JPanel all = new JPanel();
 		all.setLayout( new BoxLayout(all, BoxLayout.Y_AXIS));

@@ -70,7 +70,6 @@ import org.basex.api.dom.BXNode;
 import org.basex.api.dom.BXElem;
 
 public class QueryGenerator implements java.io.Serializable{
-	private transient Frame parentFrame;
 	String xPath;
 	String var;
 	boolean sumAll;
@@ -116,12 +115,11 @@ public class QueryGenerator implements java.io.Serializable{
 	String comments;
 	private transient SingleQueryExtension singleExtension;
 
-	public QueryGenerator(Frame parentFrameIn) {
+	public QueryGenerator() {
 		qb = null;
 		isSumable = false;
 		buildSingleQueryList = true;
 		xPath = "";
-		parentFrame = parentFrameIn;
 		sumAll = false;
 		labelRewriteMap = null;
         showAttrMap = new TreeMap<String, List<String>>();
@@ -234,6 +232,7 @@ public class QueryGenerator implements java.io.Serializable{
 	}
 	protected void getQueryDialog() {
 		final QueryGenerator thisGen = this;
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		final JDialog filterDialog = new JDialog(parentFrame, "Create Query", true);
 		filterDialog.setSize(500,400);
 		filterDialog.setLocation(100,100);
@@ -290,7 +289,7 @@ public class QueryGenerator implements java.io.Serializable{
 		final JButton gatherButton = new JButton("Get New Variables");
 		gatherButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				XMLDB.getInstance().addVarMetaData(parentFrame);
+				XMLDB.getInstance().addVarMetaData();
 			}
 		});
 
@@ -910,7 +909,7 @@ public class QueryGenerator implements java.io.Serializable{
 	public boolean editDialog(final MiUndoableEditListener listener) {
 		final Object lock = new Object();
 		String oldTitle = title;
-		final JDialog editDialog = new JDialog(InterfaceMain.getInstance(), "Edit Query", false);
+		final JDialog editDialog = new JDialog(InterfaceMain.getInstance().getFrame(), "Edit Query", false);
 		final QueryGenerator thisGen = this;
 		//editDialog.setLocation(100,100);
 		editDialog.setResizable(false);

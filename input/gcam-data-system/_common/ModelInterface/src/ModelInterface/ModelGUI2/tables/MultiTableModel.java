@@ -148,12 +148,11 @@ public class MultiTableModel extends BaseTableModel{
 	 * and create the individual tables
 	 * @param tp the Tree Path which was selected from the tree, needed to build table
 	 *        doc needed to run the XPath query against
-	 *        parentFrame needed to create dialogs
 	 *        tableTypeString to be able to display the type of table this is
 	 */
-	public MultiTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
-		super(tp, doc, parentFrame, tableTypeString, documentationIn);
-		wild = chooseTableHeaders(tp/*, parentFrame*/);
+	public MultiTableModel(TreePath tp, Document doc, String tableTypeString, Documentation documentationIn) {
+		super(tp, doc, tableTypeString, documentationIn);
+		wild = chooseTableHeaders(tp);
 	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		wild.add("");
@@ -353,7 +352,7 @@ public class MultiTableModel extends BaseTableModel{
 				// since the split pane will be showing before we can set the corrent divider location
 				// and it is pretty evedent that the resize is going on.  So if we do the following
 				// maybe it won't be as evident.
-				sp.setDividerLocation(parentFrame.getWidth()-(int)labelChart.getMinimumSize().getWidth()-30);
+				//sp.setDividerLocation(parentFrame.getWidth()-(int)labelChart.getMinimumSize().getWidth()-30);
 			}
 
 	  		if(tables == null) {
@@ -487,10 +486,9 @@ public class MultiTableModel extends BaseTableModel{
 	QueryGenerator qg;
 	
 	
-	public MultiTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn, DbProcInterrupt interrupt) throws Exception
+	public MultiTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, DbProcInterrupt interrupt) throws Exception
     {
         qg = qgIn;
-        parentFrame = parentFrameIn;
         title = qgIn.toString();
         wild = new ArrayList();
 

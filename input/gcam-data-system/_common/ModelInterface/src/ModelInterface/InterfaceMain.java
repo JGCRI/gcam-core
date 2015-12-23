@@ -75,7 +75,10 @@ import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.GraphicsEnvironment;
 
-public class InterfaceMain extends JFrame implements ActionListener {
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+
+public class InterfaceMain implements ActionListener {
 	/**
 	 * Unique identifier used for serializing.
 	 */
@@ -113,6 +116,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	private List<MenuAdder> menuAdders;
 
     private boolean isBatchMode;
+    private JFrame mainFrame;
 
 	/**
 	 * Main function, creates a new thread for the gui and runs it.
@@ -140,11 +144,10 @@ public class InterfaceMain extends JFrame implements ActionListener {
         } else if(args.length == 2) {
             if(args[0].equals("-b")) {
                 File batchFile = new File(args[1]);
-                main  = new InterfaceMain("Model Interface");
+                main  = new InterfaceMain();
                 main.isBatchMode = true;
-                main.initialize();
+                //main.initialize();
                 main.runBatch(batchFile);
-                main.dispose();
             } else {
                 System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
             }
@@ -172,14 +175,24 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 */
 	private static void createAndShowGUI() {
 		main = null;
-		main  = new InterfaceMain("Model Interface");
+		main  = new InterfaceMain();
+        main.mainFrame = new JFrame("Model Interface");
+		if(Boolean.parseBoolean(main.savedProperties.getProperty("isMaximized", "false"))) {
+			main.mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		}
+		String lastHeight = main.savedProperties.getProperty("lastHeight", "600");
+		String lastWidth = main.savedProperties.getProperty("lastWidth", "800");
+		main.mainFrame.setSize(Integer.parseInt(lastWidth), Integer.parseInt(lastHeight));
+
+		main.mainFrame.setLayout(new BorderLayout());
+
 		main.initialize();
 		//main.pack();
-		main.setVisible(true);
+		main.mainFrame.setVisible(true);
 	}
 
-	private InterfaceMain(String title) {
-		super(title);
+	private InterfaceMain() {
+        mainFrame = null;
 		savedProperties = new Properties();
 		if(propertiesFile.exists()) {
 			try {
@@ -190,16 +203,6 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				ioe.printStackTrace();
 			}
 		}
-		if(Boolean.parseBoolean(savedProperties.getProperty("isMaximized", "false"))) {
-			setExtendedState(MAXIMIZED_BOTH);
-		}
-		String lastHeight = savedProperties.getProperty("lastHeight", "600");
-		String lastWidth = savedProperties.getProperty("lastWidth", "800");
-		setSize(Integer.parseInt(lastWidth), Integer.parseInt(lastHeight));
-		Container contentPane = getContentPane();
-
-		contentPane.setLayout(new BorderLayout());
-
 		oldControl = "ModelInterface";
 
         isBatchMode = false;
@@ -212,7 +215,9 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		addMenuAdderMenuItems(menuMan);
 		finalizeMenu(menuMan);
 	}
-	
+    public JFrame getFrame() {
+        return mainFrame;
+    }    
 	private void addMenuItems(MenuManager menuMan) {
 		JMenu m = new JMenu("File");
 		menuMan.addMenuItem(m, FILE_MENU_POS);
@@ -270,17 +275,17 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		 FileChooserDemo fcd = new FileChooserDemo(this);
 		 fcd.addMenuItems(menuMan);
 		 */
-		final MenuAdder dbView = new DbViewer(this);
+		final MenuAdder dbView = new DbViewer();
 		dbView.addMenuItems(menuMan);
-		final MenuAdder inputView = new InputViewer(this);
+		final MenuAdder inputView = new InputViewer();
 		inputView.addMenuItems(menuMan);
-		final MenuAdder PPView = new PPViewer(this);
+		final MenuAdder PPView = new PPViewer();
 		PPView.addMenuItems(menuMan);
-		final MenuAdder DMView = new DMViewer(this);
+		final MenuAdder DMView = new DMViewer();
 		DMView.addMenuItems(menuMan);
 		final MenuAdder recentFilesList = RecentFilesList.getInstance();
 		recentFilesList.addMenuItems(menuMan);
-		final MenuAdder aboutDialog = new AboutDialog(this);
+		final MenuAdder aboutDialog = new AboutDialog();
 		aboutDialog.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
@@ -300,21 +305,21 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 	private void finalizeMenu(MenuManager menuMan) {
 		JMenuBar mb = menuMan.createMenu(); //new JMenuBar();
-		setJMenuBar(mb);
+		mainFrame.setJMenuBar(mb);
 	}
 
 	private void addWindowAdapters() {
 		// Add adapter to catch window events.
 		WindowAdapter myWindowAdapter = new WindowAdapter() {
 			public void windowStateChanged(WindowEvent e) {
-				savedProperties.setProperty("isMaximized", String.valueOf((e.getNewState() & MAXIMIZED_BOTH) != 0));
+				savedProperties.setProperty("isMaximized", String.valueOf((e.getNewState() & JFrame.MAXIMIZED_BOTH) != 0));
 			}
 			public void windowClosing(WindowEvent e) {
 				System.out.println("Caught the window closing");
-				firePropertyChange("Control", oldControl, "ModelInterface");
+				fireProperty("Control", oldControl, "ModelInterface");
 				if(!Boolean.parseBoolean(savedProperties.getProperty("isMaximized"))) {
-					savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
-					savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
+					savedProperties.setProperty("lastWidth", String.valueOf(mainFrame.getWidth()));
+					savedProperties.setProperty("lastHeight", String.valueOf(mainFrame.getHeight()));
 				}
 				try {
 					savedProperties.storeToXML(new FileOutputStream(propertiesFile), "TODO: add comments");
@@ -327,10 +332,10 @@ public class InterfaceMain extends JFrame implements ActionListener {
 			}
 			public void windowClosed(WindowEvent e) {
 				System.out.println("Caught the window closed");
-				firePropertyChange("Control", oldControl, "ModelInterface");
+				fireProperty("Control", oldControl, "ModelInterface");
 				if(!Boolean.parseBoolean(savedProperties.getProperty("isMaximized"))) {
-					savedProperties.setProperty("lastWidth", String.valueOf(getWidth()));
-					savedProperties.setProperty("lastHeight", String.valueOf(getHeight()));
+					savedProperties.setProperty("lastWidth", String.valueOf(mainFrame.getWidth()));
+					savedProperties.setProperty("lastHeight", String.valueOf(mainFrame.getHeight()));
 				}
 				try {
 					savedProperties.storeToXML(new FileOutputStream(propertiesFile), "TODO: add comments");
@@ -342,11 +347,11 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		};
-		addWindowListener(myWindowAdapter);
-		addWindowStateListener(myWindowAdapter);
+		mainFrame.addWindowListener(myWindowAdapter);
+		mainFrame.addWindowStateListener(myWindowAdapter);
 
-		getGlassPane().addMouseListener( new MouseAdapter() {});
-		getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+		mainFrame.getGlassPane().addMouseListener( new MouseAdapter() {});
+		mainFrame.getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
 	}
 
 	private JMenuItem makeMenuItem(String title) {
@@ -357,12 +362,12 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("Quit")) {
-			//firePropertyChange("Control", oldControl, "ModelInterface");
-			dispose();
+			//fireProperty("Control", oldControl, "ModelInterface");
+			mainFrame.dispose();
 		} else if(e.getActionCommand().equals("Batch File")) {
 			// TODO: make it so recent files could work with this
 			FileChooser fc = FileChooserFactory.getFileChooser();
-			final File[] result = fc.doFilePrompt(this, "Open Batch File", FileChooser.LOAD_DIALOG, 
+			final File[] result = fc.doFilePrompt(mainFrame, "Open Batch File", FileChooser.LOAD_DIALOG, 
 					new File(getProperties().getProperty("lastDirectory", ".")),
 					new XMLFilter());
             // these should be run off the GUI thread
@@ -415,11 +420,14 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		if(newValue.equals(oldControl)) {
 			oldControl += "Same";
 		}
-		firePropertyChange("Control", oldControl, newValue);
+		fireProperty("Control", oldControl, newValue);
 		oldControl = newValue;
 	}
 	public void fireProperty(String propertyName, Object oldValue, Object newValue) {
-		firePropertyChange(propertyName, oldValue, newValue);
+        final PropertyChangeEvent event = new PropertyChangeEvent(this, propertyName, oldValue, newValue);
+        for(PropertyChangeListener listener : mainFrame.getPropertyChangeListeners()) {
+            listener.propertyChange(event);
+        }
 	}
 	public class MenuManager {
 		private JMenuItem menuValue;
@@ -564,7 +572,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	 */
 	private void runBatch(File file) {
 		// don't really care about document element's name
-		Node doc = FileUtils.loadDocument(this, file, null).getDocumentElement();
+		Node doc = FileUtils.loadDocument(file, null).getDocumentElement();
 
 		// TODO: remove this check once batch queries get merged
 		if(doc.getNodeName().equals("queries")) {
@@ -633,7 +641,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
             System.out.println(message);
         } else {
             // Just forward to JOptionPane
-            JOptionPane.showMessageDialog(this, message, title, messageType);
+            JOptionPane.showMessageDialog(mainFrame, message, title, messageType);
         }
     }
 
@@ -681,7 +689,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
             return defaultOption;
         } else {
             // Just forward to JOptionPane
-            return JOptionPane.showConfirmDialog(this, message, title, optionType, messageType);
+            return JOptionPane.showConfirmDialog(mainFrame, message, title, optionType, messageType);
         }
     }
 }
