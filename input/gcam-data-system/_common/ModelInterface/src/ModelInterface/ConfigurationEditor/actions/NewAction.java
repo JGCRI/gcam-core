@@ -119,7 +119,7 @@ public class NewAction extends AbstractAction {
         final File newConfFile = new File(currentFile);
         
         // Attempt to parse the document.
-        final Document loadedDocument = FileUtils.loadDocument(parentEditor, newConfFile, ConfigurationEditor.ROOT_ELEMENT_NAME);
+        final Document loadedDocument = FileUtils.loadDocument(newConfFile, ConfigurationEditor.ROOT_ELEMENT_NAME);
         // Clear the loaded document's saved file name because it would be the template
         // file's location.
         FileUtils.setDocumentFile(loadedDocument, null);

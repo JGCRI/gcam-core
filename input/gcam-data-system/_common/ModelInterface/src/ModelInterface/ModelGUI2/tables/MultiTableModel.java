@@ -29,6 +29,7 @@
 */
 package ModelInterface.ModelGUI2.tables;
 
+import ModelInterface.InterfaceMain;
 import ModelInterface.common.DataPair;
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.DbViewer;
@@ -148,12 +149,11 @@ public class MultiTableModel extends BaseTableModel{
 	 * and create the individual tables
 	 * @param tp the Tree Path which was selected from the tree, needed to build table
 	 *        doc needed to run the XPath query against
-	 *        parentFrame needed to create dialogs
 	 *        tableTypeString to be able to display the type of table this is
 	 */
-	public MultiTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
-		super(tp, doc, parentFrame, tableTypeString, documentationIn);
-		wild = chooseTableHeaders(tp/*, parentFrame*/);
+	public MultiTableModel(TreePath tp, Document doc, String tableTypeString, Documentation documentationIn) {
+		super(tp, doc, tableTypeString, documentationIn);
+		wild = chooseTableHeaders(tp);
 	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		wild.add("");
@@ -302,68 +302,72 @@ public class MultiTableModel extends BaseTableModel{
 						documentation, null); 
 			}
 			tM.units = units;
-			JTable jTable = tM.getAsSortedTable();
-
-	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	 
-			jTable.setCellSelectionEnabled(true);
-
-	  		javax.swing.table.TableColumn col;
-	  		Iterator i = regions.iterator();
-	  		int j = 1;
-	  		while(i.hasNext()) {
-		  		col = jTable.getColumnModel().getColumn(j);
-				col.setPreferredWidth(((String)i.next()).length()*5+30);
-				if(qg == null) { // only want to do this when values might have documentation
-					col.setCellRenderer(tM.getCellRenderer(0, j));
-				}
-		  		j++;
-	  		}
-			CopyPaste copyPaste = new CopyPaste( jTable );
-	  		JScrollPane tV = new JScrollPane(jTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
-					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			JComponent tableView = tV;
-			if(me.getValue() instanceof Double || me.getValue() instanceof String) {
-				final JSplitPane sp = new JSplitPane();
-
-				final JLabel labelChart = new JLabel();
-				try {
-					JFreeChart chart = tM.createChart(0,0);
-					Dimension chartDim = tM.getChartDimensions(chart);
-					BufferedImage chartImage = chart.createBufferedImage( (int)chartDim.getWidth(), 
-							(int)chartDim.getHeight());
-					labelChart.setIcon(new ImageIcon(chartImage));
-				} catch(Exception e) {
-					labelChart.setText("Cannot Create Chart");
-				}
-
-				sp.setLeftComponent(tV);
-				JPanel lcPanel = new JPanel();
-				lcPanel.setLayout(new BoxLayout(lcPanel, BoxLayout.Y_AXIS));
-				lcPanel.add(labelChart);
-				lcPanel.add(Box.createVerticalGlue());
-				sp.setRightComponent(lcPanel);
-				tV.setPreferredSize(jTable.getPreferredSize());
-				tableView = sp;
-				Dimension tableViewSize = tableView.getPreferredSize();
-				tableViewSize.setSize(tableViewSize.getWidth(), Math.max(labelChart.getMinimumSize().getHeight(), jTable.getMinimumSize().getHeight()));
-				tableView.setPreferredSize(tableViewSize);
-
-				// This is not the corrent location however we may want to go ahead and do it
-				// since the split pane will be showing before we can set the corrent divider location
-				// and it is pretty evedent that the resize is going on.  So if we do the following
-				// maybe it won't be as evident.
-				sp.setDividerLocation(parentFrame.getWidth()-(int)labelChart.getMinimumSize().getWidth()-30);
-			}
-
 	  		if(tables == null) {
 		  		tables = new Vector();
 	  		}
 			String labelStr = titleStr.replace("/", ",   ").replace("@", ": ");
 			labelStr = labelStr.substring(2, labelStr.length());
-			//tables.add(titleStr+"/");
 			tables.add(labelStr);
-	  		tables.add(tableView);
+            final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
+            if(parentFrame == null) {
+                tables.add(tM);
+            } else {
+                JTable jTable = tM.getAsSortedTable();
+
+                jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+                jTable.setCellSelectionEnabled(true);
+
+                javax.swing.table.TableColumn col;
+                Iterator i = regions.iterator();
+                int j = 1;
+                while(i.hasNext()) {
+                    col = jTable.getColumnModel().getColumn(j);
+                    col.setPreferredWidth(((String)i.next()).length()*5+30);
+                    if(qg == null) { // only want to do this when values might have documentation
+                        col.setCellRenderer(tM.getCellRenderer(0, j));
+                    }
+                    j++;
+                }
+                CopyPaste copyPaste = new CopyPaste( jTable );
+                JScrollPane tV = new JScrollPane(jTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
+                        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                JComponent tableView = tV;
+                if(me.getValue() instanceof Double || me.getValue() instanceof String) {
+                    final JSplitPane sp = new JSplitPane();
+
+                    final JLabel labelChart = new JLabel();
+                    try {
+                        JFreeChart chart = tM.createChart(0,0);
+                        Dimension chartDim = tM.getChartDimensions(chart);
+                        BufferedImage chartImage = chart.createBufferedImage( (int)chartDim.getWidth(), 
+                                (int)chartDim.getHeight());
+                        labelChart.setIcon(new ImageIcon(chartImage));
+                    } catch(Exception e) {
+                        labelChart.setText("Cannot Create Chart");
+                    }
+
+                    sp.setLeftComponent(tV);
+                    JPanel lcPanel = new JPanel();
+                    lcPanel.setLayout(new BoxLayout(lcPanel, BoxLayout.Y_AXIS));
+                    lcPanel.add(labelChart);
+                    lcPanel.add(Box.createVerticalGlue());
+                    sp.setRightComponent(lcPanel);
+                    tV.setPreferredSize(jTable.getPreferredSize());
+                    tableView = sp;
+                    Dimension tableViewSize = tableView.getPreferredSize();
+                    tableViewSize.setSize(tableViewSize.getWidth(), Math.max(labelChart.getMinimumSize().getHeight(), jTable.getMinimumSize().getHeight()));
+                    tableView.setPreferredSize(tableViewSize);
+
+                    // This is not the corrent location however we may want to go ahead and do it
+                    // since the split pane will be showing before we can set the corrent divider location
+                    // and it is pretty evedent that the resize is going on.  So if we do the following
+                    // maybe it won't be as evident.
+                    sp.setDividerLocation(parentFrame.getWidth()-(int)labelChart.getMinimumSize().getWidth()-30);
+                }
+                tables.add(tableView);
+            }
+
 			return;
 		} else {
 			recAddTables((Map)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
@@ -487,10 +491,9 @@ public class MultiTableModel extends BaseTableModel{
 	QueryGenerator qg;
 	
 	
-	public MultiTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn, DbProcInterrupt interrupt) throws Exception
+	public MultiTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, DbProcInterrupt interrupt) throws Exception
     {
         qg = qgIn;
-        parentFrame = parentFrameIn;
         title = qgIn.toString();
         wild = new ArrayList();
 
@@ -645,7 +648,10 @@ public class MultiTableModel extends BaseTableModel{
 
 	private BaseTableModel getModelAt(int row) {
 		Object ret = getValueAt(row, 0);
-		if(ret instanceof JSplitPane) {
+        if(ret instanceof BaseTableModel) {
+            return (BaseTableModel)ret;
+        }
+        else if(ret instanceof JSplitPane) {
 			ret = ((JScrollPane)((JSplitPane)ret).getLeftComponent()).getViewport().getView();
 		} else {
 			ret = ((JScrollPane)ret).getViewport().getView();

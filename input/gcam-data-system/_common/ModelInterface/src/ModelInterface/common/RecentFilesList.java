@@ -88,7 +88,7 @@ public class RecentFilesList implements MenuAdder {
 	 * Private constructor.
 	 */
 	private RecentFilesList() {
-		InterfaceMain.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+		InterfaceMain.getInstance().getFrame().addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control") 
 					&& evt.getNewValue().equals("ModelInterface")) {
@@ -202,7 +202,7 @@ public class RecentFilesList implements MenuAdder {
 	 * @param reason A brief explanation of what went wrong.
 	 */
 	private static void showNoOpenError(String reason) {
-		JOptionPane.showMessageDialog(InterfaceMain.getInstance(), reason, "Could Not Open File Error",
+		InterfaceMain.getInstance().showMessageDialog(reason, "Could Not Open File Error",
 				JOptionPane.ERROR_MESSAGE);
 	}
 

@@ -110,9 +110,9 @@ public class PPViewer implements ActionListener, MenuAdder, BatchRunner
   
 //*************************Interface Setup Functions***************************
   
-  public PPViewer(JFrame parentFrameIn)
+  public PPViewer()
   {
-    parentFrame = parentFrameIn;
+    parentFrame = InterfaceMain.getInstance().getFrame();
     
     
     //Add listener to add or remove menu items based on gaining and losing control
@@ -231,7 +231,7 @@ public class PPViewer implements ActionListener, MenuAdder, BatchRunner
     fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
     // Start in current directory
-    fc.setCurrentDirectory(new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")));
+    fc.setCurrentDirectory(new File(InterfaceMain.getInstance().getProperties().getProperty("lastDirectory", ".")));
 
     // Set filter for Java source files.
     fc.setFileFilter(xmlFilter);
@@ -245,11 +245,11 @@ public class PPViewer implements ActionListener, MenuAdder, BatchRunner
     } else if(result==JFileChooser.APPROVE_OPTION)
     { 
       //user selected an XML file, open it and fire a control change
-      ((InterfaceMain)parentFrame).fireControlChange(controlStr);
+      InterfaceMain.getInstance().fireControlChange(controlStr);
       currFile = fc.getSelectedFile();
       
       //set last directory for subsequent file opens
-      ((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory",
+      InterfaceMain.getInstance().getProperties().setProperty("lastDirectory",
           fc.getCurrentDirectory().toString());
       
     } else

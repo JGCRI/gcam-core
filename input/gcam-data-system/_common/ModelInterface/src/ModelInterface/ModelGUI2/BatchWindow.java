@@ -103,7 +103,7 @@ import ModelInterface.InterfaceMain;
  * bar when a batch query is run. If this window is exited before it is 
  * finished collecting the results, then the query is canceled.  
  */
-public class BatchWindow extends Window {
+public class BatchWindow {
 
 
 
@@ -120,10 +120,8 @@ public class BatchWindow extends Window {
 	final boolean drawPics; 
 	final int numQueries; 
 	final XPathResult res;
-	final JFrame parentFrame;
 	Thread exportThread;
 	final boolean overwriteFile;
-	final boolean suppressMessages;
 	final JProgressBar progressBar;
 	final Runnable increaseProgress;
 	final Window progressDialog;
@@ -194,8 +192,8 @@ public class BatchWindow extends Window {
                     throw new Exception("No regions were set to query.");
                 }
                 return qg.isGroup()
-                    ? new MultiTableModel(qg, scenarios, regions, parentFrame, context)
-                    : new ComboTableModel(qg, scenarios, regions, parentFrame, null,context);
+                    ? new MultiTableModel(qg, scenarios, regions, context)
+                    : new ComboTableModel(qg, scenarios, regions, null, context);
             } finally {
                 // the count for the progress bar is made before we could determine if extra
                 // queries will be run so avoid increasing the progress extra times
@@ -219,18 +217,14 @@ public class BatchWindow extends Window {
 	 * @param drawPics Boolean option to draw charts
 	 * @param numQueries the number of queries
 	 * @param res The XPath results which will contain the aQuery to run.
-	 * @param parentFrame the parent frame GUI
 	 * @param overwriteFile Boolean option to overwrite existing file
-	 * @param suppressMessages Boolean to indicate to avoid popping up dialog boxes which require user intervention.
 	 */
 	public BatchWindow(final File outputFile, final Vector<Object[]> toRunScns,
 			final Vector<String> allRegions, final boolean singleSheet, final boolean drawPics,
-			final int numQueries, final XPathResult res, final JFrame parentFrame,
-			final boolean overwriteFile, final boolean suppressMessages) {
+			final int numQueries, final XPathResult res, final boolean overwriteFile) {
 
 
 
-		super(parentFrame);
         this.outputFile = outputFile;
         final boolean isExcelOutput = outputFile.getName().endsWith(".xls");
 		this.toRunScns = toRunScns;
@@ -239,9 +233,7 @@ public class BatchWindow extends Window {
 		this.drawPics = drawPics;
 		this.numQueries = numQueries;
 		this.res = res;
-		this.parentFrame = parentFrame;
 		this.overwriteFile = overwriteFile;
-        this.suppressMessages = suppressMessages;
 
         // determine the proper number of threads to use for queries by
         // checking the configuration parameter which defaults to the
@@ -256,27 +248,40 @@ public class BatchWindow extends Window {
 		prop.setProperty(coresToUsePropertyName, Integer.toString(numCoresToUse));
         // Create a thread pool to run queries in
         queryThreadPool = Executors.newFixedThreadPool(numCoresToUse);
+        final int totalQueriesToExcute = numQueries*toRunScns.size();
 
-		progressBar = new JProgressBar(0, numQueries*toRunScns.size());
-		// TODO: createProgressBarGUI should be moved somewhere else
+        if(InterfaceMain.getInstance().getFrame() == null) {
+            progressBar = null;
+            progressDialog = null;
+        } else {
+            progressBar = new JProgressBar(0, totalQueriesToExcute);
+            progressDialog = createProgressBarGUI2(progressBar, 
+                    "Running Queries", "Run and Export Progress");
+            WindowAdapter myWindowAdapter = new WindowAdapter() {
+                public void windowClosing(WindowEvent e) {
+                    killThread();
+                }
+            };
+            progressDialog.addWindowListener(myWindowAdapter);
+            progressDialog.addWindowStateListener(myWindowAdapter);
+
+        }
 
 		// the createProgressBarGUI sets it visible
 		increaseProgress = new Runnable() {
+            int numRun = 0;
 			public void run() {
-				progressBar.setValue(progressBar.getValue()+1);
+                ++numRun;
+                if(progressBar != null) {
+                    progressBar.setValue(progressBar.getValue()+1);
+                } else {
+                    System.out.print("Completed ");
+                    System.out.print(numRun * 100.0 / totalQueriesToExcute);
+                    System.out.println("% of batch queries.");
+                }
 			}
 		};
 
-		//This method was copied from XMLDB and edited for this application
-		progressDialog = createProgressBarGUI2(parentFrame, progressBar, 
-				"Running Queries", "Run and Export Progress");
-		WindowAdapter myWindowAdapter = new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				killThread();
-			}
-		};
-		progressDialog.addWindowListener(myWindowAdapter);
-		progressDialog.addWindowStateListener(myWindowAdapter);
 
 		//Thread that compiles the data. Everything visual has been 
 		//completed before this point, except updating the progress bar.
@@ -297,12 +302,12 @@ public class BatchWindow extends Window {
 						wb = new HSSFWorkbook(new FileInputStream(outputFile));
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
-                        if(!suppressMessages) {
-						JOptionPane.showMessageDialog(parentFrame,
+						InterfaceMain.getInstance().showMessageDialog(
 								"There was an error while trying to open "+outputFile,
 								"Batch Query Error", JOptionPane.ERROR_MESSAGE);
+                        if(progressDialog != null) {
+                            progressDialog.dispose();
                         }
-						progressDialog.dispose();
 						return;
 					}
 				}
@@ -399,19 +404,18 @@ public class BatchWindow extends Window {
 	/**
 	 * Creates the progress bar GUI. 
 	 * 
-	 * @param parentFrame the parent frame GUI
 	 * @param progBar the progress bar
 	 * @param title title of the window
 	 * @param labelStr the label of the window
 	 * 
 	 * @return the window
 	 */
-	public static Window createProgressBarGUI2(Frame parentFrame, JProgressBar progBar, String title, 
+	public static Window createProgressBarGUI2(JProgressBar progBar, String title, 
 			String labelStr) {
 		if(progBar.getMaximum() == 0) {
 			return null;
 		}
-		final JDialog filterDialog = new JDialog(parentFrame, title, false);
+		final JDialog filterDialog = new JDialog(InterfaceMain.getInstance().getFrame(), title, false);
 		filterDialog.setResizable(false);
 		filterDialog.setAlwaysOnTop(true);
 		JPanel all = new JPanel();
@@ -441,7 +445,6 @@ public class BatchWindow extends Window {
 		all.add(Box.createVerticalStrut(10));
 		all.add(buttonPanel);
 		all.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
 
 		filterDialog.add(all, BorderLayout.PAGE_START);
 		filterDialog.pack();
@@ -541,31 +544,25 @@ public class BatchWindow extends Window {
                 wb.write(fos);
                 fos.close();
                 if(numErrors == 0) {
-                    System.out.println("Sucessfully ran batch query.");
-                    if(!suppressMessages) {
-                        JOptionPane.showMessageDialog(parentFrame,
-                                "Sucessfully ran batch query",
-                                "Batch Query", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    InterfaceMain.getInstance().showMessageDialog(
+                            "Sucessfully ran batch query",
+                            "Batch Query", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // warn the users that some queries had errors
                     final String message = "Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s.");
-                    System.out.println(message);
-                    if(!suppressMessages) {
-                        JOptionPane.showMessageDialog(parentFrame,
-                                message,
-                                "Batch Query", JOptionPane.WARNING_MESSAGE);
-                    }
+                    InterfaceMain.getInstance().showMessageDialog(
+                            message,
+                            "Batch Query", JOptionPane.WARNING_MESSAGE);
                 }
             } catch(IOException ioe) {
                 ioe.printStackTrace();
-                if(!suppressMessages) {
-                    JOptionPane.showMessageDialog(parentFrame,
-                            "There was an error while trying to write results",
-                            "Batch Query Error", JOptionPane.ERROR_MESSAGE);
-                }
+                InterfaceMain.getInstance().showMessageDialog(
+                        "There was an error while trying to write results",
+                        "Batch Query Error", JOptionPane.ERROR_MESSAGE);
             } finally {
-                progressDialog.dispose();
+                if(progressDialog != null) {
+                    progressDialog.dispose();
+                }
             }
         } catch(InterruptedException ie) {
             ie.printStackTrace();
@@ -631,31 +628,25 @@ public class BatchWindow extends Window {
                 outputStream.print(outputBuf.toString());
                 outputStream.close();
                 if(numErrors == 0) {
-                    System.out.println("Sucessfully ran batch query.");
-                    if(!suppressMessages) {
-                        JOptionPane.showMessageDialog(parentFrame,
-                                "Sucessfully ran batch query",
-                                "Batch Query", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                    InterfaceMain.getInstance().showMessageDialog(
+                            "Sucessfully ran batch query",
+                            "Batch Query", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // warn the users that some queries had errors
                     final String message = "Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s.");
-                    System.out.println(message);
-                    if(!suppressMessages) {
-                        JOptionPane.showMessageDialog(parentFrame,
-                                message,
-                                "Batch Query", JOptionPane.WARNING_MESSAGE);
-                    }
+                    InterfaceMain.getInstance().showMessageDialog(
+                            message,
+                            "Batch Query", JOptionPane.WARNING_MESSAGE);
                 }
             } catch(IOException ioe) {
                 ioe.printStackTrace();
-                if(!suppressMessages) {
-                    JOptionPane.showMessageDialog(parentFrame,
-                            "There was an error while trying to write results",
-                            "Batch Query Error", JOptionPane.ERROR_MESSAGE);
-                }
+                InterfaceMain.getInstance().showMessageDialog(
+                        "There was an error while trying to write results",
+                        "Batch Query Error", JOptionPane.ERROR_MESSAGE);
             } finally {
-                progressDialog.dispose();
+                if(progressDialog != null) {
+                    progressDialog.dispose();
+                }
             }
         } catch(InterruptedException ie) {
             ie.printStackTrace();

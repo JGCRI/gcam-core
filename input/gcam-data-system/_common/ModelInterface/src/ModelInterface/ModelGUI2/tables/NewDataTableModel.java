@@ -97,16 +97,15 @@ public class NewDataTableModel extends BaseTableModel{
 	 * Constructor initializes data members, and calls buildTable to initialize data, and filterMaps
 	 * @param tp the Tree Path which was selected from the tree, needed to build table
 	 *        doc needed to run the XPath query against
-	 *        parentFrame needed to create dialogs
 	 *        tableTypeString to be able to display the type of table this is
 	 */
-	public NewDataTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
-		super(tp, doc, parentFrame, tableTypeString, documentationIn);
+	public NewDataTableModel(TreePath tp, Document doc, String tableTypeString, Documentation documentationIn) {
+		super(tp, doc, tableTypeString, documentationIn);
 		indCol = new Vector();
 		indRow = new Vector();
 		data = new TreeMap();
 		w3 = "";
-		wild = chooseTableHeaders(tp/*, parentFrame*/);
+		wild = chooseTableHeaders(tp);
 		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
 		wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 1));
@@ -251,11 +250,12 @@ public class NewDataTableModel extends BaseTableModel{
 		indCol.add(0, ind1Name);
 		flipped = !flipped;
 		fireTableStructureChanged();
+        final InterfaceMain main = InterfaceMain.getInstance();
 		if(row >= 0 && col >= 0) {
-			UndoManager undoManager = ((InterfaceMain)parentFrame).getUndoManager();
+			UndoManager undoManager = main.getUndoManager();
 			undoManager.addEdit(new FlipUndoableEdit(this));
 		}
-		((InterfaceMain)parentFrame).refreshUndoRedo();
+		main.refreshUndoRedo();
 	}
 
 	/**
@@ -392,7 +392,7 @@ public class NewDataTableModel extends BaseTableModel{
 			if( updown == null || side == null ) {
 				// throw some exception
 				System.out.println("Couldn't gather enough info to create Node");
-				JOptionPane.showMessageDialog(parentFrame, 
+				InterfaceMain.getInstance().showMessageDialog(
 						"Couldn't gather enough information to \ncreate the data",
 						"Set Value Error", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -697,20 +697,6 @@ public class NewDataTableModel extends BaseTableModel{
 
 			int where = wb.addPicture(new org.jfree.chart.encoders.SunJPEGEncoderAdapter().encode(chartImage), HSSFWorkbook.PICTURE_TYPE_JPEG);
 			dp.createPicture(new HSSFClientAnchor(0,0,255,255,firstCol,firstRow,colSpan,rowSpan), where);
-			
-			
-			//TODO: Make this a user selectable option
-			/*
-			try {
-				File outputfile = new File("saved.jpg");
-				ImageIO.write(chartImage, "jpg", outputfile);
-			} catch (IOException e3){
-				JOptionPane.showMessageDialog(parentFrame, 
-						"Image didn't save",
-						"Who knows why", JOptionPane.ERROR_MESSAGE);
-			}
-			*/	
-
 		} catch(java.io.IOException ioe) {
 			ioe.printStackTrace();
 		}

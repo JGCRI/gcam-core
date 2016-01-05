@@ -95,8 +95,6 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 	private int lastFlipY = 0;
 
-	private JFrame parentFrame;
-
 	public static String controlStr = "InputViewer";
 
 	JSplitPane splitPane;
@@ -147,7 +145,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	//int windowWidth;
 	//JFileChooser globalFC;
 
-	public InputViewer(JFrame parentFrameIn) {
+	public InputViewer() {
+        InterfaceMain main = InterfaceMain.getInstance();
+        JFrame parentFrame = main.getFrame();
 		try {
             /*
 			System.setProperty(DOMImplementationRegistry.PROPERTY,
@@ -160,7 +160,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			if (implls == null) {
 				System.out
 						.println("Could not find a DOM3 Load-Save compliant parser.");
-				JOptionPane.showMessageDialog(parentFrame,
+				InterfaceMain.getInstance().showMessageDialog(
 						"Could not find a DOM3 Load-Save compliant parser.",
 						"Initialization Error", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -171,13 +171,16 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			lsParser.setFilter(new ParseFilter());
 		} catch (Exception e) {
 			System.err.println("Couldn't initialize DOMImplementation: " + e);
-			JOptionPane.showMessageDialog(parentFrame,
+			InterfaceMain.getInstance().showMessageDialog(
 					"Couldn't initialize DOMImplementation\n" + e,
 					"Initialization Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
-		parentFrame = parentFrameIn;
 		thisViewer = this;
+        if(parentFrame == null) {
+            // no gui components available such as in batch mode.
+            return;
+        }
 
 		// Create a window to display the chart in.
 		chartWindow = new JFrame( "Charts" );
@@ -211,9 +214,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			public void propertyChange(PropertyChangeEvent e) {
 				// TODO: listen for undo/redo or just get it right!
 				if(e.getPropertyName().equals("Document-Modified")) {
-					((InterfaceMain)parentFrame).getSaveMenu().setEnabled(true);
+					main.getSaveMenu().setEnabled(true);
 				} else if(e.getPropertyName().equals("Document-Save")) {
-					((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
+					main.getSaveMenu().setEnabled(false);
 				}
 			}
 		};
@@ -223,48 +226,49 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr) || 
 						evt.getOldValue().equals(controlStr+"Same")) {
-						((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveAsMenu().removeActionListener(thisViewer);
-						//((InterfaceMain)parentFrame).getUndoMenu().removeActionListener(thisViewer);
-						//((InterfaceMain)parentFrame).getRedoMenu().removeActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(false);
-						//((InterfaceMain)parentFrame).getUndoMenu().setEnabled(false);
-						//((InterfaceMain)parentFrame).getRedoMenu().setEnabled(false);
-						((InterfaceMain)parentFrame).removePropertyChangeListener(savePropListener);
-						//((InterfaceMain)parentFrame).getQuitMenu().removeActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
+						main.getSaveMenu().removeActionListener(thisViewer);
+						main.getSaveAsMenu().removeActionListener(thisViewer);
+						//main.getUndoMenu().removeActionListener(thisViewer);
+						//main.getRedoMenu().removeActionListener(thisViewer);
+						main.getSaveAsMenu().setEnabled(false);
+						//main.getUndoMenu().setEnabled(false);
+						//min.getRedoMenu().setEnabled(false);
+						parentFrame.removePropertyChangeListener(savePropListener);
+						//main.getQuitMenu().removeActionListener(thisViewer);
+						main.getSaveMenu().setEnabled(false);
 						doc = null;
 						documentation = null;
-						((InterfaceMain)parentFrame).getUndoManager().discardAllEdits();
-						((InterfaceMain)parentFrame).refreshUndoRedo();
+						main.getUndoManager().discardAllEdits();
+						main.refreshUndoRedo();
 						parentFrame.getContentPane().removeAll();
 						parentFrame.setTitle("ModelInterface");
 						if(splitPane != null) {
-							((InterfaceMain)parentFrame).getProperties().setProperty("dividerLocation", 
+							main.getProperties().setProperty("dividerLocation", 
 								 String.valueOf(splitPane.getDividerLocation()));
 						}
 					}
 					if(evt.getNewValue().equals(controlStr)) {
-						((InterfaceMain)parentFrame).getSaveMenu().addActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveAsMenu().addActionListener(thisViewer);
-						//((InterfaceMain)parentFrame).getUndoMenu().addActionListener(thisViewer);
-						//((InterfaceMain)parentFrame).getRedoMenu().addActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(true);
-						//((InterfaceMain)parentFrame).getUndoMenu().setEnabled(true);
-						//((InterfaceMain)parentFrame).getRedoMenu().setEnabled(true);
-						((InterfaceMain)parentFrame).addPropertyChangeListener(savePropListener);
-						//((InterfaceMain)parentFrame).getQuitMenu().addActionListener(thisViewer);
-						//((InterfaceMain)parentFrame).oldControl = "FileChooserDemo.File";
-						leftWidth = Integer.parseInt(((InterfaceMain)parentFrame).
+						main.getSaveMenu().addActionListener(thisViewer);
+						main.getSaveAsMenu().addActionListener(thisViewer);
+						//main.getUndoMenu().addActionListener(thisViewer);
+						//main.getRedoMenu().addActionListener(thisViewer);
+						main.getSaveAsMenu().setEnabled(true);
+						//main.getUndoMenu().setEnabled(true);
+						//main.getRedoMenu().setEnabled(true);
+						parentFrame.addPropertyChangeListener(savePropListener);
+						//main.getQuitMenu().addActionListener(thisViewer);
+						//main.oldControl = "FileChooserDemo.File";
+						leftWidth = Integer.parseInt(main.
 							getProperties().getProperty("dividerLocation", "200"));
 					}
 				}
 			}
 		});
-		tableSelector = new TableSelector(parentFrame);
+		tableSelector = new TableSelector();
 	}
 
 	public void addMenuItems(InterfaceMain.MenuManager menuMan) {
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		JMenuItem menuItem = new JMenuItem("XML file");
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
 				ActionEvent.ALT_MASK));
@@ -306,10 +310,11 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 * be handled.
 	 */
 	public void displayJtree() {
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		Container contentPane = parentFrame.getContentPane();
 		contentPane.removeAll();
 		// Set up the tree
-		jtree = new JTree(new DOMmodel(doc, (InterfaceMain)parentFrame));
+		jtree = new JTree(new DOMmodel(doc));
 		jtree.setEditable(true);
 		jtree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -419,50 +424,28 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 *            the event, only care about a click on a menu item
 	 */
 	public void actionPerformed(ActionEvent e) {
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		boolean status = false;
 		String command = e.getActionCommand();
 		if (command.equals("XML file")) {
 			// Open a file
 			status = openXMLFile(e);
-			/*
-			if (!status) {
-				JOptionPane.showMessageDialog(null, "Error opening file!",
-						"File Open Error", JOptionPane.ERROR_MESSAGE);
-			}
-			*/
 			if (doc == null) {
 				// probably the cancel, just return here to avoid exceptions
 				return;
 			}
-			//((InterfaceMain)parentFrame).fireControlChange(controlStr);
 			if(status) {
 				displayJtree();
-				//ADDING CP HERE
-				//DOMPasteboard pd = new DOMPasteboard(doc, jtree, implls);
 				jtree.setTransferHandler(new DOMTransferHandler(doc, implls));
 				jtree.setDragEnabled(true);
-				//menuSave.setEnabled(true); // now save can show up
-				//setTitle("["+file+"] - ModelGUI");
 				parentFrame.setTitle("["+file+"] - ModelInterface");
 			}
 		} else if (command.equals("CSV file")) {
 			// Open a file
 			status = openCSVFile(e);
-			/*
-			if (!status) {
-				JOptionPane.showMessageDialog(null, "Error opening file!",
-						"File Open Error", JOptionPane.ERROR_MESSAGE);
-			}
-			if (doc == null) {
-				//probably the cancell, just return here to avoid exceptions
-				return;
-			}
-			*/
-			//((InterfaceMain)parentFrame).fireControlChange(controlStr);
 			if(status) {
 				displayJtree();
-				//menuSave.setEnabled(true); // now save can show up
-				//parentFrame.setTitle("["+file+"] - ModelGUI");
 				parentFrame.setTitle("["+file+"] - ModelInterface");
 			}
 		} else if (command.equals("Save")) {
@@ -472,24 +455,22 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				status = saveFile(file);
 			}
 			if (!status) {
-				JOptionPane.showMessageDialog(null,
-						"IO error in saving file!!", "File Save Error",
+				main.showMessageDialog( "IO error in saving file!!", "File Save Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			parentFrame.setTitle("["+file+"] - ModelInterface");
-			((InterfaceMain)parentFrame).fireProperty("Document-Save", null, doc);
+			main.fireProperty("Document-Save", null, doc);
 		} else if (command.equals("Save As")) {
 			// Save a file
 			status = saveFile();
 			if (!status) {
-				JOptionPane.showMessageDialog(null,
-						"IO error in saving file!!", "File Save Error",
+				main.showMessageDialog( "IO error in saving file!!", "File Save Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			parentFrame.setTitle("["+file+"] - ModelInterface");
-			((InterfaceMain)parentFrame).fireProperty("Document-Save", null, doc);
+			main.fireProperty("Document-Save", null, doc);
 		} else if (command.equals("Filter")) {
 				/*
 			try {
@@ -523,7 +504,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			}
 				*/
 			// new and old values should be??
-			((InterfaceMain)parentFrame).fireProperty("Filter", null, 1);
+			main.fireProperty("Filter", null, 1);
 		} else if(command.equals("Add Child")) {
 			jtree.setSelectionPath(selectedPath);
 
@@ -573,39 +554,6 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		}
 	}
 
-	/* moved to it's correct place.. delete this
-	private TreeSet doc1Nodes;
-	private void evalDocumentationLink(String xpLink) {
-		doc1Nodes = new TreeSet(new Comparator() {
-			public int compare(Object obj1, Object obj2) {
-				if(obj1.equals(obj2)) {
-					return 0;
-				} else {
-					String node1Val = ((Node)obj1).getNodeValue();
-					String node2Val = ((Node)obj2).getNodeValue();
-					int ret = String.CASE_INSENSITIVE_ORDER.compare(node1Val, node2Val);
-					if(ret == 0) {
-						return 1;
-					} else {
-						return ret;
-					}
-				}
-			}
-		});
-
-		try {
-			XPath xpImpl = XPathFactory.newInstance().newXPath();
-			XPathExpression xpe = xpImpl.compile(xpLink);
-			NodeList nl = (NodeList)xpe.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
-			for(int i = 0; i < nl.getLength(); ++i) {
-				doc1Nodes.add(nl.item(i));
-			}
-			//System.out.println("Evaluated to: "+xpe.evaluate(doc.getDocumentElement(), XPathConstants.STRING));
-		} catch(XPathExpressionException xpee) {
-			xpee.printStackTrace();
-		}
-	}
-	*/
 
 	String meregeXPaths(String path1, String path2) {
 		String[] path1Arr = path1.split("/");
@@ -642,40 +590,6 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		return strBuff.toString();
 	}
 				
-	/* Moved to Documentation, can remove here
-	StringBuffer nodeToXPath(Node n) {
-		if(n.getNodeType() != Node.DOCUMENT_NODE) {
-			StringBuffer buf = nodeToXPath(n.getParentNode());
-			if(n.getNodeType() == Node.TEXT_NODE) {
-				return buf.append("node()");
-			}
-			buf.append(n.getNodeName());
-			NamedNodeMap nm = n.getAttributes();
-			if(nm.getLength() > 0) {
-				buf.append("[");
-			}
-			if(nm.getLength() > 1) {
-				buf.append("(");
-			}
-			for(int i = 0; i < nm.getLength(); ++i) {
-				buf.append("(@").append(nm.item(i).getNodeName()).append("='").append(nm.item(i).getNodeValue()).append("')");
-				if(i+1 != nm.getLength()) {
-					buf.append(" and ");
-				}
-			}
-			if(nm.getLength() > 1) {
-				buf.append(")");
-			}
-			if(nm.getLength() > 0) {
-				buf.append("]");
-			}
-			return buf.append("/");
-		} else {
-			return new StringBuffer("/");
-		}
-	}
-	*/
-
 	/**
 	 * This "helper method" makes a menu item and then registers this object as
 	 * a listener to it.
@@ -809,7 +723,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 							chartWindow.pack();
 							chartWindow.setVisible(true);
 						} catch(NumberFormatException nfe) {
-							JOptionPane.showMessageDialog(parentFrame, 
+							InterfaceMain.getInstance().showMessageDialog(
 									"Could not create a chart: No year values to chart.", 
 									"Could Not Create", JOptionPane.ERROR_MESSAGE);
 						}
@@ -836,8 +750,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			message += " and all of its children?";
 		}
 
-		int ans = JOptionPane.showConfirmDialog(parentFrame, message, "Delete Node",
-				JOptionPane.YES_NO_OPTION);
+		int ans = InterfaceMain.getInstance().showConfirmDialog(message, "Delete Node",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_OPTION);
 
 		if (ans == JOptionPane.NO_OPTION)
 			return;
@@ -866,6 +780,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 * add a child to an esiting node in the tree.
 	 */
 	public void makeAddChildDialog() {
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		addChildDialog = new JDialog(parentFrame, "Add Child Node", true);
 		Container content = addChildDialog.getContentPane();
 		content.setLayout(new BoxLayout(addChildDialog.getContentPane(),
@@ -1028,7 +943,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		String data = dataField.getText();
 		Element tempNode = null;
 		if(name.equals("")) {
-			JOptionPane.showMessageDialog(parentFrame, "You must supply a name", 
+			InterfaceMain.getInstance().showMessageDialog("You must supply a name", 
 					"Invalid Name", JOptionPane.ERROR_MESSAGE);
 			return false;
 		} else {
@@ -1036,10 +951,10 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				tempNode = doc.createElement(name);
 			} catch(DOMException e) {
 				if(e.code == DOMException.INVALID_CHARACTER_ERR) {
-					JOptionPane.showMessageDialog(parentFrame, "Invalid XML name, please Change your Node Name", 
+					InterfaceMain.getInstance().showMessageDialog("Invalid XML name, please Change your Node Name", 
 							"Invalid Name", JOptionPane.ERROR_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(parentFrame, e, 
+					InterfaceMain.getInstance().showMessageDialog(e, 
 							"Invalid Name", JOptionPane.ERROR_MESSAGE);
 				}
 				return false;
@@ -1055,10 +970,10 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					gotSome = true;
 				} catch(DOMException e) {
 					if(e.code == DOMException.INVALID_CHARACTER_ERR) {
-						JOptionPane.showMessageDialog(parentFrame, "Invalid XML attribute name, please check your attribute names", 
+						InterfaceMain.getInstance().showMessageDialog("Invalid XML attribute name, please check your attribute names", 
 								"Invalid Attribute", JOptionPane.ERROR_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(parentFrame, e, 
+						InterfaceMain.getInstance().showMessageDialog(e, 
 								"Invalid Name", JOptionPane.ERROR_MESSAGE);
 					}
 					return false;
@@ -1066,7 +981,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			}
 			if(!gotSome) {
 				// show error
-				JOptionPane.showMessageDialog(parentFrame, "Please check the syntax of you Attributes", 
+				InterfaceMain.getInstance().showMessageDialog("Please check the syntax of you Attributes", 
 						"Invalid Attributes", JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
@@ -1113,7 +1028,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					if(bt != null) {
 						bt.fireTableRowsUpdated(0, bt.getRowCount());
 					}
-					((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
+					InterfaceMain.getInstance().fireProperty("Document-Modified", null, doc);
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -1121,117 +1036,17 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		}
 
 		public void treeNodesInserted(TreeModelEvent e) {
-			((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
+			InterfaceMain.getInstance().fireProperty("Document-Modified", null, doc);
 		}
 
 		public void treeNodesRemoved(TreeModelEvent e) {
-			((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
+			InterfaceMain.getInstance().fireProperty("Document-Modified", null, doc);
 		}
 
 		public void treeStructureChanged(TreeModelEvent e) {
-			((InterfaceMain)parentFrame).fireProperty("Document-Modified", null, doc);
+			InterfaceMain.getInstance().fireProperty("Document-Modified", null, doc);
 		}
 	}
-
-	/**
-	 * Gets the input values from the add child dialog and parses them makes
-	 * sure they are valid then returns a new node as specified by the input in
-	 * the dialog.
-	 * 
-	 * @return new node as specified in the dialog
-	 */
-	/*
-	private Node extractNewChild() {
-		String nodeName = nameField.getText().trim();
-		String attribs = attribField.getText().trim();
-		String value = valueField.getText().trim();
-		int sIndex, eIndex, index;
-		boolean repeat = true;
-		//create new node with given name
-		Element newNode = null;
-
-		while (repeat) {
-			try {
-				newNode = doc.createElement(nodeName);
-				repeat = false;
-			} catch (Exception nameExc) {
-				JOptionPane.showMessageDialog(null, "Invalid node name!");
-				Object[] possibilities = null;
-				String s2 = (String) JOptionPane
-						.showInputDialog(
-								null,
-								"Please try again, press cancel or leave blank to cancel 'Add Child'",
-								"Re-enter a valid node name)",
-								JOptionPane.PLAIN_MESSAGE, null, possibilities,
-								null);
-				nodeName = s2;
-				if (s2 == null || s2.length() == 0) {
-					return null;
-				}
-				System.out.println("BAD NAME .. " + nameExc);
-			}
-		}
-
-		repeat = true; //for detecting bad attributes
-		while (repeat) {
-
-			//add all attributes to the new node, if the exist
-			//  hopefully a comma-seporated list of attributes in the form:
-			// name=nodeName, year=1975, ...
-			if (attribs.length() > 0) {
-				StringTokenizer st = new StringTokenizer(attribs, ",", false);
-				String attrib, val, strboth;
-
-				try {
-					int numTokens = st.countTokens();
-					for (int i = 0; i < numTokens; i++) {
-						strboth = st.nextToken().trim();
-						StringTokenizer stInner = new StringTokenizer(strboth,
-								"=", false);
-						attrib = stInner.nextToken().trim();
-						val = stInner.nextToken().trim();
-						newNode.setAttribute(attrib, val);
-					}
-					repeat = false;
-
-				} catch (Exception se) {
-					JOptionPane.showMessageDialog(null,
-							"Syntax for attribute(s) incorrect!");
-					Object[] possibilities = null;
-					String s = (String) JOptionPane
-							.showInputDialog(
-									null,
-									"Please try again, leave blank if you don't want any attributes, press cancel to cancel entire 'Add Child', othwerwise attributes must of form: attrname1=attrval1,attrname2=attrval2, ..",
-									"Re-enter attribute(s)",
-									JOptionPane.PLAIN_MESSAGE, null,
-									possibilities, null);
-					if ((s != null) && (s.length() > 0)) {
-						attribs = s;
-
-					}
-					if (s == null) {
-						return null;
-					}
-					if (s.length() == 0) { // no attribute
-						repeat = false;
-					}
-
-					//System.out.println("BAD ATTRIBUTE ADDED!!!!");
-				}
-			} else {
-				repeat = false;
-			}
-
-		} // while !okaytogoon
-
-		if (value.length() > 0) {
-			Text tempText = doc.createTextNode(value);
-			newNode.appendChild(tempText);
-		}
-
-		return newNode;
-	}
-*/
 
 	/**
 	 * Creates a JFileChooser to figure out which file to parse, then parses the
@@ -1242,22 +1057,24 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	boolean openXMLFile(ActionEvent evt) {
 
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		File[] result;
 		if(evt.getSource() instanceof RecentFile) {
 			result = ((RecentFile)evt.getSource()).getFiles();
 		} else {
 			FileChooser fc = FileChooserFactory.getFileChooser();
 			result = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG, 
-					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					new File(main.getProperties().getProperty("lastDirectory", ".")),
 					xmlFilter, this, "XML file");
 		}
 
 		if (result == null) {
 			return false;
 		} else {
-			((InterfaceMain)parentFrame).fireControlChange(controlStr);
+			main.fireControlChange(controlStr);
 			file = result[0];
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", file.getParent());
+			main.getProperties().setProperty("lastDirectory", file.getParent());
 
 			doc = readXMLFile( file );
 			
@@ -1325,6 +1142,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	boolean openCSVFile(ActionEvent evt) {
 
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		File[] csvFiles;
 		File[] headerFiles;
 		if(evt.getSource() instanceof RecentFile) {
@@ -1337,20 +1156,20 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			FileChooser fc = FileChooserFactory.getFileChooser();
 			// can't use the normal recent file so will have to addFile manually
 			csvFiles = fc.doFilePrompt(parentFrame, "Open CSV Files", FileChooser.LOAD_DIALOG, 
-					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					new File(main.getProperties().getProperty("lastDirectory", ".")),
 					csvFilter, null, null);
 			if(csvFiles == null) {
 				return false;
 			}
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", csvFiles[0].getPath());
+			main.getProperties().setProperty("lastDirectory", csvFiles[0].getPath());
 			headerFiles = fc.doFilePrompt(parentFrame, "Open Headers File", FileChooser.LOAD_DIALOG, 
-					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					new File(main.getProperties().getProperty("lastDirectory", ".")),
 					null, null, null);
 			// return false or should it be true?
 			if(headerFiles == null) {
 				return false;
 			}
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", headerFiles[0].getPath());
+			main.getProperties().setProperty("lastDirectory", headerFiles[0].getPath());
 			File[] files = new File[csvFiles.length+1];
 			System.arraycopy(csvFiles, 0, files, 0, csvFiles.length);
 			files[files.length-1] = headerFiles[0];
@@ -1360,7 +1179,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		if(csvFiles == null || headerFiles == null) {
 			return false;
 		} 
-		((InterfaceMain)parentFrame).fireControlChange(controlStr);
+		main.fireControlChange(controlStr);
 
 		// TODO: get rid of the dependency on file
 		file = csvFiles[0];
@@ -1375,6 +1194,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	boolean saveFile() {
 		// save as..
 
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		FileChooser fc = FileChooserFactory.getFileChooser();
         String saveAsDefault = file.getAbsolutePath();
         if(!saveAsDefault.endsWith(".xml")) {
@@ -1393,16 +1214,16 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 				}
 			}
 			if (file.exists()) {
-				int response = JOptionPane.showConfirmDialog(null,
+				int response = InterfaceMain.getInstance().showConfirmDialog(
 						"Overwrite existing file?", "Confirm Overwrite",
 						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.QUESTION_MESSAGE);
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_OPTION);
 				//if they hit cancel it gives and error message, so i
 				//made it return true, that could be a problem in the future
 				if (response == JOptionPane.CANCEL_OPTION)
 					return true;
 			}
-			((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", file.getParent());
+			main.getProperties().setProperty("lastDirectory", file.getParent());
 			return writeFile(file, doc);
 		}
 	}
@@ -1427,7 +1248,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		} catch (Exception e) {
 			System.out.println("Got Exception while creating XML document: "
 					+ e);
-			JOptionPane.showMessageDialog(parentFrame,
+			InterfaceMain.getInstance().showMessageDialog(
 					"Exception while creating XML document\n" + e.getMessage(), "Exception",
 					JOptionPane.ERROR_MESSAGE);
 		}
@@ -1445,7 +1266,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 *            the Headers file
 	 */
 	public void readCSVFile(File[] csvFiles, File file2) {
-        doc = CSVToXMLMain.runCSVConversion(csvFiles, file2, parentFrame);
+        doc = CSVToXMLMain.runCSVConversion(csvFiles, file2, InterfaceMain.getInstance());
     }
 
 	/**
@@ -1497,6 +1318,8 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	}
 
 	public void displayTable() {
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		if (!jtree.getModel().isLeaf(jtree.getLastSelectedPathComponent())) {
 
 			// find out the type of table and create it
@@ -1510,7 +1333,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 			if(((JScrollPane)splitPane.getRightComponent()).getViewport().getView() != null) {
 				oldVal = getTableModelFromScrollPane((JScrollPane)splitPane.getRightComponent());
 			}
-			((InterfaceMain)parentFrame).fireProperty("Table", oldVal, getTableModelFromScrollPane(tableView));
+			main.fireProperty("Table", oldVal, getTableModelFromScrollPane(tableView));
 
 			// maybe this will solve the resizing of the left component
 			//tableView.setPreferredSize(new Dimension(windowWidth - leftWidth, windowHeight));
@@ -1657,13 +1480,13 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 					// again
 				} else {
 					System.out.println("Not enough info to run conversion");
-					JOptionPane.showMessageDialog(parentFrame,
+					InterfaceMain.getInstance().showMessageDialog(
 							"Not enough info to run conversion",
 							"Batch File Error", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
 				System.out.println("Unknown command: "+actionCommand);
-				JOptionPane.showMessageDialog(parentFrame,
+				InterfaceMain.getInstance().showMessageDialog(
 						"Unknown command: "+actionCommand,
 						"Batch File Error", JOptionPane.ERROR_MESSAGE);
 			}

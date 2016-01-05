@@ -135,8 +135,6 @@ import org.basex.api.dom.BXDoc;
 import org.basex.util.Token;
 
 public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
-	private JFrame parentFrame;
-
 	private Document queriesDoc;
 
 	private static String controlStr = "DbViewer";
@@ -161,9 +159,35 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	public static final String SCENARIO_LIST_NAME = "scenario list";
 	public static final String REGION_LIST_NAME = "region list";
 
-	public DbViewer(JFrame pf) {
-		parentFrame = pf;
+	public DbViewer() {
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		final DbViewer thisViewer = this;
+
+		try {
+			DOMImplementationRegistry reg = DOMImplementationRegistry
+			.newInstance();
+			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
+			if (implls == null) {
+				System.out.println("Could not find a DOM3 Load-Save compliant parser.");
+				InterfaceMain.getInstance().showMessageDialog(
+						"Could not find a DOM3 Load-Save compliant parser.",
+						"Initialization Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		} catch (Exception e) {
+			System.err.println("Couldn't initialize DOMImplementation: " + e);
+			InterfaceMain.getInstance().showMessageDialog(
+					"Couldn't initialize DOMImplementation\n" + e,
+					"Initialization Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+        if(parentFrame == null) {
+            // no gui components available such as in batch mode.
+            return;
+        }
+
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
@@ -173,23 +197,22 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 							((QueryResultsPanel)tablesTabs.getComponentAt(tab)).killThreadAndWait();
 						}
 
-						if(queries.hasChanges() && JOptionPane.showConfirmDialog(
-								parentFrame, 
+						if(queries.hasChanges() && InterfaceMain.getInstance().showConfirmDialog(
 								"The Queries have been modified.  Do you want to save them?",
 								"Confirm Save Queries", JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+								JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION) {
 							writeQueries();
 						}
-						Properties prop = ((InterfaceMain)parentFrame).getProperties();
+						Properties prop = main.getProperties();
 						prop.setProperty("scenarioRegionSplit", String.valueOf(scenarioRegionSplit.getDividerLocation()));
 						prop.setProperty("queriesSplit", String.valueOf(queriesSplit.getDividerLocation()));
 						prop.setProperty("tableCreatorSplit", String.valueOf(tableCreatorSplit.getDividerLocation()));
-						((InterfaceMain)parentFrame).getUndoManager().discardAllEdits();
-						((InterfaceMain)parentFrame).refreshUndoRedo();
-						((InterfaceMain)parentFrame).getSaveMenu().removeActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveAsMenu().removeActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(false);
-						((InterfaceMain)parentFrame).getSaveMenu().setEnabled(false);
+						main.getUndoManager().discardAllEdits();
+						main.refreshUndoRedo();
+						main.getSaveMenu().removeActionListener(thisViewer);
+						main.getSaveAsMenu().removeActionListener(thisViewer);
+						main.getSaveAsMenu().setEnabled(false);
+						main.getSaveMenu().setEnabled(false);
 						parentFrame.getContentPane().removeAll();
 
 						// closing the db should be the last thing to do in case
@@ -198,7 +221,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					}
 					if(evt.getNewValue().equals(controlStr)) {
 						String queryFileName;
-						Properties prop = ((InterfaceMain)parentFrame).getProperties();
+						Properties prop = main.getProperties();
 						// I should probably stop being lazy
 						prop.setProperty("queryFile", queryFileName = 
 							prop.getProperty("queryFile", "standard_queries.xml"));
@@ -223,38 +246,15 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 						} catch(NumberFormatException nfe) {
 							System.out.println("Invalid split location preference: "+nfe);
 						}
-						((InterfaceMain)parentFrame).getSaveMenu().addActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveAsMenu().addActionListener(thisViewer);
-						((InterfaceMain)parentFrame).getSaveAsMenu().setEnabled(true);
+						main.getSaveMenu().addActionListener(thisViewer);
+						main.getSaveAsMenu().addActionListener(thisViewer);
+						main.getSaveAsMenu().setEnabled(true);
 						queriesDoc = readQueries(new File(queryFileName));
 					}
 				}
 			}
 		});
 
-		try {
-            /*
-			System.setProperty(DOMImplementationRegistry.PROPERTY,
-			"com.sun.org.apache.xerces.internal.dom.DOMImplementationSourceImpl");
-			//"org.apache.xerces.dom.DOMImplementationSourceImpl");
-            */
-			DOMImplementationRegistry reg = DOMImplementationRegistry
-			.newInstance();
-			implls = (DOMImplementationLS)reg.getDOMImplementation("XML 3.0");
-			if (implls == null) {
-				System.out.println("Could not find a DOM3 Load-Save compliant parser.");
-				JOptionPane.showMessageDialog(parentFrame,
-						"Could not find a DOM3 Load-Save compliant parser.",
-						"Initialization Error", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-		} catch (Exception e) {
-			System.err.println("Couldn't initialize DOMImplementation: " + e);
-			JOptionPane.showMessageDialog(parentFrame,
-					"Couldn't initialize DOMImplementation\n" + e,
-					"Initialization Error", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		}
 	}
 
 	private JMenuItem makeMenuItem(String title) {
@@ -264,6 +264,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	}
 
 	public void addMenuItems(InterfaceMain.MenuManager menuMan) {
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		JMenuItem menuItem = new JMenuItem("DB Open");
 		menuItem.addActionListener(this);
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).
@@ -272,11 +274,6 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		final JMenuItem menuManage = makeMenuItem("Manage DB");
 		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuManage, 10);
 		menuManage.setEnabled(false);
-		/*
-		final JMenuItem menuBatch = makeMenuItem("Batch Query");
-		menuMan.getSubMenuManager(InterfaceMain.FILE_MENU_POS).addMenuItem(menuBatch, 11);
-		menuBatch.setEnabled(false);
-		 */
 		// TODO: why are there two property change listeners
 		final ActionListener thisListener = this;
 		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
@@ -288,17 +285,17 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 						//menuBatch.setEnabled(false);
 						// TODO: have the inteface main hanlde all batch files including
 						// this ones
-						JMenuItem batchMenu = InterfaceMain.getInstance().getBatchMenu();
+						JMenuItem batchMenu = main.getBatchMenu();
 						batchMenu.removeActionListener(thisListener);
-						batchMenu.addActionListener(InterfaceMain.getInstance());
+						batchMenu.addActionListener(main);
 					} 
 					if(evt.getNewValue().equals(controlStr)) {
 						menuManage.setEnabled(true);
 						//menuBatch.setEnabled(true);
 						// TODO: have the inteface main hanlde all batch files including
 						// this ones
-						JMenuItem batchMenu = InterfaceMain.getInstance().getBatchMenu();
-						batchMenu.removeActionListener(InterfaceMain.getInstance());
+						JMenuItem batchMenu = main.getBatchMenu();
+						batchMenu.removeActionListener(main);
 						batchMenu.addActionListener(thisListener);
 					}
 				}
@@ -329,6 +326,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		if(e.getActionCommand().equals("DB Open")) {
 			File[] dbFiles;
 			if(e.getSource() instanceof RecentFile) {
@@ -345,12 +344,12 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				FileChooser fc = FileChooserFactory.getFileChooser();
 				// Now open chooser
 				dbFiles = fc.doFilePrompt(parentFrame, "Choose XML Database", FileChooser.LOAD_DIALOG, 
-						new File(((InterfaceMain)parentFrame).getProperties()
+						new File(main.getProperties()
 								.getProperty("lastDirectory", ".")), dbFilter, this, "DB Open");
 			}
 
 			if(dbFiles != null) {
-				((InterfaceMain)parentFrame).fireControlChange(controlStr);
+				main.fireControlChange(controlStr);
 				doOpenDB(dbFiles[0]);
 			}
 		} else if(e.getActionCommand().equals("Manage DB")) {
@@ -360,13 +359,13 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			// Now open chooser
 			final FileFilter xmlFilter = new XMLFilter();
 			File[] batchFiles = fc.doFilePrompt(parentFrame, "Open batch Query File", FileChooser.LOAD_DIALOG, 
-					new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+					new File(main.getProperties().getProperty("lastDirectory", ".")),
 					xmlFilter);
 
 			if(batchFiles == null) {
 				return;
 			} else {
-				((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", batchFiles[0].getParent());
+				main.getProperties().setProperty("lastDirectory", batchFiles[0].getParent());
 
 				final FileFilter xlsFilter = (new javax.swing.filechooser.FileFilter() {
 					public boolean accept(File f) {
@@ -377,7 +376,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					}
 				});
 				File[] xlsFiles = fc.doFilePrompt(parentFrame, "Select Where to Save Output", FileChooser.SAVE_DIALOG, 
-						new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+						new File(main.getProperties().getProperty("lastDirectory", ".")),
 						xlsFilter);
 				if(xlsFiles == null) {
 					return;
@@ -387,7 +386,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                             xlsFiles[i] = new File(xlsFiles[i].getAbsolutePath()+".xls");
                         }
                     }
-					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", xlsFiles[0].getParent());
+					main.getProperties().setProperty("lastDirectory", xlsFiles[0].getParent());
 					batchQuery(batchFiles[0], xlsFiles[0]);
 				}
 			}
@@ -399,7 +398,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			final FileFilter xmlFilter = new XMLFilter();
 			FileChooser fc = FileChooserFactory.getFileChooser();
 			File[] result = fc.doFilePrompt(parentFrame, null, FileChooser.SAVE_DIALOG, 
-					new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile", ".")),
+					new File(main.getProperties().getProperty("queryFile", ".")),
 					xmlFilter);
 			if(result != null) {
 				File file = result[0];
@@ -408,11 +407,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 						file = new File(file.getAbsolutePath() + ".xml");
 					}
 				}
-				if (!file.exists() || JOptionPane.showConfirmDialog(null,
+				if (!file.exists() || InterfaceMain.getInstance().showConfirmDialog(
 						"Overwrite existing file?", "Confirm Overwrite",
 						JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-					((InterfaceMain)parentFrame).getProperties().setProperty("queryFile", 
+						JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_OPTION) == JOptionPane.YES_OPTION) {
+					main.getProperties().setProperty("queryFile", 
 							file.getAbsolutePath());
 					writeQueries();
 				}
@@ -421,16 +420,18 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	}
 
 	private void doOpenDB(File dbFile) {
-		((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", dbFile.getParent());
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
+		main.getProperties().setProperty("lastDirectory", dbFile.getParent());
 		// put up a wait cursor so that the user knows things are happening while the database loads
 		parentFrame.getGlassPane().setVisible(true);
 		try {
-			XMLDB.openDatabase(dbFile.getAbsolutePath(), parentFrame);
+			XMLDB.openDatabase(dbFile.getAbsolutePath());
 		} catch(Exception e) {
 			e.printStackTrace();
 			parentFrame.getGlassPane().setVisible(false);
 			// tell the user it didn't open.
-			JOptionPane.showMessageDialog(parentFrame, "Could not open the xml database.", 
+			InterfaceMain.getInstance().showMessageDialog("Could not open the xml database.", 
 					"DB Open Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
@@ -706,12 +707,12 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		createButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() != 1) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select one Query or Query Group before creating", 
+					InterfaceMain.getInstance().showMessageDialog("Please select one Query or Query Group before creating", 
 							"Create Query Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
-				QueryGenerator qg = new QueryGenerator(parentFrame); 
+				QueryGenerator qg = new QueryGenerator(); 
 				if(qg.getXPath().equals("")) {
 					return;
 				} else if(qg.getXPath().equals("Query Group")) {
@@ -725,7 +726,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		removeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select a Query or Query Group to Remove", 
+					InterfaceMain.getInstance().showMessageDialog("Please select a Query or Query Group to Remove", 
 							"Query Remove Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					TreePath[] selPaths = queryList.getSelectionPaths();
@@ -741,16 +742,15 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				int[] scnSel = scnList.getSelectedIndices();
 				int[] regionSel = regionList.getSelectedIndices();
 				if(scnSel.length == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select Scenarios to run the query against", 
+					InterfaceMain.getInstance().showMessageDialog("Please select Scenarios to run the query against", 
 							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else if(regionSel.length == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select Regions to run the query against", 
+					InterfaceMain.getInstance().showMessageDialog("Please select Regions to run the query against", 
 							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select a query to run", 
+					InterfaceMain.getInstance().showMessageDialog("Please select a query to run", 
 							"Run Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					parentFrame.getGlassPane().setVisible(true);
 					TreePath[] selPaths = queryList.getSelectionPaths();
 					boolean movedTabAlready = false;
 					for(int i = 0; i < selPaths.length; ++i) {
@@ -766,7 +766,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 							}
 							//add loading icon to QueryResultsPanel
 							TabCloseIcon loadingIcon = new TabCloseIcon(tablesTabs);
-							JComponent ret = new QueryResultsPanel(qg, singleBinding, parentFrame, scnList.getSelectedValues(), regionList.getSelectedValues(), loadingIcon);
+							JComponent ret = new QueryResultsPanel(qg, singleBinding, scnList.getSelectedValues(), regionList.getSelectedValues(), loadingIcon);
 
 							tablesTabs.addTab(qg.toString(), loadingIcon, ret, createCommentTooltip(selPaths[i])); 
 							if(!movedTabAlready) { 
@@ -779,7 +779,6 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 							System.out.println("Warning: Caught "+cce+" likely a QueryGroup was in the selection");
 						}
 					}
-					parentFrame.getGlassPane().setVisible(false);
 					// need old value/new value?
 					// fire off property or something we did query
 				}
@@ -789,7 +788,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(queryList.getSelectionCount() == 0) {
-					JOptionPane.showMessageDialog(parentFrame, "Please select a query to edit", 
+					InterfaceMain.getInstance().showMessageDialog("Please select a query to edit", 
 							"Edit Query Error", JOptionPane.ERROR_MESSAGE);
 				} else {
 					TreePath[] selPaths = queryList.getSelectionPaths();
@@ -816,9 +815,9 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			}
 		});
 
+        JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		Container contentPane = parentFrame.getContentPane();
-		contentPane.add(tableCreatorSplit/*, BorderLayout.PAGE_START*/);
-		//contentPane.add(new JScrollPane(all), BorderLayout.PAGE_START);
+		contentPane.add(tableCreatorSplit);
 
 		// have to get rid of the wait cursor
 		parentFrame.getGlassPane().setVisible(false);
@@ -860,6 +859,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	}
 
 	private void manageDB() {
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		final JDialog filterDialog = new JDialog(parentFrame, "Manage Database", true);
 		filterDialog.getGlassPane().addMouseListener( new MouseAdapter() {});
 		filterDialog.getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -900,15 +901,15 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				FileChooser fc = FileChooserFactory.getFileChooser();
 				final FileFilter xmlFilter = new XMLFilter();
 				final File[] xmlFiles = fc.doFilePrompt(parentFrame, "Open XML File", FileChooser.LOAD_DIALOG,
-						new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
+						new File(main.getProperties().  getProperty("lastDirectory", ".")),
 						xmlFilter);
 
 				if(xmlFiles != null) {
 					dirtyBit.setDirty();
-					((InterfaceMain)parentFrame).getProperties().setProperty("lastDirectory", 
+					main.getProperties().setProperty("lastDirectory", 
 							xmlFiles[0].getParent());
 					final JProgressBar progBar = new JProgressBar(0, xmlFiles.length);
-					final JDialog jd = XMLDB.createProgressBarGUI(parentFrame, progBar, "Adding Runs",
+					final JDialog jd = XMLDB.createProgressBarGUI(progBar, "Adding Runs",
 					"Importing runs into the database");
 					final Runnable incProgress = (new Runnable() {
 						public void run() {
@@ -1048,7 +1049,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				}
 				FileChooser fc = FileChooserFactory.getFileChooser();
 				final File[] exportLocation = fc.doFilePrompt(parentFrame, saveDialogTitle, FileChooser.SAVE_DIALOG,
-						new File(((InterfaceMain)parentFrame).getProperties().  getProperty("lastDirectory", ".")),
+						new File(main.getProperties().  getProperty("lastDirectory", ".")),
 						fileFilter);
 				if(isSingleSelection && !exportLocation[0].getName().endsWith(".xml")) {
 					exportLocation[0] = new File(exportLocation[0].getParentFile(), 
@@ -1059,7 +1060,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					return;
 				}
 				final JProgressBar progBar = new JProgressBar(0, selectedList.length);
-				final JDialog jd = XMLDB.createProgressBarGUI(parentFrame, progBar, "Exporting Runs",
+				final JDialog jd = XMLDB.createProgressBarGUI(progBar, "Exporting Runs",
 				"Exporting runs from the database");
 				final Runnable incProgress = (new Runnable() {
 					public void run() {
@@ -1089,10 +1090,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 						}
 						jd.setVisible(false);
 						if(success) {
-							JOptionPane.showMessageDialog(parentFrame, "Scenario export succeeded.");
+							InterfaceMain.getInstance().showMessageDialog("Scenario export succeeded.",
+                                "Scenario Export", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else {
-							JOptionPane.showMessageDialog(parentFrame, "Scenario export failed.", null, JOptionPane.ERROR_MESSAGE);
+							InterfaceMain.getInstance().showMessageDialog("Scenario export failed.", null, JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}).start();
@@ -1233,7 +1235,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
     */
 	}
 
-	protected BatchWindow batchQuery(File queryFile, final File excelFile) {
+	protected void batchQuery(File queryFile, final File excelFile) {
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		final Vector<ScenarioListItem> tempScns = getScenarios();
 		final String singleSheetCheckBoxPropName = "batchQueryResultsInDifferentSheets";
 		final String includeChartsPropName ="batchQueryIncludeCharts";
@@ -1306,7 +1309,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		scenarioDialog.setVisible(true);
 
 		if(scenarioList.isSelectionEmpty()) {
-			return null;
+			return;
 		}
 		// save the check box options back into the properties
 		prop.setProperty(singleSheetCheckBoxPropName, Boolean.toString(singleSheetCheckBox.isSelected()));
@@ -1321,9 +1324,9 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
 		final int numQueries = res.getSnapshotLength();
 		if(numQueries == 0) {
-			JOptionPane.showMessageDialog(parentFrame, "Could not find queries to run in batch file:\n"+queryFile,
+			InterfaceMain.getInstance().showMessageDialog("Could not find queries to run in batch file:\n"+queryFile,
 					"Batch Query Error", JOptionPane.ERROR_MESSAGE);
-			return null;
+			return;
 		}
 		final Vector<Object[]> toRunScns = new Vector<Object[]>();
 		if(!seperateRunsCheckBox.isSelected()) {
@@ -1342,11 +1345,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
         allRegions.remove("Global");
 
 		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, allRegions, singleSheetCheckBox.isSelected(), drawPicsCheckBox.isSelected(), 
-				numQueries,res, parentFrame, overwriteCheckBox.isSelected(), false);
+				numQueries,res, overwriteCheckBox.isSelected());
 		//create listener for window
-
-
-        return bWindow;
 	}
 
 	public boolean writeFile(File file, Document theDoc) {
@@ -1398,7 +1398,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			.getDOMImplementation().createDocument(null, "queries", null);
 			queries.getAsNode(tempDoc);
 			//writeDocument(tempDoc, queryFile);
-			writeFile(new File(((InterfaceMain)parentFrame).getProperties().getProperty("queryFile"))
+			writeFile(new File(InterfaceMain.getInstance().getProperties().getProperty("queryFile"))
 			, tempDoc);
 			queries.resetChanges();
 		} catch(ParserConfigurationException pce) {
@@ -1515,6 +1515,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	private void createAndShowGetSingleQueries(final List<QueryGenerator> queries, final List<ScenarioListItem> scenarios,
 			final List<String> regions) {
 		// create the dialog which will block the rest of the gui until it is done
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		final JDialog scanDialog = new JDialog(parentFrame, "Update Single Query Cache", true);
 		final JTabbedPane selectionTabs = new JTabbedPane();
 
@@ -1772,7 +1773,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                     if(queryFile == null || outFile == null || dbFile == null) {
                         throw new Exception("Not enough information provided to run batch query.");
                     }
-                    XMLDB.openDatabase(dbFile, parentFrame);
+                    XMLDB.openDatabase(dbFile);
 
                     Vector<ScenarioListItem> scenariosInDb = getScenarios();
                     Vector<ScenarioListItem> scenariosToRun = new Vector<ScenarioListItem>();
@@ -1822,27 +1823,17 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
                     // run the queries and wait for them to finish so that we
                     // can close the database
-                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet, includeCharts, numQueries, res, parentFrame, replaceResults, true);
+                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet, includeCharts, numQueries, res, replaceResults);
                     if(runner != null) {
                         runner.waitForFinish();
                     }
                 } catch(Exception e) {
                     e.printStackTrace();
-                    /*
-                    JOptionPane.showMessageDialog(parentFrame,
-                            "Recieved error while running: "+e.getMessage(),
-                            "Batch File Error", JOptionPane.ERROR_MESSAGE);
-                            */
                 } finally {
                     XMLDB.closeDatabase();
                 }
 			} else {
 				System.out.println("Unknown command: "+actionCommand);
-                /*
-				JOptionPane.showMessageDialog(parentFrame,
-						"Unknown command: "+actionCommand,
-						"Batch File Error", JOptionPane.ERROR_MESSAGE);
-                        */
 			}
 		}
 	}

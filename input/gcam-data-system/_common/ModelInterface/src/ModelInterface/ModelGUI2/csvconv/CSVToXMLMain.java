@@ -29,6 +29,8 @@
 */
 package ModelInterface.ModelGUI2.csvconv;
 
+import ModelInterface.InterfaceMain;
+
 import java.io.File;
 import java.net.URI;
 import java.io.FileInputStream;
@@ -42,7 +44,6 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import javax.swing.JOptionPane;
-import javax.swing.JFrame;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -107,7 +108,7 @@ public class CSVToXMLMain {
      * @return
      *            The generated XML dom document
      */
-    public static Document runCSVConversion(File[] csvFiles, File headerFile, JFrame parentFrame) {
+    public static Document runCSVConversion(File[] csvFiles, File headerFile, InterfaceMain parentFrame) {
         StringTokenizer st;
         String intValueStr = null;
         String strToReplace;
@@ -181,7 +182,7 @@ public class CSVToXMLMain {
                                     .println("***Couldn't find replacement for "
                                             + strToReplace + "!***");
                                 if(parentFrame != null) {
-                                    JOptionPane.showMessageDialog(parentFrame,
+                                    parentFrame.showMessageDialog(
                                             "Couldn't find replacement for "
                                             + strToReplace, "Warning",
                                             JOptionPane.WARNING_MESSAGE);
@@ -194,7 +195,7 @@ public class CSVToXMLMain {
                             .println("*** Hashtable file formatted incorrectly ***"
                                     + e);
                         if(parentFrame != null) {
-                            JOptionPane.showMessageDialog(parentFrame,
+                            parentFrame.showMessageDialog(
                                     "Hashtable file formatted incorrectly\n" + e,
                                     "Exception", JOptionPane.ERROR_MESSAGE);
                         }
@@ -276,7 +277,7 @@ public class CSVToXMLMain {
                 .println("Excpetion thrown while trying to read csv and header files");
             e.printStackTrace();
             if(parentFrame != null) {
-                JOptionPane.showMessageDialog(parentFrame,
+                parentFrame.showMessageDialog(
                         "Excpetion thrown while trying to read csv and header files\n"
                         + e, "Exception", JOptionPane.ERROR_MESSAGE);
             }

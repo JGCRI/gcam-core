@@ -60,7 +60,6 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected Document doc;
 	protected ArrayList wild;
 	protected Map tableFilterMaps;
-	protected Frame parentFrame;
 	protected String title;
 	protected Documentation documentation;
 	protected String units;
@@ -100,44 +99,45 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 * Constuctor initializes some necessary data members
 	 * @param tp Not required in the BaseTableModel, but will be in derived class to create xpath
 	 * 	  doc DOM document, necessary so that we can run an Xpath query on it.
-	 * 	  parentFrame Reference to the main gui so that we can create a dialog
 	 * 	  tableTypeString used to display which type of table the user is looking at
 	 */
-	public BaseTableModel(TreePath tp, Document doc, JFrame parentFrameIn, String tableTypeString, Documentation documentationIn) {
+	public BaseTableModel(TreePath tp, Document doc, String tableTypeString, Documentation documentationIn) {
 		this.doc = doc;
-		this.parentFrame = parentFrameIn;
 		this.tableTypeString = tableTypeString;
 		this.documentation = documentationIn;
 		this.title = ((DOMmodel.DOMNodeAdapter)tp.getLastPathComponent()).getNode().getNodeName();
 		final BaseTableModel thisTableModel = this;
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 
-		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent e) {
-				if(e.getPropertyName().equals("Control") || (e.getPropertyName().equals("Table") &&
-						!thisTableModel.equals(e.getNewValue()))) {
-					System.out.println("New Table: "+e.getNewValue());
-					System.out.println("This Table: "+thisTableModel);
-					System.out.println("Stoped listening for filter");
-					parentFrame.removePropertyChangeListener(this);
-				} else if(e.getPropertyName().equals("Filter")) {
-					try {
-						// is there a better way than to do this..
-						if(thisTableModel instanceof NewDataTableModel) {
-							//((NewDataTableModel)thisTableModel).filterData();
-							JOptionPane.showMessageDialog(parentFrame,
-								"This table does not support filtering",
-								"Table Filter Error", JOptionPane.ERROR_MESSAGE);
-						} else {
-							thisTableModel.filterData();
-						}
-					} catch (UnsupportedOperationException uoe) {
-						JOptionPane.showMessageDialog(parentFrame,
-							"This table does not support filtering",
-							"Table Filter Error", JOptionPane.ERROR_MESSAGE);
-					}
-				}
-			}
-		});
+        if(parentFrame != null ) {
+            parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
+                public void propertyChange(PropertyChangeEvent e) {
+                    if(e.getPropertyName().equals("Control") || (e.getPropertyName().equals("Table") &&
+                            !thisTableModel.equals(e.getNewValue()))) {
+                        System.out.println("New Table: "+e.getNewValue());
+                        System.out.println("This Table: "+thisTableModel);
+                        System.out.println("Stoped listening for filter");
+                        parentFrame.removePropertyChangeListener(this);
+                    } else if(e.getPropertyName().equals("Filter")) {
+                        try {
+                            // is there a better way than to do this..
+                            if(thisTableModel instanceof NewDataTableModel) {
+                                //((NewDataTableModel)thisTableModel).filterData();
+                                InterfaceMain.getInstance().showMessageDialog(
+                                    "This table does not support filtering",
+                                    "Table Filter Error", JOptionPane.ERROR_MESSAGE);
+                            } else {
+                                thisTableModel.filterData();
+                            }
+                        } catch (UnsupportedOperationException uoe) {
+                            InterfaceMain.getInstance().showMessageDialog(
+                                "This table does not support filtering",
+                                "Table Filter Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                }
+            });
+        }
 	}
 
 	/**
@@ -318,10 +318,9 @@ public abstract class BaseTableModel extends AbstractTableModel {
   /**
    * Creates a dialog box so that the user can select the 2 axis for a table, and returns a list of the 2 nodes, which will be used for the wild
    * @param path the path which was selected in the tree, so we can get a list of canidates for the 2 axes.
-   *        parentFrame so we can create a dialog associated with the parentFrame
    * @return an ArrayList of the 2 nodes selected from the dialog
    */
-  protected ArrayList chooseTableHeaders( TreePath path/*, JFrame parentFrame*/ ){
+  protected ArrayList chooseTableHeaders( TreePath path ){
 	final ArrayList selected = new ArrayList(2);
 
 	final Object[] itemsObjs = path.getPath();
@@ -341,6 +340,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
     
 	JScrollPane scrollingList = new JScrollPane(list);
     		
+    final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 	final JDialog filterDialog = new JDialog(parentFrame, tableTypeString + " for \'" + ((DOMmodel.DOMNodeAdapter)itemsObjs[itemsObjs.length-1]).getNode().getNodeName() + "\'. Please choose two headers:", true);
 	filterDialog.setSize(500,400);
 	filterDialog.setLocation(100,100);
@@ -356,7 +356,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 				filterDialog.dispose();
 			}else{
 				// make user try again ..
-				JOptionPane.showMessageDialog(null, "Error: You must choose exactly two (2)!");
+				InterfaceMain.getInstance().showMessageDialog("Error: You must choose exactly two (2)!", null, JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	});
@@ -397,9 +397,8 @@ public abstract class BaseTableModel extends AbstractTableModel {
         /**
 	 * Creates a dialog and lists attrubutes of the nodes which can be filtered, while updating
 	 * the filterMaps to keep track of what the user has selected
-	 * @param parentFrame So that we can create a dialog
 	 */
-	public void filterData(/*JFrame parentFrame*/) {
+	public void filterData() {
 		// so i can make oldNumRows final and it won't crash
 		if (activeRows == null) {
 			activeRows = new Vector();
@@ -418,6 +417,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 		if (possibleKeys.isEmpty()) {
 			return;
 		}
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
 		final JDialog filterDialog = new JDialog(parentFrame, title, true);
 		filterDialog.setSize(500,400);
 		filterDialog.setLocation(100,100);

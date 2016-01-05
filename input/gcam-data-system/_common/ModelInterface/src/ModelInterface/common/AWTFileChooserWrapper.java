@@ -77,7 +77,7 @@ public class AWTFileChooserWrapper implements FileChooser {
 					"This FileChooser does not support a parent Component of such a type.");
 					*/
 			System.out.println("WARNING: This FileChooser does not support a parent Component of such a type.");
-			toWrap = new FileDialog((Frame)InterfaceMain.getInstance(), title);
+			toWrap = new FileDialog(InterfaceMain.getInstance().getFrame(), title);
 		}
 
 		if(!setFile.isDirectory()) {

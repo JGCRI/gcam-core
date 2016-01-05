@@ -43,6 +43,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -284,7 +285,8 @@ public class Documentation {
 			}
 		};
 
-		ModelInterface.InterfaceMain.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
+        final JFrame parentFrame = InterfaceMain.getInstance().getFrame();
+		parentFrame.addPropertyChangeListener(new PropertyChangeListener() {
 			//boolean same = true;
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
@@ -302,7 +304,7 @@ public class Documentation {
 						} catch (FileNotFoundException fnfe) {
 							fnfe.printStackTrace();
 						}
-						ModelInterface.InterfaceMain.getInstance().removePropertyChangeListener(this);
+						parentFrame.removePropertyChangeListener(this);
 								}
 					/*
 					if(same) {
@@ -375,13 +377,14 @@ public class Documentation {
 	}
 
 	public void getDocumentation(Vector<Node> selectedNodes, int[] rows, int[] cols) {
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		if(documentationURI == null) {
-			JOptionPane.showMessageDialog(ModelInterface.InterfaceMain.getInstance(), 
+			main.showMessageDialog(
 				"Please select a documentation file, or type in the name of a\nnew documentation file to create a new one.\nYou must save the XML to save the link to the documentation file.", "Add new Documentation File", JOptionPane.INFORMATION_MESSAGE);
-			final InterfaceMain parentFrame = InterfaceMain.getInstance();
 			FileChooser fc = FileChooserFactory.getFileChooser();
 			File[] result = fc.doFilePrompt(parentFrame, "Select Documentation File", FileChooser.SAVE_DIALOG, 
-					new File(parentFrame.getProperties().getProperty("lastDirectory", ".")),
+					new File(main.getProperties().getProperty("lastDirectory", ".")),
 					new XMLFilter());
 			if(result == null) {
 				return;
@@ -407,7 +410,7 @@ public class Documentation {
 					}
 				}
 				doc.getDocumentElement().setAttribute("documentation", relDocumentationURI.toString());
-				ModelInterface.InterfaceMain.getInstance().fireProperty("Document-Modified", null, doc);
+				main.fireProperty("Document-Modified", null, doc);
 				if(result[0].exists()) {
 					System.out.println("Opening existing doc");
 					openDocumentation();
@@ -480,13 +483,9 @@ public class Documentation {
 			addToDocumentation(selectedNodes, notFoundNames, docMaps);
 		}
 		if(docMaps.size() == 0) {
-			/*
-			JOptionPane.showMessageDialog(ModelInterface.InterfaceMain.getInstance(), "Couldn't find any documentation", 
-					"Annotation Error", JOptionPane.WARNING_MESSAGE);
-			*/
 			return;
 		}
-		final JDialog docDialog = new JDialog(ModelInterface.InterfaceMain.getInstance(), "Annotation", false);
+		final JDialog docDialog = new JDialog(parentFrame, "Annotation", false);
 		docDialog.setLocation(100,100);
 		docDialog.setResizable(false);
 		JButton cancelButton = new JButton("Cancel");
@@ -638,16 +637,16 @@ public class Documentation {
 
 	private void addToDocumentation(final Vector<Node> selectedNodes, final Vector<String> notFoundNames, 
 			final Map<Integer, LinkedList<String>> docMaps) {
-		if(JOptionPane.showConfirmDialog(ModelInterface.InterfaceMain.getInstance(), 
+		if(ModelInterface.InterfaceMain.getInstance().showConfirmDialog(
 			"Warning Some of the nodes selected did not have documentation\n Would you like to add documentation now?",
-			"Missing Documentation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) == JOptionPane.NO_OPTION) {
+			"Missing Documentation", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, JOptionPane.NO_OPTION) == JOptionPane.NO_OPTION) {
 			return;
 		}
 		final Vector<String> docNames = new Vector<String>(documentations.size());
 		for(int i = 0; i < documentations.size(); ++i) {
 			docNames.add(documentations.get(i).source + "  Date: "+documentations.get(i).sourceDate);
 		}
-		final JDialog addDocDialog = new JDialog(ModelInterface.InterfaceMain.getInstance(), "Add Documentation", true);
+		final JDialog addDocDialog = new JDialog(ModelInterface.InterfaceMain.getInstance().getFrame(), "Add Documentation", true);
 		addDocDialog.setLocation(100,100);
 		addDocDialog.setResizable(false);
 		JButton doneButton = new JButton("Done");
@@ -763,7 +762,7 @@ public class Documentation {
 	}
 
 	public boolean newDocumentationDialog() {
-		final JDialog newDocDialog = new JDialog(ModelInterface.InterfaceMain.getInstance(), "Add Documentation", true);
+		final JDialog newDocDialog = new JDialog(ModelInterface.InterfaceMain.getInstance().getFrame(), "Add Documentation", true);
 		newDocDialog.setLocation(100,100);
 		newDocDialog.setResizable(false);
 		int prevDocSize = documentations.size();

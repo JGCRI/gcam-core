@@ -68,9 +68,10 @@ public class DOMmodel implements TreeModel {
 	 * been modified so that it can update itself.
 	 * @param doc Document node which will be used to get the root of the tree
 	 */
-	public DOMmodel(Document doc, final InterfaceMain main) {
+	public DOMmodel(Document doc) {
 		this.doc = doc;
         	rootNode = doc.getDocumentElement();
+        final InterfaceMain main = InterfaceMain.getInstance();
  		treeModelListeners.clear();
 		final EventTarget target = (EventTarget)doc;
 		target.addEventListener("DOMNodeInserted", new EventListener() {

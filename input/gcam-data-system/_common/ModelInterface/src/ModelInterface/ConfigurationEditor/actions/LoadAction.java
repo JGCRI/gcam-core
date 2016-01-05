@@ -98,7 +98,7 @@ public class LoadAction extends AbstractAction {
         }
         
         // Load the document.
-        final Document loadedDocument = FileUtils.loadDocument(parentEditor, currentFile, ConfigurationEditor.ROOT_ELEMENT_NAME);
+        final Document loadedDocument = FileUtils.loadDocument(currentFile, ConfigurationEditor.ROOT_ELEMENT_NAME);
 
         // Set the document into the model.
         parentEditor.setDocument(loadedDocument);

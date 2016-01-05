@@ -409,7 +409,7 @@ public class LogEditor extends JPanel implements DOMDocumentEditor {
                     JOptionPane.ERROR_MESSAGE);
             return null;
         }
-        final Document newDocument = FileUtils.loadDocument(this, new File(
+        final Document newDocument = FileUtils.loadDocument(new File(
                 logConfPath), LOG_ROOT);
         if (newDocument != null) {
             // Add an event handler which will listen for the document being
