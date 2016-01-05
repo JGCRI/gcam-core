@@ -875,7 +875,7 @@ public class QueryGenerator implements java.io.Serializable{
 			}
 			attr = type+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap(String.CASE_INSENSITIVE_ORDER));
+				tempMap.put(attr, new TreeMap());
 			}
 			tempMap = (Map)tempMap.get(attr);
         }
