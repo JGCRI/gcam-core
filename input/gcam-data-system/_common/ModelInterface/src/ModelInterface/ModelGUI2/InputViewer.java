@@ -1266,7 +1266,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 *            the Headers file
 	 */
 	public void readCSVFile(File[] csvFiles, File file2) {
-        doc = CSVToXMLMain.runCSVConversion(csvFiles, file2, InterfaceMain.getInstance());
+        doc = CSVToXMLMain.runCSVConversion(csvFiles, file2, InterfaceMain.getInstance().getFrame());
     }
 
 	/**
