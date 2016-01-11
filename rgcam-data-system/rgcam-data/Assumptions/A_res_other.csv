@@ -1,5 +1,0 @@
-# Other resource parameters,,,,
-# Source: Tables_Res_Data.xlsx,,,,
-resource,subresource,gdpSupplyElast,subResourceCapacityFactor,subResourceVariance
-distributed_solar,distributed_solar,0.1,0.2,0
-large onshore windresource,large onshore wind,0,0.4,0.3

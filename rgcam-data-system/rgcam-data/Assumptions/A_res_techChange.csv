@@ -1,5 +1,0 @@
-# Technical change by subresource,,,,,,,
-# Source: Tables_Res_Data.xlsx,,,,,,,
-resource,subresource,tc_2020,tc_2035,tc_2050,tc_2065,tc_2080,tc_2095
-geothermal,hydrothermal,0.004751963,0.005290864,0.004040555,0.0025,0.0025,0.0025
-distributed_solar,distributed_solar,0.03075354,0.023359407,0.018274371,0.014932389,0.005564023,0.003962486

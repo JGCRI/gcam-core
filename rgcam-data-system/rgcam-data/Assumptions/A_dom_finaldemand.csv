@@ -1,4 +1,0 @@
-# This table contains final demand parameters,,,,
-# Source: Tables_Dom_Data.xlsx,,,,
-energy_final_demand,perCapitaBased,price_elast,income_elast,aeei
-domestic water,0,-0.326188149,0.366163898,0.005

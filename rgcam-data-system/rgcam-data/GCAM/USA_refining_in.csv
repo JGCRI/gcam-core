@@ -1,9 +1,0 @@
-supplysector,subsector,technology,minicam-energy-input,1975,1980,1985,1990,1995,2000,2005,2008
-refined liquids,crude oil refining,crude oil refining,regional crude oil,33.4721083,35.0677022,31.6432571,33.82552145,34.8129083,38.3710144,40.35672849,36.933174
-refined liquids,crude oil refining,crude oil refining,elect_td_ind,0.0905878,0.1295548,0.1013561,0.117318323,0.1766085,0.175561,0.176038193,0.1744716
-refined liquids,crude oil refining,crude oil refining,wholesale gas,0.9232665,0.6350364,0.5708875,0.658336619,0.7438507,0.8051504,0.667107965,0.6932355
-refined liquids,biomass liquids,biomass liquids-ethanol (conv),regional corn for ethanol,0,0,0,0,0.1109931,0.1326973,0.325515326,0.777245
-refined liquids,biomass liquids,biomass liquids-ethanol (conv),wholesale gas,0,0,0,0,0.03533598,0.042245772,0.103631696,0.247445238
-refined liquids,biomass liquids,biomass liquids-ethanol (conv),elect_td_ind,0,0,0,0,0.002849289,0.003406455,0.008356261,0.019952554
-refined liquids,biomass liquids,biomass liquids-biodiesel (conv),regional biomassOil,0,0,0,0,0,0.000907113,0.012784847,0.058184845
-refined liquids,biomass liquids,biomass liquids-biodiesel (conv),wholesale gas,0,0,0,0,0,5.07E-05,0.00071522,0.003255023

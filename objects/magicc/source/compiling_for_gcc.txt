@@ -1,9 +1,0 @@
-To compile a dynamically linked library for GCC
-
-Debug:
-g77 -x f77 -ffree-form -g -shared -c Climat.f90 -o magiccd.so
-
-Release:
-g77 -x f77 -ffree-form -O3 -shared -c Climat.f90 -o magicc.so
-
-

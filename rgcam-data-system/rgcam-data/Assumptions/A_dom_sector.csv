@@ -1,4 +1,0 @@
-# This table contains sector level assumptions,,,,
-# Source: Tables_Dom_Data.xlsx,,,,
-supplysector,output_unit,input_unit,price_unit,logit
-domestic water,km^3,km^3,1975$/m^3,-3

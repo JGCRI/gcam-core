@@ -1,7 +1,0 @@
-# This miscellaneous sector level assumptions,,,,,
-# Source: Tables_ElecS_Data.xlsx,,,,,
-supplysector,input_unit,output_unit,price_unit,electricity_reserve_margin,average_grid_capacity_factor
-base load generation,EJ,EJ,1975$/GJ,0.15,0.6
-intermediate generation,EJ,EJ,1975$/GJ,0.15,0.6
-subpeak generation,EJ,EJ,1975$/GJ,0.15,0.6
-peak generation,EJ,EJ,1975$/GJ,0.15,0.6

@@ -1,4 +1,0 @@
-# Technology basic inputs,,,,,,,,
-# Source: Tables_CCS_Data.xlsx,,,,,,,,
-supplysector,subsector,technology,period,share_weight,coefficient,non_energy_cost,minicam_energy_input,market
-carbon-storage,carbon-storage regional,carbon-storage regional,1975,1,1,0,carbon-storage resource,*

@@ -1,5 +1,0 @@
-# Subsector level parameters,,,,,,,,
-# Source: Tables_Res_Data.xlsx,,,,,,,,
-supplysector,subsector,sw_2020,sw_2035,sw_2050,sw_2065,sw_2080,sw_2095,logit
-elect_td_bld,elect_td_bld,1,1,1,1,1,1,-3
-elect_td_bld,rooftop_pv,1,1,1,1,1,1,-3
