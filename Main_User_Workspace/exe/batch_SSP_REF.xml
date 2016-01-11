@@ -181,6 +181,10 @@
 			<!-- NUCLEAR -->
 			<Value name="nuclear">../input/gcam-data-system/xml/energy-xml/nuclear_low.xml</Value>
 			
+			<!-- BIO TRANSFORMATION -->
+			<Value name="bio">../input/gcam-data-system/xml/energy-xml/en_transformation_low.xml</Value>
+			<Value name="bio">../input/gcam-data-system/xml/energy-xml/elec_bio_low.xml</Value>
+			
 			<!-- FOSSIL -->
 			<Value name="resource_extraction">../input/gcam-data-system/xml/energy-xml/resources_SSP3.xml</Value>
 			

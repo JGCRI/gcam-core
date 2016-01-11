@@ -33,6 +33,7 @@ A22.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_shrwt" )
 A22.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A22.subsector_interp" )
 A22.globaltech_coef <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_coef" )
 A22.globaltech_cost <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_cost" )
+A22.globaltech_cost_low <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_cost_low" ) # Note: "Low" indicates low tech. Costs are actually higher than core.
 A22.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_shrwt" )
 A22.globaltech_interp <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_interp" )
 A22.globaltech_co2capture <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_co2capture" )
@@ -96,6 +97,12 @@ printlog( "L222.GlobalTechCost_en: Costs of global technologies for energy trans
 L222.globaltech_cost.melt <- interpolate_and_melt( A22.globaltech_cost, model_years, value.name="input.cost", digits = digits_cost )
 L222.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L222.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]
 L222.GlobalTechCost_en <- L222.globaltech_cost.melt[ names_GlobalTechCost ]
+
+#Costs of global technologies -- low tech option
+printlog( "L222.GlobalTechCost_low_en: Costs of global technologies for energy transformation" )
+L222.globaltech_cost_low.melt <- interpolate_and_melt( A22.globaltech_cost_low, model_years, value.name="input.cost", digits = digits_cost )
+L222.globaltech_cost_low.melt[ c( "sector.name", "subsector.name" ) ] <- L222.globaltech_cost_low.melt[ c( "supplysector", "subsector" ) ]
+L222.GlobalTechCost_low_en <- L222.globaltech_cost_low.melt[ names_GlobalTechCost ]
 
 #Shareweights of global technologies
 printlog( "L222.GlobalTechShrwt_en: Shareweights of global technologies for energy transformation" )
@@ -266,6 +273,9 @@ write_mi_data( L222.StubTechProd_refining, "StubTechProd", "ENERGY_LEVEL2_DATA",
 write_mi_data( L222.StubTechCoef_refining, "StubTechCoef", "ENERGY_LEVEL2_DATA", "L222.StubTechCoef_refining", "ENERGY_XML_BATCH", "batch_en_transformation.xml" )
 
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_en_transformation.xml", "ENERGY_XML_FINAL", "en_transformation.xml", "", xml_tag="outFile" )
+
+write_mi_data( L222.GlobalTechCost_low_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCost_low_en", "ENERGY_XML_BATCH", "batch_en_transformation_low.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_en_transformation_low.xml", "ENERGY_XML_FINAL", "en_transformation_low.xml", "", xml_tag="outFile" )
 
 logstop()
 

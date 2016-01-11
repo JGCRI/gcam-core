@@ -513,9 +513,13 @@ MAC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{
 
 MAC_NC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, scenario, scenario/world
 
+MACTC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+{year=1975;fillout=1}tech-change, scenario, scenario/world
+
 MAC_NoBelowZero, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/no-zero-cost-reductions,scenario, scenario/world
 
 AgMAC, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, scenario, scenario/world
+
+AgMACTC, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+{year=1975;fillout=1}tech-change, scenario, scenario/world
 
 ResMAC, world/+{name}region, region/+{name;nocreate=1}depresource, depresource/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, scenario, scenario/world
 
