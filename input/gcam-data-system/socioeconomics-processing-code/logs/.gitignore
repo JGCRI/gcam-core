@@ -1,1 +1,4 @@
+# Ignore all log files
 *
+# Do not ignore this file
+!.gitignore

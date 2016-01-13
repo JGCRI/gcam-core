@@ -1,0 +1,13 @@
+# Ignore typically generated output files
+output*.xml
+database*
+*basexdb
+ccsm_c.txt
+concs_c.dis
+emiss_c.dis
+forcings_c.dis
+fracleft_c.out
+mag_c.csv
+magout_c.csv
+sealev_c.dis
+temps_c.dis
