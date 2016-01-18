@@ -65,6 +65,18 @@ public:
         ADDED_AND_REMOVED
     };
 
+    //! Enums for the types of vectors we report in solver data log
+    enum ReportType {
+      x,
+      fx,
+      deltax,
+      deltafx,
+      diagB,
+      price,
+      supply,
+      demand
+    };
+
     typedef std::vector<SolutionInfo>::iterator SetIterator;
     typedef std::vector<SolutionInfo>::const_iterator ConstSetIterator;
     SolutionInfoSet( Marketplace* marketplace );
@@ -104,6 +116,10 @@ public:
     void findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger );
     void printMarketInfo( const std::string& comment, const double worldCalcCount, std::ostream& out ) const;
     void printDerivatives( std::ostream& aOut ) const;
+
+    // following functions are used for reporting into solver data log
+    const std::vector<int> &getCanonicalOrder(std::vector<int> &apermvec) const;
+    int nsolve(void) const;
     
 private:
     unsigned int period;

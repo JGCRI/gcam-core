@@ -105,6 +105,10 @@ mMarketInfo( InfoFactory::constructInfo( 0, regionNameIn+goodNameIn ) )
 #endif
     // Store the market name so that it can be returned without any allocations.
     mName = region + good;
+    
+    // Assign a serial number that is guaranteed to be invalid.  This will help
+    // us catch any failure to assign a serial number to the market.
+    mSerialNumber = -1;
 }
 
 //! Destructor. This is needed because of the auto_ptr.

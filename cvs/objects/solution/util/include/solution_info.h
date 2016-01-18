@@ -135,6 +135,8 @@ public:
     double getForecastPrice() const;
     double getForecastDemand() const;
 
+    int getSerialNumber(void) const;
+    
     const IInfo* getMarketInfo() const;
 #if GCAM_PARALLEL_ENABLED
     GcamFlowGraph* getFlowGraph() const;

@@ -413,6 +413,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     marketplace->nullSuppliesAndDemands( aPeriod ); // initialize market demand to null
     marketplace->init_to_last( aPeriod ); // initialize to last period's info
     world->initCalc( aPeriod ); // call to initialize anything that won't change during calc
+    marketplace->assignMarketSerialNumbers(aPeriod); // give the markets their serial numbers for this period.
     
     // SGM Period 0 needs to clear out the supplies and demands put in by initCalc.
     if( aPeriod == 0 ){

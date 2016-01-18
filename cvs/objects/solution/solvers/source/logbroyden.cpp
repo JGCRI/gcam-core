@@ -173,8 +173,7 @@ bool LogBroyden::XMLParse( const DOMNode* aNode ) {
 }
 
 
-/*! \brief Broyden's method solver in log-log space
-
+/*! \brief Broyden's method solver. 
  * \details Attempts to solve the selected markets using Broyden's
  * method (see Numerical Recipes sectn. 9.7).  Broyden's method is
  * broadly similar to the Newton-Raphson Method.  At each iteration we
@@ -195,6 +194,8 @@ bool LogBroyden::XMLParse( const DOMNode* aNode ) {
  * difference approximations for the new column, and we'll zero the
  * off-diagonal terms of the new row.
  *
+ * The solver can run in either log-log mode or linear-linear mode.
+ *
  * \author Robert Link 
  * \param solnset An initial set of SolutionInfo objects representing all of the markets we will attempt to solve
  * \param period Model time period
@@ -207,7 +208,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     if( solnset.isAllSolved() ){
         return code = SolverComponent::SUCCESS;
     }
-
+    
     startMethod();
     if(period != mLastPer) {
         // reset our internal counters
@@ -386,6 +387,15 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
   ILogger& singleLog = ILogger::getLogger( "single_market_log" );
   singleLog.setLevel( ILogger::DEBUG );
 
+  // Workspace for logging debugging data.  The size of this vector
+  // might be different from the size of our working vectors because
+  // some markets not included in the "solvable" solution set might
+  // still be reported (i.e., because they may find their way into
+  // the solution set in later calls to the solver)
+  UBVECTOR report_vec(cSolInfo->nsolve());
+  std::vector<int> perm_vec;
+  cSolInfo->getCanonicalOrder(perm_vec);
+  
   F(x,fx);
 
   solverLog.setLevel(ILogger::DEBUG);
@@ -684,12 +694,12 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
     }
 
     // log the data trace before we do the update
-    reportVec("x", xnew);
-    reportVec("fx", fxnew);
-    reportVec("deltax", xnew-x);    // xstep may have been modified above
-    reportVec("deltafx", fxnew-fx); // fxstep definitely modified above
-    reportVec("diagB", jdiag);
-    reportPSD();
+    reportVec("x", xnew, report_vec, perm_vec);
+    reportVec("fx", fxnew, report_vec, perm_vec);
+    reportVec("deltax", xnew-x, report_vec, perm_vec);    // xstep may have been modified above
+    reportVec("deltafx", fxnew-fx, report_vec, perm_vec); // fxstep definitely modified above
+    reportVec("diagB", jdiag, report_vec, perm_vec);
+    reportPSD(report_vec, perm_vec);                // report price, supply, and demand.  
     mPerIter++;
 
     // update x, fx, f0 for next iteration
@@ -706,22 +716,29 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
   return -1;
 }
 
-void LogBroyden::reportVec(const std::string &aname, const UBVECTOR &av)
+void LogBroyden::reportVec(const std::string &aname, const UBVECTOR &av, UBVECTOR &arptvec,
+                           const std::vector<int> &apermvec)
 {
     ILogger &datalog = ILogger::getLogger("solver-data-log");
     datalog.setLevel(ILogger::DEBUG);
 
+    for(unsigned i=0; i<arptvec.size(); ++i)
+      arptvec[i] = std::numeric_limits<double>::quiet_NaN();
+    
+    for(unsigned i=0; i<av.size(); ++i)
+      arptvec[apermvec[i]] = av[i];
+    
     datalog << mLastPer <<  " , " << mPerIter << " ,\""
             << (mLogPricep ? "Log" : "Linear") << "\",\""
             << aname << "\"";
 
-    for(unsigned int i=0; i<av.size(); ++i) {
-        datalog << ", " << av[i];
+    for(unsigned int i=0; i<arptvec.size(); ++i) {
+        datalog << ", " << arptvec[i];
     }
     datalog << "\n";
 }
 
-void LogBroyden::reportPSD(void)
+void LogBroyden::reportPSD(UBVECTOR &arptvec, const std::vector<int> &apermvec)
 {
     if(!cSolInfo) {
         ILogger &solverlog = ILogger::getLogger("solver_log");
@@ -738,17 +755,17 @@ void LogBroyden::reportPSD(void)
     // log prices
     for(i=0; i<solvable.size(); ++i)
         v[i] = solvable[i].getPrice();
-    reportVec("price", v);
+    reportVec("price", v, arptvec, apermvec);
 
     // log supply
     for(i=0; i<solvable.size(); ++i)
         v[i] = solvable[i].getSupply();
-    reportVec("supply", v);
+    reportVec("supply", v, arptvec, apermvec);
 
     // log demand
     for(i=0; i<solvable.size(); ++i)
         v[i] = solvable[i].getDemand();
-    reportVec("demand", v);
+    reportVec("demand", v, arptvec, apermvec);
 
 }
 

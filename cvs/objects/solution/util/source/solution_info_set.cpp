@@ -673,3 +673,37 @@ void SolutionInfoSet::printDerivatives( ostream& aOut ) const {
     }
     aOut << endl;
 }
+
+/*! \brief Create a permutation vector that puts solvable markets into canonical order 
+ * \details The caller has to supply the permutation vector, which
+ *          this function will resize if necessary.  The return value
+ *          is a const reference to the argument vector.  (This is so
+ *          you can use a call to this function as an rvalue.)
+ *
+ *          When using this function keep these things in mind: 
+ *          1) Only the (currently) solvable markets are provided.
+ *             This is because the currently-operating solver has no
+ *             way of providing meaningful values for markets it is
+ *             not solving.
+ *
+ *          2) The values in the permutation vector may be up to
+ *             nsolve()-1, which is generally *larger* than the size
+ *             of the solvable set.  The vector that you are writing
+ *             into using the permutation vector must have size >=
+ *             nsolve().
+ */
+const std::vector<int> &SolutionInfoSet::getCanonicalOrder(std::vector<int> &permvec) const
+{
+    if(permvec.size() != solvable.size())
+        permvec.resize(solvable.size());
+
+    for(int i=0; i<solvable.size(); ++i)
+        permvec[i] = solvable[i].getSerialNumber();
+
+    return permvec;
+}
+
+int SolutionInfoSet::nsolve(void) const
+{
+    return marketplace->nsolve();
+}

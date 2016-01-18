@@ -626,3 +626,8 @@ double SolutionInfo::getForecastDemand() const
 {
     return linkedMarket->getForecastDemand();
 }
+
+int SolutionInfo::getSerialNumber(void) const
+{
+    return linkedMarket->getSerialNumber();
+}

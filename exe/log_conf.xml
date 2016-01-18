@@ -57,6 +57,13 @@
 		<minToScreenWarningLevel>3</minToScreenWarningLevel>
 		<headerMessage>{date}:{time}</headerMessage>
 	</Logger>
+	<Logger name="solver-data-key" type="PlainTextLogger">
+		<FileName>logs/solver-data-key.txt</FileName>
+		<printLogWarningLevel>0</printLogWarningLevel>
+		<minLogWarningLevel>0</minLogWarningLevel>
+		<minToScreenWarningLevel>3</minToScreenWarningLevel>
+		<headerMessage>{date}:{time}</headerMessage>
+	</Logger>
 	<Logger name="climate-log" type="PlainTextLogger">
 		<FileName>logs/climate-log.txt</FileName>
 		<printLogWarningLevel>0</printLogWarningLevel>
