@@ -115,14 +115,18 @@ int Logger::receiveCharFromUnderStream( int ch ) {
         tbb::spin_mutex::scoped_lock lck(mMutex);
 #endif
         if( ch == '\n' ){
-            char tempBuf[ MAX_LINE_SIZE ];
-            mBuf.get( tempBuf, MAX_LINE_SIZE );
-            string tempString( tempBuf, mBuf.gcount() );
-            mBuf.clear(); // The get hits an EOF, so we need to clear the failure flag.
+            string tempString( mBuf.str() );
             logCompleteMessage( tempString );
             printToScreenIfConfigured( tempString );
+
+            // reset the stringstream buffer
+            mBuf.clear();       // Clear error flags, if any.
+            mBuf.str(std::string()); // clear out the data in the buffer.
        }
         else {
+            // The functions that perform the output will add the
+            // newline, so we only want to insert non-newline
+            // characters.
             mBuf << (char)ch;
         }
     }
