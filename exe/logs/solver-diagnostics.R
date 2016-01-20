@@ -9,14 +9,16 @@ require(graphics)
 
 ### Note that the ordering (and possibly number) of the markets
 ### changes each time the solver exits and restarts.
-read.trace.log <- function(filename, nmkt=200) {
+read.trace.log <- function(filename) {
     ## unfortunately, the number of markets in play fluctuates as
     ## markets are added and subtracted from the solvable set. 200
     ## seems to be about the largest it gets.
+    dummy <- read.table(filename,sep=',', strip.white=TRUE, skip=3, fill=TRUE,nrows=3)
+    nmkt <- ncol(dummy) - 4  # first 4 columns are period, iter, mode, name. Rest are markets
     varn <- seq(1,nmkt)
     colnames   <- c("period", "iter", "mode", "name", varn)
     colclasses <- c("factor", "integer", "factor", "factor", rep("numeric", nmkt))
-    rawdata <- read.table(filename, sep=',', strip.white=TRUE, skip=2, fill=TRUE,
+    rawdata <- read.table(filename, sep=',', strip.white=TRUE, skip=3, fill=TRUE,
                           col.names=colnames, colClasses=colclasses)
     data.by.period <- split(rawdata, rawdata$period)
     lapply(data.by.period,
@@ -54,10 +56,12 @@ fxcolormap <- function(n=51, controlpts=c(-10,-3,0,3,10)) {
     h1 <- ifelse(x<x1, 0, 90/360)
     h2 <- ifelse(x>x2, 240/360, 180/360)
     H <- ifelse(x<xm, h1, h2)
-    ## Use "option 2 for the saturation"
-    S <- ifelse(x<xm, 1-(x-xlo)/(xm-xlo), (x-xm)/(xhi-xm))
-    ## Constant 1 for value
 
+    ## Use "option 2 for the saturation"
+    eps <- 1.0e-8        # protect against roundoff giving vaues slightly larger than 1
+    S <- ifelse(x<xm, 1-(x-xlo)/(xm-xlo), (x-xm)/(xhi-xm+eps))
+
+    ## Constant 1 for value
     hsv(H, S, 1)
 }
 
@@ -155,7 +159,16 @@ calc.total.deriv <- function(deltafx, deltax) {
 ### the bottom-level table in the list created by read.trace.log).
 ### This version is tuned for looking at fx.
 heatmap.fx <- function(data, title="", breaks=c(-12, -7, -3, 0, 3, 7, 12)) {
-    heatmap.gcam(data, xform=fxtransform, colors=fxcolormap(), title=title, breaks=breaks)
+    qp <- fxtransform(quantile(as.matrix(data[-c(1,2)]), c(0,1),na.rm=TRUE))
+    q0 <- qp[1]   
+    q2 <- 0.0
+    q1 <- 0.5*(q0+q2)
+    q4 <- qp[2]
+    q3 <- 0.5*(q2+q4)    
+    
+    cp <- c(q0,q1,q2,q3,q4)
+    heatmap.gcam(data, xform=fxtransform, colors=fxcolormap(n=51,controlpts=cp), 
+                 title=title, breaks=breaks)
 }
 
 ### heat map for deltax and deltafx
