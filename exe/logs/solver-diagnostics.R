@@ -29,6 +29,20 @@ read.trace.log <- function(filename) {
            }) 
 }
 
+### Create a lookup function for market names by period and ID number.
+###   Example usage:
+###     > market.lookup <- create.market.lookup()    # optional filename for the key accepted
+###     > market.name <- market.lookup(period, mktID)  # arguments can be vectors
+create.market.lookup <- function(filename='solver-data-key.txt') 
+{
+    key <- read.csv(filename, header=FALSE, skip=3, stringsAsFactors=FALSE)
+    names(key) <- c('period', 'mktID', 'name')
+    ## this function is what's returned
+    function(aperiod, amktid) {
+        key$name[key$period %in% aperiod & key$mktID %in% amktid]
+    }
+}
+
 fxcolormap <- function(n=51, controlpts=c(-10,-3,0,3,10)) {
     ### Create colormap for visualizing f(x) values.
     ###
