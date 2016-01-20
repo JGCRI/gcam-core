@@ -1,0 +1,6 @@
+# All text files in this directory will have their line ends normalized to the
+# appropriate ending for their system
+* text=auto
+
+# Visual studio project files will always have windows line endings
+*.vcxproj* eol=crlf
