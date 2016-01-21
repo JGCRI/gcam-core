@@ -114,6 +114,7 @@ public:
     int receiveCharFromUnderStream( int ch ); //!< Pure virtual function called to complete the log and clean up.
     virtual void close() = 0;
     ILogger::WarningLevel setLevel( const ILogger::WarningLevel newLevel );
+    bool wouldPrint(ILogger::WarningLevel aLevel) const;
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 protected:
 	//! Logger name

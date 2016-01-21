@@ -106,6 +106,15 @@ ILogger::WarningLevel Logger::setLevel( const ILogger::WarningLevel aLevel ){
     return oldLevel;
 }
 
+/*! \brief Test whether the logger will produce output at a specified logging level
+ *  \details This function allows us to skip preparing expensive
+ *           logging output if we know it won't even be printed.
+ */
+bool Logger::wouldPrint(ILogger::WarningLevel aLevel) const
+{
+    return aLevel >= mMinLogWarningLevel || aLevel >= mMinToScreenWarningLevel;
+}
+
 //! Receive a single character from the underlying stream and buffer it, printing the buffer it is a newline.
 int Logger::receiveCharFromUnderStream( int ch ) {
     // Only receive the character or print to the screen if it needed.

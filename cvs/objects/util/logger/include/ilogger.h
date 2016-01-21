@@ -75,6 +75,7 @@ public:
     virtual int receiveCharFromUnderStream( int ch ) = 0;
     virtual void close() = 0;
     virtual WarningLevel setLevel( const WarningLevel newLevel ) = 0;
+    virtual bool wouldPrint(ILogger::WarningLevel aLevel) const =0;
     static ILogger& getLogger( const std::string& aLoggerName );
 };
 
