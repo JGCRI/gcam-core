@@ -439,17 +439,8 @@ void Marketplace::nullSuppliesAndDemands( const int period ) {
 /*! \brief Assign a serial number to each market we are attempting to solve
  *
  * \details Iterate over the entire list of markets and assign a
- *          serial number to each one for which shouldSolve() returns
- *          true.  All markets so assigned will be output in solver
- *          diagnostics.  As a side effect, this function sets mNsolv,
- *          the number of markets being solved.
- *
- *          We have to limit the output this way because there are a
- *          lot of markets that aren't actually participating in the
- *          solution, and we don't want to clutter the output with
- *          them.  This function is intended to run at the start of
- *          each period, right before the calculation for the preiod
- *          begins.
+ *          serial number (in fact, the market's index in the master
+ *          array of market structures) to each one.
  *
  *          Another side effect of this function is that it writes the
  *          names and serial numbers of the markets to the
@@ -462,13 +453,9 @@ void Marketplace::assignMarketSerialNumbers(int aPeriod)
     ILogger &solverDataKey = ILogger::getLogger("solver-data-key");
     solverDataKey.setLevel(ILogger::DEBUG);
     
-    mNsolv = 0;
     for(unsigned i=0; i<markets.size(); ++i) {
-        Market *mkt = markets[i][aPeriod];
-        if(markets[i][aPeriod]->shouldSolve()) {
-            solverDataKey << aPeriod << ", " << mNsolv << ", " << mkt->getName() << "\n";
-            mkt->assignSerialNumber(mNsolv++);
-        }
+        markets[i][aPeriod]->assignSerialNumber(i);
+        solverDataKey << aPeriod << ", " << i << ", " << markets[i][aPeriod]->getName() << "\n";
     }
 }
 

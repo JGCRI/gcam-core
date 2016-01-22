@@ -413,6 +413,11 @@ vector<SolutionInfo> SolutionInfoSet::getSolvableSet() const{
     return solvable;
 }
 
+//! Get the unsolvable set
+vector<SolutionInfo> SolutionInfoSet::getUnsolvableSet() const {
+    return unsolvable;
+}
+
 //! Non-Const getter which references the solvable vector.
 SolutionInfo& SolutionInfoSet::getSolvable( unsigned int index ) {
     return solvable.at( index );
@@ -674,36 +679,35 @@ void SolutionInfoSet::printDerivatives( ostream& aOut ) const {
     aOut << endl;
 }
 
-/*! \brief Create a permutation vector that puts solvable markets into canonical order 
- * \details The caller has to supply the permutation vector, which
- *          this function will resize if necessary.  The return value
- *          is a const reference to the argument vector.  (This is so
- *          you can use a call to this function as an rvalue.)
+/*! \brief Return a vector of market IDs 
+ * \details The caller has to supply the vector to store the ID
+ *          values.  The vector will be resized if necessary.  The
+ *          return value is a const reference to the argument vector.
+ *          (This is so you can use a call to this function as an
+ *          rvalue.)
  *
- *          When using this function keep these things in mind: 
- *          1) Only the (currently) solvable markets are provided.
- *             This is because the currently-operating solver has no
- *             way of providing meaningful values for markets it is
- *             not solving.
- *
- *          2) The values in the permutation vector may be up to
- *             nsolve()-1, which is generally *larger* than the size
- *             of the solvable set.  The vector that you are writing
- *             into using the permutation vector must have size >=
- *             nsolve().
+ *          If the second argument is 'true', then only the solvable
+ *          markets will be provided.  If 'false', then ids for all
+ *          markets, solvable and unsolvable will be provided.
  */
-const std::vector<int> &SolutionInfoSet::getCanonicalOrder(std::vector<int> &permvec) const
+const std::vector<int> &SolutionInfoSet::getMarketIDs(std::vector<int> &amktids, bool aSolvableOnly) const
 {
-    if(permvec.size() != solvable.size())
-        permvec.resize(solvable.size());
+    unsigned expected_size;
+    if(aSolvableOnly)
+        expected_size = solvable.size();
+    else
+        expected_size = solvable.size() + unsolvable.size();
+    
+    if(amktids.size() != expected_size)
+        amktids.resize(expected_size);
 
-    for(int i=0; i<solvable.size(); ++i)
-        permvec[i] = solvable[i].getSerialNumber();
+    for(unsigned i=0; i<solvable.size(); ++i)
+        amktids[i] = solvable[i].getSerialNumber();
 
-    return permvec;
+    if(!aSolvableOnly)
+        for(unsigned i=solvable.size(), j=0; j<solvable.size(); ++i,++j)
+            amktids[i] = unsolvable[j].getSerialNumber();
+
+    return amktids;
 }
 
-int SolutionInfoSet::nsolve(void) const
-{
-    return marketplace->nsolve();
-}

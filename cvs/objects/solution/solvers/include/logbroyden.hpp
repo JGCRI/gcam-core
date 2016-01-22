@@ -104,9 +104,9 @@ protected:
   int bsolve(VecFVec<double,double> &F, UBLAS::vector<double> &x, UBLAS::vector<double> &fx,
              UBMATRIX &B, int &neval);
   //! Additional logging for visualizing solver progress.
-  void reportVec(const std::string &aname, const UBLAS::vector<double> &av, UBLAS::vector<double> &arptvec,
-                 const std::vector<int> &apermvec);
-  void reportPSD(UBLAS::vector<double> &arptvec, const std::vector<int> &apermvec);
+  void reportVec(const std::string &aname, const UBLAS::vector<double> &av, const std::vector<int> &amktids,
+                 const std::vector<bool> &aissolvable);
+  void reportPSD(UBLAS::vector<double> &arptvec, const std::vector<int> &amktids, const std::vector<bool> &aissolvable);
 
   //! Maximum number of main-loop iterations for the root-finding algorithm
   unsigned int mMaxIter;

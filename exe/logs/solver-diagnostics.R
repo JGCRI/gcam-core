@@ -5,42 +5,36 @@ require(graphics)
 ### Create a collection of tables with the following structure
 ### list: one element for each GCAM model period.  for each period:
 ###      list:  one element for each variable type, for each variable
-###           data frame: values for each market by iteration number
+###           data frame: long-form table of values for each market by iteration number
+###
+### The columns in the lowest level table will be:
+###      iteration, market id, solvable (T/F), value, name 
 
-### Note that the ordering (and possibly number) of the markets
-### changes each time the solver exits and restarts.
-read.trace.log <- function(filename) {
-    ## unfortunately, the number of markets in play fluctuates as
-    ## markets are added and subtracted from the solvable set. 200
-    ## seems to be about the largest it gets.
-    dummy <- read.table(filename,sep=',', strip.white=TRUE, skip=3, fill=TRUE,nrows=3)
-    nmkt <- ncol(dummy) - 4  # first 4 columns are period, iter, mode, name. Rest are markets
-    varn <- seq(1,nmkt)
-    colnames   <- c("period", "iter", "mode", "name", varn)
-    colclasses <- c("factor", "integer", "factor", "factor", rep("numeric", nmkt))
-    rawdata <- read.table(filename, sep=',', strip.white=TRUE, skip=3, fill=TRUE,
-                          col.names=colnames, colClasses=colclasses)
-    data.by.period <- split(rawdata, rawdata$period)
+read.trace.log <- function(filename, key.filename=NA) {
+    colnames <- c('period', 'iter', 'variable','mktid','solvable','value')
+    colclasses <- c('integer', 'integer', 'factor','integer','logical','numeric')
+    data <- read.table(filename, sep=',', strip.white=TRUE, skip=3, header=FALSE,
+                        col.names=colnames, colClasses=colclasses)
+
+    if(is.na(key.filename))
+        data$mktname <- as.factor('UNKNOWN')
+    else {
+        key.names <- c('period','mktid','mktname')
+        key.classes <- c('integer','integer','factor')
+        key <- read.table(key.filename, sep=',', strip.white=TRUE, skip=3, header=FALSE,
+                          col.names=key.names, colClasses=key.classes)
+        data <- merge(data,key)
+    }
+
+    ## split by period, and split each period by variable.  Drop
+    ## redundant columns after the split.
+    data.by.period <- split(data, data$period)
     lapply(data.by.period,
            function(df) {
                df$period <- NULL
-               dfs <- split(df, df$name)
-               lapply(dfs, function(d) {d$name <- NULL;d})
+               dfs <- split(df, df$variable)
+               lapply(dfs, function(d) {d$variable <- NULL;d})
            }) 
-}
-
-### Create a lookup function for market names by period and ID number.
-###   Example usage:
-###     > market.lookup <- create.market.lookup()    # optional filename for the key accepted
-###     > market.name <- market.lookup(period, mktID)  # arguments can be vectors
-create.market.lookup <- function(filename='solver-data-key.txt') 
-{
-    key <- read.csv(filename, header=FALSE, skip=3, stringsAsFactors=FALSE)
-    names(key) <- c('period', 'mktID', 'name')
-    ## this function is what's returned
-    function(aperiod, amktid) {
-        key$name[key$period %in% aperiod & key$mktID %in% amktid]
-    }
 }
 
 fxcolormap <- function(n=51, controlpts=c(-10,-3,0,3,10)) {
@@ -129,7 +123,7 @@ deltatransform <- function(x, maxmag=10) {
     pmin(magx, maxmag)
 }
 
-heatmap.gcam <- function(data, xform=identity, colors=c("white","blue"), title="", breaks=waiver()) {
+heatmap.gcam <- function(data, xform=identity, colors=c("white","blue"), title="", breaks=waiver(), solvable.only = FALSE) {
     ### Plot one of the traces in the solver-data-log as a heat map
     ###
     ### Inputs:  
@@ -140,26 +134,37 @@ heatmap.gcam <- function(data, xform=identity, colors=c("white","blue"), title="
     ###    title  - string to print as the title of the plot
     ###    breaks - controls the breaks in the scale legend (see ggplot2::discrete_scale).
     ###             The default here usually does the right thing.
-    nmkt <- ncol(data) - 2
-    niter <- max(data$iter)
-    dm    <- melt(data, id=c("mode","iter"))
-    ## turns out this next line only works because 'variable' was
-    ## turned into a factor, and the values we want (1..n) are
-    ## precisely the integer indices of the factor.  Whatever.  I'll
-    ## take it.
-    dm$component <- as.integer(dm$variable)   # This variable is the market id
-    dm$value <- xform(as.numeric(dm$value))   # This one is the value of whatever we're plotting for that market.
 
-    ggplot(data=dm, aes(x=component, y=iter, fill=value)) + geom_raster() +
+    if(solvable.only)
+        data <- data[data$solvable,]
+    
+    nmkt <- max(data$mktid)
+    if(nmkt < 10)
+      intvl <- 1
+    else if(nmkt < 500)
+      intvl <- 10
+    else if(nmkt < 2000)
+      intvl <- 50
+    else
+      intvl <- 100
+    print(intvl)
+    mktbreaks <- seq(intvl,nmkt,intvl)
+    niter <- max(data$iter)
+    
+    data$value <- xform(data$value)     # Apply the requested transformation to the data values.
+
+    ggplot(data=data, aes(x=mktid, y=iter, fill=value)) + geom_raster() +
         scale_fill_gradientn(colours=colors, na.value="black", breaks=breaks) +
             ggtitle(title) +
-                scale_x_continuous(breaks=seq(10,nmkt,10)) + scale_y_continuous(breaks=seq(0,niter,20))
+            scale_x_continuous(breaks=mktbreaks) + 
+            scale_y_continuous(breaks=seq(0,niter,20)) +
+            xlab('Market ID')
 }
   
 ### calculate a total derivative from deltax and deltafx
 calc.total.deriv <- function(deltafx, deltax) {
-  dfxmat <- as.matrix(cast(melt(deltafx, id=c("iter","mode")), iter~variable))
-  dxmat  <- as.matrix(cast(melt(deltax, id=c("iter","mode")), iter~variable))
+  dfxmat <- as.matrix(cast(deltafx, id=c("iter","mode"), iter~variable))
+  dxmat  <- as.matrix(cast(deltax, id=c("iter","mode"), iter~variable))
   
   as.data.frame(dfxmat/dxmat)
 }
@@ -172,15 +177,23 @@ calc.total.deriv <- function(deltafx, deltax) {
 ### create a heat map of a single variable for a single period (i.e.,
 ### the bottom-level table in the list created by read.trace.log).
 ### This version is tuned for looking at fx.
-heatmap.fx <- function(data, title="", breaks=c(-12, -7, -3, 0, 3, 7, 12)) {
-    qp <- fxtransform(quantile(as.matrix(data[-c(1,2)]), c(0,1),na.rm=TRUE))
-    q0 <- qp[1]   
-    q2 <- 0.0
-    q1 <- 0.5*(q0+q2)
-    q4 <- qp[2]
-    q3 <- 0.5*(q2+q4)    
+heatmap.fx <- function(data, title="", breaks=NULL) {
+    minval <- fxtransform(min(data$value, na.rm=TRUE))
+    maxval <- fxtransform(max(data$value, na.rm=TRUE))
+
+    ## set up control points as (min, x1, 0.0, x2, max), where x1 and
+    ## x2 are the midpoints of [min,0] and [0,max], respectively
+    cp <- rep(0.0,5)
+    cp[1] <- minval   
+    cp[2] <- 0.5*minval
+    cp[4] <- 0.5*maxval
+    cp[5] <- maxval
     
-    cp <- c(q0,q1,q2,q3,q4)
+    ## use control point values as a default for legend labels, if
+    ## none supplied.
+    if(is.null(breaks))
+        breaks <- cp
+
     heatmap.gcam(data, xform=fxtransform, colors=fxcolormap(n=51,controlpts=cp), 
                  title=title, breaks=breaks)
 }

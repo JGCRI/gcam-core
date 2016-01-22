@@ -107,6 +107,7 @@ public:
     const SolutionInfo& getAny( unsigned int index ) const;
     SolutionInfo& getAny( unsigned int index );
     std::vector<SolutionInfo> getSolvableSet() const;
+    std::vector<SolutionInfo> getUnsolvableSet() const;
     std::vector<SolutionInfo> getSolvedSet() const;
     std::vector<SolutionInfo> getUnsolvedSet() const;
     bool isAllSolved();
@@ -118,7 +119,7 @@ public:
     void printDerivatives( std::ostream& aOut ) const;
 
     // following functions are used for reporting into solver data log
-    const std::vector<int> &getCanonicalOrder(std::vector<int> &apermvec) const;
+    const std::vector<int> &getMarketIDs(std::vector<int> &amktids, bool aSolvableOnly) const;
     int nsolve(void) const;
     
 private:

@@ -200,7 +200,6 @@ public:
     bool checkstate(int period, const std::vector<double>&, std::ostream *log=0, unsigned tol=0) const;
     void prnmktbl(int period, std::ostream &out) const;
     void logForecastEvaluation(int aPeriod) const;
-    int nsolve(void) const {return mNsolv;}  //!< Return current number of markets to solve.
 private:
 
     typedef double (Market::*getpsd_t)() const; // Can point to Market::getPrice, Market::getRawPrice, Market::getRawDemand, etc.
@@ -213,9 +212,6 @@ private:
     std::auto_ptr<MarketDependencyFinder> mDependencyFinder;
     //! Flag indicating whether the next call to world->calc() will be part of a partial derivative calculation 
     bool mIsDerivativeCalc;
-
-    //! Current number of markets we are attempting to solve.
-    int mNsolv;
 
 #if GCAM_PARALLEL_ENABLED
     //! helper class for tbb parallel_for over null supplies and demands

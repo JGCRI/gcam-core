@@ -387,14 +387,21 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
   ILogger& singleLog = ILogger::getLogger( "single_market_log" );
   singleLog.setLevel( ILogger::DEBUG );
 
-  // Workspace for logging debugging data.  The size of this vector
-  // might be different from the size of our working vectors because
-  // some markets not included in the "solvable" solution set might
-  // still be reported (i.e., because they may find their way into
-  // the solution set in later calls to the solver)
-  UBVECTOR report_vec(cSolInfo->nsolve());
-  std::vector<int> perm_vec;
-  cSolInfo->getCanonicalOrder(perm_vec);
+  // market ids and solvable flag for just the solvable markets
+  std::vector<int> mktids_solv;
+  cSolInfo->getMarketIDs(mktids_solv,true);
+  std::vector<bool> issolvable_solv(mktids_solv.size(), true);
+  // market ids and solvable flag for all markets (solvable and unsolvable)
+  std::vector<int> mktids_all;
+  cSolInfo->getMarketIDs(mktids_all, false);
+  std::vector<bool> issolvable_all(mktids_all.size());
+  for(unsigned i=0; i<issolvable_solv.size(); ++i) // solvable markets are at the beginning; set their flag to true
+      issolvable_all[i] = true;
+  for(unsigned i=issolvable_solv.size(); i<issolvable_all.size(); ++i)
+      // unsolvable markets at the end of the array; set their flag to false
+      issolvable_all[i] = false;
+  // working space for variables that will be printed for solvable and unsolvable markets
+  UBVECTOR rptvec_all(mktids_all.size());
   
   F(x,fx);
 
@@ -694,12 +701,12 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
     }
 
     // log the data trace before we do the update
-    reportVec("x", xnew, report_vec, perm_vec);
-    reportVec("fx", fxnew, report_vec, perm_vec);
-    reportVec("deltax", xnew-x, report_vec, perm_vec);    // xstep may have been modified above
-    reportVec("deltafx", fxnew-fx, report_vec, perm_vec); // fxstep definitely modified above
-    reportVec("diagB", jdiag, report_vec, perm_vec);
-    reportPSD(report_vec, perm_vec);                // report price, supply, and demand.  
+    reportVec("x", xnew, mktids_solv, issolvable_solv);
+    reportVec("fx", fxnew, mktids_solv, issolvable_solv);
+    reportVec("deltax", xnew-x, mktids_solv, issolvable_solv);    // xstep may have been modified above
+    reportVec("deltafx", fxnew-fx, mktids_solv, issolvable_solv); // fxstep definitely modified above
+    reportVec("diagB", jdiag, mktids_solv, issolvable_solv);
+    reportPSD(rptvec_all, mktids_all, issolvable_all);                // report price, supply, and demand.  
     mPerIter++;
 
     // update x, fx, f0 for next iteration
@@ -716,30 +723,43 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
   return -1;
 }
 
-void LogBroyden::reportVec(const std::string &aname, const UBVECTOR &av, UBVECTOR &arptvec,
-                           const std::vector<int> &apermvec)
+/*! \brief Write a vector into the solver data log
+ *
+ *  \details We write the solver data log in "long" format; i.e., with
+ *           one completely-specified data item per line.  This allows
+ *           us to simply skip variables that we don't have data for
+ *           (vs. filling in NaN values), and we don't have to commit
+ *           to a fixed number of variables; e.g., we could have more
+ *           variables for price, supply, and demand.
+ *
+ *           The output columns are:
+ *           period, iteration, variable name, market id, solvable (T/F), value
+ *
+ */
+void LogBroyden::reportVec(const std::string &aname, const UBVECTOR &av, const std::vector<int> &amktids,
+                           const std::vector<bool> &aissolvable)
 {
     ILogger &datalog = ILogger::getLogger("solver-data-log");
     datalog.setLevel(ILogger::DEBUG);
+    // Skip preparing the output if it won't be printed
+    if(!datalog.wouldPrint(ILogger::DEBUG))
+        return;
 
-    for(unsigned i=0; i<arptvec.size(); ++i)
-      arptvec[i] = std::numeric_limits<double>::quiet_NaN();
-    
-    for(unsigned i=0; i<av.size(); ++i)
-      arptvec[apermvec[i]] = av[i];
-    
-    datalog << mLastPer <<  " , " << mPerIter << " ,\""
-            << (mLogPricep ? "Log" : "Linear") << "\",\""
-            << aname << "\"";
-
-    for(unsigned int i=0; i<arptvec.size(); ++i) {
-        datalog << ", " << arptvec[i];
+    for(unsigned int i=0; i<av.size(); ++i) {
+        datalog << mLastPer <<  " , " << mPerIter
+                << ",\"" << aname << "\""
+                << ", " << amktids[i]
+                << (aissolvable[i] ? ", T" : ", F")
+                << ", " << av[i] << "\n";
     }
-    datalog << "\n";
 }
 
-void LogBroyden::reportPSD(UBVECTOR &arptvec, const std::vector<int> &apermvec)
+void LogBroyden::reportPSD(UBVECTOR &arptvec, const std::vector<int> &amktids, const std::vector<bool> &aissolvable)
 {
+    // Skip preparing the log output if we're not going to print it anyhow 
+    if(!ILogger::getLogger("solver-data-log").wouldPrint(ILogger::DEBUG))
+        return;
+    
     if(!cSolInfo) {
         ILogger &solverlog = ILogger::getLogger("solver_log");
         ILogger::WarningLevel olvl = solverlog.setLevel(ILogger::ERROR);
@@ -749,23 +769,31 @@ void LogBroyden::reportPSD(UBVECTOR &arptvec, const std::vector<int> &apermvec)
     }
 
     std::vector<SolutionInfo> solvable = cSolInfo->getSolvableSet();
-    UBVECTOR v(solvable.size());
+    std::vector<SolutionInfo> unsolvable = cSolInfo->getUnsolvableSet();
 
     unsigned int i;
+    unsigned int j;
     // log prices
     for(i=0; i<solvable.size(); ++i)
-        v[i] = solvable[i].getPrice();
-    reportVec("price", v, arptvec, apermvec);
+        arptvec[i] = solvable[i].getPrice();
+    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j)
+        arptvec[j] = unsolvable[i].getPrice();
+        
+    reportVec("price", arptvec, amktids, aissolvable);
 
     // log supply
     for(i=0; i<solvable.size(); ++i)
-        v[i] = solvable[i].getSupply();
-    reportVec("supply", v, arptvec, apermvec);
+        arptvec[i] = solvable[i].getSupply();
+    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j)
+        arptvec[j] = unsolvable[i].getSupply();
+    reportVec("supply", arptvec, amktids, aissolvable);
 
     // log demand
     for(i=0; i<solvable.size(); ++i)
-        v[i] = solvable[i].getDemand();
-    reportVec("demand", v, arptvec, apermvec);
+        arptvec[i] = solvable[i].getDemand();
+    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j)
+        arptvec[j] = unsolvable[i].getDemand();
+    reportVec("demand", arptvec, amktids, aissolvable);
 
 }
 
