@@ -26,14 +26,11 @@ read.trace.log <- function(filename, key.filename=NA) {
         data <- merge(data,key)
     }
 
-    ## split by period, and split each period by variable.  Drop
-    ## redundant columns after the split.
+    ## split by period, and split each period by variable.  
     data.by.period <- split(data, data$period)
     lapply(data.by.period,
            function(df) {
-               df$period <- NULL
-               dfs <- split(df, df$variable)
-               lapply(dfs, function(d) {d$variable <- NULL;d})
+               split(df, df$variable)
            }) 
 }
 
@@ -170,7 +167,7 @@ calc.total.deriv <- function(deltafx, deltax) {
 }
 
 ####
-#### The rest of these functions call heatmap.gcam with some tuned values that
+#### The next few functions call heatmap.gcam with some tuned values that
 #### (in my experience) produce readily interpretable plots.
 ####
 
@@ -209,4 +206,50 @@ heatmap.dfdx <- function(data, title="") {
                  colors=fxcolormap(101,c(-100, -20, 0, 20, 100)), title=title)
 }
 
-
+###
+### Functions for looking at small numbers of markets
+###
+plotvars <- function(data, mktids, title="", transforms=NULL, use.names=TRUE) {
+  ## Plot all of the variables for a selection of markets in a single period
+  ##   data : one period of data (i.e., the second level from read.trace.log)
+  ##   mktids : vector of market ids
+  ##   title: optional title for the plot
+  ## transforms : optinal list of transforms to apply to variables names(transforms)
+  ##              indicates which variable the transforms apply to (for example,
+  ##              transforms[['fx']] will get applied to the variable fx)
+  ## use.names : determines whether the legend will display market names or market
+  ##             id numbers.  Default is names.
+    
+  plotdata <- ldply(data, function(d) {d[d$mktid %in% mktids,]})
+  
+  ## apply transforms as necessary
+  ## default transforms for this application, if none supplied by user
+  cmt <- clipped.mag.transform(3)
+  transforms <- list(fx=fxtransform, deltafx=cmt, deltax=cmt)
+  for(var in levels(plotdata$variable)) {
+    if(var %in% names(transforms) && var %in% plotdata$variable) {
+      ind <- plotdata$variable == var
+      plotdata$value[ind] <- transforms[[var]](plotdata$value[ind])
+    }
+  }
+    
+  ## use market names or id numbers, as requested
+  if(use.names)
+    plotdata$cvar <- plotdata$mktname
+  else
+    plotdata$cvar <- as.factor(plotdata$mktid)
+  
+  ## select a color scheme.  Use Set1 from color brewer, unless there are
+  ## too many markets being displayed, in which case use Set3 (using too
+  ## many for set2 (>12) will cause colors to be repeated)
+  nmkt <- length(mktids)
+  if(nmkt<3) nmkt <- 3      # 3 is the minimum number supported.  
+  if(nmkt <= 9)
+    cpal <- 'Set1'
+  else
+    cpal <- 'Set3'
+  
+  ggplot(data=plotdata, aes(x=iter,y=value,color=cvar)) + geom_line() +
+    facet_wrap(facets=~variable,scales='free_y') + 
+    scale_color_brewer(name="market",palette=cpal)
+}
