@@ -452,10 +452,24 @@ void Marketplace::assignMarketSerialNumbers(int aPeriod)
 {
     ILogger &solverDataKey = ILogger::getLogger("solver-data-key");
     solverDataKey.setLevel(ILogger::DEBUG);
-    
+
+    // Give markets being solved the lower numbers
+    int id=1;
     for(unsigned i=0; i<markets.size(); ++i) {
-        markets[i][aPeriod]->assignSerialNumber(i);
-        solverDataKey << aPeriod << ", " << i << ", " << markets[i][aPeriod]->getName() << "\n";
+        if(markets[i][aPeriod]->shouldSolve()) {
+            markets[i][aPeriod]->assignSerialNumber(id);
+            solverDataKey << aPeriod << ", " << i << ", " << markets[i][aPeriod]->getName() << "\n";
+            id++;
+        }
+    }
+
+    // Give markets not being solved the higher numbers
+    for(unsigned i=0; i<markets.size(); ++i) {
+        if(!markets[i][aPeriod]->shouldSolve()) {
+            markets[i][aPeriod]->assignSerialNumber(id);
+            solverDataKey << aPeriod << ", " << i << ", " << markets[i][aPeriod]->getName() << "\n";
+            id++;
+        }
     }
 }
 
