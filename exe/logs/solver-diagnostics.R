@@ -2,6 +2,8 @@ require(ggplot2)
 require(reshape)
 require(RColorBrewer)
 require(graphics)
+require(plyr)
+
 ### Create a collection of tables with the following structure
 ### list: one element for each GCAM model period.  for each period:
 ###      list:  one element for each variable type, for each variable
@@ -9,7 +11,6 @@ require(graphics)
 ###
 ### The columns in the lowest level table will be:
 ###      iteration, market id, solvable (T/F), value, name 
-
 read.trace.log <- function(filename, key.filename=NA) {
     colnames <- c('period', 'iter', 'variable','mktid','solvable','value')
     colclasses <- c('integer', 'integer', 'factor','integer','logical','numeric')
@@ -252,4 +253,48 @@ plotvars <- function(data, mktids, title="", transforms=NULL, use.names=TRUE) {
   ggplot(data=plotdata, aes(x=iter,y=value,color=cvar)) + geom_line() +
     facet_wrap(facets=~variable,scales='free_y') + 
     scale_color_brewer(name="market",palette=cpal)
+}
+
+
+###
+### Functions for identifying markets to look at more closely
+###
+
+final.mkt.extremes <- function(vardata, nmkt=5, final.iter=TRUE, findmax=TRUE) {
+  ## Find the markets that have the largest (optionally smallest) values of a tracked variable.
+  
+  ## The main use for this function is looking at which markets are farthest from solution, 
+  ## but it works with any of the variables we track.  In looking at which markets did or
+  ## did not solve, it's often useful to look at the penultimate iteration, rather than the 
+  ## final one, so we provide an option to do that.
+  ##  vardata:  values for the period
+  ##  nmkt: number of markets to return
+  ##  final.iter:  if FALSE, use the penultimate iteration, instead of the final one
+  ##  findmax:  If TRUE, find the largest values; otherwise, find the smallest
+  ## Return value:  vector of market IDs
+  
+  iters <- vardata$iter
+  niter <- max(iters)
+  key.iter <- if(final.iter) niter else niter-1
+  
+  fxkey <- vardata[iters==key.iter,]
+  
+  ## sort by value
+  mkts.by.value <- fxkey$mktid[order(abs(fxkey$value), decreasing=findmax)]
+  mkts.by.value[1:nmkt]
+}
+
+overall.mkt.extremes <- function(vardata, nmkt=5, skip=0, findmax=TRUE) {
+  ## Find markets with overall largest (optionally smallest) values of a tracked variable, as measured by the L2 metric
+  ##  vardata:  values for the period
+  ##  nmkt:  number of markets to return
+  ##  skip:  number of iterations to skip at the beginning of the period
+  ##  findmax:  If TRUE, find the largest l2 values; otherwise find the smallest
+  ## Return value:  vector of market IDs
+  vardata <- vardata[vardata$iter > skip,]
+  fx.split <- split(vardata, vardata$mktid)
+  l2 <- sapply(fx.split, function(d) {sum(d$value*d$value,na.rm=TRUE)})
+  mktid <- sapply(fx.split, function(d){d$mktid[1]})
+  srt <- order(l2, decreasing=findmax)
+  as.integer(mktid[srt[1:nmkt]])
 }
