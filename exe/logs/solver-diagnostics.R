@@ -1,5 +1,6 @@
 require(ggplot2)
 require(reshape)
+require(data.table)
 require(RColorBrewer)
 require(graphics)
 require(plyr)
@@ -14,24 +15,27 @@ require(plyr)
 read.trace.log <- function(filename, key.filename=NA) {
     colnames <- c('period', 'iter', 'variable','mktid','solvable','value')
     colclasses <- c('integer', 'integer', 'factor','integer','logical','numeric')
-    data <- read.table(filename, sep=',', strip.white=TRUE, skip=3, header=FALSE,
-                        col.names=colnames, colClasses=colclasses)
+    data <- fread(filename, sep=',', skip=3, header=FALSE, colClasses=colclasses)
+    names(data) <- colnames
+    setkey(data, period, mktid)
 
     if(is.na(key.filename))
         data$mktname <- as.factor('UNKNOWN')
     else {
         key.names <- c('period','mktid','mktname')
         key.classes <- c('integer','integer','factor')
-        key <- read.table(key.filename, sep=',', strip.white=TRUE, skip=3, header=FALSE,
-                          col.names=key.names, colClasses=key.classes)
-        data <- merge(data,key)
+        data.key <- fread(key.filename, sep=',', skip=3, header=FALSE, colClasses=key.classes)
+        names(data.key) <- key.names
+        setkey(data.key,period,mktid)
+        data <- data[data.key]
     }
 
     ## split by period, and split each period by variable.  
+    data <- data[period>0]             # drop bogus period 0
     data.by.period <- split(data, data$period)
     lapply(data.by.period,
            function(df) {
-               split(df, df$variable)
+               lapply(split(df, df$variable), function(dt) {setkey(dt, iter, mktid)})
            }) 
 }
 
@@ -220,15 +224,14 @@ plotvars <- function(data, mktids, title="", transforms=NULL, use.names=TRUE) {
   ##              transforms[['fx']] will get applied to the variable fx)
   ## use.names : determines whether the legend will display market names or market
   ##             id numbers.  Default is names.
-    
-  plotdata <- ldply(data, function(d) {d[d$mktid %in% mktids,]})
+  plotdata <- rbindlist(lapply(data, function(d) {d[mktid %in% mktids,]}))
   
   ## apply transforms as necessary
   ## default transforms for this application, if none supplied by user
   cmt <- clipped.mag.transform(3)
   transforms <- list(fx=fxtransform, deltafx=cmt, deltax=cmt)
-  for(var in levels(plotdata$variable)) {
-    if(var %in% names(transforms) && var %in% plotdata$variable) {
+  for(var in unique(plotdata$variable)) {
+    if(var %in% names(transforms)) {
       ind <- plotdata$variable == var
       plotdata$value[ind] <- transforms[[var]](plotdata$value[ind])
     }
