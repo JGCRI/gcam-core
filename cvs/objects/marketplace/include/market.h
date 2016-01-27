@@ -165,7 +165,7 @@ public:
     /*!
      * \brief Get this market's serial number.
      */
-    int getSerialNumber(void) const {return mSerialNumber;}
+    virtual int getSerialNumber(void) const {return mSerialNumber;}
     
     /*!
     * \brief Return the type of the market as defined by the IMarketTypeEnum

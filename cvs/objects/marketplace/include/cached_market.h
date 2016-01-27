@@ -95,6 +95,7 @@ public:
     
     IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
                          const int aPeriod, const bool aMustExist );
+    virtual int getSerialNumber(void) const;
 private:
 #if(!NDEBUG)
     //! The good name used when this market was located.  Used for debugging.

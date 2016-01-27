@@ -458,7 +458,7 @@ void Marketplace::assignMarketSerialNumbers(int aPeriod)
     for(unsigned i=0; i<markets.size(); ++i) {
         if(markets[i][aPeriod]->shouldSolve()) {
             markets[i][aPeriod]->assignSerialNumber(id);
-            solverDataKey << aPeriod << ", " << i << ", " << markets[i][aPeriod]->getName() << "\n";
+            solverDataKey << aPeriod << ", " << id << ", " << markets[i][aPeriod]->getName() << "\n";
             id++;
         }
     }
@@ -467,7 +467,7 @@ void Marketplace::assignMarketSerialNumbers(int aPeriod)
     for(unsigned i=0; i<markets.size(); ++i) {
         if(!markets[i][aPeriod]->shouldSolve()) {
             markets[i][aPeriod]->assignSerialNumber(id);
-            solverDataKey << aPeriod << ", " << i << ", " << markets[i][aPeriod]->getName() << "\n";
+            solverDataKey << aPeriod << ", " << id << ", " << markets[i][aPeriod]->getName() << "\n";
             id++;
         }
     }

@@ -705,7 +705,7 @@ const std::vector<int> &SolutionInfoSet::getMarketIDs(std::vector<int> &amktids,
         amktids[i] = solvable[i].getSerialNumber();
 
     if(!aSolvableOnly)
-        for(unsigned i=solvable.size(), j=0; j<solvable.size(); ++i,++j)
+        for(unsigned i=solvable.size(), j=0; j<unsolvable.size(); ++i,++j)
             amktids[i] = unsolvable[j].getSerialNumber();
 
     return amktids;
