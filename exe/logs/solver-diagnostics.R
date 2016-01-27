@@ -11,7 +11,7 @@ require(plyr)
 ###           data frame: long-form table of values for each market by iteration number
 ###
 ### The columns in the lowest level table will be:
-###      iteration, market id, solvable (T/F), value, name 
+###      iteration, market id, solvable (T/F), value, name
 read.trace.log <- function(filename, key.filename=NA) {
     colnames <- c('period', 'iter', 'variable','mktid','solvable','value')
     colclasses <- c('integer', 'integer', 'factor','integer','logical','numeric')
@@ -163,12 +163,29 @@ heatmap.gcam <- function(data, xform=identity, colors=c("white","blue"), title="
             xlab('Market ID')
 }
   
-### calculate a total derivative from deltax and deltafx
-calc.total.deriv <- function(deltafx, deltax) {
-  dfxmat <- as.matrix(cast(deltafx, id=c("iter","mode"), iter~variable))
-  dxmat  <- as.matrix(cast(deltax, id=c("iter","mode"), iter~variable))
+calc.excess.dmnd <- function(data.period) {
+  ## Add log-excess demand to data for a period.
+  ## assumes keys have already been set
+  supply <- data.period$supply
+  demand <- data.period$demand
   
-  as.data.frame(dfxmat/dxmat)
+  newdata <- demand[supply, .(period, iter, variable, mktid, solvable, value, mktname, i.value)]
+  newdata$value <- log10(newdata$value / (newdata$i.value+1.0e-8))
+  newdata$variable <- 'log.excess.dmnd'
+  newdata$i.value <- NULL
+  newdata
+}
+
+### calculate a total derivative from deltax and deltafx
+calc.total.deriv <- function(data.period) {
+  ## assumes keys have already been set for variable tables  
+  deltafx <- data.period$deltafx
+  deltax <- data.period$deltax
+  
+  newdata <- deltax[deltafx, .(period, iter, variable, mktid, solvable, value, mktname, i.value)]
+  newdata$value <- newdata$i.value / newdata$value
+  newdata$i.value <- NULL
+  newdata$variable <- "dfdx"
 }
 
 ####
@@ -226,10 +243,13 @@ plotvars <- function(data, mktids, title="", transforms=NULL, use.names=TRUE) {
   ##             id numbers.  Default is names.
   plotdata <- rbindlist(lapply(data, function(d) {d[mktid %in% mktids,]}))
   
-  ## apply transforms as necessary
   ## default transforms for this application, if none supplied by user
-  cmt <- clipped.mag.transform(3)
-  transforms <- list(fx=fxtransform, deltafx=cmt, deltax=cmt)
+  if(is.null(transforms)) {
+    cmt <- clipped.mag.transform(3)
+    transforms <- list(fx=fxtransform, deltafx=cmt, deltax=cmt)
+  }
+  
+  ## apply transforms as necessary
   for(var in unique(plotdata$variable)) {
     if(var %in% names(transforms)) {
       ind <- plotdata$variable == var
