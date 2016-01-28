@@ -990,6 +990,7 @@
 		CD52798D16418A9F00A425BF /* util.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = util.hpp; sourceTree = "<group>"; };
 		CD548E5812AFFD8C00ADCE8C /* generic_output.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = generic_output.h; sourceTree = "<group>"; };
 		CD548E5912AFFD9400ADCE8C /* generic_output.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = generic_output.cpp; sourceTree = "<group>"; };
+		CD572C8F1C59D874004438B4 /* data_definition_util.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = data_definition_util.h; sourceTree = "<group>"; };
 		CD693F9D1AEFD0A900805384 /* idiscrete_choice.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idiscrete_choice.hpp; sourceTree = "<group>"; };
 		CD693F9E1AEFE09200805384 /* relative_cost_logit.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = relative_cost_logit.hpp; sourceTree = "<group>"; };
 		CD693F9F1AEFE0CE00805384 /* relative_cost_logit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = relative_cost_logit.cpp; sourceTree = "<group>"; };
@@ -2293,6 +2294,7 @@
 				CD4886EB122873C200F5A88A /* version.h */,
 				CD4886EC122873C200F5A88A /* xml_helper.h */,
 				CD4886ED122873C200F5A88A /* xml_pair.h */,
+				CD572C8F1C59D874004438B4 /* data_definition_util.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
