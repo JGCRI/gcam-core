@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,7 +22,6 @@
 		CD165BC51A2513D5005F3A8B /* preconditioner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC41A2513D5005F3A8B /* preconditioner.cpp */; };
 		CD165BC81A2513F7005F3A8B /* spline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC71A2513F7005F3A8B /* spline.cpp */; };
 		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
-		CD1C993F1A3AE1E800E5F460 /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */; };
 		CD3B52C61BFE0E2800179FDD /* hector_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B52C51BFE0E2800179FDD /* hector_model.cpp */; settings = {ASSET_TAGS = (); }; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
@@ -362,7 +361,6 @@
 		CD165BC71A2513F7005F3A8B /* spline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spline.cpp; sourceTree = "<group>"; };
 		CD177C39159A0ADA000A996F /* cumulative_emissions_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cumulative_emissions_target.h; sourceTree = "<group>"; };
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
-		CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = ../../../../../../../../../System/Library/Frameworks/JavaVM.framework; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3B52C41BFE0E1F00179FDD /* hector_model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = hector_model.hpp; sourceTree = "<group>"; };
 		CD3B52C51BFE0E2800179FDD /* hector_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hector_model.cpp; sourceTree = "<group>"; };
@@ -1041,7 +1039,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD1C993F1A3AE1E800E5F460 /* JavaVM.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,7 +1048,6 @@
 		08FB7794FE84155DC02AAC07 /* objects */ = {
 			isa = PBXGroup;
 			children = (
-				CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */,
 				CD488409122873C000F5A88A /* objects */,
 				CD299E9711B9C11800E6D196 /* Products */,
 			);
@@ -2434,9 +2430,10 @@
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "objects" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -2797,10 +2794,6 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/xercesc/lib,
-					/System/Library/Frameworks/JavaVM.framework/Libraries,
-				);
 				PRODUCT_NAME = objects;
 			};
 			name = Release;
@@ -2808,7 +2801,7 @@
 		1DEB923608733DC60010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ENABLE_TESTABILITY = YES;
 				GCC_AUTO_VECTORIZATION = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = NO;
@@ -2824,11 +2817,18 @@
 					"../../../../libs/boost-lib",
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
+					../../../../libs/java/include/darwin,
 				);
-				LD_RUNPATH_SEARCH_PATHS = ../libs;
-				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
+				LD_RUNPATH_SEARCH_PATHS = "../libs ../libs/java/lib";
+				LIBRARY_SEARCH_PATHS = (
+					../../../../libs/xercesc/lib,
+					../../../../libs/java/lib,
+				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-lxerces-c";
+				OTHER_LDFLAGS = (
+					"-lxerces-c",
+					"-ljvm",
+				);
 				PREBINDING = NO;
 				SDKROOT = "";
 				SYMROOT = ../../../../exe;
@@ -2839,7 +2839,6 @@
 		1DEB923708733DC60010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -2858,11 +2857,18 @@
 					"../../../../libs/boost-lib",
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
+					../../../../libs/java/include/darwin,
 				);
-				LD_RUNPATH_SEARCH_PATHS = ../libs;
-				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
+				LD_RUNPATH_SEARCH_PATHS = "../libs ../libs/java/lib";
+				LIBRARY_SEARCH_PATHS = (
+					../../../../libs/xercesc/lib,
+					../../../../libs/java/lib,
+				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-lxerces-c";
+				OTHER_LDFLAGS = (
+					"-lxerces-c",
+					"-ljvm",
+				);
 				PREBINDING = NO;
 				SDKROOT = "";
 				SYMROOT = ../../../../exe;
@@ -2873,7 +2879,6 @@
 		CDE5689F161BA81B007A864C /* Release - LAPACK */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -2893,13 +2898,18 @@
 					"../../../../libs/boost-lib",
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
+					../../../../libs/java/include/darwin,
 					"../../../../libs/boost-numeric-bindings",
 				);
-				LD_RUNPATH_SEARCH_PATHS = ../libs;
-				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
+				LD_RUNPATH_SEARCH_PATHS = "../libs ../libs/java/lib";
+				LIBRARY_SEARCH_PATHS = (
+					../../../../libs/xercesc/lib,
+					../../../../libs/java/lib,
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lxerces-c",
+					"-ljvm",
 					"-llapack",
 					"-lblas",
 				);
@@ -2925,7 +2935,6 @@
 		CDE568AC161BAC0D007A864C /* Release - TBB */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -2946,17 +2955,20 @@
 					"../../../../libs/boost-lib",
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
+					../../../../libs/java/include/darwin,
 					"../../../../libs/boost-numeric-bindings",
 					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = ../libs;
+				LD_RUNPATH_SEARCH_PATHS = "../libs ../libs/java/lib";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
+					../../../../libs/java/lib,
 					../../../../libs/tbb/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lxerces-c",
+					"-ljvm",
 					"-llapack",
 					"-lblas",
 					"-ltbb",
