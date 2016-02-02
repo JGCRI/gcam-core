@@ -90,7 +90,7 @@ struct Data { \
 template<typename T>
 struct Data {
     Data( const char* aDataName ):mDataName( aDataName ) {}
-    typedef T type_name;
+    typedef T value_type;
     /*! \brief The human readable name for this data. */
     const std::string mDataName;
 
@@ -163,7 +163,7 @@ struct Data {
  * \param elem The variable name to define for direct access to the current Data.
  */
 #define MAKE_VAR_REF( r, data, i, elem ) \
-    boost::mpl::at_c< DataVectorType, i >::type::type_name& elem= boost::fusion::at_c<i>( DATA_VECTOR_NAME ).mData;
+    boost::mpl::at_c< DataVectorType, i >::type::value_type& elem= boost::fusion::at_c<i>( DATA_VECTOR_NAME ).mData;
 
 /*!
  * \brief Macros to cut accross sequences of Data declerations to organize as

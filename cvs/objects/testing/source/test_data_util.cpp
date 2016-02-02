@@ -10,6 +10,9 @@
 #include <boost/fusion/include/count_if.hpp>
 #include <boost/fusion/include/joint_view.hpp>
 
+#include <boost/mpl/for_each.hpp>
+#include <boost/mpl/quote.hpp>
+#include <boost/mpl/apply.hpp>
 #include <boost/mpl/inherit.hpp>
 #include <boost/mpl/inherit_linearly.hpp>
 
@@ -17,12 +20,25 @@
 
 typedef boost::mpl::vector<std::string, int, double> ValidDataPrimatives;
 
+template<typename T>
+struct add_value_type {
+    using type=typename T::value_type;
+};
+
+
 template<typename DataType>
-class GetDataVisitor {
+class GetDataWrapper {
     public:
-    GetDataVisitor( const std::string& aDataNameToFind ):mDataNameToFind ( aDataNameToFind ), mNumFound( 0 ), mFoundData( 0 ) { }
-    GetDataVisitor( const GetDataVisitor& aOther ):mDataNameToFind ( aOther.mDataNameToFind ), mNumFound( 0 ), mFoundData( 0 ) {
-        std::cout << "Creating copy!" << std::endl;
+    GetDataWrapper():mNumFound( 0 ), mFoundData( 0 ) { }
+    GetDataWrapper( const GetDataWrapper& aOther ):mNumFound( 0 ), mFoundData( 0 ) {
+        std::cout << "Creating copy wrapper!" << std::endl;
+    }
+
+    virtual const std::string& getDataNameToFind() const = 0;
+
+    void reset() {
+        mNumFound = 0;
+        mFoundData = 0;
     }
 
     bool wasFound() const {
@@ -31,38 +47,61 @@ class GetDataVisitor {
 
     DataType& getData() const {
         if( mNumFound == 0 ) {
-            std::cout << mDataNameToFind << " was not found." << std::endl;
+            std::cout << getDataNameToFind() << " was not found." << std::endl;
             abort();
         }
         else if( mNumFound > 1 ) {
-            std::cout << mDataNameToFind << " was not found " << mNumFound << " times." << std::endl;
+            std::cout << getDataNameToFind() << " was not found " << mNumFound << " times." << std::endl;
         }
         return *mFoundData;
     }
-
-    void operator()( Data<DataType>& aData ) const {
-        if( aData.mDataName == mDataNameToFind ) {
-            mFoundData = &aData.mData;
-            ++mNumFound;
-        }
-    }
-
-    template<typename T>
-    void process( T* aContainer ) {
-        auto fullDataVec = aContainer->getDataVector();
-        boost::fusion::filter_view< decltype( fullDataVec ), boost::is_same<boost::mpl::_, Data<DataType> > > dataOfDataType( fullDataVec );
-        boost::fusion::for_each( dataOfDataType, *this );
-    }
-
-    private:
-    const std::string& mDataNameToFind;
 
     mutable int mNumFound;
 
     mutable DataType* mFoundData;
 };
 
-class Master : public boost::mpl::inherit_linearly< ValidDataPrimatives, boost::mpl::inherit< boost::mpl::_1, GetDataVisitor< boost::mpl::_2 > > >::type {
+class GetDataVisitor : public boost::mpl::inherit_linearly< ValidDataPrimatives, boost::mpl::inherit< boost::mpl::_1, GetDataWrapper< boost::mpl::_2 > > >::type {
+    public:
+    GetDataVisitor( const std::string& aDataNameToFind ):mDataNameToFind ( aDataNameToFind ) { }
+    GetDataVisitor( const GetDataVisitor& aOther ):mDataNameToFind ( aOther.mDataNameToFind ) {
+        std::cout << "Creating copy visitor!" << std::endl;
+    }
+
+    virtual const std::string& getDataNameToFind() const {
+        return mDataNameToFind;
+    }
+
+    template<typename T>
+    void process( T* aContainer ) {
+        using namespace boost::mpl;
+        auto fullDataVec = aContainer->getDataVector();
+        boost::fusion::filter_view< decltype( fullDataVec ),
+            boost::is_same<_,
+                           bind<quote1<Data>, bind<quote1<add_value_type>, _> >
+                        > > simpleDataVec( fullDataVec );
+        boost::fusion::for_each( simpleDataVec, *this );
+    }
+
+    template<typename DataType>
+    void operator()( Data<DataType>& aData ) const {
+        if( aData.mDataName == mDataNameToFind ) {
+            static_cast<const GetDataWrapper<DataType>*>( this )->mFoundData = &aData.mData;
+            static_cast<const GetDataWrapper<DataType>*>( this )->mNumFound++;
+            // TODO: track the number of foudn across all types too?
+        }
+    }
+
+    void reset() {
+        GetDataVisitor* thisWrapper = this;
+        boost::mpl::for_each<ValidDataPrimatives>( [&thisWrapper] (auto d) {
+            typedef decltype( d ) DataType;
+            static_cast<GetDataWrapper<DataType>*>( thisWrapper )->reset();
+        } );
+    }
+
+    protected:
+    const std::string& mDataNameToFind;
 };
 
 class Base {
@@ -104,6 +143,7 @@ class Base {
         return boost::fusion::joint_view< decltype( mDataVector ), decltype( emptyVec )>( mDataVector, emptyVec );
     }
     public:
+    /*
     friend class GetDataVisitor<std::string>;
     virtual void accept( GetDataVisitor<std::string>& aDataVisitor ) {
         aDataVisitor.process( this );
@@ -114,6 +154,11 @@ class Base {
     }
     friend class GetDataVisitor<double>;
     virtual void accept( GetDataVisitor<double>& aDataVisitor ) {
+        aDataVisitor.process( this );
+    }
+    */
+    friend class GetDataVisitor;
+    virtual void accept( GetDataVisitor& aDataVisitor ) {
         aDataVisitor.process( this );
     }
 
@@ -184,6 +229,7 @@ class Derived : public Base {
         return ret;
     }
     public:
+    /*
     friend class GetDataVisitor<std::string>;
     virtual void accept( GetDataVisitor<std::string>& aDataVisitor ) {
         aDataVisitor.process( this );
@@ -194,6 +240,11 @@ class Derived : public Base {
     }
     friend class GetDataVisitor<double>;
     virtual void accept( GetDataVisitor<double>& aDataVisitor ) {
+        aDataVisitor.process( this );
+    }
+    */
+    friend class GetDataVisitor;
+    virtual void accept( GetDataVisitor& aDataVisitor ) {
         aDataVisitor.process( this );
     }
 };
@@ -210,12 +261,13 @@ double Derived::calc( const double value ) const {
 
 template<typename T>
 void runTest( Base* aContainer, const std::string& aDataNameToFind, T aNewValue ) {
-    GetDataVisitor<T> visitor( aDataNameToFind );
+    GetDataVisitor visitor( aDataNameToFind );
+    GetDataWrapper<T>& visitorTypeT = static_cast<GetDataWrapper<T>&>( visitor );
     aContainer->accept( visitor );
-    std::cout << "Was found? " <<  visitor.wasFound() << " = ";
-    if( visitor.wasFound() ) {
-        std::cout << visitor.getData() << std::endl;
-        visitor.getData() = aNewValue;
+    std::cout << "Was found? " <<  visitorTypeT.wasFound() << " = ";
+    if( visitorTypeT.wasFound() ) {
+        std::cout << visitorTypeT.getData() << std::endl;
+        visitorTypeT.getData() = aNewValue;
     }
     else {
         std::cout << "NA" << std::endl;
