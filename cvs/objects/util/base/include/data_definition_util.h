@@ -86,6 +86,18 @@ struct Data { \
     T mData; \
 };
 
+
+template<typename T>
+struct Data {
+    Data( const char* aDataName ):mDataName( aDataName ) {}
+    typedef T type_name;
+    /*! \brief The human readable name for this data. */
+    const std::string mDataName;
+
+    /*! \brief The actual data stored. */
+    T mData;
+};
+
 //! The name to call the variable which will hold all Data structs in a vector.
 #define DATA_VECTOR_NAME mDataVector
 
@@ -103,7 +115,7 @@ struct Data { \
  * \param The Data definition as a sequence of tokens missing the N count parameter.
  */
 #define DEFINE_SIMPLE_DATA_STRUCT( ... ) \
-    BOOST_PP_SEQ_REPLACE( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( __VA_ARGS__ ) ), 0, Data< BOOST_PP_VARIADIC_ELEM( 0, __VA_ARGS__  ) )
+    BOOST_PP_SEQ_REPLACE( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( __VA_ARGS__ ) ), 0, Data< BOOST_PP_VARIADIC_ELEM( 0, __VA_ARGS__  ) > )
 
 /*!
  * \brief Gathers the definiiton for a piece of data to be collected as a sequence
@@ -139,7 +151,7 @@ struct Data { \
  * \param elem The sequence of tokens represetning the current data definition.
  */
 #define ADD_INDEX_TEMPLATE_PARAM( r, data, i, elem ) \
-    elem ( i> )
+    elem
 
 /*!
  * \brief Creates the direct access variable definition.
@@ -191,10 +203,8 @@ struct Data { \
  *             users can continue to use the member variables as normal.
  */
 #define DEFINE_DATA( aDefList... ) \
-    SET_DATANAME_HELPER { const char* dataNames[] = { BOOST_PP_SEQ_ENUM( UNZIP( 2, aDefList ) ) }; return dataNames[ N ]; } \
-    SIMPLE_DATA_STRUCT \
     typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_FOR_EACH_I( ADD_INDEX_TEMPLATE_PARAM, BOOST_PP_EMPTY, UNZIP( 1, aDefList ) ) )> DataVectorType; \
-    boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME; \
+    boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type( BOOST_PP_SEQ_ENUM( UNZIP( 2, aDefList ) ) ); \
     BOOST_PP_SEQ_FOR_EACH_I( MAKE_VAR_REF,  BOOST_PP_EMPTY, UNZIP( 0, aDefList ) )
 
 /*
