@@ -113,9 +113,6 @@ class Base {
     int getYear() const;
     virtual double calc(const double value) const;
 
-    template<typename T>
-    bool setData( const std::string& aDataNameToFind, const T& aDataToSet ); 
-
     struct printData {
         printData( std::ostream& aOut ):mOut( aOut ) {}
         std::ostream& mOut;
@@ -143,36 +140,10 @@ class Base {
         return boost::fusion::joint_view< decltype( mDataVector ), decltype( emptyVec )>( mDataVector, emptyVec );
     }
     public:
-    /*
-    friend class GetDataVisitor<std::string>;
-    virtual void accept( GetDataVisitor<std::string>& aDataVisitor ) {
-        aDataVisitor.process( this );
-    }
-    friend class GetDataVisitor<int>;
-    virtual void accept( GetDataVisitor<int>& aDataVisitor ) {
-        aDataVisitor.process( this );
-    }
-    friend class GetDataVisitor<double>;
-    virtual void accept( GetDataVisitor<double>& aDataVisitor ) {
-        aDataVisitor.process( this );
-    }
-    */
     friend class GetDataVisitor;
     virtual void accept( GetDataVisitor& aDataVisitor ) {
         aDataVisitor.process( this );
     }
-
-    template<typename T>
-    struct setDataHelper {
-        setDataHelper( const std::string& aDataNameToFind, const T& aDataToSet ): mDataNameToFind( aDataNameToFind ), mDataToSet( aDataToSet ) {}
-        const std::string& mDataNameToFind;
-        const T& mDataToSet;
-        void operator()( Data<T>& aData ) const {
-            if( aData.mDataName == mDataNameToFind ) {
-                aData.mData = mDataToSet;
-            }
-        }
-    };
 };
 
 Base::Base() {
@@ -194,22 +165,6 @@ double Base::calc(const double value) const {
     return value * mCoefA;
 }
 
-template<typename T>
-bool Base::setData( const std::string& aDataNameToFind, const T& aDataToSet ) {
-    boost::fusion::filter_view< decltype( mDataVector ), boost::is_same<boost::mpl::_, Data<T> > > dataOfTypeT( mDataVector );
-    bool wasSet = boost::fusion::any( dataOfTypeT, [&aDataNameToFind, &aDataToSet] ( auto& aData ) -> bool {
-        if( aData.mDataName == aDataNameToFind ) {
-            aData.mData = aDataToSet;
-            return true;
-        } else {
-            return false;
-        }
-    } );
-    //boost::fusion::for_each( dataOfTypeT, setDataHelper<T>( aDataNameToFind, aDataToSet ) );
-
-    return wasSet;
-}
-
 class Derived : public Base {
     public:
     Derived();
@@ -229,20 +184,6 @@ class Derived : public Base {
         return ret;
     }
     public:
-    /*
-    friend class GetDataVisitor<std::string>;
-    virtual void accept( GetDataVisitor<std::string>& aDataVisitor ) {
-        aDataVisitor.process( this );
-    }
-    friend class GetDataVisitor<int>;
-    virtual void accept( GetDataVisitor<int>& aDataVisitor ) {
-        aDataVisitor.process( this );
-    }
-    friend class GetDataVisitor<double>;
-    virtual void accept( GetDataVisitor<double>& aDataVisitor ) {
-        aDataVisitor.process( this );
-    }
-    */
     friend class GetDataVisitor;
     virtual void accept( GetDataVisitor& aDataVisitor ) {
         aDataVisitor.process( this );
@@ -294,39 +235,10 @@ int main() {
     std::cout << "Working on Base" << std::endl;
     Base* b = new Base();
     runTests( b );
-    /*
-
-    b->accept( visitor );
-
-    bool wasSet = false;
-    wasSet = b->setData( "name", std::string( "this is my name" ) );
-    std::cout << "Was able to set name? " << wasSet << std::endl;
-    wasSet = b->setData( "year", 1975 );
-    std::cout << "Was able to set year? " << wasSet << std::endl;
-    wasSet = b->setData( "year-wrong", 1990 );
-    std::cout << "Was able to set year-wrong? " << wasSet << std::endl;
-    wasSet = b->setData( "dont-have-type", *b );
-    std::cout << "Was able to set dont-have-type? " << wasSet << std::endl;
-
-    b->print( std::cout );
-    std::cout << "calc(10): " << b->calc( 10.0 ) << std::endl;
-    */
 
     std::cout << "Working on Derived" << std::endl;
     Base* d = new Derived();
     runTests( d );
-
-    /*
-    d->accept( visitor );
-
-    wasSet = d->setData( "coef-a", 2.0 );
-    std::cout << "Was able to set coef-a? " << wasSet << std::endl;
-    wasSet = d->setData( "coef-b", 5.0 );
-    std::cout << "Was able to set coef-b? " << wasSet << std::endl;
-
-    d->print( std::cout );
-    std::cout << "calc(10): " << d->calc( 10.0 ) << std::endl;
-    */
 
     return 0;
 }
