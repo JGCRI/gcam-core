@@ -1,4 +1,5 @@
 #include <iostream>
+#include <map>
 #include <functional>
 #include <algorithm>
 
@@ -18,7 +19,11 @@
 
 #include "util/base/include/data_definition_util.h"
 
-typedef boost::mpl::vector<std::string, int, double> ValidDataPrimatives;
+std::ostream& operator<<( std::ostream& out, const std::map<int, double>& m ) {
+    return out << "MAPasdfasdf";
+}
+
+typedef boost::mpl::vector<std::string, int, double, std::map<int, double>> ValidDataPrimatives;
 
 template<typename T>
 struct add_value_type {
@@ -132,7 +137,8 @@ class Base {
     DEFINE_DATA(
         CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
         CREATE_SIMPLE_VARIABLE( mYear, int, "year" ),
-        CREATE_SIMPLE_VARIABLE( mCoefA, double, "coef-a" )
+        CREATE_SIMPLE_VARIABLE( mCoefA, double, "coef-a" ),
+        CREATE_SIMPLE_VARIABLE( mMap, std::map<int, double>, "some-map" )
     )
 
     auto getDataVector() -> boost::fusion::joint_view< decltype( mDataVector ), boost::fusion::vector<> > {
@@ -174,7 +180,8 @@ class Derived : public Base {
 
     protected:
 
-    DEFINE_DATA(
+    DEFINE_DATA_WITH_PARENT(
+        Base,
         CREATE_SIMPLE_VARIABLE( mCoefB, double, "coef-b" )
     )
 
