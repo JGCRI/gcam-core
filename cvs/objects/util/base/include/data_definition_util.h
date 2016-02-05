@@ -57,6 +57,8 @@
 #include <boost/preprocessor/variadic/elem.hpp>
 #include <boost/preprocessor/variadic/size.hpp>
 #include <boost/preprocessor/facilities/empty.hpp>
+#include <boost/preprocessor/control/iif.hpp>
+#include <boost/preprocessor/punctuation/is_begin_parens.hpp>
 
 
 template<typename T>
@@ -84,8 +86,8 @@ struct Data {
  * \param ...[n:n] The human readable name.
  * \param The Data definition as a sequence of tokens.
  */
-#define DEFINE_SIMPLE_DATA_STRUCT( ... ) \
-    BOOST_PP_VARIADIC_TO_SEQ( Data< BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( __VA_ARGS__ ) ) ) > )
+#define DEFINE_SIMPLE_DATA_STRUCT( aTypeAndName... ) \
+    BOOST_PP_VARIADIC_TO_SEQ( Data< BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( aTypeAndName ) ) ) > )
 
 /*!
  * \brief Gathers the definiiton for a piece of data to be collected as a sequence
@@ -94,8 +96,8 @@ struct Data {
  * \param ...[0:n-1] The type definition.
  * \param ...[n:n] The human readable name.
  */
-#define CREATE_SIMPLE_VARIABLE( aVarName, ... ) \
-    ( aVarName, DEFINE_SIMPLE_DATA_STRUCT( __VA_ARGS__ ), BOOST_PP_VARIADIC_ELEM( BOOST_PP_DEC( BOOST_PP_VARIADIC_SIZE( __VA_ARGS__ ) ), __VA_ARGS__ ) )
+#define CREATE_SIMPLE_VARIABLE( aVarName, aTypeAndName... ) \
+    ( aVarName, DEFINE_SIMPLE_DATA_STRUCT( aTypeAndName ), BOOST_PP_VARIADIC_ELEM( BOOST_PP_DEC( BOOST_PP_VARIADIC_SIZE( aTypeAndName ) ), aTypeAndName ) )
 
 /*!
  * \brief Flattens the nesting of sequences one level
@@ -156,26 +158,48 @@ struct Data {
  *          3) Aliases for direct access varible definitions such as mName, mYear so that
  *             users can continue to use the member variables as normal.
  */
-#define DEFINE_DATA( aDefList... ) \
+#define DEFINE_DATA_INTERNAL( aDefList... ) \
     typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_FOR_EACH( FLATTEN, BOOST_PP_EMPTY, UNZIP( 1, aDefList ) ) )> DataVectorType; \
     boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type( BOOST_PP_SEQ_ENUM( UNZIP( 2, aDefList ) ) ); \
     BOOST_PP_SEQ_FOR_EACH_I( MAKE_VAR_REF,  BOOST_PP_EMPTY, UNZIP( 0, aDefList ) )
 
+#define DEFINE_DATA_INTERNAL2( aDefList... ) \
+    aDefList
+
+#define DEFINE_DATA_INTERNAL_EMPTY(aDummy) \
+    typedef boost::mpl::vector<> DataVectorType; \
+    boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type();
+
+#define DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList... ) \
+    BOOST_PP_IIF( BOOST_PP_IS_BEGIN_PARENS( aDefList ), DEFINE_DATA_INTERNAL, DEFINE_DATA_INTERNAL_EMPTY ) ( aDefList )
+
 /*!
- * \brief Adds a typdef to give reference to the direct parent class.  This is necessary
- *        since each definition of mDataVector is independent from it's parent classes.
+ * \brief Define data entry point.  In this definition a user must give a sequence
+ *        of all of the possible members of the inheritance heirarchy this class
+ *        belongs to starting with itself.  This is necessary in order to get the
+ *        full data vector from sub-classes at runtime.
+ * \details The first argument is used to typedef the SubClassFamilyVector, and the
+ *          rest is given to DEFINE_DATA_INTERNAL to process the actual data definitions.
+ */
+#define DEFINE_DATA( aSubClassFamilySeq, aDefList... ) \
+    typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( aSubClassFamilySeq )> SubClassFamilyVector; \
+    DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList )
+
+/*!
+ * \brief Define data entry point which adds a typdef to give reference to the direct
+ *        parent class.  This is necessary since each definition of mDataVector is
+ *        independent from it's parent classes.
  * \details The first argument is used to typeef the reference to the direct parent class,
- *          and the rest is given to DEFINE_DATA as usual.
+ *          and the rest is given to DEFINE_DATA_INTERNAL to process the actual data definitions.
  */
 #define DEFINE_DATA_WITH_PARENT( aParentClass, aDefList... ) \
     typedef aParentClass ParentClass; \
-    DEFINE_DATA( aDefList )
+    DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList )
 
-/*
-DEFINE_DATA(
-    CREATE_SIMPLE_VARIABLE( mAge, std::map<int, float>, "age" ),
-    CREATE_SIMPLE_VARIABLE( mHeight, float, "height" )
-)
-*/
+/*!
+ * \brief A helper to organize the subclass family members into a sequence.
+ */
+#define DEFINE_SUBCLASS_FAMILY( aClassList... ) \
+    BOOST_PP_VARIADIC_TO_SEQ( aClassList )
 
 #endif // _DATA_DEFINITION_UTIL_H_

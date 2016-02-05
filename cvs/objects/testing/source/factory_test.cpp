@@ -47,6 +47,8 @@ class Factory {
     }
 };
 
+typedef AbstractBase::SubClassFamilyVector BaseFamily;
+
 void runCanCreateTests( const Factory<BaseFamily>& aBaseFactory, const std::string aXMLName ) {
     std::cout << "Knows " << aXMLName << "? " << aBaseFactory.canCreateType( aXMLName ) << std::endl;
 }

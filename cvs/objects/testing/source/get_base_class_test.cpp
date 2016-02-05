@@ -23,7 +23,6 @@
 #include "testing_classes_def.hpp"
 
 BOOST_MPL_HAS_XXX_TRAIT_DEF( ParentClass );
-BOOST_MPL_HAS_XXX_TRAIT_DEF( DataVectorType );
 
 template<typename T, typename Enable=void>
 struct get_base_class {
@@ -47,9 +46,8 @@ struct get_full_datavector_type<T, typename boost::enable_if<boost::mpl::not_<ha
 
 template<typename SubClassFamilyVector>
 struct ExpandDataVector  {
-    using HasDataVector = typename boost::mpl::remove_if<SubClassFamilyVector, boost::mpl::not_<has_DataVectorType<boost::mpl::_> > >::type;
-    using HasDataVectorPtr = typename boost::mpl::transform<HasDataVector, boost::add_pointer<boost::mpl::_> >::type;
-    using SubClassPtrMap = typename boost::fusion::result_of::as_map<typename boost::fusion::result_of::as_vector<typename boost::mpl::transform_view<boost::mpl::zip_view< boost::mpl::vector<HasDataVector, HasDataVectorPtr> >, boost::mpl::unpack_args<boost::fusion::pair<boost::mpl::_1, boost::mpl::_2> > > >::type>::type;
+    using SubClassVecPtr = typename boost::mpl::transform<SubClassFamilyVector, boost::add_pointer<boost::mpl::_> >::type;
+    using SubClassPtrMap = typename boost::fusion::result_of::as_map<typename boost::fusion::result_of::as_vector<typename boost::mpl::transform_view<boost::mpl::zip_view< boost::mpl::vector<SubClassFamilyVector, SubClassVecPtr> >, boost::mpl::unpack_args<boost::fusion::pair<boost::mpl::_1, boost::mpl::_2> > > >::type>::type;
     SubClassPtrMap mSubClassPtrMap;
 
     ExpandDataVector() {
@@ -104,9 +102,11 @@ struct PrintDataHandler {
 
 template<typename T>
 void runTest(T obj) {
+  /*
     obj.print();
     using BaseType = typename get_base_class<T>::type;
     static_cast<BaseType>(obj ).print();
+    */
 }
 
 int main() {
@@ -120,7 +120,7 @@ int main() {
     runTest(d3);
 
     PrintDataHandler printer;
-    ExpandDataVector<BaseFamily> edv;
+    ExpandDataVector<AbstractBase::SubClassFamilyVector> edv;
     edv.setSubClass(&b);
     edv.getFullDataVector(printer);
     edv.setSubClass(&d1);

@@ -7,7 +7,7 @@ class Base;
 class D1;
 class D2;
 class D3;
-typedef boost::mpl::vector<AbstractBase, Base, D1, D2, D3> BaseFamily;
+//typedef boost::mpl::vector<AbstractBase, Base, D1, D2, D3> BaseFamily;
 //template<> class Factory<BaseFamily> {};
 //typedef Factory<BaseFamily> BaseFactory;
 
@@ -16,6 +16,9 @@ class AbstractBase {
     virtual ~AbstractBase() {}
     virtual int doSomethingVirtual() const = 0;
     virtual double calc(const double value) const = 0;
+    DEFINE_DATA(
+        DEFINE_SUBCLASS_FAMILY(AbstractBase, Base, D1, D2, D3)
+    )
 };
 
 class Base : public AbstractBase {
@@ -30,7 +33,8 @@ class Base : public AbstractBase {
     virtual double calc(const double value) const  { return value * mCoef0; }
 
     //protected:
-    DEFINE_DATA(
+    DEFINE_DATA_WITH_PARENT(
+        AbstractBase,
         CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
         CREATE_SIMPLE_VARIABLE( mYear, int, "year" ),
         CREATE_SIMPLE_VARIABLE( mCoef0, double, "coef-0" )
@@ -88,12 +92,11 @@ public:
     }
     void print() { std::cout << "In " << getXMLNameStatic() << std::endl; }
     virtual int doSomethingVirtual() const { return 3; };
-    virtual double calc(const double value) const  { return value * mCoef0 * mCoef3; }
+    virtual double calc(const double value) const  { return value * mCoef0 * 100.0; }
 
     //protected:
     DEFINE_DATA_WITH_PARENT(
-        Base,
-        CREATE_SIMPLE_VARIABLE( mCoef3, double, "coef-3" )
+        Base
     )
     // TOOD: how to put in macro
     //friend class BaseFactory;
