@@ -7,7 +7,6 @@
 #include <boost/mpl/front.hpp>
 #include <boost/mpl/transform.hpp>
 #include <boost/mpl/remove_if.hpp>
-#include <boost/mpl/has_xxx.hpp>
 
 #include <boost/fusion/include/vector.hpp>
 #include <boost/fusion/include/mpl.hpp>
@@ -15,19 +14,6 @@
 #include <boost/fusion/include/accumulate.hpp>
 
 #include "testing_classes_def.hpp"
-
-BOOST_MPL_HAS_XXX_TRAIT_DEF( DataVectorType );
-
-template<typename DataVectorType>
-struct FullDataVectorWrapper {
-    mutable bool mWasFound = false;
-    DataVectorType* mDataVector = 0;
-
-    void reset() {
-        mWasFound = 0;
-        mDataVector = 0;
-    }
-};
 
 template<typename SubClassFamilyVector>
 class Factory {

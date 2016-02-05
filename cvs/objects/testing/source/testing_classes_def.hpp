@@ -29,7 +29,7 @@ class Base : public AbstractBase {
     virtual int doSomethingVirtual() const { return 0; };
     virtual double calc(const double value) const  { return value * mCoef0; }
 
-    protected:
+    //protected:
     DEFINE_DATA(
         CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
         CREATE_SIMPLE_VARIABLE( mYear, int, "year" ),
@@ -49,6 +49,8 @@ class D1 : public Base {
     void print() { std::cout << "In " << getXMLNameStatic() << std::endl; }
     virtual int doSomethingVirtual() const { return 1; };
     virtual double calc(const double value) const  { return value * mCoef0 * mCoef1; }
+
+    //protected:
     DEFINE_DATA_WITH_PARENT(
         Base,
         CREATE_SIMPLE_VARIABLE( mCoef1, double, "coef-1" )
@@ -67,6 +69,8 @@ class D2 : public D1 {
     void print() { std::cout << "In " << getXMLNameStatic() << std::endl; }
     virtual int doSomethingVirtual() const { return 2; };
     virtual double calc(const double value) const  { return value * mCoef0 * mCoef1 * mCoef2; }
+
+    //protected:
     DEFINE_DATA_WITH_PARENT(
         D1,
         CREATE_SIMPLE_VARIABLE( mCoef2, double, "coef-2" )
@@ -85,6 +89,8 @@ public:
     void print() { std::cout << "In " << getXMLNameStatic() << std::endl; }
     virtual int doSomethingVirtual() const { return 3; };
     virtual double calc(const double value) const  { return value * mCoef0 * mCoef3; }
+
+    //protected:
     DEFINE_DATA_WITH_PARENT(
         Base,
         CREATE_SIMPLE_VARIABLE( mCoef3, double, "coef-3" )
