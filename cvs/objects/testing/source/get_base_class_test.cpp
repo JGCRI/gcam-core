@@ -1,95 +1,9 @@
 #include <iostream>
 
-#include <boost/type_traits.hpp>
-#include <boost/utility/enable_if.hpp>
-
-#include <boost/mpl/not.hpp>
-#include <boost/mpl/transform.hpp>
-#include <boost/mpl/vector.hpp>
-#include <boost/mpl/remove_if.hpp>
-#include <boost/mpl/zip_view.hpp>
-#include <boost/mpl/transform_view.hpp>
-#include <boost/mpl/unpack_args.hpp>
-
-#include <boost/mpl/has_xxx.hpp>
-
-#include <boost/fusion/include/vector.hpp>
-#include <boost/fusion/include/map.hpp>
-#include <boost/fusion/include/at_key.hpp>
-#include <boost/fusion/include/for_each.hpp>
-#include <boost/fusion/include/mpl.hpp>
-
+#include "util/base/include/expand_data_vector.h"
 
 #include "testing_classes_def.hpp"
 
-BOOST_MPL_HAS_XXX_TRAIT_DEF( ParentClass );
-
-template<typename T, typename Enable=void>
-struct get_base_class {
-    using type = typename get_base_class<typename T::ParentClass>::type;
-};
-
-template<typename T>
-struct get_base_class<T, typename boost::enable_if<boost::mpl::not_<has_ParentClass<T> > >::type> {
-    using type = T;
-};
-
-template<typename T, typename Enable=void>
-struct get_full_datavector_type {
-    using type = boost::fusion::joint_view<typename get_full_datavector_type<typename T::ParentClass>::type, decltype( T::mDataVector )>;
-};
-
-template<typename T>
-struct get_full_datavector_type<T, typename boost::enable_if<boost::mpl::not_<has_ParentClass<T> > >::type> {
-    using type = boost::fusion::joint_view< decltype( T::mDataVector ), boost::fusion::vector<> >;
-};
-
-template<typename SubClassFamilyVector>
-struct ExpandDataVector  {
-    using SubClassVecPtr = typename boost::mpl::transform<SubClassFamilyVector, boost::add_pointer<boost::mpl::_> >::type;
-    using SubClassPtrMap = typename boost::fusion::result_of::as_map<typename boost::fusion::result_of::as_vector<typename boost::mpl::transform_view<boost::mpl::zip_view< boost::mpl::vector<SubClassFamilyVector, SubClassVecPtr> >, boost::mpl::unpack_args<boost::fusion::pair<boost::mpl::_1, boost::mpl::_2> > > >::type>::type;
-    SubClassPtrMap mSubClassPtrMap;
-
-    ExpandDataVector() {
-        reset();
-    }
-
-    void reset() {
-        boost::fusion::for_each( mSubClassPtrMap, [] ( auto& aPair ) {
-            aPair.second = 0;
-        } );
-    }
-
-    template<typename SubClass>
-    void setSubClass( SubClass* aSubClass ) {
-        reset();
-        boost::fusion::at_key<SubClass>( mSubClassPtrMap ) = aSubClass;
-    }
-
-    template<typename DataVecHandler>
-    void getFullDataVector( DataVecHandler& aDataHandler ) const {
-        boost::fusion::for_each( mSubClassPtrMap, [this, &aDataHandler] ( auto& aPair ) {
-            if( aPair.second ) {
-                aDataHandler.processData( gatherDataVector( aPair.second ) );
-            }
-        } );
-    }
-
-    protected:
-    template<typename SubClass>
-    typename boost::enable_if<has_ParentClass<SubClass>, typename get_full_datavector_type<SubClass>::type>::type gatherDataVector( SubClass* aSubClass ) const {
-        auto parentDataVec = gatherDataVector( static_cast<typename SubClass::ParentClass*>( aSubClass ) );
-        boost::fusion::joint_view< decltype( parentDataVec ), decltype( aSubClass->mDataVector )> fullDataVector( parentDataVec, aSubClass->mDataVector );
-        return fullDataVector;
-    }
-
-    template<typename SubClass>
-    typename boost::enable_if<boost::mpl::not_<has_ParentClass<SubClass> >, typename get_full_datavector_type<SubClass>::type>::type gatherDataVector( SubClass* aSubClass ) const {
-        boost::fusion::vector<> emptyVector;
-        boost::fusion::joint_view< decltype( aSubClass->mDataVector ), decltype( emptyVector )> baseDataVector( aSubClass->mDataVector, emptyVector );
-        return baseDataVector;
-    }
-};
 //template<typename T> struct PrintError;
 //PrintError<boost::mpl::front<ExpandDataVector<BaseFamily>::FusionMap>::type> asdf;
 
@@ -101,30 +15,93 @@ struct PrintDataHandler {
 };
 
 template<typename T>
-void runTest(T obj) {
-  /*
-    obj.print();
-    using BaseType = typename get_base_class<T>::type;
-    static_cast<BaseType>(obj ).print();
-    */
+class GetDataHandler {
+    public:
+    GetDataHandler( const std::string& aDataName ): mDataName( aDataName ), mNumFound( 0 ), mData( 0 ) { }
+    void reset() {
+        mNumFound = 0;
+        mData = 0;
+    }
+    bool wasFound() const {
+        return mNumFound > 0;
+    }
+    T& getData() {
+        if( mNumFound == 0 ) {
+            std::cout << mDataName << " was not found." << std::endl;
+            abort();
+        }
+        else if( mNumFound > 1 ) {
+            std::cout << mDataName << " was not found " << mNumFound << " times." << std::endl;
+        }
+        return *mData;
+    }
+    template<typename DataVectorType>
+    void processData( DataVectorType aDataVector ) {
+        // We need to filter here to make sure mData's type is assignable however maybe is_same is too strict?
+        // TODO: consider allowing is_convertable instead?
+        boost::fusion::filter_view< DataVectorType, boost::is_same< boost::mpl::_, Data<T> > > simpleDataVec( aDataVector );
+        boost::fusion::for_each( simpleDataVec, *this );
+    }
+    void operator()( Data<T>& aData ) const {
+        if( aData.mDataName == mDataName ) {
+            ++mNumFound;
+            mData = &aData.mData;
+        }
+    }
+
+    protected:
+    const std::string& mDataName;
+    mutable int mNumFound;
+    mutable T* mData;
+};
+
+template<typename T>
+void runTest( ExpandDataVector<AbstractBase::SubClassFamilyVector>& aDataVector, const std::string& aDataName, const T& aNewValue ) {
+    GetDataHandler<T> getDataHandler( aDataName );
+    aDataVector.getFullDataVector( getDataHandler );
+    std::cout << "Was " << aDataName << " found? " <<  getDataHandler.wasFound() << " = ";
+    if( getDataHandler.wasFound() ) {
+        std::cout << getDataHandler.getData() << std::endl;
+        getDataHandler.getData() = aNewValue;
+    }
+    else {
+        std::cout << "NA" << std::endl;
+    }
+}
+
+void runTests( AbstractBase* aContainer ) {
+    std::cout << "Testing " << aContainer->getXMLName() << std::endl;
+    ExpandDataVector<AbstractBase::SubClassFamilyVector> expandDataVector;
+    aContainer->accept( expandDataVector );
+
+    // should be found
+    runTest<std::string>( expandDataVector, "name", "new name" );
+    runTest<int>( expandDataVector, "year", 1975 );
+    runTest<double>( expandDataVector, "coef-0", 2.0 );
+    // might be found based on the AbstractBase sub class
+    runTest<double>( expandDataVector, "coef-1", 5.0 );
+    runTest<double>( expandDataVector, "coef-2", 10.0 );
+    // should not find due to unknown name
+    runTest<int>( expandDataVector, "unknown", 1000 );
+    // should not find due to wrong type
+    runTest<double>( expandDataVector, "year", 10000.0 );
+
+    // Print all data
+    PrintDataHandler printer;
+    expandDataVector.getFullDataVector( printer );
+
+    // should not find due to reset
+    expandDataVector.reset();
+    runTest<std::string>( expandDataVector, "name", "should not set name" );
+
+    std::cout << "calc(10): " << aContainer->calc( 10.0 ) << std::endl;
 }
 
 int main() {
-    Base b;
-    runTest(b);
-    D1 d1;
-    runTest(d1);
-    D2 d2;
-    runTest(d2);
-    D3 d3;
-    runTest(d3);
-
-    PrintDataHandler printer;
-    ExpandDataVector<AbstractBase::SubClassFamilyVector> edv;
-    edv.setSubClass(&b);
-    edv.getFullDataVector(printer);
-    edv.setSubClass(&d1);
-    edv.getFullDataVector(printer);
+    runTests( new Base() );
+    runTests( new D1() );
+    runTests( new D2() );
+    runTests( new D3() );
 
     return 0;
 }

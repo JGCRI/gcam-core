@@ -60,6 +60,7 @@
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/punctuation/is_begin_parens.hpp>
 
+#include "util/base/include/expand_data_vector.h"
 
 template<typename T>
 struct Data {
@@ -74,6 +75,12 @@ struct Data {
 
 //! The name to call the variable which will hold all Data structs in a vector.
 #define DATA_VECTOR_NAME mDataVector
+
+#define ACCEPT_EXPAND_DATA_VECTOR_METHOD( aTypeDef ) \
+    friend class ExpandDataVector<aTypeDef>; \
+    virtual void accept( ExpandDataVector<aTypeDef>& aVisitor ) { \
+        aVisitor.setSubClass( this ); \
+    }
 
 /*!
  * \brief A Macro to define a Data struct for simple data such as an int.
@@ -163,10 +170,7 @@ struct Data {
     boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type( BOOST_PP_SEQ_ENUM( UNZIP( 2, aDefList ) ) ); \
     BOOST_PP_SEQ_FOR_EACH_I( MAKE_VAR_REF,  BOOST_PP_EMPTY, UNZIP( 0, aDefList ) )
 
-#define DEFINE_DATA_INTERNAL2( aDefList... ) \
-    aDefList
-
-#define DEFINE_DATA_INTERNAL_EMPTY(aDummy) \
+#define DEFINE_DATA_INTERNAL_EMPTY() \
     typedef boost::mpl::vector<> DataVectorType; \
     boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type();
 
@@ -182,7 +186,8 @@ struct Data {
  *          rest is given to DEFINE_DATA_INTERNAL to process the actual data definitions.
  */
 #define DEFINE_DATA( aSubClassFamilySeq, aDefList... ) \
-    typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( aSubClassFamilySeq )> SubClassFamilyVector; \
+    public: typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( aSubClassFamilySeq )> SubClassFamilyVector; \
+    ACCEPT_EXPAND_DATA_VECTOR_METHOD( SubClassFamilyVector ) protected: \
     DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList )
 
 /*!
@@ -193,7 +198,8 @@ struct Data {
  *          and the rest is given to DEFINE_DATA_INTERNAL to process the actual data definitions.
  */
 #define DEFINE_DATA_WITH_PARENT( aParentClass, aDefList... ) \
-    typedef aParentClass ParentClass; \
+    public: typedef aParentClass ParentClass; \
+    ACCEPT_EXPAND_DATA_VECTOR_METHOD( get_base_class<ParentClass>::type::SubClassFamilyVector ) protected: \
     DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList )
 
 /*!
