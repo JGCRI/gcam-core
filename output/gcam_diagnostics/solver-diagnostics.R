@@ -231,17 +231,18 @@ heatmap.dfdx <- function(data, title="") {
 ###
 ### Functions for looking at small numbers of markets
 ###
-plotvars <- function(data, mktids, title="", transforms=NULL, use.names=TRUE) {
+plotvars <- function(data, mktids, title="", skip=0, transforms=NULL, use.names=TRUE) {
   ## Plot all of the variables for a selection of markets in a single period
   ##   data : one period of data (i.e., the second level from read.trace.log)
   ##   mktids : vector of market ids
   ##   title: optional title for the plot
+  ##   skip: Number of iterations to skip at the beginning.  Default is 0
   ## transforms : optinal list of transforms to apply to variables names(transforms)
   ##              indicates which variable the transforms apply to (for example,
   ##              transforms[['fx']] will get applied to the variable fx)
   ## use.names : determines whether the legend will display market names or market
   ##             id numbers.  Default is names.
-  plotdata <- rbindlist(lapply(data, function(d) {d[mktid %in% mktids,]}))
+  plotdata <- rbindlist(lapply(data, function(d) {d[mktid %in% mktids & iter>skip,]}))
   
   ## default transforms for this application, if none supplied by user
   if(is.null(transforms)) {
