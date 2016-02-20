@@ -303,7 +303,9 @@ final.mkt.extremes <- function(vardata, nmkt=5, final.iter=TRUE, findmax=TRUE) {
   fxkey <- vardata[iters==key.iter,]
   
   ## sort by value
-  mkts.by.value <- fxkey$mktid[order(abs(fxkey$value), decreasing=findmax)]
+  srt <- order(abs(fxkey$value), decreasing=findmax)
+  mkts.by.value <- fxkey$mktid[srt]
+  names(mkts.by.value) <- fxkey$mktname[srt]
   mkts.by.value[1:nmkt]
 }
 
@@ -318,6 +320,9 @@ overall.mkt.extremes <- function(vardata, nmkt=5, skip=0, findmax=TRUE) {
   fx.split <- split(vardata, vardata$mktid)
   l2 <- sapply(fx.split, function(d) {sum(d$value*d$value,na.rm=TRUE)})
   mktid <- sapply(fx.split, function(d){d$mktid[1]})
+  mktname <- sapply(fx.split, function(d){d$mktname[1]})
   srt <- order(l2, decreasing=findmax)
-  as.integer(mktid[srt[1:nmkt]])
+  mkts <- as.integer(mktid[srt[1:nmkt]])
+  names(mkts) <- mktname[srt[1:nmkt]]
+  mkts
 }
