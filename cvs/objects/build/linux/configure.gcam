@@ -28,8 +28,25 @@ HAVE_JAVA = 1
 ## set this to a nonzero value to enable parallel execution (TBB required)
 GCAM_PARALLEL_ENABLED = 0
 ## set this to a nonzero value to enable lapack, which switches to an SVD
-## solver for the N-R and Broyden solvers
+## solver for the N-R and Broyden solvers.  Defaults to off, but can be 
+## overridden in the environment.
+ifndef USE_LAPACK
 USE_LAPACK = 0
+endif
+
+## Check to see if MKL is in use.  We infer this from the existence of
+## the variable MKL_CFLAGS, which gives the location for the MKL
+## include files.  However, an explicit setting of USE_MKL overrides
+## (but woe betide the user who sets USE_MKL=1 and doesn't specify
+## MKL_CFLAGS, MKL_LDFLAGS, MKL_LIB, and MKL_RPATH, for their build
+## shall be cursed.)
+ifndef USE_MKL
+  ifdef MKL_CFLAGS
+    USE_MKL=1
+  else
+    USE_MKL=0
+  endif
+endif
 
 ## some optimization testing options
 NOCLEARNULL = 0
@@ -40,19 +57,19 @@ NOCLEARRESTORE = 0
 USE_HECTOR = 0
 ifeq ($(USE_HECTOR),1)
 
-ifeq ($(strip $(GSLROOT)),)
-GSLROOT	= /usr/local
-endif
+  ifeq ($(strip $(GSLROOT)),)
+    GSLROOT	= /usr/local
+  endif
 
-## Set the GSL library locations.  There is a special case for Evergreen users.
-ifeq ($(strip $(GSLROOT)),EVERGREEN)
-GSLLIB  = $(GSL_LIB)
-else
-GSLLIB	= $(GSLROOT)/lib
-endif 
+  ## Set the GSL library locations.  There is a special case for Evergreen users.
+  ifeq ($(strip $(GSLROOT)),EVERGREEN)
+    GSLLIB  = $(GSL_LIB)
+  else
+    GSLLIB	= $(GSLROOT)/lib
+  endif 
 
-HECTOR_INCLUDE = -I../../climate/source/hector/headers
-HECTOR_LIB = -L$(GSLLIB) -L$(BOOST_LIB) -Wl,-rpath,$(GSLLIB),-rpath,$(BOOST_LIB) -lhector -lgsl -lgslcblas -lboost_system -lboost_filesystem
+  HECTOR_INCLUDE = -I../../climate/source/hector/headers
+  HECTOR_LIB = -L$(GSLLIB) -L$(BOOST_LIB) -Wl,-rpath,$(GSLLIB),-rpath,$(BOOST_LIB) -lhector -lgsl -lgslcblas -lboost_system -lboost_filesystem
 endif  # if(USE_HECTOR==1)
 
 ### TBB setup:  On Evergreen, using tap intel-tbb-gnu (or variants for other compilers) will set
@@ -70,13 +87,13 @@ endif
 #
 # Set the environment var TBB_LINK_DEBUG to get debugging versions of libraries
 ifneq ($(strip $(TBB_LINK_DEBUG)),1)
-LIBTBB          = tbb
-LIBTBBMALLOC    = tbbmalloc
-LIBTBBMALLOC_PROXY = tbbmalloc_proxy
+  LIBTBB          = tbb
+  LIBTBBMALLOC    = tbbmalloc
+  LIBTBBMALLOC_PROXY = tbbmalloc_proxy
 else
-LIBTBB          = tbb_debug
-LIBTBBMALLOC    = tbbmalloc_debug
-LIBTBBMALLOC_PROXY = tbbmalloc_proxy_debug
+  LIBTBB          = tbb_debug
+  LIBTBBMALLOC    = tbbmalloc_debug
+  LIBTBBMALLOC_PROXY = tbbmalloc_proxy_debug
 endif
 #
 ifneq ($(GCAM_PARALLEL_ENABLED),0) 
@@ -108,37 +125,46 @@ BOOSTINC	      = $(BOOST_INCLUDE)
 # Eventually we should be able to get Xerces installed and available by a tap command, 
 # but until then it will have to be set manually
 XERCESINC	      = $(XERCES_INCLUDE)
+
 # Same for the Boost Lapack bindings
 ifneq ($(USE_LAPACK),0)
-#ifneq ($(strip $(LAPACKLIB)),)
-BOOST_NUMERIC_BINDINGS = $(GCAMLIB_HOME)/src/boost-numeric-bindings
-#endif
-BOOSTBIND      = -I$(BOOST_NUMERIC_BINDINGS)
-# On evergreen, these variables are set by running 'tap lapack'.  On other systems, set 
-# manually or using shell scripts
-ifeq ($(strip $(LAPACKINC)),)
-LAPACKINC  = $(GCAMLIB_HOME)/include 
-endif
-ifeq ($(strip $(LAPACKLIB)),)
-LAPACKLIB  = $(GCAMLIB_HOME)/lib
+  BOOST_NUMERIC_BINDINGS = $(GCAMLIB_HOME)/src/boost-numeric-bindings
+  BOOSTBIND      = -I$(BOOST_NUMERIC_BINDINGS)
+  # On evergreen, these variables are set by running 'tap lapack'.  On other systems, set 
+  # manually or using shell scripts.  If MKL is in use, we don't set these.
+  ifeq ($(strip $(LAPACKINC)),)
+    ifeq ($(USE_MKL),0)
+      LAPACKINC  = $(GCAMLIB_HOME)/include
+    endif
+  endif
+
+  ifeq ($(strip $(LAPACKLIB)),)
+    ifeq ($(USE_MKL),0)
+      LAPACKLIB  = $(GCAMLIB_HOME)/lib
+    endif
+  endif
+
+  ifeq ($(USE_MKL),0)
+    LAPACKLD = -L$(LAPACKLIB)
+    LAPACKCF = -I$(LAPACKINC)
+    LAPACK_RPATH	= -Wl,-rpath,$(LAPACKLIB)
+    LAPACKLINK = -llapack -lblas
+  endif
+
 endif
 
-LAPACKLD = -L$(LAPACKLIB)
-LAPACKCF = -I$(LAPACKINC)
-LAPACK_RPATH	= -Wl,-rpath,$(LAPACKLIB)
-LAPACKLINK = -llapack -lblas
-endif
+
 #
 ### locations of libraries
 LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY) $(LAPACKLD)
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
-CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(BASEXLIB) -DGCAM_PARALLEL_ENABLED=$(GCAM_PARALLEL_ENABLED) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE) -DUSE_HECTOR=$(USE_HECTOR)
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(BASEXLIB) -DGCAM_PARALLEL_ENABLED=$(GCAM_PARALLEL_ENABLED) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
-LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(LAPACK_RPATH)
+LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(LAPACK_RPATH) $(MKL_LDFLAGS)
 AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
