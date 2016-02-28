@@ -62,9 +62,18 @@
 
 #include "util/base/include/expand_data_vector.h"
 
+/*!
+ * \brief Basic structure for holding data members for GCAM classes.
+ * \details The idea behind this structure is that every data member
+ *          has three important properties: the data itself, a name
+ *          used to refer to it (e.g., in XML inputs), and a type.
+ *          This structure makes all three of those available for
+ *          inspection by other objects and functions.
+ */
 template<typename T>
 struct Data {
     Data( const char* aDataName ):mDataName( aDataName ) {}
+    /*! \brief Type for this data item */
     typedef T value_type;
     /*! \brief The human readable name for this data. */
     const std::string mDataName;
@@ -76,6 +85,13 @@ struct Data {
 //! The name to call the variable which will hold all Data structs in a vector.
 #define DATA_VECTOR_NAME mDataVector
 
+/*!
+ * \brief Macro to add to a class a method to accept the ExpandDataVector visitor
+ * \details The ExpandDataVector visitor works with this method to
+ *          produce a vector of all of the data elements for an object
+ *          (including those inherited from base classes).  Each class
+ *          needs to have such a method, and this macro produces it.
+ */
 #define ACCEPT_EXPAND_DATA_VECTOR_METHOD( aTypeDef ) \
     friend class ExpandDataVector<aTypeDef>; \
     virtual void accept( ExpandDataVector<aTypeDef>& aVisitor ) { \
@@ -84,7 +100,29 @@ struct Data {
 
 /*!
  * \brief A Macro to define a Data struct for simple data such as an int.
- * \details For this definition we just need a type definition.
+ 
+ * \details This macro produces a declaration for a struct Data (see
+ *          above).  The arguments to the macro are the name of the
+ *          member (i.e., the token that will be used to refer to it
+ *          in the class's methods) the type, and the string that
+ *          gives the human-readable name (i.e., what will be used to
+ *          refer to the data outside of the class, for example in XML
+ *          input files).  For example, the declaration:
+ *
+ *          ```
+ *          DEFINE_SIMPLE_VARIABLE( int, "year" )
+ *          ```
+ *          will expand to
+ *          ```
+ *          Data< int >
+ *          ```
+ *          The variable name is thrown away.  The reason that the
+ *          variable name is included at all is that the type name
+ *          could have commas in it, which will make it look to the
+ *          macro like a sequence of arguments.  This macro does the
+ *          work of separating the name from the type and uses the
+ *          latter to generate the declaration.
+ *
  * \warning We need to be careful about commas being in the type definition (such
  *          as with map definitions).  We therfore assume the last argument is the
  *          data name and the rest is the type definition.  We also avoid adding commas
@@ -99,6 +137,18 @@ struct Data {
 /*!
  * \brief Gathers the definiiton for a piece of data to be collected as a sequence
  *        of tokens to be stiched together into a vector of definitions.
+ 
+ * \details This macro takes a sequence of (variable-name, type, human-name) and
+ *          transforms the type in the sequence to a Data struct.  Thus:
+ *          ```
+ *          CREATE_SIMPLE_VARIABLE( mYear, int, "year")
+ *          ```
+ *          will expand to:
+ *          ```
+ *          (mYear, Data< int > , "year")
+ *          ```
+ *          This sequence will be used by other macros to generate the
+ *          declarations needed by the class declaration.
  * \param aVarName The variable the user of the class will use for direct access to this Data.
  * \param ...[0:n-1] The type definition.
  * \param ...[n:n] The human readable name.
@@ -118,8 +168,15 @@ struct Data {
 
 /*!
  * \brief Creates the direct access variable definition.
- * \details This Macro will be called by BOOST_PP_SEQ_FOR_EACH_I as it loops over
- *          all the requested Data definitions.
+ * \details All of the members for a class will be stored in a
+ *          Boost::Fusion vector.  This Macro will be called by
+ *          BOOST_PP_SEQ_FOR_EACH_I as it loops over all the requested
+ *          Data definitions.  Each time it is called it will create a
+ *          reference with the requested variable name pointing to the
+ *          corresponding element in the Boost::Fusion vector.  This
+ *          bit of programming legerdemain is what allows us to access
+ *          a member variable equally well through the variable name
+ *          or through the vector of member variables.
  * \param r The next available BOOST_PP_FOR repetition.
  * \param data A base token to be always passed in (note used).
  * \param i The current iteration of the data definitions.
@@ -129,7 +186,7 @@ struct Data {
     boost::mpl::at_c< DataVectorType, i >::type::value_type& elem= boost::fusion::at_c<i>( DATA_VECTOR_NAME ).mData;
 
 /*!
- * \brief Macros to cut accross sequences of Data declerations to organize as
+ * \brief Cut accross sequences of Data declarations to organize as
  *        sequences of variable names, Data type definitions, and data names.
  * \details Implementation from: http://stackoverflow.com/questions/26475453/how-to-use-boostpreprocessor-to-unzip-a-sequence
  *          The "unzipped" sequences can be accessed by index.  For data definitions
@@ -144,7 +201,6 @@ struct Data {
  *          1: ( TYPE_1, TYPE_2 )
  *          2: ( NAME_1, NAME_2 )
  */
-
 #define UNZIP_MACRO(s, data, elem) BOOST_PP_TUPLE_ELEM(data, elem)
 
 #define UNZIP(i, ...) \
