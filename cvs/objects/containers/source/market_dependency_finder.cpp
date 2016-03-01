@@ -59,7 +59,7 @@ using namespace std;
  * \param aMarketplace The marketplace object in which this object is contained.
  */
 MarketDependencyFinder::MarketDependencyFinder( Marketplace* aMarketplace ):
-mMarketplace( aMarketplace )
+mMarketplace( aMarketplace ), mCalcVertexUIDCount( 0 )
 #if GCAM_PARALLEL_ENABLED
 ,mTBBGraphGlobal( 0 )
 #endif
@@ -174,10 +174,10 @@ void MarketDependencyFinder::resolveActivityToDependency( const string& aRegionN
         return;
     }
     
-    (*itemIter)->mDemandVertices.push_back( new CalcVertex( aDemandActivity, *itemIter ) );
+    (*itemIter)->mDemandVertices.push_back( new CalcVertex( aDemandActivity, *itemIter, mCalcVertexUIDCount++ ) );
     // The price activity may not be necessary.
     if( aPriceActivity ) {
-        (*itemIter)->mPriceVertices.push_back( new CalcVertex( aPriceActivity, *itemIter ) );
+        (*itemIter)->mPriceVertices.push_back( new CalcVertex( aPriceActivity, *itemIter, mCalcVertexUIDCount++ ) );
     }
 }
 
@@ -436,7 +436,7 @@ void MarketDependencyFinder::createOrdering() {
     }
     
     // Initialize vertices in the graph.
-    map<CalcVertex*, int> numDependencies;
+    CalcVertexCountMap numDependencies;
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         // Initialize dependency counts which will be used to do the topological sort.
         for( CVertexIterator vertexIter = (*it)->mPriceVertices.begin(); vertexIter != (*it)->mPriceVertices.end(); ++vertexIter ) {
@@ -555,12 +555,12 @@ void MarketDependencyFinder::createOrdering() {
     // A map which will be populated with vertices in cycles the first time one is
     // found and can be used there after to break cycles as needed while
     // performing the topological sort.
-    map<CalcVertex*, int> totalVisits;
+    CalcVertexCountMap totalVisits;
     while( !numDependencies.empty() ) {
         // We can clear a vertex and add it to the ordering list if the number of
         // dependencies on it is equal to zero.
         vector<CalcVertex*> justRemoved;
-        typedef map<CalcVertex*, int>::iterator NumDepIterator;
+        typedef CalcVertexCountMap::iterator NumDepIterator;
         for( NumDepIterator it = numDependencies.begin(); it != numDependencies.end(); ) {
             if( (*it).second == 0 ) {
                 justRemoved.push_back( (*it).first );
@@ -754,7 +754,7 @@ void MarketDependencyFinder::createOrdering() {
  */
 void MarketDependencyFinder::findStronglyConnected( CalcVertex* aCurrVertex, int& aMaxIndex,
                                                     list<CalcVertex*>& aHasVisited,
-                                                    map<CalcVertex*, int>& aTotalVisits ) const
+                                                    CalcVertexCountMap& aTotalVisits ) const
 {
     // Initialize the newly found vertex with an index, increase the max count,
     // and add it to the current search patch.
@@ -811,12 +811,12 @@ void MarketDependencyFinder::findStronglyConnected( CalcVertex* aCurrVertex, int
  * \return The maximum number of cycle-visits so far.
  */
 int MarketDependencyFinder::markCycles( CalcVertex* aCurrVertex, list<CalcVertex*>& aHasVisited,
-                                        map<CalcVertex*, int>& aTotalVisits ) const
+                                        CalcVertexCountMap& aTotalVisits ) const
 {
     if( aTotalVisits.find( aCurrVertex ) == aTotalVisits.end() ) {
         return 0;
     }
-    typedef map<CalcVertex*, int>::iterator NumDepIterator;
+    typedef CalcVertexCountMap::iterator NumDepIterator;
     if( find( aHasVisited.begin(), aHasVisited.end(), aCurrVertex ) != aHasVisited.end() ) {
         // This search path has just formed a cycle, increase the visit count and
         // indicate that this path leads to a cycle.
