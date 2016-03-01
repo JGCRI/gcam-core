@@ -1,0 +1,15 @@
+## environment for PIC systems
+## Note you will hava to execute 'module load java' before JAVA_HOME will be set.
+ifeq (constance,$(findstring constance,$(HOSTNAME)))
+GCAMLIB_HOME    = /pic/projects/GCAM/GCAM-libraries
+BOOST_INCLUDE   = $(GCAMLIB_HOME)/include
+BOOST_LIB	= $(GCAMLIB_HOME)/lib/boost
+BOOSTROOT	= $(GCAMLIB_HOME)/src/boost
+TBB_INCDIR      = $(GCAMLIB_HOME)/include
+TBB_LIBDIR	    = $(GCAMLIB_HOME)/lib
+XERCES_INCLUDE  = $(GCAMLIB_HOME)/include
+XERCES_LIB      = $(GCAMLIB_HOME)/lib
+JAVA_INCLUDE    = ${JAVA_HOME}/include
+JAVA_LIB        = ${JAVA_HOME}/jre/lib/amd64/server
+BASEX_LIB       = $(GCAMLIB_HOME)/lib/basex/BaseX.jar
+endif
