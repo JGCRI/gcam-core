@@ -1,4 +1,4 @@
-trn_SSP <- "SSP1"
+trn_SSP <- "CORE"
 # UC Davis transportation sector objects
 #Currently the UCD database's base year is 2005 (there is no other base year).
 # This is used for energy disaggregation in all historical years.

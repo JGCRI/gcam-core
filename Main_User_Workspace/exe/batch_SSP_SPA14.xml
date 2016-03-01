@@ -149,7 +149,7 @@
 			<Value name="weak_policy">../input/policy/spa14_tax.xml</Value>
 			<Value name="link">../input/policy/2025_target_finder.xml</Value>
 			<Value name="bio_tax">../input/policy/regional_uct_spa4.xml</Value>
-			<Value name="bio_tax">../input/policy/ssp4_bio_trade.xml</Value>
+			<Value name="bio_tax">../input/gcam-data-system/xml/aglu-xml/ssp4_bio_trade.xml</Value>
 		</FileSet>
 		
 	</ComponentSet>	

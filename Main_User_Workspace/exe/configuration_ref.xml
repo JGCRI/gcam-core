@@ -36,7 +36,7 @@
 		<Value name = "fertilizer">../input/gcam-data-system/xml/energy-xml/en_Fert.xml</Value>
 		<Value name = "hddcdd">../input/gcam-data-system/xml/energy-xml/HDDCDD_constdd_no_GCM.xml</Value>
 		<Value name = "building">../input/gcam-data-system/xml/energy-xml/building_det.xml</Value>
-		<Value name = "transportation">../input/gcam-data-system/xml/energy-xml/transportation_UCD.xml</Value>
+		<Value name = "transportation">../input/gcam-data-system/xml/energy-xml/transportation_UCD_CORE.xml</Value>
 		<Value name = "carbon_content">../input/gcam-data-system/xml/energy-xml/Ccoef.xml</Value>
 		<Value name = "carbon_storage">../input/gcam-data-system/xml/energy-xml/Cstorage.xml</Value>
 		<Value name = "ind_urb_proc">../input/gcam-data-system/xml/emissions-xml/ind_urb_processing_sectors.xml</Value>
