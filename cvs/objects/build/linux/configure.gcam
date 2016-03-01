@@ -26,7 +26,9 @@ ENVLIBS         =
 HAVE_JAVA = 1
 
 ## set this to a nonzero value to enable parallel execution (TBB required)
-GCAM_PARALLEL_ENABLED = 0
+ifndef USE_GCAM_PARALLEL
+  USE_GCAM_PARALLEL = 0
+endif
 ## set this to a nonzero value to enable lapack, which switches to an SVD
 ## solver for the N-R and Broyden solvers.  Defaults to off, but can be 
 ## overridden in the environment.
@@ -54,22 +56,28 @@ NOCLEARRESTORE = 0
 
 #### flag indicating whether or not to use hector
 #### If we are using hector, there are some other variables to set.
+ifndef USE_HECTOR
 USE_HECTOR = 0
+endif
+
 ifeq ($(USE_HECTOR),1)
 
   ifeq ($(strip $(GSLROOT)),)
     GSLROOT	= /usr/local
   endif
 
-  ## Set the GSL library locations.  There is a special case for Evergreen users.
-  ifeq ($(strip $(GSLROOT)),EVERGREEN)
-    GSLLIB  = $(GSL_LIB)
-  else
-    GSLLIB	= $(GSLROOT)/lib
-  endif 
+  GSLLIB	= $(GSLROOT)/lib
 
   HECTOR_INCLUDE = -I../../climate/source/hector/headers
-  HECTOR_LIB = -L$(GSLLIB) -L$(BOOST_LIB) -Wl,-rpath,$(GSLLIB),-rpath,$(BOOST_LIB) -lhector -lgsl -lgslcblas -lboost_system -lboost_filesystem
+
+  ifeq ($(USE_MKL),1)
+    ## If we're using MKL, then we should be linking the MKL BLAS, so don't link the GSL one.
+    HECTOR_BLAS = 
+  else
+    HECTOR_BLAS = -lgslcblas
+  endif
+
+  HECTOR_LIB = -L$(GSLLIB) -L$(BOOST_LIB) -Wl,-rpath,$(GSLLIB),-rpath,$(BOOST_LIB) -lhector -lgsl $(HECTOR_BLAS) -lboost_system -lboost_filesystem
 endif  # if(USE_HECTOR==1)
 
 ### TBB setup:  On Evergreen, using tap intel-tbb-gnu (or variants for other compilers) will set
@@ -96,7 +104,7 @@ else
   LIBTBBMALLOC_PROXY = tbbmalloc_proxy_debug
 endif
 #
-ifneq ($(GCAM_PARALLEL_ENABLED),0) 
+ifneq ($(USE_GCAM_PARALLEL),0) 
 TBB_LIB		= -l$(LIBTBB) -l$(LIBTBBMALLOC) -l$(LIBTBBMALLOC_PROXY)
 endif
 
@@ -160,7 +168,7 @@ LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRA
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
-CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(BASEXLIB) -DGCAM_PARALLEL_ENABLED=$(GCAM_PARALLEL_ENABLED) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(BASEXLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
