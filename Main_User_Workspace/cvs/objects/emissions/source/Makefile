@@ -20,7 +20,8 @@ OBJS       = nonco2_emissions.o \
              emissions_control_factory.o \
              aemissions_control.o \
              mac_control.o \
-             gdp_control.o
+             gdp_control.o \
+             readin_control.o
 
 emissions_dir: ${OBJS}
 
