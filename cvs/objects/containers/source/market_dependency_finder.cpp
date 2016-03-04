@@ -351,6 +351,13 @@ void MarketDependencyFinder::findVerticesToCalculate( CalcVertex* aVertex, std::
     for( CVertexIterator it = aVertex->mOutEdges.begin(); it != aVertex->mOutEdges.end(); ++it ) {
         findVerticesToCalculate( *it, aVisited );
     }
+
+    // Add any implied in edges that should be calculated (special case for the
+    // land-allocator).
+    typedef set<CalcVertex*>::const_iterator CImpVertexIterator;
+    for( CImpVertexIterator it = aVertex->mImpliedInEdges.begin(); it != aVertex->mImpliedInEdges.end(); ++it ) {
+        findVerticesToCalculate( *it, aVisited );
+    }
 }
 
 /*!
@@ -378,18 +385,6 @@ bool MarketDependencyFinder::DependencyItemComp::operator()( const DependencyIte
 void MarketDependencyFinder::createOrdering() {
     // We have collected all dependency information and now all markets will have
     // been created so now we may create an ordering.
-    
-    // The land allocator is a special case in that it must work together with it's
-    // associated ag supply sectors to set prices from and add supplies to the marketplace
-    // even though those sectors may be solved.
-    map<DependencyItem*, vector<DependencyItem*> > landAllocatorMap;
-    for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
-        for( CItemIterator dependIt = (*it)->mDependentList.begin(); dependIt != (*it)->mDependentList.end(); ++dependIt ) {
-            if( (*dependIt)->mName == "land-allocator" ) {
-                landAllocatorMap[ *dependIt ].push_back( *it );
-            }
-        }
-    }
     
     // First associate markets to their corresponding dependency items
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
@@ -493,14 +488,9 @@ void MarketDependencyFinder::createOrdering() {
                     ++numDependencies[ (*dependIt)->getFirstDemandVertex() ];
                     (*dependIt)->getLastDemandVertex()->mOutEdges.push_back( (*it)->getFirstDemandVertex() );
                     ++numDependencies[ (*it)->getFirstDemandVertex() ];
-                    map<DependencyItem*, vector<DependencyItem*> >::iterator laExtrasIter = landAllocatorMap.find( *dependIt );
-                    assert( laExtrasIter != landAllocatorMap.end() );
-                    for( vector<DependencyItem*>::iterator laDepIter = (*laExtrasIter).second.begin(); laDepIter != (*laExtrasIter).second.end(); ++laDepIter ) {
-                        if( !(*laDepIter)->mPriceVertices.empty() ) {
-                            (*mrktIter)->mImpliedVertices.insert( (*laDepIter)->getFirstPriceVertex() );
-                        }
-                    }
-                    
+                    // These implied in edges will be added to the list of verticies to calculate
+                    // any time the land-allocator needs to be recalculated for any reason.
+                    (*dependIt)->getLastDemandVertex()->mImpliedInEdges.insert( (*it)->getLastPriceVertex() );
                 }
                 else {
                     if( !(*dependIt)->mPriceVertices.empty() ) {

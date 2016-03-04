@@ -139,6 +139,9 @@ public:
         //! A identifier for use in a Tarjan's algorithm that represents the
         //! the smallest index of a vertex know to be reachable from this vertex.
         int mLowLink;
+
+        //! Some implied verticies to calculate (special case for the land-allocator)
+        std::set<CalcVertex*> mImpliedInEdges;
     };
 
     /*!
