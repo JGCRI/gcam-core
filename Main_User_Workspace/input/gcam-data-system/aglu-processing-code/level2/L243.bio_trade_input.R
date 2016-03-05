@@ -131,16 +131,30 @@ L243.SSP4_SubsShWt_RegBio <- subset( L243.SubsShWt_RegBio, region %in% L243.low_
 L243.SSP4_SubsShWt_RegBio$year.fillout <- 2025
 L243.SSP4_SubsShWt_RegBio$share.weight <- 0.1
 
+L243.SSP4_SubsShWt_RegBio2 <- subset( L243.SubsShWt_RegBio, region %!in% L243.low_reg & subsector == "imported biomass" )
+L243.SSP4_SubsShWt_RegBio2$year.fillout <- 2025
+L243.SSP4_SubsShWt_RegBio2$share.weight <- 0.75
+
 L243.low_reg_tech <- paste( L243.low_reg, "traded biomass", sep=" " )
 L243.SSP4_SubsShWt_TradedBio <- subset( L243.SubsShWt_TradedBio, subsector %in% L243.low_reg_tech )
 L243.SSP4_SubsShWt_TradedBio$year.fillout <- 2025
 L243.SSP4_SubsShWt_TradedBio$share.weight <- 0.1
 
+L243.SSP4_SubsShWt_TradedBio2 <- subset( L243.SubsShWt_TradedBio, subsector %!in% L243.low_reg_tech )
+L243.SSP4_SubsShWt_TradedBio2$year.fillout <- 2025
+L243.SSP4_SubsShWt_TradedBio2$share.weight <- 0.75
+
 L243.SSP4_TechShWt_TradedBio <- subset( L243.TechShWt_TradedBio, technology %in% L243.low_reg_tech & year > 2020 )
 L243.SSP4_TechShWt_TradedBio$share.weight <- 0.1
 
+L243.SSP4_TechShWt_TradedBio2 <- subset( L243.TechShWt_TradedBio, technology %!in% L243.low_reg_tech & year > 2020 )
+L243.SSP4_TechShWt_TradedBio2$share.weight <- 0.75
+
 L243.SSP4_StubTechShrwt_RegBio <- subset( L243.StubTechShrwt_RegBio, region %in% L243.low_reg & year > 2020 )
 L243.SSP4_StubTechShrwt_RegBio$share.weight <- 0.1
+
+L243.SSP4_StubTechShrwt_RegBio2 <- subset( L243.StubTechShrwt_RegBio, region %!in% L243.low_reg & year > 2020 )
+L243.SSP4_StubTechShrwt_RegBio2$share.weight <- 0.75
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -165,7 +179,10 @@ write_mi_data( L243.SSP4_SubsShWt_RegBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DAT
 write_mi_data( L243.SSP4_SubsShWt_TradedBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SSP4_SubsShWt_TradedBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
 write_mi_data( L243.SSP4_TechShWt_TradedBio, "TechShrwt", "AGLU_LEVEL2_DATA", "L243.SSP4_TechShWt_TradedBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
 write_mi_data( L243.SSP4_StubTechShrwt_RegBio, "StubTechShrwt", "AGLU_LEVEL2_DATA", "L243.SSP4_StubTechShrwt_RegBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
-
+write_mi_data( L243.SSP4_SubsShWt_RegBio2, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SSP4_SubsShWt_RegBio2", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
+write_mi_data( L243.SSP4_SubsShWt_TradedBio2, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SSP4_SubsShWt_TradedBio2", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
+write_mi_data( L243.SSP4_TechShWt_TradedBio2, "TechShrwt", "AGLU_LEVEL2_DATA", "L243.SSP4_TechShWt_TradedBio2", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
+write_mi_data( L243.SSP4_StubTechShrwt_RegBio2, "StubTechShrwt", "AGLU_LEVEL2_DATA", "L243.SSP4_StubTechShrwt_RegBio2", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml", "AGLU_XML_FINAL", "ssp4_bio_trade.xml", "", xml_tag="outFile" )
 
