@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <policy-target-runner name="old">
-	<target-value>3.2</target-value>
+	<target-value>2.7</target-value>
 	<target-tolerance>0.5</target-tolerance>
 	<target-type>forcing</target-type>
 	<first-tax-year>2040</first-tax-year>
