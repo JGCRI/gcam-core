@@ -59,6 +59,7 @@
 		<Value name = "demand">../input/gcam-data-system/xml/aglu-xml/demand_input.xml</Value>
 		<Value name = "water">../input/gcam-data-system/xml/aglu-xml/ag_water_input_IRR.xml</Value>
 		<Value name = "nonco2_aglu">../input/gcam-data-system/xml/emissions-xml/all_aglu_emissions_irr.xml</Value>
+		<Value name = "bio_trade">../input/gcam-data-system/xml/aglu-xml/bio_trade.xml</Value>
 	</ScenarioComponents>
 	<Strings>
 		<Value name="scenarioName">Reference</Value>

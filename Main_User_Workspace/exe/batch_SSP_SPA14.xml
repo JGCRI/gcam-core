@@ -42,6 +42,7 @@
 			<Value name = "demand">../input/gcam-data-system/xml/aglu-xml/demand_input.xml</Value>
 			<Value name = "water">../input/gcam-data-system/xml/aglu-xml/ag_water_input_IRR.xml</Value>
 			<Value name = "nonco2_aglu">../input/gcam-data-system/xml/emissions-xml/all_aglu_emissions_irr.xml</Value>
+			<Value name = "bio_trade">../input/gcam-data-system/xml/aglu-xml/bio_trade.xml</Value>
 		</FileSet>
 	</ComponentSet>
 	<ComponentSet name="SSP Harmonized">
@@ -139,6 +140,7 @@
 			
 			<!-- TRADE -->			
 			<Value name="trade">../input/gcam-data-system/xml/aglu-xml/ssp4_trade.xml</Value>
+			<Value name="bio_trade">../input/gcam-data-system/xml/aglu-xml/ssp4_bio_trade.xml</Value>
 			
 			<!-- NON-CO2 -->
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
@@ -153,12 +155,12 @@
 		</FileSet>
 		
 	</ComponentSet>	
-	<!--runner-set name="policy-target-runner">
-		<Value name="6p0target">../input/policy/policy_target_6p0_spa14.xml</Value>
-		<Value name="4p5target">../input/policy/policy_target_4p5_spa14.xml</Value>
-		<Value name="3p7target">../input/policy/policy_target_3p7_spa14.xml</Value>
-		<Value name="2p6target">../input/policy/policy_target_2p6_spa14.xml</Value>
-	</runner-set-->
+	<runner-set name="policy-target-runner">
+		<Value name="6p0">../input/policy/policy_target_6p0_spa14.xml</Value>
+		<Value name="4p5">../input/policy/policy_target_4p5_spa14.xml</Value>
+		<Value name="3p7">../input/policy/policy_target_3p7_spa14.xml</Value>
+		<Value name="2p6">../input/policy/policy_target_2p6_spa14.xml</Value>
+	</runner-set>
 </BatchRunner>
 
 
