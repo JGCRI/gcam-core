@@ -105,6 +105,7 @@ DepRsrcEnvironCost, world/+{name}region, region/+{name}depresource, depresource/
 
 #####, SUPPLYSECTOR
 
+DeleteSupplysector, world/+{name}region, region/+{name;delete=1}supplysector, scenario, scenario/world
 
 Supplysector, world/+{name}region, region/+{name}supplysector, supplysector/+output-unit, supplysector/+input-unit, supplysector/+price-unit, supplysector/+{year;fillout=1}logit-exponent, supplysector/+logit-exponent, scenario, scenario/world
 
