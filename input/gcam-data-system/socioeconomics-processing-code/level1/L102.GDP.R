@@ -23,11 +23,12 @@ sourcedata( "SOCIO_ASSUMPTIONS", "A_socioeconomics_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 SSP_database_v9 <- readdata( "SOCIO_LEVEL0_DATA", "SSP_database_v9" )
 GCAM3_GDP <- readdata( "SOCIO_LEVEL0_DATA", "GCAM3_GDP" )
+IMF_GDP_growth <- readdata( "SOCIO_LEVEL0_DATA", "IMF_GDP_growth", na.strings = c( "", "n/a", "--"))
 L100.gdp_mil90usd_ctry_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L100.gdp_mil90usd_ctry_Yh" )
 L101.Pop_thous_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_R_Y" )
 L101.Pop_thous_GCAM3_ctry_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_ctry_Y" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
-L101.Pop_thous_SSP_R_Yfut <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_SSP_R_Yfut" )
+L101.Pop_thous_Scen_R_Yfut <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_Scen_R_Yfut" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -73,21 +74,84 @@ L102.gdp_mil90usd_SSP_R_Y[X_future_years] <- L102.gdp_mil90usd_SSP_R_Y[[X_base_y
       X_future_years ]
 L102.gdp_mil90usd_SSP_R_Y <- L102.gdp_mil90usd_SSP_R_Y[ c( Scen_R, X_historical_years, X_future_years ) ]
 
-printlog( "Calculating per-capita GDP by GCAM region and historical year and SSP scenario" )
+#Creating GCAM socioeconomic pathways (GSP).
+#GSP is basically SSP, but relfects economic sluggishness in the near future, using IMF projections.
+printlog( "Using the IMF projections for near-term GDP evolution." )
+
+#clean IMF GDP data
+#IMF_future_years imported from assumptions
+IMF_GDP_growth <- IMF_GDP_growth[ c( "ISO" , X_IMF_future_years ) ]
+IMF_GDP_growth$iso <- tolower( IMF_GDP_growth$ISO )
+
+#Romania is called "rou" in the IMF database. reset this
+IMF_GDP_growth$iso[ IMF_GDP_growth$iso == "rou" ] <- "rom"
+
+printlog( "Setting NA to zero (Argentina, South Sudan, and Syria)" )
+IMF_GDP_growth[ is.na( IMF_GDP_growth ) ] <- 0
+
+#line up USDA country list
+L102.gdp_growth_ctry_Yfut <-L100.gdp_mil90usd_ctry_Yh[ c( "iso" , R ) ]
+
+#Add IMF growth rates (converted to annual ratios)
+L102.gdp_growth_ctry_Yfut[X_IMF_future_years] <- 1 + IMF_GDP_growth[match( L102.gdp_growth_ctry_Yfut$iso, IMF_GDP_growth$iso), X_IMF_future_years ] /100
+L102.gdp_growth_ctry_Yfut[ is.na( L102.gdp_growth_ctry_Yfut ) ] <- 1
+
+#Start with country-level GDP in 2010
+L102.gdp_mil90usd_ctry_Yimf <- L100.gdp_mil90usd_ctry_Yh[ c( "iso", R, X_final_historical_year ) ]
+
+#Loop through the IMF years, multiplying per-capita GDP growth rates by the prior year's per-capita GDP
+for( i in 2:length( X_IMF_future_years ) ){
+  L102.gdp_mil90usd_ctry_Yimf[[ X_IMF_future_years[i] ]] <- 
+    L102.gdp_mil90usd_ctry_Yimf[[ X_IMF_future_years[i-1] ]] *
+    ( L102.gdp_growth_ctry_Yfut[[ X_IMF_future_years[i] ]][
+      match( L102.gdp_mil90usd_ctry_Yimf$iso, L102.gdp_growth_ctry_Yfut$iso) ] )
+}
+
+printlog( "Aggregating historical and future GDP by GCAM region")
+L102.gdp_mil90usd_R_Yimf <- aggregate( L102.gdp_mil90usd_ctry_Yimf[ X_IMF_future_years ], by=as.list( L102.gdp_mil90usd_ctry_Yimf[ R ] ), sum )
+
+#linking SSP with IMF
+#Find any common years between the IMF data and the SSP data, for computation of ratios
+X_last_IMF_year <- X_IMF_future_years[ length(X_IMF_future_years)]
+
+#build the GDP trajectories by history-IMF-SSP
+L102.gdp_mil90usd_GSP_R_Y <- repeat_and_add_vector( L102.gdp_mil90usd_R_Yh, Scen, unique( L102.gdp_mil90usd_SSP_R_Y[[Scen]] ) )
+L102.gdp_mil90usd_GSP_R_Y[X_IMF_future_years] <- L102.gdp_mil90usd_R_Yimf[X_IMF_future_years]
+X_beyond_IMF_years <- X_future_years[X_future_years > X_last_IMF_year ]
+
+#using SSP ratios for future beyond IMF
+L102.gdp_mil90usd_GSP_R_Y[X_beyond_IMF_years] <- L102.gdp_mil90usd_GSP_R_Y[[X_last_IMF_year]] * 
+  L102.gdp_mil90usd_SSP_R_Y[
+    match( vecpaste( L102.gdp_mil90usd_GSP_R_Y[ Scen_R ] ), vecpaste( L102.gdp_mil90usd_SSP_R_Y[ Scen_R ] ) ),
+    X_beyond_IMF_years ] / 
+  L102.gdp_mil90usd_SSP_R_Y[
+    match( vecpaste( L102.gdp_mil90usd_GSP_R_Y[ Scen_R ] ), vecpaste( L102.gdp_mil90usd_SSP_R_Y[ Scen_R ] ) ),
+    X_last_IMF_year ]
+L102.gdp_mil90usd_GSP_R_Y <- L102.gdp_mil90usd_GSP_R_Y[ c( Scen_R, X_historical_years, X_future_years ) ]
+
+#change scen names to GSP
+L102.gdp_mil90usd_GSP_R_Y[[Scen]] <- paste0( "G", substr(L102.gdp_mil90usd_GSP_R_Y[[Scen]],2, 4))
+
+#combine SSP and GSP into one table for efficiency
+L102.gdp_mil90usd_Scen_R_Y <- merge( L102.gdp_mil90usd_SSP_R_Y, L102.gdp_mil90usd_GSP_R_Y, all = T )
+
+printlog( "Calculating per-capita GDP by GCAM region and historical year and SSP GSP scenario" )
 #First, merge the population datasets (historical and future/scenario)
-L102.Pop_thous_SSP_R_Y <- L101.Pop_thous_SSP_R_Yfut
-L102.Pop_thous_SSP_R_Y[ X_historical_years ] <- L101.Pop_thous_R_Yh[
-      match( L102.Pop_thous_SSP_R_Y[[R]], L101.Pop_thous_R_Yh[[R]] ),
-      X_historical_years ]
-L102.Pop_thous_SSP_R_Y <- L102.Pop_thous_SSP_R_Y[ c( Scen_R, X_historical_years, X_future_years ) ]
+L102.Pop_thous_Scen_R_Y <- L101.Pop_thous_Scen_R_Yfut
+L102.Pop_thous_Scen_R_Y[ X_historical_years ] <- L101.Pop_thous_R_Yh[
+  match( L102.Pop_thous_Scen_R_Y[[R]], L101.Pop_thous_R_Yh[[R]] ),
+  X_historical_years ]
+L102.Pop_thous_Scen_R_Y <- L102.Pop_thous_Scen_R_Y[ c( Scen_R, X_historical_years, X_future_years ) ]
 
 #Calculate per-capita GDP
-L102.pcgdp_thous90USD_SSP_R_Y <- L102.gdp_mil90usd_SSP_R_Y
-L102.pcgdp_thous90USD_SSP_R_Y[ c( X_historical_years, X_future_years ) ] <-
-      L102.gdp_mil90usd_SSP_R_Y[ c( X_historical_years, X_future_years ) ] / L102.Pop_thous_SSP_R_Y[
-         match( vecpaste( L102.pcgdp_thous90USD_SSP_R_Y[ Scen_R ] ), vecpaste( L102.Pop_thous_SSP_R_Y[ Scen_R ] ) ),
-         c( X_historical_years, X_future_years ) ]
-         
+L102.pcgdp_thous90USD_Scen_R_Y <- L102.gdp_mil90usd_Scen_R_Y
+L102.pcgdp_thous90USD_Scen_R_Y[ c( X_historical_years, X_future_years ) ] <-
+  L102.gdp_mil90usd_Scen_R_Y[ c( X_historical_years, X_future_years ) ] / L102.Pop_thous_Scen_R_Y[
+    match( vecpaste( L102.gdp_mil90usd_Scen_R_Y[ Scen_R ] ), vecpaste( L102.Pop_thous_Scen_R_Y[ Scen_R ] ) ),
+    c( X_historical_years, X_future_years ) ]
+
+###near term GDP is complete. now all other scripts should use Scen instead of SSP
+
 #GDP by GCAM region from GCAM 3.0 GDPs.
 printlog( "Downscaling GCAM 3.0 GDP by GCAM 3.0 region to countries, using SSP2 GDP scenario" )
 #GDP by GCAM 3.0 region - downscale to country according to actual shares in the historical periods, and SSPbase in the future periods
@@ -136,6 +200,16 @@ L102.gdp_mil90usd_GCAM3_ctry_Y[ c( X_historical_years, X_future_years ) ] <-
          match( L102.gdpshares_ctryRG3_Y$region_GCAM3, L102.gdp_mil90usd_GCAM3_RG3_Y$region_GCAM3 ),
       c( X_historical_years, X_future_years ) ]
 
+#rebasing GDP to 2010 USD at country level
+#Calculate the GDP ratios from the first year in the projections. Use this ratio to project GDP from historical dataset in final historical period
+L102.gdpRatio_GCAM3_ctry_Yfut <- L102.gdp_mil90usd_GCAM3_ctry_Y[ c( "iso", "region_GCAM3", X_future_years ) ]
+L102.gdpRatio_GCAM3_ctry_Yfut[ X_future_years ] <- L102.gdp_mil90usd_GCAM3_ctry_Y[ X_future_years ] /  L102.gdp_mil90usd_GCAM3_ctry_Y[[ X_base_year ]]
+
+#Use these ratios to build the GDP trajectories by old GCAM3
+L102.gdp_mil90usd_GCAM3_ctry_Y <- L102.gdp_mil90usd_ctry_Yh
+L102.gdp_mil90usd_GCAM3_ctry_Y[X_future_years] <- L102.gdp_mil90usd_GCAM3_ctry_Y[[X_base_year]] * L102.gdpRatio_GCAM3_ctry_Yfut[ X_future_years ]
+L102.gdp_mil90usd_GCAM3_ctry_Y <- L102.gdp_mil90usd_GCAM3_ctry_Y[ c( "iso", "region_GCAM3",X_historical_years, X_future_years ) ]
+
 printlog( "Aggregating by GCAM regions")
 L102.gdp_mil90usd_GCAM3_ctry_Y[[R]] <- iso_GCAM_regID[[R]][ match( L102.gdp_mil90usd_GCAM3_ctry_Y$iso, iso_GCAM_regID$iso ) ]
 L102.gdp_mil90usd_GCAM3_R_Y <- aggregate( L102.gdp_mil90usd_GCAM3_ctry_Y[ c( X_historical_years, X_future_years ) ],
@@ -168,16 +242,16 @@ L102.PPP_MER_R$PPP_MER <- L102.PPP_MER_R$PPP / L102.PPP_MER_R$MER
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments to tables
-comments.L102.gdp_mil90usd_SSP_R_Y <- c( "GDP by SSP scenario and GCAM region (including historical time series)","Unit = million 1990 USD" )
-comments.L102.pcgdp_thous90USD_SSP_R_Y <- c( "per-capita GDP by SSP scenario and GCAM region (including historical time series)","Unit = thousand 1990 USD / cap" )
+comments.L102.gdp_mil90usd_Scen_R_Y <- c( "GDP by SSP GSP scenario and GCAM region (including historical time series)","Unit = million 1990 USD" )
+comments.L102.pcgdp_thous90USD_Scen_R_Y <- c( "per-capita GDP by SSP GSP scenario and GCAM region (including historical time series)","Unit = thousand 1990 USD / cap" )
 comments.L102.gdp_mil90usd_GCAM3_R_Y <- c( "Total GDP from GCAM 3.0 by GCAM region (including historical time series)","Unit = 1990 USD" )
 comments.L102.gdp_mil90usd_GCAM3_ctry_Y <- c( "Total GDP from GCAM 3.0 by country (including historical time series)","Unit = 1990 USD" )
 comments.L102.pcgdp_thous90USD_GCAM3_R_Y <- c( "Total GDP from GCAM 3.0 by GCAM region (including historical time series)","Unit = thous 1990 USD / cap" )
 comments.L102.pcgdp_thous90USD_GCAM3_ctry_Y <- c( "Per-capita GDP from GCAM 3.0 by country (including historical time series)","Unit = thous 1990 USD / cap" )
 comments.L102.PPP_MER_R <- c( "Conversion from World Bank based GDP MER to SSP based GDP PPP","Unitless" )
 
-writedata( L102.gdp_mil90usd_SSP_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_SSP_R_Y", comments=comments.L102.gdp_mil90usd_SSP_R_Y )
-writedata( L102.pcgdp_thous90USD_SSP_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.pcgdp_thous90USD_SSP_R_Y", comments=comments.L102.pcgdp_thous90USD_SSP_R_Y )
+writedata( L102.gdp_mil90usd_Scen_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_Scen_R_Y", comments=comments.L102.gdp_mil90usd_Scen_R_Y )
+writedata( L102.pcgdp_thous90USD_Scen_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.pcgdp_thous90USD_Scen_R_Y", comments=comments.L102.pcgdp_thous90USD_Scen_R_Y )
 writedata( L102.gdp_mil90usd_GCAM3_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_GCAM3_R_Y", comments=comments.L102.gdp_mil90usd_GCAM3_R_Y )
 writedata( L102.gdp_mil90usd_GCAM3_ctry_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.gdp_mil90usd_GCAM3_ctry_Y", comments=comments.L102.gdp_mil90usd_GCAM3_ctry_Y )
 writedata( L102.pcgdp_thous90USD_GCAM3_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L102.pcgdp_thous90USD_GCAM3_R_Y", comments=comments.L102.pcgdp_thous90USD_GCAM3_R_Y )

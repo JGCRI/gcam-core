@@ -37,6 +37,13 @@ L100.Pop_thous_SSP_ctry_Yfut[[R]] <- iso_GCAM_regID[[R]][ match( L100.Pop_thous_
 L101.Pop_thous_SSP_R_Yfut <- aggregate( L100.Pop_thous_SSP_ctry_Yfut[ c( X_future_years ) ],
       by=as.list( L100.Pop_thous_SSP_ctry_Yfut[ Scen_R ] ), sum )
 
+#Future population in the GSP scenarios
+###move this to population.R?
+#for now use SSP population for both SSP and GSP; revisit this after consulting GCAM-China team
+L101.Pop_thous_GSP_R_Yfut <- L101.Pop_thous_SSP_R_Yfut
+L101.Pop_thous_GSP_R_Yfut[[Scen]] <- paste0( "G", substr(L101.Pop_thous_GSP_R_Yfut[[Scen]],2, 4))
+L101.Pop_thous_Scen_R_Yfut <- merge( L101.Pop_thous_SSP_R_Yfut, L101.Pop_thous_GSP_R_Yfut, all = T)
+
 printlog( "Downscaling GCAM 3.0 population to country on the basis of UN historical data and base SSP in future years")
 #Population by GCAM 3.0 region - downscale to country according to actual shares in the historical periods, and SSPbase in the future periods
 L101.Pop_thous_ctry_Y <- L100.Pop_thous_ctry_Yh
@@ -82,12 +89,12 @@ L101.Pop_thous_GCAM3_ctry_Y <- L101.Pop_thous_GCAM3_ctry_Y[ c( "iso", X_historic
 # 3. Output
 #Add comments to tables
 comments.L101.Pop_thous_R_Yh <- c( "Population by region over the historical time period","Unit = million persons" )
-comments.L101.Pop_thous_SSP_R_Yfut <- c( "Population by region and SSP in future periods","Unit = million persons" )
+comments.L101.Pop_thous_Scen_R_Yfut <- c( "Population by region and GSP SSP in future periods","Unit = million persons" )
 comments.L101.Pop_thous_GCAM3_R_Y <- c( "GCAM 3.0 population by region in historical and future years","Unit = thousand persons" )
 comments.L101.Pop_thous_GCAM3_ctry_Y <- c( "GCAM 3.0 population by country in historical and future years","Unit = thousand persons" )
 
 writedata( L101.Pop_thous_R_Yh, domain="SOCIO_LEVEL1_DATA", fn="L101.Pop_thous_R_Yh", comments=comments.L101.Pop_thous_R_Yh )
-writedata( L101.Pop_thous_SSP_R_Yfut, domain="SOCIO_LEVEL1_DATA", fn="L101.Pop_thous_SSP_R_Yfut", comments=comments.L101.Pop_thous_SSP_R_Yfut )
+writedata( L101.Pop_thous_Scen_R_Yfut, domain="SOCIO_LEVEL1_DATA", fn="L101.Pop_thous_Scen_R_Yfut", comments=comments.L101.Pop_thous_Scen_R_Yfut )
 writedata( L101.Pop_thous_GCAM3_R_Y, domain="SOCIO_LEVEL1_DATA", fn="L101.Pop_thous_GCAM3_R_Y", comments=comments.L101.Pop_thous_GCAM3_R_Y )
 writedata( L101.Pop_thous_GCAM3_ctry_Y, domain="SOCIO_LEVEL1_DATA", fn="L101.Pop_thous_GCAM3_ctry_Y", comments=comments.L101.Pop_thous_GCAM3_ctry_Y )
 

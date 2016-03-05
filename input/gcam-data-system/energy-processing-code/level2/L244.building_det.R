@@ -50,7 +50,7 @@ L144.NEcost_75USDGJ <- readdata( "ENERGY_LEVEL1_DATA", "L144.NEcost_75USDGJ" )
 L144.internal_gains <- readdata ("ENERGY_LEVEL1_DATA", "L144.internal_gains" )
 L143.HDDCDD_scen_R_Y <- readdata( "ENERGY_LEVEL1_DATA", "L143.HDDCDD_scen_R_Y" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA" , "L101.Pop_thous_R_Yh" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -108,13 +108,13 @@ L244.Satiation_flsp <- L244.Satiation_flsp[ names_Satiation_flsp ]
 # Satiation adder - this is total BS. Required for shaping the future floorspace growth trajectories in each region
 printlog( "L244.SatiationAdder: Satiation adders in floorspace demand function" )
 #First, prepare socioeconomics tables by adding region names
-L102.pcgdp_thous90USD_SSP_R_Y <- add_region_name( L102.pcgdp_thous90USD_SSP_R_Y )
+L102.pcgdp_thous90USD_Scen_R_Y <- add_region_name( L102.pcgdp_thous90USD_Scen_R_Y )
 L101.Pop_thous_R_Yh <- add_region_name( L101.Pop_thous_R_Yh )
 
 #Match in the per-capita GDP, total floorspace, and population (for calculating per-capita floorspace)
 L244.SatiationAdder <- L244.Satiation_flsp
-L244.SatiationAdder$pcGDP_thous90USD <- L102.pcgdp_thous90USD_SSP_R_Y[[ X_satiation_year ]][
-      match( L244.SatiationAdder$region, L102.pcgdp_thous90USD_SSP_R_Y$region ) ]
+L244.SatiationAdder$pcGDP_thous90USD <- L102.pcgdp_thous90USD_Scen_R_Y[[ X_satiation_year ]][
+      match( L244.SatiationAdder$region, L102.pcgdp_thous90USD_Scen_R_Y$region ) ]
 L244.SatiationAdder$Flsp_bm2 <- L244.Floorspace_full$base.building.size[
       match( paste( L244.SatiationAdder$region, L244.SatiationAdder$gcam.consumer, satiation_year ),
              paste( L244.Floorspace_full$region, L244.Floorspace_full$gcam.consumer, L244.Floorspace_full$year ) ) ]
@@ -154,8 +154,8 @@ L244.Satiation_flsp_SSPs$satiation.level <- L244.Satiation_flsp_class_SSPs$satia
          vecpaste( L244.Satiation_flsp_class_SSPs[ c( "SSP", "region.class", "sector" ) ] ) ) ]
 
 #Calculate pcFlsp and make sure it is smaller than the satiation level
-L244.Satiation_flsp_SSPs$pcGDP_thous90USD <- L102.pcgdp_thous90USD_SSP_R_Y[[ X_satiation_year ]][
-  match( L244.Satiation_flsp_SSPs$region, L102.pcgdp_thous90USD_SSP_R_Y$region ) ]
+L244.Satiation_flsp_SSPs$pcGDP_thous90USD <- L102.pcgdp_thous90USD_Scen_R_Y[[ X_satiation_year ]][
+  match( L244.Satiation_flsp_SSPs$region, L102.pcgdp_thous90USD_Scen_R_Y$region ) ]
 L244.Satiation_flsp_SSPs$Flsp_bm2 <- L244.Floorspace_full$base.building.size[
   match( paste( L244.Satiation_flsp_SSPs$region, L244.Satiation_flsp_SSPs$gcam.consumer, satiation_year ),
          paste( L244.Floorspace_full$region, L244.Floorspace_full$gcam.consumer, L244.Floorspace_full$year ) ) ]

@@ -29,7 +29,7 @@ A52.demand <- readdata( "ENERGY_ASSUMPTIONS", "A52.demand" )
 A52.inc_elas <- readdata( "SOCIO_ASSUMPTIONS", "A52.inc_elas" )
 L101.Pop_thous_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_R_Y" )
 L102.gdp_mil90usd_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_R_Y" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -50,43 +50,28 @@ L252.IncomeElasticity_trn_GCAM3$income.elasticity <- round(
 L252.IncomeElasticity_trn_GCAM3$energy.final.demand <- A52.demand$energy.final.demand
 L252.IncomeElasticity_trn_GCAM3 <- L252.IncomeElasticity_trn_GCAM3[ names_IncomeElasticity]
 
-#SSPs
-L252.pcgdp_thous90USD_SSP_R_Y <- add_region_name( L102.pcgdp_thous90USD_SSP_R_Y )
-L252.pcgdp_thous90USD_SSP_R_Y.melt <- interpolate_and_melt( L252.pcgdp_thous90USD_SSP_R_Y, model_future_years, value.name = "pcgdp_90thousUSD" )
-L252.pcgdp_thous90USD_SSP_R_Y.melt$income.elasticity <- round(
-      approx( A52.inc_elas$pcgdp_90thousUSD, A52.inc_elas$inc_elas, xout = L252.pcgdp_thous90USD_SSP_R_Y.melt$pcgdp_90thousUSD, rule = 2 )$y,
+#SSPs GSPs
+L252.pcgdp_thous90USD_Scen_R_Y <- add_region_name( L102.pcgdp_thous90USD_Scen_R_Y )
+L252.pcgdp_thous90USD_Scen_R_Y.melt <- interpolate_and_melt( L252.pcgdp_thous90USD_Scen_R_Y, model_future_years, value.name = "pcgdp_90thousUSD" )
+L252.pcgdp_thous90USD_Scen_R_Y.melt$income.elasticity <- round(
+      approx( A52.inc_elas$pcgdp_90thousUSD, A52.inc_elas$inc_elas, xout = L252.pcgdp_thous90USD_Scen_R_Y.melt$pcgdp_90thousUSD, rule = 2 )$y,
       digits_IncElas_trn )
-L252.pcgdp_thous90USD_SSP_R_Y.melt$energy.final.demand <- A52.demand$energy.final.demand
-
-printlog( "L252.IncomeElasticity_trn_SSP1")
-L252.IncomeElasticity_trn_SSP1 <- L252.pcgdp_thous90USD_SSP_R_Y.melt[ L252.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP1", names_IncomeElasticity ]
-
-printlog( "L252.IncomeElasticity_trn_SSP2")
-L252.IncomeElasticity_trn_SSP2 <- L252.pcgdp_thous90USD_SSP_R_Y.melt[ L252.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP2", names_IncomeElasticity ]
-
-printlog( "L252.IncomeElasticity_trn_SSP3")
-L252.IncomeElasticity_trn_SSP3 <- L252.pcgdp_thous90USD_SSP_R_Y.melt[ L252.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP3", names_IncomeElasticity ]
-
-printlog( "L252.IncomeElasticity_trn_SSP4")
-L252.IncomeElasticity_trn_SSP4 <- L252.pcgdp_thous90USD_SSP_R_Y.melt[ L252.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP4", names_IncomeElasticity ]
-
-printlog( "L252.IncomeElasticity_trn_SSP5")
-L252.IncomeElasticity_trn_SSP5 <- L252.pcgdp_thous90USD_SSP_R_Y.melt[ L252.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP5", names_IncomeElasticity ]
+L252.pcgdp_thous90USD_Scen_R_Y.melt$energy.final.demand <- A52.demand$energy.final.demand
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L252.IncomeElasticity_trn_GCAM3, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L252.IncomeElasticity_trn_GCAM3", "SOCIO_XML_BATCH", "batch_trn_agg_GCAM3.xml" ) 
-write_mi_data( L252.IncomeElasticity_trn_SSP1, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L252.IncomeElasticity_trn_SSP1", "SOCIO_XML_BATCH", "batch_trn_agg_SSP1.xml" ) 
-write_mi_data( L252.IncomeElasticity_trn_SSP2, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L252.IncomeElasticity_trn_SSP2", "SOCIO_XML_BATCH", "batch_trn_agg_SSP2.xml" ) 
-write_mi_data( L252.IncomeElasticity_trn_SSP3, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L252.IncomeElasticity_trn_SSP3", "SOCIO_XML_BATCH", "batch_trn_agg_SSP3.xml" ) 
-write_mi_data( L252.IncomeElasticity_trn_SSP4, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L252.IncomeElasticity_trn_SSP4", "SOCIO_XML_BATCH", "batch_trn_agg_SSP4.xml" ) 
-write_mi_data( L252.IncomeElasticity_trn_SSP5, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L252.IncomeElasticity_trn_SSP5", "SOCIO_XML_BATCH", "batch_trn_agg_SSP5.xml" ) 
-
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_trn_agg_GCAM3.xml", "SOCIO_XML_FINAL", "trn_agg_GCAM3.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_trn_agg_SSP1.xml", "SOCIO_XML_FINAL", "trn_agg_SSP1.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_trn_agg_SSP2.xml", "SOCIO_XML_FINAL", "trn_agg_SSP2.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_trn_agg_SSP3.xml", "SOCIO_XML_FINAL", "trn_agg_SSP3.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_trn_agg_SSP4.xml", "SOCIO_XML_FINAL", "trn_agg_SSP4.xml", "", xml_tag="outFile" )
-insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_trn_agg_SSP5.xml", "SOCIO_XML_FINAL", "trn_agg_SSP5.xml", "", xml_tag="outFile" )
+
+printlog( "Writing out SSP GSP files in a for loop" )
+Scens <- sort( unique( L252.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] ) )
+for( i in Scens ){
+	objectname <- paste0( "L252.IncomeElasticity_trn_", i )
+	object <- L252.pcgdp_thous90USD_Scen_R_Y.melt[ L252.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] == i, names_IncomeElasticity ]
+	batchXMLstring <- paste0( "batch_trn_agg_", i, ".xml" )
+	write_mi_data( object, "IncomeElasticity", "SOCIO_LEVEL2_DATA", objectname, "SOCIO_XML_BATCH", batchXMLstring )
+	XMLstring <- sub( "batch_", "", batchXMLstring )
+	insert_file_into_batchxml( "SOCIO_XML_BATCH", batchXMLstring, "SOCIO_XML_FINAL", XMLstring, "", xml_tag="outFile" )
+}
 
 logstop()
