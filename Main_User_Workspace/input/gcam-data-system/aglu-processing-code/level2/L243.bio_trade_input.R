@@ -57,6 +57,10 @@ L243.GlobalTechCoeff_RegBio <- L243.GlobalTechCoeff_RegBio[ names_GlobalTechCoef
 L243.GlobalTechShWt_RegBio <- L243.GlobalTechCoeff_RegBio[ names_GlobalTechYr ]
 L243.GlobalTechShWt_RegBio$share.weight <- 1
 
+#Keywords of global technologies
+L243.PrimaryConsKeyword_en <- L243.GlobalTechCoeff_RegBio[ names_GlobalTechYr ]
+L243.PrimaryConsKeyword_en$primary.consumption <- "biomass"
+
 # L243.StubTech_RegBio -- stub technologies for the regional biomass technologies
 L243.StubTech_RegBio <- data.frame( subsector = c( "domestic biomass", "imported biomass" ),
                                     stub.technology = c( "domestic biomass", "imported biomass" ) )
@@ -166,6 +170,7 @@ write_mi_data( L243.SubsShWt_RegBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "
 write_mi_data( L243.SubsShWt_TradedBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SubsShWt_TradedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.GlobalTechCoeff_RegBio, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L243.GlobalTechCoeff_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.GlobalTechShWt_RegBio, "GlobalTechShrwt", "AGLU_LEVEL2_DATA", "L243.GlobalTechShWt_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.PrimaryConsKeyword_en, "PrimaryConsKeyword", "AGLU_LEVEL2_DATA", "L243.PrimaryConsKeyword_en", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.StubTech_RegBio, "StubTech", "AGLU_LEVEL2_DATA", "L243.StubTech_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.StubTechShrwt_RegBio, "StubTechShrwt", "AGLU_LEVEL2_DATA", "L243.StubTechShrwt_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.StubTechCoef_ImportedBio, "StubTechCoef", "AGLU_LEVEL2_DATA", "L243.StubTechCoef_ImportedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
