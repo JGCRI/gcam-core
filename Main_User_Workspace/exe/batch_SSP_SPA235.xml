@@ -2,6 +2,7 @@
 <BatchRunner xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="batch_runner.xsd">
 	<ComponentSet name="base">
 		<FileSet name="">
+			<Value name="ClimateModel">../input/climate/hector.xml</Value>
 			<Value name = "hist_emissions">../input/magicc/Historical Emissions/Default Emissions Module/Default_Emissions_Input.xml</Value>
 			<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/interest_rate.xml</Value>
 			<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_GCAM3.xml</Value>
@@ -19,7 +20,7 @@
 			<Value name = "fertilizer">../input/gcam-data-system/xml/energy-xml/en_Fert.xml</Value>
 			<Value name = "hddcdd">../input/gcam-data-system/xml/energy-xml/HDDCDD_constdd_no_GCM.xml</Value>
 			<Value name = "building">../input/gcam-data-system/xml/energy-xml/building_det.xml</Value>
-			<Value name = "transportation">../input/gcam-data-system/xml/energy-xml/transportation_UCD.xml</Value>
+			<Value name = "transportation">../input/gcam-data-system/xml/energy-xml/transportation_UCD_CORE.xml</Value>
 			<Value name = "carbon_content">../input/gcam-data-system/xml/energy-xml/Ccoef.xml</Value>
 			<Value name = "carbon_storage">../input/gcam-data-system/xml/energy-xml/Cstorage.xml</Value>
 			<Value name = "ind_urb_proc">../input/gcam-data-system/xml/emissions-xml/ind_urb_processing_sectors.xml</Value>
@@ -41,7 +42,7 @@
 			<Value name = "bio">../input/gcam-data-system/xml/aglu-xml/bio_hi_IRR.xml</Value>
 			<Value name = "demand">../input/gcam-data-system/xml/aglu-xml/demand_input.xml</Value>
 			<Value name = "water">../input/gcam-data-system/xml/aglu-xml/ag_water_input_IRR.xml</Value>
-			<Value name = "nonco2_aglu">../input/gcam-data-system/xml/emissions-xml/all_aglu_emissions_irr.xml</Value>
+			<Value name = "nonco2_aglu">../input/gcam-data-system/xml/emissions-xml/all_aglu_emissions_IRR.xml</Value>
 			<Value name = "bio_trade">../input/gcam-data-system/xml/aglu-xml/bio_trade.xml</Value>
 		</FileSet>
 	</ComponentSet>
