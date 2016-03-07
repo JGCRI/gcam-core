@@ -75,6 +75,7 @@ public:
 
     virtual void nullSupply();
     virtual double getSupply() const;
+    virtual double getSolverSupply() const;
     virtual void addToSupply( const double supplyIn );
     
     virtual bool meetsSpecialSolutionCriteria() const;

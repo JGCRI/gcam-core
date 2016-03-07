@@ -64,6 +64,9 @@ void DemandMarket::initPrice() {
 }
 
 void DemandMarket::setPrice( const double priceIn ) {
+    // Prices for DemandMarket are solved explicitly by
+    // the solver and should only be set by the model
+    // when setting the initial "prices" for the market.
     Market::setPrice( priceIn );
 }
 
@@ -84,29 +87,29 @@ void DemandMarket::addToDemand( const double demandIn ) {
 }
 
 double DemandMarket::getDemand() const {
+    // Model facing getDemand returns a trial demand
+    // solver facing getSolverDemand will look at the actual
+    // demand
     return price;
 }
 
 void DemandMarket::nullSupply() {
-#if GCAM_PARALLEL_ENABLED
-    supply.clear();
-#else
-    supply = 0;
-#endif
-    demMktSupply = 0; 
+    // DemandMarket does not utilize supply instead
+    // it is equal to the price.
+}
+
+double DemandMarket::getSolverSupply() const {
+    return Market::getPrice();
 }
 
 double DemandMarket::getSupply() const {
-    return Market::getSupply();
+    return Market::getPrice();
 }
 
 void DemandMarket::addToSupply( const double supplyIn ) {
-#if GCAM_PARALLEL_ENABLED
-    supply.clear();
-    supply.local() = price;
-#else
-    supply = price;
-#endif
+    // TODO: we could potentially track this value as a consistency
+    // check however DemandMarket does not actually utilize
+    // this value instead the supply is just the trial price.
 }
 
 bool DemandMarket::meetsSpecialSolutionCriteria() const {
