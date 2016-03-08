@@ -147,20 +147,20 @@ L243.low_reg <- L243.pcgdp_2010$region[ L243.pcgdp_2010$X2010 < lo_growth_pcgdp 
 # Next, we want to limit imports & exports of biomass into low income regions for SSP4. Do this with share-weights
 L243.SSP4_SubsShWt_RegBio <- subset( L243.SubsShWt_RegBio, region %in% L243.low_reg & subsector == "imported biomass" )
 L243.SSP4_SubsShWt_RegBio$year.fillout <- 2025
-L243.SSP4_SubsShWt_RegBio$share.weight <- 0.0
+L243.SSP4_SubsShWt_RegBio$share.weight <- 0.1
 
 L243.low_reg_tech <- paste( L243.low_reg, "traded biomass", sep=" " )
 L243.SSP4_SubsShWt_TradedBio <- subset( L243.SubsShWt_TradedBio, subsector %in% L243.low_reg_tech )
 L243.SSP4_SubsShWt_TradedBio$year.fillout <- 2025
-L243.SSP4_SubsShWt_TradedBio$share.weight <- 0.0
+L243.SSP4_SubsShWt_TradedBio$share.weight <- 0.1
 
 L243.SSP4_TechShWt_TradedBio <- subset( L243.TechShWt_TradedBio, technology %in% L243.low_reg_tech & year > 2020 )
-L243.SSP4_TechShWt_TradedBio$share.weight <- 0.0
+L243.SSP4_TechShWt_TradedBio$share.weight <- 0.1
 
 L243.SSP4_StubTechShrwt_RegBio <- subset( L243.StubTechShrwt_RegBio, region %in% L243.low_reg 
                                                                      & subsector == "imported biomass" 
                                                                      & year > 2020 )
-L243.SSP4_StubTechShrwt_RegBio$share.weight <- 0.0
+L243.SSP4_StubTechShrwt_RegBio$share.weight <- 0.1
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
