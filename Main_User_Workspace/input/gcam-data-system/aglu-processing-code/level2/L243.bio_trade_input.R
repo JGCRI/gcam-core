@@ -34,71 +34,81 @@ L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thou
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
-# First, delete existing regional biomass market.
-L243.Delete_RegBio <- data.frame( region = GCAM_region_names$region )
-L243.Delete_RegBio$supplysector <- "regional biomass"
+# First, delete existing regional biomass input
+L243.Delete_RegBioInput <- data.frame( region = GCAM_region_names$region )
+L243.Delete_RegBioInput$supplysector <- "regional biomass"
+L243.Delete_RegBioInput$subsector <- "regional biomass"
+L243.Delete_RegBioInput$technology <- "regional biomass"
+L243.Delete_RegBioInput <- repeat_and_add_vector( L243.Delete_RegBioInput, "year", model_years )
+L243.Delete_RegBioInput$minicam.energy.input <- "biomass"
+
+# Now, create new regional biomass input
+L243.RegBioInput <- L243.Delete_RegBioInput
+L243.RegBioInput$minicam.energy.input <- "total biomass"
+L243.RegBioInput$coefficient <- 1
+L243.RegBioInput$market.name <- L243.RegBioInput$region
 
 # Next, set up global trade. Markets now default to regional and we use logits to allow trade.
-# L243.Supplysector_RegBio -- supplysector for the regional biomass
-L243.Supplysector_RegBio <- A_bio_supplysector
-L243.Supplysector_RegBio$logit.year.fillout <- min( model_years )
-L243.Supplysector_RegBio <- repeat_and_add_vector( L243.Supplysector_RegBio, "region", GCAM_region_names$region )
-L243.Supplysector_RegBio <- L243.Supplysector_RegBio[ names_Supplysector ]
+# L243.Supplysector_TotBio -- supplysector for the regional biomass
+L243.Supplysector_TotBio <- A_bio_supplysector
+L243.Supplysector_TotBio$logit.year.fillout <- min( model_years )
+L243.Supplysector_TotBio <- repeat_and_add_vector( L243.Supplysector_TotBio, "region", GCAM_region_names$region )
+L243.Supplysector_TotBio <- L243.Supplysector_TotBio[ names_Supplysector ]
 
-# L243.GlobalTechCoef_RegBio -- coefficients for the regional biomass technologies
-L243.GlobalTechCoeff_RegBio <- data.frame( subsector.name = c( "domestic biomass", "imported biomass" ),
+# L243.GlobalTechCoef_TotBio -- coefficients for the regional biomass technologies
+L243.GlobalTechCoeff_TotBio <- data.frame( subsector.name = c( "domestic biomass", "imported biomass" ),
                                            technology = c( "domestic biomass", "imported biomass" ),
                                            minicam.energy.input = c( "biomass", "traded biomass" ) )
-L243.GlobalTechCoeff_RegBio$sector.name <- "regional biomass"
-L243.GlobalTechCoeff_RegBio$coefficient <- 1
-L243.GlobalTechCoeff_RegBio <- repeat_and_add_vector( L243.GlobalTechCoeff_RegBio, "year", model_years )
-L243.GlobalTechCoeff_RegBio <- L243.GlobalTechCoeff_RegBio[ names_GlobalTechCoef ]
+L243.GlobalTechCoeff_TotBio$sector.name <- "total biomass"
+L243.GlobalTechCoeff_TotBio$coefficient <- 1
+L243.GlobalTechCoeff_TotBio <- repeat_and_add_vector( L243.GlobalTechCoeff_TotBio, "year", model_years )
+L243.GlobalTechCoeff_TotBio <- L243.GlobalTechCoeff_TotBio[ names_GlobalTechCoef ]
 
-# L243.GlobalTechShWt_RegBio -- share weights for the regional biomass technologies
-L243.GlobalTechShWt_RegBio <- L243.GlobalTechCoeff_RegBio[ names_GlobalTechYr ]
-L243.GlobalTechShWt_RegBio$share.weight <- A_bio_subsector$share.weight[ match( L243.GlobalTechShWt_RegBio$subsector ,
+# L243.GlobalTechShWt_TotBio -- share weights for the regional biomass technologies
+L243.GlobalTechShWt_TotBio <- L243.GlobalTechCoeff_TotBio[ names_GlobalTechYr ]
+L243.GlobalTechShWt_TotBio$share.weight <- A_bio_subsector$share.weight[ match( L243.GlobalTechShWt_TotBio$subsector ,
                                                                                 A_bio_subsector$subsector )]
 
 #Keywords of global technologies
-L243.PrimaryConsKeyword_en <- L243.GlobalTechCoeff_RegBio[ names_GlobalTechYr ]
+L243.PrimaryConsKeyword_en <- L243.GlobalTechCoeff_TotBio[ names_GlobalTechYr ]
 L243.PrimaryConsKeyword_en$primary.consumption <- "biomass"
 
-# L243.StubTech_RegBio -- stub technologies for the regional biomass technologies
-L243.StubTech_RegBio <- data.frame( subsector = c( "domestic biomass", "imported biomass" ),
+# L243.StubTech_TotBio -- stub technologies for the regional biomass technologies
+L243.StubTech_TotBio <- data.frame( subsector = c( "domestic biomass", "imported biomass" ),
                                     stub.technology = c( "domestic biomass", "imported biomass" ) )
-L243.StubTech_RegBio$supplysector <- "regional biomass"
-L243.StubTech_RegBio <- repeat_and_add_vector( L243.StubTech_RegBio, "region", GCAM_region_names$region )
-L243.StubTech_RegBio <- L243.StubTech_RegBio[ names_StubTech ]
+L243.StubTech_TotBio$supplysector <- "total biomass"
+L243.StubTech_TotBio <- repeat_and_add_vector( L243.StubTech_TotBio, "region", GCAM_region_names$region )
+L243.StubTech_TotBio <- L243.StubTech_TotBio[ names_StubTech ]
 
-# L243.StubTechShrwt_RegBio -- share weights for the regional biomass technologies
-L243.StubTechShrwt_RegBio <- L243.StubTech_RegBio
-L243.StubTechShrwt_RegBio <- repeat_and_add_vector( L243.StubTechShrwt_RegBio, "year", model_years )
-L243.StubTechShrwt_RegBio$share.weight <- 1
+# L243.StubTechShrwt_TotBio -- share weights for the regional biomass technologies
+L243.StubTechShrwt_TotBio <- L243.StubTech_TotBio
+L243.StubTechShrwt_TotBio <- repeat_and_add_vector( L243.StubTechShrwt_TotBio, "year", model_years )
+L243.StubTechShrwt_TotBio$share.weight <- 1
 
 # L243.StubTechCoef_ImportedBio -- stub technologies for the regional biomass technologies
-L243.StubTechCoef_ImportedBio <- subset( L243.StubTech_RegBio, subsector == "imported biomass" )
+L243.StubTechCoef_ImportedBio <- subset( L243.StubTech_TotBio, subsector == "imported biomass" )
 L243.StubTechCoef_ImportedBio <- repeat_and_add_vector( L243.StubTechCoef_ImportedBio, "year", model_years )
 L243.StubTechCoef_ImportedBio$minicam.energy.input <- "traded biomass"
 L243.StubTechCoef_ImportedBio$coefficient <- 1
 L243.StubTechCoef_ImportedBio$market <- A_biotrade_supplysector$region
 
 # L243.StubTechCoef_DomesticBio -- stub technologies for the regional biomass technologies
-L243.StubTechCoef_DomesticBio <- subset( L243.StubTech_RegBio, subsector == "domestic biomass" )
+L243.StubTechCoef_DomesticBio <- subset( L243.StubTech_TotBio, subsector == "domestic biomass" )
 L243.StubTechCoef_DomesticBio <- repeat_and_add_vector( L243.StubTechCoef_DomesticBio, "year", model_years )
 L243.StubTechCoef_DomesticBio$minicam.energy.input <- "biomass"
 L243.StubTechCoef_DomesticBio$coefficient <- 1
 L243.StubTechCoef_DomesticBio$market <- L243.StubTechCoef_DomesticBio$region
 
-# L243.StubTechLogit_RegBio -- logit exponents for the regional biomass subsectors
-L243.SubsLogit_RegBio <- L243.StubTech_RegBio[ names_Subsector ]
-L243.SubsLogit_RegBio$logit.year.fillout <- min( model_years )
-L243.SubsLogit_RegBio$logit.exponent <- A_bio_subsector$logit.exponent[ match( L243.SubsLogit_RegBio$subsector,
+# L243.StubTechLogit_TotBio -- logit exponents for the regional biomass subsectors
+L243.SubsLogit_TotBio <- L243.StubTech_TotBio[ names_Subsector ]
+L243.SubsLogit_TotBio$logit.year.fillout <- min( model_years )
+L243.SubsLogit_TotBio$logit.exponent <- A_bio_subsector$logit.exponent[ match( L243.SubsLogit_TotBio$subsector,
                                                                                    A_bio_subsector$subsector )]
 
-# L243.StubTechShWt_RegBio -- share weights for the regional biomass subsectors
-L243.SubsShWt_RegBio <- L243.StubTech_RegBio[ names_Subsector ]
-L243.SubsShWt_RegBio$year.fillout <- min( model_years )
-L243.SubsShWt_RegBio$share.weight <- A_bio_subsector$share.weight[ match( L243.SubsShWt_RegBio$subsector,
+# L243.StubTechShWt_TotBio -- share weights for the regional biomass subsectors
+L243.SubsShWt_TotBio <- L243.StubTech_TotBio[ names_Subsector ]
+L243.SubsShWt_TotBio$year.fillout <- min( model_years )
+L243.SubsShWt_TotBio$share.weight <- A_bio_subsector$share.weight[ match( L243.SubsShWt_TotBio$subsector,
                                                                                    A_bio_subsector$subsector )]
 
 # L243.Supplysector_TradedBio -- supplysector for traded biomass
@@ -145,9 +155,9 @@ L243.pcgdp_2010$X2010 <- L243.pcgdp_2010$X2010 * conv_1990_2010_USD
 L243.low_reg <- L243.pcgdp_2010$region[ L243.pcgdp_2010$X2010 < lo_growth_pcgdp ]
 
 # Next, we want to limit imports & exports of biomass into low income regions for SSP4. Do this with share-weights
-L243.SSP4_SubsShWt_RegBio <- subset( L243.SubsShWt_RegBio, region %in% L243.low_reg & subsector == "imported biomass" )
-L243.SSP4_SubsShWt_RegBio$year.fillout <- 2025
-L243.SSP4_SubsShWt_RegBio$share.weight <- 0.1
+L243.SSP4_SubsShWt_TotBio <- subset( L243.SubsShWt_TotBio, region %in% L243.low_reg & subsector == "imported biomass" )
+L243.SSP4_SubsShWt_TotBio$year.fillout <- 2025
+L243.SSP4_SubsShWt_TotBio$share.weight <- 0.1
 
 L243.low_reg_tech <- paste( L243.low_reg, "traded biomass", sep=" " )
 L243.SSP4_SubsShWt_TradedBio <- subset( L243.SubsShWt_TradedBio, subsector %in% L243.low_reg_tech )
@@ -157,24 +167,25 @@ L243.SSP4_SubsShWt_TradedBio$share.weight <- 0.1
 L243.SSP4_TechShWt_TradedBio <- subset( L243.TechShWt_TradedBio, technology %in% L243.low_reg_tech & year > 2020 )
 L243.SSP4_TechShWt_TradedBio$share.weight <- 0.1
 
-L243.SSP4_StubTechShrwt_RegBio <- subset( L243.StubTechShrwt_RegBio, region %in% L243.low_reg 
+L243.SSP4_StubTechShrwt_TotBio <- subset( L243.StubTechShrwt_TotBio, region %in% L243.low_reg 
                                                                      & subsector == "imported biomass" 
                                                                      & year > 2020 )
-L243.SSP4_StubTechShrwt_RegBio$share.weight <- 0.1
+L243.SSP4_StubTechShrwt_TotBio$share.weight <- 0.1
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L243.Delete_RegBio, "DeleteSupplysector", "AGLU_LEVEL2_DATA", "L243.Delete_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.Supplysector_RegBio, "Supplysector", "AGLU_LEVEL2_DATA", "L243.Supplysector_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.Delete_RegBioInput, "DeleteInput", "AGLU_LEVEL2_DATA", "L243.Delete_RegBioInput", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.RegBioInput, "TechCoef", "AGLU_LEVEL2_DATA", "L243.RegBioInput", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.Supplysector_TotBio, "Supplysector", "AGLU_LEVEL2_DATA", "L243.Supplysector_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.Supplysector_TradedBio, "Supplysector", "AGLU_LEVEL2_DATA", "L243.Supplysector_TradedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.SubsLogit_RegBio, "SubsectorLogit", "AGLU_LEVEL2_DATA", "L243.SubsLogit_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.SubsShWt_RegBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SubsShWt_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.SubsLogit_TotBio, "SubsectorLogit", "AGLU_LEVEL2_DATA", "L243.SubsLogit_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.SubsShWt_TotBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SubsShWt_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.SubsShWt_TradedBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SubsShWt_TradedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.GlobalTechCoeff_RegBio, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L243.GlobalTechCoeff_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.GlobalTechShWt_RegBio, "GlobalTechShrwt", "AGLU_LEVEL2_DATA", "L243.GlobalTechShWt_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.GlobalTechCoeff_TotBio, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L243.GlobalTechCoeff_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.GlobalTechShWt_TotBio, "GlobalTechShrwt", "AGLU_LEVEL2_DATA", "L243.GlobalTechShWt_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.PrimaryConsKeyword_en, "PrimaryConsKeyword", "AGLU_LEVEL2_DATA", "L243.PrimaryConsKeyword_en", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.StubTech_RegBio, "StubTech", "AGLU_LEVEL2_DATA", "L243.StubTech_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.StubTechShrwt_RegBio, "StubTechShrwt", "AGLU_LEVEL2_DATA", "L243.StubTechShrwt_RegBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.StubTech_TotBio, "StubTech", "AGLU_LEVEL2_DATA", "L243.StubTech_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.StubTechShrwt_TotBio, "StubTechShrwt", "AGLU_LEVEL2_DATA", "L243.StubTechShrwt_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.StubTechCoef_ImportedBio, "StubTechCoef", "AGLU_LEVEL2_DATA", "L243.StubTechCoef_ImportedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.StubTechCoef_DomesticBio, "StubTechCoef", "AGLU_LEVEL2_DATA", "L243.StubTechCoef_DomesticBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.TechCoef_TradedBio, "TechCoef", "AGLU_LEVEL2_DATA", "L243.TechCoef_TradedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
@@ -182,10 +193,10 @@ write_mi_data( L243.TechShWt_TradedBio, "TechShrwt", "AGLU_LEVEL2_DATA", "L243.T
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_bio_trade.xml", "AGLU_XML_FINAL", "bio_trade.xml", "", xml_tag="outFile" )
 
-write_mi_data( L243.SSP4_SubsShWt_RegBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SSP4_SubsShWt_RegBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
+write_mi_data( L243.SSP4_SubsShWt_TotBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SSP4_SubsShWt_TotBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
 write_mi_data( L243.SSP4_SubsShWt_TradedBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SSP4_SubsShWt_TradedBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
 write_mi_data( L243.SSP4_TechShWt_TradedBio, "TechShrwt", "AGLU_LEVEL2_DATA", "L243.SSP4_TechShWt_TradedBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
-write_mi_data( L243.SSP4_StubTechShrwt_RegBio, "StubTechShrwt", "AGLU_LEVEL2_DATA", "L243.SSP4_StubTechShrwt_RegBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
+write_mi_data( L243.SSP4_StubTechShrwt_TotBio, "StubTechShrwt", "AGLU_LEVEL2_DATA", "L243.SSP4_StubTechShrwt_TotBio", "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml" )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ssp4_bio_trade.xml", "AGLU_XML_FINAL", "ssp4_bio_trade.xml", "", xml_tag="outFile" )
 
