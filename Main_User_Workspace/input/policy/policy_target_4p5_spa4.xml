@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <policy-target-runner name="old">
-	<target-value>2.5</target-value>
+	<target-value>4.1</target-value>
 	<target-tolerance>0.5</target-tolerance>
 	<target-type>forcing</target-type>
 	<first-tax-year>2025</first-tax-year>
+	<max-iterations>500</max-iterations>
 	<tax-name>CO2_tf</tax-name>
-	<overshoot/>
+	<forward-look>2</forward-look>
 </policy-target-runner>

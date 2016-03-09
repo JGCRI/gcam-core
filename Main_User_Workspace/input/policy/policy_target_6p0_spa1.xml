@@ -3,6 +3,6 @@
 	<target-value>5.8</target-value>
 	<target-tolerance>0.5</target-tolerance>
 	<target-type>forcing</target-type>
-	<first-tax-year>2040</first-tax-year>
+	<first-tax-year>2025</first-tax-year>
 	<tax-name>CO2_tf</tax-name>
 </policy-target-runner>
