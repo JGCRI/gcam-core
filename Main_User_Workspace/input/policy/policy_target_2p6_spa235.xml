@@ -6,4 +6,5 @@
     <first-tax-year>2040</first-tax-year>
 	<tax-name>CO2_tf</tax-name>
 	<overshoot/>
+        <max-tax>6000</max-tax>
 </policy-target-runner>
