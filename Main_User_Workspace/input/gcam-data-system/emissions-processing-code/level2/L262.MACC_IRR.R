@@ -79,24 +79,30 @@ L262.MAC_an <- L262.MAC_an[ names( L262.MAC_an ) != "EPA_region" ]
 
 printlog( "L262.MAC_TC_SSP1: Tech Change on MACCs for SSP1" )
 L262.MAC_Ag_TC_SSP1 <- L262.AgMAC
-L262.MAC_Ag_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( "SSP1", A_MACC_TechChange$scenario )]
+L262.MAC_Ag_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L262.MAC_Ag_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 
 L262.MAC_An_TC_SSP1 <- L262.MAC_an
-L262.MAC_An_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( "SSP1", A_MACC_TechChange$scenario )]
+L262.MAC_An_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L262.MAC_An_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 
 printlog( "L262.MAC_TC_SSP2: Tech Change on MACCs for SSP2" )
 L262.MAC_Ag_TC_SSP2 <- L262.AgMAC
-L262.MAC_Ag_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( "SSP2", A_MACC_TechChange$scenario )]
+L262.MAC_Ag_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L262.MAC_Ag_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 
 L262.MAC_An_TC_SSP2 <- L262.MAC_an
-L262.MAC_An_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( "SSP2", A_MACC_TechChange$scenario )]
+L262.MAC_An_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L262.MAC_An_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 
 printlog( "L262.MAC_TC_SSP5: Tech Change on MACCs for SSP5" )
 L262.MAC_Ag_TC_SSP5 <- L262.AgMAC
-L262.MAC_Ag_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( "SSP5", A_MACC_TechChange$scenario )]
+L262.MAC_Ag_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L262.MAC_Ag_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 
 L262.MAC_An_TC_SSP5 <- L262.MAC_an
-L262.MAC_An_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( "SSP5", A_MACC_TechChange$scenario )]
+L262.MAC_An_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L262.MAC_An_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -106,16 +112,16 @@ write_mi_data( L262.MAC_an, "MAC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_an", "EMIS
 #This is the last file that refers to agricultural emissions
 insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions_IRR.xml", "EMISSIONS_XML_FINAL", "all_aglu_emissions_IRR.xml", "", xml_tag="outFile" )
 
-write_mi_data( L262.MAC_Ag_TC_SSP1, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_Ag_TC_SSP1", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1.xml" ) 
-write_mi_data( L262.MAC_An_TC_SSP1, "MACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_An_TC_SSP1", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1.xml" ) 
-insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP1.xml", "", xml_tag="outFile" )
+write_mi_data( L262.MAC_Ag_TC_SSP1, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_Ag_TC_SSP1", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1_IRR.xml" ) 
+write_mi_data( L262.MAC_An_TC_SSP1, "MACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_An_TC_SSP1", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1_IRR.xml" ) 
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1_IRR.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP1_IRR.xml", "", xml_tag="outFile" )
 
-write_mi_data( L262.MAC_Ag_TC_SSP2, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_Ag_TC_SSP2", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2.xml" ) 
-write_mi_data( L262.MAC_An_TC_SSP2, "MACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_An_TC_SSP2", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2.xml" ) 
-insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP2.xml", "", xml_tag="outFile" )
+write_mi_data( L262.MAC_Ag_TC_SSP2, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_Ag_TC_SSP2", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2_IRR.xml" ) 
+write_mi_data( L262.MAC_An_TC_SSP2, "MACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_An_TC_SSP2", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2_IRR.xml" ) 
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2_IRR.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP2_IRR.xml", "", xml_tag="outFile" )
 
-write_mi_data( L262.MAC_Ag_TC_SSP5, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_Ag_TC_SSP5", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5.xml" ) 
-write_mi_data( L262.MAC_An_TC_SSP5, "MACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_An_TC_SSP5", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5.xml" ) 
-insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP5.xml", "", xml_tag="outFile" )
+write_mi_data( L262.MAC_Ag_TC_SSP5, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_Ag_TC_SSP5", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5_IRR.xml" ) 
+write_mi_data( L262.MAC_An_TC_SSP5, "MACTC", "EMISSIONS_LEVEL2_DATA", "L262.MAC_An_TC_SSP5", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5_IRR.xml" ) 
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5_IRR.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP5_IRR.xml", "", xml_tag="outFile" )
 
 logstop()
