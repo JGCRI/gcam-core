@@ -154,6 +154,9 @@
 			<!-- FOSSIL -->
 			<Value name="resource_extraction">../input/gcam-data-system/xml/energy-xml/resources_SSP3.xml</Value>
 			
+			<!-- TRADE -->
+			<Value name="bio_trade">../input/gcam-data-system/xml/aglu-xml/ssp3_bio_trade.xml</Value>
+			
 			<!-- CCS -->
 			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/ccs_supply_low.xml</Value>
 			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/no_offshore_ccs.xml</Value>
@@ -170,10 +173,10 @@
 		</FileSet>	
 	</ComponentSet>
 	<runner-set name="policy-target-runner">
-		<Value name="6p0">../input/policy/policy_target_6p0_spa14.xml</Value>
-		<Value name="4p5">../input/policy/policy_target_4p5_spa14.xml</Value>
-		<Value name="3p7">../input/policy/policy_target_3p7_spa14.xml</Value>
-		<Value name="2p6">../input/policy/policy_target_2p6_spa14.xml</Value>
+		<Value name="6p0">../input/policy/policy_target_6p0_spa235.xml</Value>
+		<Value name="4p5">../input/policy/policy_target_4p5_spa235.xml</Value>
+		<Value name="3p7">../input/policy/policy_target_3p7_spa235.xml</Value>
+		<Value name="2p6">../input/policy/policy_target_2p6_spa235.xml</Value>
 	</runner-set>
 	
 </BatchRunner>

@@ -193,6 +193,9 @@
 			<!-- FOSSIL -->
 			<Value name="resource_extraction">../input/gcam-data-system/xml/energy-xml/resources_SSP3.xml</Value>
 			
+			<!-- TRADE -->
+			<Value name="bio_trade">../input/gcam-data-system/xml/aglu-xml/ssp3_bio_trade.xml</Value>
+			
 			<!-- CCS -->
 			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/ccs_supply_low.xml</Value>
 			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/no_offshore_ccs.xml</Value>
