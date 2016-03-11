@@ -30,7 +30,8 @@ A44.subsector_interp <- readdata( "ENERGY_ASSUMPTIONS", "A44.subsector_interp" )
 A44.subsector_logit <- readdata( "ENERGY_ASSUMPTIONS", "A44.subsector_logit" )
 A44.subsector_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A44.subsector_shrwt" )
 A44.fuelprefElasticity <- readdata( "ENERGY_ASSUMPTIONS", "A44.fuelprefElasticity" )
-A44.fuelprefElasticity_SSP34 <- readdata( "ENERGY_ASSUMPTIONS", "A44.fuelprefElasticity_SSP34" )
+A44.fuelprefElasticity_SSP3 <- readdata( "ENERGY_ASSUMPTIONS", "A44.fuelprefElasticity_SSP3" )
+A44.fuelprefElasticity_SSP4 <- readdata( "ENERGY_ASSUMPTIONS", "A44.fuelprefElasticity_SSP4" )
 A44.fuelprefElasticity_SSP15 <- readdata( "ENERGY_ASSUMPTIONS", "A44.fuelprefElasticity_SSP15" )
 A44.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A44.globaltech_shrwt" )
 A44.gcam_consumer <- readdata( "ENERGY_ASSUMPTIONS", "A44.gcam_consumer" )
@@ -447,11 +448,17 @@ L244.FuelPrefElast_bld <- write_to_all_regions( A44.fuelprefElasticity, names_Fu
 L244.FuelPrefElast_bld <- subset( L244.FuelPrefElast_bld,
       paste( region, supplysector, subsector ) %in% paste( L244.Tech_bld$region, L244.Tech_bld$supplysector, L244.Tech_bld$subsector ) )
 
-printlog( "L244.FuelPrefElast_bld_SSP34: Fuel preference elasticities for buildings in SSP 3 & 4" )
-A44.fuelprefElasticity_SSP34$year.fillout <- min( model_base_years )
-L244.FuelPrefElast_bld_SSP34 <- write_to_all_regions( A44.fuelprefElasticity_SSP34, names_FuelPrefElasticity )
-L244.FuelPrefElast_bld_SSP34 <- subset( L244.FuelPrefElast_bld_SSP34,
+printlog( "L244.FuelPrefElast_bld_SSP3: Fuel preference elasticities for buildings in SSP 3" )
+A44.fuelprefElasticity_SSP3$year.fillout <- min( model_base_years )
+L244.FuelPrefElast_bld_SSP3 <- write_to_all_regions( A44.fuelprefElasticity_SSP3, names_FuelPrefElasticity )
+L244.FuelPrefElast_bld_SSP3 <- subset( L244.FuelPrefElast_bld_SSP3,
                                   paste( region, supplysector, subsector ) %in% paste( L244.Tech_bld$region, L244.Tech_bld$supplysector, L244.Tech_bld$subsector ) )
+
+printlog( "L244.FuelPrefElast_bld_SSP4: Fuel preference elasticities for buildings in SSP 3" )
+A44.fuelprefElasticity_SSP4$year.fillout <- min( model_base_years )
+L244.FuelPrefElast_bld_SSP4 <- write_to_all_regions( A44.fuelprefElasticity_SSP4, names_FuelPrefElasticity )
+L244.FuelPrefElast_bld_SSP4 <- subset( L244.FuelPrefElast_bld_SSP4,
+                                       paste( region, supplysector, subsector ) %in% paste( L244.Tech_bld$region, L244.Tech_bld$supplysector, L244.Tech_bld$subsector ) )
 
 printlog( "L244.FuelPrefElast_bld_SSP15: Fuel preference elasticities for buildings in SSP 1 & 5" )
 A44.fuelprefElasticity_SSP15$year.fillout <- min( model_base_years )
@@ -643,7 +650,7 @@ insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP2.xml", "ENERG
 write_mi_data( L244.Satiation_flsp_SSP3, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP3", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" ) 
 write_mi_data( L244.SatiationAdder_SSP3, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP3", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" ) 
 write_mi_data( L244.GenericServiceSatiation_SSP3, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP3", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" ) 
-write_mi_data( L244.FuelPrefElast_bld_SSP34, "FuelPrefElast", "ENERGY_LEVEL2_DATA", "L244.FuelPrefElast_bld_SSP34", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" )
+write_mi_data( L244.FuelPrefElast_bld_SSP3, "FuelPrefElast", "ENERGY_LEVEL2_DATA", "L244.FuelPrefElast_bld_SSP3", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" )
 if( nrow( L244.DeleteThermalService ) > 0 ){
   write_mi_data( L244.DeleteThermalService, "DeleteThermalService", "ENERGY_LEVEL2_DATA", "L244.DeleteThermalService", "ENERGY_XML_BATCH", "batch_building_SSP3.xml" )
 }
@@ -652,7 +659,7 @@ insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_building_SSP3.xml", "ENERG
 write_mi_data( L244.Satiation_flsp_SSP4, "Satiation_flsp", "ENERGY_LEVEL2_DATA", "L244.Satiation_flsp_SSP4", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" ) 
 write_mi_data( L244.SatiationAdder_SSP4, "SatiationAdder", "ENERGY_LEVEL2_DATA", "L244.SatiationAdder_SSP4", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" ) 
 write_mi_data( L244.GenericServiceSatiation_SSP4, "GenericServiceSatiation", "ENERGY_LEVEL2_DATA", "L244.GenericServiceSatiation_SSP4", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" ) 
-write_mi_data( L244.FuelPrefElast_bld_SSP34, "FuelPrefElast", "ENERGY_LEVEL2_DATA", "L244.FuelPrefElast_bld_SSP34", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" )
+write_mi_data( L244.FuelPrefElast_bld_SSP4, "FuelPrefElast", "ENERGY_LEVEL2_DATA", "L244.FuelPrefElast_bld_SSP4", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" )
 if( nrow( L244.DeleteThermalService ) > 0 ){
   write_mi_data( L244.DeleteThermalService, "DeleteThermalService", "ENERGY_LEVEL2_DATA", "L244.DeleteThermalService", "ENERGY_XML_BATCH", "batch_building_SSP4.xml" )
 }
