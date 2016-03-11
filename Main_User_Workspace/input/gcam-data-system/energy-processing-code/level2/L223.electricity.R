@@ -25,6 +25,7 @@ sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_ccs_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_elec_data", extension = ".R" )
+sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )
@@ -53,6 +54,7 @@ L1231.in_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.in_EJ_R_e
 L1231.out_EJ_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.out_EJ_R_elec_F_tech_Yh" )
 L1231.eff_R_elec_F_tech_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1231.eff_R_elec_F_tech_Yh" )
 L102.gdp_mil90usd_GCAM3_ctry_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.gdp_mil90usd_GCAM3_ctry_Y" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -199,7 +201,18 @@ L223.GlobalTechCapital_geo_low <- subset( L223.GlobalTechCapital_elec_low, L223.
 
 L223.GlobalTechCapital_nuc_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "nuclear") 
 
-L223.GlobalTechCapital_bio_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "biomass") 
+L223.GlobalTechCapital_bio_low <- subset( L223.GlobalTechCapital_elec_low, L223.GlobalTechCapital_elec_low$subsector.name == "biomass")
+
+# For SSP4, we want low tech biomass options for low income regions. First, determine which regions are in which groupings.
+L223.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L223.pcgdp_2010 <- L223.pcgdp_2010[ names( L223.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
+L223.pcgdp_2010 <- add_region_name( L223.pcgdp_2010 )
+L223.pcgdp_2010$X2010 <- L223.pcgdp_2010$X2010 * conv_1990_2010_USD
+L223.low_reg <- L223.pcgdp_2010$region[ L223.pcgdp_2010$X2010 < lo_growth_pcgdp ]
+L223.GlobalTechCapital_bio_ssp4 <- repeat_and_add_vector( L223.GlobalTechCapital_bio_low, "region", L223.low_reg )
+names( L223.GlobalTechCapital_bio_ssp4 )[ names( L223.GlobalTechCapital_bio_ssp4 ) == "sector.name" ] <- "supplysector"
+names( L223.GlobalTechCapital_bio_ssp4 )[ names( L223.GlobalTechCapital_bio_ssp4 ) == "subsector.name" ] <- "subsector"
+L223.GlobalTechCapital_bio_ssp4 <- L223.GlobalTechCapital_bio_ssp4[ names_TechCapital ]
 
 printlog( "L223.GlobalTechOMfixed_elec: Fixed O&M costs of global electricity generation technologies" )
 L223.globaltech_OMfixed.melt <- interpolate_and_melt( A23.globaltech_OMfixed, c( model_base_years, model_future_years ), value.name="OM.fixed", digits = digits_OM )
@@ -584,6 +597,9 @@ insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_nuclear_low.xml", "ENERGY_
 
 write_mi_data( L223.GlobalTechCapital_bio_low, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_bio_low", "ENERGY_XML_BATCH", "batch_elec_bio_low.xml" )
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_elec_bio_low.xml", "ENERGY_XML_FINAL", "elec_bio_low.xml", "", xml_tag="outFile" )
+
+write_mi_data( L223.GlobalTechCapital_bio_ssp4, "TechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_bio_ssp4", "ENERGY_XML_BATCH", "batch_elec_bio_ssp4.xml" )
+insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_elec_bio_ssp4.xml", "ENERGY_XML_FINAL", "elec_bio_ssp4.xml", "", xml_tag="outFile" )
 
 logstop()
 

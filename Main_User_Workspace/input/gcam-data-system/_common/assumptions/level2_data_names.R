@@ -49,6 +49,7 @@ names_CalInput <- c( names_TechYr, input, "calibrated.value" )
 names_TechCoef <- c( names_TechYr, input, "coefficient", "market.name" )
 names_TechEff <- c( names_TechYr, input, "efficiency", "market.name" )
 names_TechCost <- c( names_TechYr, "minicam.non.energy.input", "input.cost" )
+names_TechCapital <- c( names_TechYr, "input.capital", "capital.overnight", "fixed.charge.rate", "capacity.factor" )
 names_CarbonCapture <- c( names_TechYr, "storage.market", "remove.fraction" )
 names_ImportTech <- c( names_TechYr ) #indicates a renewable input; nothing is specified in the table however
 names_FixedOutput <- c( names_TechYr, "fixedOutput" )
