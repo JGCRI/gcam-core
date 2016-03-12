@@ -24,7 +24,6 @@ sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_ccs_data", extension = ".R" )
-sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 fuel_energy_input <- readdata( "ENERGY_MAPPINGS", "fuel_energy_input" )
 calibrated_techs <- readdata( "ENERGY_MAPPINGS", "calibrated_techs" )
@@ -43,7 +42,6 @@ A22.globaltech_retirement <- readdata( "ENERGY_ASSUMPTIONS", "A22.globaltech_ret
 L122.out_EJ_R_gasproc_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_gasproc_F_Yh" )
 L122.out_EJ_R_refining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.out_EJ_R_refining_F_Yh" )
 L122.IO_R_oilrefining_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.IO_R_oilrefining_F_Yh" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -106,17 +104,6 @@ printlog( "L222.GlobalTechCost_low_en: Costs of global technologies for energy t
 L222.globaltech_cost_low.melt <- interpolate_and_melt( A22.globaltech_cost_low, model_years, value.name="input.cost", digits = digits_cost )
 L222.globaltech_cost_low.melt[ c( "sector.name", "subsector.name" ) ] <- L222.globaltech_cost_low.melt[ c( "supplysector", "subsector" ) ]
 L222.GlobalTechCost_low_en <- L222.globaltech_cost_low.melt[ names_GlobalTechCost ]
-
-# For SSP4, we want low tech options for low income regions. First, determine which regions are in which groupings.
-L222.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
-L222.pcgdp_2010 <- L222.pcgdp_2010[ names( L222.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
-L222.pcgdp_2010 <- add_region_name( L222.pcgdp_2010 )
-L222.pcgdp_2010$X2010 <- L222.pcgdp_2010$X2010 * conv_1990_2010_USD
-L222.low_reg <- L222.pcgdp_2010$region[ L222.pcgdp_2010$X2010 < lo_growth_pcgdp ]
-L222.GlobalTechCost_ssp4_en <- repeat_and_add_vector( L222.GlobalTechCost_low_en, "region", L222.low_reg )
-names( L222.GlobalTechCost_ssp4_en )[ names( L222.GlobalTechCost_ssp4_en ) == "sector.name" ] <- "supplysector"
-names( L222.GlobalTechCost_ssp4_en )[ names( L222.GlobalTechCost_ssp4_en ) == "subsector.name" ] <- "subsector"
-L222.GlobalTechCost_ssp4_en <- L222.GlobalTechCost_ssp4_en[ names_TechCost ]
 
 #Shareweights of global technologies
 printlog( "L222.GlobalTechShrwt_en: Shareweights of global technologies for energy transformation" )
@@ -290,9 +277,6 @@ insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_en_transformation.xml", "E
 
 write_mi_data( L222.GlobalTechCost_low_en, "GlobalTechCost", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCost_low_en", "ENERGY_XML_BATCH", "batch_en_transformation_low.xml" )
 insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_en_transformation_low.xml", "ENERGY_XML_FINAL", "en_transformation_low.xml", "", xml_tag="outFile" )
-
-write_mi_data( L222.GlobalTechCost_ssp4_en, "TechCost", "ENERGY_LEVEL2_DATA", "L222.GlobalTechCost_ssp4_en", "ENERGY_XML_BATCH", "batch_en_transformation_ssp4.xml" )
-insert_file_into_batchxml( "ENERGY_XML_BATCH", "batch_en_transformation_ssp4.xml", "ENERGY_XML_FINAL", "en_transformation_ssp4.xml", "", xml_tag="outFile" )
 
 logstop()
 

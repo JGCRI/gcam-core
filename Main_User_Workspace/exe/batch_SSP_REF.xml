@@ -32,11 +32,7 @@
 			
 			<!-- NUCLEAR -->
 			<Value name="nuclear">../input/gcam-data-system/xml/energy-xml/nuclear_adv.xml</Value>
-			
-			<!-- BIO TRANSFORMATION -->
-			<Value name="bio">../input/gcam-data-system/xml/energy-xml/en_transformation_ssp4.xml</Value>
-			<Value name="bio">../input/gcam-data-system/xml/energy-xml/elec_bio_ssp4.xml</Value>
-			
+						
 			<!-- CCS -->
 			<Value name="ccs_supply">../input/gcam-data-system/xml/energy-xml/ccs_supply_high.xml</Value>
 			
