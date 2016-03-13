@@ -109,6 +109,7 @@
 		<Value name="4p5">../input/policy/policy_target_4p5_spa1.xml</Value>
 		<Value name="3p7">../input/policy/policy_target_3p7_spa1.xml</Value>
 		<Value name="2p6">../input/policy/policy_target_2p6_spa1.xml</Value>
+		<Value name="2p0">../input/policy/policy_target_2p0_spa1.xml</Value>
 	</runner-set>
 </BatchRunner>
 
