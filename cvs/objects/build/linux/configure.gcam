@@ -136,7 +136,6 @@ XERCESINC	      = $(XERCES_INCLUDE)
 
 # Same for the Boost Lapack bindings
 ifneq ($(USE_LAPACK),0)
-  BOOST_NUMERIC_BINDINGS = $(GCAMLIB_HOME)/src/boost-numeric-bindings
   BOOSTBIND      = -I$(BOOST_NUMERIC_BINDINGS)
   # On evergreen, these variables are set by running 'tap lapack'.  On other systems, set 
   # manually or using shell scripts.  If MKL is in use, we don't set these.
