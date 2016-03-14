@@ -10,12 +10,12 @@
             <linked-ghg-policy name="CO2_LUC">
                 <market>global</market>
                 <linked-policy>CO2</linked-policy>
-                <price-adjust year="2040" fillout="1">0.09</price-adjust>
-                <price-adjust year="2045" fillout="1">0.17</price-adjust>
-                <price-adjust year="2050" fillout="1">0.25</price-adjust>
-                <price-adjust year="2055" fillout="1">0.335</price-adjust>
-                <price-adjust year="2060" fillout="1">0.415</price-adjust>
-                <price-adjust year="2070" fillout="1">0.5</price-adjust>
+                <price-adjust year="2040" fillout="1">0.05</price-adjust>
+                <price-adjust year="2045" fillout="1">0.09</price-adjust>
+                <price-adjust year="2050" fillout="1">0.125</price-adjust>
+                <price-adjust year="2055" fillout="1">0.167</price-adjust>
+                <price-adjust year="2060" fillout="1">0.212</price-adjust>
+                <price-adjust year="2065" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>

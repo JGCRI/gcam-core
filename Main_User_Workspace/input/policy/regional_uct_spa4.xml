@@ -10,12 +10,13 @@
                 <market>USA</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                <price-adjust year="2025" fillout="1">0.17</price-adjust>
-                <price-adjust year="2030" fillout="1">0.33</price-adjust>
-                <price-adjust year="2035" fillout="1">0.5</price-adjust>
-                <price-adjust year="2040" fillout="1">0.67</price-adjust>
-                <price-adjust year="2045" fillout="1">0.83</price-adjust>
-                <price-adjust year="2050" fillout="1">1.0</price-adjust>
+                
+                <price-adjust year="2025" fillout="1">0.09</price-adjust>
+                <price-adjust year="2030" fillout="1">0.17</price-adjust>
+                <price-adjust year="2035" fillout="1">0.25</price-adjust>
+                <price-adjust year="2040" fillout="1">0.335</price-adjust>
+                <price-adjust year="2045" fillout="1">0.415</price-adjust>
+                <price-adjust year="2050" fillout="1">0.5</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -26,12 +27,13 @@
                 <market>Canada</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                <price-adjust year="2025" fillout="1">0.17</price-adjust>
-                <price-adjust year="2030" fillout="1">0.33</price-adjust>
-                <price-adjust year="2035" fillout="1">0.5</price-adjust>
-                <price-adjust year="2040" fillout="1">0.67</price-adjust>
-                <price-adjust year="2045" fillout="1">0.83</price-adjust>
-                <price-adjust year="2050" fillout="1">1.0</price-adjust>
+                
+                <price-adjust year="2025" fillout="1">0.09</price-adjust>
+                <price-adjust year="2030" fillout="1">0.17</price-adjust>
+                <price-adjust year="2035" fillout="1">0.25</price-adjust>
+                <price-adjust year="2040" fillout="1">0.335</price-adjust>
+                <price-adjust year="2045" fillout="1">0.415</price-adjust>
+                <price-adjust year="2050" fillout="1">0.5</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
         </region>
@@ -40,12 +42,13 @@
                 <market>EU-15</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                <price-adjust year="2025" fillout="1">0.17</price-adjust>
-                <price-adjust year="2030" fillout="1">0.33</price-adjust>
-                <price-adjust year="2035" fillout="1">0.5</price-adjust>
-                <price-adjust year="2040" fillout="1">0.67</price-adjust>
-                <price-adjust year="2045" fillout="1">0.83</price-adjust>
-                <price-adjust year="2050" fillout="1">1.0</price-adjust>
+                
+                <price-adjust year="2025" fillout="1">0.09</price-adjust>
+                <price-adjust year="2030" fillout="1">0.17</price-adjust>
+                <price-adjust year="2035" fillout="1">0.25</price-adjust>
+                <price-adjust year="2040" fillout="1">0.335</price-adjust>
+                <price-adjust year="2045" fillout="1">0.415</price-adjust>
+                <price-adjust year="2050" fillout="1">0.5</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
         </region>
@@ -54,13 +57,13 @@
                 <market>Europe_Non_EU</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+   
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -70,12 +73,13 @@
                 <market>European Free Trade Association</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                <price-adjust year="2025" fillout="1">0.17</price-adjust>
-                <price-adjust year="2030" fillout="1">0.33</price-adjust>
-                <price-adjust year="2035" fillout="1">0.5</price-adjust>
-                <price-adjust year="2040" fillout="1">0.67</price-adjust>
-                <price-adjust year="2045" fillout="1">0.83</price-adjust>
-                <price-adjust year="2050" fillout="1">1.0</price-adjust>
+                
+                <price-adjust year="2025" fillout="1">0.09</price-adjust>
+                <price-adjust year="2030" fillout="1">0.17</price-adjust>
+                <price-adjust year="2035" fillout="1">0.25</price-adjust>
+                <price-adjust year="2040" fillout="1">0.335</price-adjust>
+                <price-adjust year="2045" fillout="1">0.415</price-adjust>
+                <price-adjust year="2050" fillout="1">0.5</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
         </region>
@@ -84,12 +88,13 @@
                 <market>Japan</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                <price-adjust year="2025" fillout="1">0.17</price-adjust>
-                <price-adjust year="2030" fillout="1">0.33</price-adjust>
-                <price-adjust year="2035" fillout="1">0.5</price-adjust>
-                <price-adjust year="2040" fillout="1">0.67</price-adjust>
-                <price-adjust year="2045" fillout="1">0.83</price-adjust>
-                <price-adjust year="2050" fillout="1">1.0</price-adjust>
+                
+                <price-adjust year="2025" fillout="1">0.09</price-adjust>
+                <price-adjust year="2030" fillout="1">0.17</price-adjust>
+                <price-adjust year="2035" fillout="1">0.25</price-adjust>
+                <price-adjust year="2040" fillout="1">0.335</price-adjust>
+                <price-adjust year="2045" fillout="1">0.415</price-adjust>
+                <price-adjust year="2050" fillout="1">0.5</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
         </region>
@@ -98,12 +103,13 @@
                 <market>Australia_NZ</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                <price-adjust year="2025" fillout="1">0.17</price-adjust>
-                <price-adjust year="2030" fillout="1">0.33</price-adjust>
-                <price-adjust year="2035" fillout="1">0.5</price-adjust>
-                <price-adjust year="2040" fillout="1">0.67</price-adjust>
-                <price-adjust year="2045" fillout="1">0.83</price-adjust>
-                <price-adjust year="2050" fillout="1">1.0</price-adjust>
+                
+                <price-adjust year="2025" fillout="1">0.09</price-adjust>
+                <price-adjust year="2030" fillout="1">0.17</price-adjust>
+                <price-adjust year="2035" fillout="1">0.25</price-adjust>
+                <price-adjust year="2040" fillout="1">0.335</price-adjust>
+                <price-adjust year="2045" fillout="1">0.415</price-adjust>
+                <price-adjust year="2050" fillout="1">0.5</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
         </region>
@@ -113,12 +119,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -129,12 +135,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -145,12 +151,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -161,12 +167,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
         </region>
@@ -176,12 +182,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -192,12 +198,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -208,11 +214,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.017</price-adjust>
-                <price-adjust year="2030" fillout="1">0.033</price-adjust>
-                <price-adjust year="2035" fillout="1">0.05</price-adjust>
-                <price-adjust year="2040" fillout="1">0.067</price-adjust>
-                <price-adjust year="2045" fillout="1">0.083</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -223,12 +230,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -239,12 +246,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -255,12 +262,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -271,12 +278,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -286,12 +293,13 @@
                 <market>Taiwan</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                <price-adjust year="2025" fillout="1">0.17</price-adjust>
-                <price-adjust year="2030" fillout="1">0.33</price-adjust>
-                <price-adjust year="2035" fillout="1">0.5</price-adjust>
-                <price-adjust year="2040" fillout="1">0.67</price-adjust>
-                <price-adjust year="2045" fillout="1">0.83</price-adjust>
-                <price-adjust year="2050" fillout="1">1.0</price-adjust>
+                
+                <price-adjust year="2025" fillout="1">0.09</price-adjust>
+                <price-adjust year="2030" fillout="1">0.17</price-adjust>
+                <price-adjust year="2035" fillout="1">0.25</price-adjust>
+                <price-adjust year="2040" fillout="1">0.335</price-adjust>
+                <price-adjust year="2045" fillout="1">0.415</price-adjust>
+                <price-adjust year="2050" fillout="1">0.5</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -302,12 +310,12 @@
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                                 
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -317,12 +325,12 @@
                 <market>EU-12</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>                
-                <price-adjust year="2025" fillout="1">0.085</price-adjust>
-                <price-adjust year="2030" fillout="1">0.165</price-adjust>
-                <price-adjust year="2035" fillout="1">0.25</price-adjust>
-                <price-adjust year="2040" fillout="1">0.335</price-adjust>
-                <price-adjust year="2045" fillout="1">0.415</price-adjust>
-                <price-adjust year="2050" fillout="1">0.5</price-adjust>
+                <price-adjust year="2025" fillout="1">0.05</price-adjust>
+                <price-adjust year="2030" fillout="1">0.09</price-adjust>
+                <price-adjust year="2035" fillout="1">0.125</price-adjust>
+                <price-adjust year="2040" fillout="1">0.167</price-adjust>
+                <price-adjust year="2045" fillout="1">0.212</price-adjust>
+                <price-adjust year="2050" fillout="1">0.25</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
             
@@ -332,12 +340,13 @@
                 <market>South Korea</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
-                <price-adjust year="2025" fillout="1">0.17</price-adjust>
-                <price-adjust year="2030" fillout="1">0.33</price-adjust>
-                <price-adjust year="2035" fillout="1">0.5</price-adjust>
-                <price-adjust year="2040" fillout="1">0.67</price-adjust>
-                <price-adjust year="2045" fillout="1">0.83</price-adjust>
-                <price-adjust year="2050" fillout="1">1.0</price-adjust>
+                
+                <price-adjust year="2025" fillout="1">0.09</price-adjust>
+                <price-adjust year="2030" fillout="1">0.17</price-adjust>
+                <price-adjust year="2035" fillout="1">0.25</price-adjust>
+                <price-adjust year="2040" fillout="1">0.335</price-adjust>
+                <price-adjust year="2045" fillout="1">0.415</price-adjust>
+                <price-adjust year="2050" fillout="1">0.5</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>
             </linked-ghg-policy>
         </region>
