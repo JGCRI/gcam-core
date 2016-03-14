@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "util/base/include/data_definition_util.h"
 
@@ -15,6 +16,8 @@ class AbstractBase {
     public:
     virtual ~AbstractBase() {}
     virtual const std::string& getXMLName() const = 0;
+    virtual const std::string& getName() const = 0;
+    virtual void setName( const std::string& aName ) = 0;
     virtual int doSomethingVirtual() const = 0;
     virtual double calc(const double value) const = 0;
 
@@ -32,6 +35,8 @@ class Base : public AbstractBase {
         return XML_NAME;
     }
     virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
+    virtual const std::string& getName() const { return mName; }
+    virtual void setName( const std::string& aName ) { mName = aName; }
     void print() { std::cout << "In " << getXMLNameStatic() << std::endl; }
     virtual int doSomethingVirtual() const { return 0; };
     virtual double calc(const double value) const  { return value * mCoef0; }
@@ -98,6 +103,31 @@ public:
     protected:
     DEFINE_DATA_WITH_PARENT(
         Base
+    )
+};
+
+class Container {
+    public:
+    virtual ~Container() {}
+    static const std::string& getXMLNameStatic() {
+        static const std::string& XML_NAME = "container";
+        return XML_NAME;
+    }
+    virtual const std::string& getXMLName() const { return getXMLNameStatic(); }
+    void print() { std::cout << "In " << getXMLNameStatic() << std::endl; }
+    void addCalc( AbstractBase* aCalc ) { mCalculators.push_back( aCalc ); }
+    double doAllCalcs( const double value ) {
+        double ret = 0;
+        for(auto it = mCalculators.begin(); it != mCalculators.end(); ++it ) {
+            ret += (*it)->calc( value );
+        }
+        return ret;
+    }
+
+    protected:
+    DEFINE_DATA(
+        DEFINE_SUBCLASS_FAMILY( Container ),
+        CREATE_CONTAINER_VARIABLE( mCalculators, std::vector<AbstractBase*>, NamedFilter, "calculator" )
     )
 };
 

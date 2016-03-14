@@ -113,7 +113,7 @@ struct get_base_class<T, typename boost::enable_if<boost::mpl::not_<has_ParentCl
  *          create a joint_view of the full data vector.
  *          Storing this joint_view proves tricky so instead we provide the 
  *          getFullDataVector which takes as an argument some templated class that
- *          provides a processData method as a call back to do something useful with
+ *          provides a processDataVector method as a call back to do something useful with
  *          the joint_view of the full data vector.
  *
  * \author Pralit Patel
@@ -160,18 +160,18 @@ class ExpandDataVector  {
     /*!
      * \brief The accessor method to get the full datavector one setSubClass has been
      *        called.
-     * \details The full data vector is gathered and passed as an argument to the processData
+     * \details The full data vector is gathered and passed as an argument to the processDataVector
      *          call back on the aDataHandler argument which can then do something useful with
      *          the information.
-     * \tparam DataVecHandler Any object type that can provide the processData call back which takes
-     *                        the full data vector as an argument.
+     * \tparam DataVecHandler Any object type that can provide the processDataVector call back which
+     *                        takes the full data vector as an argument.
      * \param aDataHandler The instance of DataVecHandler to call back on.
      */
     template<typename DataVecHandler>
     void getFullDataVector( DataVecHandler& aDataHandler ) const {
         boost::fusion::for_each( mSubClassPtrMap, [this, &aDataHandler] ( auto& aPair ) {
             if( aPair.second ) {
-                aDataHandler.processData( this->gatherDataVector( aPair.second ) );
+                aDataHandler.processDataVector( this->gatherDataVector( aPair.second ) );
             }
         } );
     }

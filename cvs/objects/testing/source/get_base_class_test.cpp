@@ -9,7 +9,7 @@
 
 struct PrintDataHandler {
     template<typename DataVectorType>
-    void processData( DataVectorType aDataVector ) {
+    void processDataVector( DataVectorType aDataVector ) {
         boost::fusion::for_each( aDataVector, [] ( const auto& aData ) { std::cout << aData.mDataName << " = " << aData.mData << std::endl; } );
     }
 };
@@ -36,7 +36,7 @@ class GetDataHandler {
         return *mData;
     }
     template<typename DataVectorType>
-    void processData( DataVectorType aDataVector ) {
+    void processDataVector( DataVectorType aDataVector ) {
         // We need to filter here to make sure mData's type is assignable however maybe is_same is too strict?
         // TODO: consider allowing is_convertable instead?
         boost::fusion::filter_view< DataVectorType, boost::is_same< boost::mpl::_, Data<T> > > simpleDataVec( aDataVector );
