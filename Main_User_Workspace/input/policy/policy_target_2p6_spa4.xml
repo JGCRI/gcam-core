@@ -5,6 +5,6 @@
 	<target-type>forcing</target-type>
     <first-tax-year>2025</first-tax-year>
 	<tax-name>CO2_tf</tax-name>
-	<max-tax>6000</max-tax>
+	<max-tax>5000</max-tax>
 	<overshoot/>
 </policy-target-runner>
