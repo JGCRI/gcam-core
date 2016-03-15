@@ -61,6 +61,12 @@
         <solution-floor>0.0001</solution-floor>
         <calibration-tolerance>0.01</calibration-tolerance>
         <max-model-calcs>5000</max-model-calcs>
+        <bisect-all-solver-component>
+            <bracket-interval>1.0</bracket-interval>
+            <max-bracket-iterations>40</max-bracket-iterations>
+            <max-iterations>10</max-iterations>
+            <solution-info-filter>unsolved &amp;&amp; solvable</solution-info-filter>
+        </bisect-all-solver-component>
         <broyden-solver-component>
             <max-iterations>40</max-iterations>
 	    <ftol>1.0e-3</ftol>
@@ -68,12 +74,6 @@
             <!-- include the tax market in the newton-raphson -->
             <solution-info-filter>solvable-nr || (market-type="Tax" &amp;&amp; solvable)</solution-info-filter>
         </broyden-solver-component> 
-        <bisect-all-solver-component>
-            <bracket-interval>1.0</bracket-interval>
-            <max-bracket-iterations>40</max-bracket-iterations>
-            <max-iterations>10</max-iterations>
-            <solution-info-filter>unsolved &amp;&amp; solvable</solution-info-filter>
-        </bisect-all-solver-component>
     </user-configurable-solver>
     <!-- The SolutionInfoParamParser object allows us to specify the following solution algorithm
          parameters with varying granularity.
@@ -96,5 +96,6 @@
     <solution-info-param-parser>
         <!-- applies to all regions since region attribute is not included -->
         <max-price-change fillout="1" market-type="Trial-Value" period="1">10</max-price-change>
+        <max-price-change fillout="1" market-type="biomass" period="10">10</max-price-change>
     </solution-info-param-parser>
 </scenario>
