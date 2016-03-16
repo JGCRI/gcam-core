@@ -12,6 +12,11 @@ require(plyr)
 ###
 ### The columns in the lowest level table will be:
 ###      iteration, market id, solvable (T/F), value, name
+###
+###  Examples:
+###  mydata <- read.trace.log(...)
+###  mydata[[5]] (or mydata$`5`)  : all period 5 data
+###  mydata[[5]]$price            : period 5 price data, with columns described above.
 read.trace.log <- function(filename, key.filename=NA) {
     colnames <- c('period', 'iter', 'variable','mktid','solvable','value')
     colclasses <- c('integer', 'integer', 'factor','integer','logical','numeric')
@@ -33,6 +38,11 @@ read.trace.log <- function(filename, key.filename=NA) {
     ## split by period, and split each period by variable.  
     data <- data[period>0]             # drop bogus period 0
     data.by.period <- split(data, data$period)
+
+    ## For each period, split it by variable and add iter and mktid as the primary and
+    ## secondary sort keys (see data.table documentation for an explanaiton of how this
+    ## works and why we need to do it).  Other functions here may rely on this keying, so
+    ## don't change it.
     lapply(data.by.period,
            function(df) {
                lapply(split(df, df$variable), function(dt) {setkey(dt, iter, mktid)})
@@ -283,6 +293,38 @@ plotvars <- function(data, mktids, title="", skip=0, transforms=NULL, use.names=
 ###
 ### Functions for identifying markets to look at more closely
 ###
+
+mkt.names <- function(perdata, mktids) {
+    ## Look up market names by market id
+    ##   perdata:  full dataset for a period
+    ##   mktids:  vector of market ids to look up
+    ##
+    ##  return value: vector of market name strings
+    ##
+    ## Notes:  this function exploits the sorting imposed by the data.table
+    ##    when the mktid field is the secondary sort key.  Changing the keying
+    ##    on the log data may break this function.  (So don't do that!)
+    perdata$price[mktids,mktname]       # Use price because it will have solvable & unsolvable markets
+}
+
+mkt.grep <- function(perdata, pattern, ...) {
+    ## Find market ids for markets matching a regexp
+    ##   perdata:  full dataset for a period
+    ##   pattern:  character string containing a regular expression
+    ##       ...:  Extra args are passed to grep.  Particularly useful
+    ##             possiblilities include ignore.case, fixed, or perl
+    ##
+    ##  return value:  vector of market IDs whose names match the
+    ##     regular expression supplied in pattern.
+
+    ## limit to first iter so we don't have duplicates; use price
+    ## because it has both solvable and unsolvable markets
+    iter1 <- perdata$price[iter==1]
+
+    mkts <- iter1$mktid[grep(pattern,iter1$mktname, ...)]
+    names(mkts) <- iter1$mktname[mkts]
+    mkts
+}
 
 final.mkt.extremes <- function(vardata, nmkt=5, final.iter=TRUE, findmax=TRUE) {
   ## Find the markets that have the largest (optionally smallest) values of a tracked variable.
