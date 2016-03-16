@@ -196,6 +196,7 @@ calc.total.deriv <- function(data.period) {
   newdata$value <- newdata$i.value / newdata$value
   newdata$i.value <- NULL
   newdata$variable <- "dfdx"
+  newdata
 }
 
 ####
