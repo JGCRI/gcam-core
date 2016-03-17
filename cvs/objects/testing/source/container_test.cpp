@@ -24,6 +24,9 @@ struct NamedFilter {
             return false;
         }
     }
+    const std::string* getCurrValue() const {
+        return mCurrFilterValue;
+    }
     void reset() {
         mCurrFilterValue = 0;
     }
@@ -43,12 +46,16 @@ struct YearFilter {
             return false;
         }
     }
+    const int* getCurrValue() const {
+        return mCurrFilterValue;
+    }
     void reset() {
         mCurrFilterValue = 0;
     }
 };
 
 BOOST_MPL_HAS_XXX_TRAIT_DEF( filter_type );
+BOOST_MPL_HAS_XXX_TRAIT_DEF( key_type );
 
 struct FilterStep {
     FilterStep( const std::string& aDataName ):mDataName( aDataName ), mFilterMap( boost::fusion::make_pair<NamedFilter>( static_cast<NamedFilter*>( 0 ) ), boost::fusion::make_pair<YearFilter>( static_cast<YearFilter*>( 0 ) ) ), mNoFilters( true ) {}
@@ -68,31 +75,75 @@ struct FilterStep {
         } );
     }
     template<typename DataType>
-    typename boost::enable_if<has_filter_type<DataType>, bool>::type matchesDataType( const DataType& aData ) {
-        return ( mDataName.empty() || mDataName == aData.mDataName ) && ( mNoFilters || boost::fusion::at_key<typename DataType::filter_type>( mFilterMap ) );
+    bool matchesDataName( const DataType& aData ) {
+        return mDataName.empty() || mDataName == aData.mDataName;
     }
-    template<typename DataType>
-    typename boost::enable_if<boost::mpl::not_<has_filter_type<DataType> >, bool>::type matchesDataType( const DataType& aData ) {
-        return ( mDataName.empty() || mDataName == aData.mDataName ) && ( mNoFilters );
-    }
+    // TODO: this looks delicate, we need to make sure we know how to iterate over whatever types of data
+    // is in DataType.mData
     template<typename DataType, typename DataVectorHandler>
-    typename boost::enable_if<has_filter_type<DataType>, void>::type applyFilter( const DataType& aData, DataVectorHandler& aHandler ) {
-        //assert( matchesDataType( aData ) );
+    typename boost::enable_if<
+        boost::mpl::and_<
+            boost::is_same<DataType, ContainerData<typename DataType::value_type, typename DataType::filter_type> >,
+            boost::mpl::not_<has_key_type<typename DataType::value_type> >
+        >,
+    void>::type applyFilter( const DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
+        //assert( matchesDataName( aData ) );
         if( aData.mData.empty() ) {
             return;
         }
         ExpandDataVector<typename boost::remove_pointer<typename decltype( aData.mData )::value_type>::type::SubClassFamilyVector> getDataVector;
+        auto& filterPred = *boost::fusion::at_key<typename DataType::filter_type>( mFilterMap );
         auto iter = aData.mData.begin();
-        while( ( iter = std::find_if( iter, aData.mData.end(), *boost::fusion::at_key<typename DataType::filter_type>( mFilterMap ) ) ) != aData.mData.end() ) {
-            (*iter)->accept( getDataVector );
-            getDataVector.getFullDataVector( aHandler );
+        while( ( iter = std::find_if( iter, aData.mData.end(), filterPred ) ) != aData.mData.end() ) {
+            if( !aIsLastStep ) {
+                aHandler.pushFilterStep( *iter, filterPred.getCurrValue() );
+                (*iter)->accept( getDataVector );
+                getDataVector.getFullDataVector( aHandler );
+                aHandler.popFilterStep( *iter );
+            }
+            else {
+                aHandler.processData( *iter );
+            }
             ++iter;
         }
     }
     template<typename DataType, typename DataVectorHandler>
-    typename boost::enable_if<boost::mpl::not_<has_filter_type<DataType> >, void>::type applyFilter( const DataType& aData, DataVectorHandler& aHandler ) {
-        //assert( matchesDataType( aData ) );
-        //aHandler.processDataVector( aData );
+    typename boost::enable_if<
+        boost::mpl::and_<
+            boost::is_same<DataType, ContainerData<typename DataType::value_type, typename DataType::filter_type> >,
+            has_key_type<typename DataType::value_type>
+        >,
+    void>::type applyFilter( const DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
+        //assert( matchesDataName( aData ) );
+        if( aData.mData.empty() ) {
+            return;
+        }
+        ExpandDataVector<typename boost::remove_pointer<typename decltype( aData.mData )::mapped_type>::type::SubClassFamilyVector> getDataVector;
+        auto& filterPred = *boost::fusion::at_key<typename DataType::filter_type>( mFilterMap );
+        for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
+            if( filterPred( (*iter).second ) ) {
+                if( !aIsLastStep ) {
+                    aHandler.pushFilterStep( (*iter).second, filterPred.getCurrValue() );
+                    (*iter).second->accept( getDataVector );
+                    getDataVector.getFullDataVector( aHandler );
+                    aHandler.popFilterStep( (*iter).second );
+                }
+                else {
+                    aHandler.processData( (*iter).second );
+                }
+            }
+        }
+    }
+
+    template<typename DataType, typename DataVectorHandler>
+    typename boost::enable_if<boost::is_same<DataType, Data<typename DataType::value_type> >, void>::type applyFilter( const DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
+        //assert( matchesDataName( aData ) );
+        if( aIsLastStep ) {
+            aHandler.processData( aData.mData );
+        }
+        else {
+            // error?
+        }
     }
 };
 
@@ -113,23 +164,34 @@ class GCAMParamResetAPI {
     template<typename DataVectorType>
     void processDataVector( DataVectorType aDataVector ) {
         //assert( mCurrStep < mFilterSteps.size() );
-        boost::fusion::for_each( aDataVector, [this] ( auto& aData ) {
-            if( this->mFilterSteps[ mCurrStep ]->matchesDataType( aData ) ) {
-                std::cout << "Begin mCurrStep is now: " << mCurrStep << std::endl;
+        bool isAtLastStep = this->isAtLastStep();
+        std::cout << "Curr step is: " << mCurrStep << ", at end? " << isAtLastStep << std::endl;
+        boost::fusion::for_each( aDataVector, [this, isAtLastStep] ( auto& aData ) {
+            if( this->mFilterSteps[ mCurrStep ]->matchesDataName( aData ) ) {
                 std::cout << "Matches!!!! " << aData.mDataName << std::endl;
-                if( isAtLastStep() ) {
-                    std::cout << "Done!" << std::endl;
-                    mDataProcessor.processData( aData );
-                    ++mCurrStep;
-                }
-                else {
-                    std::cout << "Taking step" << std::endl;
-                    this->mFilterSteps[ mCurrStep++ ]->applyFilter( aData, *this );
-                }
-                --mCurrStep;
-                std::cout << "End mCurrStep is now: " << mCurrStep << std::endl;
+                this->mFilterSteps[ mCurrStep ]->applyFilter( aData, *this, isAtLastStep );
             }
         } );
+    }
+
+    template<typename DataType, typename IDType>
+    void pushFilterStep( const DataType& aData, const IDType* aIDValue )  {
+        ++mCurrStep;
+        std::cout << "Pushed step: " << mCurrStep << std::endl;
+        mDataProcessor.pushFilterStep( aData, aIDValue );
+    }
+
+    template<typename DataType>
+    void popFilterStep( const DataType& aData )  {
+        --mCurrStep;
+        std::cout << "Popped step: " << mCurrStep << std::endl;
+        mDataProcessor.popFilterStep( aData );
+    }
+
+    template<typename DataType>
+    void processData( DataType& aData )  {
+        std::cout << "Done!" << std::endl;
+        mDataProcessor.processData( aData );
     }
 
     bool isAtLastStep() const {
@@ -145,9 +207,18 @@ class GCAMParamResetAPI {
 };
 
 struct DoSomeThingNotSure {
+    template<typename DataType, typename IDType>
+    void pushFilterStep( const DataType& aData, const IDType* aIDValue )  {
+        if( aIDValue ) {
+            std::cout << "Pushed: " << *aIDValue << std::endl;
+        }
+    }
+    template<typename DataType>
+    void popFilterStep( const DataType& aData )  {
+    }
     template<typename T>
     void processData( T& aData ) {
-        // something
+        std::cout << "Saw: " << aData << std::endl;
     }
 };
 
