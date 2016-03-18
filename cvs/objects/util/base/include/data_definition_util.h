@@ -157,10 +157,18 @@ struct Data {
     ( aVarName, DEFINE_SIMPLE_DATA_STRUCT( aTypeAndName ), BOOST_PP_VARIADIC_ELEM( BOOST_PP_DEC( BOOST_PP_VARIADIC_SIZE( aTypeAndName ) ), aTypeAndName ) )
 
 /*!
- * \brief Flattens the nesting of sequences one level
- *        Note the tokens are still left in a sequence.
+ * \brief Identity transformation. To be used with FOR_EACH metafunction to Flatten the nesting of sequences one level.
+
+ * \details Example.  Starting with a sequence like this
+ *          ```
+ *          (a) (b) (c)
+ *          ```
+ *          will become:
+ *          ```
+ *          a b c
+ *          ```
  * \param s The next available BOOST_PP_FOR repetition.
- * \param data A base token to be always passed in (note used).
+ * \param data A base token to be always passed in (not used).
  * \param elem The sequence of tokens represetning the current data definition.
  */
 #define FLATTEN( r, data, elem ) \
@@ -191,15 +199,23 @@ struct Data {
  * \details Implementation from: http://stackoverflow.com/questions/26475453/how-to-use-boostpreprocessor-to-unzip-a-sequence
  *          The "unzipped" sequences can be accessed by index.  For data definitions
  *          given like:
- *          (
- *            ( VAR_1, TYPE_1, NAME_1),
+ *          ```
+ *          #define DECLS  \
+ *            ( VAR_1, TYPE_1, NAME_1), \
  *            ( VAR_2, TYPE_2, NAME_2)
- *          )
- *
+ *          ```
+ *          The macro calls:
+ *          ```
+ *          UNZIP(0, DECLS)
+ *          UNZIP(1, DECLS)
+ *          UNZIP(2, DECLS)
+ *          ```   
  *          Would then be transformed to:
- *          0: ( VAR_1, VAR_2 )
- *          1: ( TYPE_1, TYPE_2 )
- *          2: ( NAME_1, NAME_2 )
+ *          ```
+ *          (VAR_1) (VAR_2)
+ *          (TYPE_1) (TYPE_2)
+ *          (NAME_1) (NAME_2)
+ *          ```
  */
 #define UNZIP_MACRO(s, data, elem) BOOST_PP_TUPLE_ELEM(data, elem)
 
@@ -240,6 +256,8 @@ struct Data {
  *        full data vector from sub-classes at runtime.
  * \details The first argument is used to typedef the SubClassFamilyVector, and the
  *          rest is given to DEFINE_DATA_INTERNAL to process the actual data definitions.
+ *          The DEFINE_SUBCLASS_FAMILY macro can be used to create the SubClassFamilySeq
+ *          argument.
  */
 #define DEFINE_DATA( aSubClassFamilySeq, aDefList... ) \
     public: typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( aSubClassFamilySeq )> SubClassFamilyVector; \
