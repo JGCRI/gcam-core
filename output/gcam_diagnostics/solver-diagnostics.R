@@ -85,7 +85,7 @@ fxcolormap <- function(n=51, controlpts=c(-10,-3,0,3,10)) {
     hsv(H, S, 1)
 }
 
-fxtransform <- function(x) {
+fxtransform <- function(ftol=1.0e-3) {
     ### Transform F(x) values for better visualization
     ###
     ### This transformation is a log scale for small values that switches to a linear 
@@ -94,13 +94,14 @@ fxtransform <- function(x) {
     ###  that but < 1 are divided by the tolerance, have the base-10 log taken, and
     ###  have their sign preserved.  Magnitudes > 1 are presented linearly (shifted
     ###  to be continuous with the small scale), and magnitudes >10 are clamped.
-    ftol  <- 1.0e-3                     # threshold for considering a market "solved"
-    signx <- sign(x)
-    magx  <- abs(x)
-    xx    <- ifelse(magx < ftol, 0,
-                    ifelse(magx < 1, log10(magx)-log10(ftol),
-                           ifelse(magx < 10, (magx-1)-log10(ftol), 9-log10(ftol))))
-    signx*xx                            # return value
+    function(x) {
+        signx <- sign(x)
+        magx  <- abs(x)
+        xx    <- ifelse(magx < ftol, 0,
+                        ifelse(magx < 1, log10(magx)-log10(ftol),
+                               ifelse(magx < 10, (magx-1)-log10(ftol), 9-log10(ftol))))
+        signx*xx                            # return value
+    }
 }
 
 ### Return a transform function that takes the magnitude and clips it to a maximum value
@@ -121,18 +122,12 @@ clamp.transform <- function(xmin=-100, xmax=100) {
 ### Return a transform function that gives sign(x)*log(x/xmin).
 ### x-values less than xmin are flushed to zero, and x-values greater
 ### than xmax are clipped to xmax
-signed.log.transform <- function(xmin=1e-4, xmax=100) {
+signed.log.transform <- function(xmin=1e-3, xmax=100) {
     function(x) {
         signx <- sign(x)
         absx  <- pmax( pmin(abs(x), xmax), xmin)
         signx * log10(absx/xmin)
     }
-}
-
-### Transform deltax and deltafx values for better visualization
-deltatransform <- function(x, maxmag=10) {
-    magx <- abs(x)
-    pmin(magx, maxmag)
 }
 
 heatmap.gcam <- function(data, xform=identity, colors=c("white","blue"), title="", breaks=waiver(), solvable.only = FALSE) {
@@ -207,9 +202,10 @@ calc.total.deriv <- function(data.period) {
 ### create a heat map of a single variable for a single period (i.e.,
 ### the bottom-level table in the list created by read.trace.log).
 ### This version is tuned for looking at fx.
-heatmap.fx <- function(data, title="", breaks=NULL) {
-    minval <- fxtransform(min(data$value, na.rm=TRUE))
-    maxval <- fxtransform(max(data$value, na.rm=TRUE))
+heatmap.fx <- function(data, title="", breaks=NULL, ftol=1e-3) {
+    fxform <- fxtransform(ftol)
+    minval <- fxform(min(data$value, na.rm=TRUE))
+    maxval <- fxform(max(data$value, na.rm=TRUE))
 
     ## set up control points as (min, x1, 0.0, x2, max), where x1 and
     ## x2 are the midpoints of [min,0] and [0,max], respectively
@@ -224,7 +220,7 @@ heatmap.fx <- function(data, title="", breaks=NULL) {
     if(is.null(breaks))
         breaks <- cp
 
-    heatmap.gcam(data, xform=fxtransform, colors=fxcolormap(n=51,controlpts=cp), 
+    heatmap.gcam(data, xform=fxform, colors=fxcolormap(n=51,controlpts=cp), 
                  title=title, breaks=breaks)
 }
 
@@ -258,7 +254,7 @@ plotvars <- function(data, mktids, title="", skip=0, transforms=NULL, use.names=
   ## default transforms for this application, if none supplied by user
   if(is.null(transforms)) {
     cmt <- clipped.mag.transform(3)
-    transforms <- list(fx=fxtransform, deltafx=cmt, deltax=cmt)
+    transforms <- list(fx=fxtransform(), deltafx=cmt, deltax=cmt)
   }
   
   ## apply transforms as necessary
