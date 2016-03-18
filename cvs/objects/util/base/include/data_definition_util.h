@@ -90,6 +90,11 @@ struct ContainerData : public Data<T> {
     typedef Filter filter_type;
 };
 
+template<typename T>
+struct ArrayData : public Data<T> {
+    ArrayData( const char* aDataName ):Data<T>( aDataName ) {}
+};
+
 //! The name to call the variable which will hold all Data structs in a vector.
 #define DATA_VECTOR_NAME mDataVector
 
@@ -145,6 +150,9 @@ struct ContainerData : public Data<T> {
 #define DEFINE_CONTAINER_DATA_STRUCT( aTypeAndName... ) \
     BOOST_PP_VARIADIC_TO_SEQ( ContainerData< BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( aTypeAndName ) ) ) > )
 
+#define DEFINE_ARRAY_DATA_STRUCT( aTypeAndName... ) \
+    BOOST_PP_VARIADIC_TO_SEQ( ArrayData< BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( aTypeAndName ) ) ) > )
+
 /*!
  * \brief Gathers the definiiton for a piece of data to be collected as a sequence
  *        of tokens to be stiched together into a vector of definitions.
@@ -169,6 +177,9 @@ struct ContainerData : public Data<T> {
 
 #define CREATE_CONTAINER_VARIABLE( aVarName, aTypeAndName... ) \
     ( aVarName, DEFINE_CONTAINER_DATA_STRUCT( aTypeAndName ), BOOST_PP_VARIADIC_ELEM( BOOST_PP_DEC( BOOST_PP_VARIADIC_SIZE( aTypeAndName ) ), aTypeAndName ) )
+
+#define CREATE_ARRAY_VARIABLE( aVarName, aTypeAndName... ) \
+    ( aVarName, DEFINE_ARRAY_DATA_STRUCT( aTypeAndName ), BOOST_PP_VARIADIC_ELEM( BOOST_PP_DEC( BOOST_PP_VARIADIC_SIZE( aTypeAndName ) ), aTypeAndName ) )
 
 /*!
  * \brief Identity transformation. To be used with FOR_EACH metafunction to Flatten the nesting of sequences one level.
