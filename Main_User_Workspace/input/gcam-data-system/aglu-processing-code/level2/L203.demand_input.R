@@ -29,6 +29,7 @@ GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_demand_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_demand_supplysector" )
 A_demand_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_demand_subsector" )
 A_demand_technology <- readdata( "AGLU_ASSUMPTIONS", "A_demand_technology" )
+A_fuelprefElasticity_ssp1 <- readdata( "AGLU_ASSUMPTIONS", "A_fuelprefElasticity_ssp1" )
 L101.ag_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_Food_Pcal_R_C_Y" )
 L101.ag_kcalg_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_kcalg_R_C_Y" )
 L105.an_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L105.an_Food_Pcal_R_C_Y" )
@@ -453,6 +454,11 @@ L203.PriceElasticity$price.elasticity[ L203.PriceElasticity$region == "USA" &
       L203.PriceElasticity$energy.final.demand == "FoodDemand_Meat" ] <- food_meat_P_elas_USA
 L203.PriceElasticity <- L203.PriceElasticity[ names_PriceElasticity ]
 
+#fuel preference elasticity
+printlog( "L203.FuelPrefElast_ssp1: Fuel preference elasticities for meat in SSP1" )
+A_fuelprefElasticity_ssp1$year.fillout <- min( model_base_years )
+L203.FuelPrefElast_ssp1 <- write_to_all_regions_ag( A_fuelprefElasticity_ssp1, names_FuelPrefElasticity )
+
 #Remove any regions for which agriculture and land use are not modeled
 ## ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS
 L203.Supplysector_demand         <- subset( L203.Supplysector_demand, !region %in% no_aglu_regions )
@@ -475,6 +481,7 @@ L203.IncomeElasticity_SSP3       <- subset( L203.IncomeElasticity_SSP3, !region 
 L203.IncomeElasticity_SSP4       <- subset( L203.IncomeElasticity_SSP4, !region %in% no_aglu_regions )
 L203.IncomeElasticity_SSP5       <- subset( L203.IncomeElasticity_SSP5, !region %in% no_aglu_regions )
 L203.PriceElasticity             <- subset( L203.PriceElasticity, !region %in% no_aglu_regions )
+L203.FuelPrefElast_ssp1          <- subset( L203.FuelPrefElast_ssp1, !region %in% no_aglu_regions )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -500,6 +507,7 @@ write_mi_data( L203.PriceElasticity, "PriceElasticity", "AGLU_LEVEL2_DATA", "L20
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_demand_input.xml", "AGLU_XML_FINAL", "demand_input.xml", "", xml_tag="outFile" )
 
+write_mi_data( L203.FuelPrefElast_ssp1, "FuelPrefElast", "AGLU_LEVEL2_DATA", "L203.FuelPrefElast_ssp1", "AGLU_XML_BATCH", "batch_food_SSP1.xml" )
 write_mi_data( L203.IncomeElasticity_SSP1, "IncomeElasticity", "AGLU_LEVEL2_DATA", "L203.IncomeElasticity_SSP1", "AGLU_XML_BATCH", "batch_food_SSP1.xml" )
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_food_SSP1.xml", "AGLU_XML_FINAL", "food_SSP1.xml", "", xml_tag="outFile" )
 
