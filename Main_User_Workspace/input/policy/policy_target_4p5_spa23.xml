@@ -5,4 +5,5 @@
 	<target-type>forcing</target-type>
 	<first-tax-year>2040</first-tax-year>
 	<tax-name>CO2_tf</tax-name>
+        <forward-look>2</forward-look>
 </policy-target-runner>
