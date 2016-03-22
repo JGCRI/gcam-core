@@ -125,7 +125,7 @@ double PriceMarket::getDemand() const {
 }
 
 void PriceMarket::nullSupply() {
-    // DemandMarket does not utilize supply instead
+    // PriceMarket does not utilize supply instead
     // it is equal to the price.
 }
 

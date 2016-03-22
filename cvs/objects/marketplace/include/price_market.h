@@ -51,6 +51,11 @@ class Tabs;
 /*!
 * \ingroup Objects
 * \brief A derived class which defines a single PriceMarket object for use in solving simultaneous markets.
+*
+* \warning The "supply" value for this type of market is not used.  Since the PriceMarket market serves
+*          as an abstraction to model components such as Sectors or Technologies the accessor
+*          function getSupply will be forwarded to the associated DemandMarket (which will return a trial
+*          value itself) while accessing from the solver via getSolverSupply will simply return the price.
 * \author Steve Smith
 */
 

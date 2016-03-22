@@ -55,7 +55,9 @@
 * supply or demand. The object using this market must set this market to solved,
 * and then call addToDemand to set the trial value, and call getPrice to get the
 * trial value.
-*
+* 
+* \warning The "supply" value for this type of market is not used.  Any of the accessor
+*          functions such as getSupply or getSolverSupply will simply return the price.
 * \author Steve Smith
 */
 

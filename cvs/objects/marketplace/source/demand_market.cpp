@@ -87,9 +87,10 @@ void DemandMarket::addToDemand( const double demandIn ) {
 }
 
 double DemandMarket::getDemand() const {
-    // Model facing getDemand returns a trial demand
-    // solver facing getSolverDemand will look at the actual
-    // demand
+    // This method is used by model components such as Sectors,
+    // Technologies, etc and returns a trial demand aka price.
+    // The solver will use getSolverDemand will get the actual
+    // demand added to this market.
     return price;
 }
 
