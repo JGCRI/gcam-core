@@ -140,7 +140,7 @@
 	</ComponentSet>
 	<runner-set name="policy-target-runner">
 		<Value name="6p0">../input/policy/policy_target_6p0_spa235.xml</Value>
-		<Value name="4p5">../input/policy/policy_target_4p5_spa235.xml</Value>
+		<Value name="4p5">../input/policy/policy_target_4p5_spa23.xml</Value>
 		<Value name="3p7">../input/policy/policy_target_3p7_spa235.xml</Value>
 		<Value name="2p6">../input/policy/policy_target_2p6_spa23.xml</Value>
 		<Value name="2p0">../input/policy/policy_target_2p0_spa235.xml</Value>
