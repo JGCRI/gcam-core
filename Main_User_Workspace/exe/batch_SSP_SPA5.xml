@@ -75,6 +75,7 @@
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp15_emissions_factors.xml</Value>
 			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP5.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP5_IRR.xml</Value>
 			
 			<!-- POLICY -->
 			<Value name="tax">../input/policy/carbon_tax_tf_0.xml</Value>
