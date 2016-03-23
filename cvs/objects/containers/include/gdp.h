@@ -48,6 +48,7 @@
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 class Demographic;
 
@@ -66,33 +67,6 @@ class Demographic;
 class GDP: public IRoundTrippable, public IVisitable
 {
     friend class XMLDBOutputter;
-private:
-    std::vector<Value> laborProdGrowthRate; //!< labor productivity growth rate
-    std::vector<Value> laborForceParticipationPercent; //!< labor force participation percent
-    std::vector<double> laborForce; //!< actual labor force
-    std::vector<double> gdpValue; //!< approximate regional gross domestic product in constant dollars, not adjusted for energy price for this period
-    std::vector<double> gdpPerCapita; //!< regional gross domestic product per capita in constant dollars ($)
-    std::vector<double> gdpValueAdjusted; //!< regional gross domestic product adjusted for energy price feedback
-    std::vector<double> gdpValueNotAdjusted; //!< regional gross domestic product without any adjustments for energy price feedback in any period
-    std::vector<double> gdpPerCapitaNotAdjusted; //!< regional GDP per cap without any adjustments for energy price feedback in any period
-    std::vector<double> gdpValueAdjustedPPP; //!< regional adjusted GDP in PPP terms
-    std::vector<double> gdpPerCapitaAdjusted; //!< regional gross domestic product per capita in constant dollars ($)
-    std::vector<double> gdpPerCapitaAdjustedPPP; //!< regional gross domestic product per capita in constant dollars ($)
-    std::vector<double> gdpPerCapitaApproxPPP; //!< approximate regional GDP per capita PPP terms (before energy price adjustment)
-    std::vector<bool> gdpAdjustedFlag; //!< flag to tell if GDPs have been adjusted yet
-    std::vector<double> calibrationGDPs; //!< Calibration values for GDP (constant dollars)
-    std::string mGDPUnit; //!< Unit for GDP
-    double baseGDP; //!< Base-year value (constant dollars) for regional GDP
-    double mEnergyGDPElasticity; //!< Energy service price feedback elasticity for GDP
-    double PPPConversionFact; //!< 1990 Ratio of PPP to Market GDP
-    double PPPDelta; //!< Internal exponent variable for PPP conversion
-    bool constRatio; //!< Flag to turn on dynamic ratio of PPP to Market GDP
-    static const std::string XML_NAME; //!< node name for toXML methods
-    double calculatePPPPerCap( const int period,const double marketGDPperCap ); // function to calculate PPP values
-    double getPPPMERRatio( const int period, const double marketGDPperCap ); // function to calculate PPP/MER ratio
-    double getTotalLaborProductivity( const int period ) const;
-    double getLaborForce( const int per ) const;
-    int findNextPeriodWithValue( const int aStartPeriod, const std::vector<Value>& aValueVector ) const;
 public:
     GDP();
     void XMLParse( const xercesc::DOMNode* node );
@@ -119,6 +93,79 @@ public:
     double getGDPPerCapitaNotAdjusted( const int period ) const;
     double getApproxPPPperCap( const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    
+protected:
+    
+    DEFINE_DATA(
+        /*! \brief GDP is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( GDP ),
+        
+        /*! \brief labor productivity growth rate. */
+        CREATE_ARRAY_VARIABLE( laborProdGrowthRate, std::vector<Value>, "laborproductivity" ),
+                
+        /*! \brief labor force participation percent. */
+        CREATE_ARRAY_VARIABLE( laborForceParticipationPercent, std::vector<Value>, "laborforce" ),
+        
+        /*! \brief actual labor force. */
+        CREATE_ARRAY_VARIABLE( laborForce, std::vector<double>, "total-laborForce" ),
+        
+        /*! \brief approximate regional gross domestic product in constant dollars, not adjusted for energy price for this period. */
+        CREATE_ARRAY_VARIABLE( gdpValue, std::vector<double>, "gdpValue" ),
+        
+        /*! \brief regional gross domestic product per capita in constant dollars ($). */
+        CREATE_ARRAY_VARIABLE( gdpPerCapita, std::vector<double>, "gdpPerCapita" ),
+        
+        /*! \brief regional gross domestic product adjusted for energy price feedback. */
+        CREATE_ARRAY_VARIABLE( gdpValueAdjusted, std::vector<double>, "gdpValueAdjusted" ),
+        
+        /*! \brief regional gross domestic product without any adjustments for energy price feedback in any period. */
+        CREATE_ARRAY_VARIABLE( gdpValueNotAdjusted, std::vector<double>, "gdpValueNotAdjusted" ),
+        
+        /*! \brief regional GDP per cap without any adjustments for energy price feedback in any period. */
+        CREATE_ARRAY_VARIABLE( gdpPerCapitaNotAdjusted, std::vector<double>, "gdpPerCapitaNotAdjusted" ),
+        
+        /*! \brief regional adjusted GDP in PPP terms. */
+        CREATE_ARRAY_VARIABLE( gdpValueAdjustedPPP, std::vector<double>, "gdpValueAdjustedPPP" ),
+        
+        /*! \brief regional gross domestic product per capita in constant dollars ($). */
+        CREATE_ARRAY_VARIABLE( gdpPerCapitaAdjusted, std::vector<double>, "gdpPerCapitaAdjusted" ),
+        
+        /*! \brief regional gross domestic product per capita in constant dollars ($). */
+        CREATE_ARRAY_VARIABLE( gdpPerCapitaAdjustedPPP, std::vector<double>, "gdpPerCapitaAdjustedPPP" ),
+        
+        /*! \brief approximate regional GDP per capita PPP terms (before energy price adjustment). */
+        CREATE_ARRAY_VARIABLE( gdpPerCapitaApproxPPP, std::vector<double>, "gdpPerCapitaApproxPPP" ),
+                
+        /*! \brief flag to tell if GDPs have been adjusted yet. */
+        CREATE_ARRAY_VARIABLE( gdpAdjustedFlag, std::vector<bool>, "gdpAdjustedFlag" ),
+        
+        /*! \brief Calibration values for GDP (constant dollars). */
+        CREATE_ARRAY_VARIABLE( calibrationGDPs, std::vector<double>, "calibrationGDPs" ),
+                
+        /*! \brief Unit for GDP. */
+        CREATE_SIMPLE_VARIABLE( mGDPUnit, std::string, "GDP-unit" ),
+                
+        /*! \brief Base-year value (constant dollars) for regional GDP. */
+        CREATE_SIMPLE_VARIABLE( baseGDP, double, "baseGDP" ),
+                
+        /*! \brief Energy service price feedback elasticity for GDP. */
+        CREATE_SIMPLE_VARIABLE( mEnergyGDPElasticity, double, "e_GDP_elas" ),
+        
+        /*! \brief 1990 Ratio of PPP to Market GDP. */
+        CREATE_SIMPLE_VARIABLE( PPPConversionFact, double, "PPPConversionFact" ),
+        
+        /*! \brief Internal exponent variable for PPP conversion. */
+        CREATE_SIMPLE_VARIABLE( PPPDelta, double, "PPPDelta" ),
+                
+        /*! \brief Flag to turn on dynamic ratio of PPP to Market GDP. */
+        CREATE_SIMPLE_VARIABLE( constRatio, bool, "PPPConvert" )
+    )
+
+    double calculatePPPPerCap( const int period,const double marketGDPperCap ); // function to calculate PPP values
+    double getPPPMERRatio( const int period, const double marketGDPperCap ); // function to calculate PPP/MER ratio
+    double getTotalLaborProductivity( const int period ) const;
+    double getLaborForce( const int per ) const;
+    int findNextPeriodWithValue( const int aStartPeriod, const std::vector<Value>& aValueVector ) const;
  };
 
 #endif // _GDP_H_

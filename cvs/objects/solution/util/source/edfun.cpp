@@ -113,7 +113,7 @@ void LogEDFun::partial(int ip)
 
 double LogEDFun::partialSize(int ip) const
 {
-  return double(mkts[ip].getDependencies().size()) / double(world->global_size());
+  return double(mkts[ip].getDependencies().size()) / double(world->getGlobalOrderingSize());
 }
 
 void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)

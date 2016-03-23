@@ -2897,7 +2897,10 @@
 				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
+					"FUSION_MAX_VECTOR_SIZE=30",
+				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -2940,6 +2943,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
+					"FUSION_MAX_VECTOR_SIZE=30",
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2983,6 +2987,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
+					"FUSION_MAX_VECTOR_SIZE=30",
 					USE_LAPACK,
 				);
 				GCC_UNROLL_LOOPS = YES;
@@ -3043,6 +3048,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
+					"FUSION_MAX_VECTOR_SIZE=30",
 					USE_LAPACK,
 					GCAM_PARALLEL_ENABLED,
 				);

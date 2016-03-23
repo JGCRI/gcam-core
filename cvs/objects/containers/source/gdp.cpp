@@ -61,7 +61,6 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 // static initialize.
-const string GDP::XML_NAME = "GDP";
 const int BASE_PPP_YEAR = 1990;   // Base year for PPP conversion. PPP values are not known before about this time.
 
 //! Default Constructor
@@ -210,6 +209,7 @@ void GDP::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& GDP::getXMLNameStatic() {
+    const static string XML_NAME = "GDP";
     return XML_NAME;
 }
 

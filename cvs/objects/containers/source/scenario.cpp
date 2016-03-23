@@ -82,14 +82,19 @@ Scenario::Scenario() {
     // Get time and date before model run.
     time( &gGlobalTime );
 
-    marketplace.reset( new Marketplace() );
+    mModeltime = 0;
+    mMarketplace = new Marketplace();
+    mWorld = 0;
+    mSolutionInfoParamParser = 0;
 }
 
 //! Destructor
 Scenario::~Scenario() {
+    delete mMarketplace;
+    delete mWorld;
+    delete mSolutionInfoParamParser;
     // model time is really a singleton and so don't
     // try to delete it
-    modeltime.release();
 }
 
 /*! \brief Get the static XML name of the Scenario.
@@ -102,27 +107,27 @@ const string& Scenario::getXMLNameStatic(){
 
 //! Return a reference to the modeltime->
 const Modeltime* Scenario::getModeltime() const {
-    return modeltime.get();
+    return mModeltime;
 }
 
 //! Return a constant reference to the goods and services marketplace.
 const Marketplace* Scenario::getMarketplace() const {
-    return marketplace.get();
+    return mMarketplace;
 }
 
 //! Return a mutable reference to the goods and services marketplace.
 Marketplace* Scenario::getMarketplace() {
-    return marketplace.get();
+    return mMarketplace;
 }
 
 //! Return a constant reference to the world object.
 const World* Scenario::getWorld() const {
-    return world.get();
+    return mWorld;
 }
 
 //! Return a mutable reference to the world object.
 World* Scenario::getWorld() {
-    return world.get();
+    return mWorld;
 }
 
 //! Set data members from XML input.
@@ -131,7 +136,7 @@ bool Scenario::XMLParse( const DOMNode* node ){
     assert( node );
 
     // set the scenario name.
-    name = XMLHelper<string>::getAttr( node, "name" );
+    mName = XMLHelper<string>::getAttr( node, "name" );
 
     // get the children of the node.
     DOMNodeList* nodeList = node->getChildNodes();
@@ -145,9 +150,9 @@ bool Scenario::XMLParse( const DOMNode* node ){
             continue;
         }
         else if ( nodeName == Modeltime::getXMLNameStatic() ){
-            if( !modeltime.get() ) {
-                modeltime.reset( Modeltime::getInstance() );
-                const_cast<Modeltime*>( modeltime.get() )->XMLParse( curr );
+            if( !mModeltime ) {
+                mModeltime = Modeltime::getInstance();
+                const_cast<Modeltime*>( mModeltime )->XMLParse( curr );
             }
             else {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -156,7 +161,7 @@ bool Scenario::XMLParse( const DOMNode* node ){
             }
         }
         else if ( nodeName == World::getXMLNameStatic() ){
-            parseSingleNode( curr, world, new World );
+            parseSingleNode( curr, mWorld, new World );
         }
         else if( nodeName == OutputMetaData::getXMLNameStatic() ) {
             parseSingleNode( curr, mOutputMetaData, new OutputMetaData );
@@ -179,8 +184,8 @@ bool Scenario::XMLParse( const DOMNode* node ){
              */
             assert( world.get() );
             
-            boost::shared_ptr<Solver> retSolver( SolverFactory::createAndParseSolver( nodeName, marketplace.get(),
-                                                                     world.get(), curr ) );
+            boost::shared_ptr<Solver> retSolver( SolverFactory::createAndParseSolver( nodeName, mMarketplace,
+                                                                     mWorld, curr ) );
             
             // make sure we don't attempt to set an invalid solver
             if( retSolver.get() ) {
@@ -191,17 +196,17 @@ bool Scenario::XMLParse( const DOMNode* node ){
                 
                 // this must be done here rather than relying on XMLHelper since we require a factory
                 // to create our object
-                const int period = modeltime->getyr_to_per( XMLHelper<int>::getAttr( curr, "year" ) );
+                const int period = mModeltime->getyr_to_per( XMLHelper<int>::getAttr( curr, "year" ) );
                 const bool fillOut = XMLHelper<bool>::getAttr( curr, "fillout" );
                 // we may need to resize the mSolvers which we could do now that we know we have a
                 // modeltime
                 if( mSolvers.size() == 0 ) {
-                    mSolvers.resize( modeltime->getmaxper() );
+                    mSolvers.resize( mModeltime->getmaxper() );
                 }
                 mSolvers[ period ] = retSolver;
                 
                 // TODO: I think just using the same object rather than copying should suffice here
-                for( int fillOutPeriod = period + 1; fillOut && fillOutPeriod < modeltime->getmaxper(); ++fillOutPeriod ) {
+                for( int fillOutPeriod = period + 1; fillOut && fillOutPeriod < mModeltime->getmaxper(); ++fillOutPeriod ) {
                     mSolvers[ fillOutPeriod ] = retSolver;
                 }
             }
@@ -218,28 +223,28 @@ bool Scenario::XMLParse( const DOMNode* node ){
 //! Sets the name of the scenario. 
 void Scenario::setName( string newName ) {
     // Used to override the read-in scenario name.
-    name = newName;
+    mName = newName;
 }
 
 //! Finish all initializations needed before the model can run.
 void Scenario::completeInit() {
     // Make sure that some name is set.
-    if( name.empty() ){
+    if( mName.empty() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "No scenario name was set, using default." << endl;
-        name = "NoScenarioName";
+        mName = "NoScenarioName";
     }
     
     // if we didn't parse any solution info parameters we should at least
     // create an empty one
-    if( !mSolutionInfoParamParser.get() ) {
-        mSolutionInfoParamParser.reset( new SolutionInfoParamParser() );
+    if( !mSolutionInfoParamParser ) {
+        mSolutionInfoParamParser = new SolutionInfoParamParser();
     }
 
     // Complete the init of the world object.
-    if( world.get() ){
-        world->completeInit();
+    if( mWorld ){
+        mWorld->completeInit();
 
         // initialize solvers
         initSolvers();
@@ -252,7 +257,7 @@ void Scenario::completeInit() {
 
     // Set the valid period vector to false.
     mIsValidPeriod.clear();
-    mIsValidPeriod.resize( modeltime->getmaxper(), false );
+    mIsValidPeriod.resize( mModeltime->getmaxper(), false );
 }
 
 //! Write object to xml output stream.
@@ -261,18 +266,18 @@ void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
     // write heading for XML input file
     out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
 
-    out << "<" << getXMLNameStatic() << " name=\"" << name << "\" date=\"" 
+    out << "<" << getXMLNameStatic() << " name=\"" << mName << "\" date=\""
         << util::XMLCreateDate( gGlobalTime ) << "\">" << endl;
     
     tabs->increaseIndent();
 
     // write the xml for the class members.
-    modeltime->toInputXML( out, tabs );
+    mModeltime->toInputXML( out, tabs );
     if( mOutputMetaData.get() ){
         mOutputMetaData->toInputXML( out, tabs );
     }
 
-    world->toInputXML( out, tabs );
+    mWorld->toInputXML( out, tabs );
     // finished writing xml for the class members.
 
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
@@ -280,7 +285,7 @@ void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
 
 //! Return scenario name.
 const string& Scenario::getName() const {
-    return name; 
+    return mName;
 }
 
 /*! \brief Run the scenario.
@@ -296,7 +301,7 @@ bool Scenario::run( const int aSinglePeriod,
                     const string& aFilenameEnding )
 {
     // Avoid accumulating unsolved periods.
-    unsolvedPeriods.clear();
+    mUnsolvedPeriods.clear();
     
     // Open the debugging files.
     AutoOutputFile XMLDebugFile( "xmlDebugFileName", "debug.xml", aPrintDebugging );
@@ -305,7 +310,7 @@ bool Scenario::run( const int aSinglePeriod,
     if( aPrintDebugging ) {
         // Write opening tags for debug XML
         string dateString = util::XMLCreateDate( gGlobalTime );
-        XMLDebugFile << "<" << getXMLNameStatic() << " name=\"" << name << "\" date=\"" << dateString << "\">" << endl;
+        XMLDebugFile << "<" << getXMLNameStatic() << " name=\"" << mName << "\" date=\"" << dateString << "\">" << endl;
 
         tabs.increaseIndent();
         XMLWriteElement( "Debugging output", "summary", *XMLDebugFile, &tabs );
@@ -322,12 +327,12 @@ bool Scenario::run( const int aSinglePeriod,
     // If the single period is RUN_ALL_PERIODS that means to calculate all periods. Loop over
     // time steps and operate model.
     if( aSinglePeriod == RUN_ALL_PERIODS ){
-        for( int per = 0; per < modeltime->getmaxper(); per++ ){
+        for( int per = 0; per < mModeltime->getmaxper(); per++ ){
             success &= calculatePeriod( per, *XMLDebugFile, *SGMDebugFile, &tabs, aPrintDebugging );
         }
     }
     // Check if the single period is invalid.
-    else if( aSinglePeriod >= modeltime->getmaxper() ){
+    else if( aSinglePeriod >= mModeltime->getmaxper() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Invalid single period " << aSinglePeriod << " passed to run method." << endl;
@@ -342,7 +347,7 @@ bool Scenario::run( const int aSinglePeriod,
         }
         
         // Invalidate the period about to be run and all periods past it.
-        for( int per = aSinglePeriod; per < modeltime->getmaxper(); ++per ){
+        for( int per = aSinglePeriod; per < mModeltime->getmaxper(); ++per ){
             mIsValidPeriod[ per ] = false;
         }
 
@@ -357,13 +362,13 @@ bool Scenario::run( const int aSinglePeriod,
     mainLog.setLevel( ILogger::WARNING );
     
     // Report if all model periods solved correctly.
-    if( unsolvedPeriods.empty() ) {
+    if( mUnsolvedPeriods.empty() ) {
         mainLog << "All model periods solved correctly." << endl;
     }
     else {
         // Otherwise print all model periods which did not solve correctly.
         mainLog << "The following model periods did not solve: ";
-        for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
+        for( vector<int>::const_iterator i = mUnsolvedPeriods.begin(); i != mUnsolvedPeriods.end(); i++ ) {
             mainLog << *i << ", ";
         }
         mainLog << endl;
@@ -374,7 +379,7 @@ bool Scenario::run( const int aSinglePeriod,
     TimerRegistry::getInstance().printAllTimers( mainLog );
 
     // Run the climate model.
-    world->runClimateModel();
+    mWorld->runClimateModel();
 
     // Close the debugging files.
     if( aPrintDebugging ){
@@ -405,23 +410,23 @@ bool Scenario::calculatePeriod( const int aPeriod,
 
     // If this is period 0 initialize market price.
     if( aPeriod == 0 ){
-        marketplace->initPrices(); // initialize prices
+        mMarketplace->initPrices(); // initialize prices
     }
 
     // Run the iteration of the model.
-    marketplace->nullSuppliesAndDemands( aPeriod ); // initialize market demand to null
-    marketplace->init_to_last( aPeriod ); // initialize to last period's info
-    world->initCalc( aPeriod ); // call to initialize anything that won't change during calc
-    marketplace->assignMarketSerialNumbers( aPeriod ); // give the markets their serial numbers for this period.
+    mMarketplace->nullSuppliesAndDemands( aPeriod ); // initialize market demand to null
+    mMarketplace->init_to_last( aPeriod ); // initialize to last period's info
+    mWorld->initCalc( aPeriod ); // call to initialize anything that won't change during calc
+    mMarketplace->assignMarketSerialNumbers( aPeriod ); // give the markets their serial numbers for this period.
     
     // SGM Period 0 needs to clear out the supplies and demands put in by initCalc.
     if( aPeriod == 0 ){
-        marketplace->nullSuppliesAndDemands( aPeriod );
+        mMarketplace->nullSuppliesAndDemands( aPeriod );
     }
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
-    world->calc( aPeriod );       // get rid of transient bad data
-    marketplace->nullSuppliesAndDemands( aPeriod );
+    mWorld->calc( aPeriod );       // get rid of transient bad data
+    mMarketplace->nullSuppliesAndDemands( aPeriod );
 
     ILogger &mainlog = ILogger::getLogger("main_log"); 
     
@@ -432,7 +437,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     tbb::tick_count t0 = tbb::tick_count::now();
 #endif
     
-    world->calc( aPeriod ); // call to calculate initial supply and demand
+    mWorld->calc( aPeriod ); // call to calculate initial supply and demand
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
     tbb::tick_count t1 = tbb::tick_count::now();
@@ -443,10 +448,10 @@ bool Scenario::calculatePeriod( const int aPeriod,
     pdebug << "%%%%%%%%%%%%%%%% Starting parallel World::calc (period " << aPeriod << ") %%%%%%%%%%%%%%%%\n";
     tbb::tick_count t2;
     tbb::tick_count t3;
-    marketplace->nullSuppliesAndDemands( aPeriod );
+    mMarketplace->nullSuppliesAndDemands( aPeriod );
 
     t2 = tbb::tick_count::now();
-    world->calc(aPeriod, world->getGlobalFlowGraph());
+    mWorld->calc(aPeriod, world->getGlobalFlowGraph());
     t3 = tbb::tick_count::now();
       
     pdebug << "%%%%%%%%%%%%%%%% Ending parallel World::calc %%%%%%%%%%%%%%%%\n";
@@ -455,7 +460,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
 
     ILogger::WarningLevel old_main_log_level = mainlog.setLevel(ILogger::ERROR);
     if(aPeriod > 0) {
-        if( !marketplace->checkstate(aPeriod, serialrslt, &mainlog, DBL_CMP_LOOSE) ) {
+        if( !mMarketplace->checkstate(aPeriod, serialrslt, &mainlog, DBL_CMP_LOOSE) ) {
             std::cerr << "ERROR: parallel calc failed to reproduce serial results in period " << aPeriod
                       << ".\n";
             mainlog << "ERROR: parallel calc failed to reproduce serial results in period " << aPeriod
@@ -479,21 +484,21 @@ bool Scenario::calculatePeriod( const int aPeriod,
     
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
 
-    world->postCalc( aPeriod );
+    mWorld->postCalc( aPeriod );
     
     // Output metadata is not required to exist.
     const list<string>& primaryFuelList = mOutputMetaData.get() ? 
                                           mOutputMetaData->getPrimaryFuelList() 
                                           : list<string>();
 
-    world->updateSummary( primaryFuelList, aPeriod ); // call to update summaries for reporting
+    mWorld->updateSummary( primaryFuelList, aPeriod ); // call to update summaries for reporting
     
     // Mark that the period is now valid.
     mIsValidPeriod[ aPeriod ] = true;
 
     // Run the climate model for this period (only if the solver is successful)
     if( success ) {
-        world->runClimateModel( aPeriod );
+        mWorld->runClimateModel( aPeriod );
     }
     else {
         ILogger& climatelog = ILogger::getLogger( "climate-log" );
@@ -518,15 +523,15 @@ bool Scenario::calculatePeriod( const int aPeriod,
 void Scenario::logPeriodBeginning( const int aPeriod ) const {
     ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
     calibrationLog.setLevel( ILogger::DEBUG );
-    calibrationLog << "Period " << aPeriod <<": "<< modeltime->getper_to_yr( aPeriod ) << endl << endl;
+    calibrationLog << "Period " << aPeriod <<": "<< mModeltime->getper_to_yr( aPeriod ) << endl << endl;
 
     ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
     worstMarketLog.setLevel( ILogger::DEBUG );
-    worstMarketLog << "Period " << aPeriod <<": "<< modeltime->getper_to_yr( aPeriod ) << endl;
+    worstMarketLog << "Period " << aPeriod <<": "<< mModeltime->getper_to_yr( aPeriod ) << endl;
 
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Period " << aPeriod <<": "<< modeltime->getper_to_yr( aPeriod ) << endl;
+    mainLog << "Period " << aPeriod <<": "<< mModeltime->getper_to_yr( aPeriod ) << endl;
 }
 
 /*! \brief Perform any logging which should occur when a period ends.
@@ -563,8 +568,8 @@ void Scenario::writeDebuggingFiles( ostream& aXMLDebugFile,
                                     Tabs* aTabs,
                                     const int aPeriod ) const
 {
-    modeltime->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
-    world->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
+    mModeltime->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
+    mWorld->toDebugXML( aPeriod, aXMLDebugFile, aTabs );
     csvSGMOutputFile( aSGMDebugFile, aPeriod );
 }
 
@@ -579,8 +584,8 @@ void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
         mOutputMetaData->accept( aVisitor, aPeriod );
     }
     // Update the world.
-    if( world.get() ){
-        world->accept( aVisitor, aPeriod );
+    if( mWorld ){
+        mWorld->accept( aVisitor, aPeriod );
     }
     aVisitor->endVisitScenario( this, aPeriod );
 }
@@ -645,14 +650,14 @@ void Scenario::printLandAllocatorGraph( const int aPeriod, const bool aPrintValu
 * \param aTax Tax to set.
 */
 void Scenario::setTax( const GHGPolicy* aTax ){
-    world->setTax( aTax );
+    mWorld->setTax( aTax );
 }
 
 /*! \brief Get the climate model.
 * \return The climate model.
 */
 const IClimateModel* Scenario::getClimateModel() const {
-    return world->getClimateModel();
+    return mWorld->getClimateModel();
 }
 
 /*! \brief A function to generate a series of ghg emissions quantity curves
@@ -670,7 +675,7 @@ const IClimateModel* Scenario::getClimateModel() const {
 */
 map<string, const Curve*> Scenario::getEmissionsQuantityCurves( const string& ghgName ) const {
     /*! \pre The run has been completed. */
-    return world->getEmissionsQuantityCurves( ghgName );
+    return mWorld->getEmissionsQuantityCurves( ghgName );
 }
 
 /*! \brief A function to generate a series of ghg emissions price curves based
@@ -688,7 +693,7 @@ map<string, const Curve*> Scenario::getEmissionsQuantityCurves( const string& gh
 */
 map<string, const Curve*> Scenario::getEmissionsPriceCurves( const string& ghgName ) const {
     /*! \pre The run has been completed. */
-    return world->getEmissionsPriceCurves( ghgName );
+    return mWorld->getEmissionsPriceCurves( ghgName );
 }
 
 /*! \brief Solve the marketplace using the Solver for a given period. 
@@ -707,9 +712,9 @@ bool Scenario::solve( const int period ){
     // Solve the marketplace. If the return code is false than the model did not
     // solve for the period. Add the period to the scenario list of unsolved
     // periods. 
-    const bool success = mSolvers[ period ]->solve( period, mSolutionInfoParamParser.get() );
+    const bool success = mSolvers[ period ]->solve( period, mSolutionInfoParamParser );
     if( !success ) {
-        unsolvedPeriods.push_back( period );
+        mUnsolvedPeriods.push_back( period );
     }
     
     return success;
@@ -752,16 +757,16 @@ void Scenario::writeOutputFiles() const {
         // Minicam style output.
         outFile << "Region,Sector,Subsector,Technology,Variable,Units,";
 
-        for ( int t = 0; t < modeltime->getmaxper(); t++ ) { 
-            outFile << modeltime->getper_to_yr( t ) <<",";
+        for ( int t = 0; t < mModeltime->getmaxper(); t++ ) {
+            outFile << mModeltime->getper_to_yr( t ) <<",";
         }
         outFile << "Date,Notes" << endl;
 
         // Write global market info to file
-        marketplace->csvOutputFile( "global" );
+        mMarketplace->csvOutputFile( "global" );
 
         // Write world and regional info
-        world->csvOutputFile();
+        mWorld->csvOutputFile();
     }
 }
 
@@ -771,8 +776,8 @@ void Scenario::dbOutput() const {
     const list<string>& primaryFuelList = mOutputMetaData.get() ? 
                                           mOutputMetaData->getPrimaryFuelList() 
                                           : list<string>();
-    world->dbOutput( primaryFuelList );
-    marketplace->dbOutput();
+    mWorld->dbOutput( primaryFuelList );
+    mMarketplace->dbOutput();
 }
 
 /*! \brief Write SGM results to csv text file.
@@ -783,8 +788,8 @@ void Scenario::csvSGMOutputFile( ostream& aSGMDebugFile, const int aPeriod ) con
     aSGMDebugFile <<  "**********************" << endl;
     aSGMDebugFile <<  "RESULTS FOR PERIOD:  " << aPeriod << endl;
     aSGMDebugFile <<  "**********************" << endl << endl;
-    marketplace->csvSGMOutputFile( aSGMDebugFile, aPeriod );
-    world->csvSGMOutputFile( aSGMDebugFile, aPeriod );
+    mMarketplace->csvSGMOutputFile( aSGMDebugFile, aPeriod );
+    mWorld->csvSGMOutputFile( aSGMDebugFile, aPeriod );
 }
 
 /*! \brief Write SGM general results for all periods to csv text file.
@@ -795,7 +800,7 @@ void Scenario::csvSGMGenFile( ostream& aFile ) const {
     aFile << "Date & Time: ";
     util::printTime( gGlobalTime, aFile );
     aFile << endl;
-    world->csvSGMGenFile( aFile );
+    mWorld->csvSGMGenFile( aFile );
 }
 
 /*!
@@ -820,11 +825,11 @@ void Scenario::initSolvers() {
     // we may need to resize the mSolvers which we could do now that we know we have a
     // modeltime
     if( mSolvers.size() == 0 ) {
-        mSolvers.resize( modeltime->getmaxper() );
+        mSolvers.resize( mModeltime->getmaxper() );
     }
     
     // unfortunately we have to access this solver directly
-    boost::shared_ptr<Solver> defaultSolver( new BisectionNRSolver( marketplace.get(), world.get() ) );
+    boost::shared_ptr<Solver> defaultSolver( new BisectionNRSolver( mMarketplace, mWorld ) );
     for(vector<boost::shared_ptr<Solver> >::iterator solverIt = mSolvers.begin(); solverIt != mSolvers.end(); ++solverIt ) {
         if( !(*solverIt).get() ) {
             (*solverIt) = defaultSolver;
@@ -839,7 +844,7 @@ void Scenario::initSolvers() {
  * \return A vector of model periods that did not solve.
  */
 const vector<int>& Scenario::getUnsolvedPeriods() const {
-    return unsolvedPeriods;
+    return mUnsolvedPeriods;
 }
 
 /*!

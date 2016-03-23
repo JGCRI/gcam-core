@@ -16,6 +16,19 @@ struct GetIndexAsYear {
     }
 };
 
+struct NoFilter {
+    using filter_value_type = void*;
+    template<typename T>
+    bool operator()( const T* aContainer ) {
+        return false;
+    }
+    filter_value_type getCurrValue() const {
+        return 0;
+    }
+    void reset() {
+    }
+};
+
 struct IndexFilter {
     using filter_value_type = const int*;
     IndexFilter( const int aIndex ):mIndex( aIndex ), mCurrFilterValue( 0 ) {}
@@ -94,7 +107,7 @@ struct YearFilter {
     }
 };
 
-typedef boost::mpl::vector<IndexFilter, NamedFilter, YearFilter> FilterTypes;
+typedef boost::mpl::vector<NoFilter, IndexFilter, NamedFilter, YearFilter> FilterTypes;
 
 BOOST_MPL_HAS_XXX_TRAIT_DEF( filter_type );
 BOOST_MPL_HAS_XXX_TRAIT_DEF( key_type );
@@ -103,6 +116,9 @@ struct FilterStep {
     using FilterPtrTypes = typename boost::mpl::transform<FilterTypes, boost::add_pointer<boost::mpl::_> >::type;
     using FilterMapType = typename boost::fusion::result_of::as_map<typename boost::fusion::result_of::as_vector<typename boost::mpl::transform_view<boost::mpl::zip_view< boost::mpl::vector<FilterTypes, FilterPtrTypes> >, boost::mpl::unpack_args<boost::fusion::pair<boost::mpl::_1, boost::mpl::_2> > > >::type>::type;
     FilterStep( const std::string& aDataName ):mDataName( aDataName ), mFilterMap(), mNoFilters( true ) {}
+    FilterStep( const std::string& aDataName, NoFilter* aFilter ):mDataName( aDataName ), mFilterMap(), mNoFilters( false ) {
+        boost::fusion::at_key<NoFilter>( mFilterMap ) = aFilter;
+    }
     FilterStep( const std::string& aDataName, IndexFilter* aFilter ):mDataName( aDataName ), mFilterMap(), mNoFilters( false ) {
         boost::fusion::at_key<IndexFilter>( mFilterMap ) = aFilter;
     }

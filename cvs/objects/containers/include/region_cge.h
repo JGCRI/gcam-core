@@ -123,6 +123,13 @@ public:
     virtual void csvSGMGenFile( std::ostream& aFile ) const;
 
 protected:
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Region
+    )
+    // TODO: convert SGM classes for introspection?
     const static std::string XML_NAME; //!< node name for toXML method.
     std::vector<FinalDemandSector*> finalDemandSector; //!< vector of pointers to final demand sector objects
     std::vector<FactorSupply*> factorSupply; //!< vector of pointers to factor supply objects

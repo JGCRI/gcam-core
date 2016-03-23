@@ -51,11 +51,12 @@
 #include <string>
 #include <list>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/summary.h"
-#include <boost/noncopyable.hpp>
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations.
 class Demographic;
@@ -65,6 +66,11 @@ class PolicyPortfolioStandard;
 class Curve;
 class AResource;
 class IInfo;
+
+// Need to forward declare the subclasses as well.
+class RegionMiniCAM;
+class RegionCGE;
+
 /*! 
 * \ingroup Objects
 * \brief This is an abstract base class for Regions.
@@ -108,16 +114,34 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual void csvSGMGenFile( std::ostream& aFile ) const {};
 protected:
-    std::string name; //!< Region name
-    std::auto_ptr<Demographic> demographic; //!< Population object
-    std::vector<Sector*> supplySector; //!< vector of pointers to supply sector objects
-    //! vector of pointers to ghg market objects, container for constraints and emissions
-    std::vector<GHGPolicy*> mGhgPolicies;
-    //! vector of pointers to portfolio standard market objects, container for constraints
-    std::vector<PolicyPortfolioStandard*> mPolicies;
-    std::vector<AResource*> mResources; //!< vector of pointers to resource objects
-    //! The region's information store.
-    std::auto_ptr<IInfo> mRegionInfo;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Region to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Region, RegionMiniCAM, RegionCGE ),
+                
+        /*! \brief Region name */
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        
+        /*! \brief Population object */
+        CREATE_CONTAINER_VARIABLE( mDemographic, Demographic*, NoFilter, "demographic" ),
+        
+        /*! \brief  vector of pointers to supply sector objects */
+        CREATE_CONTAINER_VARIABLE( mSupplySector, std::vector<Sector*>, NamedFilter, "sector" ),
+        
+        /*! \brief vector of pointers to ghg market objects, container for constraints and emissions */
+        CREATE_CONTAINER_VARIABLE( mGhgPolicies, std::vector<GHGPolicy*>, NamedFilter, "ghg-policies" ),
+        
+        /*! \brief vector of pointers to portfolio standard market objects, container for constraints */
+        CREATE_CONTAINER_VARIABLE( mPolicies, std::vector<PolicyPortfolioStandard*>, NamedFilter, "policies" ),
+        
+        /*! \brief vector of pointers to resource objects */
+        CREATE_CONTAINER_VARIABLE( mResources, std::vector<AResource*>, NamedFilter, "resource" ),
+        
+        /*! \brief The region's information store. */
+        CREATE_CONTAINER_VARIABLE( mRegionInfo, IInfo*, NoFilter, "info" )
+    )
 
     virtual const std::string& getXMLName() const = 0;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;

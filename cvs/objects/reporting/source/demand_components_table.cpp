@@ -107,8 +107,8 @@ void DemandComponentsTable::startVisitRegionCGE( const RegionCGE* regionCGE, con
     // Add the rows in the right order.
     // This has to be done explicitly because the rows are added later by input, so the
     // ordering would be wrong.
-    for( unsigned int i = 0; i < regionCGE->supplySector.size(); ++i ){
-        mTable->addToType( regionCGE->supplySector[ i ]->getName(), "Trade", 0 ); // Column doesn't matter.
+    for( unsigned int i = 0; i < regionCGE->mSupplySector.size(); ++i ){
+        mTable->addToType( regionCGE->mSupplySector[ i ]->getName(), "Trade", 0 ); // Column doesn't matter.
     }
     // Add the factor supplies.
     for( unsigned int i = 0; i < regionCGE->factorSupply.size(); ++i ){

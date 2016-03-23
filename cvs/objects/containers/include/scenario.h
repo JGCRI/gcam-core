@@ -53,6 +53,7 @@
 #include "util/base/include/iparsable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class Modeltime;
@@ -113,12 +114,35 @@ public:
 
     //! Constant which when passed to the run method means to run all model periods.
     const static int RUN_ALL_PERIODS = -1;
-private:
-    //! A vector booleans, one per period, which denotes whether each period is valid.
-    std::vector<bool> mIsValidPeriod;
-    std::auto_ptr<const Modeltime> modeltime; //!< The modeltime for the scenario
-    std::auto_ptr<World> world; //!< The world object
-    std::auto_ptr<Marketplace> marketplace; //!< The goods and services marketplace.
+protected:
+    
+    DEFINE_DATA(
+        /*! \brief Scenario is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( Scenario ),
+                
+        /*! \brief The Scenario name. */
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+
+        /*! \brief The modeltime for the scenario. */
+        CREATE_CONTAINER_VARIABLE( mModeltime, const Modeltime*, NoFilter, "modeltime" ),
+
+        /*! \brief The goods and services marketplace. */
+        CREATE_CONTAINER_VARIABLE( mMarketplace, Marketplace*, NoFilter, "marketplace" ),
+                
+        /*! \brief The goods and services marketplace. */
+        CREATE_CONTAINER_VARIABLE( mWorld, World*, NoFilter, "world" ),
+                
+        /*! \brief A vector booleans, one per period, which denotes whether each period is valid. */
+        CREATE_ARRAY_VARIABLE( mIsValidPeriod, std::vector<bool>, "is-valid-period" ),
+                
+        /*! \brief Unsolved periods. */
+        CREATE_ARRAY_VARIABLE( mUnsolvedPeriods, std::vector<int>, "unsolved-periods" ),
+                
+        /*! \brief A pass through object used to parse SolutionInfo parameters
+         *         until markets are created.
+         */
+        CREATE_CONTAINER_VARIABLE( mSolutionInfoParamParser, SolutionInfoParamParser*, NoFilter, "solution-info-param-parser" )
+    )
     
     //! Pointer to solution mechanisms by period.  Note we can't use a period vector
     //! since that would rely on modeltime which is not avaiable at creation.  Also
@@ -128,15 +152,6 @@ private:
 
     //! A container of meta-data pertinent to outputting data.
     std::auto_ptr<OutputMetaData> mOutputMetaData;
-
-    std::string name; //!< Scenario name.
-    std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
-    std::vector<int> unsolvedPeriods; //!< Unsolved periods.
-    
-    //! A pass through object used to parse SolutionInfo parameters
-    //! until markets are created
-    std::auto_ptr<SolutionInfoParamParser> mSolutionInfoParamParser;
-
 
     bool solve( const int period );
 

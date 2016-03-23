@@ -188,7 +188,7 @@ bool RegionCGE::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
         parseContainerNode( curr, factorSupply, new FactorSupply() );
     }
     else if( nodeName == ProductionSector::getXMLNameStatic() ){
-        parseContainerNode( curr, supplySector, new ProductionSector( name ) );
+        parseContainerNode( curr, mSupplySector, new ProductionSector( mName ) );
     }
     else if( nodeName == NationalAccount::getXMLNameStatic() ){
         int per = scenario->getModeltime()->getyr_to_per( XMLHelper<int>::getAttr( curr, "year" ) );
@@ -233,10 +233,10 @@ void RegionCGE::completeInit() {
     Region::completeInit();
 
     // initialize demographic
-    if( demographic.get() ){
-        demographic->completeInit();
+    if( mDemographic ){
+        mDemographic->completeInit();
     }
-    for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
+    for( SectorIterator sectorIter = mSupplySector.begin(); sectorIter != mSupplySector.end(); ++sectorIter ) {
         ( *sectorIter )->completeInit( 0, 0 );
     }
     for( unsigned int i = 0; i < finalDemandSector.size(); i++) {
@@ -246,7 +246,7 @@ void RegionCGE::completeInit() {
         finalDemandSector[i]->completeInit( 0, 0 );
     }
     for( unsigned int i = 0; i < factorSupply.size(); i++) {
-        factorSupply[i]->completeInit( name );
+        factorSupply[i]->completeInit( mName );
     }
     // Make sure we have a NationalAccount for each period.
     for(unsigned int i = 0; i < mNationalAccounts.size(); i++) {
@@ -256,28 +256,28 @@ void RegionCGE::completeInit() {
     }
     
     // initialize the calc capital good visitor
-    mCalcCapitalGoodPriceVisitor = new CalcCapitalGoodPriceVisitor( name );
+    mCalcCapitalGoodPriceVisitor = new CalcCapitalGoodPriceVisitor( mName );
 }
 
 //! Call any initializations that are only done once per period
 void RegionCGE::initCalc( const int period ) 
 {
     for (unsigned int i = 0; i < factorSupply.size(); i++) {
-        factorSupply[i]->initCalc( name, period );
+        factorSupply[i]->initCalc( mName, period );
     }
 
-    for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        (*currSector)->initCalc( mNationalAccounts[ period ], demographic.get(), period );
+    for( SectorIterator currSector = mSupplySector.begin(); currSector != mSupplySector.end(); ++currSector ){
+        (*currSector)->initCalc( mNationalAccounts[ period ], mDemographic, period );
     }
 
     // SGM sequence of procedures
     for ( unsigned int i = 0; i < finalDemandSector.size(); i++ ) {
-        finalDemandSector[i]->initCalc( mNationalAccounts[ period ], demographic.get(), period );
+        finalDemandSector[i]->initCalc( mNationalAccounts[ period ], mDemographic, period );
     }
     
     // TODO: should I move this to a Region::initCalc
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
-        (*currResource)->initCalc( name, period );
+        (*currResource)->initCalc( mName, period );
     }
 }
 
@@ -294,7 +294,7 @@ void RegionCGE::postCalc( const int aPeriod ){
     // operation however the national account is not passed down.  As a temporary solution we added it
     // into the market info for Capital and so now the region has to move it into the national accounts.
     Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* capitalMarketInfo = marketplace->getMarketInfo( "Capital", name, aPeriod, true );
+    IInfo* capitalMarketInfo = marketplace->getMarketInfo( "Capital", mName, aPeriod, true );
 
     // nominal is the current year quantity * the current year prices, real is the current year
     // quantity * base year prices
@@ -335,7 +335,7 @@ void RegionCGE::calc( const int period ) {
       */
     IInfo* hack = scenario->getMarketplace()->getMarketInfo( "SVS", "USA", period, true );
     string hackStr = hack->getString( "CurrDerivRegion", false );
-    bool doCalibrations = hackStr == name || hackStr.empty();
+    bool doCalibrations = hackStr == mName || hackStr.empty();
     if( !doCalibrations ) {
         /*!
          * \todo Currently we are operating all import sectors  even though we should only be operating the import
@@ -344,9 +344,9 @@ void RegionCGE::calc( const int period ) {
          *       to know how much demand is given to the foreign good from any given sector before price perturbation.
          *       Profiling shows that there is significant perormance benefits to be had if we could get this to work.
          */
-        for( vector<Sector*>::iterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
+        for( vector<Sector*>::iterator currSec = mSupplySector.begin(); currSec != mSupplySector.end(); ++currSec ){
             if( (*currSec)->getName().rfind( "-import" ) != string::npos || (*currSec)->getName() == "TPT-Margin" ) {
-                (*currSec)->operate( *mNationalAccounts[ period ], demographic.get(), period );
+                (*currSec)->operate( *mNationalAccounts[ period ], mDemographic, period );
             }
         }
         // the import taxes need to get added to the government taxes market but we don't really
@@ -361,7 +361,7 @@ void RegionCGE::calc( const int period ) {
     // calc resource supplies
     // TODO: should I just put this in operate?
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
-        (*currResource)->calcSupply( name, 0, period );
+        (*currResource)->calcSupply( mName, 0, period );
     }
 }
 
@@ -390,13 +390,13 @@ void RegionCGE::operate( const int period ){
     
     // operate production sectors which will get old capital, distribute new investment, then operate
     // new capital.
-    for( vector<Sector*>::iterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
-        (*currSec)->operate( *mNationalAccounts[ period ], demographic.get(), period );
+    for( vector<Sector*>::iterator currSec = mSupplySector.begin(); currSec != mSupplySector.end(); ++currSec ){
+        (*currSec)->operate( *mNationalAccounts[ period ], mDemographic, period );
     }
 
     // calculate demands from consumers which will also calculate supplies for factors not including resource
     for (unsigned int i = 0; i < finalDemandSector.size(); i++) {
-        finalDemandSector[i]->operate( *mNationalAccounts[period], demographic.get(), period );
+        finalDemandSector[i]->operate( *mNationalAccounts[period], mDemographic, period );
     }
 }
 
@@ -408,7 +408,7 @@ void RegionCGE::operate( const int period ){
  */
 void RegionCGE::updateMarketplace( const int period ) {
     // have the proudction sectors and consumers add there initial demands into the marketplace
-    for( vector<Sector*>::iterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
+    for( vector<Sector*>::iterator currSector = mSupplySector.begin(); currSector != mSupplySector.end(); ++currSector ){
         (*currSector)->updateMarketplace( period );
     }
     for (unsigned int i = 0; i < finalDemandSector.size(); i++) {
@@ -425,10 +425,10 @@ void RegionCGE::updateMarketplace( const int period ) {
 void RegionCGE::csvSGMOutputFile( ostream& aFile, const int period ) const {
     vector<IVisitor*> outputContainers; // vector of output containers
 
-    aFile << "Region:  " << name << endl << endl;
+    aFile << "Region:  " << mName << endl << endl;
     mNationalAccounts[ period ]->csvSGMOutputFile( aFile, period );
 
-    for( vector<Sector*>::const_iterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
+    for( vector<Sector*>::const_iterator currSec = mSupplySector.begin(); currSec != mSupplySector.end(); ++currSec ){
         (*currSec)->csvSGMOutputFile( aFile, period );
     }
     for (unsigned int i = 0; i < finalDemandSector.size(); i++) {
@@ -437,16 +437,16 @@ void RegionCGE::csvSGMOutputFile( ostream& aFile, const int period ) const {
     for (unsigned int i = 0; i < factorSupply.size(); i++) {
         factorSupply[i]->csvSGMOutputFile( aFile, period );
     }
-    demographic.get()->csvSGMOutputFile( aFile, period );
+    mDemographic->csvSGMOutputFile( aFile, period );
     aFile << endl;
 
 
     // Add outputcontainers here.
-    outputContainers.push_back( new SocialAccountingMatrix( name, aFile ) );
+    outputContainers.push_back( new SocialAccountingMatrix( mName, aFile ) );
     outputContainers.push_back( new DemandComponentsTable( aFile ) );
-    outputContainers.push_back( new SectorResults( name, aFile ) );
-    outputContainers.push_back( new GovtResults( name, aFile ) );
-    outputContainers.push_back( new InputOutputTable( name, aFile ) );
+    outputContainers.push_back( new SectorResults( mName, aFile ) );
+    outputContainers.push_back( new GovtResults( mName, aFile ) );
+    outputContainers.push_back( new InputOutputTable( mName, aFile ) );
     
     // load values into all tables
     for (unsigned int i = 0; i < outputContainers.size(); i++) { 

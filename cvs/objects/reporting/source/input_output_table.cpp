@@ -103,8 +103,8 @@ void InputOutputTable::finish() const {
 //! Update the region. 
 void InputOutputTable::startVisitRegionCGE( const RegionCGE* aRegion, const int aPeriod ){
     // Loop through the sectors and add a blank item for each just to set the ordering.
-    for( unsigned int i = 0; i < aRegion->supplySector.size(); ++i ){
-        mInternalTable->setType( aRegion->supplySector[ i ]->getName(), aRegion->supplySector[ i ]->getName(), 0 );
+    for( unsigned int i = 0; i < aRegion->mSupplySector.size(); ++i ){
+        mInternalTable->setType( aRegion->mSupplySector[ i ]->getName(), aRegion->mSupplySector[ i ]->getName(), 0 );
     }
     // Add factor supplies at the end. right?
     for( unsigned int i = 0; i < aRegion->factorSupply.size(); ++i ){

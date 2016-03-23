@@ -63,6 +63,8 @@
 #include "util/base/include/expand_data_vector.h"
 
 struct NamedFilter;
+struct NoFilter;
+struct YearFilter;
 
 /*!
  * \brief Basic structure for holding data members for GCAM classes.
@@ -75,6 +77,12 @@ struct NamedFilter;
 template<typename T>
 struct Data {
     Data( const char* aDataName ):mDataName( aDataName ) {}
+    /*! \warning The Data struct will not attempt to manage memory allocation/de-allocation
+     *           automatically and users will still be responsible for releasing memory
+     *           themselves.
+     */
+    virtual ~Data() { }
+
     /*! \brief Type for this data item */
     typedef T value_type;
     /*! \brief The human readable name for this data. */
@@ -87,12 +95,14 @@ struct Data {
 template<typename T, typename Filter>
 struct ContainerData : public Data<T> {
     ContainerData( const char* aDataName ):Data<T>( aDataName ) {}
+    virtual ~ContainerData() { }
     typedef Filter filter_type;
 };
 
 template<typename T>
 struct ArrayData : public Data<T> {
     ArrayData( const char* aDataName ):Data<T>( aDataName ) {}
+    virtual ~ArrayData() { }
 };
 
 //! The name to call the variable which will hold all Data structs in a vector.

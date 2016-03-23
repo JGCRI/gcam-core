@@ -511,7 +511,7 @@ void XMLDBOutputter::endVisitRegion( const Region* aRegion,
 void XMLDBOutputter::startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) {
     // Store the region's GDP object.
     assert( !mGDP );
-    mGDP = aRegionMiniCAM->gdp.get();
+    mGDP = aRegionMiniCAM->mGDP;
 
     // Write the opening region tag and the type of the base class.
     XMLWriteOpeningTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get(),

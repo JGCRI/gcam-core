@@ -56,6 +56,7 @@
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declarations.
 class Population;
@@ -117,25 +118,38 @@ public:
     virtual void updateAllOutputContainers( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    std::auto_ptr<GDP> gdp; //!< GDP object.
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Region,
 
-    //! Regional land allocator.
-    std::auto_ptr<ILandAllocator> mLandAllocator;
-
-    std::vector<AFinalDemand*> mFinalDemands; //!< vector of pointers to demand sector objects
-
-    std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
-    std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
-
-    //! GCAM consumers
-    std::vector<Consumer*> mConsumers;
-
+        /*! \brief GDP object. */
+        CREATE_CONTAINER_VARIABLE( mGDP, GDP*, NoFilter, "GDP" ),
+        
+        /*! \brief Regional land allocator. */
+        CREATE_CONTAINER_VARIABLE( mLandAllocator, ILandAllocator*, NoFilter, "land-allocator" ),
+        
+        /*! \brief vector of pointers to demand sector objects */
+        CREATE_CONTAINER_VARIABLE( mFinalDemands, std::vector<AFinalDemand*>, NamedFilter, "final-demand" ),
+        
+        /*! \brief GCAM consumers */
+        CREATE_CONTAINER_VARIABLE( mConsumers, std::vector<Consumer*>, NamedFilter, "consumer" ),
+        
+        /*! \brief GDPs to calibrate to */
+        CREATE_ARRAY_VARIABLE( mCalibrationGDPs, objects::PeriodVector<double>, "calibrationGDPs" ),
+        
+        /*! \brief GDP per capita to calibrate to */
+        CREATE_ARRAY_VARIABLE( mGDPcalPerCapita, objects::PeriodVector<double>, "GDPcalPerCapita" ),
+        
+        /*! \brief map of CO2 emissions coefficient for primary fuels only */
+        CREATE_SIMPLE_VARIABLE( mPrimaryFuelCO2Coef, std::map<std::string, double>, "PrimaryFuelCO2Coef" ),
+        
+        /*! \brief Interest rate for the region. */
+        CREATE_SIMPLE_VARIABLE( mInterestRate, double, "interest-rate" )
+    )
+    
     std::vector<Summary> summary; //!< summary values and totals for reporting
-    std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector.
-    std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
-
-    //! Interest rate for the region.
-    double mInterestRate;
 
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
