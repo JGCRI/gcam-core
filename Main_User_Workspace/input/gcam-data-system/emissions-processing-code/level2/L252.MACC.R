@@ -162,64 +162,64 @@ if ( use_GV_MAC ) {
 }
 
 printlog( "L252.MAC_TC_SSP1: Tech Change on MACCs for SSP1" )
-L252.MAC_Ag_TC_SSP1 <- L252.AgMAC
+L252.MAC_Ag_TC_SSP1 <- L252.AgMAC[ names( L252.AgMAC ) != "EPA_region" ]
 L252.MAC_Ag_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L252.MAC_Ag_TC_SSP1$mac.control ),
                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_Ag_TC_SSP1 <- na.omit( L252.MAC_Ag_TC_SSP1 )
 
-L252.MAC_An_TC_SSP1 <- L252.MAC_an
+L252.MAC_An_TC_SSP1 <- L252.MAC_an[ names( L252.MAC_an ) != "EPA_region" ]
 L252.MAC_An_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L252.MAC_An_TC_SSP1$mac.control ),
                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_An_TC_SSP1 <- na.omit( L252.MAC_An_TC_SSP1 )
 
-L252.MAC_prc_TC_SSP1 <- L252.MAC_prc
+L252.MAC_prc_TC_SSP1 <- L252.MAC_prc[ names( L252.MAC_prc ) != "EPA_region" ]
 L252.MAC_prc_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L252.MAC_prc_TC_SSP1$mac.control ),
                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_prc_TC_SSP1 <- na.omit( L252.MAC_prc_TC_SSP1 )
 
-L252.MAC_res_TC_SSP1 <- L252.ResMAC_fos
+L252.MAC_res_TC_SSP1 <- L252.ResMAC_fos[ names( L252.ResMAC_fos ) != "EPA_region" ]
 L252.MAC_res_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L252.MAC_res_TC_SSP1$mac.control ),
                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_res_TC_SSP1 <- na.omit( L252.MAC_res_TC_SSP1 )
 
 printlog( "L252.MAC_TC_SSP2: Tech Change on MACCs for SSP2" )
-L252.MAC_Ag_TC_SSP2 <- L252.AgMAC
+L252.MAC_Ag_TC_SSP2 <- L252.AgMAC[ names( L252.AgMAC ) != "EPA_region" ]
 L252.MAC_Ag_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L252.MAC_Ag_TC_SSP2$mac.control ),
                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_Ag_TC_SSP2 <- na.omit( L252.MAC_Ag_TC_SSP2 )
 
-L252.MAC_An_TC_SSP2 <- L252.MAC_an
+L252.MAC_An_TC_SSP2 <- L252.MAC_an[ names( L252.MAC_an ) != "EPA_region" ]
 L252.MAC_An_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L252.MAC_An_TC_SSP2$mac.control ),
                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_An_TC_SSP2 <- na.omit( L252.MAC_An_TC_SSP2 )
 
-L252.MAC_prc_TC_SSP2 <- L252.MAC_prc
+L252.MAC_prc_TC_SSP2 <- L252.MAC_prc[ names( L252.MAC_prc ) != "EPA_region" ]
 L252.MAC_prc_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L252.MAC_prc_TC_SSP2$mac.control ),
                                                                           paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_prc_TC_SSP2 <- na.omit( L252.MAC_prc_TC_SSP2 )
 
-L252.MAC_res_TC_SSP2 <- L252.ResMAC_fos
+L252.MAC_res_TC_SSP2 <- L252.ResMAC_fos[ names( L252.ResMAC_fos ) != "EPA_region" ]
 L252.MAC_res_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L252.MAC_res_TC_SSP2$mac.control ),
                                                                           paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_res_TC_SSP2 <- na.omit( L252.MAC_res_TC_SSP2 )
 
 printlog( "L252.MAC_TC_SSP5: Tech Change on MACCs for SSP5" )
-L252.MAC_Ag_TC_SSP5 <- L252.AgMAC
+L252.MAC_Ag_TC_SSP5 <- L252.AgMAC[ names( L252.AgMAC ) != "EPA_region" ]
 L252.MAC_Ag_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L252.MAC_Ag_TC_SSP5$mac.control ),
                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_Ag_TC_SSP5 <- na.omit( L252.MAC_Ag_TC_SSP5 )
 
-L252.MAC_An_TC_SSP5 <- L252.MAC_an
+L252.MAC_An_TC_SSP5 <- L252.MAC_an[ names( L252.MAC_an ) != "EPA_region" ]
 L252.MAC_An_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L252.MAC_An_TC_SSP5$mac.control ),
                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_An_TC_SSP5 <- na.omit( L252.MAC_An_TC_SSP5 )
 
-L252.MAC_prc_TC_SSP5 <- L252.MAC_prc
+L252.MAC_prc_TC_SSP5 <- L252.MAC_prc[ names( L252.MAC_prc ) != "EPA_region" ]
 L252.MAC_prc_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L252.MAC_prc_TC_SSP5$mac.control ),
                                                                           paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_prc_TC_SSP5 <- na.omit( L252.MAC_prc_TC_SSP5 )
 
-L252.MAC_res_TC_SSP5 <- L252.ResMAC_fos
+L252.MAC_res_TC_SSP5 <- L252.ResMAC_fos[ names( L252.ResMAC_fos ) != "EPA_region" ]
 L252.MAC_res_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L252.MAC_res_TC_SSP5$mac.control ),
                                                                           paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
 L252.MAC_res_TC_SSP5 <- na.omit( L252.MAC_res_TC_SSP5 )
