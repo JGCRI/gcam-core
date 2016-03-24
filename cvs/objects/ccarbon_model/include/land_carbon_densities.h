@@ -94,23 +94,29 @@ public:
 	virtual int getMatureAge( ) const;
 
 protected:
-    //! Actual above ground carbon content by year.  Note that these are for
-    //! GCAM model years only since historical years have a seperate value.
-    objects::YearVector<double> mAboveGroundCarbon;
-
-    //! Actual below ground carbon content by year.  Note that these are for
-    //! GCAM model years only since historical years have a seperate value.
-    objects::YearVector<double> mBelowGroundCarbon;
-
-    //! Average above ground carbon content (read in).
-    double mAvgAboveGroundCarbon;
-
-    //! Average below ground carbon content (read in).
-    double mAvgBelowGroundCarbon;
-	
-    //! Age at maturity.  This is used to grow forests slowly.
-    int mMatureAge;      
     
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ASimpleCarbonCalc,
+                            
+        //! Actual above ground carbon content by year.  Note that these are for
+        //! GCAM model years only since historical years have a seperate value.
+        CREATE_ARRAY_VARIABLE( mAboveGroundCarbon, objects::YearVector<double>, "actual-above-ground-carbon-density" ),
+        
+        //! Actual below ground carbon content by year.  Note that these are for
+        //! GCAM model years only since historical years have a seperate value.
+        CREATE_ARRAY_VARIABLE( mBelowGroundCarbon, objects::YearVector<double>, "actual-below-ground-carbon-density" ),
+        
+        //! Average above ground carbon content (read in).
+        CREATE_SIMPLE_VARIABLE( mAvgAboveGroundCarbon, double, "above-ground-carbon-density" ),
+        
+        //! Average below ground carbon content (read in).
+        CREATE_SIMPLE_VARIABLE( mAvgBelowGroundCarbon, double, "below-ground-carbon-density" ),
+        
+        //! Age at maturity.  This is used to grow forests slowly.
+        CREATE_SIMPLE_VARIABLE( mMatureAge, int, "mature-age" )
+    )
 };
 
 #endif // _LAND_CARBON_DENSITIES_H_

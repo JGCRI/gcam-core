@@ -47,6 +47,7 @@
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/default_visitor.h"
+#include "util/base/include/data_definition_util.h"
 
 class ICarbonCalc;
 class LandUseHistory;
@@ -94,7 +95,15 @@ public:
     
     void calc( const int aPeriod, const int aEndYear );
     
-private:
+protected:
+    
+    DEFINE_DATA(
+        /*! \brief NodeCarbonCalc is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( NodeCarbonCalc )
+                
+        // TODO: should any of these member variables be accessible through introspection?
+    )
+    
     //! The carbon leaves that will drive the carbon calculations at this node.
     std::vector<NoEmissCarbonCalc*> mCarbonCalcs;
 

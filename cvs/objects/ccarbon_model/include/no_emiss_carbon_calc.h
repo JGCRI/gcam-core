@@ -67,8 +67,12 @@ public:
     virtual void calc( const int aPeriod, const int aEndYear );
     
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
-private:
-
+protected:
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        LandCarbonDensities
+    )
 };
 
 #endif // _NO_EMISS_CARBON_CALC_H_

@@ -49,10 +49,17 @@
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
+#include "util/base/include/data_definition_util.h"
+
 // Forward declarations
 class IInfo;
 class Tabs;
 class LandUseHistory;
+
+// Need to forward declare the subclasses as well.
+class ASimpleCarbonCalc;
+class LandCarbonDensities;
+class NoEmissCarbonCalc;
 
 /*!
  * \brief An interface to an object responsible for determining the annual
@@ -176,6 +183,15 @@ public:
 
     virtual void acceptDerived( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;
+    
+    protected:
+    
+    /* We must declare all subclasses of ICarbonCalc in this interface to allow
+     * automatic traversal of the hierarchy under introspection.
+     */
+    DEFINE_DATA(
+        DEFINE_SUBCLASS_FAMILY( ICarbonCalc, ASimpleCarbonCalc, LandCarbonDensities, NoEmissCarbonCalc )
+    )
 };
 
 // Inline function definitions.

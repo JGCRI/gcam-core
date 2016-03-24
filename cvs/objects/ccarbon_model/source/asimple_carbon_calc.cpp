@@ -54,20 +54,19 @@ using namespace objects;
 
 extern Scenario* scenario;
 
-ASimpleCarbonCalc::ASimpleCarbonCalc():
-    mTotalEmissions(CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear()),
-    mTotalEmissionsAbove(CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear()),
-    mTotalEmissionsBelow(CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear()),
-    mCarbonStock(scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear()),
-    mLandUseHistory( 0 ),
-    mSoilTimeScale( CarbonModelUtils::getSoilTimeScale() ),
-    precalc_sigmoid_diff(  /* only allocate space if necessary i.e. mature age > 1 */ ),
-    mStoredEmissionsAbove(0),
-    mStoredEmissionsBelow(0),
-    mHasCalculatedHistoricEmiss( false )
+ASimpleCarbonCalc::ASimpleCarbonCalc()
 {
+    const int histStartYear = CarbonModelUtils::getStartYear();
     int endYear = CarbonModelUtils::getEndYear();
     const Modeltime* modeltime = scenario->getModeltime();
+    
+    mTotalEmissions.reinitialize( histStartYear, endYear );
+    mTotalEmissionsAbove.reinitialize( histStartYear, endYear );
+    mTotalEmissionsBelow.reinitialize( histStartYear, endYear );
+    mCarbonStock.reinitialize( modeltime->getStartYear(), endYear );
+    mLandUseHistory = 0;
+    mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();
+    mHasCalculatedHistoricEmiss = false;
 
     // Note we are not allocating space for period zero since that is historical
     // and can never be calculated more than once.

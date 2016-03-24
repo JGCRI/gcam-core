@@ -104,34 +104,40 @@ public:
     virtual void setSoilTimeScale( const int aTimeScale );
 
 protected:
-    //! Total land used by period.
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICarbonCalc,
+
+        //! Stored above ground emissions which are necessary to clear the total emissions
+        //! when recalculating a period.
+        CREATE_ARRAY_VARIABLE( mStoredEmissionsAbove, objects::PeriodVector<objects::YearVector<double>*>, "above-emissions-by-period" ),
+        
+        //! Stored above ground emissions which are necessary to clear the total emissions
+        //! when recalculating a period.
+        CREATE_ARRAY_VARIABLE( mStoredEmissionsBelow, objects::PeriodVector<objects::YearVector<double>*>, "below-emissions-by-period" ),
+        
+        //! Total emissions by year.
+        CREATE_ARRAY_VARIABLE( mTotalEmissions, objects::YearVector<double>, "land-use-change-emissions" ),
+        
+        //! Above ground total emissions by year
+        CREATE_ARRAY_VARIABLE( mTotalEmissionsAbove, objects::YearVector<double>, "above-ground-land-use-change-emissions" ),
+        
+        //! Below ground total emissions by year
+        CREATE_ARRAY_VARIABLE( mTotalEmissionsBelow, objects::YearVector<double>, "above-ground-land-use-change-emissions" ),
+        
+        //! Above ground carbon stock
+        CREATE_ARRAY_VARIABLE( mCarbonStock, objects::YearVector<double>, "above-ground-carbon-stock" ),
+        
+        //! Time scale for soil carbon emissions
+        CREATE_SIMPLE_VARIABLE( mSoilTimeScale, int, "soil-time-scale" )
+    )
+
+    //! Total land used by period as copied from the land leaf.
     objects::PeriodVector<double> mLandUse;
 
-    //! Stored above ground emissions which are necessary to clear the total emissions
-    //! when recalculating a period.
-    objects::PeriodVector<objects::YearVector<double>*> mStoredEmissionsAbove;
-
-    //! Stored above ground emissions which are necessary to clear the total emissions
-    //! when recalculating a period.
-    objects::PeriodVector<objects::YearVector<double>*> mStoredEmissionsBelow;
-
-    //! Total emissions by year.
-    objects::YearVector<double> mTotalEmissions;
-
-    //! Above ground total emissions by year
-    objects::YearVector<double> mTotalEmissionsAbove;
-
-    //! Below ground total emissions by year
-    objects::YearVector<double> mTotalEmissionsBelow;
-
-    //! Above ground carbon stock
-    objects::YearVector<double> mCarbonStock;
-
-    //! Time scale for soil carbon emissions
-    int mSoilTimeScale;
-
-
-    /*! 
+    /*!
      * \brief The land use history for the land leaf or it's parent land node.
      * \details Weak pointer to the land use history either for this leaf
      *          or the parent land type. The historical land share will be set to

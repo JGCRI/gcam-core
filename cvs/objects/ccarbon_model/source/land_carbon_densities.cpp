@@ -54,13 +54,16 @@ extern Scenario* scenario;
 /*! \brief Constructor.
 * \author James Blackwood
 */
-LandCarbonDensities::LandCarbonDensities():
-mAboveGroundCarbon( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear(), 0.0 ),
-mBelowGroundCarbon( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear(), 0.0 ),
-mAvgAboveGroundCarbon( 0.0 ),
-mAvgBelowGroundCarbon( 0.0 ),
-mMatureAge( 1 )
+LandCarbonDensities::LandCarbonDensities()
 {
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int startYear = modeltime->getStartYear();
+    const int endYear = CarbonModelUtils::getEndYear();
+    mAboveGroundCarbon.reinitialize( startYear, endYear, 0.0 );
+    mBelowGroundCarbon.reinitialize( startYear, endYear, 0.0 );
+    mAvgAboveGroundCarbon = 0.0;
+    mAvgBelowGroundCarbon = 0.0;
+    mMatureAge = 1;
 }
 
 //! Default destructor
