@@ -120,7 +120,6 @@ public:
 
     // following functions are used for reporting into solver data log
     const std::vector<int> &getMarketIDs(std::vector<int> &amktids, bool aSolvableOnly) const;
-    int nsolve(void) const;
     
 private:
     unsigned int period;
