@@ -75,7 +75,7 @@ L102.gdp_mil90usd_SSP_R_Y[X_future_years] <- L102.gdp_mil90usd_SSP_R_Y[[X_base_y
 L102.gdp_mil90usd_SSP_R_Y <- L102.gdp_mil90usd_SSP_R_Y[ c( Scen_R, X_historical_years, X_future_years ) ]
 
 #Creating GCAM socioeconomic pathways (GSP).
-#GSP is basically SSP, but relfects economic sluggishness in the near future, using IMF projections.
+#GSP is basically SSP, but reflects economic sluggishness in the near future, using IMF projections.
 printlog( "Using the IMF projections for near-term GDP evolution." )
 
 #clean IMF GDP data

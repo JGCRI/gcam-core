@@ -38,7 +38,6 @@ L101.Pop_thous_SSP_R_Yfut <- aggregate( L100.Pop_thous_SSP_ctry_Yfut[ c( X_futur
       by=as.list( L100.Pop_thous_SSP_ctry_Yfut[ Scen_R ] ), sum )
 
 #Future population in the GSP scenarios
-###move this to population.R?
 #for now use SSP population for both SSP and GSP; revisit this after consulting GCAM-China team
 L101.Pop_thous_GSP_R_Yfut <- L101.Pop_thous_SSP_R_Yfut
 L101.Pop_thous_GSP_R_Yfut[[Scen]] <- paste0( "G", substr(L101.Pop_thous_GSP_R_Yfut[[Scen]],2, 4))

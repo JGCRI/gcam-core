@@ -1,4 +1,7 @@
-# this script reads in USDA (original World Bank) GDP historical data and converts to GCAM units 
+# this script reads in USDA GDP historical data and converts to GCAM units 
+# USDA Source: http://www.ers.usda.gov/datafiles/International_Macroeconomic_Data/Historical_Data_Files/HistoricalRealGDPValues.xls
+# USDA dataset is sourced from World Bank and IMF dataset combined to minimize missing values and inconsistencies. 
+
 if( !exists( "SOCIOPROC_DIR" ) ){
   if( Sys.getenv( "SOCIOPROC" ) != "" ){
     SOCIOPROC_DIR <- Sys.getenv( "SOCIOPROC" )
@@ -29,7 +32,7 @@ USDA_GDP_MER <- readdata( "SOCIO_LEVEL0_DATA", "USDA_GDP_MER" )
 # 2. Perform computations
 # At present the GDP database used requires no downscaling and all major countries are included, so really no
 # processing steps are needed. All that happens in this file right now is subsetting the years that will be
-# required by later files, and converting the units from [million 2010 USD] to GCAM's GDP unit (million 1990 USD)
+# required by later files, and converting the units from [billion 2010 USD] to GCAM's GDP unit (million 1990 USD)
 L100.gdp_mil90usd_ctry_Yh <- na.omit(
   data.frame(
     USDA_GDP_MER[ "iso" ],
