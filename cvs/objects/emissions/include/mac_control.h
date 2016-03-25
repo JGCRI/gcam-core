@@ -83,14 +83,20 @@ protected:
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AEmissionsControl,
+        
+        //! Boolean indicating whether reductions should occur at a zero carbon price
+        CREATE_SIMPLE_VARIABLE( mNoZeroCostReductions, bool, "no-zero-cost-reductions" ),
+        
+        //! The underlying Curve (as read in)
+        CREATE_CONTAINER_VARIABLE( mMacCurve, PointSetCurve*, NoFilter, "mac-reduction" )
+    )
 
 private:
-    //! Boolean indicating whether reductions should occur at a zero carbon price
-    bool mNoZeroCostReductions;
-    
-    //! The underlying Curve (as read in)
-    std::auto_ptr<PointSetCurve> mMacCurve;
-
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;
 };

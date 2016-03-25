@@ -50,9 +50,9 @@ using namespace std;
 using namespace xercesc;
 
 //! Default constructor.
-AEmissionsControl::AEmissionsControl():
-mReduction( 0 )
+AEmissionsControl::AEmissionsControl()
 {
+    mReduction = 0;
 }
 
 //! Destructor

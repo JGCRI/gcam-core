@@ -48,10 +48,15 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class GDP;
 class IInfo;
+
+// Need to forward declare the subclasses as well.
+class GDPControl;
+class MACControl;
 
 /*! 
  * \ingroup Objects
@@ -153,13 +158,20 @@ protected:
 
     void setEmissionsReduction( double aReduction );
     
-private:
-    //! Name of the reduction so that users can have multiple emissions reductions
-    std::string mName;
-    
-    //! Reduction (usually calculated)
-    double mReduction;
+    DEFINE_DATA(
+        /* Declare all subclasses of AEmissionsControl to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl ),
+        
+        //! Name of the reduction so that users can have multiple emissions reductions
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        
+        //! Reduction (usually calculated)
+        CREATE_SIMPLE_VARIABLE( mReduction, double, "reduction" )
+    )
 
+private:
     void copy( const AEmissionsControl& aOther );
 
 };

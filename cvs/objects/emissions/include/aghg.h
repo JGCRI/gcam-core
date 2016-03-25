@@ -53,6 +53,8 @@
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class GDP;
@@ -63,6 +65,10 @@ class AEmissionsControl;
 class ICaptureComponent;
 class IInput;
 class CachedMarket;
+
+// Need to forward declare the subclasses as well.
+class CO2Emissions;
+class NonCO2Emissions;
 
 /*! 
  * \ingroup Objects
@@ -188,18 +194,31 @@ protected:
      * \return The constant XML_NAME.
      */
     virtual const std::string& getXMLName() const = 0;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of AGHG to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( AGHG, CO2Emissions, NonCO2Emissions ),
+        
+        //! GHG name
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
-    //! GHG name
-    std::string mName;
+        //! Unit of emissions
+        CREATE_SIMPLE_VARIABLE( mEmissionsUnit, std::string, "emissions-unit" ),
 
-    //! Unit of emissions
-    std::string mEmissionsUnit;
+        //! Emissions (calculated)
+        //! TODO: These are sized to store emissions for all periods however only
+        //!       a fraction of that will actually be used (depending on the technology
+        //!       vintage and lifetime.
+        CREATE_ARRAY_VARIABLE( mEmissions, objects::PeriodVector<double>, "emissions" ),
 
-    //! Emissions (calculated)
-    std::vector<double> mEmissions;
-
-    //! Emissions sequestered by a ICaptureComponent
-    std::vector<double> mEmissionsSequestered;
+        //! Emissions sequestered by a ICaptureComponent
+        //! TODO: These are sized to store emissions for all periods however only
+        //!       a fraction of that will actually be used (depending on the technology
+        //!       vintage and lifetime.
+        CREATE_ARRAY_VARIABLE( mEmissionsSequestered, objects::PeriodVector<double>, "emissions-sequestered" )
+    )
     
     //! Pre-located market which has been cached from the marketplace to get the price
     //! of this ghg and add demands to the market.

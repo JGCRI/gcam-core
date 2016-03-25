@@ -63,19 +63,21 @@ extern Scenario* scenario;
 
 //! Default constructor.
 MACControl::MACControl():
-AEmissionsControl(),
-mNoZeroCostReductions( false ),
-mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
+AEmissionsControl()
 {
+    mNoZeroCostReductions = false;
+    mMacCurve = new PointSetCurve( new ExplicitPointSet() );
 }
 
 //! Default destructor.
 MACControl::~MACControl(){
+    delete mMacCurve;
 }
 
 //! Copy constructor.
 MACControl::MACControl( const MACControl& aOther )
 : AEmissionsControl( aOther ) {
+    mMacCurve = 0;
     copy( aOther );
 }
 
@@ -87,7 +89,10 @@ MACControl* MACControl::clone() const {
 //! Assignment operator.
 MACControl& MACControl::operator=( const MACControl& aOther ){
     if( this != &aOther ){
-        // If there was a destructor it would need to be called here.
+        // Free memory before copying.  Since this is just a single
+        // variable I am just deleting it directly here.
+        delete mMacCurve;
+        mMacCurve = 0;
         AEmissionsControl::operator=( aOther );
         copy( aOther );
     }
@@ -96,7 +101,11 @@ MACControl& MACControl::operator=( const MACControl& aOther ){
 
 //! Copy helper function.
 void MACControl::copy( const MACControl& aOther ){
-    mMacCurve.reset( aOther.mMacCurve->clone() );
+    /*!
+     * \pre mMacCurve should be null otherwise we have a memory leak.
+     */
+    assert( !mMacCurve );
+    mMacCurve = aOther.mMacCurve->clone();
     mNoZeroCostReductions = aOther.mNoZeroCostReductions;
 }
 

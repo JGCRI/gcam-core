@@ -63,12 +63,7 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default constructor.
-AGHG::AGHG():
-// this is inefficient as it is greater than the lifetime
-// but much simpler than converting period to lifetime period 
-// TODO: Fix this so it has one spot per active period.
-mEmissions( scenario->getModeltime()->getmaxper() ),
-mEmissionsSequestered( scenario->getModeltime()->getmaxper() )
+AGHG::AGHG()
 {
 }
 
@@ -95,9 +90,7 @@ void AGHG::copy( const AGHG& aOther ){
     mName = aOther.mName;
     mEmissionsUnit = aOther.mEmissionsUnit;
 
-    // Note results are never copied.
-    mEmissions.resize( scenario->getModeltime()->getmaxper() );
-    mEmissionsSequestered.resize( scenario->getModeltime()->getmaxper() );
+    // Note results (such as emissions) are never copied.
 }
 
 //! \brief initialize Ghg object with xml data

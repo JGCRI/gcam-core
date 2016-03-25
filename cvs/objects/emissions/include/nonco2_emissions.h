@@ -99,13 +99,21 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AGHG,
 
-private:    
-    //! The emissions coefficient.
-    Value mEmissionsCoef;
+        //! The emissions coefficient.
+        CREATE_SIMPLE_VARIABLE( mEmissionsCoef, Value, "emiss-coef" ),
 
-    //! Emissions to calibrate to if provided.
-    Value mInputEmissions;
+        //! Emissions to calibrate to if provided.
+        CREATE_SIMPLE_VARIABLE( mInputEmissions, Value, "input-emissions" ),
+                                
+        //! Set of emissions controls
+        CREATE_CONTAINER_VARIABLE( mEmissionsControls, std::vector<AEmissionsControl*>, NamedFilter, "emissions-control" )
+    )
 
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef
     //! in the current model period.
@@ -116,14 +124,13 @@ private:
     const GDP* mGDP;
 
     //! Emissions driver delegate
+    //! Include this in DEFINE_DATA?  These currently have no data at all and are simply "tags".
     std::auto_ptr<AEmissionsDriver> mEmissionsDriver;
-
-    //! Set of emissions controls
-    std::vector<AEmissionsControl*> mEmissionsControls;
 
     // typdef to help simplify code
     typedef std::vector<AEmissionsControl*>::const_iterator CControlIterator;
 
+private:
     void clear();
 
     void copy( const NonCO2Emissions& aOther );
