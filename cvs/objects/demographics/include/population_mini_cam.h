@@ -80,13 +80,22 @@ public:
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Population,
+        
+        //! Fraction of the total population which is assumed to be of working age
+        CREATE_SIMPLE_VARIABLE( mFractionWorking, double, "fraction-working" )
+    )
+    
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
-    double mFractionWorking; //!< Fraction of the total population which is assumed to be of working age
 };
 
 #endif // _POPULATION_MINI_CAM_H_

@@ -61,16 +61,14 @@ extern Scenario* scenario;
 
 //! Default constructor.
 Population::Population():
-    mIsParsed(true),
-    mYear(-1),
-    mTotalPop(-1),
-    mPopulationUnit("thous"),
-    mWorkingAgeMin(WORKING_AGE_MIN_DEFAULT),
-    mWorkingAgeMax(WORKING_AGE_MAX_DEFAULT)
+    mIsParsed(true)
 
 {
-    //mWorkingAgeMin = WORKING_AGE_MIN_DEFAULT;
-    //mWorkingAgeMax = WORKING_AGE_MAX_DEFAULT;
+    mYear = -1;
+    mTotalPop = -1;
+    mPopulationUnit = "thous";
+    mWorkingAgeMin = WORKING_AGE_MIN_DEFAULT;
+    mWorkingAgeMax = WORKING_AGE_MAX_DEFAULT;
 }
 
 //! Population destructor. 

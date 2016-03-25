@@ -51,8 +51,14 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/data_definition_util.h"
 
 class IVisitor;
+
+// Need to forward declare the subclasses as well.
+class PopulationMiniCAM;
+class PopulationSGMFixed;
+class PopulationSGMRate;
 
 /*! 
 * \ingroup Objects
@@ -87,11 +93,28 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
     bool mIsParsed; //!< whether population has been read-in
 protected:
-    int mYear; //!< year
-    double mTotalPop; //!< total population for this year
-    std::string mPopulationUnit; //!< unit of population numbers
-    int mWorkingAgeMin; //!< minimum working age.
-    int mWorkingAgeMax; //!< maximum working age.
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Population to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Population, PopulationMiniCAM, PopulationSGMFixed, PopulationSGMRate ),
+
+        //! year
+        CREATE_SIMPLE_VARIABLE( mYear, int, "year" ),
+        
+        //! total population for this year
+        CREATE_SIMPLE_VARIABLE( mTotalPop, double, "totalPop" ),
+        
+        //! unit of population numbers
+        CREATE_SIMPLE_VARIABLE( mPopulationUnit, std::string, "population-unit" ),
+        
+        //! minimum working age.
+        CREATE_SIMPLE_VARIABLE( mWorkingAgeMin, int, "min-working-age" ),
+        
+        //! maximum working age.
+        CREATE_SIMPLE_VARIABLE( mWorkingAgeMax, int, "max-working-age" )
+    )
 
     virtual const std::string& getXMLName() const = 0;
     virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr ) = 0;
