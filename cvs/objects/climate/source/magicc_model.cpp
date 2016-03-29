@@ -112,25 +112,23 @@ const string MagiccModel::sInputGasUnits[] = { "(Pg C)",
 /*! \brief Constructor
 * \param aModeltime Pointer to the global modeltime object.
 */
-MagiccModel::MagiccModel( const Modeltime* aModeltime ):
-mGHGInputFileName(""),
-mModeltime( aModeltime ),
-mIsValid( false ),
-mClimateSensitivity( -1 ),
-mSoilTempFeedback( -1 ),
-mHumusTempFeedback( -1 ),
-mGPPTempFeedback( -1 ),
-mOceanCarbFlux80s( -1 ),
-mNetDeforestCarbFlux80s( -1 ),
-mSO2Dir1990( 0 ), // initialize to zero since -1 is a legit value
-mSO2Ind1990( 0 ), // initialize to zero since -1 is a legit value
-mBCUnitForcing( 0 ),
-mOCUnitForcing( 0 ), // initialize to zero since -1 is a legit value
-mLastHistoricalYear ( 0 ), // default to zero -- use only model data
-mCarbonModelStartYear( 1975 ), // Need to have first model year here, but should be 1990 for MAGICC. FIX.
-mNumberHistoricalDataPoints( 0 ) // internal counter
+MagiccModel::MagiccModel()
 {
-
+    mGHGInputFileName = "";
+    mIsValid = false;
+    mClimateSensitivity = -1;
+    mSoilTempFeedback = -1;
+    mHumusTempFeedback = -1;
+    mGPPTempFeedback = -1;
+    mOceanCarbFlux80s = -1;
+    mNetDeforestCarbFlux80s = -1;
+    mSO2Dir1990 = 0; // initialize to zero since -1 is a legit value
+    mSO2Ind1990 = 0; // initialize to zero since -1 is a legit value
+    mBCUnitForcing = 0;
+    mOCUnitForcing = 0; // initialize to zero since -1 is a legit value
+    mLastHistoricalYear = 0; // default to zero -- use only model data
+    mCarbonModelStartYear = 1975; // Need to have first model year here, but should be 1990 for MAGICC. FIX.
+    mNumberHistoricalDataPoints = 0; // internal counter
 }
 
 /*! \brief Complete the initialization of the MagiccModel.
@@ -147,15 +145,17 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     mScenarioName = aScenarioName;
     // Resize to the number of gases based on the gas name vector.
     mModelEmissionsByGas.resize( getNumInputGases() );
+    
+    const Modeltime* modeltime = scenario->getModeltime();
 
     // Resize all the vectors to the number of data points for MAGICC.
-    const int numGasPoints = mModeltime->getmaxper() + getNumAdditionalGasPoints() + 1; //Add space for 1975 to make later code clearer
+    const int numGasPoints = modeltime->getmaxper() + getNumAdditionalGasPoints() + 1; //Add space for 1975 to make later code clearer
     for( unsigned int i = 0; i < mModelEmissionsByGas.size(); ++i ){
         mModelEmissionsByGas[ i ].resize( numGasPoints );
     }
 	
 	// Resize the LUC CO2 vector to the number of years plus the number of additional points
-	const int numYears = mModeltime->getEndYear() - mModeltime->getStartYear()
+	const int numYears = modeltime->getEndYear() - modeltime->getStartYear()
 							+ getNumAdditionalGasPoints();
 	mLUCEmissionsByYear.resize( numYears );
 	
@@ -413,7 +413,7 @@ bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const
     }
 
     // Check that the period is valid.
-    if( aPeriod < 1 || aPeriod >= mModeltime->getmaxper() ){
+    if( aPeriod < 1 || aPeriod >= scenario->getModeltime()->getmaxper() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Invalid period " << aPeriod << " passed to MAGICC model wrapper." << endl;
@@ -449,7 +449,8 @@ bool MagiccModel::setLUCEmissions( const string& aGasName, const int aYear, cons
     }
 	
     // Check that the period is valid.
-    if( aYear < mModeltime->getStartYear() || aYear > mModeltime->getEndYear() ){
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( aYear < modeltime->getStartYear() || aYear > modeltime->getEndYear() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Invalid year " << aYear << " passed to MAGICC model wrapper." << endl;
@@ -458,7 +459,7 @@ bool MagiccModel::setLUCEmissions( const string& aGasName, const int aYear, cons
 	
     // Set the gas level. Base year values are not passed to MAGICC, so remove
     // one from the model period to determine the index.
-    mLUCEmissionsByYear[ aYear - mModeltime->getStartYear() - 1 ] = aEmission;
+    mLUCEmissionsByYear[ aYear - modeltime->getStartYear() - 1 ] = aEmission;
 	
     // Invalidate the output because an input has changed.
     mIsValid = false;
@@ -577,9 +578,10 @@ void MagiccModel::writeMAGICCEmissionsFile(){
         }
     }
     
-	const int startYear = mModeltime->getper_to_yr( 1 );
-	const int endYear = mModeltime->getEndYear();
-	const int finalCalYear = mModeltime->getper_to_yr( mModeltime->getFinalCalibrationPeriod() ); 
+    const Modeltime* modeltime = scenario->getModeltime();
+	const int startYear = modeltime->getper_to_yr( 1 );
+	const int endYear = modeltime->getEndYear();
+	const int finalCalYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
     
     // Keep track of the next model year to use for interpolating in-between historical and model data.
     int firstModelYear = startYear; 
@@ -588,11 +590,11 @@ void MagiccModel::writeMAGICCEmissionsFile(){
     // We want to write model emissions to MAGICC annually to eliminate errors
     // with the LUC CO2 emissions
     for( unsigned int year = startYear; year <= endYear; year++ ) {
-		int period =  mModeltime->getyr_to_per( year );
+		int period =  modeltime->getyr_to_per( year );
         
         // If are past historical years, write out model emissions for every year past final cal year, a model year, and GAS_EMK_CRIT_YEAR 
         if ( year > mLastHistoricalYear ) { 
-            if ( mModeltime->isModelYear( year ) || year == GAS_EMK_CRIT_YEAR || year > finalCalYear ) { 
+            if ( modeltime->isModelYear( year ) || year == GAS_EMK_CRIT_YEAR || year > finalCalYear ) {
                 std::vector<int>::iterator yearIterator; // Need this several times
                
                 // Write out model emissions for all the gases if past historical emissions year.
@@ -606,14 +608,14 @@ void MagiccModel::writeMAGICCEmissionsFile(){
                     // and model data are acceptable
                     if ( sInputGasNames[ gasNumber ] == "CO2NetLandUse" ) { 
                         gasFileData << setw(  6 + OUT_PRECISION ) << setprecision( OUT_PRECISION )
-                                    << mLUCEmissionsByYear[ year - mModeltime->getStartYear() - 1 ];
+                                    << mLUCEmissionsByYear[ year - modeltime->getStartYear() - 1 ];
                     }
                     // For all emissions other than LUC carbon
                     else {
-                        bool needToInterpolate = !mModeltime->isModelYear( year );
+                        bool needToInterpolate = !modeltime->isModelYear( year );
                         if( needToInterpolate ) {
-                            int nextYear = mModeltime->getper_to_yr( period );
-                            int prevYear = mModeltime->getper_to_yr( period - 1);
+                            int nextYear = modeltime->getper_to_yr( period );
+                            int prevYear = modeltime->getper_to_yr( period - 1);
                             double nextValue = mModelEmissionsByGas[ gasNumber ][ period ];
                             double previousValue = mModelEmissionsByGas[ gasNumber ][ period - 1 ];
                             
@@ -639,21 +641,21 @@ void MagiccModel::writeMAGICCEmissionsFile(){
         } 
         else {
             // If this was a historical year, then keep track of next model period.
-            firstModelYear = mModeltime->getper_to_yr( period );
+            firstModelYear = modeltime->getper_to_yr( period );
         }
     } // End of year loop
     
     // Add an additional data point if needed so that MAGICC has data at least out to 2100.
     if ( mLastHistoricalYear < 2100 && endYear < 2100 ) {
         int year = endYear;
-        int period = mModeltime->getmaxper();
+        int period = modeltime->getmaxper();
         for ( unsigned int extra = 0; extra < getNumAdditionalGasPoints(); extra++ ) {
             year = year + 10;
             gasFileData << setw( 4 ) << year << ",";
             // Write out all the gases.
             for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
                 if ( sInputGasNames[ gasNumber ] == "CO2NetLandUse" ) {
-                    int index = mModeltime->getEndYear() - mModeltime->getStartYear() + extra - 1;
+                    int index = modeltime->getEndYear() - modeltime->getStartYear() + extra - 1;
                     gasFileData << setw(  6 + OUT_PRECISION ) << setprecision( OUT_PRECISION )
                     << mLUCEmissionsByYear[ index ];
                 }
@@ -728,7 +730,7 @@ enum MagiccModel::runModelStatus MagiccModel::runModel(){
     // Add on extra periods MAGICC needs. 
     // Loop through the gases and copy forward emissions.
     for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
-        const int finalPeriod = mModeltime->getmaxper() - 1;
+        const int finalPeriod = scenario->getModeltime()->getmaxper() - 1;
         // Fill in data for extra periods
         fill( mModelEmissionsByGas[ gasNumber ].begin() + finalPeriod,
               mModelEmissionsByGas[ gasNumber ].end(),
@@ -878,59 +880,60 @@ void MagiccModel::printFileOutput() const {
         string var4name,string var5name,string uname,vector<double> dout);
 
     // Fill up a vector of CO2 concentrations.
-    vector<double> data( mModeltime->getmaxper() );
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getConcentration( "CO2", mModeltime->getper_to_yr( period ) );
+    const Modeltime* modeltime = scenario->getModeltime();
+    vector<double> data( modeltime->getmaxper() );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getConcentration( "CO2", modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","Concentration","PPM", data );
     
     // TEMP?
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getEmissions( "CO2", mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getEmissions( "CO2", modeltime->getper_to_yr( period ) );
     }
 
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","CO2-Emissions","TgC", data );
 
     // Fill up a vector of total forcing.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getTotalForcing( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getTotalForcing( modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","Forcing","W/m^2", data );
 
     // Fill up a vector of CO2 forcing.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getForcing( "CO2", mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getForcing( "CO2", modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","CO2-Forcing","W/m^2", data );
 
     // Fill up a vector of Global Mean Temperature.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getTemperature( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getTemperature( modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","Temperature","degC", data );
 
     // Fill up a vector of Net Terrestrial Uptake.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getNetTerrestrialUptake( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getNetTerrestrialUptake( modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","NetTerUptake","GtC", data );
 
     // Fill up a vector of Ocean Uptake.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getNetOceanUptake( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getNetOceanUptake( modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","OceanUptake","GtC", data );
     
     // Fill up a vector of Net Land-Use Emissions.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getNetLandUseChangeEmission( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getNetLandUseChangeEmission( modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the text output function protocol
     fileoutput3( "global","MAGICC"," "," ","netLUEm","GtC", data );
@@ -942,60 +945,61 @@ void MagiccModel::printDBOutput() const {
         string uname,vector<double> dout);
 
     // Fill up a vector of concentrations.
-    vector<double> data( mModeltime->getmaxper() );
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getConcentration( "CO2", mModeltime->getper_to_yr( period ) );
+    const Modeltime* modeltime = scenario->getModeltime();
+    vector<double> data( modeltime->getmaxper() );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getConcentration( "CO2", modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the database.
      dboutput4( "global", "General", "Concentrations", "Period", "PPM", data );
  
     // TEMP?
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
         data[ period ] =
-            getEmissions( "CO2", mModeltime->getper_to_yr( period ) );
+            getEmissions( "CO2", modeltime->getper_to_yr( period ) );
     }
     // Write out the data to the database.
      dboutput4( "global", "General", "CO2 Emissions", "Period", "TgC", data );
 
     // Fill up a vector of total forcing.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getTotalForcing( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getTotalForcing( modeltime->getper_to_yr( period ) );
     }
     dboutput4( "global", "General", "Forcing", "Period","W/m^2", data );
 
     // Fill up a vector of CO2 forcing.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getForcing( "CO2", mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getForcing( "CO2", modeltime->getper_to_yr( period ) );
     }
      dboutput4( "global", "General", "CO2-Forcing", "Period","W/m^2", data );
 
      // Fill up a vector of Global Mean Temperature.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getTemperature( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getTemperature( modeltime->getper_to_yr( period ) );
     }
 
     // Write out the data to the database.
     dboutput4( "global", "General", "Temperature", "Period", "degC", data );
 
     // Fill up a vector of Net Terrestrial Uptake.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getNetTerrestrialUptake( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getNetTerrestrialUptake( modeltime->getper_to_yr( period ) );
     }
 
     // Write out the data to the database.
     dboutput4( "global", "General", "NetTerUptake", "Period", "GtC", data );
 
     // Fill up a vector of Ocean Uptake.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getNetOceanUptake( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getNetOceanUptake( modeltime->getper_to_yr( period ) );
     }
 
     // Write out the data to the database.
     dboutput4( "global", "General", "OceanUptake", "Period", "GtC", data );
 
     // Fill up a vector of Net Land-Use Emissions.
-    for( int period = 0; period < mModeltime->getmaxper(); ++period ){
-        data[ period ] = getNetLandUseChangeEmission( mModeltime->getper_to_yr( period ) );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ){
+        data[ period ] = getNetLandUseChangeEmission( modeltime->getper_to_yr( period ) );
     }
 
     // Write out the data to the database.

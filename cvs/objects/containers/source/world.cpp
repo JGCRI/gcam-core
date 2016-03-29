@@ -142,11 +142,11 @@ void World::XMLParse( const DOMNode* node ){
         }
 		// Read in parameters for climate model
         else if( nodeName == MagiccModel::getXMLNameStatic() ){
-            parseSingleNode( curr, mClimateModel, new MagiccModel( scenario->getModeltime() ) );
+            parseSingleNode( curr, mClimateModel, new MagiccModel() );
         }
 #if USE_HECTOR
         else if( nodeName == HectorModel::getXMLNameStatic() ) {
-            parseSingleNode( curr, mClimateModel, new HectorModel( scenario->getModeltime() ) );
+            parseSingleNode( curr, mClimateModel, new HectorModel() );
         }
 #endif
 		// SGM regions
@@ -170,7 +170,7 @@ void World::XMLParse( const DOMNode* node ){
 void World::completeInit() {
     //If none has been read in, instantiate the default climate model
     if ( !mClimateModel ) {
-        mClimateModel = new MagiccModel( scenario->getModeltime() );
+        mClimateModel = new MagiccModel();
     }
     
     // Initialize Climate Model

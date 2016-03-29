@@ -50,9 +50,14 @@
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/iparsable.h"
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
 class IVisitor;
+
+// Need to forward declare the subclasses as well.
+class MagiccModel;
+class HectorModel;
 
 /*! 
 * \ingroup Objects
@@ -281,6 +286,19 @@ public:
     */
 	virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;
+    
+protected:
+    
+    /* We must declare all subclasses of IClimateModel in this interface to allow
+     * automatic traversal of the hierarchy under introspection.
+     */
+    DEFINE_DATA(
+#if USE_HECTOR
+        DEFINE_SUBCLASS_FAMILY( IClimateModel, MagiccModel, HectorModel )
+#else
+        DEFINE_SUBCLASS_FAMILY( IClimateModel, MagiccModel )
+#endif // USE_HECTOR
+    )
 };
 
 // Inline definitions to avoid compiler warnings and errors.
