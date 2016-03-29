@@ -48,6 +48,9 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <iosfwd> // remove when csv output is removed.
 
+#include "util/base/include/ivisitable.h"
+#include "util/base/include/data_definition_util.h"
+
 class Tabs;
 class ICaptureComponent;
 class IInfo;
@@ -57,7 +60,8 @@ class ICaptureComponent;
 class NationalAccount;
 class Expenditure;
 
-// Until copyParam is fixed.
+// Need to forward declare the subclasses as well.
+class MiniCAMInput;
 class DemandInput;
 class ProductionInput;
 class NodeInput;
@@ -70,8 +74,6 @@ class InputTax;
 class InputOMVar;
 class InputOMFixed;
 class InputCapital;
-
-#include "util/base/include/ivisitable.h"
 
 /*! 
  * \ingroup Objects
@@ -500,6 +502,17 @@ public:
     // IVisitable interface.
     virtual void accept( IVisitor* aVisitor,
                         const int aPeriod ) const = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of IDiscreteChoice to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IInput, MiniCAMInput, EnergyInput, NonEnergyInput,
+                                RenewableInput, InputSubsidy, InputTax, InputOMVar,
+                                InputOMFixed, InputCapital )
+    )
 };
 
 // Inline function definitions.

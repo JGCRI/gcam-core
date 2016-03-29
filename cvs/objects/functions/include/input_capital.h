@@ -44,10 +44,11 @@
  */
 
 #include <string>
-#include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 class Tabs;
 
@@ -160,41 +161,44 @@ public:
 protected:
 
     InputCapital();
-
-    //! Cost of the capital input adjusted for the additional costs of the
-    //! capture component.
-    std::vector<Value> mAdjustedCosts;
-
-    //! Coefficient for production or demand function. Coefficients are not
-    // read in and are initialized to 1, but can increase over time with
-    // technical change.
-    std::vector<Value> mAdjustedCoefficients;
-
-    //! Cost of the capital input.
-    Value mCost;
-
-    //! Input specific technical change.
-    Value mTechChange;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
+        
+        //! Cost of the non-energy input adjusted for the additional costs of the
+        //! capture component.
+        CREATE_ARRAY_VARIABLE( mAdjustedCosts, objects::PeriodVector<Value>, "adjusted-cost" ),
+        
+        //! Coefficient for production or demand function. Coefficients are not
+        // read in and are initialized to 1, but can increase over time with
+        // technical change.
+        CREATE_ARRAY_VARIABLE( mAdjustedCoefficients, objects::PeriodVector<Value>, "adjusted-coef" ),
+        
+        //! Input specific technical change.
+        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "tech-change" ),
+        
+        //! Overnight cost of capital.
+        CREATE_SIMPLE_VARIABLE( mCapitalOvernight, Value, "capital-overnight" ),
+        
+        //! Fixed charge rate for levelizing capital.
+        // TODO: this should come from the capital market.
+        CREATE_SIMPLE_VARIABLE( mFixedChargeRate, double, "fixed-charge-rate" ),
+        
+        //! Lifetime of capital that may be different from lifetime of technology.
+        // This is a Value object so as to include units.
+        CREATE_SIMPLE_VARIABLE( mLifetimeCapital, Value, "lifetime-capital" ),
+        
+        //! Calculated value for the levelized cost of capital.
+        CREATE_SIMPLE_VARIABLE( mLevelizedCapitalCost, Value, "levelized-capital-cost" ),
+        
+        //! Technology capacity factor.
+        // TODO: create one in technology and use that instead.
+        CREATE_SIMPLE_VARIABLE( mCapacityFactor, double, "capacity-factor" )
+    )
 
 private:
-    //! Overnight cost of capital.
-    Value mCapitalOvernight;
-
-    //! Fixed charge rate for levelizing capital.
-    // TODO: this should come from the capital market.
-    double mFixedChargeRate;
-
-    //! Lifetime of capital that may be different from lifetime of technology.
-    // This is a Value object so as to include units.
-    Value mLifetimeCapital;
-
-    //! Calculated value for the levelized cost of capital.
-    Value mLevelizedCapitalCost;
-
-    //! Technology capacity factor.
-    // TODO: create one in technology and use that instead.
-    double mCapacityFactor;
-
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
 
     // Function to calculate levelized capital costs.

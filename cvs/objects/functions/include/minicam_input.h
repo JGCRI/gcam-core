@@ -216,11 +216,17 @@ public:
 protected:
     MiniCAMInput();
 
-    //! Name of the Input.
-    std::string mName;
-    
-    //! A map of a keyword to its keyword group
-    std::map<std::string, std::string> mKeywordMap;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IInput,
+                            
+        //! Name of the Input.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        
+        //! A map of a keyword to its keyword group
+        CREATE_SIMPLE_VARIABLE( mKeywordMap, std::map<std::string, std::string>, "keyword" )
+    )
 };
 
 #endif // _MINICAM_INPUT_H_

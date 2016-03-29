@@ -50,6 +50,7 @@
 #include "util/base/include/value.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/data_definition_util.h"
 
 /*!
  * \ingroup Objects
@@ -117,30 +118,36 @@ public:
     // IRoundTrippable methods
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 
-private:
-    //! Calibrate the satiation level based on a multiplier increase of base
-    //! year demand.  Note this value must be strictly greater than 1.
-    Value mBaseYearSatiationMultiplier;
+protected:
+    
+    DEFINE_DATA(
+        // SatiationDemandFunction is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( SatiationDemandFunction ),
 
-    //! The satiation level which may have been parsed directly by the user.
-    Value mParsedSatiationLevel;
+        //! Calibrate the satiation level based on a multiplier increase of base
+        //! year demand.  Note this value must be strictly greater than 1.
+        CREATE_SIMPLE_VARIABLE( mBaseYearSatiationMultiplier, Value, "satiation-base-year-increase" ),
 
-    //! The satiation level to use during calcDemand.  This could have been read
-    //! in directly by the user or set as a percentage increase from the base year
-    //! demand.
-    Value mSatiationLevel;
+        //! The satiation level which may have been parsed directly by the user.
+        CREATE_SIMPLE_VARIABLE( mParsedSatiationLevel, Value, "parsed-satiation-level" ),
 
-    //! Satiation impedance or midpoint demand driver.  Note that this value is
-    //! calibrated via calibrateSatiationImpedance.
-    Value mSatiationImpedance;
+        //! The satiation level to use during calcDemand.  This could have been read
+        //! in directly by the user or set as a percentage increase from the base year
+        //! demand.
+        CREATE_SIMPLE_VARIABLE( mSatiationLevel, Value, "satiation-level" ),
 
-    //! Satiation adder, determines subsistence level.  This is the parsed value
-    //! and will not change.
-    Value mParsedSatiationAdder;
+        //! Satiation impedance or midpoint demand driver.  Note that this value is
+        //! calibrated via calibrateSatiationImpedance.
+        CREATE_SIMPLE_VARIABLE( mSatiationImpedance, Value, "satiation-impedance" ),
 
-    //! Satiation adder, determines subsistence level.  This value may be adjusted
-    //! from the parsed value during some calibration periods.
-    Value mSatiationAdder;
+        //! Satiation adder, determines subsistence level.  This is the parsed value
+        //! and will not change.
+        CREATE_SIMPLE_VARIABLE( mParsedSatiationAdder, Value, "parsed-satiation-adder" ),
+
+        //! Satiation adder, determines subsistence level.  This value may be adjusted
+        //! from the parsed value during some calibration periods.
+        CREATE_SIMPLE_VARIABLE( mSatiationAdder, Value, "satiation-adder" )
+    )
 };
 
 #endif // _SATIATION_DEMAND_FUNCTION_H_

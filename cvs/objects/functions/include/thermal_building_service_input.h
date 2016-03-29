@@ -117,14 +117,21 @@ public:
                                  const int aPeriod );
     
 protected:
-    //! Internal gains scaling parameter.
-    Value mInternalGainsScalar;
     
-    //! Degree days by period.
-    objects::PeriodVector<Value> mDegreeDays;
-    
-    //! Demand function coefficients to capture base year thermal characteristics.
-    Value mCoefficient;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        BuildingServiceInput,
+
+        //! Internal gains scaling parameter.
+        CREATE_SIMPLE_VARIABLE( mInternalGainsScalar, Value, "internal-gains-scalar" ),
+        
+        //! Degree days by period.
+        CREATE_ARRAY_VARIABLE( mDegreeDays, objects::PeriodVector<Value>, "degree-days" ),
+        
+        //! Demand function coefficients to capture base year thermal characteristics.
+        CREATE_SIMPLE_VARIABLE( mCoefficient, Value, "coefficient" )
+    )
     
     void copy( const ThermalBuildingServiceInput& aInput );
 };

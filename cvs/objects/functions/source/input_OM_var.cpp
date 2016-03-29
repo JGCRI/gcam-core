@@ -83,8 +83,7 @@ const string& InputOMVar::getXMLReportingName() const{
 
 //! Constructor
 InputOMVar::InputOMVar()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Clone the input.

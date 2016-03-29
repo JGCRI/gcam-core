@@ -94,9 +94,8 @@ const string& InputTax::getXMLReportingName() const{
 
 //! Constructor
 InputTax::InputTax()
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper(), 1.0 )
 {
+    std::fill( mAdjustedCoefficients.begin(), mAdjustedCoefficients.end(), 1.0 );
 }
 
 /*!
@@ -121,10 +120,6 @@ InputTax::InputTax( const InputTax& aOther ){
     // Do not copy calibration values into the future
     // as they are only valid for one period.
     mName = aOther.mName;
-    
-    // Resize vectors to the correct size.
-    mPhysicalDemand.resize( scenario->getModeltime()->getmaxper() );
-    mAdjustedCoefficients.resize( scenario->getModeltime()->getmaxper() );
     
     // copy keywords
     mKeywordMap = aOther.mKeywordMap;

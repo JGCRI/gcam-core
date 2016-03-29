@@ -83,8 +83,7 @@ const string& NonEnergyInput::getXMLReportingName() const{
 
 //! Constructor
 NonEnergyInput::NonEnergyInput()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 /*! \brief Constructor that sets name attribute.
@@ -93,9 +92,7 @@ NonEnergyInput::NonEnergyInput()
 * objects.
 * \author Steve Smith
 */
-NonEnergyInput::NonEnergyInput( const std::string& aName ) 
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() )
+NonEnergyInput::NonEnergyInput( const std::string& aName )
 {
     mName = aName;
 }

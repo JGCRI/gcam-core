@@ -366,61 +366,69 @@ public:
 
 
 protected:
-	//! Vector of child inputs
-    std::vector<INestedInput*> mNestedInputs;
-    typedef std::vector<INestedInput*>::iterator NestedInputIterator;
-    typedef std::vector<INestedInput*>::const_iterator CNestedInputIterator;
     
-    //! The name of this input
-    std::string mName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        INestedInput,
 
-    //! Type of function used
-    std::string mFunctionType;
+        //! Vector of child inputs
+        CREATE_CONTAINER_VARIABLE( mNestedInputs, std::vector<INestedInput*>, NamedFilter, "nodeInput" ),
+        
+        //! The name of this input
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
+        //! Type of function used
+        CREATE_SIMPLE_VARIABLE( mFunctionType, std::string, "prodDmdFnType" ),
+
+        //! Building size by period.
+        CREATE_ARRAY_VARIABLE( mBuildingSize, objects::PeriodVector<Value>, "base-building-size" ),
+
+        //! Price exponent by period.
+        CREATE_ARRAY_VARIABLE( mPriceExponent, objects::PeriodVector<Value>, "price-exponent" ),
+
+        //! Satiation demand function.
+        CREATE_CONTAINER_VARIABLE( mSatiationDemandFunction, SatiationDemandFunction*, NoFilter, "satiation-demand-function" ),
+
+        //! Shell conductance by period.
+        CREATE_ARRAY_VARIABLE( mShellConductance, objects::PeriodVector<Value>, "shell-conductance" ),
+
+        //! Floor to surface ratio by period.
+        CREATE_ARRAY_VARIABLE( mFloorToSurfaceRatio, objects::PeriodVector<Value>, "floor-to-surface-ratio" ),
+
+        //! Internal gains market name
+        CREATE_SIMPLE_VARIABLE( mInternalGainsMarketname, std::string, "internal-gains-market-name" ),
+
+        //! Internal gains output unit used to create the market
+        CREATE_SIMPLE_VARIABLE( mInternalGainsUnit, std::string, "internal-gains-unit" ),
+
+        //! Current Subregional population.  Note that this is just a
+        //! temporary value used during demand calculations
+        CREATE_SIMPLE_VARIABLE( mCurrentSubregionalPopulation, Value, "subregional-population" ),
+
+        //! Current Subregional income.  Note that this is just a
+        //! temporary value used during demand calculations
+        CREATE_SIMPLE_VARIABLE( mCurrentSubregionalIncome, Value, "subregional-income" ),
+
+        //! Stored trial internal gains trial supply for reporting
+        CREATE_ARRAY_VARIABLE( mInternalGainsTrialSupply, objects::PeriodVector<double>, "internal-gains-trial-supply" ),
+
+        //! The sum product of energy service price necessary to drive demands.
+        CREATE_ARRAY_VARIABLE( mPrice, objects::PeriodVector<double>, "price" )
+    )
+                           
     //! Pointer to function this class will use
     const IFunction* mFunction;
 
-	//! Building size by period.
-	objects::PeriodVector<Value> mBuildingSize;
-
-	//! Price exponent by period.
-	objects::PeriodVector<Value> mPriceExponent;
-
-	//! Satiation demand function.
-	std::auto_ptr<SatiationDemandFunction> mSatiationDemandFunction;
-
-	//! Shell conductance by period.
-	objects::PeriodVector<Value> mShellConductance;
-
-	//! Floor to surface ratio by period.
-	objects::PeriodVector<Value> mFloorToSurfaceRatio;
-
-	//! Internal gains market name
-	std::string mInternalGainsMarketname;
-
-	//! Internal gains output unit used to create the market
-	std::string mInternalGainsUnit;
-
-	//! Current Subregional population.  Note that this is just a
-	//! temporary value used during demand calculations
-	Value mCurrentSubregionalPopulation;
-
-	//! Current Subregional income.  Note that this is just a
-	//! temporary value used during demand calculations
-	Value mCurrentSubregionalIncome;
-
-	//! Cache the vector of children as IInput* which is needed for the mFunction
+    //! Cache the vector of children as IInput* which is needed for the mFunction
     std::vector<IInput*> mChildInputsCache;
-
-	//! Stored trial internal gains trial supply for reporting
-	objects::PeriodVector<double> mInternalGainsTrialSupply;
-
-	//! Stored region name only necessary because there is no
-	//! post calc to store the trial internal gains supply
-	std::string mRegionName;
-
-	//! The sum product of energy service price necessary to drive demands.
-	objects::PeriodVector<double> mPrice;
+                          
+    //! Stored region name only necessary because there is no
+    //! post calc to store the trial internal gains supply
+    std::string mRegionName;
+                       
+    typedef std::vector<INestedInput*>::iterator NestedInputIterator;
+    typedef std::vector<INestedInput*>::const_iterator CNestedInputIterator;
     
     void copy( const BuildingNodeInput& aNodeInput );
 };

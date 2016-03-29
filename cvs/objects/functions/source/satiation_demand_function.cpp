@@ -53,9 +53,9 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-SatiationDemandFunction::SatiationDemandFunction():
-mParsedSatiationAdder( 0 )
+SatiationDemandFunction::SatiationDemandFunction()
 {
+    mParsedSatiationAdder = 0;
 }
 
 const string& SatiationDemandFunction::getXMLNameStatic() {

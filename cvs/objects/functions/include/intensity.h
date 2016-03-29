@@ -81,9 +81,16 @@ public:
 
     virtual double getCoefficient() const;
 
-private:
-    //! The read-in intensity.
-    Value mReadInIntensity;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICoefficient,
+        
+        //! The read-in intensity.
+        CREATE_SIMPLE_VARIABLE( mReadInIntensity, Value, "coefficient" )
+    )
 };
 
 #endif // _INTENSITY_H_

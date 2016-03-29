@@ -55,11 +55,11 @@ using namespace std;
 using namespace xercesc;
 
 //! constructor: arg values <= 0 (including default) will get filled in with the default
-AbsoluteCostLogit::AbsoluteCostLogit():
-mLogitExponent( 1 ),
-mBaseCost( 0 ),
-mParsedBaseCost( false )
+AbsoluteCostLogit::AbsoluteCostLogit()
 {
+    std::fill( mLogitExponent.begin(), mLogitExponent.end(), 1.0 );
+    mBaseCost = 0;
+    mParsedBaseCost = false;
 }
 
 //! destructor: nothing to clean up

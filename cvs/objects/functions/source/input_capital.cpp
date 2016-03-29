@@ -83,8 +83,7 @@ const string& InputCapital::getXMLReportingName() const{
 
 //! Constructor
 InputCapital::InputCapital()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Clone the input.
@@ -332,8 +331,6 @@ void InputCapital::doInterpolations( const int aYear, const int aPreviousYear,
     mTechChange = nextCapInput->mTechChange;
     
     // interpolate the costs
-    mCost = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
-                                      prevCapInput->mCost, nextCapInput->mCost );
     mCapitalOvernight = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
                                                   prevCapInput->mCapitalOvernight,
                                                   nextCapInput->mCapitalOvernight );

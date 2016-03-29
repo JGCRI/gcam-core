@@ -94,13 +94,11 @@ const string& EnergyInput::getXMLReportingName() const{
 
 //! Constructor
 EnergyInput::EnergyInput() :
-    mCoefficient( 0 ),
-    mPriceUnitConversionFactor( 1 ),
-    mPhysicalDemand( scenario->getModeltime()->getmaxper() ),
-    mCarbonContent( scenario->getModeltime()->getmaxper() ),
-    mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ),
     mCachedMarket( 0 )
 {
+    
+    mCoefficient = 0;
+    mPriceUnitConversionFactor = 1;
 }
 
 /*!
@@ -110,6 +108,7 @@ EnergyInput::EnergyInput() :
  *       the auto_ptr is included.
  */
 EnergyInput::~EnergyInput() {
+    delete mCoefficient;
 }
 
 /*!
@@ -128,9 +127,7 @@ EnergyInput::EnergyInput( const EnergyInput& aOther ){
      *          must also consider CCS and the way it makes adjustments to the
      *          coefficient.
      */
-    if( aOther.mCoefficient.get() ) {
-        mCoefficient.reset( aOther.mCoefficient->clone() );
-    }
+    mCoefficient = aOther.mCoefficient ? aOther.mCoefficient->clone() : 0;
 
     // Do not copy calibration values into the future
     // as they are only valid for one period.
@@ -138,11 +135,6 @@ EnergyInput::EnergyInput( const EnergyInput& aOther ){
     mIncomeElasticity = aOther.mIncomeElasticity;
     mTechChange = aOther.mTechChange;
     mPriceUnitConversionFactor = aOther.mPriceUnitConversionFactor;
-    
-    // Resize vectors to the correct size.
-    mPhysicalDemand.resize( scenario->getModeltime()->getmaxper() );
-    mCarbonContent.resize( scenario->getModeltime()->getmaxper() );
-    mAdjustedCoefficients.resize( scenario->getModeltime()->getmaxper() );
     
     // copy keywords
     mKeywordMap = aOther.mKeywordMap;
@@ -178,10 +170,12 @@ void EnergyInput::XMLParse( const xercesc::DOMNode* node ) {
 
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
         if( nodeName == Efficiency::getXMLNameStatic() ) {
-            mCoefficient.reset( new Efficiency( XMLHelper<double>::getValue( curr ) ) );
+            delete mCoefficient;
+            mCoefficient = new Efficiency( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == Intensity::getXMLNameStatic() ){
-            mCoefficient.reset( new Intensity( XMLHelper<double>::getValue( curr ) ) );
+            delete mCoefficient;
+            mCoefficient = new Intensity( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "income-elasticity" ){
             mIncomeElasticity = XMLHelper<double>::getValue( curr );
@@ -220,7 +214,7 @@ void EnergyInput::toInputXML( ostream& aOut,
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     // Write out the coefficient if there is one.
-    if( mCoefficient.get() ){
+    if( mCoefficient ){
         mCoefficient->toInputXML( aOut, aTabs );
     }
     XMLWriteElementCheckDefault( mIncomeElasticity, "income-elasticity", aOut,
@@ -245,7 +239,7 @@ void EnergyInput::toDebugXML( const int aPeriod,
 {
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
     // Write out the coefficient if there is one.
-    if( mCoefficient.get() ){
+    if( mCoefficient ){
         mCoefficient->toDebugXML( aPeriod, aOut, aTabs );
     }
 
@@ -279,7 +273,7 @@ void EnergyInput::completeInit( const string& aRegionName,
     // If there is a coefficient, initialize it and determine the current
     // coefficient. Otherwise use a default intensity of 1.
     double currCoef = 1;
-    if( mCoefficient.get() ){
+    if( mCoefficient ){
         mCoefficient->completeInit();
         currCoef = mCoefficient->getCoefficient();
     }
@@ -306,7 +300,7 @@ void EnergyInput::initCalc( const string& aRegionName,
 
     // Set the coefficient for the current period if there is an explicit
     // coefficient read-in, or it was not initialized from the previous period.
-    if( mCoefficient.get() ){
+    if( mCoefficient ){
         mAdjustedCoefficients[ aPeriod ] = mCoefficient->getCoefficient();
     }
     else if( !mAdjustedCoefficients[ aPeriod ].isInited() ){
@@ -334,8 +328,8 @@ void EnergyInput::copyParamsInto( EnergyInput& aInput,
     // forward the coefficient from the previous period. This results in any
     // technical change from the previous periods being applied.
     // TODO: This has some strange consequences. See the comment in copy.
-    if( !aInput.mCoefficient.get() ){
-        aInput.mCoefficient.reset( mCoefficient.get() ? mCoefficient->clone() : new Intensity( 1 ) );
+    if( !aInput.mCoefficient ){
+        aInput.mCoefficient = mCoefficient ? mCoefficient->clone() : new Intensity( 1 );
     }
 }
 
@@ -441,11 +435,12 @@ void EnergyInput::doInterpolations( const int aYear, const int aPreviousYear,
     // Interpolate the coefficient if it exisits in the previous technology.  It
     // may not if it was just the default in which case no interpolations are 
     // necessary.
-    if( prevEneInput->mCoefficient.get() ) {
+    if( prevEneInput->mCoefficient ) {
         double newCoef = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
                                                    prevEneInput->mCoefficient->getCoefficient(),
                                                    nextEneInput->mCoefficient->getCoefficient() );
-        mCoefficient.reset( new Intensity( newCoef ) );
+        delete mCoefficient;
+        mCoefficient = new Intensity( newCoef );
     }
 }
 

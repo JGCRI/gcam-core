@@ -45,11 +45,12 @@
  */
 
 #include <string>
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
-#include <vector>
-#include <memory>
+#include "util/base/include/time_vector.h"
 
 class Tabs;
 class ICoefficient;
@@ -169,42 +170,48 @@ protected:
     EnergyInput( const EnergyInput& aOther );
 
     void initializeCachedCoefficients( const std::string& aRegionName );
-
-    //! Coefficient for production or demand function.
-    std::auto_ptr<ICoefficient> mCoefficient;
     
-    //! Cached CO2 coefficient.
-    Value mCO2Coefficient;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
 
-    //! Read-in calibration value.
-    Value mCalibrationInput;
+        //! Coefficient for production or demand function.
+        CREATE_CONTAINER_VARIABLE( mCoefficient, ICoefficient*, NoFilter, "coefficient" ),
+        
+        //! Cached CO2 coefficient.
+        CREATE_SIMPLE_VARIABLE( mCO2Coefficient, Value, "co2-coef" ),
 
-    //! Income elasticity.
-    Value mIncomeElasticity;
-    
-    //! Input specific technical change.
-    Value mTechChange;
+        //! Read-in calibration value.
+        CREATE_SIMPLE_VARIABLE( mCalibrationInput, Value, "calibrated-value" ),
 
-    //! Conversion factor to change the market price units to working units
-    Value mPriceUnitConversionFactor;
+        //! Income elasticity.
+        CREATE_SIMPLE_VARIABLE( mIncomeElasticity, Value, "income-elasticity" ),
+        
+        //! Input specific technical change.
+        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "tech-change" ),
 
-    //! Physical Demand.
-    std::vector<Value> mPhysicalDemand;
+        //! The market name from which to demand.  It will default to the region
+        //! in which this input is contained.
+        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market-name" ),
 
-    //! Carbon content of input by period.
-    std::vector<Value> mCarbonContent;
+        //! Conversion factor to change the market price units to working units
+        CREATE_SIMPLE_VARIABLE( mPriceUnitConversionFactor, Value, "price-unit-conversion" ),
 
-    //! Current coefficient after adjustments have been made by the technology's
-    //! capture component.
-    std::vector<Value> mAdjustedCoefficients;
+        //! Physical Demand.
+        CREATE_ARRAY_VARIABLE( mPhysicalDemand, objects::PeriodVector<Value>, "physical-demand" ),
+
+        //! Carbon content of input by period.
+        CREATE_ARRAY_VARIABLE( mCarbonContent, objects::PeriodVector<Value>, "carbon-content" ),
+
+        //! Current coefficient after adjustments have been made by the technology's
+        //! capture component.
+        CREATE_ARRAY_VARIABLE( mAdjustedCoefficients, objects::PeriodVector<Value>, "current-coef" )
+    )
     
     //! A pre-located market which has been cahced from the marketplace to get
     //! the price and add demands to.
     std::auto_ptr<CachedMarket> mCachedMarket;
-    
-    //! The market name from which to demand.  It will default to the region
-    //! in which this input is contained.
-    std::string mMarketName;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

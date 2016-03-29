@@ -94,15 +94,22 @@ public:
 
     virtual void setBaseCost( const double aBaseCost, const std::string &aFailMsg );
 
-private:
-    //! The logit exponents by period.
-    objects::PeriodVector<double> mLogitExponent;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IDiscreteChoice,
+                            
+        //! The logit exponents by period.
+        CREATE_ARRAY_VARIABLE( mLogitExponent, objects::PeriodVector<double>, "logit-exponent" ),
 
-    //! scale factor for cost -- may be parsed or set in calibration
-    double mBaseCost;
+        //! scale factor for cost -- may be parsed or set in calibration
+        CREATE_SIMPLE_VARIABLE( mBaseCost, double, "base-cost" ),
 
-    //! flag indicating whether a base cost was set in the XML input
-    bool mParsedBaseCost;
+        //! flag indicating whether a base cost was set in the XML input
+        CREATE_SIMPLE_VARIABLE( mParsedBaseCost, bool, "is-base-cost-parsed" )
+    )
 };
 
 #endif // _ABSOLUTE_COST_LOGIT_HPP_

@@ -82,9 +82,15 @@ public:
     virtual void completeInit();
 
     virtual double getCoefficient() const;
-private:
-    //! The read-in efficiency.
-    Value mReadInEfficiency;
+protected:
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICoefficient,
+                            
+        //! The read-in efficiency.
+        CREATE_SIMPLE_VARIABLE( mReadInEfficiency, Value, "efficiency" )
+    )
 };
 
 #endif // _EFFICIENCY_H_

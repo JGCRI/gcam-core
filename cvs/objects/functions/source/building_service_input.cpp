@@ -61,10 +61,13 @@ extern Scenario* scenario;
 //! Default Constructor
 BuildingServiceInput::BuildingServiceInput()
 {
+    mSatiationDemandFunction = 0;
 }
 
 //! Destructor
-BuildingServiceInput::~BuildingServiceInput() {}
+BuildingServiceInput::~BuildingServiceInput() {
+    delete mSatiationDemandFunction;
+}
 
 /*! \brief Get the XML name for reporting to XML file.
 *
@@ -160,7 +163,8 @@ void BuildingServiceInput::copy( const BuildingServiceInput& aInput ) {
     mName = aInput.mName;
     mServiceDemand = aInput.mServiceDemand;
 
-    mSatiationDemandFunction.reset( new SatiationDemandFunction( *aInput.mSatiationDemandFunction.get() ) );
+    delete mSatiationDemandFunction;
+    mSatiationDemandFunction = new SatiationDemandFunction( *aInput.mSatiationDemandFunction );
 }
 
 bool BuildingServiceInput::isSameType( const string& aType ) const {
@@ -218,7 +222,7 @@ void BuildingServiceInput::setServiceDensity( const double aServiceDensity, cons
  * \return The satiation demand function.
  */
 SatiationDemandFunction* BuildingServiceInput::getSatiationDemandFunction() const {
-    return mSatiationDemandFunction.get();
+    return mSatiationDemandFunction;
 }
 
 //! Get the name of the input

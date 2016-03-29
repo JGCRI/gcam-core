@@ -306,56 +306,71 @@ public:
 
 
 protected:
-	//! Vector of child inputs
-    // TODO: should this be an auto_ptr?
-    std::vector<INestedInput*> mNestedInputs;
-    typedef std::vector<INestedInput*>::iterator NestedInputIterator;
-    typedef std::vector<INestedInput*>::const_iterator CNestedInputIterator;
     
-    //! The name of this input
-    std::string mName;
-    //! Type of function used
-    std::string mProdDmdFnType;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        INestedInput,
+                            
+        //! Vector of child inputs
+        CREATE_CONTAINER_VARIABLE( mNestedInputs, std::vector<INestedInput*>, NamedFilter, "nodeInput" ),
+        
+        //! The name of this input
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+                                
+        //! Type of function used
+        CREATE_SIMPLE_VARIABLE( mProdDmdFnType, std::string, "prodDmdFnType" ),
+
+        /*! 
+         * Value used for initialization.  This is the same thing as the sum
+         * of the children's currency demand
+         */
+        CREATE_SIMPLE_VARIABLE( mNodeCurrencyDemand, Value, "demandCurrency" ),
+                                
+        //! Sigma used to operate new capital
+        CREATE_SIMPLE_VARIABLE( mSigmaNewCapital, Value, "Sigma1" ),
+
+        //! Sigma used to operate old capital
+        CREATE_SIMPLE_VARIABLE( mSigmaOldCapital, Value, "Sigma2" ),
+
+        //! The current Sigma to use
+        CREATE_SIMPLE_VARIABLE( mCurrentSigma, Value, "current-Sigma" ),
+
+        //! Alpha, for the root node this would be Alpha zero
+        CREATE_SIMPLE_VARIABLE( mAlphaCoef, Value, "coefficient" ),
+
+        //! Price paid, for the root this would be price recieved
+        CREATE_SIMPLE_VARIABLE( mPricePaid, Value, "price-recieved" ),
+
+        //! Price paid in the base year, for the root this would be price recieved
+        CREATE_SIMPLE_VARIABLE( mBasePricePaid, Value, "base-price-paid" ),
+
+        // TODO: these shouldn't really be in here, they are specific to the UtilityDemandFunction
+        //! Alpha param
+        CREATE_SIMPLE_VARIABLE( mAlphaUtilityParam, Value, "alpha-utility-param" ),
+
+        //! Beta param
+        CREATE_SIMPLE_VARIABLE( mBetaUtilityParam, Value, "beta-utility-param" ),
+
+        /*! 
+         * The technical change that would get applied to the node.  Note that it
+         * only gets applied during the initial vintage of a technology and will
+         * never get passed forward.
+         */
+        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "technicalChange" )
+    )
+    
     //! Pointer to function this class will use
     const IFunction* mProdDmdFn;
-    /*! 
-     * Value used for initialization.  This is the same thing as the sum
-     * of the children's currency demand
-     */
-    Value mNodeCurrencyDemand;
-    //! Sigma used to operate new capital
-    Value mSigmaNewCapital;
-    //! Sigma used to operate old capital
-    Value mSigmaOldCapital;
-    //! The current Sigma to use
-    Value mCurrentSigma;
-    //! Alpha, for the root node this would be Alpha zero
-    Value mAlphaCoef;
-    //! Price paid, for the root this would be price recieved
-    Value mPricePaid;
-
-    //! Price paid in the base year, for the root this would be price recieved
-    Value mBasePricePaid;
-
-    //! Hack to avoiding excessive levelized cost calcs to help performance.
-    bool mNodePriceSet;
-
+                           
     //! Cache the vector of children as IInput* which is needed for the mProdDmdFn
     std::vector<IInput*> mChildInputsCache;
-
-    // TODO: these shouldn't really be in here, they are specific to the UtilityDemandFunction
-    //! Alpha param
-    Value mAlphaUtilityParam;
-
-    //! Beta param
-    Value mBetaUtilityParam;
-
-    /*! 
-     * The technical change that would get applied to the node.  Note that it
-     * only gets applied during the initial vintage of a technology and will
-     * never get passed forward.
-     */
-    Value mTechChange;
+                           
+    //! Hack to avoiding excessive levelized cost calcs to help performance.
+    bool mNodePriceSet;
+                           
+    typedef std::vector<INestedInput*>::iterator NestedInputIterator;
+    typedef std::vector<INestedInput*>::const_iterator CNestedInputIterator;
     
     void copy( const NodeInput& aNodeInput );
 };

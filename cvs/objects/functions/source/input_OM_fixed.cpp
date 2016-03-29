@@ -83,8 +83,7 @@ const string& InputOMFixed::getXMLReportingName() const{
 
 //! Constructor
 InputOMFixed::InputOMFixed()
-: mAdjustedCosts( scenario->getModeltime()->getmaxper() ),
-  mAdjustedCoefficients( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Clone the input.

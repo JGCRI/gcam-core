@@ -79,7 +79,7 @@ const string& RenewableInput::getXMLReportingName() const{
 
 //! Constructor
 RenewableInput::RenewableInput() 
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() ) {
+{
 }
 
 /*! \brief Constructor that sets name attribute.
@@ -88,8 +88,7 @@ RenewableInput::RenewableInput()
 * objects.
 * \author Steve Smith
 */
-RenewableInput::RenewableInput( const std::string& aName ) 
-: mPhysicalDemand( scenario->getModeltime()->getmaxper() )
+RenewableInput::RenewableInput( const std::string& aName )
 {
     mName = aName;
 }

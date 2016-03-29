@@ -65,8 +65,8 @@ const string& Efficiency::getXMLNameStatic() {
  * \param aEfficiency An efficiency.
  */
 Efficiency::Efficiency( const double aEfficiency )
-: mReadInEfficiency( aEfficiency )
 {
+    mReadInEfficiency = aEfficiency;
 }
 
 Efficiency* Efficiency::clone() const {

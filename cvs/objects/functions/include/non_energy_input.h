@@ -45,10 +45,11 @@
  */
 
 #include <string>
-#include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 class Tabs;
 
@@ -157,21 +158,27 @@ protected:
     NonEnergyInput();
     
     NonEnergyInput( const std::string& aName );
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        MiniCAMInput,
 
-    //! Cost of the non-energy input adjusted for the additional costs of the
-    //! capture component.
-    std::vector<Value> mAdjustedCosts;
+        //! Cost of the non-energy input adjusted for the additional costs of the
+        //! capture component.
+        CREATE_ARRAY_VARIABLE( mAdjustedCosts, objects::PeriodVector<Value>, "adjusted-cost" ),
 
-    //! Coefficient for production or demand function. Coefficients are not
-    // read in and are initialized to 1, but can increase over time with
-    // technical change.
-    std::vector<Value> mAdjustedCoefficients;
+        //! Coefficient for production or demand function. Coefficients are not
+        // read in and are initialized to 1, but can increase over time with
+        // technical change.
+        CREATE_ARRAY_VARIABLE( mAdjustedCoefficients, objects::PeriodVector<Value>, "adjusted-coef" ),
 
-    //! Cost of the non-energy input.
-    Value mCost;
+        //! Cost of the non-energy input.
+        CREATE_SIMPLE_VARIABLE( mCost, Value, "input-cost" ),
 
-    //! Input specific technical change.
-    Value mTechChange;
+        //! Input specific technical change.
+        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "tech-change" )
+    )
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

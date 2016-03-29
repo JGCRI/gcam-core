@@ -48,7 +48,13 @@
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/istandard_component.h"
+#include "util/base/include/data_definition_util.h"
+
 class Tabs;
+
+// Need to forward declare the subclasses as well.
+class Efficiency;
+class Intensity;
 
 /*! 
  * \ingroup Objects
@@ -98,6 +104,14 @@ public:
      * \return The coefficient.
      */
     virtual double getCoefficient() const = 0;
+    
+protected:
+    DEFINE_DATA(
+        /* Declare all subclasses of ICoefficient to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ICoefficient, Efficiency, Intensity )
+    )
 };
 
 // Inline function definitions.

@@ -65,7 +65,8 @@ const string& Intensity::getXMLNameStatic() {
  * \param aIntensity An intensity.
  */
 Intensity::Intensity( const double aIntensity )
-: mReadInIntensity( aIntensity ) {
+{
+    mReadInIntensity = aIntensity;
 }
 
 Intensity* Intensity::clone() const {
