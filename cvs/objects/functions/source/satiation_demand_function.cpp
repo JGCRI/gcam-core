@@ -58,6 +58,21 @@ SatiationDemandFunction::SatiationDemandFunction()
     mParsedSatiationAdder = 0;
 }
 
+SatiationDemandFunction* SatiationDemandFunction::clone() {
+    SatiationDemandFunction* clone = new SatiationDemandFunction();
+    clone->copy( *this );
+    return clone;
+}
+
+void SatiationDemandFunction::copy( const SatiationDemandFunction& aOther ) {
+    mBaseYearSatiationMultiplier = aOther.mBaseYearSatiationMultiplier;
+    mParsedSatiationLevel = aOther.mParsedSatiationLevel;
+    mSatiationLevel = aOther.mSatiationLevel;
+    mSatiationImpedance = aOther.mSatiationImpedance;
+    mParsedSatiationAdder = aOther.mParsedSatiationAdder;
+    mSatiationAdder = aOther.mSatiationAdder;
+}
+
 const string& SatiationDemandFunction::getXMLNameStatic() {
     const static string XML_NAME = "satiation-demand-function";
     return XML_NAME;

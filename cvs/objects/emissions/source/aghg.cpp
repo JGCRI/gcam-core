@@ -71,20 +71,6 @@ AGHG::AGHG()
 AGHG::~AGHG(){
 }
 
-//! Copy constructor.
-AGHG::AGHG( const AGHG& aOther ){
-    copy( aOther );
-}
-
-//! Assignment operator.
-AGHG& AGHG::operator=( const AGHG& aOther ){
-    if( this != &aOther ){
-        // If there was a destructor it would need to be called here.
-        copy( aOther );
-    }
-    return *this;
-}
-
 //! Copy helper function.
 void AGHG::copy( const AGHG& aOther ){
     mName = aOther.mName;

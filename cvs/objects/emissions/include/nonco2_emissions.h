@@ -130,7 +130,6 @@ protected:
     // typdef to help simplify code
     typedef std::vector<AEmissionsControl*>::const_iterator CControlIterator;
 
-private:
     void clear();
 
     void copy( const NonCO2Emissions& aOther );

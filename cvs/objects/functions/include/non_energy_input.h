@@ -179,6 +179,8 @@ protected:
         //! Input specific technical change.
         CREATE_SIMPLE_VARIABLE( mTechChange, Value, "tech-change" )
     )
+    
+    void copy( const NonEnergyInput& aOther );
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

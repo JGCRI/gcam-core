@@ -64,7 +64,9 @@ CO2Emissions::~CO2Emissions()
 
 //! Clone operator.
 CO2Emissions* CO2Emissions::clone() const {
-    return new CO2Emissions( *this );
+    CO2Emissions* clone = new CO2Emissions();
+    clone->copy( *this );
+    return clone;
 }
 
 void CO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){

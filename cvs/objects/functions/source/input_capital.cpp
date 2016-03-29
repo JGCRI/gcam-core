@@ -88,7 +88,21 @@ InputCapital::InputCapital()
 
 //! Clone the input.
 InputCapital* InputCapital::clone() const {
-    return new InputCapital( *this );
+    InputCapital* clone = new InputCapital();
+    clone->copy( *this );
+    return clone;
+}
+
+void InputCapital::copy( const InputCapital& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mTechChange = aOther.mTechChange;
+    mCapitalOvernight = aOther.mCapitalOvernight;
+    mFixedChargeRate = aOther.mFixedChargeRate;
+    mLifetimeCapital = aOther.mLifetimeCapital;
+    mCapacityFactor = aOther.mCapacityFactor;
+    
+    // calculated parameters are not copied.
 }
 
 bool InputCapital::isSameType( const string& aType ) const {

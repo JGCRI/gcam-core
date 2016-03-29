@@ -189,6 +189,8 @@ protected:
         // TODO: create one in technology and use that instead.
         CREATE_SIMPLE_VARIABLE( mCapacityFactor, double, "capacity-factor" )
     )
+    
+    void copy( const InputOMFixed& aOther );
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

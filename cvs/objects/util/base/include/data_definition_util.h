@@ -60,6 +60,13 @@
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/punctuation/is_begin_parens.hpp>
 
+/*
+#include <boost/static_assert.hpp>
+#include <boost/type_traits/is_copy_constructible.hpp>
+#include <boost/type_traits/is_copy_assignable.hpp>
+*/
+#include <type_traits>
+
 #include "util/base/include/expand_data_vector.h"
 
 struct NamedFilter;
@@ -118,6 +125,10 @@ struct ArrayData : public Data<T> {
 #define ACCEPT_EXPAND_DATA_VECTOR_METHOD( aTypeDef ) \
     friend class ExpandDataVector<aTypeDef>; \
     virtual void doDataExpansion( ExpandDataVector<aTypeDef>& aVisitor ) { \
+        using ThisType = std::remove_reference<decltype( *this )>::type; \
+        static_assert( !std::is_copy_constructible<ThisType>::value && \
+                       !std::is_copy_assignable<ThisType>::value, \
+                       "Container classes must not be copyable. They should use the clone() idiom if need be." ); \
         aVisitor.setSubClass( this ); \
     }
 

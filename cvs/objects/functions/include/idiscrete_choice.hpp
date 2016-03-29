@@ -43,6 +43,7 @@
  * \brief IDiscreteChoice class declaration file
  * \author Robert Link
  */
+#include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
@@ -64,7 +65,7 @@ class AbsoluteCostLogit;
  *       into these classes so that we can calculate proper average
  *       costs.
  */
-class IDiscreteChoice : public IParsable, public IRoundTrippable {
+class IDiscreteChoice : public IParsable, public IRoundTrippable, private boost::noncopyable {
 public:
     /*!
      * \brief Constructor.

@@ -164,7 +164,7 @@ void BuildingServiceInput::copy( const BuildingServiceInput& aInput ) {
     mServiceDemand = aInput.mServiceDemand;
 
     delete mSatiationDemandFunction;
-    mSatiationDemandFunction = new SatiationDemandFunction( *aInput.mSatiationDemandFunction );
+    mSatiationDemandFunction = aInput.mSatiationDemandFunction->clone();
 }
 
 bool BuildingServiceInput::isSameType( const string& aType ) const {

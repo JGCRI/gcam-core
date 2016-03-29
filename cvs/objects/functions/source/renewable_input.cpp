@@ -95,11 +95,19 @@ RenewableInput::RenewableInput( const std::string& aName )
 
 //! Clone the input.
 RenewableInput* RenewableInput::clone() const {
-    return new RenewableInput( *this );
+    RenewableInput* clone = new RenewableInput();
+    clone->copy( *this );
+    return clone;
 }
 
 bool RenewableInput::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
+}
+
+void RenewableInput::copy( const RenewableInput& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    // calculated parameters are not copied.
 }
 
 void RenewableInput::copyParam( const IInput* aInput,

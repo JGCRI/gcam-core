@@ -50,6 +50,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
@@ -82,7 +83,7 @@ class NonCO2Emissions;
  *          The last one of these read in determines the method used.
  * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
-class AGHG: public IVisitable, public IRoundTrippable
+class AGHG: public IVisitable, public IRoundTrippable, private boost::noncopyable
 { 
     friend class XMLDBOutputter;
 
@@ -181,8 +182,6 @@ public:
 protected:
 
     AGHG();
-    AGHG( const AGHG& aOther );
-    AGHG& operator=( const AGHG& aOther );
 
     /*!
      * \brief Get the XML node name for output to XML.
@@ -260,7 +259,6 @@ protected:
 
     void addEmissionsToMarket( const std::string& aRegionName, const int aPeriod );
     
-private:
     void copy( const AGHG& other );
 };
 

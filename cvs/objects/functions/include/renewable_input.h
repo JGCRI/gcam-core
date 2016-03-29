@@ -157,6 +157,8 @@ protected:
         //! Physical Demand.
         CREATE_ARRAY_VARIABLE( mPhysicalDemand, objects::PeriodVector<Value>, "physical-demand" )
     )
+    
+    void copy( const RenewableInput& aOther );
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
 };

@@ -88,7 +88,18 @@ InputOMVar::InputOMVar()
 
 //! Clone the input.
 InputOMVar* InputOMVar::clone() const {
-    return new InputOMVar( *this );
+    InputOMVar* clone = new InputOMVar();
+    clone->copy( *this );
+    return clone;
+}
+
+void InputOMVar::copy( const InputOMVar& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mTechChange = aOther.mTechChange;
+    mOMVar = aOther.mOMVar;
+    
+    // calculated parameters are not copied.
 }
 
 bool InputOMVar::isSameType( const string& aType ) const {

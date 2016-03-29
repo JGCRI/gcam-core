@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/data_definition_util.h"
 
 class AbstractBase;
@@ -9,11 +11,9 @@ class D1;
 class D2;
 class D3;
 
-template<typename T>
-class ExpandDataVector;
-
-class AbstractBase {
+class AbstractBase : private boost::noncopyable {
     public:
+
     virtual ~AbstractBase() {}
     virtual const std::string& getXMLName() const = 0;
     virtual const std::string& getName() const = 0;
@@ -106,7 +106,7 @@ public:
     )
 };
 
-class Container {
+class Container: private boost::noncopyable {
     public:
     virtual ~Container() {}
     static const std::string& getXMLNameStatic() {

@@ -45,6 +45,8 @@
 * \author Josh Lurz
 */
 #include <vector>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
@@ -64,7 +66,7 @@ class Demographic;
 * \author Josh Lurz, Sonny Kim, Steve Smith
 */
 
-class GDP: public IRoundTrippable, public IVisitable
+class GDP: public IRoundTrippable, public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:

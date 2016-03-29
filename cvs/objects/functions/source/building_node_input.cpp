@@ -241,7 +241,7 @@ void BuildingNodeInput::copy( const BuildingNodeInput& aNodeInput ) {
     mInternalGainsUnit = aNodeInput.mInternalGainsUnit;
 
     delete mSatiationDemandFunction;
-    mSatiationDemandFunction = new SatiationDemandFunction( *aNodeInput.mSatiationDemandFunction );
+    mSatiationDemandFunction = aNodeInput.mSatiationDemandFunction->clone();
 
     // copy children
     for( CNestedInputIterator it = aNodeInput.mNestedInputs.begin(); it != aNodeInput.mNestedInputs.end(); ++it ) {

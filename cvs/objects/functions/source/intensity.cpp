@@ -70,7 +70,8 @@ Intensity::Intensity( const double aIntensity )
 }
 
 Intensity* Intensity::clone() const {
-    return new Intensity( *this );
+    Intensity* clone = new Intensity( mReadInIntensity );
+    return clone;
 }
 
 bool Intensity::isSameType( const string& aType ) const {

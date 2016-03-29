@@ -77,25 +77,11 @@ mGDP( 0 )
 NonCO2Emissions::~NonCO2Emissions(){
 }
 
-//! Copy constructor.
-NonCO2Emissions::NonCO2Emissions( const NonCO2Emissions& aOther )
-: AGHG( aOther ){
-    copy( aOther );
-}
-
 //! Clone operator.
 NonCO2Emissions* NonCO2Emissions::clone() const {
-    return new NonCO2Emissions( *this );
-}
-
-//! Assignment operator.
-NonCO2Emissions& NonCO2Emissions::operator=( const NonCO2Emissions& aOther ){
-    if( this != &aOther ){
-        AGHG::operator=( aOther );
-        clear();
-        copy( aOther );
-    }
-    return *this;
+    NonCO2Emissions* clone = new NonCO2Emissions();
+    clone->copy( *this );
+    return clone;
 }
 
 //! Clear any dynamically allocated memory
@@ -108,6 +94,8 @@ void NonCO2Emissions::clear() {
 
 //! Copy helper function.
 void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
+    AGHG::copy( aOther );
+    
     mEmissionsCoef = aOther.mEmissionsCoef;
     mGDP = aOther.mGDP;
     

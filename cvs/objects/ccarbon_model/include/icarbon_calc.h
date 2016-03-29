@@ -45,6 +45,8 @@
  */
 
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
@@ -78,7 +80,8 @@ class NoEmissCarbonCalc;
  */
 class ICarbonCalc: public IVisitable,
                    public IRoundTrippable,
-                   public IParsable 
+                   public IParsable ,
+                   private boost::noncopyable
 {
 public:
     //! Constructor

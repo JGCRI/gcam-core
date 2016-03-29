@@ -88,7 +88,19 @@ InputOMFixed::InputOMFixed()
 
 //! Clone the input.
 InputOMFixed* InputOMFixed::clone() const {
-    return new InputOMFixed( *this );
+    InputOMFixed* clone = new InputOMFixed();
+    clone->copy( *this );
+    return clone;
+}
+
+void InputOMFixed::copy( const InputOMFixed& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mTechChange = aOther.mTechChange;
+    mOMFixed = aOther.mOMFixed;
+    mCapacityFactor = aOther.mCapacityFactor;
+    
+    // calculated parameters are not copied.
 }
 
 bool InputOMFixed::isSameType( const string& aType ) const {

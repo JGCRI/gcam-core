@@ -49,6 +49,8 @@
 #include <vector>
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
@@ -67,7 +69,7 @@ class PopulationSGMRate;
 *  populationMiniCAM derive from it. They all share a totalPopulation value and year.
 */
 
-class Population: public IRoundTrippable, IVisitable 
+class Population: public IRoundTrippable, IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter; // For getXMLName()
 public:

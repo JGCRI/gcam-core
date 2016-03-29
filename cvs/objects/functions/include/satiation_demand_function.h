@@ -46,6 +46,7 @@
  */
 
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/value.h"
 #include "util/base/include/iparsable.h"
@@ -98,10 +99,12 @@
  * \author Pralit Patel
  * \author Jiyong Eom
  */
-class SatiationDemandFunction : public INamed, public IParsable, public IRoundTrippable {
+class SatiationDemandFunction : public INamed, public IParsable, public IRoundTrippable, private boost::noncopyable {
 	friend class XMLDBOutputter;
 public:
     SatiationDemandFunction();
+    
+    SatiationDemandFunction* clone();
 
     double calcDemand( const double aDemandDriver ) const;
     
@@ -148,6 +151,8 @@ protected:
         //! from the parsed value during some calibration periods.
         CREATE_SIMPLE_VARIABLE( mSatiationAdder, Value, "satiation-adder" )
     )
+    
+    void copy( const SatiationDemandFunction& aOther );
 };
 
 #endif // _SATIATION_DEMAND_FUNCTION_H_

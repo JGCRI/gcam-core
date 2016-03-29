@@ -44,6 +44,8 @@
  * \brief The NodeCarbonCalc class header file.
  * \author Pralit Patel
  */
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/default_visitor.h"
@@ -73,7 +75,8 @@ class LandUseHistory;
  */
 class NodeCarbonCalc: public IParsable,
                       public IRoundTrippable,
-                      public DefaultVisitor
+                      public DefaultVisitor,
+                      private boost::noncopyable
 {
 public:
     NodeCarbonCalc();

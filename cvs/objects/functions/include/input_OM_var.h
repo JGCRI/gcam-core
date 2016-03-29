@@ -179,6 +179,8 @@ protected:
         //! Variable O&M cost.
         CREATE_SIMPLE_VARIABLE( mOMVar, Value, "OM-var" )
     )
+    
+    void copy( const InputOMVar& aOther );
 
 private:
     // Convert to 1975$/GJ for now.

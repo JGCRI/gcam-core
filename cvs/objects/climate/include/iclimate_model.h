@@ -47,6 +47,8 @@
 
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/iparsable.h"
@@ -71,7 +73,7 @@ class HectorModel;
 * \author Josh Lurz
 */
 
-class IClimateModel: public IVisitable, public IRoundTrippable {
+class IClimateModel: public IVisitable, public IRoundTrippable, private boost::noncopyable {
 public:
 	//! Constructor.
     inline IClimateModel();

@@ -99,11 +99,22 @@ NonEnergyInput::NonEnergyInput( const std::string& aName )
 
 //! Clone the input.
 NonEnergyInput* NonEnergyInput::clone() const {
-    return new NonEnergyInput( *this );
+    NonEnergyInput* clone = new NonEnergyInput();
+    clone->copy( *this );
+    return clone;
 }
 
 bool NonEnergyInput::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
+}
+
+void NonEnergyInput::copy( const NonEnergyInput& aOther ) {
+    MiniCAMInput::copy( aOther );
+    
+    mCost = aOther.mCost;
+    mTechChange = aOther.mTechChange;
+    
+    // calculated parameters are not copied.
 }
 
 void NonEnergyInput::copyParam( const IInput* aInput,

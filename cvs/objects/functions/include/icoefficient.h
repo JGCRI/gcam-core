@@ -47,6 +47,8 @@
 #include <iosfwd>
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -67,8 +69,9 @@ class Intensity;
  * \author Josh Lurz
  */
 class ICoefficient : public ISimpleComponent,
-                     public IRoundTrippable
-{ 
+                     public IRoundTrippable,
+                     private boost::noncopyable
+{
 public:
     /*!
      * \brief Constructor.

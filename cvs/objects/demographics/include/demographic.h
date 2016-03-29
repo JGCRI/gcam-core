@@ -48,6 +48,8 @@
 
 #include <vector>
 #include <map>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "demographics/include/population.h"
@@ -58,7 +60,7 @@
 * \brief Demographics model that calculates population by gender and age cohort.
 */
 
-class Demographic: public IVisitable, public IRoundTrippable {
+class Demographic: public IVisitable, public IRoundTrippable, private boost::noncopyable {
     friend class XMLDBOutputter; // For getXMLName()
 public:
     Demographic();

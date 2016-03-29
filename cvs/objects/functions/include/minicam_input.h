@@ -227,6 +227,8 @@ protected:
         //! A map of a keyword to its keyword group
         CREATE_SIMPLE_VARIABLE( mKeywordMap, std::map<std::string, std::string>, "keyword" )
     )
+    
+    void copy( const MiniCAMInput& aOther );
 };
 
 #endif // _MINICAM_INPUT_H_

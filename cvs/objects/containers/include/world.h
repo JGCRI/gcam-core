@@ -50,6 +50,8 @@
 #include <list>
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/data_definition_util.h"
@@ -82,7 +84,7 @@ class GcamFlowGraph;
 * \author Sonny Kim
 */
 
-class World: public IVisitable, public IRoundTrippable
+class World: public IVisitable, public IRoundTrippable, private boost::noncopyable
 {
 public:
     World();
