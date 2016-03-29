@@ -170,7 +170,7 @@ struct FilterStep {
             typename DataType::filter_type::filter_value_type nullFilterValue = 0;
             if( !aIsLastStep ) {
                 aHandler.pushFilterStep( aData.mData, nullFilterValue );
-                aData.mData->accept( getDataVector );
+                aData.mData->doDataExpansion( getDataVector );
                 getDataVector.getFullDataVector( aHandler );
                 aHandler.popFilterStep( aData.mData );
             }
@@ -185,7 +185,7 @@ struct FilterStep {
             if( filterPred( aData.mData ) ) {
                 if( !aIsLastStep ) {
                     aHandler.pushFilterStep( aData.mData, filterPred.getCurrValue() );
-                    aData.mData->accept( getDataVector );
+                    aData.mData->doDataExpansion( getDataVector );
                     getDataVector.getFullDataVector( aHandler );
                     aHandler.popFilterStep( aData.mData );
                 }
@@ -223,7 +223,7 @@ struct FilterStep {
             for( auto container : aData.mData ) {
                 if( !aIsLastStep ) {
                     aHandler.pushFilterStep( container, nullFilterValue );
-                    container->accept( getDataVector );
+                    container->doDataExpansion( getDataVector );
                     getDataVector.getFullDataVector( aHandler );
                     aHandler.popFilterStep( container );
                 }
@@ -240,7 +240,7 @@ struct FilterStep {
                 if( filterPred( *iter ) ) {
                     if( !aIsLastStep ) {
                         aHandler.pushFilterStep( *iter, filterPred.getCurrValue() );
-                        (*iter)->accept( getDataVector );
+                        (*iter)->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( *iter );
                     }
@@ -258,7 +258,7 @@ struct FilterStep {
                 if( filterPred( iter - aData.mData.begin() ) ) {
                     if( !aIsLastStep ) {
                         aHandler.pushFilterStep( *iter, filterPred.getCurrValue() );
-                        (*iter)->accept( getDataVector );
+                        (*iter)->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( *iter );
                     }
@@ -293,7 +293,7 @@ struct FilterStep {
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
                 if( !aIsLastStep ) {
                     aHandler.pushFilterStep( (*iter).second, nullFilterValue );
-                    (*iter).second->accept( getDataVector );
+                    (*iter).second->doDataExpansion( getDataVector );
                     getDataVector.getFullDataVector( aHandler );
                     aHandler.popFilterStep( (*iter).second );
                 }
@@ -310,7 +310,7 @@ struct FilterStep {
                 if( filterPred( (*iter).second ) ) {
                     if( !aIsLastStep ) {
                         aHandler.pushFilterStep( (*iter).second, filterPred.getCurrValue() );
-                        (*iter).second->accept( getDataVector );
+                        (*iter).second->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( (*iter).second );
                     }
@@ -328,7 +328,7 @@ struct FilterStep {
                 if( filterPred( iter - aData.mData.begin() ) ) {
                     if( !aIsLastStep ) {
                         aHandler.pushFilterStep( (*iter).second, filterPred.getCurrValue() );
-                        (*iter).second->accept( getDataVector );
+                        (*iter).second->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( (*iter).second );
                     }
@@ -413,7 +413,7 @@ class GCAMParamResetAPI {
             return;
         }
         ExpandDataVector<typename ContainerType::SubClassFamilyVector> getDataVector;
-        aContainer->accept( getDataVector );
+        aContainer->doDataExpansion( getDataVector );
         getDataVector.getFullDataVector( *this );
     }
 

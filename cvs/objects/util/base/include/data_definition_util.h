@@ -117,7 +117,7 @@ struct ArrayData : public Data<T> {
  */
 #define ACCEPT_EXPAND_DATA_VECTOR_METHOD( aTypeDef ) \
     friend class ExpandDataVector<aTypeDef>; \
-    virtual void accept( ExpandDataVector<aTypeDef>& aVisitor ) { \
+    virtual void doDataExpansion( ExpandDataVector<aTypeDef>& aVisitor ) { \
         aVisitor.setSubClass( this ); \
     }
 

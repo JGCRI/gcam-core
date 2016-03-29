@@ -72,7 +72,7 @@ void runTest( ExpandDataVector<AbstractBase::SubClassFamilyVector>& aDataVector,
 void runTests( AbstractBase* aContainer ) {
     std::cout << "Testing " << aContainer->getXMLName() << std::endl;
     ExpandDataVector<AbstractBase::SubClassFamilyVector> expandDataVector;
-    aContainer->accept( expandDataVector );
+    aContainer->doDataExpansion( expandDataVector );
 
     // should be found
     runTest<std::string>( expandDataVector, "name", "new name" );
