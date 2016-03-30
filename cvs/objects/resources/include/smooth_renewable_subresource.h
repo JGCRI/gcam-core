@@ -108,18 +108,22 @@ public :
     virtual double getHighestPrice( const int aPeriod ) const;
 
 protected :
-
-   //! SmoothRenewableSubresource
-   static const std::string   sXMLName;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SubRenewableResource,
+        
+        //! Multiplier price increase
+        CREATE_SIMPLE_VARIABLE( mPriceExponent, double, "price-exponent" ),
+        
+        //! Mid-price for cost curve, assuming no technical change
+        CREATE_SIMPLE_VARIABLE( mMidPrice, double, "mid-price" )
+    )
 
    //! The cost curve calculator
+   // TODO: is this really necessary?
    ObjECTS::TCostCurve<> mCostCurve;
-
-   //! Multiplier price increase
-   double mPriceExponent;
-
-   //! Mid-price for cost curve, assuming no technical change
-   double mMidPrice;
 
    // Documentation is inherited.
    virtual const std::string& getXMLName() const;

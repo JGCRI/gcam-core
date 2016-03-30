@@ -117,14 +117,21 @@ public:
                          const int aPeriod ) const;
 
 protected:
-    //! Read in prices.
-    objects::PeriodVector<Value> mFixedPrices;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AResource,
+                            
+        //! Read in prices.
+        CREATE_ARRAY_VARIABLE( mFixedPrices, objects::PeriodVector<Value>, "price" ),
 
-    //! Capacity factor.
-    Value mCapacityFactor;
+        //! Capacity factor.
+        CREATE_SIMPLE_VARIABLE( mCapacityFactor, Value, "capacity-factor" ),
 
-    //! Variance.
-    Value mVariance;
+        //! Variance.
+        CREATE_SIMPLE_VARIABLE( mVariance, Value, "variance" )
+    )
 
     void setMarket( const std::string& aRegionName );
 };

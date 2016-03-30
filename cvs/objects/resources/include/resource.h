@@ -49,6 +49,7 @@
 #include <map>
 #include "resources/include/aresource.h"
 #include "util/base/include/object_meta_info.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declaration.
 class SubResource;
@@ -85,18 +86,37 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
 
+    // TODO: is this stuff used?
     typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
 
-    int mNumSubResource; //!< number of subsectors for each Resource
-    std::auto_ptr<IInfo> mResourceInfo; //!< Pointer to the resource's information store.
-    std::vector<SubResource*> mSubResource; //!< subsector objects for each Resource
-    std::vector<double> mResourcePrice; //!< Resource price
-    std::vector<double> mAvailable; //!< total Resource available
-    std::vector<double> mAnnualProd; //!< annual production rate of Resource
-    std::vector<double> mCumulProd; //!< cumulative production of Resource
-    std::map<std::string,int> mSubResourceNameMap; //!< Map of subResource name to integer position in vector.
-    object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to the market
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AResource,
+
+        //! subresource objects for each Resource
+        CREATE_CONTAINER_VARIABLE( mSubResource, std::vector<SubResource*>, NamedFilter, "subresource" ),
+
+        //! Resource price
+        CREATE_ARRAY_VARIABLE( mResourcePrice, objects::PeriodVector<double>, "price" ),
+
+        //! total Resource available
+        CREATE_ARRAY_VARIABLE( mAvailable, objects::PeriodVector<double>, "available" ),
+
+        //! annual production rate of Resource
+        CREATE_ARRAY_VARIABLE( mAnnualProd, objects::PeriodVector<double>, "annualprod" ),
+
+        //! cumulative production of Resource
+        CREATE_ARRAY_VARIABLE( mCumulProd, objects::PeriodVector<double>, "cummprod" )
+    )
+    
+    //! Pointer to the resource's information store.
+    std::auto_ptr<IInfo> mResourceInfo;
+
+    //! Vector of object meta info to pass to the market
+    object_meta_info_vector_type mObjectMetaInfo;
+
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aNode ) = 0;
     virtual const std::string& getXMLName() const = 0;
@@ -114,10 +134,15 @@ class DepletableResource: public Resource {
 public: 
     static const std::string& getXMLNameStatic();
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Resource
+    )
+    
     const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 /*! 
@@ -130,10 +155,15 @@ public:
 
     static const std::string& getXMLNameStatic();
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Resource
+    )
+    
     const std::string& getXMLName() const;
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 /*! 
@@ -146,17 +176,23 @@ public:
     RenewableResource();
     static const std::string& getXMLNameStatic();
 protected:
-    //! average resource variance computed from subresources
-    std::vector<double> resourceVariance;
-    //! average resource capacity factor computed from subresources
-    std::vector<double> resourceCapacityFactor;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Resource,
+
+        //! average resource variance computed from subresources
+        CREATE_ARRAY_VARIABLE( mResourceVariance, objects::PeriodVector<double>, "resourceVariance" ),
+
+        //! average resource capacity factor computed from subresources
+        CREATE_ARRAY_VARIABLE( mResourceCapacityFactor, objects::PeriodVector<double>, "resourceCapacityFactor" )
+    )
 
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );
     virtual const std::string& getXMLName() const;
     void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );
     void annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price );
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 #endif // _RESOURCE_H_

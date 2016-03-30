@@ -124,15 +124,21 @@ public:
                          const int aPeriod ) const;
 
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AResource,
 
-    //! Fixed resource quantity currently available.
-    Value mFixedResource;
+        //! Fixed resource quantity currently available.
+        CREATE_SIMPLE_VARIABLE( mFixedResource, Value, "fixed-resource" ),
 
-    //! The rate at which the resource depletes.
-    Value mDepletionRate;
+        //! The rate at which the resource depletes.
+        CREATE_SIMPLE_VARIABLE( mDepletionRate, Value, "depletion-rate" ),
 
-    //! The initial price for this resource.
-    Value mInitialPrice;
+        //! The initial price for this resource.
+        CREATE_SIMPLE_VARIABLE( mInitialPrice, Value, "price" )
+    )
 
     void setMarket( const std::string& aRegionName );
 };

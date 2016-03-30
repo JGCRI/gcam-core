@@ -72,7 +72,9 @@ const string& DepletingFixedResource::getXMLNameStatic(){
 
 //! Constructor.
 DepletingFixedResource::DepletingFixedResource()
-: mDepletionRate( 0 ), mInitialPrice( 1 ) {
+{
+    mDepletionRate = 0;
+    mInitialPrice = 1;
 }
 
 //! Destructor.

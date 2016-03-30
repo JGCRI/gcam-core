@@ -58,33 +58,31 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-const double GDP_SUPPLY_ELASTICITY_DEFAULT = 0;
 //! Constructor
-
 SubRenewableResource::SubRenewableResource(){
-	maxSubResource = 0;
-	gdpSupplyElasticity = GDP_SUPPLY_ELASTICITY_DEFAULT;
-	subResourceVariance = 0;
-	subResourceCapacityFactor = 1;
+	mMaxSubResource = 0;
+	mGdpSupplyElasticity = 0;
+	mSubResourceVariance = 0;
+	mSubResourceCapacityFactor = 1;
 }
 
 //! Performs XML read-in that is specific to this derived class
 bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
 	bool didParse = false;
 	if( nodeName == "maxSubResource" ){
-		maxSubResource = XMLHelper<double>::getValue( node );
+		mMaxSubResource = XMLHelper<double>::getValue( node );
 		didParse = true;
 	}
 	else if( nodeName == "subResourceVariance" ){
-		subResourceVariance = XMLHelper<double>::getValue( node );
+		mSubResourceVariance = XMLHelper<double>::getValue( node );
 		didParse = true;
 	}
 	else if( nodeName == "subResourceCapacityFactor" ){
-		subResourceCapacityFactor = XMLHelper<double>::getValue( node );
+		mSubResourceCapacityFactor = XMLHelper<double>::getValue( node );
 		didParse = true;
 	}
 	else if( nodeName == "gdpSupplyElast" ){
-		gdpSupplyElasticity = XMLHelper<double>::getValue( node );
+		mGdpSupplyElasticity = XMLHelper<double>::getValue( node );
 		didParse = true;
 	}
 	return didParse;
@@ -120,10 +118,10 @@ void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {
 
 //! Write out to XML variables specific to this derived class
 void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
-	XMLWriteElementCheckDefault( maxSubResource, "maxSubResource", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( gdpSupplyElasticity, "gdpSupplyElast", out, tabs, GDP_SUPPLY_ELASTICITY_DEFAULT );
-	XMLWriteElementCheckDefault( subResourceVariance, "subResourceVariance", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( subResourceCapacityFactor, "subResourceCapacityFactor", out, tabs, 1.0 );
+	XMLWriteElementCheckDefault( mMaxSubResource, "maxSubResource", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( mGdpSupplyElasticity, "gdpSupplyElast", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( mSubResourceVariance, "subResourceVariance", out, tabs, 0.0 );
+	XMLWriteElementCheckDefault( mSubResourceCapacityFactor, "subResourceCapacityFactor", out, tabs, 1.0 );
 }
 
 //! Cumulative Production
@@ -186,10 +184,10 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 
     // Calculate the amount of resource expansion due to GDP increase.
     double resourceSupplyIncrease = pow( gdp->getApproxGDP( period ) / gdp->getApproxGDP( 0 ),
-                                      gdpSupplyElasticity );
+                                      mGdpSupplyElasticity );
 
     // now convert to absolute value of production
-    mAnnualProd[ period ] = fractionAvailable * maxSubResource * resourceSupplyIncrease;
+    mAnnualProd[ period ] = fractionAvailable * mMaxSubResource * resourceSupplyIncrease;
 }
 
 /*! \brief Get the variance.
@@ -197,7 +195,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 * \return The variance.
 */
 double SubRenewableResource::getVariance() const {
-	return subResourceVariance;
+	return mSubResourceVariance;
 }
 
 /*! \brief Get the average capacity factor.
@@ -205,11 +203,11 @@ double SubRenewableResource::getVariance() const {
 * \return The average capacity factor.
 */
 double SubRenewableResource::getAverageCapacityFactor() const {
-	return subResourceCapacityFactor;
+	return mSubResourceCapacityFactor;
 }
 
 double SubRenewableResource::getMaxSubResource() const {
-    return maxSubResource;
+    return mMaxSubResource;
 }
 
 const std::string& SubRenewableResource::getXMLName() const

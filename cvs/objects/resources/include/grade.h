@@ -45,12 +45,20 @@
 * \author Sonny Kim
 */
 
-#include <vector>
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
+
 class Tabs;
 class IInfo;
+
+// Forward declarations.
+class AccumulatedGrade;
+class AccumulatedPostGrade;
 
 /*! 
 * \ingroup Objects
@@ -61,7 +69,7 @@ class IInfo;
 * \author Sonny Kim
 */
 
-class Grade: public IVisitable
+class Grade: public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
@@ -82,12 +90,30 @@ public:
     const std::string& getName() const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of SubResource to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Grade, AccumulatedGrade, AccumulatedPostGrade ),
+        
+        //! Grade name.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        
+        //! amount of Grade for each Grade
+        CREATE_SIMPLE_VARIABLE( mAvailable, double, "available" ),
+        
+        //! extraction cost of each Grade
+        CREATE_SIMPLE_VARIABLE( mExtractCost, double, "extractioncost" ),
+        
+        //! total cost
+        CREATE_ARRAY_VARIABLE( mTotalCost, objects::PeriodVector<double>, "totalcost" )
+    )
+
+    //! The Grade's information store.
+    std::auto_ptr<IInfo> mGradeInfo;
+    
     virtual const std::string& getXMLName() const;
-    std::string mName; //!< Grade name
-    std::auto_ptr<IInfo> mGradeInfo; //!< The Grade's information store.
-    double mAvailable; //!< amount of Grade for each Grade
-    double mExtractCost; //!< extraction cost of each Grade
-    std::vector<double> mTotalCost; //!< total cost
 };
 
 #endif // _GRADE_H_

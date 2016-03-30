@@ -46,9 +46,12 @@
 */
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations.
 class Grade;
@@ -57,13 +60,17 @@ class IInfo;
 class IVisitor;
 class Tabs;
 
+// Need to forward declare the subclasses as well.
+class SubRenewableResource;
+class SmoothRenewableSubresource;
+
 /*! 
 * \ingroup Objects
 * \brief SubResource is a class that contains grades.
 * \author Sonny Kim
 */
 
-class SubResource: public IVisitable
+class SubResource: public IVisitable, private boost::noncopyable
 {
 	friend class XMLDBOutputter;
     friend class CalibrateResourceVisitor;
@@ -97,26 +104,51 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
     virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 
-    std::string mName; //!< SubResource name
-    std::auto_ptr<IInfo> mSubresourceInfo; //!< The subsector's information store.
-    std::vector<double> mAvailable; //!< total available resource
-    std::vector<double> mAnnualProd; //!< annual production of SubResource
-    std::vector<double> mCumulProd; //!< cumulative production of SubResource
-    std::vector<double> mCumulativeTechChange; //!< Cumulative Technical Change for this subsector
-    std::vector<double> mEffectivePrice; //!< effective price (global price + price adder)
-    std::vector<double> mCalProduction; //!< calibrated production 
-
-    objects::PeriodVector<Value> mTechChange; //!< technical change
-    objects::PeriodVector<Value> mEnvironCost; //!< Environmental costs
-    objects::PeriodVector<Value> mSeveranceTax; //!< Severance Tax (exogenous)
-    objects::PeriodVector<Value> mPriceAdder; //!< price adder used for calibration purposes
+    DEFINE_DATA(
+        /* Declare all subclasses of SubResource to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( SubResource, SubRenewableResource, SmoothRenewableSubresource ),
+        
+        //! SubResource name.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        
+        //! total available resource
+        CREATE_ARRAY_VARIABLE( mAvailable, objects::PeriodVector<double>, "available" ),
+        
+        //! annual production of SubResource
+        CREATE_ARRAY_VARIABLE( mAnnualProd, objects::PeriodVector<double>, "annualprod" ),
+        
+        //! cumulative production of SubResource
+        CREATE_ARRAY_VARIABLE( mCumulProd, objects::PeriodVector<double>, "cumulprod" ),
+        
+        //! Cumulative Technical Change for this subsector
+        CREATE_ARRAY_VARIABLE( mCumulativeTechChange, objects::PeriodVector<double>, "cumulative-tech-change" ),
+        
+        //! effective price (global price + price adder)
+        CREATE_ARRAY_VARIABLE( mEffectivePrice, objects::PeriodVector<double>, "effective-price" ),
+        
+        //! calibrated production
+        CREATE_ARRAY_VARIABLE( mCalProduction, objects::PeriodVector<double>, "cal-production" ),
+        
+        //! technical change
+        CREATE_ARRAY_VARIABLE( mTechChange, objects::PeriodVector<Value>, "techChange" ),
+        
+        //! Environmental costs
+        CREATE_ARRAY_VARIABLE( mEnvironCost, objects::PeriodVector<Value>, "environCost" ),
+        
+        //! Severance Tax (exogenous)
+        CREATE_ARRAY_VARIABLE( mSeveranceTax, objects::PeriodVector<Value>, "severanceTax" ),
+        
+        //! price adder used for calibration purposes
+        CREATE_ARRAY_VARIABLE( mPriceAdder, objects::PeriodVector<Value>, "price-adder" ),
     
-    // Cumulative technical change needs to be in sub-resource sector 
-    std::vector<Grade*> mGrade; //!< amount of SubResource for each grade
-    std::map<std::string,int> mGradeNameMap; //!< Map of grade name to integer position in vector.
+        //! amount of SubResource for each grade
+        CREATE_CONTAINER_VARIABLE( mGrade, std::vector<Grade*>, NamedFilter, "grade" )
+    )
     
-private:
-    static const std::string XML_NAME; //!< node name for toXML methods
+    //!< The subsector's information store.
+    std::auto_ptr<IInfo> mSubresourceInfo;
 };
 
 

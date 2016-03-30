@@ -62,16 +62,6 @@ class IInfo;
 */
 class SubRenewableResource: public SubResource {
     friend class CalibrateResourceVisitor;
-protected:
-    double maxSubResource;
-    double gdpSupplyElasticity;
-    //! subresource variance now read in rather than computed
-    double subResourceVariance;
-    //! read in average capacity factor for each subresource
-    double subResourceCapacityFactor;  
-    virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
-    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 public: 
     SubRenewableResource();
     virtual void completeInit( const IInfo* aSectorInfo );
@@ -84,5 +74,29 @@ public:
     static const std::string& getXMLNameStatic( void );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual double getLowestPrice( const int aPeriod ) const;
+    
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SubResource,
+
+        //! The maximum achievable resource production at a price of infinity.
+        CREATE_SIMPLE_VARIABLE( mMaxSubResource, double, "maxSubResource" ),
+
+        //! elasticity on GDP growth that controls expansion of the max subresource.
+        CREATE_SIMPLE_VARIABLE( mGdpSupplyElasticity, double, "gdpSupplyElast" ),
+
+        //! subresource variance now read in rather than computed
+        CREATE_SIMPLE_VARIABLE( mSubResourceVariance, double, "subResourceVariance" ),
+
+        //! read in average capacity factor for each subresource
+        CREATE_SIMPLE_VARIABLE( mSubResourceCapacityFactor, double, "subResourceCapacityFactor" )
+    )
+
+    virtual const std::string& getXMLName() const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
+    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_
