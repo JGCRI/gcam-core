@@ -62,9 +62,12 @@ class ALandAllocatorItem;
  */
 class ILandAllocator : public IVisitable,
                        public IParsable,
-                       public IRoundTrippable {
+                       public IRoundTrippable
+{
 public:
     ILandAllocator();
+    ILandAllocator( const ILandAllocator& aOther ) = delete;
+    ILandAllocator& operator=( const ILandAllocator& aOther ) = delete;
     
     virtual ~ILandAllocator();
 

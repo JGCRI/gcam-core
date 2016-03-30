@@ -157,28 +157,35 @@ public:
     virtual bool isManagedLandLeaf( )  const;
 
 protected:
-    //! Land allocated in 1000's of hectares
-    objects::PeriodVector<Value> mLandAllocation;
-
-    //! Carbon content and emissions calculator for the leaf.
-    std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
-
-    //! Interest rate stored from the region info.
-    Value mInterestRate;
-
-    //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
-    Value mMinAboveGroundCDensity;
-
-    //! Minimum below ground carbon density (used for carbon subsidy and not emissions calculations)
-    Value mMinBelowGroundCDensity;
-
-    //! Expected rate of increase of the carbon price from the region info.
-    objects::PeriodVector<Value> mCarbonPriceIncreaseRate;
-
-    //! Container of historical land use.
-    std::auto_ptr<LandUseHistory> mLandUseHistory;
     
-    objects::PeriodVector<Value> mReadinLandAllocation;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ALandAllocatorItem,
+
+        //! Land allocated in 1000's of hectares
+        CREATE_ARRAY_VARIABLE( mLandAllocation, objects::PeriodVector<Value>, "landAllocation" ),
+
+        //! Carbon content and emissions calculator for the leaf.
+        CREATE_CONTAINER_VARIABLE( mCarbonContentCalc, ICarbonCalc*, NoFilter, "carbon-calc" ),
+
+        //! Interest rate stored from the region info.
+        CREATE_SIMPLE_VARIABLE( mInterestRate, Value, "interest-rate" ),
+
+        //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
+        CREATE_SIMPLE_VARIABLE( mMinAboveGroundCDensity, Value, "minAboveGroundCDensity" ),
+
+        //! Minimum below ground carbon density (used for carbon subsidy and not emissions calculations)
+        CREATE_SIMPLE_VARIABLE( mMinBelowGroundCDensity, Value, "minBelowGroundCDensity" ),
+
+        //! Expected rate of increase of the carbon price from the region info.
+        CREATE_ARRAY_VARIABLE( mCarbonPriceIncreaseRate, objects::PeriodVector<Value>, "carbon-price-increase-rate" ),
+
+        //! Container of historical land use.
+        CREATE_CONTAINER_VARIABLE( mLandUseHistory, LandUseHistory*, NoFilter, "land-use-history" ),
+        
+        CREATE_ARRAY_VARIABLE( mReadinLandAllocation, objects::PeriodVector<Value>, "parsed-landAllocation" )
+    )
 
     double getCarbonSubsidy( const std::string& aRegionName,
                            const int aPeriod ) const;

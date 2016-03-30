@@ -70,24 +70,27 @@ extern Scenario* scenario;
  * \param aName Product name.
 */
 LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName ):
-    ALandAllocatorItem( aParent, eLeaf ),
-    mLandAllocation( 0.0 ),
-    mCarbonContentCalc(0),
-    mMinAboveGroundCDensity( 0.0 ),
-    mMinBelowGroundCDensity( 0.0 ),
-    mCarbonPriceIncreaseRate( 0.0 ),
-    mLandUseHistory(0),
-    mReadinLandAllocation(0.0),
-    mLastCalcCO2Value(0.0),
-    mLastCalcExpansionValue(0.0)
+    ALandAllocatorItem( aParent, eLeaf )
 {
     // Can't use initializer because mName is a member of ALandAllocatorItem,
     // not LandLeaf.
     mName = aName;
+    
+    mLandAllocation.assign( mLandAllocation.size(), 0.0 );
+    mCarbonContentCalc = 0;
+    mMinAboveGroundCDensity = 0.0;
+    mMinBelowGroundCDensity = 0.0;
+    mCarbonPriceIncreaseRate.assign( mCarbonPriceIncreaseRate.size(), 0.0 );
+    mLandUseHistory = 0;
+    mReadinLandAllocation.assign( mReadinLandAllocation.size(), 0.0 );
+    mLastCalcCO2Value = 0.0;
+    mLastCalcExpansionValue = 0.0;
 }
 
 //! Destructor
 LandLeaf::~LandLeaf() {
+    delete mLandUseHistory;
+    delete mCarbonContentCalc;
 }
 
 const string& LandLeaf::getXMLName() const {
@@ -195,8 +198,8 @@ void LandLeaf::completeInit( const string& aRegionName,
 
     // Set the carbon cycle object if it has not already been initialized. Use a
     // virtual function so that derived leaves may use a different default type.
-    if( !mCarbonContentCalc.get() ){
-        mCarbonContentCalc.reset( new LandCarbonDensities );
+    if( !mCarbonContentCalc ){
+        mCarbonContentCalc = new LandCarbonDensities;
     }
 
     // Initialize the carbon-cycle object
@@ -291,14 +294,14 @@ void LandLeaf::setInitShares( const string& aRegionName,
  */
 void LandLeaf::initLandUseHistory( const string& aRegionName )
 {
-    if( !mLandUseHistory.get() ){
+    if( !mLandUseHistory ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "No land use history read in for leaf "
                 << getName() << " in region " << aRegionName << endl;
-        exit( -1 );
+        abort();
     }
-    mCarbonContentCalc->initLandUseHistory( mLandUseHistory.get() );
+    mCarbonContentCalc->initLandUseHistory( mLandUseHistory );
 }
 
 void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
@@ -311,7 +314,7 @@ void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );
     
 
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toInputXML( aOut, aTabs );
     }
 
@@ -328,7 +331,7 @@ void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) c
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
     XMLWriteVector( mCarbonPriceIncreaseRate, "carbon-price-increase-rate", out, tabs, scenario->getModeltime() );
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", out, tabs, string() );
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toDebugXML( period, out, tabs );
     }
     
@@ -645,7 +648,7 @@ void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
     acceptDerived( aVisitor, aPeriod );
 
-    if( mCarbonContentCalc.get() ){
+    if( mCarbonContentCalc ){
         mCarbonContentCalc->accept( aVisitor, aPeriod );
     }
 
@@ -657,7 +660,7 @@ void LandLeaf::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 ICarbonCalc* LandLeaf::getCarbonContentCalc() const{
-    return ( mCarbonContentCalc.get() );
+    return mCarbonContentCalc;
 }
 
 bool LandLeaf::isManagedLandLeaf( )  const 

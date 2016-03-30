@@ -182,39 +182,45 @@ protected:
     
     const ALandAllocatorItem* findChild( const std::string& aName,
                                          const LandAllocatorItemType aType ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ALandAllocatorItem,
 
-    //! Land allocated -- used for conceptual roots
-    objects::PeriodVector<double> mLandAllocation;
+        //! Land allocated -- used for conceptual roots
+        CREATE_ARRAY_VARIABLE( mLandAllocation, objects::PeriodVector<double>, "landAllocation" ),
+            
+        //! Logit exponent -- should be positive since we are sharing on profit
+        CREATE_ARRAY_VARIABLE( mLogitExponent, objects::PeriodVector<double>, "logit-exponent" ),
+
+        //! Share Profit scaler for new technologies in this node
+        CREATE_ARRAY_VARIABLE( mNewTechProfitScaler, objects::PeriodVector<double>, "new-tech-profit-scaler" ),
         
-    //! Logit exponent -- should be positive since we are sharing on profit
-    objects::PeriodVector<double> mLogitExponent;
+        //! Numerator that determines share for new technologies IF the right profit conditions hold
+        //! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
+        //! the profit of the new technology is equal to the profit of the dominant technology in 
+        //! the base year, and all other profits stay the same.
+        CREATE_ARRAY_VARIABLE( mGhostShareNumerator, objects::PeriodVector<double>, "default-share" ),
+        
+        //! Double storing the average price of land in a region or subregion
+        CREATE_SIMPLE_VARIABLE( mUnManagedLandValue, double, "unManagedLandValue" ),
 
-    //! Share Profit scaler for new technologies in this node
-    objects::PeriodVector<double> mNewTechProfitScaler;
-    
-    //! Numerator that determines share for new technologies IF the right profit conditions hold
-	//! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
-	//! the profit of the new technology is equal to the profit of the dominant technology in 
-	//! the base year, and all other profits stay the same.
-    objects::PeriodVector<double> mGhostShareNumerator;
-    
-    //! Double storing the average price of land in a region or subregion
-    double mUnManagedLandValue;
+        //! Boolean indicating that scalers in this node should be adjusted for new technologies
+        // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
+        CREATE_SIMPLE_VARIABLE( mAdjustScalersForNewTech, bool, "adjustForNewTech" ),
 
-    //! Boolean indicating that scalers in this node should be adjusted for new technologies
-    // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
-    bool mAdjustScalersForNewTech;
+        //! List of the children of this land node located below it in the land
+        //! allocation tree.
+        CREATE_CONTAINER_VARIABLE( mChildren, std::vector<ALandAllocatorItem*>, NamedFilter, "child-nodes" ),
 
-    //! List of the children of this land node located below it in the land
-    //! allocation tree.
-    std::vector<ALandAllocatorItem*> mChildren;
+        //! Container of historical land use.
+        CREATE_CONTAINER_VARIABLE( mLandUseHistory, LandUseHistory*, NoFilter, "land-use-history" ),
 
-    //! Container of historical land use.
-    std::auto_ptr<LandUseHistory> mLandUseHistory;
-
-    //! (optional) A carbon calculation which can used when children maybe similar
-    //! in terms of switching between them does not mean carbon is emitted per se.
-    std::auto_ptr<NodeCarbonCalc> mCarbonCalc;
+        //! (optional) A carbon calculation which can used when children maybe similar
+        //! in terms of switching between them does not mean carbon is emitted per se.
+        CREATE_CONTAINER_VARIABLE( mCarbonCalc, NodeCarbonCalc*, NoFilter, "node-carbon-calc" )
+    )
 };
 
 #endif // _LAND_NODE_H_

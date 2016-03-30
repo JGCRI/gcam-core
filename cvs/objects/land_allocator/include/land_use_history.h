@@ -43,9 +43,11 @@
  * \brief The LandUseHistory class header file.
  * \author Josh Lurz
  */
-#include <xercesc/dom/DOMNode.hpp>
-#include "util/base/include/ivisitable.h"
 #include <map>
+#include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/ivisitable.h"
 
 class Tabs;
 /*!
@@ -67,7 +69,8 @@ class Tabs;
  */
 class LandUseHistory : public IVisitable,
                        public IParsable,
-                       public IRoundTrippable
+                       public IRoundTrippable,
+                       private boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
@@ -78,8 +81,6 @@ public:
     static const std::string& getXMLNameStatic();
 
     LandUseHistory();
-
-	LandUseHistory( const LandUseHistory& aLandUseHistory );
     
     // IParsable Methods.
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
@@ -113,18 +114,20 @@ public:
 	void printHistory() const;
 
 protected:
-    //! Map type for land allocations by year.
-    //typedef std::map<unsigned int, double> LandMapType;
 
-    //! Sparse mapping of year to land allocation.
-    LandMapType mHistoricalLand;
+    DEFINE_DATA(
+        // LandUseHistory is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( LandUseHistory ),
 
-    //! Average above ground carbon content historically.
-    double mHistoricAboveGroundCarbonDensity;
+        //! Sparse mapping of year to land allocation.
+        CREATE_ARRAY_VARIABLE( mHistoricalLand, LandMapType, "allocation" ),
 
-    //! Average below ground carbon content historically.
-    double mHistoricBelowGroundCarbonDensity;
+        //! Average above ground carbon content historically.
+        CREATE_SIMPLE_VARIABLE( mHistoricAboveGroundCarbonDensity, double, "above-ground-carbon-density" ),
 
+        //! Average below ground carbon content historically.
+        CREATE_SIMPLE_VARIABLE( mHistoricBelowGroundCarbonDensity, double, "below-ground-carbon-density" )
+    )
 };
 
 #endif // _HISTORICAL_LAND_USE_H_

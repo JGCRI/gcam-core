@@ -507,7 +507,7 @@ public:
 protected:
     
     DEFINE_DATA(
-        /* Declare all subclasses of IDiscreteChoice to allow automatic traversal of the
+        /* Declare all subclasses of IInput to allow automatic traversal of the
          * hierarchy under introspection.
          */
         DEFINE_SUBCLASS_FAMILY( IInput, MiniCAMInput, EnergyInput, NonEnergyInput,

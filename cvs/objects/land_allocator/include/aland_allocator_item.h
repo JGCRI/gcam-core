@@ -63,7 +63,13 @@
 class IInfo;
 class Tabs;
 class LandUseHistory;
+
+// Need to forward declare the subclasses as well.
+class LandAllocator;
 class LandNode;
+class LandLeaf;
+class CarbonLandLeaf;
+class UnmanagedLandLeaf;
 
 
 /*!
@@ -400,45 +406,54 @@ protected:
     //! Parent of this node
     const ALandAllocatorItem* mParent;
 
-    /*!
-     * \brief Share of parent's total land.
-     * \details This is equal to the land allocated to this node divided by land
-     *          allocated to node above. This is always the normalized share and
-     *          so is always between zero and one inclusive.
-     */
-    objects::PeriodVector<double> mShare;
-    
-    //! Profit scaler 
-    objects::PeriodVector<double> mProfitScaler;  
+    DEFINE_DATA(
+        /* Declare all subclasses of ALandAllocatorItem to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ALandAllocatorItem, LandAllocator, LandNode, LandLeaf,
+                                CarbonLandLeaf, UnmanagedLandLeaf ),
 
-    //! Boolean indicating a node or leaf is new 
-    objects::PeriodVector<bool> mIsNewTech;  
+        /*!
+         * \brief Share of parent's total land.
+         * \details This is equal to the land allocated to this node divided by land
+         *          allocated to node above. This is always the normalized share and
+         *          so is always between zero and one inclusive.
+         */
+        CREATE_ARRAY_VARIABLE( mShare, objects::PeriodVector<double>, "share" ),
+        
+        //! Profit scaler 
+        CREATE_ARRAY_VARIABLE( mProfitScaler, objects::PeriodVector<double>, "profit-scaler" ),
 
-    //! Double that adjusts a profit scaler to account for the availability of new technologies
-    objects::PeriodVector<double> mAdjustForNewTech;
+        //! Boolean indicating a node or leaf is new
+        // TODO: should this be in the leaf?
+        CREATE_ARRAY_VARIABLE( mIsNewTech, objects::PeriodVector<bool>, "isNewTechnology" ),
 
-    //! Calibration Profit or Calibration Land Rental Rate in dollars
-    // This is the profit rate implied by the shares in the calibration data
-    //It is not read in but computed as part of the calibration
-    objects::PeriodVector<double> mCalibrationProfitRate;
+        //! Double that adjusts a profit scaler to account for the availability of new technologies
+        CREATE_ARRAY_VARIABLE( mAdjustForNewTech, objects::PeriodVector<double>, "adjustment" ),
 
-    //! Land observed profit rate
-    objects::PeriodVector<double> mProfitRate;
-    
-    //! Name of the land allocator item. This is the name of the product for
-    //! leafs and name of the type of land for nodes.
-    std::string mName;
+        //! Calibration Profit or Calibration Land Rental Rate in dollars
+        // This is the profit rate implied by the shares in the calibration data
+        //It is not read in but computed as part of the calibration
+        CREATE_ARRAY_VARIABLE( mCalibrationProfitRate, objects::PeriodVector<double>, "CalProfitRate" ),
 
-    /*!
-     * \brief Enum that stores the item's type.
-     * \note This is stored to avoid a virtual function call.
-     */
-    LandAllocatorItemType mType;
+        //! Land observed profit rate
+        CREATE_ARRAY_VARIABLE( mProfitRate, objects::PeriodVector<double>, "ProfitRate" ),
+        
+        //! Name of the land allocator item. This is the name of the product for
+        //! leafs and name of the type of land for nodes.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
-    //! name of land expansion constraint cost curve
-    std::string mLandExpansionCostName;
-    bool mIsLandExpansionCost;
-    
+        /*!
+         * \brief Enum that stores the item's type.
+         * \note This is stored to avoid a virtual function call.
+         */
+        CREATE_SIMPLE_VARIABLE( mType, LandAllocatorItemType, "land-type" ),
+
+        //! name of land expansion constraint cost curve
+        // TODO: should these be in the leaf?
+        CREATE_SIMPLE_VARIABLE( mLandExpansionCostName, std::string, "landConstraintCurve" ),
+        CREATE_SIMPLE_VARIABLE( mIsLandExpansionCost, bool, "is-land-expansion-cost" )
+    )
 };
 
 typedef std::unary_function<const ALandAllocatorItem*, bool> SearchPredicate;

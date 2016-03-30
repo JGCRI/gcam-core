@@ -62,21 +62,25 @@ typedef std::map<unsigned int, double> LandMapType;
  * \author James Blackwood
  */
 LandNode::LandNode( const ALandAllocatorItem* aParent )
-: ALandAllocatorItem( aParent, eNode ),
-mLogitExponent( 1.0 ),
-mUnManagedLandValue( 0.0 ),
-mNewTechProfitScaler( 0.0 ),
-mGhostShareNumerator( 0.25 ),
-mAdjustScalersForNewTech( false )
- {
+: ALandAllocatorItem( aParent, eNode )
+{
+    mLogitExponent.assign( mLogitExponent.size(), 1.0 );
+    mUnManagedLandValue = 0.0;
+    mNewTechProfitScaler.assign( mNewTechProfitScaler.size(), 0.0 );
+    mGhostShareNumerator.assign( mGhostShareNumerator.size(), 0.25 );
+    mAdjustScalersForNewTech = false;
+    mLandUseHistory = 0;
+    mCarbonCalc = 0;
     mType = eNode;
- }
+}
 
 //! Destructor
 LandNode::~LandNode() {
     for( unsigned int i = 0; i < mChildren.size(); i++ ) {
         delete mChildren[ i ];
     }
+    delete mLandUseHistory;
+    delete mCarbonCalc;
 }
 
 size_t LandNode::getNumChildren() const {
@@ -174,11 +178,11 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     }
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
 
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toInputXML( out, tabs );
     }
     
-    if( mCarbonCalc.get() ) {
+    if( mCarbonCalc ) {
         mCarbonCalc->toInputXML( out, tabs );
     }
     
@@ -206,10 +210,10 @@ void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tab
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );
     XMLWriteElement( getLandAllocation( mName, period ), "landAllocation", out, tabs );
 
-    if( mLandUseHistory.get() ){
+    if( mLandUseHistory ){
         mLandUseHistory->toDebugXML( period, out, tabs );
     }
-    if( mCarbonCalc.get() ) {
+    if( mCarbonCalc ) {
         mCarbonCalc->toDebugXML( period, out, tabs );
     }
     // write out for mChildren
@@ -243,8 +247,8 @@ void LandNode::completeInit( const string& aRegionName,
         mChildren[ i ]->completeInit( aRegionName, aRegionInfo );
     }
 
-    if( mCarbonCalc.get() ) {
-        accept( mCarbonCalc.get(), -1 );
+    if( mCarbonCalc ) {
+        accept( mCarbonCalc, -1 );
         mCarbonCalc->completeInit();
     }
 }
@@ -721,7 +725,7 @@ void LandNode::calcLandAllocation( const string& aRegionName,
 void LandNode::calcLUCEmissions( const string& aRegionName,
                                  const int aPeriod, const int aEndYear )
 {
-    if( mCarbonCalc.get() ) {
+    if( mCarbonCalc ) {
         mCarbonCalc->calc( aPeriod, aEndYear );
     }
     
@@ -813,7 +817,7 @@ void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
 }
 
 LandUseHistory* LandNode::getLandUseHistory(){
-    return( this->mLandUseHistory.get() );
+    return( this->mLandUseHistory );
 }
 
 bool LandNode::isManagedLandLeaf( )  const 

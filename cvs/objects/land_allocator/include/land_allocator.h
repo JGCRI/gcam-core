@@ -139,16 +139,28 @@ protected:
 
     virtual void toInputXMLDerived( std::ostream& aOutput,
                                     Tabs* aTabs ) const;
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        /*!
+         * \note Defining LandNode as the parent type of LandAllocator since that is
+         *       the parent type which contains shared data members.
+         */
+        LandNode,
+
+        //! Land allocated in 1000's of hectares
+        // TODO: redefinition from LandNode?
+        CREATE_ARRAY_VARIABLE( mLandAllocation, objects::PeriodVector<double>, "landAllocation" ),
+
+        //! Rate at which carbon price is expected to increase
+        CREATE_ARRAY_VARIABLE( mCarbonPriceIncreaseRate, objects::PeriodVector<double>, "carbonPriceIncreaseRate" ),
+
+        //! Integer storing the soil time scale for a region
+        CREATE_SIMPLE_VARIABLE( mSoilTimeScale, int, "soilTimeScale" )
+    )
+
 private:
-    //! Land allocated in 1000's of hectares
-    objects::PeriodVector<double> mLandAllocation;
-
-    //! Rate at which carbon price is expected to increase
-    objects::PeriodVector<double> mCarbonPriceIncreaseRate;
-
-    //! Integer storing the soil time scale for a region
-    int mSoilTimeScale;                              
-
     void calibrateLandAllocator( const std::string& aRegionName, const int aPeriod );
 
     void calculateProfitScalers( const std::string& aRegionName, 

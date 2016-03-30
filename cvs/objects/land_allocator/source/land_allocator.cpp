@@ -58,10 +58,10 @@ extern Scenario* scenario;
  * \author James Blackwood
  */
 LandAllocator::LandAllocator()
-: LandNode( 0 ),
-  mCarbonPriceIncreaseRate( 0.0 ),
-  mSoilTimeScale( CarbonModelUtils::getSoilTimeScale() )
+: LandNode( 0 )
 {
+    mCarbonPriceIncreaseRate.assign( mCarbonPriceIncreaseRate.size(), 0.0 );
+    mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();
 }
 
 //! Destructor

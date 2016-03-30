@@ -63,7 +63,7 @@ class Population;
 class Demographic;
 class Sector;
 class SupplySector;
-class ILandAllocator;
+class LandAllocator;
 class GHGPolicy;
 class Summary;
 class ILogger;
@@ -128,7 +128,7 @@ protected:
         CREATE_CONTAINER_VARIABLE( mGDP, GDP*, NoFilter, "GDP" ),
         
         /*! \brief Regional land allocator. */
-        CREATE_CONTAINER_VARIABLE( mLandAllocator, ILandAllocator*, NoFilter, "land-allocator" ),
+        CREATE_CONTAINER_VARIABLE( mLandAllocator, LandAllocator*, NoFilter, "land-allocator" ),
         
         /*! \brief vector of pointers to demand sector objects */
         CREATE_CONTAINER_VARIABLE( mFinalDemands, std::vector<AFinalDemand*>, NamedFilter, "final-demand" ),
