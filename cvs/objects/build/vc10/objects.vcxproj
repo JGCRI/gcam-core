@@ -631,7 +631,6 @@
     <ClCompile Include="..\..\sectors\source\factor_supply.cpp" />
     <ClCompile Include="..\..\sectors\source\final_demand_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\more_sector_info.cpp" />
-    <ClCompile Include="..\..\sectors\source\non_energy_final_demand.cpp" />
     <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\production_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\sector.cpp" />
@@ -639,7 +638,6 @@
     <ClCompile Include="..\..\sectors\source\subsector.cpp" />
     <ClCompile Include="..\..\sectors\source\subsector_add_techcosts.cpp" />
     <ClCompile Include="..\..\sectors\source\supply_sector.cpp" />
-    <ClCompile Include="..\..\sectors\source\tran_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp" />
     <ClCompile Include="..\..\sectors\source\wind_backup_calculator.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp" />
@@ -959,7 +957,6 @@
     <ClInclude Include="..\..\sectors\include\final_demand_sector.h" />
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\more_sector_info.h" />
-    <ClInclude Include="..\..\sectors\include\non_energy_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\pass_through_sector.h" />
     <ClInclude Include="..\..\sectors\include\production_sector.h" />
     <ClInclude Include="..\..\sectors\include\sector.h" />
@@ -967,7 +964,6 @@
     <ClInclude Include="..\..\sectors\include\subsector.h" />
     <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h" />
     <ClInclude Include="..\..\sectors\include\supply_sector.h" />
-    <ClInclude Include="..\..\sectors\include\tran_sector.h" />
     <ClInclude Include="..\..\sectors\include\tran_subsector.h" />
     <ClInclude Include="..\..\sectors\include\wind_backup_calculator.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_all.h" />

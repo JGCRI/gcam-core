@@ -65,6 +65,13 @@ public:
     
     virtual void interpolateShareWeights( const int aPeriod );
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Subsector
+    )
+
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
 };

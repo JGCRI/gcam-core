@@ -50,13 +50,14 @@
 #include <map>
 #include <memory>
 #include <list>
+#include <boost/core/noncopyable.hpp>
 
-#include "containers/include/national_account.h" // lets use an auto_ptr instead.
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/object_meta_info.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class Subsector;
@@ -67,12 +68,17 @@ class Tabs;
 class IInfo;
 class Demographic;
 class NationalAccount;
-class MoreSectorInfo;
 class SocialAccountingMatrix;
 class ILandAllocator;
 class IndirectEmissionsCalculator;
 class AGHG;
 class IDiscreteChoice;
+
+// Need to forward declare the subclasses as well.
+class SupplySector;
+class AgSupplySector;
+class ExportSector;
+class PassThroughSector;
 
 /*! 
 * \ingroup Objects
@@ -88,7 +94,8 @@ class IDiscreteChoice;
 
 class Sector: public IVisitable,
               public IRoundTrippable,
-              public INamed
+              public INamed,
+              private boost::noncopyable
 {
     // TODO: Remove the need for these.
     friend class SocialAccountingMatrix;
@@ -98,43 +105,57 @@ class Sector: public IVisitable,
     friend class XMLDBOutputter;
     friend class CalibrateShareWeightVisitor;
 protected:
-    std::string name; //!< Sector name
-    std::string mOutputUnit; //!< unit of good or service produced by sector
-    std::string mInputUnit; //!< unit of input demanded by sector
-    std::string mPriceUnit; //!< price unit of good or service produced by sector
-    std::string regionName; //!< region name
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Sector to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Sector, SupplySector, AgSupplySector, ExportSector,
+                                PassThroughSector ),
 
-    //! Type of the sector.
-    std::string mSectorType;
+        //! Sector name
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
-    double mBaseOutput; //!< Read in base year output. TODO: Move to demand sector.
-    std::auto_ptr<IInfo> mSectorInfo; //!< Pointer to the sector's information store.
-    std::vector<Subsector*> subsec; //!< subsector objects
+        //! unit of good or service produced by sector
+        CREATE_SIMPLE_VARIABLE( mOutputUnit, std::string, "output-unit" ),
+
+        //! unit of input demanded by sector
+        CREATE_SIMPLE_VARIABLE( mInputUnit, std::string, "input-unit" ),
+
+        //! price unit of good or service produced by sector
+        CREATE_SIMPLE_VARIABLE( mPriceUnit, std::string, "price-unit" ),
+
+        //! region name
+        CREATE_SIMPLE_VARIABLE( mRegionName, std::string, "region-name" ),
+
+        //! subsector objects
+        CREATE_CONTAINER_VARIABLE( mSubsectors, std::vector<Subsector*>, NamedFilter, "subsector" ),
+        
+        //! Sector price by period updated with solution prices.
+        CREATE_ARRAY_VARIABLE( mPrice, objects::PeriodVector<double>, "price" ),
+
+        //! A map of a keyword to its keyword group
+        CREATE_SIMPLE_VARIABLE( mKeywordMap, std::map<std::string, std::string>, "keyword" ),
+        
+        //! The discrete choice model used to calculate sector shares.
+        CREATE_CONTAINER_VARIABLE( mDiscreteChoiceModel, IDiscreteChoice*, NoFilter, "discrete-choice-function" ),
+
+        //! A flag that will force the market dependency finder to create trial price/demand
+        //! markets for this sector.
+        CREATE_SIMPLE_VARIABLE( mUseTrialMarkets, bool, "use-trial-market" )
+    )
+    
     typedef std::vector<Subsector*>::iterator SubsectorIterator;
     typedef std::vector<Subsector*>::const_iterator CSubsectorIterator;
-    
-    //! Sector price in $/service. TODO: Move to supply and production sector.
-    double mBasePrice;
-    //! Sector price by period updated with solution prices.
-    std::vector<double> mPrice;
 
-    std::vector<Summary> summary; //!< summary for reporting
-    std::map<std::string,int> subSectorNameMap; //!< Map of subSector name to integer position in vector.
-    std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
+    //! Pointer to the sector's information store.
+    std::auto_ptr<IInfo> mSectorInfo;
+
+    objects::PeriodVector<Summary> summary; //!< summary for reporting
 
     typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
     object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to mSectorInfo
-
-    //! A map of a keyword to its keyword group
-    std::map<std::string, std::string> mKeywordMap;
-
-    //! The discrete choice model used to calculate sector shares.
-    std::auto_ptr<IDiscreteChoice> mDiscreteChoiceModel;
-
-    //! A flag that will force the market dependency finder to create trial price/demand
-    //! markets for this sector.
-    bool mUseTrialMarkets;
 
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
@@ -143,8 +164,6 @@ protected:
     
     virtual double getFixedOutput( const int aPeriod ) const;
     const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
-    static const std::string& getDefaultSectorType();
-    const std::string& getSectorType() const;
 
     bool outputsAllFixed( const int period ) const;
     

@@ -50,10 +50,13 @@
 #include <map>
 #include <list>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "investment/include/iinvestable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class Summary;
@@ -74,6 +77,11 @@ class IndirectEmissionsCalculator;
 class InterpolationRule;
 class IDiscreteChoice;
 
+// Need to forward declare the subclasses as well.
+class TranSubsector;
+class AgSupplySubsector;
+class SubsectorAddTechCosts;
+
 /*! 
 * \ingroup Objects
 * \brief A class which defines a single Subsector of the model.
@@ -84,7 +92,8 @@ class IDiscreteChoice;
 */
 
 class Subsector: public IInvestable,
-                 public IRoundTrippable
+                 public IRoundTrippable,
+                 private boost::noncopyable
 {
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
@@ -99,36 +108,54 @@ class Subsector: public IInvestable,
     friend class SetShareWeightVisitor;
     friend class CalibrateShareWeightVisitor;
 private:
-    static const std::string XML_NAME; //!< node name for toXML methods
     void clear();
     void clearInterpolationRules();
     //! A flag for convenience to know whether this Subsector created a market
-    //! for calibration
+    //! for calibration (SGM)
     bool doCalibration;
 protected:
-    std::string name; //!< subsector name
-    std::string regionName; //!< region name
-    std::string sectorName; //!< sector name
-    std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Subsector to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Subsector, TranSubsector, AgSupplySubsector, SubsectorAddTechCosts ),
 
-    //! Vector of technology containers by name
-    std::vector<ITechnologyContainer*> mTechContainers;
+        //! subsector name
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+
+        //! region name
+        CREATE_SIMPLE_VARIABLE( mRegionName, std::string, "region-name" ),
+
+        //! sector name
+        CREATE_SIMPLE_VARIABLE( mSectorName, std::string, "sector-name" ),
+
+        //! Subsector logit share weights
+        CREATE_ARRAY_VARIABLE( mShareWeights, objects::PeriodVector<Value>, "share-weight" ),
+
+        //! The original subsector logit share weights that were parsed
+        CREATE_ARRAY_VARIABLE( mParsedShareWeights, objects::PeriodVector<Value>, "parsed-share-weight" ),
+                    
+        //! Fuel preference elasticity
+        CREATE_ARRAY_VARIABLE( mFuelPrefElasticity, objects::PeriodVector<double>, "fuelprefElasticity" ),
+        
+        //! Vector of technology containers by name
+        CREATE_CONTAINER_VARIABLE( mTechContainers, std::vector<ITechnologyContainer*>, NamedFilter, "technology" ),
+
+        //! Interpolation rules for subsector share weight values.
+        CREATE_CONTAINER_VARIABLE( mShareWeightInterpRules, std::vector<InterpolationRule*>, NoFilter, "interpolation-rule" ),
+
+        //! Discrete choice model used for allocating technology shares
+        CREATE_CONTAINER_VARIABLE( mDiscreteChoiceModel, IDiscreteChoice*, NoFilter, "discreate-choice-function" )
+    )
+    
     // Some typedefs for technology interators
     typedef std::vector<ITechnologyContainer*>::iterator TechIterator;
     typedef std::vector<ITechnologyContainer*>::const_iterator CTechIterator;
-
-    //! Subsector logit share weights
-    objects::PeriodVector<Value> mShareWeights;
-    //! The original subsector logit share weights that were parsed
-    objects::PeriodVector<Value> mParsedShareWeights;
-    //! Interpolation rules for subsector share weight values.
-    std::vector<InterpolationRule*> mShareWeightInterpRules;
     // Some typedefs to make using interpolation rules more readable.
     typedef std::vector<InterpolationRule*>::const_iterator CInterpRuleIterator;
-    //! Discrete choice model used for allocating technology shares
-    std::auto_ptr<IDiscreteChoice> mDiscreteChoiceModel;
-
-    std::vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
+    
+    std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
 
     std::vector<double> mInvestments; //!< Investment by period.
     std::vector<double> mFixedInvestments; //!< Input fixed subsector level investment by period.

@@ -86,19 +86,11 @@ extern Scenario* scenario;
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 Sector::Sector( const string& aRegionName )
-    : regionName( aRegionName ),
-      mObjectMetaInfo(),
-      mUseTrialMarkets( false )
+    :mObjectMetaInfo()
 {
-    mSectorType = getDefaultSectorType();
-    mBaseOutput = 0;
-    mBasePrice = 0;
-
-    // resize vectors
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    summary.resize( maxper ); // object containing summaries
-    mPrice.resize( maxper );
+    mRegionName = aRegionName;
+    mDiscreteChoiceModel = 0;
+    mUseTrialMarkets = false;
 }
 
 /*! \brief Destructor
@@ -111,9 +103,11 @@ Sector::~Sector() {
 
 //! Clear member variables
 void Sector::clear(){
-    for( SubsectorIterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+    for( SubsectorIterator subSecIter = mSubsectors.begin(); subSecIter != mSubsectors.end(); subSecIter++ ) {
         delete *subSecIter;
     }
+    
+    delete mDiscreteChoiceModel;
 }
 
 /*! \brief Returns Sector name
@@ -122,24 +116,7 @@ void Sector::clear(){
 * \return Sector name as a string
 */
 const string& Sector::getName() const {
-    return name;
-}
-
-/*! \brief Returns The default sector type.
-* \author Steve Smith
-* \return Default sector type.
-*/
-const string& Sector::getDefaultSectorType() {
-    const static string DEFAULT_SECTOR_TYPE = "Energy";
-    return DEFAULT_SECTOR_TYPE;
-}
-
-/*! \brief Return the type of the sector.
-* \author Steve Smith
-* \return The sector type.
-*/
-const string& Sector::getSectorType() const {
-    return mSectorType;
+    return mName;
 }
 
 /*! \brief Set data members from XML input
@@ -153,7 +130,7 @@ void Sector::XMLParse( const DOMNode* node ){
     assert( node );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttr( node, "name" );
+    mName = XMLHelper<string>::getAttr( node, "name" );
 
     // Temporary code to warn about no longer read-in demand sector
     // perCapitaBasedString. TODO: Remove this warning.
@@ -178,7 +155,6 @@ void Sector::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == "price" ){
             XMLHelper<double>::insertValueIntoVector( curr, mPrice, modeltime );
-            mBasePrice = mPrice[ 0 ];
         }
         else if( nodeName == "output-unit" ){
             mOutputUnit = XMLHelper<string>::getValue( curr );
@@ -188,21 +164,6 @@ void Sector::XMLParse( const DOMNode* node ){
         }
         else if( nodeName == "price-unit" ){
             mPriceUnit = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "sectorType" ){
-            mSectorType = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "output" ) {
-            // Check if the output year is the base year.
-            if( XMLHelper<int>::getAttr( curr, "year" ) == modeltime->getStartYear() ){
-                mBaseOutput = XMLHelper<double>::getValue( curr );
-            }
-            else {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Output level for years other than " << modeltime->getStartYear()
-                        << " are not read in."<< endl;
-            }
         }
         else if ( nodeName == object_meta_info_type::getXMLNameStatic() ){
             /* Read in object meta info here into mObjectMetaInfo.  This
@@ -214,14 +175,11 @@ void Sector::XMLParse( const DOMNode* node ){
                 mObjectMetaInfo.push_back( metaInfo );
             }
         }
-        else if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
-            parseSingleNode( curr, moreSectorInfo, new MoreSectorInfo );
-        }
         else if( nodeName == Subsector::getXMLNameStatic() ){
-            parseContainerNode( curr, subsec, subSectorNameMap, new Subsector( regionName, name ) );
+            parseContainerNode( curr, mSubsectors, new Subsector( mRegionName, mName ) );
         }
         else if( nodeName == TranSubsector::getXMLNameStatic() ){
-            parseContainerNode( curr, subsec, subSectorNameMap, new TranSubsector( regionName, name ) );
+            parseContainerNode( curr, mSubsectors, new TranSubsector( mRegionName, mName ) );
         }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
@@ -259,10 +217,9 @@ void Sector::XMLParse( const DOMNode* node ){
 void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
 
-    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, name );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     // write the xml for the class members.
-    XMLWriteElementCheckDefault( mSectorType, "sectorType", aOut, aTabs, getDefaultSectorType() );
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
@@ -270,7 +227,6 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElementCheckDefault( mUseTrialMarkets, "use-trial-market", aOut, aTabs, false );
     XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
 
-    XMLWriteElementCheckDefault( mBaseOutput, "output", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
     if( !mKeywordMap.empty() ) {
         XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
     }
@@ -286,12 +242,8 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     // write out variables for derived classes
     toInputXMLDerived( aOut, aTabs );
 
-    if( moreSectorInfo.get() ){
-        moreSectorInfo->toInputXML( aOut, aTabs );
-    }
-
     // write out the subsector objects.
-    for( CSubsectorIterator k = subsec.begin(); k != subsec.end(); k++ ){
+    for( CSubsectorIterator k = mSubsectors.begin(); k != mSubsectors.end(); k++ ){
         ( *k )->toInputXML( aOut, aTabs );
     }
 
@@ -310,10 +262,9 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 */
 void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 
-    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, name );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     // write the xml for the class members.
-    XMLWriteElement( mSectorType, "sectorType", aOut, aTabs );
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
@@ -336,14 +287,11 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 
     toDebugXMLDerived (aPeriod, aOut, aTabs);
 
-    if( moreSectorInfo.get() ){
-        moreSectorInfo->toDebugXML( aPeriod, aOut, aTabs );
-    }
     // Write out the summary
     // summary[ aPeriod ].toDebugXML( aPeriod, aOut );
 
     // write out the subsector objects.
-    for( CSubsectorIterator j = subsec.begin(); j != subsec.end(); j++ ){
+    for( CSubsectorIterator j = mSubsectors.begin(); j != mSubsectors.end(); j++ ){
         ( *j )->toDebugXML( aPeriod, aOut, aTabs );
     }
 
@@ -363,10 +311,10 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 */
 void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAllocator )
 {
-    if( !mDiscreteChoiceModel.get() ) {
+    if( !mDiscreteChoiceModel ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "No Discrete Choice function set in " << regionName << ", " << name << endl;
+        mainLog << "No Discrete Choice function set in " << mRegionName << ", " << mName << endl;
         abort();
     }
 
@@ -374,7 +322,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
     // Do not reset if mSectorInfo contains information from derived sector classes.
     // This assumes that info from derived sector contains region info (parent).
     if( !mSectorInfo.get() ){
-        mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo, regionName + "-" + name ) );
+        mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo, mRegionName + "-" + mName ) );
     }
 
     // Set output and price unit of sector into sector info.
@@ -392,7 +340,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
     }
 
     // Complete the subsector initializations.
-    for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+    for( vector<Subsector*>::iterator subSecIter = mSubsectors.begin(); subSecIter != mSubsectors.end(); subSecIter++ ) {
         ( *subSecIter )->completeInit( mSectorInfo.get(), aLandAllocator );
     }
 
@@ -400,7 +348,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
         // Adding a self dependency will force the MarketDependencyFinder to create
         // solved trial price/demand markets for this sector.
         MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
-        depFinder->addDependency( name, regionName, name, regionName );
+        depFinder->addDependency( mName, mRegionName, mName, mRegionName );
     }
 }
 
@@ -417,8 +365,8 @@ void Sector::initCalc( NationalAccount* aNationalAccount,
                       const int aPeriod )
 {
     // do any sub-Sector initializations
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsec[ i ]->initCalc( aNationalAccount, aDemographics, moreSectorInfo.get(), aPeriod );
+    for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        mSubsectors[ i ]->initCalc( aNationalAccount, aDemographics, 0, aPeriod );
     }
 }
 
@@ -438,8 +386,8 @@ void Sector::initCalc( NationalAccount* aNationalAccount,
 bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
     bool isAllCalibrated = true;
     // Check if each subsector is calibrated.
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        isAllCalibrated &= subsec[ i ]->isAllCalibrated( period, calAccuracy, printWarnings );
+    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        isAllCalibrated &= mSubsectors[ i ]->isAllCalibrated( period, calAccuracy, printWarnings );
     }
     return isAllCalibrated;
 }
@@ -453,8 +401,8 @@ bool Sector::isAllCalibrated( const int period, double calAccuracy, const bool p
 void Sector::calcCosts( const int aPeriod ){
     // Instruct all subsectors to calculate their costs. This must be done
     // before prices can be calculated.
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsec[ i ]->calcCost( aPeriod );
+    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        mSubsectors[ i ]->calcCost( aPeriod );
     }
 }
 
@@ -469,9 +417,9 @@ void Sector::calcCosts( const int aPeriod ){
 */
 const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const {
     // Calculate unnormalized shares.
-    vector<double> subsecShares( subsec.size() );
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsecShares[ i ] = subsec[ i ]->calcShare( mDiscreteChoiceModel.get(), aGDP, aPeriod );
+    vector<double> subsecShares( mSubsectors.size() );
+    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        subsecShares[ i ] = mSubsectors[ i ]->calcShare( mDiscreteChoiceModel, aGDP, aPeriod );
     }
 
     // Normalize the shares.  After normalization they will be true shares, not log(shares).
@@ -480,17 +428,17 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
         // This should no longer happen, but it's still technically possible.
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Shares for sector " << name << " in region " << regionName
+        mainLog << "Shares for sector " << mName << " in region " << mRegionName
             << " did not normalize correctly. Sum is " << shareSum << "." << endl;
         
         // All shares are zero likely due to underflow.  Give 100% share to the
         // minimum cost subsector.
         assert( subsec.size() > 0 );
         int minPriceIndex = 0;
-        double minPrice = subsec[ minPriceIndex ]->getPrice( aGDP, aPeriod );
+        double minPrice = mSubsectors[ minPriceIndex ]->getPrice( aGDP, aPeriod );
         subsecShares[ 0 ] = 0.0;
-        for( int i = 1; i < subsec.size(); ++i ) {
-            double currPrice = subsec[ i ]->getPrice( aGDP, aPeriod );
+        for( int i = 1; i < mSubsectors.size(); ++i ) {
+            double currPrice = mSubsectors[ i ]->getPrice( aGDP, aPeriod );
             subsecShares[ i ] = 0.0;                  // zero out all subsector shares ...
             if( currPrice < minPrice ) {
                 minPrice = currPrice;
@@ -512,15 +460,15 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
 * \return Weighted sector price.
 */
 double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
-    const vector<double> subsecShares = calcSubsectorShares( aGDP, aPeriod );
+    const vector<double>& subsecShares = calcSubsectorShares( aGDP, aPeriod );
     double sectorPrice = 0;
     double sumSubsecShares = 0;
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
+    for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
         // Subsectors with no share cannot affect price. The getPrice function
         // is constant so skipping it will not avoid any side effects. What?
         if( subsecShares[ i ] > util::getSmallNumber() ){
             sumSubsecShares += subsecShares[ i ];
-            double currPrice = subsec[ i ]->getPrice( aGDP, aPeriod );
+            double currPrice = mSubsectors[ i ]->getPrice( aGDP, aPeriod );
             sectorPrice += subsecShares[ i ] * currPrice;
         }
     }
@@ -542,8 +490,8 @@ double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
 */
 bool Sector::outputsAllFixed( const int period ) const {
     assert( period >= 0 );
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        if ( !( subsec[ i ]->allOutputFixed( period ) ) ) {
+    for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        if ( !( mSubsectors[ i ]->allOutputFixed( period ) ) ) {
             return false;
         }
     }
@@ -583,10 +531,10 @@ bool Sector::outputsAllFixed( const int period ) const {
  * \return Total fixed output.
  */
 double Sector::getFixedOutput( const int aPeriod ) const {
-    const double sectorPrice = scenario->getMarketplace()->getPrice( name, regionName, aPeriod );
+    const double sectorPrice = scenario->getMarketplace()->getPrice( mName, mRegionName, aPeriod );
     double totalfixedOutput = 0;
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        totalfixedOutput += subsec[ i ]->getFixedOutput( aPeriod, sectorPrice );
+    for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        totalfixedOutput += mSubsectors[ i ]->getFixedOutput( aPeriod, sectorPrice );
     }
     return totalfixedOutput;
 }
@@ -604,8 +552,8 @@ double Sector::getFixedOutput( const int aPeriod ) const {
 */
 double Sector::getCalOutput( const int period  ) const {
     double totalCalOutput = 0;
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        totalCalOutput += subsec[ i ]->getTotalCalOutputs( period );
+    for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        totalCalOutput += mSubsectors[ i ]->getTotalCalOutputs( period );
     }
     return totalCalOutput;
 }
@@ -622,10 +570,10 @@ double Sector::getCalOutput( const int period  ) const {
 void Sector::emission( const int period ) {
     summary[ period ].clearemiss(); // clear emissions map
     summary[ period ].clearemfuelmap(); // clear emissions fuel map
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsec[ i ]->emission( period );
-        summary[ period ].updateemiss( subsec[ i ]->getemission( period )); // by gas
-        summary[ period ].updateemfuelmap( subsec[ i ]->getemfuelmap( period )); // by fuel and gas
+    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        mSubsectors[ i ]->emission( period );
+        summary[ period ].updateemiss( mSubsectors[ i ]->getemission( period )); // by gas
+        summary[ period ].updateemfuelmap( mSubsectors[ i ]->getemfuelmap( period )); // by fuel and gas
     }
 }
 
@@ -646,18 +594,18 @@ void Sector::csvOutputFile( const GDP* aGDP,
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getOutput( per );
     }
-    fileoutput3( regionName, name, " ", " ", "production", mOutputUnit, temp );
+    fileoutput3( mRegionName, mName, " ", " ", "production", mOutputUnit, temp );
 
     // Sector price
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getPrice( aGDP, per );
     }
-    fileoutput3( regionName, name, " ", " ", "price", mPriceUnit, temp);
+    fileoutput3( mRegionName, mName, " ", " ", "price", mPriceUnit, temp);
 
     // do for all subsectors in the Sector
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
+    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
         // output or demand for each technology
-        subsec[ i ]->csvOutputFile( aGDP, aIndirectEmissCalc );
+        mSubsectors[ i ]->csvOutputFile( aGDP, aIndirectEmissCalc );
     }
 }
 
@@ -718,11 +666,11 @@ void Sector::updateSummary( const list<string>& aPrimaryFuelList, const int peri
     // clears Sector fuel consumption map
     summary[ period ].clearfuelcons();
 
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
+    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
         // call update summary for subsector
-        subsec[ i ]->updateSummary( aPrimaryFuelList, period );
+        mSubsectors[ i ]->updateSummary( aPrimaryFuelList, period );
         // sum subsector fuel consumption for Sector fuel consumption
-        summary[ period ].updatefuelcons( aPrimaryFuelList, subsec[ i ]->getfuelcons( period ));
+        summary[ period ].updatefuelcons( aPrimaryFuelList, mSubsectors[ i ]->getfuelcons( period ));
     }
 }
 
@@ -732,8 +680,8 @@ void Sector::updateSummary( const list<string>& aPrimaryFuelList, const int peri
 * \param period The period is usually the base period
 */
 void Sector::updateMarketplace( const int period ) {
-    for( unsigned int i = 0; i < subsec.size(); i++ ) {
-        subsec[ i ]->updateMarketplace( period );
+    for( unsigned int i = 0; i < mSubsectors.size(); i++ ) {
+        mSubsectors[ i ]->updateMarketplace( period );
     }
 }
 
@@ -746,12 +694,12 @@ void Sector::updateMarketplace( const int period ) {
 */
 void Sector::postCalc( const int aPeriod ){
     // Finalize sectors.
-    for( SubsectorIterator subsector = subsec.begin(); subsector != subsec.end(); ++subsector ){
+    for( SubsectorIterator subsector = mSubsectors.begin(); subsector != mSubsectors.end(); ++subsector ){
         (*subsector)->postCalc( aPeriod );
     }
     // Set member price vector to solved market prices
     if( aPeriod > 0 ){
-        mPrice[ aPeriod ] = scenario->getMarketplace()->getPrice( name, regionName, aPeriod, true );
+        mPrice[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, mRegionName, aPeriod, true );
     }
 }
 
@@ -767,15 +715,15 @@ void Sector::csvSGMOutputFile( ostream& aFile, const int period ) const {
     auto_ptr<IVisitor> sectorReport( new SectorReport( aFile ) );
     accept( sectorReport.get(), period );
     sectorReport->finish();
-    for( unsigned int i = 0; i < subsec.size(); i++ ) {
-        subsec[ i ]->csvSGMOutputFile( aFile, period );
+    for( unsigned int i = 0; i < mSubsectors.size(); i++ ) {
+        mSubsectors[ i ]->csvSGMOutputFile( aFile, period );
     }
 }
 
 void Sector::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitSector( this, aPeriod );
-    for( unsigned int i = 0; i < subsec.size(); i++ ) {
-        subsec[ i ]->accept( aVisitor, aPeriod );
+    for( unsigned int i = 0; i < mSubsectors.size(); i++ ) {
+        mSubsectors[ i ]->accept( aVisitor, aPeriod );
     }
     
     aVisitor->endVisitSector( this, aPeriod );

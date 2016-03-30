@@ -716,7 +716,7 @@ void XMLDBOutputter::endVisitSubsector( const Subsector* aSubsector,
 void XMLDBOutputter::startVisitTranSubsector( const TranSubsector* aTranSubsector, const int aPeriod ) {
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        double currValue = aTranSubsector->speed[ i ];
+        double currValue = aTranSubsector->mSpeed[ i ];
         if( !objects::isEqual<double>( currValue, 0.0 ) ) {
             writeItem( "speed", "km/hr", currValue, i );
         }

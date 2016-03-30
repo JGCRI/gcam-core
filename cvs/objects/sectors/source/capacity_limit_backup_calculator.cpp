@@ -58,13 +58,22 @@ using namespace xercesc;
  * \brief Constructor.
  */
 CapacityLimitBackupCalculator::CapacityLimitBackupCalculator()
-: mCapacityLimit( 1.0 ), mFmax( 1.0 ), mC ( 5.0 ), mTau ( 0.1 )
 {
+    mCapacityLimit = 1.0;
+    mFmax = 1.0;
+    mC = 5.0;
+    mTau = 0.1;
 }
 
 // Documentation is inherited.
 CapacityLimitBackupCalculator* CapacityLimitBackupCalculator::clone() const {
-    return new CapacityLimitBackupCalculator( *this );
+    CapacityLimitBackupCalculator* clone = new CapacityLimitBackupCalculator();
+    clone->mCapacityLimit = mCapacityLimit;
+    clone->mFmax = mFmax;
+    clone->mC = mC;
+    clone->mTau = mTau;
+    
+    return clone;
 }
 
 // Documentation is inherited.

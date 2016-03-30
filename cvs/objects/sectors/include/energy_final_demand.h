@@ -44,8 +44,8 @@
  * \author Josh Lurz
  */
 
-#include <vector>
 #include <xercesc/dom/DOMNode.hpp>
+
 #include "sectors/include/afinal_demand.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -150,6 +150,7 @@ protected:
                                    const int aPeriod ) const;
     };
 
+    // TODO: get rid of this?  Would have to move AEEI out into EnergyFinalDemand.
     class FinalEnergyConsumer {
     public:
         static const std::string& getXMLNameStatic();
@@ -187,23 +188,29 @@ protected:
         objects::PeriodVector<Value> mCalFinalEnergy;
     };
     
-    //! Name of the final demand and the good it consumes.
-    std::string mName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AFinalDemand,
     
-    //! Total end-use sector service after technical change is applied.
-    std::vector<double> mServiceDemands;
+        //! Name of the final demand and the good it consumes.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        
+        //! Total end-use sector service after technical change is applied.
+        CREATE_ARRAY_VARIABLE( mServiceDemands, objects::PeriodVector<double>, "service" ),
 
-    //! Income elasticity 
-    std::vector<Value> mIncomeElasticity;
+        //! Income elasticity 
+        CREATE_ARRAY_VARIABLE( mIncomeElasticity, objects::PeriodVector<Value>, "income-elasticity" ),
 
-    //! Price elasticity.
-    std::vector<Value> mPriceElasticity;
+        //! Price elasticity.
+        CREATE_ARRAY_VARIABLE( mPriceElasticity, objects::PeriodVector<Value>, "price-elasticity" ),
 
-    //! Service demand without technical change applied.
-    std::vector<double> mPreTechChangeServiceDemand;
+        //! Service demand without technical change applied.
+        CREATE_ARRAY_VARIABLE( mPreTechChangeServiceDemand, objects::PeriodVector<double>, "service-pre-tech-change" ),
 
-    //! Per capita service for each period to which to calibrate.
-    std::vector<Value> mBaseService;
+        //! Per capita service for each period to which to calibrate.
+        CREATE_ARRAY_VARIABLE( mBaseService, objects::PeriodVector<Value>, "base-service" )
+    )
 
     //! Demand function used to calculate unscaled demand.
     std::auto_ptr<IDemandFunction> mDemandFunction;

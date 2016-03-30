@@ -89,11 +89,17 @@ protected:
 	
     const std::string& getXMLName() const;
     
-    //! Vector of read-in fixed prices.
-    std::vector<double> mFixedPrices;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SupplySector,
+    
+        //! Vector of read-in fixed prices.
+        CREATE_ARRAY_VARIABLE( mFixedPrices, objects::PeriodVector<double>, "sectorprice" ),
 
-	//! The market region into which the sector is exporting.
-	std::string mMarketName;
+        //! The market region into which the sector is exporting.
+        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market" )
+    )
 };
 
 #endif // _EXPORT_SECTOR_H_

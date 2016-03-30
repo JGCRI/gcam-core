@@ -48,6 +48,7 @@
 #include "sectors/include/more_sector_info.h"
 #include "containers/include/scenario.h"
 #include "investment/include/iinvestor.h"
+#include "containers/include/national_account.h"
 // Need a factory method.
 #include "investment/include/accelerator.h"
 #include "investment/include/market_based_investment.h"
@@ -126,6 +127,9 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
     else if( nodeName == "sectorprice" ){
         XMLHelper<double>::insertValueIntoVector( curr, mFixedPrices, scenario->getModeltime() );
     }
+    else if( nodeName == MoreSectorInfo::getXMLNameStatic() ) {
+        parseSingleNode( curr, moreSectorInfo, new MoreSectorInfo );
+    }
     else {
         return false;
     }
@@ -148,6 +152,9 @@ void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const 
     for( map<string, double>::const_iterator coef = ghgEmissCoefMap.begin(); coef != ghgEmissCoefMap.end(); ++coef ){
         XMLWriteElement( coef->second, "ghgEmissCoef", out, tabs, 0, coef->first );
     }
+    if( moreSectorInfo.get() ){
+        moreSectorInfo->toInputXML( out, tabs );
+    }
 }
 
 /* \brief Write out ProductionSector specific data to the debugging XML file.
@@ -167,6 +174,9 @@ void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, T
     XMLWriteElement( mFixedPrices[ period ], "fixed-price", out, tabs );
     for( map<string, double>::const_iterator coef = ghgEmissCoefMap.begin(); coef != ghgEmissCoefMap.end(); ++coef ){
         XMLWriteElement( coef->second, "ghgEmissCoef", out, tabs, 0, coef->first );
+    }
+    if( moreSectorInfo.get() ){
+        moreSectorInfo->toDebugXML( period, out, tabs );
     }
 }
 
@@ -189,11 +199,11 @@ void ProductionSector::completeInit( const IInfo* aRegionInfo,
     if( !mInvestor.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Creating default investment type for sector " << name << "." << endl;
+        mainLog << "Creating default investment type for sector " << mName << "." << endl;
         mInvestor.reset( new Accelerator() );
     }
 
-    mInvestor->completeInit( regionName, name );
+    mInvestor->completeInit( mRegionName, mName );
 }
 
 /*! \brief Initialize the market required by this ProductionSector.
@@ -214,7 +224,7 @@ void ProductionSector::setMarket() {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Market name for production sector was not read-in. Defaulting to region name." << endl;
-        mMarketName = regionName;
+        mMarketName = mRegionName;
     }
     
     // Create the market.
@@ -223,19 +233,19 @@ void ProductionSector::setMarket() {
 
     // name is Sector name (name of good supplied or demanded)
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
-    if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
+    if( marketplace->createMarket( mRegionName, mMarketName, mName, IMarketType::NORMAL ) ) {
         // Set the base year price which the sector reads in, into the mFixedPrices vector.
         // TODO: Separate MiniCAM sector so this is not needed.
 
-        mFixedPrices[ 0 ] = mBasePrice;
-        marketplace->setPriceVector( name, regionName, mFixedPrices );
+        mFixedPrices[ 0 ] = mPrice[ 0 ];
+        marketplace->setPriceVector( mName, mRegionName, mFixedPrices );
         for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
             // Setup the market information on the sector.
-            IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, period, true );
+            IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, period, true );
             if( !mIsFixedPrice ){
                 if( !Configuration::getInstance()->getBool( "CalibrationActive" ) ){
                     if( period >= START_PERIOD ){
-                        marketplace->setMarketToSolve( name, regionName, period );
+                        marketplace->setMarketToSolve( mName, mRegionName, period );
                     }
                 }
             }
@@ -295,7 +305,7 @@ void ProductionSector::initCalc( NationalAccount* aNationalAccount,
         if( moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE) != 0 ) {
             // back out retained earnings param
             retEarnParam = log( 1 - (totalRetEarnings/(totalProfits*moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
-                *(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", regionName, aPeriod );
+                *(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", mRegionName, aPeriod );
         }
 
         // set these params into the sector info so that they may be retrieved by the technologies
@@ -315,11 +325,14 @@ void ProductionSector::initCalc( NationalAccount* aNationalAccount,
             moreSectorInfo->getValue( MoreSectorInfo::INVEST_TAX_CREDIT_RATE ) );
     }
 
-    Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
+    // do any sub-Sector initializations
+    for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        mSubsectors[ i ]->initCalc( aNationalAccount, aDemographics, moreSectorInfo.get(), aPeriod );
+    }
 
     //*************** begin initialize the investment routine ********
     // Calculate and distribute investment to the subsectors of this sector.
-    vector<IInvestable*> investableSubsecs = InvestmentUtils::convertToInvestables( subsec );
+    vector<IInvestable*> investableSubsecs = InvestmentUtils::convertToInvestables( mSubsectors );
     // aNationalAccount is a pointer here, but initCalc needs a reference to aNationalAccount
     mInvestor->initCalc( investableSubsecs, *aNationalAccount, aDemographics, aPeriod );
     //*************** end initialize the investment routine ********
@@ -336,14 +349,14 @@ void ProductionSector::initCalc( NationalAccount* aNationalAccount,
 */
 double ProductionSector::getOutput( const int aPeriod ) const {
     double output = 0;
-    for ( unsigned int i = 0; i < subsec.size(); ++i ) {
-        double subsecOutput = subsec[ i ]->getOutput( aPeriod );
+    for ( unsigned int i = 0; i < mSubsectors.size(); ++i ) {
+        double subsecOutput = mSubsectors[ i ]->getOutput( aPeriod );
         // error check.
         if ( !util::isValidNumber( subsecOutput ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Output for subsector " << subsec[ i ]->getName() << " in Sector " << name 
-                    << " in region " << regionName <<" is not valid." << endl;
+            mainLog << "Output for subsector " << mSubsectors[ i ]->getName() << " in Sector " << mName
+                    << " in region " << mRegionName <<" is not valid." << endl;
             continue;
         }
         output += subsecOutput;
@@ -361,7 +374,7 @@ double ProductionSector::getOutput( const int aPeriod ) const {
  */
 double ProductionSector::getPrice( const GDP* aGDP,
                                    const int aPeriod ) const {
-    return scenario->getMarketplace()->getPrice( name, regionName, aPeriod, true );
+    return scenario->getMarketplace()->getPrice( mName, mRegionName, aPeriod, true );
 }
 
 /*! \brief Operate the capital of the sector.
@@ -394,7 +407,7 @@ void ProductionSector::calcInvestment( const Demographic* aDemographic,
                                        NationalAccount& aNationalAccount,
                                        const int aPeriod )
 {
-    vector<IInvestable*> investableSubsecs = InvestmentUtils::convertToInvestables( subsec );
+    vector<IInvestable*> investableSubsecs = InvestmentUtils::convertToInvestables( mSubsectors );
     // Calculate and distribute investment to the subsectors of this sector.
     mInvestor->calcAndDistributeInvestment( investableSubsecs, aNationalAccount, aDemographic,
         aPeriod );
@@ -417,7 +430,7 @@ void ProductionSector::calcInvestment( const Demographic* aDemographic,
 void ProductionSector::operateOldCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount,
                                           const int period )
 {
-    for( CSubsectorIterator currSub = subsec.begin(); currSub != subsec.end(); ++currSub ){
+    for( CSubsectorIterator currSub = mSubsectors.begin(); currSub != mSubsectors.end(); ++currSub ){
         // flag tells the subsector only to operate old capital.
         (*currSub)->operate( aNationalAccount, aDemographic, moreSectorInfo.get(), false, period );
     }
@@ -434,7 +447,7 @@ void ProductionSector::operateOldCapital( const Demographic* aDemographic, Natio
 void ProductionSector::operateNewCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount,
                                           const int aPeriod )
 {
-    for( CSubsectorIterator currSub = subsec.begin(); currSub != subsec.end(); ++currSub ){
+    for( CSubsectorIterator currSub = mSubsectors.begin(); currSub != mSubsectors.end(); ++currSub ){
         // flag tells the subsector to operate new capital.
         (*currSub)->operate( aNationalAccount, aDemographic, moreSectorInfo.get(), true, aPeriod );
     }
@@ -493,12 +506,12 @@ void ProductionSector::calcPriceReceived( const int period ){
 
     Marketplace* marketplace = scenario->getMarketplace();
     // set price received in market info
-    double priceReceived = ( marketplace->getPrice( name, regionName, period ) + 
+    double priceReceived = ( marketplace->getPrice( mName, mRegionName, period ) +
         ( moreSectorInfo->getValue( MoreSectorInfo::TRANSPORTATION_COST )
         * moreSectorInfo->getValue( MoreSectorInfo::TRAN_COST_MULT ) ) )
         / ( 1 + moreSectorInfo->getValue( MoreSectorInfo::IND_BUS_TAX_RATE ) );
     // set price received in market info
-    FunctionUtils::setPriceReceived( regionName, name, period, priceReceived );
+    FunctionUtils::setPriceReceived( mRegionName, mName, period, priceReceived );
 }
 
 /*! \brief Update an aVisitor for reporting.

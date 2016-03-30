@@ -65,7 +65,6 @@ using namespace std;
 using namespace xercesc;
 
 extern Scenario* scenario;
-const string TranSubsector::XML_NAME = "tranSubsector";
 
 /*  Begin TranSubsector Method Definitions */
 
@@ -78,15 +77,10 @@ const string TranSubsector::XML_NAME = "tranSubsector";
 * \param aUnit The sector output unit.
 * \author Josh Lurz, Sonny Kim
 */
-TranSubsector::TranSubsector( const string& regionName, const string& sectorName ): Subsector( regionName, sectorName ),
-mTimeValueMult( 1.0 )
+TranSubsector::TranSubsector( const string& regionName, const string& sectorName ): Subsector( regionName, sectorName )
 {
-    // resize vectors
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    mPopulation.resize( maxper ); // copy of population since demog object not available
-    popDenseElasticity.resize( maxper );
-    popDensity = 1; // initialize to 1 for now
+    mTimeValueMult.assign( mTimeValueMult.size(), 1.0 );
+    mPopDensity = 1; // initialize to 1 for now
     mAddTimeValue = false; // initialize to false
 }
 
@@ -99,7 +93,7 @@ mTimeValueMult( 1.0 )
 * \return The constant XML_NAME.
 */
 const std::string& TranSubsector::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -112,6 +106,7 @@ const std::string& TranSubsector::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& TranSubsector::getXMLNameStatic() {
+    static const string XML_NAME = "tranSubsector";
     return XML_NAME;
 }
 
@@ -128,10 +123,10 @@ bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode*
         mAddTimeValue = XMLHelper<bool>::getValue( curr );
     }
     else if( nodeName == "speed" ){
-        XMLHelper<Value>::insertValueIntoVector( curr, speed, modeltime );
+        XMLHelper<Value>::insertValueIntoVector( curr, mSpeed, modeltime );
     }
     else if( nodeName == "popDenseElasticity" ){
-        XMLHelper<double>::insertValueIntoVector( curr, popDenseElasticity, modeltime );
+        XMLHelper<double>::insertValueIntoVector( curr, mPopDenseElasticity, modeltime );
     }
     else if( nodeName == "time-value-multiplier" ){
         XMLHelper<Value>::insertValueIntoVector( curr, mTimeValueMult, modeltime );
@@ -152,9 +147,8 @@ bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( mAddTimeValue, "addTimeValue", out, tabs, false );
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( speed, "speed", out, tabs, modeltime, Value( 0.0 ) );
-    XMLWriteVector( popDenseElasticity, "popDenseElasticity", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( mServiceOutputs, "serviceoutput", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mSpeed, "speed", out, tabs, modeltime, Value( 0.0 ) );
+    XMLWriteVector( mPopDenseElasticity, "popDenseElasticity", out, tabs, modeltime, 0.0 );
     XMLWriteVector( mTimeValueMult, "time-value-multiplier", out, tabs, modeltime, Value( 1.0 ) );
 }
 
@@ -166,9 +160,9 @@ void TranSubsector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 */
 void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( mAddTimeValue, "addTimeValue", out, tabs );
-    XMLWriteElement( popDenseElasticity[ period ], "popDenseElasticity", out, tabs );
-    XMLWriteElement( popDensity, "popDensity", out, tabs );
-    XMLWriteElement( speed[ period ], "speed", out, tabs );
+    XMLWriteElement( mPopDenseElasticity[ period ], "popDenseElasticity", out, tabs );
+    XMLWriteElement( mPopDensity, "popDensity", out, tabs );
+    XMLWriteElement( mSpeed[ period ], "speed", out, tabs );
     XMLWriteElement( mTimeValueMult[ period ], "time-value-multiplier", out, tabs );
     
     // Write out useful debugging info
@@ -186,7 +180,7 @@ void TranSubsector::completeInit( const IInfo* aSectorInfo,
     // Only call base class completeInit.
     Subsector::completeInit( aSectorInfo, aLandAllocator );
 
-    SectorUtils::fillMissingPeriodVectorInterpolated( speed );
+    SectorUtils::fillMissingPeriodVectorInterpolated( mSpeed );
     SectorUtils::fillMissingPeriodVectorInterpolated( mTimeValueMult );
 }
 
@@ -209,12 +203,12 @@ void TranSubsector::initCalc( NationalAccount* aNationalAccount,
 							 const int aPeriod )
 {
     // Check if illegal values have been read in
-    if ( speed[ aPeriod ] <= 0 ) {
-        speed[ aPeriod ] = 1;
+    if ( mSpeed[ aPeriod ] <= 0 ) {
+        mSpeed[ aPeriod ] = 1;
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Speed was zero or negative in subsector: " << name << " in region " 
-            << regionName << ". Reset to 1." << endl;
+        mainLog << "Speed was zero or negative in subsector: " << mName << " in region "
+            << mRegionName << ". Reset to 1." << endl;
     }
     // time in transit
     // initialize vector to hold population (thousands)
@@ -255,7 +249,7 @@ double TranSubsector::getTimeValue( const GDP* aGDP, const int aPeriod ) const {
     // into dollars (instead of 1000's of $'s) GDP value at this point in the
     // code does not include energy feedback calculation for this year, so is,
     // therefore, approximate
-    return aGDP->getApproxGDPperCap( aPeriod ) * 1000 * mTimeValueMult[ aPeriod ] / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / speed[ aPeriod ];
+    return aGDP->getApproxGDPperCap( aPeriod ) * 1000 * mTimeValueMult[ aPeriod ] / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / mSpeed[ aPeriod ];
 }
 
 /*! \brief Calculate the generalized service price for the mode that includes time value.
@@ -286,7 +280,7 @@ double TranSubsector::getTimeInTransit( const int aPeriod ) const {
     const double POP_MILE_CONV = 1000;
     // calculate time in transit per day for each person using total population
     return getOutput( aPeriod ) / mPopulation[ aPeriod ] * POP_MILE_CONV  
-        / speed[ aPeriod ] / DAYS_PER_YEAR ;
+        / mSpeed[ aPeriod ] / DAYS_PER_YEAR ;
 }
 
 /*! \brief Get service per day per capita for the period.
@@ -334,12 +328,12 @@ void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
     for( int per = 0; per < maxper; ++per ){
         temp[ per ] = getOutput( per );
     }
-    dboutput4(regionName,"Secondary Energy Prod",sectorName,name,outputUnit,temp);
+    dboutput4(mRegionName,"Secondary Energy Prod",mSectorName,mName,outputUnit,temp);
     // Subsector price
     for( int m = 0; m < maxper; m++ ){
         temp[ m ] = getPrice( aGDP, m );
     }
-    dboutput4(regionName,"Price",sectorName,name,priceUnit,temp);
+    dboutput4(mRegionName,"Price",mSectorName,mName,priceUnit,temp);
     
     // do for all technologies in the Subsector
     for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
@@ -350,7 +344,7 @@ void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
             temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m );
         }
 
-        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-new-investment", 
+        dboutput4( mRegionName, "Secondary Energy Prod", mSectorName + "_tech-new-investment",
             mTechContainers[i]->getName(), outputUnit, temp );
 		
         // Output for all vintages.
@@ -361,12 +355,12 @@ void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
                 temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m );
             }
         }
-        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-total", mTechContainers[i]->getName(), outputUnit, temp );
+        dboutput4( mRegionName, "Secondary Energy Prod", mSectorName + "_tech-total", mTechContainers[i]->getName(), outputUnit, temp );
         // Transportation technology cost already in 1990 $.
         for ( int m=0;m<maxper;m++) {
             temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getCost( m );
         }
-        dboutput4( regionName, "Price", sectorName + "_tech", mTechContainers[i]->getName(), priceUnit, temp );
+        dboutput4( mRegionName, "Price", mSectorName + "_tech", mTechContainers[i]->getName(), priceUnit, temp );
     }
 }
 
@@ -392,14 +386,14 @@ void TranSubsector::MCoutputAllSectors( const GDP* aGDP,
     for( int per = 0; per < maxPeriod; ++per ){
         temp [ per ] = getTimeValue( aGDP, per );
     }
-    dboutput4( regionName, "General", "TimeValue", sectorName + name, priceUnit, temp );
+    dboutput4( mRegionName, "General", "TimeValue", mSectorName + mName, priceUnit, temp );
     // Subsector speed
-    dboutput4( regionName, "General", "Speed", sectorName + name, "Miles/hr", convertToVector( speed ) );
+    dboutput4( mRegionName, "General", "Speed", mSectorName + mName, "Miles/hr", convertToVector( mSpeed ) );
     // time in transit (hours/day/person)
     for( int per = 0; per < maxPeriod; ++per ){
         temp[ per ] = getTimeInTransit( per );
     }
-    dboutput4( regionName, "End-Use Service", sectorName+" TimeInTransit", name, "hrs/day/per", temp);
+    dboutput4( mRegionName, "End-Use Service", mSectorName+" TimeInTransit", mName, "hrs/day/per", temp);
     // service per day per person (service/day/person)
     for( int per = 0; per < maxPeriod; ++per ){
         temp[ per ] = getServicePerCapita( per );

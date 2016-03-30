@@ -86,7 +86,7 @@ bool PassThroughSector::XMLDerivedClassParse( const string& aNodeName, const DOM
 
 void PassThroughSector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mMarginalRevenueSector, "marginal-revenue-sector", aOut, aTabs );
-    XMLWriteElementCheckDefault( mMarginalRevenueMarket, "marginal-revenue-market", aOut, aTabs, regionName );
+    XMLWriteElementCheckDefault( mMarginalRevenueMarket, "marginal-revenue-market", aOut, aTabs, mRegionName );
 }
 
 void PassThroughSector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
@@ -101,30 +101,30 @@ void PassThroughSector::completeInit( const IInfo* aRegionInfo,
     if( mMarginalRevenueSector.empty() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "No marginal revenue sector set for pass-through sector " << name << " in " << regionName << "." << endl;
+        mainLog << "No marginal revenue sector set for pass-through sector " << mName << " in " << mRegionName << "." << endl;
         // TODO: allow this or just quit?
-        mMarginalRevenueSector = name;
+        mMarginalRevenueSector = mName;
     }
 
     // The default market for the marginal revenue sector is just the same region
     // as this sector.
     if( mMarginalRevenueMarket.empty() ) {
-        mMarginalRevenueMarket = regionName;
+        mMarginalRevenueMarket = mRegionName;
     }
 
     // Add dependencies for a calc item to gather up the fixed demands from this
     // pass through sector and make that available for the downstream sector
-    const string fixedDemandActivityName = name + "-fixed-output";
+    const string fixedDemandActivityName = mName + "-fixed-output";
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
 
     // Ensure we gather the fixed demands after we calculate prices / before we
     // set supplies
-    depFinder->addDependency( fixedDemandActivityName, regionName, name, regionName );
-    depFinder->addDependency( fixedDemandActivityName, regionName, mMarginalRevenueSector, mMarginalRevenueMarket );
+    depFinder->addDependency( fixedDemandActivityName, mRegionName, mName, mRegionName );
+    depFinder->addDependency( fixedDemandActivityName, mRegionName, mMarginalRevenueSector, mMarginalRevenueMarket );
 
     // Set the activity to create the call back.
     // Note the market dependency finder will manage the newly allocated memory.
-    depFinder->resolveActivityToDependency( regionName, fixedDemandActivityName,
+    depFinder->resolveActivityToDependency( mRegionName, fixedDemandActivityName,
                                             new CalcFixedOutputActivity( this ) );
 }
 
@@ -139,7 +139,7 @@ double PassThroughSector::getFixedOutput( const int aPeriod ) const {
     const double marginalRevenue = scenario->getMarketplace()->getPrice( mMarginalRevenueSector,
         mMarginalRevenueMarket, aPeriod );
     double totalfixedOutput = 0;
-    for( CSubsectorIterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
+    for( CSubsectorIterator subSecIter = mSubsectors.begin(); subSecIter != mSubsectors.end(); subSecIter++ ) {
         totalfixedOutput += (*subSecIter)->getFixedOutput( aPeriod, marginalRevenue );
     }
     return totalfixedOutput;
@@ -154,7 +154,7 @@ void PassThroughSector::setFixedDemandsToMarket( const int aPeriod ) const {
     double fixedOutput = getFixedOutput( aPeriod );
 
     Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, aPeriod, true );
+    IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, aPeriod, true );
     marketInfo->setDouble( "fixed-output", fixedOutput );
 }
 
@@ -176,6 +176,6 @@ void CalcFixedOutputActivity::setStale() {
 }
 
 string CalcFixedOutputActivity::getDescription() const {
-    return mSector->regionName + " " + mSector->getName() + "-fixed-output";
+    return mSector->mRegionName + " " + mSector->getName() + "-fixed-output";
 }
 

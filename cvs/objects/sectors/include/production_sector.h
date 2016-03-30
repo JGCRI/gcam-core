@@ -52,6 +52,7 @@
 class IInvestor;
 class Demographic;
 class NationalAccount;
+class MoreSectorInfo;
 class GDP;
 class IInfo;
 
@@ -157,6 +158,8 @@ private:
     //! in its various technologies. Different types of investment objects may
     //! be read in to change the investment behavior.
     std::auto_ptr<IInvestor> mInvestor;
+    
+    std::auto_ptr<MoreSectorInfo> moreSectorInfo; //! Additional sector information needed below sector
     
     void calcInvestment( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int aPeriod );
     void operateOldCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int aPeriod );

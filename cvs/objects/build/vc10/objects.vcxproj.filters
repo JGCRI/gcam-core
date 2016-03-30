@@ -347,9 +347,6 @@
     <ClCompile Include="..\..\sectors\source\supply_sector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\tran_sector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
@@ -935,9 +932,6 @@
     <ClCompile Include="..\..\sectors\source\ag_supply_subsector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\non_energy_final_demand.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
@@ -1292,9 +1286,6 @@
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\supply_sector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\tran_sector.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\tran_subsector.h">
@@ -2000,9 +1991,6 @@
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\ag_supply_subsector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\non_energy_final_demand.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h">

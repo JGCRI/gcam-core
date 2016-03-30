@@ -168,7 +168,7 @@ void SGMGenTable::endVisitSector( const Sector* aSector, const int aPeriod ){
 void SGMGenTable::startVisitProductionSector( const ProductionSector* aProductionSector, const int aPeriod ) {
     if( mName == "PRICE" ) {
         addToType( mModeltime->getper_to_yr( aPeriod ), aProductionSector->getName(),
-            scenario->getMarketplace()->getPrice( aProductionSector->getName(), aProductionSector->regionName, aPeriod ) );
+            scenario->getMarketplace()->getPrice( aProductionSector->getName(), aProductionSector->mRegionName, aPeriod ) );
     }
 }
 

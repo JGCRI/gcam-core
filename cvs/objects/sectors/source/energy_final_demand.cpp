@@ -65,17 +65,8 @@ extern Scenario* scenario;
 /*! \brief Constructor.
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-EnergyFinalDemand::EnergyFinalDemand():
-mBaseService( scenario->getModeltime()->getmaxper() )
+EnergyFinalDemand::EnergyFinalDemand()
 {
-    // TODO: Use in place construction.
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-
-    mIncomeElasticity.resize( maxper );
-    mPriceElasticity.resize( maxper );
-    mServiceDemands.resize( maxper );
-    mPreTechChangeServiceDemand.resize( maxper );
 }
 
 /*! \brief Destructor.
@@ -459,7 +450,7 @@ void EnergyFinalDemand::csvOutputFile( const string& aRegionName ) const {
     // the function writes all years
     // total Sector output
     fileoutput3( aRegionName, mName, " ", " ", "demand", "SerUnit",
-                 mServiceDemands );
+                 convertToVector( mServiceDemands ) );
 }
 
 //! Write MiniCAM style demand sector output to database.
@@ -474,7 +465,7 @@ void EnergyFinalDemand::dbOutput( const string& aRegionName ) const {
     
     // total sector output
     dboutput4( aRegionName,"End-Use Service","by Sector", mName, "Ser Unit",
-               mServiceDemands );
+               convertToVector( mServiceDemands ) );
     
     temp.clear();
     for( int i = 0; i < maxper; ++i ) {

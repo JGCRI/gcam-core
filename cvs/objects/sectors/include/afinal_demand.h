@@ -44,14 +44,21 @@
  * \author Josh Lurz
  */
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/iparsable.h"
+#include "util/base/include/data_definition_util.h"
+
 // Forward declarations
 class GDP;
 class Demographic;
 class IInfo;
 class Tabs;
+
+// Need to forward declare the subclasses as well.
+class EnergyFinalDemand;
 
 /*! 
  * \ingroup Objects
@@ -63,7 +70,8 @@ class Tabs;
 
 class AFinalDemand: public IParsable,
                     public IRoundTrippable,
-                    public IVisitable
+                    public IVisitable,
+                    private boost::noncopyable
 {
 public:
     /*!
@@ -152,6 +160,15 @@ public:
     // Documentation is inherited.
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of AFinalDemand to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( AFinalDemand, EnergyFinalDemand )
+    )
 };
 
 // Inline function definitions.

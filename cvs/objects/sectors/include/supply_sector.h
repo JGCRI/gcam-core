@@ -81,26 +81,6 @@ public:
     virtual void dbOutput( const GDP* aGDP,
                            const IndirectEmissionsCalculator* aIndEmissCalc ) const;
 protected:
-    
-    /*!
-     * \brief Class responsible for setting final energy into the calibration
-     *        market.
-     */
-    class FinalEnergySupplier {
-    public:
-        FinalEnergySupplier( const std::string& aSectorName );
-
-        void setFinalEnergy( const std::string& aRegionName,
-                             const double aFinalEnergy,
-                             const int aPeriod );
-    private:
-        //! The cached name of the TFE market.
-        std::string mTFEMarketName;
-        
-        // State value necessary to use marketplace::addToDemand
-        double mLastTFEValue;
-    };
-
     virtual double getEnergyInput( const int aPeriod ) const;
     virtual double getOutput( const int aPeriod ) const;
     virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
@@ -112,15 +92,14 @@ protected:
 
     virtual const std::string& getXMLName() const;
 
-    //! The object responsible for setting final energy supply into the
-    //! calibration market.
-    std::auto_ptr<FinalEnergySupplier> mFinalEnergySupplier;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Sector,
 
-    //! Trial supply market prices
-    std::vector<double> mPriceTrialSupplyMarket;
-
-private:
-    const static std::string XML_NAME; //!< node name for toXML methods 
+        //! Trial supply market prices
+        CREATE_ARRAY_VARIABLE( mPriceTrialSupplyMarket, objects::PeriodVector<double>, "price-trial-supply" )
+    )
 };
 
 #endif // _SUPPLY_SECTOR_H_

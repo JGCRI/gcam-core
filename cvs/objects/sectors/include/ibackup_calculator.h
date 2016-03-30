@@ -44,10 +44,18 @@
  * \author Marshall Wise, Josh Lurz
  */
 
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/istandard_component.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declaration
 class IInfo;
+
+// Need to forward declare the subclasses as well.
+class WindBackupCalculator;
+class CapacityLimitBackupCalculator;
+class CSPBackupCalculator;
 
 /*!
  * \ingroup Objects
@@ -60,7 +68,7 @@ class IInfo;
  *          sectors that produce electricity.
  * \author Josh Lurz
  */
-class IBackupCalculator : public IParsedComponent {
+class IBackupCalculator : public IParsedComponent, private boost::noncopyable {
 public:
     // Clone operator must be declared explicitly even though it is inherited
     // from IStandardComponent so that the return type can be changed. Since
@@ -122,6 +130,16 @@ public:
                                              const double aReserveMargin,
                                              const double aAverageGridCapacityFactor,
                                              const int aPeriod ) const = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Sector to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IBackupCalculator, WindBackupCalculator, CapacityLimitBackupCalculator,
+                                CSPBackupCalculator )
+    )
 };
 
 #endif // _IBACKUP_CALCULATOR_H_

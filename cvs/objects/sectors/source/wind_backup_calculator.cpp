@@ -58,7 +58,8 @@ WindBackupCalculator::WindBackupCalculator()
 {}
 
 WindBackupCalculator* WindBackupCalculator::clone() const {
-    return new WindBackupCalculator( *this );
+    // no data members
+    return new WindBackupCalculator();
 }
 
 bool WindBackupCalculator::isSameType( const string& aType ) const {

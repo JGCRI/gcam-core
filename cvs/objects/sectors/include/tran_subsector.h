@@ -45,7 +45,6 @@
 * \author Marshall Wise, Sonny Kim, Josh Lurz
 */
 
-#include <vector>
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
@@ -86,13 +85,33 @@ public:
                             const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    objects::PeriodVector<Value> speed; // Speed of Mode in Miles/hour
-    std::vector<double> mPopulation; // copy of population from demographics
-    std::vector<double> popDenseElasticity; // Population Density Elasticity of mode
-    std::vector<double> mServiceOutputs; //!< Service output by period.
-    double popDensity; // population density per land area
-    //! Time value multiplier
-    objects::PeriodVector<Value> mTimeValueMult;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Subsector,
+
+        //! Speed of Mode in Miles/hour
+        CREATE_ARRAY_VARIABLE( mSpeed, objects::PeriodVector<Value>, "speed" ),
+
+        //! copy of population from demographics
+        CREATE_ARRAY_VARIABLE( mPopulation, objects::PeriodVector<double>, "population" ),
+
+        //! Population Density Elasticity of mode
+        CREATE_ARRAY_VARIABLE( mPopDenseElasticity, objects::PeriodVector<double>, "popDenseElasticity" ),
+
+        //! population density per land area
+        CREATE_SIMPLE_VARIABLE( mPopDensity, double, "popDensity" ),
+
+        //! Time value multiplier
+        CREATE_ARRAY_VARIABLE( mTimeValueMult, objects::PeriodVector<Value>, "time-value-multiplier" ),
+
+        //! add value of time to price term
+        CREATE_SIMPLE_VARIABLE( mAddTimeValue, bool, "addTimeValue" )
+    )
+    
+    //! Save time value for debugging purposes.
+    mutable double mTimeValue;
 
     virtual void MCoutputSupplySector( const GDP* aGDP ) const; 
     virtual void MCoutputAllSectors( const GDP* aGDP,
@@ -108,12 +127,6 @@ protected:
     double getTimeInTransit( const int aPeriod ) const;
     double getServicePerCapita( const int aPeriod ) const;
     double getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) const;
-private:
-    static const std::string XML_NAME; //!< XML name of this object.
-    bool mAddTimeValue;  //!< add value of time to price term
-
-    //! Save time value for debugging purposes. 
-    mutable double mTimeValue;
 };
 
 

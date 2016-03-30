@@ -58,11 +58,9 @@ extern Scenario* scenario;
 /*! \brief Default constructor.
 * \author James Blackwood
 */
-AgSupplySector::AgSupplySector( std::string& regionName ): SupplySector( regionName ),
-   mCalPrice( -1.0 )
-   
+AgSupplySector::AgSupplySector( std::string& regionName ): SupplySector( regionName )
 {
-	mSectorType = "Agriculture"; //Default sector type for ag production sectors 
+    mCalPrice = -1.0;
 }
 
 //! Default destructor
@@ -76,7 +74,7 @@ AgSupplySector::~AgSupplySector( ) {
 */
 bool AgSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){
     if ( nodeName == AgSupplySubsector::getXMLNameStatic() ) {
-        parseContainerNode( curr, subsec, subSectorNameMap, new AgSupplySubsector( regionName, name ) );
+        parseContainerNode( curr, mSubsectors, new AgSupplySubsector( mRegionName, mName ) );
     }
     else if ( nodeName == "calPrice" ) {
         mCalPrice = XMLHelper<double>::getValue( curr );
@@ -106,7 +104,7 @@ void AgSupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
 void AgSupplySector::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     SupplySector::toDebugXMLDerived( period, out, tabs );
-    XMLWriteElement( scenario->getMarketplace()->getPrice( name, regionName, 1, true ), "calPrice", out, tabs );
+    XMLWriteElement( scenario->getMarketplace()->getPrice( mName, mRegionName, 1, true ), "calPrice", out, tabs );
     XMLWriteElement( mMarketName, "market", out, tabs );
 }
 
@@ -125,8 +123,8 @@ void AgSupplySector::completeInit( const IInfo* aRegionInfo,
     if( mMarketName.empty() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Market name for sector " << name << " was not set. Defaulting to regional market." << endl;
-        mMarketName = regionName;
+        mainLog << "Market name for sector " << mName << " was not set. Defaulting to regional market." << endl;
+        mMarketName = mRegionName;
     }
     SupplySector::completeInit( aRegionInfo, aLandAllocator );
 }
@@ -139,7 +137,7 @@ void AgSupplySector::completeInit( const IInfo* aRegionInfo,
 * \return The sector price.
 */
 double AgSupplySector::getPrice( const GDP* aGDP, const int aPeriod ) const {
-    return scenario->getMarketplace()->getPrice( name, regionName, aPeriod, true );
+    return scenario->getMarketplace()->getPrice( mName, mRegionName, aPeriod, true );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -173,9 +171,9 @@ void AgSupplySector::supply( const GDP* aGDP, const int aPeriod ) {
     // supply and demand will be made equal by the market.
 	/* for agSupplySectors, output is summed from technology output rather than shared
 	  like it is for default GCAM sector */
-    for( unsigned int i = 0; i < subsec.size(); ++i ){
+    for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
         // set subsector output from Sector demand
-        subsec[ i ]->setOutput( 1, 1, aGDP, aPeriod );
+        mSubsectors[ i ]->setOutput( 1, 1, aGDP, aPeriod );
     }  
 }
 
@@ -185,24 +183,24 @@ void AgSupplySector::setMarket() {
     const Modeltime* modeltime = scenario->getModeltime();
 
     /* Since agSupplySectors are solved, they can be in multiregional markets */
-    if ( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
+    if ( marketplace->createMarket( mRegionName, mMarketName, mName, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
-        IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, 0, true );
+        IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, 0, true );
         marketInfo->setString( "price-unit", mPriceUnit );
         marketInfo->setString( "output-unit", mOutputUnit );
 
         // Set market prices to initial price vector
-        marketplace->setPriceVector( name, regionName, mPrice );
+        marketplace->setPriceVector( mName, mRegionName, convertToVector( mPrice ) );
         // Reset base period price to mCalPrice
-        marketplace->setPrice( name, regionName, mCalPrice, 0, true );
+        marketplace->setPrice( mName, mRegionName, mCalPrice, 0, true );
 
         for( int per = 1; per < modeltime->getmaxper(); ++per ){
-            marketplace->setMarketToSolve( name, regionName, per );
+            marketplace->setMarketToSolve( mName, mRegionName, per );
         }
         // Don't set calPrice or indicate the market is fully calibrated if mCalPrice is not valid.
         if ( mCalPrice > 0 ) {
             for( int per = 0; per < modeltime->getmaxper(); ++per ){
-                IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, per, true );
+                IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, per, true );
                 marketInfo->setDouble( "calPrice", mCalPrice );
                 marketInfo->setBoolean( "fully-calibrated", true );
             }

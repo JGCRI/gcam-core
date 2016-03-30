@@ -101,19 +101,27 @@ protected:
                                   const double aAverageGridCapacityFactor,
                                   const int aPeriod ) const;
 
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IBackupCalculator,
+
+        // Parameters hard-coded in constructor for first step
+        //! Maximum Backup Fraction is the maximum backup fraction required.
+        CREATE_SIMPLE_VARIABLE( mMaxBackupFraction, double, "max-backup-fraction" ),
+
+         //! Fraction of electric sector that is intermediate and peak
+        CREATE_SIMPLE_VARIABLE( mMaxSectorLoadServed, double, "max-sector-load-served" ),
+
+        //! Backup function exponent parameter
+        CREATE_SIMPLE_VARIABLE( mBackupExponent, double, "backup-exponent" ),
+
+        //! Fraction of year backup mode operates (during no-sun days)
+        CREATE_SIMPLE_VARIABLE( mNoSunDayBackup, double, "no-sun-days" )
+    )
     
-    // Parameters hard-coded in constructor for first step
-    //! Maximum Backup Fraction is the maximum backup fraction required.
-    double mMaxBackupFraction;
-     //! Fraction of electric sector that is intermediate and peak
-    double mMaxSectorLoadServed;
-    //! Backup function exponent parameter
-    double mBackupExponent;
-    //! Fraction of year backup mode operates (during no-sun days)
-    double mNoSunDayBackup;
     //! Backup fraction -- cached for reporting
     mutable double mBackupFraction;
-
 };
 
 #endif // _CSP_BACKUP_CALCULATOR_H_
