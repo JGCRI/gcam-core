@@ -55,6 +55,7 @@
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 // For LandUsageType enum.
 #include "land_allocator/include/iland_allocator.h"

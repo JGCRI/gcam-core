@@ -48,14 +48,21 @@
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
+
+// Need to forward declare the subclasses as well.
+class LinkedGHGPolicy;
 
 /*! 
 * \ingroup Objects
 * \brief Class which defines greenhouse gas mitigation policy. 
 * \author Sonny Kim
 */
-class GHGPolicy: public IRoundTrippable {
+class GHGPolicy: public IRoundTrippable, private boost::noncopyable {
 public:
     GHGPolicy();
     GHGPolicy( const std::string aName,
@@ -74,11 +81,27 @@ public:
     virtual bool isApplicable( const std::string& aRegion ) const;
     virtual void setConstraint( const std::vector<double>& aConstraint );
 protected:
-    std::string mName; //!< GHG name
-    std::string mMarket; //!< Name of the market
-    bool isFixedTax; //!< Boolean to use fixed tax or constraint
-    std::vector<double> mConstraint; //!< Emissions constraint by year(tgC or MTC)
-    std::vector<double> mFixedTax; //!< Fixed tax on Emissions by year($/TC)
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of GHGPolicy to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( GHGPolicy, LinkedGHGPolicy ),
+
+        //! GHG name
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+                
+        //! Name of the market
+        CREATE_SIMPLE_VARIABLE( mMarket, std::string, "market" ),
+                    
+        //! Emissions constraint by year(tgC or MTC)
+        CREATE_ARRAY_VARIABLE( mConstraint, objects::PeriodVector<double>, "constraint" ),
+                    
+        //! Fixed tax on Emissions by year($/TC)
+        CREATE_ARRAY_VARIABLE( mFixedTax, objects::PeriodVector<double>, "fixedTax" )
+    )
+    
+    void copy( const GHGPolicy& aOther );
 };
 
 #endif // _POLICY_GHG_H_

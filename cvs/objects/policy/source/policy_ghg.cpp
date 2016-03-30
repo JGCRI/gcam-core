@@ -44,6 +44,7 @@
 #include <cassert>
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
@@ -61,45 +62,52 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 /*! \brief Default constructor. */
-GHGPolicy::GHGPolicy():
-    isFixedTax( false ),
-    mConstraint( scenario->getModeltime()->getmaxper(), -1 ),
-    mFixedTax( scenario->getModeltime()->getmaxper(), -1 )
+GHGPolicy::GHGPolicy()
 {
+    mConstraint.assign( mConstraint.size(), -1 );
+    mFixedTax.assign( mFixedTax.size(), -1 );
 }
 
 /*!
 * \brief Constructor which initializes a GHG policy without setting a tax or
 *        constraint.
 */
-GHGPolicy::GHGPolicy( const string aName, const string aMarket ):
-    mName( aName ), 
-    mMarket( aMarket ),
-    isFixedTax( false ),
-    mConstraint( scenario->getModeltime()->getmaxper(), -1 ),
-    mFixedTax( scenario->getModeltime()->getmaxper(), -1 )
+GHGPolicy::GHGPolicy( const string aName, const string aMarket )
 {
+    mName = aName;
+    mMarket = aMarket;
+    mConstraint.assign( mConstraint.size(), -1 );
+    mFixedTax.assign( mFixedTax.size(), -1 );
 }
 
 /*! \brief Constructor used when explicitly constructing a fixed tax.
 */
 GHGPolicy::GHGPolicy( const string aName, const string aMarket,
-                      const vector<double>& aTaxes ):
-    mName( aName ), 
-    mMarket( aMarket ),
-    isFixedTax( true ),
-    mConstraint( scenario->getModeltime()->getmaxper(), -1 ),
-    mFixedTax( aTaxes )
+                      const vector<double>& aTaxes )
 {
     // Ensure that the taxes vector passed in is the right size.
     assert( aTaxes.size() == mConstraint.size() );
+    
+    mName = aName;
+    mMarket = aMarket;
+    mConstraint.assign( mConstraint.size(), -1 );
+    std::copy( aTaxes.begin(), aTaxes.end(), mFixedTax.begin() );
 }
 
 /*! \brief Create a copy of the GHG policy.
 * \return An exact copy of the policy.
 */
 GHGPolicy* GHGPolicy::clone() const {
-    return new GHGPolicy( *this );
+    GHGPolicy* clone = new GHGPolicy();
+    clone->copy( *this );
+    return clone;
+}
+
+void GHGPolicy::copy( const GHGPolicy& aOther ) {
+    mName = aOther.mName;
+    mMarket = aOther.mMarket;
+    std::copy( aOther.mConstraint.begin(), aOther.mConstraint.end(), mConstraint.begin() );
+    std::copy( aOther.mFixedTax.begin(), aOther.mFixedTax.end(), mFixedTax.begin() );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -156,9 +164,6 @@ void GHGPolicy::XMLParse( const DOMNode* node ){
         else if( nodeName == "market" ){
             mMarket = XMLHelper<string>::getValue( curr ); // should be only one market
         }
-        else if( nodeName == "isFixedTax" ) {
-            isFixedTax = XMLHelper<bool>::getValue( curr );
-        }
         else if( nodeName == "constraint" ){
             XMLHelper<double>::insertValueIntoVector( curr, mConstraint, modeltime );
         }
@@ -178,7 +183,6 @@ void GHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
     XMLWriteElement( mMarket, "market", out, tabs );
-    XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );
     
     const Modeltime* modeltime = scenario->getModeltime();    
     XMLWriteVector( mConstraint, "constraint", out, tabs, modeltime, -1.0 );
@@ -195,9 +199,6 @@ void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     // write out the market string.
     XMLWriteElement( mMarket, "market", out, tabs );
-
-    // Write whether we are a fixed tax policy.
-    XMLWriteElement( isFixedTax, "isFixedTax", out, tabs );
 
     // Write the mConstraint for the current year
     XMLWriteElement( mConstraint[ period ], "constraint", out, tabs );
@@ -297,6 +298,5 @@ bool GHGPolicy::isApplicable( const string& aRegion ) const {
 * \param aConstraint new mConstraint vector
 */
 void GHGPolicy::setConstraint( const vector<double>& aConstraint ){
-    isFixedTax = false;
-    mConstraint = aConstraint;
+    std::copy( aConstraint.begin(), aConstraint.end(), mConstraint.begin() );
 }

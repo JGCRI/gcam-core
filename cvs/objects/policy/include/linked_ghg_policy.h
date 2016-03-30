@@ -109,22 +109,31 @@ public:
     virtual bool isApplicable( const std::string& aRegion ) const;
     virtual void setConstraint( const std::vector<double>& aConstraint );
 protected:
-    //! The name of the policy to link to.
-    std::string mLinkedPolicyName;
-
-    //! A label for the price units of this market
-    std::string mPriceUnits;
-
-    //! A label for the units of this market
-    std::string mOutputUnits;
     
-    //! A price adjustment factor by period.  Could be useful for unit conversion or
-    //! "turning off" price feedbacks from the linked market.
-    objects::PeriodVector<Value> mPriceAdjust;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        GHGPolicy,
+
+        //! The name of the policy to link to.
+        CREATE_SIMPLE_VARIABLE( mLinkedPolicyName, std::string, "linked-policy" ),
+
+        //! A label for the price units of this market
+        CREATE_SIMPLE_VARIABLE( mPriceUnits, std::string, "price-unit" ),
+
+        //! A label for the units of this market
+        CREATE_SIMPLE_VARIABLE( mOutputUnits, std::string, "output-unit" ),
+        
+        //! A price adjustment factor by period.  Could be useful for unit conversion or
+        //! "turning off" price feedbacks from the linked market.
+        CREATE_ARRAY_VARIABLE( mPriceAdjust, objects::PeriodVector<Value>, "price-adjust" ),
+        
+        //! A demand adjustment factor by period.  Could be useful for unit conversion (GWP) or
+        //! "turning off" participation in the linked market.
+        CREATE_ARRAY_VARIABLE( mDemandAdjust, objects::PeriodVector<Value>, "demand-adjust" )
+    )
     
-    //! A demand adjustment factor by period.  Could be useful for unit conversion (GWP) or
-    //! "turning off" participation in the linked market.
-    objects::PeriodVector<Value> mDemandAdjust;
+    void copy( const LinkedGHGPolicy& aOther );
 };
 
 #endif // _LINKED_GHG_POLICY_H_

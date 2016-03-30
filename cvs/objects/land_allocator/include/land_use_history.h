@@ -48,6 +48,7 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
 /*!
