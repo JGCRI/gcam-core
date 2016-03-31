@@ -66,6 +66,9 @@ void TrialValueMarket::initPrice() {
 }
 
 void TrialValueMarket::setPrice( const double priceIn ) {
+    // Prices for TrialValueMarket are solved explicitly by
+    // the solver and should only be set by the model
+    // when setting the initial "prices" for the market.
     Market::setPrice( priceIn );
 }
 
@@ -104,12 +107,6 @@ double TrialValueMarket::getPrice() const {
 */
 void TrialValueMarket::addToDemand( const double demandIn ) {
     Market::addToDemand( demandIn );
-#if GCAM_PARALLEL_ENABLED
-    supply.clear();
-    supply.local() = price;
-#else
-    supply = price;
-#endif
 }
 
 double TrialValueMarket::getDemand() const {
@@ -117,23 +114,22 @@ double TrialValueMarket::getDemand() const {
 }
 
 void TrialValueMarket::nullSupply() {
-   Market::nullSupply();
+    // TrialValueMarket does not utilize supply instead
+    // it is equal to the price.
 }
 
 double TrialValueMarket::getSupply() const {
-    return Market::getSupply();
+    return Market::getPrice();
 }
 
-/*! Perform default Market::addToSupply behavior
- *
- * \todo I believe this function should be a no-op, rather than
- *       running the default addToSupply.  Since supply should always
- *       equal price, it should never be possible to add to it
- *       independently.  (Arguably it's an error to call this method
- *       at all.)
- */
+double TrialValueMarket::getSolverSupply() const {
+    return Market::getPrice();
+}
+
 void TrialValueMarket::addToSupply( const double supplyIn ) {
-    Market::addToSupply( supplyIn );
+    // TrialValueMarket does not utilize supply instead
+    // it is equal to the price thus can not be added to.
+    assert( false );
 }
 
 bool TrialValueMarket::meetsSpecialSolutionCriteria() const {
@@ -143,13 +139,7 @@ bool TrialValueMarket::meetsSpecialSolutionCriteria() const {
 }
 
 bool TrialValueMarket::shouldSolve() const {
-    bool doSolveMarket = false;
-    // Check if this market is a type that is solved.
-    if ( solveMarket ) {
-        // Solve all solvable markets.
-        doSolveMarket = true;
-    }
-    return doSolveMarket;
+    return Market::shouldSolve();
 }
 
 bool TrialValueMarket::shouldSolveNR() const {

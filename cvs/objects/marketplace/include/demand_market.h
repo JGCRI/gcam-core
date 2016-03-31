@@ -50,6 +50,14 @@
 /*!
 * \ingroup Objects
 * \brief A class which defines a DemandMarket object for use in solving simultaneous markets.
+*
+* \warning The "supply" value for this type of market is not used.  Any of the accessor
+*          functions such as getSupply or getSolverSupply will simply return the price.
+*
+* \note    Also note that since this class abstracts the way the model handles simultaneous
+*          markets the accessor function getDemand which is used by model components such as
+*          Sectors or Technologies will also see the price where as the solver via getSolverDemand
+*          will see the actual demand that was added to this market.
 * \author Steve Smith
 */
 
@@ -69,6 +77,7 @@ public:
 
     virtual void nullSupply();
     virtual double getSupply() const;
+    virtual double getSolverSupply() const;
     virtual void addToSupply( const double supplyIn );
     
     virtual bool meetsSpecialSolutionCriteria() const;

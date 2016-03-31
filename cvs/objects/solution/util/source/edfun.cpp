@@ -190,7 +190,12 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
      * 1B Set the model inputs using the solutionInfo objects (partial derivative version)
      ****/ 
     mktplc->mIsDerivativeCalc = true;
-    solnset.storeValues();      // store all market values
+    if(partj == 0) {
+        // We are about to perform partial derviatives so store all market
+        // prices/supplies/demands so that we can snap back to them between
+        // each partial derivative calculation.
+        solnset.storeValues();
+    }
 
     if(mdiagnostic) {
       ILogger &solverlog = ILogger::getLogger("solver_log");
@@ -218,9 +223,11 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
       }
     }
     else {
-        for(size_t i=0; i<x.size(); ++i) {
-            mkts[i].setPrice(x[i]);
-        }
+        // During a partial calc only the price of the partj'th element should
+        // change and the rest were reset from stored values.  In theory
+        // those reset prices are the same as in x however there may be some
+        // slight differences due to roundoff error.
+        mkts[partj].setPrice(x[partj]);
     }
 
     /****

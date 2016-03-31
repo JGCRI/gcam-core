@@ -451,14 +451,8 @@ double Market::getStoredRawPrice() const {
 */
 void Market::nullDemand() {
 #if GCAM_PARALLEL_ENABLED
-#if NOCLEARNULL
-    storedDemand = demand.combine(std::plus<double>());
-    demand.local() -= storedDemand;
-#else
     demand.clear();
-#endif
 #else
-    storedDemand = demand;
     demand = 0;
 #endif
 }
@@ -537,16 +531,8 @@ double Market::getDemand() const {
 */
 void Market::nullSupply() {
 #if GCAM_PARALLEL_ENABLED
-    // reset supply to zero.  Calling supply.clear() is expensive, so
-    // do it by fixing the local value.
-#if NOCLEARNULL
-    storedSupply = supply.combine(std::plus<double>());
-    supply.local() -= storedSupply;
-#else
     supply.clear();
-#endif
 #else
-    storedSupply = supply;
     supply = 0;
 #endif
 }
