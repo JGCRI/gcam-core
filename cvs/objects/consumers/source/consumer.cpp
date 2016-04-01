@@ -72,6 +72,10 @@ Consumer::Consumer():
 mUtilityParameterA( 1.0 ) {
 }
 
+void Consumer::copy( const Consumer& aOther ) {
+    BaseTechnology::copy( aOther );
+}
+
 void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
                          const string& aRegionName, 
                          const string& aSectorName,

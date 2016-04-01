@@ -51,12 +51,14 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <cassert>
 #include <map>
+#include <boost/core/noncopyable.hpp>
 
 #include "technologies/include/expenditure.h"
 #include "investment/include/iinvestable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "containers/include/iinfo.h"
+#include "util/base/include/data_definition_util.h"
 
 class IInput;
 class IOutput;
@@ -77,6 +79,9 @@ class IExpectedProfitRateCalculator;
 class TechnologyType;
 class INestedInput;
 class ICaptureComponent;
+
+// Need to forward declare the subclasses as well.
+class GCAMConsumer;
 
 /*! 
  * \ingroup Objects
@@ -121,15 +126,13 @@ class ICaptureComponent;
  * \author Pralit Patel, Sonny Kim
  */
 
-class BaseTechnology: public IInvestable, public IRoundTrippable
+class BaseTechnology: public IInvestable, public IRoundTrippable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
     friend class InvestableCounterVisitor;
     friend class SetShareWeightVisitor;
 public:
     BaseTechnology();
-    BaseTechnology( const BaseTechnology& baseTechIn );
-    BaseTechnology& operator= (const BaseTechnology& baseTechIn );
     virtual BaseTechnology* clone() const = 0;
     virtual ~BaseTechnology();
 
@@ -240,8 +243,22 @@ protected:
     virtual const std::string& getXMLName() const = 0;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+    
+    void copy( const BaseTechnology& baseTechIn );
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of ICalData to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( BaseTechnology, Consumer, GCAMConsumer ),
+                
+        //! Name
+        CREATE_SIMPLE_VARIABLE( name, std::string, "name" ),
+        
+        //! The root of the nested inputs
+        CREATE_CONTAINER_VARIABLE( mNestedInputRoot, INestedInput*, NamedFilter, "nodeInput" )
+    )
 
-    std::string name; //!< Name
     std::string categoryName; //!< Category name, used for reporting
     int year; //!< Year the technology will initially operate.
     std::map<std::string,int> mGhgNameMap; //!< Mapping of ghg name to number.
@@ -256,10 +273,6 @@ protected:
 
     //! The share weight used to bias investment
     double mShareWeight;
-    
-    //! The root of the nested inputs
-    // TODO: should I make this an auto_ptr
-    INestedInput* mNestedInputRoot;
 
     //! A flag to determine if this technology is the first of it's kind
     bool mIsInitialYear;
@@ -274,7 +287,6 @@ protected:
     std::auto_ptr<IInfo> mTechInfo;
 private:
     void clear();
-    void copy( const BaseTechnology& baseTechIn );
     bool doCalibration;
 };
 

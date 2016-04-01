@@ -73,7 +73,10 @@ void InvestConsumer::copyParamsInto( InvestConsumer& aInvestConsumer,
 }
 
 InvestConsumer* InvestConsumer::clone() const {
-    return new InvestConsumer( *this );
+    InvestConsumer* clone = new InvestConsumer();
+    clone->copy( *this );
+    clone->mCapitalGoodPrice = mCapitalGoodPrice;
+    return clone;
 }
 
 //! parses rest of InvestConsumer xml object
