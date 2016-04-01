@@ -76,9 +76,15 @@ class XYDataPoint: public DataPoint {
         void XMLParse( const xercesc::DOMNode* node );
         void invertAxises();
     protected:
-        static const std::string XML_NAME;  //!< The name of the XML tag associated with this object.
-        double x;
-        double y;
+
+        // Define data such that introspection utilities can process the data from this
+        // subclass together with the data members of the parent classes.
+        DEFINE_DATA_WITH_PARENT(
+            DataPoint,
+                            
+            CREATE_SIMPLE_VARIABLE( x, double, "x" ),
+            CREATE_SIMPLE_VARIABLE( y, double, "y" )
+        )
         void print( std::ostream& out ) const;
     };
 #endif // _XY_POINT_H_

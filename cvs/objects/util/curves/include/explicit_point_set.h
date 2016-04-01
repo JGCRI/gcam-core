@@ -69,9 +69,7 @@ class ExplicitPointSet: public PointSet {
     }
 public:
     ExplicitPointSet();
-    ExplicitPointSet( const ExplicitPointSet& rhs );
     ~ExplicitPointSet();
-    ExplicitPointSet& operator=( const ExplicitPointSet& rhs );
     bool operator==( const ExplicitPointSet& rhs ) const;
     bool operator!=( const ExplicitPointSet& rhs ) const;
     ExplicitPointSet* clone() const;
@@ -97,9 +95,16 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void XMLParse( const xercesc::DOMNode* node );
     void invertAxises();
-protected:   
-    static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
-    std::vector<DataPoint*> points;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        PointSet,
+        
+        CREATE_ARRAY_VARIABLE( points, std::vector<DataPoint*>, "points" )
+    )
+
     typedef std::vector<DataPoint*>::iterator DataPointIterator;
     typedef std::vector<DataPoint*>::const_iterator DataPointConstIterator;
 	const std::string& getXMLName() const;

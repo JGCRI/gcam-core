@@ -105,7 +105,7 @@ ITechnologyContainer* TechnologyContainer::clone() const {
     clonedTechContainer->mFinalAvailableYear = mFinalAvailableYear;
     
     for( CInterpRuleIterator ruleIter = mShareWeightInterpRules.begin(); ruleIter != mShareWeightInterpRules.end(); ++ruleIter ) {
-        clonedTechContainer->mShareWeightInterpRules.push_back( new InterpolationRule( *( *ruleIter ) ) );
+        clonedTechContainer->mShareWeightInterpRules.push_back( ( *ruleIter )->clone() );
     }
     
     for( CVintageIterator vintageIter = mVintages.begin(); vintageIter != mVintages.end(); ++vintageIter ) {

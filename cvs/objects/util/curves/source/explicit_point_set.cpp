@@ -52,29 +52,13 @@
 
 using namespace std;
 
-const string ExplicitPointSet::XML_NAME = "ExplicitPointSet";
-
 //! Constructor
 ExplicitPointSet::ExplicitPointSet() {
-}
-
-//! Copy constructor.
-ExplicitPointSet::ExplicitPointSet( const ExplicitPointSet& rhs ){
-    copy( rhs );
 }
 
 //! Destructor
 ExplicitPointSet::~ExplicitPointSet(){
     clear();
-}
-
-//! Assignment operator
-ExplicitPointSet& ExplicitPointSet::operator=( const ExplicitPointSet& rhs ){
-    if( this != &rhs ){
-        clear();
-        copy( rhs );
-    }
-    return *this;
 }
 
 //! Equals operator
@@ -89,7 +73,9 @@ bool ExplicitPointSet::operator!=( const ExplicitPointSet& rhs ) const {
 
 //! Return a copy of the PointSet
 ExplicitPointSet* ExplicitPointSet::clone() const {
-    return new ExplicitPointSet( *this );
+    ExplicitPointSet* clone = new ExplicitPointSet();
+    clone->copy( *this );
+    return clone;
 }
 
 //! Helper function which frees memory.
@@ -109,12 +95,13 @@ void ExplicitPointSet::copy( const ExplicitPointSet& rhs ){
 
 //! Static function to return the name of the XML element associated with this object.
 const string& ExplicitPointSet::getXMLNameStatic() {
+    static const string XML_NAME = "ExplicitPointSet";
     return XML_NAME;
 }
 
 //! Return the name of the XML element associated with this object.
 const string& ExplicitPointSet::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 //! Add a new data point to the point set. Returns true if it was added successfully, it is a unique point.

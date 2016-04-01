@@ -68,7 +68,6 @@ class PointSetCurve: public Curve {
     }
 public:
     PointSetCurve( PointSet* pointSetIn = 0 );
-    PointSetCurve( const PointSetCurve& curveIn );
     PointSetCurve( const std::string pointSetType, const std::string dataPointType, const std::vector<double> yValues, const double xStart, const double xInterval );
     ~PointSetCurve();
     PointSetCurve* clone() const;
@@ -95,8 +94,15 @@ public:
     void invertAxises();
     PointSet* getPointSet();
 protected:
-    static const std::string XML_NAME; //!< The name of the XML tag associated with this object.
-    PointSet* pointSet;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Curve,
+
+        CREATE_CONTAINER_VARIABLE( pointSet, PointSet*, NoFilter, "point-set" )
+    )
+    
     static double linearInterpolateY( const double xVal, const double x1, const double y1, const double x2, const double y2 );
     static double linearInterpolateX( const double yVal, const double x1, const double y1, const double x2, const double y2 );
     static double getSlope( const double x1, const double y1, const double x2, const double y2 );

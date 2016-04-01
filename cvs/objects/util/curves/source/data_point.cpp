@@ -44,8 +44,6 @@
 
 using namespace std;
 
-const string DataPoint::XML_NAME = "DataPoint";
-
 //! Constructor
 DataPoint::DataPoint() {
 }
@@ -86,12 +84,13 @@ bool DataPoint::operator>=( const DataPoint& rhs ) const {
 
 //! Static function to return the name of the XML element associated with this object.
 const string& DataPoint::getXMLNameStatic(){
+    static const string XML_NAME = "DataPoint";
     return XML_NAME;
 }
 
 //! Function to return the name of the XML element associated with this object.
 const string& DataPoint::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 //! Factory method which returns the correct type of DataPoint based on the type string.

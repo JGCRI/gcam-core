@@ -78,6 +78,8 @@ public:
     static const std::string& getXMLAttrNameStatic();
     
     // IInterpolationFunction methods
+    virtual IInterpolationFunction* clone() const;
+    
     virtual double interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
         const double aXValue ) const;
     
@@ -86,6 +88,13 @@ public:
 
     // IRoundTrippable methods
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+    
+protected:
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IInterpolationFunction
+    )
 };
 
 #endif // _FIXED_INTERPOLATION_FUNCTION_H_

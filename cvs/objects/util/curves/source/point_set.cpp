@@ -45,8 +45,6 @@
 
 using namespace std;
 
-const string PointSet::XML_NAME = "PointSet";
-
 //! Constructor
 PointSet::PointSet() {
 }
@@ -57,12 +55,13 @@ PointSet::~PointSet(){
 
 //! Static function to return the name of the XML element associated with this object.
 const string& PointSet::getXMLNameStatic(){
+    static const string XML_NAME = "PointSet";
     return XML_NAME;
 }
 
 //! Function to return the name of the XML element associated with this object.
 const string& PointSet::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 //! Factory method which returns the correct type of PointSet based on the type string.

@@ -51,8 +51,14 @@
 #include <cfloat>
 #include <functional>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
+
+// Need to forward declare the subclasses as well.
+class PointSetCurve;
 
 /*!
 * \ingroup Util
@@ -60,7 +66,7 @@ class Tabs;
 * \author Josh Lurz
 */
 
-class Curve {
+class Curve : private boost::noncopyable {
     friend std::ostream& operator<<( std::ostream& os, const Curve& curve ){
         curve.print( os );
         return os;
@@ -68,7 +74,6 @@ class Curve {
 public:
     typedef std::vector<std::pair<double,double> > SortedPairVector;
     Curve();
-    Curve( const Curve& curveIn );
     virtual ~Curve();
     virtual bool operator==( const Curve& rhs ) const;
     virtual bool operator!=( const Curve& rhs ) const;
@@ -110,14 +115,23 @@ public:
     virtual double getHammingDistance( const Curve* otherCurve, const double xStart, const double xEnd, const double xInterval ) const;
 
 protected:
-    const static std::string XML_NAME; //!< The name of the XML tag associated with this object.
-    double numericalLabel;
-    std::string name;
-    std::string title;
-    std::string xAxisLabel;
-    std::string yAxisLabel;
-    std::string xAxisUnits;
-    std::string yAxisUnits;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Curve to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Curve, PointSetCurve ),
+                
+        CREATE_SIMPLE_VARIABLE( numericalLabel, double, "numericalLabel" ),
+        CREATE_SIMPLE_VARIABLE( name, std::string, "name" ),
+        CREATE_SIMPLE_VARIABLE( title, std::string, "title" ),
+        CREATE_SIMPLE_VARIABLE( xAxisLabel, std::string, "xAxisLabel" ),
+        CREATE_SIMPLE_VARIABLE( yAxisLabel, std::string, "yAxisLabel" ),
+        CREATE_SIMPLE_VARIABLE( xAxisUnits, std::string, "xAxisUnit" ),
+        CREATE_SIMPLE_VARIABLE( yAxisUnits, std::string, "yAxisUnit" )
+    )
+    
+    void copy( const Curve& aOther );
 
     virtual void print( std::ostream& out, const double lowDomain = -DBL_MAX, const double highDomain = DBL_MAX,
         const double lowRange = -DBL_MAX, const double highRange = DBL_MAX, const int minPoints = 0 ) const = 0;

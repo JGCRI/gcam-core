@@ -59,6 +59,11 @@ FixedInterpolationFunction::FixedInterpolationFunction() {
 FixedInterpolationFunction::~FixedInterpolationFunction() {
 }
 
+IInterpolationFunction* FixedInterpolationFunction::clone() const {
+    // no parameters to copy
+    return new FixedInterpolationFunction();
+}
+
 /*!
  * \brief The value for the xml name attribute which identifies this
  *        interpolation function.

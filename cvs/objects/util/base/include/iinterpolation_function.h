@@ -43,10 +43,18 @@
  * \brief Header file for the IInterpolationFunction interface.
  * \author Pralit Patel
  */
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/data_definition_util.h"
 
 class DataPoint;
+
+// Need to forward declare the subclasses as well.
+class LinearInterpolationFunction;
+class FixedInterpolationFunction;
+class SCurveInterpolationFunction;
 
 /*!
  * \ingroup Objects
@@ -55,11 +63,16 @@ class DataPoint;
  * \author Pralit Patel
  * \author Sonny Kim
  */
-class IInterpolationFunction : public IParsable, public IRoundTrippable {
+class IInterpolationFunction : public IParsable, public IRoundTrippable, private boost::noncopyable {
 public:
     //! Virtual destructor so that instances of the interface may be deleted
     //! correctly through a pointer to the interface.
     inline virtual ~IInterpolationFunction();
+    
+    /*!
+     * \brief Create a clone of the interpolation function copying any parsed values.
+     */
+    virtual IInterpolationFunction* clone() const = 0;
     
     /*!
      * \brief Interpolate a y-value at the given x-value that is between the
@@ -84,6 +97,16 @@ public:
         const static std::string XML_NAME = "interpolation-function";
         return XML_NAME;
     }
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of IInterpolationFunction to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IInterpolationFunction, LinearInterpolationFunction, FixedInterpolationFunction,
+                                SCurveInterpolationFunction )
+    )
 };
 
 // Inline function definitions.

@@ -52,8 +52,6 @@
 
 using namespace std;
 
-const string PointSetCurve::XML_NAME = "PointSetCurve";
-
 /*! \brief Constructor
 * \warning This curve is takes responsibility for this PointSet one it is constructed. 
 * \param pointSetIn The PointSet which defines this curve's data.
@@ -105,24 +103,23 @@ PointSetCurve::~PointSetCurve(){
     delete pointSet;
 }
 
-//! Copy Constructor
-PointSetCurve::PointSetCurve( const PointSetCurve& otherCurve ){
-    pointSet = otherCurve.pointSet->clone();
-}
-
 //! Return a copy of the Curve.
 PointSetCurve* PointSetCurve::clone() const {
-    return new PointSetCurve( *this );
+    PointSetCurve* clone = new PointSetCurve();
+    clone->copy( *this );
+    clone->pointSet = pointSet ? pointSet->clone() : 0;
+    return clone;
 }
 
 //! Static function to return the name of the XML tag this objects uses to write itself out.
 const string& PointSetCurve::getXMLNameStatic() {
+    static const string XML_NAME = "PointSetCurve";
     return XML_NAME;
 }
 
 //! Return the name of the XML tag this objects uses to write itself out.
 const string& PointSetCurve::getXMLName() const {
-    return XML_NAME;
+    return getXMLNameStatic();
 }
 
 //! Get the underlying PointSet
