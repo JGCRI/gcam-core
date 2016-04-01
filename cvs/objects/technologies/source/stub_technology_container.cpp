@@ -227,3 +227,7 @@ DOMDocument* StubTechnologyContainer::getDocumentToHoldNodes() {
     
     return doc;
 }
+
+void StubTechnologyContainer::doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor ) {
+    mTechnology->doDataExpansion( aVisitor );
+}

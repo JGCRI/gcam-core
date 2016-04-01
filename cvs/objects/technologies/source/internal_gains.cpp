@@ -55,9 +55,6 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-// static initialize.
-const string InternalGains::XML_REPORTING_NAME = "output-internal-gains";
-
 const string& InternalGains::getXMLNameStatic()
 {
     const static string XML_NAME = "internal-gains";
@@ -65,13 +62,25 @@ const string& InternalGains::getXMLNameStatic()
 }
 
 InternalGains::InternalGains()
-: mPhysicalOutputs( scenario->getModeltime()->getmaxper() )
 {
+}
+
+InternalGains::~InternalGains() {
 }
 
 InternalGains* InternalGains::clone() const
 {
-    return new InternalGains( *this );
+    InternalGains* clone = new InternalGains();
+    clone->copy( *this );
+    return clone;
+}
+
+void InternalGains::copy( const InternalGains& aOther ) {
+    mName = aOther.mName;
+    mOutputRatio = aOther.mOutputRatio;
+    mTrialMarketName = aOther.mTrialMarketName;
+    
+    // note results are not copied.
 }
 
 bool InternalGains::isSameType( const string& aType ) const
@@ -81,9 +90,7 @@ bool InternalGains::isSameType( const string& aType ) const
 
 const string& InternalGains::getName() const
 {
-    // There can only be one internal gains object per technology so it does not
-    // require a name.
-    return getXMLNameStatic();
+    return mName;
 }
 
 /*! \brief Get the XML name for reporting to XML file.
@@ -95,6 +102,7 @@ const string& InternalGains::getName() const
 * \return The constant XML_NAME.
 */
 const string& InternalGains::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-internal-gains";
     return XML_REPORTING_NAME;
 }
 

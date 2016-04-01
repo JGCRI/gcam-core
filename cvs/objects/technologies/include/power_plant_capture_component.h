@@ -49,6 +49,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/icapture_component.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -97,6 +98,8 @@
 class PowerPlantCaptureComponent: public ICaptureComponent {
     friend class CaptureComponentFactory;
 public:
+    virtual ~PowerPlantCaptureComponent();
+    
     // Documentation is inherited from ICaptureComponent.
     virtual PowerPlantCaptureComponent* clone() const;
         
@@ -151,6 +154,8 @@ public:
 
 protected:
 	PowerPlantCaptureComponent();
+    
+    void copy( const PowerPlantCaptureComponent& aOther );
 
 	static const std::string& getXMLNameStatic();
     
@@ -163,24 +168,30 @@ protected:
                                const double aEffectiveEnergyIntensity,
                                const double aFuelEmissCoef,
                                const int aPeriod ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICaptureComponent,
 
-    //! Sequestered quantity by period.
-    std::vector<double> mSequesteredAmount;
+        //! Sequestered quantity by period.
+        CREATE_ARRAY_VARIABLE( mSequesteredAmount, objects::PeriodVector<double>, "sequestered-amount" ),
 
-    //! Name of the storage market.
-    std::string mStorageMarket;
+        //! Name of the storage market.
+        CREATE_SIMPLE_VARIABLE( mStorageMarket, std::string, "storage-market" ),
 
-    //! The name of the gas which will be sequestered.
-    std::string mTargetGas;
+        //! The name of the gas which will be sequestered.
+        CREATE_SIMPLE_VARIABLE( mTargetGas, std::string, "target-gas" ),
 
-     //! Fraction of carbon removed from the emissions stream.
-    double mRemoveFraction;
+         //! Fraction of carbon removed from the emissions stream.
+        CREATE_SIMPLE_VARIABLE( mRemoveFraction, double, "remove-fraction" ),
 
-    //! The amount of energy required to capture one unit of the emitted gas.
-    double mCaptureEnergy;
+        //! The amount of energy required to capture one unit of the emitted gas.
+        CREATE_SIMPLE_VARIABLE( mCaptureEnergy, double, "capture-energy" ),
 
-    //! Non-energy cost penalty.
-    double mNonEnergyCostPenalty;
+        //! Non-energy cost penalty.
+        CREATE_SIMPLE_VARIABLE( mNonEnergyCostPenalty, double, "non-energy-penalty" )
+    )
 
     //! Stored emissions coefficient for the fuel.
     Value mCachedFuelCoef;

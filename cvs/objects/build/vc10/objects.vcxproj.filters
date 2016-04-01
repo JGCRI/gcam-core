@@ -1513,9 +1513,6 @@
     <ClInclude Include="..\..\technologies\include\unmanaged_land_technology.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\technologies\include\variable_cost_shutdown_decider.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\technologies\include\variable_production_state.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>

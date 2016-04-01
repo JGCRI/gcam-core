@@ -786,7 +786,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
     // TODO: Inconsistent use of year attribute.  Technology vintage written out
     // with "year" attribute.
     XMLWriteOpeningTag( aTechnology->getXMLName(), *parentBuffer, mTabs.get(),
-        aTechnology->getName(), aTechnology->year,
+        aTechnology->getName(), aTechnology->mYear,
         DefaultTechnology::getXMLNameStatic() );
         
     // put the buffers on a stack so that we have the correct ordering
@@ -850,9 +850,7 @@ void XMLDBOutputter::startVisitTranTechnology( const TranTechnology* aTranTechno
     // tran startVisitTranTechnology gets visited after startVisitTechnology which implies
     // mBufferStack.top() is the child buffer for technology
     writeItemToBuffer( aTranTechnology->mLoadFactor, "load-factor", 
-        *mBufferStack.top(), mTabs.get(), -1, "load/veh" );
-    writeItemToBuffer( aTranTechnology->mServiceOutput, "service-output",
-        *mBufferStack.top(), mTabs.get(), -1, mCurrentOutputUnit );    
+        *mBufferStack.top(), mTabs.get(), -1, "load/veh" ); 
 }
 
 void XMLDBOutputter::endVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) {

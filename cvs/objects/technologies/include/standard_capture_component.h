@@ -48,6 +48,7 @@
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/icapture_component.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -105,6 +106,8 @@
 class StandardCaptureComponent: public ICaptureComponent {
     friend class CaptureComponentFactory;
 public:
+    virtual ~StandardCaptureComponent();
+    
     // Documentation inherits.
     virtual StandardCaptureComponent* clone() const;
     
@@ -150,28 +153,36 @@ public:
 protected:
     StandardCaptureComponent();
     
-    static const std::string& getXMLNameStatic();
-
-    //! Sequestered quantity by period.
-    std::vector<double> mSequesteredAmount;
-
-    //! Name of the storage market.
-    std::string mStorageMarket;
-
-    //! The name of the gas which will be sequestered.
-    std::string mTargetGas;
-
-	//! Fraction of carbon removed from fuel.
-    double mRemoveFraction;
+    void copy( const StandardCaptureComponent& aOther );
     
-    //! Storage cost associated with the remove fraction.
-    double mStorageCost;
+    static const std::string& getXMLNameStatic();
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICaptureComponent,
 
-	//! Energy intensity penalty.
-    double mIntensityPenalty;
+        //! Sequestered quantity by period.
+        CREATE_ARRAY_VARIABLE( mSequesteredAmount, objects::PeriodVector<double>, "sequestered-amount" ),
 
-    //! Multiplicative non-energy cost penalty.
-    double mNonEnergyCostPenalty;
+        //! Name of the storage market.
+        CREATE_SIMPLE_VARIABLE( mStorageMarket, std::string, "storage-market" ),
+
+        //! The name of the gas which will be sequestered.
+        CREATE_SIMPLE_VARIABLE( mTargetGas, std::string, "target-gas" ),
+
+        //! Fraction of carbon removed from fuel.
+        CREATE_SIMPLE_VARIABLE( mRemoveFraction, double, "remove-fraction" ),
+        
+        //! Storage cost associated with the remove fraction.
+        CREATE_SIMPLE_VARIABLE( mStorageCost, double, "storage-cost" ),
+
+        //! Energy intensity penalty.
+        CREATE_SIMPLE_VARIABLE( mIntensityPenalty, double, "intensity-penalty" ),
+
+        //! Multiplicative non-energy cost penalty.
+        CREATE_SIMPLE_VARIABLE( mNonEnergyCostPenalty, double, "non-energy-penalty" )
+    )
     
     //! State value necessary to use Marketplace::addToDemand
     double mLastCalcValue;

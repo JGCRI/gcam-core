@@ -70,35 +70,52 @@ extern Scenario* scenario;
  */
 
 IntermittentTechnology::IntermittentTechnology( const string& aName, const int aYear ) 
-:Technology( aName, aYear ),
-mElectricSectorName("electricity"),
-mBackupCapacityFactor(0.05),
-mBackupCapitalCost( 0.0 ),
-mElecReserveMargin( 0.15 ),
-mAveGridCapacityFactor( 0.60 )
+:Technology( aName, aYear )
 {
+    mElectricSectorName = "electricity";
+    mBackupCapacityFactor = 0.05;
+    mBackupCapitalCost = 0.0;
+    mElecReserveMargin = 0.15;
+    mAveGridCapacityFactor = 0.60;
+    
+    mBackupCalculator = 0;
+    
+    mResourceInput = mInputs.end();
+    mBackupInput = mInputs.end();
+    mBackupCapCostInput = mInputs.end();
+    mTechCostInput = mInputs.end();
 }
 
-/*! 
- * \brief Copy constructor.
- * \param aOther Technology from which to copy data.
+/*!
+ * \brief Destructor.
  */
-IntermittentTechnology::IntermittentTechnology( const IntermittentTechnology& aOther )
-: Technology( aOther ),mElectricSectorName( aOther.mElectricSectorName ),
-mElectricSectorMarket( aOther.mElectricSectorMarket ),
-mTrialMarketNameParsed( aOther.mTrialMarketNameParsed ),
-mBackupCapacityFactor( aOther.mBackupCapacityFactor ),
-mBackupCapitalCost( aOther.mBackupCapitalCost )
-// Only copy member variables that are read-in. The rest will be filled in by
-// initialization methods.
-{
-    if( aOther.mBackupCalculator.get() ){
-        mBackupCalculator.reset( aOther.mBackupCalculator->clone() );
-    }
+IntermittentTechnology::~IntermittentTechnology() {
+    delete mBackupCalculator;
 }
     
 IntermittentTechnology* IntermittentTechnology::clone() const {
-    return new IntermittentTechnology( *this );
+    IntermittentTechnology* clone = new IntermittentTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
+
+void IntermittentTechnology::copy( const IntermittentTechnology& aOther ) {
+    Technology::copy( aOther );
+    mElectricSectorName = aOther.mElectricSectorName;
+    mElectricSectorMarket = aOther.mElectricSectorMarket;
+    mTrialMarketNameParsed = aOther.mTrialMarketNameParsed;
+    mBackupCapacityFactor = aOther.mBackupCapacityFactor;
+    mBackupCapitalCost = aOther.mBackupCapitalCost;
+    
+    if( aOther.mBackupCalculator ) {
+        delete mBackupCalculator;
+        mBackupCalculator = aOther.mBackupCalculator->clone();
+    }
+    
+    /*!
+     * \warning Only copy member variables that are read-in. The rest will be filled in by
+     *          initialization methods.
+     */
 }
 
 const string& IntermittentTechnology::getXMLName() const {
@@ -167,13 +184,7 @@ bool IntermittentTechnology::XMLDerivedClassParse( const string& aNodeName,
         mBackupCapitalCost = XMLHelper<double>::getValue( aCurr );
     }
     else if( BackupCalculatorFactory::isOfType( aNodeName ) ){
-        // Check if a new backup calculator needs to be created because
-        // there is not currently one or the current type does not match the
-        // new type.
-        if( !mBackupCalculator.get() || !mBackupCalculator->isSameType( aNodeName ) ){
-            mBackupCalculator = BackupCalculatorFactory::create( aNodeName );
-        }
-        mBackupCalculator->XMLParse( aCurr );
+        parseSingleNode( aCurr, mBackupCalculator, BackupCalculatorFactory::create( aNodeName ).release() );
     }
     else if( aNodeName == "trial-market-price" ){
         mTrialMarketPrice.set( XMLHelper<double>::getValue(aCurr) );
@@ -194,7 +205,7 @@ void IntermittentTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) con
     if( mBackupCapitalCost.isInited() ){
         XMLWriteElement( mBackupCapitalCost.get(), "backup-capital-cost", aOut, aTabs);
     }
-    if( mBackupCalculator.get() ){
+    if( mBackupCalculator ){
         mBackupCalculator->toInputXML( aOut, aTabs );
     }
 }   
@@ -202,7 +213,7 @@ void IntermittentTechnology::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) con
 void IntermittentTechnology::toInputXMLForRestart( ostream& aOut, Tabs* aTabs ) const {
     Technology::toInputXMLForRestart( aOut, aTabs );
 
-    XMLWriteOpeningTag( getXMLVintageNameStatic(), aOut, aTabs, "", year );
+    XMLWriteOpeningTag( getXMLVintageNameStatic(), aOut, aTabs, "", mYear );
     if( mTrialMarketPrice.isInited() ){
         XMLWriteElementCheckDefault( mTrialMarketPrice.get(), "trial-market-price", aOut, aTabs, 0.001 );
     }
@@ -223,7 +234,7 @@ void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut,
         XMLWriteElement( mBackupCapitalCost.get(), "backup-capital-cost", aOut, aTabs );
     }
     XMLWriteElement( calcEnergyFromBackup(), "energy-to-backup", aOut, aTabs );
-    if( mBackupCalculator.get() ){
+    if( mBackupCalculator ){
         mBackupCalculator->toDebugXML( period, aOut, aTabs );
     }
 }
@@ -287,7 +298,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
 
     // Create trial market for intermettent technology if backup exists and needs to be
     // calculated.
-    if( mBackupCalculator.get() ){
+    if( mBackupCalculator ){
         SectorUtils::createTrialSupplyMarket( aRegionName, mTrialMarketName, mIntermittTechInfo.get(), mElectricSectorMarket );
         MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
         depFinder->addDependency( aSectorName, aRegionName,
@@ -301,7 +312,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     }
 
     // Warn if a backup calculator was not read-in.
-    if( !mBackupCalculator.get() ){
+    if( !mBackupCalculator ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
@@ -309,7 +320,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
                 << " did not read in a backup calculator. Backup costs will default to zero. " << endl;
     }
     // Convert technology year to period
-    int period = scenario->getModeltime()->getyr_to_per( year );
+    int period = scenario->getModeltime()->getyr_to_per( mYear );
     // Initialize trial market price here instead of in initCalc to avoid
     // price override.
     if( mTrialMarketPrice.isInited() ){
@@ -333,11 +344,9 @@ void IntermittentTechnology::initCalc( const string& aRegionName,
     // Note: initCalc is called for all past, current and future technologies.
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
         aDemographics, aPrevPeriodInfo, aPeriod );
-    if ( mBackupCalculator.get() ) {
+    if ( mBackupCalculator ) {
         mBackupCalculator->initCalc( mIntermittTechInfo.get() );
-    }
 
-    if( mBackupCalculator.get() ) {
         // The renewable trial market is a share calculation so we can give the
         // solver some additional hints that the range should be between 0 and 1.
         SectorUtils::setSupplyBehaviorBounds( SectorUtils::getTrialMarketName( mTrialMarketName ),
@@ -507,7 +516,7 @@ double IntermittentTechnology::getMarginalBackupCapacity( const string& aRegionN
                                                           const string& aSectorName,
                                                           const int aPeriod ) const {
     double backupCapacity = 0;
-    if( mBackupCalculator.get() && mResourceInput != mInputs.end() ){
+    if( mBackupCalculator && mResourceInput != mInputs.end() ){
         const string& resourceName = ( *mResourceInput )->getName();
         backupCapacity = mBackupCalculator->getMarginalBackupCapacity( aSectorName,
                          mElectricSectorName, resourceName, aRegionName,
@@ -534,7 +543,7 @@ double IntermittentTechnology::getAverageBackupCapacity( const string& aRegionNa
                                                          const int aPeriod ) const
 {
     double backupCapacity = 0;
-    if( mBackupCalculator.get() ){
+    if( mBackupCalculator ){
         const string& resourceName = ( *mResourceInput )->getName();
         backupCapacity = mBackupCalculator->getAverageBackupCapacity( aSectorName,
                          mElectricSectorName, resourceName, aRegionName,

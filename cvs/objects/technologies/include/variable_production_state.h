@@ -92,6 +92,12 @@ protected:
      * \return The static name of this object.
      */
     static const std::string& getXMLNameStatic();
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IProductionState
+    )
 };
 
 #endif // _VARIABLE_PRODUCTION_STATE_H_

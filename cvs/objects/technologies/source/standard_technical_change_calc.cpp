@@ -60,7 +60,15 @@ StandardTechnicalChangeCalc::StandardTechnicalChangeCalc()
 
 
 StandardTechnicalChangeCalc* StandardTechnicalChangeCalc::clone() const {
-    return new StandardTechnicalChangeCalc( *this );
+    StandardTechnicalChangeCalc* clone = new StandardTechnicalChangeCalc();
+    clone->copy( *this );
+    return clone;
+}
+
+void StandardTechnicalChangeCalc::copy( const StandardTechnicalChangeCalc& aOther ) {
+    mHicksNeutralTechChange = aOther.mHicksNeutralTechChange;
+    mEnergyTechChange = aOther.mEnergyTechChange;
+    mMaterialTechChange = aOther.mMaterialTechChange;
 }
 
 bool StandardTechnicalChangeCalc::isSameType( const string& aType ) const {

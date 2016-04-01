@@ -47,12 +47,16 @@
 
 using namespace std;
 
-VintageProductionState::VintageProductionState():
-mInitialYear( -1 ){
+VintageProductionState::VintageProductionState()
+{
+    mInitialYear = -1;
 }
 
 VintageProductionState* VintageProductionState::clone() const {
-    return new VintageProductionState( *this );
+    VintageProductionState* clone = new VintageProductionState();
+    clone->mBaseOutput = mBaseOutput;
+    clone->mInitialYear = mInitialYear;
+    return clone;
 }
 
 bool VintageProductionState::isSameType( const string& aType ) const {

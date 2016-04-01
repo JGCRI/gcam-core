@@ -51,6 +51,7 @@ class Tabs;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 #include "util/curves/include/cost_curve.h"
 
 /*! 
@@ -80,8 +81,6 @@ class FractionalSecondaryOutput: public IOutput
 {
     friend class OutputFactory;
 public:
-    FractionalSecondaryOutput( const FractionalSecondaryOutput& aOutput );
-    
     virtual ~FractionalSecondaryOutput();
     
     /*!
@@ -180,28 +179,36 @@ protected:
 
     double calcPhysicalOutputInternal( const std::string& aRegionName, const double aPrimaryOutput,
                                        const int aPeriod ) const;
-
-    //! Physical output by period.
-    std::vector<Value> mPhysicalOutputs;
-
-    //! Name of the secondary output. Corresponds to a market for this good 
-    //! which must be explicitly solved for.
-    std::string mName;
-
-    //! Ratio of the secondary output to primary output production such that
-    //! primary output multiplied by the ratio is equal to secondary output.
-    Value mOutputRatio;
     
-    //! Piece-wise linear cost curve that contains price driven fraction adjustments
-    //! to mOutputRatio.
-    std::auto_ptr<Curve> mCostCurve;
+    void copy( const FractionalSecondaryOutput& aOther );
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IOutput,
+
+        //! Physical output by period.
+        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, objects::PeriodVector<Value>, "physical-output" ),
+
+        //! Name of the secondary output. Corresponds to a market for this good 
+        //! which must be explicitly solved for.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+
+        //! Ratio of the secondary output to primary output production such that
+        //! primary output multiplied by the ratio is equal to secondary output.
+        CREATE_SIMPLE_VARIABLE( mOutputRatio, Value, "output-ratio" ),
+        
+        //! Piece-wise linear cost curve that contains price driven fraction adjustments
+        //! to mOutputRatio.
+        CREATE_CONTAINER_VARIABLE( mCostCurve, Curve*, NoFilter, "fraction-produced" ),
+                                
+        //! The market name in which this output is adjusting the value.  If empty
+        //! the current region is assumed.
+        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market-name" )
+    )
     
     //! State value necessary to use Marketplace::addToDemand
     double mLastCalcValue;
-    
-    //! The market name in which this output is adjusting the value.  If empty
-    //! the current region is assumed.
-    std::string mMarketName;
 };
 
 #endif // _FRACTIONAL_SECONDARY_OUTPUT_H_

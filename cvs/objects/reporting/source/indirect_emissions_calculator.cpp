@@ -151,7 +151,7 @@ void IndirectEmissionsCalculator::startVisitTechnology( const Technology* aTechn
                                                         const int aPeriod )
 {
     // TODO: Fix this for vintaging.
-    if( scenario->getModeltime()->getper_to_yr( aPeriod ) != aTechnology->year ){
+    if( scenario->getModeltime()->getper_to_yr( aPeriod ) != aTechnology->mYear ){
         return;
     }
 

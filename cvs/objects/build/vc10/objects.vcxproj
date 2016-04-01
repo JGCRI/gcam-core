@@ -1066,7 +1066,6 @@
     <ClInclude Include="..\..\technologies\include\technology_type.h" />
     <ClInclude Include="..\..\technologies\include\tran_technology.h" />
     <ClInclude Include="..\..\technologies\include\unmanaged_land_technology.h" />
-    <ClInclude Include="..\..\technologies\include\variable_cost_shutdown_decider.h" />
     <ClInclude Include="..\..\technologies\include\variable_production_state.h" />
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h" />
     <ClInclude Include="..\..\technologies\include\wind_technology.h" />

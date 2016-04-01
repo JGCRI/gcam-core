@@ -45,10 +45,17 @@
  */
 
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/data_definition_util.h"
 
 // Forward declarations
 class Demographic;
 class Tabs;
+
+// Need to forward declare the subclasses as well.
+class CalDataOutput;
+class CalDataOutputPercap;
 
 /*!
  * \brief An interface to an object which represents the calibration value of a
@@ -59,7 +66,7 @@ class Tabs;
  *          single fixed efficiency. Only one calibration value may be read in
  *          per Technology.
  */
-class ICalData {
+class ICalData : private boost::noncopyable {
 public:
     ICalData();
     virtual ~ICalData();
@@ -90,6 +97,15 @@ public:
     * \return Calibration output value.
     */
     virtual double getCalOutput() = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of ICalData to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ICalData, CalDataOutput, CalDataOutputPercap )
+    )
 };
 
 // Inline function definitions.

@@ -74,7 +74,7 @@ public:
                                 const int aYear );
 
     ~UnmanagedLandTechnology();
-    UnmanagedLandTechnology( const UnmanagedLandTechnology& aOther );
+
     static const std::string& getXMLNameStatic();
     const std::string& getXMLName() const;
     UnmanagedLandTechnology* clone() const;
@@ -116,15 +116,22 @@ protected:
                                    const int aPeriod );
 
     virtual const std::string& getLandInputName( ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AgProductionTechnology,
 
-private:
-    //! Name of leaf or node to use as driver for this technology
-    std::string mLandItemName;
+        //! Name of leaf or node to use as driver for this technology
+        CREATE_SIMPLE_VARIABLE( mLandItemName, std::string, "itemName" )
+    )
+
 
     typedef std::vector<IInput*>::iterator InputIterator;
-
     //! Internal input that contains the amount of land.
     InputIterator mResourceInput;
+    
+    void copy( const UnmanagedLandTechnology& aOther );
 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;

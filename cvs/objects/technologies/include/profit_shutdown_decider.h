@@ -84,6 +84,8 @@ class ProfitShutdownDecider: public IShutdownDecider
     // Allow SGM technology to create the ProfitShutdownDecider directly.
     friend class ProductionTechnology;
 public:
+    ~ProfitShutdownDecider();
+    
     // IParsedComponent methods.
     virtual ProfitShutdownDecider* clone() const;
 
@@ -107,23 +109,30 @@ public:
                                      const std::string& aSectorName,
                                      const int aInitialTechYear,
                                      const int aPeriod ) const;
-private:
+protected:
     ProfitShutdownDecider();
+    
+    void copy( const ProfitShutdownDecider& aOther );
 
     static const std::string& getXMLNameStatic();
 
-    //! The name of this shutdown decider in case we want to stack multiple.
-    std::string mName;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IShutdownDecider,
 
-    //! Parameter for max rate of shutdown (e.g. 1 means entire vintage can be shutdown)
-    double mMaxShutdown;
+        //! The name of this shutdown decider in case we want to stack multiple.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
-    //! Parameter for steepness of backup curve. Higher number means steeper ascent.
-    double mSteepness;
+        //! Parameter for max rate of shutdown (e.g. 1 means entire vintage can be shutdown)
+        CREATE_SIMPLE_VARIABLE( mMaxShutdown, double, "max-shutdown" ),
 
-    //! Parameter for profitRate at which 50% of is shutdown.
-    double mMedianShutdownPoint;
-  
+        //! Parameter for steepness of backup curve. Higher number means steeper ascent.
+        CREATE_SIMPLE_VARIABLE( mSteepness, double, "steepness" ),
+
+        //! Parameter for profitRate at which 50% of is shutdown.
+        CREATE_SIMPLE_VARIABLE( mMedianShutdownPoint, double, "median-shutdown-point" )
+    )
 };
 
 #endif // _PROFIT_SHUTDOWN_DECIDER_H_

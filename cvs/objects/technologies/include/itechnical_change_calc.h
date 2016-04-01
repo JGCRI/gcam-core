@@ -44,11 +44,17 @@
  * \author Josh Lurz
  */
 #include <vector>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/istandard_component.h"
+#include "util/base/include/data_definition_util.h"
 
 class IInput;
 struct PreviousPeriodInfo;
 class IFunction;
+
+// Need to forward declare the subclasses as well.
+class StandardTechnicalChangeCalc;
 
 /*! 
  * \ingroup Objects
@@ -63,7 +69,7 @@ class IFunction;
  *          entire production function.
  * \author Josh Lurz
 */
-class ITechnicalChangeCalc : public IParsedComponent { 
+class ITechnicalChangeCalc : public IParsedComponent, private boost::noncopyable {
 public:
     // Clone operator must be declared explicitly even though it is inherited
     // from IStandardComponent so that the return type can be changed. Since
@@ -90,6 +96,15 @@ public:
                                                const std::string& aRegionName,
                                                const std::string& aSectorName,
                                                const int aPeriod ) const = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of ITechnicalChangeCalc to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ITechnicalChangeCalc, StandardTechnicalChangeCalc )
+    )
 };
 
 #endif // _ITECHNICAL_CHANGE_CALC_H_

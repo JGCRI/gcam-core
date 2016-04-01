@@ -55,61 +55,44 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-// static initialize.
-const string ResidueBiomassOutput::XML_REPORTING_NAME = "output-residue-biomass";
-
-ResidueBiomassOutput::ResidueBiomassOutput( const std::string& sectorName ) :
-    parent(),
-    mPhysicalOutputs( scenario->getModeltime()->getmaxper(), 0 ),
-    mName( sectorName ),
-    mCachedCO2Coef( ),
-    mProductLeaf( 0 ),
-    mHarvestIndex( 0 ),
-    mErosCtrl( 0 ),
-    mMassConversion( 0 ),
-    mWaterContent( 0 ),
-    mMassToEnergy( 0 ),
-    mCostCurve( )
-
+ResidueBiomassOutput::ResidueBiomassOutput( const std::string& sectorName )
 {
+    mName = sectorName;
+    mProductLeaf = 0;
+    mHarvestIndex = 0;
+    mErosCtrl = 0;
+    mMassConversion = 0;
+    mWaterContent = 0;
+    mMassToEnergy = 0;
+    mCostCurve = 0;
 }
-
-ResidueBiomassOutput::ResidueBiomassOutput( const ResidueBiomassOutput& other ) :
-    parent(),
-    mPhysicalOutputs( scenario->getModeltime()->getmaxper(), 0 ), // Do not copy results
-    mName( other.mName ),
-    mCachedCO2Coef( other.mCachedCO2Coef ),
-    mProductLeaf( other.mProductLeaf ),
-    mHarvestIndex( other.mHarvestIndex ),
-    mErosCtrl( other.mErosCtrl ),
-    mMassConversion( other.mMassConversion ),
-    mWaterContent( other.mWaterContent ),
-    mMassToEnergy( other.mMassToEnergy )
-{
-    mCostCurve.reset( other.mCostCurve->clone() );
-}
-
 
 ResidueBiomassOutput::~ResidueBiomassOutput( ) 
 {
+    delete mCostCurve;
 }
 
-ResidueBiomassOutput& ResidueBiomassOutput::operator =( const ResidueBiomassOutput& other ){
-    if ( &other != this ) {
-        // Note mPhysicalOutputs is not copied as results should never be copied.
-        mName = other.mName;
-        mCachedCO2Coef = other.mCachedCO2Coef;
-        mProductLeaf = other.mProductLeaf;
-        mHarvestIndex = other.mHarvestIndex;
-        mErosCtrl = other.mErosCtrl;
-        mMassConversion = other.mMassConversion;
-        mMassToEnergy = other.mMassToEnergy;
-        mCostCurve.reset( other.mCostCurve->clone() );
-        mWaterContent = other.mWaterContent;
-    }
-    return *this;
+ResidueBiomassOutput* ResidueBiomassOutput::clone() const {
+    ResidueBiomassOutput* clone = new ResidueBiomassOutput( mName );
+    clone->copy( *this );
+    return clone;
 }
 
+void ResidueBiomassOutput::copy( const ResidueBiomassOutput& aOther ) {
+    mName = aOther.mName;
+    mCachedCO2Coef = aOther.mCachedCO2Coef;
+    mProductLeaf = aOther.mProductLeaf;
+    mHarvestIndex = aOther.mHarvestIndex;
+    mErosCtrl = aOther.mErosCtrl;
+    mMassConversion = aOther.mMassConversion;
+    mMassToEnergy = aOther.mMassToEnergy;
+    mWaterContent = aOther.mWaterContent;
+    
+    delete mCostCurve;
+    mCostCurve = aOther.mCostCurve ? aOther.mCostCurve->clone() : 0;
+    
+    // note results are not copied.
+}
 
 /*! \brief Get the XML name for reporting to XML file.
 *
@@ -120,6 +103,7 @@ ResidueBiomassOutput& ResidueBiomassOutput::operator =( const ResidueBiomassOutp
 * \return The constant XML_NAME.
 */
 const string& ResidueBiomassOutput::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-residue-biomass";
     return XML_REPORTING_NAME;
 }
 
@@ -352,7 +336,7 @@ void ResidueBiomassOutput::setPhysicalOutput( const double aPrimaryOutput, const
 void ResidueBiomassOutput::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, getName() );
-    if ( value_vector_type::size_type( aPeriod ) < mPhysicalOutputs.size() ) {
+    if ( aPeriod < mPhysicalOutputs.size() ) {
         XMLWriteElement( mPhysicalOutputs[ aPeriod ], "output", aOut, aTabs );
     }
     XMLWriteElement( mErosCtrl, "eros-ctrl", aOut, aTabs );
@@ -461,7 +445,12 @@ bool ResidueBiomassOutput::XMLParse( const xercesc::DOMNode* aNode )
         }
     }
     
-    mCostCurve.reset( new PointSetCurve( currPoints ) );
+    /*!
+     * \warning This implies mCostCurve must be parsed all together and any subsequent
+     *          attempts to parse it will completely override the previous definition.
+     */
+    delete mCostCurve;
+    mCostCurve = new PointSetCurve( currPoints );
 
     return true;
 }

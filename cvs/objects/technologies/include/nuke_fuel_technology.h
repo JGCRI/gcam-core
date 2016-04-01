@@ -94,34 +94,65 @@ protected:
     virtual double getTotalInputCost( const std::string& aRegionName,
                                       const std::string& aSectorName,
                                       const int aPeriod ) const;
-
-private:
-    static const std::string XML_NAME; //!< The XML name of this object.
     
-    std::string fertileFuelName; //!< name of secondary fertile material used for making nuclear fuel
-    std::string blanketFuelName; //!< name of secondary fertile material used for breeding fissile material
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Technology,
+    
+        //! name of secondary fertile material used for making nuclear fuel
+        CREATE_SIMPLE_VARIABLE( fertileFuelName, std::string, "fertileFuelName" ),
 
-    //! Unit Conversion factor, used to be fmult.
-    double mConversionFactor;
+        //! name of secondary fertile material used for breeding fissile material
+        CREATE_SIMPLE_VARIABLE( blanketFuelName, std::string, "blanketFuelName" ),
 
-    double blanketFuelRatio; //!< Ratio of blanket to fuel materials (kgBlanket/kgFuel)
-    double burnup; //!< designed burnup of fuel associated with nuclear plant (MWd/kgHM)
-    double conversionCost; //!< uranium ore conversion cost ($/kgU)
-	double enrichmentProd; //!< fissile material enrichment (%)
-	double enrichmentFeed; //!< feed material enrichment (%)
-	double enrichmentTail; //!< tail enrichment (%)
-    double enrichmentCost; //!< uranium enrichment cost ($/SWU)
-    double fabricationCost; //!< primary fuel fuel fabrication cost ($/kgHM)
-    double blanketFabCost; //!< blanket material fabrication cost ($/kgHM)
-    double interimStorageCost; //!< interim storage cost of spent fuel ($/kgHM)
-	double geologicWasteDisposalCost; //!< cost of permenant waste disposal ($/kgHM)
-    double reprocessingCost; //!< reprocessing cost of spent fuel ($/kgHM)
+        //! Unit Conversion factor, used to be fmult.
+        CREATE_SIMPLE_VARIABLE( mConversionFactor, double, "fMultiplier" ),
+
+        //! Ratio of blanket to fuel materials (kgBlanket/kgFuel)
+        CREATE_SIMPLE_VARIABLE( blanketFuelRatio, double, "blanketFuelRatio" ),
+
+        //! designed burnup of fuel associated with nuclear plant (MWd/kgHM)
+        CREATE_SIMPLE_VARIABLE( burnup, double, "burnup" ),
+
+        //! uranium ore conversion cost ($/kgU)
+        CREATE_SIMPLE_VARIABLE( conversionCost, double, "conversionCost" ),
+
+        //! fissile material enrichment (%)
+        CREATE_SIMPLE_VARIABLE( enrichmentProd, double, "enrichmentProd" ),
+
+        //! feed material enrichment (%)
+        CREATE_SIMPLE_VARIABLE( enrichmentFeed, double, "enrichmentFeed" ),
+
+        //! tail enrichment (%)
+        CREATE_SIMPLE_VARIABLE( enrichmentTail, double, "enrichmentTail" ),
+
+        //! uranium enrichment cost ($/SWU)
+        CREATE_SIMPLE_VARIABLE( enrichmentCost, double, "enrichmentCost" ),
+
+        //! primary fuel fuel fabrication cost ($/kgHM)
+        CREATE_SIMPLE_VARIABLE( fabricationCost, double, "fabricationCost" ),
+
+        //! blanket material fabrication cost ($/kgHM)
+        CREATE_SIMPLE_VARIABLE( blanketFabCost, double, "blanketFabCost" ),
+
+        //! interim storage cost of spent fuel ($/kgHM)
+        CREATE_SIMPLE_VARIABLE( interimStorageCost, double, "interimStorageCost" ),
+
+        //! cost of permenant waste disposal ($/kgHM)
+        CREATE_SIMPLE_VARIABLE( geologicWasteDisposalCost, double, "geologicWasteDisposalCost" ),
+
+        //! reprocessing cost of spent fuel ($/kgHM)
+        CREATE_SIMPLE_VARIABLE( reprocessingCost, double, "reprocessingCost" )
+    )
     
     //! State value for fertile fuel market necessary to use Marketplace::addToDemand
     double mLastFertileValue;
     
     //! State value for blanket fuel market necessary to use Marketplace::addToDemand
     double mLastBlanketValue;
+    
+    void copy( const NukeFuelTechnology& aOther );
 
 	static double getSWValue( const double aWeightFraction );
 

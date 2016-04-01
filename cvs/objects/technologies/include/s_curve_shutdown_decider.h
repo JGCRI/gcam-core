@@ -81,6 +81,8 @@ class S_CurveShutdownDecider: public IShutdownDecider
 {
     friend class ShutdownDeciderFactory;
 public:
+    virtual ~S_CurveShutdownDecider();
+    
     // IParsedComponent methods.
     virtual S_CurveShutdownDecider* clone() const;
 
@@ -104,18 +106,26 @@ public:
                                      const std::string& aSectorName,
                                      const int aInstallationYear,
                                      const int aPeriod ) const;
-private:
-    //! The name of this shutdown decider in case we want to stack multiple.
-    std::string mName;
-
-    //! The steepness of the curve. This rate may be zero
-    //! which is the equivalent to not reading in the s-curve shutdown decider.
-    double mSteepness;
+protected:
     
-    double mHalfLife;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IShutdownDecider,
 
+        //! The name of this shutdown decider in case we want to stack multiple.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+
+        //! The steepness of the curve. This rate may be zero
+        //! which is the equivalent to not reading in the s-curve shutdown decider.
+        CREATE_SIMPLE_VARIABLE( mSteepness, double, "steepness" ),
+        
+        //! Half life in terms of years after which 50% shutdown is achieved.
+        CREATE_SIMPLE_VARIABLE( mHalfLife, double, "half-life" )
+    )
 
     S_CurveShutdownDecider();
+    void copy( const S_CurveShutdownDecider& aOther );
 
     static const std::string& getXMLNameStatic();
 };

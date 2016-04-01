@@ -36,13 +36,6 @@
 *
 */
 
-
-#include "util/base/include/istandard_component.h"
-#include <string>
-#include <vector>
-
-class IShutdownDecider;
-
 /*! 
  * \file iproduction_state.h
  * \ingroup Objects
@@ -50,7 +43,21 @@ class IShutdownDecider;
  * \author Josh Lurz
  */
 
+#include <string>
+#include <vector>
+#include <boost/core/noncopyable.hpp>
+
+#include "util/base/include/istandard_component.h"
+#include "util/base/include/data_definition_util.h"
+
 class MarginalProfitCalculator;
+class IShutdownDecider;
+
+// Need to forward declare the subclasses as well.
+class FixedProductionState;
+class VariableProductionState;
+class VintageProductionState;
+class RetiredProductionState;
 
 /*! 
  * \ingroup Objects
@@ -63,7 +70,7 @@ class MarginalProfitCalculator;
  *          over its lifetime.
  * \author Josh Lurz
  */
-class IProductionState: public ISimpleComponent
+class IProductionState: public ISimpleComponent, private boost::noncopyable
 {
 public:
 	// Clone operator must be declared explicitly even though it is inherited
@@ -134,6 +141,16 @@ public:
     static double fixedOutputDefault() {
         return -1;
     }
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of IProductionState to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IProductionState, FixedProductionState, VariableProductionState,
+                                VintageProductionState, RetiredProductionState )
+    )
 };
 
 #endif // _ISHUTDOWN_DECIDER_H_

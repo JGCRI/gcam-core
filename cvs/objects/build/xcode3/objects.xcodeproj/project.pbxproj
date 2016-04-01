@@ -849,7 +849,6 @@
 		CD488697122873C200F5A88A /* technology_type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = technology_type.h; sourceTree = "<group>"; };
 		CD488698122873C200F5A88A /* tran_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tran_technology.h; sourceTree = "<group>"; };
 		CD488699122873C200F5A88A /* unmanaged_land_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unmanaged_land_technology.h; sourceTree = "<group>"; };
-		CD48869A122873C200F5A88A /* variable_cost_shutdown_decider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = variable_cost_shutdown_decider.h; sourceTree = "<group>"; };
 		CD48869B122873C200F5A88A /* variable_production_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = variable_production_state.h; sourceTree = "<group>"; };
 		CD48869C122873C200F5A88A /* vintage_production_state.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vintage_production_state.h; sourceTree = "<group>"; };
 		CD48869D122873C200F5A88A /* wind_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wind_technology.h; sourceTree = "<group>"; };
@@ -2165,7 +2164,6 @@
 				CD488697122873C200F5A88A /* technology_type.h */,
 				CD488698122873C200F5A88A /* tran_technology.h */,
 				CD488699122873C200F5A88A /* unmanaged_land_technology.h */,
-				CD48869A122873C200F5A88A /* variable_cost_shutdown_decider.h */,
 				CD48869B122873C200F5A88A /* variable_production_state.h */,
 				CD48869C122873C200F5A88A /* vintage_production_state.h */,
 				CD48869D122873C200F5A88A /* wind_technology.h */,

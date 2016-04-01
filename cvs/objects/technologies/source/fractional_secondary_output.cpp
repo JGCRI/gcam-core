@@ -43,7 +43,6 @@
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/fractional_secondary_output.h"
 #include "containers/include/scenario.h"
-#include "util/base/include/model_time.h"
 #include "containers/include/iinfo.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
@@ -61,27 +60,29 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 FractionalSecondaryOutput::FractionalSecondaryOutput()
-    : mPhysicalOutputs( scenario->getModeltime()->getmaxper() ),
-     mCostCurve( 0 )
 {
-}
-
-FractionalSecondaryOutput::FractionalSecondaryOutput( const FractionalSecondaryOutput& aOutput )
-: mPhysicalOutputs( aOutput.mPhysicalOutputs ),
-  mName( aOutput.mName ),
-  mOutputRatio( aOutput.mOutputRatio ),
-  mCostCurve( aOutput.mCostCurve.get() ? aOutput.mCostCurve->clone() : 0 ),
-  mMarketName( aOutput.mMarketName )
-{
+    mCostCurve = 0;
 }
 
 FractionalSecondaryOutput::~FractionalSecondaryOutput() {
+    delete mCostCurve;
 }
 
 
 FractionalSecondaryOutput* FractionalSecondaryOutput::clone() const
 {
-    return new FractionalSecondaryOutput( *this );
+    FractionalSecondaryOutput* clone = new FractionalSecondaryOutput();
+    clone->copy( *this );
+    return clone;
+}
+
+void FractionalSecondaryOutput::copy( const FractionalSecondaryOutput& aOther ) {
+    mName = aOther.mName;
+    mOutputRatio = aOther.mOutputRatio;
+    mMarketName = aOther.mMarketName;
+    
+    delete mCostCurve;
+    mCostCurve = aOther.mCostCurve ? aOther.mCostCurve->clone() : 0;
 }
 
 const string& FractionalSecondaryOutput::getName() const
@@ -163,7 +164,8 @@ bool FractionalSecondaryOutput::XMLParse( const DOMNode* aNode )
     }
     
     // TODO: should not reset the curve everytime *anything* is parsed
-    mCostCurve.reset( new PointSetCurve( currPoints ) );
+    delete mCostCurve;
+    mCostCurve = new PointSetCurve( currPoints );
 
     // TODO: Improve error handling.
     return true;
@@ -218,7 +220,7 @@ void FractionalSecondaryOutput::completeInit( const string& aSectorName,
                                                                           mMarketName.empty() ? aRegionName : mMarketName );
     }
 
-    if( !mCostCurve.get() ) {
+    if( !mCostCurve ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
         mainLog << "No fraction-produced read in for " << getXMLNameStatic() << " " << getName() << endl;

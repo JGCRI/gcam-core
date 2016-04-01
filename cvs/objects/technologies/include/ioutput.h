@@ -47,15 +47,27 @@
 #include <string>
 #include <xercesc/dom/DOMNode.hpp>
 #include <list>
+#include <boost/core/noncopyable.hpp>
 
 class Tabs;
 class ICaptureComponent;
 class IInfo;
+class ILandAllocator;
 
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
-#include "land_allocator/include/iland_allocator.h"
+#include "util/base/include/data_definition_util.h"
+
+// Need to forward declare the subclasses as well.
+class PrimaryOutput;
+class SecondaryOutput;
+class RESSecondaryOutput;
+class InternalGains;
+class ResidueBiomassOutput;
+class FractionalSecondaryOutput;
+class GenericOutput;
+
 /*! 
 * \ingroup Objects
 * \brief Represents a single generic output of a Technology.
@@ -70,7 +82,7 @@ class IInfo;
 *          and quantity calculations.
 * \author Josh Lurz
 */
-class IOutput : public IVisitable, public IParsable, public IRoundTrippable {
+class IOutput : public IVisitable, public IParsable, public IRoundTrippable, private boost::noncopyable {
 public:
     /*! 
      * \brief Constructor.
@@ -276,6 +288,17 @@ public:
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IOutput* aPreviousInput,
                                    const IOutput* aNextInput ) = 0;
+    
+protected:
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of IOutput to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IOutput, PrimaryOutput, SecondaryOutput, RESSecondaryOutput,
+                                InternalGains, ResidueBiomassOutput, FractionalSecondaryOutput,
+                                GenericOutput )
+    )
 };
 
 // Inline function definitions.

@@ -81,7 +81,29 @@ NukeFuelTechnology::NukeFuelTechnology( const string& aName, const int aYear ): 
 }
 
 NukeFuelTechnology* NukeFuelTechnology::clone() const {
-    return new NukeFuelTechnology( *this );
+    NukeFuelTechnology* clone = new NukeFuelTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
+
+void NukeFuelTechnology::copy( const NukeFuelTechnology& aOther ) {
+    Technology::copy( aOther );
+    
+    fertileFuelName = aOther.fertileFuelName;
+    blanketFuelName = aOther.blanketFuelName;
+    blanketFuelRatio = aOther.blanketFuelRatio;
+    burnup = aOther.burnup;
+    conversionCost = aOther.conversionCost;
+    enrichmentProd = aOther.enrichmentProd;
+    enrichmentFeed = aOther.enrichmentFeed;
+    enrichmentTail = aOther.enrichmentTail;
+    enrichmentCost = aOther.enrichmentCost;
+    fabricationCost = aOther.fabricationCost;
+    blanketFabCost = aOther.blanketFabCost;
+    interimStorageCost = aOther.interimStorageCost;
+    geologicWasteDisposalCost = aOther.geologicWasteDisposalCost;
+    reprocessingCost = aOther.reprocessingCost;
+    mConversionFactor = aOther.mConversionFactor;
 }
 
 const string& NukeFuelTechnology::getXMLName() const {

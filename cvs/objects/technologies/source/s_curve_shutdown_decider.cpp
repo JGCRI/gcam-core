@@ -58,11 +58,24 @@ extern Scenario* scenario;
  * \brief Constructor
  */
 S_CurveShutdownDecider::S_CurveShutdownDecider()
-: mSteepness( 0.1 ), mHalfLife( 45 )
-{}
+{
+    mSteepness = 0.1;
+    mHalfLife = 45;
+}
+
+S_CurveShutdownDecider::~S_CurveShutdownDecider() {
+}
 
 S_CurveShutdownDecider* S_CurveShutdownDecider::clone() const {
-    return new S_CurveShutdownDecider( *this );
+    S_CurveShutdownDecider* clone = new S_CurveShutdownDecider();
+    clone->copy( *this );
+    return clone;
+}
+
+void S_CurveShutdownDecider::copy( const S_CurveShutdownDecider& aOther ) {
+    mName = aOther.mName;
+    mSteepness = aOther.mSteepness;
+    mHalfLife = aOther.mHalfLife;
 }
 
 bool S_CurveShutdownDecider::isSameType( const string& aType ) const {

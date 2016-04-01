@@ -67,23 +67,25 @@ extern Scenario* scenario;
 UnmanagedLandTechnology::UnmanagedLandTechnology( const string& aName, const int aYear )
 :AgProductionTechnology( aName, aYear )
 {
+    mResourceInput = mInputs.end();
 }
 
 // ! Destructor
 UnmanagedLandTechnology::~UnmanagedLandTechnology() {
 }
 
-/*!
- * \brief Copy Constructor.
- * \details Need to define the copy constructor here to ensure that the
- *          compiler does not try to copy mResourceInput which will result
- *          in an error.
- * \param aOther The UnmanagedLandTechnology to copy.
- */
-UnmanagedLandTechnology::UnmanagedLandTechnology( const UnmanagedLandTechnology& aOther ):
-AgProductionTechnology( aOther ),
-mLandItemName( aOther.mLandItemName )
-{
+//! Clone Function. Returns a deep copy of the current technology.
+UnmanagedLandTechnology* UnmanagedLandTechnology::clone() const {
+    UnmanagedLandTechnology* clone = new UnmanagedLandTechnology( mName, mYear );
+    clone->copy( *this );
+    return clone;
+}
+
+void UnmanagedLandTechnology::copy( const UnmanagedLandTechnology& aOther ) {
+    AgProductionTechnology::copy( aOther );
+    
+    mLandItemName = aOther.mLandItemName;
+    // note mResourceInput is left unitialized
 }
 
 //! Parses any input variables specific to derived classes
@@ -145,11 +147,6 @@ const string& UnmanagedLandTechnology::getXMLNameStatic() {
 const string& UnmanagedLandTechnology::getLandInputName( ) const {
     const static string LAND_INPUT_NAME = "land-input";
     return LAND_INPUT_NAME;
-}
-
-//! Clone Function. Returns a deep copy of the current technology.
-UnmanagedLandTechnology* UnmanagedLandTechnology::clone() const {
-    return new UnmanagedLandTechnology( *this );
 }
 
 /*! 
@@ -311,8 +308,8 @@ void UnmanagedLandTechnology::calcEmissionsAndOutputs( const string& aRegionName
     ( *mResourceInput )->setPhysicalDemand( landArea, aRegionName, aPeriod );
 
     // calculate emissions for each gas
-    for ( unsigned int i = 0; i < ghg.size(); ++i ) {
-        ghg[ i ]->calcEmission( aRegionName, mInputs , mOutputs, aGDP, mCaptureComponent.get(), aPeriod );
+    for ( unsigned int i = 0; i < mGHG.size(); ++i ) {
+        mGHG[ i ]->calcEmission( aRegionName, mInputs , mOutputs, aGDP, mCaptureComponent, aPeriod );
     }
 }
 

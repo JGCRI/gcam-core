@@ -51,6 +51,7 @@ class Tabs;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -89,6 +90,8 @@ public:
      * \return The XML name for the class.
      */
     static const std::string& getXMLNameStatic();
+    
+    virtual ~InternalGains();
 
     virtual InternalGains* clone() const;
 
@@ -168,22 +171,30 @@ protected:
      *        OutputFactory.
      */
     InternalGains();
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IOutput,
 
-    //! Physical output by period.
-    std::vector<Value> mPhysicalOutputs;
+        //! Physical output by period.
+        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, objects::PeriodVector<Value>, "physical-output" ),
 
-    //! Internal Gains trial market name.
-    std::string mTrialMarketName;
+        //! The name of the output
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
-    //! Ratio of the internal gains to primary output production such that
-    //! primary output multiplied by the ratio is equal to internal gains.
-    Value mOutputRatio;
+        //! Internal Gains trial market name.
+        CREATE_SIMPLE_VARIABLE( mTrialMarketName, std::string, "internal-gains-market-name" ),
+
+        //! Ratio of the internal gains to primary output production such that
+        //! primary output multiplied by the ratio is equal to internal gains.
+        CREATE_SIMPLE_VARIABLE( mOutputRatio, Value, "output-ratio" )
+    )
     
     //! State value necessary to use addToTrialDemand
     double mLastCalcValue;
-
-private :
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
+    
+    void copy( const InternalGains& aOther );
 };
 
 #endif // _INTERNAL_GAINS_H_

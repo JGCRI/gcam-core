@@ -61,16 +61,27 @@ extern Scenario* scenario;
  * \details Protected constructor which prevents the capture component from
  *          being created without using the CaptureComponentFactory.
  */
-PowerPlantCaptureComponent::PowerPlantCaptureComponent():
-mSequesteredAmount( scenario->getModeltime()->getmaxper() ),
-mRemoveFraction( 0 ),
-mCaptureEnergy( 0 ),
-mNonEnergyCostPenalty( 0 )
+PowerPlantCaptureComponent::PowerPlantCaptureComponent()
 {
+    mRemoveFraction = 0;
+    mCaptureEnergy = 0;
+    mNonEnergyCostPenalty = 0;
+}
+
+PowerPlantCaptureComponent::~PowerPlantCaptureComponent() {
 }
 
 PowerPlantCaptureComponent* PowerPlantCaptureComponent::clone() const {
-    return new PowerPlantCaptureComponent( *this );
+    PowerPlantCaptureComponent* clone = new PowerPlantCaptureComponent();
+    clone->copy( *this );
+    return clone;
+}
+
+void PowerPlantCaptureComponent::copy( const PowerPlantCaptureComponent& aOther ) {
+    mStorageMarket = aOther.mStorageMarket;
+    mTargetGas = aOther.mTargetGas;
+    mRemoveFraction = aOther.mRemoveFraction;
+    mNonEnergyCostPenalty = aOther.mNonEnergyCostPenalty;
 }
 
 bool PowerPlantCaptureComponent::isSameType( const std::string& aType ) const {
@@ -139,6 +150,7 @@ void PowerPlantCaptureComponent::toInputXML( ostream& aOut,
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElementCheckDefault( mStorageMarket, "storage-market", aOut, aTabs, string( "" ) );
+	XMLWriteElementCheckDefault( mTargetGas, "target-gas", aOut, aTabs, string( "CO2" ) );
     XMLWriteElementCheckDefault( mRemoveFraction, "remove-fraction", aOut, aTabs, 0.0 );
     XMLWriteElementCheckDefault( mCaptureEnergy, "capture-energy", aOut, aTabs, 0.0 );
     XMLWriteElementCheckDefault( mNonEnergyCostPenalty, "non-energy-penalty", aOut, aTabs, 0.0 );

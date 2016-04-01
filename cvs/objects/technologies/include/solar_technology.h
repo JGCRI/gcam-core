@@ -94,10 +94,6 @@ public :
    SolarTechnology(
       const std::string& aName = std::string(),
       const int          aYear = -1 );
-   /*! Copy constructor
-    *  \param other the instance to copy
-    */
-   SolarTechnology( const SolarTechnology& other );
 
    //! Destructor
    virtual ~SolarTechnology(void);
@@ -172,77 +168,80 @@ protected :
       const std::string&      nodeName,
       const xercesc::DOMNode* curr );
 
-private :
-
    static const double      kWhrtoGJ;
    static const std::string ELECTRIC_SECTOR_NAME_KEY;
    static const std::string NO_SUN_DAYS_KEY;
 
    double getSolarPenetration( const int aPeriod ) const;
     
-   //! The key used for total annual irradiance
-   std::string mTotalAnnualIrradianceKey;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IntermittentTechnology,
+    
+       //! The key used for total annual irradiance
+       CREATE_SIMPLE_VARIABLE( mTotalAnnualIrradianceKey, std::string, "irradiance-tagname" ),
 
-   //! Capital cost [$/MW Capacity]
-   double mCapitalCost;
+       //! Capital cost [$/MW Capacity]
+       CREATE_SIMPLE_VARIABLE( mCapitalCost, double, "capital-cost" ),
 
-   //! Connection cost (used internally)
-   double mCConnect;
+       //! Connection cost (used internally)
+       CREATE_SIMPLE_VARIABLE( mCConnect, double, "c-connect" ),
 
-   //! Net plant solar to electricity conversion efficiency
-   double mCSPEfficiency;
+       //! Net plant solar to electricity conversion efficiency
+       CREATE_SIMPLE_VARIABLE( mCSPEfficiency, double, "net-solar-conversion-efficiency" ),
 
-   //! Plant availability (% of year plant is available at scheduled time)
-   double mPlantAvailability;
+       //! Plant availability (% of year plant is available at scheduled time)
+       CREATE_SIMPLE_VARIABLE( mPlantAvailability, double, "plant-availability-fraction" ),
 
-   //! Plant Maintenance Fraction (% of year plant need to be down for scheduled maintenance)
-   double mScheduledMaintenance;
+       //! Plant Maintenance Fraction (% of year plant need to be down for scheduled maintenance)
+       CREATE_SIMPLE_VARIABLE( mScheduledMaintenance, double, "plant-scheduled-maintenance-fraction" ),
 
-   //! Fraction of scheduled maintenance that can be accomplished during no-sun day outages
-   double mRandomMaintenanceFraction;
+       //! Fraction of scheduled maintenance that can be accomplished during no-sun day outages
+       CREATE_SIMPLE_VARIABLE( mRandomMaintenanceFraction, double, "random-maintence-fraction" ),
 
-   //! Generation cost (used internally)
-   double mCGeneration;
+       //! Generation cost (used internally)
+       CREATE_SIMPLE_VARIABLE( mCGeneration, double, "c-generation" ),
 
-   //! The average capacity factor for the CSP plant. [unitless] (used internally)
-   double mCSPCapacityFactor;
+       //! The average capacity factor for the CSP plant. [unitless] (used internally)
+       CREATE_SIMPLE_VARIABLE( mCSPCapacityFactor, double, "csp-capacity-factor" ),
 
-   //! The current electrical sector name (cached)
-   std::string mElectricSectorName;
+       //! [unitless]
+       CREATE_SIMPLE_VARIABLE( mFCR, double, "fcr" ),
 
-   //! [unitless]
-   double mFCR;
+       //! The unit connection cost [$/km/MW capacity]. 
+       CREATE_SIMPLE_VARIABLE( mGridConnectionCost, double, "grid-connection-cost" ),
 
-   //! The unit connection cost [$/km/MW capacity]. 
-   double mGridConnectionCost;
+       //! [$]
+       CREATE_SIMPLE_VARIABLE( mOM, double, "om" ),
 
-   //! [$]
-   double mOM;
+       //! The current region name (cached)
+       CREATE_SIMPLE_VARIABLE( mRegionName, std::string, "region-name" ),
 
-   //! The current region name (cached)
-   std::string mRegionName;
+       //! The current sector name (cached)
+       CREATE_SIMPLE_VARIABLE( mSectorName, std::string, "sector-name" ),
 
-   //! The current sector name (cached)
-   std::string mSectorName;
+       /*! The fraction of the resource area that is actually occupied
+        *  by the solar field. [unitless]
+        */
+       CREATE_SIMPLE_VARIABLE( mSolarFieldFraction, double, "solar-field-fraction" ),
 
-   /*! The fraction of the resource area that is actually occupied
-    *  by the solar field. [unitless]
-    */
-   double mSolarFieldFraction;
+       CREATE_SIMPLE_VARIABLE( mSolarFieldArea, double, "solar-field-area" ),
 
-   double mSolarFieldArea;
+       //! The maximum energy loss fraction
+       CREATE_SIMPLE_VARIABLE( mMaxLoss, double, "max-solar-loss" ),
 
-   //! The maximum energy loss fraction
-   double mMaxLoss;
+       //! Exponent for energy loss as a function of penetration
+       CREATE_SIMPLE_VARIABLE( mEfficiencyLossExponent, double, "loss-exponent" ),
 
-   //! Exponent for energy loss as a function of penetration
-   double mEfficiencyLossExponent;
+       //! The max potential fraction of the sector's load that can be served by this technology
+       CREATE_SIMPLE_VARIABLE( mMaxSectorLoadServed, double, "max-sector-load-served" ),
 
-   //! The max potential fraction of the sector's load that can be served by this technology
-   double mMaxSectorLoadServed;
-
-   //! Number of no sun days
-   double mNoSunDays;
+       //! Number of no sun days
+       CREATE_SIMPLE_VARIABLE( mNoSunDays, double, "no-sun-days" )
+    )
+    
+    void copy( const SolarTechnology& aOther );
 
    virtual const std::string& getTechCostName( ) const;
 };

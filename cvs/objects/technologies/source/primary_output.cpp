@@ -43,7 +43,6 @@
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/primary_output.h"
 #include "containers/include/scenario.h"
-#include "util/base/include/model_time.h"
 #include "containers/include/iinfo.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
@@ -55,26 +54,9 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-// static initialize.
-const string PrimaryOutput::XML_REPORTING_NAME = "output-primary";
-
 PrimaryOutput::PrimaryOutput( const string& aSectorName )
-    : mPhysicalOutputs( scenario->getModeltime()->getmaxper() ), // Name of the primary output is the sector name.
-mName( aSectorName )
 {
-}
-
-/*!
- * \brief Copy constructor.
- * \note This class requires a copy constructor because it has dynamically
- *          allocated memory.
- * \param aPrimaryOutput Primary output from which to copy.
- */
-PrimaryOutput::PrimaryOutput( const PrimaryOutput& aPrimaryOutput )
-    : mPhysicalOutputs( scenario->getModeltime()->getmaxper() ),
-mName( aPrimaryOutput.mName )
-{
-    // not copying outputs or coefs is this fine?
+    mName = aSectorName;
 }
 
 PrimaryOutput::~PrimaryOutput() {
@@ -82,7 +64,14 @@ PrimaryOutput::~PrimaryOutput() {
 
 PrimaryOutput* PrimaryOutput::clone() const
 {
-    return new PrimaryOutput( *this );
+    PrimaryOutput* clone = new PrimaryOutput( mName );
+    clone->copy( *this );
+    return clone;
+}
+
+void PrimaryOutput::copy( const PrimaryOutput& aOther ) {
+    mName = aOther.mName;
+    mCachedCO2Coef = aOther.mCachedCO2Coef;
 }
 
 bool PrimaryOutput::isSameType( const string& aType ) const
@@ -107,6 +96,7 @@ const string& PrimaryOutput::getName() const
 * \return The constant XML_NAME.
 */
 const string& PrimaryOutput::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-primary";
     return XML_REPORTING_NAME;
 }
 

@@ -52,6 +52,7 @@ class CachedMarket;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -75,8 +76,6 @@ public:
      * \param aSectorName Name of the sector and primary output.
      */
     PrimaryOutput( const std::string& aSectorName );
-    
-    PrimaryOutput( const PrimaryOutput& aPrimaryOutput );
     
     virtual ~PrimaryOutput();
 
@@ -158,20 +157,26 @@ public:
                                    const IOutput* aNextInput ) {}
 
 protected:
-    //! Physical output by period.
-    std::vector<Value> mPhysicalOutputs;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IOutput,
 
-    //! Name of the primary output. This is the same as the sector name.
-    const std::string mName;
+        //! Physical output by period.
+        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, objects::PeriodVector<Value>, "physical-output" ),
 
-    //! CO2 emissions coefficient cached from the marketplace.
-    Value mCachedCO2Coef;
+        //! Name of the primary output. This is the same as the sector name.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+
+        //! CO2 emissions coefficient cached from the marketplace.
+        CREATE_SIMPLE_VARIABLE( mCachedCO2Coef, Value, "co2-coef" )
+    )
     
     //! A pre-located market which has been cached from the marketplace to add supply to.
     std::auto_ptr<CachedMarket> mCachedMarket;
-
-private:
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
+    
+    void copy( const PrimaryOutput& aOther );
 };
 
 #endif // _PRIMARY_OUTPUT_H_

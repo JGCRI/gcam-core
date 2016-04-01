@@ -49,7 +49,9 @@ FixedProductionState::FixedProductionState(){
 }
 
 FixedProductionState* FixedProductionState::clone() const {
-    return new FixedProductionState( *this );
+    FixedProductionState* clone = new FixedProductionState();
+    clone->mFixedOutput = mFixedOutput;
+    return clone;
 }
 
 bool FixedProductionState::isSameType( const string& aType ) const {

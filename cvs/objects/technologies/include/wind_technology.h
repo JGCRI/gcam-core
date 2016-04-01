@@ -86,10 +86,6 @@ public :
    WindTechnology(
       const std::string& aName = std::string(),
       const int          aYear = -1 );
-   /*! Copy constructor
-    *  \param other the instance to copy
-    */
-   WindTechnology(const WindTechnology& other);
 
    //! Destructor
    virtual ~WindTechnology(void);
@@ -226,63 +222,63 @@ protected :
       const std::string&      nodeName,
       const xercesc::DOMNode* curr );
 
-private :
-
    static const double kWhrtoGJ;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+       IntermittentTechnology,
 
-   //! Capital cost [2004 $/kW] based on rated capacity
-   double mCapitalCost;
+       //! Capital cost [2004 $/kW] based on rated capacity
+       CREATE_SIMPLE_VARIABLE( mCapitalCost, double, sXMLTagNames[ CAPITAL_COST_KEY ] ),
 
-   //! Connection cost
-   double mConnectCost;
+       //! Connection cost
+       CREATE_SIMPLE_VARIABLE( mConnectCost, double, "connection-cost" ),
 
-   //! Turbine cutout speed [m/s]
-   double mCutOutSpeed;
+       //! Turbine cutout speed [m/s]
+       CREATE_SIMPLE_VARIABLE( mCutOutSpeed, double, sXMLTagNames[ CUTOUT_SPEED_KEY ] ),
 
-   //! fixed charge rate [unitless]
-   double mFCR;
+       //! fixed charge rate [unitless]
+       CREATE_SIMPLE_VARIABLE( mFCR, double, sXMLTagNames[ FCR_KEY ] ),
 
-   //! Generation cost
-   double mGenerationCost;
+       //! Generation cost
+       CREATE_SIMPLE_VARIABLE( mGenerationCost, double, "generation-cost" ),
 
-   //! Grid connection cost [$/km/MW capacity] based on rated capacity
-   double mGridConnectionCost;
+       //! Grid connection cost [$/km/MW capacity] based on rated capacity
+       CREATE_SIMPLE_VARIABLE( mGridConnectionCost, double, sXMLTagNames[ GRID_CONNECTION_COST_KEY ] ),
 
-   //! [2004 $/kW/Yr] based on rated capacity
-   double mOM;
+       //! [2004 $/kW/Yr] based on rated capacity
+       CREATE_SIMPLE_VARIABLE( mOM, double, sXMLTagNames[ OM_KEY ] ),
 
-   //! Realized turbine output
-   double mRealizedTurbineOutput;
+       //! Realized turbine output
+       CREATE_SIMPLE_VARIABLE( mRealizedTurbineOutput, double, "realized-turbine-output" ),
 
-   //! Turbine rotor diameter [m]
-   double mRotorDiameter;
+       //! Turbine rotor diameter [m]
+       CREATE_SIMPLE_VARIABLE( mRotorDiameter, double, sXMLTagNames[ ROTOR_DIAMETER_KEY ] ),
 
-   //! Land per turbine [MW/km2]
-   double mTurbineDensity;
+       //! Land per turbine [MW/km2]
+       CREATE_SIMPLE_VARIABLE( mTurbineDensity, double, sXMLTagNames[ TURBINE_DENSITY_KEY ] ),
 
-   //! Percentage of loss from ideal operation [unitless]
-   double mTurbineDerating;
+       //! Percentage of loss from ideal operation [unitless]
+       CREATE_SIMPLE_VARIABLE( mTurbineDerating, double, sXMLTagNames[ TURBINE_DERATING_KEY ] ),
 
-   //! Turbine hub height [m]
-   double mTurbineHubHeight;
+       //! Turbine hub height [m]
+       CREATE_SIMPLE_VARIABLE( mTurbineHubHeight, double, sXMLTagNames[ TURBINE_HUB_HEIGHT_KEY ] ),
 
-   //! Turbine output rating [unitless]
-   double mTurbineRating;
+       //! Turbine output rating [unitless]
+       CREATE_SIMPLE_VARIABLE( mTurbineRating, double, sXMLTagNames[ TURBINE_RATING_KEY ] ),
 
-   //! Wind capacity factor
-   double mWindCapacityFactor;
+       //! Wind capacity factor
+       CREATE_SIMPLE_VARIABLE( mWindCapacityFactor, double, "wind-capacity-factor" ),
 
-   //! Percentage of loss from turbine to grid [unitless]
-   double mWindFarmLoss;
-
+       //! Percentage of loss from turbine to grid [unitless]
+       CREATE_SIMPLE_VARIABLE( mWindFarmLoss, double, sXMLTagNames[ WIND_FARM_LOSS_KEY ] )
+   )
+    
    //! Wind Power Variance
    mutable double mWindPowerVariance;
-
-   //! The maximum energy loss fraction
-   double mMaxLoss;
-
-   //! Exponent for energy loss as a function of penetration
-   double mEfficiencyLossExponent;
+    
+    void copy( const WindTechnology& aOther );
 
    virtual const std::string& getTechCostName( ) const;
 };

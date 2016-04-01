@@ -62,7 +62,10 @@ CalDataOutputPercap::CalDataOutputPercap() {
 * \return A clone of the object.
 */
 CalDataOutputPercap* CalDataOutputPercap::clone() const {
-    return new CalDataOutputPercap( *this );
+    CalDataOutputPercap* clone = new CalDataOutputPercap();
+    clone->mCalOutputPercapValue = mCalOutputPercapValue;
+    clone->mPopulation = mPopulation;
+    return clone;
 }
 
 /*! \brief Parses XML for the object.

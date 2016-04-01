@@ -84,6 +84,7 @@ struct YearFilter;
 template<typename T>
 struct Data {
     Data( const char* aDataName ):mDataName( aDataName ) {}
+    Data( const std::string& aDataName ):mDataName( aDataName ) {}
     /*! \warning The Data struct will not attempt to manage memory allocation/de-allocation
      *           automatically and users will still be responsible for releasing memory
      *           themselves.
@@ -102,6 +103,7 @@ struct Data {
 template<typename T, typename Filter>
 struct ContainerData : public Data<T> {
     ContainerData( const char* aDataName ):Data<T>( aDataName ) {}
+    ContainerData( const std::string& aDataName ):Data<T>( aDataName ) {}
     virtual ~ContainerData() { }
     typedef Filter filter_type;
 };
@@ -109,6 +111,7 @@ struct ContainerData : public Data<T> {
 template<typename T>
 struct ArrayData : public Data<T> {
     ArrayData( const char* aDataName ):Data<T>( aDataName ) {}
+    ArrayData( const const std::string& aDataName ):Data<T>( aDataName ) {}
     virtual ~ArrayData() { }
 };
 

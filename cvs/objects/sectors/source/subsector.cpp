@@ -777,7 +777,7 @@ void Subsector::interpolateShareWeights( const int aPeriod ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Found uninitialized share weight in subsector: " << mName << " in period " << per << endl;
-            exit( 1 );
+            abort();
         }
     }
 }

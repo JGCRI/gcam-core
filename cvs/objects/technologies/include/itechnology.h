@@ -48,8 +48,11 @@
 #include <vector>
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
+#include <boost/core/noncopyable.hpp>
+
 #include "util/base/include/istandard_component.h"
 #include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 // Forward declaration
 class AGHG;
@@ -60,8 +63,20 @@ class ILandAllocator;
 class Demographic;
 class IOutput;
 class IInput;
-class Technology;
 class IDiscreteChoice;
+
+// Need to forward declare the subclasses as well.
+class Technology;
+class DefaultTechnology;
+class IntermittentTechnology;
+class WindTechnology;
+class SolarTechnology;
+class NukeFuelTechnology;
+class TranTechnology;
+class AgProductionTechnology;
+class PassThroughTechnology;
+class UnmanagedLandTechnology;
+class EmptyTechnology;
 
 /*!
 * \brief A structure containing information about the same type Technology
@@ -87,7 +102,7 @@ struct PreviousPeriodInfo {
 *
 * \author Pralit Patel
 */
-class ITechnology: public IParsedComponent
+class ITechnology: public IParsedComponent, private boost::noncopyable
 {
 public:
     virtual ITechnology* clone() const = 0;
@@ -222,6 +237,16 @@ public:
     virtual double getTotalInputCost( const std::string& aRegionName,
                                     const std::string& aSectorName,
                                     const int aPeriod ) const = 0;
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of ITechnology to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( ITechnology, Technology, DefaultTechnology, IntermittentTechnology,
+                                WindTechnology, SolarTechnology, NukeFuelTechnology, TranTechnology,
+                                AgProductionTechnology, PassThroughTechnology, UnmanagedLandTechnology,
+                                EmptyTechnology )
+    )
 };
 
 // Inline methods

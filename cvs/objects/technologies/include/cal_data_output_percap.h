@@ -65,14 +65,21 @@ public:
 
     virtual double getCalOutput();
 
-private:
-    //! Calibrated output on a per capita basis.
-    double mCalOutputPercapValue;
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICalData,
 
-    /*! \brief Cached population for the period of the calibration value.
-    * \todo If population becomes dynamic this will have to change.
-    */
-    double mPopulation;
+        //! Calibrated output on a per capita basis.
+        CREATE_SIMPLE_VARIABLE( mCalOutputPercapValue, double, "calOutputPercapValue" ),
+
+        /*! \brief Cached population for the period of the calibration value.
+        * \todo If population becomes dynamic this will have to change.
+        */
+        CREATE_SIMPLE_VARIABLE( mPopulation, double, "population" )
+    )
 };
 
 #endif // _CAL_DATA_OUTPUT_PERCAP_H_

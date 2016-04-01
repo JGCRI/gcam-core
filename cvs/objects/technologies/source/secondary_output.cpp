@@ -55,9 +55,6 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-// static initialize.
-const string SecondaryOutput::XML_REPORTING_NAME = "output-secondary";
-
 /*! \brief Get the XML name for reporting to XML file.
 *
 * This public function accesses the private constant string, XML_NAME. This way
@@ -67,6 +64,7 @@ const string SecondaryOutput::XML_REPORTING_NAME = "output-secondary";
 * \return The constant XML_NAME.
 */
 const string& SecondaryOutput::getXMLReportingName() const{
+    static const string XML_REPORTING_NAME = "output-secondary";
     return XML_REPORTING_NAME;
 }
 
@@ -77,14 +75,28 @@ const string& SecondaryOutput::getXMLNameStatic()
 }
 
 SecondaryOutput::SecondaryOutput()
-    : mPhysicalOutputs( scenario->getModeltime()->getmaxper() ),
-      mPriceMult( 1.0 )
 {
+    mPriceMult = 1.0;
+}
+
+SecondaryOutput::~SecondaryOutput() {
 }
 
 SecondaryOutput* SecondaryOutput::clone() const
 {
-    return new SecondaryOutput( *this );
+    SecondaryOutput* clone = new SecondaryOutput();
+    clone->copy( * this );
+    return clone;
+}
+
+void SecondaryOutput::copy( const SecondaryOutput& aOther ) {
+    mName = aOther.mName;
+    mCachedCO2Coef = aOther.mCachedCO2Coef;
+    mOutputRatio = aOther.mOutputRatio;
+    mPriceMult = aOther.mPriceMult;
+    mMarketName = aOther.mMarketName;
+    
+    // note results are not copied.
 }
 
 bool SecondaryOutput::isSameType( const string& aType ) const

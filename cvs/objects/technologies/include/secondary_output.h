@@ -51,6 +51,7 @@ class Tabs;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -85,6 +86,8 @@ public:
      */
     static const std::string& getXMLNameStatic();
 
+    virtual ~SecondaryOutput();
+    
     virtual SecondaryOutput* clone() const;
 
     virtual bool isSameType( const std::string& aType ) const;
@@ -172,33 +175,38 @@ protected:
     SecondaryOutput();
 
     double calcPhysicalOutputInternal( const double aPrimaryOutput ) const;
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IOutput,
 
-    //! Physical output by period.
-    std::vector<Value> mPhysicalOutputs;
+        //! Physical output by period.
+        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, objects::PeriodVector<Value>, "physical-output" ),
 
-    //! Name of the secondary output. Corresponds to a market for this good and
-    //! a supply sector which supplies this good as its primary output.
-    std::string mName;
+        //! Name of the secondary output. Corresponds to a market for this good and
+        //! a supply sector which supplies this good as its primary output.
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
-    //! CO2 emissions coefficient cached from the marketplace.
-    Value mCachedCO2Coef;
+        //! CO2 emissions coefficient cached from the marketplace.
+        CREATE_SIMPLE_VARIABLE( mCachedCO2Coef, Value, "co2-coef" ),
 
-    //! Ratio of the secondary output to primary output production such that
-    //! primary output multiplied by the ratio is equal to secondary output.
-    Value mOutputRatio;
+        //! Ratio of the secondary output to primary output production such that
+        //! primary output multiplied by the ratio is equal to secondary output.
+        CREATE_SIMPLE_VARIABLE( mOutputRatio, Value, "output-ratio" ),
 
-    //! Multiplier to price of secondary good to allow unit changes.
-    double mPriceMult;
+        //! Multiplier to price of secondary good to allow unit changes.
+        CREATE_SIMPLE_VARIABLE( mPriceMult, double, "pMultiplier" ),
+        
+        //! The market name in which this output is adjusting the value.  If empty
+        //! the current region is assumed.
+        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market-name" )
+    )
+    
+    void copy( const SecondaryOutput& aOther );
     
     //! State value necessary to use Marketplace::addToDemand
     double mLastCalcValue;
-    
-    //! The market name in which this output is adjusting the value.  If empty
-    //! the current region is assumed.
-    std::string mMarketName;
-
-private:
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
 };
 
 #endif // _SECONDARY_OUTPUT_H_

@@ -49,7 +49,7 @@ VariableProductionState::VariableProductionState(){
 }
 
 VariableProductionState* VariableProductionState::clone() const {
-    return new VariableProductionState( *this );
+    return new VariableProductionState();
 }
 
 bool VariableProductionState::isSameType( const std::string& aType ) const {

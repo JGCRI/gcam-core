@@ -101,11 +101,17 @@ public:
     
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
 protected:
-    //!< Vehicle load factor.
-    double mLoadFactor; 
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Technology,
 
-    //!< Service output.
-    double mServiceOutput; 
+        //! Vehicle load factor.
+        CREATE_SIMPLE_VARIABLE( mLoadFactor, double, "loadFactor" )
+    )
+    
+    void copy( const TranTechnology& aOther );
 
     double getTotalInputCost( const std::string& aRegionName,
         const std::string& aSectorName,
@@ -117,10 +123,6 @@ protected:
     double getNonEnergyCost( const std::string& aRegionName,
         const std::string& aSectorName,
         const int aPeriod ) const;
-
-
-private:
-    static const std::string XML_NAME; //!< The XML name of this object.
 };
 
 #endif // _TRAN_TECHNOLOGY_H_

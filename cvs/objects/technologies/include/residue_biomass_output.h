@@ -37,9 +37,10 @@
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
 #include "util/curves/include/cost_curve.h"
-#include <vector>
+#include "util/base/include/time_vector.h"
 
 class Curve;
+class ALandAllocatorItem;
 
 /*!
  * \ingroup objects::biomass
@@ -78,9 +79,7 @@ public :
    typedef IOutput parent;
 
     ResidueBiomassOutput( const std::string& sectorName = std::string() );
-    ResidueBiomassOutput( const ResidueBiomassOutput& other );
     virtual ~ResidueBiomassOutput(void);
-    ResidueBiomassOutput& operator = ( const ResidueBiomassOutput& other );
     virtual const std::string& getXMLReportingName() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
@@ -89,7 +88,7 @@ public :
                                                     const ICaptureComponent* aCaptureComponent,
                                                     const int aPeriod ) const;
 
-    virtual ResidueBiomassOutput* clone( void ) const { return new ResidueBiomassOutput( *this ); }
+    virtual ResidueBiomassOutput* clone( void ) const;
 
     virtual void completeInit( const std::string& aSectorName, const std::string& aRegionName,
                                const IInfo* aTechInfo, const bool aIsTechOperating );
@@ -131,43 +130,44 @@ public :
                                    const int aNextYear, const IOutput* aPreviousInput,
                                    const IOutput* aNextInput );
 
-private :
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
-    typedef std::vector<Value> value_vector_type;
-
-    //! Physical output by period.
-    mutable value_vector_type mPhysicalOutputs;
-
-    /*!
-    * Name of the secondary output. Corresponds to a market for this good
-    * and a supply sector which supplies this good as its primary output.
-    */
-    std::string mName;
-
-    //! CO2 emissions coefficient cached from the marketplace.
-    Value mCachedCO2Coef;
+protected :
+    typedef objects::PeriodVector<Value> value_vector_type;
     
-    //! Weak pointer to the land leaf which corresponds to this biomass output
-    //! used to save time finding it over and over
-    ALandAllocatorItem* mProductLeaf;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IOutput,
 
-    //! The harvest index
-    double mHarvestIndex;
+        //! Physical output by period.
+        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, value_vector_type, "physical-output" ),
 
-    //! The mass per unit area of biomass to be retained to prevent erosion
-    double mErosCtrl;
+        /*!
+        * Name of the secondary output. Corresponds to a market for this good
+        * and a supply sector which supplies this good as its primary output.
+        */
+        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
-    //! The energy to mass conversion of the crop
-    double mMassConversion;
-    
-    //! Water content of residue
-    double mWaterContent;
+        //! CO2 emissions coefficient cached from the marketplace.
+        CREATE_SIMPLE_VARIABLE( mCachedCO2Coef, Value, "co2-coef" ),
 
-    //! The mass to energy conversion of the crop residue
-    double mMassToEnergy;
+        //! The harvest index
+        CREATE_SIMPLE_VARIABLE( mHarvestIndex, double, "harvest-index" ),
 
-    //! Piece-wise linear cost curve 
-    std::auto_ptr<Curve> mCostCurve; 
+        //! The mass per unit area of biomass to be retained to prevent erosion
+        CREATE_SIMPLE_VARIABLE( mErosCtrl, double, "eros-ctrl" ),
+
+        //! The energy to mass conversion of the crop
+        CREATE_SIMPLE_VARIABLE( mMassConversion, double, "mass-conversion" ),
+        
+        //! Water content of residue
+        CREATE_SIMPLE_VARIABLE( mWaterContent, double, "water-content" ),
+
+        //! The mass to energy conversion of the crop residue
+        CREATE_SIMPLE_VARIABLE( mMassToEnergy, double, "mass-to-energy" ),
+
+        //! Piece-wise linear cost curve 
+        CREATE_CONTAINER_VARIABLE( mCostCurve, Curve*, NoFilter, "fract-harvested" )
+    )
 
     // These variables are for debugging purposes. Values are written to debug.xml
     // Are made mutable so values can be saved. Are used only for debugging so are not violating const functions.
@@ -191,6 +191,12 @@ private :
 
     //! State value necessary to use Marketplace::addToDemand
     double mLastCalcValue;
+    
+    //! Weak pointer to the land leaf which corresponds to this biomass output
+    //! used to save time finding it over and over
+    ALandAllocatorItem* mProductLeaf;
+    
+    void copy( const ResidueBiomassOutput& aOther );
 };
 
 #endif   // __RESIDUEBIOMASSOUTPUT_H

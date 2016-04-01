@@ -96,8 +96,14 @@ protected:
      */
     static const std::string& getXMLNameStatic();
 
-    //! The level of fixed output.
-    Value mFixedOutput;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        IProductionState,
+
+        //! The level of fixed output.
+        CREATE_SIMPLE_VARIABLE( mFixedOutput, Value, "base-output" )
+    )
 };
 
 #endif // _FIXED_PRODUCTION_STATE_H_

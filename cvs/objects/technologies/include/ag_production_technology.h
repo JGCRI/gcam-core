@@ -70,7 +70,6 @@ class AgProductionTechnology : public Technology {
 public:
     AgProductionTechnology( const std::string& aName,
                               const int aYear );
-    AgProductionTechnology( const AgProductionTechnology& aAgTech );
     ~AgProductionTechnology();
     static const std::string& getXMLNameStatic();
     AgProductionTechnology* clone() const;    
@@ -111,21 +110,35 @@ public:
     virtual Value getParsedShareWeight() const;
 protected:
 
-    double mNonLandVariableCost; //!< The non-land cost of producing a unit of product
-    double mNonLandCostTechChange; //!< Annual percent reduction in non-land variableCost
-    double mYield; //!< optional input of yield used only for sectors with no current production
-	// but maybe also use for calibrated yield?
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Technology,
 
-    double mAgProdChange;  //!< the technological change factor
+        //! The non-land cost of producing a unit of product
+        CREATE_SIMPLE_VARIABLE( mNonLandVariableCost, double, "nonLandVariableCost" ),
 
-    //! Measure of multiple cropping
-    double mHarvestsPerYear;
+        //! Annual percent reduction in non-land variableCost
+        CREATE_SIMPLE_VARIABLE( mNonLandCostTechChange, double, "nonLandCostTechChange" ),
+
+        //! optional input of yield used only for sectors with no current production
+        //! but maybe also use for calibrated yield?
+        CREATE_SIMPLE_VARIABLE( mYield, double, "yield" ),
+        
+        //! the technological change factor
+        CREATE_SIMPLE_VARIABLE( mAgProdChange, double, "agProdChange" ),
+
+        //! Measure of multiple cropping
+        CREATE_SIMPLE_VARIABLE( mHarvestsPerYear, double, "harvests-per-year" )
+    )
  
     ILandAllocator* mLandAllocator;
     
     //! Weak pointer to the land leaf which corresponds to this technology
     //! used to save time finding it over and over
     ALandAllocatorItem* mProductLeaf;
+    
+    void copy( const AgProductionTechnology& aOther );
 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;

@@ -59,7 +59,9 @@ CalDataOutput::CalDataOutput() {
 * \return A clone of the object.
 */
 CalDataOutput* CalDataOutput::clone() const {
-    return new CalDataOutput( *this );
+    CalDataOutput* clone = new CalDataOutput();
+    clone->mCalOutputValue = mCalOutputValue;
+    return clone;
 }
 
 /*! \brief Parses XML for the object.

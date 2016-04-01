@@ -80,9 +80,16 @@ public:
 
     virtual double getCalOutput();
 
-private:
-    //! Calibrated output value.
-    double mCalOutputValue;
+protected:
+
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        ICalData,
+
+        //! Calibrated output value.
+        CREATE_SIMPLE_VARIABLE( mCalOutputValue, double, "calOutputValue" )
+    )
 };
 
 #endif // _CAL_DATA_OUTPUT_H_
