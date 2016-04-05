@@ -46,12 +46,12 @@
 using namespace std;
 
 //! Constructor
-TrialValueMarket::TrialValueMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
-  Market( goodNameIn, regionNameIn, periodIn )
+TrialValueMarket::TrialValueMarket( const MarketContainer* aContainer ) :
+  Market( aContainer )
 {   
     // Initialize to 0.001. Use of previous getSmallNumber() is too small and 
     // takes longer to solve.
-    price = 0.001;
+    mPrice = 0.001;
 }
 
 void TrialValueMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -76,8 +76,8 @@ void TrialValueMarket::set_price_to_last_if_default( const double lastPrice ) {
    //Market::set_price_to_last_if_default( lastPrice );
     // Only initialize the price from last period's price if the price is set to
     // the default. This prevents overwriting read-in initial prices.
-    if( price == 0.001 ){
-        price = lastPrice;
+    if( mPrice == 0.001 ){
+        mPrice = lastPrice;
     }
     // Note zero may be a valid price for a trial value.
 }
@@ -85,8 +85,8 @@ void TrialValueMarket::set_price_to_last_if_default( const double lastPrice ) {
 void TrialValueMarket::set_price_to_last( const double lastPrice ) {
     // Initialize the price from last period's price.
     // This resets all prices to last.
-    if( price > 0 ){
-        price = lastPrice;
+    if( mPrice > 0 ){
+        mPrice = lastPrice;
     }
     // Note zero may be a valid price for a trial value.
 }

@@ -46,8 +46,8 @@
 using namespace std;
 
 ///! Constructor
-MarketRES::MarketRES( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
-  Market( goodNameIn, regionNameIn, periodIn ) {
+MarketRES::MarketRES( const MarketContainer* aContainer ) :
+  Market( aContainer ) {
 }
 
 void MarketRES::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -74,13 +74,13 @@ double MarketRES::getDefaultPrice() const {
 */
 void MarketRES::initPrice() {
     // If price is near zero it needs to be initialized.
-    if( price < util::getSmallNumber() ){
-        if( solveMarket ){
-            price = getDefaultPrice();
+    if( mPrice < util::getSmallNumber() ){
+        if( mSolveMarket ){
+            mPrice = getDefaultPrice();
         }
         // The market will not be solved so it is set to null. 
         else {
-            price = 0;
+            mPrice = 0;
         }
     }
     // get the minimum price from the market info
@@ -101,13 +101,13 @@ void MarketRES::setPrice( const double priceIn ) {
 */
 void MarketRES::set_price_to_last_if_default( const double lastPrice ) {
     // If the price is zero and the solve flag is set so a constraint exists. 
-    if( price == getDefaultPrice() && solveMarket ){
+    if( mPrice == getDefaultPrice() && mSolveMarket ){
         if( lastPrice < util::getSmallNumber() ){
-            price = getDefaultPrice();
+            mPrice = getDefaultPrice();
         }
         // Otherwise set the price to the previous period's price.
         else {
-            price = lastPrice;
+            mPrice = lastPrice;
         }
     }
     // There is no else here because we do not want to override prices in the case of a fixed tax.
@@ -122,13 +122,13 @@ void MarketRES::set_price_to_last_if_default( const double lastPrice ) {
 */
 void MarketRES::set_price_to_last( const double lastPrice ) {
     // If the price is zero and the solve flag is set so a constraint exists. 
-    if( solveMarket ){
+    if( mSolveMarket ){
         if( lastPrice < util::getSmallNumber() ){
-            price = getDefaultPrice();
+            mPrice = getDefaultPrice();
         }
         // Otherwise set the price to the previous period's price.
         else {
-            price = lastPrice;
+            mPrice = lastPrice;
         }
     }
     // There is no else here because we do not want to override prices in the case of a fixed tax.
@@ -182,7 +182,7 @@ void MarketRES::addToSupply( const double supplyIn ) {
 * \author Sonny Kim
 */
 bool MarketRES::shouldSolve() const {
-    return solveMarket;
+    return mSolveMarket;
 }
 
 /* \brief This method determines whether to solve a MarketRES with the NR solution mechanism.
@@ -203,13 +203,13 @@ bool MarketRES::shouldSolveNR() const {
 */
 bool MarketRES::meetsSpecialSolutionCriteria() const {
     // If there is no constraint, this market is solved.
-    if( !solveMarket ){
+    if( !mSolveMarket ){
         return true;
     }
 
     // If price is below the min-price, demand cannot be driven any higher.
     // The constraint is not binding (greater than the demand), so this market is solved.
-    if( ( price <= mMinPrice ) && ( getRawSupply() >= getRawDemand() ) ){
+    if( ( mPrice <= mMinPrice ) && ( getRawSupply() >= getRawDemand() ) ){
 		return true;
     }
     return false;

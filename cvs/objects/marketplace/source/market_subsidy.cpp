@@ -44,8 +44,8 @@
 using namespace std;
 
 ///! Constructor
-MarketSubsidy::MarketSubsidy( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
-  MarketRES( goodNameIn, regionNameIn, periodIn ) {
+MarketSubsidy::MarketSubsidy( const MarketContainer* aContainer ) :
+  MarketRES( aContainer ) {
 }
 
 void MarketSubsidy::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {

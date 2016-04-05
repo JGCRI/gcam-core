@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E0BB18F1CB2CF3F002F78F2 /* market_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E0BB18E1CB2CF3F002F78F2 /* market_container.cpp */; };
 		0E36093313F03D350002F67C /* price_greater_than_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E36093213F03D350002F67C /* price_greater_than_solution_info_filter.cpp */; };
 		0E36094413F0457A0002F67C /* price_less_than_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E36094313F0457A0002F67C /* price_less_than_solution_info_filter.cpp */; };
 		0E4247B7143D00AC00A8BBD3 /* resource_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247B6143D00AC00A8BBD3 /* resource_activity.cpp */; };
@@ -360,6 +361,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E0BB18D1CB2B718002F78F2 /* market_container.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = market_container.h; sourceTree = "<group>"; };
+		0E0BB18E1CB2CF3F002F78F2 /* market_container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_container.cpp; sourceTree = "<group>"; };
 		0E36093013F03C490002F67C /* price_greater_than_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = price_greater_than_solution_info_filter.h; sourceTree = "<group>"; };
 		0E36093213F03D350002F67C /* price_greater_than_solution_info_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = price_greater_than_solution_info_filter.cpp; sourceTree = "<group>"; };
 		0E36094113F045080002F67C /* price_less_than_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = price_less_than_solution_info_filter.h; sourceTree = "<group>"; };
@@ -1711,6 +1714,7 @@
 				CD488567122873C100F5A88A /* price_market.h */,
 				CD488568122873C100F5A88A /* trial_value_market.h */,
 				CD83E61214F456C000A1D301 /* linked_market.h */,
+				0E0BB18D1CB2B718002F78F2 /* market_container.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1732,6 +1736,7 @@
 				CD488574122873C100F5A88A /* price_market.cpp */,
 				CD488575122873C100F5A88A /* trial_value_market.cpp */,
 				CD83E61514F4584900A1D301 /* linked_market.cpp */,
+				0E0BB18E1CB2CF3F002F78F2 /* market_container.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2705,6 +2710,7 @@
 				CD4887ED122873C200F5A88A /* solvable_nr_solution_info_filter.cpp in Sources */,
 				CD4887EE122873C200F5A88A /* solvable_solution_info_filter.cpp in Sources */,
 				CD4887EF122873C200F5A88A /* solver_library.cpp in Sources */,
+				0E0BB18F1CB2CF3F002F78F2 /* market_container.cpp in Sources */,
 				CD4887F0122873C200F5A88A /* unsolved_solution_info_filter.cpp in Sources */,
 				CD4887F1122873C200F5A88A /* bisecter.cpp in Sources */,
 				CD4887F2122873C200F5A88A /* concentration_target.cpp in Sources */,

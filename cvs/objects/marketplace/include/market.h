@@ -47,8 +47,11 @@
 
 #include <vector>
 #include <memory>
+#include <boost/core/noncopyable.hpp>
+
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/data_definition_util.h"
 
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/combinable.h>
@@ -57,9 +60,22 @@
 class IInfo;
 class Tabs;
 class IVisitor;
+class MarketContainer;
 namespace objects {
     class Atom;
 }
+
+// Need to forward declare the subclasses as well.
+class NormalMarket;
+class MarketTax;
+class MarketRES;
+class MarketSubsidy;
+class CalibrationMarket;
+class InverseCalibrationMarket;
+class DemandMarket;
+class TrialValueMarket;
+class PriceMarket;
+class LinkedMarket;
 
 /*!
  * \ingroup Objects
@@ -93,18 +109,16 @@ namespace objects {
  * \author Sonny Kim
  */
 
-class Market: public IVisitable
+class Market: public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
     friend class PriceMarket;
 public:
-    Market( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
+    Market( const MarketContainer* aContainer );
     virtual ~Market();
-    static std::auto_ptr<Market> createMarket( const IMarketType::Type aMarketType,
-                                               const std::string& aGoodName, const std::string& aRegionName, int aPeriod );
+
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    void addRegion( const std::string& aRegion );
     const std::vector<const objects::Atom*>& getContainedRegions() const;
 
     virtual void initPrice();
@@ -151,22 +165,11 @@ public:
     virtual bool shouldSolveNR() const;
     bool isSolvable() const;
     
-    /*!
-     * \brief Assign a serial number to this market.
-     * \details Serial numbers are used to place markets in a canonical
-     *          order (generally to make it easier to interpret logging
-     *          output).  They are assigned by the Marketplace at the
-     *          start of a period and should remain fixed through the
-     *          entire period (but there is no requirement for consistency
-     *          between periods).  No other class besides the Marketplace
-     *          should call this function.
-     */ 
-    void assignSerialNumber( int aSerialNumber ) {mSerialNumber = aSerialNumber;}
-    /*!
-     * \brief Get this market's serial number.
-     */
-    virtual int getSerialNumber( void ) const {return mSerialNumber;}
+    virtual int getSerialNumber() const;
     
+    int getYear() const;
+    void setYear( const int aYear );
+
     /*!
     * \brief Return the type of the market as defined by the IMarketTypeEnum
     *        which is unique for each derived market class.
@@ -177,70 +180,69 @@ public:
 
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    Market( const Market& aMarket );
+    void copy( const Market& aMarket );
+    
+    DEFINE_DATA(
+        /* Declare all subclasses of Market to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( Market, NormalMarket, MarketTax, MarketRES, MarketSubsidy,
+                                CalibrationMarket, InverseCalibrationMarket, DemandMarket,
+                                TrialValueMarket, PriceMarket, LinkedMarket ),
 
-    //! The name of the market.
-    std::string mName;
-    
-    //! The good the market represents
-    std::string good;
-    
-    //! The region of the market.
-    std::string region;
-    
-    //! Whether to solve the market given other constraints are satisfied.
-    bool solveMarket;
-    
-    //! The period the market is valid in.
-    int period;
+        //! Whether to solve the market given other constraints are satisfied.
+        CREATE_SIMPLE_VARIABLE( mSolveMarket, bool, "solved_Market_Flag" ),
+        
+        //! The market price.
+        CREATE_SIMPLE_VARIABLE( mPrice, double, "price" ),
+        
+        //! The stored market price.
+        CREATE_SIMPLE_VARIABLE( mStoredPrice, double, "storedPrice" ),
+        
+        //! The original market price.
+        CREATE_SIMPLE_VARIABLE( mOriginal_price, double, "orginal_price" ),
 
-    //! serial number for putting markets into canonical order
-    int mSerialNumber;
-    
-    //! The market price.
-    double price;
-    
-    //! The stored market price.
-    double storedPrice;
-    
-    //! The original market price.
-    double original_price;
+        //! Forecast price (used for setting solver initial guess)
+        CREATE_SIMPLE_VARIABLE( mForecastPrice, double, "forecast-price" ),
 
-    //! Forecast price (used for setting solver initial guess)
-    double mForecastPrice;
-
-    //! Forecast demand (used for rescaling in solver)
-    double mForecastDemand;
-    
-    //! The market demand.
+        //! Forecast demand (used for rescaling in solver)
+        CREATE_SIMPLE_VARIABLE( mForecastDemand, double, "forecast-demand" ),
+        
+        //! The market demand.
 #if GCAM_PARALLEL_ENABLED
-    // have to make this mutable because tbb::combinable::combine is not const
-    mutable tbb::combinable<double> demand;
+        // have to make this mutable because tbb::combinable::combine is not const
+        CREATE_SIMPLE_VARIABLE( mDemand, mutable tbb::combinable<double>, "demand" ),
 #else
-    double demand;
+        CREATE_SIMPLE_VARIABLE( mDemand, double, "demand" ),
 #endif
-    
-    //! The stored demand.
-    double storedDemand;
-    
-    //! The market supply.
+        
+        //! The stored demand.
+        CREATE_SIMPLE_VARIABLE( mStoredDemand, double, "storedDemand" ),
+        
+        //! The market supply.
 #if GCAM_PARALLEL_ENABLED
-    // have to make this mutable because tbb::combinable::combine is not const
-    mutable tbb::combinable<double> supply;
+        // have to make this mutable because tbb::combinable::combine is not const
+        CREATE_SIMPLE_VARIABLE( mSupply, mutable tbb::combinable<double>, "supply" ),
 #else
-    double supply;
+        CREATE_SIMPLE_VARIABLE( mSupply, double, "supply" ),
 #endif
-    
-    //! The stored supply.
-    double storedSupply;
-    
-    //! Vector of atoms of all regions contained within this market.
-    std::vector <const objects::Atom*> mContainedRegions;
+        
+        //! The stored supply.
+        CREATE_SIMPLE_VARIABLE( mStoredSupply, double, "storedSupply" ),
+                
+        //! The year associated with this market.
+        CREATE_SIMPLE_VARIABLE( mYear, int, "year" )
+    )
     
     //! Object containing information related to the market.
     std::auto_ptr<IInfo> mMarketInfo;
+    
+    //! Weak pointer to the container that hold this market.  The container will
+    //! keep shared market data such as name and contained regions so we hold a
+    //! reference to it here to access such information.
+    const MarketContainer* mContainer;
 
-        /*! \brief Add additional information to the debug xml stream for derived
+    /*! \brief Add additional information to the debug xml stream for derived
     *          classes.
     * \details This method is inherited from by derived class if they which to
     *          add any additional information to the printout of the class.

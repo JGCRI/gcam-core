@@ -48,10 +48,12 @@
 #include <iosfwd>
 #include <string>
 #include <memory>
+#include <boost/core/noncopyable.hpp>
+
 #include "marketplace/include/imarket_type.h"
-#include "marketplace/include/market.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/fltcmp.hpp"
+#include "util/base/include/data_definition_util.h"
 
 #if GCAM_PARALLEL_ENABLED
 #include "tbb/parallel_for.h"
@@ -59,6 +61,8 @@
 #endif 
 
 class Tabs;
+class Market;
+class MarketContainer;
 class MarketLocator;
 class IVisitor;
 class IInfo;
@@ -127,7 +131,7 @@ class MarketDependencyFinder;
  *       items.
  */
 
-class Marketplace: public IVisitable
+class Marketplace: public IVisitable, private boost::noncopyable
 {
     friend class CachedMarket;
     friend class SolverLibrary;
@@ -159,10 +163,7 @@ public:
         const int period ) const;
     double getDemand( const std::string& goodName, const std::string& regionName,
         const int period ) const;
-    double getStoredSupply( const std::string& goodName, const std::string& regionName,
-        const int period ) const;
-    double getStoredDemand( const std::string& goodName, const std::string& regionName,
-        const int period ) const;
+
     void init_to_last( const int period );
     void dbOutput() const; 
     void csvOutputFile( std::string marketsToPrint = "" ) const; 
@@ -171,8 +172,6 @@ public:
         const int period );
     void unsetMarketToSolve( const std::string& goodName, const std::string& regionName,
         const int period );
-    void storeinfo( const int period );
-    void restoreinfo( const int period );
 
     const IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
                                 const int aPeriod, const bool aMustExist ) const;
@@ -191,8 +190,17 @@ public:
     
     //! The price to return if no market exists.
     const static double NO_MARKET_PRICE;
+    
+    // TODO: replace these these store/restore with something more flexible and
+    // that does not get confused with store/restore state that occurrs during
+    // partial derivative calculations.  Perhaps a way of extracting all prices
+    // which can then held and restored as needed by which ever driver needs this
+    // functionality.
+    void storeinfo( const int period );
+    void restoreinfo( const int period );
     void store_prices_for_cost_calculation();
     void restore_prices_for_cost_calculation();
+    
     MarketDependencyFinder* getDependencyFinder() const;
 
     // The methods from here down are diagnostics
@@ -200,34 +208,44 @@ public:
     bool checkstate(int period, const std::vector<double>&, std::ostream *log=0, unsigned tol=0) const;
     void prnmktbl(int period, std::ostream &out) const;
     void logForecastEvaluation( int aPeriod ) const;
-private:
+protected:
+    
+    DEFINE_DATA(
+        // Marketplace is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( Marketplace ),
 
-    typedef double (Market::*getpsd_t)() const; // Can point to Market::getPrice, Market::getRawPrice, Market::getRawDemand, etc.
-    static double forecastDemand( const std::vector<Market*>& aMarketHIstory, const int aPeriod );
-    static double forecastPrice( const std::vector<Market*>& aMarketHistory, const int aPeriod );
-    static double extrapolate( const std::vector<Market*>& aMarketHistory, const int aPeriod, getpsd_t aDataFn );
+        //! List of all markets.  Note that MarketContainer wraps the list of markets by
+        //! period.
+        CREATE_CONTAINER_VARIABLE( mMarkets, std::vector<MarketContainer*>, NamedFilter, "market" )
+    )
 
-    std::vector< std::vector<Market*> > markets; //!< no of market objects by period
-    std::auto_ptr<MarketLocator> mMarketLocator; //!< An object which determines the correct market number.
+    //! An object which determines the correct market number.
+    std::auto_ptr<MarketLocator> mMarketLocator;
+    
+    //! A gobal object which tracks dependencies between all of the model activities
+    //! and their linkages to their respective markets.  It can be used to create a
+    //! sorted global ordering or get an inorder list of model activities that are
+    //! affected by changing the price of a single market.
     std::auto_ptr<MarketDependencyFinder> mDependencyFinder;
+    
     //! Flag indicating whether the next call to world->calc() will be part of a partial derivative calculation 
     bool mIsDerivativeCalc;
 
 #if GCAM_PARALLEL_ENABLED
     //! helper class for tbb parallel_for over null supplies and demands
     struct NullSDHelper {
-        const std::vector< std::vector<Market*> >& mMarkets;
+        const std::vector<MarketContainer*>& mMarkets;
         const int mPeriod;
-        NullSDHelper( const std::vector< std::vector<Market*> >& aMarkets, const int aPeriod )
+        NullSDHelper( const std::vector<MarketContainer*>& aMarkets, const int aPeriod )
             : mMarkets( aMarkets ), mPeriod( aPeriod ) {}
         void operator()( const tbb::blocked_range<int>& aRange ) const;
     };
 
     //! helper class for tbb parallel_for over restore info
     struct RestoreHelper {
-        const std::vector< std::vector<Market*> >& mMarkets;
+        const std::vector<MarketContainer*>& mMarkets;
         const int mPeriod;
-        RestoreHelper( const std::vector< std::vector<Market*> >& aMarkets, const int aPeriod )
+        RestoreHelper( const std::vector<MarketContainer*>& aMarkets, const int aPeriod )
             : mMarkets( aMarkets ), mPeriod( aPeriod ) {}
         void operator()( const tbb::blocked_range<int>& aRange ) const;
     };

@@ -46,13 +46,11 @@
 using namespace std;
 
 //! Constructor
-DemandMarket::DemandMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
-  Market( goodNameIn, regionNameIn, periodIn ) {
-  demMktSupply = 0;
+DemandMarket::DemandMarket( const MarketContainer* aContainer ) :
+  Market( aContainer ) {
 }
 
 void DemandMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
-   XMLWriteElement( demMktSupply, "DemandMarketSupply", out, tabs );
 }
 
 IMarketType::Type DemandMarket::getType() const {
@@ -91,7 +89,7 @@ double DemandMarket::getDemand() const {
     // Technologies, etc and returns a trial demand aka price.
     // The solver will use getSolverDemand will get the actual
     // demand added to this market.
-    return price;
+    return mPrice;
 }
 
 void DemandMarket::nullSupply() {

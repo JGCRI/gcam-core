@@ -43,6 +43,7 @@
 #include "containers/include/market_dependency_finder.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/marketplace.h"
+#include "marketplace/include/market_container.h"
 #include "marketplace/include/market_locator.h"
 #include "marketplace/include/market.h"
 #include "marketplace/include/linked_market.h"
@@ -213,7 +214,7 @@ const vector<IActivity*> MarketDependencyFinder::getOrdering( const int aMarketN
             // Somehow this market was not linked to any entry points into the graph.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Could not find market: " << mMarketplace->markets[ aMarketNumber ][ 0 ]->getName()
+            mainLog << "Could not find market: " << mMarketplace->mMarkets[ aMarketNumber ]->getName()
                     << " to get an ordering for." << endl;
             exit( 1 );
         }
@@ -400,8 +401,8 @@ void MarketDependencyFinder::createOrdering() {
             // Handle the linked market type by tracing back the links to the actual policy
             // and associating to that market directly.  Note that may be need to traverse
             // multiple linked markets before we arrive at the actual policy.
-            if( mMarketplace->markets[ marketNumber ][ 0 ]->getType() == IMarketType::LINKED ) {
-                Market* currMarket = mMarketplace->markets[ marketNumber ][ 0 ];
+            if( mMarketplace->mMarkets[ marketNumber ]->getMarket( 0 )->getType() == IMarketType::LINKED ) {
+                Market* currMarket = mMarketplace->mMarkets[ marketNumber ]->getMarket( 0 );
                 int currMarketNumber = marketNumber;
                 while( currMarket->getType() == IMarketType::LINKED ) {
                     currMarket = ((LinkedMarket*)currMarket)->mLinkedMarket;
@@ -429,8 +430,8 @@ void MarketDependencyFinder::createOrdering() {
             // Implied entry points will be added below.
             (*it)->mLinkedMarket = marketNumber;
             bool isSolved = false;
-            for( int period = 1; period < mMarketplace->markets[ marketNumber ].size() && !isSolved; ++period ) {
-                isSolved = mMarketplace->markets[ marketNumber ][ period ]->isSolvable();
+            for( int period = 1; period < mMarketplace->mMarkets[ marketNumber ]->size() && !isSolved; ++period ) {
+                isSolved = mMarketplace->mMarkets[ marketNumber ]->getMarket( period )->isSolvable();
             }
             (*it)->mIsSolved = isSolved;
         }

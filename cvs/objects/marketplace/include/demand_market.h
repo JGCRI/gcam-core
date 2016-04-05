@@ -63,7 +63,7 @@
 
 class DemandMarket: public Market {
 public:
-    DemandMarket( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
+    DemandMarket( const MarketContainer* aContainer );
     virtual IMarketType::Type getType() const;
 
     virtual void initPrice();
@@ -84,9 +84,14 @@ public:
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Market
+    )
+    
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
-private:
-    double demMktSupply; //!< Raw supply
 };
 
 #endif // _DEMAND_MARKET_H_

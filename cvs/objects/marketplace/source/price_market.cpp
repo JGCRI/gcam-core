@@ -47,21 +47,14 @@
 
 using namespace std;
 
-//! Constructor
-PriceMarket::PriceMarket( const string& goodNameIn, const string& regionNameIn, int periodIn, Market* demandMarketIn ) :
-  Market( goodNameIn, regionNameIn, periodIn )
-{
-    assert( demandMarketIn );
-    demandMarketPointer = demandMarketIn;
-    mMarketInfo->setBoolean( "has-split-market", true );
-}
-
-//! Copy Constructor.
+//! Constructor.
 PriceMarket::PriceMarket( Market& marketIn, Market* demandMarketIn ) : 
-Market( marketIn )
+Market( marketIn.mContainer )
 {
+    copy( marketIn );
+    
     assert( demandMarketIn );
-    demandMarketPointer = demandMarketIn;
+    mDemandMarketPointer = demandMarketIn;
     
     // Info objects can not be copied instead we will have the original market
     // release it's info object to this market.
@@ -70,7 +63,7 @@ Market( marketIn )
 }
 
 void PriceMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( demandMarketPointer->getName(), "LinkedDemandMarket", out, tabs );
+    XMLWriteElement( mDemandMarketPointer->getName(), "LinkedDemandMarket", out, tabs );
 }
 
 IMarketType::Type PriceMarket::getType() const {
@@ -97,10 +90,10 @@ void PriceMarket::initPrice() {
 */
 void PriceMarket::setPrice( const double priceIn ) {
 #if GCAM_PARALLEL_ENABLED
-    demand.clear();
-    demand.local() = priceIn;
+    mDemand.clear();
+    mDemand.local() = priceIn;
 #else
-    demand = priceIn;
+    mDemand = priceIn;
 #endif
 }
 
@@ -113,15 +106,15 @@ void PriceMarket::set_price_to_last( const double lastPrice ) {
 }
 
 double PriceMarket::getPrice() const {
-    return price; 
+    return mPrice;
 }
 
 void PriceMarket::addToDemand( const double demandIn ) {
-    demandMarketPointer->addToDemand( demandIn );
+    mDemandMarketPointer->addToDemand( demandIn );
 }
 
 double PriceMarket::getDemand() const {
-    return demandMarketPointer->getDemand();
+    return mDemandMarketPointer->getDemand();
 }
 
 void PriceMarket::nullSupply() {
@@ -130,15 +123,15 @@ void PriceMarket::nullSupply() {
 }
 
 double PriceMarket::getSolverSupply() const {
-    return price;
+    return mPrice;
 }
 
 double PriceMarket::getSupply() const {
-    return demandMarketPointer->getSupply();
+    return mDemandMarketPointer->getSupply();
 }
 
 void PriceMarket::addToSupply( const double supplyIn ) {
-    demandMarketPointer->addToSupply( supplyIn );
+    mDemandMarketPointer->addToSupply( supplyIn );
 }
 
 bool PriceMarket::meetsSpecialSolutionCriteria() const {

@@ -1172,14 +1172,12 @@ void XMLDBOutputter::endVisitMarketplace( const Marketplace* aMarketplace,
 void XMLDBOutputter::startVisitMarket( const Market* aMarket,
                                        const int aPeriod )
 {
-    // TODO: What should happen if period != -1 or the period of the market?
     // Write the opening market tag.
-    const int year = scenario->getModeltime()->getper_to_yr( aMarket->period );
     XMLWriteOpeningTag( Market::getXMLNameStatic(), mBuffer, mTabs.get(),
-                        aMarket->getName(), year );
+                        aMarket->getName(), aMarket->getYear() );
 
-    XMLWriteElement( aMarket->good, "MarketGoodOrFuel",mBuffer, mTabs.get() );
-    XMLWriteElement( aMarket->region, "MarketRegion", mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->getGoodName(), "MarketGoodOrFuel",mBuffer, mTabs.get() );
+    XMLWriteElement( aMarket->getRegionName(), "MarketRegion", mBuffer, mTabs.get() );
 
     // if next market clear out units to be updated
     if( mCurrentMarket != aMarket->getName() ){
@@ -1189,7 +1187,7 @@ void XMLDBOutputter::startVisitMarket( const Market* aMarket,
         mCurrentOutputUnit.clear();
     }
     // Store unit information from base period
-    if( aMarket->period == 0 ) {
+    if( aMarket->getYear() == scenario->getModeltime()->getStartYear() ) {
         if( mCurrentPriceUnit.empty() ){
             mCurrentPriceUnit = aMarket->getMarketInfo()->getString( "price-unit", false );
         }

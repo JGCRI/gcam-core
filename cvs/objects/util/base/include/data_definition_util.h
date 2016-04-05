@@ -111,7 +111,7 @@ struct ContainerData : public Data<T> {
 template<typename T>
 struct ArrayData : public Data<T> {
     ArrayData( const char* aDataName ):Data<T>( aDataName ) {}
-    ArrayData( const const std::string& aDataName ):Data<T>( aDataName ) {}
+    ArrayData( const std::string& aDataName ):Data<T>( aDataName ) {}
     virtual ~ArrayData() { }
 };
 

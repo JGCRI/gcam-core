@@ -61,7 +61,6 @@ class Tabs;
 
 class PriceMarket: public Market {
 public:
-    PriceMarket( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn, Market* demandMarketIn );
     PriceMarket( Market& marketIn, Market* demandMarketIn );
 
     virtual IMarketType::Type getType() const;
@@ -84,9 +83,16 @@ public:
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
 protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        Market
+    )
+    
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
-    Market* demandMarketPointer; //!< A pointer to the companion DemandMarket
+    Market* mDemandMarketPointer; //!< A pointer to the companion DemandMarket
 };
 
 #endif // _PRICE_MARKET_H_

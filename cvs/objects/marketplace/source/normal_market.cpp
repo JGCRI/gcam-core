@@ -46,8 +46,8 @@
 using namespace std;
 
 //! Constructor
-NormalMarket::NormalMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
-  Market( goodNameIn, regionNameIn, periodIn ) {
+NormalMarket::NormalMarket( const MarketContainer* aContainer ) :
+  Market( aContainer ) {
 }
 
 void NormalMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -102,13 +102,7 @@ bool NormalMarket::meetsSpecialSolutionCriteria() const {
 }
 
 bool NormalMarket::shouldSolve() const {
-    bool doSolveMarket = false;
-    // Check if this market is a type that is solved.
-    if ( solveMarket ) {
-        // Solve all solvable markets.
-        doSolveMarket = true;
-    }
-    return doSolveMarket;
+    return mSolveMarket;
 }
 
 bool NormalMarket::shouldSolveNR() const {
