@@ -1,4 +1,8 @@
 #include <iostream>
+#include <regex>
+
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include <boost/fusion/include/pair.hpp>
 
@@ -16,6 +20,94 @@ struct GetIndexAsYear {
     }
 };
 
+class AMatchesValue {
+public:
+    virtual ~AMatchesValue() {}
+    virtual bool matchesString( const std::string& aStrToTest ) const {
+        return false;
+    }
+    virtual bool matchesInt( const int aIntToTest ) const {
+        return false;
+    }
+};
+
+class StringEquals : public AMatchesValue {
+public:
+    StringEquals( const std::string& aStr ):mStr( aStr ) {}
+    virtual ~StringEquals() {}
+    virtual bool matchesString( const std::string& aStrToTest ) const {
+        return mStr == aStrToTest;
+    }
+private:
+    const std::string mStr;
+};
+
+class StringRegexMatches : public AMatchesValue {
+public:
+    StringRegexMatches( const std::regex& aRegex ):mRegex( aRegex ) {}
+    // TODO: which matching style to use by default?
+    StringRegexMatches( const std::string& aRegexStr ):mRegex( aRegexStr, std::regex::nosubs | std::regex::optimize | std::regex::egrep ) {}
+    virtual ~StringRegexMatches() {}
+    virtual bool matchesString( const std::string& aStrToTest ) const {
+        return std::regex_search( aStrToTest, mRegex );
+    }
+private:
+    const std::regex mRegex;
+};
+
+class IntEquals : public AMatchesValue {
+public:
+    IntEquals( const int aInt ):mInt( aInt ) {}
+    virtual ~IntEquals() {}
+    virtual bool matchesInt( const int aIntToTest ) const {
+        return mInt == aIntToTest;
+    }
+private:
+    const int mInt;
+};
+
+class IntGreaterThan : public AMatchesValue {
+public:
+    IntGreaterThan( const int aInt ):mInt( aInt ) {}
+    virtual ~IntGreaterThan() {}
+    virtual bool matchesInt( const int aIntToTest ) const {
+        return aIntToTest > mInt;
+    }
+private:
+    const int mInt;
+};
+class IntGreaterThanEq : public AMatchesValue {
+public:
+    IntGreaterThanEq( const int aInt ):mInt( aInt ) {}
+    virtual ~IntGreaterThanEq() {}
+    virtual bool matchesInt( const int aIntToTest ) const {
+        return aIntToTest >= mInt;
+    }
+private:
+    const int mInt;
+};
+class IntLessThan : public AMatchesValue {
+public:
+    IntLessThan( const int aInt ):mInt( aInt ) {}
+    virtual ~IntLessThan() {}
+    virtual bool matchesInt( const int aIntToTest ) const {
+        return aIntToTest < mInt;
+    }
+private:
+    const int mInt;
+};
+class IntLessThanEq : public AMatchesValue {
+public:
+    IntLessThanEq( const int aInt ):mInt( aInt ) {}
+    virtual ~IntLessThanEq() {}
+    virtual bool matchesInt( const int aIntToTest ) const {
+        return aIntToTest <= mInt;
+    }
+private:
+    const int mInt;
+};
+
+
 struct NoFilter {
     using filter_value_type = void*;
     template<typename T>
@@ -27,15 +119,19 @@ struct NoFilter {
     }
     void reset() {
     }
+    AMatchesValue* mMatcher;
 };
 
 struct IndexFilter {
     using filter_value_type = const int*;
-    IndexFilter( const int aIndex ):mIndex( aIndex ), mCurrFilterValue( 0 ) {}
-    const int mIndex;
+    IndexFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ), mCurrFilterValue( 0 ) {}
+    ~IndexFilter() {
+        delete mMatcher;
+    }
+    const AMatchesValue* mMatcher;
     filter_value_type mCurrFilterValue;
     bool operator()( const int aIndex ) {
-        if( mIndex == aIndex ) {
+        if( mMatcher->matchesInt( aIndex ) ) {
             mCurrFilterValue = &aIndex;
             return true;
         }
@@ -53,12 +149,15 @@ struct IndexFilter {
 
 struct NamedFilter {
     using filter_value_type = const std::string*;
-    NamedFilter( const std::string& aName ):mName( aName ), mCurrFilterValue( 0 ) {}
-    const std::string& mName;
+    NamedFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ), mCurrFilterValue( 0 ) {}
+    ~NamedFilter() {
+        delete mMatcher;
+    }
+    const AMatchesValue* mMatcher;
     filter_value_type mCurrFilterValue;
     template<typename T>
     bool operator()( const T* aContainer ) {
-        if( mName == aContainer->getName() ) {
+        if( mMatcher->matchesString( aContainer->getName() ) ) {
             mCurrFilterValue = &aContainer->getName();
             return true;
         }
@@ -76,12 +175,15 @@ struct NamedFilter {
 
 struct YearFilter {
     using filter_value_type = const int*;
-    YearFilter( const int aYear ):mYear( aYear ), mCurrFilterValue( 0 ) {}
-    const int mYear;
+    YearFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ), mCurrFilterValue( 0 ) {}
+    ~YearFilter() {
+        delete mMatcher;
+    }
+    const AMatchesValue* mMatcher;
     filter_value_type mCurrFilterValue;
     template<typename T>
     bool operator()( const T* aContainer ) {
-        if( mYear == aContainer->getYear() ) {
+        if( mMatcher->matchesInt( aContainer->getYear() ) ) {
             mCurrFilterValue = &aContainer->getYear();
             return true;
         }
@@ -91,7 +193,7 @@ struct YearFilter {
     }
     // specialization where the year has been converted for us
     bool operator()( const int* aYear ) {
-        if( mYear == *aYear ) {
+        if( mMatcher->matchesInt( *aYear ) ) {
             mCurrFilterValue = aYear;
             return true;
         }
@@ -131,6 +233,21 @@ struct FilterStep {
     const std::string& mDataName;
     FilterMapType mFilterMap;
     bool mNoFilters;
+    void debug() {
+        std::cout << "mDataName: " << mDataName << std::endl;
+        if( mNoFilters ) {
+            std::cout << "No filters" << std::endl;
+        }
+        else {
+            boost::fusion::for_each( mFilterMap, [] ( auto& aPair ) {
+                if( aPair.second ) {
+                    std::cout << "Filter type: " << typeid(*aPair.second).name() << std::endl;
+                    std::cout << "Matches third? " << aPair.second->mMatcher->matchesString( "third" ) << std::endl;
+                    std::cout << "Matches 0? " << aPair.second->mMatcher->matchesInt( 0 ) << std::endl;
+                }
+            } );
+        }
+    }
     bool isDescendantStep() const {
         return mDataName.empty() && mNoFilters;
     }
@@ -478,6 +595,77 @@ struct DoSomeThingNotSure {
     }
 };
 
+FilterStep* parseFilterStepStr( const std::string& aFilterStepStr ) {
+    auto openBracketIter = std::find( aFilterStepStr.begin(), aFilterStepStr.end(), '[' );
+    if( openBracketIter == aFilterStepStr.end() ) {
+        // no filter just the data name
+        return new FilterStep( aFilterStepStr );
+    }
+    else {
+        std::string dataName( aFilterStepStr.begin(), openBracketIter );
+        std::string filterStr( openBracketIter + 1, std::find( openBracketIter, aFilterStepStr.end(), ']' ) );
+        std::vector<std::string> filterOptions;
+        boost::split( filterOptions, filterStr, boost::is_any_of( "," ) );
+        // [0] = filter type (name, year, index)
+        // [1] = match type
+        // [2:] = match type options
+        AMatchesValue* matcher = 0;
+        if( filterOptions[ 1 ] == "StringEquals" ) {
+            matcher = new StringEquals( filterOptions[ 2 ] );
+        }
+        else if( filterOptions[ 1 ] == "StringRegexMatches" ) {
+            matcher = new StringRegexMatches( filterOptions[ 2 ] );
+        }
+        else if( filterOptions[ 1 ] == "IntEquals" ) {
+            matcher = new IntEquals( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
+        }
+        else if( filterOptions[ 1 ] == "IntGreaterThan" ) {
+            matcher = new IntGreaterThan( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
+        }
+        else if( filterOptions[ 1 ] == "IntGreaterThanEq" ) {
+            matcher = new IntGreaterThanEq( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
+        }
+        else if( filterOptions[ 1 ] == "IntLessThan" ) {
+            matcher = new IntLessThan( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
+        }
+        else if( filterOptions[ 1 ] == "IntLessThanEq" ) {
+            matcher = new IntLessThanEq( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
+        }
+        else {
+            // error!
+        }
+
+        FilterStep* filterStep = 0;
+        if( filterOptions[ 0 ] == "NoFilter" ) {
+            filterStep = new FilterStep( dataName, new NoFilter() );
+        }
+        else if( filterOptions[ 0 ] == "IndexFilter" ) {
+            filterStep = new FilterStep( dataName, new IndexFilter( matcher ) );
+        }
+        else if( filterOptions[ 0 ] == "NamedFilter" ) {
+            filterStep = new FilterStep( dataName, new NamedFilter( matcher ) );
+        }
+        else if( filterOptions[ 0 ] == "YearFilter" ) {
+            filterStep = new FilterStep( dataName, new YearFilter( matcher ) );
+        }
+        else {
+            // error!
+        }
+        return filterStep;
+    }
+}
+
+std::vector<FilterStep*> parseFilterString( const std::string& aFilterStr ) {
+    std::vector<std::string> filterStepsStr;
+    boost::split( filterStepsStr, aFilterStr, boost::is_any_of( "/" ) );
+    std::vector<FilterStep*> filterSteps( filterStepsStr.size() );
+    for( size_t i = 0; i < filterStepsStr.size(); ++i ) {
+        filterSteps[ i ] = parseFilterStepStr( filterStepsStr[ i ] );
+    }
+    return filterSteps;
+}
+
+
 void addCalc( Container* aContainer, const std::string& aXMLName, const std::string& aName ) {
     AbstractBase* newCalc = Factory<BaseFamily>::createType( aXMLName );
     newCalc->setName( aName );
@@ -492,8 +680,8 @@ int main() {
         addCalc( &container, calcs[i], names[i] );
     }
 
-    NamedFilter nFilter( "second" );
-    YearFilter yFilter( 1975 );
+    NamedFilter nFilter( new StringEquals( "second" ) );
+    YearFilter yFilter( new IntEquals( 1975 ) );
     FilterStep aStep("calculator", &nFilter );
     FilterStep aStep2("", &nFilter );
     FilterStep wildCardStep("");
@@ -509,6 +697,12 @@ int main() {
     GCAMParamResetAPI<DoSomeThingNotSure> api(notSure, steps);
     api.startFilter( &container );
     std::cout << nFilter.mCurrFilterValue << std::endl;
+
+    //const std::vector<FilterStep*>& parsedSteps = parseFilterString( "calculator[NamedFilter,StringEquals,third]/coef-1" );
+    const std::vector<FilterStep*>& parsedSteps = parseFilterString( "calculator[IndexFilter,IntEquals,0]/coef-1" );
+    for( auto filterStep : parsedSteps ) {
+        filterStep->debug();
+    }
     return 0;
 }
 
