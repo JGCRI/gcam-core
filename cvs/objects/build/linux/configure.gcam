@@ -13,7 +13,7 @@ CC		= gcc
 endif
 CFLAGS		= -O2
 CXXOPTIM        = -O2
-CXXDEBUG        = -ggdb -DNDEBUG
+CXXDEBUG        = -ggdb -DNDEBUG -DFUSION_MAX_VECTOR_SIZE=30
 CXXBASEOPTS     = $(CXXDEBUG)
 
 ARCH_FLAGS      = 
