@@ -140,7 +140,7 @@ protected:
         CREATE_CONTAINER_VARIABLE( mResources, std::vector<AResource*>, NamedFilter, "resource" ),
         
         /*! \brief The region's information store. */
-        CREATE_CONTAINER_VARIABLE( mRegionInfo, IInfo*, NoFilter, "info" )
+        CREATE_SIMPLE_VARIABLE( mRegionInfo, IInfo*, "info" )
     )
 
     virtual const std::string& getXMLName() const = 0;

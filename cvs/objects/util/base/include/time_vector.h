@@ -195,6 +195,7 @@ namespace objects {
         iterator begin();
         iterator end();
         iterator last();
+        typedef T value_type;
     protected:
         //! Dynamic array containing the data.
         T* mData;

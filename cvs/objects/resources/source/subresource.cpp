@@ -344,7 +344,7 @@ const std::string& SubResource::getXMLNameStatic() {
 }
 
 //! return SubResource name
-string SubResource::getName() const {
+const std::string& SubResource::getName() const {
     return mName;
 }
 

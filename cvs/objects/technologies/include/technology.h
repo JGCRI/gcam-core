@@ -161,6 +161,7 @@ public:
     virtual ~Technology();
 
     virtual void setYear( const int aNewYear );
+    virtual int getYear() const;
     
     virtual bool isSameType( const std::string& aType ) const;
 

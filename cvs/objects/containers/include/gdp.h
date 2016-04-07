@@ -139,7 +139,7 @@ protected:
         CREATE_ARRAY_VARIABLE( gdpPerCapitaApproxPPP, std::vector<double>, "gdpPerCapitaApproxPPP" ),
                 
         /*! \brief flag to tell if GDPs have been adjusted yet. */
-        CREATE_ARRAY_VARIABLE( gdpAdjustedFlag, std::vector<bool>, "gdpAdjustedFlag" ),
+        CREATE_SIMPLE_VARIABLE( gdpAdjustedFlag, std::vector<bool>, "gdpAdjustedFlag" ),
         
         /*! \brief Calibration values for GDP (constant dollars). */
         CREATE_ARRAY_VARIABLE( calibrationGDPs, std::vector<double>, "calibrationGDPs" ),

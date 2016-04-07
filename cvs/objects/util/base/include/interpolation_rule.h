@@ -171,7 +171,7 @@ protected:
 
         //! The interpolation function that will be used to perform the
         //! interpolations
-        CREATE_CONTAINER_VARIABLE( mInterpolationFunction, IInterpolationFunction*, NamedFilter, IInterpolationFunction::getXMLNameStatic() ),
+        CREATE_CONTAINER_VARIABLE( mInterpolationFunction, IInterpolationFunction*, NoFilter, IInterpolationFunction::getXMLNameStatic() ),
 
         //! The policy this rule will use in the event that an existing
         //! value may get overwritten.

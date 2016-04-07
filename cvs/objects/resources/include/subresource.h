@@ -78,7 +78,7 @@ class SubResource: public IVisitable, private boost::noncopyable
 public:
     SubResource();
     virtual ~SubResource();
-    std::string getName() const;
+    const std::string& getName() const;
     void XMLParse( const xercesc::DOMNode* tempnode );
     virtual void completeInit( const IInfo* aResourceInfo );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;

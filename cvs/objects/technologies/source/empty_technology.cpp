@@ -290,6 +290,10 @@ void EmptyTechnology::setYear( const int aYear )
 {
 }
 
+int EmptyTechnology::getYear() const {
+    return 0;
+}
+
 void EmptyTechnology::doInterpolations( const Technology* aPrevTech,
                                         const Technology* aNextTech )
 {

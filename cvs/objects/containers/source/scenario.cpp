@@ -64,6 +64,8 @@
 #include "solution/solvers/include/solver_factory.h"
 #include "solution/solvers/include/bisection_nr_solver.h"
 #include "solution/util/include/solution_info_param_parser.h" 
+#include "containers/include/imodel_feedback_calc.h"
+#include "containers/include/degree_days_feedback.h"
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
 #include <stdlib.h>
@@ -210,6 +212,9 @@ bool Scenario::XMLParse( const DOMNode* node ){
                     mSolvers[ fillOutPeriod ] = retSolver;
                 }
             }
+        }
+        else if( nodeName == DegreeDaysFeedback::getXMLNameStatic() ) {
+            parseContainerNode( curr, mModelFeedbacks, new DegreeDaysFeedback() );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -418,6 +423,9 @@ bool Scenario::calculatePeriod( const int aPeriod,
     mMarketplace->init_to_last( aPeriod ); // initialize to last period's info
     mWorld->initCalc( aPeriod ); // call to initialize anything that won't change during calc
     mMarketplace->assignMarketSerialNumbers( aPeriod ); // give the markets their serial numbers for this period.
+    for( auto modelFeedback : mModelFeedbacks ) {
+        modelFeedback->calcFeedbacksBeforePeriod( this, mWorld->getClimateModel(), aPeriod );
+    }
     
     // SGM Period 0 needs to clear out the supplies and demands put in by initCalc.
     if( aPeriod == 0 ){
@@ -485,6 +493,9 @@ bool Scenario::calculatePeriod( const int aPeriod,
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
 
     mWorld->postCalc( aPeriod );
+    for( auto modelFeedback : mModelFeedbacks ) {
+        modelFeedback->calcFeedbacksAfterPeriod( this, mWorld->getClimateModel(), aPeriod );
+    }
     
     // Output metadata is not required to exist.
     const list<string>& primaryFuelList = mOutputMetaData.get() ? 

@@ -110,6 +110,7 @@ public:
     inline virtual ~ITechnology() = 0;
 
     virtual void setYear( const int aNewYear ) = 0;
+    virtual int getYear() const = 0;
 
     virtual bool XMLParse( const xercesc::DOMNode* tempnode ) = 0;
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;

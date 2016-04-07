@@ -71,6 +71,7 @@ public:
     virtual ITechnology* clone() const;
     
     virtual void setYear( const int aNewYear );
+    virtual int getYear() const;
     
     virtual bool XMLParse( const xercesc::DOMNode* tempnode );
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const;

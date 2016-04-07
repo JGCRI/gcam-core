@@ -45,9 +45,11 @@
  */
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
+#include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/iparsable.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/data_definition_util.h"
 
 class Marketplace;
 
@@ -127,7 +129,7 @@ class Marketplace;
  * \author Pralit Patel
  * \todo Do we want to write this back out in toInputXML?
  */
-class SolutionInfoParamParser : public IParsable {
+class SolutionInfoParamParser : public IParsable, private boost::noncopyable {
 public:
     SolutionInfoParamParser();
     ~SolutionInfoParamParser();
@@ -162,11 +164,17 @@ public:
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
-private:
-    //! A data structure that will go from periods to the pair of good name / market
-    //! type and region name which maps to the struct SolutionInfoValues which will
-    //! contain each of the possible values for a solution info.
-    objects::PeriodVector<std::map<std::pair<std::string, std::string>, SolutionInfoValues> > mSolutionInfoParams;
+protected:
+    
+    DEFINE_DATA(
+        // SolutionInfoParamParser is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( SolutionInfoParamParser ),
+
+        //! A data structure that will go from periods to the pair of good name / market
+        //! type and region name which maps to the struct SolutionInfoValues which will
+        //! contain each of the possible values for a solution info.
+        CREATE_ARRAY_VARIABLE( mSolutionInfoParams, objects::PeriodVector<std::map<std::pair<std::string, std::string>, SolutionInfoValues> >, "solution-info-param" )
+    )
     
     std::vector<SolutionInfoValues*> getSolutionInfoValuesFromAttrs( const xercesc::DOMNode* aNode );
 };

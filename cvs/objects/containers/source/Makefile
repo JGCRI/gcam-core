@@ -30,6 +30,7 @@ OBJS       = batch_runner.o \
              sector_activity.o \
              market_dependency_finder.o \
              consumer_activity.o \
+             degree_days_feedback.o \
              world.o
 
 containers_dir: ${OBJS}

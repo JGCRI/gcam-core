@@ -66,6 +66,7 @@ class GHGPolicy;
 class IClimateModel;
 class OutputMetaData;
 class SolutionInfoParamParser;
+class IModelFeedbackCalc;
 
 /*!
 * \ingroup Objects
@@ -124,7 +125,7 @@ protected:
         CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
 
         /*! \brief The modeltime for the scenario. */
-        CREATE_CONTAINER_VARIABLE( mModeltime, const Modeltime*, NoFilter, "modeltime" ),
+        CREATE_SIMPLE_VARIABLE( mModeltime, const Modeltime*, "modeltime" ),
 
         /*! \brief The goods and services marketplace. */
         CREATE_CONTAINER_VARIABLE( mMarketplace, Marketplace*, NoFilter, "marketplace" ),
@@ -133,7 +134,7 @@ protected:
         CREATE_CONTAINER_VARIABLE( mWorld, World*, NoFilter, "world" ),
                 
         /*! \brief A vector booleans, one per period, which denotes whether each period is valid. */
-        CREATE_ARRAY_VARIABLE( mIsValidPeriod, std::vector<bool>, "is-valid-period" ),
+        CREATE_SIMPLE_VARIABLE( mIsValidPeriod, std::vector<bool>, "is-valid-period" ),
                 
         /*! \brief Unsolved periods. */
         CREATE_ARRAY_VARIABLE( mUnsolvedPeriods, std::vector<int>, "unsolved-periods" ),
@@ -152,6 +153,10 @@ protected:
 
     //! A container of meta-data pertinent to outputting data.
     std::auto_ptr<OutputMetaData> mOutputMetaData;
+    
+    //! Objects that may take model results and provide some sort of feedback as
+    //! the scenario progresses through the model periods.
+    std::vector<IModelFeedbackCalc*> mModelFeedbacks;
 
     bool solve( const int period );
 

@@ -1627,6 +1627,11 @@ void Technology::setYear( const int aYear )
     }
 }
 
+//! Get the technology year.
+int Technology::getYear() const {
+    return mYear;
+}
+
 /*! \brief Return the marginal revenue for this Technology's output.
 * \details The marginal revenue for the Technology is defined as the market
 *          price for the good in the given period divided by the price
