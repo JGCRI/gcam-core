@@ -7,15 +7,16 @@ CSVToXML.jar: ModelInterface/ModelGUI2/csvconv/*.class
 ModelInterface/ModelGUI2/csvconv/%.class: ModelInterface/ModelGUI2/csvconv/%.java
 	javac $^
 
-ModelInterface.jar: ModelInterface/InterfaceMain.class
+# NOTE: dependency tracking is handled internally by javac however
+# is very flakey and it is recommnded to always do a clean build.
+ModelInterface.jar: clean ModelInterface/InterfaceMain.class
 	jar -cmf MANIFEST_MI.MK $@ ModelInterface
 
 ModelInterface/InterfaceMain.class: ModelInterface/InterfaceMain.java
 	# Note needed libraries are assumped to be in the jars directory
-	# WARNING: dependency tracking is handled internally by javac however
-	# is very flakey and it is recommnded to always do a clean build.
 	javac -cp jars/*:. $^
 
 clean:
-	rm CSVToXML.jar
+	rm -f CSVToXML.jar
+	rm -f ModelInterface.jar
 	find ModelInterface -name *.class -delete

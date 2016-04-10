@@ -1773,7 +1773,11 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                     if(queryFile == null || outFile == null || dbFile == null) {
                         throw new Exception("Not enough information provided to run batch query.");
                     }
-                    XMLDB.openDatabase(dbFile);
+                    // The database may have already been opeened by a calling implementation to
+                    // for instance connect to an in memory database.
+                    if(XMLDB.getInstance() == null) {
+                        XMLDB.openDatabase(dbFile);
+                    }
 
                     Vector<ScenarioListItem> scenariosInDb = getScenarios();
                     Vector<ScenarioListItem> scenariosToRun = new Vector<ScenarioListItem>();

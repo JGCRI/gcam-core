@@ -99,12 +99,24 @@ public class XMLDB {
 	 * @throws Exception If a database is already open or there was an error opening the database.
 	 */ 
 	public static void openDatabase(String dbLocation) throws Exception {
+        openDatabase(dbLocation, null);
+    }
+	/**
+	 * Opens a new xml database at the given location and potentially an existing context.
+	 * @param dbLocation The location of the database to open.
+	 * @param contextIn An existing daabase context to use an existing connection and support
+     *                  using an in memory database that has been loaded already.  If null a
+     *                  new default context will be created to open the data base at location dbLocation
+     *                  from disk.
+	 * @throws Exception If a database is already open or there was an error opening the database.
+	 */ 
+	public static void openDatabase(String dbLocation, Context contextIn) throws Exception {
 		// WARNING: not thread safe
 		if(xmldbInstance != null) {
 			throw new Exception("Could not open databse because "+xmldbInstance.contName+
 					" is still open");
 		}
-		xmldbInstance = new XMLDB(dbLocation);
+		xmldbInstance = new XMLDB(dbLocation, contextIn);
 	}
 
 	/**
@@ -125,24 +137,28 @@ public class XMLDB {
 		}
 	}
 
-	private XMLDB(String db) throws Exception {
-		openDB(db);
+	private XMLDB(String db, Context contextIn) throws Exception {
+		openDB(db, contextIn);
 	}
-	private void openDB(String dbPath) throws Exception {
+	private void openDB(String dbPath, Context contextIn) throws Exception {
 		String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
         // The db Context will check the org.basex.DBPATH property when it is created
         // and use it as the base path for finding all collections/containers
         System.setProperty("org.basex.DBPATH", path);
 
-        context = new Context();
-        // Set some default behaviors such as no indexing etc
-        // TODO: experiment with these
-        context.options.set(MainOptions.ATTRINDEX, false);
-        context.options.set(MainOptions.FTINDEX, false);
-        context.options.set(MainOptions.UPDINDEX, false);
-        context.options.set(MainOptions.CHOP, true);
-        context.options.set(MainOptions.ADDCACHE, true);
-        context.options.set(MainOptions.INTPARSE, true);
+        if(contextIn == null) {
+            context = new Context();
+            // Set some default behaviors such as no indexing etc
+            // TODO: experiment with these
+            context.options.set(MainOptions.ATTRINDEX, false);
+            context.options.set(MainOptions.FTINDEX, false);
+            context.options.set(MainOptions.UPDINDEX, false);
+            context.options.set(MainOptions.CHOP, true);
+            context.options.set(MainOptions.ADDCACHE, true);
+            context.options.set(MainOptions.INTPARSE, true);
+        } else {
+            context = contextIn;
+        }
 
         // TODO: worry about spaces?
 		// spaces in a database name is illegal for a URI and must be escaped by a %20
@@ -151,6 +167,12 @@ public class XMLDB {
 		// java api
 		final String contNameUnmodified = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
 		contName = contNameUnmodified.replaceAll(" ", "%20");
+
+        // In memory databases can not be re-opened so just return now
+        if(context.options.get(MainOptions.MAINMEM)) {
+            return;
+        }
+
         /*
         // The Check command will opent the container if it already exists or create
         // an empty one if it does not.
