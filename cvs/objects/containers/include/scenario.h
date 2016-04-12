@@ -65,6 +65,7 @@ class GHGPolicy;
 class IClimateModel;
 class OutputMetaData;
 class SolutionInfoParamParser;
+class XMLDBOutputter;
 
 /*!
 * \ingroup Objects
@@ -112,6 +113,8 @@ public:
     const std::vector<int>& getUnsolvedPeriods() const;
     void invalidatePeriod( const int aPeriod );
 
+    XMLDBOutputter* getXMLDBOutputter() const;
+
     //! Constant which when passed to the run method means to run all model periods.
     const static int RUN_ALL_PERIODS = -1;
 private:
@@ -137,6 +140,12 @@ private:
     //! A pass through object used to parse SolutionInfo parameters
     //! until markets are created
     std::auto_ptr<SolutionInfoParamParser> mSolutionInfoParamParser;
+
+
+    //! The XML database output is a special case in that we must keep
+    //! it around in case we want to do additional processing once GCAM
+    //! is done running.
+    mutable XMLDBOutputter* mXMLDBOutputter;
 
     bool solve( const int period );
 

@@ -84,6 +84,8 @@ Scenario::Scenario() {
     time( &gGlobalTime );
 
     marketplace.reset( new Marketplace() );
+
+    mXMLDBOutputter = 0;
 }
 
 //! Destructor
@@ -91,6 +93,12 @@ Scenario::~Scenario() {
     // model time is really a singleton and so don't
     // try to delete it
     modeltime.release();
+
+    // ensure model data is cleared out before potentially
+    // running queries on the XML database
+    world.reset( 0 );
+
+    delete mXMLDBOutputter;
 }
 
 /*! \brief Get the static XML name of the Scenario.
@@ -585,19 +593,28 @@ void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->endVisitScenario( this, aPeriod );
 }
 
+/*!
+ * \brief Get the refernce to the XMLDBOutputter.
+ * \return The XMLDBOutputter.
+ */
+XMLDBOutputter* Scenario::getXMLDBOutputter() const {
+    return mXMLDBOutputter;
+}
+
 /*! \brief A function which writes output to an XML file so that it can be read by the XML database.
 */
 void Scenario::printOutputXML() const {
-    // Create a graph printer.
-    XMLDBOutputter xmlDBOutputter;
+    // Do XML DB output
+    assert( !mXMLDBOutputter );
+    mXMLDBOutputter = new XMLDBOutputter();
     
     // Update the output container with information from the model.
     // -1 flags to update the output container for all periods at once.
-    accept( &xmlDBOutputter, -1 );
+    accept( mXMLDBOutputter, -1 );
     
     
     // Print the output.
-    xmlDBOutputter.finish();
+    mXMLDBOutputter->finish();
 }
 
 /*! \brief A function which print dependency graphs showing fuel usage by

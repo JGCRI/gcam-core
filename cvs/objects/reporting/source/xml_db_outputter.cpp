@@ -161,6 +161,20 @@ mJavaEnv( 0 )
  */
 XMLDBOutputter::JNIContainer::~JNIContainer() {
     if( mJavaEnv ) {
+        // First we need to look up the appropriate "finalizeAndClose" Java method with no
+        // arguments and void return: "()V" then call it.
+        jmethodID finalizeMID = mJavaEnv->GetMethodID( mWriteDBClass, "finalizeAndClose", "()V" );
+        if( !finalizeMID ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::SEVERE );
+            mainLog << "Failed to find JNI method: finalizeAndClose" << endl;
+            return;
+        }
+
+        // The java method will (potentially) run queries then close the database
+        // before returning.
+        mJavaEnv->CallVoidMethod( mWriteDBInstance, finalizeMID );
+
         mJavaEnv->DeleteGlobalRef( mWriteDBClass );
         mJavaEnv->DeleteGlobalRef( mWriteDBInstance );
     }
@@ -181,7 +195,7 @@ XMLDBOutputter::XMLDBOutputter():
 mTabs( new Tabs ),
 mGDP( 0 )
 #if( __HAVE_JAVA__ )
-,mJNIContainer( createContainer( false ) )
+,mJNIContainer( createContainer() )
 #endif
 {
 #if( DEBUG_XML_DB )
@@ -244,12 +258,11 @@ void XMLDBOutputter::finish() const {
 #if( __HAVE_JAVA__ )
 /*!
  * \brief Create an initialized Java environment.
- * \param aAppendOnly If we are only looking to append data and not add a new file.
  * \return An initialized Java environment with the Write DB class loaded and
  *         ready to accept data to write/alter to the database.  If an error occurs
  *         a null container will be returned.
  */
-auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bool aAppendOnly ) {
+auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer() {
     // Create a Java instance.
     auto_ptr<JNIContainer> jniContainer( new JNIContainer );
 
@@ -263,7 +276,7 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bo
     // Start the Java VM with the following settings
     JavaVMInitArgs vmArgs;
     JavaVMOption* options = new JavaVMOption[ 1 ];
-    const string classpath = "-Djava.class.path=." + string( PATH_SEPARATOR ) + string( BASEX_LIB );
+    const string classpath = "-Djava.class.path=XMLDBDriver.jar" + string( PATH_SEPARATOR ) + string( BASEX_LIB ) + string( PATH_SEPARATOR ) + "../input/gcam-data-system/_common/ModelInterface/src/ModelInterface.jar";
     options[ 0 ].optionString = const_cast<char*>( classpath.c_str() );
     vmArgs.version = JNI_VERSION_1_6;
     vmArgs.nOptions = 1;
@@ -290,7 +303,7 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bo
     // the database.
     // Note that we need to make this class reference "global" so that we can use
     // it again in later.
-    const string writeDBClassName = "WriteLocalBaseXDB";
+    const string writeDBClassName = "XMLDBDriver";
     jniContainer->mWriteDBClass = reinterpret_cast<jclass>( jniContainer->mJavaEnv->NewGlobalRef(
         jniContainer->mJavaEnv->FindClass( writeDBClassName.c_str() ) ) );
     if( !jniContainer->mWriteDBClass ) {
@@ -301,12 +314,11 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bo
         return jniContainer;
     }
 
-    // Find the constructor: "<init>" for the class which takes two string and a boolean argument:
-    // "(Ljava/lang/String;Ljava/lang/String;Z)V".  The arguments are the database, and
-    // a unique name to call the document that we will put into the database and a flag
-    // if we are opening the database only to append data to an existing document.
+    // Find the constructor: "<init>" for the class which takes two string:
+    // "(Ljava/lang/String;Ljava/lang/String)V".  The arguments are the database, and
+    // a unique name to call the document that we will put into the database.
     jmethodID writeDBCtorMID = jniContainer->mJavaEnv->GetMethodID( jniContainer->mWriteDBClass,
-        "<init>", "(Ljava/lang/String;Ljava/lang/String;Z)V" );
+        "<init>", "(Ljava/lang/String;Ljava/lang/String;)V" );
     if( !writeDBCtorMID ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
@@ -331,7 +343,7 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bo
 
     // Call the constructor to get an instance of writeDBClassName.
     jniContainer->mWriteDBInstance = jniContainer->mJavaEnv->NewGlobalRef(
-        jniContainer->mJavaEnv->NewObject( jniContainer->mWriteDBClass, writeDBCtorMID, jXMLDBContainerName, jDocName, aAppendOnly ) );
+        jniContainer->mJavaEnv->NewObject( jniContainer->mWriteDBClass, writeDBCtorMID, jXMLDBContainerName, jDocName ) );
     if( !jniContainer->mWriteDBInstance ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
@@ -380,12 +392,8 @@ bool XMLDBOutputter::appendData( const string& aData, const string& aLocation ) 
     }
 
 #if( __HAVE_JAVA__ )
-    // Create a Java container to use for the update indicating that we intend
-    // open to append data.
-    auto_ptr<JNIContainer> jniContainer( createContainer( true ) );
-
     // Check if creating the container failed.
-    if( !jniContainer.get() ){
+    if( !mJNIContainer.get() ){
         // An error message will have been printed by create container.
         return false;
     }
@@ -394,7 +402,7 @@ bool XMLDBOutputter::appendData( const string& aData, const string& aLocation ) 
     // "(Ljava/lang/String;Ljava/lang/String;)Z".  The arguments are the data, and
     // an XPath which gives the location after which to insert the data.  It will
     // return a bool "Z" if it successfully appended the data or not.
-    jmethodID appendDataMID = jniContainer->mJavaEnv->GetMethodID( jniContainer->mWriteDBClass,
+    jmethodID appendDataMID = mJNIContainer->mJavaEnv->GetMethodID( mJNIContainer->mWriteDBClass,
         "appendData", "(Ljava/lang/String;Ljava/lang/String;)Z" );
     if( !appendDataMID ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -404,11 +412,11 @@ bool XMLDBOutputter::appendData( const string& aData, const string& aLocation ) 
     }
 
     // Convert the C++ string to a Java String so that they can be passed to the Java method.
-    jstring jData = jniContainer->mJavaEnv->NewStringUTF( aData.c_str() );
-    jstring jLocation = jniContainer->mJavaEnv->NewStringUTF( aLocation.c_str() );
+    jstring jData = mJNIContainer->mJavaEnv->NewStringUTF( aData.c_str() );
+    jstring jLocation = mJNIContainer->mJavaEnv->NewStringUTF( aLocation.c_str() );
 
     // Call the appendData method
-    return jniContainer->mJavaEnv->CallBooleanMethod( jniContainer->mWriteDBInstance, appendDataMID, jData, jLocation );
+    return mJNIContainer->mJavaEnv->CallBooleanMethod( mJNIContainer->mWriteDBInstance, appendDataMID, jData, jLocation );
 #else
     return false;
 #endif

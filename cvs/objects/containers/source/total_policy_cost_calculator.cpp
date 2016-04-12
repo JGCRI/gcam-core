@@ -338,7 +338,7 @@ void TotalPolicyCostCalculator::printOutput() const {
     
     // Append the data to the XML database.
     if( Configuration::getInstance()->shouldWriteFile( "xmldb-location" ) ) {
-        XMLDBOutputter::appendData( xmlString, UPDATE_LOCATION );
+        mSingleScenario->getInternalScenario()->getXMLDBOutputter()->appendData( xmlString, UPDATE_LOCATION );
     }
 
     // Write to the database.

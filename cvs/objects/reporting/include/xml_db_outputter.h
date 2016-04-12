@@ -221,7 +221,7 @@ public:
     virtual void startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod );
     virtual void endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod );
 
-    static bool appendData( const std::string& aData, const std::string& aLocation );
+    bool appendData( const std::string& aData, const std::string& aLocation );
 private:
     //! A boost iostream which will send output to the DB as it is printed.
     mutable boost::iostreams::filtering_ostream mBuffer;
@@ -293,7 +293,7 @@ private:
     //! the like of the XMLDBOutputter.
     const std::auto_ptr<JNIContainer> mJNIContainer;
 
-    static std::auto_ptr<JNIContainer> createContainer( const bool aAppendOnly );
+    static std::auto_ptr<JNIContainer> createContainer();
 #endif
     static const std::string createContainerName( const std::string& aScenarioName );
 
