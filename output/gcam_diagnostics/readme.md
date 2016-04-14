@@ -329,6 +329,47 @@ of the data will be shown in white.  (Note that although the limits
 are symmetric around 0, the data need not be, so there is no guarantee
 that the middle color will correspond to white.)
 
+### Addtional notes about plots
+All plots are generated as [GGPlot2](http://ggplot2.org) objects which means
+that all of the tools provided by GGPlot2 can be used to customize these
+diagnostic plots as well.
+
+When running interactively calling the plotting methods will display the
+figure automatically:
+```R
+> plotvars(per10, mkt.grep(per10, '*DDGS*'), transforms=list(fx=fxtransform()))
+```
+
+However you can also save the object, customize it, then display the figure using
+the print function (which always works even when running in a script):
+```R
+> plot.obj <- plotvars(per10, mkt.grep(per10, '*DDGS*'), transforms=list(fx=fxtransform()))
+> plot.obj <- plot.obj + ggtitle("New title")
+> print(plot.obj)
+```
+
+You can also use `ggsave` to save these figures.  Note, especially for the heat maps,
+a high resolution image may be preferable to ensure readability.
+```R
+> ggsave("test_lineplot.pdf", plot.obj, height=20, width=20, units="in")
+```
+
+In addition you can utilze the plotting utilities of the gcam_diagnostics package
+to generate whole sets of figures to look through:
+```R
+> source( "scripts/diag_header.R" )	# configuration and helper functions
+> source( "scripts/diag_grapher.R" )  # functions to generate figures
+>
+> logstart( "test_solver_diagnostics.R", savelog=F )
+> 
+> # the diagnostics package expects a title and Units
+> plot.obj$data$title <- "Base Title"
+> plot.obj$data$Units <- ""
+> # used by do_graph to customize the image size of the saved figure
+> plot.obj$save_args <- list(dpi=300/2, width=2560/300, height=1440/300)
+> do_graph(plot.obj, page_variables=c("mktname"))
+```
+
 ### Other notes
 
 Output is currently logged only from the Broyden's Method solver.
