@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stx:transform xmlns:stx="http://stx.sourceforge.net/2002/ns" version="1.0" pass-through="all" strip-space="no">
+    <!-- This transformation uses the pass-through="all" option so by default
+         all results are copied.  The following templates will match elements with
+         years/vintage elements with years < 2020 and > 2050 and by virtue of template
+         being empty those tags and all of their child nodes will be filtered out.
+      -->
+    <stx:template match="*[@year &gt; 2050]"/>
+    <stx:template match="*[@vintage &gt; 2050]"/>
+    <!-- Note the lower priority since this is ambigous with the technology
+         special case below.
+      -->
+    <stx:template match="*[@year &lt; 2020]" priority="0.1"/>
+    <stx:template match="*[@vintage &lt; 2020]"/>
+
+    <!-- Technologies are a special case since they may be vintaged so we need to check
+         if they would still be operating in 2020 before decideing to filter them out.
+         We can check by seeing if it has output in 2020 but to do that we have to be able
+         to look ahead and the only way to do that is to collect the entire results for this
+         technology then we can use XSLT to check that.
+      -->
+    <stx:buffer name="xslt-code">
+        <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="2.0">
+            <xsl:template match="*[@type='technology']">
+                <!-- only start copying if there is output in 2020 -->
+                <xsl:if test="child::*[@type='output']/physical-output[@vintage = 2020]/node() &gt; 0">
+                    <xsl:copy>
+                        <xsl:apply-templates select="*|@*|text()"/>
+                    </xsl:copy>
+                </xsl:if>
+            </xsl:template>
+            <!-- default is to copy -->
+            <xsl:template match="*|@*|text()">
+                <xsl:copy>
+                    <xsl:apply-templates select="*|@*|text()"/>
+                </xsl:copy>
+            </xsl:template>
+            <!-- we need to repeat the delete filters in xslt too -->
+            <xsl:template match="*[@year &gt; 2050]"/>
+            <xsl:template match="*[@vintage &gt; 2050]"/>
+            <xsl:template match="*[@year &lt; 2020]" priority="0.1"/>
+            <xsl:template match="*[@vintage &lt; 2020]"/>
+        </xsl:stylesheet>
+    </stx:buffer>
+    <stx:template match="*[@type='technology' and @year &lt; 2020]">
+        <stx:process-self filter-method="http://www.w3.org/1999/XSL/Transform" filter-src="buffer(xslt-code)"/>
+    </stx:template>
+</stx:transform>

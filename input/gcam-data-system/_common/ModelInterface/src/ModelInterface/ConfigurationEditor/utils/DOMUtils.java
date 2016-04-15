@@ -37,7 +37,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
-import org.apache.xpath.domapi.XPathEvaluatorImpl;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -48,7 +47,10 @@ import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 //import org.w3c.dom.ls.DOMImplementationLS;
 //import org.w3c.dom.ls.LSSerializer;
-import org.w3c.dom.xpath.XPathResult;
+import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 
 /**
  * A set of methods for manipulating and querying the DOM.
@@ -106,7 +108,7 @@ public final class DOMUtils {
         final String[] comps = aXPath.split("/+"); //$NON-NLS-1$
 
         // Create the XPath evaluator.
-        final XPathEvaluatorImpl xPathEvaluator = new XPathEvaluatorImpl(aDocument);
+        final XPathFactory xPathEvaluator = XPathFactory.newInstance();
         
         // Store the parent of the current query.
         Node parent = null;
@@ -120,10 +122,10 @@ public final class DOMUtils {
             
             // Perform an XPath query on the tree. If this proves too slow
             // we could do the search initially and store the node.
-            final XPathResult result = executeQuery(aDocument, query.toString(), xPathEvaluator);
+            final NodeList result = executeQuery(aDocument, query.toString(), xPathEvaluator);
             
             // Check the number of results.
-            final Node firstResult = result.iterateNext();
+            final Node firstResult = result.item(0);
             // If there isn't a result the node must be created.
             if(firstResult == null) {
                 // Create the new node.
@@ -146,7 +148,7 @@ public final class DOMUtils {
             }
             else {
                 // Check for multiple results.
-                final Node secondResult = result.iterateNext();
+                final Node secondResult = result.item(1);
                 if(secondResult == null) {
                     // Set the parent to the single result.
                     parent = firstResult;
@@ -161,11 +163,11 @@ public final class DOMUtils {
         
         // Check if the process was successful by executing the entire
         // query.
-        final XPathResult result = executeQuery(aDocument, aXPath, xPathEvaluator);
+        final NodeList result = executeQuery(aDocument, aXPath, xPathEvaluator);
         
         // Unneccessary to check for multiple results here as they were 
         // checked for at every level.
-        return result.iterateNext();
+        return result.item(0);
     }
     
     /**
@@ -176,14 +178,17 @@ public final class DOMUtils {
      * @param xPathEvaluator Evaluator to use to execute.
      * @return The result of the query.
      */
-    private static XPathResult executeQuery(final Document aDocument, final String aXPath, final XPathEvaluatorImpl xPathEvaluator) {
-        return (XPathResult) xPathEvaluator
-                .createExpression(
+    private static NodeList executeQuery(final Document aDocument, final String aXPath, final XPathFactory xPathEvaluator) {
+        try {
+        return (NodeList) xPathEvaluator.newXPath()
+                .evaluate(
                         aXPath,
-                        xPathEvaluator.createNSResolver(aDocument
-                                .getDocumentElement())).evaluate(
                         aDocument.getDocumentElement(),
-                        XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+                        XPathConstants.NODESET);
+        } catch(XPathExpressionException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     
     /**
@@ -351,14 +356,15 @@ return false;
         }
         assert (aXPath != null);
         // Create the XPath evaluator.
-        final XPathEvaluatorImpl xPathEvaluator = new XPathEvaluatorImpl(aDocument);
+        final XPathFactory xPathEvaluator = XPathFactory.newInstance();
 
-        final XPathResult result = executeQuery(aDocument, aXPath, xPathEvaluator);
+        final NodeList result = executeQuery(aDocument, aXPath, xPathEvaluator);
 
         // Check for any results. Loop so that we always use the last node.
         Node resultNode = null;
+        int i = 0;
         while (true) {
-            final Node newResult = result.iterateNext();
+            final Node newResult = result.item(i++);
             // If we already set this once we have multiple values matching the
             // XPath. This is not illegal but merits a warning.
             if(newResult != null && resultNode != null) {

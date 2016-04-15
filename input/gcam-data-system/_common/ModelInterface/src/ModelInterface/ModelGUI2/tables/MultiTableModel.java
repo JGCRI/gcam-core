@@ -57,7 +57,10 @@ import javax.swing.*;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.tree.TreePath;
-import org.w3c.dom.xpath.*;
+
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 
 import org.basex.query.QueryException;
 import org.basex.query.QueryProcessor;
@@ -180,7 +183,12 @@ public class MultiTableModel extends BaseTableModel{
 	 * @param xpe the XPath expression which will be used to get nodes.
 	 */
   	protected void buildTable(XPathExpression xpe) {
-	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+	  NodeList res = null;
+      try {
+          res = (NodeList)xpe.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
+      } catch(XPathExpressionException e) {
+          e.printStackTrace();
+      }
 	  xpe = null;
 	  Node tempNode;
 	  Object[] regionAndYear;
@@ -188,7 +196,8 @@ public class MultiTableModel extends BaseTableModel{
 	  TreeSet years = new TreeSet();
 	  tableFilterMaps = new LinkedHashMap();
 	  Map dataTree = new TreeMap();
-	  while ((tempNode = res.iterateNext()) != null) {
+      for(int i = 0; i < res.getLength(); ++i) {
+        tempNode = res.item(i);
 		regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
 		regions.add(regionAndYear[0]);
 		years.add(regionAndYear[1]);

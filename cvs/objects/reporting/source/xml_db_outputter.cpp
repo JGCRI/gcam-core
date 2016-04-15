@@ -275,11 +275,17 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer() {
 
     // Start the Java VM with the following settings
     JavaVMInitArgs vmArgs;
-    JavaVMOption* options = new JavaVMOption[ 1 ];
-    const string classpath = "-Djava.class.path=XMLDBDriver.jar" + string( PATH_SEPARATOR ) + string( BASEX_LIB ) + string( PATH_SEPARATOR ) + "../input/gcam-data-system/_common/ModelInterface/src/ModelInterface.jar";
+    JavaVMOption* options = new JavaVMOption[ 2 ];
+    // Note that JNI will not expand the wildcards in the classpath as it would
+    // in every other means of setting the classpath.  To work aroudnd this we
+    // will need to use a custom class loader that will do the expansion prior to
+    // loading any classes.
+    const string classpath = "-Djava.class.path=XMLDBDriver.jar" + string( PATH_SEPARATOR ) + string( JARS_LIB )
+        + string( PATH_SEPARATOR ) + "../input/gcam-data-system/_common/ModelInterface/src/ModelInterface.jar";
     options[ 0 ].optionString = const_cast<char*>( classpath.c_str() );
+    options[ 1 ].optionString = const_cast<char*>( "-Djava.system.class.loader=WildcardExpandingClassLoader" );
     vmArgs.version = JNI_VERSION_1_6;
-    vmArgs.nOptions = 1;
+    vmArgs.nOptions = 2;
     vmArgs.options = options;
     vmArgs.ignoreUnrecognized = false;
     if( !jniContainer->mJavaVM ) {

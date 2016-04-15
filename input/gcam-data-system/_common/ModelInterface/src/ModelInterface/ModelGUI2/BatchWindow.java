@@ -86,7 +86,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.xpath.XPathResult;
 
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
 import ModelInterface.ModelGUI2.tables.BaseTableModel;
@@ -119,7 +118,7 @@ public class BatchWindow {
 	final boolean singleSheet; 
 	final boolean drawPics; 
 	final int numQueries; 
-	final XPathResult res;
+	final NodeList res;
 	Thread exportThread;
 	final boolean overwriteFile;
 	final JProgressBar progressBar;
@@ -221,7 +220,7 @@ public class BatchWindow {
 	 */
 	public BatchWindow(final File outputFile, final Vector<Object[]> toRunScns,
 			final Vector<String> allRegions, final boolean singleSheet, final boolean drawPics,
-			final int numQueries, final XPathResult res, final boolean overwriteFile) {
+			final int numQueries, final NodeList res, final boolean overwriteFile) {
 
 
 
@@ -319,7 +318,7 @@ public class BatchWindow {
                     Object[] currScns = itScn.next();
 					for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
                         QueryGenerator qgTemp = null;
-						tempNode = res.snapshotItem(snapshotIndex);
+						tempNode = res.item(snapshotIndex);
 						if(tempNode.getNodeType() == Node.COMMENT_NODE) {
 							// skip comments
 							SwingUtilities.invokeLater(increaseProgress);
@@ -500,7 +499,7 @@ public class BatchWindow {
                     drawingPat = drawPics ? sheet.createDrawingPatriarch() : null;
                 }
                 for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
-                    Node tempNode = res.snapshotItem(snapshotIndex);
+                    Node tempNode = res.item(snapshotIndex);
                     if(tempNode.getNodeType() == Node.COMMENT_NODE) {
                         // skip comments
                         continue;
@@ -588,7 +587,7 @@ public class BatchWindow {
             // actually get the query results and write them into the spreadsheet
             for(Iterator<Object[]> itScn = toRunScns.iterator(); itScn.hasNext(); itScn.next()) {
                 for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
-                    Node tempNode = res.snapshotItem(snapshotIndex);
+                    Node tempNode = res.item(snapshotIndex);
                     if(tempNode.getNodeType() == Node.COMMENT_NODE) {
                         // skip comments
                         continue;

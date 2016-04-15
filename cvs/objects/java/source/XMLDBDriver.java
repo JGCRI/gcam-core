@@ -299,9 +299,9 @@ public class XMLDBDriver {
         // Check if we have an error message for any reason, if so print it and exit
         if( error != null ) {
             System.err.println( "ERROR: "+error );
-            System.err.println( "Usage: java -jar XMLDBDriver.jar --db-path [Path to DB]" );
-            System.err.println( "                                 --doc-name [The unique name to call the document in the DB" );
-            System.err.println( "                                 --xml [The exported GCAM results XML file to load]" );
+            System.err.println( "Usage: java -cp XMLDBDriver.jar XMLDBDriver --db-path [Path to DB]" );
+            System.err.println( "            --doc-name [The unique name to call the document in the DB" );
+            System.err.println( "            --xml [The exported GCAM results XML file to load]" );
         }
         else {
             // Run the XMLDBDriver by mimicing the sequence of method calls GCAM would make
@@ -312,7 +312,12 @@ public class XMLDBDriver {
             byte[] buffer = new byte[ XMLDBDriver.BUFFER_SIZE ];
             int read = 0;
             while( ( read = xmlRead.read( buffer ) ) != -1 ) {
-                driver.receiveDataFromGCAM( buffer, read );
+                boolean hadError = driver.receiveDataFromGCAM( buffer, read );
+                if( hadError ) {
+                    // There was an error in set up.  Those messages have already been
+                    // printed so we just need to stop trying to send data.
+                    break;
+                }
             }
             xmlRead.close();
 

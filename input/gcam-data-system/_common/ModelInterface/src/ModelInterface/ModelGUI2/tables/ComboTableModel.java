@@ -54,12 +54,15 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+
 import org.w3c.dom.*;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import javax.swing.table.TableCellRenderer;
-import org.w3c.dom.xpath.*;
 
 import javax.swing.undo.UndoManager;
 import javax.swing.undo.UndoableEdit;
@@ -156,7 +159,12 @@ public class ComboTableModel extends BaseTableModel{
 	 * @see MultiTableModel#buildTable(XPathExpression)
 	 */
 	protected void buildTable(XPathExpression xpe) {
-	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+	  NodeList res = null;
+      try {
+          res = (NodeList)xpe.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
+      } catch(XPathExpressionException e) {
+          e.printStackTrace();
+      }
 	  xpe = null;
 	  Node tempNode;
 	  Object[] regionAndYear;
@@ -164,7 +172,8 @@ public class ComboTableModel extends BaseTableModel{
 	  TreeSet years = new TreeSet();
 	  tableFilterMaps = new LinkedHashMap();
 	  Map dataTree = new TreeMap();
-	  while ((tempNode = res.iterateNext()) != null) {
+      for(int i = 0; i < res.getLength(); ++i) {
+        tempNode = res.item(i);
 		regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
 		regions.add(regionAndYear[0]);
 		years.add(regionAndYear[1]);
@@ -752,9 +761,6 @@ public class ComboTableModel extends BaseTableModel{
 		
 		// This turns on automatic resizing of the domain..
 		xAxis.setAutoRange(true);
-		
-		// This makes the X axis use integer tick units.
-		xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 		
 		// This turns on automatic resizing of the range.
 		yAxis.setAutoRange(true);

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stx:transform xmlns:stx="http://stx.sourceforge.net/2002/ns" version="1.0" pass-through="all" strip-space="no">
+    <!-- This transformation uses the pass-through="all" option so by default
+         all results are copied.  The following template will match the region
+         tag (that are not named USA) and by virtue of template being empty those
+         tags and all of their child nodes will be filtered out.
+      -->
+    <stx:template match="*[@type='region' and not(@name = 'USA' or matches(@name, '^[A-Z][A-Z]$') or contains(@name, 'grid') or contains(@name, 'OCS'))]" />
+</stx:transform>

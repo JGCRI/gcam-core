@@ -100,15 +100,9 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
-
-//import org.jfree.report.JFreeReport;
-/*
-import org.w3c.dom.ls.*;
-import org.w3c.dom.bootstrap.*;
- */
-import org.apache.xpath.domapi.XPathEvaluatorImpl;
-//import org.jfree.chart.JFreeChart;
-import org.w3c.dom.xpath.*;
+import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
 
 /*
 import org.jfree.report.Group;
@@ -500,10 +494,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	}
 
 	protected QueryTreeModel getQueries() {
-		Vector ret = new Vector();
-		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queriesDoc);
-		XPathResult res = (XPathResult)xpeImpl.createExpression("/queries", xpeImpl.createNSResolver(queriesDoc.getDocumentElement())).evaluate(queriesDoc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-		return new QueryTreeModel(res.iterateNext());
+		return new QueryTreeModel(queriesDoc.getDocumentElement());
 	}
 
 	protected void createTableSelector() {
@@ -1319,10 +1310,16 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
 		// read the batch query file
 		Document queries = readQueries( queryFile );
-		XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queries);
-		final XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-
-		final int numQueries = res.getSnapshotLength();
+		final NodeList res;
+        try {
+            res = (NodeList)XPathFactory.newInstance().newXPath().evaluate("/queries/node()", queries, XPathConstants.NODESET);
+        } catch(Exception e) {
+			InterfaceMain.getInstance().showMessageDialog("Could not find queries to run in batch file:\n"+queryFile,
+					"Batch Query Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+            return;
+        }
+		final int numQueries = res.getLength();
 		if(numQueries == 0) {
 			InterfaceMain.getInstance().showMessageDialog("Could not find queries to run in batch file:\n"+queryFile,
 					"Batch Query Error", JOptionPane.ERROR_MESSAGE);
@@ -1803,10 +1800,9 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
                     // read the batch query file
                     Document queries = readQueries(queryFile);
-                    XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(queries);
-                    final XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+                    final NodeList res = (NodeList)XPathFactory.newInstance().newXPath().evaluate("/queries/node()", queries, XPathConstants.NODESET);
 
-                    final int numQueries = res.getSnapshotLength();
+                    final int numQueries = res.getLength();
                     if(numQueries == 0) {
                         throw new Exception("Could not find queries to run.");
                     }
