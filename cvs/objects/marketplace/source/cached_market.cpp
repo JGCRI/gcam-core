@@ -447,10 +447,3 @@ IInfo* CachedMarket::getMarketInfo( const string& aGoodName, const string& aRegi
     }
     return info;
 }
-
-/*! \brief Get the serial number for the cached market
- */
-int CachedMarket::getSerialNumber(void) const
-{
-    return mCachedMarket->getSerialNumber();
-}
