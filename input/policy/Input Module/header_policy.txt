@@ -1,0 +1,7 @@
+The first row of a header file is not read.
+
+1,world/+{name}region,region/+{name}ghgpolicy,ghgpolicy/+market,ghgpolicy/+isFixedTax,ghgpolicy/+{year=2020}fixedTax,scenario,scenario/world
+
+2,world/+{name}region,region/+{name}ghgpolicy,ghgpolicy/+market,ghgpolicy/+{year=2020}constraint,ghgpolicy/+{year=2025}constraint,ghgpolicy/+{year=2030}constraint,scenario,scenario/world
+
+3,world/+{name}region,region/+{name}ghgpolicy,ghgpolicy/+market,ghgpolicy/+isFixedTax,ghgpolicy/+{year=2020}fixedTax,ghgpolicy/+{year=2025}fixedTax,ghgpolicy/+{year=2030}fixedTax,ghgpolicy/+{year=2035}fixedTax,scenario,scenario/world

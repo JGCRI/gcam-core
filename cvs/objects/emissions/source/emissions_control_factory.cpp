@@ -45,6 +45,7 @@
 #include "emissions/include/emissions_control_factory.h"
 #include "emissions/include/mac_control.h"
 #include "emissions/include/gdp_control.h"
+#include "emissions/include/readin_control.h"
 #include "emissions/include/aemissions_control.h"
 
 using namespace std;
@@ -61,10 +62,14 @@ auto_ptr<AEmissionsControl> EmissionsControlFactory::create( const string& aType
     else if( aType == GDPControl::getXMLNameStatic() ){
         return auto_ptr<AEmissionsControl>( new GDPControl );
     }
+    else if( aType == ReadInControl::getXMLNameStatic() ){
+        return auto_ptr<AEmissionsControl>( new ReadInControl );
+    }
     return auto_ptr<AEmissionsControl>();
 }
 
 bool EmissionsControlFactory::isEmissionsControlNode( const string& aNodeName ){
     return aNodeName == MACControl::getXMLNameStatic() ||
-           aNodeName == GDPControl::getXMLNameStatic() ;
+           aNodeName == GDPControl::getXMLNameStatic() ||
+           aNodeName == ReadInControl::getXMLNameStatic();
 }

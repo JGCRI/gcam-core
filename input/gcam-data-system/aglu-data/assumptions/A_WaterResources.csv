@@ -1,0 +1,1 @@
+# File: A_WaterResources.csv,,,,# Description: sets the characteristics and supply curves of water supply,,,,# Original source: NA,,,,# ----------,,,,resource,output-unit,price-unit,1971,2100biophysical water consumption,km^3,1975$/m^3,0,0water consumption,km^3,1975$/m^3,0,0water withdrawals,km^3,1975$/m^3,0.001,0.001

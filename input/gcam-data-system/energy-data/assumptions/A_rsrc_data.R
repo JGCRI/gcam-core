@@ -15,3 +15,7 @@ digits_capacity.factor <- 2
 hi_ccs_cost_mult <- 0.8
 lo_ccs_cost_mult <- 3
 lowest_ccs_cost_mult <- 10
+
+#GDP per capita thressholds for SSP4 region groupings
+hi_growth_pcgdp <- 12.275
+lo_growth_pcgdp <- 2.75

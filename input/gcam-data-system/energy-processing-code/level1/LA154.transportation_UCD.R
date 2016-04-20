@@ -26,7 +26,7 @@ calibrated_techs_trn_agg <- readdata( "ENERGY_MAPPINGS", "calibrated_techs_trn_a
 enduse_fuel_aggregation <- readdata( "ENERGY_MAPPINGS", "enduse_fuel_aggregation" )
 UCD_ctry <- readdata( "ENERGY_MAPPINGS", "UCD_ctry" )
 UCD_techs <- readdata( "ENERGY_MAPPINGS", "UCD_techs" )
-UCD_transportation_database <- readdata( "ENERGY_LEVEL0_DATA", "UCD_transportation_database" )
+UCD_trn_data <- readdata( "ENERGY_LEVEL0_DATA", paste0( "UCD_trn_data_", trn_SSP ) )   #Note that the assumed SSP is appended here
 L101.in_EJ_ctry_trn_Fi_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L101.in_EJ_ctry_trn_Fi_Yh" )
 L1011.in_EJ_ctry_intlship_TOT_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1011.in_EJ_ctry_intlship_TOT_Yh" )
 L131.in_EJ_R_Senduse_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L131.in_EJ_R_Senduse_F_Yh" )
@@ -65,7 +65,7 @@ L154.in_EJ_ctry_trn_Fi_Yh <- aggregate( L154.in_EJ_ctry_trn_Fi_Yh[ X_historical_
 
 printlog( "Aggregating UCD transportation database by the general categories used for the IEA transportation data" )
 printlog( "These will be used to compute shares for allocation of energy to mode/technology/fuel within category/fuel")
-L154.in_PJ_Rucd_trn_m_sz_tech_F <- subset( UCD_transportation_database, variable == "energy" )
+L154.in_PJ_Rucd_trn_m_sz_tech_F <- subset( UCD_trn_data, variable == "energy" )
 L154.in_PJ_Rucd_trn_m_sz_tech_F[ UCD_Cat_F ] <- UCD_techs[
       match( vecpaste( L154.in_PJ_Rucd_trn_m_sz_tech_F[ UCD_techID ] ),
              vecpaste( UCD_techs[ UCD_techID ] ) ),
@@ -153,7 +153,7 @@ if( any( !complete.cases( L154.in_EJ_R_trn_m_sz_tech_F_Yh ) ) ){
 printlog( "Part 2: Downscaling of parameters in the UCD database to the country level")
 printlog( "2a: Merging of non-fuel costs to assign each technology with a single cost per vkm" )
 #NOTE: because "$" is recognized as an operator in R, it can not be used in grepl() to return the costs. Using exact unit names
-L154.UCD_trn_cost_data <- subset( UCD_transportation_database, unit %in% c( "2005$/veh/yr", "2005$/veh", "2005$/vkt" ) )
+L154.UCD_trn_cost_data <- subset( UCD_trn_data, unit %in% c( "2005$/veh/yr", "2005$/veh", "2005$/vkt" ) )
 L154.UCD_trn_cost_data.melt <- melt( L154.UCD_trn_cost_data, measure.vars = X_UCD_years, variable.name = "Xyear" )
 
 #Where the unit is $/vkt, the various cost components are ready for aggregation
@@ -163,7 +163,7 @@ L154.UCD_trn_cost_data.melt$value[ L154.UCD_trn_cost_data.melt$unit == "2005$/ve
 L154.UCD_trn_cost_data.melt$unit[ L154.UCD_trn_cost_data.melt$unit == "2005$/veh" ] <- "2005$/veh/yr"
 
 #Next, match in the number of km per vehicle per year in order to calculate a levelized cost (per vkm)
-L154.UCD_trn_vkm_veh <- subset( UCD_transportation_database, variable == "annual travel per vehicle" )
+L154.UCD_trn_vkm_veh <- subset( UCD_trn_data, variable == "annual travel per vehicle" )
 L154.UCD_trn_cost_data.melt$vkm.veh <- L154.UCD_trn_vkm_veh[[ X_UCD_en_year ]][
       match( vecpaste( L154.UCD_trn_cost_data.melt[ c( "UCD_region", "UCD_sector", "mode", "size.class" ) ] ),
              vecpaste( L154.UCD_trn_vkm_veh[ c( "UCD_region", "UCD_sector", "mode", "size.class" ) ] ) ) ]
@@ -180,7 +180,7 @@ L154.UCD_trn_cost_data_agg <- dcast( L154.UCD_trn_cost_data_agg.melt, UCD_region
       UCD_technology + UCD_fuel + variable + unit ~ Xyear, value.var = "value" )
 
 L154.UCD_trn_data <- rbind(
-      subset( UCD_transportation_database, variable %in% c( "intensity", "load factor", "speed" ) ),
+      subset( UCD_trn_data, variable %in% c( "intensity", "load factor", "speed" ) ),
       L154.UCD_trn_cost_data_agg )
 
 #Loop through the database to get rid of missing values in the base years, filling them out with the values from the next time period
@@ -312,7 +312,7 @@ L154.speed_kmhr_R_trn_m_sz_tech_F_Y <- dcast( L154.ALL_R_trn_m_sz_tech_F_Y.melt,
       value.var = "speed_kmhr" )
 
 printlog( "Part 3: Downscaling of non-motorized transport to the country level, using population" )
-L154.out_bpkm_Rucd_trn_nonmotor <- subset( UCD_transportation_database, mode %in% c( "Walk", "Cycle" ) & variable == "service output" )
+L154.out_bpkm_Rucd_trn_nonmotor <- subset( UCD_trn_data, mode %in% c( "Walk", "Cycle" ) & variable == "service output" )
 L100.Pop_thous_ctry_Yh$UCD_region <- UCD_ctry$UCD_region[
       match( L100.Pop_thous_ctry_Yh$iso, UCD_ctry$iso ) ]
 L154.Pop_thous_Rucd <- aggregate( L100.Pop_thous_ctry_Yh[ X_UCD_en_year ],

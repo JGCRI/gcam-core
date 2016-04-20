@@ -72,14 +72,16 @@ extern Scenario* scenario;
 LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName ):
     ALandAllocatorItem( aParent, eLeaf ),
     mLandAllocation( 0.0 ),
-    mCarbonContentCalc(0),
+    mCarbonContentCalc( 0 ),
     mMinAboveGroundCDensity( 0.0 ),
     mMinBelowGroundCDensity( 0.0 ),
     mCarbonPriceIncreaseRate( 0.0 ),
-    mLandUseHistory(0),
-    mReadinLandAllocation(0.0),
-    mLastCalcCO2Value(0.0),
-    mLastCalcExpansionValue(0.0)
+    mLandUseHistory( 0 ),
+    mReadinLandAllocation( 0.0 ),
+    mLastCalcCO2Value( 0.0 ),
+    mLastCalcExpansionValue( 0.0 ),
+    mGhostShareNumeratorForLeaf( 0.25 ),
+    mNewTechStartYear( 2020 )
 {
     // Can't use initializer because mName is a member of ALandAllocatorItem,
     // not LandLeaf.
@@ -154,8 +156,13 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
             mMinBelowGroundCDensity = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "isNewTechnology" ){
-            XMLHelper<bool>::insertValueIntoVector( curr, mIsNewTech,
-                                                 scenario->getModeltime() );
+			mIsNewTech = XMLHelper<bool>::getValue( curr );
+        }        
+		else if( nodeName == "ghost-share-leaf" ){
+			mGhostShareNumeratorForLeaf = XMLHelper<double>::getValue( curr );
+        }
+		else if( nodeName == "new-tech-start-year" ){
+			mNewTechStartYear = XMLHelper<int>::getValue( curr );
         }        
         else if( nodeName == LandUseHistory::getXMLNameStatic() ){
             parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
@@ -235,8 +242,17 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
 {
     if ( aPeriod > 1 ) {
         // If leaf is a "new tech" get the scaler from its parent
-        if ( mIsNewTech[ aPeriod ] ) {
-            mProfitScaler[ aPeriod ] = getParent()->getNewTechProfitScaler( aPeriod );
+        if ( mIsNewTech ) {
+			int finalCalPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
+			if ( aPeriod < scenario->getModeltime()->getyr_to_per( mNewTechStartYear ) ) {
+				mProfitScaler[ aPeriod ] = 0.0;
+			}
+			else if ( aPeriod > finalCalPeriod ) {
+				mProfitScaler[ aPeriod ] = mCalibrationProfitRate[ finalCalPeriod ] / getParent()->getCalibrationProfitForNewTech( finalCalPeriod );
+			}
+			else {
+				mProfitScaler[ aPeriod ] = mCalibrationProfitRate[ aPeriod ] / getParent()->getCalibrationProfitForNewTech( aPeriod );
+			}
         }
         // Copy share weights forward if new ones haven't been read in 
         else if ( mProfitScaler[ aPeriod ] == -1 ) {
@@ -250,6 +266,7 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
         if ( mShare[ aPeriod ] == -1 ) {
             mShare[ aPeriod ] = mShare[ aPeriod - 1 ];
         }
+
     }
     //  This works since the land allocator calibration is called before these 
     //  initcalcs are called in the landallocator initcalc, so Period 1 values 
@@ -305,7 +322,7 @@ void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteVector( mReadinLandAllocation, "landAllocation", aOut, aTabs, modeltime );
-    XMLWriteVector( mIsNewTech, "isNewTechnology", aOut, aTabs, modeltime );
+    XMLWriteElement( mIsNewTech, "isNewTechnology", aOut, aTabs );
     XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", aOut, aTabs );
     XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", aOut, aTabs );
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );
@@ -397,11 +414,14 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
         double incrementalBelowCDensity = mCarbonContentCalc->getActualBelowGroundCarbonDensity( year )
                                             - mMinBelowGroundCDensity;
 
+        // KVC_SSP: We want to use a social discount rate here.
+        double socialDiscountRate = 0.02;
+        
         // Calculate the carbon value as the total carbon content of the land
         // multiplied by the carbon price and the interest rate.
         double carbonSubsidy = ( incrementalAboveCDensity * mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
             + incrementalBelowCDensity * mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
-            * carbonPrice * ( mInterestRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
+            * carbonPrice * ( socialDiscountRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
 
         assert( carbonSubsidy >= 0.0 );
 
@@ -442,12 +462,16 @@ void LandLeaf::calculateCalibrationProfitRate( const string& aRegionName,
     // so don't do it.  Zero means fixed shares so average profit won't change.
     // And avoid 1/0.
     if ( aLogitExponentAbove > 0 ) {    
+		if ( mIsNewTech ) {
+			avgProfitRate *= pow( mGhostShareNumeratorForLeaf, 1.0 / aLogitExponentAbove );
+		}
+		else {
         avgProfitRate *= pow( mShare[ aPeriod ], 1.0 / aLogitExponentAbove ); 
+    }
     }
 
     // store this value in this leaf 
     mCalibrationProfitRate[ aPeriod ] = avgProfitRate;
-
 }
 
 
@@ -514,7 +538,15 @@ void LandLeaf::calculateProfitScalers( const string& aRegionName,
     // the price of land read in for the subregion, plus any carbon value
 
     // Only calculate if numerator and denomiator are both not equal to 0, else set to zero
-    if ( mCalibrationProfitRate[ aPeriod ] == 0 || mProfitRate[ aPeriod ] == 0 ) {
+	if ( mIsNewTech ) {
+		if ( aPeriod < scenario->getModeltime()->getyr_to_per( mNewTechStartYear ) ) {
+			mProfitScaler[ aPeriod ] = 0.0;
+		}
+		else {
+			mProfitScaler[ aPeriod ] = mCalibrationProfitRate[ aPeriod ] / getParent()->getCalibrationProfitForNewTech( aPeriod );
+		}
+	}
+	else if ( mCalibrationProfitRate[ aPeriod ] == 0 || mProfitRate[ aPeriod ] == 0 ) {
         mProfitScaler[ aPeriod ] = 0;
     }
     else {
@@ -529,7 +561,6 @@ void LandLeaf::calculateProfitScalers( const string& aRegionName,
                << aRegionName << " " << mName << endl;
                mProfitScaler[ aPeriod ] = 0;
         }
-
 }
 
 
@@ -626,7 +657,7 @@ double LandLeaf::getCalLandAllocation( const LandAllocationType aType,
 }
 
 // does nothing for leaves. all new leafs within a node get the same scaler
-double LandLeaf::getNewTechProfitScaler( const int aPeriod ) const {
+double LandLeaf::getCalibrationProfitForNewTech( const int aPeriod ) const {
      return 0;
 }
 
@@ -663,4 +694,13 @@ ICarbonCalc* LandLeaf::getCarbonContentCalc() const{
 bool LandLeaf::isManagedLandLeaf( )  const 
 {
     return true;
+}
+
+bool LandLeaf::isUnmanagedLandLeaf( )  const 
+{
+    return false;
+}
+
+double LandLeaf::getProfitForChildWithHighestShare( const int aPeriod ) const {
+	return mProfitRate[ aPeriod ];
 }

@@ -185,7 +185,8 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
 }
 
 bool Marketplace::createLinkedMarket( const string& regionName, const string& marketName,
-                                      const string& goodName, const string& linkedMarket )
+                                      const string& goodName, const string& linkedMarket,
+                                      const int aStartPeriod )
 {
     /*! \pre Region name, market name, sector name, and linked good name must be non null. */
     assert( !regionName.empty() && !marketName.empty() && !goodName.empty() && !linkedMarket.empty() );
@@ -197,23 +198,36 @@ bool Marketplace::createLinkedMarket( const string& regionName, const string& ma
     // If the market number is the unique number we passed it, the market did not already exist and 
     // we should create the market objects, one per period.
     const bool isNewMarket = ( marketNumber == uniqueNumber );
-    if( isNewMarket ){
+    if( isNewMarket || markets[ marketNumber ][ aStartPeriod ]->getType() == IMarketType::TAX ){
         const int linkedMarketNumber = mMarketLocator->getMarketNumber( regionName, linkedMarket );
         if( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Linked market "<< goodName << " in " << regionName << " could not be linked to " << linkedMarket << endl;
         }
+        if( isNewMarket ) {
         vector<Market*> tempVector( scenario->getModeltime()->getmaxper() );
-        for( unsigned int i = 0; i < tempVector.size(); i++ ){
+            for( unsigned int i = aStartPeriod; i < tempVector.size(); i++ ){
             tempVector[ i ] = new LinkedMarket( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ? 0
                                                 : markets[ linkedMarketNumber ][ i ], goodName, marketName, i );
         }
         markets.push_back( tempVector );
     }
+        else {
+            vector<Market*> tempVector = markets[ marketNumber];
+            for( unsigned int i = aStartPeriod; i < tempVector.size(); i++ ){
+                if( tempVector[ i ]->getType() == IMarketType::TAX ) {
+                    delete tempVector[ i ];
+                    tempVector[ i ] = new LinkedMarket( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ? 0
+                                                        : markets[ linkedMarketNumber ][ i ], goodName, marketName, i );
+                }
+            }
+            markets[ marketNumber ] = tempVector;
+        }
+    }
     
     // Add the region onto the market.
-    for( unsigned int i = 0; i < markets[ marketNumber ].size(); i++ ) {
+    for( unsigned int i = aStartPeriod; i < markets[ marketNumber ].size(); i++ ) {
         markets[ marketNumber ][ i ]->addRegion( regionName );
     }
     // Return whether we were required to create a new market.

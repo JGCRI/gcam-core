@@ -32,8 +32,6 @@ L124.nonco2_tg_R_grass_Y_AEZ <- readdata( "EMISSIONS_LEVEL1_DATA", "L124.nonco2_
 L124.nonco2_tg_R_forest_Y_AEZ <- readdata( "EMISSIONS_LEVEL1_DATA", "L124.nonco2_tg_R_forest_Y_AEZ" )
 L125.bcoc_tgbkm2_R_grass_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L125.bcoc_tgbkm2_R_grass_2000" )
 L125.bcoc_tgbkm2_R_forest_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L125.bcoc_tgbkm2_R_forest_2000" )
-L124.nonco2_tgbm2_grass_fy.melt <- readdata( "EMISSIONS_LEVEL1_DATA", "L124.nonco2_tgbm2_grass_fy.melt" )
-L124.nonco2_tgbm2_forest_fy.melt <- readdata( "EMISSIONS_LEVEL1_DATA", "L124.nonco2_tgbm2_forest_fy.melt" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -51,8 +49,9 @@ L212.Sector$logit.exponent <- -3
 
 printlog( "L212.ItemName: Land item to relate emissions to" )
 L212.LandItem <- L212.Sector[ names( L212.Sector ) %in% c( "region", "AgSupplySector" )]
-L212.LandItem <- repeat_and_add_vector( L212.LandItem, "AgSupplySubsector", c( "ForestFires", "GrasslandFires") )
-L212.LandItem$itemName[ L212.LandItem$AgSupplySubsector == "ForestFires" ] <- "UnmanagedForest" 
+L212.LandItem <- repeat_and_add_vector( L212.LandItem, "AgSupplySubsector", c( "ForestFire", "Deforest", "GrasslandFires") )
+L212.LandItem$itemName[ L212.LandItem$AgSupplySubsector == "ForestFire" ] <- "UnmanagedForest" 
+L212.LandItem$itemName[ L212.LandItem$AgSupplySubsector == "Deforest" ] <- "UnmanagedForest" 
 L212.LandItem$itemName[ L212.LandItem$AgSupplySubsector == "GrasslandFires" ] <- "Grassland" 
 L212.LandItem <- repeat_and_add_vector( L212.LandItem, "AEZ", AEZs )
 L212.LandItem$AgSupplySubsector <- paste( L212.LandItem$AgSupplySubsector, L212.LandItem$AEZ, sep="" )
@@ -105,96 +104,74 @@ L212.GRASSEmissionsFactors_BCOC <- na.omit( L212.GRASSEmissionsFactors_BCOC )
 #Forest fire emissions
 printlog( "L212.ForestEmissions: Forest fire emissions in all regions" )
 #Interpolate and add region name
-L212.FOREST <- L124.nonco2_tg_R_forest_Y_AEZ[ names( L124.nonco2_tg_R_forest_Y_AEZ ) %!in% c( "X2009", "X2010") ]
+L212.FOREST <- L124.nonco2_tg_R_forest_Y_AEZ[ names( L124.nonco2_tg_R_forest_Y_AEZ )]
 
 #Note: interpolate takes ages, so I'm not using interpolate_and_melt
 L212.FOREST <- melt( L212.FOREST, id.vars = grep( "X[0-9]{4}", names( L212.FOREST ), invert = T ) )
 L212.FOREST <- na.omit( L212.FOREST )
 L212.FOREST$year <- as.numeric( substr( L212.FOREST$variable, 2, 5 ) )
-L212.FOREST <- subset( L212.FOREST, L212.FOREST$year %in% emiss_model_base_years )
+L212.FOREST <- subset( L212.FOREST, L212.FOREST$year %in% c( emiss_model_base_years, 2010 ) )
 L212.FOREST <- add_region_name( L212.FOREST )
 
 #Add subsector and tech names
 L212.FOREST$AgSupplySector <- "UnmanagedLand"
-L212.FOREST$AgSupplySubsector <- paste( "ForestFires", L212.FOREST$AEZ, sep="" )
-L212.FOREST$UnmanagedLandTechnology <- paste( "ForestFires", L212.FOREST$AEZ, sep="" )
+L212.FOREST$AgSupplySubsector <- paste( L212.FOREST$technology, L212.FOREST$AEZ, sep="" )
+L212.FOREST$UnmanagedLandTechnology <- paste( L212.FOREST$technology, L212.FOREST$AEZ, sep="" )
+
+#Split into ForestFire & Deforest -- they have different drivers and this is easier to do now 
+L212.FOREST_FF <- subset( L212.FOREST, technology == "ForestFire" )
+L212.FOREST_D <- subset( L212.FOREST, technology == "Deforest" )
 
 #Format for csv file
-L212.FORESTEmissions <- L212.FOREST[ c( names_UnmgdTech, "year", "Non.CO2" ) ]
-L212.FORESTEmissions$input.emissions <- L212.FOREST$value
-L212.FORESTEmissions <- na.omit( L212.FORESTEmissions )
+L212.FORESTEmissions_FF <- L212.FOREST_FF[ c( names_UnmgdTech, "year", "Non.CO2" ) ]
+L212.FORESTEmissions_FF$input.emissions <- L212.FOREST_FF$value
+L212.FORESTEmissions_FF <- na.omit( L212.FORESTEmissions_FF )
+
+L212.FORESTEmissions_D <- L212.FOREST_D[ c( names_UnmgdTech, "year", "Non.CO2" ) ]
+L212.FORESTEmissions_D$input.emissions <- L212.FOREST_D$value
+L212.FORESTEmissions_D <- na.omit( L212.FORESTEmissions_D )
 
 #Forest fire emissions factors for BC/OC
 printlog( "L212.ForestEmissions: Forest fire emissions factors for BC/OC in all regions" )
 #Interpolate and add region name
 L212.FORESTEF_BCOC <- L125.bcoc_tgbkm2_R_forest_2000
 L212.FORESTEF_BCOC <- na.omit( L212.FORESTEF_BCOC )
-names( L212.FORESTEF_BCOC )[ names( L212.FORESTEF_BCOC ) == "X2000" ] <- "value"
 L212.FORESTEF_BCOC <- repeat_and_add_vector( L212.FORESTEF_BCOC, "year", emiss_model_base_years )
 L212.FORESTEF_BCOC <- add_region_name( L212.FORESTEF_BCOC )
 L212.FORESTEF_BCOC <- repeat_and_add_vector( L212.FORESTEF_BCOC, "AEZ", AEZs )
 
 #Add subsector and tech names
 L212.FORESTEF_BCOC$AgSupplySector <- "UnmanagedLand"
-L212.FORESTEF_BCOC$AgSupplySubsector <- paste( "ForestFires", L212.FORESTEF_BCOC$AEZ, sep="" )
-L212.FORESTEF_BCOC$UnmanagedLandTechnology <- paste( "ForestFires", L212.FORESTEF_BCOC$AEZ, sep="" )
+L212.FORESTEF_BCOC$AgSupplySubsector <- paste( L212.FORESTEF_BCOC$technology, L212.FORESTEF_BCOC$AEZ, sep="" )
+L212.FORESTEF_BCOC$UnmanagedLandTechnology <- paste( L212.FORESTEF_BCOC$technology, L212.FORESTEF_BCOC$AEZ, sep="" )
+
+#Split into ForestFire & Deforest -- they have different drivers and this is easier to do now 
+L212.FORESTEF_BCOC_FF <- subset( L212.FORESTEF_BCOC, technology == "ForestFire" )
+L212.FORESTEF_BCOC_D <- subset( L212.FORESTEF_BCOC, technology == "Deforest" )
 
 #Format for csv file
-L212.FORESTEmissionsFactors_BCOC <- L212.FORESTEF_BCOC[ c( names_UnmgdTech, "year", "Non.CO2" ) ]
-L212.FORESTEmissionsFactors_BCOC$emiss.coef <- L212.FORESTEF_BCOC$value
-L212.FORESTEmissionsFactors_BCOC <- na.omit( L212.FORESTEmissionsFactors_BCOC )
+L212.FORESTEmissionsFactors_BCOC_FF <- L212.FORESTEF_BCOC_FF[ c( names_UnmgdTech, "year", "Non.CO2" ) ]
+L212.FORESTEmissionsFactors_BCOC_FF$emiss.coef <- L212.FORESTEF_BCOC_FF$em_fact
+L212.FORESTEmissionsFactors_BCOC_FF <- na.omit( L212.FORESTEmissionsFactors_BCOC_FF )
 
-#Forest fire emissions factors for pollutant gases in future years
-printlog( "L212.ForestEmissions: Forest fire emissions factors for pollutant gases in future years" )
-#Interpolate and add region name
-L212.FORESTEF <- L124.nonco2_tgbm2_forest_fy.melt
-L212.FORESTEF <- repeat_and_add_vector( L212.FORESTEF, "region", GCAM_region_names$region )
-L212.FORESTEF$year <- 2010
-L212.FORESTEF <- repeat_and_add_vector( L212.FORESTEF, "AEZ", AEZs )
-
-#Add subsector and tech names
-L212.FORESTEF$AgSupplySector <- "UnmanagedLand"
-L212.FORESTEF$AgSupplySubsector <- paste( "ForestFires", L212.FORESTEF$AEZ, sep="" )
-L212.FORESTEF$UnmanagedLandTechnology <- paste( "ForestFires", L212.FORESTEF$AEZ, sep="" )
-
-#Format for csv file
-L212.FORESTEmissionsFactors <- L212.FORESTEF[ c( names_UnmgdTech, "year", "Non.CO2" ) ]
-L212.FORESTEmissionsFactors$emiss.coef <- L212.FORESTEF$em_fact
-L212.FORESTEmissionsFactors <- na.omit( L212.FORESTEmissionsFactors )
-
-#Grassland fire emissions factors for pollutant gases in future years
-printlog( "L212.GrassEmissions: Grassland fire emissions factors for pollutant gases in future years" )
-#Interpolate and add region name
-L212.GRASSEF <- L124.nonco2_tgbm2_grass_fy.melt
-L212.GRASSEF <- repeat_and_add_vector( L212.GRASSEF, "region", GCAM_region_names$region )
-L212.GRASSEF$year <- 2010
-L212.GRASSEF <- repeat_and_add_vector( L212.GRASSEF, "AEZ", AEZs )
-
-#Add subsector and tech names
-L212.GRASSEF$AgSupplySector <- "UnmanagedLand"
-L212.GRASSEF$AgSupplySubsector <- paste( "GrasslandFires", L212.GRASSEF$AEZ, sep="" )
-L212.GRASSEF$UnmanagedLandTechnology <- paste( "GrasslandFires", L212.GRASSEF$AEZ, sep="" )
-
-#Format for csv file
-L212.GRASSEmissionsFactors <- L212.GRASSEF[ c( names_UnmgdTech, "year", "Non.CO2" ) ]
-L212.GRASSEmissionsFactors$emiss.coef <- L212.GRASSEF$em_fact
-L212.GRASSEmissionsFactors <- na.omit( L212.GRASSEmissionsFactors )
+L212.FORESTEmissionsFactors_BCOC_D <- L212.FORESTEF_BCOC_D[ c( names_UnmgdTech, "year", "Non.CO2" ) ]
+L212.FORESTEmissionsFactors_BCOC_D$emiss.coef <- L212.FORESTEF_BCOC_D$em_fact
+L212.FORESTEmissionsFactors_BCOC_D <- na.omit( L212.FORESTEmissionsFactors_BCOC_D )
 
 printlog( "Removing non-existent regions and AEZs from all tables")
 L212.Sector <- subset( L212.Sector, !region %in% no_aglu_regions )
 L212.GRASSEmissions <- remove_AEZ_nonexist( L212.GRASSEmissions )
-L212.GRASSEmissionsFactors <- remove_AEZ_nonexist( L212.GRASSEmissionsFactors )
 L212.GRASSEmissionsFactors_BCOC <- remove_AEZ_nonexist( L212.GRASSEmissionsFactors_BCOC )
-L212.FORESTEmissions <- remove_AEZ_nonexist( L212.FORESTEmissions )
-L212.FORESTEmissionsFactors <- remove_AEZ_nonexist( L212.FORESTEmissionsFactors )
-L212.FORESTEmissionsFactors_BCOC <- remove_AEZ_nonexist( L212.FORESTEmissionsFactors_BCOC )
+L212.FORESTEmissions_FF <- remove_AEZ_nonexist( L212.FORESTEmissions_FF )
+L212.FORESTEmissions_D <- remove_AEZ_nonexist( L212.FORESTEmissions_D )
+L212.FORESTEmissionsFactors_BCOC_FF <- remove_AEZ_nonexist( L212.FORESTEmissionsFactors_BCOC_FF )
+L212.FORESTEmissionsFactors_BCOC_D <- remove_AEZ_nonexist( L212.FORESTEmissionsFactors_BCOC_D )
 L212.LandItem <- remove_AEZ_nonexist( L212.LandItem )
 
 printlog( "Rename to regional SO2" )
 L212.GRASSEmissions <- rename_SO2( L212.GRASSEmissions, A_regions, FALSE )
-L212.GRASSEmissionsFactors <- rename_SO2( L212.GRASSEmissionsFactors, A_regions, FALSE )
-L212.FORESTEmissions <- rename_SO2( L212.FORESTEmissions, A_regions, FALSE )
-L212.FORESTEmissionsFactors <- rename_SO2( L212.FORESTEmissionsFactors, A_regions, FALSE )
+L212.FORESTEmissions_D <- rename_SO2( L212.FORESTEmissions_D, A_regions, FALSE )
+L212.FORESTEmissions_FF <- rename_SO2( L212.FORESTEmissions_FF, A_regions, FALSE )
 
 # Add logit tags to avoid errors
 L212.SectorLogitType <- L212.Sector
@@ -226,11 +203,11 @@ write_mi_data( L212.SubsectorLogitTables[[ curr_table ]]$data, L212.SubsectorLog
 write_mi_data( L212.AgSupplySubsector, "AgSupplySubsector", "EMISSIONS_LEVEL2_DATA", "L212.AgSupplySubsector", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 write_mi_data( L212.LandItem, "ItemNameUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.LandItem", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 write_mi_data( L212.GRASSEmissions, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissions", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
-write_mi_data( L212.FORESTEmissions, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissions", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.FORESTEmissions_FF, "InputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissions_FF", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.FORESTEmissions_D, "OutputEmissionsUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissions_D", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 write_mi_data( L212.GRASSEmissionsFactors_BCOC, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissionsFactors_BCOC", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
-write_mi_data( L212.FORESTEmissionsFactors_BCOC, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors_BCOC", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
-write_mi_data( L212.GRASSEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
-write_mi_data( L212.FORESTEmissionsFactors, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.FORESTEmissionsFactors_BCOC_FF, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors_BCOC_FF", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.FORESTEmissionsFactors_BCOC_D, "OutputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors_BCOC_D", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 
 insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml", "EMISSIONS_XML_FINAL", "all_unmgd_emissions.xml", "", xml_tag="outFile" )
 

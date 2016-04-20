@@ -1,41 +1,1 @@
-# File: USDA_item_cost.csv,
-# Description: Specifies cost type from USDA database,
-# ----------,
-Item,cost_type
-Primary output,na
-Secondary output,na
-Total output,na
-Seed,variable
-Fertilizer,variable
-Soil conditioners,variable
-Manure,variable
-Chemicals,variable
-Custom operations,variable
-"Fuel, lube, and electricity",variable
-Repairs,variable
-Purchased irrigation water,variable
-Interest on operating capital,variable
-Commercial Drying,variable
-Coop share,variable
-Freight and dirt hauling,variable
-Ginning,variable
-Hauling allowance,variable
-Miscellaneous,variable
-Total operating costs,na
-Hired labor,na
-Opportunity cost of unpaid labor,na
-Capital recovery of machinery and equipment,na
-Opportunity cost of land (rental rate),na
-Taxes and insurance,na
-General farm overhead,na
-Total allocated overhead,na
-Total costs listed,na
-Value of production less total costs listed,na
-Value of production less operating costs,na
-Yield,na
-Yield (seed),na
-Price,na
-Price (seed),na
-Enterprise size,na
-Irrigated,na
-Dryland,na
+# File: USDA_item_cost.csv,,# Description: Specifies cost type from USDA database,,# ----------,,Item,cost_type,cost_type_irrPrimary output,na,naSecondary output,na,naTotal output,na,naSeed,variable,variableFertilizer,variable,variableSoil conditioners,variable,variableManure,variable,variableChemicals,variable,variableCustom operations,variable,variable"Fuel, lube, and electricity",variable,variableRepairs,variable,variablePurchased irrigation water,variable,naInterest on operating capital,variable,variableCommercial Drying,variable,variableCoop share,variable,variableFreight and dirt hauling,variable,variableGinning,variable,variableHauling allowance,variable,variableMiscellaneous,variable,variableTotal operating costs,na,naHired labor,na,naOpportunity cost of unpaid labor,na,naCapital recovery of machinery and equipment,na,naOpportunity cost of land (rental rate),na,naTaxes and insurance,na,naGeneral farm overhead,na,naTotal allocated overhead,na,naTotal costs listed,na,naValue of production less total costs listed,na,naValue of production less operating costs,na,naYield,na,naYield (seed),na,naPrice,na,naPrice (seed),na,naEnterprise size,na,naIrrigated,na,naDryland,na,na

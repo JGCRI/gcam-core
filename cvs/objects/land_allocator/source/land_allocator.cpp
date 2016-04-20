@@ -192,7 +192,7 @@ void LandAllocator::checkLandArea( const string& aRegionName, const int aPeriod 
     // If the difference between the total and the sum of the leafs
     // is too large, print an error message and exit. 
     double fractionDiff = excessLand / mLandAllocation[ aPeriod ];
-    if ( abs( fractionDiff ) > 0.01 ) {
+    if ( abs( fractionDiff ) > 0.0001 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "The sum of land areas in region " << aRegionName 
@@ -245,7 +245,7 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
    are what the profit rates would have to be based on the actual shares, the logit exponent, and
    the average profit of the containing node. These are equivalent to what was called "intrinsic
    rates" in the 2008 version of the code based on Sands and Leimbech. */
-
+	
     calculateCalibrationProfitRate( aRegionName, mUnManagedLandValue, 
                                     0, // logit exponent is zero at this level
                                     aPeriod );
@@ -384,7 +384,7 @@ void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
 
     // In calibration periods, check land area and set calibration values
     if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-        calibrateLandAllocator( aRegionName, aPeriod );
+       calibrateLandAllocator( aRegionName, aPeriod );
     } 
 	
     // Calculate land shares

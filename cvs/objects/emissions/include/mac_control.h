@@ -88,11 +88,15 @@ private:
     //! Boolean indicating whether reductions should occur at a zero carbon price
     bool mNoZeroCostReductions;
     
+    //! Technology change
+    std::vector<double> mTechChange;
+    
     //! The underlying Curve (as read in)
     std::auto_ptr<PointSetCurve> mMacCurve;
 
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;
+    double adjustForTechChange( const int aPeriod, double reduction );
 };
 
 #endif // _MAC_CONTROL_H_

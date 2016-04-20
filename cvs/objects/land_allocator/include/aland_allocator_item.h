@@ -378,7 +378,9 @@ public:
 
     double getProfitScaler( const int aPeriod ) const;
 
-    virtual double getNewTechProfitScaler( const int aPeriod ) const = 0;
+    virtual double getCalibrationProfitForNewTech( const int aPeriod ) const = 0;
+	
+    virtual double getProfitForChildWithHighestShare( const int aPeriod ) const = 0;
 
     double getShare( const double aPeriod ) const;
 
@@ -389,6 +391,8 @@ public:
     LandAllocatorItemType getType() const;
             
     virtual bool isManagedLandLeaf( )  const = 0;
+	
+	virtual bool isUnmanagedLandLeaf( )  const = 0;
 
 protected:
     virtual void toDebugXMLDerived( const int aPeriod,
@@ -412,7 +416,7 @@ protected:
     objects::PeriodVector<double> mProfitScaler;  
 
     //! Boolean indicating a node or leaf is new 
-    objects::PeriodVector<bool> mIsNewTech;  
+    bool mIsNewTech;  
 
     //! Double that adjusts a profit scaler to account for the availability of new technologies
     objects::PeriodVector<double> mAdjustForNewTech;

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policy-target-runner name="old">
+	<target-value>2.6</target-value>
+	<target-tolerance>0.5</target-tolerance>
+	<target-type>forcing</target-type>
+    <first-tax-year>2020</first-tax-year>
+	<overshoot/>
+</policy-target-runner>
