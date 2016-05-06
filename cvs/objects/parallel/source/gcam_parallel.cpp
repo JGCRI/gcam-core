@@ -39,10 +39,12 @@
 #include "containers/include/iactivity.h"
 #include "containers/include/market_dependency_finder.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/timer.h"
 /* more graph analysis headers */
 #include "parallel/include/clanid.hpp"
 #include "parallel/include/graph-parse.hpp"
 #include "parallel/include/grain-collect.hpp"
+#include "parallel/include/digraph-output.hpp"
 
 using namespace std;
 
@@ -125,11 +127,18 @@ void GcamParallel::makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyF
             }
         }
     }
+    write_dot_to_file("gcam4.dot", fgTemp);
     // copy the transitive reduction of the flow graph we just made into
     // the output argument
+    Timer &graphtimer = TimerRegistry::getInstance().getTimer("graph-timer");
+    graphtimer.start();
     aGCAMFlowGraph = fgTemp.treduce();
     // perform a topological sort and record the results.
     aGCAMFlowGraph.topological_sort();
+    graphtimer.stop();
+    ILogger &mainlog = ILogger::getLogger("main_log");
+    mainlog.setLevel(ILogger::DEBUG);
+    graphtimer.print(mainlog, "Graph analysis in makeGCAMFlowGraph:  ");
 }
 
 
@@ -156,21 +165,35 @@ void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, Flow
     // intermediate results of the parsing.
     typedef clanid<FlowGraphNodeType> ClanidType;
     typedef digraph<ClanidType> ClanTree;
+
+    write_dot_to_file("gcam4a.dot", aGCAMFlowGraph);
     
+    Timer &parsetimer = TimerRegistry::getInstance().getTimer("parse-timer");
+    Timer &graintimer = TimerRegistry::getInstance().getTimer("grain-timer");
+    ILogger &mainlog = ILogger::getLogger("main_log");
+    mainlog.setLevel(ILogger::DEBUG);
+
+    parsetimer.start();
     FlowGraph gcamFGReduce = aGCAMFlowGraph.treduce(); // find transitive reduction of gcamfg
     gcamFGReduce.topological_sort();
     
     ClanTree parseTree; 
     graph_parse( gcamFGReduce, 0, parseTree, mGrainSizeTarget );
+    parsetimer.stop();
     
     // Use the parse tree to roll up the node graph into a grain graph.  Start
     // with a copy of the node graph.
+    graintimer.start();
     FlowGraph grainGraphTemp = gcamFGReduce;
     grain_collect( parseTree, parseTree.nodelist().begin(), grainGraphTemp, mGrainSizeTarget );
     
     // set the output graph to the transitive reduction of what came out of the
     // grain collection algorithm.
     aGrainGraph = grainGraphTemp.treduce();
+    graintimer.stop();
+
+    parsetimer.print(mainlog, "Graph parse in graphParseGrainCollect:  ");
+    graintimer.print(mainlog, "Grain collect in graphParseGrainCollect:  ");
 }
 
 /*!
