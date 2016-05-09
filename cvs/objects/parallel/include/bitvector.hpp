@@ -1,37 +1,5 @@
-#ifndef BITVECTOR_HPP_
-#define BITVECTOR_HPP_
-
-/*
-* LEGAL NOTICE
-* This computer software was prepared by Battelle Memorial Institute,
-* hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
-* CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
-* LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
-* sentence must appear on any copies of this computer software.
-* 
-* EXPORT CONTROL
-* User agrees that the Software will not be shipped, transferred or
-* exported into any country or used in any manner prohibited by the
-* United States Export Administration Act or any other applicable
-* export laws, restrictions or regulations (collectively the "Export Laws").
-* Export of the Software may require some form of license or other
-* authority from the U.S. Government, and failure to obtain such
-* export control license may result in criminal liability under
-* U.S. laws. In addition, if the Software is identified as export controlled
-* items under the Export Laws, User represents and warrants that User
-* is not a citizen, or otherwise located within, an embargoed nation
-* (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
-*     and that User is not otherwise prohibited
-* under the Export Laws from receiving the Software.
-* 
-* Copyright 2011 Battelle Memorial Institute.  All Rights Reserved.
-* Distributed as open-source under the terms of the Educational Community 
-* License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
-* 
-* For further details, see: http://www.globalchange.umd.edu/models/gcam/
-*
-*/
+#ifndef BITVECTOR_HH_
+#define BITVECTOR_HH_
 
 #include <iostream>
 #include <iomanip>
@@ -44,12 +12,12 @@
 static const unsigned char PopCountTbl[256] = {
 #define B2(n) n,        n+1,    n+1,      n+2
 #define B4(n) B2(n), B2(n+1), B2(n+1), B2(n+2)
-#define B8(n) B4(n), B4(n+1), B4(n+1), B4(n+2)
-  B8(0), B8(1), B8(1), B8(2)
+#define B6(n) B4(n), B4(n+1), B4(n+1), B4(n+2)
+  B6(0), B6(1), B6(1), B6(2)
 };
 #undef B2
 #undef B4
-#undef B8
+#undef B6
 
 class bitvector;
 
@@ -156,7 +124,7 @@ public:
   }
 
   //! get the size of the vector
-  unsigned size(void) const {return bsize;}
+  unsigned length(void) const {return bsize;}
   //! get the popcount of the vector
   unsigned count(void) const {
     unsigned pcount = 0;
@@ -177,12 +145,7 @@ public:
   //! avoids doing a popcount on every word in the vector
   bool gt1set(void) const {
     int nwordset = 0;
-    // ignore the compiler warning about the following variable
-    // possibly being used uninitialized.  It's only referenced if
-    // nwordset==1, in which case setword is guaranteed to have been
-    // set.
-    int setword;
-    
+    int setword=0;
     for(unsigned i=0; i<dsize; ++i)
       if(data[i]) {
         ++nwordset;
@@ -262,6 +225,24 @@ public:
       data[i] &= ~bv.data[i];
     data[dsize-1] &= last_word_mask;
     return *this;
+  }
+
+  //! Test whether this set is a subset of another set 
+  //! \details You could do this with a set difference.  A is a subset
+  //!          of B if A - B is empty.  However, this function does it
+  //!          without modifying this set or making a copy.
+  //! \warning As always, we don't check for length compatibility
+  bool subset(const bitvector &bv) const {
+    for(unsigned i=0; i<dsize-1; ++i)
+      if (data[i] & ~bv.data[i])
+        // something left over when all members of B removed => not a subset of B
+        return false;
+    
+    // do the last element specially, since it needs the last word mask
+    if (data[dsize-1] & ~bv.data[dsize-1] & last_word_mask)
+      return false;
+    else
+      return true;
   }
 
   //! Equality comparison

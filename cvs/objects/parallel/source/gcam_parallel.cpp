@@ -127,7 +127,6 @@ void GcamParallel::makeGCAMFlowGraph( const MarketDependencyFinder& aDependencyF
             }
         }
     }
-    write_dot_to_file("gcam4.dot", fgTemp);
     // copy the transitive reduction of the flow graph we just made into
     // the output argument
     Timer &graphtimer = TimerRegistry::getInstance().getTimer("graph-timer");
