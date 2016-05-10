@@ -41,6 +41,7 @@
 #include "util/base/include/definitions.h"
 #include "marketplace/include/market_RES.h"
 #include "util/base/include/util.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
@@ -82,6 +83,9 @@ void MarketRES::initPrice() {
             price = 0;
         }
     }
+    // get the minimum price from the market info
+    const string LOWER_BOUND_KEY = "lower-bound-supply-price";
+    mMinPrice = mMarketInfo->getDouble( LOWER_BOUND_KEY, 0.0 );
 }
 
 void MarketRES::setPrice( const double priceIn ) {
@@ -131,11 +135,11 @@ void MarketRES::set_price_to_last( const double lastPrice ) {
 }
 
 double MarketRES::getPrice() const {
-    // Constraint type markets may be non-binding even at a price of zero.
-    // In this case the solver will generate a "correction" by exploring
+    // Constraint type markets may be non-binding even at a price of mMinPrice.
+    // In this case the solver will generate a "correction" by exploring potentially
     // negative prices.  The model calculations should not see these negative
-    // prices so we cap it at zero.
-    return std::max( Market::getPrice(), 0.0 );
+    // prices so we cap it at mMinPrice.
+    return std::max( Market::getPrice(), mMinPrice );
 }
 
 void MarketRES::addToDemand( const double demandIn ) {
@@ -203,9 +207,9 @@ bool MarketRES::meetsSpecialSolutionCriteria() const {
         return true;
     }
 
-    // If price is zero, demand cannot be driven any higher.
+    // If price is below the min-price, demand cannot be driven any higher.
     // The constraint is not binding (greater than the demand), so this market is solved.
-    if( ( price <= 0.001 ) && ( getRawSupply() >= getRawDemand() ) ){
+    if( ( price <= mMinPrice ) && ( getRawSupply() >= getRawDemand() ) ){
 		return true;
     }
     return false;
