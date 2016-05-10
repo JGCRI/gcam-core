@@ -54,6 +54,7 @@
 #include "policy/include/policy_portfolio_standard.h"
 #include "marketplace/include/marketplace.h"
 #include "util/logger/include/ilogger.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -339,6 +340,11 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
                     marketplace->addToDemand( mName, aRegionName, tempConstraint[ per ] - 
                         marketplace->getDemand( mName, aRegionName, per ), 0, per, false );
                 }
+
+                // Constraint policies must have a price >= 0.  It may be the case that the constraint is
+                // non-binding at a zero price in which case the solver can use this information to
+                // make a supply currection to still ensure equality.
+                SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, 0, util::getLargeNumber(), per );
             }
         }
     }

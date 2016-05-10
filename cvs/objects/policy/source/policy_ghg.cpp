@@ -53,6 +53,7 @@
 #include "util/base/include/model_time.h"
 #include "policy/include/policy_ghg.h"
 #include "marketplace/include/marketplace.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -274,6 +275,11 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
             marketplace->addToSupply( mName, aRegionName, mConstraint[ i ] - 
                 marketplace->getSupply( mName, aRegionName, i ), 0, i, false );
         }
+
+        // GHG policies must have a price >= 0.  It may be the case that the constraint is
+        // non-binding at a zero price in which case the solver can use this information to
+        // make a supply currection to still ensure equality.
+        SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, 0, util::getLargeNumber(), i );
     }
 }
 

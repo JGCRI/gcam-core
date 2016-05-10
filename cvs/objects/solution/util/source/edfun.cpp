@@ -302,7 +302,32 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
         // if the supply was indeed zero.  If the actual lower bound price is significantly
         // different than the estimated this may generate a discontinuity.
         double p0 = mkts[i].getLowerBoundSupplyPrice();
-        double c = s == 0 ? std::max(0.0, (p0-x[i])*mfxscl[i]/mxscl[i]) : 0;
+        double c = s == 0 ? std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]) : 0;
+        // give difference as a fraction of demand
+        fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
+        if(c>0.0) {
+          ILogger &solverlog = ILogger::getLogger("solver_log");
+          solverlog.setLevel(ILogger::DEBUG);
+          solverlog << "\t\tAdding supply correction: i= " << i << "  p= " << x[i]
+                    << "  p0= " << p0 << "  c= " << c << "  modified supply= " << s-c
+                    << "\n";
+        }
+    }
+    else if(!mLogPricep && ( mkts[i].getType() == IMarketType::RES  // LINEAR CASE (constraint type markets only)
+            || mkts[i].getType() == IMarketType::TAX
+            || mkts[i].getType() == IMarketType::SUBSIDY ) )
+    {
+        double d = mkts[i].getDemand();
+        double s = mkts[i].getSupply();
+
+        // generate a correction if the input price is less than the
+        // supply curve lower bound.  This is most effective if we transform the
+        // price correction from it's price scale into a scale relevant for the demands.
+        // Note that for constraint type markets this lower bound is the price (typically
+        // zero) below which the policy is considered non-binding in which case the correction
+        // is essentially adding extra demand to meet the constraint.
+        double p0 = mkts[i].getLowerBoundSupplyPrice();
+        double c = std::max(0.0, (p0-x[i])/mfxscl[i]/mxscl[i]);
         // give difference as a fraction of demand
         fx[i] = d - s + c;          // == d-(s-c); i.e., the correction subtracts from supply
         if(c>0.0) {
