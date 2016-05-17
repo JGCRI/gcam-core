@@ -224,10 +224,12 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "Beginning Broyden solution for period " << period
               << "Solving " << solnset.getNumSolvable() << "markets.\n";
-    if( mLogPricep )
+    if( mLogPricep ) {
       solverLog << "Log price in effect\n";
-    else
+    }
+    else {
       solverLog << "Linear price in effect\n";
+    }
     
     ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
     worstMarketLog.setLevel( ILogger::DEBUG );
@@ -258,10 +260,12 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
 
     // set our initial x from the solutionInfoSet
     std::vector<SolutionInfo> smkts(solnset.getSolvableSet());
-    if( mLogPricep )
+    if( mLogPricep ) {
       std::transform(smkts.begin(), smkts.end(), x.begin(), SI2lgprice);
-    else
+    }
+    else {
       std::transform(smkts.begin(), smkts.end(), x.begin(), SI2price);
+    }
 
     
     // This is the closure that will evaluate the ED function
@@ -349,10 +353,12 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     // log some final debugging info
     const SolutionInfo* maxred = solnset.getWorstSolutionInfo();
     addIteration(maxred->getName(), maxred->getRelativeED());
-    if( mLogPricep )
+    if( mLogPricep ) {
       worstMarketLog << "###Broyden-end-logPrice:  " << *maxred << std::endl;
-    else
+    }
+    else {
       worstMarketLog << "###Broyden-end-linearPrice:  " << *maxred << std::endl;
+    }
 
     solnset.printMarketInfo("Broyden-end ", calcCounter->getPeriodCount(), singleLog);
     singleLog << std::endl;
@@ -395,11 +401,13 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
   std::vector<int> mktids_all;
   cSolInfo->getMarketIDs(mktids_all, false);
   std::vector<bool> issolvable_all(mktids_all.size());
-  for(unsigned i=0; i<issolvable_solv.size(); ++i) // solvable markets are at the beginning; set their flag to true
+  for(unsigned i=0; i<issolvable_solv.size(); ++i) { // solvable markets are at the beginning; set their flag to true
       issolvable_all[i] = true;
-  for(unsigned i=issolvable_solv.size(); i<issolvable_all.size(); ++i)
+  }
+  for(unsigned i=issolvable_solv.size(); i<issolvable_all.size(); ++i) {
       // unsolvable markets at the end of the array; set their flag to false
       issolvable_all[i] = false;
+  }
   // working space for variables that will be printed for solvable and unsolvable markets
   UBVECTOR rptvec_all(mktids_all.size());
   
@@ -435,11 +443,12 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
   // stores the value of F that it produces as an intermediate.
   FdotF<double,double> fnorm( F );
   double f0 = inner_prod(fx,fx); // already have a value of F on input, so no need to call fnorm yet
-  if(f0 < FTINY)
+  if(f0 < FTINY) {
     // Guard against F=0 since it can cause a NaN in our solver.  This
     // is a more stringent test than our regular convergence test
     return 0;
-  
+  }
+
   bool lsfail = false;        // flag indicating whether we have had a line-search failure
   for(int iter=0; iter<mMaxIter; ++iter) {
     // log some debug info
@@ -501,7 +510,9 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
        invoke the jacobian preconditioner and try again.  If it fails
        a second time, we bail out */
     do {
-      for(size_t i=0; i<p.size(); ++i) p[i] = i;
+      for(size_t i=0; i<p.size(); ++i) {
+        p[i] = i;
+      }
       int sing = lu_factorize(B,p);
       if(sing>0) {
         int fail=1;
@@ -512,8 +523,9 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
             f0 = inner_prod(fx,fx);
 
             // log the diagonal of the new jacobian
-            for(int j=0; j<F.narg(); ++j)
+            for(int j=0; j<F.narg(); ++j) {
                 jdiag[j] = B(j,j); 
+            }
             solverLog << "After jacobian salvage.  diag( B )=\n" << jdiag << "\n";
 
         }
@@ -567,8 +579,9 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
         ageB = 0;  // reset the age on B
 
         // Log the diagonal of the new jacobian after the failed line search
-        for(int j=0; j<F.narg(); ++j)
+        for(int j=0; j<F.narg(); ++j) {
             jdiag[j] = B(j,j);
+        }
         solverLog << "New Jacobian: diag( B )=\n" << jdiag << "\n";
 
         // start the next iteration *without* updating x
@@ -580,11 +593,12 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
       // generating very tiny dx values.  Make a relaxed convergence
       // test and return if we have a "close enough" solution.
       double msf = f0/fx.size();
-      if(msf < mFTOL)
+      if(msf < mFTOL) {
         // basically, we're letting ourselves converge to the sqrt of
         // our intended tolerance.
         return 0;
-      
+      }
+
       // 3) Neither of the above.  The most likely way for this to
       // happen is if we're close to a discontinuity in (probably
       // several components of) the Jacobian.  Using smoother supply
@@ -614,11 +628,13 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
     // log the worst market info
     const SolutionInfo* maxred = cSolInfo->getWorstSolutionInfo();
     addIteration(maxred->getName(), maxred->getRelativeED());
-    if( mLogPricep )
+    if( mLogPricep ) {
       worstMarketLog << "Broyden-logPrice:  " << *maxred << "\n";
-    else
+    }
+    else {
       worstMarketLog << "Broyden-linearPrice:  " << *maxred << "\n";
-  
+    }
+
     // test for convergence
     double maxval = fabs(fxnew[0]);
     double imaxval = 0;
@@ -685,8 +701,9 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
         ageB = 0;
 
         // Log the results of the Jacobian reset
-        for(int j=0; j<F.narg(); ++j)
+        for(int j=0; j<F.narg(); ++j) {
             jdiag[j] = B(j,j);
+        }
             
         solverLog << "New Jacobian:  diag( B )=\n" << jdiag << "\n";
         
@@ -742,8 +759,9 @@ void LogBroyden::reportVec(const std::string &aname, const UBVECTOR &av, const s
     ILogger &datalog = ILogger::getLogger("solver-data-log");
     datalog.setLevel(ILogger::DEBUG);
     // Skip preparing the output if it won't be printed
-    if(!datalog.wouldPrint(ILogger::DEBUG))
+    if(!datalog.wouldPrint(ILogger::DEBUG)) {
         return;
+    }
 
     for(unsigned int i=0; i<av.size(); ++i) {
         datalog << mLastPer <<  " , " << mPerIter
@@ -757,9 +775,10 @@ void LogBroyden::reportVec(const std::string &aname, const UBVECTOR &av, const s
 void LogBroyden::reportPSD(UBVECTOR &arptvec, const std::vector<int> &amktids, const std::vector<bool> &aissolvable)
 {
     // Skip preparing the log output if we're not going to print it anyhow 
-    if(!ILogger::getLogger("solver-data-log").wouldPrint(ILogger::DEBUG))
+    if(!ILogger::getLogger("solver-data-log").wouldPrint(ILogger::DEBUG)) {
         return;
-    
+    }
+
     if(!cSolInfo) {
         ILogger &solverlog = ILogger::getLogger("solver_log");
         ILogger::WarningLevel olvl = solverlog.setLevel(ILogger::ERROR);
@@ -774,25 +793,31 @@ void LogBroyden::reportPSD(UBVECTOR &arptvec, const std::vector<int> &amktids, c
     unsigned int i;
     unsigned int j;
     // log prices
-    for(i=0; i<solvable.size(); ++i)
+    for(i=0; i<solvable.size(); ++i) {
         arptvec[i] = solvable[i].getPrice();
-    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j)
+    }
+    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j) {
         arptvec[j] = unsolvable[i].getPrice();
+    }
         
     reportVec("price", arptvec, amktids, aissolvable);
 
     // log supply
-    for(i=0; i<solvable.size(); ++i)
+    for(i=0; i<solvable.size(); ++i) {
         arptvec[i] = solvable[i].getSupply();
-    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j)
+    }
+    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j) {
         arptvec[j] = unsolvable[i].getSupply();
+    }
     reportVec("supply", arptvec, amktids, aissolvable);
 
     // log demand
-    for(i=0; i<solvable.size(); ++i)
+    for(i=0; i<solvable.size(); ++i) {
         arptvec[i] = solvable[i].getDemand();
-    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j)
+    }
+    for(i=0,j=solvable.size(); i<unsolvable.size(); ++i,++j) {
         arptvec[j] = unsolvable[i].getDemand();
+    }
     reportVec("demand", arptvec, amktids, aissolvable);
 
 }

@@ -1294,8 +1294,9 @@ void Marketplace::logForecastEvaluation( int aPeriod ) const
         double ldiff = (lprice-cprice)/(fabs( cprice )+smallval);
         double fdiff = (fcst-cprice)/(fabs( cprice )+smallval);
         char marker = fabs( fdiff )<=fabs( ldiff ) ? '+' : ' ';
-        if(fdiff > 0.1)
+        if(fdiff > 0.1) {
             marker = '!';
+        }
 
         ld2 += ldiff*ldiff;
         fd2 += fdiff*fdiff;
@@ -1367,8 +1368,9 @@ void Marketplace::logForecastEvaluation( int aPeriod ) const
         double lddiff       = (ldemand-cdemand)/(fabs( cdemand )+smallval);
         double fddiff       = (fcstdemand-cdemand)/(fabs( cdemand )+smallval);
         char marker = fabs( fddiff )<=fabs( lddiff ) ? '+' : ' ';
-        if(fddiff > 0.1)
+        if(fddiff > 0.1) {
             marker = '!';
+        }
 
         ld2 += lddiff*lddiff;
         fd2 += fddiff*fddiff;

@@ -693,20 +693,26 @@ void SolutionInfoSet::printDerivatives( ostream& aOut ) const {
 const std::vector<int> &SolutionInfoSet::getMarketIDs(std::vector<int> &amktids, bool aSolvableOnly) const
 {
     unsigned expected_size;
-    if( aSolvableOnly )
+    if( aSolvableOnly ) {
         expected_size = solvable.size();
-    else
+    }
+    else {
         expected_size = solvable.size() + unsolvable.size();
+    }
     
-    if(amktids.size() != expected_size)
+    if(amktids.size() != expected_size) {
         amktids.resize( expected_size );
+    }
 
-    for(unsigned i=0; i<solvable.size(); ++i)
+    for(unsigned i=0; i<solvable.size(); ++i) {
         amktids[i] = solvable[i].getSerialNumber();
+    }
 
-    if(!aSolvableOnly)
-        for(unsigned i=solvable.size(), j=0; j<unsolvable.size(); ++i,++j)
+    if(!aSolvableOnly) {
+        for(unsigned i=solvable.size(), j=0; j<unsolvable.size(); ++i,++j) {
             amktids[i] = unsolvable[j].getSerialNumber();
+        }
+    }
 
     return amktids;
 }
