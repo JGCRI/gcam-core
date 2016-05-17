@@ -2,7 +2,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -217,7 +217,7 @@ bool Scenario::XMLParse( const DOMNode* node ){
 }
 
 //! Sets the name of the scenario. 
-void Scenario::setName(string newName) {
+void Scenario::setName( string newName ) {
     // Used to override the read-in scenario name.
     name = newName;
 }
@@ -413,7 +413,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     marketplace->nullSuppliesAndDemands( aPeriod ); // initialize market demand to null
     marketplace->init_to_last( aPeriod ); // initialize to last period's info
     world->initCalc( aPeriod ); // call to initialize anything that won't change during calc
-    marketplace->assignMarketSerialNumbers(aPeriod); // give the markets their serial numbers for this period.
+    marketplace->assignMarketSerialNumbers( aPeriod ); // give the markets their serial numbers for this period.
     
     // SGM Period 0 needs to clear out the supplies and demands put in by initCalc.
     if( aPeriod == 0 ){
@@ -421,7 +421,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     }
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
-    world->calc(aPeriod);       // get rid of transient bad data
+    world->calc( aPeriod );       // get rid of transient bad data
     marketplace->nullSuppliesAndDemands( aPeriod );
 
     ILogger &mainlog = ILogger::getLogger("main_log"); 
@@ -439,12 +439,12 @@ bool Scenario::calculatePeriod( const int aPeriod,
     tbb::tick_count t1 = tbb::tick_count::now();
     
     pdebug << "****************Ending serial World::calc****************\n";
-    std::vector<double> serialrslt = marketplace->fullstate(aPeriod);
+    std::vector<double> serialrslt = marketplace->fullstate( aPeriod );
 
     pdebug << "%%%%%%%%%%%%%%%% Starting parallel World::calc (period " << aPeriod << ") %%%%%%%%%%%%%%%%\n";
     tbb::tick_count t2;
     tbb::tick_count t3;
-    marketplace->nullSuppliesAndDemands(aPeriod);
+    marketplace->nullSuppliesAndDemands( aPeriod );
 
     t2 = tbb::tick_count::now();
     world->calc(aPeriod, world->getGlobalFlowGraph());
@@ -474,7 +474,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     double ratio   = sertime/partime;
     mainlog << "===Period: " << aPeriod << ":\tserial time: " << sertime
             << "\tparallel time:  " << partime << "\tspeedup:  " << ratio << "\n";
-    mainlog.setLevel(old_main_log_level);
+    mainlog.setLevel( old_main_log_level );
 #endif
     
     

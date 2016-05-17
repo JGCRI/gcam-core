@@ -2,7 +2,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -98,7 +98,7 @@ namespace {
   // helper functions for the std::transform algorithm
   inline double SI2lgprice (const SolutionInfo &si) {
     double p = std::max(si.getPrice(), util::getTinyNumber());
-    return log(p);
+    return log( p );
   }
   inline double SI2price (const SolutionInfo &si) {return si.getPrice();}
 
@@ -147,7 +147,7 @@ bool LogBroyden::XMLParse( const DOMNode* aNode ) {
             mMaxIter = XMLHelper<unsigned int>::getValue( curr );
         }
         else if( nodeName == "ftol" ) {
-            mFTOL = XMLHelper<double>::getValue(curr);
+            mFTOL = XMLHelper<double>::getValue( curr );
         }
         else if( nodeName == "solution-info-filter" ) {
             mSolutionInfoFilter.reset(
@@ -182,7 +182,7 @@ bool LogBroyden::XMLParse( const DOMNode* aNode ) {
  * and we iterate to convergence.  The difference is that in place of
  * the exact Jacobian, J, we use an approximate Jacobian, B.  At each
  * iteration we update B using Broyden's secant condition: B(i+1) =
- * B(i) + ((dF(i) - B(i) . dx(i)) X dx(i)) / (dx . dx).  Since this
+ * B( i ) + ((dF( i ) - B( i ) . dx( i )) X dx( i )) / (dx . dx).  Since this
  * update does not require any model evaluations, it is *much* faster
  * than computing finite-difference Jacobians.
  *
@@ -224,7 +224,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "Beginning Broyden solution for period " << period
               << "Solving " << solnset.getNumSolvable() << "markets.\n";
-    if(mLogPricep)
+    if( mLogPricep )
       solverLog << "Log price in effect\n";
     else
       solverLog << "Linear price in effect\n";
@@ -243,22 +243,22 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     solverLog << "Initial market state:\nmkt    \tprice   \tsupply  \tdemand\n";
     std::vector<SolutionInfo> solvables = solnset.getSolvableSet();
     for(size_t i=0; i<solvables.size(); ++i) {
-        solverLog << std::setw(8) << i << "\t"
-                  << std::setw(8) << solvables[i].getPrice() << "\t"
-                  << std::setw(8) << solvables[i].getSupply() << "\t"
-                  << std::setw(8) << solvables[i].getDemand()
+        solverLog << std::setw( 8 ) << i << "\t"
+                  << std::setw( 8 ) << solvables[i].getPrice() << "\t"
+                  << std::setw( 8 ) << solvables[i].getSupply() << "\t"
+                  << std::setw( 8 ) << solvables[i].getDemand()
                   << "\t\t" << solvables[i].getName() << "\n"; 
     } 
 
     Timer& solverTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::SOLVER );
     solverTimer.start();
     
-    UBVECTOR x(nsolv), fx(nsolv);
+    UBVECTOR x( nsolv ), fx( nsolv );
     int neval = 0;
 
     // set our initial x from the solutionInfoSet
     std::vector<SolutionInfo> smkts(solnset.getSolvableSet());
-    if(mLogPricep)
+    if( mLogPricep )
       std::transform(smkts.begin(), smkts.end(), x.begin(), SI2lgprice);
     else
       std::transform(smkts.begin(), smkts.end(), x.begin(), SI2price);
@@ -277,13 +277,13 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     }
 
     // scale the initial guess for use in the solver algorithm
-    F.scaleInitInputs(x);
+    F.scaleInitInputs( x );
     
-    // Call F(x), store the result in fx
+    // Call F( x ), store the result in fx
     F(x,fx);
 
     solverLog.setLevel(ILogger::DEBUG);
-    solverLog << "Initial guess:\n" << x << "\nInitial F(x):\n" << fx << "\n";
+    solverLog << "Initial guess:\n" << x << "\nInitial F( x ):\n" << fx << "\n";
     solnset.printMarketInfo("Broyden-initial", calcCounter->getPeriodCount(), singleLog);
 
     // Precondition the x values to avoid singular columns in the Jacobian
@@ -294,13 +294,13 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     solverLog << ">>>> Main loop jacobian called.\n";
     int pcfail = jacobian_precondition(x, fx, J, F, &solverLog, mLogPricep);
 
-    if(pcfail) {
+    if( pcfail ) {
       solverLog.setLevel(ILogger::WARNING);
       solverLog << "Unable to find nonsingular initial guess for one or more markets.  bsolve() will probably fail.\n";
       solverLog.setLevel(ILogger::DEBUG);
     }
     else {
-      solverLog << "Revised guess:\n" << x << "\nRevised F(x):\n" << fx << "\n";
+      solverLog << "Revised guess:\n" << x << "\nRevised F( x ):\n" << fx << "\n";
     }
     solnset.printMarketInfo("Broyden-preconditioned", calcCounter->getPeriodCount(), singleLog);
     cSolInfo = &solnset;        // make available for log outputs
@@ -341,7 +341,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     }
     if(!solnset.isAllSolved()) {
         solverLog << "The following markets were not solved:\n";
-        solnset.printUnsolved(solverLog);
+        solnset.printUnsolved( solverLog );
     }
 
     solverLog << std::endl;
@@ -349,7 +349,7 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     // log some final debugging info
     const SolutionInfo* maxred = solnset.getWorstSolutionInfo();
     addIteration(maxred->getName(), maxred->getRelativeED());
-    if(mLogPricep)
+    if( mLogPricep )
       worstMarketLog << "###Broyden-end-logPrice:  " << *maxred << std::endl;
     else
       worstMarketLog << "###Broyden-end-linearPrice:  " << *maxred << std::endl;
@@ -375,7 +375,7 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
   // svd decomposition elements (note nrow == ncol)
 #if USE_LAPACK
   UBMATRIX Usv(nrow,ncol),VTsv(ncol,ncol);
-  UBVECTOR Ssv(ncol);
+  UBVECTOR Ssv( ncol );
 #else
   permutation_matrix<int> p(F.narg()); // permutation vector for pivoting in L-U decomposition
 #endif
@@ -431,9 +431,9 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
     abort();
   }
 
-  // We create a functor that computes f(x) = F(x)*F(x).  It also
+  // We create a functor that computes f( x ) = F( x )*F( x ).  It also
   // stores the value of F that it produces as an intermediate.
-  FdotF<double,double> fnorm(F);
+  FdotF<double,double> fnorm( F );
   double f0 = inner_prod(fx,fx); // already have a value of F on input, so no need to call fnorm yet
   if(f0 < FTINY)
     // Guard against F=0 since it can cause a NaN in our solver.  This
@@ -445,7 +445,7 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
     // log some debug info
     
     solverLog << "Broyden iter= " << iter << "\tneval= " << neval << "\n";
-    solverLog << "Internal iteration count (mPerIter)= " << mPerIter << "\n";
+    solverLog << "Internal iteration count ( mPerIter )= " << mPerIter << "\n";
     cSolInfo->printMarketInfo("Broyden ", calcCounter->getPeriodCount(), singleLog);
     for(int j=0;j<F.narg();++j) {
       // double bjj= B(j,j);
@@ -455,7 +455,7 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
     double jdmax=0.0, jdmin=0.0;
     int jdjmax=0, jdjmin=0;
     locate_vector_minmax(jdiag, jdmax, jdmin, jdjmax, jdjmin);
-    solverLog << "diag(B):\n" << jdiag << "\n";
+    solverLog << "diag( B ):\n" << jdiag << "\n";
     solverLog << "maxval= " << jdmax << " jmax= " << jdjmax << "  "
               << "minval= " << jdmin << "  jmin= " << jdjmin << "\n";
     
@@ -493,7 +493,7 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
 
     solverLog << "\nIteration " << iter << "\nf0= " << f0
               << "\tnsing= " << nsing
-              << "\nx: " << x << "\nF(x): " << fx << "\ndx: " << dx << "\n";
+              << "\nx: " << x << "\nF( x ): " << fx << "\ndx: " << dx << "\n";
 
 #else /* No USE_LAPACK.  Solve using L-U decomposition */
     int itrial = 0;
@@ -514,11 +514,11 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
             // log the diagonal of the new jacobian
             for(int j=0; j<F.narg(); ++j)
                 jdiag[j] = B(j,j); 
-            solverLog << "After jacobian salvage.  diag(B)=\n" << jdiag << "\n";
+            solverLog << "After jacobian salvage.  diag( B )=\n" << jdiag << "\n";
 
         }
         
-        if(fail) {
+        if( fail ) {
             solverLog.setLevel(ILogger::WARNING);
             solverLog << "Singular Jacobian:\n" << B << "\n";
             return sing;
@@ -569,7 +569,7 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
         // Log the diagonal of the new jacobian after the failed line search
         for(int j=0; j<F.narg(); ++j)
             jdiag[j] = B(j,j);
-        solverLog << "New Jacobian: diag(B)=\n" << jdiag << "\n";
+        solverLog << "New Jacobian: diag( B )=\n" << jdiag << "\n";
 
         // start the next iteration *without* updating x
         continue;
@@ -607,14 +607,14 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
               << "\tlambda= " << lambda << "\n";
 
     UBVECTOR fxnew(fx.size());
-    fnorm.lastF(fxnew);            // get the last value of big-F
+    fnorm.lastF( fxnew );            // get the last value of big-F
     solverLog << "\nxnew: " << xnew << "\nfxnew: " << fxnew << "\n";
-    UBVECTOR fxstep(fxnew -fx); // change in F(x).  We will need this for the secant update
+    UBVECTOR fxstep(fxnew -fx); // change in F( x ).  We will need this for the secant update
 
     // log the worst market info
     const SolutionInfo* maxred = cSolInfo->getWorstSolutionInfo();
     addIteration(maxred->getName(), maxred->getRelativeED());
-    if(mLogPricep)
+    if( mLogPricep )
       worstMarketLog << "Broyden-logPrice:  " << *maxred << "\n";
     else
       worstMarketLog << "Broyden-linearPrice:  " << *maxred << "\n";
@@ -688,7 +688,7 @@ int LogBroyden::bsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx,
         for(int j=0; j<F.narg(); ++j)
             jdiag[j] = B(j,j);
             
-        solverLog << "New Jacobian:  diag(B)=\n" << jdiag << "\n";
+        solverLog << "New Jacobian:  diag( B )=\n" << jdiag << "\n";
         
       }
       else {
@@ -764,7 +764,7 @@ void LogBroyden::reportPSD(UBVECTOR &arptvec, const std::vector<int> &amktids, c
         ILogger &solverlog = ILogger::getLogger("solver_log");
         ILogger::WarningLevel olvl = solverlog.setLevel(ILogger::ERROR);
         solverlog << "cSolInfo is not set.  Data log will not include price, supply, or demand." << std::endl;
-        solverlog.setLevel(olvl);
+        solverlog.setLevel( olvl );
         return;
     }
 

@@ -2,7 +2,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -529,19 +529,19 @@ void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     // Unsolved Part 1:
     aOut << "Unsolved Part 1: Solvable Markets" << endl;
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.width(10); aOut << "X,"; aOut << " ";
-    aOut.width(10); aOut << "XL,"; aOut << " ";
-    aOut.width(10); aOut << "XR,"; aOut << " ";
-    aOut.width(10); aOut << "ED,"; aOut << " ";
-    aOut.width(10); aOut << "EDL,"; aOut << " ";
-    aOut.width(10); aOut << "EDR,"; aOut << " ";
-    aOut.width(10); aOut << "RED,"; aOut << " ";
-    aOut.width(3); aOut << "brk,"; aOut << " ";
-    aOut.width(10); aOut << "Supply,"; aOut << " ";
-    aOut.width(10); aOut << "Demand,"; aOut << " ";
-    aOut.width(10); aOut << "Mrk Type," << " ";
-    aOut.width(36); aOut << "Market,"; aOut << endl;
-    aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    aOut.width( 10 ); aOut << "X,"; aOut << " ";
+    aOut.width( 10 ); aOut << "XL,"; aOut << " ";
+    aOut.width( 10 ); aOut << "XR,"; aOut << " ";
+    aOut.width( 10 ); aOut << "ED,"; aOut << " ";
+    aOut.width( 10 ); aOut << "EDL,"; aOut << " ";
+    aOut.width( 10 ); aOut << "EDR,"; aOut << " ";
+    aOut.width( 10 ); aOut << "RED,"; aOut << " ";
+    aOut.width( 3 ); aOut << "brk,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Supply,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Demand,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Mrk Type," << " ";
+    aOut.width( 36 ); aOut << "Market,"; aOut << endl;
+    aOut.setf(ios_base::fmtflags( 0 ),ios_base::floatfield); //reset to default
     // Solvable markets that are not solved.
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
         if( !curr->isSolved() ){
@@ -552,19 +552,19 @@ void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     // Unsolved Part 2:
     aOut << "Unsolved Part 2: Unsolvable Markets Not Cleared" << endl;
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.width(10); aOut << "X,"; aOut << " ";
-    aOut.width(10); aOut << "XL,"; aOut << " ";
-    aOut.width(10); aOut << "XR,"; aOut << " ";
-    aOut.width(10); aOut << "ED,"; aOut << " ";
-    aOut.width(10); aOut << "EDL,"; aOut << " ";
-    aOut.width(10); aOut << "EDR,"; aOut << " ";
-    aOut.width(10); aOut << "RED,"; aOut << " ";
-    aOut.width(3); aOut << "brk,"; aOut << " ";
-    aOut.width(10); aOut << "Supply,"; aOut << " ";
-    aOut.width(10); aOut << "Demand,"; aOut << " ";
-    aOut.width(10); aOut << "Mrk Type," << " ";
-    aOut.width(36); aOut << "Market,"; aOut << endl;
-    aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    aOut.width( 10 ); aOut << "X,"; aOut << " ";
+    aOut.width( 10 ); aOut << "XL,"; aOut << " ";
+    aOut.width( 10 ); aOut << "XR,"; aOut << " ";
+    aOut.width( 10 ); aOut << "ED,"; aOut << " ";
+    aOut.width( 10 ); aOut << "EDL,"; aOut << " ";
+    aOut.width( 10 ); aOut << "EDR,"; aOut << " ";
+    aOut.width( 10 ); aOut << "RED,"; aOut << " ";
+    aOut.width( 3 ); aOut << "brk,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Supply,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Demand,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Mrk Type," << " ";
+    aOut.width( 36 ); aOut << "Market,"; aOut << endl;
+    aOut.setf(ios_base::fmtflags( 0 ),ios_base::floatfield); //reset to default
     // Unsolvable markets that are not cleared.
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
         if( !curr->isSolved() ){
@@ -693,13 +693,13 @@ void SolutionInfoSet::printDerivatives( ostream& aOut ) const {
 const std::vector<int> &SolutionInfoSet::getMarketIDs(std::vector<int> &amktids, bool aSolvableOnly) const
 {
     unsigned expected_size;
-    if(aSolvableOnly)
+    if( aSolvableOnly )
         expected_size = solvable.size();
     else
         expected_size = solvable.size() + unsolvable.size();
     
     if(amktids.size() != expected_size)
-        amktids.resize(expected_size);
+        amktids.resize( expected_size );
 
     for(unsigned i=0; i<solvable.size(); ++i)
         amktids[i] = solvable[i].getSerialNumber();

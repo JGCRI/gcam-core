@@ -9,7 +9,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -82,8 +82,8 @@ class LogBroyden: public SolverComponent {
 public:
   LogBroyden(Marketplace *mktplc, World *world, CalcCounter *ccounter, int itmax=250,
              double ftol=1.0e-4) :
-      SolverComponent(mktplc,world,ccounter), mMaxIter(itmax), mFTOL(ftol),
-      mLogPricep(true) {}
+      SolverComponent(mktplc,world,ccounter), mMaxIter( itmax ), mFTOL( ftol ),
+      mLogPricep( true ) {}
   virtual ~LogBroyden() {}
 
   // SolverComponent methods
@@ -97,7 +97,7 @@ public:
   // IParsable methods
   virtual bool XMLParse( const xercesc::DOMNode* aNode );
   
-  static const std::string & getXMLNameStatic(void) {return SOLVER_NAME;}
+  static const std::string & getXMLNameStatic( void ) {return SOLVER_NAME;}
 
 protected:
   //! Perform the Broyden's method iterations.

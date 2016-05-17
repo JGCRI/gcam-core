@@ -8,7 +8,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -118,7 +118,7 @@ class MarketDependencyFinder;
  *          demand, and any info, and NO_MARKET_PRICE for prices.
  *
  * \author Sonny Kim
- * \todo (re)storeInfo, init_to_last and initPrices should be removed.
+ * \todo ( re )storeInfo, init_to_last and initPrices should be removed.
  * \todo setPriceVector should be removed, it can be easily implemented using
  *       setPrice.
  * \todo An interface should be put in front of this class for model consumers.
@@ -144,7 +144,7 @@ public:
                              const std::string& goodName, const std::string& linkedMarket );
     void initPrices();
     void nullSuppliesAndDemands( const int period );
-    void assignMarketSerialNumbers(int aPeriod);
+    void assignMarketSerialNumbers( int aPeriod );
     void setPrice( const std::string& goodName, const std::string& regionName, const double value,
                    const int period, bool aMustExist = true );
     void setPriceVector( const std::string& goodName, const std::string& regionName,
@@ -196,10 +196,10 @@ public:
     MarketDependencyFinder* getDependencyFinder() const;
 
     // The methods from here down are diagnostics
-    std::vector<double> fullstate(int period) const; //!< Return all supplies and demands in all markets in a single vector
+    std::vector<double> fullstate( int period ) const; //!< Return all supplies and demands in all markets in a single vector
     bool checkstate(int period, const std::vector<double>&, std::ostream *log=0, unsigned tol=0) const;
     void prnmktbl(int period, std::ostream &out) const;
-    void logForecastEvaluation(int aPeriod) const;
+    void logForecastEvaluation( int aPeriod ) const;
 private:
 
     typedef double (Market::*getpsd_t)() const; // Can point to Market::getPrice, Market::getRawPrice, Market::getRawDemand, etc.
