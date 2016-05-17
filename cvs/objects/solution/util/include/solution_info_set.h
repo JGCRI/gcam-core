@@ -119,7 +119,7 @@ public:
     void printDerivatives( std::ostream& aOut ) const;
 
     // following functions are used for reporting into solver data log
-    const std::vector<int> &getMarketIDs(std::vector<int> &amktids, bool aSolvableOnly) const;
+    const std::vector<int> &getMarketIDs(std::vector<int> &aMktids, bool aSolvableOnly) const;
     
 private:
     unsigned int period;
