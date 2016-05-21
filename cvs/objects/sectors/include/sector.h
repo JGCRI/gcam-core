@@ -132,6 +132,10 @@ protected:
     //! The discrete choice model used to calculate sector shares.
     std::auto_ptr<IDiscreteChoice> mDiscreteChoiceModel;
 
+    //! A flag that will force the market dependency finder to create trial price/demand
+    //! markets for this sector.
+    bool mUseTrialMarkets;
+
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;

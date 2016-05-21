@@ -71,6 +71,7 @@
 #include "sectors/include/sector_utils.h"
 #include "functions/include/idiscrete_choice.hpp"
 #include "functions/include/discrete_choice_factory.hpp"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -86,7 +87,8 @@ extern Scenario* scenario;
 */
 Sector::Sector( const string& aRegionName )
     : regionName( aRegionName ),
-      mObjectMetaInfo()
+      mObjectMetaInfo(),
+      mUseTrialMarkets( false )
 {
     mSectorType = getDefaultSectorType();
     mBaseOutput = 0;
@@ -232,6 +234,9 @@ void Sector::XMLParse( const DOMNode* node ){
         else if( DiscreteChoiceFactory::isOfType( nodeName ) ) {
             parseSingleNode( curr, mDiscreteChoiceModel, DiscreteChoiceFactory::create( nodeName ).release() );
         }
+        else if( nodeName == "use-trial-market" ) {
+            mUseTrialMarkets = XMLHelper<bool>::getValue( curr );
+        }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
         }
         else {
@@ -262,6 +267,7 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     mDiscreteChoiceModel->toInputXML( aOut, aTabs );
+    XMLWriteElementCheckDefault( mUseTrialMarkets, "use-trial-market", aOut, aTabs, false );
     XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
 
     XMLWriteElementCheckDefault( mBaseOutput, "output", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
@@ -311,6 +317,7 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+    XMLWriteElement( mUseTrialMarkets, "use-trial-market", aOut, aTabs );
     mDiscreteChoiceModel->toDebugXML( aPeriod, aOut, aTabs );
 
     // Write out the data in the vectors for the current period.
@@ -387,6 +394,13 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
     // Complete the subsector initializations.
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
         ( *subSecIter )->completeInit( mSectorInfo.get(), aLandAllocator );
+    }
+
+    if( mUseTrialMarkets ) {
+        // Adding a self dependency will force the MarketDependencyFinder to create
+        // solved trial price/demand markets for this sector.
+        MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
+        depFinder->addDependency( name, regionName, name, regionName );
     }
 }
 

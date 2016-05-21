@@ -1,0 +1,4 @@
+# All R source code files will have their newlines normalized for the current
+# platform
+*.R text=auto
+Makefile text=auto

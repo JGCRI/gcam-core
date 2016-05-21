@@ -1,0 +1,14 @@
+# Ignore executables
+*.exe
+*.pdb
+*.dll
+
+# Ignore build directories
+Debug*
+Release*
+*build
+
+# Ignore typically generated output files
+gas*.emk
+outFile*.csv
+debug*.xml

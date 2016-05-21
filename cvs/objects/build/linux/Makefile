@@ -70,6 +70,13 @@ varchk:
 	@echo LDFLAGS: $(LDFLAGS)
 	@echo LIB: $(LIB)
 	@echo HECTOR_LIB: $(HECTOR_LIB)
+	@echo
+	@echo USE_LAPACK: $(USE_LAPACK)
+	@echo MLIB_CFLAGS: $(MLIB_CFLAGS)
+	@echo MKL_CFLAGS: $(MKL_CFLAGS)
+	@echo MKL_LIB: $(MKL_LIB)
+	@echo MKL_LDFLAGS: $(MKL_LDFLAGS)
+	@echo MKL_RPATH: $(MKL_RPATH)
 
 clean :
 	-$(RM) libgcam.a

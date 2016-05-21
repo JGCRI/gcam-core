@@ -5,6 +5,7 @@ GCAMLIB_HOME    = /pic/projects/GCAM/GCAM-libraries
 BOOST_INCLUDE   = $(GCAMLIB_HOME)/include
 BOOST_LIB	= $(GCAMLIB_HOME)/lib/boost
 BOOSTROOT	= $(GCAMLIB_HOME)/src/boost
+BOOST_NUMERIC_BINDINGS = $(GCAMLIB_HOME)/src/boost-numeric-bindings
 TBB_INCDIR      = $(GCAMLIB_HOME)/include
 TBB_LIBDIR	    = $(GCAMLIB_HOME)/lib
 XERCES_INCLUDE  = $(GCAMLIB_HOME)/include
@@ -12,4 +13,17 @@ XERCES_LIB      = $(GCAMLIB_HOME)/lib
 JAVA_INCLUDE    = ${JAVA_HOME}/include
 JAVA_LIB        = ${JAVA_HOME}/jre/lib/amd64/server
 BASEX_LIB       = $(GCAMLIB_HOME)/lib/basex/BaseX.jar
+## `module load mkl/15.0.1` will get you the following variables:
+ifdef MLIB_CFLAGS
+MKL_CFLAGS      = $(MLIB_CFLAGS) -fopenmp
+MKL_LIB         = $(MLIB_LIB)
+MKL_LDFLAGS     = -fopenmp -L$(MKL_LIB) -lmkl_intel_lp64 -lmkl_core -lmkl_gnu_thread -ldl -lpthread -lm
+MKL_RPATH       = -Wl,rpath,$(MKL_LIB)
+  ## If MKL is selected and we haven't specifically asked not to use
+  ## lapack, then use it.
+  ifndef USE_LAPACK
+    USE_LAPACK = 1
+  endif
+endif
+
 endif

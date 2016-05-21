@@ -56,6 +56,12 @@ L221.SectorLogitTables <- get_logit_fn_tables( A21.sector, names_SupplysectorLog
     include.equiv.table=T, write.all.regions=T, has.traded=T )
 L221.Supplysector_en <- write_to_all_regions( A21.sector, names_Supplysector, has.traded=T )
 
+printlog( "L221.SectorUseTrialMarket_en: Supplysector table that indicates to the model to create solved markets for them." )
+# The traded markets tend to be a good canidate to solve explicitly since they tie together
+# many solved markets.
+L221.SectorUseTrialMarket_en <- write_to_all_regions( subset( A21.sector, traded == T ), c( reg, supp ), has.traded=T )
+L221.SectorUseTrialMarket_en$use.trial.market <- 1
+
 # 2b. Subsector information
 printlog( "L221.SubsectorLogit_en: Subsector logit exponents of upstream energy handling sectors" )
 L221.SubsectorLogitTables <- get_logit_fn_tables( A21.subsector_logit, names_SubsectorLogitType,
@@ -301,6 +307,7 @@ write_mi_data( L221.SectorLogitTables[[ curr_table ]]$data, L221.SectorLogitTabl
 }
 write_mi_data( L221.Supplysector_en, IDstring="Supplysector", domain="ENERGY_LEVEL2_DATA", fn="L221.Supplysector_en",
                batch_XML_domain="ENERGY_XML_BATCH", batch_XML_file="batch_en_supply.xml" ) 
+write_mi_data( L221.SectorUseTrialMarket_en, "SectorUseTrialMarket", "ENERGY_LEVEL2_DATA", "L221.SectorUseTrialMarket_en", "ENERGY_XML_BATCH", "batch_en_supply.xml" ) 
 for( curr_table in names ( L221.SubsectorLogitTables ) ) {
 write_mi_data( L221.SubsectorLogitTables[[ curr_table ]]$data, L221.SubsectorLogitTables[[ curr_table ]]$header,
     "ENERGY_LEVEL2_DATA", paste0("L221.", L221.SubsectorLogitTables[[ curr_table ]]$header ), "ENERGY_XML_BATCH",

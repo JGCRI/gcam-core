@@ -24,4 +24,4 @@ electricity,solar,PV_storage,0,0,1,1,1,1,1,1
 electricity,solar,CSP,1,1,1,1,1,1,1,1
 electricity,solar,CSP_storage,0,0,0,0,0.25,0.75,1,1
 electricity,geothermal,geothermal,1,1,1,1,1,1,1,1
-elect_td_bld,rooftop_pv,rooftop_pv,1,1,1,1,1,1,1,1
+elect_td_bld,rooftop_pv,rooftop_pv,0,0,1,1,1,1,1,1

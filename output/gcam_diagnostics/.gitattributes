@@ -1,0 +1,6 @@
+# All source files will have their new lines automatically normalized for
+# the platform they are on.
+# Note we avoid normalizing the CSV files because of excel
+*.R text=auto
+*.xml text=auto
+*.txt text=auto

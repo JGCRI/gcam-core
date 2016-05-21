@@ -115,8 +115,8 @@ public:
      *           The out edges represent dependencies.
      */
     struct CalcVertex {
-        CalcVertex( IActivity* aCalcItem, DependencyItem* aDepItem )
-        :mCalcItem( aCalcItem ), mDepItem( aDepItem ), mIndex( -1 ), mLowLink( -1 ) {}
+        CalcVertex( IActivity* aCalcItem, DependencyItem* aDepItem, const int aUID )
+        :mCalcItem( aCalcItem ), mDepItem( aDepItem ), mUID( aUID ), mIndex( -1 ), mLowLink( -1 ) {}
         ~CalcVertex();
         
         //! The object which does the calculations for this vertex.
@@ -129,17 +129,35 @@ public:
         //! convenience.
         DependencyItem* mDepItem;
 
+        //! A unique ID for all CalcVertex to be able to consistently compare
+        //! between runs
+        int mUID;
+
         //! A sequential unique identifier for use in a Tarjan's algorithm.
         int mIndex;
 
         //! A identifier for use in a Tarjan's algorithm that represents the
         //! the smallest index of a vertex know to be reachable from this vertex.
         int mLowLink;
+
+        //! Some implied verticies to calculate (special case for the land-allocator)
+        std::set<CalcVertex*> mImpliedInEdges;
     };
+
+    /*!
+     * \brief A comparison functor to allow unique ordering of CalcVertex items.
+     */
+    struct CalcVertexComp {
+        bool operator()( const CalcVertex* aLHS, const CalcVertex* aRHS ) const {
+            return aLHS->mUID < aRHS->mUID;
+        }
+    };
+
     // Some typedefs to make the syntax of using vectors of calc vertices cleaner.
     typedef std::vector<CalcVertex*> VertexList;
     typedef VertexList::iterator VertexIterator;
     typedef VertexList::const_iterator CVertexIterator;
+    typedef std::map<CalcVertex*, int, CalcVertexComp> CalcVertexCountMap;
     
     // DependencyItem and related declarations
     
@@ -173,7 +191,7 @@ public:
     struct DependencyItem {
         DependencyItem( const std::string& aName, const std::string& aLocatedInRegion )
         :mName( aName ), mLocatedInRegion( aLocatedInRegion ), mIsSolved( false ),
-        mLinkedMarket( -1 ), mCanBreakCycle( true ) {}
+        mLinkedMarket( -1 ), mCanBreakCycle( true ), mHasSelfDependence( false ) {}
         ~DependencyItem();
         
         //! A name of a dependency which will correspond to a sector or resource, etc.
@@ -203,6 +221,11 @@ public:
         
         //! Whether this item can be used to break a cycle.
         bool mCanBreakCycle;
+
+        //! A flag to indicate if this dependency has a self dependence.  If this
+        //! flag is set then the item must be converted to a solved market by creating
+        //! trial markets.
+        bool mHasSelfDependence;
         
         /*!
          * \brief Helper function to clean up syntax in accessing the first price
@@ -306,6 +329,9 @@ public:
     //! The final global ordering
     std::vector<IActivity*> mGlobalOrdering;
 
+    //! A UID counter to able to compare CalcVertex uniquely between runs
+    int mCalcVertexUIDCount;
+
 #if GCAM_PARALLEL_ENABLED
     //! The global flow graph to calculate the full model in parallel
     GcamFlowGraph* mTBBGraphGlobal;
@@ -313,9 +339,9 @@ public:
     
     void findVerticesToCalculate( CalcVertex* aVertex, std::set<IActivity*>& aVisited ) const;
     void findStronglyConnected( CalcVertex* aCurrVertex, int& aMaxIndex,std::list<CalcVertex*>& aHasVisited,
-                                std::map<CalcVertex*, int>& aTotalVisits ) const;
-    int markCycles( CalcVertex* aCurrVertex, std::list<CalcVertex*>& aHasVisited, std::map<CalcVertex*,
-                    int>& aTotalVisits ) const;
+                                CalcVertexCountMap& aTotalVisits ) const;
+    int markCycles( CalcVertex* aCurrVertex, std::list<CalcVertex*>& aHasVisited, CalcVertexCountMap& aTotalVisits ) const;
+    void createTrialsForItem( CItemIterator aItemToReset, CalcVertexCountMap& aNumDependencies );
 };
 
 #endif // _MARKET_DEPENDENCY_FINDER_H_

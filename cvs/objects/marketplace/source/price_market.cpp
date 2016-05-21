@@ -99,12 +99,8 @@ void PriceMarket::setPrice( const double priceIn ) {
 #if GCAM_PARALLEL_ENABLED
     demand.clear();
     demand.local() = priceIn;
-    
-    supply.clear();
-    supply.local() = price;
 #else
     demand = priceIn;
-    supply = price;
 #endif
 }
 
@@ -129,7 +125,12 @@ double PriceMarket::getDemand() const {
 }
 
 void PriceMarket::nullSupply() {
-    Market::nullSupply();
+    // PriceMarket does not utilize supply instead
+    // it is equal to the price.
+}
+
+double PriceMarket::getSolverSupply() const {
+    return price;
 }
 
 double PriceMarket::getSupply() const {
