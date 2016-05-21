@@ -8,7 +8,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -114,6 +114,7 @@ public:
     int receiveCharFromUnderStream( int ch ); //!< Pure virtual function called to complete the log and clean up.
     virtual void close() = 0;
     ILogger::WarningLevel setLevel( const ILogger::WarningLevel newLevel );
+    bool wouldPrint(ILogger::WarningLevel aLevel) const;
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 protected:
 	//! Logger name

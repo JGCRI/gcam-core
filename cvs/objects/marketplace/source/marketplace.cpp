@@ -2,7 +2,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -436,6 +436,43 @@ void Marketplace::nullSuppliesAndDemands( const int period ) {
 #endif
 }
 
+/*! \brief Assign a serial number to each market we are attempting to solve
+ *
+ * \details Iterate over the entire list of markets and assign a
+ *          serial number (in fact, the market's index in the master
+ *          array of market structures) to each one.
+ *
+ *          Another side effect of this function is that it writes the
+ *          names and serial numbers of the markets to the
+ *          solver-data-key at log level DEBUG.  The format of this
+ *          log is three comma-separated columns: period, serial
+ *          number, market name.
+ */
+void Marketplace::assignMarketSerialNumbers( int aPeriod )
+{
+    ILogger &solverDataKey = ILogger::getLogger("solver-data-key");
+    solverDataKey.setLevel(ILogger::DEBUG);
+
+    // Give markets being solved the lower numbers
+    int id=1;
+    for(unsigned i=0; i<markets.size(); ++i) {
+        if(markets[i][aPeriod]->shouldSolve()) {
+            markets[i][aPeriod]->assignSerialNumber( id );
+            solverDataKey << aPeriod << ", " << id << ", " << markets[i][aPeriod]->getName() << "\n";
+            id++;
+        }
+    }
+
+    // Give markets not being solved the higher numbers
+    for(unsigned i=0; i<markets.size(); ++i) {
+        if(!markets[i][aPeriod]->shouldSolve()) {
+            markets[i][aPeriod]->assignSerialNumber( id );
+            solverDataKey << aPeriod << ", " << id << ", " << markets[i][aPeriod]->getName() << "\n";
+            id++;
+        }
+    }
+}
+
 /*! \brief Set the market price.
 *
 * This function uses the type dependent method Market::setPrice to set the passed in value into
@@ -697,7 +734,7 @@ vector<Market*> Marketplace::getMarketsToSolve( const int period ) const {
  *          which will allow users to resume the model at that period.  If the
  *          user did not intend on restarting the model we can resuse prices up to
  *          the final calibration year.  After which we attempt to use the trend
- *          in prices to forecast prices (and demands) to come up with a good
+ *          in prices to forecast prices ( and demands ) to come up with a good
  *          guess that would be closer to the solution. This only occurs for periods
  *          greater than 0.
  * \author Sonny Kim
@@ -937,7 +974,7 @@ void Marketplace::dbOutput() const {
         string uname,vector<double> dout);
 
     const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp(maxPeriod);
+    vector<double> temp( maxPeriod );
     int j;
     // write market prices, supply and demand
     for (int i=0;i< static_cast<int>( markets.size() );i++) {
@@ -980,13 +1017,13 @@ void Marketplace::csvOutputFile( string marketsToPrint ) const {
         string var4name,string var5name,string uname,vector<double> dout);
 
     const int maxPeriod = modeltime->getmaxper();
-    vector<double> temp(maxPeriod);
+    vector<double> temp( maxPeriod );
 
     // Function arguments are variable name, double array, db name, and
     // table name.
     // The function writes all years.
 
-    // write market prices and supply (or demand)
+    // write market prices and supply ( or demand )
     for ( unsigned int i = 0; i < markets.size(); i++ ) {
       if ( marketsToPrint == "" || markets[i][0]->getRegionName() == marketsToPrint ) {
         const IInfo* marketInfo = markets[i][0]->getMarketInfo();
@@ -1067,7 +1104,7 @@ MarketDependencyFinder* Marketplace::getDependencyFinder() const {
  * \return A vector in strides of 3 which include price, demand, and supply for
  *         all markets.
  */
-std::vector<double> Marketplace::fullstate(int period) const
+std::vector<double> Marketplace::fullstate( int period ) const
 {
   std::vector<double> state;
   for(unsigned i=0; i<markets.size(); ++i) {
@@ -1089,11 +1126,11 @@ std::vector<double> Marketplace::fullstate(int period) const
 bool Marketplace::checkstate(int period, const std::vector<double> &ostate, std::ostream *log, unsigned tol) const
 {
   bool ok = true;
-  std::vector<double> cstate(fullstate(period));
+  std::vector<double> cstate(fullstate( period ));
   for(unsigned i=0; i<ostate.size(); ++i) {
       if(!dblcmp(ostate[i],cstate[i], tol)) {
       ok = false;
-      if(log) {
+      if( log ) {
         int imkt = i/3;
         int j = imkt*3;         // index of price for this market
                                 // (irrespective of whether it was p,
@@ -1235,7 +1272,7 @@ double Marketplace::extrapolate( const std::vector<Market*>& aMarketHistory, con
 /*!
  * \brief Log the forecast and actual prices for this period
  */
-void Marketplace::logForecastEvaluation(int aPeriod) const
+void Marketplace::logForecastEvaluation( int aPeriod ) const
 {
     const double smallval=0.1;  // for cases where the actual price was nearly zero
     double ld2=0.0, fd2=0.0;    // sum of squared differences for last val and forecast val
@@ -1254,27 +1291,28 @@ void Marketplace::logForecastEvaluation(int aPeriod) const
         double lprice = markets[i][aPeriod-1]->getRawPrice();
         double fcst   = markets[i][aPeriod]->getForecastPrice();
         double cprice = markets[i][aPeriod]->getRawPrice();
-        double ldiff = (lprice-cprice)/(fabs(cprice)+smallval);
-        double fdiff = (fcst-cprice)/(fabs(cprice)+smallval);
-        char marker = fabs(fdiff)<=fabs(ldiff) ? '+' : ' ';
-        if(fdiff > 0.1)
+        double ldiff = (lprice-cprice)/(fabs( cprice )+smallval);
+        double fdiff = (fcst-cprice)/(fabs( cprice )+smallval);
+        char marker = fabs( fdiff )<=fabs( ldiff ) ? '+' : ' ';
+        if(fdiff > 0.1) {
             marker = '!';
+        }
 
         ld2 += ldiff*ldiff;
         fd2 += fdiff*fdiff;
 
         if(markets[i][aPeriod]->shouldSolve()) {
             // only compute statistics on solvable markets
-            if(fabs(ldiff) > ldmax) {
-                ldmax = fabs(ldiff);
+            if(fabs( ldiff ) > ldmax) {
+                ldmax = fabs( ldiff );
                 limax = i;
             }
-            if(fabs(fdiff) > fdmax) {
-                fdmax = fabs(fdiff);
+            if(fabs( fdiff ) > fdmax) {
+                fdmax = fabs( fdiff );
                 fimax = i;
             }
 
-            if(fabs(fdiff) > fabs(ldiff)) {
+            if(fabs( fdiff ) > fabs( ldiff )) {
                 // this forecast was a miss.  Magnitude is the difference
                 // in delta-price divided by the delta-price for the
                 // persistence forecast
@@ -1290,11 +1328,11 @@ void Marketplace::logForecastEvaluation(int aPeriod) const
             }
         }
         
-        solverlog << setw(11) << lprice << "\t"
-                  << setw(11) << fcst << "\t"
-                  << setw(11) << cprice << "\t"
-                  << setw(11) << ldiff << "\t"
-                  << setw(11) << fdiff << "\t"
+        solverlog << setw( 11 ) << lprice << "\t"
+                  << setw( 11 ) << fcst << "\t"
+                  << setw( 11 ) << cprice << "\t"
+                  << setw( 11 ) << ldiff << "\t"
+                  << setw( 11 ) << fdiff << "\t"
                   << marker << "  > " // angle marker makes it easier to grep for these lines in the log.
                   << markets[i][aPeriod]->getName() << "\n";
     }
@@ -1327,11 +1365,12 @@ void Marketplace::logForecastEvaluation(int aPeriod) const
         double ldemand      = std::max(fabs(markets[i][aPeriod-1]->getSolverDemand()), 1.0);
         double fcstdemand   = markets[i][aPeriod]->getForecastDemand();
         double cdemand      = std::max(fabs(markets[i][aPeriod]->getSolverDemand()), 1.0);
-        double lddiff       = (ldemand-cdemand)/(fabs(cdemand)+smallval);
-        double fddiff       = (fcstdemand-cdemand)/(fabs(cdemand)+smallval);
-        char marker = fabs(fddiff)<=fabs(lddiff) ? '+' : ' ';
-        if(fddiff > 0.1)
+        double lddiff       = (ldemand-cdemand)/(fabs( cdemand )+smallval);
+        double fddiff       = (fcstdemand-cdemand)/(fabs( cdemand )+smallval);
+        char marker = fabs( fddiff )<=fabs( lddiff ) ? '+' : ' ';
+        if(fddiff > 0.1) {
             marker = '!';
+        }
 
         ld2 += lddiff*lddiff;
         fd2 += fddiff*fddiff;
@@ -1339,16 +1378,16 @@ void Marketplace::logForecastEvaluation(int aPeriod) const
         
         if(markets[i][aPeriod]->shouldSolve()) {
             // only compute statistics on solvable markets
-            if(fabs(lddiff) > ldmax) {
-                ldmax = fabs(lddiff);
+            if(fabs( lddiff ) > ldmax) {
+                ldmax = fabs( lddiff );
                 limax = i;
             }
-            if(fabs(fddiff) > fdmax) {
-                fdmax = fabs(fddiff);
+            if(fabs( fddiff ) > fdmax) {
+                fdmax = fabs( fddiff );
                 fimax = i;
             }
 
-            if(fabs(fddiff) > fabs(lddiff)) {
+            if(fabs( fddiff ) > fabs( lddiff )) {
                 // this forecast was a miss.  Magnitude is the difference
                 // in delta-price divided by the delta-price for the
                 // persistence forecast
@@ -1364,11 +1403,11 @@ void Marketplace::logForecastEvaluation(int aPeriod) const
             }
         }
         
-        solverlog << setw(11) << ldemand << "\t"
-                  << setw(11) << fcstdemand << "\t"
-                  << setw(11) << cdemand << "\t"
-                  << setw(11) << lddiff << "\t"
-                  << setw(11) << fddiff << "\t"
+        solverlog << setw( 11 ) << ldemand << "\t"
+                  << setw( 11 ) << fcstdemand << "\t"
+                  << setw( 11 ) << cdemand << "\t"
+                  << setw( 11 ) << lddiff << "\t"
+                  << setw( 11 ) << fddiff << "\t"
                   << marker << "  > " // angle marker makes it easier to grep for these lines in the log.
                   << markets[i][aPeriod]->getName() << "\n";
     }
