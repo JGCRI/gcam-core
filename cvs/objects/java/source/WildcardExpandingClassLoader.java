@@ -85,8 +85,14 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
                             }
                         } );
                     // Add the additional jars to the new search path
-                    for( File currJar : expandedJars ) {
-                        ret.add( currJar.toURI().toURL() );
+                    if( expandedJars != null ) {
+                        for( File currJar : expandedJars ) {
+                            ret.add( currJar.toURI().toURL() );
+                        }
+                    } else {
+                        // could not expand due to some error, we can try to
+                        // proceed with out these jars
+                        System.out.println( "WARNING: could not expand classpath at: "+currFile.toString() );
                     }
                 } catch( Exception e ) {
                     // could not expand due to some error, we can try to
