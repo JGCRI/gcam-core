@@ -120,6 +120,8 @@ Supplysector_absolute-cost-logit, world/+{name}region, region/+{name}supplysecto
 
 SupplysectorPrice, world/+{name}region, region/+{name}supplysector, supplysector/+{year}price, supplysector/+price, scenario, scenario/world
 
+SectorUseTrialMarket, world/+{name}region, region/+{name}supplysector, supplysector/+use-trial-market, scenario, scenario/world
+
 ElecReserve,world/+{name}region,region/+{name}supplysector,{name=electricity-reserve-margin}object-meta-info/+value,{name=average-grid-capacity-factor}object-meta-info/+value,@supplysector/object-meta-info,scenario,scenario/world
 
 PassThroughSector, world/+{name}region, region/+{name}pass-through-sector, pass-through-sector/+marginal-revenue-sector, pass-through-sector/+marginal-revenue-market, scenario, scenario/world

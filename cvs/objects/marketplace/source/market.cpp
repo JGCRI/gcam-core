@@ -2,7 +2,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -105,6 +105,10 @@ mMarketInfo( InfoFactory::constructInfo( 0, regionNameIn+goodNameIn ) )
 #endif
     // Store the market name so that it can be returned without any allocations.
     mName = region + good;
+    
+    // Assign a serial number that is guaranteed to be invalid.  This will help
+    // us catch any failure to assign a serial number to the market.
+    mSerialNumber = -1;
 }
 
 //! Destructor. This is needed because of the auto_ptr.

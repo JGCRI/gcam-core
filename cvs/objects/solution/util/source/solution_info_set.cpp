@@ -2,7 +2,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -413,6 +413,11 @@ vector<SolutionInfo> SolutionInfoSet::getSolvableSet() const{
     return solvable;
 }
 
+//! Get the unsolvable set
+vector<SolutionInfo> SolutionInfoSet::getUnsolvableSet() const {
+    return unsolvable;
+}
+
 //! Non-Const getter which references the solvable vector.
 SolutionInfo& SolutionInfoSet::getSolvable( unsigned int index ) {
     return solvable.at( index );
@@ -524,19 +529,19 @@ void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     // Unsolved Part 1:
     aOut << "Unsolved Part 1: Solvable Markets" << endl;
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.width(10); aOut << "X,"; aOut << " ";
-    aOut.width(10); aOut << "XL,"; aOut << " ";
-    aOut.width(10); aOut << "XR,"; aOut << " ";
-    aOut.width(10); aOut << "ED,"; aOut << " ";
-    aOut.width(10); aOut << "EDL,"; aOut << " ";
-    aOut.width(10); aOut << "EDR,"; aOut << " ";
-    aOut.width(10); aOut << "RED,"; aOut << " ";
-    aOut.width(3); aOut << "brk,"; aOut << " ";
-    aOut.width(10); aOut << "Supply,"; aOut << " ";
-    aOut.width(10); aOut << "Demand,"; aOut << " ";
-    aOut.width(10); aOut << "Mrk Type," << " ";
-    aOut.width(36); aOut << "Market,"; aOut << endl;
-    aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    aOut.width( 10 ); aOut << "X,"; aOut << " ";
+    aOut.width( 10 ); aOut << "XL,"; aOut << " ";
+    aOut.width( 10 ); aOut << "XR,"; aOut << " ";
+    aOut.width( 10 ); aOut << "ED,"; aOut << " ";
+    aOut.width( 10 ); aOut << "EDL,"; aOut << " ";
+    aOut.width( 10 ); aOut << "EDR,"; aOut << " ";
+    aOut.width( 10 ); aOut << "RED,"; aOut << " ";
+    aOut.width( 3 ); aOut << "brk,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Supply,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Demand,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Mrk Type," << " ";
+    aOut.width( 36 ); aOut << "Market,"; aOut << endl;
+    aOut.setf(ios_base::fmtflags( 0 ),ios_base::floatfield); //reset to default
     // Solvable markets that are not solved.
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
         if( !curr->isSolved() ){
@@ -547,19 +552,19 @@ void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     // Unsolved Part 2:
     aOut << "Unsolved Part 2: Unsolvable Markets Not Cleared" << endl;
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.width(10); aOut << "X,"; aOut << " ";
-    aOut.width(10); aOut << "XL,"; aOut << " ";
-    aOut.width(10); aOut << "XR,"; aOut << " ";
-    aOut.width(10); aOut << "ED,"; aOut << " ";
-    aOut.width(10); aOut << "EDL,"; aOut << " ";
-    aOut.width(10); aOut << "EDR,"; aOut << " ";
-    aOut.width(10); aOut << "RED,"; aOut << " ";
-    aOut.width(3); aOut << "brk,"; aOut << " ";
-    aOut.width(10); aOut << "Supply,"; aOut << " ";
-    aOut.width(10); aOut << "Demand,"; aOut << " ";
-    aOut.width(10); aOut << "Mrk Type," << " ";
-    aOut.width(36); aOut << "Market,"; aOut << endl;
-    aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    aOut.width( 10 ); aOut << "X,"; aOut << " ";
+    aOut.width( 10 ); aOut << "XL,"; aOut << " ";
+    aOut.width( 10 ); aOut << "XR,"; aOut << " ";
+    aOut.width( 10 ); aOut << "ED,"; aOut << " ";
+    aOut.width( 10 ); aOut << "EDL,"; aOut << " ";
+    aOut.width( 10 ); aOut << "EDR,"; aOut << " ";
+    aOut.width( 10 ); aOut << "RED,"; aOut << " ";
+    aOut.width( 3 ); aOut << "brk,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Supply,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Demand,"; aOut << " ";
+    aOut.width( 10 ); aOut << "Mrk Type," << " ";
+    aOut.width( 36 ); aOut << "Market,"; aOut << endl;
+    aOut.setf(ios_base::fmtflags( 0 ),ios_base::floatfield); //reset to default
     // Unsolvable markets that are not cleared.
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
         if( !curr->isSolved() ){
@@ -673,3 +678,42 @@ void SolutionInfoSet::printDerivatives( ostream& aOut ) const {
     }
     aOut << endl;
 }
+
+/*! \brief Return a vector of market IDs 
+ * \details The caller has to supply the vector to store the ID
+ *          values.  The vector will be resized if necessary.  The
+ *          return value is a const reference to the argument vector.
+ *          (This is so you can use a call to this function as an
+ *          rvalue.)
+ *
+ *          If the second argument is 'true', then only the solvable
+ *          markets will be provided.  If 'false', then ids for all
+ *          markets, solvable and unsolvable will be provided.
+ */
+const std::vector<int> &SolutionInfoSet::getMarketIDs(std::vector<int> &aMktids, bool aSolvableOnly) const
+{
+    unsigned expected_size;
+    if( aSolvableOnly ) {
+        expected_size = solvable.size();
+    }
+    else {
+        expected_size = solvable.size() + unsolvable.size();
+    }
+    
+    if(aMktids.size() != expected_size) {
+        aMktids.resize( expected_size );
+    }
+
+    for(unsigned i=0; i<solvable.size(); ++i) {
+        aMktids[i] = solvable[i].getSerialNumber();
+    }
+
+    if(!aSolvableOnly) {
+        for(unsigned i=solvable.size(), j=0; j<unsolvable.size(); ++i,++j) {
+            aMktids[i] = unsolvable[j].getSerialNumber();
+        }
+    }
+
+    return aMktids;
+}
+

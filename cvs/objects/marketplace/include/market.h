@@ -8,7 +8,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -150,7 +150,23 @@ public:
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
     bool isSolvable() const;
-
+    
+    /*!
+     * \brief Assign a serial number to this market.
+     * \details Serial numbers are used to place markets in a canonical
+     *          order (generally to make it easier to interpret logging
+     *          output).  They are assigned by the Marketplace at the
+     *          start of a period and should remain fixed through the
+     *          entire period (but there is no requirement for consistency
+     *          between periods).  No other class besides the Marketplace
+     *          should call this function.
+     */ 
+    void assignSerialNumber( int aSerialNumber ) {mSerialNumber = aSerialNumber;}
+    /*!
+     * \brief Get this market's serial number.
+     */
+    virtual int getSerialNumber( void ) const {return mSerialNumber;}
+    
     /*!
     * \brief Return the type of the market as defined by the IMarketTypeEnum
     *        which is unique for each derived market class.
@@ -177,6 +193,9 @@ protected:
     
     //! The period the market is valid in.
     int period;
+
+    //! serial number for putting markets into canonical order
+    int mSerialNumber;
     
     //! The market price.
     double price;

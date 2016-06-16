@@ -2,7 +2,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -539,20 +539,20 @@ bool SolutionInfo::hasBisected() const {
 void SolutionInfo::print( ostream& aOut ) const {
 
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
-    aOut.precision(6); // for floating-point
-    aOut.width(10); aOut << getPrice() << ", ";
-    aOut.width(10); aOut << XL << ", ";
-    aOut.width(10); aOut << XR << ", ";
-    aOut.width(10); aOut << getED() << ", ";
-    aOut.width(10); aOut << EDL << ", ";
-    aOut.width(10); aOut << EDR << ", ";
-    aOut.width(10); aOut << getRelativeED() << ",\t";
-    aOut.width(3); aOut << isBracketed() << ", ";
-    aOut.width(10); aOut << getSupply() << ", ";
-    aOut.width(10); aOut << getDemand() << ", ";
-    aOut.width(10); aOut << getTypeName() << ", ";
-    aOut.width(36); aOut << getName() << ", ";
-    aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
+    aOut.precision( 6 ); // for floating-point
+    aOut.width( 10 ); aOut << getPrice() << ", ";
+    aOut.width( 10 ); aOut << XL << ", ";
+    aOut.width( 10 ); aOut << XR << ", ";
+    aOut.width( 10 ); aOut << getED() << ", ";
+    aOut.width( 10 ); aOut << EDL << ", ";
+    aOut.width( 10 ); aOut << EDR << ", ";
+    aOut.width( 10 ); aOut << getRelativeED() << ",\t";
+    aOut.width( 3 ); aOut << isBracketed() << ", ";
+    aOut.width( 10 ); aOut << getSupply() << ", ";
+    aOut.width( 10 ); aOut << getDemand() << ", ";
+    aOut.width( 10 ); aOut << getTypeName() << ", ";
+    aOut.width( 36 ); aOut << getName() << ", ";
+    aOut.setf(ios_base::fmtflags( 0 ),ios_base::floatfield); //reset to default
 }
 
 SupplyDemandCurve SolutionInfo::createSDCurve(){
@@ -625,4 +625,9 @@ double SolutionInfo::getForecastPrice() const
 double SolutionInfo::getForecastDemand() const
 {
     return linkedMarket->getForecastDemand();
+}
+
+int SolutionInfo::getSerialNumber( void ) const
+{
+    return linkedMarket->getSerialNumber();
 }

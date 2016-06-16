@@ -191,7 +191,7 @@ public:
     struct DependencyItem {
         DependencyItem( const std::string& aName, const std::string& aLocatedInRegion )
         :mName( aName ), mLocatedInRegion( aLocatedInRegion ), mIsSolved( false ),
-        mLinkedMarket( -1 ), mCanBreakCycle( true ) {}
+        mLinkedMarket( -1 ), mCanBreakCycle( true ), mHasSelfDependence( false ) {}
         ~DependencyItem();
         
         //! A name of a dependency which will correspond to a sector or resource, etc.
@@ -221,6 +221,11 @@ public:
         
         //! Whether this item can be used to break a cycle.
         bool mCanBreakCycle;
+
+        //! A flag to indicate if this dependency has a self dependence.  If this
+        //! flag is set then the item must be converted to a solved market by creating
+        //! trial markets.
+        bool mHasSelfDependence;
         
         /*!
          * \brief Helper function to clean up syntax in accessing the first price
@@ -336,6 +341,7 @@ public:
     void findStronglyConnected( CalcVertex* aCurrVertex, int& aMaxIndex,std::list<CalcVertex*>& aHasVisited,
                                 CalcVertexCountMap& aTotalVisits ) const;
     int markCycles( CalcVertex* aCurrVertex, std::list<CalcVertex*>& aHasVisited, CalcVertexCountMap& aTotalVisits ) const;
+    void createTrialsForItem( CItemIterator aItemToReset, CalcVertexCountMap& aNumDependencies );
 };
 
 #endif // _MARKET_DEPENDENCY_FINDER_H_

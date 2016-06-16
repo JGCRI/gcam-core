@@ -2,7 +2,7 @@
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
 * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
-* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* with the Department of Energy ( DOE ). NEITHER THE GOVERNMENT NOR THE
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
@@ -106,13 +106,22 @@ ILogger::WarningLevel Logger::setLevel( const ILogger::WarningLevel aLevel ){
     return oldLevel;
 }
 
+/*! \brief Test whether the logger will produce output at a specified logging level
+ *  \details This function allows us to skip preparing expensive
+ *           logging output if we know it won't even be printed.
+ */
+bool Logger::wouldPrint(ILogger::WarningLevel aLevel) const
+{
+    return aLevel >= mMinLogWarningLevel || aLevel >= mMinToScreenWarningLevel;
+}
+
 //! Receive a single character from the underlying stream and buffer it, printing the buffer it is a newline.
 int Logger::receiveCharFromUnderStream( int ch ) {
     // Only receive the character or print to the screen if it needed.
     if( mCurrentWarningLevel >= mMinLogWarningLevel || mCurrentWarningLevel >= mMinToScreenWarningLevel ){
         // only really need to lock the mutex if we're going to do something.
 #if GCAM_PARALLEL_ENABLED
-        tbb::spin_mutex::scoped_lock lck(mMutex);
+        tbb::spin_mutex::scoped_lock lck( mMutex );
 #endif
         if( ch == '\n' ){
             string tempString( mBuf.str() );
@@ -127,7 +136,7 @@ int Logger::receiveCharFromUnderStream( int ch ) {
             // The functions that perform the output will add the
             // newline, so we only want to insert non-newline
             // characters.
-            mBuf << (char)ch;
+            mBuf << ( char )ch;
         }
     }
     return ch;
