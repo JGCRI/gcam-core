@@ -261,8 +261,8 @@ A_WaterResources$unlimited.resource <- A_WaterResources$resource
 L227.UnlimitRsrc <- repeat_and_add_vector( A_WaterResources[ names( A_WaterResources ) %in% names_UnlimitRsrc ], R, GCAM_region_names[[R]] )
 L227.UnlimitRsrc <- add_region_name( L227.UnlimitRsrc )
 L227.UnlimitRsrc$market <- L227.UnlimitRsrc$region
-L227.UnlimitRsrc <- L227.UnlimitRsrc[ names_UnlimitRsrc ]
 L227.UnlimitRsrc$capacity.factor <- 1
+L227.UnlimitRsrc <- L227.UnlimitRsrc[ names_UnlimitRsrc ]
 
 printlog( "Water resource prices by period" )
 A_WaterResources <- gcam_interp( A_WaterResources, model_years )
