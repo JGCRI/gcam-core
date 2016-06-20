@@ -47,6 +47,8 @@ L161.ag_rfdProd_Mt_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L161.ag_rfdProd_M
 # -----------------------------------------------------------------------------
 # 2. Build tables
 printlog( "L221.AgSupplySector: Generic AgSupplySector characteristics (units, calprice, market, logit)" )
+L221.AgSectorLogitTables <- get_logit_fn_tables( A_AgSupplySector, names_AgSupplySectorLogitType,
+                                                 base.header="AgSupplySector_", include.equiv.table=T, write.all.regions=T )
 L221.AgSupplySector <- write_to_all_regions_ag( A_AgSupplySector, names_AgSupplySector )
 L221.AgSupplySector$calPrice <- L132.ag_an_For_Prices$calPrice[ match( L221.AgSupplySector$AgSupplySector, L132.ag_an_For_Prices$GCAM_commodity ) ]
 L221.AgSupplySector$calPrice[ L221.AgSupplySector$AgSupplySector == "biomass" ] <- 0.7   #value irrelevant
@@ -63,6 +65,19 @@ L221.AgSupplySector_biomassOil$market[ L221.AgSupplySector_biomassOil$market == 
       L221.AgSupplySector_biomassOil$region[ L221.AgSupplySector_biomassOil$market == "regional" ]
 L221.AgSupplySector_biomassOil$logit.year.fillout <- min( model_base_years )
 L221.AgSupplySector_biomassOil <- L221.AgSupplySector_biomassOil[ names_AgSupplySector ]
+
+L221.biomassOil_LogitTemp <- L221.AgSupplySector_biomassOil
+L221.biomassOil_LogitTemp$logit.type <- NA
+L221.biomassOil_LogitTemp <- get_logit_fn_tables( L221.biomassOil_LogitTemp, names_AgSupplySectorLogitType,
+                                                  base.header="AgSupplySector_", include.equiv.table=F, write.all.regions=F )
+for( curr_table in names( L221.biomassOil_LogitTemp ) ) {
+  if( curr_table %in% names( L221.AgSectorLogitTables ) ) {
+    L221.AgSectorLogitTables[[ curr_table ]]$data <- rbind( L221.AgSectorLogitTables[[ curr_table ]]$data,
+                                                            L221.biomassOil_LogitTemp[[ curr_table ]]$data )
+  } else {
+    L221.AgSectorLogitTables[[ curr_table ]] <- L221.biomassOil_LogitTemp[[ curr_table ]]
+  }
+}
 
 #printlog( "L221.AgSector: Regional Subsidies" )
 #L221.AgSector_subs <- L221.AgSector[ c( "region", "AgSupplySector")]
@@ -279,8 +294,19 @@ L221.AgYield_bio_hi$yield[ paste( L221.AgYield_bio_hi$region, L221.AgYield_bio_h
       paste( A_biocrops_R_AEZ_irr$region, A_biocrops_R_AEZ_irr$AgSupplySubsector ) ]
 
 printlog( "Removing non-existent regions and AEZs from all tables")
+for( curr_table in names( L221.AgSectorLogitTables) ) {
+  if( curr_table != "EQUIV_TABLE" ) {
+    L221.AgSectorLogitTables[[ curr_table ]]$data <- subset( L221.AgSectorLogitTables[[ curr_table ]]$data,
+                                                             !region %in% no_aglu_regions )
+  }
+}
 L221.AgSupplySector <- subset( L221.AgSupplySector, !region %in% no_aglu_regions )
 L221.AgSupplySector_biomassOil <- subset( L221.AgSupplySector_biomassOil, !region %in% no_aglu_regions )
+for( curr_table in names( L221.AgSubsectorLogitTables ) ) {
+  if( curr_table != "EQUIV_TABLE" ) {
+    L221.AgSubsectorLogitTables[[ curr_table ]]$data <- remove_AEZ_nonexist( L221.AgSubsectorLogitTables[[ curr_table ]]$data )
+  }
+}
 L221.AgSupplySubsector <- remove_AEZ_nonexist( L221.AgSupplySubsector )
 L221.AgTechInterp <- remove_AEZ_nonexist( L221.AgTechInterp )
 L221.AgTechShrwt <- remove_AEZ_nonexist( L221.AgTechShrwt )
@@ -293,9 +319,19 @@ L221.AgYield_bio_hi <- remove_AEZ_nonexist( L221.AgYield_bio_hi )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table in names ( L221.AgSectorLogitTables) ) {
+  write_mi_data( L221.AgSectorLogitTables[[ curr_table ]]$data, L221.AgSectorLogitTables[[ curr_table ]]$header,
+                 "AGLU_LEVEL2_DATA", paste0("L221.", L221.AgSectorLogitTables[[ curr_table ]]$header ), "AGLU_XML_BATCH",
+                 "batch_ag_For_Past_bio_base_IRR.xml" )
+}
 write_mi_data( L221.AgSupplySector, IDstring="AgSupplySector", domain="AGLU_LEVEL2_DATA", fn="L221.AgSupplySector",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_For_Past_bio_base_IRR.xml" ) 
 write_mi_data( L221.AgSupplySector_biomassOil, "AgSupplySector", "AGLU_LEVEL2_DATA", "L221.AgSupplySector_biomassOil", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base_IRR.xml" ) 
+for( curr_table in names ( L221.AgSubsectorLogitTables ) ) {
+  write_mi_data( L221.AgSubsectorLogitTables[[ curr_table ]]$data, L221.AgSubsectorLogitTables[[ curr_table ]]$header,
+                 "AGLU_LEVEL2_DATA", paste0("L221.", L221.AgSubsectorLogitTables[[ curr_table ]]$header ), "AGLU_XML_BATCH",
+                 "batch_ag_For_Past_bio_base_IRR.xml" )
+}
 write_mi_data( L221.AgSupplySubsector, "AgSupplySubsector", "AGLU_LEVEL2_DATA", "L221.AgSupplySubsector", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base_IRR.xml" ) 
 write_mi_data( L221.AgTechInterp, "AgTechInterp", "AGLU_LEVEL2_DATA", "L221.AgTechInterp", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base_IRR.xml" ) 
 write_mi_data( L221.AgTechShrwt, "AgTechShrwt", "AGLU_LEVEL2_DATA", "L221.AgTechShrwt", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base_IRR.xml" ) 
