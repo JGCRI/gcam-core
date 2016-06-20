@@ -269,6 +269,13 @@ L221.ag_BioYield_GJm2_R_AEZ_hi.melt$value[
 printlog( "Renaming biomass crops in all tables to specified names" )
 L221.AgSupplySubsector <- rename_biocrops( L221.AgSupplySubsector, lookup = A_biocrops_R_AEZ_irr, data_matchvar = "AgSupplySubsector",
       lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector" )
+for( curr_table in names( L221.AgSubsectorLogitTables ) ) {
+  if( curr_table != "EQUIV_TABLE" ) {
+    L221.AgSubsectorLogitTables[[ curr_table ]]$data <- rename_biocrops( L221.AgSubsectorLogitTables[[ curr_table ]]$data,
+                                                                         lookup = A_biocrops_R_AEZ_irr, data_matchvar = "AgSupplySubsector",
+                                                                         lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector" )
+  }
+}
 L221.AgTechInterp <- rename_biocrops( L221.AgTechInterp, lookup = A_biocrops_R_AEZ_irr, data_matchvar = "AgProductionTechnology",
       lookup_matchvar = "old_AgProductionTechnology", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
 L221.AgTechShrwt <- rename_biocrops( L221.AgTechShrwt, lookup = A_biocrops_R_AEZ_irr, data_matchvar = "AgProductionTechnology",
