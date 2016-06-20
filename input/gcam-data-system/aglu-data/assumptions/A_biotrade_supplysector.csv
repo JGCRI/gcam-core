@@ -1,1 +1,1 @@
-# File: A_biotrade_supplysector.csv,,,,,# Description: Supplysector for traded biomass,,,,,# Original source: NA,,,,,# ----------,,,,,region,supplysector,output.unit,input.unit,price.unit,logit.exponentUSA,traded biomass,EJ,EJ,1975$/GJ,-6
+# File: A_biotrade_supplysector.csv,,,,,,# Description: Supplysector for traded biomass,,,,,,# Original source: NA,,,,,,# ----------,,,,,,region,supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.typeUSA,traded biomass,EJ,EJ,1975$/GJ,-6,
