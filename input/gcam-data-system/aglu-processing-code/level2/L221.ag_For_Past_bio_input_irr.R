@@ -75,6 +75,14 @@ printlog( "L221.AgSupplySubsector: Generic AgSupplySubsector characteristics (no
 A_AgSupplySubsector_repAEZ <- repeat_and_add_vector( A_AgSupplySubsector, AEZ, AEZs )
 A_AgSupplySubsector_repAEZ$AgSupplySubsector <- with( A_AgSupplySubsector_repAEZ, paste( AgSupplySector, AEZ, sep = AEZ_delimiter ) )
 L221.AgSupplySubsector <- write_to_all_regions_ag( A_AgSupplySubsector_repAEZ, names_AgSupplySubsector )
+# We do not actually care about the logit here but we need a value to avoid errors
+L221.AgSupplySubsector$logit.year.fillout <- min( model_base_years )
+L221.AgSupplySubsector$logit.exponent <- -3
+L221.AgSupplySubsectorLogitType <- L221.AgSupplySubsector
+L221.AgSupplySubsectorLogitType$logit.type <- NA
+L221.AgSubsectorLogitTables <- get_logit_fn_tables( L221.AgSupplySubsectorLogitType, names_AgSupplySubsectorLogitType,
+                                                    base.header="AgSupplySubsector_", include.equiv.table=F, write.all.regions=F )
+
 
 printlog( "L221.AgTechInterp: Generic AgProductionTechnology characteristics (share-weight interpolation)" )
 A_AgTechnology_repAEZ <- repeat_and_add_vector( A_AgTechnology, AEZ, AEZs )
