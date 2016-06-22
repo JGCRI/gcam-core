@@ -47,6 +47,7 @@ import javax.swing.undo.UndoManager;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CannotRedoException;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -60,6 +61,7 @@ import ModelInterface.common.RecentFilesList;
 
 import ModelInterface.ModelGUI2.XMLFilter;
 import ModelInterface.ConfigurationEditor.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.utils.DOMUtils;
 import ModelInterface.common.FileChooser;
 import ModelInterface.common.FileChooserFactory;
 import ModelInterface.BatchRunner;
@@ -124,10 +126,6 @@ public class InterfaceMain implements ActionListener {
 	 * Main function, creates a new thread for the gui and runs it.
 	 */
 	public static void main(String[] args) {
-		System.out.println("Library Path: "+System.getProperty("java.library.path"));
-
-		//Schedule a job for the event-dispatching thread:
-		//creating and showing this application's GUI.
 
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread t, Throwable e) {
@@ -140,30 +138,64 @@ public class InterfaceMain implements ActionListener {
 			}
 		});
 
-        if(args.length > 0 && args.length != 2) {
-            System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
-            return;
+        // Parse command line options looking for a batch file to run the ModelInterface
+        // in batch mode.  Note when running in batch mode we will run "headless" or with
+        // no GUI interface.
+        String argOptionsErrorMsg = null;
+        Document batchDoc = null;
+        if(args.length == 1) {
+            if(args[0].equals("--")) {
+                System.setProperty("java.awt.headless", "true");
+                // load the batch commands from STDIN
+                batchDoc = DOMUtils.parseInputStream(System.in);
+                if(batchDoc == null) {
+                    argOptionsErrorMsg = "Skipping batch run due to XML parsing errors.";
+                }
+            } else {
+                argOptionsErrorMsg = "Unrecognized argument: "+args[0];
+            }
         } else if(args.length == 2) {
             if(args[0].equals("-b")) {
                 System.setProperty("java.awt.headless", "true");
-                System.out.println("Running headless? "+GraphicsEnvironment.isHeadless());
+                // load the batch commands from the specified file
                 File batchFile = new File(args[1]);
-                main  = new InterfaceMain();
-
-                // Construct the subset of menu adders that are also BatchRunner while
-                // avoiding creating any GUI components
-                // TODO: avoid code duplication
-                final MenuAdder dbView = new DbViewer();
-                final MenuAdder inputView = new InputViewer();
-                main.menuAdders = new ArrayList<MenuAdder>(2);
-                main.menuAdders.add(dbView);
-                main.menuAdders.add(inputView);
-
-                // Run the batch file
-                main.runBatch(batchFile);
+                batchDoc = FileUtils.loadDocument(batchFile, null);
+                if(batchDoc == null) {
+                    argOptionsErrorMsg = "Skipping batch run due to XML parsing errors.";
+                }
             } else {
-                System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
+                argOptionsErrorMsg = "Unrecognized argument: "+args[0];
             }
+        } else if(args.length > 0) {
+            argOptionsErrorMsg = "Too many arguments specified";
+        }
+
+        // If there was an error parsing the command line arguments print the error
+        // and usage message and quit.
+        if(argOptionsErrorMsg != null) {
+            System.err.println("ERROR: "+argOptionsErrorMsg);
+            System.out.println("Usage: java -jar ModelInterface.jar -b [batch file]");
+            System.out.println("Or     java -jar ModelInterface.jar -- < [batch file from STDIN]");
+            System.exit(1);
+        }
+
+        System.out.println("Running headless? "+GraphicsEnvironment.isHeadless());
+
+        // If we have a batch file to run then just run it and return
+        if(batchDoc != null) {
+            main  = new InterfaceMain();
+
+            // Construct the subset of menu adders that are also BatchRunner while
+            // avoiding creating any GUI components
+            // TODO: avoid code duplication
+            final MenuAdder dbView = new DbViewer();
+            final MenuAdder inputView = new InputViewer();
+            main.menuAdders = new ArrayList<MenuAdder>(2);
+            main.menuAdders.add(dbView);
+            main.menuAdders.add(inputView);
+
+            // Run the batch file
+            main.runBatch(batchDoc.getDocumentElement());
             return;
         }
 
@@ -386,7 +418,13 @@ public class InterfaceMain implements ActionListener {
                 public void run() {
                     if(result != null) {
                         for(File file : result) {
-                            runBatch(file);
+                            Document doc = FileUtils.loadDocument(file, null);
+                            // Only run if the batch file was parsed correctly
+                            // note and error would have already been given if it wasn't
+                            // parsed correctly
+                            if(doc != null) {
+                                runBatch(doc.getDocumentElement());
+                            }
                         }
                     }
                     // TODO: message that all were run
@@ -578,13 +616,11 @@ public class InterfaceMain implements ActionListener {
 	 * Runs the given batch file.  Relys on the menuAdders list
 	 * and if any of the class implements BatchRunner it will pass
 	 * it off the command to that class. 
-	 * @param file The batch file to run.
+	 * @param doc The batch file parsed into a DOM document which contains
+     *            the commands to run.
 	 * @see BatchRunner 
 	 */
-	private void runBatch(File file) {
-		// don't really care about document element's name
-		Node doc = FileUtils.loadDocument(file, null).getDocumentElement();
-
+	private void runBatch(Node doc) {
 		// TODO: remove this check once batch queries get merged
 		if(doc.getNodeName().equals("queries")) {
 			System.out.println("Batch queries are not yet merged with this functionality.");
@@ -609,7 +645,7 @@ public class InterfaceMain implements ActionListener {
 			}
 		}
 		showMessageDialog(
-				"Finished running batch file "+file.getName(),
+				"Finished running batch file",
 				"Batch File Complete", JOptionPane.INFORMATION_MESSAGE);
 	}
     /**
