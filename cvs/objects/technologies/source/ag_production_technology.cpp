@@ -486,12 +486,6 @@ double AgProductionTechnology::calcProfitRate( const string& aRegionName,
     // and the land allocator needs it in $/billion m2. This assumes yield is in kg/m2
     profitRate *= 1e9;
 
-    ILogger& kateLog = ILogger::getLogger( "kate_log" );
-    kateLog.setLevel( ILogger::WARNING );
-    if ( profitRate <= 0 && mYield > 0 && aPeriod == 3 && aProductName != "biomass" ){
-        kateLog << aRegionName << "," << mName << ",price," << price << ",inputCosts," << inputCosts << ",nonlandcost," << mNonLandVariableCost << endl;
-    }
-
     return profitRate;
 }
 
