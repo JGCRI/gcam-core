@@ -51,6 +51,7 @@
 
 class Timer;
 class TotalPolicyCostCalculator;
+class SingleScenarioRunner;
 class ITarget;
 class Modeltime;
 
@@ -142,7 +143,7 @@ public:
 private:
     //! The scenario runner which controls running the initial scenario, and all
     //! fixed taxed scenarios after.
-    std::auto_ptr<IScenarioRunner> mSingleScenario;
+    std::auto_ptr<SingleScenarioRunner> mSingleScenario;
 
     //! The delegate object which calculates total costs.
     std::auto_ptr<TotalPolicyCostCalculator> mPolicyCostCalculator;

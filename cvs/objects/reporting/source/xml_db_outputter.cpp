@@ -161,20 +161,6 @@ mJavaEnv( 0 )
  */
 XMLDBOutputter::JNIContainer::~JNIContainer() {
     if( mJavaEnv ) {
-        // First we need to look up the appropriate "finalizeAndClose" Java method with no
-        // arguments and void return: "()V" then call it.
-        jmethodID finalizeMID = mJavaEnv->GetMethodID( mWriteDBClass, "finalizeAndClose", "()V" );
-        if( !finalizeMID ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::SEVERE );
-            mainLog << "Failed to find JNI method: finalizeAndClose" << endl;
-            return;
-        }
-
-        // The java method will (potentially) run queries then close the database
-        // before returning.
-        mJavaEnv->CallVoidMethod( mWriteDBInstance, finalizeMID );
-
         mJavaEnv->DeleteGlobalRef( mWriteDBClass );
         mJavaEnv->DeleteGlobalRef( mWriteDBInstance );
     }
@@ -252,6 +238,34 @@ void XMLDBOutputter::finish() const {
     // The java method will wait until the database is done processing all data
     // before returning.
     mJNIContainer->mJavaEnv->CallVoidMethod( mJNIContainer->mWriteDBInstance, finishMID );
+#endif
+}
+
+/*!
+ * \brief A method to inform us that no more data will be appended to the open database so we can
+ *        now run any addtional processing necessary and close the database.
+ * \details We will simply call the finalizeAndClose method on the XMLDBDriver to do the work.
+ *          It may potentially run queries if configured then close the database.
+ */
+void XMLDBOutputter::finalizeAndClose() {
+#if( __HAVE_JAVA__ )
+    // Call finalizeAndClose on the XMLDBDriver if it was successfully opened in the first place.
+    if( mJNIContainer.get() ) {
+        // First we need to look up the appropriate "finalizeAndClose" Java method with no
+        // arguments and void return: "()V" then call it.
+        jmethodID finalizeMID = mJNIContainer->mJavaEnv->GetMethodID( mJNIContainer->mWriteDBClass,
+                "finalizeAndClose", "()V" );
+        if( !finalizeMID ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::SEVERE );
+            mainLog << "Failed to find JNI method: finalizeAndClose" << endl;
+            return;
+        }
+
+        // The java method will (potentially) run queries then close the database
+        // before returning.
+        mJNIContainer->mJavaEnv->CallVoidMethod( mJNIContainer->mWriteDBInstance, finalizeMID );
+    }
 #endif
 }
 

@@ -58,6 +58,7 @@
 #include "target_finder/include/bisecter.h"
 #include "util/curves/include/explicit_point_set.h"
 #include "util/curves/include/xy_data_point.h"
+#include "containers/include/single_scenario_runner.h"
 #include "containers/include/total_policy_cost_calculator.h"
 #include "util/base/include/auto_file.h"
 
@@ -81,7 +82,7 @@ SimplePolicyTargetRunner::SimplePolicyTargetRunner()
   mHasParsedConfig( false ),
   mTaxName( "CO2" ) // Default to only taxing CO2.
 {
-    mSingleScenario = ScenarioRunnerFactory::create( "single-scenario-runner" );
+    mSingleScenario = ScenarioRunnerFactory::createSingleScenarioRunner();
 
     // Check to make sure calibration is off.
     const Configuration* conf = Configuration::getInstance();

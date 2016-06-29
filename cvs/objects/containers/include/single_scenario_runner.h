@@ -50,6 +50,7 @@
 
 class Timer;
 class Scenario;
+class XMLDBOutputter;
 
 /*! 
  * \ingroup Object
@@ -109,10 +110,17 @@ public:
     virtual Scenario* getInternalScenario();
     virtual const Scenario* getInternalScenario() const;
 
+    XMLDBOutputter* getXMLDBOutputter() const;
+
 protected:    
     SingleScenarioRunner();
     static const std::string& getXMLNameStatic();
     //! The scenario which will be run.
     std::auto_ptr<Scenario> mScenario;
+
+    //! The XML database output is a special case in that we must keep
+    //! it around in case we want to do additional processing once GCAM
+    //! is done running.
+    mutable XMLDBOutputter* mXMLDBOutputter;
 };
 #endif // _SINGLE_SCENARIO_RUNNER_H_

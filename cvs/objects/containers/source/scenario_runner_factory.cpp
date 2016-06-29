@@ -105,6 +105,14 @@ auto_ptr<IScenarioRunner> ScenarioRunnerFactory::create( const string& aType ) {
     return auto_ptr<IScenarioRunner>();
 }
 
+/*!
+ * \brief Return a new instance of the SingleScenarioRunner.
+ * \return An auto_ptr with a newly created SingleScenarioRunner.
+ */
+auto_ptr<SingleScenarioRunner> ScenarioRunnerFactory::createSingleScenarioRunner() {
+    return auto_ptr<SingleScenarioRunner>( new SingleScenarioRunner );
+}
+
 /*! 
  * \brief Create the default type of IScenarioRunner based on values set in the
  *        configuration file.

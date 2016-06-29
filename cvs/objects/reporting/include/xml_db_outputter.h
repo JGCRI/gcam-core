@@ -71,6 +71,7 @@ public:
     ~XMLDBOutputter();
 
     void finish() const;
+    void finalizeAndClose();
 
     void startVisitScenario( const Scenario* aScenario, const int aPeriod );
     void endVisitScenario( const Scenario* aScenario, const int aPeriod );

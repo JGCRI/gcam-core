@@ -43,6 +43,7 @@
 #include <string>
 #include "containers/include/mac_generator_scenario_runner.h"
 #include "containers/include/scenario_runner_factory.h"
+#include "containers/include/single_scenario_runner.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/total_policy_cost_calculator.h"
@@ -60,7 +61,7 @@ extern ofstream outFile;
 /*! \brief Constructor.
 */
 MACGeneratorScenarioRunner::MACGeneratorScenarioRunner(){
-    mSingleScenario = ScenarioRunnerFactory::create( "single-scenario-runner" );
+    mSingleScenario = ScenarioRunnerFactory::createSingleScenarioRunner();
 
     // Check to make sure calibration is off.
     const Configuration* conf = Configuration::getInstance();

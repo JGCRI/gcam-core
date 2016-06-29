@@ -49,6 +49,7 @@
 #include <list>
 
 class IScenarioRunner;
+class SingleScenarioRunner;
 
 /*! 
  * \ingroup Objects
@@ -63,6 +64,7 @@ class ScenarioRunnerFactory {
 public:
 	static bool isOfType( const std::string& aType );
 	static std::auto_ptr<IScenarioRunner> create( const std::string& aType );
+	static std::auto_ptr<SingleScenarioRunner> createSingleScenarioRunner();
     static std::auto_ptr<IScenarioRunner> createDefault( const std::list<std::string>& aExcludedTypes );
 private:
     static bool isExcluded( const std::list<std::string>& aExcludedTypes,

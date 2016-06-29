@@ -57,7 +57,7 @@
 #include "util/base/include/auto_file.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/total_policy_cost_calculator.h"
-#include "containers/include/iscenario_runner.h"
+#include "containers/include/single_scenario_runner.h"
 #include "policy/include/policy_ghg.h"
 #include "reporting/include/xml_db_outputter.h"
 
@@ -67,7 +67,7 @@ using namespace xercesc;
 /*! \brief Constructor.
 * \param aSingleScenario The single scenario runner.
 */
-TotalPolicyCostCalculator::TotalPolicyCostCalculator( IScenarioRunner* aSingleScenario ){
+TotalPolicyCostCalculator::TotalPolicyCostCalculator( SingleScenarioRunner* aSingleScenario ){
     assert( aSingleScenario );
     mSingleScenario = aSingleScenario;
     mGlobalCost = 0;
@@ -338,7 +338,7 @@ void TotalPolicyCostCalculator::printOutput() const {
     
     // Append the data to the XML database.
     if( Configuration::getInstance()->shouldWriteFile( "xmldb-location" ) ) {
-        mSingleScenario->getInternalScenario()->getXMLDBOutputter()->appendData( xmlString, UPDATE_LOCATION );
+        mSingleScenario->getXMLDBOutputter()->appendData( xmlString, UPDATE_LOCATION );
     }
 
     // Write to the database.

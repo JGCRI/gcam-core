@@ -60,7 +60,6 @@
 #include "util/base/include/timer.h"
 #include "reporting/include/graph_printer.h"
 #include "reporting/include/land_allocator_printer.h"
-#include "reporting/include/xml_db_outputter.h"
 #include "containers/include/output_meta_data.h"
 #include "solution/solvers/include/solver_factory.h"
 #include "solution/solvers/include/bisection_nr_solver.h"
@@ -84,8 +83,6 @@ Scenario::Scenario() {
     time( &gGlobalTime );
 
     marketplace.reset( new Marketplace() );
-
-    mXMLDBOutputter = 0;
 }
 
 //! Destructor
@@ -93,12 +90,6 @@ Scenario::~Scenario() {
     // model time is really a singleton and so don't
     // try to delete it
     modeltime.release();
-
-    // ensure model data is cleared out before potentially
-    // running queries on the XML database
-    world.reset( 0 );
-
-    delete mXMLDBOutputter;
 }
 
 /*! \brief Get the static XML name of the Scenario.
@@ -591,30 +582,6 @@ void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
         world->accept( aVisitor, aPeriod );
     }
     aVisitor->endVisitScenario( this, aPeriod );
-}
-
-/*!
- * \brief Get the refernce to the XMLDBOutputter.
- * \return The XMLDBOutputter.
- */
-XMLDBOutputter* Scenario::getXMLDBOutputter() const {
-    return mXMLDBOutputter;
-}
-
-/*! \brief A function which writes output to an XML file so that it can be read by the XML database.
-*/
-void Scenario::printOutputXML() const {
-    // Do XML DB output
-    assert( !mXMLDBOutputter );
-    mXMLDBOutputter = new XMLDBOutputter();
-    
-    // Update the output container with information from the model.
-    // -1 flags to update the output container for all periods at once.
-    accept( mXMLDBOutputter, -1 );
-    
-    
-    // Print the output.
-    mXMLDBOutputter->finish();
 }
 
 /*! \brief A function which print dependency graphs showing fuel usage by
