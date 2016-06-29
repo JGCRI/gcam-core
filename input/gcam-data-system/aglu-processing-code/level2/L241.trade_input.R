@@ -116,7 +116,6 @@ L241.AgProdTech_RES_output       <- remove_AEZ_nonexist( L241.AgProdTech_RES_out
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-
 write_mi_data( L241.StubAgTradeCoeff_food, "StubTechCoef_NM", "AGLU_LEVEL2_DATA", "L241.StubAgTradeCoeff_food", "AGLU_XML_BATCH", "batch_ssp4_trade.xml" )
 write_mi_data( L241.StubAgTradeCoeff_nonfood, "StubTechCoef_NM", "AGLU_LEVEL2_DATA", "L241.StubAgTradeCoeff_nonfood", "AGLU_XML_BATCH", "batch_ssp4_trade.xml" )
 write_mi_data( L241.StubAgTradeCoeff_feed, "StubTechCoef_NM", "AGLU_LEVEL2_DATA", "L241.StubAgTradeCoeff_feed", "AGLU_XML_BATCH", "batch_ssp4_trade.xml" )
