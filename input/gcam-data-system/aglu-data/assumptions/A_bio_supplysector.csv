@@ -1,1 +1,7 @@
-# File: A_bio_supplysector.csv,,,,,# Description: Supplysector for biomass,,,,,# Original source: NA,,,,,# ----------,,,,,supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.typeregional biomass,EJ,EJ,1975$/GJ,-6,total biomass,EJ,EJ,1975$/GJ,-3,
+# File: A_bio_supplysector.csv,,,,,
+# Description: Supplysector for biomass,,,,,
+# Original source: NA,,,,,
+# ----------,,,,,
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+regional biomass,EJ,EJ,1975$/GJ,-6,
+total biomass,EJ,EJ,1975$/GJ,-3,

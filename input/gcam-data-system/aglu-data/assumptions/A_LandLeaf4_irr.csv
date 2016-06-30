@@ -1,1 +1,18 @@
-# File: A_LandLeaf4_irr.csv,,,,# Description: Managed Land Leafs in the fourth node (note: the IRR/RFD distinction is added in the R script),,,,# Original source: Land_nesting_structure.xls,,,,# ----------,,,,LandNode1,LandNode2,LandNode3,LandNode4,LandLeafAgroForestLand,AgroForest_NonPasture,CropLand,Corn,CornAgroForestLand,AgroForest_NonPasture,CropLand,FiberCrop,FiberCropAgroForestLand,AgroForest_NonPasture,CropLand,FodderGrass,FodderGrassAgroForestLand,AgroForest_NonPasture,CropLand,FodderHerb,FodderHerbAgroForestLand,AgroForest_NonPasture,CropLand,MiscCrop,MiscCropAgroForestLand,AgroForest_NonPasture,CropLand,OilCrop,OilCropAgroForestLand,AgroForest_NonPasture,CropLand,OtherGrain,OtherGrainAgroForestLand,AgroForest_NonPasture,CropLand,PalmFruit,PalmFruitAgroForestLand,AgroForest_NonPasture,CropLand,Rice,RiceAgroForestLand,AgroForest_NonPasture,CropLand,Root_Tuber,Root_TuberAgroForestLand,AgroForest_NonPasture,CropLand,SugarCrop,SugarCropAgroForestLand,AgroForest_NonPasture,CropLand,Wheat,WheatAgroForestLand,AgroForest_NonPasture,CropLand,biomass,biomass
+# File: A_LandLeaf4_irr.csv,,,,
+# Description: Managed Land Leafs in the fourth node (note: the IRR/RFD distinction is added in the R script),,,,
+# Original source: Land_nesting_structure.xls,,,,
+# ----------,,,,
+LandNode1,LandNode2,LandNode3,LandNode4,LandLeaf
+AgroForestLand,AgroForest_NonPasture,CropLand,Corn,Corn
+AgroForestLand,AgroForest_NonPasture,CropLand,FiberCrop,FiberCrop
+AgroForestLand,AgroForest_NonPasture,CropLand,FodderGrass,FodderGrass
+AgroForestLand,AgroForest_NonPasture,CropLand,FodderHerb,FodderHerb
+AgroForestLand,AgroForest_NonPasture,CropLand,MiscCrop,MiscCrop
+AgroForestLand,AgroForest_NonPasture,CropLand,OilCrop,OilCrop
+AgroForestLand,AgroForest_NonPasture,CropLand,OtherGrain,OtherGrain
+AgroForestLand,AgroForest_NonPasture,CropLand,PalmFruit,PalmFruit
+AgroForestLand,AgroForest_NonPasture,CropLand,Rice,Rice
+AgroForestLand,AgroForest_NonPasture,CropLand,Root_Tuber,Root_Tuber
+AgroForestLand,AgroForest_NonPasture,CropLand,SugarCrop,SugarCrop
+AgroForestLand,AgroForest_NonPasture,CropLand,Wheat,Wheat
+AgroForestLand,AgroForest_NonPasture,CropLand,biomass,biomass

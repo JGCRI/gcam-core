@@ -1,1 +1,4 @@
-#Fuel preference elasticities for ssp1 meat demand,,supplysector,subsector,fuelprefElasticityFoodDemand_Meat,Beef,-1FoodDemand_Meat,SheepGoat,-1
+#Fuel preference elasticities for ssp1 meat demand,,
+supplysector,subsector,fuelprefElasticity
+FoodDemand_Meat,Beef,-1
+FoodDemand_Meat,SheepGoat,-1

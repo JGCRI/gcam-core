@@ -1,1 +1,7 @@
-# File: A_an_subsector.csv,,,,,,,,,# Description: Subsectors of animal production,,,,,,,,,# Original source: NA,,,,,,,,,# ----------,,,,,,,,,supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.typetotal biomass,domestic biomass,-3,start-year,1,share-weight,final-calibration-year,end-year,fixed,total biomass,imported biomass,-3,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+# File: A_an_subsector.csv,,,,,,,,,
+# Description: Subsectors of animal production,,,,,,,,,
+# Original source: NA,,,,,,,,,
+# ----------,,,,,,,,,
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
+total biomass,domestic biomass,-3,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+total biomass,imported biomass,-3,start-year,1,share-weight,final-calibration-year,end-year,fixed,
