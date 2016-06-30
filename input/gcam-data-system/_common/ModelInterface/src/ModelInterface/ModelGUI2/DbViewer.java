@@ -1235,6 +1235,17 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		final String replaceResultsPropName = "batchQueryReplaceResults";
 		Properties prop = InterfaceMain.getInstance().getProperties();
 
+        // determine the proper number of threads to use for queries by
+        // checking the configuration parameter which defaults to the
+        // total number of cores on the system
+        final String coresToUsePropertyName = "coresToUse";
+        final int numSystemCores = Runtime.getRuntime().availableProcessors();
+        // TODO: set the default cores to use low until we figure out how to get BaseX to
+        // perform better with many parallel queries.
+        //final int numCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(numSystemCores)));
+        final int defaultNumCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(2)));
+		prop.setProperty(coresToUsePropertyName, Integer.toString(defaultNumCoresToUse));
+
 		// Create a Select Scenarios dialog to get which scenarios to run
 		final JList scenarioList = new JList(tempScns); 
 		final JDialog scenarioDialog = new JDialog(parentFrame, "Select Scenarios to Run", true);
@@ -1342,7 +1353,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
         allRegions.remove("Global");
 
 		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, allRegions, singleSheetCheckBox.isSelected(), drawPicsCheckBox.isSelected(), 
-				numQueries,res, overwriteCheckBox.isSelected());
+				numQueries,res, overwriteCheckBox.isSelected(), defaultNumCoresToUse);
 		//create listener for window
 	}
 
@@ -1715,6 +1726,18 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		final String includeChartsPropName ="batchQueryIncludeCharts";
 		final String splitRunsPropName = "batchQuerySplitRunsInDifferentSheets";
 		final String replaceResultsPropName = "batchQueryReplaceResults";
+
+        // determine the proper number of threads to use for queries by
+        // checking the configuration parameter which defaults to the
+        // total number of cores on the system
+        final String coresToUsePropertyName = "coresToUse";
+        final int numSystemCores = Runtime.getRuntime().availableProcessors();
+        // TODO: set the default cores to use low until we figure out how to get BaseX to
+        // perform better with many parallel queries.
+        //final int numCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(numSystemCores)));
+        final int defaultNumCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(2)));
+		prop.setProperty(coresToUsePropertyName, Integer.toString(defaultNumCoresToUse));
+
 		NodeList children = command.getChildNodes();
 		for(int i = 0; i < children.getLength(); ++i ) {
 			Node child = children.item(i);
@@ -1735,6 +1758,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				boolean includeCharts = Boolean.parseBoolean(prop.getProperty(includeChartsPropName, "true"));
 				boolean splitRuns = Boolean.parseBoolean(prop.getProperty(splitRunsPropName, "false"));
 				boolean replaceResults = Boolean.parseBoolean(prop.getProperty(replaceResultsPropName, "false"));
+                int numCoresToUse = defaultNumCoresToUse;
 				// read file names for header file, csv files, and the output file
 				NodeList fileNameChildren = child.getChildNodes();
 				for(int j = 0; j < fileNameChildren.getLength(); ++j) {
@@ -1758,6 +1782,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                         splitRuns = Boolean.parseBoolean(fileNode.getFirstChild().getNodeValue());
                     } else if(fileNode.getNodeName().equals(replaceResultsPropName)) {
                         replaceResults = Boolean.parseBoolean(fileNode.getFirstChild().getNodeValue());
+                    } else if(fileNode.getNodeName().equals(coresToUsePropertyName)) {
+                        numCoresToUse = Integer.parseInt(fileNode.getFirstChild().getNodeValue());
 					} else {
 						System.out.println("Unknown tag: "+fileNode.getNodeName());
 						// should I print this error to the screen?
@@ -1823,7 +1849,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
                     // run the queries and wait for them to finish so that we
                     // can close the database
-                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet, includeCharts, numQueries, res, replaceResults);
+                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet,
+                            includeCharts, numQueries, res, replaceResults, numCoresToUse);
                     if(runner != null) {
                         runner.waitForFinish();
                     }
