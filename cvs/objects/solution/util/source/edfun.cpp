@@ -338,7 +338,7 @@ void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
                     << "\n";
         }
     }
-    else {                      // All markets besides NORMAL
+    else {                      // Markets that are neither normal nor constraint types.
       // for other types of markets (mostly price, demand, and
       // trial-value), output fractional demand - supply
         fx[i] = mkts[i].getDemand() - mkts[i].getSupply();
