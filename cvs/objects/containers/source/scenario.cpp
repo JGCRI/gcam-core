@@ -60,7 +60,6 @@
 #include "util/base/include/timer.h"
 #include "reporting/include/graph_printer.h"
 #include "reporting/include/land_allocator_printer.h"
-#include "reporting/include/xml_db_outputter.h"
 #include "containers/include/output_meta_data.h"
 #include "solution/solvers/include/solver_factory.h"
 #include "solution/solvers/include/bisection_nr_solver.h"
@@ -584,21 +583,6 @@ void Scenario::accept( IVisitor* aVisitor, const int aPeriod ) const {
         world->accept( aVisitor, aPeriod );
     }
     aVisitor->endVisitScenario( this, aPeriod );
-}
-
-/*! \brief A function which writes output to an XML file so that it can be read by the XML database.
-*/
-void Scenario::printOutputXML() const {
-    // Create a graph printer.
-    XMLDBOutputter xmlDBOutputter;
-    
-    // Update the output container with information from the model.
-    // -1 flags to update the output container for all periods at once.
-    accept( &xmlDBOutputter, -1 );
-    
-    
-    // Print the output.
-    xmlDBOutputter.finish();
 }
 
 /*! \brief A function which print dependency graphs showing fuel usage by

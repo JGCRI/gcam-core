@@ -34,16 +34,10 @@ import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.*;
 import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
-//import org.apache.xpath.domapi.*;
 import org.jfree.chart.JFreeChart;
-//import org.w3c.dom.xpath.*;
 
 import javax.xml.xpath.*;
 
-//import org.apache.xpath.XPath;
-//import org.apache.xpath.XPathContext;
-//import org.apache.xml.utils.PrefixResolver;
-//import org.apache.xml.utils.PrefixResolverDefault;
 import javax.xml.transform.TransformerException;
 
 import javax.swing.event.*;
@@ -141,13 +135,9 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 	private Documentation documentation;
 
-	//int windowHeight;
-	//int windowWidth;
-	//JFileChooser globalFC;
-
 	public InputViewer() {
-        InterfaceMain main = InterfaceMain.getInstance();
-        JFrame parentFrame = main.getFrame();
+        final InterfaceMain main = InterfaceMain.getInstance();
+        final JFrame parentFrame = main.getFrame();
 		try {
             /*
 			System.setProperty(DOMImplementationRegistry.PROPERTY,

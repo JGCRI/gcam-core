@@ -2816,7 +2816,7 @@
 				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = "BASEX_LIB=\"\\\"../libs/basex/BaseX.jar\\\"\"";
+				GCC_PREPROCESSOR_DEFINITIONS = "JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"";
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -2849,7 +2849,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
-					"BASEX_LIB=\"\\\"../libs/basex/BaseX.jar\\\"\"",
+					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2883,7 +2883,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
-					"BASEX_LIB=\"\\\"../libs/basex/BaseX.jar\\\"\"",
+					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
 					USE_LAPACK,
 				);
 				GCC_UNROLL_LOOPS = YES;
@@ -2935,7 +2935,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
-					"BASEX_LIB=\"\\\"../libs/basex/BaseX.jar\\\"\"",
+					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
 					USE_LAPACK,
 					GCAM_PARALLEL_ENABLED,
 				);

@@ -230,7 +230,7 @@
       <Optimization>Disabled</Optimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>../../../../libs/xercesc/include;../../../../libs\boost-lib;..\..\..\..\libs\java\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;_DEBUG;_WINDOWS;_AFXDLL;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;_DEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -370,7 +370,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -397,7 +397,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\boost-numeric-bindings;..\..\..\..\libs\java\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -424,7 +424,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\boost-numeric-bindings;..\..\..\..\libs\tbb\include;..\..\..\..\libs\java\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;GCAM_PARALLEL_ENABLED;NOGDI;BASEX_LIB#"../libs/basex/BaseX.jar";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;GCAM_PARALLEL_ENABLED;NOGDI;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

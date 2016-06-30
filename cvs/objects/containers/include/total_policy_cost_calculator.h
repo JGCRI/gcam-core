@@ -49,7 +49,7 @@
 #include <memory>
 #include <vector>
 
-class IScenarioRunner;
+class SingleScenarioRunner;
 class Curve;
 
 /*! 
@@ -63,7 +63,7 @@ class Curve;
 */
 class TotalPolicyCostCalculator {
 public:
-    explicit TotalPolicyCostCalculator( IScenarioRunner* aSingleScenario );
+    explicit TotalPolicyCostCalculator( SingleScenarioRunner* aSingleScenario );
     ~TotalPolicyCostCalculator();
     bool calculateAbatementCostCurve();
     void printOutput() const;
@@ -85,7 +85,7 @@ private:
 
     //! The scenario runner which controls running the initial scenario, and all
     //! fixed taxed scenarios after. This is a weak reference.
-    IScenarioRunner* mSingleScenario;
+    SingleScenarioRunner* mSingleScenario;
 
     typedef std::map<std::string, double> RegionalCosts;
     typedef RegionalCosts::const_iterator CRegionalCostsIterator;

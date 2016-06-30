@@ -50,6 +50,7 @@
 #include "util/base/include/auto_file.h"
 #include "util/logger/include/ilogger.h"
 #include "util/logger/include/logger_factory.h"
+#include "reporting/include/xml_db_outputter.h"
 
 using namespace std;
 using namespace xercesc;
@@ -65,10 +66,15 @@ extern void createDBout();
 
 /*! \brief Constructor */
 SingleScenarioRunner::SingleScenarioRunner(){
+    mXMLDBOutputter = 0;
 }
 
 //! Destructor.
 SingleScenarioRunner::~SingleScenarioRunner(){
+    /*!
+     * \pre Memory clean up should have been done in the cleanup method.
+     */
+    assert( !mXMLDBOutputter );
 }
 
 const string& SingleScenarioRunner::getName() const {
@@ -227,7 +233,16 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Starting output to XML Database." << endl;
         // Print the XML file for the XML database.
-        scenario->printOutputXML();
+        assert( !mXMLDBOutputter );
+        mXMLDBOutputter = new XMLDBOutputter();
+
+        // Update the output container with information from the model.
+        // -1 flags to update the output container for all periods at once.
+        mScenario->accept( mXMLDBOutputter, -1 );
+
+
+        // Print the output.
+        mXMLDBOutputter->finish();
     }
 
     // Print the timestamps.
@@ -243,6 +258,15 @@ void SingleScenarioRunner::cleanup() {
     // created from scratch the next time a scenario is setup and run.
     mScenario.reset( 0 );
     scenario = 0;
+
+    // If the XML database was opened then we should close it.
+    if( mXMLDBOutputter ) {
+        // Now that the scenario memory is cleared out we can have the XML DB
+        // outputter finalize and close.
+        mXMLDBOutputter->finalizeAndClose();
+        delete mXMLDBOutputter;
+        mXMLDBOutputter = 0;
+    }
 }
 
 Scenario* SingleScenarioRunner::getInternalScenario(){
@@ -251,6 +275,14 @@ Scenario* SingleScenarioRunner::getInternalScenario(){
 
 const Scenario* SingleScenarioRunner::getInternalScenario() const {
 	return mScenario.get();
+}
+
+/*!
+ * \brief Get the refernce to the XMLDBOutputter.
+ * \return The XMLDBOutputter.
+ */
+XMLDBOutputter* SingleScenarioRunner::getXMLDBOutputter() const {
+    return mXMLDBOutputter;
 }
 
 /*!

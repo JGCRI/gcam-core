@@ -108,7 +108,6 @@ public:
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     const IClimateModel* getClimateModel() const;
     static const std::string& getXMLNameStatic();
-    void printOutputXML() const;
     const std::vector<int>& getUnsolvedPeriods() const;
     void invalidatePeriod( const int aPeriod );
 
@@ -137,6 +136,7 @@ private:
     //! A pass through object used to parse SolutionInfo parameters
     //! until markets are created
     std::auto_ptr<SolutionInfoParamParser> mSolutionInfoParamParser;
+
 
     bool solve( const int period );
 

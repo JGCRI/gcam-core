@@ -54,6 +54,7 @@
 #include "containers/include/scenario_runner_factory.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/single_scenario_runner.h"
 #include "containers/include/total_policy_cost_calculator.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
@@ -185,7 +186,7 @@ bool PolicyTargetRunner::setupScenarios( Timer& aTimer,
                                          const list<string> aScenComponents )
 {
     // Setup the internal single scenario runner.
-    mSingleScenario = ScenarioRunnerFactory::create( "single-scenario-runner" );
+    mSingleScenario = ScenarioRunnerFactory::createSingleScenarioRunner();
 
     bool success = mSingleScenario->setupScenarios( aTimer, aName,
                                                     aScenComponents );

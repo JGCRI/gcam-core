@@ -51,9 +51,8 @@ import javax.swing.table.TableModel;
 //import java.sql.Statement;
 import org.apache.poi.hssf.usermodel.*;
 
-import org.apache.xpath.domapi.*;
+import javax.xml.xpath.*;
 import org.jfree.chart.JFreeChart;
-import org.w3c.dom.xpath.*;
 
 public abstract class BaseTableModel extends AbstractTableModel {
 	protected Vector activeRows;
@@ -65,7 +64,7 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	protected String units;
 	protected boolean remove1975;
 	protected TableSorter sortedTable;
-	private static java.util.List<String> defaultYearList;
+	private java.util.List<String> defaultYearList;
 
 	// stuff for filtering
 	// can i move these somewhere
@@ -186,8 +185,6 @@ public abstract class BaseTableModel extends AbstractTableModel {
 	 */
  	protected XPathExpression treePathtoXPath(TreePath tp, Node currNode, int flag) {
 	   // attempts to put the tp in form /nodeName[@attributeName=attrubuteValue]/childNode
-           XPathEvaluatorImpl xpeImpl = new XPathEvaluatorImpl(doc);
-           //String pathStr = "";
 	   StringBuffer pathStr = new StringBuffer("/");
            Object[] path = tp.getPath();
            Node tempNode;
@@ -244,7 +241,12 @@ public abstract class BaseTableModel extends AbstractTableModel {
                    pathStr.append("/text()");
            }
 	   System.out.println(pathStr.toString());
-           return xpeImpl.createExpression(pathStr.toString(), xpeImpl.createNSResolver(currNode));
+       try {
+           return XPathFactory.newInstance().newXPath().compile(pathStr.toString());
+       } catch(XPathExpressionException e) {
+           e.printStackTrace();
+           return null;
+       }
 	}
 
   /**

@@ -74,8 +74,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.xpath.XPathExpression;
-import org.w3c.dom.xpath.XPathResult;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 
 public class NewDataTableModel extends BaseTableModel{
 	/**
@@ -131,7 +132,12 @@ public class NewDataTableModel extends BaseTableModel{
 	 * @param xpe an XPath expression which will be evaluated to get a set of nodes
 	 */
 	protected void buildTable(XPathExpression xpe) {
-		XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+		NodeList res = null;
+        try {
+            res = (NodeList)xpe.evaluate(doc.getDocumentElement(), XPathConstants.NODESET);
+        } catch(XPathExpressionException e) {
+            e.printStackTrace();
+        }
 		xpe = null;
 		// TreeSets don't allow duplicates
 		TreeSet col = new TreeSet();
@@ -140,7 +146,8 @@ public class NewDataTableModel extends BaseTableModel{
 		// region and year isn't a good name anymore
 		// more like axis keys
 		Object[] regionAndYear;
-		while ((tempNode = res.iterateNext()) != null) {
+        for(int i = 0; i < res.getLength(); ++i) {
+            tempNode = res.item(i);
 			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode());
 			col.add(regionAndYear[0]);
 			row.add(regionAndYear[1]);
@@ -595,9 +602,6 @@ public class NewDataTableModel extends BaseTableModel{
 
 		// This turns on automatic resizing of the domain..
 		xAxis.setAutoRange(true);
-
-		// This makes the X axis use integer tick units.
-		xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
 		// This turns on automatic resizing of the range.
 		yAxis.setAutoRange(true);
