@@ -95,6 +95,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
@@ -1400,6 +1401,53 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			return ((DOMImplementation)implls).createDocument("", "queries", null);
 		}
 	}
+    /**
+     * Filter and existing DOM subtree with an LSParserFilter.  This traverses the child
+     * nodes of the given node recursively removing any rejected nodes in the same manner
+     * that the LSParser would.
+     * @param parentNode The current node who's children will be processed recursively.
+     * @param filter The LSParserFilter to apply.
+     */
+    public void filterNodes(Node parentNode, LSParserFilter filter) {
+        Node currNode = parentNode.getFirstChild();
+        final int whatToShow = filter.getWhatToShow();
+        while(currNode != null) {
+            Node nextNode = currNode.getNextSibling();
+            // First determine if we should even inspect this kind of node.
+            boolean showNode;
+            switch(currNode.getNodeType()) {
+                case Node.ATTRIBUTE_NODE: {
+                    showNode = (whatToShow & NodeFilter.SHOW_ATTRIBUTE) != 0;
+                    break;
+                }
+                case Node.COMMENT_NODE: {
+                    showNode = (whatToShow & NodeFilter.SHOW_COMMENT) != 0;
+                    break;
+                }
+                case Node.ELEMENT_NODE: {
+                    showNode = (whatToShow & NodeFilter.SHOW_ELEMENT) != 0;
+                    break;
+                }
+                case Node.TEXT_NODE: {
+                    showNode = (whatToShow & NodeFilter.SHOW_TEXT) != 0;
+                    break;
+                }
+                default: {
+                    showNode = (whatToShow & NodeFilter.SHOW_ALL) != 0;
+                    break;
+                }
+            }
+            if(showNode && filter.acceptNode(currNode) == LSParserFilter.FILTER_REJECT) {
+                // the node was rejected so remove it
+                parentNode.removeChild(currNode);
+            } else {
+                // either the node should not be tested or it was accepted so we
+                // keep and and recursively process from this node
+                filterNodes(currNode, filter);
+            }
+            currNode = nextNode;
+        }
+    }
 	private void writeQueries() {
 		try {
 			Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
@@ -1751,6 +1799,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			}
 			if(actionCommand.equals("XMLDB Batch File")) {
 				File queryFile = null;
+                Node queriesNode = null;
 				File outFile = null;
 				String dbFile = null;
 				List<String> scenariosNames = new ArrayList<String>();
@@ -1768,6 +1817,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					}
 					if(fileNode.getNodeName().equals("queryFile")) {
 						queryFile = new File(fileNode.getTextContent());
+                    } else if(fileNode.getNodeName().equals("queries")) {
+                        queriesNode = fileNode;
 					} else if(fileNode.getNodeName().equals("outFile")) {
 						outFile = new File(fileNode.getTextContent());
 					} else if(fileNode.getNodeName().equals("xmldbLocation")) {
@@ -1793,7 +1844,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                     // make sure we have enough to run the batch query 
                     // which means we have a query file, output file, and
                     // at database location
-                    if(queryFile == null || outFile == null || dbFile == null) {
+                    if((queryFile == null && queriesNode == null) || outFile == null || dbFile == null) {
                         throw new Exception("Not enough information provided to run batch query.");
                     }
                     // The database may have already been opeened by a calling implementation to
@@ -1824,9 +1875,22 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                         throw new Exception("Could not find scenarios to run.");
                     }
 
-                    // read the batch query file
-                    Document queries = readQueries(queryFile);
-                    final NodeList res = (NodeList)XPathFactory.newInstance().newXPath().evaluate("/queries/node()", queries, XPathConstants.NODESET);
+                    // Figure out where to get the queries they may have been specified as a seperate query
+                    // file we need to load or inline in which case we already have the XML parsed.
+                    // Note a user can only specify the queries one way or the other not both.
+                    if(queryFile != null && queriesNode != null) {
+                        throw new Exception("Setting both a queryFile and inline queries is not allowed.");
+                    } else if(queryFile != null) {
+                        // read the batch query file
+                        queriesNode = readQueries(queryFile).getDocumentElement();
+                    } else {
+                        // filter the nodes taken directly from the batch file in the same way they would
+                        // have been in readQueries since none of the query parsing methods that will look
+                        // at these nodes are expecting empty text() nodes.
+                        filterNodes(queriesNode, new ParseFilter());
+                    }
+
+                    final NodeList res = (NodeList)XPathFactory.newInstance().newXPath().evaluate("./aQuery", queriesNode, XPathConstants.NODESET);
 
                     final int numQueries = res.getLength();
                     if(numQueries == 0) {
