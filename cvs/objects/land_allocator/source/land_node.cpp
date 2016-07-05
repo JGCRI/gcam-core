@@ -756,11 +756,6 @@ LandUseHistory* LandNode::getLandUseHistory(){
     return( this->mLandUseHistory.get() );
 }
 
-bool LandNode::isManagedLandLeaf( )  const 
-{
-    return false;
-}
-
 bool LandNode::isUnmanagedLandLeaf( )  const 
 {
     return false;

@@ -157,8 +157,6 @@ public:
 
     virtual ICarbonCalc* getCarbonContentCalc() const;
         
-    virtual bool isManagedLandLeaf( )  const;
-	
 	virtual bool isUnmanagedLandLeaf( )  const;
 
 protected:

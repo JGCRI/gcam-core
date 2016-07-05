@@ -389,8 +389,6 @@ public:
     void setNewTechAdjustment( const double aAdjustment, const double aPeriod );
 
     LandAllocatorItemType getType() const;
-            
-    virtual bool isManagedLandLeaf( )  const = 0;
 	
 	virtual bool isUnmanagedLandLeaf( )  const = 0;
 

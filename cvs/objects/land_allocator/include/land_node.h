@@ -151,8 +151,6 @@ public:
                                              double aAverageProfitRate,
                                              const int aPeriod );
            
-    virtual bool isManagedLandLeaf( )  const;
-	
 	virtual bool isUnmanagedLandLeaf( )  const;
 
     virtual void calculateCalibrationProfitRate( const std::string& aRegionName,

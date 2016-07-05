@@ -691,11 +691,6 @@ ICarbonCalc* LandLeaf::getCarbonContentCalc() const{
     return ( mCarbonContentCalc.get() );
 }
 
-bool LandLeaf::isManagedLandLeaf( )  const 
-{
-    return true;
-}
-
 bool LandLeaf::isUnmanagedLandLeaf( )  const 
 {
     return false;
