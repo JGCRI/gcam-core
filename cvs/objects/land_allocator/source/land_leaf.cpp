@@ -466,8 +466,8 @@ void LandLeaf::calculateCalibrationProfitRate( const string& aRegionName,
 			avgProfitRate *= pow( mGhostShareNumeratorForLeaf, 1.0 / aLogitExponentAbove );
 		}
 		else {
-        avgProfitRate *= pow( mShare[ aPeriod ], 1.0 / aLogitExponentAbove ); 
-    }
+            avgProfitRate *= pow( mShare[ aPeriod ], 1.0 / aLogitExponentAbove );
+        }
     }
 
     // store this value in this leaf 
