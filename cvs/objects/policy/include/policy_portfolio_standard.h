@@ -83,6 +83,8 @@ private:
     std::vector<double> mConstraint; //!< Quantity constraint by year
     std::vector<double> mFixedTax; //!< Fixed tax on Fuel by year($/GJ)
     std::vector<double> mShareOfSectorOutput; //!< Share of total or sectoral output
+    //!< The minimum price below which the constraint is considered non-binding.
+    std::vector<double> mMinPrice; 
 };
 
 #endif // _POLICY_PORTFOLIO_STANDARD_H_
