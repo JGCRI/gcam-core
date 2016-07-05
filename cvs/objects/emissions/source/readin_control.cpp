@@ -102,7 +102,6 @@ void ReadInControl::copy( const ReadInControl& aOther ){
  * \details This public function accesses the private constant string, XML_NAME.
  *          This way the tag is always consistent for both read-in and output and can be easily changed.
  *          This function may be virtual to be overridden by derived class pointers.
- * \author Jim Naslund
  * \return The constant XML_NAME.
  */
 const string& ReadInControl::getXMLName() const {
