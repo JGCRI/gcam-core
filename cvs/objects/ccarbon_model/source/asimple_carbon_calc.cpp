@@ -364,32 +364,7 @@ double ASimpleCarbonCalc::getAboveGroundCarbonSubsidyDiscountFactor( ){
     if ( getMatureAge() == 1 ) {
         return 1.0;
     }
-
-    // We are approximating this curve as a quadratic with an offset of
-    // 250 (If the mature age is 250, all carbon uptake occurs far enough 
-    // in the future that you wouldn't base decisions on it. So, for a 
-    // mature age of 250 the multiplier is zero
-    // quadCoef is chosen by minimizing least squared error 
-    // between actual carbon subsidy discount and functional estimate
-    // Note: these parameters assume a discount rate of 0.05
-    /* const double QUADCOEF = 2.7e-10;
-    const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
-    return QUADCOEF * pow( double(getMatureAge() - MAXMATUREAGE), 4); */
-    
-    // We are approximating this curve as a quadratic with an offset of
-    // 250 (If the mature age is 250, all carbon uptake occurs far enough 
-    // in the future that you wouldn't base decisions on it. So, for a 
-    // mature age of 250 the multiplier is zero
-    // quadCoef is chosen by minimizing least squared error 
-    // between actual carbon subsidy discount and functional estimate
-    // Note: these parameters assume a discount rate of 0.025
-    /*const double QUADCOEF = 1.53e-05;
-    const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
-    return QUADCOEF * pow( double(getMatureAge() - MAXMATUREAGE), 2); */
-    
-    // KVC_SSP: Use private investors discount rate
-    
-    // We are approximating this curve as a quadratic with an offset of
+    // We are approximating this curve as a polynomial with an offset of
     // 250 (If the mature age is 250, all carbon uptake occurs far enough
     // in the future that you wouldn't base decisions on it. So, for a
     // mature age of 250 the multiplier is zero
@@ -398,7 +373,7 @@ double ASimpleCarbonCalc::getAboveGroundCarbonSubsidyDiscountFactor( ){
     // Note: these parameters assume a discount rate of 0.1
     const double QUADCOEF = -8.57e-13;
     const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
-    return QUADCOEF * pow( double(getMatureAge() - MAXMATUREAGE), 5);
+    return QUADCOEF * pow( double( getMatureAge() - MAXMATUREAGE ), 5);
 }
 
 void ASimpleCarbonCalc::setSoilTimeScale( const int aTimeScale ) {
