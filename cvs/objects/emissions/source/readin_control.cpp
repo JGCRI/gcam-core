@@ -161,9 +161,5 @@ void ReadInControl::calcEmissionsReduction( const std::string& aRegionName, cons
         reduction = ( mFutureEmissionsFactors[ mTechBuildPeriod ] - mFutureEmissionsFactors[ aPeriod ] ) / mFutureEmissionsFactors[ mTechBuildPeriod ];
     }
     
-    if ( mFutureEmissionsFactors[ aPeriod ] == 0.0 ) {
-        reduction = 1.0;
-    }
-    
     setEmissionsReduction( reduction );
 }
