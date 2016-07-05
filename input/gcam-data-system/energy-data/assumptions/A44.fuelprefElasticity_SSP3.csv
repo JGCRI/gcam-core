@@ -1,1 +1,6 @@
-#Fuel preference elasticities for building energy use,,supplysector,subsector,fuelprefElasticityresid heating,traditional biomass,-1resid others,traditional biomass,-1resid heating,coal,0resid others,coal,0
+#Fuel preference elasticities for building energy use,,
+supplysector,subsector,fuelprefElasticity
+resid heating,traditional biomass,-1
+resid others,traditional biomass,-1
+resid heating,coal,0
+resid others,coal,0
