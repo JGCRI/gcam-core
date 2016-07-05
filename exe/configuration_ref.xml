@@ -20,7 +20,6 @@
 		<Value write-output="0" append-scenario-name="0" name="dbFileName">../output/output.mdb</Value>
 	</Files>
 	<ScenarioComponents>
-		<Value name="ClimateModel">../input/climate/hector.xml</Value>
 		<Value name = "hist_emissions">../input/magicc/Historical Emissions/Default Emissions Module/Default_Emissions_Input.xml</Value>
 		<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/interest_rate.xml</Value>
 		<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_GCAM3.xml</Value>
@@ -66,7 +65,6 @@
 	<Strings>
 		<Value name="scenarioName">Reference</Value>
 		<Value name="debug-region">USA</Value>
-		<Value name="climate-model">Hector</Value>
 		<Value name="MAGICC-input-dir">../input/magicc/inputs</Value>
 		<Value name="MAGICC-output-dir">../output</Value>
 	</Strings>
