@@ -53,9 +53,6 @@ L131.LV_USD75_m2_R_AEZ[ AEZs ] <-
 L131.LV_USD75_m2_R_AEZ[ is.na( L131.LV_USD75_m2_R_AEZ ) ] <- 0
 L131.LV_USD75_m2_R_AEZ[ AEZs ][ L131.LV_USD75_m2_R_AEZ[ AEZs ] == Inf ] <- 0
 
-#L131.LV_USD75_m2_R_AEZ[ L131.LV_USD75_m2_R_AEZ$GCAM_region_ID == 14, AEZs ] <-
-#  L131.LV_USD75_m2_R_AEZ[ L131.LV_USD75_m2_R_AEZ$GCAM_region_ID == 14, AEZs ] * 10
-
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments to tables
