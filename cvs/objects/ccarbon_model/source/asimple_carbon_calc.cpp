@@ -343,10 +343,7 @@ double ASimpleCarbonCalc::getBelowGroundCarbonSubsidyDiscountFactor( ){
     const double halfLife = mSoilTimeScale / 10.0;
     const double log2 = log( 2.0 );
     const double lambda = log2 / halfLife;
-    
-    // KVC_SSP: Use private investors discount rate
-    const double discountrate = 0.1;
-    return 1.0 - discountrate / ( discountrate + lambda );
+    return 1.0 - mPrivateDiscountRate / ( mPrivateDiscountRate + lambda );
         
 }
 

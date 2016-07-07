@@ -136,6 +136,12 @@ protected:
 
     //! Interest rate for the region.
     double mInterestRate;
+    
+    //! Social discount rate for the region.
+    double mSocialDiscountRate;
+    
+    //! Private discount rate used for land decisions in the region.
+    double mPrivateDiscountRateLand;
 
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

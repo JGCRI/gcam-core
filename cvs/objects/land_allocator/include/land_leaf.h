@@ -166,8 +166,8 @@ protected:
     //! Carbon content and emissions calculator for the leaf.
     std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
 
-    //! Interest rate stored from the region info.
-    Value mInterestRate;
+    //! Social discount rate stored from the region info.
+    Value mSocialDiscountRate;
 
     //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
     Value mMinAboveGroundCDensity;

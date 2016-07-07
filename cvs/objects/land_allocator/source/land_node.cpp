@@ -46,6 +46,7 @@
 #include "land_allocator/include/carbon_land_leaf.h"
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/node_carbon_calc.h"
+#include "containers/include/iinfo.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
 #include <numeric>
@@ -244,9 +245,10 @@ void LandNode::completeInit( const string& aRegionName,
         mChildren[ i ]->completeInit( aRegionName, aRegionInfo );
     }
 
+    const double privateDiscountRateLand = aRegionInfo->getDouble( "private-discount-rate-land", true );
     if( mCarbonCalc.get() ) {
         accept( mCarbonCalc.get(), -1 );
-        mCarbonCalc->completeInit();
+        mCarbonCalc->completeInit( privateDiscountRateLand );
     }
 }
 

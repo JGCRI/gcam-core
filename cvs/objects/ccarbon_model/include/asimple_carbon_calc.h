@@ -66,7 +66,7 @@ public:
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const = 0;
 
-    virtual void completeInit() = 0;
+    virtual void completeInit( const double aPrivateDiscountRateLand  ) = 0;
 
     virtual void initLandUseHistory( const LandUseHistory* aHistory );
 
@@ -129,9 +129,11 @@ protected:
 
     //! Time scale for soil carbon emissions
     int mSoilTimeScale;
+    
+    //! Dicsount rate for land related decisions
+    double mPrivateDiscountRate;
 
-
-    /*! 
+    /*!
      * \brief The land use history for the land leaf or it's parent land node.
      * \details Weak pointer to the land use history either for this leaf
      *          or the parent land type. The historical land share will be set to

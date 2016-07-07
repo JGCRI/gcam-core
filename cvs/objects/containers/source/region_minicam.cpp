@@ -128,6 +128,8 @@ RegionMiniCAM::RegionMiniCAM() {
     GDPcalPerCapita.resize( maxper );
 
     mInterestRate = 0;
+    mSocialDiscountRate = 0.02;
+    mPrivateDiscountRateLand = 0.1;
 }
 
 //! Default destructor destroys sector, demsector, Resource, and
@@ -159,6 +161,12 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     }
     else if( nodeName == "interest-rate" ){
         mInterestRate = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "social-discount-rate" ){
+        mSocialDiscountRate = XMLHelper<double>::getValue( curr );
+    }
+    else if( nodeName == "private-discount-rate-land" ){
+        mPrivateDiscountRateLand = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == SupplySector::getXMLNameStatic() ){
         parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
@@ -236,6 +244,12 @@ void RegionMiniCAM::completeInit() {
 
     // Add the interest rate to the region info.
     mRegionInfo->setDouble( "interest-rate", mInterestRate );
+    
+    // Add the social discount rate to the region info.
+    mRegionInfo->setDouble( "social-discount-rate", mSocialDiscountRate );
+    
+    // Add the land private discount rate to the region info.
+    mRegionInfo->setDouble( "private-discount-rate-land", mPrivateDiscountRateLand );
 
     // initialize demographic
     if( demographic.get() ){
@@ -312,6 +326,8 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     }
 
     XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mSocialDiscountRate, "social-discount-rate", out, tabs, 0.02 );
+    XMLWriteElementCheckDefault( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs, 0.1 );
 
     // write the xml for the class members.
 
@@ -356,6 +372,8 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     // write out basic datamembers
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
+    XMLWriteElement( mSocialDiscountRate, "social-discount-rate", out, tabs );
+    XMLWriteElement( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs );
 
     XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
     XMLWriteElement( getEndUseServicePrice( period ), "priceSer", out, tabs );

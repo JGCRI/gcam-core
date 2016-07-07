@@ -198,7 +198,8 @@ void LandLeaf::completeInit( const string& aRegionName,
                              const IInfo* aRegionInfo )
 {
     // Store the interest rate from the region.
-    mInterestRate = aRegionInfo->getDouble( "interest-rate", true );
+    mSocialDiscountRate = aRegionInfo->getDouble( "social-discount-rate", true );
+    const double privateDiscountRateLand = aRegionInfo->getDouble( "private-discount-rate-land", true );
 
     // Set the carbon cycle object if it has not already been initialized. Use a
     // virtual function so that derived leaves may use a different default type.
@@ -207,7 +208,7 @@ void LandLeaf::completeInit( const string& aRegionName,
     }
 
     // Initialize the carbon-cycle object
-    mCarbonContentCalc->completeInit();
+    mCarbonContentCalc->completeInit( privateDiscountRateLand );
 
     // Ensure that a carbon cycle object has been setup.
     assert( mCarbonContentCalc.get() );
@@ -342,7 +343,7 @@ void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) c
     XMLWriteElement( mLandAllocation[ period ], "landAllocation", out, tabs );    
     XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", out, tabs );
     XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", out, tabs );
-    XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
+    XMLWriteElement( mSocialDiscountRate, "social-discount-rate", out, tabs );
     XMLWriteVector( mCarbonPriceIncreaseRate, "carbon-price-increase-rate", out, tabs, scenario->getModeltime() );
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", out, tabs, string() );
     if( mLandUseHistory.get() ){
@@ -414,14 +415,11 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
         double incrementalBelowCDensity = mCarbonContentCalc->getActualBelowGroundCarbonDensity( year )
                                             - mMinBelowGroundCDensity;
 
-        // KVC_SSP: We want to use a social discount rate here.
-        double socialDiscountRate = 0.02;
-        
         // Calculate the carbon value as the total carbon content of the land
         // multiplied by the carbon price and the interest rate.
         double carbonSubsidy = ( incrementalAboveCDensity * mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
             + incrementalBelowCDensity * mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
-            * carbonPrice * ( socialDiscountRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
+            * carbonPrice * ( mSocialDiscountRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
 
         assert( carbonSubsidy >= 0.0 );
 
