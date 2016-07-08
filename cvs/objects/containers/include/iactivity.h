@@ -81,6 +81,24 @@ public:
     virtual std::string getDescription() const = 0;
 };
 
+/*!
+ * \ingroup Objects
+ * \brief A dummy implementation of IActivity that does not do anything.
+ * \author Pralit Patel
+ */
+class DummyActivity : public IActivity {
+    virtual ~DummyActivity() { }
+
+    // IActivity methods
+    virtual void calc( const int aPeriod ) { }
+
+    virtual void setStale() { }
+
+    virtual std::string getDescription() const {
+        return "dummy-activity";
+    }
+};
+
 // Inline definitions.
 IActivity::~IActivity() {
 }

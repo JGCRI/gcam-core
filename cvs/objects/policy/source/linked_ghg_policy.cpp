@@ -50,6 +50,8 @@
 #include "containers/include/iinfo.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/market_dependency_finder.h"
+#include "containers/include/iactivity.h"
 
 using namespace std;
 using namespace xercesc;
@@ -157,6 +159,7 @@ void LinkedGHGPolicy::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( mPolicyName, "policy-name", out, tabs, mName );
     XMLWriteElement( mMarket, "market", out, tabs );
     XMLWriteElement( mLinkedPolicyName, "linked-policy", out, tabs );
+    XMLWriteElementCheckDefault( mStartYear, "start-year", out, tabs, -1 );
     XMLWriteElementCheckDefault( mPriceUnits, "price-unit", out, tabs );
     XMLWriteElementCheckDefault( mOutputUnits, "output-unit", out, tabs );
     
@@ -191,7 +194,8 @@ void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
     }
     const Modeltime* modeltime = scenario->getModeltime();
     Marketplace* marketplace = scenario->getMarketplace();
-    int startPeriod = mStartYear == -1 ? 0 : modeltime->getyr_to_per( mStartYear );
+    // Forward the -1 flag to indicate we do not intend to change market links over time.
+    int startPeriod = mStartYear == -1 ? -1 : modeltime->getyr_to_per( mStartYear );
     marketplace->createLinkedMarket( aRegionName, mMarket, mPolicyName, mLinkedPolicyName, startPeriod );
     
     // Set price and output units for period 0 market info
@@ -204,6 +208,13 @@ void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
     if( !mOutputUnits.empty() ) {
         marketInfo->setString( "output-unit", mOutputUnits );
     }
+
+    // Add a dependency between this mand the linked market and include a dummy
+    // activity to ensure the dependecy finder has an activity to traverse
+    MarketDependencyFinder* depFinder = marketplace->getDependencyFinder();
+    depFinder->addDependency( mPolicyName, aRegionName, mLinkedPolicyName, aRegionName );
+    depFinder->resolveActivityToDependency( aRegionName, mPolicyName,
+            new DummyActivity(), new DummyActivity() );
     
     // Interpolations for price and demand adjustments.  Note that we do not use
     // the utilty method for interpolating here to avoid extrapolating the policy.
