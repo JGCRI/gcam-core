@@ -1,5 +1,5 @@
-#ifndef _MAC_CONTROL_H_
-#define _MAC_CONTROL_H_
+#ifndef _LINEAR_CONTROL_H_
+#define _LINEAR_CONTROL_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,30 +38,27 @@
 
 
 /*! 
- * \file mac_control.h
+ * \file gdp_control.h
  * \ingroup Objects
- * \brief MACControl class header file.
- * \author Kate Calvin
+ * \brief LinearControl class header file.
+ * \author Steve Smith
  */
 
-#include <memory>
-
 #include "emissions/include/aemissions_control.h"
-
-class PointSetCurve;
+#include "util/base/include/value.h"
 
 /*! 
  * \ingroup Objects
- * \brief An class that represents MAC Controls.
- * \author Kate Calvin
+ * \brief An class that impliments a linear reduction in the emissions factor
+ * \author Steve Smith
  */
-class MACControl: public AEmissionsControl {
+class LinearControl: public AEmissionsControl {
 public:
-    MACControl();
+    LinearControl();
     
-    virtual ~MACControl();
+    virtual ~LinearControl();
     
-    virtual MACControl* clone() const;
+    virtual LinearControl* clone() const;
     
     static const std::string& getXMLNameStatic();
     
@@ -74,9 +71,9 @@ public:
                            const NonCO2Emissions* parentGHG,
                            const int aPeriod );
 
-protected:
-    MACControl( const MACControl& aOther );
-    MACControl& operator=( const MACControl& aOther );
+protected: 
+    LinearControl( const LinearControl& aOther );
+    LinearControl& operator=( const LinearControl& aOther );
     
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
@@ -86,29 +83,22 @@ protected:
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
 
 private:
-    //! Boolean indicating whether reductions should occur at a zero carbon price
-    bool mNoZeroCostReductions;
+    //! Target year for final emissions factor
+    int mTargetYear;
     
-    //! The underlying Curve (as read in)
-    std::auto_ptr<PointSetCurve> mMacCurve;
+    //! Year to start emission factor decline. Must be a model period.
+    int mStartYear;
     
-    //! Length of time in years to phase in no-cost MAC reductions
-    int mZeroCostPhaseInTime;
+    //! Final emissions coefficient
+    Value mFinalEmCoefficient;
+  
+    //! Emissions coefficient passed in from parent ghg object
+    double mBaseEmissionsCoef;
     
-    //! Conversion factor if getting price from its own market
-    double mCovertPriceValue;
+    //! Flag if wish to allow emissions factor increase
+    bool mAllowIncrease;
     
-    //! Name of market to look for
-    std::string mPriceMarketName;
-    
-    //! Vintage year (year built) of parent technology
-    int mVintageYear;
-    
-    //! (Optional) Year after which this mac will not operate
-    int mOperateOnlyBeforeVintageYear;
-    
-    void copy( const MACControl& other );
-    double getMACValue( const double aCarbonPrice ) const;
+    void copy( const LinearControl& aOther );
 };
 
-#endif // _MAC_CONTROL_H_
+#endif // _LINEAR_CONTROL_H_

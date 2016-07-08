@@ -47,8 +47,10 @@
 #include "emissions/include/aghg.h"
 #include "util/base/include/value.h"
 
+// Forward declaration
 class AEmissionsDriver;
 class AEmissionsControl;
+class IInfo;
 
 /*! 
  * \ingroup Objects
@@ -56,6 +58,9 @@ class AEmissionsControl;
  * \author Kate Calvin
  */
 class NonCO2Emissions: public AGHG {
+    friend class GDPControl;
+    friend class MACControl;
+    friend class LinearControl;
 public:
     NonCO2Emissions();
     
@@ -66,6 +71,8 @@ public:
     virtual void copyGHGParameters( const AGHG* aPrevGHG );
     
     static const std::string& getXMLNameStatic();
+
+    virtual const std::string& getXMLName() const;
 
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
@@ -95,7 +102,6 @@ protected:
     NonCO2Emissions( const NonCO2Emissions& aOther );
     NonCO2Emissions& operator=( const NonCO2Emissions& aOther );
     
-    virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const;
@@ -103,10 +109,13 @@ protected:
 private:    
     //! The emissions coefficient.
     Value mEmissionsCoef;
-
+    
     //! Emissions to calibrate to if provided.
     Value mInputEmissions;
-
+    
+    //! Stored Emissions Coefficient (needed for some control technologies)
+    double mSavedEmissionsCoef; 
+    
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef
     //! in the current model period.
     bool mShouldCalibrateEmissCoef;

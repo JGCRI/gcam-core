@@ -67,6 +67,7 @@ extern Scenario* scenario;
 NonCO2Emissions::NonCO2Emissions():
 AGHG(),
 mShouldCalibrateEmissCoef( false ),
+mSavedEmissionsCoef( -1 ),
 mGDP( 0 )
 {
     // default unit for emissions
@@ -109,6 +110,7 @@ void NonCO2Emissions::clear() {
 //! Copy helper function.
 void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
     mEmissionsCoef = aOther.mEmissionsCoef;
+    mSavedEmissionsCoef = aOther.mSavedEmissionsCoef;
     mGDP = aOther.mGDP;
     
     // Deep copy the auto_ptr
@@ -155,14 +157,14 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
 
     mGDP = prevComplexGHG->mGDP;
 
-    /*!
-     * \warning This will always copy previous. You can't overwrite it with new MAC curve.
-     */
-    clear();
-    for ( CControlIterator controlIt = prevComplexGHG->mEmissionsControls.begin();
-          controlIt != prevComplexGHG->mEmissionsControls.end(); ++controlIt )
-    {
-        mEmissionsControls.push_back( (*controlIt)->clone() );
+    // As with other variables, only copy if something is not already present
+    if( mEmissionsControls.empty() ) {
+        clear();
+        for ( CControlIterator controlIt = prevComplexGHG->mEmissionsControls.begin();
+              controlIt != prevComplexGHG->mEmissionsControls.end(); ++controlIt )
+        {
+            mEmissionsControls.push_back( (*controlIt)->clone() );
+        }
     }
 }
 
@@ -217,6 +219,7 @@ void NonCO2Emissions::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
     XMLWriteElement( mInputEmissions, "input-emissions", aOut, aTabs );
+    XMLWriteElement( mSavedEmissionsCoef, "saved-ef", aOut, aTabs );
 
     XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
 
@@ -238,6 +241,10 @@ void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSe
                                     const IInfo* aTechInfo )
 {
     AGHG::completeInit( aRegionName, aSectorName, aTechInfo );
+    // If an emissions coefficient was read-in or otherwise set, stash this coefficient
+    if ( mEmissionsCoef.isInited() ) {
+        mSavedEmissionsCoef = mEmissionsCoef;
+    }
     
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->completeInit( aRegionName, aSectorName, aTechInfo );
@@ -250,16 +257,17 @@ void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSe
  * \param aLocalInfo The local information object.
  * \param aPeriod Model period.
  */
-void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aLocalInfo, const int aPeriod ) {
-    AGHG::initCalc( aRegionName, aLocalInfo, aPeriod );
+void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInfo, const int aPeriod ) {
+    AGHG::initCalc( aRegionName, aTechInfo, aPeriod );
 
     // Recalibrate the emissions coefficient if we have input emissions and this is
     // the initial vintage year of the technology.
-    mShouldCalibrateEmissCoef = mInputEmissions.isInited() && aLocalInfo->getBoolean( "new-vintage-tech", true );
-
-    for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
-        (*controlIt)->initCalc( aRegionName, aLocalInfo, aPeriod );
+    mShouldCalibrateEmissCoef = mInputEmissions.isInited() && aTechInfo->getBoolean( "new-vintage-tech", true );
+    
+     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
+        (*controlIt)->initCalc( aRegionName, aTechInfo, this, aPeriod );
     }
+
 }
 
 double NonCO2Emissions::getGHGValue( const string& aRegionName,
@@ -350,6 +358,8 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     // If emissions were read in and this is an appropraite period, compute emissions coefficient
     if( mShouldCalibrateEmissCoef ) {
         mEmissionsCoef = emissDriver > 0 ? mInputEmissions / emissDriver : 0;
+        // Since have updated emissions coefficient, updated stashed coefficient
+        mSavedEmissionsCoef = mEmissionsCoef;
     }
     
     // Compute emissions reductions. These are only applied in future years
@@ -372,7 +382,10 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     }
 
     mEmissions[ aPeriod ] = totalEmissions;
-
+    
+    // Stash emissions coefficient. This updates stashed value in case emissions controls have been applied
+    mSavedEmissionsCoef = emissDriver > 0 ? totalEmissions / emissDriver : 0;
+    
     addEmissionsToMarket( aRegionName, aPeriod );
 }
 

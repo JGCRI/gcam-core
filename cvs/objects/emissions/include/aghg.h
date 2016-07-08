@@ -89,6 +89,17 @@ public:
     
     virtual void copyGHGParameters( const AGHG* aPrevGHG ) = 0;
 
+    /*!
+     * \brief Get the XML node name for output to XML.
+     * \details This public function accesses the private constant string,
+     *          XML_NAME. This way the tag is always consistent for both read-in
+     *          and output and can be easily changed. This function may be
+     *          virtual to be overridden by derived class pointers.
+     * \author Jim Naslund
+     * \return The constant XML_NAME.
+     */
+    virtual const std::string& getXMLName() const = 0;
+
     // IRoundTrippable methods
     void XMLParse( const xercesc::DOMNode* aNode );
 
@@ -177,17 +188,6 @@ protected:
     AGHG();
     AGHG( const AGHG& aOther );
     AGHG& operator=( const AGHG& aOther );
-
-    /*!
-     * \brief Get the XML node name for output to XML.
-     * \details This public function accesses the private constant string,
-     *          XML_NAME. This way the tag is always consistent for both read-in
-     *          and output and can be easily changed. This function may be
-     *          virtual to be overridden by derived class pointers.
-     * \author Jim Naslund
-     * \return The constant XML_NAME.
-     */
-    virtual const std::string& getXMLName() const = 0;
 
     //! GHG name
     std::string mName;

@@ -48,6 +48,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include "util/base/include/iround_trippable.h"
+#include "emissions/include/nonco2_emissions.h"
 
 // Forward declarations
 class GDP;
@@ -96,6 +97,7 @@ public:
      */
     virtual void initCalc( const std::string& aRegionName,
                            const IInfo* aLocalInfo,
+                           const NonCO2Emissions* parentGHG,
                            const int aPeriod ) = 0;
 
 protected:
