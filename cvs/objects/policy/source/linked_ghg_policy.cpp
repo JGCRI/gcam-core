@@ -248,7 +248,6 @@ void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
     // Set the price/demand adjustments into the linked market info object for
     // retrieval by that market object.
     for( int per = startPeriod; per < modeltime->getmaxper(); ++per ){
-        marketplace->unsetMarketToSolve( mPolicyName, aRegionName, per );
         IInfo* currMarketInfo = marketplace->getMarketInfo( mPolicyName, aRegionName, per, true );
         if( mPriceAdjust[ per ].isInited() ) {
             currMarketInfo->setDouble( "price-adjust", mPriceAdjust[ per ] );
