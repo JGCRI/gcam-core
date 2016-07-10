@@ -12,9 +12,12 @@ if( !exists( "AGLUPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
+ENERGYPROC_DIR <- AGLUPROC_DIR
+source(paste(AGLUPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 logstart( "L243.bio_trade_input.R" )
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
+adddep(paste(AGLUPROC_DIR,"/../_common/headers/ENERGY_header.R",sep=""))
 printlog( "Model biomass trade" )
 
 # -----------------------------------------------------------------------------
@@ -27,7 +30,7 @@ sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_bio_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_bio_supplysector" )
-A_biotrade_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_biotrade_supplysector" )
+A_bio_subsector_logit <- readdata( "AGLU_ASSUMPTIONS", "A_bio_subsector_logit" )
 A_bio_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_bio_subsector" )
 L120.LC_bm2_R_LT_Yh_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L120.LC_bm2_R_LT_Yh_AEZ" )
 L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
@@ -49,11 +52,21 @@ L243.RegBioInput$coefficient <- 1
 L243.RegBioInput$market.name <- L243.RegBioInput$region
 
 # Next, set up global trade. Markets now default to regional and we use logits to allow trade.
-# L243.Supplysector_TotBio -- supplysector for the regional biomass
-L243.Supplysector_TotBio <- A_bio_supplysector
-L243.Supplysector_TotBio$logit.year.fillout <- min( model_years )
-L243.Supplysector_TotBio <- repeat_and_add_vector( L243.Supplysector_TotBio, "region", GCAM_region_names$region )
-L243.Supplysector_TotBio <- L243.Supplysector_TotBio[ names_Supplysector ]
+# L243.Supplysector_Bio -- supplysector for the biomass sectors
+L243.SectorLogitTables <- get_logit_fn_tables( A_bio_supplysector, names_SupplysectorLogitType, base.header="Supplysector_",
+    include.equiv.table=T, write.all.regions=T, has.traded=T )
+L243.Supplysector_Bio <- write_to_all_regions( A_bio_supplysector, names_Supplysector, has.traded=T )
+
+# The traded markets tend to be a good canidate to solve explicitly since they tie together
+# many solved markets.
+L243.SectorUseTrialMarket_Bio <- write_to_all_regions( subset( A_bio_supplysector, traded == T ), c( reg, supp ), has.traded=T )
+L243.SectorUseTrialMarket_Bio$use.trial.market <- 1
+
+# L243.SubsectorLogit_Bio -- Subsector logit definitions
+L243.SubsectorLogitTables <- get_logit_fn_tables( A_bio_subsector_logit, names_SubsectorLogitType,
+    base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T, has.traded=T )
+L243.SubsectorLogit_Bio <- write_to_all_regions( A_bio_subsector_logit, names_SubsectorLogit, has.traded=T )
+
 
 # L243.GlobalTechCoef_TotBio -- coefficients for the regional biomass technologies
 L243.GlobalTechCoeff_TotBio <- data.frame( subsector.name = c( "domestic biomass", "imported biomass" ),
@@ -86,7 +99,7 @@ L243.StubTechCoef_ImportedBio <- subset( L243.StubTech_TotBio, subsector == "imp
 L243.StubTechCoef_ImportedBio <- repeat_and_add_vector( L243.StubTechCoef_ImportedBio, "year", model_years )
 L243.StubTechCoef_ImportedBio$minicam.energy.input <- "traded biomass"
 L243.StubTechCoef_ImportedBio$coefficient <- 1
-L243.StubTechCoef_ImportedBio$market <- A_biotrade_supplysector$region
+L243.StubTechCoef_ImportedBio$market <- GCAM_region_names$region[1]
 
 # L243.StubTechCoef_DomesticBio -- stub technologies for the regional biomass technologies
 L243.StubTechCoef_DomesticBio <- subset( L243.StubTech_TotBio, subsector == "domestic biomass" )
@@ -95,29 +108,15 @@ L243.StubTechCoef_DomesticBio$minicam.energy.input <- "biomass"
 L243.StubTechCoef_DomesticBio$coefficient <- 1
 L243.StubTechCoef_DomesticBio$market <- L243.StubTechCoef_DomesticBio$region
 
-# L243.StubTechLogit_TotBio -- logit exponents for the regional biomass subsectors
-L243.SubsLogit_TotBio <- L243.StubTech_TotBio[ names_Subsector ]
-L243.SubsLogit_TotBio$logit.year.fillout <- min( model_years )
-L243.SubsLogit_TotBio$logit.exponent <- A_bio_subsector$logit.exponent[ match( L243.SubsLogit_TotBio$subsector,
-                                                                                   A_bio_subsector$subsector )]
-
 # L243.StubTechShWt_TotBio -- share weights for the regional biomass subsectors
 L243.SubsShWt_TotBio <- L243.StubTech_TotBio[ names_Subsector ]
 L243.SubsShWt_TotBio$year.fillout <- min( model_years )
 L243.SubsShWt_TotBio$share.weight <- A_bio_subsector$share.weight[ match( L243.SubsShWt_TotBio$subsector,
                                                                                    A_bio_subsector$subsector )]
 
-# L243.Supplysector_TradedBio -- supplysector for traded biomass
-A_bio_supplysector_reg <- repeat_and_add_vector( A_bio_supplysector, "region", GCAM_region_names$region )
-ALL_BIO_SUPPLY_LOGIT <- rbind( A_bio_supplysector_reg, A_biotrade_supplysector )
-L243.SectorLogitTables <- get_logit_fn_tables( ALL_BIO_SUPPLY_LOGIT, names_SupplysectorLogitType,
-                                               base.header="Supplysector_", include.equiv.table=T, write.all.regions=F )
-L243.Supplysector_TradedBio <- A_biotrade_supplysector
-L243.Supplysector_TradedBio$logit.year.fillout <- min( model_years )
-L243.Supplysector_TradedBio <- L243.Supplysector_TradedBio[ names_Supplysector ]
-
 # L243.TechCoef_TradedBio -- input name, market, coeff for traded biomass
-L243.TechCoef_TradedBio <- L243.Supplysector_TradedBio[ c( "region", "supplysector" )]
+L243.TechCoef_TradedBio <- L243.Supplysector_Bio[ L243.Supplysector_Bio$supplysector == "traded biomass",
+                                                  c( "region", "supplysector" ) ]
 L243.TechCoef_TradedBio$minicam.energy.input <- "biomass"
 L243.TechCoef_TradedBio$coefficient <- 1
 L243.TechCoef_TradedBio <- repeat_and_add_vector( L243.TechCoef_TradedBio, "market.name", GCAM_region_names$region )
@@ -146,20 +145,6 @@ L243.SubsShWt_TradedBio <- L243.TechCoef_TradedBio[ names_Subsector ]
 L243.SubsShWt_TradedBio$year.fillout <- min( model_years )
 L243.SubsShWt_TradedBio$share.weight <- L243.TechShWt$ShWt[ match( L243.SubsShWt_TradedBio$subsector , 
                                                                    L243.TechShWt$subsector )]
-
-# L243.SubsLogit_TradedBio -- logit for traded biomass subsectors
-L243.SubsLogit_TradedBio <- L243.SubsShWt_TradedBio
-L243.SubsLogit_TradedBio$logit.exponent <- -3
-L243.SubsLogit_TradedBio$share.weight <- NULL
-
-# Set subsector logit types
-A_bio_subsector_reg <- repeat_and_add_vector( A_bio_subsector, "region", GCAM_region_names$region )
-A_bio_subsector_reg <- A_bio_subsector_reg[ names( A_bio_subsector_reg )  %in% c( "region", "supplysector", "subsector" ) ]
-A_biotrade_subsector <- L243.SubsShWt_TradedBio[ names( L243.SubsShWt_TradedBio ) %in% c( "region", "supplysector", "subsector" )]
-ALL_BIO_SUB_LOGIT <- rbind( A_bio_subsector_reg, A_biotrade_subsector )
-ALL_BIO_SUB_LOGIT$logit.type <- NA
-L243.SubsectorLogitTablesTotal <- get_logit_fn_tables( ALL_BIO_SUB_LOGIT, names_SubsectorLogitType,
-                                                       base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=F )
 
 # First, determine which regions are in which groupings.
 L243.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
@@ -213,17 +198,16 @@ for( curr_table in names ( L243.SectorLogitTables) ) {
                  "batch_bio_trade.xml" )
 }
 write_mi_data( L243.RegBioInput, "TechCoef", "AGLU_LEVEL2_DATA", "L243.RegBioInput", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.Supplysector_TotBio, "Supplysector", "AGLU_LEVEL2_DATA", "L243.Supplysector_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.Supplysector_TradedBio, "Supplysector", "AGLU_LEVEL2_DATA", "L243.Supplysector_TradedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-for( curr_table in names ( L243.SubsectorLogitTablesTotal ) ) {
-  write_mi_data( L243.SubsectorLogitTablesTotal[[ curr_table ]]$data, L243.SubsectorLogitTablesTotal[[ curr_table ]]$header,
-                 "AGLU_LEVEL2_DATA", paste0("L243.", L243.SubsectorLogitTablesTotal[[ curr_table ]]$header ), "AGLU_XML_BATCH",
+write_mi_data( L243.Supplysector_Bio, "Supplysector", "AGLU_LEVEL2_DATA", "L243.Supplysector_Bio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.SectorUseTrialMarket_Bio, "SectorUseTrialMarket", "AGLU_LEVEL2_DATA", "L243.SectorUseTrialMarket_Bio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+for( curr_table in names ( L243.SubsectorLogitTables ) ) {
+  write_mi_data( L243.SubsectorLogitTables[[ curr_table ]]$data, L243.SubsectorLogitTables[[ curr_table ]]$header,
+                 "AGLU_LEVEL2_DATA", paste0("L243.", L243.SubsectorLogitTables[[ curr_table ]]$header ), "AGLU_XML_BATCH",
                  "batch_bio_trade.xml" )
 }
 
-write_mi_data( L243.SubsLogit_TotBio, "SubsectorLogit", "AGLU_LEVEL2_DATA", "L243.SubsLogit_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
+write_mi_data( L243.SubsectorLogit_Bio, "SubsectorLogit", "AGLU_LEVEL2_DATA", "L243.SubsectorLogit_Bio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.SubsShWt_TotBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SubsShWt_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
-write_mi_data( L243.SubsLogit_TradedBio, "SubsectorLogit", "AGLU_LEVEL2_DATA", "L243.SubsLogit_TradedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.SubsShWt_TradedBio, "SubsectorShrwtFllt", "AGLU_LEVEL2_DATA", "L243.SubsShWt_TradedBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.GlobalTechCoeff_TotBio, "GlobalTechCoef", "AGLU_LEVEL2_DATA", "L243.GlobalTechCoeff_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
 write_mi_data( L243.GlobalTechShWt_TotBio, "GlobalTechShrwt", "AGLU_LEVEL2_DATA", "L243.GlobalTechShWt_TotBio", "AGLU_XML_BATCH", "batch_bio_trade.xml" )
