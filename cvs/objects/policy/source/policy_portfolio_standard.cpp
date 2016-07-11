@@ -54,6 +54,7 @@
 #include "policy/include/policy_portfolio_standard.h"
 #include "marketplace/include/marketplace.h"
 #include "util/logger/include/ilogger.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -68,7 +69,8 @@ PolicyPortfolioStandard::PolicyPortfolioStandard():
     mIsShareBased( false ),
     mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
     mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
-    mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 )
+    mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 ),
+    mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 )
 {
 }
 
@@ -83,7 +85,8 @@ PolicyPortfolioStandard::PolicyPortfolioStandard( const string aName, const stri
     mIsShareBased( false ),
     mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
     mFixedTax( scenario->getModeltime()->getmaxper(), -1 ),
-    mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 )
+    mShareOfSectorOutput( scenario->getModeltime()->getmaxper(), -1.0 ),
+    mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 )
 {
 }
 
@@ -96,7 +99,8 @@ PolicyPortfolioStandard::PolicyPortfolioStandard( const string aName, const stri
     isFixedTax( false ),
     mIsShareBased( true ),
     mConstraint( scenario->getModeltime()->getmaxper(), -1.0 ),
-    mShareOfSectorOutput( aShareOfTotal )
+    mShareOfSectorOutput( aShareOfTotal ),
+    mMinPrice( scenario->getModeltime()->getmaxper(), 0.0 )
 {
     // Ensure that the share vector passed in is the right size.
     assert( aShareOfTotal.size() == mConstraint.size() );
@@ -188,6 +192,9 @@ void PolicyPortfolioStandard::XMLParse( const DOMNode* node ){
                     <<"(rate <= 0 or rate > 1)." << endl;
             }
         }
+        else if( nodeName == "min-price" ){
+            XMLHelper<double>::insertValueIntoVector( curr, mMinPrice, modeltime );
+        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -212,6 +219,7 @@ void PolicyPortfolioStandard::toInputXML( ostream& out, Tabs* tabs ) const {
             "constraint", out, tabs, -1.0 );
     }
     XMLWriteVector( mFixedTax, "fixedTax", out, tabs, modeltime, 0.0 );
+    XMLWriteVector( mMinPrice, "min-price", out, tabs, modeltime, 0.0 );
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
         XMLWriteElementCheckDefault( mShareOfSectorOutput[ per ],
             "share-of-sector-output", out, tabs, -1.0 );
@@ -246,6 +254,8 @@ void PolicyPortfolioStandard::toDebugXML( const int period, ostream& out, Tabs* 
     
     // Write out the share for the current year.
     XMLWriteElement( mShareOfSectorOutput[ period ], "share-of-sector-output", out, tabs );
+
+    XMLWriteElement( mMinPrice[ period ], "min-price", out, tabs );
     
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLName(), out, tabs );
@@ -339,6 +349,11 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
                     marketplace->addToDemand( mName, aRegionName, tempConstraint[ per ] - 
                         marketplace->getDemand( mName, aRegionName, per ), 0, per, false );
                 }
+
+                // Constraint policies must have a price >= mMinPrice.  It may be the case that the constraint is
+                // non-binding at the minimum price in which case the solver can use this information to
+                // make a supply currection to still ensure equality.
+                SectorUtils::setSupplyBehaviorBounds( mName, aRegionName, mMinPrice[ per ], util::getLargeNumber(), per );
             }
         }
     }
