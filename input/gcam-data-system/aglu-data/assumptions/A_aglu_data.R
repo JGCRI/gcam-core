@@ -79,7 +79,11 @@ rcp_gcm_cm_aezid <- c( rcp_gcm_cm, "ID" )
 rcp_gcm_cm_aezid_irr <- c( rcp_gcm_cm, "ID", "irr" )
 rcp_gcm_cm_aezid_crop <- c( rcp_gcm_cm, "ID", "crop" )
 rcp_gcm_cm_aezid_crop_irr <- c( rcp_gcm_cm, "ID", "crop", "irr" )
-
+irr <- "Irr_Rfd"
+R_C_irr <- c( R_C, irr )
+R_C_Y_irr <- c( R_C_Y, irr )
+R_C_AEZ_irr <- c( R_C_AEZ, irr )
+R_AEZ_irr <- c( R, AEZ, irr )
 
 #-----------------------------------------------------------------
 #NUMBERS OF DIGITS FOR MODEL INPUT DATA
@@ -245,14 +249,25 @@ AEZ_delimiter <- ""       #delimiter between the appended sector name and AEZ na
 hi_ag_prod_growth_mult <- 1.5
 low_ag_prod_growth_mult <- 0.5
 
-#Multipliers for ag waste SSP scenarios
-low_waste_mult <- 0.85
-high_waste_mult <- 1.15
-
-#Multipliers for meat SSP scenarios
-low_meat_mult <- 0.85
-high_meat_mult <- 1.15
+#SSP diet parameters
+max.mult.ssp1 <- 1.2
+max.mult.ssp2 <- 1.25
+max.mult.ssp3 <- 1.3
+max.mult.ssp4 <- 1.25
+max.mult.ssp5 <- 1.3
 
 #GDP per capita thressholds for SSP4 region groupings
 hi_growth_pcgdp <- 12.275
 lo_growth_pcgdp <- 2.75
+#Ghost share on land uses
+irrig_ghost_share_mult <- 0.25
+ghost_share_node <- 0.25
+ghost_share_bio <- 0.5
+ghost_share_tree <- 0.05
+
+#Adder for calibration prices to get model to solve
+calPriceAdder <- 0.03
+
+#Fraction of food that should be produced locally
+local_food_fract <- 0.8
+

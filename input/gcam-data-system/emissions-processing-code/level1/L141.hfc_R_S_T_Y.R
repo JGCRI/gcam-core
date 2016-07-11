@@ -27,7 +27,7 @@ GCAM_tech <- readdata( "EMISSIONS_MAPPINGS", "gcam_fgas_tech" )
 Other_F <- readdata( "EMISSIONS_MAPPINGS", "other_f_gases" )
 L144.in_EJ_R_bld_serv_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L144.in_EJ_R_bld_serv_F_Yh" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
-EDGAR_sector <- readdata( "EMISSIONS_MAPPINGS", "EDGAR_sector" )
+EDGAR_sector <- readdata( "EMISSIONS_MAPPINGS", "EDGAR_sector_fgas" )
 EDGAR_nation <- readdata( "EMISSIONS_MAPPINGS", "EDGAR_nation" )
 GWP <- readdata( "EMISSIONS_ASSUMPTIONS", "A41.GWP" )
 EDGAR_HFC125 <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_HFC125" )
@@ -41,6 +41,7 @@ EDGAR_HFC245fa <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_HFC245fa" )
 EDGAR_HFC32 <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_HFC32" )
 EDGAR_HFC365mfc <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_HFC365mfc" )
 EDGAR_HFC43 <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_HFC43" )
+Guus_Data <- readdata( "EMISSIONS_LEVEL0_DATA", "HFC_Inventory_GV" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -93,8 +94,28 @@ L141.hfc_R_S_T_Yh.melt$share <- L141.R_cooling_T_Yh.melt$share[ match( vecpaste(
 L141.hfc_R_S_T_Yh.melt$share[ is.na( L141.hfc_R_S_T_Yh.melt$share ) ] <- 1
 L141.hfc_R_S_T_Yh.melt$emissions <- L141.hfc_R_S_T_Yh.melt$emissions * L141.hfc_R_S_T_Yh.melt$share
 
+#Add 2008 since Guus has data
+TEMP <- subset( L141.hfc_R_S_T_Yh.melt, xyear == "X2008" )
+TEMP$xyear <- "X2010"
+L141.hfc_R_S_T_Yh.melt <- rbind( L141.hfc_R_S_T_Yh.melt, TEMP )
+
+#Scale to match global totals from Guus Velders
+L141.hfc_scaler <- aggregate( L141.hfc_R_S_T_Yh.melt$emissions, by=as.list( L141.hfc_R_S_T_Yh.melt[ c( "xyear", "Non.CO2" ) ] ), sum )
+names( L141.hfc_scaler )[ names( L141.hfc_scaler ) == "x" ] <- "EDGAR_tot"
+Guus_Data$Species <- gsub( "-", "", Guus_Data$Species )
+Guus_Data$Species <- gsub( "4310mee", "43", Guus_Data$Species )
+Guus_Data$xyear <- paste( "X", Guus_Data$Year, sep="" )
+L141.hfc_scaler$Guus_tot <- Guus_Data$Emissions[ match( vecpaste( L141.hfc_scaler[ c( "xyear", "Non.CO2")]),
+                                                        vecpaste( Guus_Data[ c( "xyear", "Species" )]))]
+L141.hfc_scaler$scaler <- L141.hfc_scaler$Guus_tot / L141.hfc_scaler$EDGAR_tot
+L141.hfc_scaler$scaler[ is.na( L141.hfc_scaler$scaler ) ] <- 1
+
+L141.hfc_R_S_T_Yh.melt$scaler <- L141.hfc_scaler$scaler[ match( vecpaste( L141.hfc_R_S_T_Yh.melt[ c( "xyear", "Non.CO2" )]),
+                                                                vecpaste( L141.hfc_scaler[ c( "xyear", "Non.CO2" )]))]
+L141.hfc_R_S_T_Yh.melt$adj_emissions <- L141.hfc_R_S_T_Yh.melt$emissions * L141.hfc_R_S_T_Yh.melt$scaler
+
 #Reshape
-L141.hfc_R_S_T_Yh.melt <- aggregate( L141.hfc_R_S_T_Yh.melt$emissions, by=as.list( L141.hfc_R_S_T_Yh.melt[ c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "Non.CO2", "xyear" ) ]), sum)
+L141.hfc_R_S_T_Yh.melt <- aggregate( L141.hfc_R_S_T_Yh.melt$adj_emissions, by=as.list( L141.hfc_R_S_T_Yh.melt[ c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "Non.CO2", "xyear" ) ]), sum)
 L141.hfc_R_S_T_Yh <- dcast( L141.hfc_R_S_T_Yh.melt, GCAM_region_ID + supplysector + subsector + stub.technology + Non.CO2 ~ xyear, value.var=c( "x" ))
 L141.hfc_R_S_T_Yh[ is.na( L141.hfc_R_S_T_Yh ) ] <- 0
 

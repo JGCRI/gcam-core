@@ -22,6 +22,7 @@ printlog( "Model input for animal production (including inputs to animal produci
 
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
@@ -34,6 +35,7 @@ A_an_input_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_subsector" )
 A_an_input_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_technology" )
 A_an_input_globaltech_shrwt <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_globaltech_shrwt" )
 A_an_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_an_supplysector" )
+A_an_supplysector_SSP34 <- readdata( "AGLU_ASSUMPTIONS", "A_an_supplysector_SSP34" )
 A_an_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_an_subsector" )
 A_an_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_technology" )
 L107.an_Prod_Mt_R_C_Sys_Fd_Y <- readdata( "AGLU_LEVEL1_DATA", "L107.an_Prod_Mt_R_C_Sys_Fd_Y" )
@@ -42,6 +44,7 @@ L107.an_Feed_Mt_R_C_Sys_Fd_Y <- readdata( "AGLU_LEVEL1_DATA", "L107.an_Feed_Mt_R
 L108.ag_Feed_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L108.ag_Feed_Mt_R_C_Y" )
 L109.an_ALL_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L109.an_ALL_Mt_R_C_Y" )
 L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
+L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -146,6 +149,17 @@ printlog( "L202.Supplysector_an: generic animal production supplysector info" )
 L202.SectorLogitTables_an <- get_logit_fn_tables( A_an_supplysector, names_SupplysectorLogitType,
     base.header="Supplysector_", include.equiv.table=F, write.all.regions=T )
 L202.Supplysector_an <- write_to_all_regions_ag( A_an_supplysector, names_Supplysector )
+
+printlog( "L202.Supplysector_an_SSP3: generic animal production supplysector info" )
+L202.Supplysector_an_SSP3 <- write_to_all_regions_ag( A_an_supplysector_SSP34, names_Supplysector )
+
+#Determine which regions in SSP4 need low logits
+L202.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L202.pcgdp_2010 <- L202.pcgdp_2010[ names( L202.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
+L202.pcgdp_2010 <- add_region_name( L202.pcgdp_2010 )
+L202.pcgdp_2010$X2010 <- L202.pcgdp_2010$X2010 * conv_1990_2010_USD
+L202.low_reg <- L202.pcgdp_2010$region[ L202.pcgdp_2010$X2010 < lo_growth_pcgdp ]
+L202.Supplysector_an_SSP4 <- subset( L202.Supplysector_an_SSP3, L202.Supplysector_an_SSP3$region %in% L202.low_reg )
 
 printlog( "L202.SubsectorAll_an: generic animal production subsector info" )
 L202.SubsectorLogitTables_an <- get_logit_fn_tables( A_an_subsector, names_SubsectorLogitType,
@@ -392,5 +406,8 @@ write_mi_data( L202.GlobalRenewTech_imp_an, "GlobalRenewTech", "AGLU_LEVEL2_DATA
 write_mi_data( L202.StubTechFixOut_imp_an, "StubTechFixOut", "AGLU_LEVEL2_DATA", "L202.StubTechFixOut_imp_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_an_input.xml", "AGLU_XML_FINAL", "an_input.xml", "", xml_tag="outFile" )
+
+write_mi_data( L202.Supplysector_an_SSP3, "Supplysector", "AGLU_LEVEL2_DATA", "L202.Supplysector_an_SSP3", "AGLU_XML_BATCH", "batch_SSP3_logit.xml" ) 
+write_mi_data( L202.Supplysector_an_SSP4, "Supplysector", "AGLU_LEVEL2_DATA", "L202.Supplysector_an_SSP4", "AGLU_XML_BATCH", "batch_SSP4_logit.xml" ) 
 
 logstop()

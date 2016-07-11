@@ -78,8 +78,8 @@ public:
                                    const std::string& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
-        
-    virtual bool isManagedLandLeaf( )  const;
+	
+	virtual bool isUnmanagedLandLeaf( )  const;
 protected:
     virtual const std::string& getXMLName() const;
 

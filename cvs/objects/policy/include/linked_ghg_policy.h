@@ -62,6 +62,8 @@
  *          Similarly a multiplier exists for the quantity value of the gas as well.
  *          Note that these multipliers can change over time to simulate a "phase in"
  *          of the gas into the policy at a later time.
+ *          In addition this type of policy has the ability to switch from linking
+ *          from one policy to another at a specified start-year.
  *
  *          <b>XML specification for LinkedGHGPolicy</b>
  *          - XML name: \c LinkedGHGPolicy::getXMLNameStatic()
@@ -89,6 +91,13 @@
  *              - \c price-adjust LinkedGHGPolicy::mPriceAdjust
  *                   A multiplier on the quantity added to the linked market to allow
  *                   for GWP unit conversion or to turn "off" inclusion in a constraint.
+ *              - \c start-year LinkedGHGPolicy::mStartYear
+ *                   The first year this linked policy should be used (-1 indicates all years).
+ *                   This is the parameter which allows us to switch markets over time.
+ *              - \c policy-name LinkedGHGPolicy::mPolicyName
+ *                   The name this policy will use to create the linked market.  Note
+ *                   this is typically the same as mName however may differ if for
+ *                   instance a user wanted to switch markets over time.
  *
  * \sa Marketplace::createLinkedMarket
  * \sa LinkedMarket
@@ -125,6 +134,15 @@ protected:
     //! A demand adjustment factor by period.  Could be useful for unit conversion (GWP) or
     //! "turning off" participation in the linked market.
     objects::PeriodVector<Value> mDemandAdjust;
+
+    //! The first year this linked policy should be used (-1 indicates all years).
+    //! This is the parameter which allows us to switch markets over time.
+    int mStartYear;
+
+    //! The name this policy will use to create the linked market.  Note this is typically
+    //! the same as mName however may differ if for instance a user wanted to switch markets
+    //! over time.
+    std::string mPolicyName;
 };
 
 #endif // _LINKED_GHG_POLICY_H_

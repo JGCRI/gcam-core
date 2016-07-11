@@ -143,13 +143,15 @@ public:
         
     virtual double getLogitExponent( const int aPeriod ) const;
 
-    virtual double getNewTechProfitScaler( const int aPeriod ) const;
+    virtual double getCalibrationProfitForNewTech( const int aPeriod ) const;
+	
+    virtual double getProfitForChildWithHighestShare( const int aPeriod ) const;
     
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
            
-    virtual bool isManagedLandLeaf( )  const;
+	virtual bool isUnmanagedLandLeaf( )  const;
 
     virtual void calculateCalibrationProfitRate( const std::string& aRegionName,
                                              double aAverageProfitRate,
@@ -190,13 +192,13 @@ protected:
     objects::PeriodVector<double> mLogitExponent;
 
     //! Share Profit scaler for new technologies in this node
-    objects::PeriodVector<double> mNewTechProfitScaler;
+    objects::PeriodVector<double> mCalibrationProfitForNewTech;
     
-    //! Numerator that determines share for new technologies IF the right profit conditions hold
-	//! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
-	//! the profit of the new technology is equal to the profit of the dominant technology in 
+    //! Numerator that determines share for new nodes IF the right profit conditions hold
+	//! Share will equal ( mGhostShareNumeratorForNode / ( 1 + mGhostShareNumeratorForNode ) ) if and only if
+	//! the profit of the new node is equal to the profit of the dominant technology in 
 	//! the base year, and all other profits stay the same.
-    objects::PeriodVector<double> mGhostShareNumerator;
+    double mGhostShareNumeratorForNode;
     
     //! Double storing the average price of land in a region or subregion
     double mUnManagedLandValue;
@@ -211,6 +213,8 @@ protected:
 
     //! Container of historical land use.
     std::auto_ptr<LandUseHistory> mLandUseHistory;
+    
+    void calcCalibrationProfitForNewTech( const int aPeriod );
 
     //! (optional) A carbon calculation which can used when children maybe similar
     //! in terms of switching between them does not mean carbon is emitted per se.

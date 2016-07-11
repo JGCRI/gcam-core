@@ -343,8 +343,7 @@ double ASimpleCarbonCalc::getBelowGroundCarbonSubsidyDiscountFactor( ){
     const double halfLife = mSoilTimeScale / 10.0;
     const double log2 = log( 2.0 );
     const double lambda = log2 / halfLife;
-    const double discountrate = 0.05;
-    return 1.0 - discountrate / ( discountrate + lambda );
+    return 1.0 - mPrivateDiscountRate / ( mPrivateDiscountRate + lambda );
         
 }
 
@@ -362,28 +361,16 @@ double ASimpleCarbonCalc::getAboveGroundCarbonSubsidyDiscountFactor( ){
     if ( getMatureAge() == 1 ) {
         return 1.0;
     }
-
-    // We are approximating this curve as a quadratic with an offset of
-    // 250 (If the mature age is 250, all carbon uptake occurs far enough 
-    // in the future that you wouldn't base decisions on it. So, for a 
+    // We are approximating this curve as a polynomial with an offset of
+    // 250 (If the mature age is 250, all carbon uptake occurs far enough
+    // in the future that you wouldn't base decisions on it. So, for a
     // mature age of 250 the multiplier is zero
-    // quadCoef is chosen by minimizing least squared error 
+    // quadCoef is chosen by minimizing least squared error
     // between actual carbon subsidy discount and functional estimate
-    // Note: these parameters assume a discount rate of 0.05
-    /* const double QUADCOEF = 2.7e-10;
+    // Note: these parameters assume a discount rate of 0.1
+    const double QUADCOEF = -8.57e-13;
     const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
-    return QUADCOEF * pow( double(getMatureAge() - MAXMATUREAGE), 4); */
-    
-    // We are approximating this curve as a quadratic with an offset of
-    // 250 (If the mature age is 250, all carbon uptake occurs far enough 
-    // in the future that you wouldn't base decisions on it. So, for a 
-    // mature age of 250 the multiplier is zero
-    // quadCoef is chosen by minimizing least squared error 
-    // between actual carbon subsidy discount and functional estimate
-    // Note: these parameters assume a discount rate of 0.025
-    const double QUADCOEF = 1.53e-05;
-    const int MAXMATUREAGE = 250; // Mature age where carbon subsidy is zero
-    return QUADCOEF * pow( double(getMatureAge() - MAXMATUREAGE), 2);
+    return QUADCOEF * pow( double( getMatureAge() - MAXMATUREAGE ), 5);
 }
 
 void ASimpleCarbonCalc::setSoilTimeScale( const int aTimeScale ) {

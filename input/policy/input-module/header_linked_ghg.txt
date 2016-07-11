@@ -1,0 +1,7 @@
+
+1,world/+{name}region,region/+{name}linked-ghg-policy,linked-ghg-policy/+{year=1975;fillout=1}price-adjust,linked-ghg-policy/+{year=1975;fillout=1}demand-adjust,linked-ghg-policy/+market,linked-ghg-policy/+linked-policy,linked-ghg-policy/+price-unit,linked-ghg-policy/+output-unit,scenario,scenario/world
+
+2,world/+{name}region,region/+{name}linked-ghg-policy,linked-ghg-policy/+market,linked-ghg-policy/+linked-policy,scenario,scenario/world
+
+3,world/+{name}region,region/+{name}linked-ghg-policy,linked-ghg-policy/+{year}price-adjust,linked-ghg-policy/+price-adjust,scenario,scenario/world
+

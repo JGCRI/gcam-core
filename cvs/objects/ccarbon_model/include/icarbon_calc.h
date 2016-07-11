@@ -95,7 +95,7 @@ public:
     /*!
      * \brief Complete the initialization of the carbon calculator.
      */
-    virtual void completeInit() = 0;
+    virtual void completeInit( const double aPrivateDiscountRateLand ) = 0;
 
     /*!
      * \brief Initialize the historical land use for the carbon calculation.

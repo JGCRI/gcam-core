@@ -149,8 +149,7 @@ void UnmanagedLandLeaf::setProfitRate( const string& aRegionName,
     // This shouldn't do anything for unmanaged land leafs
 }
 
-
-bool UnmanagedLandLeaf::isManagedLandLeaf( )  const 
+bool UnmanagedLandLeaf::isUnmanagedLandLeaf( )  const 
 {
-    return false;
+    return true;
 }

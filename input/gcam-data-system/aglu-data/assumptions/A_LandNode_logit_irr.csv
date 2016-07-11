@@ -1,0 +1,27 @@
+# File: A_LandNode_logit_irr.csv,,
+# Description: Logit exponents of land nodes,,
+# Original source: Land_nesting_structure.xls,,
+# ----------,,
+LandNode,logit.exponent,logit.exponent.arid
+Tundra,0,0
+RockIceDesert,0,0
+UrbanLand,0,0
+AgroForestLand,2,1
+AllPastureLand,3,1.5
+AgroForest_NonPasture,2.5,1.25
+AllForestLand,1.75,0.875
+GrassShrubLand,0.05,0.05
+CropLand,1.75,0.875
+Corn,0.875,0.875
+FiberCrop,0.875,0.875
+FodderGrass,0.875,0.875
+FodderHerb,0.875,0.875
+MiscCrop,0.875,0.875
+OilCrop,0.875,0.875
+OtherGrain,0.875,0.875
+PalmFruit,0.875,0.875
+Rice,0.875,0.875
+Root_Tuber,0.875,0.875
+SugarCrop,0.875,0.875
+Wheat,0.875,0.875
+biomass,0.875,0.875

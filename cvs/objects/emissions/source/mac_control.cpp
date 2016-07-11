@@ -65,6 +65,7 @@ extern Scenario* scenario;
 MACControl::MACControl():
 AEmissionsControl(),
 mNoZeroCostReductions( false ),
+mTechChange( scenario->getModeltime()->getmaxper(), 0 ),
 mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
 {
 }
@@ -98,6 +99,7 @@ MACControl& MACControl::operator=( const MACControl& aOther ){
 void MACControl::copy( const MACControl& aOther ){
     mMacCurve.reset( aOther.mMacCurve->clone() );
     mNoZeroCostReductions = aOther.mNoZeroCostReductions;
+    mTechChange = aOther.mTechChange;
 }
 
 /*!
@@ -118,7 +120,7 @@ const string& MACControl::getXMLNameStatic(){
 }
 
 bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
- 
+    const Modeltime* modeltime = scenario->getModeltime();
     if ( aNodeName == "mac-reduction" ){
         double taxVal = XMLHelper<double>::getAttr( aCurrNode, "tax" );
         double reductionVal = XMLHelper<double>::getValue( aCurrNode );
@@ -127,6 +129,9 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
     }
     else if ( aNodeName == "no-zero-cost-reductions" ){
         mNoZeroCostReductions = true;
+    }
+    else if ( aNodeName == "tech-change" ){
+        XMLHelper<double>::insertValueIntoVector( aCurrNode, mTechChange, modeltime );
     }
     else{
         return false;
@@ -144,11 +149,16 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
         attrs[ "tax" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
+    const Modeltime* modeltime = scenario->getModeltime();
+	XMLWriteVector( mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
+
 }
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     toInputXMLDerived( aOut, aTabs );
     XMLWriteElement( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs);
+    const Modeltime* modeltime = scenario->getModeltime();
+	XMLWriteVector( mTechChange, "tech-change", aOut, aTabs, modeltime, 0.0 );
 }
 
 void MACControl::completeInit( const string& aRegionName, const string& aSectorName,
@@ -177,6 +187,7 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
     }
        
     double reduction = getMACValue( effectiveCarbonPrice );
+    reduction = adjustForTechChange( aPeriod, reduction );
     
     if( mNoZeroCostReductions && effectiveCarbonPrice == 0.0 ) {
         reduction = 0.0;
@@ -209,3 +220,27 @@ double MACControl::getMACValue( const double aCarbonPrice ) const {
     
     return reduction;
 }
+
+/*! \brief Adjust for Tech Change
+ *  Function that applies tech change to MAC curves, shifting them upwards
+ * \param aPeriod period for reduction
+ * \param reduction pre-tech change reduction
+ */
+double MACControl::adjustForTechChange( const int aPeriod, double reduction ) {
+
+    double techChange = 1;
+    int timestep = scenario->getModeltime()->gettimestep( 0 );
+    for ( int i=0; i <= aPeriod; i++ ) {
+        timestep = scenario->getModeltime()->gettimestep( i );
+        techChange *= pow( 1 + mTechChange[ i ], timestep );
+    }
+    reduction *= techChange;
+    
+    // TODO: Include read-in max reduction -- some sectors really shouldn't be able to reduce 100%. We could allow a read-in maximum
+    if ( reduction > 1 ) {
+        reduction = 1;
+    }
+    
+    return reduction;
+}
+

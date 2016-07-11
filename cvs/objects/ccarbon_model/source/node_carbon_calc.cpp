@@ -123,7 +123,7 @@ void NodeCarbonCalc::startVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEm
 /*!
  * \brief Complete any remaining initializations.
  */
-void NodeCarbonCalc::completeInit() {
+void NodeCarbonCalc::completeInit( const double aPrivateDiscountRateLand  ) {
     // Create indicies for the carbon calcs in terms of smallest to largest carbon
     // densities and vice versa.
     const int startYear = scenario->getModeltime()->getStartYear();

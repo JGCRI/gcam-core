@@ -125,7 +125,10 @@ public:
 
     virtual double getCalLandAllocation( const LandAllocationType aType,
                                          const int aPeriod ) const;
-    virtual double getNewTechProfitScaler( const int aPeriod ) const;
+    
+	virtual double getCalibrationProfitForNewTech( const int aPeriod ) const;
+	
+    virtual double getProfitForChildWithHighestShare( const int aPeriod ) const;
         
     virtual double getLogitExponent( const int aPeriod ) const;
 
@@ -154,7 +157,7 @@ public:
 
     virtual ICarbonCalc* getCarbonContentCalc() const;
         
-    virtual bool isManagedLandLeaf( )  const;
+	virtual bool isUnmanagedLandLeaf( )  const;
 
 protected:
     //! Land allocated in 1000's of hectares
@@ -163,8 +166,8 @@ protected:
     //! Carbon content and emissions calculator for the leaf.
     std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
 
-    //! Interest rate stored from the region info.
-    Value mInterestRate;
+    //! Social discount rate stored from the region info.
+    Value mSocialDiscountRate;
 
     //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
     Value mMinAboveGroundCDensity;
@@ -199,6 +202,14 @@ protected:
     
     //! State value necessary to use Marketplace::addToDemand for expansion constraint
     double mLastCalcExpansionValue;
+	
+	//! Numerator that determines share for new technologies IF the right profit conditions hold
+	//! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
+	//! the profit of the new technology is equal to the profit of the dominant technology in 
+	//! the base year, and all other profits stay the same.
+    double mGhostShareNumeratorForLeaf;
+	
+	int mNewTechStartYear;
 
 };
 

@@ -26,7 +26,9 @@ sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_regions <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
+A_MACC_TechChange <- readdata( "EMISSIONS_ASSUMPTIONS", "A_MACC_TechChange" )
 GCAM_sector_tech <- readdata( "EMISSIONS_MAPPINGS", "GCAM_sector_tech" )
+HFC_Abate_GV <- readdata( "EMISSIONS_LEVEL0_DATA", "HFC_Abate_GV" )
 L152.MAC_pct_R_S_Proc_EPA <- readdata( "EMISSIONS_LEVEL1_DATA", "L152.MAC_pct_R_S_Proc_EPA" )
 L201.ghg_res <- readdata( "EMISSIONS_LEVEL2_DATA", "L201.ghg_res", skip = 4 )
 L211.agr_emissions <- readdata( "EMISSIONS_LEVEL2_DATA", "L211.agr_emissions", skip = 4 )
@@ -127,6 +129,101 @@ L252.MAC_higwp$mac.reduction <- round(
       digits_MACC )
 L252.MAC_higwp <- na.omit( L252.MAC_higwp )
 
+if ( use_GV_MAC ) {
+  printlog( "L252.MAC_higwp_GV: Abatement from HFCs, PFCs, and SF6 using Guus Velders data for HFCs" )
+  L252.MAC_pfc <- subset( L252.MAC_higwp, Non.CO2 %in% c( "C2F6", "CF4", "SF6" ))
+  
+  L252.HFC_Abate_GV <- subset( HFC_Abate_GV, Species == "Total_HFCs" & Year %in% c( 2020, 2025, 2030, 2035, 2050, 2100 ))
+  L252.MAC_hfc_gv_0 <- subset( L252.MAC_higwp, Non.CO2 %!in% c( "C2F6", "CF4", "SF6" ) & tax == 0 )
+  L252.MAC_hfc_gv_0$mac.reduction <- 0
+  
+  L252.MAC_hfc_gv_10 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_10$tax <- 10
+  L252.MAC_hfc_gv_10$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2020 ]
+  
+  L252.MAC_hfc_gv_25 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_25$tax <- 25
+  L252.MAC_hfc_gv_25$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2025 ]
+  
+  L252.MAC_hfc_gv_50 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_50$tax <- 50
+  L252.MAC_hfc_gv_50$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2035 ]
+  
+  L252.MAC_hfc_gv_100 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_100$tax <- 100
+  L252.MAC_hfc_gv_100$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2050 ]
+  
+  L252.MAC_hfc_gv_200 <- L252.MAC_hfc_gv_0
+  L252.MAC_hfc_gv_200$tax <- 200
+  L252.MAC_hfc_gv_200$mac.reduction <- L252.HFC_Abate_GV$PCT_ABATE[ L252.HFC_Abate_GV$Year == 2100 ]
+  
+  L252.MAC_higwp <- rbind( L252.MAC_pfc, L252.MAC_hfc_gv_0, L252.MAC_hfc_gv_10, L252.MAC_hfc_gv_25,
+                           L252.MAC_hfc_gv_50, L252.MAC_hfc_gv_100, L252.MAC_hfc_gv_200)
+}
+
+printlog( "L252.MAC_TC_SSP1: Tech Change on MACCs for SSP1" )
+L252.MAC_Ag_TC_SSP1 <- L252.AgMAC[ names( L252.AgMAC ) != "EPA_region" ]
+L252.MAC_Ag_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L252.MAC_Ag_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_Ag_TC_SSP1 <- na.omit( L252.MAC_Ag_TC_SSP1 )
+
+L252.MAC_An_TC_SSP1 <- L252.MAC_an[ names( L252.MAC_an ) != "EPA_region" ]
+L252.MAC_An_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L252.MAC_An_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_An_TC_SSP1 <- na.omit( L252.MAC_An_TC_SSP1 )
+
+L252.MAC_prc_TC_SSP1 <- L252.MAC_prc[ names( L252.MAC_prc ) != "EPA_region" ]
+L252.MAC_prc_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L252.MAC_prc_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_prc_TC_SSP1 <- na.omit( L252.MAC_prc_TC_SSP1 )
+
+L252.MAC_res_TC_SSP1 <- L252.ResMAC_fos[ names( L252.ResMAC_fos ) != "EPA_region" ]
+L252.MAC_res_TC_SSP1$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP1", L252.MAC_res_TC_SSP1$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_res_TC_SSP1 <- na.omit( L252.MAC_res_TC_SSP1 )
+
+printlog( "L252.MAC_TC_SSP2: Tech Change on MACCs for SSP2" )
+L252.MAC_Ag_TC_SSP2 <- L252.AgMAC[ names( L252.AgMAC ) != "EPA_region" ]
+L252.MAC_Ag_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L252.MAC_Ag_TC_SSP2$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_Ag_TC_SSP2 <- na.omit( L252.MAC_Ag_TC_SSP2 )
+
+L252.MAC_An_TC_SSP2 <- L252.MAC_an[ names( L252.MAC_an ) != "EPA_region" ]
+L252.MAC_An_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L252.MAC_An_TC_SSP2$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_An_TC_SSP2 <- na.omit( L252.MAC_An_TC_SSP2 )
+
+L252.MAC_prc_TC_SSP2 <- L252.MAC_prc[ names( L252.MAC_prc ) != "EPA_region" ]
+L252.MAC_prc_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L252.MAC_prc_TC_SSP2$mac.control ),
+                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_prc_TC_SSP2 <- na.omit( L252.MAC_prc_TC_SSP2 )
+
+L252.MAC_res_TC_SSP2 <- L252.ResMAC_fos[ names( L252.ResMAC_fos ) != "EPA_region" ]
+L252.MAC_res_TC_SSP2$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP2", L252.MAC_res_TC_SSP2$mac.control ),
+                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_res_TC_SSP2 <- na.omit( L252.MAC_res_TC_SSP2 )
+
+printlog( "L252.MAC_TC_SSP5: Tech Change on MACCs for SSP5" )
+L252.MAC_Ag_TC_SSP5 <- L252.AgMAC[ names( L252.AgMAC ) != "EPA_region" ]
+L252.MAC_Ag_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L252.MAC_Ag_TC_SSP5$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_Ag_TC_SSP5 <- na.omit( L252.MAC_Ag_TC_SSP5 )
+
+L252.MAC_An_TC_SSP5 <- L252.MAC_an[ names( L252.MAC_an ) != "EPA_region" ]
+L252.MAC_An_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L252.MAC_An_TC_SSP5$mac.control ),
+                                                                         paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_An_TC_SSP5 <- na.omit( L252.MAC_An_TC_SSP5 )
+
+L252.MAC_prc_TC_SSP5 <- L252.MAC_prc[ names( L252.MAC_prc ) != "EPA_region" ]
+L252.MAC_prc_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L252.MAC_prc_TC_SSP5$mac.control ),
+                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_prc_TC_SSP5 <- na.omit( L252.MAC_prc_TC_SSP5 )
+
+L252.MAC_res_TC_SSP5 <- L252.ResMAC_fos[ names( L252.ResMAC_fos ) != "EPA_region" ]
+L252.MAC_res_TC_SSP5$tech.change <- A_MACC_TechChange$tech_change[ match( paste( "SSP5", L252.MAC_res_TC_SSP5$mac.control ),
+                                                                          paste( A_MACC_TechChange$scenario, A_MACC_TechChange$MAC ))]
+L252.MAC_res_TC_SSP5 <- na.omit( L252.MAC_res_TC_SSP5 )
+
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L252.ResMAC_fos, "ResMAC", "EMISSIONS_LEVEL2_DATA", "L252.ResMAC_fos", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
@@ -137,5 +234,23 @@ write_mi_data( L252.MAC_higwp, "MAC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_higwp",
 
 #This is the last file that refers to agricultural emissions
 insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml", "EMISSIONS_XML_FINAL", "all_aglu_emissions.xml", "", xml_tag="outFile" )
+
+write_mi_data( L252.MAC_Ag_TC_SSP1, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_Ag_TC_SSP1", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1.xml" ) 
+write_mi_data( L252.MAC_An_TC_SSP1, "MACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_An_TC_SSP1", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1.xml" ) 
+write_mi_data( L252.MAC_prc_TC_SSP1, "MACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_prc_TC_SSP1", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1.xml" ) 
+write_mi_data( L252.MAC_res_TC_SSP1, "ResMAC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_res_TC_SSP1", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1.xml" ) 
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP1.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP1.xml", "", xml_tag="outFile" )
+
+write_mi_data( L252.MAC_Ag_TC_SSP2, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_Ag_TC_SSP2", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2.xml" ) 
+write_mi_data( L252.MAC_An_TC_SSP2, "MACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_An_TC_SSP2", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2.xml" ) 
+write_mi_data( L252.MAC_prc_TC_SSP2, "MACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_prc_TC_SSP2", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2.xml" ) 
+write_mi_data( L252.MAC_res_TC_SSP2, "ResMAC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_res_TC_SSP2", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2.xml" ) 
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP2.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP2.xml", "", xml_tag="outFile" )
+
+write_mi_data( L252.MAC_Ag_TC_SSP5, "AgMACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_Ag_TC_SSP5", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5.xml" ) 
+write_mi_data( L252.MAC_An_TC_SSP5, "MACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_An_TC_SSP5", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5.xml" ) 
+write_mi_data( L252.MAC_prc_TC_SSP5, "MACTC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_prc_TC_SSP5", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5.xml" ) 
+write_mi_data( L252.MAC_res_TC_SSP5, "ResMAC", "EMISSIONS_LEVEL2_DATA", "L252.MAC_res_TC_SSP5", "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5.xml" ) 
+insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_MACC_TC_SSP5.xml", "EMISSIONS_XML_FINAL", "MACC_TC_SSP5.xml", "", xml_tag="outFile" )
 
 logstop()

@@ -69,7 +69,7 @@ L201.bcoc_en <- L201.BCOC[ c( names_StubTechYr, "Non.CO2" ) ]
 L201.bcoc_en$emiss.coef <- round( L201.BCOC$X2000, digits_emissions )
 
 printlog( "L201.nonghg_max_reduction: maximum reduction for energy technologies in all regions" )
-L201.max_reduction <- L151.nonghg_ctrl_R_en_S_T
+L201.max_reduction <- subset( L151.nonghg_ctrl_R_en_S_T, L151.nonghg_ctrl_R_en_S_T$supplysector != "out_resources" )
 L201.max_reduction <- add_region_name( L201.max_reduction )
 
 L201.nonghg_max_reduction <- L201.max_reduction[ c( names_StubTech, "Non.CO2" ) ]
@@ -81,7 +81,9 @@ L201.nonghg_max_reduction <- L201.nonghg_max_reduction[ c( names_StubTechYr, "No
 
 printlog( "L201.nonghg_steepness: steepness of reduction for energy technologies in all regions" )
 L201.steepness <- melt( A51.steepness, id.vars=c( "supplysector", "subsector", "stub.technology" ))
+L201.steepness <- subset( L201.steepness, L201.steepness$supplysector != "out_resources" )
 L201.steepness <- repeat_and_add_vector( L201.steepness, "region", GCAM_region_names$region )
+
 L201.nonghg_steepness <- L201.nonghg_max_reduction[ c( names_StubTech, "Non.CO2" ) ]
 L201.nonghg_steepness$year <- ctrl_base_year
 L201.nonghg_steepness$ctrl.name <- "GDP_control"
@@ -105,9 +107,10 @@ L201.nonghg_coef <- subset( L111.nonghg_tgej_R_en_S_F_Yh, L111.nonghg_tgej_R_en_
 L201.nonghg_coef <- interpolate_and_melt( L201.nonghg_coef, emiss_model_base_years )
 L201.nonghg_coef <- subset( L201.nonghg_coef, L201.nonghg_coef$year == final_emiss_year )
 L201.nonghg_coef <- add_region_name( L201.nonghg_coef )
+names( L201.nonghg_coef )[ names( L201.nonghg_coef ) == "subsector" ] <- "depresource"
 
 #Format for csv file
-L201.nonghg_res <- L201.nonghg_coef[ c( "region", "subsector", "Non.CO2" ) ]
+L201.nonghg_res <- L201.nonghg_coef[ c( "region", "depresource", "Non.CO2" ) ]
 names( L201.nonghg_res )[ names( L201.nonghg_res ) == "subsector" ] <- "depresource"
 L201.nonghg_res$emiss.coef <- round( L201.nonghg_coef$value, digits_emissions )
 
@@ -117,17 +120,56 @@ L201.GHG_coef <- subset( L112.ghg_tgej_R_en_S_F_Yh, L112.ghg_tgej_R_en_S_F_Yh$su
 L201.GHG_coef <- interpolate_and_melt( L201.GHG_coef, emiss_model_base_years )
 L201.GHG_coef <- subset( L201.GHG_coef, L201.GHG_coef$year == final_emiss_year )
 L201.GHG_coef <- add_region_name( L201.GHG_coef )
+names( L201.GHG_coef )[ names( L201.GHG_coef ) == "subsector" ] <- "depresource"
 
 #Format for csv file
-L201.ghg_res <- L201.GHG_coef[ c( "region", "subsector", "Non.CO2" ) ]
+L201.ghg_res <- L201.GHG_coef[ c( "region", "depresource", "Non.CO2" ) ]
 names( L201.ghg_res )[ names( L201.ghg_res ) == "subsector" ] <- "depresource"
 L201.ghg_res$emiss.coef <- round( L201.GHG_coef$value, digits_emissions )
+
+printlog( "L201.nonghg_max_reduction_res: maximum reduction for resources in all regions" )
+L201.max_reduction_res <- subset( L151.nonghg_ctrl_R_en_S_T, L151.nonghg_ctrl_R_en_S_T$supplysector == "out_resources" )
+L201.max_reduction_res <- add_region_name( L201.max_reduction_res )
+names( L201.max_reduction_res )[ names( L201.max_reduction_res ) == "subsector" ] <- "depresource"
+
+L201.nonghg_max_reduction_res <- L201.max_reduction_res[ c( "region", "depresource", "Non.CO2" ) ]
+L201.nonghg_max_reduction_res$ctrl.name <- "GDP_control"
+L201.nonghg_max_reduction_res$max.reduction <- L201.max_reduction_res$max_reduction[ match( vecpaste( L201.nonghg_max_reduction_res[ c( "region", "depresource", "Non.CO2" ) ]), 
+                                                                                            vecpaste( L201.max_reduction_res[ c( "region", "depresource", "Non.CO2" ) ]) )]
+L201.nonghg_max_reduction_res <- na.omit( L201.nonghg_max_reduction_res )
+L201.nonghg_max_reduction_res <- L201.nonghg_max_reduction_res[ c( "region", "depresource", "Non.CO2", "ctrl.name", "max.reduction" )]
+
+printlog( "L201.nonghg_steepness_res: steepness of reduction for resources in all regions" )
+L201.steepness_res <- melt( A51.steepness, id.vars=c( "supplysector", "subsector", "stub.technology" ))
+L201.steepness_res <- subset( L201.steepness_res, L201.steepness_res$supplysector == "out_resources" )
+L201.steepness_res <- repeat_and_add_vector( L201.steepness_res, "region", GCAM_region_names$region )
+names( L201.steepness_res )[ names( L201.steepness_res ) == "subsector" ] <- "depresource"
+names( L201.steepness_res )[ names( L201.steepness_res ) == "variable" ] <- "Non.CO2"
+
+L201.nonghg_steepness_res <- L201.steepness_res[ c( "region", "depresource", "Non.CO2" ) ]
+L201.nonghg_steepness_res$ctrl.name <- "GDP_control"
+L201.nonghg_steepness_res$steepness <- L201.steepness_res$value[ match( vecpaste( L201.nonghg_steepness_res[ c( "region", "depresource", "Non.CO2" ) ]), 
+                                                                        vecpaste( L201.steepness_res[ c( "region", "depresource", "Non.CO2" ) ]) )]
+L201.nonghg_steepness_res <- na.omit( L201.nonghg_steepness_res )
+L201.nonghg_steepness_res <- L201.nonghg_steepness_res[ c( "region", "depresource", "Non.CO2", "ctrl.name", "steepness" )]
+
+# Remove rows where we only have a value for one of max.reduction or steepness
+# TODO: is this what we want or should we raise an error?
+L201.nonghg_gdp_control_res <- merge( L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, all=TRUE )
+L201.nonghg_gdp_control_res <- na.omit( L201.nonghg_gdp_control_res )
+# No need to include a GDP control when the max.reduction is zero
+L201.nonghg_gdp_control_res <- L201.nonghg_gdp_control_res[ L201.nonghg_gdp_control_res$max.reduction > 0, ]
+
+L201.nonghg_max_reduction_res <- L201.nonghg_gdp_control_res[, names( L201.nonghg_gdp_control_res ) != "steepness" ]
+L201.nonghg_steepness_res <- L201.nonghg_gdp_control_res[, names( L201.nonghg_gdp_control_res ) != "max.reduction" ]
 
 printlog( "Rename to regional SO2" )
 L201.nonghg_en <- rename_SO2( L201.nonghg_en, A_regions, FALSE )
 L201.nonghg_max_reduction <- rename_SO2( L201.nonghg_max_reduction, A_regions, FALSE )
 L201.nonghg_steepness <- rename_SO2( L201.nonghg_steepness, A_regions, FALSE )
 L201.nonghg_res <- rename_SO2( L201.nonghg_res, A_regions, FALSE )
+L201.nonghg_steepness_res <- rename_SO2( L201.nonghg_steepness_res, A_regions, FALSE )
+L201.nonghg_max_reduction_res <- rename_SO2( L201.nonghg_max_reduction_res, A_regions, FALSE )
 
 printlog( "Remove district heat from regions that do have have it" )
 L201.distheat.regions <- A_regions.en[ A_regions.en$heat == 1, "region" ]
@@ -157,6 +199,8 @@ write_mi_data( L201.ghg_en, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_
 write_mi_data( L201.bcoc_en, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L201.en_bcoc_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 write_mi_data( L201.nonghg_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L201.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 write_mi_data( L201.nonghg_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L201.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.nonghg_max_reduction_res, "GDPCtrlMaxRes", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_max_reduction_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.nonghg_steepness_res, "GDPCtrlSteepRes", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_steepness_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 write_mi_data( L201.nonghg_res, "ResEmissCoef", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 write_mi_data( L201.ghg_res, "ResEmissCoef", "EMISSIONS_LEVEL2_DATA", "L201.ghg_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 

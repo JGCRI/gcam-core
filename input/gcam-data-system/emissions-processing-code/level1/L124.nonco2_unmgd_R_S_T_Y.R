@@ -35,6 +35,13 @@ EDGAR_VOC <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_NMVOC" )
 EDGAR_CH4 <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_CH4" )
 EDGAR_N2O <- readdata( "EMISSIONS_LEVEL0_DATA", "EDGAR_N2O" )
 
+GFED_ForestFire_SO2 <- readdata( "EMISSIONS_LEVEL0_DATA", "GFED_ForestFire_SO2" )
+GFED_Deforest_SO2 <- readdata( "EMISSIONS_LEVEL0_DATA", "GFED_Deforest_SO2" )
+GFED_ForestFire_CO <- readdata( "EMISSIONS_LEVEL0_DATA", "GFED_ForestFire_CO" )
+GFED_Deforest_CO <- readdata( "EMISSIONS_LEVEL0_DATA", "GFED_Deforest_CO" )
+GFED_ForestFire_NOx <- readdata( "EMISSIONS_LEVEL0_DATA", "GFED_ForestFire_NOx" )
+GFED_Deforest_NOx <- readdata( "EMISSIONS_LEVEL0_DATA", "GFED_Deforest_NOx" )
+
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 printlog( "Compute share of regional land area by technology" )
@@ -52,6 +59,42 @@ L124.forest_pct_R_Y_AEZ.melt$total_land <- L124.forest_bm2_R_Y$value[ match( vec
 L124.forest_pct_R_Y_AEZ.melt$land_share <- L124.forest_pct_R_Y_AEZ.melt$value / L124.forest_pct_R_Y_AEZ.melt$total_land
 L124.forest_pct_R_Y_AEZ.melt <- subset( L124.forest_pct_R_Y_AEZ.melt, L124.forest_pct_R_Y_AEZ.melt$variable %in% X_historical_years )
 
+printlog( "Compute share of forest fire vs deforestation from GFED")
+GFED_ForestFire_SO2$Non.CO2 <- "SO2"
+GFED_Deforest_SO2$Non.CO2 <- "SO2"
+GFED_ForestFire_CO$Non.CO2 <- "CO"
+GFED_Deforest_CO$Non.CO2 <- "CO"
+GFED_ForestFire_NOx$Non.CO2 <- "NOx"
+GFED_Deforest_NOx$Non.CO2 <- "NOx"
+
+# NMVOC is split into lots of inventories, so using CO for now. TODO: Get NMVOC data
+GFED_ForestFire_NMVOC <- GFED_ForestFire_CO
+GFED_ForestFire_NMVOC$Non.CO2 <- "NMVOC"
+GFED_Deforest_NMVOC <- GFED_Deforest_CO
+GFED_Deforest_NMVOC$Non.CO2 <- "NMVOC"
+
+L124.GFED_ForestFire <- rbind( GFED_ForestFire_SO2, GFED_ForestFire_CO, GFED_ForestFire_NOx, GFED_ForestFire_NMVOC )
+L124.GFED_Deforest <- rbind( GFED_Deforest_SO2, GFED_Deforest_CO, GFED_Deforest_NOx, GFED_Deforest_NMVOC )
+
+L124.GFED_ForestFire.melt <- melt( L124.GFED_ForestFire, id.vars=c( "Country", "Non.CO2" ) )
+L124.GFED_Deforest.melt <- melt( L124.GFED_Deforest, id.vars=c( "Country", "Non.CO2" ) )
+
+L124.GFED_ALL.melt <- L124.GFED_ForestFire.melt
+names( L124.GFED_ALL.melt )[ names( L124.GFED_ALL.melt ) == "value" ] <- "ForestFire"
+L124.GFED_ALL.melt$Deforest <- L124.GFED_Deforest.melt$value[ match( vecpaste( L124.GFED_ALL.melt[ c( "Country", "Non.CO2", "variable" )]),
+                                                           vecpaste( L124.GFED_Deforest.melt[ c( "Country", "Non.CO2", "variable" )] ))]
+
+#Aggregate by region, gas, and year
+L124.GFED_ALL.melt$iso <- EDGAR_nation$iso[ match( L124.GFED_ALL.melt$Country, EDGAR_nation$ISO_A3 )]
+L124.GFED_ALL.melt$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L124.GFED_ALL.melt$iso, iso_GCAM_regID$iso )]   
+L124.GFED_ALL.melt <- aggregate( L124.GFED_ALL.melt[ c( "ForestFire", "Deforest" )], 
+                            by=as.list( L124.GFED_ALL.melt[ c( "GCAM_region_ID", "Non.CO2", "variable" )] ), sum )
+
+L124.GFED_ALL.melt$PctForestFire <- L124.GFED_ALL.melt$ForestFire / ( L124.GFED_ALL.melt$ForestFire + L124.GFED_ALL.melt$Deforest )
+L124.GFED_ALL.melt$PctForestFire[ is.na( L124.GFED_ALL.melt$PctForestFire ) ] <- 1
+L124.GFED_ALL.melt$PctForestFire[ L124.GFED_ALL.melt$PctForestFire == "Inf" ] <- 1
+L124.GFED_ALL.melt$PctDeforest <- 1 - L124.GFED_ALL.melt$PctForestFire
+
 printlog( "Compute EDGAR emissions by region" )
 EDGAR_SO2$Non.CO2 <- "SO2"
 EDGAR_CO$Non.CO2 <- "CO"
@@ -65,10 +108,13 @@ L124.EDGAR$sector <- EDGAR_sector$agg_sector[ match( L124.EDGAR$IPCC, EDGAR_sect
 L124.EDGAR$iso <- EDGAR_nation$iso[ match( L124.EDGAR$ISO_A3, EDGAR_nation$ISO_A3 )]
 L124.EDGAR$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L124.EDGAR$iso, iso_GCAM_regID$iso )]   
 
+# Extrapolate using average of last five years --- 2010 is problematic here because of deforestation
+L124.EDGAR$X2010 <- 0.2 * L124.EDGAR$X2008 + 0.2 * L124.EDGAR$X2007 + 0.2 * L124.EDGAR$X2006 + 0.2 * L124.EDGAR$X2005 + 0.2 * L124.EDGAR$X2004
+
 #Drop unnecessary columns, aggregate by region, and melt
 L124.EDGAR <- L124.EDGAR[ names( L124.EDGAR ) %!in% c( "IPCC.Annex", "World.Region", "ISO_A3", "iso", "Name", "IPCC", "IPCC_description" ) ]
 L124.EDGAR <- na.omit( L124.EDGAR )
-L124.EDGAR <- aggregate( L124.EDGAR[ X_EDGAR_historical_years ], by=as.list( L124.EDGAR[ c( "GCAM_region_ID", "Non.CO2", "sector")]), sum)
+L124.EDGAR <- aggregate( L124.EDGAR[ c( X_EDGAR_historical_years, "X2010" ) ], by=as.list( L124.EDGAR[ c( "GCAM_region_ID", "Non.CO2", "sector")]), sum)
 L124.EDGAR.melt <- melt( L124.EDGAR, id.vars = c( "GCAM_region_ID", "Non.CO2", "sector" ))
 
 #Convert to Tg
@@ -95,46 +141,37 @@ L124.nonco2_tg_R_forest_Y_AEZ.melt$total_emiss <- L124.EDGAR_forest.melt$value[ 
 L124.nonco2_tg_R_forest_Y_AEZ.melt$emissions <- L124.nonco2_tg_R_forest_Y_AEZ.melt$total_emiss * L124.nonco2_tg_R_forest_Y_AEZ.melt$land_share
 L124.nonco2_tg_R_forest_Y_AEZ.melt <- na.omit( L124.nonco2_tg_R_forest_Y_AEZ.melt )
 
+#Split into ForestFire and Deforest
+L124.nonco2_tg_R_forest_Y_AEZ.melt$PctForestFire <- L124.GFED_ALL.melt$PctForestFire[ match( vecpaste( L124.nonco2_tg_R_forest_Y_AEZ.melt[ c( "GCAM_region_ID", "Non.CO2", "variable" )]),
+                                                                                             vecpaste( L124.GFED_ALL.melt[ c( "GCAM_region_ID", "Non.CO2", "variable" )] ))]
+L124.nonco2_tg_R_forest_Y_AEZ.melt$PctDeforest <- L124.GFED_ALL.melt$PctDeforest[ match( vecpaste( L124.nonco2_tg_R_forest_Y_AEZ.melt[ c( "GCAM_region_ID", "Non.CO2", "variable" )]),
+                                                                                             vecpaste( L124.GFED_ALL.melt[ c( "GCAM_region_ID", "Non.CO2", "variable" )] ))]
+
+# If data is missing, assume all emissions are assigned to forest fires. These are easier to calibrate in GCAM.
+L124.nonco2_tg_R_forest_Y_AEZ.melt$PctForestFire[ is.na( L124.nonco2_tg_R_forest_Y_AEZ.melt$PctForestFire ) ] <- 1.0
+L124.nonco2_tg_R_forest_Y_AEZ.melt$PctDeforest[ is.na( L124.nonco2_tg_R_forest_Y_AEZ.melt$PctDeforest ) ] <- 0.0
+
+L124.nonco2_tg_R_forest_Y_AEZ.melt$ForestFire <- L124.nonco2_tg_R_forest_Y_AEZ.melt$emissions * L124.nonco2_tg_R_forest_Y_AEZ.melt$PctForestFire
+L124.nonco2_tg_R_forest_Y_AEZ.melt$Deforest <- L124.nonco2_tg_R_forest_Y_AEZ.melt$emissions * L124.nonco2_tg_R_forest_Y_AEZ.melt$PctDeforest
+
+L124.nonco2_tg_R_forest_Y_AEZ.melt <- L124.nonco2_tg_R_forest_Y_AEZ.melt[ names( L124.nonco2_tg_R_forest_Y_AEZ.melt ) %!in% 
+                                                                            c( "land_share", "total_emiss", "emissions", "PctForestFire", "PctDeforest")]
+names( L124.nonco2_tg_R_forest_Y_AEZ.melt )[ names( L124.nonco2_tg_R_forest_Y_AEZ.melt ) == "variable" ] <- "xyear"
+L124.nonco2_tg_R_forest_Y_AEZ.melt <- melt( L124.nonco2_tg_R_forest_Y_AEZ.melt, id.vars=c( "GCAM_region_ID", "AEZ", "Non.CO2", "xyear" ) )
+names( L124.nonco2_tg_R_forest_Y_AEZ.melt )[ names( L124.nonco2_tg_R_forest_Y_AEZ.melt ) == "variable" ] <- "technology"
+
 #Reshape
-L124.nonco2_tg_R_forest_Y_AEZ <- dcast( L124.nonco2_tg_R_forest_Y_AEZ.melt, GCAM_region_ID + Non.CO2 + AEZ ~ variable, value = c( "emissions" ) )
-
-printlog( "Compute average emissions factors for forest and grassland")
-#These emissions factors will be used from 2005 and beyond
-L124.grass_bm2_Y <- aggregate( L124.grass_bm2_R_Y$value, by=as.list( L124.grass_bm2_R_Y[ c( "variable" ) ] ), sum  )
-L124.forest_bm2_Y <- aggregate( L124.forest_bm2_R_Y$value, by=as.list( L124.forest_bm2_R_Y[ c( "variable" ) ] ), sum  )
-
-L124.nonco2_tg_grass_Y.melt <- aggregate( L124.nonco2_tg_R_grass_Y_AEZ.melt$emissions, by=as.list( L124.nonco2_tg_R_grass_Y_AEZ.melt[ c( "Non.CO2", "variable" ) ] ), sum )
-L124.nonco2_tg_forest_Y.melt <- aggregate( L124.nonco2_tg_R_forest_Y_AEZ.melt$emissions, by=as.list( L124.nonco2_tg_R_forest_Y_AEZ.melt[ c( "Non.CO2", "variable" ) ] ), sum )
-
-L124.nonco2_tgbm2_grass_Y.melt <- L124.nonco2_tg_grass_Y.melt
-names( L124.nonco2_tgbm2_grass_Y.melt )[ names( L124.nonco2_tgbm2_grass_Y.melt ) == "x" ] <- "emissions"
-L124.nonco2_tgbm2_grass_Y.melt$land_area <- L124.grass_bm2_Y$x[ match( L124.nonco2_tgbm2_grass_Y.melt$variable, L124.grass_bm2_Y$variable )]
-L124.nonco2_tgbm2_grass_Y.melt$land_type <- "grassland"
-L124.nonco2_tgbm2_grass_Y.melt$em_fact <- L124.nonco2_tgbm2_grass_Y.melt$emissions / L124.nonco2_tgbm2_grass_Y.melt$land_area
-L124.nonco2_tgbm2_grass_fy.melt <- subset( L124.nonco2_tgbm2_grass_Y.melt, L124.nonco2_tgbm2_grass_Y.melt$variable == paste( "X", final_emiss_year, sep="" ))
-L124.nonco2_tgbm2_grass_fy.melt <- L124.nonco2_tgbm2_grass_fy.melt[ names( L124.nonco2_tgbm2_grass_fy.melt ) %in% c( "Non.CO2", "land_type", "em_fact" )]
-
-L124.nonco2_tgbm2_forest_Y.melt <- L124.nonco2_tg_forest_Y.melt
-names( L124.nonco2_tgbm2_forest_Y.melt )[ names( L124.nonco2_tgbm2_forest_Y.melt ) == "x" ] <- "emissions"
-L124.nonco2_tgbm2_forest_Y.melt$land_area <- L124.forest_bm2_Y$x[ match( L124.nonco2_tgbm2_forest_Y.melt$variable, L124.forest_bm2_Y$variable )]
-L124.nonco2_tgbm2_forest_Y.melt$land_type <- "forest"
-L124.nonco2_tgbm2_forest_Y.melt$em_fact <- L124.nonco2_tgbm2_forest_Y.melt$emissions / L124.nonco2_tgbm2_forest_Y.melt$land_area
-L124.nonco2_tgbm2_forest_fy.melt <- subset( L124.nonco2_tgbm2_forest_Y.melt, L124.nonco2_tgbm2_forest_Y.melt$variable == paste( "X", final_emiss_year, sep="" ))
-L124.nonco2_tgbm2_forest_fy.melt <- L124.nonco2_tgbm2_forest_fy.melt[ names( L124.nonco2_tgbm2_forest_fy.melt ) %in% c( "Non.CO2", "land_type", "em_fact" )]
+L124.nonco2_tg_R_forest_Y_AEZ <- dcast( L124.nonco2_tg_R_forest_Y_AEZ.melt, GCAM_region_ID + Non.CO2 + AEZ + technology ~ xyear, value = c( "value" ) )
 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
 comments.L124.nonco2_tg_R_grass_Y_AEZ <- c( "Grassland fire emissions by GCAM region / land cover type / historical year", "Unit = Tg" )
 comments.L124.nonco2_tg_R_forest_Y_AEZ <- c( "Forest fire emissions by GCAM region / land cover type / historical year", "Unit = Tg" )
-comments.L124.nonco2_tgbm2_grass_fy.melt <- c( "Average grassland fire emissions factors in the final historical year", "Unit = Tg / bm2" )
-comments.L124.nonco2_tgbm2_forest_fy.melt <- c( "Average forest fire emissions factors in the final historical year", "Unit = Tg / bm2" )
 
 #write tables as CSV files
 writedata( L124.nonco2_tg_R_grass_Y_AEZ, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tg_R_grass_Y_AEZ", comments=comments.L124.nonco2_tg_R_grass_Y_AEZ )
 writedata( L124.nonco2_tg_R_forest_Y_AEZ, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tg_R_forest_Y_AEZ", comments=comments.L124.nonco2_tg_R_forest_Y_AEZ )
-writedata( L124.nonco2_tgbm2_grass_fy.melt, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tgbm2_grass_fy.melt", comments=comments.L124.nonco2_tgbm2_grass_fy.melt )
-writedata( L124.nonco2_tgbm2_forest_fy.melt, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tgbm2_forest_fy.melt", comments=comments.L124.nonco2_tgbm2_forest_fy.melt )
 
 # Every script should finish with this line
 logstop()

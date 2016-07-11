@@ -3,7 +3,7 @@ MODULE_PROC_ROOT		<- AGLUPROC_DIR
 
 # -----------------------------------------------------------------------------
 # rename_biocrops: a function for changing the names of "biomass" in selected region/AEZs
-rename_biocrops <- function( data, lookup, data_matchvar, lookup_matchvar, data_var1, data_var2=NA, data_var3 = NA ){
+rename_biocrops <- function( data, lookup, data_matchvar, lookup_matchvar, data_var1, data_var2=NA, data_var3 = NA, data_var4 = NA ){
      data_new <- data
      data_new$ID <- paste( data_new$region, data_new[[data_matchvar]] )
      lookup$ID <- paste( lookup$region, lookup[[lookup_matchvar]] )
@@ -18,7 +18,12 @@ rename_biocrops <- function( data, lookup, data_matchvar, lookup_matchvar, data_
         data_new[ data_new$ID %in% lookup$ID, data_var3 ] <- lookup[
       match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
       data_var3 ] }
+     if( !is.na( data_var4 ) ) {
+        data_new[ data_new$ID %in% lookup$ID, data_var4 ] <- lookup[
+      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
+      data_var4 ] }
      data_new <- data_new[ names( data_new ) != "ID" ]   
+     data_new <- data_new[ data_new[[ data_matchvar ]] != "delete", ]
      return (data_new )
      }            
 
@@ -103,6 +108,9 @@ add_agtech_names <- function( data ){
 	data[[agsupp]] <- data[[C]]
 	data[[agsubs]] <- paste( data[[C]], data[[AEZ]], sep = AEZ_delimiter )
 	data[[agtech]] <- paste( data[[C]], data[[AEZ]], sep = AEZ_delimiter )
+	if( irr %in% names( data ) ){
+		data[[agtech]] <- paste( data[[C]], data[[AEZ]], data[[irr]], sep = AEZ_delimiter )
+	}	
 	return( data )
 }
 
@@ -125,6 +133,7 @@ add_node_leaf_names <- function( data, nesting_table, leaf_name, LT_name = LT, L
 	if( !is.na( LN4 ) ){ data[[LN4]] <- nesting_table[[LN4]][ match( data[[LT_name]], nesting_table[[leaf_name]] ) ] }
 	data[[leaf_name]] <- data[[LT_name]]
 	if( append_AEZ == T ){ data <- append_AEZ( data, var1 = leaf_name, var2 = LN1, var3 = LN2, var4 = LN3, var5 = LN4 ) }
+	if( irr %in% names( data ) ) { data[[leaf_name]] <- paste( data[[leaf_name]], data[[irr]], sep = AEZ_delimiter ) }
 	return( data )
 }
 

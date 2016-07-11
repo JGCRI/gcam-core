@@ -142,7 +142,7 @@ void CarbonLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
         // multiplied by the carbon price and the interest rate.
         profitRate = ( incrementalAboveCDensity * mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
             + incrementalBelowCDensity * mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
-            * carbonPrice * ( mInterestRate - mCarbonPriceIncreaseRate[ aPeriod ] )* tC_in_TgC;
+            * carbonPrice * ( mSocialDiscountRate - mCarbonPriceIncreaseRate[ aPeriod ] )* tC_in_TgC;
     }
 
     mProfitRate[ aPeriod ] = profitRate;

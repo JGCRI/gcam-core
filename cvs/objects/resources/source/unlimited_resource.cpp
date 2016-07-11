@@ -215,7 +215,7 @@ void UnlimitedResource::initCalc( const string& aRegionName,
     }
     
     // Set the fixed price if a valid one was read in.
-    if( mFixedPrices[ aPeriod ] > 0 ) {
+    if( mFixedPrices[ aPeriod ].isInited() &&  mFixedPrices[ aPeriod ] >= 0 ) {
         marketplace->setPrice( mName, aRegionName, mFixedPrices[ aPeriod ], aPeriod );
     }
 }

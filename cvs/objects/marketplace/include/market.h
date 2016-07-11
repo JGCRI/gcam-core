@@ -145,7 +145,7 @@ public:
     void store_original_price();
     void restore_original_price();
 
-    void setSolveMarket( const bool doSolve );
+    virtual void setSolveMarket( const bool doSolve );
     virtual bool meetsSpecialSolutionCriteria() const = 0;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;

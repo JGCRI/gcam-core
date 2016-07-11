@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BatchRunner xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="batch_runner.xsd">
+	<ComponentSet name="SSP Harmonized">
+		<FileSet name="SSP4">
+			<!-- SOCIOECONOMICS -->
+			<Value name="socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_SSP4.xml</Value>
+			
+			<!-- INDUSTRY -->
+			<Value name="ind">../input/gcam-data-system/xml/energy-xml/industry_incelas_ssp4.xml</Value>		
+			<Value name="cement">../input/gcam-data-system/xml/energy-xml/cement_incelas_ssp4.xml</Value>
+			
+			<!-- TRANSPORTATION -->
+			<Value name="trn">../input/extra/transportation_UCD_SSP3.xml</Value>
+			
+			<!-- BUILDINGS -->
+			<Value name="bld">../input/gcam-data-system/xml/energy-xml/building_SSP4.xml</Value>
+			
+			<!-- AGLU -->			
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/food_SSP4.xml</Value>
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/ag_prodchange_ssp4_IRR.xml</Value>
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/pasture_ssp34.xml</Value>
+			
+			<!-- WIND -->
+			<Value name="wind">../input/gcam-data-system/xml/energy-xml/wind_adv.xml</Value>
+			
+			<!-- SOLAR -->
+			<Value name="solar">../input/gcam-data-system/xml/energy-xml/solar_adv.xml</Value>
+			
+			<!-- GEOTHERMAL -->
+			<Value name="geothermal">../input/gcam-data-system/xml/energy-xml/geo_adv.xml</Value>
+			<Value name="geothermal">../input/gcam-data-system/xml/energy-xml/geo_tech_adv.xml</Value>
+			
+			<!-- NUCLEAR -->
+			<Value name="nuclear">../input/gcam-data-system/xml/energy-xml/nuclear_adv.xml</Value>
+						
+			<!-- CCS -->
+			<Value name="ccs_supply">../input/gcam-data-system/xml/energy-xml/ccs_supply_high.xml</Value>
+			
+			<!-- FOSSIL -->
+			<Value name="resource_extraction">../input/gcam-data-system/xml/energy-xml/resources_SSP4.xml</Value>	
+			
+			<!-- TRADE -->			
+			<Value name="trade">../input/gcam-data-system/xml/aglu-xml/ssp4_trade.xml</Value>
+			<Value name="bio_trade">../input/gcam-data-system/xml/aglu-xml/ssp4_bio_trade.xml</Value>
+			
+			<!-- NON-CO2 -->
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp34_emissions_factors.xml</Value>
+		</FileSet>
+		
+		<FileSet name="SSP5">
+			<!-- SOCIOECONOMICS -->
+			<Value name="socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_SSP5.xml</Value>
+			
+			<!-- INDUSTRY -->
+			<Value name="ind">../input/gcam-data-system/xml/energy-xml/industry_incelas_ssp5.xml</Value>		
+			<Value name="cement">../input/gcam-data-system/xml/energy-xml/cement_incelas_ssp5.xml</Value>
+			
+			<!-- TRANSPORTATION -->
+			<Value name="trn">../input/extra/transportation_UCD_SSP5.xml</Value>
+			
+			<!-- BUILDINGS -->
+			<Value name="bld">../input/gcam-data-system/xml/energy-xml/building_SSP5.xml</Value>
+			
+			<!-- AGLU -->
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/food_SSP5.xml</Value>
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/ag_prodchange_ssp5_IRR.xml</Value>
+			
+			<!-- CCS -->
+			<Value name="ccs_supply">../input/gcam-data-system/xml/energy-xml/ccs_supply_high.xml</Value>
+			
+			<!-- FOSSIL -->
+			<Value name="resource_extraction">../input/gcam-data-system/xml/energy-xml/resources_SSP5.xml</Value>
+			
+			<!-- NON-CO2 -->
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp15_emissions_factors.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP5.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP5_IRR.xml</Value>
+		</FileSet>
+		
+		<FileSet name="SSP1">
+			<!-- SOCIOECONOMICS -->
+			<Value name="socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_SSP1.xml</Value>
+			
+			<!-- INDUSTRY -->
+			<Value name="ind">../input/gcam-data-system/xml/energy-xml/industry_incelas_ssp1.xml</Value>		
+			<Value name="cement">../input/gcam-data-system/xml/energy-xml/cement_incelas_ssp1.xml</Value>
+			
+			<!-- TRANSPORTATION -->
+			<Value name="trn">../input/extra/transportation_UCD_SSP1.xml</Value>
+			
+			<!-- BUILDINGS -->
+			<Value name="bld">../input/gcam-data-system/xml/energy-xml/building_SSP1.xml</Value>
+			
+			<!-- AGLU -->
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/food_SSP1.xml</Value>
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/ag_prodchange_ssp1_IRR.xml</Value>
+			
+			<!-- WIND -->
+			<Value name="wind">../input/gcam-data-system/xml/energy-xml/wind_adv.xml</Value>
+			
+			<!-- SOLAR -->
+			<Value name="solar">../input/gcam-data-system/xml/energy-xml/solar_adv.xml</Value>
+			
+			<!-- GEOTHERMAL -->
+			<Value name="geothermal">../input/gcam-data-system/xml/energy-xml/geo_adv.xml</Value>
+			<Value name="geothermal">../input/gcam-data-system/xml/energy-xml/geo_tech_adv.xml</Value>
+			
+			<!-- NUCLEAR -->
+			<Value name="nuclear">../input/gcam-data-system/xml/energy-xml/nuclear_low.xml</Value>
+			
+			<!-- CCS -->
+			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/ccs_supply_lowest.xml</Value>
+			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/no_offshore_ccs.xml</Value>
+			
+			<!-- FOSSIL -->
+			<Value name="resource_extraction">../input/gcam-data-system/xml/energy-xml/resources_SSP1.xml</Value>
+			
+			<!-- RENEWABLES -->		
+			<Value name="share_weights">../input/extra/renewable_shareweights_ssp1_32.xml</Value>
+			
+			<!-- NON-CO2 -->
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp15_emissions_factors.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP1.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP1_IRR.xml</Value>
+		</FileSet>
+		
+		<FileSet name="SSP2">
+			<!-- SOCIOECONOMICS -->
+			<Value name="socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_SSP2.xml</Value>
+			
+			<!-- INDUSTRY -->
+			<Value name="ind">../input/gcam-data-system/xml/energy-xml/industry_incelas_ssp2.xml</Value>		
+			<Value name="cement">../input/gcam-data-system/xml/energy-xml/cement_incelas_ssp2.xml</Value>
+			
+			<!-- TRANSPORTATION -->
+			<Value name="trn">../input/extra/transportation_UCD_SSP2.xml</Value>
+			
+			<!-- AGLU -->
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/food_SSP2.xml</Value>
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/ag_prodchange_ssp2_IRR.xml</Value>
+			
+			<!-- CCS -->
+			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/ccs_supply_low.xml</Value>
+			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/no_offshore_ccs.xml</Value>
+			
+			<!-- FOSSIL -->
+			<Value name="resource_extraction">../input/gcam-data-system/xml/energy-xml/resources_SSP2.xml</Value>
+			
+			<!-- NON-CO2 -->
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp2_emissions_factors.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP2.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/MACC_TC_SSP2_IRR.xml</Value>
+			
+		</FileSet>
+		
+		<FileSet name="SSP3">
+			<!-- SOCIOECONOMICS -->
+			<Value name="socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_SSP3.xml</Value>
+			
+			<!-- INDUSTRY -->
+			<Value name="ind">../input/gcam-data-system/xml/energy-xml/industry_incelas_ssp3.xml</Value>		
+			<Value name="cement">../input/gcam-data-system/xml/energy-xml/cement_incelas_ssp3.xml</Value>
+			
+			<!-- TRANSPORTATION -->
+			<Value name="trn">../input/extra/transportation_UCD_SSP3.xml</Value>
+			
+			<!-- BUILDINGS -->
+			<Value name="bld">../input/gcam-data-system/xml/energy-xml/building_SSP3.xml</Value>
+			
+			<!-- AGLU -->
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/food_SSP3.xml</Value>
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/ag_prodchange_ssp3_IRR.xml</Value>
+			<Value name="aglu">../input/gcam-data-system/xml/aglu-xml/pasture_ssp34.xml</Value>
+			
+			<!-- WIND -->
+			<Value name="wind">../input/gcam-data-system/xml/energy-xml/wind_low.xml</Value>
+			
+			<!-- SOLAR -->
+			<Value name="solar">../input/gcam-data-system/xml/energy-xml/solar_low.xml</Value>
+			
+			<!-- GEOTHERMAL -->
+			<Value name="geothermal">../input/gcam-data-system/xml/energy-xml/geo_low.xml</Value>
+			
+			<!-- NUCLEAR -->
+			<Value name="nuclear">../input/gcam-data-system/xml/energy-xml/nuclear_low.xml</Value>
+			
+			<!-- BIO TRANSFORMATION -->
+			<Value name="bio">../input/gcam-data-system/xml/energy-xml/en_transformation_low.xml</Value>
+			<Value name="bio">../input/gcam-data-system/xml/energy-xml/elec_bio_low.xml</Value>
+			
+			<!-- FOSSIL -->
+			<Value name="resource_extraction">../input/gcam-data-system/xml/energy-xml/resources_SSP3.xml</Value>
+			
+			<!-- TRADE -->
+			<Value name="bio_trade">../input/gcam-data-system/xml/aglu-xml/ssp3_bio_trade.xml</Value>
+			
+			<!-- CCS -->
+			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/ccs_supply_low.xml</Value>
+			<Value name="ccs">../input/gcam-data-system/xml/energy-xml/no_offshore_ccs.xml</Value>
+			<!--Value name="ccs">../input/gcam-data-system/xml/energy-xml/no_bio_ccs.xml</Value-->
+			
+			<!-- NON-CO2 -->
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/delete_gdp_control.xml</Value>
+			<Value name="nonco2">../input/gcam-data-system/xml/emissions-xml/ssp34_emissions_factors.xml</Value>
+		</FileSet>		
+	</ComponentSet>
+	
+</BatchRunner>
+
+

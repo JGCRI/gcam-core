@@ -184,11 +184,44 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
     return isNewMarket;
 }
 
+/*!
+ * \brief Create a market that links to another market.
+ * \details This function creates a market using the same symatics as createMarket
+ *          however differs in two key ways:
+ *          - The market type is always LinkedMarket and the parameter linkedMarket along
+ *            with the regionName will be used to look up the good to link to.
+ *          - We allow these types of markets to change over time.  That is if the aStartPeriod
+ *            parameter is set (non negative value) then this call may potentially override a
+ *            previously set market with one that links elsewhere.
+ * \param regionName The region of the policy for which to create a market.
+ * \param marketName The market region for which to create a market. This varies from the
+ *                   regionName, it can be global, a multi-region market, or the same as
+ *                   the region name.
+ * \param goodName The good for which to create a market.
+ * \param linkedGoodName The good which in conjunction with regionName will be used to lookup
+ *                       which market is linked to.
+ * \param aStartPeriod If a non-negative value is the period in which a linked market may
+ *                     override a previously set market to effectively switch markets over time.
+ * \return If a new market was created.
+ */
 bool Marketplace::createLinkedMarket( const string& regionName, const string& marketName,
-                                      const string& goodName, const string& linkedMarket )
+                                      const string& goodName, const string& linkedGoodName,
+                                      const int aStartPeriod )
 {
     /*! \pre Region name, market name, sector name, and linked good name must be non null. */
-    assert( !regionName.empty() && !marketName.empty() && !goodName.empty() && !linkedMarket.empty() );
+    assert( !regionName.empty() && !marketName.empty() && !goodName.empty() && !linkedGoodName.empty() );
+
+    /*!
+     * \warning Changing marketName and changing a market over time may have unintended consequences
+     *          instead we reccommend using regional markets when a user wants to change the linked
+     *          market over time.
+     */
+    if( aStartPeriod < 0 && regionName != marketName ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Changing regional markets and linking to different markets over time is not reccommend." << endl;
+        mainLog << "A safer appraoch would be to use regional markets in this use case." << endl;
+    }
 
     // Create the index within the market locator.
     const int uniqueNumber = static_cast<int>( markets.size() );
@@ -197,23 +230,37 @@ bool Marketplace::createLinkedMarket( const string& regionName, const string& ma
     // If the market number is the unique number we passed it, the market did not already exist and 
     // we should create the market objects, one per period.
     const bool isNewMarket = ( marketNumber == uniqueNumber );
-    if( isNewMarket ){
-        const int linkedMarketNumber = mMarketLocator->getMarketNumber( regionName, linkedMarket );
-        if( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Linked market "<< goodName << " in " << regionName << " could not be linked to " << linkedMarket << endl;
-        }
-        vector<Market*> tempVector( scenario->getModeltime()->getmaxper() );
-        for( unsigned int i = 0; i < tempVector.size(); i++ ){
+
+    // Find the market to link to.
+    const int linkedMarketNumber = mMarketLocator->getMarketNumber( regionName, linkedGoodName );
+    if( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Linked market "<< goodName << " in " << regionName << " could not be linked to " << linkedGoodName << endl;
+    }
+    // We check if the default value for start year is found (-1).  If this is a new market then
+    // we assume the user wanted to link for all period.  Otherwise we must assume this linked policy
+    // is simply adding it's region to the market.
+    if( isNewMarket ) {
+        vector<Market*> tempVector( scenario->getModeltime()->getmaxper(), 0 );
+        for( unsigned int i = max( aStartPeriod, 0 ); i < tempVector.size(); i++ ){
             tempVector[ i ] = new LinkedMarket( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ? 0
-                                                : markets[ linkedMarketNumber ][ i ], goodName, marketName, i );
+                    : markets[ linkedMarketNumber ][ i ], goodName, marketName, i );
         }
         markets.push_back( tempVector );
     }
+    else if( aStartPeriod > 0 ) {
+        vector<Market*> tempVector = markets[ marketNumber ];
+        for( unsigned int i = aStartPeriod; i < tempVector.size(); i++ ){
+            delete tempVector[ i ];
+            tempVector[ i ] = new LinkedMarket( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ? 0
+                    : markets[ linkedMarketNumber ][ i ], goodName, marketName, i );
+        }
+        markets[ marketNumber ] = tempVector;
+    }
     
     // Add the region onto the market.
-    for( unsigned int i = 0; i < markets[ marketNumber ].size(); i++ ) {
+    for( unsigned int i = max( aStartPeriod, 0 ); i < markets[ marketNumber ].size(); i++ ) {
         markets[ marketNumber ][ i ]->addRegion( regionName );
     }
     // Return whether we were required to create a new market.

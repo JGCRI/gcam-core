@@ -90,7 +90,7 @@ public:
     // DefaultVisitor methods
     virtual void startVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod );
     
-    void completeInit();
+    void completeInit( const double aPrivateDiscountRateLand  );
     
     void calc( const int aPeriod, const int aEndYear );
     

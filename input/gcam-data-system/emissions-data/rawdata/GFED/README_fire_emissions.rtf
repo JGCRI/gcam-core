@@ -1,0 +1,64 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf210
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\froman\fcharset0 Times-Roman;\f2\fnil\fcharset0 Menlo-Regular;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue233;}
+\margl1440\margr1440\vieww10800\viewh8360\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 README file for greenhouse gas and pollutant emission estimates by country.\
+\
+Data extracted in February 2015\
+Contact: Yannick, 
+\f1 Yannick.LePage@pnnl.gov\
+Extracted with Python, code available on request but not properly documented. \
+
+\f0 \
+\'97\'97\'97\
+\ul Fire types\ulnone :\
+Excel files are named according to the type of fire for which emissions are reported:\
+TEMF: Temperate forest fires\
+BORF: Boreal forest fires\
+DEFO: Tropical deforestation fires\
+DEGR: Tropical degradation fires (non-deforestation fires)\
+ALLFOREST: all non-deforestation fires (TEMF + BORF + DEGR)\
+\
+Other fire types are available for extraction if needed: agricultural fires, peat fires and savanna fires.\
+\
+\'97\'97\'97\
+\ul Pollutants\
+\ulnone Each excel file contains one sheet per pollutant, each named with the pollutant acronym.\
+The file GFED4_Emission_Factors.xlsx gives further details on these pollutants and their emission factors per gram of burned dry matter. \
+List of pollutants: 
+\f2\fs22 \CocoaLigature0 ['C', 'CO2', 'CO', 'CH4', 'NMHC', 'H2', 'NOx', 'N2O', 'PM2.5','TPM','TC', 'OC', 'BC', 'SO2', 'C2H6', 'CH3OH', 'C2H5OH', 'C3H8', 'C2H2','C2H4', 'C3H6', 'C5H8', 'C10H16', 'C7H8', 'C6H6', 'C8H10', 'Toluene_lump', 'Higher_Alkenes', 'Higher_Alkanes', 'CH2O', 'C2H4O', 'C3H6O', 'NH3', 'C2H6S', 'HCN', 'HCOOH', 'CH3COOH', 'ALK4', 'MEK']
+\f0\fs24 \CocoaLigature1 \
+\
+\'97\'97\'97\
+\ul ISO 3 Countries and Time series\
+\ulnone In each sheet, the data are organized per country (rows) and year (columns), with their respective value in the headers. Country name is the ISO3 3-letter acronym.\
+Emissions are annual from 1996 to 2013 (note: there\'92s a 1995 column, but it\'92s all zeros).\
+\
+\'97 \'97 \'97 \
+\ul Units\
+\ulnone All emission data are provided as 
+\b Tons emitted per country per year
+\b0 .\
+\
+\'97 \'97 \'97 \
+\ul References\
+\ulnone We use the GFEDv4 data. Note that emission data are preliminary (full released date end of 2014 but apparently delayed). More information on the GFED website: http://www.globalfiredata.org/data.html\
+\
+Publications:\
+\pard\pardeftab720
+
+\f1 \cf0 van der Werf, Guido R., et al. "Global fire emissions and the contribution of deforestation, savanna, forest, agricultural, and peat fires (1997\'962009)." 
+\i Atmospheric Chemistry and Physics
+\i0  10.23 (2010): 11707-11735.\
+
+\i \
+Andreae, M. O., and P. Merlet (2001), Emission of trace gases and aerosols from biomass burning, Global Biogeochem. Cycles, 15(4), 955\'96966, doi:{\field{\*\fldinst{HYPERLINK "http://dx.doi.org/10.1029/2000GB001382"}}{\fldrslt \cf2 \ul \ulc2 10.1029/2000GB001382}}.
+\f0\i0 \
+
+\f1\i \
+Giglio, L., J. T. Randerson, and G. R. van der Werf, (2013), Analysis of daily, monthly, and annual burned area using the fourth-generation global fire emissions database (GFED4) J. Geophys. Res. Biogeosci., 118, 317\'96328, doi:{\field{\*\fldinst{HYPERLINK "http://dx.doi.org/10.1002/jgrd.20042"}}{\fldrslt \cf2 \ul \ulc2 10.1002/jgrg.20042}}.\
+\
+Randerson, J. T., Y. Chen, G. R. van derWerf, B. M. Rogers, and D. C. Morton (2012), Global burned area and biomass burning emissions from small fires, J. Geophys. Res., 117, G04012, doi:{\field{\*\fldinst{HYPERLINK "http://dx.doi.org/10.1029/2012JG002128"}}{\fldrslt \cf2 \ul \ulc2 10.1029/2012JG002128}}.}

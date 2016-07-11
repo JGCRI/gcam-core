@@ -77,7 +77,7 @@ public:
 
     virtual const std::string& getXMLName() const;
 
-    virtual void completeInit();
+    virtual void completeInit( const double aPrivateDiscountRateLand  );
 
     virtual double getActualAboveGroundCarbonDensity( const int aYear ) const;
     
@@ -109,7 +109,7 @@ protected:
     double mAvgBelowGroundCarbon;
 	
     //! Age at maturity.  This is used to grow forests slowly.
-    int mMatureAge;      
+    int mMatureAge;
     
 };
 

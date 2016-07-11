@@ -1,0 +1,15 @@
+# File: A_FoodDemand_SSPs.csv,,,
+# Description: sets the satiation level & maximum increase in per capita food in the SSPs,,,
+# Original source: NA,,,
+# ----------,,,
+scenario,GCAM_demand,satiation.level,max.mult
+SSP1,crops,10000,100
+SSP2,crops,10000,100
+SSP3,crops,10000,100
+SSP4,crops,10000,100
+SSP5,crops,10000,100
+SSP1,meat,1000,1.104080803
+SSP2,meat,1100,1.104080803
+SSP3,meat,1400,1.104080803
+SSP4,meat,1100,1.104080803
+SSP5,meat,1400,1.104080803
