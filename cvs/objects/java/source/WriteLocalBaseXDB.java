@@ -102,6 +102,10 @@ public class WriteLocalBaseXDB implements Runnable {
         mDBLocation = aDBLocation;
         mDocName = aDocName;
 
+	if ( aInMemoryDB ) {
+	    System.out.println("Opening in-memory database");
+	}
+	
         // Open the database
         openDB( aInMemoryDB, aOpenDBWait );
     }
