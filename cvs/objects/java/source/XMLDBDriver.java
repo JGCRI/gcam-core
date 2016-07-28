@@ -44,8 +44,8 @@ import java.io.File;
  * via the receiveDataFromGCAM method.  When all data has been sent the finish
  * method is called which will wait until the BaseX has finished adding all of
  * the data.  Users can optionally configure this class to:
- *  - Apply a filter on the XML as it is stremed into the database.
- *  - Run a Model Interface batch file to exectue queries afer a GCAM scenario has
+ *  - Apply a filter on the XML as it is streamed into the database.
+ *  - Run a Model Interface batch file to execute queries after a GCAM scenario has
  *    finished running.
  *  - Create the database in memory so that they can be queries and discarded without
  *    the performance penalty to writing thmm to disk.
@@ -73,7 +73,7 @@ public class XMLDBDriver {
      * A class that can be used to run queries against the BaseX DB.
      * If null no queries will be run. These will wait to run until finalizeAndClose
      * is called so that we can ensure that all data has been appended to the database
-     * and GCASM has cleared out some memory.
+     * and GCAM has cleared out some memory.
      */
     private RunQueries mRunQueries = null;
 
@@ -106,9 +106,10 @@ public class XMLDBDriver {
             String filterScript = config.getProperty( "filter-script", "" );
             mFilterOutput = filterScript.isEmpty() ? null : new FilterOutput( filterScript );
 
-            // optionally run a batch batch query (off by default)
+            // optionally run a batch query (off by default), with output optionally routed to a log file
+	    String batchLog  = config.getProperty( "batch-logfile", "" );
             String batchFile = config.getProperty( "batch-queries", "" );
-            mRunQueries = batchFile.isEmpty() ? null : new RunQueries( batchFile );
+            mRunQueries = batchFile.isEmpty() ? null : new RunQueries( batchFile, batchLog );
 
             // connect up the XML streams so that it passes from:
             // GCAM -> Filter (if it exists) -> DB

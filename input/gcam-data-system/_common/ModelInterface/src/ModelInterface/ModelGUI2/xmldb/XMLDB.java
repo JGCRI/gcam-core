@@ -146,6 +146,14 @@ public class XMLDB {
         // and use it as the base path for finding all collections/containers
         System.setProperty("org.basex.DBPATH", path);
 
+        // TODO: worry about spaces?
+		// spaces in a database name is illegal for a URI and must be escaped by a %20
+		// TODO: any other invalid URI characters are not taken care of here,  need to find a 
+		// good util to take care of this but there does not seem to be one in the standard
+		// java api
+		final String contNameUnmodified = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
+		contName = contNameUnmodified.replaceAll(" ", "%20");
+
         if(contextIn == null) {
             context = new Context();
             // Set some default behaviors such as no indexing etc
@@ -157,21 +165,11 @@ public class XMLDB {
             context.options.set(MainOptions.ADDCACHE, true);
             context.options.set(MainOptions.INTPARSE, true);
         } else {
+            // We are just going to adopt an already open database context
             context = contextIn;
-        }
-
-        // TODO: worry about spaces?
-		// spaces in a database name is illegal for a URI and must be escaped by a %20
-		// TODO: any other invalid URI characters are not taken care of here,  need to find a 
-		// good util to take care of this but there does not seem to be one in the standard
-		// java api
-		final String contNameUnmodified = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
-		contName = contNameUnmodified.replaceAll(" ", "%20");
-
-        // In memory databases can not be re-opened so just return now
-        if(context.options.get(MainOptions.MAINMEM)) {
             return;
         }
+
 
         /*
         // The Check command will opent the container if it already exists or create

@@ -544,7 +544,7 @@ public class BatchWindow {
                 fos.close();
                 if(numErrors == 0) {
                     InterfaceMain.getInstance().showMessageDialog(
-                            "Sucessfully ran batch query",
+                            "Successfully ran batch query",
                             "Batch Query", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // warn the users that some queries had errors
@@ -628,7 +628,7 @@ public class BatchWindow {
                 outputStream.close();
                 if(numErrors == 0) {
                     InterfaceMain.getInstance().showMessageDialog(
-                            "Sucessfully ran batch query",
+                            "Successfully ran batch query",
                             "Batch Query", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // warn the users that some queries had errors

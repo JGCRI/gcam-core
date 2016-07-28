@@ -33,6 +33,7 @@ import java.util.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFrame;
@@ -50,6 +51,10 @@ import javax.swing.undo.CannotRedoException;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import joptsimple.OptionException;
 
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
 import ModelInterface.DMsource.DMViewer;
@@ -135,37 +140,72 @@ public class InterfaceMain implements ActionListener {
                     InterfaceMain.getInstance().showMessageDialog(e, "Unexpected Error", 
                         JOptionPane.ERROR_MESSAGE);
                 }
-				// still print the stack trace to the console for debugging
-				e.printStackTrace();
+		// still print the stack trace to the console for debugging
+		e.printStackTrace();
 			}
-		});
+		    });
 
-        if(args.length > 0 && args.length != 2) {
-            System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
-            return;
-        } else if(args.length == 2) {
-            if(args[0].equals("-b")) {
-                System.setProperty("java.awt.headless", "true");
-                System.out.println("Running headless? "+GraphicsEnvironment.isHeadless());
-                File batchFile = new File(args[1]);
-                main  = new InterfaceMain();
+		// -b <batch file> -l <log file>
+		//OptionParser parser = new OptionParser("b:l:");
+		OptionParser parser = new OptionParser();
+		parser.accepts("help", "print usage information").forHelp();
+		parser.accepts("b", "XML batch file to process").withRequiredArg();
+		parser.accepts("l", "log file into which to redirect ModelInterface output").withRequiredArg();
+		
+		OptionSet opts = null;
+		try {
+		    opts = parser.parse(args);
+		} catch (OptionException e) {
+		    System.err.println(e);
+		    System.exit(1);
+		}
 
-                // Construct the subset of menu adders that are also BatchRunner while
-                // avoiding creating any GUI components
-                // TODO: avoid code duplication
-                final MenuAdder dbView = new DbViewer();
-                final MenuAdder inputView = new InputViewer();
-                main.menuAdders = new ArrayList<MenuAdder>(2);
-                main.menuAdders.add(dbView);
-                main.menuAdders.add(inputView);
+		if (opts.has("help")) {
+		    try {
+			System.out.println("Usage: java -jar ModelInterface.jar -b <batch file> -l <log file>");
+			parser.printHelpOn(System.out);
+		    } catch (Exception e) {
+			System.err.println("Failed to write usage message");
+			System.exit(1);
+		    }
+		    System.exit(1);
+		}
 
-                // Run the batch file
-                main.runBatch(batchFile);
-            } else {
-                System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
-            }
-            return;
-        }
+		if (opts.has("b")) {
+		    String filename = (String) opts.valueOf("b");
+		    System.out.println("InterfaceMain: batchFile: " + filename);
+
+		    System.setProperty("java.awt.headless", "true");
+		    System.out.println("Running headless? "+GraphicsEnvironment.isHeadless());
+		    File batchFile = new File(filename);
+		    main  = new InterfaceMain();
+
+		    // Construct the subset of menu adders that are also BatchRunner while
+		    // avoiding creating any GUI components
+		    // TODO: avoid code duplication
+		    final MenuAdder dbView = new DbViewer();
+		    final MenuAdder inputView = new InputViewer();
+		    main.menuAdders = new ArrayList<MenuAdder>(2);
+		    main.menuAdders.add(dbView);
+		    main.menuAdders.add(inputView);
+
+		    PrintStream stdout = System.out;
+		    if (opts.has("l")) {
+			String logFile = (String) opts.valueOf("l");
+			// System.out.println("InterfaceMain: Directing stdout to " + logFile);
+			try {
+			    FileOutputStream log = new FileOutputStream(logFile);
+			    System.setOut(new PrintStream(log));
+ 			} catch (Exception e) {
+			    System.err.println("Failed to open log file '" + logFile + "' for writing: " + e);
+			}
+		    }
+
+		    // Run the batch file
+		    main.runBatch(batchFile);
+		    System.setOut(stdout);
+		    return;
+		}
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -173,7 +213,6 @@ public class InterfaceMain implements ActionListener {
 			// warn the user.. should be ok to keep going
 			System.out.println("Error setting look and feel: " + e);
 		}
-
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
