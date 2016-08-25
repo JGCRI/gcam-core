@@ -91,9 +91,11 @@ L227.AgCoef_Irr_Water_by <- data.frame( region = L227.Region_Commodity_Yby_AEZ$r
       AgProductionTechnology = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, "IRR", sep = AEZ_delimiter ),
       year = L227.Region_Commodity_Yby_AEZ$year,
       minicam.energy.input = Irr_Cons_name,
-      coefficient = L227.Blue_IRR_IO_R_C_Y_AEZ.melt$value[
-         match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
+      coefficient = round(
+         L227.Blue_IRR_IO_R_C_Y_AEZ.melt$value[
+            match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
                 vecpaste( L227.Blue_IRR_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ],
+         digits_calOutput ),
       stringsAsFactors = F )
 # Note that the R_C_AEZ tables don't have all non-applicable combinations written out, so missing values are generated
 # These are removed later on
@@ -104,22 +106,26 @@ L227.AgCoef_BioIrr_Water_by <- data.frame( region = L227.Region_Commodity_Yby_AE
       AgSupplySubsector = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, sep = AEZ_delimiter ),
       AgProductionTechnology = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, "IRR", sep = AEZ_delimiter ),
       year = L227.Region_Commodity_Yby_AEZ$year,
-      minicam.energy.input = Irr_Cons_name,
-      coefficient = L227.Bio_IRR_IO_R_C_Y_AEZ.melt$value[
-         match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
-                vecpaste( L227.Bio_IRR_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ],
+      minicam.energy.input = Bio_Cons_name,
+      coefficient = round(
+         L227.Bio_IRR_IO_R_C_Y_AEZ.melt$value[
+            match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
+                   vecpaste( L227.Bio_IRR_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ],
+         digits_calOutput ),
       stringsAsFactors = F )
 
 #Table L227.AgCoef_BioWater for rainfed crops
 L227.AgCoef_BioRfd_Water_by <- data.frame( region = L227.Region_Commodity_Yby_AEZ$region,
       AgSupplySector = L227.Region_Commodity_Yby_AEZ$GCAM_commodity,
       AgSupplySubsector = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, sep = AEZ_delimiter ),
-      AgProductionTechnology = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, "IRR", sep = AEZ_delimiter ),
+      AgProductionTechnology = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, "RFD", sep = AEZ_delimiter ),
       year = L227.Region_Commodity_Yby_AEZ$year,
-      minicam.energy.input = Irr_Cons_name,
-      coefficient = L227.Bio_RFD_IO_R_C_Y_AEZ.melt$value[
-         match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
-                vecpaste( L227.Bio_RFD_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ],
+      minicam.energy.input = Bio_Cons_name,
+      coefficient = round(
+         L227.Bio_RFD_IO_R_C_Y_AEZ.melt$value[
+            match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
+                   vecpaste( L227.Bio_RFD_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ],
+         digits_calOutput ),
       stringsAsFactors = F )
 
 #Future periods
