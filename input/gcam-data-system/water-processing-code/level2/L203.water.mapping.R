@@ -26,6 +26,7 @@ sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "WATER_ASSUMPTIONS", "A_water_data", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
+L165.ag_IrrEff_R <- readdata("AGLU_LEVEL1_DATA", "L165.ag_IrrEff_R")
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A03.sector <- readdata( "WATER_ASSUMPTIONS", "A03.sector" )
 
@@ -33,14 +34,15 @@ A03.sector <- readdata( "WATER_ASSUMPTIONS", "A03.sector" )
 
 #2. Build tables
 # Make a table with all of the possible mapping sectors with shares
-L203.mapping_nonirr <- A03.sector[ A03.sector[[water_sector]] != "Irrigation", ]
+L203.mapping_nonirr <- A03.sector[ A03.sector[[water_sector]] %in% nonirr_water_sectors, ]
 L203.mapping_nonirr[[AEZ]] <- NA
-L203.mapping_irr <- A03.sector[ A03.sector[[water_sector]] == "Irrigation", ]
+L203.mapping_irr <- A03.sector[ A03.sector[[water_sector]] %in% irr_water_sector, ]
 L203.mapping_irr.orig_size <- nrow( L203.mapping_irr )
 L203.mapping_irr <- L203.mapping_irr[ rep( 1:L203.mapping_irr.orig_size, times=length( AEZs ) ), ]
 # use just AEZ numbers to avoid pasting AEZAEZ in get_water_inputs_for_mapping
 L203.mapping_irr[[AEZ]] <- sort( rep( 1:length( AEZs ), times=L203.mapping_irr.orig_size ) )
 L203.mapping_all <- rbind( L203.mapping_nonirr, L203.mapping_irr )
+L203.mapping_all$coefficient <- 1
 L203.mapping_all[[water_type]] <- water_C
 L203.mapping_all.W <- L203.mapping_all
 L203.mapping_all.W[[water_type]] <- water_W
@@ -56,6 +58,11 @@ L203.mapping_all <- L203.mapping_all[
     paste( L203.mapping_all[[R]], L203.mapping_all[[AEZ]] ) %!in%
     L203.R_AEZ_nonexist, ]
 L203.mapping_all <- L203.mapping_all[ order( L203.mapping_all[[R]] ), ]
+# map in converyance losses for irrigation water withdrawals
+L203.mapping_all[ L203.mapping_all[[water_sector]] == irr_water_sector & L203.mapping_all[[water_type]] == water_W, "coefficient" ] <-
+    L165.ag_IrrEff_R[ match(
+        L203.mapping_all[ L203.mapping_all[[water_sector]] == irr_water_sector & L203.mapping_all[[water_type]] == water_W, R ],
+        L165.ag_IrrEff_R[[R]] ), "conveyance.eff" ]
 
 printlog( "L203.Supplysector: Sector information" )
 L203.Supplysector <- L203.mapping_all[, names_Supplysector ]
@@ -82,10 +89,9 @@ L203.TechShrwt$year <- model_years[1]
 L203.TechShrwt$share.weight <- 1
 
 printlog( "L203.TechCoef: Pass-through technology to the water resource" )
-L203.TechCoef <- L203.mapping_all[, c( names_Tech, water_type ) ]
+L203.TechCoef <- L203.mapping_all[, c( names_Tech, water_type, "coefficient" ) ]
 L203.TechCoef$minicam.energy.input <- L203.TechCoef[[water_type]]
 L203.TechCoef$year <- model_years[1]
-L203.TechCoef$coefficient <- 1
 L203.TechCoef$market.name <- L203.TechCoef[[reg]]
 L203.TechCoef <- L203.TechCoef[, names_TechCoef ]
 
