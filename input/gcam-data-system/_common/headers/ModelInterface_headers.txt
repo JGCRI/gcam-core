@@ -269,9 +269,12 @@ GlobalTechCapture, global-technology-database/+{sector-name}location-info, globa
 
 GlobalTechCSeq, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, non-energy-use-capture-component/+remove-fraction, non-energy-use-capture-component/+target-gas, scenario, scenario/world, world/global-technology-database, period/non-energy-use-capture-component
 
+GlobalPassThroughTech, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}pass-through-technology, scenario, scenario/world, world/global-technology-database
 
 #####, GLOBAL INTERMITTENT TECHNOLOGY
 
+
+GlobalIntTechCoef, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
 GlobalIntTechEff, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 

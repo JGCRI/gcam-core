@@ -1,0 +1,35 @@
+#fresh and saline water shares and consumption to withdrawal ratios based on1995 US data.,,,,,
+#assume 95% of Middle East water use for resource prodution from saline water,,,,,
+GCAM_region_ID,region,fraction.salinewater,fraction.freshwater,ratio.consumption.withdrawal.fresh,ratio.consumption.withdrawal.total
+1,USA,0.425,0.575,0.305,0.271
+2,Africa_Eastern,0.425,0.575,0.305,0.271
+3,Africa_Northern,0.425,0.575,0.305,0.271
+4,Africa_Southern,0.425,0.575,0.305,0.271
+5,Africa_Western,0.425,0.575,0.305,0.271
+6,Australia_NZ,0.425,0.575,0.305,0.271
+7,Brazil,0.425,0.575,0.305,0.271
+8,Canada,0.425,0.575,0.305,0.271
+9,Central America and Caribbean,0.425,0.575,0.305,0.271
+10,Central Asia,0.425,0.575,0.305,0.271
+11,China,0.425,0.575,0.305,0.271
+12,EU-12,0.425,0.575,0.305,0.271
+13,EU-15,0.425,0.575,0.305,0.271
+14,Europe_Eastern,0.425,0.575,0.305,0.271
+15,Europe_Non_EU,0.425,0.575,0.305,0.271
+16,European Free Trade Association,0.425,0.575,0.305,0.271
+17,India,0.425,0.575,0.305,0.271
+18,Indonesia,0.425,0.575,0.305,0.271
+19,Japan,0.425,0.575,0.305,0.271
+20,Mexico,0.425,0.575,0.305,0.271
+21,Middle East,0.95,0.05,0.305,0.271
+22,Pakistan,0.425,0.575,0.305,0.271
+23,Russia,0.425,0.575,0.305,0.271
+24,South Africa,0.425,0.575,0.305,0.271
+25,South America_Northern,0.425,0.575,0.305,0.271
+26,South America_Southern,0.425,0.575,0.305,0.271
+27,South Asia,0.425,0.575,0.305,0.271
+28,South Korea,0.425,0.575,0.305,0.271
+29,Southeast Asia,0.425,0.575,0.305,0.271
+30,Taiwan,0.425,0.575,0.305,0.271
+31,Argentina,0.425,0.575,0.305,0.271
+32,Colombia,0.425,0.575,0.305,0.271

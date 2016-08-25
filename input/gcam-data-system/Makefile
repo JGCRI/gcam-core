@@ -1,4 +1,5 @@
-xml: emiss2 aglu2 energy2 socio2 modeltime
+xml: water2 emiss2 aglu2 energy2 socio2 modeltime
+	$(MAKE) -C water-data XML_BATCH
 	$(MAKE) -C emissions-data XML_BATCH
 	$(MAKE) -C aglu-data XML_BATCH
 	$(MAKE) -C energy-data XML_BATCH
@@ -7,6 +8,12 @@ xml: emiss2 aglu2 energy2 socio2 modeltime
 
 common:
 	$(MAKE) -C _common all
+
+water1: common modeltime energy1b aglu1b
+	$(MAKE) -C water-data level1
+
+water2: water1 energy2 emiss2
+	$(MAKE) -C water-data level2
 
 emiss1: common modeltime energy2 aglu2
 	$(MAKE) -C emissions-data level1
@@ -43,6 +50,7 @@ modeltime: common
 
 clean:
 	$(MAKE) -C _common clean
+	$(MAKE) -C water-data clean
 	$(MAKE) -C emissions-data clean
 	$(MAKE) -C energy-data clean
 	$(MAKE) -C aglu-data clean
@@ -50,14 +58,13 @@ clean:
 	$(MAKE) -C socioeconomics-data clean
 
 level2clean:
+	$(MAKE) -C water-data level2clean
 	$(MAKE) -C emissions-data level2clean
 	$(MAKE) -C energy-data level2clean
 	$(MAKE) -C aglu-data level2clean
 	$(MAKE) -C modeltime-data level2clean
 	$(MAKE) -C socioeconomics-data level2clean
 
-
-## add water-data build commands here eventually
 
 ## What about the emissions-data directory?
 

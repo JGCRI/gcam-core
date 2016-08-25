@@ -308,7 +308,7 @@ auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer() {
     else {
         jniContainer->mJavaVM->AttachCurrentThread( (void**)&jniContainer->mJavaEnv, &vmArgs );
     }
-    delete options;
+    delete[] options;
 
     // Ensure that the Java VM opened successfully.
     if( !jniContainer->mJavaVM || !jniContainer->mJavaEnv ) {

@@ -16,9 +16,11 @@ if( !exists( "AGLUPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
+source(paste(AGLUPROC_DIR,"/../_common/headers/WATER_header.R",sep=""))
 logstart( "L227.ag_water_irr.R" )
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
+adddep(paste(AGLUPROC_DIR,"/../_common/headers/WATER_header.R",sep=""))
 printlog( "Model input for water withdrawals and consumption" )
 
 # -----------------------------------------------------------------------------
@@ -28,9 +30,9 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
+sourcedata( "WATER_ASSUMPTIONS", "A_water_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_biocrops_R_AEZ_irr <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ_irr" )
-A_WaterResources <- readdata( "AGLU_ASSUMPTIONS", "A_WaterResources" )
 A_IrrigationEfficiency_R <- readdata( "AGLU_ASSUMPTIONS", "A_IrrigationEfficiency_R" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
 L161.ag_irrProd_Mt_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L161.ag_irrProd_Mt_R_C_Y_AEZ" )
@@ -39,6 +41,7 @@ L161.ag_irrYield_kgm2_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L161.ag_irrYie
 L165.blue_km3Mt_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.blue_km3Mt_R_C_AEZ" )
 L165.tot_km3Mt_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.tot_km3Mt_R_C_AEZ" )
 L165.green_km3Mt_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.green_km3Mt_R_C_AEZ" )
+A03.sector <- readdata( "WATER_ASSUMPTIONS", "A03.sector" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -255,26 +258,27 @@ L227.AgCoef_Irr_WaterWithdrawals_bio <- remove_AEZ_nonexist( L227.AgCoef_Irr_Wat
 L227.AgCoef_Bio_Water_bio <- remove_AEZ_nonexist( L227.AgCoef_Bio_Water_bio )
 L227.AgCoef_Irr_Water_bio <- remove_AEZ_nonexist( L227.AgCoef_Irr_Water_bio )
 
-#Build base tables for water supply tables
-printlog( "Building tables for reading in water supply" )
-A_WaterResources$unlimited.resource <- A_WaterResources$resource
-L227.UnlimitRsrc <- repeat_and_add_vector( A_WaterResources[ names( A_WaterResources ) %in% names_UnlimitRsrc ], R, GCAM_region_names[[R]] )
-L227.UnlimitRsrc <- add_region_name( L227.UnlimitRsrc )
-L227.UnlimitRsrc$market <- L227.UnlimitRsrc$region
-L227.UnlimitRsrc$capacity.factor <- 1
-L227.UnlimitRsrc <- L227.UnlimitRsrc[ names_UnlimitRsrc ]
+printlog( "Map the water inputs to the appropraite water mapping sector." )
 
-printlog( "Water resource prices by period" )
-A_WaterResources <- gcam_interp( A_WaterResources, model_years )
-L227.WaterResources.melt <- melt( A_WaterResources, measure.vars = X_model_years, id.vars = "unlimited.resource", variable.name = "Xyear", value.name = "price" )
-L227.WaterResources.melt$year <- substr( L227.WaterResources.melt$Xyear, 2, 5 )
-L227.WaterResources.melt <- repeat_and_add_vector( L227.WaterResources.melt, R, GCAM_region_names[[R]])
-L227.WaterResources.melt <- add_region_name( L227.WaterResources.melt )
-L227.UnlimitRsrcPrice <- L227.WaterResources.melt[ names_UnlimitRsrcPrice ]
+# A helper wrapper to help get the data in/out in a way that is usable by the
+# get_water_inputs_for_mapping utility method.
+do_water_rename <- function(d) {
+    d[[water_sector]] <- "Irrigation"
+    d[[AEZ]] <- as.integer( sub( '.*AEZ', '', d[[agsubs]] ) )
+    d$minicam.energy.input <- as.character( d$minicam.energy.input )
+    d$minicam.energy.input <- get_water_inputs_for_mapping( d, A03.sector, water_type.col="minicam.energy.input" )
+    d[[AEZ]] <- NULL
+    d[[water_sector]] <- NULL
+    return(d)
+}
 
-#Remove any regions for which agriculture and land use are not modeled
-L227.UnlimitRsrc <- subset( L227.UnlimitRsrc, !region %in% no_aglu_regions )
-L227.UnlimitRsrcPrice <- subset( L227.UnlimitRsrcPrice, !region %in% no_aglu_regions )
+L227.AgCoef_BioIrr_Water <- do_water_rename( L227.AgCoef_BioIrr_Water )
+L227.AgCoef_BioRfd_Water <- do_water_rename( L227.AgCoef_BioRfd_Water )
+L227.AgCoef_Irr_Water <- do_water_rename( L227.AgCoef_Irr_Water )
+L227.AgCoef_Irr_WaterWithdrawals <- do_water_rename( L227.AgCoef_Irr_WaterWithdrawals )
+L227.AgCoef_Irr_WaterWithdrawals_bio <- do_water_rename( L227.AgCoef_Irr_WaterWithdrawals_bio )
+L227.AgCoef_Bio_Water_bio <- do_water_rename( L227.AgCoef_Bio_Water_bio )
+L227.AgCoef_Irr_Water_bio <- do_water_rename( L227.AgCoef_Irr_Water_bio )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -288,8 +292,6 @@ write_mi_data( L227.AgCoef_Irr_WaterWithdrawals, "AgCoef", "AGLU_LEVEL2_DATA", "
 write_mi_data( L227.AgCoef_Irr_WaterWithdrawals_bio, "AgCoef", "AGLU_LEVEL2_DATA", "L227.AgCoef_Irr_WaterWithdrawals_bio", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
 write_mi_data( L227.AgCoef_Bio_Water_bio, "AgCoef", "AGLU_LEVEL2_DATA", "L227.AgCoef_Bio_Water_bio", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
 write_mi_data( L227.AgCoef_Irr_Water_bio, "AgCoef", "AGLU_LEVEL2_DATA", "L227.AgCoef_Irr_Water_bio", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
-write_mi_data( L227.UnlimitRsrc, "UnlimitRsrc", "AGLU_LEVEL2_DATA", "L227.UnlimitRsrc", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
-write_mi_data( L227.UnlimitRsrcPrice, "UnlimitRsrcPrice", "AGLU_LEVEL2_DATA", "L227.UnlimitRsrcPrice", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml", "AGLU_XML_FINAL", "ag_water_input_IRR.xml", "", xml_tag="outFile" )
 

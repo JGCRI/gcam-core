@@ -536,6 +536,21 @@ translate_to_full_table <- function( data, var1, var1_values, var2, var2_values,
 	return( data_new )
 }
 
+# -----------------------------------------------------------------------------
+# set_subsector_shrwt: calculate subsector shareweights in calibration periods, where subsectors may have multiple technologies
+set_subsector_shrwt <- function( data,
+  value.name="calOutputValue", region.name="region", sector.name="supplysector", subsector.name="subsector", year.name="year",
+  result.column.name="subs.share.weight" ){
+	data_aggregated <- aggregate( data[value.name],
+	      by=list( region = data[[region.name]], sector = data[[sector.name]], subsector = data[[subsector.name]], year = data[[year.name]] ),
+	      FUN=sum )
+	data_new <- data
+	data_new[[result.column.name]] <- ifelse( data_aggregated[[value.name]][
+	      match( paste( data_new[[region.name]], data_new[[sector.name]], data_new[[subsector.name]], data_new[[year.name]] ),
+	             paste( data_aggregated$region, data_aggregated$sector, data_aggregated$subsector, data_aggregated$year ) ) ] > 0, 1, 0 )
+	return( data_new ) 	
+}
+
 # Gets a list of all valid logit types.
 # WARNING: this needs to be kept in sync with the model and headers
 get_logit_types <- function() {
