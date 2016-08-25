@@ -33,6 +33,7 @@ FAO_an_Exp_t_SUA <- readdata( "AGLU_LEVEL0_DATA", "FAO_an_Exp_t_SUA" )
 FAO_an_Food_t_SUA <- readdata( "AGLU_LEVEL0_DATA", "FAO_an_Food_t_SUA" )
 FAO_an_Imp_t_SUA <- readdata( "AGLU_LEVEL0_DATA", "FAO_an_Imp_t_SUA" )
 FAO_an_Prod_t_SUA <- readdata( "AGLU_LEVEL0_DATA", "FAO_an_Prod_t_SUA" )
+FAO_an_Stocks <- readdata( "AGLU_LEVEL0_DATA", "FAO_an_Stocks" )
 FAO_CL_kha_RESOURCESTAT <- readdata( "AGLU_LEVEL0_DATA", "FAO_CL_kha_RESOURCESTAT" )
 FAO_fallowland_kha_RESOURCESTAT <- readdata( "AGLU_LEVEL0_DATA", "FAO_fallowland_kha_RESOURCESTAT" )
 FAO_harv_CL_kha_RESOURCESTAT <- readdata( "AGLU_LEVEL0_DATA", "FAO_harv_CL_kha_RESOURCESTAT" )
@@ -80,6 +81,7 @@ FAO_an_Exp_t_SUA$element <- "an_Exp_t"
 FAO_an_Food_t_SUA$element <- "an_Food_t"
 FAO_an_Imp_t_SUA$element <- "an_Imp_t"
 FAO_an_Prod_t_SUA$element <- "an_Prod_t"
+FAO_an_Stocks$element <- "an_Stocks"
 FAO_CL_kha_RESOURCESTAT$element <- "CL_kha"
 FAO_fallowland_kha_RESOURCESTAT$element <- "fallowland_kha"
 FAO_harv_CL_kha_RESOURCESTAT$element <- "harv_CL_kha"
@@ -91,7 +93,7 @@ FAO_For_Prod_m3_FORESTAT$element <- "For_Prod_m3"
 
 #Not all databases go to 2011. Extrapolate each dataset to 2011, just repeating the data for 2009/10. Where missing 1961, substitute 1962
 FAO_data_ALL.list <- list( FAO_ag_Exp_t_SUA, FAO_ag_Feed_t_SUA, FAO_ag_Food_t_SUA, FAO_ag_Imp_t_SUA,
-      FAO_an_Exp_t_SUA, FAO_an_Food_t_SUA, FAO_an_Imp_t_SUA, FAO_an_Prod_t_SUA, FAO_Fert_Cons_tN_RESOURCESTAT,
+      FAO_an_Exp_t_SUA, FAO_an_Food_t_SUA, FAO_an_Imp_t_SUA, FAO_an_Prod_t_SUA, FAO_an_Stocks, FAO_Fert_Cons_tN_RESOURCESTAT,
       FAO_Fert_Prod_tN_RESOURCESTAT, FAO_ag_HA_ha_PRODSTAT, FAO_ag_Prod_t_PRODSTAT,
       FAO_CL_kha_RESOURCESTAT, FAO_fallowland_kha_RESOURCESTAT, FAO_harv_CL_kha_RESOURCESTAT,
       FAO_For_Exp_m3_FORESTAT, FAO_For_Imp_m3_FORESTAT, FAO_For_Prod_m3_FORESTAT )
@@ -165,6 +167,7 @@ L100.FAO_an_Exp_t <- subset( L100.FAO_data_ALL_5yr, element == "an_Exp_t" )
 L100.FAO_an_Food_t <- subset( L100.FAO_data_ALL_5yr, element == "an_Food_t" )
 L100.FAO_an_Imp_t <- subset( L100.FAO_data_ALL_5yr, element == "an_Imp_t" )
 L100.FAO_an_Prod_t <- subset( L100.FAO_data_ALL_5yr, element == "an_Prod_t" )
+L100.FAO_an_Stocks <- subset( L100.FAO_data_ALL_5yr, element == "an_Stocks" )
 L100.FAO_CL_kha <- subset( L100.FAO_data_ALL_5yr, element == "CL_kha" )
 L100.FAO_fallowland_kha <- subset( L100.FAO_data_ALL_5yr, element == "fallowland_kha" )
 L100.FAO_harv_CL_kha <- subset( L100.FAO_data_ALL_5yr, element == "harv_CL_kha" )
@@ -187,6 +190,7 @@ comments.L100.FAO_an_Exp_t <- c( "FAO animal exports by country / item / year","
 comments.L100.FAO_an_Food_t <- c( "FAO animal food consumption by country / item / year","Unit = t" )
 comments.L100.FAO_an_Imp_t <- c( "FAO animal imports by country / item / year","Unit = t" )
 comments.L100.FAO_an_Prod_t <- c( "FAO animal production by country / item / year","Unit = t" )
+comments.L100.FAO_an_Stocks <- c( "FAO animal stocks country / item / year","Unit = number" )
 comments.L100.FAO_CL_kha <- c( "FAO cropland area by country / year","Unit = kha" )
 comments.L100.FAO_fallowland_kha <- c( "FAO fallow land area by country / year","Unit = kha" )
 comments.L100.FAO_harv_CL_kha <- c( "FAO harvested cropland (temporary crops) by country / year","Unit = kha" )
@@ -207,6 +211,7 @@ writedata( L100.FAO_an_Exp_t, domain="AGLU_LEVEL1_DATA", fn="L100.FAO_an_Exp_t",
 writedata( L100.FAO_an_Food_t, domain="AGLU_LEVEL1_DATA", fn="L100.FAO_an_Food_t", comments=comments.L100.FAO_an_Food_t )
 writedata( L100.FAO_an_Imp_t, domain="AGLU_LEVEL1_DATA", fn="L100.FAO_an_Imp_t", comments=comments.L100.FAO_an_Imp_t )
 writedata( L100.FAO_an_Prod_t, domain="AGLU_LEVEL1_DATA", fn="L100.FAO_an_Prod_t", comments=comments.L100.FAO_an_Prod_t )
+writedata( L100.FAO_an_Stocks, domain="AGLU_LEVEL1_DATA", fn="L100.FAO_an_Stocks", comments=comments.L100.FAO_an_Stocks )
 writedata( L100.FAO_CL_kha, domain="AGLU_LEVEL1_DATA", fn="L100.FAO_CL_kha", comments=comments.L100.FAO_CL_kha )
 writedata( L100.FAO_fallowland_kha, domain="AGLU_LEVEL1_DATA", fn="L100.FAO_fallowland_kha", comments=comments.L100.FAO_fallowland_kha )
 writedata( L100.FAO_harv_CL_kha, domain="AGLU_LEVEL1_DATA", fn="L100.FAO_harv_CL_kha", comments=comments.L100.FAO_harv_CL_kha )
