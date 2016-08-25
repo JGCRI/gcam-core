@@ -56,7 +56,6 @@
 #include "containers/include/gdp.h"
 #include "resources/include/renewable_subresource.h"
 
-
 // class: SmoothRenewableSubresource ***************************************
 
 /*!
@@ -74,69 +73,40 @@
  *   - \c mid-price SmoothRenewableSubresource::mCostCurve.get/setMidprice()
  *   - \c price-exponent SmoothRenewableSubresource::mPriceExponent
  *
- * \author Kevin Walker
+ * \author Kevin Walker, Sonny Kim
  * \date $ Date $
  * \version $ Revision $
  */
-class SmoothRenewableSubresource : public SubRenewableResource
+class SmoothRenewableSubresource: public SubRenewableResource
 {
-public :
-
-   typedef SubRenewableResource  parent;
-
-   // Constructor
-   SmoothRenewableSubresource(void);
-
-   // Destructor
-   virtual ~SmoothRenewableSubresource(void);
-
-   // Documentation is inherited.
-   virtual void annualsupply(
-      int        aPeriod,
-      const GDP* aGDP,
-      double     aPrice,
-      double     aPrevPrice );
-
-   // Documentation is inherited.
+    friend class XMLDBOutputter;
+protected:
+    //! SmoothRenewableSubresource
+    static const std::string sXMLName;
+    //! The cost curve calculator
+    ObjECTS::TCostCurve<> mCostCurve;
+    //! Multiplier price increase
+    double mPriceExponent;
+    //! Mid-price for cost curve, assuming no technical change
+    double mMidPrice;
+    // Documentation is inherited.
+    virtual const std::string& getXMLName() const;
+    // Documentation is inherited.
+    virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
+    // Documentation is inherited.
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
+public:
+    SmoothRenewableSubresource();
+    virtual ~SmoothRenewableSubresource();
+    //! Return the XML tag name
+    static const std::string& getXMLNameStatic();
     virtual void completeInit( const IInfo* aSectorInfo );
     virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
-
-   //! Return the XML tag name
-    static const std::string& getXMLNameStatic( void );
-
+    virtual void annualsupply( int aPeriod, const GDP* aGDP, double aPrice, double aPrevPrice );
     virtual double getLowestPrice( const int aPeriod ) const;
     virtual double getHighestPrice( const int aPeriod ) const;
-
-protected :
-
-   //! SmoothRenewableSubresource
-   static const std::string   sXMLName;
-
-   //! The cost curve calculator
-   ObjECTS::TCostCurve<> mCostCurve;
-
-   //! Multiplier price increase
-   double mPriceExponent;
-
-   //! Mid-price for cost curve, assuming no technical change
-   double mMidPrice;
-
-   // Documentation is inherited.
-   virtual const std::string& getXMLName() const;
-
-   // Documentation is inherited.
-   virtual void toXMLforDerivedClass(
-      std::ostream& out,
-      Tabs*         tabs ) const;
-
-   // Documentation is inherited.
- 	virtual bool XMLDerivedClassParse(
-      const std::string&      nodeName,
-      const xercesc::DOMNode* node );
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 };
-
 #endif   // __SMOOTH_RENEWABLE_SUBRESOURCE_H
 
 // end of smooth_renewable_subresource.h ***********************************
-
-

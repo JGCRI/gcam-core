@@ -47,6 +47,7 @@
 
 const double LogEDFun::PMAX = 1.0e24;
 const double LogEDFun::ARGMAX = 55.262042; // log(PMAX)
+const double LogEDFun::MINXSCL = 1.0e-3;
 
 // constructor
 LogEDFun::LogEDFun(SolutionInfoSet &sisin,
@@ -71,7 +72,7 @@ LogEDFun::LogEDFun(SolutionInfoSet &sisin,
             // doesn't give nonsensical results here, but forecast
             // price is used for other things and so hasn't been
             // so-modified.
-            mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), 1.0);
+            mxscl[i] = std::max(fabs(mkts[i].getForecastPrice()), MINXSCL);
             mfxscl[i] = 1.0/mkts[i].getForecastDemand();
         }
     } else {
@@ -118,7 +119,7 @@ double LogEDFun::partialSize(int ip) const
 
 void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
 {
-  assert(x.size() == mkts.size());
+  assert(ax.size() == mkts.size());
   assert(fx.size() == mkts.size());
 
   Timer& edfunMiscTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_MISC );

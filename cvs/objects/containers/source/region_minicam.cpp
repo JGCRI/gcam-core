@@ -587,7 +587,8 @@ void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Cannot set emissions factor of zero for fuel " << coef->first
-                    << " because the name does not match the name of a market." << endl;
+                    << " for region " << name
+                    << " because the name does not match the market name or market does not exist." << endl;
         }
     }
 }

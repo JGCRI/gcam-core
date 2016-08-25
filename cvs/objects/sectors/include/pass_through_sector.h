@@ -70,6 +70,8 @@ public:
 protected:
     virtual double getFixedOutput( const int aPeriod ) const;
 
+    virtual const std::string& getXMLName() const;
+
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;

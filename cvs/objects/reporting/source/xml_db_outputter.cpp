@@ -64,6 +64,8 @@
 #include "climate/include/iclimate_model.h"
 #include "climate/include/magicc_model.h"
 #include "resources/include/subresource.h"
+#include "resources/include/renewable_subresource.h"
+#include "resources/include/smooth_renewable_subresource.h"
 #include "resources/include/grade.h"
 #include "demographics/include/demographic.h"
 #include "demographics/include/population.h"
@@ -616,6 +618,29 @@ void XMLDBOutputter::endVisitSubResource( const SubResource* aSubResource,
 {
     // Write the closing subresource tag.
     XMLWriteClosingTag( aSubResource->getXMLName(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitSubRenewableResource( const SubRenewableResource* aSubResource,
+                                                     const int aPeriod )
+{
+    // Write the opening subresource tag and the type of the base class.
+    XMLWriteOpeningTag( aSubResource->getXMLNameStatic(), mBuffer, mTabs.get(),
+                       aSubResource->getName(), 0, "subresource" );
+    
+    // Write out annual production and maximum available renewable resource.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per < modeltime->getmaxper(); ++per ){
+        writeItem( "max-annual-subresource", mCurrentOutputUnit, aSubResource->getMaxAnnualSubResource(per), per );
+        writeItem( "production", mCurrentOutputUnit, aSubResource->getAnnualProd( per ), per );
+        writeItem( "cumulative-production", mCurrentOutputUnit, aSubResource->getCumulProd( per ), per );
+    }
+}
+
+void XMLDBOutputter::endVisitSubRenewableResource( const SubRenewableResource* aSubResource,
+                                                        const int aPeriod )
+{
+    // Write the closing subresource tag.
+    XMLWriteClosingTag( aSubResource->getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
 /*! \brief Write the output for a grade.

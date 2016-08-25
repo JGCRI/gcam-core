@@ -249,6 +249,11 @@ double DepletingFixedResource::getAnnualProd( const string& aRegionName,
     return scenario->getMarketplace()->getSupply( mName, aRegionName, aPeriod );
 }
 
+//! Return price of resources.
+double DepletingFixedResource::getPrice( const int aPeriod ) const {
+    return mInitialPrice;
+}
+
 void DepletingFixedResource::csvOutputFile( const string& aRegionName )
 {
     // function protocol

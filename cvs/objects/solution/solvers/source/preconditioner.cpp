@@ -232,19 +232,16 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                 switch(solvable[i].getType()) {
                 case IMarketType::NORMAL:
                 case IMarketType::TRIAL_VALUE:
-                    // select a lower bound just a bit above the bottom of the supply curve.
                     lb = solvable[i].getLowerBoundSupplyPrice();
-                    lb += 1.0e-5 * std::max(1.0, fabs(lb));
-                    // select an upper bound just a bit below the top of the supply curve.
                     ub = solvable[i].getUpperBoundSupplyPrice();
-                    ub -= 1.0e-5 * std::max(1.0, fabs(ub));
                     if(oldprice < lb &&
                        oldsply < olddmnd && olddmnd > mFTOL
                         ) {
                         // price is below the bottom of the supply curve,
                         // and there is excess demand: set new price a bit
                         // above the bottom of the curve.
-                        newprice = lb + 0.01*std::max(1.0, fabs(lb)); 
+                        // 1% above lower bound
+                        newprice = lb + 0.01 * fabs(lb);
                         // sometimes the range of valid prices is really
                         // narrow and the above can actually overshoot.
                         if(newprice >= solvable[i].getUpperBoundSupplyPrice())
@@ -327,8 +324,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                             solvable[i].setPrice(newprice);
                             chg = true;
                             ++nchg;
-                        }
-                        
+                        }                        
                     } 
                     break; 
                 default:

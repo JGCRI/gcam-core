@@ -551,16 +551,13 @@ double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
     double sharesum = 0.0;
     const vector<double> techShares = calcTechShares( aGDP, aPeriod );
     for ( unsigned int i = 0; i < mTechContainers.size(); ++i ) {
-        // Technologies with zero share cannot affect the marginal price.
-        if( techShares[ i ] > util::getSmallNumber() ){
-            double currCost = mTechContainers[i]->getNewVintageTechnology(aPeriod)->getCost( aPeriod );
-            // calculate weighted average price for Subsector.
-            /*!
-             * \note Negative prices may be produced and are valid.
-             */
-            subsectorPrice += techShares[ i ] * currCost;
-            sharesum += techShares[i];
-        }
+        double currCost = mTechContainers[i]->getNewVintageTechnology(aPeriod)->getCost( aPeriod );
+        // calculate weighted average price for Subsector.
+        /*!
+         * \note Negative prices may be produced and are valid.
+         */
+        subsectorPrice += techShares[ i ] * currCost;
+        sharesum += techShares[i];
     }
 
     if( sharesum < util::getSmallNumber() ) {

@@ -114,7 +114,9 @@ InputSubsidy::~InputSubsidy() {
  *          allocated memory.
  * \param aOther subsidy input from which to copy.
  */
-InputSubsidy::InputSubsidy( const InputSubsidy& aOther ){
+InputSubsidy::InputSubsidy( const InputSubsidy& aOther ):
+    MiniCAMInput( aOther )
+{
     // Do not clone the input coefficient as the calculated
     // coeffient will be filled out later.
 

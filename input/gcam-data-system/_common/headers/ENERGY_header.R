@@ -19,6 +19,7 @@ convert_rsrc_to_L2 <- function( data, resource_type, subresource_type=NA ) {
 		region = data$region,
 		renewresource = data$resource,
 		smooth.renewable.subresource = data$subresource,
+		year.fillout = min( model_base_years ),
 		maxSubResource = round( data$maxSubResource, digits_maxSubResource ),
 		mid.price = round( data$mid.price, digits_mid.price ),
 		curve.exponent = round( data$curve.exponent, digits_curve.exponent ) )

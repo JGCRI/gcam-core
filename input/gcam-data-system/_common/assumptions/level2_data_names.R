@@ -15,10 +15,10 @@ names_SubRenewRsrc <- c( "region", "renewresource", "sub.renewable.resource" )
 names_SmthRenewRsrc <- c( "region", "renewresource", "smooth.renewable.subresource" )
 names_DepRsrcCalProd <- c( names_SubDepRsrc, "year", "cal.production" )
 names_RenewRsrcCalProd <- c( names_SubRenewRsrc, "year", "cal.production" )
-names_maxSubResource <- c( names_SubRenewRsrc, "maxSubResource" ) #only applicable for renewable resources
+names_maxSubResource <- c( names_SubRenewRsrc, "year.fillout", "maxSubResource" ) #only applicable for renewable resources
 names_DepRsrcCurves <- c( names_SubDepRsrc, "grade", "available", "extractioncost" )
 names_RenewRsrcCurves <- c( names_SubRenewRsrc, "grade", "available", "extractioncost" )
-names_SmthRenewRsrcCurves <- c( names_SmthRenewRsrc, "maxSubResource", "mid.price", "curve.exponent" )
+names_SmthRenewRsrcCurves <- c( names_SmthRenewRsrc, "year.fillout", "maxSubResource", "mid.price", "curve.exponent" )
 names_DepRsrcTechChange <- c( names_SubDepRsrc, "year.fillout", "techChange" )
 names_RenewRsrcTechChange <- c( names_SubRenewRsrc, "year.fillout", "techChange" )
 names_SmthRenewRsrcTechChange <- c( names_SmthRenewRsrc, "year.fillout", "techChange" )
@@ -74,7 +74,7 @@ names_GlobalTechCapital <- c( names_GlobalTechYr, "input.capital", "capital.over
 names_GlobalTechOMfixed <- c( names_GlobalTechYr, "input.OM.fixed", "OM.fixed", "capacity.factor" )
 names_GlobalTechOMvar <- c( names_GlobalTechYr, "input.OM.var", "OM.var" )
 names_GlobalTechBackup <- c( names_GlobalTechYr, "electric.sector.name", "trial.market.name", "backup.capital.cost",
-                             "backup.capacity.factor", "capacity.limit", "minicam.energy.input", "minicam.non.energy.input" )
+                             "backup.capacity.factor", "capacity.limit", "minicam.energy.input", "minicam.non.energy.input", "flag" )
 names_GlobalCarbonCapture <- c( names_GlobalTechYr, "storage.market", "remove.fraction" )
 names_GlobalRenewTech <- c( names_GlobalTechYr, "renewable.input" )
 names_GlobalTechSecOut <- c( names_GlobalTechYr, "secondary.output", "output.ratio" )

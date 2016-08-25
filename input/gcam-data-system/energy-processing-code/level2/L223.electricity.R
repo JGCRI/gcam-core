@@ -173,6 +173,8 @@ L223.GlobalTechEff_elec <- L223.globaltech_eff.melt[ names_GlobalTechEff ]
 
 L223.GlobalIntTechEff_elec <- subset_inttechs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechEff_elec <- subset_techs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+#Hard code in type "Resource" for intermittent technology resource input only
+L223.GlobalIntTechEff_elec["type"] <- "Resource" 
 
 #Costs of global technologies
 printlog( "L223.GlobalTechCapital_elec: Capital costs of global electricity generation technologies" )

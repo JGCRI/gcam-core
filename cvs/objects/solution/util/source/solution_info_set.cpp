@@ -227,7 +227,11 @@ bool SolutionInfoSet::checkAndResetBrackets(){
     set bracketed to false.
 */
 void SolutionInfoSet::resetBrackets(){
+    // do all markets including solvable and unsolvable
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
+        iter->resetBrackets();
+    }
+    for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
         iter->resetBrackets();
     }
 }

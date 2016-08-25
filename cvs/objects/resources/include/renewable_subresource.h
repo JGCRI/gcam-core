@@ -63,7 +63,8 @@ class IInfo;
 class SubRenewableResource: public SubResource {
     friend class CalibrateResourceVisitor;
 protected:
-    double maxSubResource;
+    //!< Max annual renewable subresource
+    std::vector<double> mMaxAnnualSubResource;
     double gdpSupplyElasticity;
     //! subresource variance now read in rather than computed
     double subResourceVariance;
@@ -74,15 +75,16 @@ protected:
     virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 public: 
     SubRenewableResource();
-    virtual void completeInit( const IInfo* aSectorInfo );
-    virtual void cumulsupply(double prc,int per);
-    virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
-    virtual double getVariance() const;
-    virtual double getMaxSubResource() const;
-    virtual double getAverageCapacityFactor() const;
+    virtual ~SubRenewableResource();
     //! Return the XML tag name
     static const std::string& getXMLNameStatic( void );
-    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual void completeInit( const IInfo* aSectorInfo );
+    virtual void cumulsupply( double aPrice, int aPeriod );
+    virtual void annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
+    virtual double getVariance() const;
+    virtual double getMaxAnnualSubResource( const int aPeriod ) const;
+    virtual double getAverageCapacityFactor() const;
     virtual double getLowestPrice( const int aPeriod ) const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

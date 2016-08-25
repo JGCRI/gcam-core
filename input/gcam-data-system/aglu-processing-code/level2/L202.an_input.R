@@ -95,6 +95,7 @@ printlog( "L202.maxSubResource: maximum amount of resource production allowed in
 #Compute the maxsubresource as the maximum of all base periods, for each region and resource
 L202.maxSubResource <- aggregate( L202.RenewRsrcCalProd$cal.production, by=as.list( L202.RenewRsrcCalProd[ names_SubRenewRsrc ] ), max )
 names( L202.maxSubResource )[ names( L202.maxSubResource ) == "x" ] <- "maxSubResource"
+L202.maxSubResource$year.fillout <- min( model_base_years )
 L202.maxSubResource <- L202.maxSubResource[ names_maxSubResource ]
 
 printlog( "L202.RenewRsrcCurves" )

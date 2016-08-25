@@ -70,6 +70,10 @@ const string& PassThroughSector::getXMLNameStatic() {
     return XML_NAME;
 }
 
+const string& PassThroughSector::getXMLName() const {
+    return getXMLNameStatic();
+}
+
 bool PassThroughSector::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
     bool didParse = true;
     if( aNodeName == "marginal-revenue-sector" ) {

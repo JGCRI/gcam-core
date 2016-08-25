@@ -133,12 +133,18 @@ public:
         //! Traded Good.
         TRADED = 1 << 12,
 		
-		//! O&M Input
+		//! O&M Variable Input
         OM_VAR = 1 << 13,
 		
-		//! O&M Input
-        OM_FIXED = 1 << 14
+		//! O&M Fixed Input
+        OM_FIXED = 1 << 14,
 
+        //! Resource Energy Input
+        RESOURCE = 1 << 15,
+        
+        //! Backup Energy Input
+        BACKUP_ENERGY = 1 << 16
+        
     };
 
     /*!

@@ -118,7 +118,9 @@ EnergyInput::~EnergyInput() {
  *          allocated memory.
  * \param aOther Energy input from which to copy.
  */
-EnergyInput::EnergyInput( const EnergyInput& aOther ){
+EnergyInput::EnergyInput( const EnergyInput& aOther ) :
+MiniCAMInput( aOther )
+{
     /*!
      * \warning Copying the coefficient here could break technical change.  We
      *          have done it this way because it is currently unused (coefficients
@@ -198,6 +200,9 @@ void EnergyInput::XMLParse( const xercesc::DOMNode* node ) {
         else if( nodeName == "market-name" ){
             mMarketName = XMLHelper<string>::getValue( curr );
         }
+        else if( nodeName == "flag" ) {
+            setFlagsByName( XMLHelper<string>::getValue( curr ) );
+        }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
             for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
@@ -222,6 +227,12 @@ void EnergyInput::toInputXML( ostream& aOut,
     // Write out the coefficient if there is one.
     if( mCoefficient.get() ){
         mCoefficient->toInputXML( aOut, aTabs );
+    }
+    if( hasTypeFlag(IInput::RESOURCE) ) {
+        XMLWriteElement( getFlagName(IInput::RESOURCE), "flag", aOut, aTabs );
+    }
+    else if( hasTypeFlag(IInput::BACKUP_ENERGY) ) {
+        XMLWriteElement( getFlagName(IInput::BACKUP_ENERGY), "flag", aOut, aTabs );
     }
     XMLWriteElementCheckDefault( mIncomeElasticity, "income-elasticity", aOut,
                                  aTabs, Value( 0 ) );
@@ -249,6 +260,13 @@ void EnergyInput::toDebugXML( const int aPeriod,
         mCoefficient->toDebugXML( aPeriod, aOut, aTabs );
     }
 
+    if( hasTypeFlag(IInput::RESOURCE) ) {
+        XMLWriteElement( getFlagName(IInput::RESOURCE), "flag", aOut, aTabs );
+    }
+    else if( hasTypeFlag(IInput::BACKUP_ENERGY) ) {
+        XMLWriteElement( getFlagName(IInput::BACKUP_ENERGY), "flag", aOut, aTabs );
+    }
+    
     XMLWriteElement( mIncomeElasticity, "income-elasticity", aOut, aTabs );
     XMLWriteElement( mCalibrationInput.isInited() ? mCalibrationInput.get() : -1,
                      "calibrated-value", aOut, aTabs );
@@ -288,6 +306,7 @@ void EnergyInput::completeInit( const string& aRegionName,
     // Set the coeffients to the read-in value.
     mAdjustedCoefficients.assign( mAdjustedCoefficients.size(),
                                   currCoef );
+    initializeTypeFlags();
 }
 
 void EnergyInput::initCalc( const string& aRegionName,
@@ -314,6 +333,16 @@ void EnergyInput::initCalc( const string& aRegionName,
     }
     
     mCachedMarket = scenario->getMarketplace()->locateMarket( mName, mMarketName, aPeriod );
+}
+
+/*! \brief Initialize the type flags.
+ * \see setFlagsByName
+ * \param aRegionName Name of the region.
+ */
+void EnergyInput::initializeTypeFlags() {
+    
+    // Set the flag to Energy.
+    mTypeFlags |= IInput::ENERGY;
 }
 
 const string& EnergyInput::getMarketName( const string& aRegionName ) const {
@@ -402,10 +431,6 @@ double EnergyInput::getCalibrationQuantity( const int aPeriod ) const
 {
     // return -1 if no calibration value is read in
     return mCalibrationInput.isInited() ? mCalibrationInput.get() : -1;
-}
-
-bool EnergyInput::hasTypeFlag( const int aTypeFlag ) const {
-    return ( ( aTypeFlag & ~IInput::ENERGY ) == 0 );
 }
 
 double EnergyInput::getIncomeElasticity( const int aPeriod ) const {

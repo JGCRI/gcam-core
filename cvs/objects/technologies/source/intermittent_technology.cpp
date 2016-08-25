@@ -564,10 +564,34 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
     // Set the inputs to the error value.
     mBackupCapCostInput = mTechCostInput = mResourceInput = mBackupInput = mInputs.end();
 
-    const Marketplace* marketplace = scenario->getMarketplace();
     for( InputIterator i = mInputs.begin(); i != mInputs.end(); ++i ){
+        // Parse location for energy inputs.
+        if( ( *i )->hasTypeFlag( IInput::ENERGY | IInput::RESOURCE ) ){
+            if( mResourceInput != mInputs.end() ){
+                // There already was a resource input.
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
+                << " in region " << aRegionName << " has more than one variable resource input." << endl;
+            }
+            else {
+                mResourceInput = i;
+            }
+        }
+        else if( ( *i )->hasTypeFlag( IInput::ENERGY | IInput::BACKUP_ENERGY ) ){
+            if( mBackupInput != mInputs.end() ){
+                // There already was a resource input.
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::NOTICE );
+                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
+                << " in region " << aRegionName << " has more than one backup input." << endl;
+            }
+            else {
+                mBackupInput = i;
+            }
+        }
         // Parse location for non-energy inputs.
-        if( !( *i )->hasTypeFlag( IInput::ENERGY ) ){
+        else{
             if ( ( *i )->getName() == getBackupCapCostName() && ( getBackupCapCostName() != "" ) ) {
                mBackupCapCostInput = i;
                continue;
@@ -575,46 +599,6 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
             else if ( ( *i )->getName() == getTechCostName() && ( getTechCostName() != "" ) ) {
                mTechCostInput = i;
                continue;
-            }
-        }
-
-        // Otherwise, if this is any other non-energy input then skip this input
-        if( !( *i )->hasTypeFlag( IInput::ENERGY ) ){
-            continue;
-        }
-        
-        // Determine the location of the resource and backup input. Resource input
-        // is known to be the input with a variance. Backup input is assumed to be
-        // the other energy input.
-        
-        // Use period 0 marketInfo object to determine which input has a resource variance and is therefore a resource.
-        const IInfo* info = marketplace->getMarketInfo( ( *i )->getName(), aRegionName, 0, false );
-
-        // If the good has a variance it must be the resource input.
-        if( info && info->hasValue( "resourceVariance" ) ){
-            if( mResourceInput != mInputs.end() ){
-                // There already was a resource input.
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
-                        << " in region " << aRegionName << " has more than one variable resource input." << endl;
-            }
-            else {
-                mResourceInput = i;
-            }
-        }
-        // If it is an energy input that is not the resource it must be the backup.
-        else {
-            if( mBackupInput != mInputs.end() ){
-              // There already was a resource input.
-              ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
-                        << " in region " << aRegionName
-                        << " has more than one energy input that is not the resource." << endl;
-            }
-            else {
-                mBackupInput = i;
             }
         }
     }

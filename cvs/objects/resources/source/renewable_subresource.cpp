@@ -59,22 +59,35 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 const double GDP_SUPPLY_ELASTICITY_DEFAULT = 0;
-//! Constructor
 
-SubRenewableResource::SubRenewableResource(){
-	maxSubResource = 0;
-	gdpSupplyElasticity = GDP_SUPPLY_ELASTICITY_DEFAULT;
-	subResourceVariance = 0;
-	subResourceCapacityFactor = 1;
+//! Constructor
+SubRenewableResource::SubRenewableResource(void):
+mMaxAnnualSubResource( scenario->getModeltime()->getmaxper(), 0.0 ),
+gdpSupplyElasticity( GDP_SUPPLY_ELASTICITY_DEFAULT ),
+subResourceVariance( 0 ),
+subResourceCapacityFactor( 1 )
+{
+}
+
+SubRenewableResource::~SubRenewableResource(){
+}
+
+const std::string& SubRenewableResource::getXMLName() const{
+    return getXMLNameStatic();
+}
+
+const std::string& SubRenewableResource::getXMLNameStatic(){
+    static const std::string XMLName = "sub-renewable-resource";
+    return XMLName;
 }
 
 //! Performs XML read-in that is specific to this derived class
 bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
 	bool didParse = false;
-	if( nodeName == "maxSubResource" ){
-		maxSubResource = XMLHelper<double>::getValue( node );
-		didParse = true;
-	}
+    if( nodeName == "maxSubResource" ){
+        XMLHelper<double>::insertValueIntoVector( node, mMaxAnnualSubResource, scenario->getModeltime() );
+        didParse = true;
+    }
 	else if( nodeName == "subResourceVariance" ){
 		subResourceVariance = XMLHelper<double>::getValue( node );
 		didParse = true;
@@ -90,12 +103,24 @@ bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const D
 	return didParse;
 }
 
+//! Write out to XML variables specific to this derived class
+void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
+    XMLWriteElementCheckDefault( gdpSupplyElasticity, "gdpSupplyElast", out, tabs, GDP_SUPPLY_ELASTICITY_DEFAULT );
+    XMLWriteElementCheckDefault( subResourceVariance, "subResourceVariance", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( subResourceCapacityFactor, "subResourceCapacityFactor", out, tabs, 1.0 );
+    XMLWriteVector( mMaxAnnualSubResource, "maxSubResource", out, tabs, scenario->getModeltime(), 0.0 );
+}
+
 //! Do any initializations needed for this resource
 /*! Renewable resources should have only grades with well defined cost curves. 
 \todo The extra elements in the vector should be removed. 
 Also remove any grades with zero available by resetting the parameter nograde. */
 void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {   
+
+    SubResource::completeInit( aSectorInfo );
+    
     double lastAvailable = 0;
+    
     for( vector<Grade*>::iterator i = mGrade.begin(); i != mGrade.end(); ++i ){
         if( i != mGrade.begin() && (*i)->getAvail() <= lastAvailable ){
             // Remove the bad grade.
@@ -109,21 +134,13 @@ void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {
             lastAvailable = (*i)->getAvail();
         }
     }
+    
     if( !mGrade.empty() && mGrade[ 0 ]->getAvail() != 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Non-zero initial grade available is ignored in " << getXMLNameStatic()
                 << " " << mName << "." << endl;
     }
-    SubResource::completeInit( aSectorInfo );
-}
-
-//! Write out to XML variables specific to this derived class
-void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
-	XMLWriteElementCheckDefault( maxSubResource, "maxSubResource", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( gdpSupplyElasticity, "gdpSupplyElast", out, tabs, GDP_SUPPLY_ELASTICITY_DEFAULT );
-	XMLWriteElementCheckDefault( subResourceVariance, "subResourceVariance", out, tabs, 0.0 );
-	XMLWriteElementCheckDefault( subResourceCapacityFactor, "subResourceCapacityFactor", out, tabs, 1.0 );
 }
 
 //! Cumulative Production
@@ -132,7 +149,10 @@ void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) cons
 *   production 
 */
 
-void SubRenewableResource::cumulsupply( double prc, int per ) {   
+void SubRenewableResource::cumulsupply( double aPrice, int aPeriod ) {
+    // Cumulative supply is not utilize for annual production.
+    // Calculate cumulative production for reporting after calling annual supply for this
+    // subresource.
 }
 
 //! calculate annual supply 
@@ -142,14 +162,14 @@ void SubRenewableResource::cumulsupply( double prc, int per ) {
 * Note that the cost curve needs to be in the form of price, and cumulative fraction available.
 * Calls calcVariance() method
 */
-void SubRenewableResource::annualsupply( int period, const GDP* gdp, double price, double prev_price ) {
+void SubRenewableResource::annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice  ) {
 
     double fractionAvailable = -1;
-    const double effectivePrice = price + mPriceAdder[ period ];
+    const double effectivePrice = aPrice + mPriceAdder[ aPeriod ];
 
     // Move up the cost curve until a point is found above the current price.
     for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
-        if( effectivePrice <= mGrade[ i ]->getCost( period ) ) {
+        if( effectivePrice <= mGrade[ i ]->getCost( aPeriod ) ) {
             if( i == 0 ) {
                 // Below the bottom of the supply curve which means the fraction
                 // available is zero.
@@ -158,14 +178,14 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
             else {
                 // Determine the cost and available for the previous
                 // point. 
-                double prevGradeCost = mGrade[ i - 1 ]->getCost( period );
+                double prevGradeCost = mGrade[ i - 1 ]->getCost( aPeriod );
                 double prevGradeAvailable = mGrade[ i - 1 ]->getAvail();
 
                 // This should not be able to happen because the above if
                 // statement would fail.
-                assert( mGrade[ i ]->getCost( period ) > prevGradeCost );
+                assert( mGrade[ i ]->getCost( aPeriod ) > prevGradeCost );
                 double gradeFraction = ( effectivePrice - prevGradeCost )
-                    / ( mGrade[ i ]->getCost( period ) - prevGradeCost ); 
+                    / ( mGrade[ i ]->getCost( aPeriod ) - prevGradeCost );
                 // compute production as fraction of total possible
                 fractionAvailable = prevGradeAvailable + gradeFraction
                     * ( mGrade[ i ]->getAvail() - prevGradeAvailable ); 
@@ -185,11 +205,21 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
     }
 
     // Calculate the amount of resource expansion due to GDP increase.
-    double resourceSupplyIncrease = pow( gdp->getApproxGDP( period ) / gdp->getApproxGDP( 0 ),
-                                      gdpSupplyElasticity );
+    double resourceSupplyIncrease = pow( aGdp->getApproxGDP( aPeriod ) / aGdp->getApproxGDP( 0 ),
+                                         gdpSupplyElasticity );
 
     // now convert to absolute value of production
-    mAnnualProd[ period ] = fractionAvailable * maxSubResource * resourceSupplyIncrease;
+    mAnnualProd[ aPeriod ] = fractionAvailable * mMaxAnnualSubResource[aPeriod] * resourceSupplyIncrease;
+
+    // This subresource does not utilize a cumualtive supply curve.
+    // Calculate cumulative production from annunal production values.
+    if ( aPeriod == 0 ) {
+        mCumulProd[ aPeriod ] = 0.0;
+    }
+    else {
+        mCumulProd[ aPeriod ] = ( mAnnualProd[aPeriod] + mAnnualProd[aPeriod - 1] ) / 2
+        * scenario->getModeltime()->gettimestep( aPeriod ) + mCumulProd[aPeriod - 1];
+    }
 }
 
 /*! \brief Get the variance.
@@ -208,36 +238,9 @@ double SubRenewableResource::getAverageCapacityFactor() const {
 	return subResourceCapacityFactor;
 }
 
-double SubRenewableResource::getMaxSubResource() const {
-    return maxSubResource;
+double SubRenewableResource::getMaxAnnualSubResource( const int aPeriod ) const {
+    return mMaxAnnualSubResource[ aPeriod ];
 }
-
-const std::string& SubRenewableResource::getXMLName() const
-{
-   return getXMLNameStatic();
-}
-
-const std::string& SubRenewableResource::getXMLNameStatic()
-{
-   static const std::string XMLName = "sub-renewable-resource";
-   return XMLName;
-}
-
-/*! \brief Update an output container for a SubRenewableResource.
-* \param aVisitor Output container to update.
-* \param aPeriod Period to update.
-*/
-void SubRenewableResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
-    aVisitor->startVisitSubRenewableResource( this, aPeriod );
-
-    // Update the output container for the subresources.
-    for( unsigned int i = 0; i < mGrade.size(); ++i ){
-        mGrade[ i ]->accept( aVisitor, aPeriod );
-    }
-
-    aVisitor->endVisitSubRenewableResource( this, aPeriod );
-}
-
 
 /*!
  * \brief Calculate the lowest price for which a price change produces a nonzero supply response
@@ -259,4 +262,19 @@ double SubRenewableResource::getLowestPrice( const int aPeriod ) const
         cost = util::getLargeNumber();
     }
     return cost;
+}
+
+/*! \brief Update an output container for a SubRenewableResource.
+ * \param aVisitor Output container to update.
+ * \param aPeriod Period to update.
+ */
+void SubRenewableResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitSubRenewableResource( this, aPeriod );
+    
+    // Update the output container for the subresources.
+    for( unsigned int i = 0; i < mGrade.size(); ++i ){
+        mGrade[ i ]->accept( aVisitor, aPeriod );
+    }
+    
+    aVisitor->endVisitSubRenewableResource( this, aPeriod );
 }
