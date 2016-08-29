@@ -274,14 +274,7 @@ printlog( "Ad hoc adjustment to water coefficients so that none of the region/AE
 # By adding in the water cost without modifying the non-land variable costs, we risk having prices that exceed commodity prices, which will
 # cause solution/calibration failure in base years, and zero share in future years. This calculation checks whether any of our costs exceed
 # the prices.
-# TODO: decide what to do about this
-if(1==2) {
-L227.AgCoef_Irr_WaterWithdrawals$WaterPrice <- L227.UnlimitRsrcPrice$price[
-      match( vecpaste( L227.AgCoef_Irr_WaterWithdrawals[ c( input, Y ) ] ),
-             vecpaste( L227.UnlimitRsrcPrice[ c( "unlimited.resource", Y ) ] ) ) ]
-} else {
-L227.AgCoef_Irr_WaterWithdrawals$WaterPrice <- DEFAULT_UNLIMITED_WATER_PRICE
-}
+L227.AgCoef_Irr_WaterWithdrawals$WaterPrice <- DEFAULT_UNLIMITED_IRR_WATER_PRICE
 L227.AgCoef_Irr_WaterWithdrawals$WaterCost <- with( L227.AgCoef_Irr_WaterWithdrawals, coefficient * WaterPrice )
 L227.AgCoef_Irr_WaterWithdrawals$NonLandCost <- L225.AgCost_ag$nonLandVariableCost[
       match( vecpaste( L227.AgCoef_Irr_WaterWithdrawals[ c( reg, agtech, Y ) ] ),

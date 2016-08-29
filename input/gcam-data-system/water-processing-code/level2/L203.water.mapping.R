@@ -59,7 +59,9 @@ L203.mapping_all <- L203.mapping_all[
     L203.R_AEZ_nonexist, ]
 L203.mapping_all <- L203.mapping_all[ order( L203.mapping_all[[R]] ), ]
 # map in converyance losses for irrigation water withdrawals
-L203.mapping_all[ L203.mapping_all[[water_sector]] == irr_water_sector & L203.mapping_all[[water_type]] == water_W, "coefficient" ] <-
+# The loss is given as an efficiency, we will read it into the model as coefficient
+L203.mapping_all[ L203.mapping_all[[water_sector]] == irr_water_sector & L203.mapping_all[[water_type]] == water_W, "coefficient" ] <- 1.0 /
+
     L165.ag_IrrEff_R[ match(
         L203.mapping_all[ L203.mapping_all[[water_sector]] == irr_water_sector & L203.mapping_all[[water_type]] == water_W, R ],
         L165.ag_IrrEff_R[[R]] ), "conveyance.eff" ]

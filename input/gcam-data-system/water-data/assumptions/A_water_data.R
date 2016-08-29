@@ -20,6 +20,7 @@ S_F_tech_cool <- c( "sector", "fuel", "technology", "cooling_system", water_type
 
 # Default unlimited water price for basins/water_type with out an explicit assumption (Units: 1975$/m3)
 DEFAULT_UNLIMITED_WATER_PRICE <- 0
+DEFAULT_UNLIMITED_IRR_WATER_PRICE <- 0.001
 
 #Fixed charge rate and capacity factor to use on the cooling systems' capital costs
 cooling_system_FCR <- 0.15

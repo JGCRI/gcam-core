@@ -34,6 +34,8 @@ printlog( "Augment explictly assumed unlimited water supply prices with default 
 L102.all_region_water_type <- data.frame( GCAM_region_ID=rep( GCAM_region_names[[R]], length( all_water_types ) ),
                                          water_type=all_water_types[ sort( rep( 1:length( all_water_types ), nrow( GCAM_region_names ) ) ) ] )
 L102.all_region_water_type[, grep( 'X[0-9]{4}', names( A_unlimited_water_price ), value=T ) ] <- DEFAULT_UNLIMITED_WATER_PRICE
+# water withdrawals have a different default price
+L102.all_region_water_type[ L102.all_region_water_type[[water_type]] == water_W, grep( 'X[0-9]{4}', names( A_unlimited_water_price ), value=T ) ] <- DEFAULT_UNLIMITED_IRR_WATER_PRICE
 # Combine the assumed water prices with all possible region + water types that are not already
 # represented in the assumed prices.
 L102.unlimited_water_price_R_W_Y_75USDm3 <- rbind( A_unlimited_water_price, L102.all_region_water_type[
