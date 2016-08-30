@@ -23,35 +23,43 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "WATER_ASSUMPTIONS", "A_water_data", extension = ".R" )
 GCAM_region_iso <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
-AGLU_ctry <- readdata( "AGLU_MAPPINGS", "AGLU_ctry" )
 L105.an_Prod_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L105.an_Prod_Mt_R_C_Y" )
 LivestockWaterFootprint_MH2010 <- readdata( "WATER_LEVEL0_DATA", "LivestockWaterFootprint_MH2010" )
-# TODO: these should be in AGLU data?
 FAO_an_items_Stocks <- readdata( "WATER_MAPPINGS", "FAO_an_items_Stocks" )
-FAO.dairy <- readdata( "WATER_LEVEL0_DATA", "FAO.dairy" )
-FAO.livestock <- readdata( "WATER_LEVEL0_DATA", "FAO.livestock" )
+L100.FAO_an_Stocks <- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_an_Stocks" )
+L100.FAO_an_Dairy_Stocks<- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_an_Dairy_Stocks" )
 
 # -----------------------------------------------------------------------------
 
 # 2. Process data
-printlog( "Map FAO country to GCAM region ID" )
-L133.FAO_an_heads <- rbind( FAO.dairy, FAO.livestock )
-# TODO: why 2000?
-L133.FAO_an_heads <- subset( L133.FAO_an_heads, Year == 2000 )
-L133.FAO_ctry_GCAM_region_ID <- merge( GCAM_region_iso[, c("iso", R) ], AGLU_ctry[, c("iso", "FAO_country" ) ] )
+
+printlog(" Adjust total animal stocks to reduce by dairy animals" )
+# Note we are only using the year 2000 since that is the year for which the water
+# coefficients are for.
+L133.dairy_an_adj <- merge( L100.FAO_an_Dairy_Stocks[, c( "iso", "item", "X2000" ) ],
+    FAO_an_items_Stocks[, c( "item", "dairy.to.total" ) ] )
+L133.dairy_an_adj$dairy.adj <- L133.dairy_an_adj$X2000
+L133.dairy_an_adj$item <- L133.dairy_an_adj$dairy.to.total
+L133.dairy_an_adj <- L133.dairy_an_adj[, c( "iso", "item", "dairy.adj" ) ]
+L133.FAO_an_heads <- merge( L100.FAO_an_Stocks, L133.dairy_an_adj, all.x=T )
+L133.FAO_an_heads[ is.na( L133.FAO_an_heads$dairy.adj ), "dairy.adj" ] <- 0
+L133.FAO_an_heads$X2000 <- L133.FAO_an_heads$X2000 - L133.FAO_an_heads$dairy.adj
+# It seems the PDR stoppeed reporting data after 1994 for total livestock but not
+# dairy which causes the adjustment to be negative.  Just zero it out for now
+L133.FAO_an_heads[ L133.FAO_an_heads$X2000 < 0, "X2000"] <- 0
+
+# Now that we have adjusted the total stock data we can combine it together
+# with the dairy for the rest of the processing
+L133.FAO_an_heads <- rbind( L133.FAO_an_heads[, c( "iso", "item", "X2000" ) ],
+    L100.FAO_an_Dairy_Stocks[, c( "iso", "item", "X2000" ) ] )
 
 printlog( "Calculate water demand by FAO item" )
-L133.FAO_an_heads <- merge( L133.FAO_an_heads, L133.FAO_ctry_GCAM_region_ID, by.x="AreaName", by.y="FAO_country")
-L133.FAO_an_heads <- merge( L133.FAO_an_heads, FAO_an_items_Stocks, by.x="ItemName", by.y="item" )
+L133.FAO_an_heads <- merge( L133.FAO_an_heads, FAO_an_items_Stocks )
 L133.FAO_an_heads <- merge( L133.FAO_an_heads, LivestockWaterFootprint_MH2010 )
-# Note Value is in 1000 heads for Poultry and heads for everything else.
+L133.FAO_an_heads <- merge( L133.FAO_an_heads, GCAM_region_iso )
 # Coefficient is liters/head which is the same as m^3/1000 heads
-# So we will convert Value to 1000s of heads except for Poultry
-L133.FAO_an_heads[ L133.FAO_an_heads$GCAM_commodity != "Poultry", "Value" ] <- 
-    L133.FAO_an_heads[ L133.FAO_an_heads$GCAM_commodity != "Poultry", "Value" ] / 1000
-L133.FAO_an_heads$water.consumption <- L133.FAO_an_heads$Value * L133.FAO_an_heads$Coefficient
 # Coefficient was in terms of day so we convert water consumption / year
-L133.FAO_an_heads$water.consumption <- L133.FAO_an_heads$water.consumption / conv_days_year
+L133.FAO_an_heads$water.consumption <- L133.FAO_an_heads$X2000 * L133.FAO_an_heads$Coefficient / 1000 / conv_days_year
 
 printlog( "Calculate water demand by GCAM_commodity" )
 # Note aggregating water consumption by GCAM_commodity and averaging over total production means
