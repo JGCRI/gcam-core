@@ -16,9 +16,11 @@ if( !exists( "AGLUPROC_DIR" ) ){
 # Universal header file - provides logging, file support, etc.
 source(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
+source(paste(AGLUPROC_DIR,"/../_common/headers/WATER_header.R",sep=""))
 logstart( "L227.ag_water_irr.R" )
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 adddep(paste(AGLUPROC_DIR,"/../_common/headers/AGLU_header.R",sep=""))
+adddep(paste(AGLUPROC_DIR,"/../_common/headers/WATER_header.R",sep=""))
 printlog( "Model input for water withdrawals and consumption" )
 
 # -----------------------------------------------------------------------------
@@ -28,17 +30,20 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
+sourcedata( "WATER_ASSUMPTIONS", "A_water_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_biocrops_R_AEZ_irr <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ_irr" )
-A_WaterResources <- readdata( "AGLU_ASSUMPTIONS", "A_WaterResources" )
-A_IrrigationEfficiency_R <- readdata( "AGLU_ASSUMPTIONS", "A_IrrigationEfficiency_R" )
 L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
+L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
 L161.ag_irrProd_Mt_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L161.ag_irrProd_Mt_R_C_Y_AEZ" )
 L161.ag_rfdProd_Mt_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L161.ag_rfdProd_Mt_R_C_Y_AEZ" )
 L161.ag_irrYield_kgm2_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L161.ag_irrYield_kgm2_R_C_Y_AEZ" )
-L165.blue_km3Mt_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.blue_km3Mt_R_C_AEZ" )
-L165.tot_km3Mt_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.tot_km3Mt_R_C_AEZ" )
-L165.green_km3Mt_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.green_km3Mt_R_C_AEZ" )
+L165.BlueIrr_m3kg_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.BlueIrr_m3kg_R_C_AEZ" )
+L165.TotIrr_m3kg_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.TotIrr_m3kg_R_C_AEZ" )
+L165.GreenRfd_m3kg_R_C_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L165.GreenRfd_m3kg_R_C_AEZ" )
+L165.ag_IrrEff_R <- readdata( "AGLU_LEVEL1_DATA", "L165.ag_IrrEff_R" )
+L225.AgCost_ag <- readdata( "AGLU_LEVEL2_DATA", "L225.AgCost_ag", skip = 4 )
+A03.sector <- readdata( "WATER_ASSUMPTIONS", "A03.sector" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -61,9 +66,9 @@ L227.Region_Commodity_Y_AEZ <- rbind( L227.Region_Commodity_Yby_AEZ, L227.Region
 #L165.bioPhysCons_km3Mt_R_C_AEZ <- add_region_name(  L165.bioPhysCons_km3Mt_R_C_AEZ )
 
 #Water IO by AEZ by all years
-L227.Blue_IRR_IO_R_C_Y_AEZ <- repeat_and_add_vector( L165.blue_km3Mt_R_C_AEZ, "year", model_years )
-L227.Bio_IRR_IO_R_C_Y_AEZ <- repeat_and_add_vector( L165.tot_km3Mt_R_C_AEZ, "year", model_years )
-L227.Bio_RFD_IO_R_C_Y_AEZ <- repeat_and_add_vector( L165.green_km3Mt_R_C_AEZ, "year", model_years )
+L227.Blue_IRR_IO_R_C_Y_AEZ <- repeat_and_add_vector( L165.BlueIrr_m3kg_R_C_AEZ, "year", model_years )
+L227.Bio_IRR_IO_R_C_Y_AEZ <- repeat_and_add_vector( L165.TotIrr_m3kg_R_C_AEZ, "year", model_years )
+L227.Bio_RFD_IO_R_C_Y_AEZ <- repeat_and_add_vector( L165.GreenRfd_m3kg_R_C_AEZ, "year", model_years )
 
 # Agricultural component
 #  Water IO coefficients (km3 / Mt crop) for all regions, crops, AEZs, and years
@@ -86,9 +91,14 @@ L227.AgCoef_Irr_Water_by <- data.frame( region = L227.Region_Commodity_Yby_AEZ$r
       AgProductionTechnology = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, "IRR", sep = AEZ_delimiter ),
       year = L227.Region_Commodity_Yby_AEZ$year,
       minicam.energy.input = Irr_Cons_name,
-      coefficient = L227.Blue_IRR_IO_R_C_Y_AEZ.melt$value[
-         match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
-                vecpaste( L227.Blue_IRR_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ] )
+      coefficient = round(
+         L227.Blue_IRR_IO_R_C_Y_AEZ.melt$value[
+            match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
+                vecpaste( L227.Blue_IRR_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ],
+         digits_calOutput ),
+      stringsAsFactors = F )
+# Note that the R_C_AEZ tables don't have all non-applicable combinations written out, so missing values are generated
+# These are removed later on
                     
 #Table L227.AgCoef_BioWater for irrigated crops
 L227.AgCoef_BioIrr_Water_by <- data.frame( region = L227.Region_Commodity_Yby_AEZ$region,
@@ -96,21 +106,27 @@ L227.AgCoef_BioIrr_Water_by <- data.frame( region = L227.Region_Commodity_Yby_AE
       AgSupplySubsector = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, sep = AEZ_delimiter ),
       AgProductionTechnology = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, "IRR", sep = AEZ_delimiter ),
       year = L227.Region_Commodity_Yby_AEZ$year,
-      minicam.energy.input = Irr_Cons_name,
-      coefficient = L227.Bio_IRR_IO_R_C_Y_AEZ.melt$value[
-         match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
-                vecpaste( L227.Bio_IRR_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ] )
+      minicam.energy.input = Bio_Cons_name,
+      coefficient = round(
+         L227.Bio_IRR_IO_R_C_Y_AEZ.melt$value[
+            match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
+                   vecpaste( L227.Bio_IRR_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ],
+         digits_calOutput ),
+      stringsAsFactors = F )
 
 #Table L227.AgCoef_BioWater for rainfed crops
 L227.AgCoef_BioRfd_Water_by <- data.frame( region = L227.Region_Commodity_Yby_AEZ$region,
       AgSupplySector = L227.Region_Commodity_Yby_AEZ$GCAM_commodity,
       AgSupplySubsector = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, sep = AEZ_delimiter ),
-      AgProductionTechnology = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, "IRR", sep = AEZ_delimiter ),
+      AgProductionTechnology = paste( L227.Region_Commodity_Yby_AEZ$GCAM_commodity, L227.Region_Commodity_Yby_AEZ$AEZ, "RFD", sep = AEZ_delimiter ),
       year = L227.Region_Commodity_Yby_AEZ$year,
-      minicam.energy.input = Irr_Cons_name,
-      coefficient = L227.Bio_RFD_IO_R_C_Y_AEZ.melt$value[
-         match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
-                vecpaste( L227.Bio_RFD_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ] )
+      minicam.energy.input = Bio_Cons_name,
+      coefficient = round(
+         L227.Bio_RFD_IO_R_C_Y_AEZ.melt$value[
+            match( vecpaste( L227.Region_Commodity_Yby_AEZ[ c( reg, C, AEZ, Y ) ] ),
+                   vecpaste( L227.Bio_RFD_IO_R_C_Y_AEZ.melt[ c( reg, C, AEZ, Y ) ] ) ) ],
+         digits_calOutput ),
+      stringsAsFactors = F )
 
 #Future periods
 printlog( "Setting future water coefs (km3 / Mt crop ) equal to base year values" )
@@ -132,21 +148,18 @@ L227.AgCoef_BioIrr_Water <- subset( L227.AgCoef_BioIrr_Water, coefficient > 0 )
 L227.AgCoef_BioRfd_Water <- subset( L227.AgCoef_BioRfd_Water, coefficient > 0 )
 
 # Create table for water withdrawals
-L227.IrrigationEfficiency_R <- gcam_interp( A_IrrigationEfficiency_R, model_years, rule = 2 )
+L227.IrrigationEfficiency_R <- repeat_and_add_vector( L165.ag_IrrEff_R, Y, model_years )
 L227.IrrigationEfficiency_R <- add_region_name( L227.IrrigationEfficiency_R )
-L227.IrrigationEfficiency_R.melt <- melt( L227.IrrigationEfficiency_R, measure.vars = X_model_years,
-       id.vars = "region", variable.name = "Xyear", value.name = "efficiency" )
-L227.IrrigationEfficiency_R.melt$year <- substr( L227.IrrigationEfficiency_R.melt$Xyear, 2, 5 )
 
 L227.AgCoef_Irr_WaterWithdrawals <- L227.AgCoef_Irr_Water
-L227.AgCoef_Irr_WaterWithdrawals$coefficient <- L227.AgCoef_Irr_WaterWithdrawals$coefficient /
-      L227.IrrigationEfficiency_R.melt$efficiency[
+L227.AgCoef_Irr_WaterWithdrawals$coefficient <- round(
+      L227.AgCoef_Irr_WaterWithdrawals$coefficient /
+      L227.IrrigationEfficiency_R$field.eff[
          match( vecpaste(L227.AgCoef_Irr_WaterWithdrawals[ c( reg, Y ) ] ),
-                vecpaste(L227.IrrigationEfficiency_R.melt[ c( reg, Y ) ] ) ) ]
+                vecpaste(L227.IrrigationEfficiency_R[ c( reg, Y ) ] ) ) ],
+      digits_calOutput )
 L227.AgCoef_Irr_WaterWithdrawals$minicam.energy.input <- Irr_W_name
-L227.AgCoef_Irr_WaterWithdrawals$coefficient[ L227.AgCoef_Irr_WaterWithdrawals$coefficient %in% c( Inf, NA ) ] <- 0 
-L227.AgCoef_Irr_WaterWithdrawals$coefficient[ L227.AgCoef_Irr_WaterWithdrawals$coefficient > 35 ] <- 35 
-                 
+       
 #  Water IO coefficients for dedicated bioenergy crops (km3 / EJ biomass)
 printlog( "Table L227.AgCoef_Water_bio: Water input-output coefficients by region / dedicated bioenergy crop / year / AEZ" )
 #Compute average water IO for grassy and woody bioenergy crops
@@ -182,8 +195,8 @@ L227.AgCoef_Bio_Water_bio$coefficient[ substr( L227.AgCoef_Bio_Water_bio$AgSuppl
 
 printlog( "Compute blue water for irrigated bioenergy" )
 #Match in green and blue water for existing crops in 2005 -- note for this we are only using blue & green from irrigated crops
-L227.irrWater_R_C_AEZ.melt <- melt( L165.blue_km3Mt_R_C_AEZ, id.vars = R_C, variable.name = AEZ, value.name = "BlueCoeff_perkg" )
-L227.bioWater_R_C_AEZ.melt <- melt( L165.tot_km3Mt_R_C_AEZ, id.vars = R_C, variable.name = AEZ )
+L227.irrWater_R_C_AEZ.melt <- melt( L165.BlueIrr_m3kg_R_C_AEZ, id.vars = R_C, variable.name = AEZ, value.name = "BlueCoeff_perkg" )
+L227.bioWater_R_C_AEZ.melt <- melt( L165.TotIrr_m3kg_R_C_AEZ, id.vars = R_C, variable.name = AEZ )
 L227.irrWater_R_C_AEZ.melt$GreenCoeff_perkg <- L227.bioWater_R_C_AEZ.melt$value[
       match( vecpaste( L227.irrWater_R_C_AEZ.melt[ R_C_AEZ ] ),
              vecpaste( L227.bioWater_R_C_AEZ.melt[ R_C_AEZ ] ) ) ] -
@@ -214,6 +227,7 @@ L227.AgCoef_Irr_Water_bio$AEZ <- substr( L227.AgCoef_Irr_Water_bio$AgSupplySubse
 L227.AgCoef_Irr_Water_bio$coefficient <- swgr_Bio_IO_km3EJ * L227.BlueWaterFract$blue_fract[
       match( vecpaste(L227.AgCoef_Irr_Water_bio[ c( reg, AEZ, Y ) ] ),
              vecpaste(L227.BlueWaterFract[ c( reg, AEZ, Y ) ] ) ) ]
+L227.AgCoef_Irr_Water_bio$coefficient[ is.na( L227.AgCoef_Irr_Water_bio$coefficient ) ] <- 0
 
 #Replace other bioenergy crops with crop-specific water coefficients
 L227.AgCoef_Irr_Water_bio$coefficient[
@@ -240,9 +254,9 @@ L227.AgCoef_Bio_Water_bio$coefficient[ L227.AgCoef_Bio_Water_bio$coefficient %in
 
 # Create table for water withdrawals
 L227.AgCoef_Irr_WaterWithdrawals_bio <- L227.AgCoef_Irr_Water_bio
-L227.AgCoef_Irr_WaterWithdrawals_bio$coefficient <- L227.AgCoef_Irr_WaterWithdrawals_bio$coefficient / L227.IrrigationEfficiency_R.melt$efficiency[
+L227.AgCoef_Irr_WaterWithdrawals_bio$coefficient <- L227.AgCoef_Irr_WaterWithdrawals_bio$coefficient / L227.IrrigationEfficiency_R$field.eff[
       match( vecpaste( L227.AgCoef_Irr_WaterWithdrawals_bio[ c( reg, Y ) ] ),
-             vecpaste( L227.IrrigationEfficiency_R.melt[ c( reg, Y ) ] ) ) ]
+             vecpaste( L227.IrrigationEfficiency_R[ c( reg, Y ) ] ) ) ]
 L227.AgCoef_Irr_WaterWithdrawals_bio$minicam.energy.input <- Irr_W_name
 L227.AgCoef_Irr_WaterWithdrawals_bio$coefficient[ L227.AgCoef_Irr_WaterWithdrawals_bio$coefficient %in% c( Inf, NA ) ] <- 0 
 
@@ -255,26 +269,55 @@ L227.AgCoef_Irr_WaterWithdrawals_bio <- remove_AEZ_nonexist( L227.AgCoef_Irr_Wat
 L227.AgCoef_Bio_Water_bio <- remove_AEZ_nonexist( L227.AgCoef_Bio_Water_bio )
 L227.AgCoef_Irr_Water_bio <- remove_AEZ_nonexist( L227.AgCoef_Irr_Water_bio )
 
-#Build base tables for water supply tables
-printlog( "Building tables for reading in water supply" )
-A_WaterResources$unlimited.resource <- A_WaterResources$resource
-L227.UnlimitRsrc <- repeat_and_add_vector( A_WaterResources[ names( A_WaterResources ) %in% names_UnlimitRsrc ], R, GCAM_region_names[[R]] )
-L227.UnlimitRsrc <- add_region_name( L227.UnlimitRsrc )
-L227.UnlimitRsrc$market <- L227.UnlimitRsrc$region
-L227.UnlimitRsrc$capacity.factor <- 1
-L227.UnlimitRsrc <- L227.UnlimitRsrc[ names_UnlimitRsrc ]
+printlog( "Ad hoc adjustment to water coefficients so that none of the region/AEZ/crops have negative profit" )
+# In GCAM, the profit rate is calculated as price minus cost times yield, so if the cost exceeds the price, then the profit goes negative.
+# By adding in the water cost without modifying the non-land variable costs, we risk having prices that exceed commodity prices, which will
+# cause solution/calibration failure in base years, and zero share in future years. This calculation checks whether any of our costs exceed
+# the prices.
+L227.AgCoef_Irr_WaterWithdrawals$WaterPrice <- DEFAULT_UNLIMITED_IRR_WATER_PRICE
+L227.AgCoef_Irr_WaterWithdrawals$WaterCost <- with( L227.AgCoef_Irr_WaterWithdrawals, coefficient * WaterPrice )
+L227.AgCoef_Irr_WaterWithdrawals$NonLandCost <- L225.AgCost_ag$nonLandVariableCost[
+      match( vecpaste( L227.AgCoef_Irr_WaterWithdrawals[ c( reg, agtech, Y ) ] ),
+             vecpaste( L225.AgCost_ag[ c( reg, agtech, Y ) ] ) ) ]
+L227.AgCoef_Irr_WaterWithdrawals$calPrice <- L132.ag_an_For_Prices$calPrice[
+      match( L227.AgCoef_Irr_WaterWithdrawals[[ agsupp ]], L132.ag_an_For_Prices[[C]] ) ]
+L227.AgCoef_Irr_WaterWithdrawals$Profit <- with( L227.AgCoef_Irr_WaterWithdrawals, calPrice - WaterCost - NonLandCost)
 
-printlog( "Water resource prices by period" )
-A_WaterResources <- gcam_interp( A_WaterResources, model_years )
-L227.WaterResources.melt <- melt( A_WaterResources, measure.vars = X_model_years, id.vars = "unlimited.resource", variable.name = "Xyear", value.name = "price" )
-L227.WaterResources.melt$year <- substr( L227.WaterResources.melt$Xyear, 2, 5 )
-L227.WaterResources.melt <- repeat_and_add_vector( L227.WaterResources.melt, R, GCAM_region_names[[R]])
-L227.WaterResources.melt <- add_region_name( L227.WaterResources.melt )
-L227.UnlimitRsrcPrice <- L227.WaterResources.melt[ names_UnlimitRsrcPrice ]
+printlog( "Assuming an exogenous floor on profit rates to prevent negative, zero, and very low profit rates" )
+# For the model, low profit rates are fine as long as it's not the dominant crop in a nest where bioenergy is allowed
+minProfit <- min( with( L227.AgCoef_Irr_WaterWithdrawals, calPrice - NonLandCost ) ) / 2
+L227.AgCoef_Irr_WaterWithdrawals$coefficient <- with( L227.AgCoef_Irr_WaterWithdrawals,
+      round( pmin( coefficient, ( calPrice - NonLandCost - minProfit ) / WaterPrice ), digits_calOutput ) )
 
-#Remove any regions for which agriculture and land use are not modeled
-L227.UnlimitRsrc <- subset( L227.UnlimitRsrc, !region %in% no_aglu_regions )
-L227.UnlimitRsrcPrice <- subset( L227.UnlimitRsrcPrice, !region %in% no_aglu_regions )
+#Go ahead and print out the number of values being changed in each year
+tmp1 <- subset( L227.AgCoef_Irr_WaterWithdrawals, year == 2010 )
+tmp2 <- subset( tmp1, Profit < minProfit )
+printlog( "Out of", nrow( tmp1 ), "observations,", nrow(tmp2 ), "had water coefficients reduced to keep positive profit rates")
+
+#As a last step, remove the unnecessary columns
+L227.AgCoef_Irr_WaterWithdrawals <- L227.AgCoef_Irr_WaterWithdrawals[ names_AgCoef ]
+
+printlog( "Map the water inputs to the appropraite water mapping sector." )
+
+# A helper wrapper to help get the data in/out in a way that is usable by the
+# get_water_inputs_for_mapping utility method.
+do_water_rename <- function(d) {
+    d[[water_sector]] <- "Irrigation"
+    d[[AEZ]] <- as.integer( sub( '.*AEZ', '', d[[agsubs]] ) )
+    d$minicam.energy.input <- as.character( d$minicam.energy.input )
+    d$minicam.energy.input <- get_water_inputs_for_mapping( d, A03.sector, water_type.col="minicam.energy.input" )
+    d[[AEZ]] <- NULL
+    d[[water_sector]] <- NULL
+    return(d)
+}
+
+L227.AgCoef_BioIrr_Water <- do_water_rename( L227.AgCoef_BioIrr_Water )
+L227.AgCoef_BioRfd_Water <- do_water_rename( L227.AgCoef_BioRfd_Water )
+L227.AgCoef_Irr_Water <- do_water_rename( L227.AgCoef_Irr_Water )
+L227.AgCoef_Irr_WaterWithdrawals <- do_water_rename( L227.AgCoef_Irr_WaterWithdrawals )
+L227.AgCoef_Irr_WaterWithdrawals_bio <- do_water_rename( L227.AgCoef_Irr_WaterWithdrawals_bio )
+L227.AgCoef_Bio_Water_bio <- do_water_rename( L227.AgCoef_Bio_Water_bio )
+L227.AgCoef_Irr_Water_bio <- do_water_rename( L227.AgCoef_Irr_Water_bio )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -288,8 +331,6 @@ write_mi_data( L227.AgCoef_Irr_WaterWithdrawals, "AgCoef", "AGLU_LEVEL2_DATA", "
 write_mi_data( L227.AgCoef_Irr_WaterWithdrawals_bio, "AgCoef", "AGLU_LEVEL2_DATA", "L227.AgCoef_Irr_WaterWithdrawals_bio", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
 write_mi_data( L227.AgCoef_Bio_Water_bio, "AgCoef", "AGLU_LEVEL2_DATA", "L227.AgCoef_Bio_Water_bio", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
 write_mi_data( L227.AgCoef_Irr_Water_bio, "AgCoef", "AGLU_LEVEL2_DATA", "L227.AgCoef_Irr_Water_bio", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
-write_mi_data( L227.UnlimitRsrc, "UnlimitRsrc", "AGLU_LEVEL2_DATA", "L227.UnlimitRsrc", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
-write_mi_data( L227.UnlimitRsrcPrice, "UnlimitRsrcPrice", "AGLU_LEVEL2_DATA", "L227.UnlimitRsrcPrice", "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml" ) 
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_water_input_IRR.xml", "AGLU_XML_FINAL", "ag_water_input_IRR.xml", "", xml_tag="outFile" )
 

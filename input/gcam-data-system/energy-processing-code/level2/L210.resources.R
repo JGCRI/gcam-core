@@ -256,6 +256,7 @@ L210.GrdRenewRsrcCurves_geo <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_geo, "re
 
 printlog( "L210.GrdRenewRsrcMax_geo: default max sub resource of geothermal (hydrothermal) resources")
 L210.GrdRenewRsrcMax_geo <- subset( L210.GrdRenewRsrcCurves_geo, grade = unique( grade )[1] )
+L210.GrdRenewRsrcMax_geo$year.fillout <- min( model_base_years )
 L210.GrdRenewRsrcMax_geo$maxSubResource <- 1
 L210.GrdRenewRsrcMax_geo <- L210.GrdRenewRsrcMax_geo[ names_maxSubResource ]
 
@@ -265,6 +266,7 @@ L210.GrdRenewRsrcCurves_EGS <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_EGS, "re
 
 printlog( "L210.GrdRenewRsrcMax_EGS: default max sub resource of EGS resources")
 L210.GrdRenewRsrcMax_EGS <- subset( L210.GrdRenewRsrcCurves_EGS, grade = unique( grade )[1] )
+L210.GrdRenewRsrcMax_EGS$year.fillout <- min( model_base_years )
 L210.GrdRenewRsrcMax_EGS$maxSubResource <- 1
 L210.GrdRenewRsrcMax_EGS <- L210.GrdRenewRsrcMax_EGS[ names_maxSubResource ]
 
@@ -274,6 +276,7 @@ L210.GrdRenewRsrcCurves_tradbio <- convert_rsrc_to_L2( L210.RsrcCurves_EJ_R_trad
 
 printlog( "L210.GrdRenewRsrcMax_tradbio: default max sub resource of tradbio resources")
 L210.GrdRenewRsrcMax_tradbio <- subset( L210.GrdRenewRsrcCurves_tradbio, grade == unique( grade )[1] )
+L210.GrdRenewRsrcMax_tradbio$year.fillout <- min( model_base_years )
 L210.GrdRenewRsrcMax_tradbio$maxSubResource <- 1
 L210.GrdRenewRsrcMax_tradbio <- L210.GrdRenewRsrcMax_tradbio[ names_maxSubResource ]
 

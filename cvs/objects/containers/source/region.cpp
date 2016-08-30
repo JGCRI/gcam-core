@@ -166,6 +166,9 @@ void Region::XMLParse( const DOMNode* node ){
             parseContainerNode( curr, mPolicies, new PolicyPortfolioStandard() );
         }
         // TODO: should we create a factory for resources?
+        else if( nodeName == Resource::getXMLNameStatic() ){
+            parseContainerNode( curr, mResources, new Resource() );
+        }
         else if( nodeName == DepletableResource::getXMLNameStatic() ){
             parseContainerNode( curr, mResources, new DepletableResource() );
         }

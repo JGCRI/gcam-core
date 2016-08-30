@@ -80,7 +80,7 @@ public:
     virtual void cumulsupply( double aPrice, int aPeriod );
     virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
-    double getCumulProd( const int aPeriod ) const;
+    virtual double getCumulProd( const int aPeriod ) const;
     virtual void annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
     double getAnnualProd( int aPeriod ) const;
     double getAvailable( int aPeriod ) const;

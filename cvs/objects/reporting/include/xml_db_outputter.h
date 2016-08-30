@@ -96,6 +96,9 @@ public:
 
     void startVisitSubResource( const SubResource* aSubResource, const int aPeriod );
     void endVisitSubResource( const SubResource* aSubResource, const int aPeriod );
+    
+    void startVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod );
+    void endVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod );
 
     void startVisitGrade( const Grade* aGrade, const int aPeriod );
     void endVisitGrade( const Grade* aGrade, const int aPeriod );

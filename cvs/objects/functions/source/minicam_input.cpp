@@ -42,12 +42,13 @@
 #include <cassert>
 #include "functions/include/minicam_input.h"
 #include "util/base/include/ivisitor.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
 
 //! Default Constructor
-MiniCAMInput::MiniCAMInput()
+MiniCAMInput::MiniCAMInput(): mTypeFlags( 0 )
 {
 }
 
@@ -61,6 +62,61 @@ const string& MiniCAMInput::getName() const {
 
 const string& MiniCAMInput::getMarketName( const string& aRegionName ) const {
     return aRegionName;
+}
+
+/*! \brief Initialize the type flags.
+ * \see setFlagsByName
+ */
+void MiniCAMInput::initializeTypeFlags() {
+    
+    // Initialize the flag.
+    mTypeFlags |= IInput::INITIALIZED;
+}
+
+/*! \brief Add the correct flags to the mTypeFlags for the given type name.
+ * \details This allows us to flexibly initialize the type flags based on
+ *          input names or read in flags.
+ * \param aTypeName The name to use when determining the type flags.
+ */
+void MiniCAMInput::setFlagsByName( const string& aTypeName ) {
+    // Initialize the type.
+    if( aTypeName == "Energy" ){
+        mTypeFlags |= IInput::ENERGY;
+    }
+    else if( aTypeName == "Resource" ){
+        mTypeFlags |= IInput::RESOURCE;
+    }
+    else if( aTypeName == "BackupEnergy" ){
+        mTypeFlags |= IInput::BACKUP_ENERGY;
+    }
+    else{
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Flag Error " << aTypeName << endl;
+    }
+}
+
+string MiniCAMInput::getFlagName( const int aTypeFlag ) const {
+    if( aTypeFlag & IInput::ENERGY ){
+        return ("Energy");
+    }
+    else if( aTypeFlag & IInput::RESOURCE ){
+        return ("Resource");
+        
+    }
+    else if( aTypeFlag & IInput::BACKUP_ENERGY ){
+        return ("BackupEnergy");
+    }
+    else {
+        return ("");
+    }
+}
+
+bool MiniCAMInput::hasTypeFlag( const int aTypeFlag ) const {
+    
+    /*! \pre The type flags must be initialized. */
+    
+    return ( ( aTypeFlag & ~mTypeFlags ) == 0 );
 }
 
 double MiniCAMInput::getConversionFactor( const int aPeriod ) const {

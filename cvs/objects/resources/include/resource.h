@@ -55,11 +55,13 @@ class SubResource;
 
 /*! 
 * \ingroup Objects
-* \brief An abstract class which defines a single resource containing multiple
-*        subresources.
+* \brief A class which defines a single resource containing multiple
+*        subresources, which can be of either depletable or renewable type.
 * \todo This class needs much more documentation.
 * \todo This class and AResource need refactoring and cleaning up. FixedResource
-*       should be removed, DeplatableResource and Resource should be merged, and
+*       should be removed. Resource is generic and may contain depletable or 
+*       renewable subresources. DepletableResource contains only depletable
+*       subresources, while RenewableResource contains only renewable subresources.
 *       RenewableResource should inherit from AResource and be moved to its own
 *       files.
 * \author Sonny Kim
@@ -69,6 +71,7 @@ class Resource: public AResource {
 public:
     Resource();
     virtual ~Resource();
+    static const std::string& getXMLNameStatic();
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
     void toDebugXML( const int period, std::ostream& aOut, Tabs* aTabs ) const;
@@ -80,7 +83,8 @@ public:
     
     void calcSupply( const std::string& aRegionName, const GDP* aGdp, const int aPeriod );
     virtual double getAnnualProd( const std::string& aRegionName, const int aPeriod ) const;
-    void dbOutput( const std::string& regname ); 
+    virtual double getPrice( const int aPeriod ) const;
+    void dbOutput( const std::string& regname );
     void csvOutputFile( const std::string& regname ); 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
@@ -97,12 +101,13 @@ protected:
     std::vector<double> mCumulProd; //!< cumulative production of Resource
     std::map<std::string,int> mSubResourceNameMap; //!< Map of subResource name to integer position in vector.
     object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to the market
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aNode ) = 0;
-    virtual const std::string& getXMLName() const = 0;
+    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
+    virtual const std::string& getXMLName() const;
     void setMarket( const std::string& aRegionName );
     virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
     void cumulsupply( double aPrice, int aPeriod );
+private:
+    static const std::string XML_NAME; //!< node name for toXML methods
 };
 
 /*! 

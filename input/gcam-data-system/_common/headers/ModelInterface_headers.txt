@@ -79,19 +79,19 @@ DepRsrcCalProd, world/+{name}region, region/+{name}depresource, depresource/+{na
 
 RenewRsrcCalProd, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year}cal-production, sub-renewable-resource/+cal-production, scenario, scenario/world
 
-maxSubResource, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
+maxSubResource, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
-GrdRenewRsrcMax, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
+GrdRenewRsrcMax, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{year;fillout=1}maxSubResource, sub-renewable-resource/+maxSubResource, scenario, scenario/world
 
 DepRsrcCurves, world/+{name}region, region/+{name}depresource, depresource/+{name}subresource, subresource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
 RenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
-SmthRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, scenario, scenario/world
+SmthRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}maxSubResource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, scenario, scenario/world
 
-SmthRenewRsrcCurvesGdpElast, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, scenario, scenario/world
+SmthRenewRsrcCurvesGdpElast, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}maxSubResource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, scenario, scenario/world
 
-SmthRenewRsrcCurvesGdpElastCapFac, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, smooth-renewable-subresource/+subResourceCapacityFactor, scenario, scenario/world
+SmthRenewRsrcCurvesGdpElastCapFac, world/+{name}region, region/+{name}renewresource, renewresource/+{name}smooth-renewable-subresource, smooth-renewable-subresource/+{year;fillout=1}maxSubResource, smooth-renewable-subresource/+maxSubResource, smooth-renewable-subresource/+mid-price, smooth-renewable-subresource/+curve-exponent, smooth-renewable-subresource/+gdpSupplyElast, smooth-renewable-subresource/+subResourceCapacityFactor, scenario, scenario/world
 
 GrdRenewRsrcCurves, world/+{name}region, region/+{name}renewresource, renewresource/+{name}sub-renewable-resource, sub-renewable-resource/+{name}grade, grade/+available, grade/+extractioncost, scenario, scenario/world
 
@@ -269,11 +269,14 @@ GlobalTechCapture, global-technology-database/+{sector-name}location-info, globa
 
 GlobalTechCSeq, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, non-energy-use-capture-component/+remove-fraction, non-energy-use-capture-component/+target-gas, scenario, scenario/world, world/global-technology-database, period/non-energy-use-capture-component
 
+GlobalPassThroughTech, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}pass-through-technology, scenario, scenario/world, world/global-technology-database
 
 #####, GLOBAL INTERMITTENT TECHNOLOGY
 
 
-GlobalIntTechEff, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
+GlobalIntTechCoef, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
+
+GlobalIntTechEff, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+efficiency, minicam-energy-input/+flag, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
 GlobalIntTechShrwt, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+share-weight, scenario, scenario/world, world/global-technology-database, period/{name=CO2}CO2
 
@@ -291,7 +294,7 @@ GlobalIntTechLifetime, global-technology-database/+{sector-name}location-info, g
 
 GlobalIntTechProfitShutdown, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, profit-shutdown-decider/+median-shutdown-point, profit-shutdown-decider/+steepness, scenario, scenario/world, world/global-technology-database, period/{name=profit}profit-shutdown-decider
 
-GlobalIntTechBackup, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+electric-sector-name, period/+trial-market-name, period/+backup-capital-cost, period/+backup-capacity-factor, capacity-limit-backup-calculator/+capacity-limit, period/+{name}minicam-energy-input, period/+{name}minicam-non-energy-input, scenario, scenario/world, world/global-technology-database, period/capacity-limit-backup-calculator
+GlobalIntTechBackup, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}intermittent-technology, intermittent-technology/+{year}period, period/+electric-sector-name, period/+trial-market-name, period/+backup-capital-cost, period/+backup-capacity-factor, capacity-limit-backup-calculator/+capacity-limit, period/+{name}minicam-energy-input, period/+{name}minicam-non-energy-input, minicam-energy-input/+flag, scenario, scenario/world, world/global-technology-database, period/capacity-limit-backup-calculator
 
 GlobalRenewTech, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}renewable-input, scenario/world, scenario, world/global-technology-database, period/{name=CO2}CO2
 

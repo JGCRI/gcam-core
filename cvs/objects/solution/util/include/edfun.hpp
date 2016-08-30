@@ -117,6 +117,8 @@ public:
   // Constants to protect against overflow: 
   static const double PMAX;            //!< Greatest allowable price
   static const double ARGMAX;          //!< log of greatest allowable price
+  //! smallest value allowed for rescaling x values
+  static const double MINXSCL;
 
 protected:
   // scale factors for input and output

@@ -116,6 +116,8 @@ public:
     virtual double getAnnualProd( const std::string& aRegionName,
                                   const int aPeriod ) const;
 
+    virtual double getPrice( const int aPeriod ) const;
+    
     virtual void dbOutput( const std::string& aRegionName );
 
     virtual void csvOutputFile( const std::string& aRegionName ); 
