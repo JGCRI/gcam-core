@@ -29,6 +29,7 @@ A_regions <- readdata( "ENERGY_ASSUMPTIONS", "A_regions" ) # need this to tell w
 A_agRsrc <- readdata( "AGLU_ASSUMPTIONS", "A_agRsrc" )
 A_agSubRsrc <- readdata( "AGLU_ASSUMPTIONS", "A_agSubRsrc" )
 A_agRsrcCurves <- readdata( "AGLU_ASSUMPTIONS", "A_agRsrcCurves" )
+A_agUnlimitedRsrcCurves <- readdata( "AGLU_ASSUMPTIONS", "A_agUnlimitedRsrcCurves" )
 A_an_input_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_supplysector" )
 A_an_input_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_subsector" )
 A_an_input_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_technology" )
@@ -96,6 +97,18 @@ L202.maxSubResource <- L202.maxSubResource[ names_maxSubResource ]
 
 printlog( "L202.RenewRsrcCurves" )
 L202.RenewRsrcCurves <- write_to_all_regions_ag( A_agRsrcCurves, names_RenewRsrcCurves )
+
+printlog( "L202.UnlimitedRenewRsrcCurves" )
+L202.UnlimitedRenewRsrcCurves <- write_to_all_regions_ag( A_agUnlimitedRsrcCurves, names_UnlimitRsrc )
+
+printlog( "L202.UnlimitedRenewRsrcPrice" )
+L202.UnlimitedRenewRsrcPrice <- interpolate_and_melt(
+        A_agUnlimitedRsrcCurves[ names( A_agUnlimitedRsrcCurves ) %in% c( "unlimited.resource", X_historical_years ) ], 
+        model_base_years )
+L202.UnlimitedRenewRsrcPrice$year <- substr( L202.UnlimitedRenewRsrcPrice$variable, 2, 5 )
+L202.UnlimitedRenewRsrcPrice$variable <- NULL
+names( L202.UnlimitedRenewRsrcPrice )[ names( L202.UnlimitedRenewRsrcPrice ) == "value" ] <- "price"
+L202.UnlimitedRenewRsrcPrice <- write_to_all_regions_ag( L202.UnlimitedRenewRsrcPrice, names_UnlimitRsrcPrice )
 
 printlog( "L202.Supplysector_in: generic supplysector info for inputs to animal production" )
 L202.SectorLogitTables_in <- get_logit_fn_tables( A_an_input_supplysector, names_SupplysectorLogitType,
@@ -303,6 +316,8 @@ L202.RenewRsrcPrice <- subset( L202.RenewRsrcPrice, !region %in% no_aglu_regions
 L202.RenewRsrcCalProd <- subset( L202.RenewRsrcCalProd, !region %in% no_aglu_regions )
 L202.maxSubResource <- subset( L202.maxSubResource, !region %in% no_aglu_regions )
 L202.RenewRsrcCurves <- subset( L202.RenewRsrcCurves, !region %in% no_aglu_regions )
+L202.UnlimitedRenewRsrcCurves <- subset( L202.UnlimitedRenewRsrcCurves, !region %in% no_aglu_regions )
+L202.UnlimitedRenewRsrcPrice <- subset( L202.UnlimitedRenewRsrcPrice, !region %in% no_aglu_regions )
 for( curr_table in names( L202.SectorLogitTables_in ) ) {
     if( curr_table != "EQUIV_TABLE" ) {
         L202.SectorLogitTables_in[[ curr_table ]]$data <- subset( L202.SectorLogitTables_in[[ curr_table ]]$data,
@@ -354,6 +369,8 @@ write_mi_data( L202.RenewRsrc, IDstring="RenewRsrc", domain="AGLU_LEVEL2_DATA", 
 write_mi_data( L202.RenewRsrcPrice, "RenewRsrcPrice", "AGLU_LEVEL2_DATA", "L202.RenewRsrcPrice", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.maxSubResource, "maxSubResource", "AGLU_LEVEL2_DATA", "L202.maxSubResource", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 write_mi_data( L202.RenewRsrcCurves, "RenewRsrcCurves", "AGLU_LEVEL2_DATA", "L202.RenewRsrcCurves", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+write_mi_data( L202.UnlimitedRenewRsrcCurves, "UnlimitRsrc", "AGLU_LEVEL2_DATA", "L202.UnlimitedRenewRsrcCurves", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
+write_mi_data( L202.UnlimitedRenewRsrcPrice, "UnlimitRsrcPrice", "AGLU_LEVEL2_DATA", "L202.UnlimitedRenewRsrcPrice", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 for( curr_table in names ( L202.SectorLogitTables_in ) ) {
 write_mi_data( L202.SectorLogitTables_in[[ curr_table ]]$data, L202.SectorLogitTables_in[[ curr_table ]]$header,
     "AGLU_LEVEL2_DATA", paste0("L202.", L202.SectorLogitTables_in[[ curr_table ]]$header, "_in" ), "AGLU_XML_BATCH",
