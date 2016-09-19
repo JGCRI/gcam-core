@@ -90,15 +90,15 @@ L203.pcgdp_thous90USD_SSP_R_Y.melt <- add_region_name( L203.pcgdp_thous90USD_SSP
 printlog( "L203.Supplysector_demand: generic info for demand sectors" )
 L203.SectorLogitTables <- get_logit_fn_tables( A_demand_supplysector, names_SupplysectorLogitType,
     base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
-L203.Supplysector_demand <- write_to_all_regions_ag( A_demand_supplysector, names_Supplysector )
+L203.Supplysector_demand <- write_to_all_regions( A_demand_supplysector, names_Supplysector )
 
 printlog( "L203.SubsectorAll_demand: generic info for demand subsectors" )
 L203.SubsectorLogitTables <- get_logit_fn_tables( A_demand_subsector, names_SubsectorLogitType,
     base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
-L203.SubsectorAll_demand <- write_to_all_regions_ag( A_demand_subsector, names_SubsectorAll )
+L203.SubsectorAll_demand <- write_to_all_regions( A_demand_subsector, names_SubsectorAll )
 
 printlog( "L203.StubTech_demand: identification of stub technologies for demands" )
-L203.StubTech_demand <- write_to_all_regions_ag( A_demand_technology, names_Tech )
+L203.StubTech_demand <- write_to_all_regions( A_demand_technology, names_Tech )
 names( L203.StubTech_demand ) <- gsub( "technology", "stub.technology", names( L203.StubTech_demand ) )
 
 printlog( "L203.GlobalTechCoef_demand: input names of demand technologies" )
@@ -113,7 +113,7 @@ L203.GlobalTechShrwt_demand$share.weight <- 1
 #Calibrated food and nonfood demands of crops and meat
 #Create table of regions, technologies, and all base years
 # NOTE: Easiest if the model base years are subsetted from a full table as a last step in the construction of each of these tables
-A_demand_technology_R <- write_to_all_regions_ag( A_demand_technology, c( names_Tech, "minicam.energy.input", "market.name" ) )
+A_demand_technology_R <- write_to_all_regions( A_demand_technology, c( names_Tech, "minicam.energy.input", "market.name" ) )
 A_demand_technology_R$stub.technology <- A_demand_technology_R$technology
 A_demand_technology_R_Yh <- repeat_and_add_vector( A_demand_technology_R, Y, aglu_demand_calyears )
 A_demand_technology_R_Y <- repeat_and_add_vector( A_demand_technology_R, Y, c( model_base_years, model_future_years ) )
@@ -213,7 +213,7 @@ L203.StubCalorieContent_meat <- L203.StubCalorieContent_meat[ names_StubTechCalo
 
 #FINAL DEMANDS
 printlog( "L203.PerCapitaBased: final demand attributes that do not vary by time period" )
-L203.PerCapitaBased <- write_to_all_regions_ag( A_demand_supplysector, names_PerCapitaBased )
+L203.PerCapitaBased <- write_to_all_regions( A_demand_supplysector, names_PerCapitaBased )
 
 printlog( "L203.BaseService: base service of final demands" )
 Prod_colnames <- c( "region", "supplysector", "year", "calOutputValue" )
@@ -327,54 +327,54 @@ L203.pcgdp_thous90USD_R_Y.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
        L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == diet_gdpScen & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y <- dcast( L203.pcgdp_thous90USD_R_Y.melt, region ~ variable )
 L203.pcgdpRatio_R_Y <- L203.pcgdp_usd_R_Y
-L203.pcgdpRatio_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
-      L203.pcgdp_usd_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] / 
-      L203.pcgdp_usd_R_Y[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y[ X_model_years[ -1 ] ] <-
+      L203.pcgdp_usd_R_Y[ X_model_years[ -1 ] ] / 
+      L203.pcgdp_usd_R_Y[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y[ X_model_years[1] ] <- 1
 
 L203.pcgdp_thous90USD_R_Y_SSP1.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
   L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP1" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP1 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP1.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP1 <- L203.pcgdp_usd_R_Y_SSP1
-L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ 2:length( X_model_years ) ] ] <-
-  L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ 2:length( X_model_years ) ] ] / 
-  L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ -1 ] ] <-
+  L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ -1 ] ] / 
+  L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP1[ X_model_years[1] ] <- 1
 
 L203.pcgdp_thous90USD_R_Y_SSP2.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
   L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP2" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP2 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP2.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP2 <- L203.pcgdp_usd_R_Y_SSP2
-L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ 2:length( X_model_years ) ] ] <-
-  L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ 2:length( X_model_years ) ] ] / 
-  L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ -1 ] ] <-
+  L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ -1 ] ] / 
+  L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP2[ X_model_years[1] ] <- 1
 
 L203.pcgdp_thous90USD_R_Y_SSP3.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
   L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP3" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP3 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP3.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP3 <- L203.pcgdp_usd_R_Y_SSP3
-L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ 2:length( X_model_years ) ] ] <-
-  L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ 2:length( X_model_years ) ] ] / 
-  L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ -1 ] ] <-
+  L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ -1 ] ] / 
+  L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP3[ X_model_years[1] ] <- 1
 
 L203.pcgdp_thous90USD_R_Y_SSP4.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
   L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP4" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP4 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP4.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP4 <- L203.pcgdp_usd_R_Y_SSP4
-L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ 2:length( X_model_years ) ] ] <-
-  L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ 2:length( X_model_years ) ] ] / 
-  L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ -1 ] ] <-
+  L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ -1 ] ] / 
+  L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP4[ X_model_years[1] ] <- 1
 
 L203.pcgdp_thous90USD_R_Y_SSP5.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
   L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP5" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP5 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP5.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP5 <- L203.pcgdp_usd_R_Y_SSP5
-L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ 2:length( X_model_years ) ] ] <-
-  L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ 2:length( X_model_years ) ] ] / 
-  L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
+L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ -1 ] ] <-
+  L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ -1 ] ] / 
+  L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP5[ X_model_years[1] ] <- 1
 
 printlog( "Step 5: Solving for the income elasticities in each time period" )
@@ -450,7 +450,7 @@ L203.IncomeElasticity_SSP5$income.elasticity[ L203.IncomeElasticity_SSP5$income.
 L203.IncomeElasticity_SSP5$income.elasticity[ L203.IncomeElasticity_SSP5$income.elasticity < 0 ] <- 0
 
 printlog( "L203.PriceElasticity: Price elasticities" )
-L203.PriceElasticity <- write_to_all_regions_ag( A_demand_supplysector, c( names_EnergyFinalDemand, "price.elasticity" ) )
+L203.PriceElasticity <- write_to_all_regions( A_demand_supplysector, c( names_EnergyFinalDemand, "price.elasticity" ) )
 #Price elasticities are only read for future periods
 L203.PriceElasticity <- repeat_and_add_vector( L203.PriceElasticity, Y, model_future_years )
 #Set the USA price elasticity to a region-specific value
@@ -461,7 +461,7 @@ L203.PriceElasticity <- L203.PriceElasticity[ names_PriceElasticity ]
 #fuel preference elasticity
 printlog( "L203.FuelPrefElast_ssp1: Fuel preference elasticities for meat in SSP1" )
 A_fuelprefElasticity_ssp1$year.fillout <- min( model_base_years )
-L203.FuelPrefElast_ssp1 <- write_to_all_regions_ag( A_fuelprefElasticity_ssp1, names_FuelPrefElasticity )
+L203.FuelPrefElast_ssp1 <- write_to_all_regions( A_fuelprefElasticity_ssp1, names_FuelPrefElasticity )
 
 #Remove any regions for which agriculture and land use are not modeled
 ## ALSO SUBSET THE CALIBRATION TABLES TO ONLY THE MODEL BASE YEARS

@@ -258,9 +258,10 @@ L1322.Fert_NEcost_75USDkgN_coalCCS <- L1322.Fert_NEcost_75USDkgN_gas +
 #For oil, the lack of differentiation in oil-derived products means that the fuel costs are too high
 # Fertilizer is made from relatively low-cost by-products of oil refining
 #Also, the technology is being phased out where it is currently used (primarily India)
-# To minimize price distortions from this phase-out, set the NE cost to 0
+# To minimize price distortions from this phase-out, and to ensure no negative profit rates in the ag sector,
+# set the NE cost to generally balance the total net costs with natural gas steam reforming
 printlog( "Setting NE costs for oil technology to 0" )
-L1322.Fert_NEcost_75USDkgN_oil <- 0
+L1322.Fert_NEcost_75USDkgN_oil <- -0.1
 
 # Build output table with NE costs by technology
 L1322.Fert_NEcost_75USDkgN_F <- data.frame(

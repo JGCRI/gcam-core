@@ -58,16 +58,18 @@ EDGAR_HFC245fa$Non.CO2 <- "HFC245fa"
 EDGAR_HFC32$Non.CO2 <- "HFC32"
 EDGAR_HFC365mfc$Non.CO2 <- "HFC365mfc"
 EDGAR_HFC43$Non.CO2 <- "HFC43"
-L141.EDGAR_HFC <- rbind( EDGAR_HFC125, EDGAR_HFC134a, EDGAR_HFC143a, EDGAR_HFC152a, EDGAR_HFC227ea, EDGAR_HFC23, EDGAR_HFC236fa, EDGAR_HFC245fa, EDGAR_HFC32, EDGAR_HFC365mfc, EDGAR_HFC43  )  
+L141.EDGAR_HFC <- rbind( EDGAR_HFC125, EDGAR_HFC134a, EDGAR_HFC143a, EDGAR_HFC152a, EDGAR_HFC227ea, EDGAR_HFC23,
+                         EDGAR_HFC236fa, EDGAR_HFC245fa, EDGAR_HFC32, EDGAR_HFC365mfc, EDGAR_HFC43  )  
 
 #Then, prepare EDGAR data for use
 L141.EDGAR_HFC$EDGAR_agg_sector <- EDGAR_sector$agg_sector[ match( L141.EDGAR_HFC$IPCC_description, EDGAR_sector$IPCC_description )]
 L141.EDGAR_HFC$iso <- EDGAR_nation$iso[ match( L141.EDGAR_HFC$ISO_A3, EDGAR_nation$ISO_A3 )]
 L141.EDGAR_HFC$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L141.EDGAR_HFC$iso, iso_GCAM_regID$iso )]   
 L141.EDGAR_HFC <- L141.EDGAR_HFC[ c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", X_EDGAR_historical_years) ]
-L141.EDGAR_hfc_R_S_T_Yh.melt <- melt( L141.EDGAR_HFC, id.vars=c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2" ) )
-L141.EDGAR_hfc_R_S_T_Yh.melt <- aggregate( L141.EDGAR_hfc_R_S_T_Yh.melt$value, by=as.list( L141.EDGAR_hfc_R_S_T_Yh.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", "variable" ) ] ), sum )
-names( L141.EDGAR_hfc_R_S_T_Yh.melt )[ names( L141.EDGAR_hfc_R_S_T_Yh.melt ) == "x" ] <- "EDGAR_emissions"
+L141.EDGAR_hfc_R_S_T_Yh.melt <- melt( L141.EDGAR_HFC, id.vars=c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2" ),
+                                      variable.name = Y, value.name = "EDGAR_emissions" )
+L141.EDGAR_hfc_R_S_T_Yh.melt <- aggregate( L141.EDGAR_hfc_R_S_T_Yh.melt[ "EDGAR_emissions" ],
+                                           by = L141.EDGAR_hfc_R_S_T_Yh.melt[ c( R, "EDGAR_agg_sector", "Non.CO2", Y ) ], sum )
 
 #Map in other f-gas sector, which varies by gas
 L141.EDGAR_hfc_R_S_T_Yh_rest <- subset( L141.EDGAR_hfc_R_S_T_Yh.melt, L141.EDGAR_hfc_R_S_T_Yh.melt$EDGAR_agg_sector != "other_f_gases")
@@ -77,55 +79,67 @@ L141.EDGAR_hfc_R_S_T_Yh.melt <- rbind( L141.EDGAR_hfc_R_S_T_Yh_rest, L141.EDGAR_
 
 #Map to GCAM technologies
 L141.hfc_R_S_T_Yh.melt <- GCAM_tech
-L141.hfc_R_S_T_Yh.melt <- repeat_and_add_vector( L141.hfc_R_S_T_Yh.melt, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
-L141.hfc_R_S_T_Yh.melt <- repeat_and_add_vector( L141.hfc_R_S_T_Yh.melt, "xyear", X_EDGAR_historical_years )
+L141.hfc_R_S_T_Yh.melt <- repeat_and_add_vector( L141.hfc_R_S_T_Yh.melt, R, GCAM_region_names[[R]] )
+L141.hfc_R_S_T_Yh.melt <- repeat_and_add_vector( L141.hfc_R_S_T_Yh.melt, Y, X_EDGAR_historical_years )
 L141.hfc_R_S_T_Yh.melt <- repeat_and_add_vector( L141.hfc_R_S_T_Yh.melt, "Non.CO2", HFCs )
-L141.hfc_R_S_T_Yh.melt$emissions <- L141.EDGAR_hfc_R_S_T_Yh.melt$EDGAR_emissions[ match( vecpaste(L141.hfc_R_S_T_Yh.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", "xyear" ) ] ), vecpaste( L141.EDGAR_hfc_R_S_T_Yh.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", "variable" )] ))]
+L141.hfc_R_S_T_Yh.melt$emissions <- L141.EDGAR_hfc_R_S_T_Yh.melt$EDGAR_emissions[
+  match( vecpaste(L141.hfc_R_S_T_Yh.melt[ c( R, "EDGAR_agg_sector", "Non.CO2", Y ) ] ),
+         vecpaste( L141.EDGAR_hfc_R_S_T_Yh.melt[ c( R, "EDGAR_agg_sector", "Non.CO2", Y )] ))]
+# gpk - why not just drop the na's instead?
 L141.hfc_R_S_T_Yh.melt$emissions[ is.na( L141.hfc_R_S_T_Yh.melt$emissions )] <- 0
 
 #Disaggregate cooling emissions to residential and commercial sectors
-L141.R_cooling_T_Yh <- subset(L144.in_EJ_R_bld_serv_F_Yh, L144.in_EJ_R_bld_serv_F_Yh$service %in% c( "comm cooling", "resid cooling" ))
-L141.R_cooling_T_Yh <- subset( L141.R_cooling_T_Yh, L141.R_cooling_T_Yh$fuel == "electricity" )
-L141.R_cooling_T_Yh.melt <- melt( L141.R_cooling_T_Yh, id.vars=c( "GCAM_region_ID", "sector", "fuel", "service"))
-L141.R_cooling_Yh <- aggregate( L141.R_cooling_T_Yh.melt$value, by=as.list( L141.R_cooling_T_Yh.melt[ c( "GCAM_region_ID", "variable")]), sum )
-L141.R_cooling_T_Yh.melt$total <- L141.R_cooling_Yh$x[ match( vecpaste( L141.R_cooling_T_Yh.melt[ c( "GCAM_region_ID", "variable" ) ]), vecpaste( L141.R_cooling_Yh[ c( "GCAM_region_ID", "variable" )]))]
+L141.R_cooling_T_Yh <- subset(L144.in_EJ_R_bld_serv_F_Yh,
+                              service %in% c( "comm cooling", "resid cooling" ) & fuel == "electricity" )
+L141.R_cooling_T_Yh.melt <- melt( L141.R_cooling_T_Yh, id.vars=c( R, "sector", "fuel", "service"), measure.vars = X_historical_years,
+                                  variable.name = Y )
+L141.R_cooling_Yh <- aggregate( L141.R_cooling_T_Yh.melt$value,
+                                by =  L141.R_cooling_T_Yh.melt[ R_Y ], sum )
+L141.R_cooling_T_Yh.melt$total <- L141.R_cooling_Yh$x[
+  match( vecpaste( L141.R_cooling_T_Yh.melt[ R_Y ]),
+         vecpaste( L141.R_cooling_Yh[ R_Y ] ) ) ]
 L141.R_cooling_T_Yh.melt$share <- L141.R_cooling_T_Yh.melt$value / L141.R_cooling_T_Yh.melt$total 
-L141.hfc_R_S_T_Yh.melt$share <- L141.R_cooling_T_Yh.melt$share[ match( vecpaste( L141.hfc_R_S_T_Yh.melt[ c( "GCAM_region_ID", "xyear", "supplysector" ) ]), vecpaste(L141.R_cooling_T_Yh.melt[ c( "GCAM_region_ID", "variable", "service" ) ] ))]
+L141.hfc_R_S_T_Yh.melt$share <- L141.R_cooling_T_Yh.melt$share[
+  match( vecpaste( L141.hfc_R_S_T_Yh.melt[ c( R_Y, "supplysector" ) ]),
+         vecpaste(L141.R_cooling_T_Yh.melt[ c( R_Y, "service" ) ] ) ) ]
 L141.hfc_R_S_T_Yh.melt$share[ is.na( L141.hfc_R_S_T_Yh.melt$share ) ] <- 1
 L141.hfc_R_S_T_Yh.melt$emissions <- L141.hfc_R_S_T_Yh.melt$emissions * L141.hfc_R_S_T_Yh.melt$share
 
 #Add 2008 since Guus has data
-TEMP <- subset( L141.hfc_R_S_T_Yh.melt, xyear == "X2008" )
-TEMP$xyear <- "X2010"
+TEMP <- subset( L141.hfc_R_S_T_Yh.melt, year == "X2008" )
+TEMP$year <- "X2010"
 L141.hfc_R_S_T_Yh.melt <- rbind( L141.hfc_R_S_T_Yh.melt, TEMP )
 
 #Scale to match global totals from Guus Velders
-L141.hfc_scaler <- aggregate( L141.hfc_R_S_T_Yh.melt$emissions, by=as.list( L141.hfc_R_S_T_Yh.melt[ c( "xyear", "Non.CO2" ) ] ), sum )
+L141.hfc_scaler <- aggregate( L141.hfc_R_S_T_Yh.melt$emissions, by = L141.hfc_R_S_T_Yh.melt[ c( Y, "Non.CO2" ) ], sum )
 names( L141.hfc_scaler )[ names( L141.hfc_scaler ) == "x" ] <- "EDGAR_tot"
 Guus_Data$Species <- gsub( "-", "", Guus_Data$Species )
 Guus_Data$Species <- gsub( "4310mee", "43", Guus_Data$Species )
-Guus_Data$xyear <- paste( "X", Guus_Data$Year, sep="" )
-L141.hfc_scaler$Guus_tot <- Guus_Data$Emissions[ match( vecpaste( L141.hfc_scaler[ c( "xyear", "Non.CO2")]),
-                                                        vecpaste( Guus_Data[ c( "xyear", "Species" )]))]
+Guus_Data$year <- paste( "X", Guus_Data$Year, sep="" )
+L141.hfc_scaler$Guus_tot <- Guus_Data$Emissions[ match( vecpaste( L141.hfc_scaler[ c( Y, "Non.CO2")]),
+                                                        vecpaste( Guus_Data[ c( Y, "Species" )]))]
 L141.hfc_scaler$scaler <- L141.hfc_scaler$Guus_tot / L141.hfc_scaler$EDGAR_tot
 L141.hfc_scaler$scaler[ is.na( L141.hfc_scaler$scaler ) ] <- 1
 
-L141.hfc_R_S_T_Yh.melt$scaler <- L141.hfc_scaler$scaler[ match( vecpaste( L141.hfc_R_S_T_Yh.melt[ c( "xyear", "Non.CO2" )]),
-                                                                vecpaste( L141.hfc_scaler[ c( "xyear", "Non.CO2" )]))]
+L141.hfc_R_S_T_Yh.melt$scaler <- L141.hfc_scaler$scaler[ match( vecpaste( L141.hfc_R_S_T_Yh.melt[ c( Y, "Non.CO2" )]),
+                                                                vecpaste( L141.hfc_scaler[ c( Y, "Non.CO2" )]))]
 L141.hfc_R_S_T_Yh.melt$adj_emissions <- L141.hfc_R_S_T_Yh.melt$emissions * L141.hfc_R_S_T_Yh.melt$scaler
 
 #Reshape
-L141.hfc_R_S_T_Yh.melt <- aggregate( L141.hfc_R_S_T_Yh.melt$adj_emissions, by=as.list( L141.hfc_R_S_T_Yh.melt[ c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "Non.CO2", "xyear" ) ]), sum)
-L141.hfc_R_S_T_Yh <- dcast( L141.hfc_R_S_T_Yh.melt, GCAM_region_ID + supplysector + subsector + stub.technology + Non.CO2 ~ xyear, value.var=c( "x" ))
+L141.hfc_R_S_T_Yh.melt <- aggregate( L141.hfc_R_S_T_Yh.melt[ "adj_emissions" ],
+                                     by = L141.hfc_R_S_T_Yh.melt[ c( R, "supplysector", "subsector", "stub.technology", "Non.CO2", Y ) ], sum)
+L141.hfc_R_S_T_Yh <- dcast( L141.hfc_R_S_T_Yh.melt, GCAM_region_ID + supplysector + subsector + stub.technology + Non.CO2 ~ year,
+                            value.var = "adj_emissions" )
 L141.hfc_R_S_T_Yh[ is.na( L141.hfc_R_S_T_Yh ) ] <- 0
 
 #Compute cooling emissions factors
-L141.hfc_R_cooling_T_Yh.melt <- subset( L141.hfc_R_S_T_Yh.melt, L141.hfc_R_S_T_Yh.melt$supplysector %in% c( "comm cooling", "resid cooling" ) )
-names( L141.hfc_R_cooling_T_Yh.melt )[ names( L141.hfc_R_cooling_T_Yh.melt ) == "x" ] <- "emissions"
-L141.hfc_R_cooling_T_Yh.melt$energy <- L141.R_cooling_T_Yh.melt$value[ match( vecpaste( L141.hfc_R_cooling_T_Yh.melt[ c( "GCAM_region_ID", "supplysector", "xyear")]),
-                                                                              vecpaste( L141.R_cooling_T_Yh.melt[ c( "GCAM_region_ID", "service", "variable" )]) )] 
-L141.hfc_R_cooling_T_Yh.melt$em_fact <- L141.hfc_R_cooling_T_Yh.melt$emissions / L141.hfc_R_cooling_T_Yh.melt$energy
-L141.hfc_ef_R_cooling_Yh <- dcast( L141.hfc_R_cooling_T_Yh.melt, GCAM_region_ID + supplysector + subsector + stub.technology + Non.CO2 ~ xyear, value.var=c( "em_fact" ))
+L141.hfc_R_cooling_T_Yh.melt <- subset( L141.hfc_R_S_T_Yh.melt, supplysector %in% c( "comm cooling", "resid cooling" ) )
+L141.hfc_R_cooling_T_Yh.melt$energy <- L141.R_cooling_T_Yh.melt$value[
+  match( vecpaste( L141.hfc_R_cooling_T_Yh.melt[ c( R_Y, "supplysector" ) ] ),
+         vecpaste( L141.R_cooling_T_Yh.melt[ c( R_Y, "service" ) ] ) ) ] 
+L141.hfc_R_cooling_T_Yh.melt$em_fact <- with( L141.hfc_R_cooling_T_Yh.melt, adj_emissions / energy )
+L141.hfc_ef_R_cooling_Yh <- dcast( L141.hfc_R_cooling_T_Yh.melt,
+                                   GCAM_region_ID + supplysector + subsector + stub.technology + Non.CO2 ~ year, value.var = "em_fact" )
 L141.hfc_ef_R_cooling_Yh[ is.na( L141.hfc_ef_R_cooling_Yh ) ] <- 0
 
 # -----------------------------------------------------------------------------

@@ -103,7 +103,7 @@ names_StubTechNonCO2 <- c( names_StubTechYr, "Non.CO2" )
 #Agricultural sectors, subsectors, and technologies
 names_AgSupplySector <- c( "region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent" )
 names_AgSupplySectorLogitType <- c( "region", "AgSupplySector", "logit.type" )
-names_AgSupplySubsector <- c( "region", "AgSupplySector", "AgSupplySubsector" )
+names_AgSupplySubsector <- c( "region", "AgSupplySector", "AgSupplySubsector", "logit.year.fillout", "logit.exponent" )
 names_AgSupplySubsectorLogitType <- c( "region", "AgSupplySector", "AgSupplySubsector", "logit.type" )
 names_AgSupplySubsectorAll <- c( "region", "AgSupplySector", "AgSupplySubsector", "logit.year.fillout", "logit.exponent", "year.fillout", "share.weight" )
 names_AgTech <- c( "region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
@@ -120,6 +120,7 @@ names_AgCoef <- c( names_AgTechYr, input, "coefficient" )
 names_AgRES <- c( names_AgTechYr, "res.secondary.output", "output.ratio" )
 names_AgConstraint <- c( names_AgTechYr, "input.tax", "coefficient" )
 names_UnmgdTech <- c( "region", "AgSupplySector", "AgSupplySubsector", "UnmanagedLandTechnology" )
+names_AgResBio <- c( names_AgTechYr, "residue.biomass.production", "mass.conversion", "harvest.index", "eros.ctrl", "mass.to.energy", "water.content" )
 
 #Demands
 names_EnergyFinalDemand <- c( "region", "energy.final.demand" )
@@ -168,5 +169,6 @@ names_LN4_UnmgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNod
                             "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
 names_LN4_MgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
                           "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
-names_LN4_NewTech <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "newTechStartYear", "isNewTechnology", "GhostShareLeaf" )
+names_LN4_NewTech <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "newTechStartYear", "isNewTechnology", "ghost.share.leaf" )
+names_LN4_NewNode <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "isNewTechnology", "ghost.share.node" )
 

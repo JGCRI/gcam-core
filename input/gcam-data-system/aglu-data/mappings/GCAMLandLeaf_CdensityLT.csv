@@ -5,7 +5,7 @@
 LandLeaf,Land_Type
 Tundra,Tundra
 RockIceDesert,RockIceDesert
-UrbanLand,Urbanland
+UrbanLand,UrbanLand
 UnmanagedPasture,Pasture
 UnmanagedForest,Forest
 Grassland,Grassland
@@ -25,8 +25,5 @@ Rice,Cropland
 Root_Tuber,Cropland
 SugarCrop,Cropland
 Wheat,Cropland
-biomass,Pasture
-Jatropha,Cropland
-miscanthus,Cropland
-willow,Forest
-eucalyptus,Forest
+biomass_grass,Pasture
+biomass_tree,Pasture

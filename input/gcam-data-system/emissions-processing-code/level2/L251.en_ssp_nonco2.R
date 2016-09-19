@@ -29,6 +29,7 @@ A_region <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 L161.SSP2_EF <- readdata( "EMISSIONS_LEVEL1_DATA", "L161.SSP2_EF")
 L161.SSP15_EF <- readdata( "EMISSIONS_LEVEL1_DATA", "L161.SSP15_EF")
 L161.SSP34_EF <- readdata( "EMISSIONS_LEVEL1_DATA", "L161.SSP34_EF")
+L201.nonghg_steepness <- readdata( "EMISSIONS_LEVEL2_DATA", "L201.nonghg_steepness", skip = 4 )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -57,7 +58,7 @@ L251.ssp34_ef <- L251.ssp34[ c( names_StubTechYr, "Non.CO2" ) ]
 L251.ssp34_ef$emiss.coeff <- round( L251.ssp34$value, digits_emissions )
 
 #Delete GDP controls
-L251.ctrl.delete <- L251.ssp2_ef[ c( names_StubTechYr, "Non.CO2" ) ]
+L251.ctrl.delete <- subset( L251.ssp2_ef, year == min( year ) )[ c( names_StubTechYr, "Non.CO2" ) ]
 L251.ctrl.delete$year <- ctrl_base_year
 L251.ctrl.delete$ctrl.name <- "GDP_control"
 
@@ -88,6 +89,11 @@ L251.ssp34_ef <- rename_SO2( L251.ssp34_ef, A_region, FALSE )
 L251.ssp15_ef_vin <- rename_SO2( L251.ssp15_ef_vin, A_region, FALSE )
 L251.ssp2_ef_vin <- rename_SO2( L251.ssp2_ef_vin, A_region, FALSE )
 L251.ssp34_ef_vin <- rename_SO2( L251.ssp34_ef_vin, A_region, FALSE )
+
+# Only delete GDP control functions that exist
+L251.ctrl.delete <- L251.ctrl.delete[
+  vecpaste( L251.ctrl.delete[ c( names_StubTech, "Non.CO2" ) ] ) %in%
+  vecpaste( L201.nonghg_steepness[ c( names_StubTech, "Non.CO2" ) ] ), ]
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

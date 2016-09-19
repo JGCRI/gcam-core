@@ -38,35 +38,35 @@ EN.L244.DeleteThermalService <- readdata( "ENERGY_LEVEL2_DATA", "L244.DeleteTher
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
-printlog( "L201.nonghg_en: Pollutant emissions for energy technologies in all regions" )
+printlog( "L201.en_pol_emissions: Pollutant emissions for energy technologies in all regions" )
 #Interpolate and add region name
 L201.nonghg <- subset( L111.nonghg_tg_R_en_S_F_Yh, L111.nonghg_tg_R_en_S_F_Yh$supplysector != "out_resources" )
 L201.nonghg <- interpolate_and_melt( L201.nonghg, emiss_model_base_years )
 L201.nonghg <- add_region_name( L201.nonghg )
 
 #Format for csv file
-L201.nonghg_en <- L201.nonghg[ c( names_StubTechYr, "Non.CO2" ) ]
-L201.nonghg_en$input.emissions <- round( L201.nonghg$value, digits_emissions )
+L201.en_pol_emissions <- L201.nonghg[ c( names_StubTechYr, "Non.CO2" ) ]
+L201.en_pol_emissions$input.emissions <- round( L201.nonghg$value, digits_emissions )
 
-printlog( "L201.ghg_en: GHG emissions for energy technologies in all regions" )
+printlog( "L201.en_ghg_emissions: GHG emissions for energy technologies in all regions" )
 #Interpolate and add region name
 L201.GHG <- subset( L112.ghg_tg_R_en_S_F_Yh, L112.ghg_tg_R_en_S_F_Yh$supplysector != "out_resources" )
 L201.GHG <- interpolate_and_melt( L201.GHG, emiss_model_base_years )
 L201.GHG <- add_region_name( L201.GHG )
 
 #Format for csv file
-L201.ghg_en <- L201.GHG[ c( names_StubTechYr, "Non.CO2" ) ]
-L201.ghg_en$input.emissions <- round( L201.GHG$value, digits_emissions )
+L201.en_ghg_emissions <- L201.GHG[ c( names_StubTechYr, "Non.CO2" ) ]
+L201.en_ghg_emissions$input.emissions <- round( L201.GHG$value, digits_emissions )
 
-printlog( "L201.bcoc_en: BC/OC emissions factors for energy technologies in all regions" )
+printlog( "L201.en_bcoc_emissions: BC/OC emissions factors for energy technologies in all regions" )
 #Interpolate and add region name
 L201.BCOC <- subset( L114.bcoc_tgej_R_en_S_F_2000, L114.bcoc_tgej_R_en_S_F_2000$supplysector != "out_resources" )
 L201.BCOC <- add_region_name( L201.BCOC )
 L201.BCOC <- repeat_and_add_vector( L201.BCOC, "year", model_base_years )
 
 #Format for csv file
-L201.bcoc_en <- L201.BCOC[ c( names_StubTechYr, "Non.CO2" ) ]
-L201.bcoc_en$emiss.coef <- round( L201.BCOC$X2000, digits_emissions )
+L201.en_bcoc_emissions <- L201.BCOC[ c( names_StubTechYr, "Non.CO2" ) ]
+L201.en_bcoc_emissions$emiss.coef <- round( L201.BCOC$X2000, digits_emissions )
 
 printlog( "L201.nonghg_max_reduction: maximum reduction for energy technologies in all regions" )
 L201.max_reduction <- subset( L151.nonghg_ctrl_R_en_S_T, L151.nonghg_ctrl_R_en_S_T$supplysector != "out_resources" )
@@ -164,7 +164,7 @@ L201.nonghg_max_reduction_res <- L201.nonghg_gdp_control_res[, names( L201.nongh
 L201.nonghg_steepness_res <- L201.nonghg_gdp_control_res[, names( L201.nonghg_gdp_control_res ) != "max.reduction" ]
 
 printlog( "Rename to regional SO2" )
-L201.nonghg_en <- rename_SO2( L201.nonghg_en, A_regions, FALSE )
+L201.en_pol_emissions <- rename_SO2( L201.en_pol_emissions, A_regions, FALSE )
 L201.nonghg_max_reduction <- rename_SO2( L201.nonghg_max_reduction, A_regions, FALSE )
 L201.nonghg_steepness <- rename_SO2( L201.nonghg_steepness, A_regions, FALSE )
 L201.nonghg_res <- rename_SO2( L201.nonghg_res, A_regions, FALSE )
@@ -173,9 +173,9 @@ L201.nonghg_max_reduction_res <- rename_SO2( L201.nonghg_max_reduction_res, A_re
 
 printlog( "Remove district heat from regions that do have have it" )
 L201.distheat.regions <- A_regions.en[ A_regions.en$heat == 1, "region" ]
-L201.nonghg_en <- subset( L201.nonghg_en, supplysector != "district heat" | region %in% L201.distheat.regions )
-L201.ghg_en <- subset( L201.ghg_en, supplysector != "district heat" | region %in% L201.distheat.regions )
-L201.bcoc_en <- subset( L201.bcoc_en, supplysector != "district heat" | region %in% L201.distheat.regions )
+L201.en_pol_emissions <- subset( L201.en_pol_emissions, supplysector != "district heat" | region %in% L201.distheat.regions )
+L201.en_ghg_emissions <- subset( L201.en_ghg_emissions, supplysector != "district heat" | region %in% L201.distheat.regions )
+L201.en_bcoc_emissions <- subset( L201.en_bcoc_emissions, supplysector != "district heat" | region %in% L201.distheat.regions )
 L201.nonghg_max_reduction <- subset( L201.nonghg_max_reduction, supplysector != "district heat" | region %in% L201.distheat.regions )
 L201.nonghg_steepness <- subset( L201.nonghg_steepness, supplysector != "district heat" | region %in% L201.distheat.regions )
 
@@ -184,9 +184,9 @@ L201.nonghg_steepness <- subset( L201.nonghg_steepness, supplysector != "distric
 if( !is.null( EN.L244.DeleteThermalService ) ) {
 printlog( "Delete sectors that do not exist due to zero heating/cooling degree days" )
 L201.delete.sectors <- paste0( EN.L244.DeleteThermalService$region, EN.L244.DeleteThermalService$supplysector )
-L201.nonghg_en <- subset( L201.nonghg_en, paste0( region, supplysector ) %!in% L201.delete.sectors )
-L201.ghg_en <- subset( L201.ghg_en, paste0( region, supplysector ) %!in% L201.delete.sectors )
-L201.bcoc_en <- subset( L201.bcoc_en, paste0( region, supplysector ) %!in% L201.delete.sectors )
+L201.en_pol_emissions <- subset( L201.en_pol_emissions, paste0( region, supplysector ) %!in% L201.delete.sectors )
+L201.en_ghg_emissions <- subset( L201.en_ghg_emissions, paste0( region, supplysector ) %!in% L201.delete.sectors )
+L201.en_bcoc_emissions <- subset( L201.en_bcoc_emissions, paste0( region, supplysector ) %!in% L201.delete.sectors )
 L201.nonghg_max_reduction <- subset( L201.nonghg_max_reduction, paste0( region, supplysector ) %!in% L201.delete.sectors )
 L201.nonghg_steepness <- subset( L201.nonghg_steepness, paste0( region, supplysector ) %!in% L201.delete.sectors )
 }
@@ -194,11 +194,11 @@ L201.nonghg_steepness <- subset( L201.nonghg_steepness, paste0( region, supplyse
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L201.nonghg_en, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_pol_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
-write_mi_data( L201.ghg_en, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_ghg_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
-write_mi_data( L201.bcoc_en, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L201.en_bcoc_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
-write_mi_data( L201.nonghg_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L201.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
-write_mi_data( L201.nonghg_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L201.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.en_pol_emissions, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_pol_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.en_ghg_emissions, "InputEmissions", "EMISSIONS_LEVEL2_DATA", "L201.en_ghg_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.en_bcoc_emissions, "InputEmissCoeff", "EMISSIONS_LEVEL2_DATA", "L201.en_bcoc_emissions", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.nonghg_max_reduction, "GDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_max_reduction", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
+write_mi_data( L201.nonghg_steepness, "GDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_steepness", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 write_mi_data( L201.nonghg_max_reduction_res, "GDPCtrlMaxRes", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_max_reduction_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 write_mi_data( L201.nonghg_steepness_res, "GDPCtrlSteepRes", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_steepness_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 
 write_mi_data( L201.nonghg_res, "ResEmissCoef", "EMISSIONS_LEVEL2_DATA", "L201.nonghg_res", "EMISSIONS_XML_BATCH", "batch_all_energy_emissions.xml" ) 

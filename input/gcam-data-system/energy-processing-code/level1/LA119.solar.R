@@ -24,8 +24,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "ENERGY_ASSUMPTIONS", "A_energy_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
-GIS_ctry_AEZ <- readdata( "AGLU_MAPPINGS", "GIS_ctry_AEZ" )
-Sage_Hyde15_Area <- readdata( "AGLU_GIS_DATA", "Sage_Hyde15_Area" )
+Land_type_area_ha <- readdata( "AGLU_LDS_DATA", "Land_type_area_ha" )
 
 Smith_irradiance_ctry_kwh <- readdata( "ENERGY_LEVEL0_DATA", "Smith_irradiance_ctry_kwh" )
 
@@ -63,19 +62,18 @@ L119.Other_ctry <- iso_GCAM_regID[ iso_GCAM_regID$iso %!in% L119.Irradiance_kwh_
 
 # Building up land areas of all of other countries and calculate their share of land
 # in the other * region
-L119.LC_km2_ctry_LT_AEZ <- subset( Sage_Hyde15_Area, Year == max( Year ) )
-L119.LC_km2_ctry_LT_AEZ$iso <- GIS_ctry_AEZ$iso[ match( L119.LC_km2_ctry_LT_AEZ$AEZ_ID, GIS_ctry_AEZ$AEZ_ID ) ]
-L119.LC_km2_ctry <- aggregate( L119.LC_km2_ctry_LT_AEZ[ "Area.km2." ],
-      by=as.list( L119.LC_km2_ctry_LT_AEZ[ "iso" ] ), sum ) 
-L119.LC_km2_other_ctry <- merge( L119.Other_ctry, L119.LC_km2_ctry )
-L119.LC_km2_other_R <- aggregate( Area.km2. ~ region_GCAM3, L119.LC_km2_other_ctry, FUN=sum )
-names( L119.LC_km2_other_R )[ names( L119.LC_km2_other_R ) == "Area.km2." ] <- "Area.km2.R"
-L119.LC_km2_other_ctry <- merge( L119.LC_km2_other_ctry, L119.LC_km2_other_R )
-L119.LC_km2_other_ctry$Area.share <- L119.LC_km2_other_ctry$Area.km2. / L119.LC_km2_other_ctry$Area.km2.R
+L119.LC_ha_ctry_LT_GLU <- subset( Land_type_area_ha, year == max( year ) )
+L119.LC_bm2_ctry <- aggregate( L119.LC_ha_ctry_LT_GLU[ "value" ] * conv_Ha_bm2,
+      by = L119.LC_ha_ctry_LT_GLU[ "iso" ], sum ) 
+L119.LC_bm2_other_ctry <- merge( L119.Other_ctry, L119.LC_bm2_ctry )
+L119.LC_bm2_other_R <- aggregate( value ~ region_GCAM3, L119.LC_bm2_other_ctry, FUN=sum )
+names( L119.LC_bm2_other_R )[ names( L119.LC_bm2_other_R ) == "value" ] <- "Area.bm2.R"
+L119.LC_bm2_other_ctry <- merge( L119.LC_bm2_other_ctry, L119.LC_bm2_other_R )
+L119.LC_bm2_other_ctry$Area.share <- L119.LC_bm2_other_ctry$value / L119.LC_bm2_other_ctry$Area.bm2.R
 
 # Now include the irradiance data at the regional level and multiply the share to downscale to the
 # country
-L119.Irradiance_kwh_other_ctry <- merge( L119.LC_km2_other_ctry, L119.Irradiance_kwh_otherR )
+L119.Irradiance_kwh_other_ctry <- merge( L119.LC_bm2_other_ctry, L119.Irradiance_kwh_otherR )
 L119.Irradiance_kwh_other_ctry[, col_names_without_R( L119.Irradiance_kwh_otherR, c( "region_GCAM3" ) ) ] <-
     L119.Irradiance_kwh_other_ctry[, names( L119.Irradiance_kwh_otherR )[ names( L119.Irradiance_kwh_otherR ) != "region_GCAM3" ] ] *
     L119.Irradiance_kwh_other_ctry$Area.share

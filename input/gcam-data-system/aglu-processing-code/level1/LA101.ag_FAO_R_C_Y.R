@@ -31,22 +31,43 @@ L100.FAO_ag_Prod_t <- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_ag_Prod_t" )
 # -----------------------------------------------------------------------------
 
 # 2. Perform computations
+printlog( "Data cleaning: removing unnecessary columns, and ensuring production and harvested area data correspond" )
+# note - a number of the FAO country/item combinations are zero/missing in one dataset but present in another. In prior
+# versions of GCAM, these were simply aggregated
 L101.FAO_ag_Food_t <- L100.FAO_ag_Food_t[ c( "iso", "item", X_AGLU_historical_years ) ]
-L101.FAO_ag_HA_ha <- L100.FAO_ag_HA_ha[ c( "iso", "item", X_AGLU_historical_years ) ]
-L101.FAO_ag_Prod_t <- L100.FAO_ag_Prod_t[ c( "iso", "item", X_AGLU_historical_years ) ]
+L101.FAO_ag_HA_ha.melt <- melt( L100.FAO_ag_HA_ha,
+                                id.vars = c( "iso", "item" ), measure.vars = X_AGLU_historical_years,
+                                variable.name = Y, value.name = "HA_ha" )
+L101.FAO_ag_Prod_t.melt <- melt( L100.FAO_ag_Prod_t,
+                                 id.vars = c( "iso", "item" ), measure.vars = X_AGLU_historical_years,
+                                 variable.name = Y, value.name = "Prod_t" )
 printlog( "Dividing USA Alfalfa by 4 for consistency with USDA" )
-L101.FAO_ag_Prod_t[ L101.FAO_ag_Prod_t$iso == "usa" &
-                             L101.FAO_ag_Prod_t$item == "Alfalfa for forage and silage", X_AGLU_historical_years ] <-
-      L101.FAO_ag_Prod_t[ L101.FAO_ag_Prod_t$iso == "usa" &
-                             L101.FAO_ag_Prod_t$item == "Alfalfa for forage and silage", X_AGLU_historical_years ] / 4      
+L101.FAO_ag_Prod_t.melt$Prod_t[ L101.FAO_ag_Prod_t.melt$iso == "usa" &
+                                  L101.FAO_ag_Prod_t.melt$item == "Alfalfa for forage and silage" ] <-
+  L101.FAO_ag_Prod_t.melt$Prod_t[ L101.FAO_ag_Prod_t.melt$iso == "usa" &
+                                    L101.FAO_ag_Prod_t.melt$item == "Alfalfa for forage and silage" ] / 4
 
-#add lookup vector for GCAM regions
-printlog( "Adding region and crop lookup vectors to FAO tables" )
+printlog( "Setting production to zero where harvested area data are zero/missing, and vice versa" )
+# note that by default, merge drops rows with missing values, which removes a large portion of the inconsistent production/harvested area
+# observations. Still, a number of examples exist where one is written as zero and the other is non-zero.
+# Also, need to aggregate by iso and item, as some countries (e.g., belgium and belgium-luxembourg) share the same iso, and could result
+# in mismatched info in the steps below
+L101.FAO_ag_HA_ha.melt <- aggregate( L101.FAO_ag_HA_ha.melt[ "HA_ha" ], by = L101.FAO_ag_HA_ha.melt[ c( "iso", "item", Y ) ], sum )
+L101.FAO_ag_Prod_t.melt <- aggregate( L101.FAO_ag_Prod_t.melt[ "Prod_t" ], by = L101.FAO_ag_Prod_t.melt[ c( "iso", "item", Y ) ], sum )
+
+L101.FAO_prodstat_merged <- merge( L101.FAO_ag_Prod_t.melt, L101.FAO_ag_HA_ha.melt)
+L101.FAO_prodstat_merged$Prod_t[ L101.FAO_prodstat_merged$HA_ha == 0 ] <- 0
+L101.FAO_prodstat_merged$HA_ha[ L101.FAO_prodstat_merged$Prod_t == 0 ] <- 0
+
+printlog( "Re-casting to form tables with cleaned values" )
+L101.FAO_ag_Prod_t <- dcast( L101.FAO_prodstat_merged, iso + item ~ year, value.var = "Prod_t" )
+L101.FAO_ag_HA_ha <- dcast( L101.FAO_prodstat_merged, iso + item ~ year, value.var = "HA_ha" )
+
+printlog( "Adding GCAM region and GCAM crop vectors to FAO tables for aggregation" )
 L101.FAO_ag_Food_t$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L101.FAO_ag_Food_t$iso, iso_GCAM_regID$iso ) ]
 L101.FAO_ag_HA_ha$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L101.FAO_ag_HA_ha$iso, iso_GCAM_regID$iso ) ]
 L101.FAO_ag_Prod_t$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L101.FAO_ag_Prod_t$iso, iso_GCAM_regID$iso ) ]
 
-#add lookup vectors for GCAM crop names
 L101.FAO_ag_Food_t$GCAM_commodity <- FAO_ag_items_cal_SUA$GCAM_commodity[ match( L101.FAO_ag_Food_t$item, FAO_ag_items_cal_SUA$item ) ]
 L101.FAO_ag_HA_ha$GCAM_commodity <- FAO_ag_items_PRODSTAT$GCAM_commodity[ match( L101.FAO_ag_HA_ha$item, FAO_ag_items_PRODSTAT$item ) ]
 L101.FAO_ag_Prod_t$GCAM_commodity <- FAO_ag_items_PRODSTAT$GCAM_commodity[ match( L101.FAO_ag_Prod_t$item, FAO_ag_items_PRODSTAT$item ) ]

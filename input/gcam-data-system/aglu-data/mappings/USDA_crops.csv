@@ -1,11 +1,1 @@
-# File: USDA_item_cost.csv,
-# Description: Maps crops in USDA cost database to GCAM commodities,
-# ----------,
-Crop,GCAM_commodity
-Barley,OtherGrain
-Corn,Corn
-Cotton,FiberCrop
-Rice,Rice
-Soybeans,OilCrop
-Sugarbeets,SugarCrop
-Wheat,Wheat
+# File: USDA_item_cost.csv,,# Description: Maps crops in USDA cost database to GCAM commodities,,# ----------,,USDA_crop,GTAP_crop,GCAM_commodityBarley,Barley,OtherGrainCorn,Maize,CornCotton,SeedCotton,FiberCropOats,Oats,OtherGrainPeanuts,GrndntWShll,OilCropRice,PaddyRice,RiceSorghum,Sorghum,OtherGrainSoybeans,Soybeans,OilCropSugarbeets,SugarBeets,SugarCropWheat,Wheat,Wheat

@@ -35,7 +35,6 @@ A_an_input_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_subsector" )
 A_an_input_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_technology" )
 A_an_input_globaltech_shrwt <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_globaltech_shrwt" )
 A_an_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_an_supplysector" )
-A_an_supplysector_SSP34 <- readdata( "AGLU_ASSUMPTIONS", "A_an_supplysector_SSP34" )
 A_an_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_an_subsector" )
 A_an_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_technology" )
 L107.an_Prod_Mt_R_C_Sys_Fd_Y <- readdata( "AGLU_LEVEL1_DATA", "L107.an_Prod_Mt_R_C_Sys_Fd_Y" )
@@ -62,7 +61,7 @@ L202.ag_Feed_Mt_R_C_Y.melt <- add_region_name( L202.ag_Feed_Mt_R_C_Y.melt )
 L202.an_ALL_Mt_R_C_Y <- add_region_name( L109.an_ALL_Mt_R_C_Y )
 
 printlog( "L202.RenewRsrc: generic resource attributes" )
-L202.RenewRsrc <- write_to_all_regions_ag( A_agRsrc, names_RenewRsrc )
+L202.RenewRsrc <- write_to_all_regions( A_agRsrc, names_RenewRsrc )
 L202.RenewRsrc$market[ L202.RenewRsrc$market == "regional" ] <- L202.RenewRsrc$region[ L202.RenewRsrc$market == "regional" ]
 
 printlog( "L202.RenewRsrcPrice: resource prices" )
@@ -70,53 +69,47 @@ L202.RenewRsrcPrice <- L202.RenewRsrc[ c( "region", "renewresource" ) ]
 L202.RenewRsrcPrice$year <- min( model_base_years )
 L202.RenewRsrcPrice$price <- 1
 
-printlog( "L202.RenewRsrcCalProd: Calibrated production of resources" )
-L202.RenewRsrcCalProd <- write_to_all_regions_ag( A_agSubRsrc, names = names_SubRenewRsrc )
-L202.RenewRsrcCalProd <- repeat_and_add_vector( L202.RenewRsrcCalProd, Y, model_base_years )
-
-#Paste in cal-production from Animal products table, where appropriate.
-L202.RenewRsrcCalProd_an <- L202.RenewRsrcCalProd[ L202.RenewRsrcCalProd$sub.renewable.resource %in% L202.an_ALL_Mt_R_C_Y[[C]], ]
-L202.RenewRsrcCalProd_an$cal.production <- round( L202.an_ALL_Mt_R_C_Y$Prod_Mt[
-      match( vecpaste( L202.RenewRsrcCalProd_an[ c( reg, SubRenewRsrc, Y ) ] ),
-             vecpaste( L202.an_ALL_Mt_R_C_Y[ c( reg, C, Y ) ] ) ) ],
-      digits_calOutput )
-
-#Paste in cal-production from Feed table, where appropriate.
-L202.RenewRsrcCalProd_feed <- L202.RenewRsrcCalProd[ L202.RenewRsrcCalProd$sub.renewable.resource %in% L202.ag_Feed_Mt_R_C_Y.melt[[C]], ]
-L202.RenewRsrcCalProd_feed$cal.production <- round( L202.ag_Feed_Mt_R_C_Y.melt$value[
-      match( vecpaste( L202.RenewRsrcCalProd_feed[ c( reg, SubRenewRsrc, Y ) ] ),
-             vecpaste( L202.ag_Feed_Mt_R_C_Y.melt[ c( reg, C, Y ) ] ) ) ],
-      digits_calOutput )
-
-#Rbind the two tables
-L202.RenewRsrcCalProd <- rbind( L202.RenewRsrcCalProd_an, L202.RenewRsrcCalProd_feed )[ names_RenewRsrcCalProd ]
-
 printlog( "L202.maxSubResource: maximum amount of resource production allowed in any period" )
 #Compute the maxsubresource as the maximum of all base periods, for each region and resource
-L202.maxSubResource <- aggregate( L202.RenewRsrcCalProd$cal.production, by=as.list( L202.RenewRsrcCalProd[ names_SubRenewRsrc ] ), max )
-names( L202.maxSubResource )[ names( L202.maxSubResource ) == "x" ] <- "maxSubResource"
+# note that the supply curves can exceed this number, by setting "available" to a number > 1.
+# In this computation, we're using the sub.renewable.resource for name matching because the resource
+# for scavenging is assigned a different name from the corresponding commodity and supplysector
+# (to avoid having two markets with the same name)
+L202.maxSubResource_an <- aggregate( L202.an_ALL_Mt_R_C_Y$Prod_Mt[ L202.an_ALL_Mt_R_C_Y[[C]] %in% A_agRsrcCurves$sub.renewable.resource  ],
+                                     by = L202.an_ALL_Mt_R_C_Y[ L202.an_ALL_Mt_R_C_Y[[C]] %in% A_agRsrcCurves$sub.renewable.resource, c( reg, R_C ) ],
+                                     max )
+L202.maxSubResource_feed <- aggregate( L202.ag_Feed_Mt_R_C_Y.melt$value[ L202.ag_Feed_Mt_R_C_Y.melt[[C]]  %in% A_agRsrcCurves$sub.renewable.resource  ],
+                                       by = L202.ag_Feed_Mt_R_C_Y.melt[ L202.ag_Feed_Mt_R_C_Y.melt[[C]] %in% A_agRsrcCurves$sub.renewable.resource, c( reg, R_C ) ],
+                                       max )
+
+#Bind the two tables together, re-name the columns to the appropriate headers, and add in a sub.renewable.resource category
+L202.maxSubResource <- rbind( L202.maxSubResource_an, L202.maxSubResource_feed )
+L202.maxSubResource$sub.renewable.resource <- L202.maxSubResource[[C]]
+L202.maxSubResource$maxSubResource <- round( L202.maxSubResource$x, digits_calOutput )
 L202.maxSubResource$year.fillout <- min( model_base_years )
+L202.maxSubResource$renewresource <- A_agRsrcCurves$renewresource[
+  match( L202.maxSubResource$sub.renewable.resource, A_agRsrcCurves$sub.renewable.resource ) ]
 L202.maxSubResource <- L202.maxSubResource[ names_maxSubResource ]
 
 printlog( "L202.RenewRsrcCurves" )
-L202.RenewRsrcCurves <- write_to_all_regions_ag( A_agRsrcCurves, names_RenewRsrcCurves )
+L202.RenewRsrcCurves <- write_to_all_regions( A_agRsrcCurves, names_RenewRsrcCurves )
 
 printlog( "L202.Supplysector_in: generic supplysector info for inputs to animal production" )
 L202.SectorLogitTables_in <- get_logit_fn_tables( A_an_input_supplysector, names_SupplysectorLogitType,
     base.header="Supplysector_", include.equiv.table=T, write.all.regions=T )
-L202.Supplysector_in <- write_to_all_regions_ag( A_an_input_supplysector, names_Supplysector )
+L202.Supplysector_in <- write_to_all_regions( A_an_input_supplysector, names_Supplysector )
 
 printlog( "L202.SubsectorAll_in: generic subsector info for inputs to animal production technologies" )
 L202.SubsectorLogitTables_in <- get_logit_fn_tables( A_an_input_subsector, names_SubsectorLogitType,
     base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
-L202.SubsectorAll_in <- write_to_all_regions_ag( A_an_input_subsector, names_SubsectorAll )
+L202.SubsectorAll_in <- write_to_all_regions( A_an_input_subsector, names_SubsectorAll )
 
 printlog( "L202.StubTech_in: identification of stub technologies for inputs to animal production" )
-L202.StubTech_in <- write_to_all_regions_ag( A_an_input_technology, names_Tech )
+L202.StubTech_in <- write_to_all_regions( A_an_input_technology, names_Tech )
 names( L202.StubTech_in ) <- gsub( "technology", "stub.technology", names( L202.StubTech_in ) )
 
 printlog( "L202.StubTechInterp_in: generic technology info for inputs to animal production" )
-L202.StubTechInterp_in <- write_to_all_regions_ag( A_an_input_technology, names_TechInterp )
+L202.StubTechInterp_in <- write_to_all_regions( A_an_input_technology, names_TechInterp )
 names( L202.StubTechInterp_in ) <- gsub( "technology", "stub.technology", names( L202.StubTechInterp_in ) )
 
 printlog( "L202.GlobalTechCoef_in: coefficients for inputs to animal production" )
@@ -130,7 +123,7 @@ L202.GlobalTechShrwt_in[ c( "sector.name", "subsector.name" ) ] <- L202.GlobalTe
 L202.GlobalTechShrwt_in <- L202.GlobalTechShrwt_in[ c( names_GlobalTechYr, "share.weight" ) ]
 
 printlog( "L202.StubTechProd_in: base year output of the inputs (feed types) to animal production" )
-L202.StubTechProd_in <- write_to_all_regions_ag( A_an_input_technology, names_Tech )
+L202.StubTechProd_in <- write_to_all_regions( A_an_input_technology, names_Tech )
 L202.StubTechProd_in$stub.technology <- L202.StubTechProd_in$technology
 L202.StubTechProd_in <- repeat_and_add_vector( L202.StubTechProd_in, Y, model_base_years )
 L202.StubTechProd_in$calOutputValue <- round( L202.ag_Feed_Mt_R_C_Y.melt$value[
@@ -149,34 +142,23 @@ L202.StubTechProd_in <- L202.StubTechProd_in[ names_StubTechProd]
 printlog( "L202.Supplysector_an: generic animal production supplysector info" )
 L202.SectorLogitTables_an <- get_logit_fn_tables( A_an_supplysector, names_SupplysectorLogitType,
     base.header="Supplysector_", include.equiv.table=F, write.all.regions=T )
-L202.Supplysector_an <- write_to_all_regions_ag( A_an_supplysector, names_Supplysector )
-
-printlog( "L202.Supplysector_an_SSP3: generic animal production supplysector info" )
-L202.Supplysector_an_SSP3 <- write_to_all_regions_ag( A_an_supplysector_SSP34, names_Supplysector )
-
-#Determine which regions in SSP4 need low logits
-L202.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
-L202.pcgdp_2010 <- L202.pcgdp_2010[ names( L202.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
-L202.pcgdp_2010 <- add_region_name( L202.pcgdp_2010 )
-L202.pcgdp_2010$X2010 <- L202.pcgdp_2010$X2010 * conv_1990_2010_USD
-L202.low_reg <- L202.pcgdp_2010$region[ L202.pcgdp_2010$X2010 < lo_growth_pcgdp ]
-L202.Supplysector_an_SSP4 <- subset( L202.Supplysector_an_SSP3, L202.Supplysector_an_SSP3$region %in% L202.low_reg )
+L202.Supplysector_an <- write_to_all_regions( A_an_supplysector, names_Supplysector )
 
 printlog( "L202.SubsectorAll_an: generic animal production subsector info" )
 L202.SubsectorLogitTables_an <- get_logit_fn_tables( A_an_subsector, names_SubsectorLogitType,
     base.header="SubsectorLogit_", include.equiv.table=F, write.all.regions=T )
-L202.SubsectorAll_an <- write_to_all_regions_ag( A_an_subsector, names_SubsectorAll )
+L202.SubsectorAll_an <- write_to_all_regions( A_an_subsector, names_SubsectorAll )
 
 printlog( "L202.StubTech_an: identification of stub technologies for animal production" )
-L202.StubTech_an <- write_to_all_regions_ag( A_an_technology, names_Tech )
+L202.StubTech_an <- write_to_all_regions( A_an_technology, names_Tech )
 names( L202.StubTech_an ) <- gsub( "technology", "stub.technology", names( L202.StubTech_an ) )
 
 printlog( "L202.StubTechInterp_an: shareweight interpolation for animal production technologies" )
-L202.StubTechInterp_an <- write_to_all_regions_ag( A_an_technology, names_TechInterp )
+L202.StubTechInterp_an <- write_to_all_regions( A_an_technology, names_TechInterp )
 names( L202.StubTechInterp_an ) <- gsub( "technology", "stub.technology", names( L202.StubTechInterp_an ) )
 
 printlog( "L202.StubTechProd_an: animal production by technology and region" )
-L202.StubTechProd_an <- write_to_all_regions_ag( A_an_technology, names_Tech )
+L202.StubTechProd_an <- write_to_all_regions( A_an_technology, names_Tech )
 L202.StubTechProd_an$stub.technology <- L202.StubTechProd_an$technology
 L202.StubTechProd_an <- repeat_and_add_vector( L202.StubTechProd_an, Y, model_base_years )
 L202.StubTechProd_an$calOutputValue <- round( L202.an_Prod_Mt_R_C_Sys_Fd_Y.melt$value[
@@ -200,7 +182,7 @@ L202.StubTechProd_an$subs.share.weight <- L202.an_subs_sw$share.weight[
              vecpaste( L202.an_subs_sw[ c( reg, supp, subs, Y ) ] ) ) ]
 
 printlog( "L202.StubTechCoef_an: animal production input-output coefficients by technology and region" )
-L202.StubTechCoef_an <- write_to_all_regions_ag( A_an_technology, c( names_Tech, input, "market.name" ) )
+L202.StubTechCoef_an <- write_to_all_regions( A_an_technology, c( names_Tech, input, "market.name" ) )
 L202.StubTechCoef_an$stub.technology <- L202.StubTechCoef_an$technology
 L202.StubTechCoef_an <- repeat_and_add_vector( L202.StubTechCoef_an, Y, c( model_base_years, model_future_years ) )
 L202.StubTechCoef_an$coefficient <- round( L202.an_FeedIO_R_C_Sys_Fd_Y.melt$value[
@@ -275,12 +257,12 @@ L202.GlobalRenewTech_imp_an <- data.frame(
       sector.name = rep( A_an_supplysector$supplysector, times = length( c( model_base_years, model_future_years ) ) ),
       subsector.name = "Imports", technology = "Imports", renewable.input = "renewable",
       year = sort( rep( c( model_base_years, model_future_years ), times = length( A_an_supplysector$supplysector ) ) ) )
-L202.GlobalRenewTech_imp_an <- write_to_all_regions_ag( L202.GlobalRenewTech_imp_an, names_GlobalRenewTech )
+L202.GlobalRenewTech_imp_an <- write_to_all_regions( L202.GlobalRenewTech_imp_an, names_GlobalRenewTech )
 
 printlog( "L202.StubTechFixOut_imp_an: animal imports for net importing regions in all periods" )
 L202.StubTechFixOut_imp_an <- data.frame( supplysector = A_an_supplysector$supplysector, subsector = "Imports", stub.technology = "Imports" )
 #Write to all regions before repeating by years so that future year values will copy correctly
-L202.StubTechFixOut_imp_an <- write_to_all_regions_ag( L202.StubTechFixOut_imp_an, names_StubTech )
+L202.StubTechFixOut_imp_an <- write_to_all_regions( L202.StubTechFixOut_imp_an, names_StubTech )
 L202.StubTechFixOut_imp_an <- repeat_and_add_vector( L202.StubTechFixOut_imp_an, Y, c( model_base_years, model_future_years ) )
 L202.StubTechFixOut_imp_an$fixedOutput <- pmax( 0, round( -1 * L202.an_ALL_Mt_R_C_Y$NetExp_Mt[
       match( vecpaste( L202.StubTechFixOut_imp_an[ c( reg, supp, Y ) ] ),
@@ -315,7 +297,6 @@ L202.no_ddgs_regions_tech <- repeat_and_add_vector( L202.ddgs_names, reg, L202.n
 L202.no_ddgs_regions_subs <- unique( L202.no_ddgs_regions_tech[ c( reg, supp, subs ) ] )
 L202.RenewRsrc <- subset( L202.RenewRsrc, !region %in% no_aglu_regions )
 L202.RenewRsrcPrice <- subset( L202.RenewRsrcPrice, !region %in% no_aglu_regions )
-L202.RenewRsrcCalProd <- subset( L202.RenewRsrcCalProd, !region %in% no_aglu_regions )
 L202.maxSubResource <- subset( L202.maxSubResource, !region %in% no_aglu_regions )
 L202.RenewRsrcCurves <- subset( L202.RenewRsrcCurves, !region %in% no_aglu_regions )
 for( curr_table in names( L202.SectorLogitTables_in ) ) {
@@ -407,8 +388,5 @@ write_mi_data( L202.GlobalRenewTech_imp_an, "GlobalRenewTech", "AGLU_LEVEL2_DATA
 write_mi_data( L202.StubTechFixOut_imp_an, "StubTechFixOut", "AGLU_LEVEL2_DATA", "L202.StubTechFixOut_imp_an", "AGLU_XML_BATCH", "batch_an_input.xml" ) 
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_an_input.xml", "AGLU_XML_FINAL", "an_input.xml", "", xml_tag="outFile" )
-
-write_mi_data( L202.Supplysector_an_SSP3, "Supplysector", "AGLU_LEVEL2_DATA", "L202.Supplysector_an_SSP3", "AGLU_XML_BATCH", "batch_SSP3_logit.xml" ) 
-write_mi_data( L202.Supplysector_an_SSP4, "Supplysector", "AGLU_LEVEL2_DATA", "L202.Supplysector_an_SSP4", "AGLU_XML_BATCH", "batch_SSP4_logit.xml" ) 
 
 logstop()

@@ -21,99 +21,100 @@ printlog( "Model input for production of primary agricultural products / pasture
 # 1. Read files
 
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
+sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_AgSupplySector <- readdata( "AGLU_ASSUMPTIONS", "A_agSupplySector" )
 A_AgSupplySubsector <- readdata( "AGLU_ASSUMPTIONS", "A_agSupplySubsector" )
-A_AgTechnology <- readdata( "AGLU_ASSUMPTIONS", "A_agTechnology" )
-A_bio_cost_yield <- readdata( "AGLU_ASSUMPTIONS", "A_bio_cost_yield" )
-A_biocrops_R_AEZ <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ" )
-L104.ag_Prod_Mt_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L104.ag_Prod_Mt_R_C_Y_AEZ" )
-L113.ag_bioYield_GJm2_R_AEZ_ref <- readdata( "AGLU_LEVEL1_DATA", "L113.ag_bioYield_GJm2_R_AEZ_ref" )
-L113.ag_bioYield_GJm2_R_AEZ_hi <- readdata( "AGLU_LEVEL1_DATA", "L113.ag_bioYield_GJm2_R_AEZ_hi" )
-L122.ag_HA_to_CropLand_R_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_HA_to_CropLand_R_Y_AEZ" )
-L123.ag_Prod_Mt_R_Past_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L123.ag_Prod_Mt_R_Past_Y_AEZ" )
-L123.For_Prod_bm3_R_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Prod_bm3_R_Y_AEZ" )
-L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
+L103.ag_Prod_Mt_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_Y_GLU" )
+L113.ag_bioYield_GJm2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L113.ag_bioYield_GJm2_R_GLU" )
+L122.ag_HA_to_CropLand_R_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_HA_to_CropLand_R_Y_GLU" )
+L123.ag_Prod_Mt_R_Past_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.ag_Prod_Mt_R_Past_Y_GLU" )
+L123.For_Prod_bm3_R_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Prod_bm3_R_Y_GLU" )
+L123.For_Yield_m3m2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Yield_m3m2_R_GLU" )
 L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
-#Region by AgSupplysector base table
+# Make template table of available region x commodity x glu
+L201.R_C_GLU_ag <- L103.ag_Prod_Mt_R_C_Y_GLU[ R_C_GLU ]
+
+# biograss: available anywhere that has any crop production at all
+L201.R_C_GLU_biograss <- unique( L201.R_C_GLU_ag[ R_GLU ] )
+L201.R_C_GLU_biograss[[C]] <- bio_grass_name
+
+L201.R_C_GLU_For <- L123.For_Prod_bm3_R_Y_GLU[ R_C_GLU ]
+
+# biotree: available anywhere that has any forest production at all
+L201.R_C_GLU_biotree <- unique( L201.R_C_GLU_For[ R_GLU ] )
+L201.R_C_GLU_biotree[[C]] <- bio_tree_name
+
+# Pasture
+L201.R_C_GLU_Past <- L123.ag_Prod_Mt_R_Past_Y_GLU[ R_C_GLU ]
+
+#Bind them all together
+L201.R_C_GLU <- rbind( L201.R_C_GLU_ag, L201.R_C_GLU_biograss, L201.R_C_GLU_For, L201.R_C_GLU_biotree, L201.R_C_GLU_Past )
+L201.R_C_GLU <- L201.R_C_GLU[ order( L201.R_C_GLU[[R]], L201.R_C_GLU[[GLU]], L201.R_C_GLU[[C]] ), ]
+L201.R_C_GLU <- add_region_name( L201.R_C_GLU )
+
 printlog( "L201.AgSupplySector: Generic AgSupplySector characteristics (units, calprice, market, logit)" )
+# At the supplysector (market) level, all regions get all supplysectors
 L201.AgSectorLogitTables <- get_logit_fn_tables( A_AgSupplySector, names_AgSupplySectorLogitType,
-    base.header="AgSupplySector_", include.equiv.table=T, write.all.regions=T )
-L201.AgSupplySector <- write_to_all_regions_ag( A_AgSupplySector, names_AgSupplySector )
-L201.AgSupplySector$calPrice <- L132.ag_an_For_Prices$calPrice[ match( L201.AgSupplySector$AgSupplySector, L132.ag_an_For_Prices$GCAM_commodity ) ]
-L201.AgSupplySector$calPrice[ L201.AgSupplySector$AgSupplySector == "biomass" ] <- 0.7   #value irrelevant
+                                                 base.header="AgSupplySector_", include.equiv.table=T, write.all.regions=T )
+
+L201.AgSupplySector <- write_to_all_regions( A_AgSupplySector, names_AgSupplySector )
+L201.AgSupplySector$calPrice <- L132.ag_an_For_Prices$calPrice[
+  match( L201.AgSupplySector$AgSupplySector,
+         L132.ag_an_For_Prices[[C]] ) ]
+L201.AgSupplySector$calPrice[ L201.AgSupplySector$AgSupplySector == "biomass" ] <- 1   #value irrelevant
 L201.AgSupplySector$market[ L201.AgSupplySector$market == "regional" ] <- L201.AgSupplySector$region[ L201.AgSupplySector$market == "regional" ]
 L201.AgSupplySector <- L201.AgSupplySector[ names_AgSupplySector ]
 
-printlog( "L201.AgSupplySector_biomassOil: AgSupplySector characteristics for biomassOil (only in regions where applicable)" )
-L201.biomassOil_R <- A_biocrops_R_AEZ[ A_biocrops_R_AEZ$AgSupplySector == "biomassOil" , ]
-L201.AgSupplySector_biomassOil <- data.frame( region = unique( L201.biomassOil_R$region ) )
-L201.AgSupplySector_biomassOil[ names( A_AgSupplySector ) ] <- subset( A_AgSupplySector, AgSupplySector == "biomass" )
-L201.AgSupplySector_biomassOil$AgSupplySector <- "biomassOil"
-L201.AgSupplySector_biomassOil$calPrice <- 0.7    #Value irrelevant
-L201.AgSupplySector_biomassOil$market[ L201.AgSupplySector_biomassOil$market == "regional" ] <-
-      L201.AgSupplySector_biomassOil$region[ L201.AgSupplySector_biomassOil$market == "regional" ]
-L201.AgSupplySector_biomassOil$logit.year.fillout <- min( model_base_years )
-L201.AgSupplySector_biomassOil <- L201.AgSupplySector_biomassOil[ names_AgSupplySector ]
-
-L201.biomassOil_LogitTemp <- L201.AgSupplySector_biomassOil
-L201.biomassOil_LogitTemp$logit.type <- NA
-L201.biomassOil_LogitTemp <- get_logit_fn_tables( L201.biomassOil_LogitTemp, names_AgSupplySectorLogitType,
-    base.header="AgSupplySector_", include.equiv.table=F, write.all.regions=F )
-for( curr_table in names( L201.biomassOil_LogitTemp ) ) {
-    if( curr_table %in% names( L201.AgSectorLogitTables ) ) {
-        L201.AgSectorLogitTables[[ curr_table ]]$data <- rbind( L201.AgSectorLogitTables[[ curr_table ]]$data,
-            L201.biomassOil_LogitTemp[[ curr_table ]]$data )
-    } else {
-        L201.AgSectorLogitTables[[ curr_table ]] <- L201.biomassOil_LogitTemp[[ curr_table ]]
-    }
+printlog( "Removing no-aglu regions")
+for( curr_table in names( L201.AgSectorLogitTables) ) {
+  if( curr_table != "EQUIV_TABLE" ) {
+    L201.AgSectorLogitTables[[ curr_table ]]$data <- subset( L201.AgSectorLogitTables[[ curr_table ]]$data,
+                                                             !region %in% no_aglu_regions )
+  }
 }
+L201.AgSupplySector <- subset( L201.AgSupplySector, !region %in% no_aglu_regions)
 
 printlog( "L201.AgSupplySubsector: Generic AgSupplySubsector characteristics (none specified as competition is in the land allocator)" )
-A_AgSupplySubsector_repAEZ <- repeat_and_add_vector( A_AgSupplySubsector, AEZ, AEZs )
-A_AgSupplySubsector_repAEZ$AgSupplySubsector <- with( A_AgSupplySubsector_repAEZ, paste( AgSupplySector, AEZ, sep = AEZ_delimiter ) )
-L201.AgSupplySubsector <- write_to_all_regions_ag( A_AgSupplySubsector_repAEZ, names_AgSupplySubsector )
+# At the subsector (production) level, only region x GLU combinations that actually exist are created
+L201.AgSupplySubsector <- L201.R_C_GLU
+L201.AgSupplySubsector[[agsupp]] <- A_AgSupplySubsector[[agsupp]][
+  match( L201.AgSupplySubsector[[C]], A_AgSupplySubsector[[agsubs]] ) ]
+# Subsector isn't just the supplysector & GLU for biomass crops, as this is where the grass/tree split is done
+L201.AgSupplySubsector[[ agsubs ]] <- paste( L201.AgSupplySubsector[[C]], L201.AgSupplySubsector[[ GLU]], sep = crop_GLU_delimiter )
 # We do not actually care about the logit here but we need a value to avoid errors
 L201.AgSupplySubsector$logit.year.fillout <- min( model_base_years )
 L201.AgSupplySubsector$logit.exponent <- -3
+L201.AgSupplySubsector <- L201.AgSupplySubsector[ names_AgSupplySubsector ]
+
 L201.AgSupplySubsectorLogitType <- L201.AgSupplySubsector
 L201.AgSupplySubsectorLogitType$logit.type <- NA
 L201.AgSubsectorLogitTables <- get_logit_fn_tables( L201.AgSupplySubsectorLogitType, names_AgSupplySubsectorLogitType,
-    base.header="AgSupplySubsector_", include.equiv.table=F, write.all.regions=F )
-
-printlog( "L201.AgTechInterp: Generic AgProductionTechnology characteristics (share-weight interpolation)" )
-A_AgTechnology_repAEZ <- repeat_and_add_vector( A_AgTechnology, AEZ, AEZs )
-A_AgTechnology_repAEZ$AgSupplySubsector <- with( A_AgTechnology_repAEZ, paste( AgSupplySector, AEZ, sep = AEZ_delimiter ) )
-A_AgTechnology_repAEZ$AgProductionTechnology <- with( A_AgTechnology_repAEZ, paste( AgSupplySector, AEZ, sep = AEZ_delimiter ) )
-L201.AgTechInterp <- write_to_all_regions_ag( A_AgTechnology_repAEZ, names_AgTechInterp )
-
-printlog( "L201.AgTechShrwt: AgProductionTechnology shareweights" )
-L201.AgTechShrwt <- repeat_and_add_vector( L201.AgTechInterp[ names( L201.AgTechInterp ) %in% names_AgTechShrwt ], Y, c( model_base_years, model_future_years ) )
-L201.AgTechShrwt$share.weight <- 1
-L201.AgTechShrwt <- L201.AgTechShrwt[ names_AgTechShrwt ]
+                                                    base.header="AgSupplySubsector_", include.equiv.table=F, write.all.regions=F )
 
 printlog( "L201.AgProduction_ag: Agricultural product calibrated output" )
-L201.AgProduction <- L201.AgTechInterp[ names( L201.AgTechInterp ) %in% names_AgProduction ]
+#Start with all commodities, then filter just the ones under "ag"
+L201.AgProduction <- L201.AgSupplySubsector
+L201.AgProduction[[agtech]] <- L201.AgProduction[[agsubs]]
 L201.AgProduction <- repeat_and_add_vector( L201.AgProduction, Y, model_base_years )
-L201.AgProduction_ag <- L201.AgProduction[ L201.AgProduction$AgSupplySector %in% L104.ag_Prod_Mt_R_C_Y_AEZ[[C]], ]
+L201.AgProduction_ag <- L201.AgProduction[ L201.AgProduction[[agsupp]] %in% L103.ag_Prod_Mt_R_C_Y_GLU[[C]], ]
 
 #Melt table of production
-L201.ag_Prod_Mt_R_C_Y_AEZ.melt <- melt( L104.ag_Prod_Mt_R_C_Y_AEZ, id.vars = R_C_AEZ, variable.name = Y )
-L201.ag_Prod_Mt_R_C_Y_AEZ.melt[[Y]] <- sub( "X", "", L201.ag_Prod_Mt_R_C_Y_AEZ.melt[[Y]])
-L201.ag_Prod_Mt_R_C_Y_AEZ.melt <- add_region_name( L201.ag_Prod_Mt_R_C_Y_AEZ.melt )
-L201.ag_Prod_Mt_R_C_Y_AEZ.melt$AgProductionTechnology <- paste( L201.ag_Prod_Mt_R_C_Y_AEZ.melt[[C]], L201.ag_Prod_Mt_R_C_Y_AEZ.melt[[AEZ]], sep = AEZ_delimiter )
+L201.ag_Prod_Mt_R_C_Y_GLU.melt <- interpolate_and_melt( L103.ag_Prod_Mt_R_C_Y_GLU,
+                                                        years = model_base_years, value.name = "calOutputValue", digits = digits_calOutput )
+L201.ag_Prod_Mt_R_C_Y_GLU.melt <- add_region_name( L201.ag_Prod_Mt_R_C_Y_GLU.melt )
+L201.ag_Prod_Mt_R_C_Y_GLU.melt[[agtech]] <- paste( L201.ag_Prod_Mt_R_C_Y_GLU.melt[[C]], L201.ag_Prod_Mt_R_C_Y_GLU.melt[[GLU]], sep = crop_GLU_delimiter )
 
 #Match in the production values
-L201.AgProduction_ag$calOutputValue <- round( L201.ag_Prod_Mt_R_C_Y_AEZ.melt$value[
+L201.AgProduction_ag$calOutputValue <- L201.ag_Prod_Mt_R_C_Y_GLU.melt$calOutputValue[
       match( vecpaste( L201.AgProduction_ag[ c( reg, agtech, Y ) ] ),
-             vecpaste( L201.ag_Prod_Mt_R_C_Y_AEZ.melt[ c( reg, agtech, Y ) ] ) ) ],
-      digits_calOutput )
+             vecpaste( L201.ag_Prod_Mt_R_C_Y_GLU.melt[ c( reg, agtech, Y ) ] ) ) ]
 
 #Subsector and technology shareweights (subsector requires the year as well)
 L201.AgProduction_ag$share.weight.year <- L201.AgProduction_ag[[Y]]
@@ -123,17 +124,16 @@ L201.AgProduction_ag <- L201.AgProduction_ag[ names_AgProduction ]
 
 printlog( "L201.AgProduction_For: Forest product calibration (output)" )
 #Melt production table
-L201.For_Prod_bm3_R_Y_AEZ.melt <- melt( L123.For_Prod_bm3_R_Y_AEZ, id.vars = R_C_AEZ, variable.name = Y )
-L201.For_Prod_bm3_R_Y_AEZ.melt[[Y]] <- sub( "X", "", L201.For_Prod_bm3_R_Y_AEZ.melt[[Y]])
-L201.For_Prod_bm3_R_Y_AEZ.melt <- add_region_name( L201.For_Prod_bm3_R_Y_AEZ.melt )
-L201.For_Prod_bm3_R_Y_AEZ.melt$AgProductionTechnology <- paste( L201.For_Prod_bm3_R_Y_AEZ.melt[[C]], L201.For_Prod_bm3_R_Y_AEZ.melt[[AEZ]], sep = AEZ_delimiter )
+L201.For_Prod_bm3_R_Y_GLU.melt <- interpolate_and_melt( L123.For_Prod_bm3_R_Y_GLU,
+                                                        years = model_base_years, value.name = "calOutputValue", digits = digits_calOutput )
+L201.For_Prod_bm3_R_Y_GLU.melt <- add_region_name( L201.For_Prod_bm3_R_Y_GLU.melt )
+L201.For_Prod_bm3_R_Y_GLU.melt[[agtech]] <- paste( L201.For_Prod_bm3_R_Y_GLU.melt[[C]], L201.For_Prod_bm3_R_Y_GLU.melt[[GLU]], sep = crop_GLU_delimiter )
 
 #Subset only forest products from main table and paste in calibrated production, rounded
-L201.AgProduction_For <- L201.AgProduction[ L201.AgProduction$AgSupplySector %in% L201.For_Prod_bm3_R_Y_AEZ.melt[[C]], ]
-L201.AgProduction_For$calOutputValue <- round( L201.For_Prod_bm3_R_Y_AEZ.melt$value[
+L201.AgProduction_For <- L201.AgProduction[ L201.AgProduction[[agsupp]] %in% L201.For_Prod_bm3_R_Y_GLU.melt[[C]], ]
+L201.AgProduction_For$calOutputValue <- L201.For_Prod_bm3_R_Y_GLU.melt$calOutputValue[
       match( vecpaste( L201.AgProduction_For[ c( reg, agtech, Y ) ] ),
-             vecpaste( L201.For_Prod_bm3_R_Y_AEZ.melt[ c( reg, agtech, Y ) ] ) ) ],
-      digits_calOutput )
+             vecpaste( L201.For_Prod_bm3_R_Y_GLU.melt[ c( reg, agtech, Y ) ] ) ) ]
 L201.AgProduction_For$share.weight.year <- L201.AgProduction_For$year
 L201.AgProduction_For$subs.share.weight <- ifelse( L201.AgProduction_For$calOutputValue > 0, 1, 0 )
 L201.AgProduction_For$tech.share.weight <- ifelse( L201.AgProduction_For$calOutputValue > 0, 1, 0 )
@@ -141,17 +141,16 @@ L201.AgProduction_For <- L201.AgProduction_For[ names_AgProduction ]
 
 printlog( "L201.AgProduction_Past: Pasture product calibration (output)" )
 #Melt production table
-L201.ag_Prod_Mt_R_Past_Y_AEZ.melt <- melt( L123.ag_Prod_Mt_R_Past_Y_AEZ, id.vars = R_C_AEZ, variable.name = Y )
-L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[Y]] <- sub( "X", "", L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[Y]])
-L201.ag_Prod_Mt_R_Past_Y_AEZ.melt <- add_region_name( L201.ag_Prod_Mt_R_Past_Y_AEZ.melt )
-L201.ag_Prod_Mt_R_Past_Y_AEZ.melt$AgProductionTechnology <- paste( L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[C]], L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[AEZ]], sep = AEZ_delimiter )
+L201.ag_Prod_Mt_R_Past_Y_GLU.melt <- interpolate_and_melt( L123.ag_Prod_Mt_R_Past_Y_GLU,
+                                                           years = model_base_years, value.name = "calOutputValue", digits = digits_calOutput )
+L201.ag_Prod_Mt_R_Past_Y_GLU.melt <- add_region_name( L201.ag_Prod_Mt_R_Past_Y_GLU.melt )
+L201.ag_Prod_Mt_R_Past_Y_GLU.melt[[agtech]] <- paste( L201.ag_Prod_Mt_R_Past_Y_GLU.melt[[C]], L201.ag_Prod_Mt_R_Past_Y_GLU.melt[[GLU]], sep = crop_GLU_delimiter )
 
 #Subset only pasture output from main table and paste in calibrated production, rounded
-L201.AgProduction_Past <- L201.AgProduction[ L201.AgProduction$AgSupplySector %in% L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[[C]], ]
-L201.AgProduction_Past$calOutputValue <- round( L201.ag_Prod_Mt_R_Past_Y_AEZ.melt$value[
+L201.AgProduction_Past <- L201.AgProduction[ L201.AgProduction$AgSupplySector %in% L201.ag_Prod_Mt_R_Past_Y_GLU.melt[[C]], ]
+L201.AgProduction_Past$calOutputValue <- L201.ag_Prod_Mt_R_Past_Y_GLU.melt$calOutputValue[
       match( vecpaste( L201.AgProduction_Past[ c( reg, agtech, Y ) ] ),
-             vecpaste( L201.ag_Prod_Mt_R_Past_Y_AEZ.melt[ c( reg, agtech, Y ) ] ) ) ],
-      digits_calOutput )
+             vecpaste( L201.ag_Prod_Mt_R_Past_Y_GLU.melt[ c( reg, agtech, Y ) ] ) ) ]
 L201.AgProduction_Past$share.weight.year <- L201.AgProduction_Past$year
 L201.AgProduction_Past$subs.share.weight <- ifelse( L201.AgProduction_Past$calOutputValue > 0, 1, 0 )
 L201.AgProduction_Past$tech.share.weight <- ifelse( L201.AgProduction_Past$calOutputValue > 0, 1, 0 )
@@ -159,135 +158,109 @@ L201.AgProduction_Past <- L201.AgProduction_Past[ names_AgProduction ]
 
 printlog( "L201.AgHAtoCL: Harvests per year" )
 #Melt Harvested-area-to-cropland table
-L201.ag_HA_to_CropLand_R_Y_AEZ.melt <- melt( L122.ag_HA_to_CropLand_R_Y_AEZ, id.vars = R_AEZ, variable.name = Y )
-L201.ag_HA_to_CropLand_R_Y_AEZ.melt[[Y]] <- sub( "X", "", L201.ag_HA_to_CropLand_R_Y_AEZ.melt[[Y]])
-L201.ag_HA_to_CropLand_R_Y_AEZ.melt<- add_region_name( L201.ag_HA_to_CropLand_R_Y_AEZ.melt )
+L201.ag_HA_to_CropLand_R_Y_GLU.melt <- interpolate_and_melt( L122.ag_HA_to_CropLand_R_Y_GLU,
+                                                             years = model_years, value.name = "harvests.per.year", digits = digits_calOutput, rule = 2 )
+L201.ag_HA_to_CropLand_R_Y_GLU.melt<- add_region_name( L201.ag_HA_to_CropLand_R_Y_GLU.melt )
 
-#Paste in HA:CL to ag crops table for base years (rounded)
-L201.AgHAtoCL_base <- L201.AgProduction_ag[ names_AgTechYr ]
-L201.AgHAtoCL_base[[AEZ]] <- with( L201.AgHAtoCL_base, substr( AgProductionTechnology, nchar( AgProductionTechnology ) - 4, nchar( AgProductionTechnology ) ) )
-L201.AgHAtoCL_base$harvests.per.year <- round( L201.ag_HA_to_CropLand_R_Y_AEZ.melt$value[
-      match( vecpaste( L201.AgHAtoCL_base[ c( reg, AEZ, Y ) ] ),
-             vecpaste( L201.ag_HA_to_CropLand_R_Y_AEZ.melt[ c( reg, AEZ, Y ) ] ) ) ],
-      digits_calOutput )
-
-#For future years, repeat values in final base year by number of future periods
-L201.AgHAtoCL_future <- repeat_and_add_vector( subset( L201.AgHAtoCL_base, year == max( year ) ), Y, model_future_years )
-
-#Rbind the base and future year tables
-L201.AgHAtoCL <- rbind( L201.AgHAtoCL_base, L201.AgHAtoCL_future )
+#Paste in HA:CL to ag crops only
+L201.AgHAtoCL <- subset( L201.AgProduction_ag, year == min( model_base_years ) )
+L201.AgHAtoCL <- repeat_and_add_vector( L201.AgHAtoCL, Y, model_years )
+L201.AgHAtoCL <- substring_GLU( L201.AgHAtoCL, from.var = agtech )
+L201.AgHAtoCL$harvests.per.year <- L201.ag_HA_to_CropLand_R_Y_GLU.melt$harvests.per.year[
+      match( vecpaste( L201.AgHAtoCL[ c( reg, GLU, Y ) ] ),
+             vecpaste( L201.ag_HA_to_CropLand_R_Y_GLU.melt[ c( reg, GLU, Y ) ] ) ) ]
 L201.AgHAtoCL <- L201.AgHAtoCL[ names_AgHAtoCL ]
 
-printlog( "L201.AgYield_bio_xxx: Base year biomass yields" )
-L201.AgYield_bio <- L201.AgProduction[ L201.AgProduction$AgSupplySector == "biomass", names_AgTechYr ]
-L201.AgYield_bio[[AEZ]] <- with( L201.AgYield_bio, substr( AgProductionTechnology, nchar( AgProductionTechnology ) - 4, nchar( AgProductionTechnology ) ) )
+printlog( "L201.AgYield_bio_grass: Base year biomass yields, grass bioenergy crops" )
+L201.AgYield_bio_grass <- L201.AgProduction[ grepl( bio_grass_name, L201.AgProduction[[agsubs]] ), names_AgTechYr ]
 
-#Melt tables of base year biomass yields
-L201.ag_bioYield_GJm2_R_AEZ_ref.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_ref, id.vars = R, variable.name = AEZ ) 
-L201.ag_bioYield_GJm2_R_AEZ_ref.melt<- add_region_name( L201.ag_bioYield_GJm2_R_AEZ_ref.melt )
+#Add info to table on bioenergy grass yields
+L201.ag_bioGrassYield_GJm2_R_GLU<- add_region_name( L113.ag_bioYield_GJm2_R_GLU )
+L201.ag_bioGrassYield_GJm2_R_GLU[[C]] <- bio_grass_name
+L201.ag_bioGrassYield_GJm2_R_GLU[[agsubs]] <- paste( L201.ag_bioGrassYield_GJm2_R_GLU[[C]], L201.ag_bioGrassYield_GJm2_R_GLU[[GLU]], sep = crop_GLU_delimiter )
 
-L201.ag_bioYield_GJm2_R_AEZ_hi.melt <- melt( L113.ag_bioYield_GJm2_R_AEZ_hi, id.vars = R, variable.name = AEZ ) 
-L201.ag_bioYield_GJm2_R_AEZ_hi.melt<- add_region_name( L201.ag_bioYield_GJm2_R_AEZ_hi.melt )
+#Match in the supply sector second, in case it's a different commodity (as opposed to a different subsector)
+L201.ag_bioGrassYield_GJm2_R_GLU[[agsupp]] <- A_AgSupplySubsector[[agsupp]][ match( L201.ag_bioGrassYield_GJm2_R_GLU[[C]], A_AgSupplySubsector[[agsubs]] ) ]
 
-#Reference scenario: paste in biomass yields
-L201.AgYield_bio_ref <- L201.AgYield_bio
-L201.AgYield_bio_ref$yield <- round( L201.ag_bioYield_GJm2_R_AEZ_ref.melt$value[
-      match( vecpaste( L201.AgYield_bio_ref[ c( reg, AEZ ) ] ),
-             vecpaste( L201.ag_bioYield_GJm2_R_AEZ_ref.melt[ c( reg, AEZ ) ] ) ) ],
+#Biomass grass yields
+L201.AgYield_bio_grass$yield <- round( L201.ag_bioGrassYield_GJm2_R_GLU$Yield_GJm2[
+      match( vecpaste( L201.AgYield_bio_grass[ c( reg, agsupp, agsubs ) ] ),
+             vecpaste( L201.ag_bioGrassYield_GJm2_R_GLU[ c( reg, agsupp, agsubs ) ] ) ) ],
       digits_calOutput )
-L201.AgYield_bio_ref <- L201.AgYield_bio_ref[ names_AgYield ]
+L201.AgYield_bio_grass <- L201.AgYield_bio_grass[ names_AgYield ]
 
-#High biomass yield scenario
-L201.AgYield_bio_hi <- L201.AgYield_bio
-L201.AgYield_bio_hi$yield <- round( L201.ag_bioYield_GJm2_R_AEZ_hi.melt$value[
-      match( vecpaste( L201.AgYield_bio_hi[ c( reg, AEZ ) ] ),
-             vecpaste( L201.ag_bioYield_GJm2_R_AEZ_hi.melt[ c( reg, AEZ ) ] ) ) ],
-      digits_calOutput )
-L201.AgYield_bio_hi <- L201.AgYield_bio_hi[ names_AgYield ]
+printlog( "L201.AgYield_bio_tree: Base year biomass yields, tree bioenergy crops" )
+L201.AgYield_bio_tree <- L201.AgProduction[ grepl( bio_tree_name, L201.AgProduction[[agsubs]] ), names_AgTechYr ]
 
-printlog( "Renaming biomass crops in all tables to specified names" )
-L201.AgSupplySubsector <- rename_biocrops( L201.AgSupplySubsector, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-      lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector" )
-for( curr_table in names( L201.AgSubsectorLogitTables ) ) {
-    if( curr_table != "EQUIV_TABLE" ) {
-        L201.AgSubsectorLogitTables[[ curr_table ]]$data <- rename_biocrops( L201.AgSubsectorLogitTables[[ curr_table ]]$data,
-            lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-            lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector" )
-    }
+#Just use the grass yields where available. Where not available (i.e., where there is forest but not cropped land),
+# use a default minimum as these are likely remote / unpopulated lands
+L201.AgYield_bio_grass <- substring_GLU( L201.AgYield_bio_grass, from.var = agtech )
+L201.AgYield_bio_tree$yield <- NA
+L201.AgYield_bio_tree <- substring_GLU( L201.AgYield_bio_tree, from.var = agtech )
+L201.AgYield_bio_tree$yield <- L201.AgYield_bio_grass$yield[
+  match( vecpaste( L201.AgYield_bio_tree[ c( reg, GLU ) ] ),
+         vecpaste( L201.AgYield_bio_grass[ c( reg, GLU ) ] ) ) ]
+L201.AgYield_bio_tree$yield[ is.na( L201.AgYield_bio_tree$yield ) ] <-
+  min( L201.AgYield_bio_tree$yield, na.rm = T )
+L201.AgYield_bio_tree <- L201.AgYield_bio_tree[ names_AgYield ]
+L201.AgYield_bio_grass <- L201.AgYield_bio_grass[ names_AgYield ]
+
+# the method below, commented out, would use carbon density-derived assumptions of forest yields in each land use region
+# the problem with this method is that it isn't indexed to the value of agricultural land, unlike the assumed unmanaged land
+# values (and also unlike the bio grass crop yields, which are derived from ag crop yields).
+# This means that in places where ag land (and therefore unmanaged land) has low value, the bio tree crop profit rates are
+# comparatively very high, and gain very high market share.
+# the code to set bio tree yields according to estimated forest primary productivity is kept in case this issue is addressed
+if( FALSE ){
+  #Add info to table on bioenergy tree yields
+  L123.For_Yield_m3m2_R_GLU$yield <- L123.For_Yield_m3m2_R_GLU[[X_final_historical_year]]
+  
+  #This contains zeroes in places without any logging in the final historical year. replace with an assumed minimum value
+  L123.For_Yield_m3m2_R_GLU$yield[ L123.For_Yield_m3m2_R_GLU$yield == 0 ] <-
+    min( L123.For_Yield_m3m2_R_GLU$yield[ L123.For_Yield_m3m2_R_GLU$yield != 0 ] )
+  
+  #Also need to re-set yields in places where roundwood production compared with available forest land returns unrealistically high yields
+  # could happen either from bad data, or from places with unsustainably high logging rates in the final historical year
+  L123.For_Yield_m3m2_R_GLU$yield <- pmin( L123.For_Yield_m3m2_R_GLU$yield, quantile( L123.For_Yield_m3m2_R_GLU$yield, probs = 0.8 ) )
+  L201.ag_bioTreeYield_GJm2_R_GLU <- L123.For_Yield_m3m2_R_GLU[ c( R_C_GLU, "yield" ) ]
+  L201.ag_bioTreeYield_GJm2_R_GLU$Yield_GJm2 <- L201.ag_bioTreeYield_GJm2_R_GLU$yield * AvgWoodDensity_kgm3 * WoodEnergyContent_GJkg
+  L201.ag_bioTreeYield_GJm2_R_GLU <- add_region_name( L201.ag_bioTreeYield_GJm2_R_GLU )
+  L201.ag_bioTreeYield_GJm2_R_GLU[[C]] <- bio_tree_name
+  L201.ag_bioTreeYield_GJm2_R_GLU[[agsubs]] <- paste( L201.ag_bioTreeYield_GJm2_R_GLU[[C]], L201.ag_bioTreeYield_GJm2_R_GLU[[GLU]], sep = crop_GLU_delimiter )
+  
+  #Match in the supply sector second, in case it's a different commodity (as opposed to a different subsector)
+  L201.ag_bioTreeYield_GJm2_R_GLU[[agsupp]] <- A_AgSupplySubsector[[agsupp]][ match( L201.ag_bioTreeYield_GJm2_R_GLU[[C]], A_AgSupplySubsector[[agsubs]] ) ]
+  
+  #Biomass tree yields
+  L201.AgYield_bio_tree$yield <- round( L201.ag_bioTreeYield_GJm2_R_GLU$Yield_GJm2[
+    match( vecpaste( L201.AgYield_bio_tree[ c( reg, agsupp, agsubs ) ] ),
+           vecpaste( L201.ag_bioTreeYield_GJm2_R_GLU[ c( reg, agsupp, agsubs ) ] ) ) ],
+    digits_calOutput )
+  L201.AgYield_bio_tree <- L201.AgYield_bio_tree[ names_AgYield ]
 }
-L201.AgTechInterp <- rename_biocrops( L201.AgTechInterp, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-      lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-L201.AgTechShrwt <- rename_biocrops( L201.AgTechShrwt, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-      lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-L201.AgYield_bio_ref <- rename_biocrops( L201.AgYield_bio_ref, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-      lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-L201.AgYield_bio_hi <- rename_biocrops( L201.AgYield_bio_hi, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-      lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-
-#Reset yields for specified bioenergy crops
-printlog( "NOTE: Using multipliers from maximum switchgrass yields for specified bioenergy crops in the base years" )
-A_bio_cost_yield$yield_GJm2[ A_bio_cost_yield$GCAM_commodity == "biomass" ] <- max( L113.ag_bioYield_GJm2_R_AEZ_ref[ AEZs ] )
-A_bio_cost_yield$yield_mult <- A_bio_cost_yield$yield_GJm2 / A_bio_cost_yield$yield_GJm2[ A_bio_cost_yield$GCAM_commodity == "biomass" ]
-
-L201.AgYield_bio_ref[[C]] <- with( L201.AgYield_bio_ref, substr( AgSupplySubsector, 1, nchar( AgSupplySubsector ) - 5 ) )
-L201.AgYield_bio_ref$yield_mult <- A_bio_cost_yield$yield_mult[ match( L201.AgYield_bio_ref[[C]], A_bio_cost_yield[[C]] ) ] 
-L201.AgYield_bio_ref$yield <- round( L201.AgYield_bio_ref$yield * L201.AgYield_bio_ref$yield_mult, digits_calOutput )
-L201.AgYield_bio_ref <- L201.AgYield_bio_ref[ names_AgYield ]
-
-L201.AgYield_bio_hi$yield[ paste( L201.AgYield_bio_hi$region, L201.AgYield_bio_hi$AgSupplySubsector ) %in%
-      paste( A_biocrops_R_AEZ$region, A_biocrops_R_AEZ$AgSupplySubsector ) ] <-
-   L201.AgYield_bio_ref$yield[ paste( L201.AgYield_bio_ref$region, L201.AgYield_bio_ref$AgSupplySubsector ) %in%
-      paste( A_biocrops_R_AEZ$region, A_biocrops_R_AEZ$AgSupplySubsector ) ]
-
-printlog( "Removing non-existent regions and AEZs from all tables")
-for( curr_table in names( L201.AgSectorLogitTables) ) {
-    if( curr_table != "EQUIV_TABLE" ) {
-        L201.AgSectorLogitTables[[ curr_table ]]$data <- subset( L201.AgSectorLogitTables[[ curr_table ]]$data,
-            !region %in% no_aglu_regions )
-    }
-}
-L201.AgSupplySector <- subset( L201.AgSupplySector, !region %in% no_aglu_regions )
-L201.AgSupplySector_biomassOil <- subset( L201.AgSupplySector_biomassOil, !region %in% no_aglu_regions )
-for( curr_table in names( L201.AgSubsectorLogitTables ) ) {
-    if( curr_table != "EQUIV_TABLE" ) {
-        L201.AgSubsectorLogitTables[[ curr_table ]]$data <- remove_AEZ_nonexist( L201.AgSubsectorLogitTables[[ curr_table ]]$data )
-    }
-}
-L201.AgSupplySubsector <- remove_AEZ_nonexist( L201.AgSupplySubsector )
-L201.AgTechInterp <- remove_AEZ_nonexist( L201.AgTechInterp )
-L201.AgTechShrwt <- remove_AEZ_nonexist( L201.AgTechShrwt )
-L201.AgProduction_ag <- remove_AEZ_nonexist( L201.AgProduction_ag )
-L201.AgProduction_For <- remove_AEZ_nonexist( L201.AgProduction_For )
-L201.AgProduction_Past <- remove_AEZ_nonexist( L201.AgProduction_Past )
-L201.AgHAtoCL <- remove_AEZ_nonexist( L201.AgHAtoCL )
-L201.AgYield_bio_ref <- remove_AEZ_nonexist( L201.AgYield_bio_ref )
-L201.AgYield_bio_hi <- remove_AEZ_nonexist( L201.AgYield_bio_hi )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
 for( curr_table in names ( L201.AgSectorLogitTables) ) {
-write_mi_data( L201.AgSectorLogitTables[[ curr_table ]]$data, L201.AgSectorLogitTables[[ curr_table ]]$header,
-    "AGLU_LEVEL2_DATA", paste0("L201.", L201.AgSectorLogitTables[[ curr_table ]]$header ), "AGLU_XML_BATCH",
-    "batch_ag_For_Past_bio_base.xml" )
+  write_mi_data( L201.AgSectorLogitTables[[ curr_table ]]$data, L201.AgSectorLogitTables[[ curr_table ]]$header,
+                 "AGLU_LEVEL2_DATA", paste0("L201.", L201.AgSectorLogitTables[[ curr_table ]]$header ), "AGLU_XML_BATCH",
+                 "batch_ag_For_Past_bio_base.xml" )
 }
 write_mi_data( L201.AgSupplySector, IDstring="AgSupplySector", domain="AGLU_LEVEL2_DATA", fn="L201.AgSupplySector",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_ag_For_Past_bio_base.xml" ) 
-write_mi_data( L201.AgSupplySector_biomassOil, "AgSupplySector", "AGLU_LEVEL2_DATA", "L201.AgSupplySector_biomassOil", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
 for( curr_table in names ( L201.AgSubsectorLogitTables ) ) {
 write_mi_data( L201.AgSubsectorLogitTables[[ curr_table ]]$data, L201.AgSubsectorLogitTables[[ curr_table ]]$header,
     "AGLU_LEVEL2_DATA", paste0("L201.", L201.AgSubsectorLogitTables[[ curr_table ]]$header ), "AGLU_XML_BATCH",
     "batch_ag_For_Past_bio_base.xml" )
 }
 write_mi_data( L201.AgSupplySubsector, "AgSupplySubsector", "AGLU_LEVEL2_DATA", "L201.AgSupplySubsector", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
-write_mi_data( L201.AgTechInterp, "AgTechInterp", "AGLU_LEVEL2_DATA", "L201.AgTechInterp", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
-write_mi_data( L201.AgTechShrwt, "AgTechShrwt", "AGLU_LEVEL2_DATA", "L201.AgTechShrwt", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
 write_mi_data( L201.AgProduction_ag, "AgProduction", "AGLU_LEVEL2_DATA", "L201.AgProduction_ag", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
 write_mi_data( L201.AgProduction_For, "AgProduction", "AGLU_LEVEL2_DATA", "L201.AgProduction_For", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
 write_mi_data( L201.AgProduction_Past, "AgProduction", "AGLU_LEVEL2_DATA", "L201.AgProduction_Past", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
 write_mi_data( L201.AgHAtoCL, "AgHAtoCL", "AGLU_LEVEL2_DATA", "L201.AgHAtoCL", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
-write_mi_data( L201.AgYield_bio_ref, "AgYield", "AGLU_LEVEL2_DATA", "L201.AgYield_bio_ref", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
-write_mi_data( L201.AgYield_bio_hi, "AgYield", "AGLU_LEVEL2_DATA", "L201.AgYield_bio_hi", "AGLU_XML_BATCH", "batch_bio_hi.xml" ) 
+write_mi_data( L201.AgYield_bio_grass, "AgYield", "AGLU_LEVEL2_DATA", "L201.AgYield_bio_grass", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
+write_mi_data( L201.AgYield_bio_tree, "AgYield", "AGLU_LEVEL2_DATA", "L201.AgYield_bio_tree", "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml" ) 
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_ag_For_Past_bio_base.xml", "AGLU_XML_FINAL", "ag_For_Past_bio_base.xml", "", xml_tag="outFile" )
 

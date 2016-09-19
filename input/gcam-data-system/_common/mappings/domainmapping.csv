@@ -10,7 +10,7 @@ COMMON_MAPPINGS,../_common/mappings/
 AGLU_HEADERS,../aglu-processing-code/headers/
 AGLU_MAPPINGS,../aglu-data/mappings/
 AGLU_ASSUMPTIONS,../aglu-data/assumptions/
-AGLU_GIS_DATA,../aglu-data/GIS/
+AGLU_LDS_DATA,../aglu-data/LDS/
 AGLU_ISIMIP_DATA,../aglu-data/ISIMIP/
 AGLU_LEVEL0_DATA,../aglu-data/level0/
 AGLU_LEVEL1_DATA,../aglu-data/level1/

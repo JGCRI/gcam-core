@@ -245,7 +245,13 @@ double BuildingServiceInput::getPhysicalDemand( const int aPeriod ) const {
 //! Set Physical Demand.
 void BuildingServiceInput::setPhysicalDemand( double aPhysicalDemand, const string& aRegionName, const int aPeriod )
 {
-    mServiceDemand[ aPeriod ].set( aPhysicalDemand );
+    // We are storing the results in the same vector as the calibration data
+    // generally the calculated value should match however it may not if the
+    // solver throws us negative prices.  We must explictly gaurd against
+    // reseting these values in calibration years.
+    if( aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+        mServiceDemand[ aPeriod ].set( aPhysicalDemand );
+    }
     
     mLastCalcValue = scenario->getMarketplace()->addToDemand( mName, aRegionName,
         aPhysicalDemand, mLastCalcValue, aPeriod );

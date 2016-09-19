@@ -1,1 +1,21 @@
-# File: A_agSupplySector.csv,,,,# Description: agSupplySubsectors - logit and shareweight interpolation,,,,# Original source: NA,,,,# ----------,,,,AgSupplySector,AgSupplySubsector,logit.exponent,year.fillout,share.weightCorn,,-6,start-year,1FiberCrop,,-6,start-year,1FodderGrass,,-6,start-year,1FodderHerb,,-6,start-year,1MiscCrop,,-6,start-year,1OilCrop,,-6,start-year,1OtherGrain,,-6,start-year,1PalmFruit,,-6,start-year,1Rice,,-6,start-year,1Root_Tuber,,-6,start-year,1SugarCrop,,-6,start-year,1Wheat,,-6,start-year,1Forest,,-6,start-year,1biomass,,-6,start-year,1Pasture,,-6,start-year,1
+# File: A_agSupplySector.csv,,,,
+# Description: agSupplySubsectors - logit and shareweight interpolation,,,,
+# Original source: NA,,,,
+# ----------,,,,
+AgSupplySector,AgSupplySubsector,logit.exponent,year.fillout,share.weight
+Corn,Corn,-6,start-year,1
+FiberCrop,FiberCrop,-6,start-year,1
+FodderGrass,FodderGrass,-6,start-year,1
+FodderHerb,FodderHerb,-6,start-year,1
+MiscCrop,MiscCrop,-6,start-year,1
+OilCrop,OilCrop,-6,start-year,1
+OtherGrain,OtherGrain,-6,start-year,1
+PalmFruit,PalmFruit,-6,start-year,1
+Rice,Rice,-6,start-year,1
+Root_Tuber,Root_Tuber,-6,start-year,1
+SugarCrop,SugarCrop,-6,start-year,1
+Wheat,Wheat,-6,start-year,1
+Forest,Forest,-6,start-year,1
+biomass,biomass_grass,-6,start-year,1
+biomass,biomass_tree,-6,start-year,1
+Pasture,Pasture,-6,start-year,1

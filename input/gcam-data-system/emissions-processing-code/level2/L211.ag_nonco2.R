@@ -28,14 +28,13 @@ sourcedata( "EMISSIONS_ASSUMPTIONS", "A_emissions_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 A_regions <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 A_agSupplySector <- readdata( "AGLU_ASSUMPTIONS", "A_agSupplySector" )
-A_biocrops_R_AEZ <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ" )
-L104.ag_Prod_Mt_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L104.ag_Prod_Mt_R_C_Y_AEZ" )
-L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
-L121.nonco2_tg_R_awb_C_Y_AEZ <- readdata( "EMISSIONS_LEVEL1_DATA", "L121.nonco2_tg_R_awb_C_Y_AEZ" )
-L122.ghg_tg_R_agr_C_Y_AEZ <- readdata( "EMISSIONS_LEVEL1_DATA", "L122.ghg_tg_R_agr_C_Y_AEZ" )
+L103.ag_Prod_Mt_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_Y_GLU" )
+L205.AgCost_bio <- readdata( "AGLU_LEVEL2_DATA", "L205.AgCost_bio", skip = 4)
 L113.ghg_tg_R_an_C_Sys_Fd_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L113.ghg_tg_R_an_C_Sys_Fd_Yh" )
-L123.bcoc_tgmt_R_awb_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L123.bcoc_tgmt_R_awb_2000" )
 L115.nh3_tg_R_an_C_Sys_Fd_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L115.nh3_tg_R_an_C_Sys_Fd_Yh" )
+L121.nonco2_tg_R_awb_C_Y_GLU <- readdata( "EMISSIONS_LEVEL1_DATA", "L121.nonco2_tg_R_awb_C_Y_GLU" )
+L122.ghg_tg_R_agr_C_Y_GLU <- readdata( "EMISSIONS_LEVEL1_DATA", "L122.ghg_tg_R_agr_C_Y_GLU" )
+L123.bcoc_tgmt_R_awb_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L123.bcoc_tgmt_R_awb_2000" )
 A11.max_reduction <- readdata( "EMISSIONS_ASSUMPTIONS", "A11.max_reduction" )
 A11.steepness <- readdata( "EMISSIONS_ASSUMPTIONS", "A11.steepness" )
 
@@ -44,145 +43,92 @@ A11.steepness <- readdata( "EMISSIONS_ASSUMPTIONS", "A11.steepness" )
 #Sulfur emissions
 printlog( "L211.AWBEmissions: AWB emissions in all regions" )
 #Interpolate and add region name
-L211.AWB <- L121.nonco2_tg_R_awb_C_Y_AEZ[ names( L121.nonco2_tg_R_awb_C_Y_AEZ ) %!in% c( "X2009", "X2010") ]
-
 #Note: interpolate takes ages, so I'm not using interpolate_and_melt
-L211.AWB <- melt( L211.AWB, id.vars = grep( "X[0-9]{4}", names( L211.AWB ), invert = T ) )
-L211.AWB <- na.omit( L211.AWB )
-L211.AWB$year <- as.numeric( substr( L211.AWB$variable, 2, 5 ) )
-L211.AWB <- subset( L211.AWB, L211.AWB$year %in% emiss_model_base_years )
-L211.AWB <- add_region_name( L211.AWB )
+L211.AWB <- melt( L121.nonco2_tg_R_awb_C_Y_GLU, id.vars = c( R_C_GLU, "Non.CO2" ), measure.vars = X_emiss_model_base_years,
+                  variable.name = "xyear", value.name = "input.emissions" )
+L211.AWB$year <- as.numeric( substr( L211.AWB$xyear, 2, 5 ) )
 
-#Add subsector and tech names
+#Add region, supplysector, subsector and tech names
+L211.AWB <- add_region_name( L211.AWB )
 L211.AWB$AgSupplySector <- L211.AWB$GCAM_commodity
-L211.AWB$AgSupplySubsector <- paste( L211.AWB$GCAM_commodity, L211.AWB$AEZ, sep="" )
-L211.AWB$AgProductionTechnology <- paste( L211.AWB$GCAM_commodity, L211.AWB$AEZ, sep="" )
+L211.AWB$AgSupplySubsector <- paste( L211.AWB$GCAM_commodity, L211.AWB$GLU, sep=crop_GLU_delimiter )
+L211.AWB$AgProductionTechnology <- L211.AWB$AgSupplySubsector
 
 #Format for csv file
-L211.AWBEmissions <- L211.AWB[ c( names_AgTech, "year", "Non.CO2" ) ]
-L211.AWBEmissions$input.emissions <- L211.AWB$value
+L211.AWBEmissions <- L211.AWB[ c( names_AgTechYr, "Non.CO2", "input.emissions" ) ]
+L211.AWBEmissions$input.emissions <- round( L211.AWBEmissions$input.emissions, digits_emissions )
 
 printlog( "L211.AGREmissions: ag AGR emissions in all regions" )
-#Interpolate and add region name
-L211.AGR <- L122.ghg_tg_R_agr_C_Y_AEZ[ names( L122.ghg_tg_R_agr_C_Y_AEZ ) %!in% c( "X2009", "X2010") ]
+L211.AGR <- melt( L122.ghg_tg_R_agr_C_Y_GLU, id.vars = c( R_C_GLU, "Non.CO2" ), measure.vars = X_emiss_model_base_years,
+                  variable.name = "xyear", value.name = "input.emissions" )
+L211.AGR$year <- as.numeric( substr( L211.AGR$xyear, 2, 5 ) )
 
-#Note: interpolate takes ages, so I'm not using interpolate_and_melt
-L211.AGR <- melt( L211.AGR, id.vars = grep( "X[0-9]{4}", names( L211.AGR ), invert = T ) )
-L211.AGR$year <- as.numeric( substr( L211.AGR$variable, 2, 5 ) )
-L211.AGR <- subset( L211.AGR, L211.AGR$year %in% emiss_model_base_years )
+#Add region, supplysector, subsector and tech names
 L211.AGR <- add_region_name( L211.AGR )
-
-#Add subsector and tech names
 L211.AGR$AgSupplySector <- L211.AGR$GCAM_commodity
-L211.AGR$AgSupplySubsector <- paste( L211.AGR$GCAM_commodity, L211.AGR$AEZ, sep="" )
-L211.AGR$AgProductionTechnology <- paste( L211.AGR$GCAM_commodity, L211.AGR$AEZ, sep="" )
+L211.AGR$AgSupplySubsector <- paste( L211.AGR$GCAM_commodity, L211.AGR$GLU, sep=crop_GLU_delimiter )
+L211.AGR$AgProductionTechnology <- L211.AGR$AgSupplySubsector
 
 #Format for csv file
-L211.AGREmissions <- L211.AGR[ c( names_AgTech, "year", "Non.CO2" ) ]
-L211.AGREmissions$input.emissions <- round( L211.AGR$value, digits_emissions )
+L211.AGREmissions <- L211.AGR[ c( names_AgTechYr, "Non.CO2", "input.emissions" ) ]
+L211.AGREmissions$input.emissions <- round( L211.AGREmissions$input.emissions, digits_emissions )
 
 printlog( "L211.AGRBioEmissions: bio AGR emissions in all regions" )
 #Map in coefficients from assumption file
-L211.AGRBio <- A_regions[ names( A_regions ) %in% c( "region", "bio_N2O_coef" )]
-
-#Add sector, subsector, technology, year, gas information
-L211.AGRBio$AgSupplySector <- "biomass"
-L211.AGRBio <- repeat_and_add_vector( L211.AGRBio, "AEZ", AEZs )
-L211.AGRBio$AgSupplySubsector <- paste( L211.AGRBio$AgSupplySector, L211.AGRBio$AEZ, sep="" )
-L211.AGRBio$AgProductionTechnology <- L211.AGRBio$AgSupplySubsector
+L211.AGRBio <- L205.AgCost_bio[ L205.AgCost_bio[[Y]] == ctrl_base_year, names_AgTechYr ]
 L211.AGRBio$Non.CO2 <- "N2O_AGR"
-L211.AGRBio$year <- ctrl_base_year
+L211.AGRBio$bio_N2O_coef <- A_regions$bio_N2O_coef[ match( L211.AGRBio$region, A_regions$region ) ]
+
+printlog( "L211.AnAGREmissions: animal AGR emissions in all regions" )
+#Note: interpolate takes ages, so I'm not using interpolate_and_melt
+L211.AN <- melt( L113.ghg_tg_R_an_C_Sys_Fd_Yh, id.vars = c( R, S_S_T, "Non.CO2" ), measure.vars = X_emiss_model_base_years,
+                 variable.name = "xyear", value.name = "input.emissions" )
+L211.AN$year <- as.numeric( substr( L211.AN$xyear, 2, 5 ) )
 
 #Format for csv file
-L211.AGRBio <- L211.AGRBio[ c( names_AgTech, "year", "Non.CO2", "bio_N2O_coef" ) ]
-
-printlog( "L211.AnAGREmissions: an AGR emissions in all regions" )
-#Interpolate and add region name
-L211.AN <- L113.ghg_tg_R_an_C_Sys_Fd_Yh[ names( L113.ghg_tg_R_an_C_Sys_Fd_Yh ) %!in% c( "X2009", "X2010") ]
-
-#Note: interpolate takes ages, so I'm not using interpolate_and_melt
-L211.AN <- melt( L211.AN, id.vars = grep( "X[0-9]{4}", names( L211.AN ), invert = T ) )
-L211.AN$year <- as.numeric( substr( L211.AN$variable, 2, 5 ) )
-L211.AN <- subset( L211.AN, L211.AN$year %in% emiss_model_base_years )
 L211.AN <- add_region_name( L211.AN )
-
-#Format for csv file
 L211.AnEmissions <- L211.AN[ c( names_StubTechYr, "Non.CO2" ) ]
-L211.AnEmissions$input.emissions <- round( L211.AN$value, digits_emissions )
+L211.AnEmissions$input.emissions <- round( L211.AN$input.emissions, digits_emissions )
 
-printlog( "L211.AnNH3Emissions: an NH3 emissions in all regions" )
-#Interpolate and add region name
-L211.AN_NH3 <- L115.nh3_tg_R_an_C_Sys_Fd_Yh[ names( L115.nh3_tg_R_an_C_Sys_Fd_Yh ) %!in% c( "X2009", "X2010") ]
-
+printlog( "L211.AnNH3Emissions: animal NH3 emissions in all regions" )
 #Note: interpolate takes ages, so I'm not using interpolate_and_melt
-L211.AN_NH3 <- melt( L211.AN_NH3, id.vars = grep( "X[0-9]{4}", names( L211.AN ), invert = T ) )
-L211.AN_NH3$year <- as.numeric( substr( L211.AN_NH3$variable, 2, 5 ) )
-L211.AN_NH3 <- subset( L211.AN_NH3, L211.AN_NH3$year %in% emiss_model_base_years )
-L211.AN_NH3 <- add_region_name( L211.AN_NH3 )
+L211.AN_NH3 <- melt( L115.nh3_tg_R_an_C_Sys_Fd_Yh, id.vars = c( R, S_S_T, "Non.CO2" ),
+                     measure.vars = names( L115.nh3_tg_R_an_C_Sys_Fd_Yh )[ names( L115.nh3_tg_R_an_C_Sys_Fd_Yh ) %in% X_emiss_model_base_years ],
+                     variable.name = "xyear", value.name = "input.emissions" )
+L211.AN_NH3$year <- as.numeric( substr( L211.AN_NH3$xyear, 2, 5 ) )
 
 #Format for csv file
+L211.AN_NH3 <- add_region_name( L211.AN_NH3 )
 L211.AnNH3Emissions <- L211.AN_NH3[ c( names_StubTechYr, "Non.CO2" ) ]
-L211.AnNH3Emissions$input.emissions <- round( L211.AN_NH3$value, digits_emissions )
+L211.AnNH3Emissions$input.emissions <- round( L211.AN_NH3$input.emissions, digits_emissions )
 
-printlog( "L211.AWB_BCOC_Emissions: BC / OC AWB emissions in all regions" )
+printlog( "L211.AWB_BCOC_EmissCoeff: BC / OC AWB emissions coefficients in all regions" )
 #Add region name & replicate for all commodities & base years
-L211.AWB_BCOC <- L123.bcoc_tgmt_R_awb_2000
-L211.AWB_BCOC <- add_region_name( L211.AWB_BCOC )
-L211.AWB_BCOC <- repeat_and_add_vector( L211.AWB_BCOC, "AgSupplySector", A_agSupplySector$AgSupplySector )
-L211.AWB_BCOC <- subset( L211.AWB_BCOC,  L211.AWB_BCOC$AgSupplySector %!in% c( "Pasture", "Forest" ) )
-L211.AWB_BCOC <- repeat_and_add_vector( L211.AWB_BCOC, "AEZ", AEZs )
-L211.AWB_BCOC$AgSupplySubsector <- paste( L211.AWB_BCOC$AgSupplySector, L211.AWB_BCOC$AEZ, sep="" )
-L211.AWB_BCOC$AgProductionTechnology <- paste( L211.AWB_BCOC$AgSupplySector, L211.AWB_BCOC$AEZ, sep="" )
+L211.AWB_BCOC <- add_region_name( L123.bcoc_tgmt_R_awb_2000 )
+L211.AWB_BCOC$AgSupplySector <- L211.AWB_BCOC[[C]]
+L211.AWB_BCOC$AgSupplySubsector <- paste( L211.AWB_BCOC$AgSupplySector, L211.AWB_BCOC$GLU, sep = crop_GLU_delimiter )
+L211.AWB_BCOC$AgProductionTechnology <- L211.AWB_BCOC$AgSupplySubsector
 L211.AWB_BCOC <- repeat_and_add_vector( L211.AWB_BCOC, "year", model_base_years )
 
 #Format for csv file
-L211.AWB_BCOC_Emissions <- L211.AWB_BCOC[ c( names_AgTech, "year", "Non.CO2" ) ]
-L211.AWB_BCOC_Emissions$emiss.coef <- round( L211.AWB_BCOC$emfact, digits_emissions )
+L211.AWB_BCOC_EmissCoeff <- L211.AWB_BCOC[ c( names_AgTechYr, "Non.CO2" ) ]
+L211.AWB_BCOC_EmissCoeff$emiss.coef <- round( L211.AWB_BCOC$emfact, digits_emissions )
 
-printlog( "L211.nonghg_max_reduction: maximum reduction for energy technologies in all regions" )
-L211.max_reduction <- melt( A11.max_reduction, id.vars=c( "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" ))
-L211.max_reduction <- repeat_and_add_vector( L211.max_reduction, "region", GCAM_region_names$region )
-L211.nonghg_max_reduction <- rbind( L211.AWB_BCOC[ c( names_AgTech, "Non.CO2" ) ], L211.AWB[ c( names_AgTech, "Non.CO2" ) ] )
-L211.nonghg_max_reduction$year <- ctrl_base_year
+printlog( "L211.nonghg_max_reduction: maximum emissions coefficient reduction for ag technologies in all regions" )
+L211.nonghg_max_reduction <- rbind( L211.AWB_BCOC[ L211.AWB_BCOC[[Y]] == ctrl_base_year, c( names_AgTechYr, "Non.CO2" ) ],
+                                    L211.AWB[ L211.AWB[[Y]] == ctrl_base_year, c( names_AgTechYr, "Non.CO2" ) ] )
 L211.nonghg_max_reduction$ctrl.name <- "GDP_control"
-L211.nonghg_max_reduction$max.reduction <- L211.max_reduction$value[ match( vecpaste( L211.nonghg_max_reduction[ c( names_AgTech, "Non.CO2" ) ]), vecpaste( L211.max_reduction[ c( names_AgTech, "variable" ) ]) )]
-L211.nonghg_max_reduction <- na.omit( L211.nonghg_max_reduction )
-L211.nonghg_max_reduction <- L211.nonghg_max_reduction[ c( names_AgTechYr, "Non.CO2", "ctrl.name", "max.reduction" )]
+L211.nonghg_max_reduction$max.reduction <- A11.max_reduction$max.reduction[
+  match( L211.nonghg_max_reduction$AgSupplySector, A11.max_reduction$AgSupplySector ) ]
 
 printlog( "L211.nonghg_steepness: steepness of reduction for energy technologies in all regions" )
-L211.steepness <- melt( A11.steepness, id.vars=c( "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" ))
-L211.steepness <- repeat_and_add_vector( L211.steepness, "region", GCAM_region_names$region )
-L211.nonghg_steepness <- L211.nonghg_max_reduction[ c( names_AgTech, "Non.CO2" ) ]
-L211.nonghg_steepness$year <- ctrl_base_year
+L211.nonghg_steepness <- L211.nonghg_max_reduction[ c( names_AgTechYr, "Non.CO2" ) ]
 L211.nonghg_steepness$ctrl.name <- "GDP_control"
-L211.nonghg_steepness$steepness <- L211.steepness$value[ match( vecpaste( L211.nonghg_steepness[ c( names_AgTech, "Non.CO2" ) ]), vecpaste( L211.steepness[ c( names_AgTech, "variable" ) ]) )]
-L211.nonghg_steepness <- na.omit( L211.nonghg_steepness )
-L211.nonghg_steepness <- L211.nonghg_steepness[ c( names_AgTechYr, "Non.CO2", "ctrl.name", "steepness" )]
-
-printlog( "Rename bio-energy crops in some region/AEZs" )
-L211.AGRBio <- rename_biocrops( L211.AGRBio, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-  lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-L211.AWB_BCOC_Emissions <- rename_biocrops( L211.AWB_BCOC_Emissions, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-  lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-L211.nonghg_max_reduction <- rename_biocrops( L211.nonghg_max_reduction, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-  lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-L211.nonghg_steepness <- rename_biocrops( L211.nonghg_steepness, lookup = A_biocrops_R_AEZ, data_matchvar = "AgSupplySubsector",
-  lookup_matchvar = "old_AgSupplySubsector", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology" )
-
-printlog( "Removing non-existent regions and AEZs from all tables")
-printlog( "NOTE: also removing nonco2s from agricultural supply subsectors (crop&AEZ) with zero output in all years" )
-AgSubs_nonexist <- L104.ag_Prod_Mt_R_C_Y_AEZ[ rowSums( L104.ag_Prod_Mt_R_C_Y_AEZ[ X_historical_years ] ) == 0, R_C_AEZ ]
-AgSubs_nonexist <- add_region_name( AgSubs_nonexist )
-AgSubs_nonexist$AgSupplySubsector <- paste( AgSubs_nonexist[[C]], AgSubs_nonexist[[AEZ]], sep = AEZ_delimiter )
+L211.nonghg_steepness$steepness <- A11.steepness$steepness[
+  match( L211.nonghg_steepness$AgSupplySector, A11.steepness$AgSupplySector ) ]
 
 L211.AnEmissions <- subset( L211.AnEmissions, !region %in% no_aglu_regions )
 L211.AnNH3Emissions <- subset( L211.AnNH3Emissions, !region %in% no_aglu_regions )
-L211.AWBEmissions <- remove_AEZ_nonexist( L211.AWBEmissions[ vecpaste( L211.AWBEmissions[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
-L211.AGREmissions <- remove_AEZ_nonexist( L211.AGREmissions[ vecpaste( L211.AGREmissions[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
-L211.AGRBio <- remove_AEZ_nonexist( L211.AGRBio )
-L211.AWB_BCOC_Emissions <- remove_AEZ_nonexist( L211.AWB_BCOC_Emissions[ vecpaste( L211.AWB_BCOC_Emissions[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
-L211.nonghg_max_reduction <- remove_AEZ_nonexist( L211.nonghg_max_reduction[ vecpaste( L211.nonghg_max_reduction[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
-L211.nonghg_steepness <- remove_AEZ_nonexist( L211.nonghg_steepness[ vecpaste( L211.nonghg_steepness[ c( reg, agsubs ) ] ) %!in% vecpaste( AgSubs_nonexist[ c( reg, agsubs ) ] ), ] )
 
 printlog( "Rename to regional SO2" )
 L211.AWBEmissions <- rename_SO2( L211.AWBEmissions, A_regions, TRUE )
@@ -191,13 +137,13 @@ L211.nonghg_steepness <- rename_SO2( L211.nonghg_steepness, A_regions, TRUE )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
-write_mi_data( L211.AWBEmissions, "OutputEmissionsAg", "EMISSIONS_LEVEL2_DATA", "L211.awb_emissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
-write_mi_data( L211.AGREmissions, "OutputEmissionsAg", "EMISSIONS_LEVEL2_DATA", "L211.agr_emissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
-write_mi_data( L211.AnEmissions, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L211.an_emissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
-write_mi_data( L211.AnNH3Emissions, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L211.an_nh3_emissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
-write_mi_data( L211.AGRBio, "OutputEmissCoeffAg", "EMISSIONS_LEVEL2_DATA", "L211.bio_emissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
-write_mi_data( L211.AWB_BCOC_Emissions, "OutputEmissCoeffAg", "EMISSIONS_LEVEL2_DATA", "L211.awb_bcoc_emissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
-write_mi_data( L211.nonghg_max_reduction, "AgGDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L211.nonco2_max_reduction", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
-write_mi_data( L211.nonghg_steepness, "AgGDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L211.nonco2_steepness", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L211.AWBEmissions, "OutputEmissionsAg", "EMISSIONS_LEVEL2_DATA", "L211.AWBEmissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L211.AGREmissions, "OutputEmissionsAg", "EMISSIONS_LEVEL2_DATA", "L211.AGREmissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L211.AnEmissions, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L211.AnEmissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L211.AnNH3Emissions, "StbTechOutputEmissions", "EMISSIONS_LEVEL2_DATA", "L211.AnNH3Emissions", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L211.AGRBio, "OutputEmissCoeffAg", "EMISSIONS_LEVEL2_DATA", "L211.AGRBio", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L211.AWB_BCOC_EmissCoeff, "OutputEmissCoeffAg", "EMISSIONS_LEVEL2_DATA", "L211.AWB_BCOC_EmissCoeff", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L211.nonghg_max_reduction, "AgGDPCtrlMax", "EMISSIONS_LEVEL2_DATA", "L211.nonghg_max_reduction", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
+write_mi_data( L211.nonghg_steepness, "AgGDPCtrlSteep", "EMISSIONS_LEVEL2_DATA", "L211.nonghg_steepness", "EMISSIONS_XML_BATCH", "batch_all_aglu_emissions.xml" ) 
 
 logstop()

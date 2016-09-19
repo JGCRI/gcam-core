@@ -31,9 +31,9 @@ GCAM_sector_tech <- readdata( "EMISSIONS_MAPPINGS", "GCAM_sector_tech" )
 HFC_Abate_GV <- readdata( "EMISSIONS_LEVEL0_DATA", "HFC_Abate_GV" )
 L152.MAC_pct_R_S_Proc_EPA <- readdata( "EMISSIONS_LEVEL1_DATA", "L152.MAC_pct_R_S_Proc_EPA" )
 L201.ghg_res <- readdata( "EMISSIONS_LEVEL2_DATA", "L201.ghg_res", skip = 4 )
-L211.agr_emissions <- readdata( "EMISSIONS_LEVEL2_DATA", "L211.agr_emissions", skip = 4 )
-L211.an_emissions <- readdata( "EMISSIONS_LEVEL2_DATA", "L211.an_emissions", skip = 4 )
-L211.bio_emissions <- readdata( "EMISSIONS_LEVEL2_DATA", "L211.bio_emissions", skip = 4 )
+L211.AGREmissions <- readdata( "EMISSIONS_LEVEL2_DATA", "L211.AGREmissions", skip = 4 )
+L211.AnEmissions <- readdata( "EMISSIONS_LEVEL2_DATA", "L211.AnEmissions", skip = 4 )
+L211.AGRBio <- readdata( "EMISSIONS_LEVEL2_DATA", "L211.AGRBio", skip = 4 )
 L232.nonco2_prc <- readdata( "EMISSIONS_LEVEL2_DATA", "L232.nonco2_prc", skip = 4 )
 L241.hfc_all <- readdata( "EMISSIONS_LEVEL2_DATA", "L241.hfc_all", skip = 4 )
 L241.pfc_all <- readdata( "EMISSIONS_LEVEL2_DATA", "L241.pfc_all", skip = 4 )
@@ -63,8 +63,8 @@ L252.ResMAC_fos <- na.omit( L252.ResMAC_fos )
 
 printlog( "L252.AgMAC: Agricultural abatement (including bioenergy)" )
 L252.AgMAC <- rbind(
-      subset( L211.agr_emissions[ c( names_AgTechYr, "Non.CO2" ) ], year == min( L211.agr_emissions$year ) & Non.CO2 %in% ag_MACC_GHG_names ),
-      subset( L211.bio_emissions[ c( names_AgTechYr, "Non.CO2" ) ], year == min( L211.agr_emissions$year ) & Non.CO2 %in% ag_MACC_GHG_names ) )
+      subset( L211.AGREmissions[ c( names_AgTechYr, "Non.CO2" ) ], year == min( L211.AGREmissions$year ) & Non.CO2 %in% ag_MACC_GHG_names ),
+      subset( L211.AGRBio[ c( names_AgTechYr, "Non.CO2" ) ], year == min( L211.AGREmissions$year ) & Non.CO2 %in% ag_MACC_GHG_names ) )
 L252.AgMAC$mac.control <- GCAM_sector_tech$EPA_MACC_Sector[
       match( L252.AgMAC$AgSupplySector, GCAM_sector_tech$supplysector ) ]
 #dropping jatropha b/c it isn't in the tech table, and wasn't considered in the epa analysis anyway
@@ -81,7 +81,7 @@ L252.AgMAC$mac.reduction <- round(
 L252.AgMAC <- na.omit( L252.AgMAC )
 
 printlog( "L252.MAC_an: Abatement from animal production" )
-L252.MAC_an <- subset( L211.an_emissions[ c( names_StubTechYr, "Non.CO2" ) ], year == min( L211.an_emissions$year ) & Non.CO2 %in% ag_MACC_GHG_names )
+L252.MAC_an <- subset( L211.AnEmissions[ c( names_StubTechYr, "Non.CO2" ) ], year == min( L211.AnEmissions$year ) & Non.CO2 %in% ag_MACC_GHG_names )
 L252.MAC_an$mac.control <- GCAM_sector_tech$EPA_MACC_Sector[
       match( L252.MAC_an$supplysector, GCAM_sector_tech$supplysector ) ]
 L252.MAC_an <- repeat_and_add_vector( L252.MAC_an, "tax", MAC_taxes )

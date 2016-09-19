@@ -49,49 +49,6 @@ convert_rsrc_to_L2 <- function( data, resource_type, subresource_type=NA ) {
 	}
 	
 # -----------------------------------------------------------------------------
-# set_traded_names: convert names of traded secondary goods to be contained within region 1, with region appended to subsector and tech names
-set_traded_names <- function( data, apply.to="selected" ) {
-	data_new <- data
-	if( apply.to=="selected" ){
-		if( "subsector" %in% names( data ) ){
-			data_new$subsector[data$traded == 1] <- paste( data$region[data$traded == 1], data$subsector[data$traded == 1], sep = " " )
-		} 
-		if( "technology" %in% names( data ) ){
-			data_new$technology[data$traded == 1] <- paste( data$region[data$traded == 1], data$technology[data$traded == 1], sep = " " )
-		} 
-		data_new$region[data$traded == 1] <- GCAM_region_names$region[1]
-		return( data_new )
-	}
-	if(apply.to=="all" ){
-		if( "subsector" %in% names( data ) ){
-			data_new$subsector <- paste( data$region, data$subsector, sep = " " )
-		} 
-		if( "technology" %in% names( data ) ){
-			data_new$technology <- paste( data$region, data$technology, sep = " " )
-		} 
-		data_new$region <- GCAM_region_names$region[1]
-		return( data_new )
-	}
-}
-	
-# -----------------------------------------------------------------------------
-# write_to_all_regions: write out data to all regions, and set traded names as required
-write_to_all_regions <- function( data, names, has.traded=F, apply.to = "selected", set.market = F ){
-	if ( "logit.year.fillout" %in% names ) data$logit.year.fillout <- "start-year"
-	if ( "price.exp.year.fillout" %in% names ) data$price.exp.year.fillout <- "start-year"
-	data_new <- set_years( data )
-	data_new <- repeat_and_add_vector( data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
-	data_new <- add_region_name( data_new )
-	if( has.traded==T){
-		if( set.market==T){
-			data_new$market.name <- data_new$region
-		}
-		data_new <- set_traded_names( data_new, apply.to )
-		}
-	return( data_new[ names ] ) 
-}
-	
-# -----------------------------------------------------------------------------
 # subset_inttechs: subset intermittent technologies into a new dataframe and change the tech column name
 subset_inttechs <- function( data, inttech.table, sector.name= "supplysector", subsector.name="subsector" ){
 	data_new <- subset( data, paste( sector.name, subsector.name, technology ) %in%
@@ -106,21 +63,6 @@ subset_techs <- function( data, inttech.table, sector.name= "supplysector", subs
 	data_new <- subset( data, paste( sector.name, subsector.name, technology ) %!in%
 	            paste( inttech.table$supplysector, inttech.table$subsector, inttech.table$technology ) )
 	return( data_new ) 
-}
-
-# -----------------------------------------------------------------------------
-# set_subsector_shrwt: calculate subsector shareweights in calibration periods, where subsectors may have multiple technologies
-set_subsector_shrwt <- function( data,
-  value.name="calOutputValue", region.name="region", sector.name="supplysector", subsector.name="subsector", year.name="year",
-  result.column.name="subs.share.weight" ){
-	data_aggregated <- aggregate( data[value.name],
-	      by=list( region = data[[region.name]], sector = data[[sector.name]], subsector = data[[subsector.name]], year = data[[year.name]] ),
-	      FUN=sum )
-	data_new <- data
-	data_new[[result.column.name]] <- ifelse( data_aggregated[[value.name]][
-	      match( paste( data_new[[region.name]], data_new[[sector.name]], data_new[[subsector.name]], data_new[[year.name]] ),
-	             paste( data_aggregated$region, data_aggregated$sector, data_aggregated$subsector, data_aggregated$year ) ) ] > 0, 1, 0 )
-	return( data_new ) 	
 }
 
 # -----------------------------------------------------------------------------

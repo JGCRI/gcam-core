@@ -242,7 +242,7 @@ bool Marketplace::createLinkedMarket( const string& regionName, const string& ma
     // we assume the user wanted to link for all period.  Otherwise we must assume this linked policy
     // is simply adding it's region to the market.
     if( isNewMarket ) {
-        vector<Market*> tempVector( scenario->getModeltime()->getmaxper(), 0 );
+        vector<Market*> tempVector( scenario->getModeltime()->getmaxper(), static_cast<Market*>( 0 ) );
         for( unsigned int i = max( aStartPeriod, 0 ); i < tempVector.size(); i++ ){
             tempVector[ i ] = new LinkedMarket( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ? 0
                     : markets[ linkedMarketNumber ][ i ], goodName, marketName, i );

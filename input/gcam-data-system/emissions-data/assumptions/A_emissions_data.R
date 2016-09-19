@@ -46,12 +46,13 @@ gg_to_tg <- 0.001
 kg_to_tg <- 0.000000001
 
 #Significant digits
-digits_emissions <- 7
+digits_emissions <- 10
 digits_CO2coef <- 1
 digits_MACC <- 3
 
 #Base years for emissions data
 emiss_model_base_years <- c( "1975", "1990", "2005" )
+X_emiss_model_base_years <- paste0( "X", emiss_model_base_years )
 hfc_model_base_years <- c( "1975", "1990", "2005", "2010" )
 
 #Years for ssp inputs

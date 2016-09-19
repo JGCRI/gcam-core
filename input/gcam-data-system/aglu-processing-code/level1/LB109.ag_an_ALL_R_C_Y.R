@@ -22,7 +22,7 @@ printlog( "Primary agricultural good and animal product mass balances, by region
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 L101.ag_Food_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_Food_Mt_R_C_Y" )
-L104.ag_Prod_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L104.ag_Prod_Mt_R_C_Y" )
+L103.ag_Prod_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_Y" )
 L105.an_Food_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L105.an_Food_Mt_R_C_Y" )
 L105.an_Prod_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L105.an_Prod_Mt_R_C_Y" )
 L106.ag_NetExp_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L106.ag_NetExp_Mt_R_C_Y" )
@@ -34,19 +34,18 @@ L122.in_Mt_R_C_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L122.in_Mt_R_C_Yh" )
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 printlog( "Part 1: Primary agricultural goods" )
-#Aggregate AEZs in agricultural production
 L109.ag_NetExp_Mt_R_C_Y <- rbind( L106.ag_NetExp_Mt_R_C_Y, L108.ag_NetExp_Mt_R_FodderHerb_Y )
 
 #Name the flows in each table
 ag_Flow_cols <- c( "Prod_Mt", "NetExp_Mt", "Supply_Mt", "Food_Mt", "Feed_Mt", "Biofuels_Mt", "OtherUses_Mt" )
-L104.ag_Prod_Mt_R_C_Y$flow <- "Prod_Mt"
+L103.ag_Prod_Mt_R_C_Y$flow <- "Prod_Mt"
 L109.ag_NetExp_Mt_R_C_Y$flow <- "NetExp_Mt"
 L101.ag_Food_Mt_R_C_Y$flow <- "Food_Mt"
 L108.ag_Feed_Mt_R_C_Y$flow <- "Feed_Mt"
 L122.in_Mt_R_C_Yh$flow <- "Biofuels_Mt"
 
 #Rbind and recast so that the flows are the columns
-L109.ag_ALL_Mt_R_C_Y_prelim <- rbind( L104.ag_Prod_Mt_R_C_Y, L109.ag_NetExp_Mt_R_C_Y, L101.ag_Food_Mt_R_C_Y, L108.ag_Feed_Mt_R_C_Y, L122.in_Mt_R_C_Yh )
+L109.ag_ALL_Mt_R_C_Y_prelim <- rbind( L103.ag_Prod_Mt_R_C_Y, L109.ag_NetExp_Mt_R_C_Y, L101.ag_Food_Mt_R_C_Y, L108.ag_Feed_Mt_R_C_Y, L122.in_Mt_R_C_Yh )
 L109.ag_ALL_Mt_R_C_Y.melt <- melt( L109.ag_ALL_Mt_R_C_Y_prelim, id.vars = c( R_C, "flow" ), variable.name = Y )
 L109.ag_ALL_Mt_R_C_Y <- dcast( L109.ag_ALL_Mt_R_C_Y.melt, GCAM_region_ID + GCAM_commodity + year ~ flow )
 
@@ -55,7 +54,7 @@ L109.ag_ALL_Mt_R_C_Y[ is.na( L109.ag_ALL_Mt_R_C_Y ) ] <- 0
 L109.ag_ALL_Mt_R_C_Y[[Y]] <- as.numeric( sub( "X", "", L109.ag_ALL_Mt_R_C_Y[[Y]] ) )
 
 #For any commodities (e.g. pasture, residue, scavenging) in feed but not in production tables, production = feed
-Feed_commodities <- unique( L108.ag_Feed_Mt_R_C_Y$GCAM_commodity[ !L108.ag_Feed_Mt_R_C_Y$GCAM_commodity %in% L104.ag_Prod_Mt_R_C_Y$GCAM_commodity ] )
+Feed_commodities <- unique( L108.ag_Feed_Mt_R_C_Y$GCAM_commodity[ !L108.ag_Feed_Mt_R_C_Y$GCAM_commodity %in% L103.ag_Prod_Mt_R_C_Y$GCAM_commodity ] )
 L109.ag_ALL_Mt_R_C_Y$Prod_Mt[ L109.ag_ALL_Mt_R_C_Y$GCAM_commodity %in% Feed_commodities ] <-
       L109.ag_ALL_Mt_R_C_Y$Feed_Mt[ L109.ag_ALL_Mt_R_C_Y$GCAM_commodity %in% Feed_commodities ]
 

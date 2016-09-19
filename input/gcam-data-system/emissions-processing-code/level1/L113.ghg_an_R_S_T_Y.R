@@ -78,6 +78,7 @@ L113.emiss_scaler$scaler <- L113.emiss_scaler$EDGAR_emissions / L113.emiss_scale
 #Now, scale EPA emissions
 L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt$scaler <- L113.emiss_scaler$scaler[ match( vecpaste( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt[ c( "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "xyear" )]), vecpaste( L113.emiss_scaler[ c( "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "xyear" )]) ) ]
 L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt$emissions <- L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt$epa_emissions * L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt$scaler
+L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt <- subset( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt, xyear %in% X_EDGAR_historical_years )
 L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt[ is.na( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt ) ] <- 0
 
 #Rename columns
@@ -86,7 +87,8 @@ names( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt )[ names( L113.ghg_tg_R_an_C_Sys_Fd_Yh.
 names( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt )[ names( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt ) == "feed" ] <- "stub.technology"
 
 #Reshape
-L113.ghg_tg_R_an_C_Sys_Fd_Yh <- dcast( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt, GCAM_region_ID + Non.CO2 + supplysector + subsector + stub.technology ~ xyear, value = c( "emissions" ) )
+L113.ghg_tg_R_an_C_Sys_Fd_Yh <- dcast( L113.ghg_tg_R_an_C_Sys_Fd_Yh.melt,
+                                       GCAM_region_ID + Non.CO2 + supplysector + subsector + stub.technology ~ xyear, value.var = "emissions" )
 
 # -----------------------------------------------------------------------------
 # 3. Output

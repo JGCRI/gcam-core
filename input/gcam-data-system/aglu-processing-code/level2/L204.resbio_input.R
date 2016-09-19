@@ -27,45 +27,38 @@ sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_AgSupplySector <- readdata( "AGLU_ASSUMPTIONS", "A_agSupplySector" )
-A_biocrops_R_AEZ <- readdata( "AGLU_ASSUMPTIONS", "A_biocrops_R_AEZ" )
 A_demand_technology <- readdata( "AGLU_ASSUMPTIONS", "A_demand_technology" )
 A_resbio_curves <- readdata( "AGLU_ASSUMPTIONS", "A_resbio_curves" )
 A_bio_frac_prod_R <- readdata( "AGLU_ASSUMPTIONS", "A_bio_frac_prod_R" )
 L111.ag_resbio_R_C <- readdata( "AGLU_LEVEL1_DATA", "L111.ag_resbio_R_C" )
-L123.For_Prod_bm3_R_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Prod_bm3_R_Y_AEZ" )
-L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
+L103.ag_Prod_Mt_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_Y_GLU" )
+L123.For_Prod_bm3_R_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Prod_bm3_R_Y_GLU" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
-printlog( "Building base tables of combinations of regions / sectors / technologies" )
 #Add region names to bio frac table
 A_bio_frac_prod_R <- add_region_name( A_bio_frac_prod_R )
 
 #FORESTRY
-#Melt forest production table to get Forest name by region and AEZ
-L204.For_Prod_bm3_R_Y_AEZ.melt <- melt( L123.For_Prod_bm3_R_Y_AEZ, id.vars = R_C_AEZ, variable.name = "year" )
-L204.For_Prod_bm3_R_Y_AEZ.melt$year <- sub( "X", "", L204.For_Prod_bm3_R_Y_AEZ.melt$year )
-L204.For_Prod_bm3_R_Y_AEZ.melt<- add_region_name( L204.For_Prod_bm3_R_Y_AEZ.melt )
-L204.For_Prod_bm3_R_AEZ.melt <- subset( L204.For_Prod_bm3_R_Y_AEZ.melt, year == max( year ) )
-L204.R_For_tech <- data.frame(
-      region = L204.For_Prod_bm3_R_AEZ.melt[[reg]],
-      AgSupplySector = L204.For_Prod_bm3_R_AEZ.melt[[C]],
-      AgSupplySubsector = paste( L204.For_Prod_bm3_R_AEZ.melt[[C]], L204.For_Prod_bm3_R_AEZ.melt[[AEZ]], sep = AEZ_delimiter ),
-      AgProductionTechnology = paste( L204.For_Prod_bm3_R_AEZ.melt[[C]], L204.For_Prod_bm3_R_AEZ.melt[[AEZ]], sep = AEZ_delimiter ) )
+#Melt forest production table to get Forest name by region and GLU
+L204.R_C_GLU_For <- add_region_name( L123.For_Prod_bm3_R_Y_GLU[ R_C_GLU ] )
+L204.R_C_GLU_For[[agsupp]] <- L204.R_C_GLU_For[[C]]
+L204.R_C_GLU_For[[agsubs]] <- paste( L204.R_C_GLU_For[[C]], L204.R_C_GLU_For[[GLU]], sep = crop_GLU_delimiter )
+L204.R_C_GLU_For[[agtech]] <- L204.R_C_GLU_For[[agsubs]]
 
 printlog( "L204.AgResBio_For: Forest residue biomass parameters" )
-L204.AgResBio_For <- repeat_and_add_vector( L204.R_For_tech, Y, c( model_base_years, model_future_years ) )
+L204.AgResBio_For <- repeat_and_add_vector( L204.R_C_GLU_For, Y, model_years )
 L204.AgResBio_For$residue.biomass.production <- "biomass"
 L204.AgResBio_For$mass.conversion <- AvgWoodDensity_kgm3
 L204.AgResBio_For$harvest.index <- ForestHarvestIndex
 L204.AgResBio_For$eros.ctrl <- ForestErosCtrl_kgm2
 L204.AgResBio_For$mass.to.energy <- WoodEnergyContent_GJkg
 L204.AgResBio_For$water.content <- WoodWaterContent
+L204.AgResBio_For <- L204.AgResBio_For[ names_AgResBio ]
 
 printlog( "L204.AgResBioCurve_For: Forest residue biomass supply curves" )
-L204.R_For_tech_year <- repeat_and_add_vector( L204.R_For_tech, "year", c( model_base_years, model_future_years ) )
-L204.R_For_tech_year$residue.biomass.production <- "biomass"
-L204.AgResBioCurve_For <- repeat_and_add_vector( L204.R_For_tech_year, "price", unique (A_resbio_curves$price) )
+L204.AgResBioCurve_For <- repeat_and_add_vector( L204.AgResBio_For[ c( names_AgTechYr, "residue.biomass.production" ) ],
+                                                 "price", unique (A_resbio_curves$price) )
 L204.AgResBioCurve_For$fract.harvested <- A_resbio_curves$For[ match( L204.AgResBioCurve_For$price, A_resbio_curves$price ) ]
 
 #In base years, replace the "fraction produced" at specified prices in order to calibrate resbio production
@@ -79,13 +72,11 @@ L204.AgResBioCurve_For$fract.harvested[
 L204.Mill_tech <- A_demand_technology[ A_demand_technology$supplysector == "NonFoodDemand_Forest", c( supp, subs, tech ) ]
 L204.Mill_tech[ c( "sector.name", "subsector.name" ) ] <- L204.Mill_tech[ c( "supplysector", "subsector" ) ]
 L204.Mill_globaltech <- L204.Mill_tech[ c( "sector.name", "subsector.name", "technology" ) ]
-L204.R_Mill_tech <- data.frame(
-      region = GCAM_region_names$region,
-      L204.Mill_tech[ rep( 1:nrow( L204.Mill_tech ), times = length( GCAM_region_names$region ) ), ] )
-L204.R_Mill_tech <- L204.R_Mill_tech[ !names( L204.R_Mill_tech ) %in% c( "sector.name", "subsector.name" ) ]
+L204.R_Mill_tech <- write_to_all_regions( L204.Mill_tech, names = c( reg, supp, subs, tech) )
+L204.R_Mill_tech <- subset( L204.R_Mill_tech, !region %in% no_aglu_regions )
 
 printlog( "L204.GlobalResBio_Mill: Mill residue biomass parameters" )
-L204.GlobalResBio_Mill <- repeat_and_add_vector( L204.Mill_globaltech, Y, c( model_base_years, model_future_years ) )
+L204.GlobalResBio_Mill <- repeat_and_add_vector( L204.Mill_globaltech, Y, model_years )
 L204.GlobalResBio_Mill$residue.biomass.production <- "biomass"
 L204.GlobalResBio_Mill$mass.conversion <- AvgWoodDensity_kgm3
 L204.GlobalResBio_Mill$harvest.index <- ForestHarvestIndex
@@ -94,7 +85,7 @@ L204.GlobalResBio_Mill$mass.to.energy <- WoodEnergyContent_GJkg
 L204.GlobalResBio_Mill$water.content <- WoodWaterContent
 
 printlog( "L204.StubResBioCurve_Mill: Mill residue biomass supply curves" )
-L204.R_Mill_tech_year <- repeat_and_add_vector( L204.R_Mill_tech, "year", c( model_base_years, model_future_years ) )
+L204.R_Mill_tech_year <- repeat_and_add_vector( L204.R_Mill_tech, Y, model_years )
 L204.R_Mill_tech_year$residue.biomass.production <- "biomass"
 L204.StubResBioCurve_Mill <- repeat_and_add_vector( L204.R_Mill_tech_year, "price", unique( A_resbio_curves$price) )
 L204.StubResBioCurve_Mill$fract.harvested <- A_resbio_curves$For[ match( L204.StubResBioCurve_Mill$price, A_resbio_curves$price ) ]
@@ -109,70 +100,25 @@ L204.StubResBioCurve_Mill$fract.harvested[
 
 #AGRICULTURE
 L204.ag_resbio_R_C <- add_region_name( L111.ag_resbio_R_C )
-L204.R_Ag_supplysector <- data.frame(
-      region = rep( GCAM_region_names$region, times = length( unique( L111.ag_resbio_R_C$GCAM_commodity ) ) ),
-      AgSupplySector = sort( rep( unique( L111.ag_resbio_R_C$GCAM_commodity ), times = length( GCAM_region_names$region ) ) ) )
-L204.R_Ag_technology <- repeat_and_add_vector( L204.R_Ag_supplysector, AEZ, AEZs )
-L204.R_Ag_technology$AgSupplySubsector = paste( L204.R_Ag_technology$AgSupplySector, L204.R_Ag_technology$AEZ, sep = AEZ_delimiter )
-L204.R_Ag_technology$AgProductionTechnology <- L204.R_Ag_technology$AgSupplySubsector
-L204.R_Ag_technology <- L204.R_Ag_technology[ names( L204.R_Ag_technology ) != "AEZ" ]
-L204.R_Ag_technology_year <- repeat_and_add_vector( L204.R_Ag_technology, "year", c( model_base_years, model_future_years ) )
-L204.R_Ag_technology_year$residue.biomass.production <- "biomass"
+L204.ag_R_C_GLU <- add_region_name( L103.ag_Prod_Mt_R_C_Y_GLU[ R_C_GLU ] )
 
 printlog( "L204.AgResBio_ag: Agricultural residue biomass parameters" )
-L204.AgResBio_ag <- L204.R_Ag_technology_year
+L204.AgResBio_ag <- merge( L204.ag_R_C_GLU, L204.ag_resbio_R_C )
+L204.AgResBio_ag[[agsupp]] <- L204.AgResBio_ag[[C]]
+L204.AgResBio_ag[[agsubs]] <- paste( L204.AgResBio_ag[[C]], L204.AgResBio_ag[[GLU]], sep = crop_GLU_delimiter )
+L204.AgResBio_ag[[agtech]] <- L204.AgResBio_ag[[agsubs]]
+L204.AgResBio_ag <- repeat_and_add_vector( L204.AgResBio_ag, Y, model_years )
+L204.AgResBio_ag$residue.biomass.production <- "biomass"
 L204.AgResBio_ag$mass.conversion <- 1
-L204.AgResBio_ag$harvest.index <- round( L204.ag_resbio_R_C$HarvestIndex[
-      match( vecpaste( L204.AgResBio_ag[ c( reg, agsupp ) ] ), vecpaste( L204.ag_resbio_R_C[ c( reg, C ) ] ) ) ],
-      digits_harvest_index )
-L204.AgResBio_ag$eros.ctrl <- round( L204.ag_resbio_R_C$ErosCtrl_tHa[
-      match( vecpaste( L204.AgResBio_ag[ c( reg, agsupp ) ] ), vecpaste( L204.ag_resbio_R_C[ c( reg, C ) ] ) ) ] * conv_tha_kgm2,
-      digits_eros_ctrl )
-L204.AgResBio_ag$mass.to.energy <- round( L204.ag_resbio_R_C$ResEnergy_GJt[
-      match( vecpaste( L204.AgResBio_ag[ c( reg, agsupp ) ] ), vecpaste( L204.ag_resbio_R_C[ c( reg, C ) ] ) ) ] * conv_kg_t,
-      digits_res_energy )
-L204.AgResBio_ag$water.content <- round( L204.ag_resbio_R_C$WaterContent[
-      match( vecpaste( L204.AgResBio_ag[ c( reg, agsupp ) ] ), vecpaste( L204.ag_resbio_R_C[ c( reg, C ) ] ) ) ],
-      digits_water_content )
-
-#Calcs return missing values where crops x regions do not exist. Drop these
-L204.AgResBio_ag <- na.omit( L204.AgResBio_ag )
+L204.AgResBio_ag$harvest.index <- round( L204.AgResBio_ag$HarvestIndex, digits_harvest_index )
+L204.AgResBio_ag$eros.ctrl <- round( L204.AgResBio_ag$ErosCtrl_tHa * conv_tha_kgm2, digits_eros_ctrl )
+L204.AgResBio_ag$mass.to.energy <- round( L204.AgResBio_ag$ResEnergy_GJt * conv_kg_t, digits_res_energy )
+L204.AgResBio_ag$water.content <- round( L204.AgResBio_ag$WaterContent * conv_kg_t, digits_water_content )
+L204.AgResBio_ag <- L204.AgResBio_ag[ names_AgResBio ]
 
 printlog( "L204.AgResBioCurve_ag: Agricultural residue biomass supply curves" )
 L204.AgResBioCurve_ag <- repeat_and_add_vector( L204.AgResBio_ag[ c( names_AgTechYr, "residue.biomass.production" ) ], "price", unique (A_resbio_curves$price) )
 L204.AgResBioCurve_ag$fract.harvested <- A_resbio_curves$ag[ match( L204.AgResBioCurve_ag$price, A_resbio_curves$price ) ]
-
-#JATROPHA
-printlog( "L204.Jatr_R_Y_AEZ: Jatropha residue biomass parameters" )
-L204.A_biocrops_R_AEZ <- A_biocrops_R_AEZ
-L204.A_biocrops_R_AEZ$crop <- substr( A_biocrops_R_AEZ$AgSupplySubsector,
-      1,
-      nchar( as.character( A_biocrops_R_AEZ$AgSupplySubsector ) ) - 5 )
-
-#Build base table for jatropha res bio input tables
-L204.Jatr_R_AEZ <- L204.A_biocrops_R_AEZ[ L204.A_biocrops_R_AEZ$crop == "Jatropha", c( reg, agsupp, agsubs, agtech ) ]
-L204.Jatr_R_Y_AEZ <- repeat_and_add_vector( L204.Jatr_R_AEZ, Y, c( model_base_years, model_future_years ) )
-L204.Jatr_R_Y_AEZ$residue.biomass.production <- "biomass"
-
-L204.AgResBio_Jatr <- L204.Jatr_R_Y_AEZ
-L204.AgResBio_Jatr$mass.conversion <- 1
-L204.AgResBio_Jatr$harvest.index <- JatrophaHarvestIndex
-L204.AgResBio_Jatr$eros.ctrl <- JatrophaErosCtrl_kgm2
-L204.AgResBio_Jatr$mass.to.energy <- JatrophaMassEnergy
-L204.AgResBio_Jatr$water.content <- JatrophaWaterContent
-
-printlog( "L204.AgResBioCurve_Jatr: Agricultural residue biomass supply curves" )
-L204.AgResBioCurve_Jatr <- repeat_and_add_vector( L204.Jatr_R_Y_AEZ, "price", unique( A_resbio_curves$price) )
-L204.AgResBioCurve_Jatr$fract.harvested <- A_resbio_curves$Jatr[ match( L204.AgResBioCurve_Jatr$price, A_resbio_curves$price ) ]
-
-printlog( "Removing non-existent region x AEZs from all tables" )
-L204.StubResBioCurve_Mill <- subset( L204.StubResBioCurve_Mill, !region %in% no_aglu_regions )
-L204.AgResBio_For <- remove_AEZ_nonexist( L204.AgResBio_For )
-L204.AgResBioCurve_For <- remove_AEZ_nonexist( L204.AgResBioCurve_For )
-L204.AgResBio_ag <- remove_AEZ_nonexist( L204.AgResBio_ag )
-L204.AgResBioCurve_ag <- remove_AEZ_nonexist( L204.AgResBioCurve_ag )
-L204.AgResBio_Jatr <- remove_AEZ_nonexist( L204.AgResBio_Jatr )
-L204.AgResBioCurve_Jatr <- remove_AEZ_nonexist( L204.AgResBioCurve_Jatr )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -181,11 +127,9 @@ write_mi_data( L204.AgResBio_For, IDstring="AgResBio", domain="AGLU_LEVEL2_DATA"
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_resbio_input.xml" )
 write_mi_data( L204.GlobalResBio_Mill, "GlobalResBio", "AGLU_LEVEL2_DATA", "L204.GlobalResBio_Mill", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.AgResBio_ag, "AgResBio", "AGLU_LEVEL2_DATA", "L204.AgResBio_ag", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
-write_mi_data( L204.AgResBio_Jatr, "AgResBio", "AGLU_LEVEL2_DATA", "L204.AgResBio_Jatr", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.AgResBioCurve_For, "AgResBioCurve", "AGLU_LEVEL2_DATA", "L204.AgResBioCurve_For", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.StubResBioCurve_Mill, "StubResBioCurve", "AGLU_LEVEL2_DATA", "L204.StubResBioCurve_Mill", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 write_mi_data( L204.AgResBioCurve_ag, "AgResBioCurve", "AGLU_LEVEL2_DATA", "L204.AgResBioCurve_ag", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
-write_mi_data( L204.AgResBioCurve_Jatr, "AgResBioCurve", "AGLU_LEVEL2_DATA", "L204.AgResBioCurve_Jatr", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_resbio_input.xml", "AGLU_XML_FINAL", "resbio_input.xml", "", xml_tag="outFile" )
 

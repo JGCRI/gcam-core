@@ -13,7 +13,7 @@ if( !exists( "WATERPROC_DIR" ) ){
 source(paste(WATERPROC_DIR,"/../_common/headers/GCAM_header.R",sep=""))
 source(paste(WATERPROC_DIR,"/../_common/headers/WATER_header.R",sep=""))
 logstart( "L203.water.mapping.R" )
-printlog( "Genereate water mapping sector input files to group demands by sectors and potentially apply losses" )
+printlog( "Generate water mapping sector input files to group demands by sectors and potentially apply losses" )
 
 # -----------------------------------------------------------------------------
 
@@ -25,7 +25,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "WATER_ASSUMPTIONS", "A_water_data", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
-L125.R_AEZ_nonexist <- readdata( "AGLU_LEVEL1_DATA", "L125.R_AEZ_nonexist" )
+L125.LC_bm2_R_GLU <- readdata("AGLU_LEVEL1_DATA", "L125.LC_bm2_R_GLU")
 L165.ag_IrrEff_R <- readdata("AGLU_LEVEL1_DATA", "L165.ag_IrrEff_R")
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A03.sector <- readdata( "WATER_ASSUMPTIONS", "A03.sector" )
@@ -34,34 +34,26 @@ A03.sector <- readdata( "WATER_ASSUMPTIONS", "A03.sector" )
 
 #2. Build tables
 # Make a table with all of the possible mapping sectors with shares
-L203.mapping_nonirr <- A03.sector[ A03.sector[[water_sector]] %in% nonirr_water_sectors, ]
-L203.mapping_nonirr[[AEZ]] <- NA
-L203.mapping_irr <- A03.sector[ A03.sector[[water_sector]] %in% irr_water_sector, ]
-L203.mapping_irr.orig_size <- nrow( L203.mapping_irr )
-L203.mapping_irr <- L203.mapping_irr[ rep( 1:L203.mapping_irr.orig_size, times=length( AEZs ) ), ]
-# use just AEZ numbers to avoid pasting AEZAEZ in get_water_inputs_for_mapping
-L203.mapping_irr[[AEZ]] <- sort( rep( 1:length( AEZs ), times=L203.mapping_irr.orig_size ) )
+L125.R_GLU <- L125.LC_bm2_R_GLU[ R_GLU ]
+L203.mapping_irr <- merge( L125.R_GLU, A03.sector[ A03.sector[[water_sector]] %in% irr_water_sector, ] )
+L203.mapping_irr <- add_region_name( L203.mapping_irr )
+
+#For getting water inputs, the GLU name needs to be just the number
+L203.mapping_irr[[GLU]] <- as.numeric( sub( "GLU", "", L203.mapping_irr[[GLU]] ) )
+
+L203.mapping_nonirr <- merge( GCAM_region_names, A03.sector[ A03.sector[[water_sector]] %in% nonirr_water_sectors, ] )
+L203.mapping_nonirr[[GLU]] <- NA
 L203.mapping_all <- rbind( L203.mapping_nonirr, L203.mapping_irr )
+L203.mapping_all <- repeat_and_add_vector( L203.mapping_all, water_type, c( water_C, water_W ) )
 L203.mapping_all$coefficient <- 1
-L203.mapping_all[[water_type]] <- water_C
-L203.mapping_all.W <- L203.mapping_all
-L203.mapping_all.W[[water_type]] <- water_W
-L203.mapping_all <- rbind( L203.mapping_all, L203.mapping_all.W )
 L203.mapping_all[[supp]] <- get_water_inputs_for_mapping( L203.mapping_all, A03.sector )
-L203.mapping_all <- merge( L203.mapping_all, GCAM_region_names )
-L203.mapping_all$logit.year.fillout <- model_years[1]
-L203.mapping_all[[subs]] <- L203.mapping_all[[supp]]
-L203.mapping_all[[tech]] <- L203.mapping_all[[supp]]
-# remove non-existant region + AEZ combos
-L203.R_AEZ_nonexist <- paste( L125.R_AEZ_nonexist[[R]], gsub( "AEZ0?", "", L125.R_AEZ_nonexist[[AEZ]] ) )
-L203.mapping_all <- L203.mapping_all[
-    paste( L203.mapping_all[[R]], L203.mapping_all[[AEZ]] ) %!in%
-    L203.R_AEZ_nonexist, ]
+L203.mapping_all[c( subs, tech ) ] <- L203.mapping_all[ supp ]
+L203.mapping_all$logit.year.fillout <- min( model_base_years )
 L203.mapping_all <- L203.mapping_all[ order( L203.mapping_all[[R]] ), ]
+
 # map in converyance losses for irrigation water withdrawals
 # The loss is given as an efficiency, we will read it into the model as coefficient
 L203.mapping_all[ L203.mapping_all[[water_sector]] == irr_water_sector & L203.mapping_all[[water_type]] == water_W, "coefficient" ] <- 1.0 /
-
     L165.ag_IrrEff_R[ match(
         L203.mapping_all[ L203.mapping_all[[water_sector]] == irr_water_sector & L203.mapping_all[[water_type]] == water_W, R ],
         L165.ag_IrrEff_R[[R]] ), "conveyance.eff" ]

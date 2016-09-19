@@ -6,6 +6,7 @@ FAO_historical_years <- 1961:2011
 X_FAO_historical_years <- paste( "X", FAO_historical_years, sep = "" )
 
 land_history_years <- c( 1700, 1750, 1800, 1850, 1900, 1950, 1975 )
+X_land_history_years <- paste( "X", land_history_years, sep = "" )
 
 land_cover_years <- sort( unique(  c( land_history_years, AGLU_historical_years ) ) )
 X_land_cover_years <- paste( "X", land_cover_years, sep = "" )
@@ -42,32 +43,29 @@ X_final_cost_year <- X_model_cost_years[ length( X_model_cost_years ) ]
 base_year_IFA <- 2006
 X_base_year_IFA <- paste0( "X", base_year_IFA )
 
-#---------------------------------------------------------------------------------
-#AEZs
-AEZs <- c( paste( "AEZ0", 1:9, sep="" ), paste( "AEZ", 10:18, sep="" ) )
-
 #-----------------------------------------------------
 # Identifier columns
 LT <- "Land_Type"
-AEZ <- "AEZ"
+GLU <- "GLU"
 C <- "GCAM_commodity"
 Sys <- "system"
 Fd <- "feed"
 
 R_LT <- c( R, LT )
 R_LT_Y <- c( R, LT, Y ) 
-R_LT_AEZ <- c( R, LT, AEZ ) 
-R_AEZ <- c( R, AEZ ) 
-R_LT_Y_AEZ <- c( R, LT, Y, AEZ )
+R_LT_GLU <- c( R, LT, GLU ) 
+R_GLU <- c( R, GLU ) 
+R_Y_GLU <- c( R, Y, GLU ) 
+R_LT_Y_GLU <- c( R, LT, Y, GLU )
 
 # Identifier columns for datasets with commodities
 R_C <- c( R, C )
-R_C_AEZ <- c( R, C, AEZ )
+R_C_GLU <- c( R, C, GLU )
 R_C_Y <- c( R, C, Y ) 
-R_C_Y_AEZ <- c( R_C_Y, AEZ )
-R_C_Y_AEZ <- c( R, C, Y, AEZ ) 
+R_C_Y_GLU <- c( R_C_Y, GLU )
+R_C_Y_GLU <- c( R, C, Y, GLU ) 
 C_Y <- c( C, Y ) 
-C_AEZ <- c( C, AEZ )
+C_GLU <- c( C, GLU )
 R_C_Sys <- c( R, C, Sys )
 R_C_Sys_Fd <- c( R, C, Sys, Fd )
 R_C_Sys_Fd_Y <- c( R, C, Sys, Fd, Y )
@@ -75,15 +73,16 @@ C_Sys <- c( C, Sys )
 C_Sys_Fd <- c( C, Sys, Fd )
 R_Fd <- c( R, Fd )
 rcp_gcm_cm <- c( "rcp", "gcm", "cropmodel" )
-rcp_gcm_cm_aezid <- c( rcp_gcm_cm, "ID" )
-rcp_gcm_cm_aezid_irr <- c( rcp_gcm_cm, "ID", "irr" )
-rcp_gcm_cm_aezid_crop <- c( rcp_gcm_cm, "ID", "crop" )
-rcp_gcm_cm_aezid_crop_irr <- c( rcp_gcm_cm, "ID", "crop", "irr" )
+rcp_gcm_cm_id <- c( rcp_gcm_cm, "ID" )
+rcp_gcm_cm_id_irr <- c( rcp_gcm_cm, "ID", "irr" )
+rcp_gcm_cm_id_crop <- c( rcp_gcm_cm, "ID", "crop" )
+rcp_gcm_cm_id_crop_irr <- c( rcp_gcm_cm, "ID", "crop", "irr" )
 irr <- "Irr_Rfd"
 R_C_irr <- c( R_C, irr )
 R_C_Y_irr <- c( R_C_Y, irr )
-R_C_AEZ_irr <- c( R_C_AEZ, irr )
-R_AEZ_irr <- c( R, AEZ, irr )
+R_C_Y_GLU_irr <- c( R_C_Y_GLU, irr )
+R_C_GLU_irr <- c( R_C_GLU, irr )
+R_GLU_irr <- c( R, GLU, irr )
 
 #-----------------------------------------------------------------
 #NUMBERS OF DIGITS FOR MODEL INPUT DATA
@@ -115,9 +114,6 @@ digits_MAC <- 4 #portion of abatement at specified cost
 # Fraction of land to protect
 protect_land_fract <- 0.9
 
-# Threshold for regional production fractions in "small AEZs" whose production can be adjusted
-small_AEZ_prodfrac <- 0.015
-
 #Maximum Feed input-output coefs (for non-existent technologies)
 max_FeedIO <- 100
 
@@ -125,18 +121,19 @@ max_FeedIO <- 100
 min_HA_to_Cropland <- 1
 max_HA_to_Cropland <- 3
 
-# Maximum portion of any AEZs pastures that can be in production
-max_MgdPast_frac <- 0.85
+# Maximum portion of any land use region's pastures that can be in production
+max_MgdPast_frac <- 0.95
 max_MgdFor_frac <- 1
 
-# Average density of wood, in kg C per m3
-AvgWoodDensity_kgCm3 <- 288 # ASMP: 
-# In kg per m3
-# TODO: This should be consistent with carbon content above
-AvgWoodDensity_kgm3 <- 500
+# Average density of wood
+AvgWoodDensity_kgm3 <- 500 # In kg per m3
+AvgWoodDensity_kgCm3 <- 250 # In kg C per m3
 
 # Energy content of biomass
 bio_GJt <- 17.5
+
+#Maximum bioenergy (switchgrass) yield allowable, in tonnes per hectare
+Max_bio_yield_tha <- 20
 
 # Other parameters for wood residue biomass
 WoodEnergyContent_GJkg <- 0.0189
@@ -145,16 +142,10 @@ ForestHarvestIndex <- 0.8
 ForestErosCtrl_kgm2 <- 0.2
 ForestRootShoot <- 0.2485
 
-#Jatropha residue biomass characteristics
-JatrophaHarvestIndex <- 0.5
-JatrophaErosCtrl_kgm2 <- 0
-JatrophaMassEnergy <- 2.2
-JatrophaWaterContent <- 0.1
-
 #Price at which base year bio frac produced is used
 Price_bio_frac <- 1.2
 
-# Tolerance threshold on inter-annual changes in land cover for any region/AEZ
+# Tolerance threshold on inter-annual changes in land cover for any land use region
 LandTolerance <- 0.001
 
 # Meat price elasticity in the USA
@@ -165,30 +156,6 @@ default_IncElas <- 0
 
 #Price conversion from alfalfa to grass hay
 priceratio_grass_alfalfa <- 0.7
-
-# Biomass yield multiplier to convert from EPIC switchgrass yields to recent literature switchgrass yields
-bio_yield_mult <- 2.02
-
-# AEZ for indexing of bioenergy yields
-Index_AEZ <- "AEZ12"
-
-# AEZ classes
-AEZs_trop <- c( paste( "AEZ0", 1:6, sep="" ) ) 
-AEZs_temp <- c( paste( "AEZ0", 7:9, sep="" ), paste( "AEZ", 10:12, sep="" ) )
-AEZs_pol <- c( paste( "AEZ", 13:18, sep="" ) )
-
-# Dry AEZs that get a different bioenergy base yield
-AEZs_arid <- c( paste( "AEZ0", 1:2, sep="" ), paste( "AEZ0", 7:8, sep="" ), paste( "AEZ", 13:14, sep="" ) )
-
-# Dry AEZs that get a different logit exponent on pasture / non-pasture
-AEZs_most_arid <- c( paste( "AEZ0", c( 1, 7 ), sep="" ), paste( "AEZ", 13, sep="" ) )
-
-#AEZs where bioenergy is costed out
-AEZs_hi_bio_cost <- c( paste( "AEZ0", 1, sep="" ), paste( "AEZ0", 7, sep="" ), paste( "AEZ", 13:18, sep="" ) )
-
-# Specify crops on which to base region- and AEZ-based adjustments to EPIC switchgrass yields
-firstgenbio_crops <- c( "Corn", "OilCrop", "PalmFruit", "SugarCrop" )
-cellulosic_crops <- c( "Wheat", "OtherGrain" )
 
 #Maximum biomass yield improvement rates, reference and advanced
 bio_maxYieldRate_ref <- 0.005
@@ -201,14 +168,9 @@ min.soil.carbon.density <- 0
 # Minimum non-input costs of animal production technologies, in $/kg
 min_an_noninput_cost <- 0.05
 
-#Cost index crop, for crops with no cost data
-Cost_index_crop <- "Corn"
-
 #Forestry cost (1975$/GJ)
 cost_For_75USDm3 <- 29.59
-
-#Palm fruit cost (no FAO data for USA, and Indonesia estimates are incorrect)
-cost_OilPalmFruit_05USDt <- 105
+cost_Past_75USDkg <- 0
 
 #Start year for purpose-grown biomass
 Bio_start_year <- 2020
@@ -225,29 +187,48 @@ Ccontent_cellulose <- 0.45
 #Conversion from peak biomass to average biomass integrated over the course of the year
 Cconv_peak_avg <- 0.5
 
-#Fertilizer application rate for biomass
-swgr_Fert_IO_gNm2 <- 5.6
-swgr_Yield_kgCm2 <- 0.34
-popl_Fert_IO_gNm2 <- 3.36
-popl_Yield_kgCm2 <- 0.345
+#Biomass names
+bio_grass_name <- "biomass_grass"
+bio_tree_name <- "biomass_tree"
+
+#Production costs of biomass (from Patrick Luckow's work)
+bio_grass_Cost_75USD_GJ <- 0.75
+bio_tree_Cost_75USD_GJ <- 0.67
+
+#Fertilizer application rate for biomass, and carbon yields. Values from Adler et al. 2007
+bio_grass_Fert_IO_gNm2 <- 5.6
+bio_grass_Yield_kgCm2 <- 0.34
+bio_tree_Fert_IO_gNm2 <- 3.36
+bio_tree_Yield_kgCm2 <- 0.345
 
 #Water characteristics
 Irr_Cons_name <- "water consumption"
 Irr_W_name <- "water withdrawals"
 Bio_Cons_name <- "biophysical water consumption"
-swgr_Bio_IO_km3EJ <- 25  # From Vaibhav's paper
-misc_Bio_IO_km3EJ <- 20
-Jat_Bio_IO_km3EJ <- 240  # Roughly double the coefficient of soybeans
-wdy_Bio_IO_km3EJ <- 25
+bio_grass_Water_IO_km3EJ <- 25  # From Vaibhav's paper
+bio_tree_Water_IO_km3EJ <- 25
 
-#Woody bioenergy crop names
-woody_biocrops <- c( "eucalyptus", "willow" )
-
-AEZ_delimiter <- ""       #delimiter between the appended sector name and AEZ name
+GLU_ndigits <- 3    #number of digits in the geographic land unit identifier codes
+GLU_name_delimiter <- ""       # delimiter between the GLU name and number
+crop_GLU_delimiter <- "_"       # delimiter between the crop name and GLU name
+LT_GLU_delimiter <- crop_GLU_delimiter       # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
+irr_delimiter <- "_"       # delimiter between the appended crop x GLU and irrigation level
 
 #Multipliers for high & low ag prod growth scenarios
 hi_ag_prod_growth_mult <- 1.5
 low_ag_prod_growth_mult <- 0.5
+
+#Ghost share on land uses
+irrig_ghost_share_mult <- 0.25
+ghost_share_node <- 0.15
+ghost_share_bio <- 0.5
+ghost_share_tree <- 0.05
+
+#Fraction of food that should be produced locally
+local_food_fract <- 0.8
+
+#set a minimum allowable profit margin (in percent terms)
+min_profit_margin <- 0.15
 
 #SSP diet parameters
 max.mult.ssp1 <- 1.2
@@ -259,15 +240,4 @@ max.mult.ssp5 <- 1.3
 #GDP per capita thressholds for SSP4 region groupings
 hi_growth_pcgdp <- 12.275
 lo_growth_pcgdp <- 2.75
-#Ghost share on land uses
-irrig_ghost_share_mult <- 0.25
-ghost_share_node <- 0.25
-ghost_share_bio <- 0.5
-ghost_share_tree <- 0.05
-
-#Adder for calibration prices to get model to solve
-calPriceAdder <- 0.03
-
-#Fraction of food that should be produced locally
-local_food_fract <- 0.8
 

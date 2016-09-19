@@ -38,12 +38,15 @@ L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thou
 # 2. Perform computations
 printlog( "Building historical time series of per-capita caloric demands" )
 #Historical time series of ag and animal product consumption
-L134.ag_Food_Pcal_R_Y <- aggregate( L101.ag_Food_Pcal_R_C_Y[ X_AGLU_historical_years ], by=as.list( L101.ag_Food_Pcal_R_C_Y[ R ] ), sum )
+L134.ag_Food_Pcal_R_Y <- aggregate( L101.ag_Food_Pcal_R_C_Y[ X_AGLU_historical_years ],
+                                    by = L101.ag_Food_Pcal_R_C_Y[ R ], sum )
 L134.ag_Food_Pcal_R_Y$GCAM_demand <- "crops"
-L134.an_Food_Pcal_R_Y <- aggregate( L105.an_Food_Pcal_R_C_Y[ X_AGLU_historical_years ], by=as.list( L105.an_Food_Pcal_R_C_Y[ R ] ), sum )
+L134.an_Food_Pcal_R_Y <- aggregate( L105.an_Food_Pcal_R_C_Y[ X_AGLU_historical_years ],
+                                    by = L105.an_Food_Pcal_R_C_Y[ R ], sum )
 L134.an_Food_Pcal_R_Y$GCAM_demand <- "meat"
-L134.Food_Pcal_R_Dmnd_Y <- rbind( L134.ag_Food_Pcal_R_Y[ c( R, "GCAM_demand", X_AGLU_historical_years ) ],
-      L134.an_Food_Pcal_R_Y[ c( R, "GCAM_demand", X_AGLU_historical_years ) ] )
+L134.Food_Pcal_R_Dmnd_Y <- rbind(
+  L134.ag_Food_Pcal_R_Y[ c( R, "GCAM_demand", X_AGLU_historical_years ) ],
+  L134.an_Food_Pcal_R_Y[ c( R, "GCAM_demand", X_AGLU_historical_years ) ] )
 
 #Divide by population to calculate the historical per-capita food demands, in kcal per person per day
 L134.pcFood_kcald_R_Dmnd_Y <- L134.Food_Pcal_R_Dmnd_Y
@@ -53,13 +56,17 @@ L134.pcFood_kcald_R_Dmnd_Y[ X_AGLU_historical_years ] <- L134.Food_Pcal_R_Dmnd_Y
          X_AGLU_historical_years ]
 
 #Extrapolate this to the future periods based on the FAO projections
-L134.FAO_ag_Food_t <- aggregate( L100.FAO_ag_Food_t[ X_final_historical_year ], by=as.list( L100.FAO_ag_Food_t[ "iso" ] ), sum )
+L134.FAO_ag_Food_t <- aggregate( L100.FAO_ag_Food_t[ X_final_historical_year ],
+                                 by = L100.FAO_ag_Food_t[ "iso" ], sum )
 L134.FAO_ag_Food_t$GCAM_demand <- "crops"
-L134.FAO_an_Food_t <- aggregate( L100.FAO_an_Food_t[ X_final_historical_year ], by=as.list( L100.FAO_an_Food_t[ "iso" ] ), sum )
+L134.FAO_an_Food_t <- aggregate( L100.FAO_an_Food_t[ X_final_historical_year ],
+                                 by = L100.FAO_an_Food_t[ "iso" ], sum )
 L134.FAO_an_Food_t$GCAM_demand <- "meat"
-L134.Food_t_ctry_Dmnd_Y <- rbind( L134.FAO_ag_Food_t[ c( "iso", "GCAM_demand", X_final_historical_year ) ],
-      L134.FAO_an_Food_t[ c( "iso", "GCAM_demand", X_final_historical_year ) ] )
-L134.Food_t_ctry_Dmnd_Y$FAO2050_reg <- AGLU_ctry$FAO2050_reg[ match( L134.Food_t_ctry_Dmnd_Y$iso, AGLU_ctry$iso ) ]
+L134.Food_t_ctry_Dmnd_Y <- rbind(
+  L134.FAO_ag_Food_t[ c( "iso", "GCAM_demand", X_final_historical_year ) ],
+  L134.FAO_an_Food_t[ c( "iso", "GCAM_demand", X_final_historical_year ) ] )
+L134.Food_t_ctry_Dmnd_Y$FAO2050_reg <- AGLU_ctry$FAO2050_reg[
+      match( L134.Food_t_ctry_Dmnd_Y$iso, AGLU_ctry$iso ) ]
 
 #Calculate the future demand ratios by FAO2050 region for each demand type
 #Drop unnecessary composite regions from FAO diet table
@@ -72,8 +79,10 @@ L134.Diet_Rfao_Cfao_Yfao <- gcam_interp( L134.Diet_Rfao_Cfao_Yfao, diet_years )
 #Add vectors for caloric content and demand category
 L134.Diet_Rfao_Cfao_Yfao$GCAM_demand<-FAO2050_items_cal$GCAM_demand[
       match( L134.Diet_Rfao_Cfao_Yfao$FAO2050_item, FAO2050_items_cal$FAO2050_item)]
-L134.Diet_Rfao_Cfao_Yfao$kcalkg <- FAO2050_items_cal$kcalkg[ match( L134.Diet_Rfao_Cfao_Yfao$FAO2050_item, FAO2050_items_cal$FAO2050_item ) ]
-L134.Diet_Rfao_Cfao_Yfao$conv_d <- FAO2050_items_cal$conv_d[ match( L134.Diet_Rfao_Cfao_Yfao$FAO2050_item, FAO2050_items_cal$FAO2050_item ) ]
+L134.Diet_Rfao_Cfao_Yfao$kcalkg <- FAO2050_items_cal$kcalkg[
+      match( L134.Diet_Rfao_Cfao_Yfao$FAO2050_item, FAO2050_items_cal$FAO2050_item ) ]
+L134.Diet_Rfao_Cfao_Yfao$conv_d <- FAO2050_items_cal$conv_d[
+      match( L134.Diet_Rfao_Cfao_Yfao$FAO2050_item, FAO2050_items_cal$FAO2050_item ) ]
 
 #Build new table with only diet years subsetted
 #Multiply through by caloric contents to get all measures in kcal/pers/d
@@ -85,8 +94,9 @@ L134.Diet_kcald_Rfao_Cfao_Y[ X_diet_years ] <-
 #Aggregate by GCAM demand and FAO region
 printlog( "Aggregating by GCAM food categories and computing future diet ratios by FAO2050 region" )
 L134.Diet_kcald_Rfao_Dmnd_Y <- aggregate( L134.Diet_kcald_Rfao_Cfao_Y[ X_diet_years ],
-      by=as.list( L134.Diet_kcald_Rfao_Cfao_Y[ c( "FAO2050_reg", "GCAM_demand" ) ] ), sum )
+      by = L134.Diet_kcald_Rfao_Cfao_Y[ c( "FAO2050_reg", "GCAM_demand" ) ], sum )
 L134.Diet_kcald_Rfao_Dmnd_Y$GCAM_demand[ L134.Diet_kcald_Rfao_Dmnd_Y$GCAM_demand == "total" ] <- "crops"
+
 L134.Diet_kcald_Rfao_Dmnd_Y[ L134.Diet_kcald_Rfao_Dmnd_Y$GCAM_demand == "crops", X_diet_years ] <-
       L134.Diet_kcald_Rfao_Dmnd_Y[ L134.Diet_kcald_Rfao_Dmnd_Y$GCAM_demand == "crops", X_diet_years ] -
       L134.Diet_kcald_Rfao_Dmnd_Y[ L134.Diet_kcald_Rfao_Dmnd_Y$GCAM_demand == "meat", X_diet_years ]      
@@ -100,8 +110,10 @@ L134.Food_t_ctry_Dmnd_Y[ X_diet_years ] <- L134.Food_t_ctry_Dmnd_Y[[ X_final_his
       X_diet_years ]
       
 #Match in GCAM regions, aggregate, and compute ratios from final historical year
-L134.Food_t_ctry_Dmnd_Y[[R]] <- iso_GCAM_regID[[R]][ match( L134.Food_t_ctry_Dmnd_Y$iso, iso_GCAM_regID$iso ) ]
-L134.Food_t_R_Dmnd_Y <- aggregate( L134.Food_t_ctry_Dmnd_Y[ X_diet_years ], by=as.list( L134.Food_t_ctry_Dmnd_Y[ c( R, "GCAM_demand" ) ] ), sum )
+L134.Food_t_ctry_Dmnd_Y[[R]] <- iso_GCAM_regID[[R]][
+      match( L134.Food_t_ctry_Dmnd_Y$iso, iso_GCAM_regID$iso ) ]
+L134.Food_t_R_Dmnd_Y <- aggregate( L134.Food_t_ctry_Dmnd_Y[ X_diet_years ],
+                                   by = L134.Food_t_ctry_Dmnd_Y[ c( R, "GCAM_demand" ) ], sum )
 L134.FoodRatio_R_Dmnd_Y <- L134.Food_t_R_Dmnd_Y
 L134.FoodRatio_R_Dmnd_Y[ X_diet_years ] <- L134.Food_t_R_Dmnd_Y[ X_diet_years ] / L134.Food_t_R_Dmnd_Y[[ X_final_historical_year ]]
 

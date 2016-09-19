@@ -577,7 +577,7 @@ InputEmFactUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySec
 OutputEmFactUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/output-driver, scenario, scenario/world
 
 
-ItemNameUnmgd, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+itemName, period/{name=CO2}CO2, scenario, scenario/world
+ItemName, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name}UnmanagedLandTechnology, UnmanagedLandTechnology/+{year}period, period/+itemName, period/{name=CO2}CO2, scenario, scenario/world
 
 OutputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/output-driver, scenario, scenario/world
 

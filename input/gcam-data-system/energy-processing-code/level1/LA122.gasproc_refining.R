@@ -119,8 +119,9 @@ L122.in_EJ_R_1stgenbio_F_Yh$GCAM_commodity <- A21.globaltech_coef$minicam.energy
       match( L122.in_EJ_R_1stgenbio_F_Yh$passthrough.sector, A21.globaltech_coef$supplysector ) ]
 
 #crop inputs to biodiesel are region-specific
-L122.in_EJ_R_1stgenbio_F_Yh$GCAM_commodity[ L122.in_EJ_R_1stgenbio_F_Yh$GCAM_commodity == "biomassOil" ] <- A_regions$biomassOil_tech[
-      match( L122.in_EJ_R_1stgenbio_F_Yh$GCAM_region_ID[ L122.in_EJ_R_1stgenbio_F_Yh$GCAM_commodity == "biomassOil" ], A_regions$GCAM_region_ID ) ]
+L122.in_EJ_R_1stgenbio_F_Yh$GCAM_commodity[ L122.in_EJ_R_1stgenbio_F_Yh$passthrough.sector == "regional biomassOil" ] <- A_regions$biomassOil_tech[
+      match( L122.in_EJ_R_1stgenbio_F_Yh$GCAM_region_ID[ L122.in_EJ_R_1stgenbio_F_Yh$passthrough.sector == "regional biomassOil" ],
+             A_regions$GCAM_region_ID ) ]
 L122.in_EJ_R_1stgenbio_F_Yh <- subset( L122.in_EJ_R_1stgenbio_F_Yh, GCAM_commodity %in% FAO_ag_items_PRODSTAT$GCAM_commodity )
 
 #Interpolate coefs to all historical periods, and multiply by the input quantities

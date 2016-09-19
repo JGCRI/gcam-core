@@ -23,21 +23,24 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 USDA_crops <- readdata( "AGLU_MAPPINGS", "USDA_crops" )
-USDA_reg_AEZ <- readdata( "AGLU_MAPPINGS", "USDA_reg_AEZ" )
 USDA_item_cost <- readdata( "AGLU_MAPPINGS", "USDA_item_cost" )
+FAO_ag_items_PRODSTAT <- readdata( "AGLU_MAPPINGS", "FAO_ag_items_PRODSTAT" )
 USDA_cost_data <- readdata( "AGLU_LEVEL0_DATA", "USDA_cost_data" )
-L122.ag_EcYield_kgm2_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_EcYield_kgm2_R_C_Y_AEZ" )
+L100.LDS_ag_HA_ha <- readdata( "AGLU_LEVEL1_DATA", "L100.LDS_ag_HA_ha" )
+L100.LDS_ag_prod_t <- readdata( "AGLU_LEVEL1_DATA", "L100.LDS_ag_prod_t" )
 L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 #Add vectors for GCAM commodity and cost component
-USDA_cost_data[[C]] <- USDA_crops[[C]][ match( USDA_cost_data$Crop, USDA_crops$Crop ) ]
+USDA_cost_data[ c( C, "GTAP_crop" ) ] <- USDA_crops[
+  match( USDA_cost_data$Crop, USDA_crops$USDA_crop ),
+  c( C, "GTAP_crop" ) ]
 USDA_cost_data$cost_type <- USDA_item_cost$cost_type[ match( USDA_cost_data$Item, USDA_item_cost$Item ) ]
 
 #Subset only the variable cost, and only in the relevant years
-L133.ag_Cost_USDacr_C_Y_sR <- USDA_cost_data[ USDA_cost_data$cost_type == "variable",
-      c( C, "Region", "Item", X_model_cost_years) ]
+L133.ag_Cost_USDacr_C_Y <- USDA_cost_data[ USDA_cost_data$cost_type == "variable",
+      c( C, "GTAP_crop", "Item", X_model_cost_years) ]
 
 #Multiply dollars by GDP deflator to get 75 USD
 #First, build dataframe of same dimensions for multiplication
@@ -48,157 +51,81 @@ L133.GDP_deflators <- data.frame( X1996 = conv_1996_1975_USD, X1997 = conv_1997_
      X2007 = conv_2007_1975_USD, X2008 = conv_2008_1975_USD, X2009 = conv_2009_1975_USD )
 
 #Repeat by number of rows in cost dataframe
-L133.GDP_deflators_repcost <- L133.GDP_deflators[ rep( 1, times = nrow( L133.ag_Cost_USDacr_C_Y_sR ) ) , ]
+L133.GDP_deflators_repcost <- L133.GDP_deflators[ rep( 1, times = nrow( L133.ag_Cost_USDacr_C_Y ) ) , ]
 
 #Multiply deflator dataframe by cost dataframe to get converted costs
-L133.ag_Cost_75USDacr_Cusda_Yusda_sR <- L133.ag_Cost_USDacr_C_Y_sR
-L133.ag_Cost_75USDacr_Cusda_Yusda_sR[ X_model_cost_years ] <-
-      L133.ag_Cost_USDacr_C_Y_sR[ X_model_cost_years ]*
+L133.ag_Cost_75USDm2_Cusda_Yusda <- L133.ag_Cost_USDacr_C_Y
+L133.ag_Cost_75USDm2_Cusda_Yusda[ X_model_cost_years ] <-
+      L133.ag_Cost_USDacr_C_Y[ X_model_cost_years ]*
       L133.GDP_deflators_repcost[ X_model_cost_years ]
 
 #Compute average
 printlog( "Calculating unweighted averages across specified years, by crop and subregion" )
-L133.ag_Cost_75USDacr_Cusda_Yusda_sR$avg <- rowMeans( L133.ag_Cost_75USDacr_Cusda_Yusda_sR[ X_model_cost_years ], na.rm = TRUE )
+L133.ag_Cost_75USDm2_Cusda_Yusda$Cost_75USDm2 <- rowMeans( L133.ag_Cost_75USDm2_Cusda_Yusda[ X_model_cost_years ], na.rm = TRUE ) * conv_m2_acr
 
 #If all years are NA, set this to 0 (indicates a variable cost not disaggregated in the target years)
-L133.ag_Cost_75USDacr_Cusda_Yusda_sR$avg[ is.na( L133.ag_Cost_75USDacr_Cusda_Yusda_sR$avg ) ] <- 0
+L133.ag_Cost_75USDm2_Cusda_Yusda$Cost_75USDm2[ is.na( L133.ag_Cost_75USDm2_Cusda_Yusda$Cost_75USDm2 ) ] <- 0
 
 #Aggregate interannual averages by crop and subregion (add the different cost components)
 printlog( "Aggregating variable cost components" )
-L133.ag_Cost_75USDacr_Cusda_sR <- aggregate( L133.ag_Cost_75USDacr_Cusda_Yusda_sR[ "avg" ],
-      by=as.list( L133.ag_Cost_75USDacr_Cusda_Yusda_sR[ c( "Region", C ) ] ), sum ) 
+L133.ag_Cost_75USDm2_Cusda <- aggregate( L133.ag_Cost_75USDm2_Cusda_Yusda[ "Cost_75USDm2" ],
+      by = L133.ag_Cost_75USDm2_Cusda_Yusda[ c( C, "GTAP_crop" ) ], sum ) 
 
-#Map in AEZs and calculate average by AEZ
-printlog( "Averaging subregions by AEZs" )
-L133.ag_Cost_75USDacr_Cusda_sR[[AEZ]] <- USDA_reg_AEZ[[AEZ]][ match( L133.ag_Cost_75USDacr_Cusda_sR$Region, USDA_reg_AEZ$Region) ]
+printlog( "Matching in base-year harvested area, for weighted average price calculation (where necessary)" )
+L133.LDS_ag_HA_ha_USA <- subset( L100.LDS_ag_HA_ha, iso == "usa" & GTAP_crop %in% L133.ag_Cost_75USDm2_Cusda$GTAP_crop )
+L133.LDS_ag_HA_ha_USA <- aggregate( L133.LDS_ag_HA_ha_USA[ "value" ],
+                                    by = L133.LDS_ag_HA_ha_USA[ "GTAP_crop" ], sum )
 
-#Aggregate by AEZ, using "mean" function
-L133.ag_Cost_75USDacr_Cusda_AEZ <- aggregate( L133.ag_Cost_75USDacr_Cusda_sR[ "avg" ],
-      by=as.list( L133.ag_Cost_75USDacr_Cusda_sR[ c( "GCAM_commodity", "AEZ" ) ] ), mean )
+L133.ag_Cost_75USDm2_Cusda$HA_bm2 <- L133.LDS_ag_HA_ha_USA$value[
+  match( L133.ag_Cost_75USDm2_Cusda$GTAP_crop, L133.LDS_ag_HA_ha_USA$GTAP_crop ) ] * conv_Ha_bm2
+L133.ag_Cost_75USDm2_Cusda$Expenditures_bil75USD <- with( L133.ag_Cost_75USDm2_Cusda, Cost_75USDm2 * HA_bm2 )
+L133.ag_Cost_75USDm2_C <- aggregate( L133.ag_Cost_75USDm2_Cusda[ c( "HA_bm2", "Expenditures_bil75USD" ) ],
+                                     by = L133.ag_Cost_75USDm2_Cusda[C], sum )
+L133.ag_Cost_75USDm2_C$Cost_75USDm2 <- with( L133.ag_Cost_75USDm2_C, Expenditures_bil75USD / HA_bm2 )
 
-#Convert to dollars per square meter and add ID vector
-L133.ag_Cost_75USDm2_Cusda_AEZ <- L133.ag_Cost_75USDacr_Cusda_AEZ[ C_AEZ ]
-L133.ag_Cost_75USDm2_Cusda_AEZ$Cost_75USDm2 <- L133.ag_Cost_75USDacr_Cusda_AEZ$avg * conv_m2_acr
+printlog( "Computing national avreage yields to translate costs per m2 to costs per kg")
+L133.LDS_ag_prod_t_USA <- subset( L100.LDS_ag_prod_t, iso == "usa" & GTAP_crop %in% L133.ag_Cost_75USDm2_Cusda$GTAP_crop )
+L133.LDS_ag_prod_t_USA[[C]] <- USDA_crops[[C]][ match( L133.LDS_ag_prod_t_USA$GTAP_crop, USDA_crops$GTAP_crop ) ]
+L133.ag_Prod_Mt_USA_C <- aggregate( L133.LDS_ag_prod_t_USA[ "value" ] * conv_t_Mt,
+                                    by = L133.LDS_ag_prod_t_USA[ C ], sum )
 
-#Map in yield in order to calculate cost per kg of crop produced
-#First, melt the economic yield table and generate lookup vector
-L133.ag_EcYield_kgm2_USA_C_fby_AEZ <- L122.ag_EcYield_kgm2_R_C_Y_AEZ[ L122.ag_EcYield_kgm2_R_C_Y_AEZ[[R]]==1, c( R_C_AEZ, X_final_cost_year ) ]
+L133.ag_Cost_75USDm2_C$Prod_Mt <- L133.ag_Prod_Mt_USA_C$value[
+  match( L133.ag_Cost_75USDm2_C[[C]], L133.ag_Prod_Mt_USA_C[[C]] ) ]
+L133.ag_Cost_75USDm2_C$Yield_kgm2 <- with( L133.ag_Cost_75USDm2_C, Prod_Mt / HA_bm2 )
+L133.ag_Cost_75USDm2_C$Cost_75USDkg <- with( L133.ag_Cost_75USDm2_C, Cost_75USDm2 / Yield_kgm2 )
 
-#Map in yields, and calculate cost per kg of crop produced
-printlog( "Dividing by yields to calculate cost per unit of crop produced" )
-L133.ag_Cost_75USDm2_Cusda_AEZ$Yield_kgm2 <- L133.ag_EcYield_kgm2_USA_C_fby_AEZ[[ X_final_cost_year ]][
-      match( vecpaste( L133.ag_Cost_75USDm2_Cusda_AEZ[ C_AEZ ] ),
-             vecpaste( L133.ag_EcYield_kgm2_USA_C_fby_AEZ[ C_AEZ ] ) ) ]
-L133.ag_Cost_75USDkg_Cusda_AEZ.melt <- L133.ag_Cost_75USDm2_Cusda_AEZ[ C_AEZ ]
-L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value <- L133.ag_Cost_75USDm2_Cusda_AEZ$Cost_75USDm2 / L133.ag_Cost_75USDm2_Cusda_AEZ$Yield_kgm2
+printlog( "Checking to make sure that none of these costs are below the commodity prices minus some min-profit level" )
+L133.ag_Cost_75USDm2_C$calPrice <- L132.ag_an_For_Prices$calPrice[
+  match( L133.ag_Cost_75USDm2_C[[C]], L132.ag_an_For_Prices[[C]] ) ]
+L133.ag_Cost_75USDm2_C$Cost_75USDkg <- pmin(
+  L133.ag_Cost_75USDm2_C$Cost_75USDkg,
+  L133.ag_Cost_75USDm2_C$calPrice * ( 1 - min_profit_margin ) )
 
-#Several crops have very high costs in AEZ 12. Set these to the maximum in other AEZs.
-printlog( "NOTE: Ad-hoc adjustment of costs of crop / AEZs with anomalously high costs" )
-L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value[ L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[C]] == "FiberCrop" &
-                                           L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[AEZ]] == "AEZ12" ] <-
-      L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value[ L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[C]] == "FiberCrop" &
-                                           L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[AEZ]] == "AEZ10" ]
+#For remaining crops, just use the average difference between prices and costs in the crops where the info is available
+L133.ag_Cost_75USDm2_C$Revenue_bil75USD <- L133.ag_Cost_75USDm2_C$Prod_Mt * L133.ag_Cost_75USDm2_C$calPrice
+L133.avg_cost_price_diff <- with( L133.ag_Cost_75USDm2_C,
+                                  ( sum( Revenue_bil75USD ) - sum( Expenditures_bil75USD ) ) / sum( Prod_Mt ) )
+L133.avg_cost_price_frac <- with( L133.ag_Cost_75USDm2_C,
+                                  sum( Expenditures_bil75USD ) / sum( Revenue_bil75USD ) )
+L133.ag_Cost_75USDkg_Cothr <- subset( L132.ag_an_For_Prices, GCAM_commodity %!in% L133.ag_Cost_75USDm2_C[[C]] &
+                                        GCAM_commodity %in% FAO_ag_items_PRODSTAT[[C]] )
 
-L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value[ L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[C]] == "OtherGrain" &
-                                           L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[AEZ]] == "AEZ12" ] <-
-      L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value[ L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[C]] == "OtherGrain" &
-                                           L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[AEZ]] == "AEZ07" ]
-
-#WARNING: If any costs exceed the value of the product, GCAM will zero out the production in the given crop/AEZ
-#Check this
-if( any( L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value > L132.ag_an_For_Prices$calPrice[
-         match( L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[C]], L132.ag_an_For_Prices[[C]] ) ] ) )
-   {  printlog( "The following crop and AEZs have variable costs that exceed the value of the product" )
-      print( L133.ag_Cost_75USDkg_Cusda_AEZ.melt[ L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value > L132.ag_an_For_Prices$calPrice[
-         match( L133.ag_Cost_75USDkg_Cusda_AEZ.melt[[C]], L132.ag_an_For_Prices[[C]]) ], ] ) }
-
-#Build table with all crops' costs, in all AEZs
-all_commodities <- unique( L122.ag_EcYield_kgm2_R_C_Y_AEZ[[C]] )
-L133.ag_Cost_75USDkg_C_AEZ.melt <- data.frame(
-      GCAM_commodity = rep( all_commodities, times = length( AEZs ) ),
-      AEZ = sort( rep( AEZs, times = length( all_commodities ) ) ) )
-L133.ag_Cost_75USDkg_C_AEZ.melt$value <- L133.ag_Cost_75USDkg_Cusda_AEZ.melt$value[
-      match( vecpaste( L133.ag_Cost_75USDkg_C_AEZ.melt[ C_AEZ ] ),
-             vecpaste( L133.ag_Cost_75USDkg_Cusda_AEZ.melt[ C_AEZ ] ) ) ]
-L133.ag_Cost_75USDkg_C_AEZ <- dcast( L133.ag_Cost_75USDkg_C_AEZ.melt, GCAM_commodity ~ AEZ )
-
-#AD HOC FILLOUT OF CROP COST TABLE
-#Start with temperate AEZs, filling out missing AEZs for crops with cost data
-printlog( "Filling out costs for all crops and AEZs" )
-printlog( "NOTE: This step requires a series of ad-hoc assumptions" )
-L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Corn" ] <-
-      mean( L133.ag_Cost_75USDkg_C_AEZ$AEZ08[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Corn" ],
-            L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Corn" ] )
-L133.ag_Cost_75USDkg_C_AEZ$AEZ08[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FiberCrop" ] <-
-      L133.ag_Cost_75USDkg_C_AEZ$AEZ07[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FiberCrop" ] +
-      ( L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FiberCrop" ] -
-        L133.ag_Cost_75USDkg_C_AEZ$AEZ07[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FiberCrop" ] ) * 1/3
-L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FiberCrop" ] <-
-      L133.ag_Cost_75USDkg_C_AEZ$AEZ07[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FiberCrop" ] +
-      ( L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FiberCrop" ] -
-        L133.ag_Cost_75USDkg_C_AEZ$AEZ07[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FiberCrop" ] ) * 2/3
-L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OilCrop" ] <-
-      mean( L133.ag_Cost_75USDkg_C_AEZ$AEZ08[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OilCrop" ],
-            L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OilCrop" ] )
-L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OtherGrain" ] <-
-      mean( L133.ag_Cost_75USDkg_C_AEZ$AEZ08[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OtherGrain" ],
-            L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OtherGrain" ] )
-L133.ag_Cost_75USDkg_C_AEZ$AEZ11[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OtherGrain" ] <-
-      mean( L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OtherGrain" ],
-            L133.ag_Cost_75USDkg_C_AEZ$AEZ12[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "OtherGrain" ] )
-L133.ag_Cost_75USDkg_C_AEZ$AEZ07[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] <- L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ]
-L133.ag_Cost_75USDkg_C_AEZ$AEZ08[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] <- L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ]
-L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] <- L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] +
-      ( L133.ag_Cost_75USDkg_C_AEZ$AEZ12[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] -
-        L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] ) * 1/3
-L133.ag_Cost_75USDkg_C_AEZ$AEZ11[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] <- L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] +
-      ( L133.ag_Cost_75USDkg_C_AEZ$AEZ12[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] -
-        L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Rice" ] ) * 2/3
-L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "SugarCrop" ] <-
-      mean( L133.ag_Cost_75USDkg_C_AEZ$AEZ08[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "SugarCrop" ],
-            L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "SugarCrop" ] )
-L133.ag_Cost_75USDkg_C_AEZ$AEZ11[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "SugarCrop" ] <-
-      mean( L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "SugarCrop" ],
-            L133.ag_Cost_75USDkg_C_AEZ$AEZ12[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "SugarCrop" ] )
-L133.ag_Cost_75USDkg_C_AEZ$AEZ09[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Wheat" ] <-
-      mean( L133.ag_Cost_75USDkg_C_AEZ$AEZ08[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Wheat" ],
-            L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Wheat" ] )
-L133.ag_Cost_75USDkg_C_AEZ$AEZ11[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Wheat" ] <-
-      mean( L133.ag_Cost_75USDkg_C_AEZ$AEZ10[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Wheat" ],
-            L133.ag_Cost_75USDkg_C_AEZ$AEZ12[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Wheat" ] )
-
-#For crops with no cost data, fill out using price ratios with the index crop
-L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FodderGrass", AEZs_temp ] <-
-      L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == Cost_index_crop, AEZs_temp ] *
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == "FodderGrass" ] /
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == Cost_index_crop ]
-L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "FodderHerb", AEZs_temp ] <-
-      L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == Cost_index_crop, AEZs_temp ] *
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == "FodderHerb" ] /
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == Cost_index_crop ]
-L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "MiscCrop", AEZs_temp ] <-
-      L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == Cost_index_crop, AEZs_temp ] *
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == "MiscCrop" ] /
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == Cost_index_crop ]
-L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "PalmFruit", AEZs_temp ] <-
-      L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == Cost_index_crop, AEZs_temp ] *
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == "PalmFruit" ] /
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == Cost_index_crop ]
-L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == "Root_Tuber", AEZs_temp ] <-
-      L133.ag_Cost_75USDkg_C_AEZ[ L133.ag_Cost_75USDkg_C_AEZ[[C]] == Cost_index_crop, AEZs_temp ] *
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == "Root_Tuber" ] /
-      L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == Cost_index_crop ]
-
-#Apply costs in temperate AEZs to tropical and polar AEZs with no adjustment
-L133.ag_Cost_75USDkg_C_AEZ[ AEZs_trop ] <- L133.ag_Cost_75USDkg_C_AEZ[ AEZs_temp ]
-L133.ag_Cost_75USDkg_C_AEZ[ AEZs_pol ] <- L133.ag_Cost_75USDkg_C_AEZ[ AEZs_temp ]
+L133.ag_Cost_75USDkg_Cothr$Cost_75USDkg <- with( L133.ag_Cost_75USDkg_Cothr,
+                                                 pmin( calPrice * ( 1 - min_profit_margin ),
+                                                       pmax( ( calPrice - L133.avg_cost_price_diff ),
+                                                             calPrice * L133.avg_cost_price_frac ) 
+                                                       )
+                                                 )
+L133.ag_Cost_75USDkg_C <- rbind(
+  L133.ag_Cost_75USDm2_C[ c( C, "Cost_75USDkg" ) ],
+  L133.ag_Cost_75USDkg_Cothr[ c( C, "Cost_75USDkg" ) ] )
 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments to tables
-comments.L133.ag_Cost_75USDkg_C_AEZ <- c( "Costs of GCAM commodities and AEZs","Units = 1975$/kg" )
+comments.L133.ag_Cost_75USDkg_C <- c( "Costs of GCAM commodities","Units = 1975$/kg" )
 
-writedata( L133.ag_Cost_75USDkg_C_AEZ, domain="AGLU_LEVEL1_DATA", fn="L133.ag_Cost_75USDkg_C_AEZ", comments=comments.L133.ag_Cost_75USDkg_C_AEZ )
+writedata( L133.ag_Cost_75USDkg_C, domain="AGLU_LEVEL1_DATA", fn="L133.ag_Cost_75USDkg_C", comments=comments.L133.ag_Cost_75USDkg_C )
 
 # Every script should finish with this line
 logstop()

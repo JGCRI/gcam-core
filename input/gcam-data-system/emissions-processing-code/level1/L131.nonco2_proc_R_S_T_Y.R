@@ -47,19 +47,26 @@ L131.EPA_nonco2_indproc$subsector <- EPA_tech$fuel[ match( L131.EPA_nonco2_indpr
 
 #Remove unnecessary columns and melt
 L131.EPA_nonco2_indproc <- L131.EPA_nonco2_indproc[ names( L131.EPA_nonco2_indproc ) %!in% c( "EPA_Source_Category_Raw", "Source_Category") ]
-L131.EPA_nonco2_indproc.melt <- melt( L131.EPA_nonco2_indproc, id.vars=c( "sector", "subsector" ) )
+L131.EPA_nonco2_indproc.melt <- melt( L131.EPA_nonco2_indproc, id.vars=c( "sector", "subsector" ), variable.name = "Non.CO2" )
 L131.EPA_nonco2_indproc.melt <- na.omit( L131.EPA_nonco2_indproc.melt )
-L131.EPA_nonco2_indproc.melt <- aggregate( L131.EPA_nonco2_indproc.melt$value, by=as.list( L131.EPA_nonco2_indproc.melt[ c( "sector", "subsector", "variable" ) ]), sum )
+L131.EPA_nonco2_indproc.melt <- aggregate( L131.EPA_nonco2_indproc.melt$value,
+                                           by = L131.EPA_nonco2_indproc.melt[ c( "sector", "subsector", "Non.CO2" ) ], sum )
 
 #Compute subsector share of sectoral total
-L131.nonco2_pct_R_prc_S_S_2005 <- GCAM_sector_tech[ names( GCAM_sector_tech ) %in% c( "supplysector", "subsector", "stub.technology", "EPA_agg_sector", "EPA_agg_fuel_ghg", "EDGAR_agg_sector" )]
+L131.nonco2_pct_R_prc_S_S_2005 <- GCAM_sector_tech[
+  c( "supplysector", "subsector", "stub.technology", "EPA_agg_sector", "EPA_agg_fuel_ghg", "EDGAR_agg_sector" ) ]
 L131.nonco2_pct_R_prc_S_S_2005 <- subset( L131.nonco2_pct_R_prc_S_S_2005, L131.nonco2_pct_R_prc_S_S_2005$EDGAR_agg_sector %in% prc_sectors )
 L131.nonco2_pct_R_prc_S_S_2005 <- repeat_and_add_vector( L131.nonco2_pct_R_prc_S_S_2005, "Non.CO2", c( "CH4", "N2O", "NMVOC", "NOx", "SO2", "CO", "VOC" ))
-L131.nonco2_pct_R_prc_S_S_2005$tech_emissions <- L131.EPA_nonco2_indproc.melt$x[ match( vecpaste( L131.nonco2_pct_R_prc_S_S_2005[ c( "EPA_agg_sector", "EPA_agg_fuel_ghg", "Non.CO2" )]), vecpaste( L131.EPA_nonco2_indproc.melt[ c( "sector", "subsector", "variable" )] ) )]
+L131.nonco2_pct_R_prc_S_S_2005$tech_emissions <- L131.EPA_nonco2_indproc.melt$x[
+  match( vecpaste( L131.nonco2_pct_R_prc_S_S_2005[ c( "EPA_agg_sector", "EPA_agg_fuel_ghg", "Non.CO2" )]),
+         vecpaste( L131.EPA_nonco2_indproc.melt[ c( "sector", "subsector", "Non.CO2" )] ) )]
 L131.nonco2_pct_R_prc_S_S_2005$tech_emissions[ is.na( L131.nonco2_pct_R_prc_S_S_2005$tech_emissions ) ] <- 1
-L131.nonco2_gg_R_prc_S_2005 <- aggregate( L131.nonco2_pct_R_prc_S_S_2005$tech_emissions, by=as.list( L131.nonco2_pct_R_prc_S_S_2005[ c( "EPA_agg_sector", "Non.CO2" )]), sum )
-L131.nonco2_pct_R_prc_S_S_2005$sector_emissions <- L131.nonco2_gg_R_prc_S_2005$x[ match( vecpaste(L131.nonco2_pct_R_prc_S_S_2005[ c( "EPA_agg_sector", "Non.CO2" )] ), vecpaste( L131.nonco2_gg_R_prc_S_2005[ c( "EPA_agg_sector", "Non.CO2" )]))]
-L131.nonco2_pct_R_prc_S_S_2005$tech_share <- L131.nonco2_pct_R_prc_S_S_2005$tech_emissions / L131.nonco2_pct_R_prc_S_S_2005$sector_emissions
+L131.nonco2_gg_R_prc_S_2005 <- aggregate( L131.nonco2_pct_R_prc_S_S_2005$tech_emissions,
+                                          by = L131.nonco2_pct_R_prc_S_S_2005[ c( "EPA_agg_sector", "Non.CO2" ) ], sum )
+L131.nonco2_pct_R_prc_S_S_2005$sector_emissions <- L131.nonco2_gg_R_prc_S_2005$x[
+  match( vecpaste(L131.nonco2_pct_R_prc_S_S_2005[ c( "EPA_agg_sector", "Non.CO2" )] ),
+         vecpaste( L131.nonco2_gg_R_prc_S_2005[ c( "EPA_agg_sector", "Non.CO2" )]))]
+L131.nonco2_pct_R_prc_S_S_2005$tech_share <- with( L131.nonco2_pct_R_prc_S_S_2005, tech_emissions / sector_emissions )
 
 printlog( "Disaggregate EDGAR emissions to subsectors" )
 #First aggregate all EDGAR data and subset for processing sectors
@@ -77,27 +84,39 @@ L131.EDGAR$iso <- EDGAR_nation$iso[ match( L131.EDGAR$ISO_A3, EDGAR_nation$ISO_A
 L131.EDGAR$GCAM_region_ID <- iso_GCAM_regID$GCAM_region_ID[ match( L131.EDGAR$iso, iso_GCAM_regID$iso )]   
 L131.EDGAR <- subset( L131.EDGAR, L131.EDGAR$EDGAR_agg_sector %in% prc_sectors )
 L131.EDGAR <- L131.EDGAR[ names( L131.EDGAR ) %!in% c( "IPCC.Annex", "World.Region", "ISO_A3", "Name", "IPCC", "IPCC_description", "iso" )]
-L131.EDGAR.melt <- melt( L131.EDGAR, id.vars=c( "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector" ))
+L131.EDGAR.melt <- melt( L131.EDGAR, id.vars=c( "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector" ), variable.name = Y )
 L131.EDGAR.melt <- na.omit( L131.EDGAR.melt )
-L131.EDGAR.melt <- aggregate( L131.EDGAR.melt$value, by=as.list( L131.EDGAR.melt[ c( "GCAM_region_ID", "Non.CO2", "EDGAR_agg_sector", "variable" ) ]), sum)
+L131.EDGAR.melt <- aggregate( L131.EDGAR.melt$value,
+                              by = L131.EDGAR.melt[ c( R_Y, "Non.CO2", "EDGAR_agg_sector" ) ], sum)
 names( L131.EDGAR.melt )[ names( L131.EDGAR.melt ) == "x" ] <- "EDGAR_emissions"
 L131.EDGAR.melt$EDGAR_emissions <- L131.EDGAR.melt$EDGAR_emissions * gg_to_tg
 
 #Now, map in all data and compute emissions
-L131.nonco2_tg_R_prc_S_S_Yh.melt <- GCAM_sector_tech[ names( GCAM_sector_tech ) %in% c( "supplysector", "subsector", "stub.technology", "EDGAR_agg_sector", "EPA_agg_sector", "EPA_agg_fuel_ghg" )]
-L131.nonco2_tg_R_prc_S_S_Yh.melt <- subset( L131.nonco2_tg_R_prc_S_S_Yh.melt, L131.nonco2_tg_R_prc_S_S_Yh.melt$EDGAR_agg_sector %in% prc_sectors )
-L131.nonco2_tg_R_prc_S_S_Yh.melt <- repeat_and_add_vector( L131.nonco2_tg_R_prc_S_S_Yh.melt, "Non.CO2", c( "CH4", "N2O", "NMVOC", "NOx", "SO2", "CO", "VOC" ))
-L131.nonco2_tg_R_prc_S_S_Yh.melt$tech_share <- L131.nonco2_pct_R_prc_S_S_2005$tech_share[ match( vecpaste( L131.nonco2_tg_R_prc_S_S_Yh.melt[ c( "supplysector", "subsector", "stub.technology", "Non.CO2" )]), vecpaste( L131.nonco2_pct_R_prc_S_S_2005[ c( "supplysector", "subsector", "stub.technology", "Non.CO2" )]))]
-L131.nonco2_tg_R_prc_S_S_Yh.melt <- repeat_and_add_vector( L131.nonco2_tg_R_prc_S_S_Yh.melt, "xyear", X_EDGAR_historical_years )
-L131.nonco2_tg_R_prc_S_S_Yh.melt <- repeat_and_add_vector( L131.nonco2_tg_R_prc_S_S_Yh.melt, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
-L131.nonco2_tg_R_prc_S_S_Yh.melt$EDGAR_emissions <- L131.EDGAR.melt$EDGAR_emissions[ match( vecpaste( L131.nonco2_tg_R_prc_S_S_Yh.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", "xyear" )]), vecpaste( L131.EDGAR.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", "variable" )]) )]
+L131.nonco2_tg_R_prc_S_S_Yh.melt <- GCAM_sector_tech[
+  c( "supplysector", "subsector", "stub.technology", "EDGAR_agg_sector", "EPA_agg_sector", "EPA_agg_fuel_ghg" )]
+L131.nonco2_tg_R_prc_S_S_Yh.melt <- subset( L131.nonco2_tg_R_prc_S_S_Yh.melt,
+                                            L131.nonco2_tg_R_prc_S_S_Yh.melt$EDGAR_agg_sector %in% prc_sectors )
+L131.nonco2_tg_R_prc_S_S_Yh.melt <- repeat_and_add_vector( L131.nonco2_tg_R_prc_S_S_Yh.melt,
+                                                           "Non.CO2",c( "CH4", "N2O", "NMVOC", "NOx", "SO2", "CO", "VOC" ))
+L131.nonco2_tg_R_prc_S_S_Yh.melt$tech_share <- L131.nonco2_pct_R_prc_S_S_2005$tech_share[
+  match( vecpaste( L131.nonco2_tg_R_prc_S_S_Yh.melt[ c( "supplysector", "subsector", "stub.technology", "Non.CO2" )]),
+         vecpaste( L131.nonco2_pct_R_prc_S_S_2005[ c( "supplysector", "subsector", "stub.technology", "Non.CO2" )]))]
+L131.nonco2_tg_R_prc_S_S_Yh.melt <- repeat_and_add_vector( L131.nonco2_tg_R_prc_S_S_Yh.melt,
+                                                           Y, X_EDGAR_historical_years )
+L131.nonco2_tg_R_prc_S_S_Yh.melt <- repeat_and_add_vector( L131.nonco2_tg_R_prc_S_S_Yh.melt, R, GCAM_region_names[[R]] )
+L131.nonco2_tg_R_prc_S_S_Yh.melt$EDGAR_emissions <- L131.EDGAR.melt$EDGAR_emissions[
+  match( vecpaste( L131.nonco2_tg_R_prc_S_S_Yh.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", Y )]),
+         vecpaste( L131.EDGAR.melt[ c( "GCAM_region_ID", "EDGAR_agg_sector", "Non.CO2", Y )]) )]
 L131.nonco2_tg_R_prc_S_S_Yh.melt <- na.omit( L131.nonco2_tg_R_prc_S_S_Yh.melt )
-L131.nonco2_tg_R_prc_S_S_Yh.melt$input.emissions <- L131.nonco2_tg_R_prc_S_S_Yh.melt$EDGAR_emissions * L131.nonco2_tg_R_prc_S_S_Yh.melt$tech_share
-L131.nonco2_tg_R_prc_S_S_Yh.melt <- aggregate( L131.nonco2_tg_R_prc_S_S_Yh.melt$input.emissions, by=as.list( L131.nonco2_tg_R_prc_S_S_Yh.melt[ c( "GCAM_region_ID", "supplysector", "subsector", "stub.technology", "Non.CO2", "xyear" )]), sum )
-names( L131.nonco2_tg_R_prc_S_S_Yh.melt )[ names( L131.nonco2_tg_R_prc_S_S_Yh.melt ) == "x" ] <- "input.emissions"
+L131.nonco2_tg_R_prc_S_S_Yh.melt$input.emissions <- with( L131.nonco2_tg_R_prc_S_S_Yh.melt, EDGAR_emissions * tech_share )
+L131.nonco2_tg_R_prc_S_S_Yh.melt <- aggregate( L131.nonco2_tg_R_prc_S_S_Yh.melt[ "input.emissions" ],
+                                               by = L131.nonco2_tg_R_prc_S_S_Yh.melt[ c( R, "supplysector", "subsector", "stub.technology",
+                                                                                         "Non.CO2", Y ) ],
+                                               sum )
 
 #Reshape
-L131.nonco2_tg_R_prc_S_S_Yh <- dcast( L131.nonco2_tg_R_prc_S_S_Yh.melt, GCAM_region_ID + Non.CO2 + supplysector + subsector + stub.technology ~ xyear, value = c( "input.emissions" ) )
+L131.nonco2_tg_R_prc_S_S_Yh <- dcast( L131.nonco2_tg_R_prc_S_S_Yh.melt,
+                                      GCAM_region_ID + Non.CO2 + supplysector + subsector + stub.technology ~ year, value.var = "input.emissions" )
 L131.nonco2_tg_R_prc_S_S_Yh[ is.na( L131.nonco2_tg_R_prc_S_S_Yh ) ] <- 0
 
 # -----------------------------------------------------------------------------

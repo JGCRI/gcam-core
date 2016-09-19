@@ -631,3 +631,59 @@ read_logit_fn_tables <- function( domain, table.name, skip=0, include.equiv.tabl
     return( ret_tables )
 }
 
+#add_agtech_names: function to use the commodity and GLU names to create agsupplysectors, subsectors, technologies
+add_agtech_names <- function( data ){
+  data[[agsupp]] <- data[[C]]
+  data[[agsubs]] <- paste( data[[C]], data[[GLU]], sep = crop_GLU_delimiter )
+  data[[agtech]] <- data[[agsubs]]
+  if( irr %in% names( data ) ){
+    data[[agtech]] <- paste( data[[agsubs]], data[[irr]], sep = irr_delimiter )
+  }	
+  return( data )
+}
+
+write_to_all_regions <- function( data, names, has.traded=F, apply.to = "selected", set.market = F ){
+  if ( "logit.year.fillout" %in% names ) data$logit.year.fillout <- "start-year"
+  if ( "price.exp.year.fillout" %in% names ) data$price.exp.year.fillout <- "start-year"
+  data_new <- set_years( data )
+  data_new <- repeat_and_add_vector( data_new, "GCAM_region_ID", GCAM_region_names$GCAM_region_ID )
+  data_new <- add_region_name( data_new )
+  if ("market.name" %in% names ) data_new$market.name <- data_new$region
+  if( has.traded==T){
+    if( set.market==T){
+      data_new$market.name <- data_new$region
+    }
+    data_new <- set_traded_names( data_new, apply.to )
+  }
+  return( data_new[ names ] ) 
+}
+
+# -----------------------------------------------------------------------------
+# set_traded_names: convert names of traded secondary goods to be contained within region 1, with region appended to subsector and tech names
+set_traded_names <- function( data, apply.to="selected" ) {
+  data_new <- data
+  if( apply.to=="selected" ){
+    if( "subsector" %in% names( data ) ){
+      data_new$subsector[data$traded == 1] <- paste( data$region[data$traded == 1], data$subsector[data$traded == 1], sep = " " )
+    } 
+    if( "technology" %in% names( data ) ){
+      data_new$technology[data$traded == 1] <- paste( data$region[data$traded == 1], data$technology[data$traded == 1], sep = " " )
+    } 
+    data_new$region[data$traded == 1] <- GCAM_region_names$region[1]
+    return( data_new )
+  }
+  if(apply.to=="all" ){
+    if( "subsector" %in% names( data ) ){
+      data_new$subsector <- paste( data$region, data$subsector, sep = " " )
+    } 
+    if( "technology" %in% names( data ) ){
+      data_new$technology <- paste( data$region, data$technology, sep = " " )
+    } 
+    data_new$region <- GCAM_region_names$region[1]
+    return( data_new )
+  }
+}
+
+
+
+
