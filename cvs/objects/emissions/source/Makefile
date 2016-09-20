@@ -7,21 +7,8 @@
 PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       = nonco2_emissions.o \
-             aghg.o \
-             co2_emissions.o \
-             emissions_driver_factory.o \
-             emissions_summer.o \
-             ghg_factory.o \
-             input_driver.o \
-             input_output_driver.o \
-             luc_emissions_summer.o \
-             output_driver.o \
-             emissions_control_factory.o \
-             aemissions_control.o \
-             mac_control.o \
-             linear_control.o \
-             gdp_control.o
+SRCS = $(wildcard *.cpp)
+OBJS = $(SRCS:.cpp=.o)
 
 emissions_dir: ${OBJS}
 
