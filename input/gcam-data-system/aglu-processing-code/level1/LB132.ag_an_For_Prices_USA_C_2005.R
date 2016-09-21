@@ -94,6 +94,11 @@ L132.an_V_USA_Cfao_fby[[C]] <- FAO_an_items_PRODSTAT[[C]][ match( L132.an_V_USA_
 #Remove any fodder crops
 L132.ag_V_USA_Cfao_fby <- L132.ag_V_USA_Cfao_fby[ !L132.ag_V_USA_Cfao_fby[[C]] %in% c( "FodderHerb", "FodderGrass" ), ]
 
+# 9/21/2016 GPK - removing Sorghum because it is used as a fodder crop in the USA, and its prices are relatively low.
+# The net effect of excluding it here is to raise the price of the OtherGrain commodity, and therefore the profit rate,
+# which otherwise is the lowest of all crops. Any land use regions where this is dominant become bioenergy.
+L132.ag_V_USA_Cfao_fby <- subset( L132.ag_V_USA_Cfao_fby, item != "Sorghum" )
+
 #Aggregate by GCAM crop names and compute average prices
 printlog( "Aggregating by GCAM commodity and computing average prices" )
 #Primary agricultural goods

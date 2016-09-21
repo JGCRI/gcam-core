@@ -83,7 +83,7 @@ L133.ag_Cost_75USDm2_C <- aggregate( L133.ag_Cost_75USDm2_Cusda[ c( "HA_bm2", "E
                                      by = L133.ag_Cost_75USDm2_Cusda[C], sum )
 L133.ag_Cost_75USDm2_C$Cost_75USDm2 <- with( L133.ag_Cost_75USDm2_C, Expenditures_bil75USD / HA_bm2 )
 
-printlog( "Computing national avreage yields to translate costs per m2 to costs per kg")
+printlog( "Computing national average yields to translate costs per m2 to costs per kg")
 L133.LDS_ag_prod_t_USA <- subset( L100.LDS_ag_prod_t, iso == "usa" & GTAP_crop %in% L133.ag_Cost_75USDm2_Cusda$GTAP_crop )
 L133.LDS_ag_prod_t_USA[[C]] <- USDA_crops[[C]][ match( L133.LDS_ag_prod_t_USA$GTAP_crop, USDA_crops$GTAP_crop ) ]
 L133.ag_Prod_Mt_USA_C <- aggregate( L133.LDS_ag_prod_t_USA[ "value" ] * conv_t_Mt,
@@ -101,21 +101,24 @@ L133.ag_Cost_75USDm2_C$Cost_75USDkg <- pmin(
   L133.ag_Cost_75USDm2_C$Cost_75USDkg,
   L133.ag_Cost_75USDm2_C$calPrice * ( 1 - min_profit_margin ) )
 
-#For remaining crops, just use the average difference between prices and costs in the crops where the info is available
-L133.ag_Cost_75USDm2_C$Revenue_bil75USD <- L133.ag_Cost_75USDm2_C$Prod_Mt * L133.ag_Cost_75USDm2_C$calPrice
-L133.avg_cost_price_diff <- with( L133.ag_Cost_75USDm2_C,
-                                  ( sum( Revenue_bil75USD ) - sum( Expenditures_bil75USD ) ) / sum( Prod_Mt ) )
-L133.avg_cost_price_frac <- with( L133.ag_Cost_75USDm2_C,
-                                  sum( Expenditures_bil75USD ) / sum( Revenue_bil75USD ) )
-L133.ag_Cost_75USDkg_Cothr <- subset( L132.ag_an_For_Prices, GCAM_commodity %!in% L133.ag_Cost_75USDm2_C[[C]] &
-                                        GCAM_commodity %in% FAO_ag_items_PRODSTAT[[C]] )
+#For remaining crops, calculate the cost required to return the weighted average land profit rate
+L133.ag_Cost_75USDm2_C$Revenue_bil75USD <- with( L133.ag_Cost_75USDm2_C, Prod_Mt * calPrice )
+L133.AvgProfit_75USDm2 <- with( L133.ag_Cost_75USDm2_C, ( sum( Revenue_bil75USD ) - sum( Expenditures_bil75USD ) ) / sum( HA_bm2 ) )
 
+# Cost = Price - (Profit / Yield). Need to get the yields of these commodities
+names( L100.LDS_ag_HA_ha )[ names( L100.LDS_ag_HA_ha ) == "value" ] <- "HA_ha"
+names( L100.LDS_ag_prod_t )[ names( L100.LDS_ag_prod_t ) == "value" ] <- "Prod_t"
+L133.LDS_usa <- merge( subset( L100.LDS_ag_HA_ha, iso == "usa" | iso == "idn" & GTAP_crop == "OilPalmFruit" ),
+                       subset( L100.LDS_ag_prod_t, iso == "usa" | iso == "idn" & GTAP_crop == "OilPalmFruit"  ) )
+L133.LDS_usa[[C]] <- FAO_ag_items_PRODSTAT[[C]][ match( L133.LDS_usa$GTAP_crop, FAO_ag_items_PRODSTAT$GTAP_crop ) ]
+L133.LDS_usa_oth <- subset( L133.LDS_usa, GCAM_commodity %!in% L133.ag_Cost_75USDm2_C[[C]] )
+L133.ag_Cost_75USDkg_Cothr <- aggregate( L133.LDS_usa_oth[ c( "HA_ha", "Prod_t" ) ],
+                                         by = L133.LDS_usa_oth[ C ], sum )
+L133.ag_Cost_75USDkg_Cothr$Yield_kgm2 <- with( L133.ag_Cost_75USDkg_Cothr, Prod_t / HA_ha * conv_tha_kgm2 )
+L133.ag_Cost_75USDkg_Cothr$calPrice <- L132.ag_an_For_Prices$calPrice[
+  match( L133.ag_Cost_75USDkg_Cothr[[C]], L132.ag_an_For_Prices[[C]] ) ]
 L133.ag_Cost_75USDkg_Cothr$Cost_75USDkg <- with( L133.ag_Cost_75USDkg_Cothr,
-                                                 pmin( calPrice * ( 1 - min_profit_margin ),
-                                                       pmax( ( calPrice - L133.avg_cost_price_diff ),
-                                                             calPrice * L133.avg_cost_price_frac ) 
-                                                       )
-                                                 )
+                                                 calPrice - L133.AvgProfit_75USDm2 / Yield_kgm2 )
 L133.ag_Cost_75USDkg_C <- rbind(
   L133.ag_Cost_75USDm2_C[ c( C, "Cost_75USDkg" ) ],
   L133.ag_Cost_75USDkg_Cothr[ c( C, "Cost_75USDkg" ) ] )
