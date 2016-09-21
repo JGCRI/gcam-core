@@ -71,6 +71,11 @@
 #define __HAVE_JAVA__ 1
 #endif
 
+//! A flag which turns on or off the compilation of the hector climate model code.
+#ifndef USE_HECTOR
+#define USE_HECTOR 1
+#endif
+
 // This allows for memory leak debugging.
 #if defined(_MSC_VER)
 #   ifdef _DEBUG
