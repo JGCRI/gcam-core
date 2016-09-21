@@ -157,7 +157,12 @@ L124.nonco2_tg_R_forest_Y_GLU.melt <- na.omit( L124.nonco2_tg_R_forest_Y_GLU.mel
 #Split into ForestFire and Deforest
 L124.nonco2_tg_R_forest_Y_GLU.melt$PctForestFire <- L124.GFED_ALL.melt$PctForestFire[
   match( vecpaste( L124.nonco2_tg_R_forest_Y_GLU.melt[ c( R_Y, "Non.CO2" ) ] ),
-         vecpaste( L124.GFED_ALL.melt[ c( R_Y, "Non.CO2" )] ))]
+         vecpaste( L124.GFED_ALL.melt[ c( R_Y, "Non.CO2" ) ] ) ) ]
+
+# Because the GFED data only have a subset of emissions species available, just use these to infer the other species (rather than default to 100% FF)
+L124.nonco2_tg_R_forest_Y_GLU.melt$PctForestFire[ is.na( L124.nonco2_tg_R_forest_Y_GLU.melt$PctForestFire ) ] <- L124.GFED_ALL.melt$PctForestFire[
+  match( vecpaste( L124.nonco2_tg_R_forest_Y_GLU.melt[ is.na( L124.nonco2_tg_R_forest_Y_GLU.melt$PctForestFire ), c( R_Y ) ] ),
+         vecpaste( L124.GFED_ALL.melt[ c( R_Y ) ] ) ) ]
 L124.nonco2_tg_R_forest_Y_GLU.melt$PctDeforest <- 1 - L124.nonco2_tg_R_forest_Y_GLU.melt$PctForestFire
 
 # If data is missing, assume all emissions are assigned to forest fires. These are easier to calibrate in GCAM.
@@ -175,15 +180,42 @@ L124.nonco2_tg_R_forest_Y_GLU.melt <- melt( L124.nonco2_tg_R_forest_Y_GLU.melt,
 L124.nonco2_tg_R_forest_Y_GLU <- dcast( L124.nonco2_tg_R_forest_Y_GLU.melt,
                                         GCAM_region_ID + Land_Type + Non.CO2 + GLU + technology ~ year, value.var = c( "value" ) )
 
+# Compute driver data to write out some average coefficients. Note that the driver can't be negative, and is annualized, so divide by timestep
+L124.deforest_driver <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj[ c( R_LT_GLU, X_Deforest_coef_years ) ]
+L124.deforest_driver$driver <- pmax(
+  L124.deforest_driver[[X_Deforest_coef_years[1] ]] - L124.deforest_driver[[ X_Deforest_coef_years[2] ]],
+  0 ) / ( Deforest_coef_years[2] - Deforest_coef_years[1] )
+  
+#Repeat by species, and match in the emissions quantities
+L124.deforest_coefs_R_GLU <- repeat_and_add_vector( L124.deforest_driver[ c( R_LT_GLU, "driver" ) ],
+                                                    "Non.CO2",
+                                                    unique( L124.nonco2_tg_R_forest_Y_GLU$Non.CO2 ) )
+L124.deforest_coefs_R_GLU$technology <- "Deforest"
+L124.deforest_coefs_R_GLU$emissions <- L124.nonco2_tg_R_forest_Y_GLU[[ X_Deforest_coef_years[2 ] ]][
+  match( vecpaste( L124.deforest_coefs_R_GLU[ c( R_LT_GLU, "Non.CO2", "technology" ) ] ),
+         vecpaste( L124.nonco2_tg_R_forest_Y_GLU[ c( R_LT_GLU, "Non.CO2", "technology" ) ] ) ) ]
+
+# where the driver is (net) zero, re-set the emissions to zero to remove them from the calculation
+L124.deforest_coefs_R_GLU$emissions[ L124.deforest_coefs_R_GLU$driver == 0 ] <- 0
+L124.deforest_coefs_R_GLU$emissions[ is.na( L124.deforest_coefs_R_GLU$emissions ) ] <- 0
+
+#Aggregate the totals to compute the default coefficients
+L124.deforest_coefs <- aggregate( L124.deforest_coefs_R_GLU[ c( "driver", "emissions" ) ],
+                                  by = L124.deforest_coefs_R_GLU[ c( LT, "technology", "Non.CO2" ) ],
+                                  sum )
+L124.deforest_coefs$emiss.coef <- with( L124.deforest_coefs, emissions / driver )
+
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
 comments.L124.nonco2_tg_R_grass_Y_GLU <- c( "Grassland fire emissions by GCAM region / land cover type / historical year", "Unit = Tg" )
 comments.L124.nonco2_tg_R_forest_Y_GLU <- c( "Forest fire emissions by GCAM region / land cover type / historical year", "Unit = Tg" )
+comments.L124.deforest_coefs <- c( "Default deforestation coefficients by NonCO2 species", "Unit = kg/m2/yr" )
 
 #write tables as CSV files
 writedata( L124.nonco2_tg_R_grass_Y_GLU, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tg_R_grass_Y_GLU", comments=comments.L124.nonco2_tg_R_grass_Y_GLU )
 writedata( L124.nonco2_tg_R_forest_Y_GLU, domain="EMISSIONS_LEVEL1_DATA", fn="L124.nonco2_tg_R_forest_Y_GLU", comments=comments.L124.nonco2_tg_R_forest_Y_GLU )
+writedata( L124.deforest_coefs, domain="EMISSIONS_LEVEL1_DATA", fn="L124.deforest_coefs", comments=comments.L124.deforest_coefs )
 
 # Every script should finish with this line
 logstop()

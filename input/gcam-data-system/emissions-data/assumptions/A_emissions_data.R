@@ -51,9 +51,11 @@ digits_CO2coef <- 1
 digits_MACC <- 3
 
 #Base years for emissions data
-emiss_model_base_years <- c( "1975", "1990", "2005" )
-X_emiss_model_base_years <- paste0( "X", emiss_model_base_years )
-hfc_model_base_years <- c( "1975", "1990", "2005", "2010" )
+if( exists( "model_base_years" ) ){
+  emiss_model_base_years <- model_base_years[ model_base_years < 2008 ]
+  X_emiss_model_base_years <- paste0( "X", emiss_model_base_years )
+  hfc_model_base_years <- model_base_years
+}
 
 #Years for ssp inputs
 ssp_model_years <- c( 2010, future_years )
@@ -107,3 +109,6 @@ ssp_marker_region <- 13
 
 EPA_MACC_names <- c( "Sector", "Process", "EPA_region" )
 
+# years between which to calculate deforestation-related coefficients
+Deforest_coef_years <- c( 2000, 2005 )
+X_Deforest_coef_years <- paste0( "X", Deforest_coef_years )

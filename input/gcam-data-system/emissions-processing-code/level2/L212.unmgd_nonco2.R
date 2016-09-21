@@ -29,8 +29,10 @@ GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 A_regions <- readdata( "EMISSIONS_ASSUMPTIONS", "A_regions" )
 L124.nonco2_tg_R_grass_Y_GLU <- readdata( "EMISSIONS_LEVEL1_DATA", "L124.nonco2_tg_R_grass_Y_GLU" )
 L124.nonco2_tg_R_forest_Y_GLU <- readdata( "EMISSIONS_LEVEL1_DATA", "L124.nonco2_tg_R_forest_Y_GLU" )
+L124.deforest_coefs <- readdata( "EMISSIONS_LEVEL1_DATA", "L124.deforest_coefs" )
 L125.bcoc_tgbkm2_R_grass_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L125.bcoc_tgbkm2_R_grass_2000" )
 L125.bcoc_tgbkm2_R_forest_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L125.bcoc_tgbkm2_R_forest_2000" )
+L125.deforest_coefs_bcoc <- readdata( "EMISSIONS_LEVEL1_DATA", "L125.deforest_coefs_bcoc" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -139,11 +141,24 @@ L212.FORESTEmissionsFactors_BCOC_FF <- subset( L212.FORESTEmissionsFactors_BCOC,
 L212.FORESTEmissionsFactors_BCOC_D <- subset( L212.FORESTEmissionsFactors_BCOC, technology == "Deforest" )[
   c( names_UnmgdTech, Y, "Non.CO2", "emiss.coef" ) ]
 
+printlog( "Reading in default emissions factors for deforestation in future periods" )
+# because the model's driver for deforestation is not necessarily linked to the estimated quantity of emissions,
+# the deforestation-related emissions in the base years may be zero (regions with net afforestation), or very high
+# (regions with slightly net deforestation). This method just uses a global average for future non-co2 emissions
+# from deforestation
+L212.default_coefs <- rbind( L124.deforest_coefs[ c( "Non.CO2", "emiss.coef" ) ],
+                             L125.deforest_coefs_bcoc[ c( "Non.CO2", "emiss.coef" ) ] )
+L212.FORESTEmissionsFactors_future <- unique( L212.FOREST[ L212.FOREST$technology == "Deforest", names_UnmgdTech ] )
+L212.FORESTEmissionsFactors_future[[Y]] <- min( model_years[ model_years > max( emiss_model_base_years ) ] )
+L212.FORESTEmissionsFactors_future <- merge( L212.FORESTEmissionsFactors_future, L212.default_coefs )
+L212.FORESTEmissionsFactors_future$emiss.coef <- round( L212.FORESTEmissionsFactors_future$emiss.coef, digits_emissions )
+L212.FORESTEmissionsFactors_future <- L212.FORESTEmissionsFactors_future[ c( names_UnmgdTech, Y, "Non.CO2", "emiss.coef" ) ]
 
 printlog( "Rename to regional SO2" )
 L212.GRASSEmissions <- rename_SO2( L212.GRASSEmissions, A_regions, FALSE )
 L212.FORESTEmissions_D <- rename_SO2( L212.FORESTEmissions_D, A_regions, FALSE )
 L212.FORESTEmissions_FF <- rename_SO2( L212.FORESTEmissions_FF, A_regions, FALSE )
+L212.FORESTEmissionsFactors_future <- rename_SO2( L212.FORESTEmissionsFactors_future, A_regions, FALSE )
 
 # Add logit tags to avoid errors
 L212.AgSupplySectorLogitType <- L212.AgSupplySector
@@ -229,6 +244,7 @@ write_mi_data( L212.FORESTEmissions_D, "OutputEmissionsUnmgd", "EMISSIONS_LEVEL2
 write_mi_data( L212.GRASSEmissionsFactors_BCOC, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.GRASSEmissionsFactors_BCOC", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 write_mi_data( L212.FORESTEmissionsFactors_BCOC_FF, "InputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors_BCOC_FF", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 write_mi_data( L212.FORESTEmissionsFactors_BCOC_D, "OutputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors_BCOC_D", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
+write_mi_data( L212.FORESTEmissionsFactors_future, "OutputEmFactUnmgd", "EMISSIONS_LEVEL2_DATA", "L212.FORESTEmissionsFactors_future", "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml" ) 
 
 insert_file_into_batchxml( "EMISSIONS_XML_BATCH", "batch_all_unmgd_emissions.xml", "EMISSIONS_XML_FINAL", "all_unmgd_emissions.xml", "", xml_tag="outFile" )
 

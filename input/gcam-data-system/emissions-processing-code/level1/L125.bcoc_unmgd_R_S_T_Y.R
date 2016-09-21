@@ -78,8 +78,11 @@ L125.RCP[ c( "lcf", "sav" ) ] <- L125.RCP[ c( "lcf", "sav" ) ] * kg_to_tg
 L125.RCP <- aggregate( L125.RCP[ c( "lcf", "sav")],
                        by = L125.RCP[ c( "GCAM_region_ID", "Non.CO2" ) ], sum)
 
-printlog( "Compute grassland emissions factors by GCAM region and GLU" )
-printlog( "Because there is only one base year, we use emissions factors for BC and OC" )
+printlog( "Compute grassland emissions factors by GCAM region" )
+printlog( "Because there is only one base year, we use constant emissions factors for BC and OC in all historical years" )
+# Because grassland and forest fire emissions scale with land quantity, the coefs can be computed at the regional level
+# and applied equally to all land use regions (GLUs) thereafter. However deforestation emissions are assigned from the region
+# to the GLUs according to relative shares of deforested land, different from forest land cover.
 L125.bcoc_tgbkm2_R_grass_2000 <- aggregate( L124.LC_bm2_R_Grass_Yh_GLU_adj[ "X2000" ],
                                             by = L124.LC_bm2_R_Grass_Yh_GLU_adj[ R_LT ], sum )
 L125.bcoc_tgbkm2_R_grass_2000 <- repeat_and_add_vector( L125.bcoc_tgbkm2_R_grass_2000,
@@ -92,16 +95,24 @@ L125.bcoc_tgbkm2_R_grass_2000$em_factor <- with( L125.bcoc_tgbkm2_R_grass_2000, 
 # Subset only relevant columns
 L125.bcoc_tgbkm2_R_grass_2000 <- L125.bcoc_tgbkm2_R_grass_2000[c( R_LT, "Non.CO2", "em_factor" ) ]
 
-printlog( "Compute forest fire emissions factors by GCAM region and AEZ" )
-# gpk - is this intentional, to use 2009-2010 land cover data and name it 1999-2000?
-L125.bcoc_tgbkm2_R_forest_2000 <- aggregate( L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj[ c( "X2009", "X2010" ) ],
-                                             by = L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj[ R_LT ], sum )
-names( L125.bcoc_tgbkm2_R_forest_2000 )[ names( L125.bcoc_tgbkm2_R_forest_2000) == "X2009" ] <- "land1999"
-names( L125.bcoc_tgbkm2_R_forest_2000 )[ names( L125.bcoc_tgbkm2_R_forest_2000) == "X2010" ] <- "land2000"
-L125.bcoc_tgbkm2_R_forest_2000$landdiff <- with( L125.bcoc_tgbkm2_R_forest_2000, land1999 - land2000 )
+printlog( "Compute forest fire emissions factors by GCAM region" )
+L125.bcoc_tgbkm2_R_forestfire_2000 <- aggregate( L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj[ "X2000" ],
+                                                 by = L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj[ R_LT ],
+                                                 sum )
+names( L125.bcoc_tgbkm2_R_forestfire_2000 )[ names( L125.bcoc_tgbkm2_R_forestfire_2000 ) == "X2000" ] <- "FF_driver"
 
-# Calculate emissions
-L125.bcoc_tgbkm2_R_forest_2000 <- repeat_and_add_vector( L125.bcoc_tgbkm2_R_forest_2000, "Non.CO2", unique( L125.RCP$Non.CO2 ) )
+L125.bcoc_tgbkm2_R_GLU_defor_2000 <- L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj[ c( R_LT_GLU, X_Deforest_coef_years ) ]
+L125.bcoc_tgbkm2_R_GLU_defor_2000$D_driver <- pmax(
+  L125.bcoc_tgbkm2_R_GLU_defor_2000[[X_Deforest_coef_years[1] ]] - L125.bcoc_tgbkm2_R_GLU_defor_2000[[ X_Deforest_coef_years[2] ]],
+  0 ) / ( Deforest_coef_years[2] - Deforest_coef_years[1] )
+L125.bcoc_tgbkm2_R_defor_2000 <- aggregate( L125.bcoc_tgbkm2_R_GLU_defor_2000[ "D_driver" ],
+                                            by = L125.bcoc_tgbkm2_R_GLU_defor_2000[ R_LT ],
+                                            sum )
+L125.bcoc_tgbkm2_R_forest_2000 <- merge( L125.bcoc_tgbkm2_R_forestfire_2000, L125.bcoc_tgbkm2_R_defor_2000 )
+
+# Match in emissions and multiply by forest fire fraction
+L125.bcoc_tgbkm2_R_forest_2000 <- repeat_and_add_vector( L125.bcoc_tgbkm2_R_forest_2000,
+                                                             "Non.CO2", unique( L125.RCP$Non.CO2 ) )
 L125.bcoc_tgbkm2_R_forest_2000$total_emiss <- L125.RCP$lcf[
   match( vecpaste( L125.bcoc_tgbkm2_R_forest_2000[ c( "GCAM_region_ID", "Non.CO2" )]),
          vecpaste( L125.RCP[ c( "GCAM_region_ID", "Non.CO2" )] ) )]
@@ -111,29 +122,36 @@ L125.bcoc_tgbkm2_R_forest_2000$PctForestFire <- L125.GFED_ALL$PctForestFire[
 L125.bcoc_tgbkm2_R_forest_2000$ForestFireEmiss <- with( L125.bcoc_tgbkm2_R_forest_2000, total_emiss * PctForestFire )
 L125.bcoc_tgbkm2_R_forest_2000$DeforestEmiss <- with( L125.bcoc_tgbkm2_R_forest_2000, total_emiss - ForestFireEmiss )
 
-# Calculate emissions factors
-L125.bcoc_tgbkm2_R_forest_2000$ForestFire <- with( L125.bcoc_tgbkm2_R_forest_2000, ForestFireEmiss / land2000 )
-L125.bcoc_tgbkm2_R_forest_2000$Deforest <- with( L125.bcoc_tgbkm2_R_forest_2000, DeforestEmiss / landdiff )
+printlog( "Calculating average default deforestation emissions factors, to be used in future periods" )
+L125.deforest_coefs_bcoc <- aggregate( L125.bcoc_tgbkm2_R_forest_2000[ c( "D_driver", "DeforestEmiss" ) ],
+                                       by = L125.bcoc_tgbkm2_R_forest_2000[ "Non.CO2" ],
+                                       sum )
+L125.deforest_coefs_bcoc$emiss.coef <- with( L125.deforest_coefs_bcoc, DeforestEmiss / D_driver )
 
-# We shouldn't have negative emissions from deforestation
-L125.bcoc_tgbkm2_R_forest_2000$Deforest[ L125.bcoc_tgbkm2_R_forest_2000$Deforest < 0 ] <- 0
+# Calculate emissions factors
+L125.bcoc_tgbkm2_R_forest_2000$ForestFire <- with( L125.bcoc_tgbkm2_R_forest_2000, ForestFireEmiss / FF_driver )
+L125.bcoc_tgbkm2_R_forest_2000$Deforest <- with( L125.bcoc_tgbkm2_R_forest_2000, DeforestEmiss / D_driver )
 
 # Remove extra columns, reshape, remove strange values
 L125.bcoc_tgbkm2_R_forest_2000 <- melt( L125.bcoc_tgbkm2_R_forest_2000,
-                                             id.vars=c( "GCAM_region_ID", "Non.CO2" ), measure.vars = c( "ForestFire", "Deforest" ),
-                                             variable.name = "technology", value.name = "em_factor" )
+                                        measure.vars = c( "ForestFire", "Deforest" ),
+                                        id.vars = c( R_LT, "Non.CO2" ),
+                                        variable.name = "technology", value.name = "em_factor" )
+
 L125.bcoc_tgbkm2_R_forest_2000$em_factor[ L125.bcoc_tgbkm2_R_forest_2000$em_factor == "Inf" ] <- 0
 L125.bcoc_tgbkm2_R_forest_2000$em_factor[ is.na( L125.bcoc_tgbkm2_R_forest_2000$em_factor ) ] <- 0
 
 # -----------------------------------------------------------------------------
 # 3. Output
 #Add comments for each table
-comments.L125.bcoc_tgbkm2_R_grass_2000 <- c( "BC/OC grassland burning emissions factors by GCAM region / 2000", "Unit = Tg / Mt" )
-comments.L125.bcoc_tgbkm2_R_forest_2000 <- c( "BC/OC forest fire emissions factors by GCAM region / 2000", "Unit = Tg / Mt" )
+comments.L125.bcoc_tgbkm2_R_grass_2000 <- c( "BC/OC grassland burning emissions factors by GCAM region / 2000", "Unit = Tg / bm2" )
+comments.L125.bcoc_tgbkm2_R_forest_2000 <- c( "BC/OC forest fires and deforestation emissions factors by GCAM region / 2000", "Unit = Tg / bm2" )
+comments.L125.deforest_coefs_bcoc <- c( "Default deforestation coefficients by BC and OC", "Unit = kg/m2/yr" )
 
 #write tables as CSV files
 writedata( L125.bcoc_tgbkm2_R_grass_2000, domain="EMISSIONS_LEVEL1_DATA", fn="L125.bcoc_tgbkm2_R_grass_2000", comments=comments.L125.bcoc_tgbkm2_R_grass_2000 )
 writedata( L125.bcoc_tgbkm2_R_forest_2000, domain="EMISSIONS_LEVEL1_DATA", fn="L125.bcoc_tgbkm2_R_forest_2000", comments=comments.L125.bcoc_tgbkm2_R_forest_2000 )
+writedata( L125.deforest_coefs_bcoc, domain="EMISSIONS_LEVEL1_DATA", fn="L125.deforest_coefs_bcoc", comments=comments.L125.deforest_coefs_bcoc )
 
 # Every script should finish with this line
 logstop()
