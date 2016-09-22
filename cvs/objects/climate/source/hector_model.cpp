@@ -196,7 +196,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
         climatelog << "Setting up stub Hector core." << endl;
         // TODO: shouldn't have to fool with the hector logger here.
         if( !hector_log_is_init ) {
-            Hector::Logger::getGlobalLogger().open( "hector", true, Hector::Logger::DEBUG );
+            Hector::Logger::getGlobalLogger().open( "hector", true, Hector::Logger::WARNING );
             hector_log_is_init = true; 
         }
         if( mHcore.get() ) {
