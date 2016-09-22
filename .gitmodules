@@ -1,3 +1,4 @@
 [submodule "cvs/objects/climate/source/hector"]
 	path = cvs/objects/climate/source/hector
 	url = https://github.com/JGCRI/hector.git
+	branch = gcam-integration
