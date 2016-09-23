@@ -71,7 +71,7 @@ public class RunQueries implements Runnable {
      */
     public RunQueries( final String aBatchFile, final String aLogFile ) {
         mBatchFile = aBatchFile;
-	mLogFile = aLogFile;
+        mLogFile = aLogFile;
     }
 
     /**
@@ -114,16 +114,15 @@ public class RunQueries implements Runnable {
      * batch mode.
      */
     public void run() {
-	List<String> args = new ArrayList<String>();
-	args.add("-b");
-	args.add(mBatchFile);
-	if ( !mLogFile.isEmpty() ) {
-	    args.add("-l");
-	    args.add(mLogFile);
-	}
+        List<String> args = new ArrayList<String>();
+        args.add("-b");
+        args.add(mBatchFile);
+        if ( !mLogFile.isEmpty() ) {
+            args.add("-l");
+            args.add(mLogFile);
+        }
         // Run the ModelInterface in batch mode
-        // String[] args = { "-b", mBatchFile };
-	System.out.println("Running batch file: " + mBatchFile);
+        System.out.println("Running batch file: " + mBatchFile);
         InterfaceMain.main( args.toArray(new String[0]) );
     }
 }

@@ -1840,7 +1840,6 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 						// should I print this error to the screen?
 					}
 				}
-                boolean wasDBOpened = false;
                 try {
                     // make sure we have enough to run the batch query 
                     // which means we have a query file, output file, and
@@ -1852,7 +1851,6 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                     // for instance connect to an in memory database.
                     if(XMLDB.getInstance() == null) {
                         XMLDB.openDatabase(dbFile);
-                        wasDBOpened = true;
                     }
 
                     Vector<ScenarioListItem> scenariosInDb = getScenarios();
@@ -1923,9 +1921,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                 } catch(Exception e) {
                     e.printStackTrace();
                 } finally {
-                    if(wasDBOpened) {
-                        XMLDB.closeDatabase();
-                    }
+                    XMLDB.closeDatabase();
                 }
 			} else {
 				System.out.println("Unknown command: "+actionCommand);

@@ -144,7 +144,6 @@ public class InterfaceMain implements ActionListener {
 		    });
 
 		// -b <batch file> -l <log file>
-		//OptionParser parser = new OptionParser("b:l:");
 		OptionParser parser = new OptionParser();
 		parser.accepts("help", "print usage information").forHelp();
 		parser.accepts("b", "XML batch file to process").withRequiredArg();
@@ -169,6 +168,21 @@ public class InterfaceMain implements ActionListener {
 		    System.exit(1);
 		}
 
+        // if the -l option is set then we will redirect standard output to the specified log file
+        PrintStream stdout = System.out;
+        if (opts.has("l")) {
+            String logFile = (String) opts.valueOf("l");
+            stdout.println("InterfaceMain: Directing stdout to " + logFile);
+            try {
+                FileOutputStream log = new FileOutputStream(logFile);
+                System.setOut(new PrintStream(log));
+            } catch (Exception e) {
+                // If there was an error opening the log file we will post a message indicating as
+                // much but continue on with out the redirect.
+                System.err.println("Failed to open log file '" + logFile + "' for writing: " + e);
+            }
+        }
+
 		if (opts.has("b")) {
 		    String filename = (String) opts.valueOf("b");
 		    System.out.println("InterfaceMain: batchFile: " + filename);
@@ -186,18 +200,6 @@ public class InterfaceMain implements ActionListener {
 		    main.menuAdders = new ArrayList<MenuAdder>(2);
 		    main.menuAdders.add(dbView);
 		    main.menuAdders.add(inputView);
-
-		    PrintStream stdout = System.out;
-		    if (opts.has("l")) {
-			String logFile = (String) opts.valueOf("l");
-			// System.out.println("InterfaceMain: Directing stdout to " + logFile);
-			try {
-			    FileOutputStream log = new FileOutputStream(logFile);
-			    System.setOut(new PrintStream(log));
- 			} catch (Exception e) {
-			    System.err.println("Failed to open log file '" + logFile + "' for writing: " + e);
-			}
-		    }
 
 		    // Run the batch file
             if(batchDoc != null) {
