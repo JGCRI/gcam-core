@@ -98,6 +98,12 @@ remove_GLU <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = N
   return( data )
 }
 
+substring_irr <- function( data, from.var, to.lower = F ){
+  data[[irr]] <- substr( data[[from.var]], nchar( data[[from.var]] ) - 2, nchar( data[[from.var]] ) )
+  if( to.lower ) data[[irr]] <- tolower( data[[irr]] )
+  return( data )
+}
+
 #add_node_leaf_names: function to match in the node and leaf names from a land nesting table
 add_node_leaf_names <- function( data, nesting_table, leaf_name, LT_name = LT, LN1 = "LandNode1", LN2 = NA, LN3 = NA, LN4 = NA, append_GLU = T ){
 	data$LandAllocatorRoot <- "root"

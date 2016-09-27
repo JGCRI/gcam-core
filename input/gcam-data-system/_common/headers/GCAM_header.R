@@ -455,6 +455,7 @@ write_mi_data <- function( x, IDstring, domain="none", fn=GCAM_SOURCE_FN[ GCAM_S
 		write( "LandNode2,LandNode", myfn, append=T )
 		write( "LandNode3,LandNode", myfn, append=T )	
 		write( "LandNode4,LandNode", myfn, append=T )		
+		write( "LandNode5,LandNode", myfn, append=T )		
 	}
 }
 

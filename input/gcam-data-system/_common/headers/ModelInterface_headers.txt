@@ -556,6 +556,18 @@ LN4_NewTech,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoo
 
 LN4_NewNode,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+isNewTechnology,LandNode4/+ghost-share-node,scenario,scenario/world
 
+LN5_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, LandNode5/+{year;fillout=1}logit-exponent, LandNode5/+logit-exponent, LandNode5/+use-absolute-cost-logit, scenario, scenario/world
+
+LN5_HistMgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, LandNode5/+{name}LandLeaf,land-use-history/+{year}allocation,land-use-history/+allocation,scenario,scenario/world,LandLeaf/land-use-history
+
+LN5_MgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, LandNode5/+{name}LandLeaf,LandLeaf/+{year}landAllocation,LandLeaf/+landAllocation,scenario,scenario/world
+
+LN5_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, LandNode5/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
+
+LN5_NewTech,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, LandNode5/+{name}LandLeaf,LandLeaf/+{year;fillout=1}isNewTechnology, LandLeaf/+isNewTechnology, LandLeaf/+ghost-share-leaf,scenario,scenario/world
+
+LN5_NewNode,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{name}LandNode5,LandNode5/+isNewTechnology,LandNode5/+ghost-share-node,scenario,scenario/world
+
 11000, NODE_RENAME
 
 

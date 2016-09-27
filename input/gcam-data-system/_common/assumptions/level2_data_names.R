@@ -172,3 +172,14 @@ names_LN4_MgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2
 names_LN4_NewTech <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "newTechStartYear", "isNewTechnology", "ghost.share.leaf" )
 names_LN4_NewNode <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "isNewTechnology", "ghost.share.node" )
 
+names_LN5_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "logit.year.fillout", "logit.exponent", "use.absolute.cost.logit" )
+names_LN5_DefaultShare <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "year", "default.share" )
+names_LN5_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "UnmanagedLandLeaf", "year", "allocation" )
+names_LN5_UnmgdAllocation <- names_LN5_HistUnmgdAllocation
+names_LN5_HistMgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "year", "allocation" )
+names_LN5_MgdAllocation <- names_LN5_HistMgdAllocation
+names_LN5_UnmgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "UnmanagedLandLeaf", "hist.veg.carbon.density",
+                            "hist.soil.carbon.density", "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+names_LN5_MgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "hist.veg.carbon.density", "hist.soil.carbon.density",
+                          "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
+names_LN5_NewTech <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "newTechStartYear", "isNewTechnology", "ghost.share.leaf" )

@@ -78,11 +78,13 @@ rcp_gcm_cm_id_irr <- c( rcp_gcm_cm, "ID", "irr" )
 rcp_gcm_cm_id_crop <- c( rcp_gcm_cm, "ID", "crop" )
 rcp_gcm_cm_id_crop_irr <- c( rcp_gcm_cm, "ID", "crop", "irr" )
 irr <- "Irr_Rfd"
+lvl <- "level"
 R_C_irr <- c( R_C, irr )
 R_C_Y_irr <- c( R_C_Y, irr )
 R_C_Y_GLU_irr <- c( R_C_Y_GLU, irr )
 R_C_GLU_irr <- c( R_C_GLU, irr )
 R_GLU_irr <- c( R, GLU, irr )
+R_C_GLU_irr_lvl <- c( R_C_GLU_irr, lvl )
 
 #-----------------------------------------------------------------
 #NUMBERS OF DIGITS FOR MODEL INPUT DATA
@@ -213,6 +215,7 @@ GLU_name_delimiter <- ""       # delimiter between the GLU name and number
 crop_GLU_delimiter <- "_"       # delimiter between the crop name and GLU name
 LT_GLU_delimiter <- crop_GLU_delimiter       # delimiter between the land use type name and GLU name. should be the same as the crop-glu delimiter
 irr_delimiter <- "_"       # delimiter between the appended crop x GLU and irrigation level
+mgmt_delimiter <- "_"     #delimiter between appended tech name and management level
 
 #Multipliers for high & low ag prod growth scenarios
 hi_ag_prod_growth_mult <- 1.5
