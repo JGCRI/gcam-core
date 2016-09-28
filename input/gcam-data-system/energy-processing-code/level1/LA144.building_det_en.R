@@ -258,10 +258,10 @@ L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel[ is.na( L144.in_EJ_ctry_bld_thrm_F$sh
 #Never allow these shares to exceed a maximum assumed threshold
 L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel[
       L144.in_EJ_ctry_bld_thrm_F$service %in% heating_services &
-      L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel > 1 ] <- max_heating_share
+      L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel > max_heating_share ] <- max_heating_share
 L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel[
       L144.in_EJ_ctry_bld_thrm_F$service %in% cooling_services &
-      L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel > 1 ] <- max_cooling_share
+      L144.in_EJ_ctry_bld_thrm_F$share_serv_fuel > max_cooling_share ] <- max_cooling_share
 
 #Aggregate the services to calculate the residual to be allocated to non-thermal services
 L144.share_ctry_bld_thrm_F <- aggregate( L144.in_EJ_ctry_bld_thrm_F[ "share_serv_fuel" ],
