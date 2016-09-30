@@ -58,6 +58,8 @@ L252.ResMAC_fos$mac.reduction <- round(
                 vecpaste( L252.MAC_pct_R_S_Proc_EPA[ c( "EPA_region", "Process", "tax" ) ] ) ) ],
       digits_MACC )
 L252.ResMAC_fos <- na.omit( L252.ResMAC_fos )
+# Add column for market variable
+L252.ResMAC_fos$market.name <- MAC_Market
 
 printlog( "L252.AgMAC: Agricultural abatement (including bioenergy)" )
 L252.AgMAC <- rbind(
@@ -77,6 +79,8 @@ L252.AgMAC$mac.reduction <- round(
                 vecpaste( L252.MAC_pct_R_S_Proc_EPA[ c( "EPA_region", "Process", "tax" ) ] ) ) ],
       digits_MACC )
 L252.AgMAC <- na.omit( L252.AgMAC )
+# Add column for market variable
+L252.AgMAC$market.name <- MAC_Market
 
 printlog( "L252.MAC_an: Abatement from animal production" )
 L252.MAC_an <- subset( L211.an_emissions[ c( names_StubTechYr, "Non.CO2" ) ], year == min( L211.an_emissions$year ) & Non.CO2 %in% ag_MACC_GHG_names )
@@ -92,6 +96,8 @@ L252.MAC_an$mac.reduction <- round(
                 vecpaste( L252.MAC_pct_R_S_Proc_EPA[ c( "EPA_region", "Process", "tax" ) ] ) ) ],
       digits_MACC )
 L252.MAC_an <- na.omit( L252.MAC_an )
+# Add column for market variable
+L252.MAC_an$market.name <- MAC_Market
 
 printlog( "L252.MAC_prc: Abatement from industrial and urban processes" )
 L252.MAC_prc <- subset( L232.nonco2_prc[ c( names_StubTechYr, "Non.CO2" ) ], year == min( L232.nonco2_prc$year ) & Non.CO2 %in% GHG_names )
@@ -108,6 +114,8 @@ L252.MAC_prc$mac.reduction <- round(
                 vecpaste( L252.MAC_pct_R_S_Proc_EPA[ c( "EPA_region", "Process", "tax" ) ] ) ) ],
       digits_MACC )
 L252.MAC_prc <- na.omit( L252.MAC_prc )
+# Add column for market variable
+L252.MAC_prc$market.name <- MAC_Market
 
 printlog( "L252.MAC_higwp: Abatement from HFCs, PFCs, and SF6" )
 L252.MAC_higwp <- rbind(
@@ -126,6 +134,8 @@ L252.MAC_higwp$mac.reduction <- round(
                 vecpaste( L252.MAC_pct_R_S_Proc_EPA[ c( "EPA_region", "Process", "tax" ) ] ) ) ],
       digits_MACC )
 L252.MAC_higwp <- na.omit( L252.MAC_higwp )
+# Add column for market variable
+L252.MAC_higwp$market.name <- MAC_Market
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
