@@ -95,7 +95,7 @@ private:
     //! Length of time in years to phase in no-cost MAC reductions
     int mZeroCostPhaseInTime;
     
-    //! Conversion factor if getting price from its own market
+     //! Conversion factor if getting price from its own market.
     double mCovertPriceValue;
     
     //! Name of market to look for

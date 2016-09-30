@@ -114,7 +114,7 @@ private:
     Value mInputEmissions;
     
     //! Stored Emissions Coefficient (needed for some control technologies)
-    double mSavedEmissionsCoef; 
+    std::vector<double> mSavedEmissionsCoef; 
     
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef
     //! in the current model period.

@@ -168,10 +168,13 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );    
     XMLWriteElement( mCovertPriceValue, "mac-price-conversion", aOut, aTabs );
     XMLWriteElement( mPriceMarketName, "market-name", aOut, aTabs );
+    XMLWriteElementCheckDefault( mOperateOnlyBeforeVintageYear, "operate-only-before-vintage-year", aOut, aTabs, -1 );
 }
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     toInputXMLDerived( aOut, aTabs );
+    XMLWriteElement( mVintageYear, "vintage-year", aOut, aTabs);
+    
 }
 
 void MACControl::completeInit( const string& aRegionName, const string& aSectorName,
@@ -195,19 +198,34 @@ void MACControl::initCalc( const string& aRegionName,
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "MAC Curve appears to have no data. " << endl;
     }
-    mVintageYear = 0;
+
+    // Default to current year for objects that do not report a vintage (such as resources)
+    mVintageYear = scenario->getModeltime()->getper_to_yr( aPeriod );
+
     if ( aLocalInfo != 0 ) {
         mVintageYear = aLocalInfo->getInteger( "vintage-year", false );
+        // If vintage-year is zero, reset to current year
+        if ( mVintageYear ) {
+            mVintageYear = scenario->getModeltime()->getper_to_yr( aPeriod );
+        }
     }
 }
 
 void MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
+    // Check first if MAC curve operation should be turned off
+    if ( mCovertPriceValue == -1 ) { // User flag to turn off MAC curves
+        setEmissionsReduction( 0 );
+        return;
+    }
+    
     const Marketplace* marketplace = scenario->getMarketplace();
     double emissionsPrice = marketplace->getPrice( mPriceMarketName, aRegionName, aPeriod, false );
     if( emissionsPrice == Marketplace::NO_MARKET_PRICE ) {
         emissionsPrice = 0;
     }
     
+    emissionsPrice *= mCovertPriceValue;
+
     double reduction = getMACValue( emissionsPrice );
     
     if( mNoZeroCostReductions && emissionsPrice == 0.0 ) {
@@ -215,35 +233,44 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
     }
 
     // If technology vintage is > than specified year, do not operate
+    // Still include below zero reductions (for consistency with ref case) unless explicitly turned off
     if ( mVintageYear >= mOperateOnlyBeforeVintageYear ) {
-        reduction = 0.0;
+        if( mNoZeroCostReductions && emissionsPrice == 0.0 ) {
+            reduction = 0.0;
+        } else {
+            reduction = getMACValue( 0.0 );
+        }
     }
 
     /*!  Adjust to smoothly phase-in "no-cost" emission reductions
-     Some MAC curves have non-zero abatement at zero carbon price. Unless the users sets
-     mNoZeroCostReductions, this reduction will occur even without a carbon price. This
+     Some MAC curves have non-zero abatement at zero emissions price. Unless the users sets
+     mNoZeroCostReductions, this reduction will occur even without an emissions price. This
      code smoothly phases in this abatement so that a sudden change in emissions does not
-     occur. The phase-in period has a default value of twenty years, but this can be altered
-     by the user. This code also reduces this phase-in period if there is a carbon-price,
-     which avoids an illogical situation where a high carbon price is present and mitigation
+     occur. The phase-in period has a default value that can be altered
+     by the user. This code also reduces this phase-in period if there is a emissions-price,
+     which avoids an illogical situation where a high emissions price is present and mitigation
      is maxed out, but the "no-cost" reductions are not fully phased in.
 */
     const int lastCalYear = scenario->getModeltime()->getper_to_yr( 
                             scenario->getModeltime()->getFinalCalibrationPeriod() );
     int modelYear = scenario->getModeltime()->getper_to_yr( aPeriod );
-    if ( ( reduction > 0.0 ) && ( modelYear <= ( lastCalYear + mZeroCostPhaseInTime ) ) ) {
-        const double maxCO2Tax = mMacCurve->getMaxX();
+
+    // Amount of zero-cost reduction
+    double zeroCostReduction = getMACValue( 0 );
+
+    if ( ( reduction > 0.0 ) && ( zeroCostReduction > 0.0 ) &&
+        ( modelYear <= ( lastCalYear + mZeroCostPhaseInTime ) ) ) {
+        const double maxEmissionsTax = mMacCurve->getMaxX();
 
 		// Fraction of zero cost that is removed from original reduction value
 		// Equal to 1 at last calibration year and zero at the zero cost phase in time
-		double multiplier = ( lastCalYear*1.0 + mZeroCostPhaseInTime - modelYear*1.0 ) / mZeroCostPhaseInTime;
+		double multiplier = ( static_cast<double>( lastCalYear ) + mZeroCostPhaseInTime
+		                    - static_cast<double>( modelYear ) ) / mZeroCostPhaseInTime;
 
-		// If carbon price is not zero, accelerate the phase in for consistancy
-        double adjCarbonPrice = min( emissionsPrice, maxCO2Tax );
-        multiplier *= ( maxCO2Tax - adjCarbonPrice ) / maxCO2Tax;
-		
-        // Amount of zero-cost reduction
-		double zeroCostReduction = getMACValue( 0 );
+		// If emissions price is not zero, accelerate the phase in for consistency if there are 
+		// zero cost reductions to phase in
+        double adjEmissionsPrice = min( emissionsPrice, maxEmissionsTax );
+        multiplier *= ( maxEmissionsTax - adjEmissionsPrice ) / maxEmissionsTax;
 		
 		reduction = reduction - zeroCostReduction * multiplier;
     }

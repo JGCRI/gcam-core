@@ -139,7 +139,7 @@ void GDPControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTab
 }
 
 void GDPControl::completeInit( const string& aRegionName, const string& aSectorName,
-                               const IInfo* aLocalInfo )
+                               const IInfo* aTechIInfo )
 {
 
 }

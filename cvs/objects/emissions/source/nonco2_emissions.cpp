@@ -67,7 +67,6 @@ extern Scenario* scenario;
 NonCO2Emissions::NonCO2Emissions():
 AGHG(),
 mShouldCalibrateEmissCoef( false ),
-mSavedEmissionsCoef( -1 ),
 mGDP( 0 )
 {
     // default unit for emissions
@@ -219,7 +218,7 @@ void NonCO2Emissions::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
     XMLWriteElement( mInputEmissions, "input-emissions", aOut, aTabs );
-    XMLWriteElement( mSavedEmissionsCoef, "saved-ef", aOut, aTabs );
+    XMLWriteElement( mSavedEmissionsCoef[ aPeriod ], "saved-ef", aOut, aTabs );
 
     XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
 
@@ -241,9 +240,16 @@ void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSe
                                     const IInfo* aTechInfo )
 {
     AGHG::completeInit( aRegionName, aSectorName, aTechInfo );
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    mSavedEmissionsCoef.resize( modeltime->getmaxper(), -1.0 );
+    
     // If an emissions coefficient was read-in or otherwise set, stash this coefficient
     if ( mEmissionsCoef.isInited() ) {
-        mSavedEmissionsCoef = mEmissionsCoef;
+        // Initialize all years with initial value. Will be updated as calcuation proceeds.
+        for( unsigned int aPeriod = 0; aPeriod < mSavedEmissionsCoef.size(); ++aPeriod ) {
+            mSavedEmissionsCoef[ aPeriod ] = mEmissionsCoef;
+        }
     }
     
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
@@ -267,7 +273,6 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
      for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->initCalc( aRegionName, aTechInfo, this, aPeriod );
     }
-
 }
 
 double NonCO2Emissions::getGHGValue( const string& aRegionName,
@@ -359,7 +364,7 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     if( mShouldCalibrateEmissCoef ) {
         mEmissionsCoef = emissDriver > 0 ? mInputEmissions / emissDriver : 0;
         // Since have updated emissions coefficient, updated stashed coefficient
-        mSavedEmissionsCoef = mEmissionsCoef;
+        mSavedEmissionsCoef[ aPeriod ] = mEmissionsCoef;
     }
     
     // Compute emissions reductions. These are only applied in future years
@@ -383,8 +388,9 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
 
     mEmissions[ aPeriod ] = totalEmissions;
     
-    // Stash emissions coefficient. This updates stashed value in case emissions controls have been applied
-    mSavedEmissionsCoef = emissDriver > 0 ? totalEmissions / emissDriver : 0;
+    // Stash actual emissions coefficient including impact of any controls. Needed by control
+    // objects that apply reductions relative to this emission coefficient value
+    mSavedEmissionsCoef[ aPeriod ] = emissDriver > 0 ? totalEmissions / emissDriver : 0;
     
     addEmissionsToMarket( aRegionName, aPeriod );
 }

@@ -34,7 +34,7 @@
 /*! 
  * \file mac_control.cpp
  * \ingroup Objects
- * \brief MACControl class source file.
+ * \brief LinearControl class source file.
  * \author Steve Smith
  */
 
@@ -49,8 +49,6 @@
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/iinfo.h"
-//#include "technologies/include/ioutput.h"
-//#include "functions/include/function_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -193,15 +191,11 @@ void LinearControl::initCalc( const string& aRegionName,
         mStartYear = finalCalibYr;
     }
     
-    // Need to save the emissions coefficient from previous period as starting point for linear decline.
-    // Note that this should only be used within initCalc (so that this always is a stable, previous value.
-    // TODO: This is not robust if periods are re-run. mSavedEmissionsCoef should be changed to a vector.
+    // Need to get the emissions coefficient from start period to serve as starting point 
+    // for linear decline.
     int startPeriod = scenario->getModeltime()->getyr_to_per( mStartYear );
-    int firstControlPeriod = startPeriod + 1;
-
-    if ( aPeriod ==  firstControlPeriod ) {
-    	// This will be the emissions coefficient at the end of mStartYear
-        mBaseEmissionsCoef = parentGHG->mSavedEmissionsCoef;
+    if ( aPeriod ==  ( startPeriod + 1 ) ) {
+        mBaseEmissionsCoef = parentGHG->mSavedEmissionsCoef[ startPeriod ];
     }
     
     // Note, the emissions driver in NonCO2Emissions::calcEmission for input driver is 
@@ -217,11 +211,6 @@ void LinearControl::calcEmissionsReduction( const std::string& aRegionName, cons
                                             const GDP* aGDP ) {
     double reduction = 0.0;
     
-    // Derivation of emission reduction
-    // newEF = baseEF - (baseEF - targetEF) * ( year - baseYear ) / ( targetYear - baseYear )
-    // newEF = baseEF * ( 1 - reduction )  therefore reduction = 1 - newEF / baseEF
-    // reduction = ( 1 - targetEF / baseEF ) * ( year - baseYear ) / ( targetYear - baseYear )
-    
     if ( mStartYear >= scenario->getModeltime()->getEndYear() ) {
         return;
     }
@@ -230,12 +219,19 @@ void LinearControl::calcEmissionsReduction( const std::string& aRegionName, cons
     
     // Don't bother if no emissions or haven't passed starting point yet
     if ( mBaseEmissionsCoef > 0 && thisYear > mStartYear && mFinalEmCoefficient.isInited() ) {
-        // This is the final reduction 
+        
+        // Derivation of emission reduction formula below
+        // newEF = baseEF - (baseEF - targetEF) * ( year - baseYear ) / ( targetYear - baseYear )
+        // newEF = baseEF * ( 1 - reduction )  therefore reduction = 1 - newEF / baseEF
+        // reduction = ( 1 - targetEF / baseEF ) * ( year - baseYear ) / ( targetYear - baseYear )
+        
+        // This is the final reduction
         reduction = ( 1 - mFinalEmCoefficient / mBaseEmissionsCoef );
         
         // If not at final year yet, phase this in linearly
         if ( thisYear < mTargetYear ) {
-            reduction *= ( thisYear -  mStartYear ) * 1.0 / ( ( mTargetYear - mStartYear ) * 1.0 );
+            reduction *= static_cast<double>( thisYear -  mStartYear ) /
+                         static_cast<double>( mTargetYear - mStartYear );
         }
         
         // Ensure that reduction is not negative unless user specifically requires this

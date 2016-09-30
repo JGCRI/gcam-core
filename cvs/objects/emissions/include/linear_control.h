@@ -83,7 +83,7 @@ protected:
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
 
 private:
-    //! Target year for final emissions factor
+    //! Target year for final emissions factor. Does not have to be a model period.
     int mTargetYear;
     
     //! Year to start emission factor decline. Must be a model period.
