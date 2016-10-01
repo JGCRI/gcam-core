@@ -362,13 +362,25 @@ GcamParallel::TBBFlowGraphBody::TBBFlowGraphBody( const std::set<FlowGraphNodeTy
 }
 
 /*!
- * \brief A helper method to pretty print IActivity* objects.
+ * \brief A helper method used by digraph-output to pretty print
+ *        IActivity* objects with it's description as it's label.
+ * \param aOut The output stream to write to.
+ * \param aActivity The IActivity * to print with it's label.
+ */
+template<>
+void print_id_with_label<IActivity*>( ostream& aOut, IActivity* aActivity ) {
+    aOut << (size_t)aActivity << "[label=\"" << aActivity->getDescription() << "\"]";
+}
+
+/*!
+ * \brief A helper method used by digraph-output to pretty print
+ *        IActivity* objects.
  * \param aOut The output stream to write to.
  * \param aActivity The IActivity * to print.
- * \return The output stream for chaining.
  */
-ostream& operator<<( ostream& aOut, IActivity* aActivity ) {
-    return aOut << aActivity->getDescription();
+template<>
+void print_id<IActivity*>( ostream& aOut, IActivity* aActivity ) {
+    aOut << (size_t)aActivity;
 }
 
 #endif // GCAM_PARALLEL_ENABLED

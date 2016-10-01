@@ -59,19 +59,22 @@ void write_as_dot(std::ostream &o, const digraph<nodeid_t> &G)
     nodeid_t nodeid = nodeit->first;
     const typename graph::node_t & node = nodeit->second;
 
-    // If the node is disconnected, output it
-    if(node.successors.empty() && node.backlinks.empty()) {
-      o << "\t" << nodeid << ";\n";
-    }
-    else {
-      // iterate over children
-      for(typename std::set<nodeid_t>::const_iterator childit = node.successors.begin();
-          childit != node.successors.end(); ++childit) {
-        nodeid_t childid = *childit;
-        
-        // output a line defining the edge between node and child
-        o << "\t" << nodeid << " -> " << childid << ";\n";
-      }
+    // print for all nodes the nodeid with the label
+    o << "\t";
+    print_id_with_label(o, nodeid);
+    o << ";\n";
+
+    // iterate over children
+    for(typename std::set<nodeid_t>::const_iterator childit = node.successors.begin();
+        childit != node.successors.end(); ++childit) {
+      nodeid_t childid = *childit;
+      
+      // output a line defining the edge between node and child
+      o << "\t";
+      print_id(o, nodeid);
+      o << " -> ";
+      print_id(o, childid);
+      o << ";\n";
     }
   }
 
@@ -100,5 +103,30 @@ void write_dot_to_file(const std::string &filename, const digraph<nodeid_t> &G)
   }
 }
 
+/*!
+ * \brief Template helper function for outputting a nodeid with it's label.
+ * \details The generic implementation does nothing interesting however users
+ *          could use template specialization to come up with more appropriate
+ *          behavior for their type.
+ * \param o The outputstream to print to.
+ * \param nodeid The nodeid to print the id and label for.
+ */
+template<class nodeid_t>
+void print_id_with_label(std::ostream& o, nodeid_t nodeid) {
+  o << nodeid;
+}
+
+/*!
+ * \brief Template helper function for outputting a nodeid.
+ * \details The generic implementation does nothing interesting however users
+ *          could use template specialization to come up with more appropriate
+ *          behavior for their type.
+ * \param o The outputstream to print to.
+ * \param nodeid The nodeid to print the id for.
+ */
+template<class nodeid_t>
+void print_id(std::ostream& o, nodeid_t nodeid) {
+  o << nodeid;
+}
 
 #endif
