@@ -40,6 +40,7 @@
 #include "containers/include/market_dependency_finder.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/timer.h"
+#include "util/base/include/auto_file.h"
 /* more graph analysis headers */
 #include "parallel/include/clanid.hpp"
 #include "parallel/include/graph-parse.hpp"
@@ -165,7 +166,8 @@ void GcamParallel::graphParseGrainCollect( const FlowGraph& aGCAMFlowGraph, Flow
     typedef clanid<FlowGraphNodeType> ClanidType;
     typedef digraph<ClanidType> ClanTree;
 
-    write_dot_to_file("gcam4a.dot", aGCAMFlowGraph);
+    AutoOutputFile graphFile( "flow-graph", "gcam-flow-graph.dot" );
+    write_as_dot( *graphFile, aGCAMFlowGraph );
     
     Timer &parsetimer = TimerRegistry::getInstance().getTimer("parse-timer");
     Timer &graintimer = TimerRegistry::getInstance().getTimer("grain-timer");
@@ -357,6 +359,16 @@ GcamParallel::TBBFlowGraphBody::TBBFlowGraphBody( const std::set<FlowGraphNodeTy
         pgLog << (*it)->getDescription() << ", ";
     }
     pgLog << endl;
+}
+
+/*!
+ * \brief A helper method to pretty print IActivity* objects.
+ * \param aOut The output stream to write to.
+ * \param aActivity The IActivity * to print.
+ * \return The output stream for chaining.
+ */
+ostream& operator<<( ostream& aOut, IActivity* aActivity ) {
+    return aOut << aActivity->getDescription();
 }
 
 #endif // GCAM_PARALLEL_ENABLED
