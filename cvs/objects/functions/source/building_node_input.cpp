@@ -481,7 +481,13 @@ void BuildingNodeInput::setPhysicalDemand( const double aPhysicalDemand,
                                     const std::string& aRegionName, 
                                     const int aPeriod )
 {
-    mBuildingSize[ aPeriod ].set( aPhysicalDemand );
+    // We are storing the results in the same vector as the calibration data
+    // generally the calculated value should match however it may not if the
+    // solver throws us negative prices.  We must explictly gaurd against
+    // reseting these values in calibration years.
+    if( aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+        mBuildingSize[ aPeriod ].set( aPhysicalDemand );
+    }
 }
 
 double BuildingNodeInput::getPrice( const std::string& aRegionName,

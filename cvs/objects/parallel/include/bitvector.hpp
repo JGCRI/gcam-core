@@ -44,12 +44,12 @@
 static const unsigned char PopCountTbl[256] = {
 #define B2(n) n,        n+1,    n+1,      n+2
 #define B4(n) B2(n), B2(n+1), B2(n+1), B2(n+2)
-#define B8(n) B4(n), B4(n+1), B4(n+1), B4(n+2)
-  B8(0), B8(1), B8(1), B8(2)
+#define B6(n) B4(n), B4(n+1), B4(n+1), B4(n+2)
+  B6(0), B6(1), B6(1), B6(2)
 };
 #undef B2
 #undef B4
-#undef B8
+#undef B6
 
 class bitvector;
 
@@ -156,7 +156,7 @@ public:
   }
 
   //! get the size of the vector
-  unsigned size(void) const {return bsize;}
+  unsigned length(void) const {return bsize;}
   //! get the popcount of the vector
   unsigned count(void) const {
     unsigned pcount = 0;
@@ -177,12 +177,7 @@ public:
   //! avoids doing a popcount on every word in the vector
   bool gt1set(void) const {
     int nwordset = 0;
-    // ignore the compiler warning about the following variable
-    // possibly being used uninitialized.  It's only referenced if
-    // nwordset==1, in which case setword is guaranteed to have been
-    // set.
-    int setword;
-    
+    int setword=0;
     for(unsigned i=0; i<dsize; ++i)
       if(data[i]) {
         ++nwordset;
@@ -262,6 +257,24 @@ public:
       data[i] &= ~bv.data[i];
     data[dsize-1] &= last_word_mask;
     return *this;
+  }
+
+  //! Test whether this set is a subset of another set 
+  //! \details You could do this with a set difference.  A is a subset
+  //!          of B if A - B is empty.  However, this function does it
+  //!          without modifying this set or making a copy.
+  //! \warning As always, we don't check for length compatibility
+  bool subset(const bitvector &bv) const {
+    for(unsigned i=0; i<dsize-1; ++i)
+      if (data[i] & ~bv.data[i])
+        // something left over when all members of B removed => not a subset of B
+        return false;
+    
+    // do the last element specially, since it needs the last word mask
+    if (data[dsize-1] & ~bv.data[dsize-1] & last_word_mask)
+      return false;
+    else
+      return true;
   }
 
   //! Equality comparison

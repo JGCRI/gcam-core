@@ -92,7 +92,7 @@ public:
     virtual double calcShareWeight( const double aShare, const double aCost, const double aAnchorShare,
                                     const double aAnchorCost, const int aPeriod ) const;
 
-    virtual void setBaseCost( const double aBaseCost );
+    virtual void setBaseCost( const double aBaseCost, const std::string &aFailMsg );
 
 private:
     //! The logit exponents by period.

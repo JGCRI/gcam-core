@@ -208,8 +208,38 @@ double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCo
     return ( aShare / aAnchorShare ) * exp( coef * ( aAnchorCost - aCost ) );
 }
 
-void AbsoluteCostLogit::setBaseCost( const double aBaseCost ) {
-    if( !mParsedBaseCost ) {
-        mBaseCost = aBaseCost;
-    }
+
+/*!
+ * \brief Set the cost scale for the logit choice function
+ * \details This parameter determines the cost range in which the
+ *          logit parameter will have the same behavior as a logit
+ *          exponent with the same numerical value in the
+ *          relative-cost variant.  The purpose of this parameter is
+ *          to allow us to easily work out the numerical values of the
+ *          choice function parameters that will give behavior similar
+ *          to a relative-cost-logit with known parameters (at least,
+ *          over a limited range of cost values).  This function is
+ *          called by the calibration subroutines, which use a set of
+ *          heuristics to set the cost scale automatically.  If a
+ *          value for the cost scale parameter was specified
+ *          explicitly in the input, then the value suggested by the
+ *          calibration subroutine is ignored, and the parsed value is
+ *          used instead.
+ * \param aBaseCost Value to set as the cost scale parameter.
+ */
+void AbsoluteCostLogit::setBaseCost( const double aBaseCost, const std::string &aFailMsg ) {
+  if( !mParsedBaseCost ) {
+      if(aBaseCost <= 0.0) {
+          // Illegal value.  Log an error and set to a default value
+          ILogger &calibrationLog = ILogger::getLogger("calibration_log");
+          ILogger::WarningLevel oldlvl = calibrationLog.setLevel(ILogger::WARNING);
+          calibrationLog << aFailMsg << ":  invalid or uninitialized base cost parameter. "
+                         << "Setting baseCost = 1.0\n";
+          calibrationLog.setLevel(oldlvl);
+          mBaseCost = 1.0;
+      }
+      else {
+          mBaseCost = aBaseCost;
+      }
+  } // This function is a no-op if mParsedBaseCost is set.
 }
