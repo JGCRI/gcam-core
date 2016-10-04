@@ -3041,12 +3041,6 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <xPath buildList="true" dataName="forcing-total" group="false" sumAll="false">climate-model/forcing-total/text()</xPath>
          <comments/>
       </ClimateQuery>
-      <ClimateQuery title="RCP forcing">
-         <axis1 name="forcing-RCP">none</axis1>
-         <axis2 name="Year">forcing-RCP[@year]</axis2>
-         <xPath buildList="true" dataName="forcing-RCP" group="false" sumAll="false">climate-model/forcing-RCP/text()</xPath>
-         <comments/>
-      </ClimateQuery>
       <ClimateQuery title="Kyoto gas forcing">
          <axis1 name="forcing-Kyoto">none</axis1>
          <axis2 name="Year">forcing-Kyoto[@year]</axis2>

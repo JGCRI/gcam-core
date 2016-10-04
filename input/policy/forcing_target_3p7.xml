@@ -23,13 +23,13 @@
                            configuration string: concentration-target-gas)
                            with disregards to what that concentration might be
             kyoto-forcing | Radiative forcing from Kyoto GHGs only
-            rcp-forcing | Radiative forcing using the RCP definition
+            rcp-forcing | Radiative forcing using the RCP definition (MAGICC only)
             temperature | Global mean temperature
             cumulative-emissions | Reach a cumulative emission goal for CO2
                                    emissions (or possibly other gasses via the
                                    configuration string: cumulative-target-gas)
      -->
-    <target-type>rcp-forcing</target-type>
+    <target-type>forcing</target-type>
     <!-- first-tax-year | default: 2020 | The first year to start a tax in -->
     <first-tax-year>2020</first-tax-year>
     <!-- forward-look | default: 0 | Allow forward looking behavior by skipping
