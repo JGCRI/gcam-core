@@ -43,8 +43,8 @@ L201.Pop_GCAM3 <- interpolate_and_melt( L101.Pop_thous_GCAM3_R_Y,
 L201.Pop_GCAM3 <- add_region_name( L201.Pop_GCAM3 )
 L201.Pop_GCAM3 <- L201.Pop_GCAM3[ names_Pop ]
 
-#Population in the GSP SSP scenarios
-#Merge the GSP SSP population table (future) with the historical estimates
+#Population in the gSSP SSP scenarios
+#Merge the gSSP SSP population table (future) with the historical estimates
 L101.Pop_thous_Scen_R_Y <- merge( L101.Pop_thous_R_Yh, L101.Pop_thous_Scen_R_Yfut, all.y = T )
 L101.Pop_thous_Scen_R_Y.melt <- interpolate_and_melt( L101.Pop_thous_Scen_R_Y,
       c( model_base_years, model_future_years ), value.name = "totalPop", digits = digits_Pop )
@@ -83,7 +83,7 @@ L201.pcgdpRatio_GCAM3_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
       L201.pcgdp_GCAM3_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] /
       L201.pcgdp_GCAM3_R_Y[ X_model_years[ 1:( length( X_model_years ) - 1 ) ] ]
 
-#GSPs and SSPs
+#gSSPs and SSPs
 L201.pcgdp_thous90USD_Scen_R_Y <- add_region_name( L102.pcgdp_thous90USD_Scen_R_Y )
 L201.pcgdpRatio_Scen_R_Y <- L201.pcgdp_thous90USD_Scen_R_Y[ c( Scen, "region", X_model_years[ 2:length( X_model_years ) ] ) ]
 L201.pcgdpRatio_Scen_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
@@ -102,7 +102,7 @@ L201.pcgdpGrowth_GCAM3_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
       round( L201.pcgdpRatio_GCAM3_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] ^ ( 1 / timesteps_repR ) - 1,
              digits_LaborProductivity )
 
-#GSPs and SSPs
+#gSSPs and SSPs
 L201.pcgdpGrowth_Scen_R_Y <- L201.pcgdpRatio_Scen_R_Y
 L201.pcgdpGrowth_Scen_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] <-
       round( L201.pcgdpRatio_Scen_R_Y[ X_model_years[ 2:length( X_model_years ) ] ] ^ ( 1 / timesteps_repR_Scen ) - 1,
@@ -131,8 +131,8 @@ write_mi_data( L201.PPPConvert, "PPPConvert", "SOCIO_LEVEL2_DATA", "L201.PPPConv
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_interest_rate.xml", "SOCIO_XML_FINAL", "interest_rate.xml", "", xml_tag="outFile" )
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_socioeconomics_GCAM3.xml", "SOCIO_XML_FINAL", "socioeconomics_GCAM3.xml", "", xml_tag="outFile" )
 
-#Split into separate GSP tables to be written out
-printlog( "Split into separate SSP GSP tables to be written out" )
+#Split into separate gSSP tables to be written out
+printlog( "Split into separate SSP gSSP tables to be written out" )
 Scens <- sort( unique( L101.Pop_thous_Scen_R_Y.melt[[Scen]] ) )
 for( i in Scens ){
   objectname <- paste0( "L201.Pop_", i )

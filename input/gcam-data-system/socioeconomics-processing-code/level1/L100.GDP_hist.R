@@ -32,7 +32,7 @@ USDA_GDP_MER <- readdata( "SOCIO_LEVEL0_DATA", "USDA_GDP_MER" )
 # 2. Perform computations
 # At present the GDP database used requires no downscaling and all major countries are included, so really no
 # processing steps are needed. All that happens in this file right now is subsetting the years that will be
-# required by later files, and converting the units from [billion 2010 USD] to GCAM's GDP unit (million 1990 USD)
+# required by later files, and converting the units from [billion 2010 USD] to GCAM's GDP unit (million 1990 USD) 
 L100.gdp_mil90usd_ctry_Yh <- na.omit(
   data.frame(
     USDA_GDP_MER[ "iso" ],

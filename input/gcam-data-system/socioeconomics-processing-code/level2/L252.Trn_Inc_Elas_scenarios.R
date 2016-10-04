@@ -50,7 +50,7 @@ L252.IncomeElasticity_trn_GCAM3$income.elasticity <- round(
 L252.IncomeElasticity_trn_GCAM3$energy.final.demand <- A52.demand$energy.final.demand
 L252.IncomeElasticity_trn_GCAM3 <- L252.IncomeElasticity_trn_GCAM3[ names_IncomeElasticity]
 
-#SSPs GSPs
+#SSPs gSSPs
 L252.pcgdp_thous90USD_Scen_R_Y <- add_region_name( L102.pcgdp_thous90USD_Scen_R_Y )
 L252.pcgdp_thous90USD_Scen_R_Y.melt <- interpolate_and_melt( L252.pcgdp_thous90USD_Scen_R_Y, model_future_years, value.name = "pcgdp_90thousUSD" )
 L252.pcgdp_thous90USD_Scen_R_Y.melt$income.elasticity <- round(
@@ -63,7 +63,7 @@ L252.pcgdp_thous90USD_Scen_R_Y.melt$energy.final.demand <- A52.demand$energy.fin
 write_mi_data( L252.IncomeElasticity_trn_GCAM3, "IncomeElasticity", "SOCIO_LEVEL2_DATA", "L252.IncomeElasticity_trn_GCAM3", "SOCIO_XML_BATCH", "batch_trn_agg_GCAM3.xml" ) 
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_trn_agg_GCAM3.xml", "SOCIO_XML_FINAL", "trn_agg_GCAM3.xml", "", xml_tag="outFile" )
 
-printlog( "Writing out SSP GSP files in a for loop" )
+printlog( "Writing out SSP gSSP files in a for loop" )
 Scens <- sort( unique( L252.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] ) )
 for( i in Scens ){
 	objectname <- paste0( "L252.IncomeElasticity_trn_", i )

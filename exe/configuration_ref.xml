@@ -23,7 +23,7 @@
 	<ScenarioComponents>
 		<Value name = "climate">../input/climate/hector.xml</Value>
 		<Value name = "interest_rate">../input/gcam-data-system/xml/socioeconomics-xml/interest_rate.xml</Value>
-		<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_GSP2.xml</Value>
+		<Value name = "socioeconomics">../input/gcam-data-system/xml/socioeconomics-xml/socioeconomics_gSSP2.xml</Value>
 		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/resources.xml</Value>
 		<Value name = "energy_supply">../input/gcam-data-system/xml/energy-xml/en_supply.xml</Value>
 		<Value name = "energy_transformation">../input/gcam-data-system/xml/energy-xml/en_transformation.xml</Value>
@@ -32,9 +32,9 @@
 		<Value name = "hydrogen">../input/gcam-data-system/xml/energy-xml/hydrogen.xml</Value>
 		<Value name = "energy_distribution">../input/gcam-data-system/xml/energy-xml/en_distribution.xml</Value>
 		<Value name = "industry">../input/gcam-data-system/xml/energy-xml/industry.xml</Value>
-		<Value name = "industry_income_elas">../input/gcam-data-system/xml/energy-xml/industry_incelas_GSP2.xml</Value>
+		<Value name = "industry_income_elas">../input/gcam-data-system/xml/energy-xml/industry_incelas_gSSP2.xml</Value>
 		<Value name = "cement">../input/gcam-data-system/xml/energy-xml/cement.xml</Value>
-		<Value name = "cement_income_elas">../input/gcam-data-system/xml/energy-xml/cement_incelas_GSP2.xml</Value>
+		<Value name = "cement_income_elas">../input/gcam-data-system/xml/energy-xml/cement_incelas_gSSP2.xml</Value>
 		<Value name = "fertilizer_energy">../input/gcam-data-system/xml/energy-xml/en_Fert.xml</Value>
 		<Value name = "hddcdd">../input/gcam-data-system/xml/energy-xml/HDDCDD_constdd_no_GCM.xml</Value>
 		<Value name = "building">../input/gcam-data-system/xml/energy-xml/building_det.xml</Value>

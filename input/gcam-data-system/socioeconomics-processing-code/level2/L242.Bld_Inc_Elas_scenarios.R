@@ -50,7 +50,7 @@ L242.IncomeElasticity_bld_GCAM3$income.elasticity <- round(
 L242.IncomeElasticity_bld_GCAM3$energy.final.demand <- A42.demand$energy.final.demand
 L242.IncomeElasticity_bld_GCAM3 <- L242.IncomeElasticity_bld_GCAM3[ names_IncomeElasticity]
 
-#Scens GSPs
+#Scenarios gSSPs
 L242.pcgdp_thous90USD_Scen_R_Y <- add_region_name( L102.pcgdp_thous90USD_Scen_R_Y )
 L242.pcgdp_thous90USD_Scen_R_Y.melt <- interpolate_and_melt( L242.pcgdp_thous90USD_Scen_R_Y, model_future_years, value.name = "pcgdp_90thousUSD" )
 L242.pcgdp_thous90USD_Scen_R_Y.melt$income.elasticity <- round(
@@ -64,7 +64,7 @@ write_mi_data( L242.IncomeElasticity_bld_GCAM3, "IncomeElasticity", "SOCIO_LEVEL
 
 insert_file_into_batchxml( "SOCIO_XML_BATCH", "batch_bld_agg_GCAM3.xml", "SOCIO_XML_FINAL", "bld_agg_GCAM3.xml", "", xml_tag="outFile" )
 
-printlog( "Writing out Scen  GSP files in a for loop" )
+printlog( "Writing out Scen gSSP files in a for loop" )
 Scens <- sort( unique( L242.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] ) )
 for( i in Scens ){
 	objectname <- paste0( "L242.IncomeElasticity_bld_", i )
