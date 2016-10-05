@@ -220,7 +220,6 @@ do_graph <- function(   p,              # a ggplot
             x_var_name <- as.character( p$layers[[ 1 ]]$mapping$x )
             agg_formula <- as.formula( paste( y_var_name,
                 paste( c( x_var_name, page_variables ), collapse="+"), sep="~") )
-            print(agg_formula)
             paged_y_values <- aggregate( agg_formula, p$data, FUN=sum )
             y_min <- min( 0, min( paged_y_values[, y_var_name ] ) )
             y_max <- max( paged_y_values[, y_var_name ] )
@@ -249,6 +248,15 @@ do_graph <- function(   p,              # a ggplot
             psub[[ "filter_data" ]] <- c( psub[[ "filter_data" ]], as.list( dsub[ 1, page_variables ] ) )
         }
 
+        if( "do_neg_split" %in% names( psub ) ) {
+            # This is a bar chart that needs to have negative and positive
+            # values drawn sperately in different layers. So we must set that
+            # up now that we have dsub
+            psub$layers[[1]]$data <- subset(dsub, eval(psub$layers[[1]]$mapping$y) >= 0)
+            neg_layer <- geom_bar(data=subset(dsub, eval(psub$layers[[1]]$mapping$y) < 0),
+                mapping=psub$layers[[1]]$mapping, stat=psub$layers[[1]]$stat)
+            psub$layers <- c(psub$layers, neg_layer)
+        }
         do_single_graph( psub %+% dsub, ... )
     }
 

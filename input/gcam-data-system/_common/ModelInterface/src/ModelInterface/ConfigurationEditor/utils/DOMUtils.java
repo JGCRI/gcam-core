@@ -29,9 +29,12 @@
 */
 package ModelInterface.ConfigurationEditor.utils;
 
+import ModelInterface.InterfaceMain;
+
 import java.awt.Container;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,6 +54,8 @@ import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * A set of methods for manipulating and querying the DOM.
@@ -657,5 +662,25 @@ return false;
     	// Check for unknown values. Warn that these exist and return false.
     	Logger.global.log(Level.WARNING, "Unknown text value contained in node.");
     	return false;
+    }
+
+    /**
+     * Helper method to parse XML into a DOM document from an InputStream.
+     * @param aInputStream The input stream to read XML from.
+     * @return A DOM Document parsed from the given InputStream or null if an
+     *         error occurred.
+     */
+    public static Document parseInputStream(InputStream aInputStream) {
+        Document ret = null;
+        try {
+            DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            ret = parser.parse(aInputStream);
+        } catch(Exception e) {
+            e.printStackTrace();
+            InterfaceMain.getInstance().showMessageDialog(e.getMessage(),
+                    "Could not parse input stream", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            return ret;
+        }
     }
 }

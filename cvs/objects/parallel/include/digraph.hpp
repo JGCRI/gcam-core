@@ -74,7 +74,7 @@ public:
     
     // constructors and destructors
     node_t(void) : topological_rank(-1),subgraph(0) {}
-    node_t(const nodeid_t &o) : id(o), topological_rank(-1),subgraph(0) {}
+    explicit node_t(const nodeid_t &o) : id(o), topological_rank(-1),subgraph(0) {}
     node_t(const nodeid_t &o, const digraph &g) : id(o),topological_rank(-1) {
       subgraph = new digraph(g);
       subgraph->subp = true;
@@ -168,7 +168,11 @@ public:
   digraph(const bmatrix &adj, const std::vector<nodeid_t> &ids, const std::string &t="G");
 
   //! examine the node list
-  const nodelist_t &nodelist() const {return allnodes;} 
+  const nodelist_t &nodelist() const {return allnodes;}
+  //! get a handle to a node by nodeid
+  const node_t &getnode(const nodeid_t &node) const;
+  //! get a handle to a node by topological index
+  const node_t &getnode(int index) const;
   //! is a subgraph?
   bool issub(void) const {return subp;} 
   //! get title
@@ -184,6 +188,10 @@ public:
   nodeid_t topological_lookup(unsigned i) const;
   //! query whether the topological sort data is valid
   bool topology_valid(void) const {return topvalid;}
+  //! convert a set of nodes (e.g. successors of a node) to a bitvector
+  bitvector convert_to_bv(const std::set<nodeid_t> &nodes) const;
+  //! convert a bitvector to a set of nodes
+  std::set<nodeid_t> convert_to_set(const bitvector &nodes) const;
   
   //! Create a node with a given id
   void addnode(const nodeid_t &id) {
@@ -251,33 +259,48 @@ public:
 
   //! Remove a node, iterator version.
   //! \details If this node is a subgraph, all of the nodes in the subgraph will also be destroyed. 
+  //! \param pn Nodelist iterator pointing at the node to delete 
+  //! \param preserve_connect If true, connect the parents of the
+  //!        removed node to its children.  If false, leave the graph
+  //!        disconnected where the deleted node was.  (default =
+  //!        false) 
   //! \remark As with removing an edge, we don't invalidate the
   //! topology.  The bogus node will still be in the topological
   //! index, but it doesn't cause any harm by being there.  All we
   //! really care about is the ordering amongst the valid nodes.
-  void delnode(nodelist_iter_t &pn)
+  void delnode(nodelist_iter_t &pn, bool preserve_connect = false)
   {
-    // need to delete all the edges incident on this node
     const nodeid_t & nodeid = pn->first;
     std::set<nodeid_t> &successors = pn->second.successors;
+    std::set<nodeid_t> &backlinks = pn->second.backlinks;
     typename std::set<nodeid_t>::iterator iter;
+    
+    if(preserve_connect) {
+      // We need to connect all of this node's parent nodes to its child nodes
+      for(typename std::set<nodeid_t>::iterator piter = backlinks.begin();
+          piter != backlinks.end(); ++piter)
+        for(typename std::set<nodeid_t>::iterator citer = successors.begin();
+            citer != successors.end(); ++citer)
+          addedge(*piter, *citer);
+    }
+
+    // need to delete all the edges connecting to this node
     // erase backlink to this node from successor node
     for(iter = successors.begin(); iter != successors.end(); ++iter)
       allnodes[*iter].backlinks.erase(nodeid);
     
     // erase forward link to this node from ancestor node
-    std::set<nodeid_t> &backlinks = pn->second.backlinks;
     for(iter = backlinks.begin(); iter != backlinks.end(); ++iter)
-      allnodes[*iter].successors.erase(nodeid);
-
+      allnodes[*iter].successors.erase(nodeid); 
+    
     // erase the node itself
     allnodes.erase(pn);
   }
   //! Remove a node, node version
-  void delnode(const nodeid_t &n) {
+  void delnode(const nodeid_t &n, bool preserve_edges = false) {
     nodelist_iter_t pn = allnodes.find(n);
     if (pn!=allnodes.end())
-      delnode(pn);
+      delnode(pn, preserve_edges);
   } 
 
   //! Collapse a subgraph into a single node
@@ -627,6 +650,17 @@ digraph<nodeid_t>::digraph(const bmatrix &adj, const std::vector<nodeid_t> &ids,
   }
 }
 
+template <class nodeid_t>
+const typename digraph<nodeid_t>::node_t &digraph<nodeid_t>::getnode(const nodeid_t &node) const
+{
+  return allnodes.find(node)->second;
+}
+
+template <class nodeid_t>
+const typename digraph<nodeid_t>::node_t &digraph<nodeid_t>::getnode(int index) const
+{
+  return getnode(topological_lookup(index));
+}
 
 template <class nodeid_t>
 void digraph<nodeid_t>::collapse_subgraph(const std::set<nodeid_t> &node_names, const nodeid_t &name)
@@ -676,6 +710,7 @@ void digraph<nodeid_t>::collapse_subgraph(const std::set<nodeid_t> &node_names, 
 
   topvalid = false;             // we've added a new node
 }
+
 
 template <class nodeid_t>
 std::vector<nodeid_t> digraph<nodeid_t>::find_outside_edges(const nodelist_t &nodelist,
@@ -1315,6 +1350,27 @@ const std::vector<nodeid_t> & digraph<nodeid_t>::topological_sort(void) const
 }
 
 template <class nodeid_t>
+bitvector digraph<nodeid_t>::convert_to_bv(const std::set<nodeid_t> &nodes) const
+{
+  bitvector bvnodes(allnodes.size());
+  for(typename std::set<nodeid_t>::const_iterator nodeit = nodes.begin();
+      nodeit != nodes.end(); ++nodeit) {
+    bvnodes.set(topological_index(*nodeit));
+  }
+  return bvnodes;
+}
+
+template <class nodeid_t>
+std::set<nodeid_t> digraph<nodeid_t>::convert_to_set(const bitvector &nodes) const
+{
+  std::set<nodeid_t> snodes;
+  bitvector_iterator nodeit(&nodes);
+  while(nodeit.next())
+    snodes.insert(topological_lookup(nodeit.bindex()));
+  return snodes;
+}
+
+template <class nodeid_t>
 void digraph<nodeid_t>::clear_all_marks(void) const
 {
   for(nodelist_c_iter_t nodeit = allnodes.begin();
@@ -1390,6 +1446,18 @@ bool digraph<nodeid_t>::any_child_marked(const nodeid_t &node) const
   // if we made it this far, then there were no marked children
   return false;
 }
+
+/*! \brief Output a brief representation of a graph
+ *! \details Output will be in the form:
+ *!           <digraph: graphtitle, N nodes>
+ */
+template <class nodeid_t>
+std::ostream &operator<<(std::ostream &o, const digraph<nodeid_t> &G)
+{
+  o << "<digraph: " << G.title() << ", " << G.nodelist().size() << " nodes>";
+  return o;
+}
+
 
 #endif
 

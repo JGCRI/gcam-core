@@ -184,8 +184,8 @@ double RelativeCostLogit::calcShareWeight( const double aShare, const double aCo
     return ( aShare / aAnchorShare ) * pow( cappedAnchorCost/ cappedCost, mLogitExponent[ aPeriod ] );
 }
 
-void RelativeCostLogit::setBaseCost( const double aBaseCost ) {
-    // the relative cost logit does not utilize this parameter.
+void RelativeCostLogit::setBaseCost( const double aBaseCost, const std::string &aFailMsg ) {
+    // the relative cost logit does not utilize this parameter, so this function is a no-op
 }
 
 /*!

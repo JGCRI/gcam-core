@@ -149,7 +149,6 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
     LoggerFactory::logNewScenarioStarting( overrideName );
 
     // Print data read in time.
-    timer.stop();
     mainLog.setLevel( ILogger::DEBUG );
     timer.print( mainLog, "XML Readin Time:" );
 
@@ -174,6 +173,8 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
         mainLog << "period " << aSinglePeriod;
     }
     mainLog << endl;
+
+    aTimer.start();             // ensure timer is running.
     
 	bool success = false;
 	if( mScenario.get() ){
@@ -181,10 +182,9 @@ bool SingleScenarioRunner::runScenarios( const int aSinglePeriod,
         success = mScenario->run( aSinglePeriod, aPrintDebugging,
                                   mScenario->getName() );
 
-		// Compute model run time.
-		aTimer.stop();
-		mainLog.setLevel( ILogger::DEBUG );
-		aTimer.print( mainLog, "Data Readin & Initial Model Run Time:" );
+        // Compute model run time.
+        mainLog.setLevel( ILogger::DEBUG );
+        aTimer.print( mainLog, "Data Readin & Initial Model Run Time:" );
 	}
 	else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -201,6 +201,9 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Printing output" << endl;
 
+    Timer &writeTimer = TimerRegistry::getInstance().getTimer(TimerRegistry::WRITE_DATA);
+    writeTimer.start();
+    
     // Print output xml file.
     AutoOutputFile xmlOut( "xmlOutputFileName", "output.xml" );
     Tabs tabs;
@@ -244,11 +247,13 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
         // Print the output.
         mXMLDBOutputter->finish();
     }
-
+    writeTimer.stop();
+    
     // Print the timestamps.
     aTimer.stop();
     mainLog.setLevel( ILogger::DEBUG );
     aTimer.print( mainLog, "Data Readin, Model Run & Write Time:" );
+    writeTimer.print(mainLog, "Write time: ");
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Model run completed." << endl;
 }

@@ -91,14 +91,19 @@ public class WriteLocalBaseXDB implements Runnable {
      *                    written to disk.  This would only be useful if the users
      *                    were going to run queries on it after since as soon as the
      *                    database is closed the data is lost.
+     * @param aOpenDBWait A timeout in seconds to wait for user intervention before
+     *                    attempting to write to a DB which appears to be open. A
+     *                    negative value indicates to wait indefinately.
      */
-    public WriteLocalBaseXDB( final String aDBLocation, final String aDocName, final boolean aInMemoryDB ) throws Exception {
+    public WriteLocalBaseXDB( final String aDBLocation, final String aDocName,
+                              final boolean aInMemoryDB, final int aOpenDBWait ) throws Exception
+    {
         // Set the DB location and doc name.
         mDBLocation = aDBLocation;
         mDocName = aDocName;
 
         // Open the database
-        openDB( aInMemoryDB );
+        openDB( aInMemoryDB, aOpenDBWait );
     }
 
     /**
@@ -122,8 +127,11 @@ public class WriteLocalBaseXDB implements Runnable {
      * Opens the database.  We will "Check" the database which will open it
      * if it already exists or create a new one otherwise.
      * @param aInMemoryDB If the databse is to be stored in memory only.
+     * @param aOpenDBWait A timeout in seconds to wait for user intervention before
+     *                    attempting to write to a DB which appears to be open. A
+     *                    negative value indicates to wait indefinately.
      */
-    private void openDB( final boolean aInMemoryDB ) throws Exception {
+    private void openDB( final boolean aInMemoryDB, final int aOpenDBWait ) throws Exception {
         // Figure out the path to the database
         // First try the unix file separator
         int indexOfFileSep = mDBLocation.lastIndexOf( '/' );
@@ -168,6 +176,29 @@ public class WriteLocalBaseXDB implements Runnable {
         mContext.options.set( MainOptions.INTPARSE, true );
         // Open the database in memory if requested.
         mContext.options.set( MainOptions.MAINMEM, aInMemoryDB );
+
+        // Check if the database is "pinned" or open already in which case
+        // ask the user to close it before procceeding.
+        if( mContext.pinned( containerName ) ) {
+            // Rings bell on most terminals
+            System.out.print((char)7);
+            System.out.println( "The database "+containerName+" appears to be open.");
+            // If the timeout is less than 0 we will wait indefinately.
+            if( aOpenDBWait < 0 ) {
+                System.out.println( "Please close it and press return to continue.." );
+                System.in.read();
+            } else {
+                //BufferedReader in = new BufferedReader( new InputStreamReader( System.in ) );
+                final long startTime = System.currentTimeMillis();
+                System.out.println( "Please close it and press return to continue (waiting "+aOpenDBWait+" seconds).." );
+                while( ( System.currentTimeMillis() - startTime ) < aOpenDBWait * 1000
+                       && System.in.available() == 0 )
+                {
+                    // busy wait
+                }
+            }
+            System.out.println( "Attempting to write again." );
+        }
 
         // The Check command will open the database if it already exists or
         // create a new one otherwise.
