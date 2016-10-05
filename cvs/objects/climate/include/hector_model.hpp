@@ -4,7 +4,6 @@
 #pragma once
 #endif
 
-#if USE_HECTOR
 /*
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
@@ -43,6 +42,10 @@
  * \brief Header file for HectorModel wrapper class
  * \author Robert Link
  */
+
+#include "util/base/include/definitions.h"
+
+#if USE_HECTOR
 
 #include <map>
 #include <string>

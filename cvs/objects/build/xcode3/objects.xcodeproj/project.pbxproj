@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,8 +22,7 @@
 		CD165BC51A2513D5005F3A8B /* preconditioner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC41A2513D5005F3A8B /* preconditioner.cpp */; };
 		CD165BC81A2513F7005F3A8B /* spline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD165BC71A2513F7005F3A8B /* spline.cpp */; };
 		CD177C3B159A0C5B000A996F /* cumulative_emissions_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */; };
-		CD1C993F1A3AE1E800E5F460 /* JavaVM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */; };
-		CD3B52C61BFE0E2800179FDD /* hector_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B52C51BFE0E2800179FDD /* hector_model.cpp */; settings = {ASSET_TAGS = (); }; };
+		CD3B52C61BFE0E2800179FDD /* hector_model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3B52C51BFE0E2800179FDD /* hector_model.cpp */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
 		CD48872C122873C200F5A88A /* land_carbon_densities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488433122873C000F5A88A /* land_carbon_densities.cpp */; };
@@ -283,8 +282,9 @@
 		CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */; };
 		CD83E61614F4584900A1D301 /* linked_market.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E61514F4584900A1D301 /* linked_market.cpp */; };
 		CD83E63A14F54B1000A1D301 /* linked_ghg_policy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E63914F54B1000A1D301 /* linked_ghg_policy.cpp */; };
-		CD8FDEC91C0647140099C752 /* pass_through_sector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */; settings = {ASSET_TAGS = (); }; };
-		CD8FDECC1C0647A20099C752 /* pass_through_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */; settings = {ASSET_TAGS = (); }; };
+		CD8FDEC91C0647140099C752 /* pass_through_sector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */; };
+		CD8FDECC1C0647A20099C752 /* pass_through_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */; };
+		CD966E751D92F1CD00A93938 /* libhector-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD966E721D92F1BB00A93938 /* libhector-lib.a */; };
 		CDAF62F0130DAB6900D93AFB /* MAGICC_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */; };
 		CDAF62F1130DAB6900D93AFB /* MAGICC_IO_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */; };
 		CDAF62F2130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */; };
@@ -317,6 +317,37 @@
 		CDF83C1A13A30CC500DF178D /* kyoto_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C1813A30CC500DF178D /* kyoto_forcing_target.cpp */; };
 		CDF83C1B13A30CC500DF178D /* secanter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C1913A30CC500DF178D /* secanter.cpp */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CD966E6D1D92F1BB00A93938 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DD76F6C0486A84900D96B5E;
+			remoteInfo = hector;
+		};
+		CD966E6F1D92F1BB00A93938 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD706AC2124BA91A00C0C6D5;
+			remoteInfo = "hector-unit-tests";
+		};
+		CD966E711D92F1BB00A93938 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD97CE321BFBBF2E005689AD;
+			remoteInfo = "hector-lib";
+		};
+		CD966E731D92F1C500A93938 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CD97CE311BFBBF2E005689AD;
+			remoteInfo = "hector-lib";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		8DD76F690486A84900D96B5E /* CopyFiles */ = {
@@ -362,7 +393,6 @@
 		CD165BC71A2513F7005F3A8B /* spline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spline.cpp; sourceTree = "<group>"; };
 		CD177C39159A0ADA000A996F /* cumulative_emissions_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cumulative_emissions_target.h; sourceTree = "<group>"; };
 		CD177C3A159A0C5B000A996F /* cumulative_emissions_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cumulative_emissions_target.cpp; sourceTree = "<group>"; };
-		CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaVM.framework; path = ../../../../../../../../../System/Library/Frameworks/JavaVM.framework; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD3B52C41BFE0E1F00179FDD /* hector_model.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = hector_model.hpp; sourceTree = "<group>"; };
 		CD3B52C51BFE0E2800179FDD /* hector_model.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = hector_model.cpp; sourceTree = "<group>"; };
@@ -977,6 +1007,7 @@
 		CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pass_through_sector.cpp; sourceTree = "<group>"; };
 		CD8FDECA1C0647640099C752 /* pass_through_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pass_through_technology.h; sourceTree = "<group>"; };
 		CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pass_through_technology.cpp; sourceTree = "<group>"; };
+		CD966E671D92F1BB00A93938 /* hector.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = hector.xcodeproj; path = ../../climate/source/hector/project_files/Xcode/hector.xcodeproj; sourceTree = "<group>"; };
 		CDAF62EA130DAB6100D93AFB /* MAGICC_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAGICC_array.h; sourceTree = "<group>"; };
 		CDAF62EB130DAB6100D93AFB /* ObjECTS_MAGICC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjECTS_MAGICC.h; sourceTree = "<group>"; };
 		CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MAGICC_array.cpp; sourceTree = "<group>"; };
@@ -1041,7 +1072,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD1C993F1A3AE1E800E5F460 /* JavaVM.framework in Frameworks */,
+				CD966E751D92F1CD00A93938 /* libhector-lib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,7 +1082,7 @@
 		08FB7794FE84155DC02AAC07 /* objects */ = {
 			isa = PBXGroup;
 			children = (
-				CD1C993E1A3AE1E800E5F460 /* JavaVM.framework */,
+				CD966E671D92F1BB00A93938 /* hector.xcodeproj */,
 				CD488409122873C000F5A88A /* objects */,
 				CD299E9711B9C11800E6D196 /* Products */,
 			);
@@ -2375,6 +2406,16 @@
 			path = source;
 			sourceTree = "<group>";
 		};
+		CD966E681D92F1BB00A93938 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CD966E6E1D92F1BB00A93938 /* hector */,
+				CD966E701D92F1BB00A93938 /* hector-unit-tests */,
+				CD966E721D92F1BB00A93938 /* libhector-lib.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		CDD20FEE161B9F5D00945527 /* parallel */ = {
 			isa = PBXGroup;
 			children = (
@@ -2421,6 +2462,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CD966E741D92F1C500A93938 /* PBXTargetDependency */,
 			);
 			name = objects;
 			productInstallPath = "$(HOME)/bin";
@@ -2434,9 +2476,10 @@
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 1DEB923508733DC60010E9CD /* Build configuration list for PBXProject "objects" */;
-			compatibilityVersion = "Xcode 3.1";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -2448,12 +2491,42 @@
 			mainGroup = 08FB7794FE84155DC02AAC07 /* objects */;
 			productRefGroup = CD299E9711B9C11800E6D196 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CD966E681D92F1BB00A93938 /* Products */;
+					ProjectRef = CD966E671D92F1BB00A93938 /* hector.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8DD76F620486A84900D96B5E /* objects */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CD966E6E1D92F1BB00A93938 /* hector */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = hector;
+			remoteRef = CD966E6D1D92F1BB00A93938 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD966E701D92F1BB00A93938 /* hector-unit-tests */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = "hector-unit-tests";
+			remoteRef = CD966E6F1D92F1BB00A93938 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CD966E721D92F1BB00A93938 /* libhector-lib.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libhector-lib.a";
+			remoteRef = CD966E711D92F1BB00A93938 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8DD76F640486A84900D96B5E /* Sources */ = {
@@ -2773,12 +2846,21 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		CD966E741D92F1C500A93938 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "hector-lib";
+			targetProxy = CD966E731D92F1C500A93938 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
 		1DEB923208733DC60010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -2793,14 +2875,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
-				LIBRARY_SEARCH_PATHS = (
-					../../../../libs/xercesc/lib,
-					/System/Library/Frameworks/JavaVM.framework/Libraries,
-				);
 				PRODUCT_NAME = objects;
 			};
 			name = Release;
@@ -2808,7 +2887,7 @@
 		1DEB923608733DC60010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ENABLE_TESTABILITY = YES;
 				GCC_AUTO_VECTORIZATION = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = NO;
@@ -2824,22 +2903,31 @@
 					"../../../../libs/boost-lib",
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
+					../../../../libs/java/include/darwin,
 				);
-				LD_RUNPATH_SEARCH_PATHS = ../libs;
-				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
+				LD_RUNPATH_SEARCH_PATHS = "../libs ../libs/java/lib ../libs/boost-lib/stage/lib";
+				LIBRARY_SEARCH_PATHS = (
+					../../../../libs/xercesc/lib,
+					../../../../libs/java/lib,
+					"../../../../libs/boost-lib/stage/lib",
+				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-lxerces-c";
+				OTHER_LDFLAGS = (
+					"-lxerces-c",
+					"-ljvm",
+					"-lboost_system",
+					"-lboost_filesystem",
+				);
 				PREBINDING = NO;
 				SDKROOT = "";
 				SYMROOT = ../../../../exe;
-				USER_HEADER_SEARCH_PATHS = ../..;
+				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
 			};
 			name = Debug;
 		};
 		1DEB923708733DC60010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -2858,22 +2946,31 @@
 					"../../../../libs/boost-lib",
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
+					../../../../libs/java/include/darwin,
 				);
-				LD_RUNPATH_SEARCH_PATHS = ../libs;
-				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
+				LD_RUNPATH_SEARCH_PATHS = "../libs ../libs/java/lib ../libs/boost-lib/stage/lib";
+				LIBRARY_SEARCH_PATHS = (
+					../../../../libs/xercesc/lib,
+					../../../../libs/java/lib,
+					"../../../../libs/boost-lib/stage/lib",
+				);
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-lxerces-c";
+				OTHER_LDFLAGS = (
+					"-lxerces-c",
+					"-ljvm",
+					"-lboost_system",
+					"-lboost_filesystem",
+				);
 				PREBINDING = NO;
 				SDKROOT = "";
 				SYMROOT = ../../../../exe;
-				USER_HEADER_SEARCH_PATHS = ../..;
+				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
 			};
 			name = Release;
 		};
 		CDE5689F161BA81B007A864C /* Release - LAPACK */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -2893,20 +2990,28 @@
 					"../../../../libs/boost-lib",
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
+					../../../../libs/java/include/darwin,
 					"../../../../libs/boost-numeric-bindings",
 				);
-				LD_RUNPATH_SEARCH_PATHS = ../libs;
-				LIBRARY_SEARCH_PATHS = ../../../../libs/xercesc/lib;
+				LD_RUNPATH_SEARCH_PATHS = "../libs ../libs/java/lib ../libs/boost-lib/stage/lib";
+				LIBRARY_SEARCH_PATHS = (
+					../../../../libs/xercesc/lib,
+					../../../../libs/java/lib,
+					"../../../../libs/boost-lib/stage/lib",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lxerces-c",
+					"-ljvm",
 					"-llapack",
 					"-lblas",
+					"-lboost_system",
+					"-lboost_filesystem",
 				);
 				PREBINDING = NO;
 				SDKROOT = "";
 				SYMROOT = ../../../../exe;
-				USER_HEADER_SEARCH_PATHS = ../..;
+				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
 			};
 			name = "Release - LAPACK";
 		};
@@ -2914,7 +3019,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
@@ -2925,7 +3031,6 @@
 		CDE568AC161BAC0D007A864C /* Release - TBB */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_AUTO_VECTORIZATION = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
@@ -2946,27 +3051,33 @@
 					"../../../../libs/boost-lib",
 					../../../../libs/xercesc/include,
 					../../../../libs/java/include,
+					../../../../libs/java/include/darwin,
 					"../../../../libs/boost-numeric-bindings",
 					../../../../libs/tbb/include,
 				);
-				LD_RUNPATH_SEARCH_PATHS = ../libs;
+				LD_RUNPATH_SEARCH_PATHS = "../libs ../libs/java/lib ../libs/boost-lib/stage/lib";
 				LIBRARY_SEARCH_PATHS = (
 					../../../../libs/xercesc/lib,
+					../../../../libs/java/lib,
 					../../../../libs/tbb/lib,
+					"../../../../libs/boost-lib/stage/lib",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lxerces-c",
+					"-ljvm",
 					"-llapack",
 					"-lblas",
 					"-ltbb",
 					"-ltbbmalloc",
 					"-ltbbmalloc_proxy",
+					"-lboost_system",
+					"-lboost_filesystem",
 				);
 				PREBINDING = NO;
 				SDKROOT = "";
 				SYMROOT = ../../../../exe;
-				USER_HEADER_SEARCH_PATHS = ../..;
+				USER_HEADER_SEARCH_PATHS = "../.. ../../climate/source/hector/headers";
 			};
 			name = "Release - TBB";
 		};
@@ -2974,7 +3085,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LIBRARY = "libstdc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;

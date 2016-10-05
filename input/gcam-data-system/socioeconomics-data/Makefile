@@ -11,7 +11,7 @@ export SOCIODAT	= .
 export SOCIOXML = ../xml/socioeconomics-xml
 export COMMON = ../_common
 
-L1SCRIPTS = $(wildcard $(SOCIOPROC)/level1/*.R)
+L1SCRIPTS = $(sort $(wildcard $(SOCIOPROC)/level1/*.R))
 L1LOGS	  = $(patsubst %.R,%.R.log,$(subst /level1/,/logs/,$(L1SCRIPTS)))
 
 L2SCRIPTS = $(wildcard $(SOCIOPROC)/level2/*.R)
