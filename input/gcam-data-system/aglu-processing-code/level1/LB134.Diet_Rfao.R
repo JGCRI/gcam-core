@@ -31,7 +31,7 @@ L100.FAO_an_Food_t <- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_an_Food_t" )
 L101.ag_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_Food_Pcal_R_C_Y" )
 L105.an_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L105.an_Food_Pcal_R_C_Y" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y")
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y")
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -139,7 +139,7 @@ L134.pcFood_kcald_R_Dmnd_Y_high$X2100 <- L134.pcFood_kcald_R_Dmnd_Y_high$X2050
 L134.pcFood_kcald_R_Dmnd_Y_high <- gcam_interp( L134.pcFood_kcald_R_Dmnd_Y_high, c( historical_years, future_years ) )
 L134.pcFood_kcald_R_Dmnd_Y_high <- L134.pcFood_kcald_R_Dmnd_Y_high[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
 
-L134.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L134.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP4" )
 L134.pcgdp_2010 <- L134.pcgdp_2010[ names( L134.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
 L134.pcgdp_2010$X2010 <- L134.pcgdp_2010$X2010 * conv_1990_2010_USD
 L134.high_reg <- L134.pcgdp_2010$GCAM_region_ID[ L134.pcgdp_2010$X2010 > hi_growth_pcgdp ]
