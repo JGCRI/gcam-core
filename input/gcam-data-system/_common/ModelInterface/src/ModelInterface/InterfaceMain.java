@@ -138,10 +138,10 @@ public class InterfaceMain implements ActionListener {
                     InterfaceMain.getInstance().showMessageDialog(e, "Unexpected Error", 
                         JOptionPane.ERROR_MESSAGE);
                 }
-		// still print the stack trace to the console for debugging
-		e.printStackTrace();
+                // still print the stack trace to the console for debugging
+                e.printStackTrace();
 			}
-		    });
+        });
 
 		// -b <batch file> -l <log file>
 		OptionParser parser = new OptionParser();
@@ -157,16 +157,16 @@ public class InterfaceMain implements ActionListener {
 		    System.exit(1);
 		}
 
-		if (opts.has("help")) {
-		    try {
-			System.out.println("Usage: java -jar ModelInterface.jar -b <batch file> -l <log file>");
-			parser.printHelpOn(System.out);
-		    } catch (Exception e) {
-			System.err.println("Failed to write usage message");
-			System.exit(1);
-		    }
-		    System.exit(1);
-		}
+        if (opts.has("help")) {
+            try {
+                System.out.println("Usage: java -jar ModelInterface.jar -b <batch file> -l <log file>");
+                parser.printHelpOn(System.out);
+            } catch (Exception e) {
+                System.err.println("Failed to write usage message");
+                System.exit(1);
+            }
+            System.exit(1);
+        }
 
         // if the -l option is set then we will redirect standard output to the specified log file
         PrintStream stdout = System.out;

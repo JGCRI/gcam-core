@@ -41,6 +41,7 @@ import org.basex.core.cmd.Check;
 import org.basex.core.cmd.Add;
 import org.basex.core.cmd.Close;
 import org.basex.query.QueryProcessor;
+import org.basex.io.IO;
 
 /**
  * A helper class which gives GCAM a simple interface for adding or appending
@@ -99,12 +100,16 @@ public class WriteLocalBaseXDB implements Runnable {
                               final boolean aInMemoryDB, final int aOpenDBWait ) throws Exception
     {
         // Set the DB location and doc name.
-        mDBLocation = aDBLocation;
+        // Opening a DB in memory while having a DB location pointing to an actual on
+        // disk DB does not appear to be well defined.  We will override the DB location
+        // to (hopefully) an unused container name.
+        final String IN_MEM_DB_NAME = "./__IN_MEMORY_DB_CONTAINER__";
+        mDBLocation = aInMemoryDB ? IN_MEM_DB_NAME : aDBLocation;
         mDocName = aDocName;
 
-	if ( aInMemoryDB ) {
-	    System.out.println("Opening in-memory database");
-	}
+        if ( aInMemoryDB ) {
+            System.out.println("Opening in-memory database");
+        }
 	
         // Open the database
         openDB( aInMemoryDB, aOpenDBWait );
@@ -136,32 +141,22 @@ public class WriteLocalBaseXDB implements Runnable {
      *                    negative value indicates to wait indefinately.
      */
     private void openDB( final boolean aInMemoryDB, final int aOpenDBWait ) throws Exception {
-        // Figure out the path to the database
-        // First try the unix file separator
-        int indexOfFileSep = mDBLocation.lastIndexOf( '/' );
-        String path = null;
-        String containerName = null;
-        if( indexOfFileSep == -1 ) {
-            // that wasn't found so try the windows
-            indexOfFileSep = mDBLocation.lastIndexOf( '\\' );
-            if( indexOfFileSep == -1 ) {
-                // still not found, maybe there was no path so just assume current directory
-                path = ".";
-                containerName = mDBLocation;
-            }
-        }
-
-        // Parse out the path and the container name from the DB location.
-        if( indexOfFileSep != -1 ) {
-            path = mDBLocation.substring( 0, indexOfFileSep );
-            // TODO: worry about invalid characters in the DB name?
-            containerName = mDBLocation.substring( indexOfFileSep + 1 );
+        // We need to seperate the path to the DB and the container name (last name in the path)
+        File dbLocationFile = new File( mDBLocation ).getAbsoluteFile();
+        // The path may be a relative path so we must convert it to absolute here.
+        String path = dbLocationFile.getParentFile().getCanonicalPath();
+        // BaseX is particular about valid container names and will change them without warning
+        // so we check explicitly.
+        String containerNameUnmodified = dbLocationFile.getName();
+        String containerName = IO.get( containerNameUnmodified ).dbname();
+        if( !containerNameUnmodified.equals( containerName ) ) {
+            System.out.println( "WARNING: container name '"+containerNameUnmodified+
+                    "' contains invalid characters, it has been changed to: '"+containerName+"'" );
         }
 
         // The db Context will check the org.basex.DBPATH property when it is created
         // and use it as the base path for finding all collections/containers
-        // The path may be a relative path so we must convert it to absolute here.
-        System.setProperty( "org.basex.DBPATH", new File( path ).getAbsolutePath() );
+        System.setProperty( "org.basex.DBPATH", path );
         mContext = new Context();
 
         // Set some default behaviors

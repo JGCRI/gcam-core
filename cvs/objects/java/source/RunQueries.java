@@ -103,6 +103,7 @@ public class RunQueries implements Runnable {
         try {
             // This will block until the ModelInterface is done
             mWorkerThread.join();
+            XMLDB.closeDatabase();
         }
         catch( InterruptedException interruptError ) {
             interruptError.printStackTrace();
