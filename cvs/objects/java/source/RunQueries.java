@@ -29,7 +29,8 @@
 * For further details, see: http://www.globalchange.umd.edu/models/gcam/
 *
 */
-
+import java.util.List;
+import java.util.ArrayList;
 import org.basex.core.Context;
 
 import ModelInterface.InterfaceMain;
@@ -60,14 +61,17 @@ public class RunQueries implements Runnable {
      * will just be connecting to the already opened DB.
      */
     private final String mBatchFile;
+    private final String mLogFile;
 
     /**
      * Constructor which simply stores the batch file location. We will wait until
      * start to load the ModelInterface and begin running.
      * @param aBatchFile The ModelInterface batch file to run.
+     * @param aLogFile Optional file into which to direct ModelInterface's stdout.
      */
-    public RunQueries( final String aBatchFile ) {
+    public RunQueries( final String aBatchFile, final String aLogFile ) {
         mBatchFile = aBatchFile;
+        mLogFile = aLogFile;
     }
 
     /**
@@ -99,6 +103,7 @@ public class RunQueries implements Runnable {
         try {
             // This will block until the ModelInterface is done
             mWorkerThread.join();
+            XMLDB.closeDatabase();
         }
         catch( InterruptedException interruptError ) {
             interruptError.printStackTrace();
@@ -110,9 +115,16 @@ public class RunQueries implements Runnable {
      * batch mode.
      */
     public void run() {
+        List<String> args = new ArrayList<String>();
+        args.add("-b");
+        args.add(mBatchFile);
+        if ( !mLogFile.isEmpty() ) {
+            args.add("-l");
+            args.add(mLogFile);
+        }
         // Run the ModelInterface in batch mode
-        String[] args = { "-b", mBatchFile };
-        InterfaceMain.main( args );
+        System.out.println("Running batch file: " + mBatchFile);
+        InterfaceMain.main( args.toArray(new String[0]) );
     }
 }
 

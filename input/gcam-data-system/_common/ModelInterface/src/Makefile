@@ -9,7 +9,7 @@ ModelInterface/ModelGUI2/csvconv/%.class: ModelInterface/ModelGUI2/csvconv/%.jav
 
 # NOTE: dependency tracking is handled internally by javac however
 # is very flakey and we recommnded to always do a clean build.
-ModelInterface.jar: clean ModelInterface/InterfaceMain.class
+ModelInterface.jar: clean_MI ModelInterface/InterfaceMain.class
 	jar -cmf MANIFEST_MI.MK $@ ModelInterface
 
 ModelInterface/InterfaceMain.class: ModelInterface/InterfaceMain.java
@@ -21,3 +21,12 @@ clean:
 	rm -f CSVToXML.jar
 	rm -f ModelInterface.jar
 	find ModelInterface -name *.class -delete
+
+clean_CSVToXML:
+	rm -f CSVToXML.jar
+	find ModelInterface -name *.class -delete
+
+clean_MI:
+	rm -f ModelInterface.jar
+	find ModelInterface -name *.class -delete
+

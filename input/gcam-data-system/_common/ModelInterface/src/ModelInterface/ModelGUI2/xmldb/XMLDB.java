@@ -54,6 +54,7 @@ import org.basex.core.cmd.CreateDB;
 import org.basex.core.cmd.Close;
 import org.basex.core.cmd.Add;
 import org.basex.core.cmd.Delete;
+import org.basex.io.IO;
 import org.basex.query.QueryProcessor;
 import org.basex.query.QueryException;
 import org.basex.query.value.node.ANode;
@@ -141,7 +142,20 @@ public class XMLDB {
 		openDB(db, contextIn);
 	}
 	private void openDB(String dbPath, Context contextIn) throws Exception {
-		String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
+        // We need to seperate the path to the DB and the container name (last name in the path)
+        File dbLocationFile = new File(dbPath).getAbsoluteFile();
+        // The path may be a relative path so we must convert it to absolute here.
+        String path = dbLocationFile.getParentFile().getCanonicalPath();
+        // BaseX is particular about valid container names and will change them without warning
+        // so we check explicitly.
+        String containerNameUnmodified = dbLocationFile.getName();
+        contName = IO.get( containerNameUnmodified ).dbname();
+        if( !containerNameUnmodified.equals( contName ) ) {
+            System.out.println( "WARNING: "+containerNameUnmodified+" contains invalid characters, it has been changed to: "+contName );
+            System.out.println( "WARNING: container name '"+containerNameUnmodified+
+                    "' contains invalid characters, it has been changed to: '"+contName+"'" );
+        }
+
         // The db Context will check the org.basex.DBPATH property when it is created
         // and use it as the base path for finding all collections/containers
         System.setProperty("org.basex.DBPATH", path);
@@ -157,19 +171,8 @@ public class XMLDB {
             context.options.set(MainOptions.ADDCACHE, true);
             context.options.set(MainOptions.INTPARSE, true);
         } else {
+            // We are just going to adopt an already open database context
             context = contextIn;
-        }
-
-        // TODO: worry about spaces?
-		// spaces in a database name is illegal for a URI and must be escaped by a %20
-		// TODO: any other invalid URI characters are not taken care of here,  need to find a 
-		// good util to take care of this but there does not seem to be one in the standard
-		// java api
-		final String contNameUnmodified = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
-		contName = contNameUnmodified.replaceAll(" ", "%20");
-
-        // In memory databases can not be re-opened so just return now
-        if(context.options.get(MainOptions.MAINMEM)) {
             return;
         }
 
