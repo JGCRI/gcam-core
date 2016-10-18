@@ -33,6 +33,7 @@
 import java.net.URLClassLoader;
 import java.net.URL;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.List;
@@ -76,7 +77,7 @@ public class WildcardExpandingClassLoader extends URLClassLoader {
             if( currURL.getFile().endsWith( "*" ) ) {
                 // This URL needs to be expanded
                 try {
-                    File currFile = new File( currURL.getFile() );
+                    File currFile = new File( URLDecoder.decode( currURL.getFile(), "UTF-8" ) );
                     // Search the parent path for any files that end in .jar
                     File[] expandedJars = currFile.getParentFile().listFiles(
                         new FilenameFilter() {
