@@ -68,6 +68,8 @@ mFirstTaxYear( aFirstTaxYear )
 {
     // Store configuration variables.
     const Configuration* conf = Configuration::getInstance();
+    // FYI: the target gas read from the configuration appears to be
+    // ignored in the rest of this class.
     mTargetGas = conf->getString( "concentration-target-gas", "CO2" );
 }
 
@@ -76,7 +78,7 @@ mFirstTaxYear( aFirstTaxYear )
  * \return The static name of the object.
  */
 const string& EmissionsStabalizationTarget::getXMLNameStatic(){
-	static const string XML_NAME = "stabilization-target";
+	static const string XML_NAME = "emissions-balance-target";
 	return XML_NAME;
 }
 
