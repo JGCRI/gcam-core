@@ -733,20 +733,6 @@ void HectorModel::setupConcTbl() {
 void HectorModel::storeRF(const int aYear ) {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
     int i = yearlyDataIndex( aYear );
-
-        //     // XXX DEBUG
-        // ILogger &climatelog = ILogger::getLogger("climate-log");
-        // climatelog.setLevel(ILogger::DEBUG);
-        // climatelog << "storeRF:  year: " << aYear << "  i= " << i
-        //            << "  totrfsize= " << mTotRFTable.size()
-        //            << "  co2size= " << mGasRFTable["CO2"].size()
-        //            << "  ch4size= " << mGasRFTable["CH4"].size()
-        //            << "  N2Osize= " << mGasRFTable["N2O"].size()
-        //            << "  BCsize= " << mGasRFTable["BC"].size()
-        //            << "  OCsize= " << mGasRFTable["OC"].size()
-        //            << "\n";
-        // // XXX end debug
-
     
     // total
     mTotRFTable[i]             = mHcore->sendMessage( M_GETDATA, D_RF_TOTAL );
@@ -901,8 +887,8 @@ void HectorModel::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
 double HectorModel::getEmissions( const string& aGasName, const int aYear ) const {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
-    
-    if( aYear < mModeltime->getEndYear() && aYear > mModeltime->getStartYear() ) {
+
+    if( aYear <= mModeltime->getEndYear() && aYear >= mModeltime->getStartYear() ) {
         if( aGasName == "CO2NetLandUse" ) {
             return (mEmissionsTable.find( aGasName )->second)[ yearlyDataIndex( aYear ) ]; 
         }
