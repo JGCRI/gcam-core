@@ -195,8 +195,9 @@ void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
     const Modeltime* modeltime = scenario->getModeltime();
     Marketplace* marketplace = scenario->getMarketplace();
     // Forward the -1 flag to indicate we do not intend to change market links over time.
-    int startPeriod = mStartYear == -1 ? -1 : modeltime->getyr_to_per( mStartYear );
-    marketplace->createLinkedMarket( aRegionName, mMarket, mPolicyName, mLinkedPolicyName, startPeriod );
+    int startPeriodForCreate = mStartYear == -1 ? -1 : modeltime->getyr_to_per( mStartYear );
+    int startPeriod = max( startPeriodForCreate, 0 );
+    marketplace->createLinkedMarket( aRegionName, mMarket, mPolicyName, mLinkedPolicyName, startPeriodForCreate );
     
     // Set price and output units for period 0 market info
     IInfo* marketInfo = marketplace->getMarketInfo( mPolicyName, aRegionName, startPeriod, true );

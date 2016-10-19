@@ -216,7 +216,7 @@ bool Marketplace::createLinkedMarket( const string& regionName, const string& ma
      *          instead we reccommend using regional markets when a user wants to change the linked
      *          market over time.
      */
-    if( aStartPeriod < 0 && regionName != marketName ) {
+    if( aStartPeriod != -1 && regionName != marketName ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Changing regional markets and linking to different markets over time is not reccommend." << endl;
