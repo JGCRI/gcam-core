@@ -26,14 +26,12 @@ sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_iso <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID")
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names")
 AGLU_ctry <- readdata( "AGLU_MAPPINGS", "AGLU_ctry" )
-FAO_municipal_water_AQUASTAT <- readdata( "WATER_LEVEL0_DATA", "FAO_municipal_water_AQUASTAT", header=F )
+FAO_municipal_water_AQUASTAT <- readdata( "WATER_LEVEL0_DATA", "FAO_municipal_water_AQUASTAT" )
 IBNET_municipal_water_cost_USDm3 <- readdata( "WATER_LEVEL0_DATA", "IBNET_municipal_water_cost_USDm3" )
 municipal_water_use_efficiency <- readdata( "WATER_LEVEL0_DATA", "municipal_water_use_efficiency" )
 manufacturing_water_mapping <- readdata( "WATER_MAPPINGS", "manufacturing_water_mapping" )
 
 # TODO: why won't this file read the header right? FIX!!
-names(FAO_municipal_water_AQUASTAT) <- FAO_municipal_water_AQUASTAT[1,]
-FAO_municipal_water_AQUASTAT <- FAO_municipal_water_AQUASTAT[ -1, ]
 FAO_municipal_water_AQUASTAT$Year <- paste0( 'X', FAO_municipal_water_AQUASTAT$Year )
 FAO_municipal_water_AQUASTAT$Value <- as.numeric( FAO_municipal_water_AQUASTAT$Value )
 
