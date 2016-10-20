@@ -87,11 +87,13 @@ L210.SmthRenewRsrcTechChange_USA <- write_to_all_states( subset( L210.SmthRenewR
 L210.SmthRenewRsrcTechChange_USA <- subset( L210.SmthRenewRsrcTechChange_USA, !paste( region, renewresource ) %in% geo_states_noresource )
 
 printlog( "L210.SmthRenewRsrcCurves_wind_USA: wind resource curves in the states" )
+# Convert us_state_wind units from 2007$/kWh to 1975$/GJ
+us_state_wind$mid_price_75USDGJ <- us_state_wind$mid_price * conv_2007_1975_USD / conv_kwh_GJ
 L210.SmthRenewRsrcCurves_wind_USA <- repeat_and_add_vector(
       subset( L210.SmthRenewRsrcCurves_wind, region == "USA" ), reg, states )
 L210.SmthRenewRsrcCurves_wind_USA[ c( "maxSubResource", "mid.price", "curve.exponent" ) ] <- us_state_wind[
       match( L210.SmthRenewRsrcCurves_wind_USA$region, us_state_wind$region ),
-      c( "maxResource", "mid_price", "curve_exponent" ) ]
+      c( "maxResource", "mid_price_75USDGJ", "curve_exponent" ) ]
 
 printlog( "L210.GrdRenewRsrcCurves_geo_USA: geothermal resource curves in the states" )
 L210.GrdRenewRsrcCurves_geo_USA <- subset( L210.GrdRenewRsrcCurves_geo, region == "USA" )
