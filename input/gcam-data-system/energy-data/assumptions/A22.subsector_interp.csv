@@ -7,5 +7,5 @@ nuclearFuelGenII,enrichedUranium,share-weight,final-calibration-year,end-year,,l
 nuclearFuelGenIII,enrichedUranium,share-weight,final-calibration-year,end-year,,linear
 refining,oil refining,share-weight,final-calibration-year,end-year,,fixed
 refining,biomass liquids,share-weight,final-calibration-year,2015,,linear
-refining,coal to liquids,share-weight,final-calibration-year,end-year,,linear
-refining,gas to liquids,share-weight,final-calibration-year,end-year,,linear
+refining,coal to liquids,share-weight,initial-future-year,end-year,,linear
+refining,gas to liquids,share-weight,initial-future-year,end-year,,linear
