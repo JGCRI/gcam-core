@@ -50,17 +50,17 @@ L2231.LN3_NodeCarbon$node.carbon.calc <- " "
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 write_mi_data( L2231.LN3_Logit, IDstring="LN3_Logit", domain="AGLU_LEVEL2_DATA", fn="L2231.LN3_Logit",
-               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_3_irr.xml" )
-write_mi_data( L2231.LN3_HistUnmgdAllocation, "LN3_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_HistUnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml" )
-write_mi_data( L2231.LN3_UnmgdAllocation, "LN3_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_UnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml" )
-write_mi_data( L2231.NodeEquiv, "EQUIV_TABLE", "AGLU_LEVEL2_DATA", "L2231.NodeEquiv", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml" )
-write_mi_data( L2231.LN3_NoEmissCarbon, "LN3_NoEmissCarbon", "AGLU_LEVEL2_DATA", "L2231.LN3_NoEmissCarbon", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml" )
-write_mi_data( L2231.LN3_NodeCarbon, "LN3_NodeCarbon", "AGLU_LEVEL2_DATA", "L2231.LN3_NodeCarbon", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml" )
-write_mi_data( L2231.LN3_HistMgdAllocation_noncrop, "LN3_HistMgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_HistMgdAllocation_noncrop", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml" )
-write_mi_data( L2231.LN3_MgdAllocation_noncrop, "LN3_MgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_MgdAllocation_noncrop", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml" )
-write_mi_data( L2231.LN3_UnmgdCarbon, "LN3_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L2231.LN3_UnmgdCarbon", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml" )
-write_mi_data( L2231.LN3_MgdCarbon_noncrop, "LN3_MgdCarbon", "AGLU_LEVEL2_DATA", "L2231.LN3_MgdCarbon_noncrop", "AGLU_XML_BATCH", "batch_land_input_3_irr.xml", node_rename=T )
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.LN3_HistUnmgdAllocation, "LN3_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_HistUnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.LN3_UnmgdAllocation, "LN3_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_UnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.NodeEquiv, "EQUIV_TABLE", "AGLU_LEVEL2_DATA", "L2231.NodeEquiv", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.LN3_NoEmissCarbon, "LN3_NoEmissCarbon", "AGLU_LEVEL2_DATA", "L2231.LN3_NoEmissCarbon", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.LN3_NodeCarbon, "LN3_NodeCarbon", "AGLU_LEVEL2_DATA", "L2231.LN3_NodeCarbon", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.LN3_HistMgdAllocation_noncrop, "LN3_HistMgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_HistMgdAllocation_noncrop", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.LN3_MgdAllocation_noncrop, "LN3_MgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_MgdAllocation_noncrop", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.LN3_UnmgdCarbon, "LN3_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L2231.LN3_UnmgdCarbon", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+write_mi_data( L2231.LN3_MgdCarbon_noncrop, "LN3_MgdCarbon", "AGLU_LEVEL2_DATA", "L2231.LN3_MgdCarbon_noncrop", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml", node_rename=T )
 
-insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_3_irr.xml", "AGLU_XML_FINAL", "land_input_3_irr.xml", "", xml_tag="outFile" )
+insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml", "AGLU_XML_FINAL", "land_input_3_IRR.xml", "", xml_tag="outFile" )
 
 logstop()
