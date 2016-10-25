@@ -441,9 +441,6 @@ void Technology::completeInit( const string& aRegionName,
     // they remember to add it.
     const string CO2 = "CO2";
     if( util::searchForValue( ghg, CO2 ) == ghg.end() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        mainLog << "Adding CO2 to Technology " << mName << " in region " << aRegionName << " in sector " << aSectorName << "." << endl;
         AGHG* CO2Ghg = new CO2Emissions;
         ghg.push_back( CO2Ghg );
     }
