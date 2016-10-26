@@ -36,6 +36,12 @@ L102.Ccoef_kgCGJ_R_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L102.Ccoef_kgCGJ_R_F
 #Carbon contents
 printlog( "L202.C_Coefs: Carbon contents of fuels in all regions" )
 L202.CarbonCoef <- write_to_all_regions( A_PrimaryFuelCCoef, names_PrimaryFuelCO2Coef, has.traded = T )
+
+###For regions with no agricultural and land use sector (Taiwan), need to remove the passthrough supplysectors for first-gen biofuels
+ag_en <- c( "regional corn for ethanol", "regional sugar for ethanol", "regional biomassOil" )
+L202.CarbonCoef <- subset( L202.CarbonCoef,
+                           !region %in% no_aglu_regions | !PrimaryFuelCO2Coef.name %in% ag_en )
+
 if( use_GCAM3_Ccoefs == 1 ) printlog( "Using exogenous C coefs from GCAM 3.0")
 if( use_GCAM3_Ccoefs == 0 ) {
 	L202.CarbonCoef$fuel <- fuel_to_Ccoef$fuel[ match( L202.CarbonCoef$PrimaryFuelCO2Coef.name, fuel_to_Ccoef$PrimaryFuelCO2Coef.name ) ]

@@ -5,6 +5,8 @@ water_units_quantity <- "km^3"
 # Names of the water types
 water_type <- "water_type"
 all_water_types <- c( "water consumption", "water withdrawals", "seawater", "biophysical water consumption" )
+# specify which one(s) are only used by ag technologies, so the water goods can be removed from no-aglu regions
+ag_only_water_types <- c( "biophysical water consumption" )
 mapped_water_types <- c( "water consumption", "water withdrawals" )
 mapped_water_types_short <- c( "C", "W" )
 water_C <- all_water_types[1]

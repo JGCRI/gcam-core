@@ -41,13 +41,20 @@ L202.UnlimitRsrc$price.unit <- water_units_price
 L202.UnlimitRsrc$capacity.factor <- 1
 L202.UnlimitRsrc <- L202.UnlimitRsrc[, names_UnlimitRsrc ]
 
+# Remove water goods that are only used by ag technologies, in regions with no aglu module
+L202.UnlimitRsrc <- subset( L202.UnlimitRsrc,
+                            !region %in% no_aglu_regions | !unlimited.resource %in% ag_only_water_types )
+
 printlog( "L202.UnlimitRsrcPrice: Read in fixed prices for water types." )
 L202.unlimit_rsrc_price.melt <- melt( L102.unlimited_water_price_R_W_Y_75USDm3,
       id.vars=c( R, water_type ), measure.vars=X_model_years, variable.name="year", value.name="price" )
 L202.unlimit_rsrc_price.melt$year <- as.integer( gsub('^X', '', L202.unlimit_rsrc_price.melt$year ) )
-L202.UnlimitRsrcPrice <- merge( L202.unlimit_rsrc_price.melt, GCAM_region_names )
+L202.UnlimitRsrcPrice <- add_region_name( L202.unlimit_rsrc_price.melt )
 names(L202.UnlimitRsrcPrice)[names(L202.UnlimitRsrcPrice) == water_type] <- "unlimited.resource"
 L202.UnlimitRsrcPrice <- L202.UnlimitRsrcPrice[, names_UnlimitRsrcPrice ]
+
+L202.UnlimitRsrcPrice <- subset( L202.UnlimitRsrcPrice,
+                                 !region %in% no_aglu_regions | !unlimited.resource %in% ag_only_water_types )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
