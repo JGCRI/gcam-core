@@ -49,9 +49,13 @@ L222.LN2_Logit$LandAllocatorRoot <- "root"
 #Match in logit exponents based on the land node 2
 L222.LN2_Logit$logit.year.fillout <- min( model_base_years )
 L222.LN2_Logit$logit.exponent <- A_LandNode_logit$logit.exponent[ match( L222.LN2_Logit$LandNode2, A_LandNode_logit$LandNode ) ]
+L222.LN2_Logit$logit.type <- A_LandNode_logit$logit.type[ match( L222.LN2_Logit$LandNode2, A_LandNode_logit$LandNode ) ]
 
 #Append GLU names and keep only relevant columns
 L222.LN2_Logit <- append_GLU( L222.LN2_Logit, var1 = "LandNode1", var2 = "LandNode2" )
+
+L222.LN2_LogitTables <- get_logit_fn_tables( L222.LN2_Logit, names_LN2_LogitType,
+    base.header="LN2_Logit_", include.equiv.table=T, write.all.regions=F )
 L222.LN2_Logit <- L222.LN2_Logit[ names_LN2_Logit ]
 
 #LAND ALLOCATION AND LAND USE HISTORY
@@ -141,6 +145,9 @@ L222.LN1_UnmgdCarbon_prot$LandNode2 <- NULL
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
+for( curr_table in L222.LN2_LogitTables ) {
+write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0( "L222.", curr_table$header ), "AGLU_XML_BATCH", "batch_land_input_2.xml" )
+}
 write_mi_data( L222.LN2_Logit, IDstring="LN2_Logit", domain="AGLU_LEVEL2_DATA", fn="L222.LN2_Logit",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_2.xml" )
 write_mi_data( L222.LN2_HistUnmgdAllocation, "LN2_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L222.LN2_HistUnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_2.xml" )

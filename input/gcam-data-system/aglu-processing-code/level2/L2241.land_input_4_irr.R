@@ -66,7 +66,12 @@ L2241.LN4_Logit$logit.year.fillout <- min( model_base_years )
 L2241.LN4_Logit <- remove_GLU( L2241.LN4_Logit, "LandNode4" )
 L2241.LN4_Logit$logit.exponent <- A_LandNode_logit_irr$logit.exponent[
   match( L2241.LN4_Logit$LandNode4, A_LandNode_logit_irr$LandNode ) ]
+L2241.LN4_Logit$logit.type <- A_LandNode_logit_irr$logit.type[
+  match( L2241.LN4_Logit$LandNode4, A_LandNode_logit_irr$LandNode ) ]
 L2241.LN4_Logit <- append_GLU( L2241.LN4_Logit, var1 = "LandNode4" )
+
+L2241.LN4_LogitTables <- get_logit_fn_tables( L2241.LN4_Logit, names_LN4_LogitType,
+    base.header="LN4_Logit_", include.equiv.table=T, write.all.regions=F )
 L2241.LN4_Logit <- L2241.LN4_Logit[ names_LN4_Logit ]
 
 #LAND USE HISTORY
@@ -254,6 +259,9 @@ L2241.LN4_NewNode <- L2241.LN4_NewNode[ names_LN4_NewNode ]
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
+for( curr_table in L2241.LN4_LogitTables ) {
+write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0( "L2241.", curr_table$header ), "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
+}
 write_mi_data( L2241.LN4_Logit, IDstring="LN4_Logit", domain="AGLU_LEVEL2_DATA", fn="L2241.LN4_Logit",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_4_IRR.xml" )
 write_mi_data( L2241.LN4_HistMgdAllocation_crop, "LN4_HistMgdAllocation", "AGLU_LEVEL2_DATA", "L2241.LN4_HistMgdAllocation_crop", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )

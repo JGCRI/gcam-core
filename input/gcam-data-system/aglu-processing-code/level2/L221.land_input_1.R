@@ -50,7 +50,13 @@ L221.LN0_Logit <- data.frame(
       region = GCAM_region_names$region[ match( L125.LC_bm2_R[[R]], GCAM_region_names[[R]] ) ],
       LandAllocatorRoot = "root",
       logit.year.fillout = min( model_base_years ),
-      logit.exponent = 0 )[ names_LN0_Logit ]
+      logit.exponent = 0,
+      logit.type = NA )
+
+L221.LN0_LogitTables <- get_logit_fn_tables( L221.LN0_Logit, names_LN0_LogitType,
+    base.header="LN0_Logit_", include.equiv.table=T, write.all.regions=F )
+
+L221.LN0_Logit <- L221.LN0_Logit[, names_LN0_Logit ]
 
 printlog( "L221.LN0_Land: Total regional land allocation" )
 L221.LN0_Land <- L125.LC_bm2_R
@@ -78,6 +84,8 @@ L221.LN1_ValueLogit$LandAllocatorRoot <- "root"
 L221.LN1_ValueLogit$logit.year.fillout <- min( model_base_years )
 L221.LN1_ValueLogit$logit.exponent <- A_LandNode_logit$logit.exponent[
   match( L221.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]
+L221.LN1_ValueLogit$logit.type <- A_LandNode_logit$logit.type[
+  match( L221.LN1_ValueLogit$LandNode1, A_LandNode_logit$LandNode ) ]
 L221.LN1_ValueLogit$unManagedLandValue <- L131.LV_USD75_m2_R_GLU$LV_USD75_bm2[
     match( vecpaste( L221.LN1_ValueLogit[ R_GLU ] ),
            vecpaste( L131.LV_USD75_m2_R_GLU[ R_GLU ] ) ) ]
@@ -90,6 +98,9 @@ L221.LN1_ValueLogit$unManagedLandValue[ is.na( L221.LN1_ValueLogit$unManagedLand
 # Also sort by region then GLU
 L221.LN1_ValueLogit <- append_GLU( L221.LN1_ValueLogit, "LandNode1" )
 L221.LN1_ValueLogit <- L221.LN1_ValueLogit[ order( L221.LN1_ValueLogit[[R]], L221.LN1_ValueLogit[[GLU]] ), ]
+
+L221.LN1_LogitTables <- get_logit_fn_tables( L221.LN1_ValueLogit, names_LN1_LogitType,
+    base.header="LN1_Logit_", include.equiv.table=F, write.all.regions=F )
 L221.LN1_ValueLogit <- L221.LN1_ValueLogit[ names_LN1_ValueLogit ]
 
 #LAND USE HISTORY
@@ -120,10 +131,16 @@ L221.LN1_UnmgdCarbon <- L221.LN1_UnmgdCarbon[ names_LN1_UnmgdCarbon ]
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
+for( curr_table in L221.LN0_LogitTables ) {
+write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0("L221.", curr_table$header ), "AGLU_XML_BATCH", "batch_land_input_1.xml" )
+}
 write_mi_data( L221.LN0_Logit, IDstring="LN0_Logit", domain="AGLU_LEVEL2_DATA", fn="L221.LN0_Logit",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_1.xml" )
 write_mi_data( L221.LN0_Land, "LN0_Land", "AGLU_LEVEL2_DATA", "L221.LN0_Land", "AGLU_XML_BATCH", "batch_land_input_1.xml" )
 write_mi_data( L221.LN0_SoilTimeScale, "LN0_SoilTimeScale", "AGLU_LEVEL2_DATA", "L221.LN0_SoilTimeScale", "AGLU_XML_BATCH", "batch_land_input_1.xml" )
+for( curr_table in L221.LN1_LogitTables ) {
+write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0("L221.", curr_table$header ), "AGLU_XML_BATCH", "batch_land_input_1.xml" )
+}
 write_mi_data( L221.LN1_ValueLogit, "LN1_ValueLogit", "AGLU_LEVEL2_DATA", "L221.LN1_ValueLogit", "AGLU_XML_BATCH", "batch_land_input_1.xml" )
 write_mi_data( L221.LN1_HistUnmgdAllocation, "LN1_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L221.LN1_HistUnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_1.xml" )
 write_mi_data( L221.LN1_UnmgdAllocation, "LN1_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L221.LN1_UnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_1.xml" )

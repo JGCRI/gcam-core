@@ -25,6 +25,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
+L2241.LN4_LogitTables <- read_logit_fn_tables( "AGLU_LEVEL2_DATA", "L2241.LN4_Logit_", skip=4, include.equiv.table=T )
 L2241.LN4_Logit <- readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_Logit", skip = 4 )
 L2241.LN4_NewNode <- readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_NewNode", skip = 4 )
 
@@ -42,6 +43,11 @@ L2242.LN4_NewNode <- na.omit( L2241.LN4_NewNode )
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
+for( curr_table_name in names( L2241.LN4_LogitTables ) ) {
+    curr_header <- sub( 'L2241.', '', curr_table_name )
+    write_mi_data( L2241.LN4_LogitTables[[ curr_table_name ]], curr_header, "AGLU_LEVEL2_DATA",
+        paste0( "L2242.", curr_header ), "AGLU_XML_BATCH", "batch_land_input_4_IRR_MGMT.xml" )
+}
 write_mi_data( L2242.LN4_Logit, "LN4_Logit", "AGLU_LEVEL2_DATA", "L2242.LN4_Logit", "AGLU_XML_BATCH", "batch_land_input_4_IRR_MGMT.xml", node_rename = T )
 write_mi_data( L2242.LN4_NewNode, "LN4_NewNode", "AGLU_LEVEL2_DATA", "L2242.LN4_NewNode", "AGLU_XML_BATCH", "batch_land_input_4_IRR_MGMT.xml", node_rename = T )
 

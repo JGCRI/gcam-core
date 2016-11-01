@@ -65,9 +65,13 @@ L223.LN3_Logit$LandAllocatorRoot <- "root"
 #Match in logit exponents based on the land node 2
 L223.LN3_Logit$logit.year.fillout <- min( model_base_years )
 L223.LN3_Logit$logit.exponent <- A_LandNode_logit$logit.exponent[ match( L223.LN3_Logit$LandNode3, A_LandNode_logit$LandNode ) ]
+L223.LN3_Logit$logit.type <- A_LandNode_logit$logit.type[ match( L223.LN3_Logit$LandNode3, A_LandNode_logit$LandNode ) ]
 
 #Append GLU names and keep only relevant columns
 L223.LN3_Logit <- append_GLU( L223.LN3_Logit, var1 = "LandNode1", var2 = "LandNode2", var3 = "LandNode3" )
+
+L223.LN3_LogitTables <- get_logit_fn_tables( L223.LN3_Logit, names_LN3_LogitType,
+    base.header="LN3_Logit_", include.equiv.table=T, write.all.regions=F )
 L223.LN3_Logit <- L223.LN3_Logit[ names_LN3_Logit ]
 
 printlog( "L223.LN3_DefaultShare: Default shares for new technologies in specified years" )
@@ -344,6 +348,9 @@ L223.LN1_UnmgdCarbon_prot$LandNode3 <- NULL
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
+for( curr_table in L223.LN3_LogitTables ) {
+write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0( "L223.", curr_table$header ), "AGLU_XML_BATCH", "batch_land_input_3.xml" )
+}
 write_mi_data( L223.LN3_Logit, IDstring="LN3_Logit", domain="AGLU_LEVEL2_DATA", fn="L223.LN3_Logit",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_3.xml" )
 write_mi_data( L223.LN3_DefaultShare, "LN3_DefaultShare", "AGLU_LEVEL2_DATA", "L223.LN3_DefaultShare", "AGLU_XML_BATCH", "batch_land_input_3.xml" )

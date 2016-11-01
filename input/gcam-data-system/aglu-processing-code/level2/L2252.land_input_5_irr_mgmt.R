@@ -56,10 +56,14 @@ convert_LN4_to_LN5 <- function( data, names ){
 printlog( "L2252.LN5_Logit: Logit exponent between lo and hi managed techs")
 # Keeping this assumption in this file for now; keeps changes from forcing re-builds of other files.
 mgmt_logit <- 0.1
+mgmt_logit_type <- "relative-cost-logit"
 L2252.LN5_Logit <- repeat_and_add_vector( L2241.LN4_Logit, irr, c( "IRR", "RFD" ) )
 L2252.LN5_Logit$LandNode5 <- paste( L2252.LN5_Logit$LandNode4, L2252.LN5_Logit[[irr]], sep = irr_delimiter )
 L2252.LN5_Logit$logit.exponent <- mgmt_logit
-L2252.LN5_Logit$use.absolute.cost.logit <- 1
+L2252.LN5_Logit$logit.type <- mgmt_logit_type
+
+L2252.LN5_LogitTables <- get_logit_fn_tables( L2252.LN5_Logit, names_LN5_LogitType,
+    base.header="LN5_Logit_", include.equiv.table=T, write.all.regions=F )
 L2252.LN5_Logit <- L2252.LN5_Logit[ names_LN5_Logit ]
 
 printlog( "L2252.LN5_HistMgdAllocation_crop: historical cropland allocation" )
@@ -151,6 +155,9 @@ L2252.LN5_NewNode[["newTechStartYear"]] <- NULL
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
+for( curr_table in L2252.LN5_LogitTables ) {
+write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0( "L2252.", curr_table$header ), "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml" )
+}
 write_mi_data( L2252.LN5_Logit, IDstring="LN5_Logit", domain="AGLU_LEVEL2_DATA", fn="L2252.LN5_Logit",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_5_IRR_MGMT.xml" )
 write_mi_data( L2252.LN5_HistMgdAllocation_crop, "LN5_HistMgdAllocation", "AGLU_LEVEL2_DATA", "L2252.LN5_HistMgdAllocation_crop", "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml" )

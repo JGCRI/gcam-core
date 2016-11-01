@@ -28,6 +28,7 @@ sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 
 #For files that don't change, simply change the name upon read-in to save a step
 printlog( "Many files from L223 file are unchanged and written out")
+L2231.LN3_LogitTables <- read_logit_fn_tables( "AGLU_LEVEL2_DATA", "L223.LN3_Logit_", skip=4, include.equiv.table=T )
 L2231.LN3_Logit <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_Logit", skip = 4 )
 L2231.LN3_HistUnmgdAllocation <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_HistUnmgdAllocation", skip = 4 )
 L2231.LN3_UnmgdAllocation <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_UnmgdAllocation", skip = 4 )
@@ -49,6 +50,11 @@ L2231.LN3_NodeCarbon$node.carbon.calc <- " "
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
+for( curr_table_name in names( L2231.LN3_LogitTables ) ) {
+    curr_header <- sub( 'L223.', '', curr_table_name )
+    write_mi_data( L2231.LN3_LogitTables[[ curr_table_name ]], curr_header, "AGLU_LEVEL2_DATA",
+        paste0( "L2231.", curr_header ), "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )
+}
 write_mi_data( L2231.LN3_Logit, IDstring="LN3_Logit", domain="AGLU_LEVEL2_DATA", fn="L2231.LN3_Logit",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_3_IRR.xml" )
 write_mi_data( L2231.LN3_HistUnmgdAllocation, "LN3_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L2231.LN3_HistUnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3_IRR.xml" )

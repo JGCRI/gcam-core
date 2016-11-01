@@ -1,1 +1,14 @@
-# File: A_LandNode_logit.csv,# Description: Logit exponents of land nodes,# Original source: Land_nesting_structure.xls,# ----------,LandNode,logit.exponentTundra,0RockIceDesert,0UrbanLand,0AgroForestLand,2AllPastureLand,3AgroForest_NonPasture,2.5AllForestLand,1.75GrassShrubLand,0.05CropLand,1.75
+# File: A_LandNode_logit.csv,,
+# Description: Logit exponents of land nodes,,
+# Original source: Land_nesting_structure.xls,,
+# ----------,,
+LandNode,logit.exponent,logit.type
+Tundra,0,
+RockIceDesert,0,
+UrbanLand,0,
+AgroForestLand,2,
+AllPastureLand,3,
+AgroForest_NonPasture,2.5,
+AllForestLand,1.75,
+GrassShrubLand,0.05,
+CropLand,1.75,
