@@ -115,12 +115,12 @@ public:
                          const int aPeriod ) const;
 
     // Land allocator node methods.
-    virtual void setInitShares( const std::string& aRegionName,
-                                const double aLandAllocationAbove,
-                                const int aPeriod );
+    virtual double setInitShares( const std::string& aRegionName,
+                                  const double aLandAllocationAbove,
+                                  const int aPeriod );
 
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
      virtual void calcLandAllocation( const std::string& aRegionName,
@@ -152,7 +152,8 @@ private:
     void calibrateLandAllocator( const std::string& aRegionName, const int aPeriod );
 
     void calculateProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+                                 IDiscreteChoice* aChoiceFnAbove,
+                                 const int aPeriod );
 
     void adjustProfitScalers( const std::string& aRegionName, 
                                 const int aPeriod );

@@ -47,6 +47,7 @@
 #include "util/base/include/model_time.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/configuration.h"
+#include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -246,8 +247,9 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
    the average profit of the containing node. These are equivalent to what was called "intrinsic
    rates" in the 2008 version of the code based on Sands and Leimbech. */
 	
+    mChoiceFn->setOutputCost( mUnManagedLandValue );
     calculateCalibrationProfitRate( aRegionName, mUnManagedLandValue, 
-                                    0, // logit exponent is zero at this level
+                                    mChoiceFn.get(),
                                     aPeriod );
 
 /* Step 4. Calculate profit scalers. Because the calibration profit rate computed in Step 4
@@ -260,7 +262,7 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
    All of the calibration is captured in the leaves, so the share profit scalers for nodes are
    set equal to 1.  */
 
-    calculateProfitScalers( aRegionName, aPeriod );
+    calculateProfitScalers( aRegionName, mChoiceFn.get(), aPeriod );
 }
 
 /*!
@@ -269,8 +271,9 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
  * \param aPeriod model period.
  */
 void LandAllocator::calculateProfitScalers( const string& aRegionName, 
-                                          const int aPeriod ) {
-    LandNode::calculateProfitScalers( aRegionName, aPeriod );
+                                            IDiscreteChoice* aChoiceFnAbove,
+                                            const int aPeriod ) {
+    LandNode::calculateProfitScalers( aRegionName, aChoiceFnAbove, aPeriod );
 
     // Land allocator gets a shareweight of 1
     mProfitScaler[ aPeriod ] = 1.0;
@@ -331,29 +334,33 @@ void LandAllocator::setProfitRate( const string& aRegionName,
     } 
 }
 
-void LandAllocator::setInitShares( const string& aRegionName,
-                                       const double aLandAllocationAbove,
-                                       const int aPeriod )
+double LandAllocator::setInitShares( const string& aRegionName,
+                                     const double aLandAllocationAbove,
+                                     const int aPeriod )
 {
     // Calculating the shares
+    double avgProfitRate = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setInitShares( aRegionName,
+        avgProfitRate += mChildren[ i ]->setInitShares( aRegionName,
                                        mLandAllocation[ aPeriod ],
                                        aPeriod );
     }
 
     // This is the root node so its share is 100%.
     mShare[ aPeriod ] = 1;
+    mAvgProfitRateAbove[ aPeriod ] = avgProfitRate;
+    mChoiceFn->setBaseCost( avgProfitRate );
+    return avgProfitRate;
 }
 
 double LandAllocator::calcLandShares( const string& aRegionName,
-                                          const double aLogitExpAbove,
-                                          const int aPeriod ){
+                                      IDiscreteChoice* aChoiceFnAbove,
+                                      const int aPeriod ){
 
     // First set value of unmanaged land leaves
     setUnmanagedLandProfitRate( aRegionName, mUnManagedLandValue, aPeriod );
 
-    LandNode::calcLandShares( aRegionName, aLogitExpAbove, aPeriod );
+    LandNode::calcLandShares( aRegionName, aChoiceFnAbove, aPeriod );
  
     // This is the root node so its share is 100%.
     mShare[ aPeriod ] = 1;
@@ -389,7 +396,7 @@ void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
 	
     // Calculate land shares
     calcLandShares( aRegionName,
-                    0, // No logit exponent above the root.
+                    mChoiceFn.get(),
                     aPeriod );
 
     // Calculate land allocation

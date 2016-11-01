@@ -91,6 +91,7 @@ bool AbsoluteCostLogit::XMLParse( const DOMNode *aNode ) {
             continue;
         }
         else if( nodeName == "logit-exponent" ) {
+            /*
             double value = XMLHelper<double>::getValue( curr );
             if( value > 0 ) {
                 ILogger& mainlog = ILogger::getLogger( "main_log" );
@@ -101,8 +102,9 @@ bool AbsoluteCostLogit::XMLParse( const DOMNode *aNode ) {
                 parsingSuccessful = false;
             }
             else {
+            */
                 XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
-            }
+            //}
         }
         else if( nodeName == "base-cost" ) {
             double value = XMLHelper<double>::getValue( curr );
@@ -189,6 +191,32 @@ double AbsoluteCostLogit::calcUnnormalizedShare( const double aShareWeight, cons
     return logShareWeight + mLogitExponent[ aPeriod ] * aCost / mBaseCost;
 }
 
+double AbsoluteCostLogit::calcAverageCost( const double aUnnormalizedShareSum,
+                                            const int aPeriod ) const
+{
+    const double minInf = -std::numeric_limits<double>::infinity();
+    double ret;
+    if( mLogitExponent[ aPeriod ] == 0.0 ) {
+        // TODO: what to do with zero logit?
+        ret = 1.0;
+    }
+    else if( ( aUnnormalizedShareSum == minInf || aUnnormalizedShareSum == 0 ) && mLogitExponent[ aPeriod ] < 0 ) {
+        // No Valid options and negative logit so return a large cost so a nested
+        // logit would not want to choose this nest.
+        ret = util::getLargeNumber();
+    }
+    else if( ( aUnnormalizedShareSum == minInf || aUnnormalizedShareSum == 0 ) && mLogitExponent[ aPeriod ] > 0 ) {
+        // No Valid options and positive logit so return a large negative cost
+        // so a nested logit would not want to choose this nest.
+        ret = -util::getLargeNumber();
+    }
+    else {
+        ret = log( aUnnormalizedShareSum ) * ( mOutputCost / mLogitExponent[ aPeriod ] ) + mOutputCost;
+    }
+
+    return ret;
+}
+
 /*!
  * \brief Share weight calculation for the absolute cost logit.
  * \details Given an an "anchor" subsector with observed share and cost and another choice
@@ -206,6 +234,20 @@ double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCo
 {
     double coef = mLogitExponent[ aPeriod ] / mBaseCost;
     return ( aShare / aAnchorShare ) * exp( coef * ( aAnchorCost - aCost ) );
+}
+
+double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCost, const int aPeriod ) const {
+    double coef = mLogitExponent[ aPeriod ] / mBaseCost;
+    return ( aShare ) * exp( coef * -mLogitExponent[ aPeriod ] );
+}
+
+double AbsoluteCostLogit::calcImpliedCost( const double aShare, const double aCost, const int aPeriod ) const {
+    double coef = mLogitExponent[ aPeriod ] / mBaseCost;
+    return -log( aShare ) / coef;
+}
+
+void AbsoluteCostLogit::setOutputCost( const double aCost ) {
+    mOutputCost = aCost;
 }
 
 void AbsoluteCostLogit::setBaseCost( const double aBaseCost ) {

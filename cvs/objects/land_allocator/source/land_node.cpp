@@ -49,6 +49,8 @@
 #include "containers/include/iinfo.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
+#include "functions/include/idiscrete_choice.hpp"
+#include "functions/include/discrete_choice_factory.hpp"
 #include <numeric>
 #include <typeinfo>
 
@@ -64,7 +66,7 @@ typedef std::map<unsigned int, double> LandMapType;
  */
 LandNode::LandNode( const ALandAllocatorItem* aParent )
 : ALandAllocatorItem( aParent, eNode ),
-mLogitExponent( 1.0 ),
+mChoiceFn( 0 ),
 mUnManagedLandValue( 0.0 ),
 mGhostShareNumeratorForNode( 0.25 ),
 mAdjustScalersForNewTech( false )
@@ -125,9 +127,8 @@ bool LandNode::XMLParse( const xercesc::DOMNode* aNode ){
         else if ( nodeName == LandLeaf::getXMLNameStatic() ) {
             parseContainerNode( curr, mChildren, new LandLeaf( this, "" ) );
         }
-        else if( nodeName == "logit-exponent" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent,
-                                                 scenario->getModeltime() );
+        else if( DiscreteChoiceFactory::isOfType( nodeName ) ) {
+            parseSingleNode( curr, mChoiceFn, DiscreteChoiceFactory::create( nodeName ).release() );
         }
         else if( nodeName == LandUseHistory::getXMLNameStatic() ){
             parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
@@ -172,7 +173,6 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mLogitExponent, "logit-exponent", out, tabs, modeltime );
 	XMLWriteElement( mGhostShareNumeratorForNode, "ghost-share-node", out, tabs );  
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
 
@@ -182,6 +182,10 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     
     if( mCarbonCalc.get() ) {
         mCarbonCalc->toInputXML( out, tabs );
+    }
+
+    if( mChoiceFn.get() ) {
+        mChoiceFn->toInputXML( out, tabs );
     }
     
     if( mAdjustScalersForNewTech ) {
@@ -204,15 +208,19 @@ void LandNode::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 
 void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mLogitExponent, "logit-exponent", out, tabs, modeltime );
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );
     XMLWriteElement( getLandAllocation( mName, period ), "landAllocation", out, tabs );
+    XMLWriteElement( mAvgProfitRateAbove[ period ], "avg-profit-rate-above", out, tabs );
+    XMLWriteElement( mIsNewTech, "is-new-tech", out, tabs );
 
     if( mLandUseHistory.get() ){
         mLandUseHistory->toDebugXML( period, out, tabs );
     }
     if( mCarbonCalc.get() ) {
         mCarbonCalc->toDebugXML( period, out, tabs );
+    }
+    if( mChoiceFn.get() ) {
+        mChoiceFn->toDebugXML( period, out, tabs );
     }
     // write out for mChildren
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -241,6 +249,10 @@ const string& LandNode::getXMLNameStatic() {
 void LandNode::completeInit( const string& aRegionName,
                              const IInfo* aRegionInfo )
 {
+    if( ! mChoiceFn.get() ) {
+        cout << "No ChoiceFN" <<endl;
+        abort();
+    }
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->completeInit( aRegionName, aRegionInfo );
     }
@@ -260,14 +272,16 @@ void LandNode::initCalc( const string& aRegionName, const int aPeriod )
         if ( mProfitScaler[ aPeriod ] == -1 ) {
             mProfitScaler[ aPeriod ] = mProfitScaler[ aPeriod - 1 ];
         }
+        mAvgProfitRateAbove[ aPeriod ] = mAvgProfitRateAbove[ aPeriod - 1 ];
+        mCalibrationProfitRate[ aPeriod ] = mCalibrationProfitRate[ aPeriod - 1 ];
     }
-    else if ( mProfitScaler[ aPeriod ] == -1 ) {
+    if ( mProfitScaler[ aPeriod ] == -1 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Negative profit scaler in period " << aPeriod
                 << " for region " << aRegionName << " in land node "
                 << mName << endl;
-        exit( -1 );
+        abort();
     }
 
     // Call initCalc on any children
@@ -286,9 +300,9 @@ void LandNode::initCalc( const string& aRegionName, const int aPeriod )
 * \param aLandAllocationAbove Land allocation of the parent node
 * \param aPeriod Model period
 */
-void LandNode::setInitShares( const string& aRegionName,
-                              const double aLandAllocationAbove,
-                              const int aPeriod )
+double LandNode::setInitShares( const string& aRegionName,
+                                const double aLandAllocationAbove,
+                                const int aPeriod )
 {
     // Calculate the total land within this node.
     double nodeLandAllocation = getCalLandAllocation( eAnyLand, aPeriod );
@@ -303,12 +317,16 @@ void LandNode::setInitShares( const string& aRegionName,
         mShare[ aPeriod ] = nodeLandAllocation / aLandAllocationAbove;
    }
 
+    double avgProfitRate = 0;
     // Call setInitShares on all children
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {        
-        mChildren[ i ]->setInitShares( aRegionName,
+        avgProfitRate += mChildren[ i ]->setInitShares( aRegionName,
                                        nodeLandAllocation,
                                        aPeriod );
     }
+    mAvgProfitRateAbove[ aPeriod ] = /*mIsNewTech ? getCalibrationProfitForNewTech( aPeriod ) :*/ avgProfitRate;
+    mChoiceFn->setBaseCost( mAvgProfitRateAbove[ aPeriod ] );
+    return avgProfitRate;
 }
 
 /*!
@@ -366,11 +384,11 @@ void LandNode::setSoilTimeScale( const int aTimeScale ) {
 *          childrens' profit rates but is based on the J. Clarke and Edmonds
 *          Logit paper and uses the scaled profits of the child nodes and leafs.
 * \param aRegionName Region
-* \param aLogitExpAbove Distribution parameter of the parent node
+* \param aChoiceFnAbove The discrete choice function from the level above.
 * \param aPeriod Period.
 */
 double LandNode::calcLandShares( const string& aRegionName,
-                                 const double aLogitExpAbove,
+                                 IDiscreteChoice* aChoiceFnAbove,
                                  const int aPeriod )
 {
 
@@ -383,8 +401,10 @@ double LandNode::calcLandShares( const string& aRegionName,
     // if the current node will have fixed shares.
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         unnormalizedShares[ i ] = mChildren[ i ]->calcLandShares( aRegionName,
-                                                                  mLogitExponent[ aPeriod ],
-                                                                  aPeriod );          
+                                                                  mChoiceFn.get(),
+                                                                  aPeriod );
+        // TODO: worry about numerical overflow
+        unnormalizedShares[ i ] = exp( unnormalizedShares[ i ] );
     }
     unnormalizedSum = accumulate( unnormalizedShares.begin(),
                                    unnormalizedShares.end(),
@@ -395,6 +415,7 @@ double LandNode::calcLandShares( const string& aRegionName,
     // calibration period, or set to the previous period's value if not set.
     // Test to check if shares have changed from initialized value of -1 
     // set in the constructor of a_land_allocator class.
+    /*
     if ( mLogitExponent[ aPeriod ] == 0 && aPeriod > 0) {
         for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
             // copy forward previous period share if this is not a calibration
@@ -410,26 +431,32 @@ double LandNode::calcLandShares( const string& aRegionName,
     // Step 2 Option (b). Otherwise (as in most cases), node is not a fixed share node
     // and shares are computed based on relative profits as usual  
     else {
+    */
         // But first check to make sure at least one child has a non-zero share
         if ( unnormalizedSum == 0.0 ){ // which means all children have zero share
            mProfitRate[ aPeriod ] = 0;
            unnormalizedShare = 0.0;
+           for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+               mChildren[ i ]->setShare( 0.0,
+                                      aPeriod );
+           }
         }
         else {
            // Calculate and set the share of each child
            for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-               mChildren[ i ]->setShare( unnormalizedShares[ i ] / unnormalizedSum,
+               mChildren[ i ]->setShare( unnormalizedShares[i] <= 0.0 ? 0.0 : unnormalizedShares[ i ] / unnormalizedSum,
                                       aPeriod );
            }
         }
-     }
+     //}
       
 
    // Step 3 Option (a) . compute node profit based on share denominator
    // but only if logit exponent >0. If logit exponent is zero, math will crash.
-    if ( mLogitExponent[ aPeriod ] > 0 && unnormalizedSum > 0 ) {
-        mProfitRate[ aPeriod ] = pow( unnormalizedSum, 1.0 / mLogitExponent[ aPeriod ] );
+    if ( /*mLogitExponent[ aPeriod ] > 0 &&*/ unnormalizedSum > 0.0 ) {
+        mProfitRate[ aPeriod ] = mChoiceFn->calcAverageCost( unnormalizedSum /* * mAdjustForNewTech[ aPeriod ]*/, aPeriod );
     }
+    /*
     else if ( mLogitExponent[ aPeriod ] == 0 ) {
         // Step 3 Option (b). Profit for nodes with zero logit exponent will not change, 
         // so we set the profit rate equal to the read in value of unmanaged land.
@@ -437,7 +464,8 @@ double LandNode::calcLandShares( const string& aRegionName,
         // Note: if profit rates of children change over time this wouldn't capture that
         mProfitRate[ aPeriod ] = mUnManagedLandValue;
     } 
-    else if ( unnormalizedSum == 0 ) {
+    */
+    else /*if ( unnormalizedSum == 0 )*/ { 
         // Step 3 Option (c). If unnormalizedSum == 0 then all children must have had
         // zero profit rates.  So, set the profit rate of the node to zero.
         mProfitRate[ aPeriod ] = 0.0;
@@ -446,6 +474,7 @@ double LandNode::calcLandShares( const string& aRegionName,
     // Step 4. Calculate the unnormalized share for this node, but here using the logit exponent of the 
     // containing or parant node.  This will be used to determine this nodes share within its 
     // parent node.
+    /*
     if( aLogitExpAbove > 0 ){ // unnormalized share will be ignored if logitexpo = 0
         unnormalizedShare = pow( mProfitScaler[ aPeriod ] * mProfitRate[ aPeriod ] * mAdjustForNewTech[ aPeriod ],
                                  aLogitExpAbove );
@@ -454,6 +483,9 @@ double LandNode::calcLandShares( const string& aRegionName,
         // Can't calculate share, so return zero.
         unnormalizedShare = 0.0;
     }
+    */
+    unnormalizedShare = aChoiceFnAbove->calcUnnormalizedShare( mProfitRate[ aPeriod ] > 0.0 ? mProfitScaler[ aPeriod ] : 0.0, mProfitRate[ aPeriod ], aPeriod );
+
     
     return unnormalizedShare; // the unnormalized share of this node.
 }
@@ -461,21 +493,29 @@ double LandNode::calcLandShares( const string& aRegionName,
 /*!
  * \brief Calculates share profit scalers
  * \param aRegionName Region name.
+ * \param aChoiceFnAbove The discrete choice function from the level above.
  * \param aPeriod model period.
  */
 void LandNode::calculateProfitScalers( const string& aRegionName, 
-                                          const int aPeriod ) {
+                                       IDiscreteChoice* aChoiceFnAbove,
+                                       const int aPeriod )
+{
 
     // profit scaler of a node is calibrated as equal to 1 (the leaf
     // calibration guarantees the node profits will equal what the 
     // calibration shares would imply)   
-    mProfitScaler[ aPeriod ] = 1.0;
 	
 	calcCalibrationProfitForNewTech( aPeriod );
+
+    mProfitScaler[ aPeriod ] = aChoiceFnAbove->calcShareWeight( mIsNewTech ? mGhostShareNumeratorForNode : mShare[ aPeriod ], /*mProfitRate[ aPeriod ]*/mCalibrationProfitRate[ aPeriod ], aPeriod );
+    if( mIsNewTech ) {
+        mProfitScaler[ scenario->getModeltime()->getyr_to_per( 2020 ) ] = mProfitScaler[ aPeriod ];
+        mProfitScaler[ aPeriod ] = 0.0;
+    }
     
     // Call share profit scalers calculation for each child
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calculateProfitScalers( aRegionName, aPeriod );
+        mChildren[ i ]->calculateProfitScalers( aRegionName, mChoiceFn.get(), aPeriod );
     }
 
 }
@@ -532,18 +572,19 @@ void LandNode::adjustProfitScalers( const string& aRegionName,
             mainLog << "Can not calibrate new tech for land leaf " << mName
                     << " for region " << aRegionName
                     << " since there are no existing techs." << endl;
-            exit( 1 );
+            abort();
         }
         else {
             // Calculate adjustment factor
             double ratio = (double) ( numExistingTech + numNewTech ) / (double) numExistingTech;
-            double sigma = 1.0 / mLogitExponent[ aPeriod ];
+            /*double sigma = 1.0 / mLogitExponent[ aPeriod ];
             double adjustment = 1.0 / pow( ratio, sigma );
 
             // Set adjustment factor
             for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
                 mChildren[ i ]->setNewTechAdjustment( adjustment, aPeriod );
-            }
+            }*/
+            setNewTechAdjustment( 1.0 / ratio, aPeriod );
         }
     }
 }
@@ -566,14 +607,15 @@ void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
     // If node is the root of a fixed land area nest ( typically a subregion )
     // or the root of the entire land allocatory, then set the average profit
     // rate to the previously calculated value. 
-    if ( ( getParent() ? getParent()->getLogitExponent( 1 ) == 0 : true )
-                    && mUnManagedLandValue > 0.0 ) {
+    if ( /*( getParent() ? getParent()->getLogitExponent( 1 ) == 0 : true )
+                    &&*/ mUnManagedLandValue > 0.0 ) {
         avgProfitRate = mUnManagedLandValue;
     }
-
+    else {
+        mUnManagedLandValue = avgProfitRate;
+    }
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         // assign the unmanaged land value to this node and to children. 
-        mUnManagedLandValue = avgProfitRate;
         mChildren[ i ]->setUnmanagedLandProfitRate( aRegionName, avgProfitRate, aPeriod );
     }
 }
@@ -586,14 +628,15 @@ void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
  *          or subregion. Otherwise, calcuate it based on calibration share.
  * \param aRegionName Region name.
  * \param aAverageProfitRate Average calibration profit rate of node above.
- * \param aLogitExponentAbove - logit exponent of the containing node
+ * \param aChoiceFnAbove The discrete choice function from the level above
  * \author Marshall Wise
  */
 void LandNode::calculateCalibrationProfitRate( const string& aRegionName,
                                            double aAverageProfitRateAbove,
-                                           double aLogitExponentAbove,
+                                           IDiscreteChoice* aChoiceFnAbove,
                                            const int aPeriod )
 {
+    /*
     double avgProfitRate = aAverageProfitRateAbove;
     // If node is the root of a fixed land area nest ( typically a subregion )
     // or the root of the entire land allocatory, then use the previously
@@ -614,16 +657,27 @@ void LandNode::calculateCalibrationProfitRate( const string& aRegionName,
     else { 
         avgProfitRate *= pow( mShare[ aPeriod ],  1.0 / aLogitExponentAbove ); 
     } 
+    */
 
     // store this value in this node 
+    double avgProfitRate;
+    if( mIsNewTech ) {
+        avgProfitRate = aChoiceFnAbove->calcImpliedCost( mGhostShareNumeratorForNode, aAverageProfitRateAbove, aPeriod );
+    }
+    else if( aAverageProfitRateAbove > 0.0 ) {
+        avgProfitRate = aChoiceFnAbove->calcImpliedCost( mShare[ aPeriod ], aAverageProfitRateAbove, aPeriod );
+    }
+    else {
+        avgProfitRate = mUnManagedLandValue;
+    }
     mCalibrationProfitRate[ aPeriod ] = avgProfitRate;
+    mChoiceFn->setOutputCost( avgProfitRate );
 
     // pass the node profit rate down to children and trigger their calculation
     // and pass down the logit exponent of this node
-    double aLogitExponent = mLogitExponent[ aPeriod ];
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->calculateCalibrationProfitRate( aRegionName, avgProfitRate, 
-                                                        aLogitExponent, aPeriod );
+                                                        mChoiceFn.get(), aPeriod );
     }
 }
 
@@ -736,12 +790,15 @@ double LandNode::getCalLandAllocation( const LandAllocationType aType,
     return sum;
 }
 
-double LandNode::getLogitExponent( const int aPeriod ) const {
-    return mLogitExponent[ aPeriod ];
-}
-
 // To be called by contained leaf for new tech
 double LandNode::getCalibrationProfitForNewTech( const int aPeriod ) const {
+    if( aPeriod == 3 &&  mCalibrationProfitForNewTech[ aPeriod ] == 0) {
+        double value = aPeriod * mCalibrationProfitForNewTech[ aPeriod ] / mProfitScaler[ aPeriod ];
+        cout << "Called for profit rate for new tech but not set: " << mName << endl;
+        cout << "Called for profit rate for new tech but not set: " << value << endl;
+        cout << "Called for profit rate for new tech but not set: " << mName << endl;
+        cout << "Called for profit rate for new tech but not set: " << mName << endl;
+    }
 	return mCalibrationProfitForNewTech[ aPeriod ];
 }
 
@@ -804,3 +861,4 @@ double LandNode::getProfitForChildWithHighestShare( const int aPeriod ) const {
 	
 	return profitAtMaxShare;
 }
+

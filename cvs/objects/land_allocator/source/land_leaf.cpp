@@ -57,6 +57,7 @@
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/configuration.h"
 #include "containers/include/market_dependency_finder.h"
+#include "functions/include/idiscrete_choice.hpp"
 
 using namespace std;
 using namespace xercesc;
@@ -243,7 +244,7 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
 {
     if ( aPeriod > 1 ) {
         // If leaf is a "new tech" get the scaler from its parent
-        if ( mIsNewTech ) {
+        /*if ( mIsNewTech ) {
 			int finalCalPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
 			if ( aPeriod < scenario->getModeltime()->getyr_to_per( mNewTechStartYear ) ) {
 				mProfitScaler[ aPeriod ] = 0.0;
@@ -256,7 +257,7 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
 			}
         }
         // Copy share weights forward if new ones haven't been read in 
-        else if ( mProfitScaler[ aPeriod ] == -1 ) {
+        else*/ if ( mProfitScaler[ aPeriod ] == -1 ) {
             mProfitScaler[ aPeriod ] = mProfitScaler[ aPeriod - 1 ];
         }
 
@@ -272,7 +273,7 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
     //  This works since the land allocator calibration is called before these 
     //  initcalcs are called in the landallocator initcalc, so Period 1 values 
     //  should be set by the time it gets here
-    else if ( mProfitScaler[ aPeriod ] == -1 ) {
+    /*else*/ if ( mProfitScaler[ aPeriod ] == -1 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Negative share weight in period " << aPeriod
@@ -291,7 +292,7 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
 * \param aLandAllocationAbove Land allocation of the parent node
 * \param aPeriod Model period
 */
-void LandLeaf::setInitShares( const string& aRegionName,
+double LandLeaf::setInitShares( const string& aRegionName,
                               const double aLandAllocationAbove,
                               const int aPeriod )
 {
@@ -301,6 +302,8 @@ void LandLeaf::setInitShares( const string& aRegionName,
     else {
         mShare[ aPeriod ] = 0;
     }
+
+    return mShare[ aPeriod ] * mProfitRate[ aPeriod ];
 }
 
 /*!
@@ -340,12 +343,15 @@ void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 }
 
 void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
+    XMLWriteElement( mCalibrationProfitRate[ period ], "cal-profit-rate", out, tabs );
     XMLWriteElement( mLandAllocation[ period ], "landAllocation", out, tabs );    
     XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", out, tabs );
     XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", out, tabs );
     XMLWriteElement( mSocialDiscountRate, "social-discount-rate", out, tabs );
     XMLWriteVector( mCarbonPriceIncreaseRate, "carbon-price-increase-rate", out, tabs, scenario->getModeltime() );
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", out, tabs, string() );
+    XMLWriteElement( mAvgProfitRateAbove[ period ], "avg-profit-rate-above", out, tabs );
+    XMLWriteElement( mIsNewTech, "is-new-tech", out, tabs );
     if( mLandUseHistory.get() ){
         mLandUseHistory->toDebugXML( period, out, tabs );
     }
@@ -443,33 +449,26 @@ void LandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
 *          rate that is implied by the share this leaf gets within
 *          its node and the calibration profit rate of that.
 * \param aAverageProfitRateAbove - profit rate of the containing node
-* \param aLogitExponentAbove - logit exponent of the containing node
+* \param aChoiceFnAbove The discrete choice function from the level above.
 * \author Marshall Wise
 */
 
 
 void LandLeaf::calculateCalibrationProfitRate( const string& aRegionName, 
                                                double aAverageProfitRateAbove, 
-                                               double aLogitExponentAbove, 
+                                               IDiscreteChoice* aChoiceFnAbove,
                                                const int aPeriod ) {
     // Calculates calibration profit rate based on share within node and profit
     // of the node that contains it
-
-    double avgProfitRate = aAverageProfitRateAbove;
-    // If logit exponent of node is zero, this calculation will not matter
-    // so don't do it.  Zero means fixed shares so average profit won't change.
-    // And avoid 1/0.
-    if ( aLogitExponentAbove > 0 ) {    
-		if ( mIsNewTech ) {
-			avgProfitRate *= pow( mGhostShareNumeratorForLeaf, 1.0 / aLogitExponentAbove );
-		}
-		else {
-            avgProfitRate *= pow( mShare[ aPeriod ], 1.0 / aLogitExponentAbove );
-        }
-    }
-
     // store this value in this leaf 
-    mCalibrationProfitRate[ aPeriod ] = avgProfitRate;
+    if( !mIsNewTech ) {
+    mCalibrationProfitRate[ aPeriod ] = aChoiceFnAbove->calcImpliedCost(
+            /*mIsNewTech ? mGhostShareNumeratorForLeaf :*/ mShare[ aPeriod ],
+            aAverageProfitRateAbove, aPeriod );
+    }
+    else {
+        //mCalibrationProfitRate[ aPeriod ] = getParent()->getCalibrationProfitForNewTech( aPeriod );
+    }
 }
 
 
@@ -497,27 +496,20 @@ void LandLeaf::setSoilTimeScale( const int aTimeScale ) {
 *          distribution assumed for the parent node ( aLogitExpAbove )
 * \param aRegionName Region.
 * \param aLogitExpAbove Distribution parameter for the parent node
+* \param aChoiceFnAbove The discrete choice function from the level above.
 * \param aPeriod Model period
 */
 double LandLeaf::calcLandShares( const string& aRegionName,
-                                 const double aLogitExpAbove,
+                                 IDiscreteChoice* aChoiceFnAbove,
                                  const int aPeriod )
 {
     // Calculate the unnormalized share for this leaf
     // The unnormalized share is used by the parent node to 
     // calculate the leaf's share of the parent's land
-    double unnormalizedShare = 0.0;
-    double totalProfitRate = mProfitScaler[ aPeriod ] * mProfitRate[ aPeriod ] * mAdjustForNewTech[ aPeriod ];
-    // Total profit rate including the carbon subsidy should not be negative.
-    if( totalProfitRate < 0.0 || mProfitScaler[ aPeriod ] == 0.0 ){
-        unnormalizedShare = 0.0;
-    }
-    else {
-        unnormalizedShare = pow( totalProfitRate , aLogitExpAbove );
-    }
+    double unnormalizedShare = aChoiceFnAbove->calcUnnormalizedShare( mProfitRate[ aPeriod ] <= 0.0 ? 0.0 : mProfitScaler[ aPeriod ], mProfitRate[ aPeriod ], aPeriod );
 
     // result should be > 0.
-    assert( unnormalizedShare >= 0.0 );
+    //assert( unnormalizedShare >= 0.0 );
 
     return unnormalizedShare; 
 }
@@ -525,10 +517,12 @@ double LandLeaf::calcLandShares( const string& aRegionName,
 /*!
  * \brief Calculates share profit scalers
  * \param aRegionName Region name.
+ * \param aChoiceFnAbove The discrete choice function from the level above.
  * \param aPeriod model period.
  */
 void LandLeaf::calculateProfitScalers( const string& aRegionName, 
-                                          const int aPeriod ) 
+                                       IDiscreteChoice* aChoiceFnAbove,
+                                       const int aPeriod ) 
 {
     // profit scaler is the ratio of the calibration profit over the 
     // observed or computed profit. For managed land, the observed profit is the yield
@@ -537,18 +531,26 @@ void LandLeaf::calculateProfitScalers( const string& aRegionName,
 
     // Only calculate if numerator and denomiator are both not equal to 0, else set to zero
 	if ( mIsNewTech ) {
+        /*
 		if ( aPeriod < scenario->getModeltime()->getyr_to_per( mNewTechStartYear ) ) {
 			mProfitScaler[ aPeriod ] = 0.0;
 		}
 		else {
-			mProfitScaler[ aPeriod ] = mCalibrationProfitRate[ aPeriod ] / getParent()->getCalibrationProfitForNewTech( aPeriod );
-		}
+        */
+            mCalibrationProfitRate[ aPeriod ] = getParent()->getCalibrationProfitForNewTech( aPeriod );
+            double newTechProfitScaler = aChoiceFnAbove->calcShareWeight( mGhostShareNumeratorForLeaf,
+                    mCalibrationProfitRate[ aPeriod ],
+                    aPeriod );
+		//}
+        const Modeltime* modeltime = scenario->getModeltime();
+        mProfitScaler[ aPeriod ] = 0.0;
+        mProfitScaler[ modeltime->getyr_to_per( mNewTechStartYear ) ] = newTechProfitScaler;
 	}
 	else if ( mCalibrationProfitRate[ aPeriod ] == 0 || mProfitRate[ aPeriod ] == 0 ) {
         mProfitScaler[ aPeriod ] = 0;
     }
     else {
-        mProfitScaler[ aPeriod ] = mCalibrationProfitRate[ aPeriod ] / mProfitRate[ aPeriod ];
+        mProfitScaler[ aPeriod ] = aChoiceFnAbove->calcShareWeight( mShare[ aPeriod ], mProfitRate[ aPeriod ], aPeriod );
     }
 
     //put in a warning if this scaler is negative, that means cal price too low.
@@ -657,11 +659,6 @@ double LandLeaf::getCalLandAllocation( const LandAllocationType aType,
 // does nothing for leaves. all new leafs within a node get the same scaler
 double LandLeaf::getCalibrationProfitForNewTech( const int aPeriod ) const {
      return 0;
-}
-
-double LandLeaf::getLogitExponent( const int aPeriod ) const {
-    // Land leaves do not have logit exponents
-    return 0.0;
 }
 
 void LandLeaf::adjustProfitScalers( const std::string& aRegionName, 

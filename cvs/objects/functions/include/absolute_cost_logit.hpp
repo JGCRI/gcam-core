@@ -89,8 +89,17 @@ public:
     virtual double calcUnnormalizedShare( const double aShareWeight, const double aCost,
                                           const int aPeriod ) const;
 
+    virtual double calcAverageCost( const double aUnnormalizedShareSum,
+                                    const int aPeriod ) const;
+
     virtual double calcShareWeight( const double aShare, const double aCost, const double aAnchorShare,
                                     const double aAnchorCost, const int aPeriod ) const;
+
+    virtual double calcShareWeight( const double aShare, const double aCost, const int aPeriod ) const;
+
+    virtual double calcImpliedCost( const double aShare, const double aCost, const int aPeriod ) const;
+
+    virtual void setOutputCost( const double aCost );
 
     virtual void setBaseCost( const double aBaseCost );
 
@@ -103,6 +112,8 @@ private:
 
     //! flag indicating whether a base cost was set in the XML input
     bool mParsedBaseCost;
+
+    double mOutputCost;
 };
 
 #endif // _ABSOLUTE_COST_LOGIT_HPP_

@@ -54,7 +54,8 @@ using namespace xercesc;
 
 //! default constructor:  arg value <= 0 will get filled in with the default
 RelativeCostLogit::RelativeCostLogit():
-mLogitExponent( 1.0 )
+mLogitExponent( 1.0 ),
+mOutputCost( 0.0 )
 {
 }
 
@@ -87,6 +88,7 @@ bool RelativeCostLogit::XMLParse( const DOMNode *aNode ) {
             continue;
         }
         else if( nodeName == "logit-exponent" ) {
+            /*
             double value = XMLHelper<double>::getValue( curr );
             if( value > 0 ) {
                 ILogger& mainlog = ILogger::getLogger( "main_log" );
@@ -97,8 +99,9 @@ bool RelativeCostLogit::XMLParse( const DOMNode *aNode ) {
                 parsingSuccessful = false;
             }
             else {
+            */
                 XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
-            }
+            //}
         }
         else {
             ILogger& mainlog = ILogger::getLogger( "main_log" );
@@ -125,6 +128,7 @@ void RelativeCostLogit::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 void RelativeCostLogit::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mLogitExponent[ aPeriod ], "logit-exponent", aOut, aTabs );
+    XMLWriteElement( mOutputCost, "output-cost", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -162,6 +166,32 @@ double RelativeCostLogit::calcUnnormalizedShare( const double aShareWeight, cons
     // logit and the absolute cost logit.
 }
 
+double RelativeCostLogit::calcAverageCost( const double aUnnormalizedShareSum,
+                                            const int aPeriod ) const
+{
+    const double minInf = -std::numeric_limits<double>::infinity();
+    double ret;
+    if( mLogitExponent[ aPeriod ] == 0.0 ) {
+        // TODO: what to do with zero logit?
+        ret = 1.0;
+    }
+    else if( ( aUnnormalizedShareSum == minInf || aUnnormalizedShareSum == 0 ) && mLogitExponent[ aPeriod ] < 0 ) {
+        // No Valid options and negative logit so return a large cost so a nested
+        // logit would not want to choose this nest.
+        ret = util::getLargeNumber();
+    }
+    else if( ( aUnnormalizedShareSum == minInf || aUnnormalizedShareSum == 0 ) && mLogitExponent[ aPeriod ] > 0 ) {
+        // No Valid options and positive logit so return a large negative cost
+        // so a nested logit would not want to choose this nest.
+        ret = -util::getLargeNumber();
+    }
+    else {
+        ret = pow( aUnnormalizedShareSum, 1.0 / mLogitExponent[ aPeriod ] );
+    }
+
+    return ret;
+}
+
 /*!
  * \brief Share weight calculation for the relative cost logit.
  * \details  Given an an "anchor" choice with observed share and price and another choice
@@ -181,7 +211,25 @@ double RelativeCostLogit::calcShareWeight( const double aShare, const double aCo
     double cappedCost = std::max( aCost, getMinCostThreshold() );
     double cappedAnchorCost = std::max( aAnchorCost, getMinCostThreshold() );
     
-    return ( aShare / aAnchorShare ) * pow( cappedAnchorCost/ cappedCost, mLogitExponent[ aPeriod ] );
+    return ( aShare / aAnchorShare ) * pow( cappedAnchorCost / cappedCost, mLogitExponent[ aPeriod ] );
+}
+
+double RelativeCostLogit::calcShareWeight( const double aShare, const double aCost, const int aPeriod ) const {
+    // Negative costs are not allowed so they are instead capped at getMinCostThreshold()
+    double cappedCost = std::max( aCost, getMinCostThreshold() );
+    return ( aShare ) * pow( mOutputCost / cappedCost, mLogitExponent[ aPeriod ] );
+}
+
+double RelativeCostLogit::calcImpliedCost( const double aShare, const double aCost, const int aPeriod ) const {
+    // Negative costs are not allowed so they are instead capped at getMinCostThreshold()
+    double cappedCost = std::max( aCost, getMinCostThreshold() );
+    return mLogitExponent[ aPeriod ] == 0.0 ? cappedCost
+        : ( cappedCost ) * pow( aShare, 1.0 / mLogitExponent[ aPeriod ] );
+}
+
+void RelativeCostLogit::setOutputCost( const double aCost ) {
+    // Negative costs are not allowed so they are instead capped at getMinCostThreshold()
+    mOutputCost = std::max( aCost, getMinCostThreshold() );
 }
 
 void RelativeCostLogit::setBaseCost( const double aBaseCost ) {

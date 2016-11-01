@@ -56,9 +56,9 @@
  *          prices.  The classes gather in a single place the
  *          functions for calculating the discrete choice function and
  *          computing share weights 
- * \todo Bring the getPrice methods for the sectors and and subsectors
- *       into these classes so that we can calculate proper average
- *       costs.
+ * \note The calcAveragePrice method is currently only used in the land-allocator.
+ *       The sectors and and subsectors are currently not using this and instead
+ *       are calculating a straight average cost.
  */
 class IDiscreteChoice : public IParsable, public IRoundTrippable {
 public:
@@ -103,6 +103,18 @@ public:
                                           const int aPeriod ) const = 0;
 
     /*!
+     * \brief Compute the mean mean according the the discrete choice function's
+     *        parameterization.
+     * \param aUnnormalizedShareSum The sum of all of the shares as calculated by
+     *                              exp( calcUnnormalizedShare ) which will be used to
+     *                              calculate the mean cost.
+     * \param aPeriod The current model period.
+     * \return The average cost.
+     */
+    virtual double calcAverageCost( const double aUnnormalizedShareSum,
+                                    const int aPeriod ) const = 0;
+
+    /*!
      * \brief Compute the share weight by inverting the discrete choice function
      *        given the values of the other terms in the equation.
      * \details Given the discrete choice is calculating unnormalized shares we must
@@ -117,6 +129,12 @@ public:
      */
     virtual double calcShareWeight( const double aShare, const double aCost, const double aAnchorShare,
                                     const double aAnchorCost, const int aPeriod ) const = 0;
+
+    virtual double calcShareWeight( const double aShare, const double aCost, const int aPeriod ) const = 0;
+
+    virtual double calcImpliedCost( const double aShare, const double aCost, const int aPeriod ) const = 0;
+
+    virtual void setOutputCost( const double aCost ) = 0;
 
     /*!
      * \brief Sets the base cost to use in the choice formulation if necessary.

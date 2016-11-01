@@ -92,12 +92,13 @@ public:
     virtual void initCalc( const std::string& aRegionName,
                            const int aPeriod );
 
-    virtual void setInitShares( const std::string& aRegionName,
-                                const double aLandAllocationAbove,
-                                const int aPeriod );
+    virtual double setInitShares( const std::string& aRegionName,
+                                  const double aLandAllocationAbove,
+                                  const int aPeriod );
 
     virtual void calculateProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+                                         IDiscreteChoice* aChoiceFnAbove,
+                                         const int aPeriod );
 
 	virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
@@ -110,7 +111,7 @@ public:
     virtual void setSoilTimeScale( const int aTimeScale );
 
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
     virtual void calcLandAllocation( const std::string& aRegionName,
@@ -130,15 +131,13 @@ public:
 	
     virtual double getProfitForChildWithHighestShare( const int aPeriod ) const;
         
-    virtual double getLogitExponent( const int aPeriod ) const;
-
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
 
     virtual void calculateCalibrationProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
-                                             double aLogitExponentAbove,
+                                             IDiscreteChoice* aChoiceFnAbove,
                                              const int aPeriod );
 
     virtual void adjustProfitScalers( const std::string& aRegionName, 

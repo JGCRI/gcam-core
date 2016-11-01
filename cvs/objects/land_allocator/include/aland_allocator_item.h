@@ -64,6 +64,7 @@ class IInfo;
 class Tabs;
 class LandUseHistory;
 class LandNode;
+class IDiscreteChoice;
 
 
 /*!
@@ -212,20 +213,25 @@ public:
      * \param aRegionName Region name.
      * \param aLandAllocationAbove Land allocation of the node above this item.
      * \param aPeriod Period.
+     * \return A weighted average price built from the bottom up which may make a
+     *         suitable base-price when 
      * \author Kate Calvin
      */
-    virtual void setInitShares( const std::string& aRegionName,
-                                const double aLandAllocationAbove,
-                                const int aPeriod ) = 0;
+    virtual double setInitShares( const std::string& aRegionName,
+                                  const double aLandAllocationAbove,
+                                  const int aPeriod ) = 0;
 
     /*!
      * \brief Calculates profit scalers
      * \param aRegionName Region name.
+     * \param aChoiceFnAbove The discrete choice function from the level above
+     *                       used to calculate share-weights at this node.
      * \param aPeriod Period.
      * \author Kate Calvin
      */
     virtual void calculateProfitScalers( const std::string& aRegionName,
-                                const int aPeriod ) = 0;
+                                         IDiscreteChoice* aChoiceFnAbove,
+                                         const int aPeriod ) = 0;
 
     /*!
      * \brief Sets the profit rate for a given product.
@@ -277,13 +283,14 @@ public:
      *          and the logit exponent from one level up. This method uses the
      *          modified logit from the energy system.
      * \param aRegionName Name of the containing region.
-     * \param aLogitExpAbove the logit exponent value from the node above this level.
+     * \param aChoiceFnAbove The discrete choice function from the level above
+     *                       to calculate shares at this node.
      * \param aPeriod Model period.
      * \return The unnormalized share.
      * \author Kate Calvin
      */
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod ) = 0;
 
     /*!
@@ -329,12 +336,14 @@ public:
      *          a region/subregion.  
      * \param aRegionName Region name.
      * \param aAverageProfitRate Region's average profit rate.
+     * \param aChoiceFnAbove The discrete choice function from the level above
+     *                       to calibrate share-weights at this node.
      * \param aPeriod Model period
      * \author Marshall Wise
      */
     virtual void calculateCalibrationProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
-                                             double aLogitExponentAbove,
+                                             IDiscreteChoice* aChoiceFnAbove,
                                              const int aPeriod ) = 0;
 
     /*!
@@ -368,8 +377,6 @@ public:
 
     double getShare( const int aPeriod ) const;
         
-    virtual double getLogitExponent( const int aPeriod ) const = 0;
- 
     const ALandAllocatorItem* getParent() const;
 
     double getProfitRate( const int aPeriod ) const;
@@ -412,6 +419,7 @@ protected:
     
     //! Profit scaler 
     objects::PeriodVector<double> mProfitScaler;  
+    objects::PeriodVector<double> mAvgProfitRateAbove;  
 
     //! Boolean indicating a node or leaf is new 
     bool mIsNewTech;  

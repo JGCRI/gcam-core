@@ -95,12 +95,13 @@ public:
     virtual void initCalc( const std::string& aRegionName,
                            const int aPeriod );
 
-    virtual void setInitShares( const std::string& aRegionName,
-                                const double aLandAllocationAbove,
-                                const int aPeriod );
+    virtual double setInitShares( const std::string& aRegionName,
+                                  const double aLandAllocationAbove,
+                                  const int aPeriod );
 
     virtual void calculateProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
+                                         IDiscreteChoice* aChoiceFnAbove,
+                                         const int aPeriod );
 
     virtual void adjustProfitScalers( const std::string& aRegionName, 
                                 const int aPeriod );
@@ -123,7 +124,7 @@ public:
     virtual void setSoilTimeScale( const int aTimeScale );
 
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aLogitExpAbove,
+                                   IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
     virtual void calcLandAllocation( const std::string& aRegionName,
@@ -141,8 +142,6 @@ public:
 
     virtual LandUseHistory* getLandUseHistory();
         
-    virtual double getLogitExponent( const int aPeriod ) const;
-
     virtual double getCalibrationProfitForNewTech( const int aPeriod ) const;
 	
     virtual double getProfitForChildWithHighestShare( const int aPeriod ) const;
@@ -155,7 +154,7 @@ public:
 
     virtual void calculateCalibrationProfitRate( const std::string& aRegionName,
                                              double aAverageProfitRate,
-                                             double aLogitExponentAbove,
+                                             IDiscreteChoice* aChoiceFnAbove,
                                              const int aPeriod );
 
     virtual void accept( IVisitor* aVisitor, 
@@ -189,7 +188,7 @@ protected:
     objects::PeriodVector<double> mLandAllocation;
         
     //! Logit exponent -- should be positive since we are sharing on profit
-    objects::PeriodVector<double> mLogitExponent;
+    std::auto_ptr<IDiscreteChoice> mChoiceFn;
 
     //! Share Profit scaler for new technologies in this node
     objects::PeriodVector<double> mCalibrationProfitForNewTech;
