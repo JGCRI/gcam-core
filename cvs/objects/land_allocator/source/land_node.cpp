@@ -506,6 +506,9 @@ void LandNode::calculateProfitScalers( const string& aRegionName,
     // calibration shares would imply)   
 	
 	calcCalibrationProfitForNewTech( aPeriod );
+    if( mIsNewTech ) {
+        mChoiceFn->setBaseCost( getCalibrationProfitForNewTech( aPeriod ) );
+    }
 
     mProfitScaler[ aPeriod ] = aChoiceFnAbove->calcShareWeight( mIsNewTech ? mGhostShareNumeratorForNode : mShare[ aPeriod ], /*mProfitRate[ aPeriod ]*/mCalibrationProfitRate[ aPeriod ], aPeriod );
     if( mIsNewTech ) {
@@ -792,13 +795,6 @@ double LandNode::getCalLandAllocation( const LandAllocationType aType,
 
 // To be called by contained leaf for new tech
 double LandNode::getCalibrationProfitForNewTech( const int aPeriod ) const {
-    if( aPeriod == 3 &&  mCalibrationProfitForNewTech[ aPeriod ] == 0) {
-        double value = aPeriod * mCalibrationProfitForNewTech[ aPeriod ] / mProfitScaler[ aPeriod ];
-        cout << "Called for profit rate for new tech but not set: " << mName << endl;
-        cout << "Called for profit rate for new tech but not set: " << value << endl;
-        cout << "Called for profit rate for new tech but not set: " << mName << endl;
-        cout << "Called for profit rate for new tech but not set: " << mName << endl;
-    }
 	return mCalibrationProfitForNewTech[ aPeriod ];
 }
 

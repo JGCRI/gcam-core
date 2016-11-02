@@ -158,6 +158,7 @@ void AbsoluteCostLogit::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement( mLogitExponent[ aPeriod ], "logit-exponent", aOut, aTabs );
     XMLWriteElement( mBaseCost, "base-cost", aOut, aTabs );
     XMLWriteElement( mParsedBaseCost, "parsed-base-cost", aOut, aTabs );
+    XMLWriteElement( mOutputCost, "output-cost", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -238,7 +239,7 @@ double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCo
 
 double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCost, const int aPeriod ) const {
     double coef = mLogitExponent[ aPeriod ] / mBaseCost;
-    return ( aShare ) * exp( coef * -mLogitExponent[ aPeriod ] );
+    return ( aShare ) * exp( coef * -aCost );
 }
 
 double AbsoluteCostLogit::calcImpliedCost( const double aShare, const double aCost, const int aPeriod ) const {

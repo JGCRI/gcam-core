@@ -56,7 +56,7 @@ convert_LN4_to_LN5 <- function( data, names ){
 printlog( "L2252.LN5_Logit: Logit exponent between lo and hi managed techs")
 # Keeping this assumption in this file for now; keeps changes from forcing re-builds of other files.
 mgmt_logit <- 0.1
-mgmt_logit_type <- "relative-cost-logit"
+mgmt_logit_type <- "absolute-cost-logit"
 L2252.LN5_Logit <- repeat_and_add_vector( L2241.LN4_Logit, irr, c( "IRR", "RFD" ) )
 L2252.LN5_Logit$LandNode5 <- paste( L2252.LN5_Logit$LandNode4, L2252.LN5_Logit[[irr]], sep = irr_delimiter )
 L2252.LN5_Logit$logit.exponent <- mgmt_logit
