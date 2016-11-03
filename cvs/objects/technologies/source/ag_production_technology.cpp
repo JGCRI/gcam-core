@@ -332,7 +332,7 @@ void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
     if ( mCalValue.get() ) {
         // technology knows the year it started in member variable "year"
         int techPeriod = scenario->getModeltime()->getyr_to_per( year );
-        double calLandUsed = mLandAllocator->getLandAllocation( mName, techPeriod );
+        double calLandUsed = mProductLeaf->getCalLandAllocation( ALandAllocatorItem::LandAllocationType::eManaged, techPeriod );
         // if land is also read in, compute yield, else write a warning and set
         // yield to 0
         if ( calLandUsed > 0 ) {

@@ -115,9 +115,9 @@ public:
                          const int aPeriod ) const;
 
     // Land allocator node methods.
-    virtual double setInitShares( const std::string& aRegionName,
-                                  const double aLandAllocationAbove,
-                                  const int aPeriod );
+    virtual void setInitShares( const std::string& aRegionName,
+                                const double aLandAllocationAbove,
+                                const int aPeriod );
 
     virtual double calcLandShares( const std::string& aRegionName,
                                    IDiscreteChoice* aChoiceFnAbove,
@@ -140,9 +140,6 @@ protected:
     virtual void toInputXMLDerived( std::ostream& aOutput,
                                     Tabs* aTabs ) const;
 private:
-    //! Land allocated in 1000's of hectares
-    objects::PeriodVector<double> mLandAllocation;
-
     //! Rate at which carbon price is expected to increase
     objects::PeriodVector<double> mCarbonPriceIncreaseRate;
 
@@ -150,13 +147,6 @@ private:
     int mSoilTimeScale;                              
 
     void calibrateLandAllocator( const std::string& aRegionName, const int aPeriod );
-
-    void calculateProfitScalers( const std::string& aRegionName, 
-                                 IDiscreteChoice* aChoiceFnAbove,
-                                 const int aPeriod );
-
-    void adjustProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
 
     void checkLandArea( const std::string& aRegionName, const int aPeriod );
 };

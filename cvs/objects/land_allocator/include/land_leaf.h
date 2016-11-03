@@ -48,12 +48,9 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/time_vector.h"
-#include "util/base/include/value.h"
 
 class Tabs;
 class ICarbonCalc;
-class LandNode;
 
 /*!
  * \brief A LandLeaf is the leaf of a land allocation tree.
@@ -92,18 +89,21 @@ public:
     virtual void initCalc( const std::string& aRegionName,
                            const int aPeriod );
 
-    virtual double setInitShares( const std::string& aRegionName,
-                                  const double aLandAllocationAbove,
-                                  const int aPeriod );
+    virtual void setInitShares( const std::string& aRegionName,
+                                const double aLandAllocationAbove,
+                                const int aPeriod );
 
-    virtual void calculateProfitScalers( const std::string& aRegionName, 
-                                         IDiscreteChoice* aChoiceFnAbove,
-                                         const int aPeriod );
+    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+                                           double aAverageProfitRate,
+                                           IDiscreteChoice* aChoiceFnAbove,
+                                           const int aPeriod );
 
 	virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
+
+    virtual double getHighestProfitRateFromLeaf( const int aPeriod ) const;
 
     virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
                                       const int aPeriod );
@@ -127,21 +127,9 @@ public:
     virtual double getCalLandAllocation( const LandAllocationType aType,
                                          const int aPeriod ) const;
     
-	virtual double getCalibrationProfitForNewTech( const int aPeriod ) const;
-	
-    virtual double getProfitForChildWithHighestShare( const int aPeriod ) const;
-        
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
-
-    virtual void calculateCalibrationProfitRate( const std::string& aRegionName, 
-                                             double aAverageProfitRate,
-                                             IDiscreteChoice* aChoiceFnAbove,
-                                             const int aPeriod );
-
-    virtual void adjustProfitScalers( const std::string& aRegionName, 
-                                const int aPeriod );
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
@@ -159,9 +147,6 @@ public:
 	virtual bool isUnmanagedLandLeaf( )  const;
 
 protected:
-    //! Land allocated in 1000's of hectares
-    objects::PeriodVector<Value> mLandAllocation;
-
     //! Carbon content and emissions calculator for the leaf.
     std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
 
@@ -202,14 +187,6 @@ protected:
     //! State value necessary to use Marketplace::addToDemand for expansion constraint
     double mLastCalcExpansionValue;
 	
-	//! Numerator that determines share for new technologies IF the right profit conditions hold
-	//! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
-	//! the profit of the new technology is equal to the profit of the dominant technology in 
-	//! the base year, and all other profits stay the same.
-    double mGhostShareNumeratorForLeaf;
-	
-	int mNewTechStartYear;
-
 };
 
 #endif // _LAND_LEAF_H_

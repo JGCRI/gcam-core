@@ -139,7 +139,7 @@ void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
            technology that is identical to an existing technology is added to a node, then the node
            will be allocated the same amount of land as when the new technology didn't exist.
         */
-        adjustProfitScalers( aRegionName, aPeriod );
+        //adjustProfitScalers( aRegionName, aPeriod );
     }
 
     // Call land node's initCalc
@@ -248,9 +248,9 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
    rates" in the 2008 version of the code based on Sands and Leimbech. */
 	
     mChoiceFn->setOutputCost( mUnManagedLandValue );
-    calculateCalibrationProfitRate( aRegionName, mUnManagedLandValue, 
-                                    mChoiceFn.get(),
-                                    aPeriod );
+    calculateNodeProfitRates( aRegionName, mUnManagedLandValue, 
+                              mChoiceFn.get(),
+                              aPeriod );
 
 /* Step 4. Calculate profit scalers. Because the calibration profit rate computed in Step 4
    will most likely differ from the profit rate computed using the yield times price - cost, a
@@ -262,31 +262,7 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
    All of the calibration is captured in the leaves, so the share profit scalers for nodes are
    set equal to 1.  */
 
-    calculateProfitScalers( aRegionName, mChoiceFn.get(), aPeriod );
-}
-
-/*!
- * \brief Calculates share profit scalers
- * \param aRegionName Region name.
- * \param aPeriod model period.
- */
-void LandAllocator::calculateProfitScalers( const string& aRegionName, 
-                                            IDiscreteChoice* aChoiceFnAbove,
-                                            const int aPeriod ) {
-    LandNode::calculateProfitScalers( aRegionName, aChoiceFnAbove, aPeriod );
-
-    // Land allocator gets a shareweight of 1
-    mProfitScaler[ aPeriod ] = 1.0;
-}
-
-/*!
- * \brief Adjusts share profit scalers
- * \param aRegionName Region name.
- * \param aPeriod model period.
- */
-void LandAllocator::adjustProfitScalers( const string& aRegionName, 
-                                          const int aPeriod ) {
-    LandNode::adjustProfitScalers( aRegionName, aPeriod );
+    calculateShareWeights( aRegionName, mChoiceFn.get(), aPeriod );
 }
 
 double LandAllocator::getLandAllocation( const string& aProductName,
@@ -334,23 +310,19 @@ void LandAllocator::setProfitRate( const string& aRegionName,
     } 
 }
 
-double LandAllocator::setInitShares( const string& aRegionName,
-                                     const double aLandAllocationAbove,
-                                     const int aPeriod )
+void LandAllocator::setInitShares( const string& aRegionName,
+                                   const double aLandAllocationAbove,
+                                   const int aPeriod )
 {
     // Calculating the shares
-    double avgProfitRate = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        avgProfitRate += mChildren[ i ]->setInitShares( aRegionName,
+        mChildren[ i ]->setInitShares( aRegionName,
                                        mLandAllocation[ aPeriod ],
                                        aPeriod );
     }
 
     // This is the root node so its share is 100%.
     mShare[ aPeriod ] = 1;
-    mAvgProfitRateAbove[ aPeriod ] = avgProfitRate;
-    mChoiceFn->setBaseCost( avgProfitRate );
-    return avgProfitRate;
 }
 
 double LandAllocator::calcLandShares( const string& aRegionName,

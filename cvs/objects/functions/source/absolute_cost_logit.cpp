@@ -243,8 +243,9 @@ double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCo
 }
 
 double AbsoluteCostLogit::calcImpliedCost( const double aShare, const double aCost, const int aPeriod ) const {
-    double coef = mLogitExponent[ aPeriod ] / mBaseCost;
-    return -log( aShare ) / coef;
+    // TODO: double check this, it seems somewhat arbitrary since really it wants to work on differences
+    // we rescale it to be +/- around aCost however that doesn't garuntee we won't get out negative values
+    return ( 1.0 + ( log( aShare ) / mLogitExponent[ aPeriod ] ) ) * aCost + aCost;
 }
 
 void AbsoluteCostLogit::setOutputCost( const double aCost ) {

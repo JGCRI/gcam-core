@@ -1584,7 +1584,7 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
         writeItem( "profit-rate", "$/thous km2", aLandLeaf->mProfitRate[ i ], i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "profit-scaler", "", aLandLeaf->mProfitScaler[ i ], i );
+        writeItem( "share-weight", "", aLandLeaf->mShareWeight[ i ], i );
     }
 }
 

@@ -49,7 +49,6 @@
 #include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include "land_allocator/include/aland_allocator_item.h"
-#include "util/base/include/value.h"
 
 // Forward declarations
 class LandUseHistory;
@@ -95,21 +94,25 @@ public:
     virtual void initCalc( const std::string& aRegionName,
                            const int aPeriod );
 
-    virtual double setInitShares( const std::string& aRegionName,
-                                  const double aLandAllocationAbove,
-                                  const int aPeriod );
-
-    virtual void calculateProfitScalers( const std::string& aRegionName, 
-                                         IDiscreteChoice* aChoiceFnAbove,
-                                         const int aPeriod );
-
-    virtual void adjustProfitScalers( const std::string& aRegionName, 
+    virtual void setInitShares( const std::string& aRegionName,
+                                const double aLandAllocationAbove,
                                 const int aPeriod );
+
+    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+                                           double aAverageProfitRate,
+                                           IDiscreteChoice* aChoiceFnAbove,
+                                           const int aPeriod );
+
+    virtual void calculateShareWeights( const std::string& aRegionName, 
+                                        IDiscreteChoice* aChoiceFnAbove,
+                                        const int aPeriod );
 
     virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
+
+    virtual double getHighestProfitRateFromLeaf( const int aPeriod ) const;
  
     virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
                                       const int aPeriod );
@@ -142,20 +145,11 @@ public:
 
     virtual LandUseHistory* getLandUseHistory();
         
-    virtual double getCalibrationProfitForNewTech( const int aPeriod ) const;
-	
-    virtual double getProfitForChildWithHighestShare( const int aPeriod ) const;
-    
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
            
 	virtual bool isUnmanagedLandLeaf( )  const;
-
-    virtual void calculateCalibrationProfitRate( const std::string& aRegionName,
-                                             double aAverageProfitRate,
-                                             IDiscreteChoice* aChoiceFnAbove,
-                                             const int aPeriod );
 
     virtual void accept( IVisitor* aVisitor, 
                          const int aPeriod ) const;
@@ -184,27 +178,11 @@ protected:
     const ALandAllocatorItem* findChild( const std::string& aName,
                                          const LandAllocatorItemType aType ) const;
 
-    //! Land allocated -- used for conceptual roots
-    objects::PeriodVector<double> mLandAllocation;
-        
     //! Logit exponent -- should be positive since we are sharing on profit
     std::auto_ptr<IDiscreteChoice> mChoiceFn;
 
-    //! Share Profit scaler for new technologies in this node
-    objects::PeriodVector<double> mCalibrationProfitForNewTech;
-    
-    //! Numerator that determines share for new nodes IF the right profit conditions hold
-	//! Share will equal ( mGhostShareNumeratorForNode / ( 1 + mGhostShareNumeratorForNode ) ) if and only if
-	//! the profit of the new node is equal to the profit of the dominant technology in 
-	//! the base year, and all other profits stay the same.
-    double mGhostShareNumeratorForNode;
-    
     //! Double storing the average price of land in a region or subregion
     double mUnManagedLandValue;
-
-    //! Boolean indicating that scalers in this node should be adjusted for new technologies
-    // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
-    bool mAdjustScalersForNewTech;
 
     //! List of the children of this land node located below it in the land
     //! allocation tree.
@@ -213,8 +191,6 @@ protected:
     //! Container of historical land use.
     std::auto_ptr<LandUseHistory> mLandUseHistory;
     
-    void calcCalibrationProfitForNewTech( const int aPeriod );
-
     //! (optional) A carbon calculation which can used when children maybe similar
     //! in terms of switching between them does not mean carbon is emitted per se.
     std::auto_ptr<NodeCarbonCalc> mCarbonCalc;
