@@ -3,15 +3,14 @@
 #'
 #' Construct the \code{modeltime} data structures
 #'
-#' @param argument_name description of the argument
 #' @return A named list with all modeltime components
-#' @keywords
-#' @seealso
 #' @author BBL
 #' @export
 #'
 #' @examples
+#' modeltime()
 modeltime <- function() {
+  tibble <- tibble::tibble
 
   # Calculate the read-in timesteps in the model
   GCAM_timesteps <- diff(modeltime.YEARS)
