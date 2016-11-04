@@ -7,5 +7,9 @@ Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: What license is it under?
+Imports:
+  dplyr (>= 0.5.0),
+  tidyr (>= 0.6.0),
+  readr (>= 1.0.0)
 Encoding: UTF-8
 LazyData: true
