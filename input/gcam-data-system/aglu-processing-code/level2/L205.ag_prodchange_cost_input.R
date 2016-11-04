@@ -30,6 +30,7 @@ L103.ag_Prod_Mt_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_
 L112.ag_YieldRate_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L112.ag_YieldRate_R_C_Y_GLU" )
 L112.bio_YieldRate_R_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L112.bio_YieldRate_R_Y_GLU" )
 L113.ag_bioYield_GJm2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L113.ag_bioYield_GJm2_R_GLU" )
+L122.ag_EcYield_kgm2_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_EcYield_kgm2_R_C_Y_GLU" )
 L123.For_Yield_m3m2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Yield_m3m2_R_GLU" )
 L123.LC_bm2_R_MgdPast_Yh_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.LC_bm2_R_MgdPast_Yh_GLU" )
 L133.ag_Cost_75USDkg_C <- readdata( "AGLU_LEVEL1_DATA", "L133.ag_Cost_75USDkg_C" )
@@ -39,14 +40,33 @@ L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thou
 
 # -----------------------------------------------------------------------------
 
+#In case the model's final base year is less than the final historical year (for hindcasting runs), we need to
+# compute the ag prod change levels that will return the known yields during the historical time period
+if( max( model_base_years ) < final_historical_year ){
+  X_yrs <- names( L122.ag_EcYield_kgm2_R_C_Y_GLU )[ names( L122.ag_EcYield_kgm2_R_C_Y_GLU ) %in% c( X_final_model_base_year, X_model_future_years ) ]
+  yrs <- as.numeric(substr( X_yrs, 2, 5 ) )
+  L205.ag_EcYieldRate_R_C_Y_GLU <- L122.ag_EcYield_kgm2_R_C_Y_GLU[ c( R_C_GLU, X_yrs ) ]
+  for( i in 2:length( X_yrs ) ){
+    L205.ag_EcYieldRate_R_C_Y_GLU[ X_yrs ][i] <- ( L122.ag_EcYield_kgm2_R_C_Y_GLU[ X_yrs ][i] / L122.ag_EcYield_kgm2_R_C_Y_GLU[ X_yrs ][i-1] ) ^
+      ( 1 / ( yrs[i] - yrs[i-1] ) ) - 1
+  }
+  L205.ag_EcYieldRate_R_C_Y_GLU[ is.na( L205.ag_EcYieldRate_R_C_Y_GLU ) ] <- 0
+  L205.ag_EcYieldRate_R_C_Y_GLU[ L205.ag_EcYieldRate_R_C_Y_GLU == Inf ] <- 0
+
+  # merge this back into the L112 table of future yield improvement rates
+  L112.ag_YieldRate_R_C_Y_GLU[ X_yrs ] <- L205.ag_EcYieldRate_R_C_Y_GLU[
+    match( vecpaste( L112.ag_YieldRate_R_C_Y_GLU[ R_C_GLU ] ),
+           vecpaste( L205.ag_EcYieldRate_R_C_Y_GLU[ R_C_GLU ] ) ),
+    X_yrs ]
+# need to have values for the (non-existent) bioenergy crops in the historical years run as future periods too
+  L112.bio_YieldRate_R_Y_GLU[ X_yrs ] <- 0
+}
+
 printlog( "Table L205.AgProdChange_ag_ref: Reference scenario ag prod change (not incl biomass)" )
 L205.AgProdChange_ag_ref <- interpolate_and_melt( L112.ag_YieldRate_R_C_Y_GLU,
                                                model_future_years, value.name = "AgProdChange", digits = digits_AgProdChange )
 L205.AgProdChange_ag_ref <- add_region_name( L205.AgProdChange_ag_ref )
 L205.AgProdChange_ag_ref <- add_agtech_names( L205.AgProdChange_ag_ref )[ names_AgProdChange ]
-#If the final calibration year is less than the final historical year, this method will return Inf for crops that are 0 in one year
-# and non-zero in subsequent years. e.g. Korea and FSU FodderGrass. Setting the agprodchange to 0, and keeping these techs out.
-L205.AgProdChange_ag_ref[ L205.AgProdChange_ag_ref == Inf ] <- 0
 
 printlog( "L205.AgProdChange_bio_ref: Reference scenario ag prod change for biomass crops" )
 L205.AgProdChange_bio_ref <- rbind(

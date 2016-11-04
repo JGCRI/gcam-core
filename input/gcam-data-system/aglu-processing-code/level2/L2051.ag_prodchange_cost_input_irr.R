@@ -33,6 +33,8 @@ L162.bio_YieldRate_R_Y_GLU_irr <- readdata( "AGLU_LEVEL1_DATA", "L162.bio_YieldR
 L163.ag_irrBioYield_GJm2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L163.ag_irrBioYield_GJm2_R_GLU" )
 L163.ag_rfdBioYield_GJm2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L163.ag_rfdBioYield_GJm2_R_GLU" )
 L164.ag_Cost_75USDkg_C <- readdata( "AGLU_LEVEL1_DATA", "L164.ag_Cost_75USDkg_C" )
+L171.ag_irrEcYield_kgm2_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L171.ag_irrEcYield_kgm2_R_C_Y_GLU" )
+L171.ag_rfdEcYield_kgm2_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU" )
 L205.AgProdChange_bio_ref <- readdata( "AGLU_LEVEL2_DATA", "L205.AgProdChange_bio_ref", skip = 4 )
 L205.AgCost_bio <- readdata( "AGLU_LEVEL2_DATA", "L205.AgCost_bio", skip = 4 )
 L205.AgCost_For <- readdata( "AGLU_LEVEL2_DATA", "L205.AgCost_For", skip = 4 )
@@ -40,6 +42,31 @@ L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thou
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
+#In case the model's final base year is less than the final historical year (for hindcasting runs), we need to
+# compute the ag prod change levels that will return the known yields during the historical time period
+if( max( model_base_years ) < final_historical_year ){
+  L171.ag_irrEcYield_kgm2_R_C_Y_GLU[[irr]] <- "IRR"
+  L171.ag_rfdEcYield_kgm2_R_C_Y_GLU[[irr]] <- "RFD"
+  L2051.ag_EcYield_kgm2_R_C_Y_GLU_irr <- rbind( L171.ag_irrEcYield_kgm2_R_C_Y_GLU, L171.ag_rfdEcYield_kgm2_R_C_Y_GLU )
+  X_yrs <- names( L2051.ag_EcYield_kgm2_R_C_Y_GLU_irr )[ names( L2051.ag_EcYield_kgm2_R_C_Y_GLU_irr ) %in% c( X_final_model_base_year, X_model_future_years ) ]
+  yrs <- as.numeric(substr( X_yrs, 2, 5 ) )
+  L2051.ag_EcYieldRate_R_C_Y_GLU_irr <- L2051.ag_EcYield_kgm2_R_C_Y_GLU_irr[ c( R_C_GLU_irr, X_yrs ) ]
+  for( i in 2:length( X_yrs ) ){
+    L2051.ag_EcYieldRate_R_C_Y_GLU_irr[ X_yrs ][i] <- ( L2051.ag_EcYield_kgm2_R_C_Y_GLU_irr[ X_yrs ][i] / L2051.ag_EcYield_kgm2_R_C_Y_GLU_irr[ X_yrs ][i-1] ) ^
+      ( 1 / ( yrs[i] - yrs[i-1] ) ) - 1
+  }
+  L2051.ag_EcYieldRate_R_C_Y_GLU_irr[ is.na( L2051.ag_EcYieldRate_R_C_Y_GLU_irr ) ] <- 0
+  L2051.ag_EcYieldRate_R_C_Y_GLU_irr[ L2051.ag_EcYieldRate_R_C_Y_GLU_irr == Inf ] <- 0
+  
+  # merge this back into the L162 table of future yield improvement rates
+  L162.ag_YieldRate_R_C_Y_GLU_irr[ X_yrs ] <- L2051.ag_EcYieldRate_R_C_Y_GLU_irr[
+    match( vecpaste( L162.ag_YieldRate_R_C_Y_GLU_irr[ R_C_GLU_irr ] ),
+           vecpaste( L2051.ag_EcYieldRate_R_C_Y_GLU_irr[ R_C_GLU_irr ] ) ),
+    X_yrs ]
+  # need to have values for the (non-existent) bioenergy crops in the historical years run as future periods too
+  L162.bio_YieldRate_R_Y_GLU_irr[ X_yrs ] <- 0
+}
+
 printlog( "Table L2051.AgProdChange_ag_irr_ref: Reference scenario ag prod change (not incl biomass)" )
 L2051.AgProdChange_ag_irr_ref <- interpolate_and_melt( L162.ag_YieldRate_R_C_Y_GLU_irr,
                                                 model_future_years, value.name = "AgProdChange", digits = digits_AgProdChange )

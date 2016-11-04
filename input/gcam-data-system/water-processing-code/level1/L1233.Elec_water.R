@@ -179,11 +179,14 @@ A23.CoolingSystemShares_RG3 <- gcam_interp( A23.CoolingSystemShares_RG3, future_
 #Note that the CCS technologies are not indicated explicitly in the cooling system shares table, so dropping these from the "plant_type" variable
 # parentheses and spaces seem to be treated as wildcards...not sure why
 L1233.shrwt_R_elec_cool_Yf$plant_type <- sub( "\\ \\(CCS\\)", "", L1233.shrwt_R_elec_cool_Yf$plant_type )
-L1233.shrwt_R_elec_cool_Yf[ X_future_years ] <- A23.CoolingSystemShares_RG3[
+
+# note - in case the final model calibration year is in the historical years, keep all of the historical years in this table even
+# though it's only used for model future years
+L1233.shrwt_R_elec_cool_Yf[ c( X_historical_years, X_future_years ) ] <- A23.CoolingSystemShares_RG3[
       match( vecpaste( L1233.shrwt_R_elec_cool_Yf[ c( "region_GCAM3", "plant_type", "cooling_system", "water_type" ) ] ),
              vecpaste( A23.CoolingSystemShares_RG3[ c( "region_GCAM3", "plant_type", "cooling_system", "water_type" ) ] ) ),
-      X_future_years ]
-L1233.shrwt_R_elec_cool_Yf <- na.omit( L1233.shrwt_R_elec_cool_Yf[ c( R, S_F_tech_cool, X_future_years ) ] )
+      c( X_historical_years, X_future_years ) ]
+L1233.shrwt_R_elec_cool_Yf <- na.omit( L1233.shrwt_R_elec_cool_Yf[ c( R, S_F_tech_cool, X_historical_years, X_future_years ) ] )
 
 # -----------------------------------------------------------------------------
 

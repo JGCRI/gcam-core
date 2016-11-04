@@ -55,6 +55,8 @@ if( exists( "model_base_years" ) ){
   emiss_model_base_years <- model_base_years[ model_base_years < 2008 ]
   X_emiss_model_base_years <- paste0( "X", emiss_model_base_years )
   hfc_model_base_years <- model_base_years
+# final calibration year where we have emissions data
+  final_emiss_year <- min( final_model_base_year, 2005 )
 }
 
 #Years for ssp inputs
@@ -86,9 +88,6 @@ R_StubTechYr <- c( "GCAM_region_ID", "supplysector", "subsector", "stub.technolo
 
 #Taxes to use in MAC curves (1990$/tC)
 MAC_taxes <- c( 0, 5, 10, 15, 32, 66, 129, 243, 486, 1093 )
-
-#Final calibration year where we have emissions data
-final_emiss_year <- 2005
 
 #Year to read in pollution controls
 ctrl_base_year <- 1975
