@@ -1,0 +1,9 @@
+# Project files
+.Rproj.user
+.Rhistory
+.RData
+
+# Vignette files
+inst/doc
+vignettes/intro-luzlogr.html
+vignettes/intro-luzlogr.R
