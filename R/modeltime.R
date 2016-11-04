@@ -1,11 +1,16 @@
 
 #' Title
 #'
+#' Description
+#'
+#' @param argument_name description of the argument
 #' @return
-#' @export
+#' @keywords
+#' @seealso
 #' @author
+#' @export
 #'
 #' @examples
 modeltime <- function() {
-
+  exists("modeltime.test")
 }
