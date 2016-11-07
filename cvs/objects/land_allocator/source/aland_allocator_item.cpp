@@ -130,8 +130,11 @@ void ALandAllocatorItem::calculateShareWeights( const string& aRegionName,
     if( aPeriod == modeltime->getFinalCalibrationPeriod() ) {
         for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
             if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
+                /*
                 double profitRateForCal = mShare[ aPeriod ] > 0.0 ? mProfitRate[ aPeriod ] :
                     ( getParent()->getHighestProfitRateFromLeaf( aPeriod ) / getHighestProfitRateFromLeaf( aPeriod ) ) * mProfitRate[ aPeriod ];
+                    */
+                double profitRateForCal = mProfitRate[ aPeriod ];
                 mShareWeight[ futurePer ] = aChoiceFnAbove->calcShareWeight( mGhostUnormalizedShare[ futurePer ],
                                                                              profitRateForCal,
                                                                              futurePer );
