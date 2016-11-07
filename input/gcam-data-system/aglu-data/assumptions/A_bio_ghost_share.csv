@@ -1,1 +1,6 @@
-#Biomass default shares by year,year,default.share2020,0.032025,0.062035,0.152100,0.15
+#Biomass unormalized ghost shares by year used to phase in biomass as a new crop/technology in future years,
+year,ghost.share
+2020,0.03
+2025,0.06
+2035,0.15
+2100,0.15

@@ -535,7 +535,9 @@ LN3_Logit_relative-cost-logit, world/+{name}region, region/+{name}LandAllocatorR
 
 LN3_Logit_absolute-cost-logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/absolute-cost-logit, scenario, scenario/world
 
-LN3_DefaultShare, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{year}default-share, LandNode3/+default-share, scenario, scenario/world
+LN3_NodeGhostShare, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{year}ghost-unormalized-share, LandNode3/+ghost-unormalized-share, scenario, scenario/world
+
+LN3_LeafGhostShare, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, LandLeaf/+{year}ghost-unormalized-share, LandLeaf/+ghost-unormalized-share, scenario, scenario/world
 
 LN3_HistUnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, UnmanagedLandLeaf/land-use-history
 
@@ -558,8 +560,6 @@ LN3_UnmgdNoEmissCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, La
 LN3_MgdNoEmissCarbon, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, land-use-history/+above-ground-carbon-density, land-use-history/+below-ground-carbon-density, no-emiss-carbon-calc/+above-ground-carbon-density, no-emiss-carbon-calc/+below-ground-carbon-density, no-emiss-carbon-calc/+{year;fillout=1}mature-age, no-emiss-carbon-calc/+mature-age, LandLeaf/+minAboveGroundCDensity, LandLeaf/+minBelowGroundCDensity, scenario, scenario/world, LandLeaf/no-emiss-carbon-calc, LandLeaf/land-use-history
 
 
-LN3_NewTech, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, LandLeaf/+{year;fillout=1}isNewTechnology, LandLeaf/+isNewTechnology, scenario, scenario/world
-
 LN4_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandNode4, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, LandNode4/dummy-logit-tag, scenario, scenario/world
 
 LN4_Logit_relative-cost-logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandNode4, LandNode4/relative-cost-logit, scenario, scenario/world
@@ -572,9 +572,9 @@ LN4_MgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAlloca
 
 LN4_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age,land-carbon-densities/+mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
 
-LN4_NewTech,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{name}LandLeaf,LandLeaf/+{year;fillout=1}isNewTechnology, LandLeaf/+isNewTechnology, LandLeaf/+ghost-share-leaf,scenario,scenario/world
+LN4_LeafGhostShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{name}LandLeaf,LandLeaf/+{year}ghost-unormalized-share, LandLeaf/+ghost-unormalized-share,scenario,scenario/world
 
-LN4_NewNode,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+isNewTechnology,LandNode4/+ghost-share-node,scenario,scenario/world
+LN4_NodeGhostShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{year}ghost-unormalized-share,LandNode4/+ghost-unormalized-share,scenario,scenario/world
 
 LN5_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, LandNode5/dummy-logit-tag, scenario, scenario/world
 
@@ -588,9 +588,9 @@ LN5_MgdAllocation,world/+{name}region,region/+{name}LandAllocatorRoot,LandAlloca
 
 LN5_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, LandNode5/+{name}LandLeaf,land-use-history/+above-ground-carbon-density,land-use-history/+below-ground-carbon-density,land-carbon-densities/+above-ground-carbon-density,land-carbon-densities/+below-ground-carbon-density,land-carbon-densities/+{year;fillout=1}mature-age, land-carbon-densities/+mature-age,LandLeaf/+minAboveGroundCDensity,LandLeaf/+minBelowGroundCDensity,scenario,scenario/world,LandLeaf/land-carbon-densities,LandLeaf/land-use-history
 
-LN5_NewTech,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, LandNode5/+{name}LandLeaf,LandLeaf/+{year;fillout=1}isNewTechnology, LandLeaf/+isNewTechnology, LandLeaf/+ghost-share-leaf,scenario,scenario/world
+LN5_LeafGhostShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, LandNode5/+{name}LandLeaf,LandLeaf/+{year}ghost-unormalized-share,LandLeaf/+ghost-unormalized-share,scenario,scenario/world
 
-LN5_NewNode,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{name}LandNode5,LandNode5/+isNewTechnology,LandNode5/+ghost-share-node,scenario,scenario/world
+LN5_NodeGhostShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{name}LandNode5,LandNode5/+{year}ghost-unormalized-share,LandNode5/+ghost-unormalized-share,scenario,scenario/world
 
 11000, NODE_RENAME
 

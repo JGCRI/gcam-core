@@ -37,7 +37,7 @@ L2241.LN4_MgdAllocation_bio <- readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_MgdAlloc
 L2241.LN4_MgdCarbon_crop <- readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_MgdCarbon_crop", skip = 4 )
 #Na.omit to drop the node rename table, if present
 L2241.LN4_MgdCarbon_bio <- na.omit( readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_MgdCarbon_bio", skip = 4 ) )
-L2241.LN4_NewTech <- readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_NewTech", skip = 4 )
+L2241.LN4_LeafGhostShare <- readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_LeafGhostShare", skip = 4 )
 
 # -----------------------------------------------------------------------------
 #The methods in this code file will be to start with existing (landnode4) tables, and add another level of detail
@@ -125,11 +125,11 @@ L2252.LN5_MgdCarbon_bio$hist.veg.carbon.density[ is.na( L2252.LN5_MgdCarbon_bio$
       L2252.LN5_MgdCarbon_bio$veg.carbon.density[ is.na( L2252.LN5_MgdCarbon_bio$hist.veg.carbon.density ) ]
 L2252.LN5_MgdCarbon_bio$veg.carbon.density <- L2252.LN5_MgdCarbon_bio$hist.veg.carbon.density
 
-printlog( "L2252.LN5_NewTech: Ghost share of the new landleaf (lo-input versus hi-input)" )
+printlog( "L2252.LN5_LeafGhostShare: Ghost share of the new landleaf (lo-input versus hi-input)" )
 printlog( "NOTE: The ghost shares are inferred from average land shares allocated to hi-input versus lo-input, across all crops" )
-L2252.LN5_NewTech <- convert_LN4_to_LN5( L2241.LN4_NewTech, c( names_LN5_NewTech, lvl ) )
-L2252.LN5_NewTech <- substring_GLU( L2252.LN5_NewTech, "LandNode4" )
-L2252.LN5_NewTech <- substring_irr( L2252.LN5_NewTech, "LandNode5", to.lower = T )
+L2252.LN5_LeafGhostShare <- convert_LN4_to_LN5( L2241.LN4_LeafGhostShare, c( names_LN5_LeafGhostShare, lvl ) )
+L2252.LN5_LeafGhostShare <- substring_GLU( L2252.LN5_LeafGhostShare, "LandNode4" )
+L2252.LN5_LeafGhostShare <- substring_irr( L2252.LN5_LeafGhostShare, "LandNode5", to.lower = T )
 
 L2252.LandShare_R_bio_GLU_irr <- add_region_name( melt( L181.LandShare_R_bio_GLU_irr,
                                                         measure.vars = c( "landshare_lo", "landshare_hi" ),
@@ -137,20 +137,18 @@ L2252.LandShare_R_bio_GLU_irr <- add_region_name( melt( L181.LandShare_R_bio_GLU
 L2252.LandShare_R_bio_GLU_irr$variable <- as.character( L2252.LandShare_R_bio_GLU_irr$variable )
 L2252.LandShare_R_bio_GLU_irr[[lvl]] <- with( L2252.LandShare_R_bio_GLU_irr, substr( variable, nchar( variable ) - 1, nchar( variable ) ) )
 
-L2252.LN5_NewTech$ghost.share.leaf <-
+L2252.LN5_LeafGhostShare$ghost.unormalized.share <-
   round( L2252.LandShare_R_bio_GLU_irr$landshare[
-    match( vecpaste( L2252.LN5_NewTech[ c( reg, GLU, irr, lvl ) ] ),
+    match( vecpaste( L2252.LN5_LeafGhostShare[ c( reg, GLU, irr, lvl ) ] ),
            vecpaste( L2252.LandShare_R_bio_GLU_irr[ c( reg, GLU, irr, lvl ) ] ) ) ],
     digits_land_use )
 
 #For bio techs with no ghost share info, set lo- and hi-input techs to 0.5
-L2252.LN5_NewTech$ghost.share.leaf[ is.na( L2252.LN5_NewTech$ghost.share.leaf ) ] <- 0.5
+L2252.LN5_LeafGhostShare$ghost.unormalized.share[ is.na( L2252.LN5_LeafGhostShare$ghost.unormalized.share ) ] <- 0.5
 
-printlog( "L2252.LN5_NewNode: Ghost share of the new nodes (irrigated versus rainfed)")
-L2252.LN5_NewNode <- L2241.LN4_NewTech
-names( L2252.LN5_NewNode ) <- sub( "LandLeaf", "LandNode5", names( L2252.LN5_NewNode ) )
-names( L2252.LN5_NewNode ) <- sub( "ghost.share.leaf", "ghost.share.node", names( L2252.LN5_NewNode ) )
-L2252.LN5_NewNode[["newTechStartYear"]] <- NULL
+printlog( "L2252.LN5_NodeGhostShare: Ghost share of the new nodes (irrigated versus rainfed)")
+L2252.LN5_NodeGhostShare <- L2241.LN4_LeafGhostShare
+names( L2252.LN5_NodeGhostShare ) <- sub( "LandLeaf", "LandNode5", names( L2252.LN5_NodeGhostShare ) )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -166,8 +164,8 @@ write_mi_data( L2252.LN5_HistMgdAllocation_bio, "LN5_HistMgdAllocation", "AGLU_L
 write_mi_data( L2252.LN5_MgdAllocation_bio, "LN5_MgdAllocation", "AGLU_LEVEL2_DATA", "L2252.LN5_MgdAllocation_bio", "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml" )
 write_mi_data( L2252.LN5_MgdCarbon_crop, "LN5_MgdCarbon", "AGLU_LEVEL2_DATA", "L2252.LN5_MgdCarbon_crop", "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml" )
 write_mi_data( L2252.LN5_MgdCarbon_bio, "LN5_MgdCarbon", "AGLU_LEVEL2_DATA", "L2252.LN5_MgdCarbon_bio", "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml" )
-write_mi_data( L2252.LN5_NewTech, "LN5_NewTech", "AGLU_LEVEL2_DATA", "L2252.LN5_NewTech", "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml" )
-write_mi_data( L2252.LN5_NewNode, "LN5_NewNode", "AGLU_LEVEL2_DATA", "L2252.LN5_NewNode", "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml", node_rename=T )
+write_mi_data( L2252.LN5_LeafGhostShare, "LN5_LeafGhostShare", "AGLU_LEVEL2_DATA", "L2252.LN5_LeafGhostShare", "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml" )
+write_mi_data( L2252.LN5_NodeGhostShare, "LN5_NodeGhostShare", "AGLU_LEVEL2_DATA", "L2252.LN5_NodeGhostShare", "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml", node_rename=T )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_5_IRR_MGMT.xml", "AGLU_XML_FINAL", "land_input_5_IRR_MGMT.xml", "", xml_tag="outFile" )
 

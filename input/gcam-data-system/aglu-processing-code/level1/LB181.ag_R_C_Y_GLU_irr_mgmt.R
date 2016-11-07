@@ -118,11 +118,6 @@ tmp1$yieldmult_obs <- tmp1$hi / tmp1$yield_tha
 tmp1$yieldadd_obs <- tmp1$hi - tmp1$yield_tha
 tmp1$delta <- (tmp1$maxobs - tmp1$yield_tha ) / 2 + tmp1$yield_tha
 
-library(ggplot2)
-p <- ggplot( tmp1 ) + geom_point( aes( x = hi , y = delta ) ) +#, size = HA_ha
-    geom_line( aes( x = hi, y = maxobs ) ) #+ ggtitle( i )
-p + facet_wrap( facets = ~GTAP_crop,scales = "free" )
-
 # Apply the generic functional form explored above in order to get "hi" yields of crops not covered by Mueller
 #Separately subset the crops that are not in the Muller data. Yield multipliers and land shares will be assigned from the above calc
 L181.noMuller_ag_Yield_tha_irr <- L181.ag_Yield_tha_ctry_crop_irr[

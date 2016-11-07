@@ -30,7 +30,7 @@ A_Fodderbio_chars <- readdata( "AGLU_ASSUMPTIONS", "A_Fodderbio_chars" )
 A_LandNode_logit_irr <- readdata( "AGLU_ASSUMPTIONS", "A_LandNode_logit_irr" )
 A_LandNode4_irr <- readdata( "AGLU_ASSUMPTIONS", "A_LandNode4_irr" )
 A_LandLeaf4_irr <- readdata( "AGLU_ASSUMPTIONS", "A_LandLeaf4_irr" )
-A_bio_default_share <- readdata( "AGLU_ASSUMPTIONS", "A_bio_default_share" )
+A_bio_ghost_share <- readdata( "AGLU_ASSUMPTIONS", "A_bio_ghost_share" )
 GCAMLandLeaf_CdensityLT <- readdata( "AGLU_MAPPINGS", "GCAMLandLeaf_CdensityLT" )
 L111.ag_resbio_R_C <- readdata( "AGLU_LEVEL1_DATA", "L111.ag_resbio_R_C" )
 L121.CarbonContent_kgm2_R_LT_GLU <- readdata( "AGLU_LEVEL1_DATA", "L121.CarbonContent_kgm2_R_LT_GLU" )
@@ -214,11 +214,10 @@ L2241.LN4_MgdCarbon_bio$veg.carbon.density <- L2241.LN4_MgdCarbon_bio$hist.veg.c
 #Write out only the names to be written to XML
 L2241.LN4_MgdCarbon_bio <- L2241.LN4_MgdCarbon_bio[ names_LN4_MgdCarbon ]
 
-printlog( "L2241.LN4_NewTech: Specify the start year for purpose-grown biomass" )
+printlog( "L2241.LN4_LeafGhostShare: Specify the start year for purpose-grown biomass" )
 #Start with a table that has not had its bioenergy crops re-named yet (will make assigning a land leaf easier)
-L2241.LN4_NewTech <- L2241.LN4_Leaf_bio
-L2241.LN4_NewTech$newTechStartYear <- Bio_start_year
-L2241.LN4_NewTech$isNewTechnology <- 1
+L2241.LN4_LeafGhostShare <- L2241.LN4_Leaf_bio
+L2241.LN4_LeafGhostShare$year <- Bio_start_year
 
 printlog( "NOTE: Assigning irrigated bioenergy ghost shares based on the share of agricultural land that is irrigated by region and GLU" )
 #Calculate fraction of cropland that is irrigated in the final historical year, for each region and GLU
@@ -238,23 +237,26 @@ L2241.GhostShare_R_GLU$GhostShare <- L2241.LC_bm2_R_HarvCropLand_GLU_irr[[ X_fin
                 vecpaste( L2241.LC_bm2_R_HarvCropLand_GLU[ R_GLU ] ) ) ]
 L2241.GhostShare_R_GLU <- add_region_name( L2241.GhostShare_R_GLU )
 
-#Set ghost share leaf to irrigated share
-L2241.LN4_NewTech$ghost.share.leaf <- round(
+#Set ghost.unormalized.share to irrigated share
+L2241.LN4_LeafGhostShare$ghost.unormalized.share <- round(
     L2241.GhostShare_R_GLU$GhostShare[
-      match( vecpaste( L2241.LN4_NewTech[ c( reg, GLU, irr ) ] ),
+      match( vecpaste( L2241.LN4_LeafGhostShare[ c( reg, GLU, irr ) ] ),
              vecpaste( L2241.GhostShare_R_GLU[ c( reg, GLU, irr ) ] ) ) ],
     digits_land_use )
 
-#Regions / GLUs may exist but not have any cropland. In these cases, set the ghost share leaf to 1 for rainfed and 0 for irrigated
-L2241.LN4_NewTech$ghost.share.leaf[ is.na( L2241.LN4_NewTech$ghost.share.leaf ) & L2241.LN4_NewTech[[irr]] == "IRR" ] <- 0
-L2241.LN4_NewTech$ghost.share.leaf[ is.na( L2241.LN4_NewTech$ghost.share.leaf ) & L2241.LN4_NewTech[[irr]] == "RFD" ] <- 1
-L2241.LN4_NewTech <- L2241.LN4_NewTech[ names_LN4_NewTech ]
+#Regions / GLUs may exist but not have any cropland. In these cases, set the ghost.unormalized.share to 1 for rainfed and 0 for irrigated
+L2241.LN4_LeafGhostShare$ghost.unormalized.share[ is.na( L2241.LN4_LeafGhostShare$ghost.unormalized.share ) & L2241.LN4_LeafGhostShare[[irr]] == "IRR" ] <- 0
+L2241.LN4_LeafGhostShare$ghost.unormalized.share[ is.na( L2241.LN4_LeafGhostShare$ghost.unormalized.share ) & L2241.LN4_LeafGhostShare[[irr]] == "RFD" ] <- 1
+L2241.LN4_LeafGhostShare <- L2241.LN4_LeafGhostShare[ names_LN4_LeafGhostShare ]
 
-printlog( "L2241.LN4_NewNode: Indicate that the bioenergy node is available in future years, and specify the default node share" )
-L2241.LN4_NewNode <- subset( L2241.LN4, grepl( bio_grass_name, LandNode4 ) | grepl( bio_tree_name, LandNode4 ) )
-L2241.LN4_NewNode$isNewTechnology <- 1
-L2241.LN4_NewNode$ghost.share.node <- ghost_share_node
-L2241.LN4_NewNode <- L2241.LN4_NewNode[ names_LN4_NewNode ]
+printlog( "L2241.LN4_NodeGhostShare: Indicate that the bioenergy node is available in future years, and specify the ghost node share" )
+L2241.LN4_NodeGhostShare <- subset( L2241.LN4, grepl( bio_grass_name, LandNode4 ) | grepl( bio_tree_name, LandNode4 ) )
+L2241.LN4_NodeGhostShare <- repeat_and_add_vector( L2241.LN4_NodeGhostShare, Y, model_future_years[ model_future_years >= Bio_start_year ] )
+L2241.LN4_NodeGhostShare$ghost.unormalized.share <- approx(
+  x = A_bio_ghost_share$year,
+  y = A_bio_ghost_share$ghost.share,
+  xout = L2241.LN4_NodeGhostShare$year, rule = 2 )$y
+L2241.LN4_NodeGhostShare <- L2241.LN4_NodeGhostShare[ names_LN4_NodeGhostShare ]
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -270,8 +272,8 @@ write_mi_data( L2241.LN4_HistMgdAllocation_bio, "LN4_HistMgdAllocation", "AGLU_L
 write_mi_data( L2241.LN4_MgdAllocation_bio, "LN4_MgdAllocation", "AGLU_LEVEL2_DATA", "L2241.LN4_MgdAllocation_bio", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
 write_mi_data( L2241.LN4_MgdCarbon_crop, "LN4_MgdCarbon", "AGLU_LEVEL2_DATA", "L2241.LN4_MgdCarbon_crop", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
 write_mi_data( L2241.LN4_MgdCarbon_bio, "LN4_MgdCarbon", "AGLU_LEVEL2_DATA", "L2241.LN4_MgdCarbon_bio", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
-write_mi_data( L2241.LN4_NewTech, "LN4_NewTech", "AGLU_LEVEL2_DATA", "L2241.LN4_NewTech", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
-write_mi_data( L2241.LN4_NewNode, "LN4_NewNode", "AGLU_LEVEL2_DATA", "L2241.LN4_NewNode", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml", node_rename=T )
+write_mi_data( L2241.LN4_LeafGhostShare, "LN4_LeafGhostShare", "AGLU_LEVEL2_DATA", "L2241.LN4_LeafGhostShare", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
+write_mi_data( L2241.LN4_NodeGhostShare, "LN4_NodeGhostShare", "AGLU_LEVEL2_DATA", "L2241.LN4_NodeGhostShare", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml", node_rename=T )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml", "AGLU_XML_FINAL", "land_input_4_IRR.xml", "", xml_tag="outFile" )
 

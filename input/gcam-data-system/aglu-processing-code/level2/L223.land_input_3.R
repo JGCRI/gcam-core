@@ -27,7 +27,7 @@ sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 GCAMLandLeaf_CdensityLT <- readdata( "AGLU_MAPPINGS", "GCAMLandLeaf_CdensityLT" )
-A_bio_default_share <- readdata( "AGLU_ASSUMPTIONS", "A_bio_default_share" )
+A_bio_ghost_share <- readdata( "AGLU_ASSUMPTIONS", "A_bio_ghost_share" )
 A_Fodderbio_chars <- readdata( "AGLU_ASSUMPTIONS", "A_Fodderbio_chars" )
 A_LT_Mapping <- readdata( "AGLU_ASSUMPTIONS", "A_LT_Mapping" )
 A_LandNode_logit <- readdata( "AGLU_ASSUMPTIONS", "A_LandNode_logit" )
@@ -74,16 +74,16 @@ L223.LN3_LogitTables <- get_logit_fn_tables( L223.LN3_Logit, names_LN3_LogitType
     base.header="LN3_Logit_", include.equiv.table=T, write.all.regions=F )
 L223.LN3_Logit <- L223.LN3_Logit[ names_LN3_Logit ]
 
-printlog( "L223.LN3_DefaultShare: Default shares for new technologies in specified years" )
+printlog( "L223.LN3_LeafGhostShare: Default shares for new technologies in specified years" )
 #Default shares do not interpolate in the model, so write it out in all model future years (starting with first bio year)
-L223.LN3_DefaultShare <- L223.LN3_leaf_bio
-L223.LN3_DefaultShare$LandAllocatorRoot <- "root"
-L223.LN3_DefaultShare <- repeat_and_add_vector( L223.LN3_DefaultShare, Y, model_future_years[ model_future_years >= Bio_start_year ] )
-L223.LN3_DefaultShare$default.share <- approx(
-  x = A_bio_default_share$year,
-  y = A_bio_default_share$default.share,
-  xout = L223.LN3_DefaultShare$year, rule = 2 )$y
-L223.LN3_DefaultShare <- L223.LN3_DefaultShare[ names_LN3_DefaultShare ]
+L223.LN3_LeafGhostShare <- L223.LN3_leaf_bio
+L223.LN3_LeafGhostShare$LandAllocatorRoot <- "root"
+L223.LN3_LeafGhostShare <- repeat_and_add_vector( L223.LN3_LeafGhostShare, Y, model_future_years[ model_future_years >= Bio_start_year ] )
+L223.LN3_LeafGhostShare$ghost.unormalized.share <- approx(
+  x = A_bio_ghost_share$year,
+  y = A_bio_ghost_share$ghost.share,
+  xout = L223.LN3_LeafGhostShare$year, rule = 2 )$y
+L223.LN3_LeafGhostShare <- L223.LN3_LeafGhostShare[ names_LN3_LeafGhostShare ]
 
 #LAND USE HISTORY
 #Unmanaged land
@@ -300,11 +300,6 @@ L223.LN3_MgdCarbon_bio <- add_node_leaf_names( L223.LN3_MgdCarbon_bio, A_LandLea
 #Write out only the names to be written to XML
 L223.LN3_MgdCarbon_bio <- L223.LN3_MgdCarbon_bio[ names_LN3_MgdCarbon ]
 
-printlog( "L223.LN3_NewTech: Specify the start year for purpose-grown biomass" )
-L223.LN3_NewTech <- L223.LN3_MgdCarbon_bio[ names( L223.LN3_MgdCarbon_bio ) %in% names_LN3_NewTech ]
-L223.LN3_NewTech$year.fillout <- Bio_start_year
-L223.LN3_NewTech$isNewTechnology <- 1
-
 printlog( "Writing out information on protected lands, where applicable" )
 # Note - protected land categories are added, and non-protected lands have their land allocation quantities modified.
 # The non-protected land information (e.g., logit exponents, carbon densities) are already read in, so do not need to be duplicated
@@ -353,7 +348,7 @@ write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0( "
 }
 write_mi_data( L223.LN3_Logit, IDstring="LN3_Logit", domain="AGLU_LEVEL2_DATA", fn="L223.LN3_Logit",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_3.xml" )
-write_mi_data( L223.LN3_DefaultShare, "LN3_DefaultShare", "AGLU_LEVEL2_DATA", "L223.LN3_DefaultShare", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
+write_mi_data( L223.LN3_LeafGhostShare, "LN3_NodeGhostShare", "AGLU_LEVEL2_DATA", "L223.LN3_LeafGhostShare", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L223.LN3_HistUnmgdAllocation, "LN3_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L223.LN3_HistUnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L223.LN3_UnmgdAllocation, "LN3_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L223.LN3_UnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L223.NodeEquiv, "EQUIV_TABLE", "AGLU_LEVEL2_DATA", "L223.NodeEquiv", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
@@ -368,8 +363,7 @@ write_mi_data( L223.LN3_MgdAllocation_bio, "LN3_MgdAllocation", "AGLU_LEVEL2_DAT
 write_mi_data( L223.LN3_UnmgdCarbon, "LN3_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L223.LN3_UnmgdCarbon", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L223.LN3_MgdCarbon_noncrop, "LN3_MgdCarbon", "AGLU_LEVEL2_DATA", "L223.LN3_MgdCarbon_noncrop", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L223.LN3_MgdCarbon_crop, "LN3_MgdCarbon", "AGLU_LEVEL2_DATA", "L223.LN3_MgdCarbon_crop", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
-write_mi_data( L223.LN3_MgdCarbon_bio, "LN3_MgdCarbon", "AGLU_LEVEL2_DATA", "L223.LN3_MgdCarbon_bio", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
-write_mi_data( L223.LN3_NewTech, "LN3_NewTech", "AGLU_LEVEL2_DATA", "L223.LN3_NewTech", "AGLU_XML_BATCH", "batch_land_input_3.xml", node_rename=T )
+write_mi_data( L223.LN3_MgdCarbon_bio, "LN3_MgdCarbon", "AGLU_LEVEL2_DATA", "L223.LN3_MgdCarbon_bio", "AGLU_XML_BATCH", "batch_land_input_3.xml", node_rename=T )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_3.xml", "AGLU_XML_FINAL", "land_input_3.xml", "", xml_tag="outFile" )
 

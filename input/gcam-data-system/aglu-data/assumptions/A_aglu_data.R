@@ -223,9 +223,6 @@ low_ag_prod_growth_mult <- 0.5
 
 #Ghost share on land uses
 irrig_ghost_share_mult <- 0.25
-ghost_share_node <- 0.15
-ghost_share_bio <- 0.5
-ghost_share_tree <- 0.05
 
 #Fraction of food that should be produced locally
 local_food_fract <- 0.8
