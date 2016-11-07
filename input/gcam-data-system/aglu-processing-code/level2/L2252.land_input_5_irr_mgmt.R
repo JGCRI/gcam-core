@@ -137,14 +137,14 @@ L2252.LandShare_R_bio_GLU_irr <- add_region_name( melt( L181.LandShare_R_bio_GLU
 L2252.LandShare_R_bio_GLU_irr$variable <- as.character( L2252.LandShare_R_bio_GLU_irr$variable )
 L2252.LandShare_R_bio_GLU_irr[[lvl]] <- with( L2252.LandShare_R_bio_GLU_irr, substr( variable, nchar( variable ) - 1, nchar( variable ) ) )
 
-L2252.LN5_LeafGhostShare$ghost.unormalized.share <-
+L2252.LN5_LeafGhostShare$ghost.unnormalized.share <-
   round( L2252.LandShare_R_bio_GLU_irr$landshare[
     match( vecpaste( L2252.LN5_LeafGhostShare[ c( reg, GLU, irr, lvl ) ] ),
            vecpaste( L2252.LandShare_R_bio_GLU_irr[ c( reg, GLU, irr, lvl ) ] ) ) ],
     digits_land_use )
 
 #For bio techs with no ghost share info, set lo- and hi-input techs to 0.5
-L2252.LN5_LeafGhostShare$ghost.unormalized.share[ is.na( L2252.LN5_LeafGhostShare$ghost.unormalized.share ) ] <- 0.5
+L2252.LN5_LeafGhostShare$ghost.unnormalized.share[ is.na( L2252.LN5_LeafGhostShare$ghost.unnormalized.share ) ] <- 0.5
 
 printlog( "L2252.LN5_NodeGhostShare: Ghost share of the new nodes (irrigated versus rainfed)")
 L2252.LN5_NodeGhostShare <- L2241.LN4_LeafGhostShare

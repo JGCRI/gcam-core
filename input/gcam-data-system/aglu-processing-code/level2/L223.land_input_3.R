@@ -37,7 +37,10 @@ L111.ag_resbio_R_C <- readdata( "AGLU_LEVEL1_DATA", "L111.ag_resbio_R_C" )
 L121.CarbonContent_kgm2_R_LT_GLU <- readdata( "AGLU_LEVEL1_DATA", "L121.CarbonContent_kgm2_R_LT_GLU" )
 L122.ag_EcYield_kgm2_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_EcYield_kgm2_R_C_Y_GLU" )
 L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- readdata ( "AGLU_LEVEL1_DATA", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU" )
+L123.For_Yield_m3m2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Yield_m3m2_R_GLU" )
 L125.LC_bm2_R_LT_Yh_GLU <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R_LT_Yh_GLU" )
+L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
+L133.ag_Cost_75USDkg_C <- readdata( "AGLU_LEVEL1_DATA", "L133.ag_Cost_75USDkg_C" )
 L201.AgYield_bio_grass <- readdata( "AGLU_LEVEL2_DATA", "L201.AgYield_bio_grass", skip = 4 )
 L201.AgYield_bio_tree <- readdata( "AGLU_LEVEL2_DATA", "L201.AgYield_bio_tree", skip = 4 )
 
@@ -79,7 +82,7 @@ printlog( "L223.LN3_LeafGhostShare: Default shares for new technologies in speci
 L223.LN3_LeafGhostShare <- L223.LN3_leaf_bio
 L223.LN3_LeafGhostShare$LandAllocatorRoot <- "root"
 L223.LN3_LeafGhostShare <- repeat_and_add_vector( L223.LN3_LeafGhostShare, Y, model_future_years[ model_future_years >= Bio_start_year ] )
-L223.LN3_LeafGhostShare$ghost.unormalized.share <- approx(
+L223.LN3_LeafGhostShare$ghost.unnormalized.share <- approx(
   x = A_bio_ghost_share$year,
   y = A_bio_ghost_share$ghost.share,
   xout = L223.LN3_LeafGhostShare$year, rule = 2 )$y
@@ -339,6 +342,87 @@ L223.LN1_UnmgdCarbon_prot$UnmanagedLandLeaf <- paste0( "Protected", L223.LN1_Unm
 L223.LN1_UnmgdCarbon_prot$LandNode1 <- L223.LN1_UnmgdCarbon_prot$UnmanagedLandLeaf
 L223.LN1_UnmgdCarbon_prot$LandNode2 <- NULL
 L223.LN1_UnmgdCarbon_prot$LandNode3 <- NULL
+
+# Final step - need to calculate the bioenergy profit rate compared with the dominant crop, and
+# multiply this ratio by the assumed ghost share for bioenergy in each node
+printlog( "Calculating the (approximate) profit rate of bioenergy crops in each land use region in the final base year" )
+L223.LN3_ProfitRate_bio_grass <- subset( L223.LN3_MgdAllocation_bio, year == final_model_base_year &
+                                     grepl( "grass", LandLeaf ))[ c( reg, "LandLeaf", Y ) ]
+L223.LN3_ProfitRate_bio_grass$Price <- bio_price_75USD_GJ
+
+L223.LN3_ProfitRate_bio_grass$Cost <- bio_grass_Cost_75USD_GJ
+
+L223.LN3_ProfitRate_bio_grass$Yield <- L201.AgYield_bio_grass$yield[
+  match( vecpaste( L223.LN3_ProfitRate_bio_grass[ c( reg, "LandLeaf", Y ) ] ),
+         vecpaste( L201.AgYield_bio_grass[ c( reg, agtech, Y ) ] ) ) ]
+
+L223.LN3_ProfitRate_bio_grass$Profit <- with( L223.LN3_ProfitRate_bio_grass, ( Price - Cost ) * Yield )
+L223.LN3_ProfitRate_bio_grass <- substring_GLU( L223.LN3_ProfitRate_bio_grass, from.var = "LandLeaf" )
+
+printlog( "Calculating the (approximate) profit rate of the dominant crop of each land use region in the final base year" )
+L223.LN3_ProfitRate_domcrop_tmp <- subset( L223.LN3_MgdAllocation_crop, year == final_model_base_year )
+L223.LN3_ProfitRate_domcrop_tmp <- substring_GLU( L223.LN3_ProfitRate_domcrop_tmp, from.var = "LandLeaf" )
+
+# Strange sequence here to avoid cases where two crops within a land use region have exactly the same land allocation
+L223.LN3_ProfitRate_domcrop <- aggregate( L223.LN3_ProfitRate_domcrop_tmp[ "allocation" ],
+                                          by = L223.LN3_ProfitRate_domcrop_tmp[ c( reg, Y, GLU ) ],
+                                          max )
+L223.LN3_ProfitRate_domcrop[[R]] <- GCAM_region_names[[R]][
+  match( L223.LN3_ProfitRate_domcrop[[reg]], GCAM_region_names[[reg]] ) ]
+L223.LN3_ProfitRate_domcrop$LandLeaf <- L223.LN3_ProfitRate_domcrop_tmp$LandLeaf[
+  match( vecpaste( L223.LN3_ProfitRate_domcrop[ c( reg, Y, GLU, "allocation" ) ] ),
+         vecpaste( L223.LN3_ProfitRate_domcrop_tmp[ c( reg, Y, GLU, "allocation" ) ] ) ) ]
+L223.LN3_ProfitRate_domcrop[[C]] <- substr( L223.LN3_ProfitRate_domcrop$LandLeaf, 1,
+                                            regexpr( "_GLU", L223.LN3_ProfitRate_domcrop$LandLeaf, fixed = T ) - 1 )
+
+# Match in the prices, costs, and yields
+L223.LN3_ProfitRate_domcrop$Price <- L132.ag_an_For_Prices$calPrice[
+  match( L223.LN3_ProfitRate_domcrop[[C]], L132.ag_an_For_Prices[[C]] ) ]
+L223.LN3_ProfitRate_domcrop$Cost <- L133.ag_Cost_75USDkg_C$Cost_75USDkg[
+  match( L223.LN3_ProfitRate_domcrop[[C]], L133.ag_Cost_75USDkg_C[[C]] ) ]
+L223.LN3_ProfitRate_domcrop$Yield <- L122.ag_EcYield_kgm2_R_C_Y_GLU[[X_final_model_base_year]][
+  match( vecpaste( L223.LN3_ProfitRate_domcrop[ R_C_GLU ] ),
+         vecpaste( L122.ag_EcYield_kgm2_R_C_Y_GLU[ R_C_GLU ] ) ) ]
+
+#Calculate the profit, and match it into the bioenergy table
+L223.LN3_ProfitRate_domcrop$Profit <- with( L223.LN3_ProfitRate_domcrop, ( Price - Cost ) * Yield )
+L223.LN3_ProfitRate_bio_grass$Profit_domcrop <- L223.LN3_ProfitRate_domcrop$Profit[
+  match( vecpaste( L223.LN3_ProfitRate_bio_grass[ c( reg, GLU ) ] ),
+         vecpaste( L223.LN3_ProfitRate_domcrop[ c( reg, GLU ) ] ) ) ]
+L223.LN3_ProfitRate_bio_grass$ProfitRatio <- with( L223.LN3_ProfitRate_bio_grass, Profit / Profit_domcrop )
+
+#Repeat for bio tree
+L223.LN3_ProfitRate_bio_tree <- subset( L223.LN3_MgdAllocation_bio, year == final_model_base_year &
+                                          grepl( "tree", LandLeaf ))[ c( reg, "LandLeaf", Y ) ]
+L223.LN3_ProfitRate_bio_tree[[R]] <- GCAM_region_names[[R]][
+  match( L223.LN3_ProfitRate_bio_tree[[reg]], GCAM_region_names[[reg]] ) ]
+L223.LN3_ProfitRate_bio_tree$Price <- bio_price_75USD_GJ
+L223.LN3_ProfitRate_bio_tree$Cost <- bio_tree_Cost_75USD_GJ
+L223.LN3_ProfitRate_bio_tree$Yield <- L201.AgYield_bio_tree$yield[
+  match( vecpaste( L223.LN3_ProfitRate_bio_tree[ c( reg, "LandLeaf", Y ) ] ),
+         vecpaste( L201.AgYield_bio_tree[ c( reg, agtech, Y ) ] ) ) ]
+
+#Calculate profit
+L223.LN3_ProfitRate_bio_tree$Profit <- with( L223.LN3_ProfitRate_bio_tree, ( Price - Cost ) * Yield )
+L223.LN3_ProfitRate_bio_tree <- substring_GLU( L223.LN3_ProfitRate_bio_tree, from.var = "LandLeaf" )
+
+#For forestry, the price and the cost are the same in all regions
+L223.LN3_ProfitRate_bio_tree$Price_For <- L132.ag_an_For_Prices$calPrice[ L132.ag_an_For_Prices[[C]] == "Forest" ]
+L223.LN3_ProfitRate_bio_tree$Cost_For <- cost_For_75USDm3
+L223.LN3_ProfitRate_bio_tree$Yield_For <- L123.For_Yield_m3m2_R_GLU[[X_final_model_base_year ]][
+  match( vecpaste( L223.LN3_ProfitRate_bio_tree[ R_GLU ] ),
+         vecpaste( L123.For_Yield_m3m2_R_GLU[ R_GLU ] ) ) ]
+L223.LN3_ProfitRate_bio_tree$Profit_For <- with( L223.LN3_ProfitRate_bio_tree, ( Price_For - Cost_For ) * Yield_For )
+L223.LN3_ProfitRate_bio_tree$ProfitRatio <- with( L223.LN3_ProfitRate_bio_tree, Profit / Profit_For )
+
+L223.LN3_ProfitRatio_bio <- rbind( L223.LN3_ProfitRate_bio_grass[ c( reg, "LandLeaf", "ProfitRatio" ) ],
+                                   L223.LN3_ProfitRate_bio_tree[ c( reg, "LandLeaf", "ProfitRatio" ) ] )
+
+printlog( "Multiplying the unnormalized ghost shares by the profit ratios, for grass and tree bioenergy crops" )
+L223.LN3_LeafGhostShare$ghost.unnormalized.share <- L223.LN3_LeafGhostShare$ghost.unnormalized.share *
+  L223.LN3_ProfitRatio_bio$ProfitRatio[
+    match( vecpaste( L223.LN3_LeafGhostShare[ c( reg, "LandLeaf" ) ] ),
+           vecpaste( L223.LN3_ProfitRatio_bio[ c( reg, "LandLeaf" ) ] ) ) ]
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

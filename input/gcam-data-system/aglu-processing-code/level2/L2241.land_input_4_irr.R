@@ -237,22 +237,22 @@ L2241.GhostShare_R_GLU$GhostShare <- L2241.LC_bm2_R_HarvCropLand_GLU_irr[[ X_fin
                 vecpaste( L2241.LC_bm2_R_HarvCropLand_GLU[ R_GLU ] ) ) ]
 L2241.GhostShare_R_GLU <- add_region_name( L2241.GhostShare_R_GLU )
 
-#Set ghost.unormalized.share to irrigated share
-L2241.LN4_LeafGhostShare$ghost.unormalized.share <- round(
+#Set ghost.unnormalized.share to irrigated share
+L2241.LN4_LeafGhostShare$ghost.unnormalized.share <- round(
     L2241.GhostShare_R_GLU$GhostShare[
       match( vecpaste( L2241.LN4_LeafGhostShare[ c( reg, GLU, irr ) ] ),
              vecpaste( L2241.GhostShare_R_GLU[ c( reg, GLU, irr ) ] ) ) ],
     digits_land_use )
 
-#Regions / GLUs may exist but not have any cropland. In these cases, set the ghost.unormalized.share to 1 for rainfed and 0 for irrigated
-L2241.LN4_LeafGhostShare$ghost.unormalized.share[ is.na( L2241.LN4_LeafGhostShare$ghost.unormalized.share ) & L2241.LN4_LeafGhostShare[[irr]] == "IRR" ] <- 0
-L2241.LN4_LeafGhostShare$ghost.unormalized.share[ is.na( L2241.LN4_LeafGhostShare$ghost.unormalized.share ) & L2241.LN4_LeafGhostShare[[irr]] == "RFD" ] <- 1
+#Regions / GLUs may exist but not have any cropland. In these cases, set the ghost.unnormalized.share to 1 for rainfed and 0 for irrigated
+L2241.LN4_LeafGhostShare$ghost.unnormalized.share[ is.na( L2241.LN4_LeafGhostShare$ghost.unnormalized.share ) & L2241.LN4_LeafGhostShare[[irr]] == "IRR" ] <- 0
+L2241.LN4_LeafGhostShare$ghost.unnormalized.share[ is.na( L2241.LN4_LeafGhostShare$ghost.unnormalized.share ) & L2241.LN4_LeafGhostShare[[irr]] == "RFD" ] <- 1
 L2241.LN4_LeafGhostShare <- L2241.LN4_LeafGhostShare[ names_LN4_LeafGhostShare ]
 
 printlog( "L2241.LN4_NodeGhostShare: Indicate that the bioenergy node is available in future years, and specify the ghost node share" )
 L2241.LN4_NodeGhostShare <- subset( L2241.LN4, grepl( bio_grass_name, LandNode4 ) | grepl( bio_tree_name, LandNode4 ) )
 L2241.LN4_NodeGhostShare <- repeat_and_add_vector( L2241.LN4_NodeGhostShare, Y, model_future_years[ model_future_years >= Bio_start_year ] )
-L2241.LN4_NodeGhostShare$ghost.unormalized.share <- approx(
+L2241.LN4_NodeGhostShare$ghost.unnormalized.share <- approx(
   x = A_bio_ghost_share$year,
   y = A_bio_ghost_share$ghost.share,
   xout = L2241.LN4_NodeGhostShare$year, rule = 2 )$y
