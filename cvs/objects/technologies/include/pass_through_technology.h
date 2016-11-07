@@ -90,6 +90,10 @@ public:
                                    const double aMarginalRevenue,
                                    const int aPeriod ) const;
 
+    virtual double getCalibrationOutput( const bool aHasRequiredInput,
+                                         const std::string& aRequiredInput, 
+                                         const int aPeriod ) const;
+
 protected:
     virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const;
