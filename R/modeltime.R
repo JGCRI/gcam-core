@@ -1,15 +1,46 @@
 
-#' modeltime
+#' module_modeltime
 #'
 #' Construct the \code{modeltime} data structures
 #'
-#' @return A named list with all modeltime components
+#' @param command API command to execute
+#' @param ... other optional parameters, depending on command
+#' @return Depends on \code{command}
 #' @author BBL
 #' @export
 #'
 #' @examples
-#' modeltime()
-modeltime <- function() {
+#' module_modeltime("MAKE")
+module_modeltime <- function(command, ...) {
+  if(command == driver.DECLARE) {
+    modeltime_declaredata()
+  } else if(command == driver.MAKE) {
+    modeltime_makedata(...)
+  } else {
+    stop("Unknown command")
+  }
+}
+
+
+#' modeltime_makedata
+#'
+#' Declare what data are produced by \code{modeltime}
+#'
+#' @return All modeltime data
+#'
+modeltime_declaredata <- function() {
+  c("L200.ModelTime",
+    "L200.ModelTimeInterYears",
+    "L200.MAGICC",
+    "L200.hector")
+}
+
+
+#' modeltime_makedata
+#'
+#' @return A named list with all available modeltime data
+#'
+modeltime_makedata <- function() {
   tibble <- tibble::tibble
 
   # Calculate the read-in timesteps in the model
@@ -36,8 +67,8 @@ modeltime <- function() {
                         hector.ini.file         = modeltime.HECTOR_INI_FILE,
                         carbon.model.start.year = modeltime.MAGICC_C_START_YEAR)
 
-  list("L200.ModelTime" = L200.ModelTime,
+  list("L200.ModelTime"           = L200.ModelTime,
        "L200.ModelTimeInterYears" = L200.ModelTimeInterYears,
-       "L200.MAGICC" = L200.MAGICC,
-       "L200.hector" = L200.hector)
+       "L200.MAGICC"              = L200.MAGICC,
+       "L200.hector"              = L200.hector)
 }

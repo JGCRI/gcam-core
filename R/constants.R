@@ -1,4 +1,13 @@
 
+# ======================================================================
+# Driver constants
+driver.MAKE <- "MAKE"
+driver.DECLARE <- "DECLARE"
+
+
+# ======================================================================
+# Modeltime constants
+
 # Model base and future years
 modeltime.BASE_YEARS <- c(1975, 1990, 2005, 2010)
 modeltime.FUTURE_YEARS <- seq(2015, 2100, by = 5)
