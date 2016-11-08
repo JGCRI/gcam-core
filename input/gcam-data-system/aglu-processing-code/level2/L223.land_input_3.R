@@ -432,7 +432,7 @@ write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0( "
 }
 write_mi_data( L223.LN3_Logit, IDstring="LN3_Logit", domain="AGLU_LEVEL2_DATA", fn="L223.LN3_Logit",
                batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_land_input_3.xml" )
-write_mi_data( L223.LN3_LeafGhostShare, "LN3_NodeGhostShare", "AGLU_LEVEL2_DATA", "L223.LN3_LeafGhostShare", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
+write_mi_data( L223.LN3_LeafGhostShare, "LN3_LeafGhostShare", "AGLU_LEVEL2_DATA", "L223.LN3_LeafGhostShare", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L223.LN3_HistUnmgdAllocation, "LN3_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L223.LN3_HistUnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L223.LN3_UnmgdAllocation, "LN3_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L223.LN3_UnmgdAllocation", "AGLU_XML_BATCH", "batch_land_input_3.xml" )
 write_mi_data( L223.NodeEquiv, "EQUIV_TABLE", "AGLU_LEVEL2_DATA", "L223.NodeEquiv", "AGLU_XML_BATCH", "batch_land_input_3.xml" )

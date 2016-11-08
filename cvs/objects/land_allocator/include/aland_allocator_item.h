@@ -246,7 +246,7 @@ public:
      *        of this land item.
      * \details Note that during the final calibration period this method may also
      *          calculate share-weights for future model periods using the user
-     *          supplied "ghost unormalized share" instead of the historical share.
+     *          supplied "ghost unnormalized share" instead of the historical share.
      *          In this case the profit rate in the final calibration is still used.
      *          This could be used to introduce a new crop/technology or adjust
      *          future share-weights in a consistent manner.
@@ -282,13 +282,6 @@ public:
      * \return The currently calculated profit rate in the given model period.
      */
     double getProfitRate( const int aPeriod ) const;
-
-    /*!
-     * \brief Finds the highest profit rate from any leaf in this nest.
-     * \param aPeriod Model period.
-     * \return The higest profit rate from any leaf.
-     */
-    virtual double getHighestProfitRateFromLeaf( const int aPeriod ) const = 0;
 
     /*!
      * \brief Set the rate at which the carbon price is expected to increase
@@ -411,7 +404,7 @@ protected:
     //! Land observed profit rate
     objects::PeriodVector<double> mProfitRate;
 
-    //! The ghost unormalized share, or the share a future crop/technology would
+    //! The ghost unnormalized share, or the share a future crop/technology would
     //! get if it was available in the final calibration period at the profit rate
     //! calculated in the final calibration period.
     objects::PeriodVector<Value> mGhostUnormalizedShare;

@@ -130,10 +130,6 @@ void ALandAllocatorItem::calculateShareWeights( const string& aRegionName,
     if( aPeriod == modeltime->getFinalCalibrationPeriod() ) {
         for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
             if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
-                /*
-                double profitRateForCal = mShare[ aPeriod ] > 0.0 ? mProfitRate[ aPeriod ] :
-                    ( getParent()->getHighestProfitRateFromLeaf( aPeriod ) / getHighestProfitRateFromLeaf( aPeriod ) ) * mProfitRate[ aPeriod ];
-                    */
                 double profitRateForCal = mProfitRate[ aPeriod ];
                 mShareWeight[ futurePer ] = aChoiceFnAbove->calcShareWeight( mGhostUnormalizedShare[ futurePer ],
                                                                              profitRateForCal,
@@ -151,7 +147,7 @@ void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTa
     XMLWriteElement( mProfitRate[ aPeriod ], "profit-rate", aOut, aTabs );
     XMLWriteElement( mShare[ aPeriod ], "share", aOut, aTabs );
     XMLWriteElement( mShareWeight[ aPeriod ], "share-weight", aOut, aTabs );
-    XMLWriteElement( mGhostUnormalizedShare[ aPeriod ], "ghost-unormalized-share", aOut, aTabs );
+    XMLWriteElement( mGhostUnormalizedShare[ aPeriod ], "ghost-unnormalized-share", aOut, aTabs );
 
     // if we are in the final calibration year and we have "ghost" share-weights to calculate it
     // would be useful to see what was calculated.
@@ -161,7 +157,7 @@ void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTa
             if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
                 const int futureYear = modeltime->getper_to_yr( futurePer );
                 XMLWriteElement( mShareWeight[ futurePer ], "share-weight", aOut, aTabs, futureYear );
-                XMLWriteElement( mGhostUnormalizedShare[ futurePer ], "ghost-unormalized-share", aOut, aTabs, futureYear );
+                XMLWriteElement( mGhostUnormalizedShare[ futurePer ], "ghost-unnormalized-share", aOut, aTabs, futureYear );
             }
         }
     }

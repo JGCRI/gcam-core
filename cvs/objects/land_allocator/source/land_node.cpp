@@ -135,7 +135,7 @@ bool LandNode::XMLParse( const xercesc::DOMNode* aNode ){
         else if( nodeName == NodeCarbonCalc::getXMLNameStatic() ){
             parseSingleNode( curr, mCarbonCalc, new NodeCarbonCalc );
         }
-        else if( nodeName == "ghost-unormalized-share" ){
+        else if( nodeName == "ghost-unnormalized-share" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mGhostUnormalizedShare, scenario->getModeltime() );
         }
         else if( nodeName == "unManagedLandValue" ){
@@ -330,15 +330,6 @@ void LandNode::setProfitRate( const string& aRegionName,
         curr->setProfitRate( aRegionName, aProductName,
                                 aProfitRate, aPeriod );
     } 
-}
-
-double LandNode::getHighestProfitRateFromLeaf( const int aPeriod ) const {
-    double maxLeafProfitRate = -std::numeric_limits<double>::infinity();
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        maxLeafProfitRate = std::max( maxLeafProfitRate,
-                mChildren[i]->getHighestProfitRateFromLeaf( aPeriod ) );
-    }
-    mChoiceFn->setBaseCost( maxLeafProfitRate );
 }
 
 void LandNode::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate,

@@ -41,6 +41,7 @@ L171.LC_bm2_R_rfdHarvCropLand_C_Yh_GLU <- readdata ( "AGLU_LEVEL1_DATA", "L171.L
 L223.LN3_HistMgdAllocation_bio <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_HistMgdAllocation_bio", skip = 4 )
 L223.LN3_MgdAllocation_bio <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_MgdAllocation_bio", skip = 4 )
 L223.LN3_MgdAllocation_crop <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_MgdAllocation_crop", skip = 4 )
+L223.LN3_LeafGhostShare <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_LeafGhostShare", skip = 4 )
 L2011.AgYield_bio_grass_irr <- readdata( "AGLU_LEVEL2_DATA", "L2011.AgYield_bio_grass_irr", skip = 4 )
 L2011.AgYield_bio_tree_irr <- readdata( "AGLU_LEVEL2_DATA", "L2011.AgYield_bio_tree_irr", skip = 4 )
 
@@ -250,13 +251,10 @@ L2241.LN4_LeafGhostShare$ghost.unnormalized.share[ is.na( L2241.LN4_LeafGhostSha
 L2241.LN4_LeafGhostShare <- L2241.LN4_LeafGhostShare[ names_LN4_LeafGhostShare ]
 
 printlog( "L2241.LN4_NodeGhostShare: Indicate that the bioenergy node is available in future years, and specify the ghost node share" )
-L2241.LN4_NodeGhostShare <- subset( L2241.LN4, grepl( bio_grass_name, LandNode4 ) | grepl( bio_tree_name, LandNode4 ) )
-L2241.LN4_NodeGhostShare <- repeat_and_add_vector( L2241.LN4_NodeGhostShare, Y, model_future_years[ model_future_years >= Bio_start_year ] )
-L2241.LN4_NodeGhostShare$ghost.unnormalized.share <- approx(
-  x = A_bio_ghost_share$year,
-  y = A_bio_ghost_share$ghost.share,
-  xout = L2241.LN4_NodeGhostShare$year, rule = 2 )$y
-L2241.LN4_NodeGhostShare <- L2241.LN4_NodeGhostShare[ names_LN4_NodeGhostShare ]
+# These are the same as the values that would have been set as ghost share in the leaves in land input 3.
+# We can just copy that data frame and just rename the LandLeaf column to LandNode.
+L2241.LN4_NodeGhostShare <- L223.LN3_LeafGhostShare
+names( L2241.LN4_NodeGhostShare ) <- names_LN4_NodeGhostShare
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

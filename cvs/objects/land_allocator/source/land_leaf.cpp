@@ -153,7 +153,7 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
         else if( nodeName == "minBelowGroundCDensity" ){
             mMinBelowGroundCDensity = XMLHelper<double>::getValue( curr );
         }
-		else if( nodeName == "ghost-unormalized-share" ){
+		else if( nodeName == "ghost-unnormalized-share" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mGhostUnormalizedShare, modeltime );
         }
         else if( nodeName == LandUseHistory::getXMLNameStatic() ){
@@ -374,11 +374,6 @@ void LandLeaf::setProfitRate( const string& aRegionName,
     mProfitRate[ aPeriod ] = max( adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod ), 0.0 );
 }
 
-
-double LandLeaf::getHighestProfitRateFromLeaf( const int aPeriod ) const {
-    // The highest profit rate at a leaf is just the profit rate of the leaf.
-    return mProfitRate[ aPeriod ];
-}
 
 /*!
 * \brief Calculates the carbon subsidy per hectare for this land leaf.

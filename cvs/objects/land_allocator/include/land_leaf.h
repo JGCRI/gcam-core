@@ -103,8 +103,6 @@ public:
                                    const double aProfitRate,
                                    const int aPeriod );
 
-    virtual double getHighestProfitRateFromLeaf( const int aPeriod ) const;
-
     virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
                                       const int aPeriod );
 
