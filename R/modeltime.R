@@ -38,9 +38,10 @@ modeltime_declaredata <- function() {
 
 #' modeltime_makedata
 #'
+#' @param all_data A named list, holding all data system products so far
 #' @return A named list with all available modeltime data
 #'
-modeltime_makedata <- function() {
+modeltime_makedata <- function(all_data) {
   tibble <- tibble::tibble
 
   # Calculate the read-in timesteps in the model

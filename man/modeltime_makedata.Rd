@@ -4,7 +4,10 @@
 \alias{modeltime_makedata}
 \title{modeltime_makedata}
 \usage{
-modeltime_makedata()
+modeltime_makedata(all_data)
+}
+\arguments{
+\item{all_data}{A named list, holding all data system products so far}
 }
 \value{
 A named list with all available modeltime data
