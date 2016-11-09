@@ -2,12 +2,12 @@
 % Please edit documentation in R/modeltime.R
 \name{modeltime_declaredata}
 \alias{modeltime_declaredata}
-\title{modeltime_makedata}
+\title{modeltime_declaredata}
 \usage{
 modeltime_declaredata()
 }
 \value{
-All modeltime data
+Names of all modeltime data
 }
 \description{
 Declare what data are produced by \code{modeltime}

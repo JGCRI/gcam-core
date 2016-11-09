@@ -22,11 +22,11 @@ module_modeltime <- function(command, ...) {
 }
 
 
-#' modeltime_makedata
+#' modeltime_declaredata
 #'
 #' Declare what data are produced by \code{modeltime}
 #'
-#' @return All modeltime data
+#' @return Names of all modeltime data
 #'
 modeltime_declaredata <- function() {
   c("L200.ModelTime",

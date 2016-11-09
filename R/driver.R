@@ -8,6 +8,7 @@ driver <- function() {
   # Get a list of modules in this package
   # These are functions with a name of "module_XXXX"
   modules <- ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*$")
+  cat("Found", length(modules), "modules\n")
   all_data <- list()
 
   # Get all the data produced by each module
