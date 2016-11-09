@@ -3,6 +3,9 @@
 .Rhistory
 .RData
 
+# R directory files - using data_system_source instead
+R/*
+
 # Vignette files
 inst/doc
 vignettes/intro-luzlogr.html

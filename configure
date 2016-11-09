@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DIRECTORY=data_system_source/
+
+# Remove all R files in R/
+rm -f R/*.R
+
+# Copy all R scripts out of the directory tree into R/
+if [ -d "$DIRECTORY" ]; then
+  find $DIRECTORY -name "*.R" -exec cp {} ./R \;
+fi
