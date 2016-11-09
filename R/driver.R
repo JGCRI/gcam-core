@@ -19,7 +19,7 @@ driver <- function() {
     for(m in modules) {
       print(m)
 
-      # Order package `m` to build its data
+      # Order module `m` to build its data
       cl <- call(m, driver.MAKE, all_data)
       m_data <- eval(cl)
 
@@ -49,6 +49,6 @@ driver <- function() {
       if(have_all_data) {
         print("- OK")
       }
-    }
-  }
+    } # for
+  } # while !have_all_data
 }
