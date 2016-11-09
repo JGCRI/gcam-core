@@ -233,41 +233,13 @@ void LandLeaf::completeInit( const string& aRegionName,
 
 void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
 {
-    /*
-    if( mReadinLandAllocation[ aPeriod ].isInited() ) {
-        // TODO: shouldn't be needed however ag technolgoy calls getLandAllocation
-        // to see if there is getCalLandAllocation however getCalLandAllocation
-        // is not in ILandAllocator.. 
-        mLandAllocation[ aPeriod ] = mReadinLandAllocation[ aPeriod ];
-    }
-    */
     // TODO: error checking
     if ( aPeriod > 1 ) {
         // If leaf is a "new tech" get the scaler from its parent
         if ( !mShareWeight[ aPeriod ].isInited()) {
             mShareWeight[ aPeriod ] = mShareWeight[ aPeriod - 1 ];
         }
-
-        // If share is uninitialized, set it to the previous period's.
-        // For most land leafs, this will be overwritten during the 
-        // calcLandShares method.  The exception is when a leaf is the only
-        // leaf within a node.
-        if ( mShare[ aPeriod ] == -1 ) {
-            // TODO: is this still necessary?
-            mShare[ aPeriod ] = mShare[ aPeriod - 1 ];
-        }
-
     }
-    //  This works since the land allocator calibration is called before these 
-    //  initcalcs are called in the landallocator initcalc, so Period 1 values 
-    //  should be set by the time it gets here
-    /*else*/ /*if ( mProfitScaler[ aPeriod ] == -1 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Negative share weight in period " << aPeriod
-                << " for region " << aRegionName << endl;
-        exit( -1 );
-    }*/
 }
 
 /*!
@@ -370,8 +342,7 @@ void LandLeaf::setProfitRate( const string& aRegionName,
         adjustedProfitRate = aProfitRate - expansionCost;
     }
 
-    //TODO: negative profit rates?
-    mProfitRate[ aPeriod ] = max( adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod ), 0.0 );
+    mProfitRate[ aPeriod ] = adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod );
 }
 
 
@@ -425,7 +396,7 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
 void LandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,  
                                            double aAverageProfitRate, const int aPeriod ) {
     // Does nothing for production (managed) leaves.
-	//Only takes action on unmanaged leaves , which is a type derived from LandLeaf
+	// Only takes action on unmanaged leaves, which is a type derived from LandLeaf
 }
 
 
@@ -472,11 +443,10 @@ double LandLeaf::calcLandShares( const string& aRegionName,
     // Calculate the unnormalized share for this leaf
     // The unnormalized share is used by the parent node to 
     // calculate the leaf's share of the parent's land
-    // TODO: negative profits?
-    double unnormalizedShare = aChoiceFnAbove->calcUnnormalizedShare( mProfitRate[ aPeriod ] <= 0.0 ? 0.0 : mShareWeight[ aPeriod ].get(), mProfitRate[ aPeriod ], aPeriod );
+    double unnormalizedShare = aChoiceFnAbove->calcUnnormalizedShare( mShareWeight[ aPeriod ], mProfitRate[ aPeriod ], aPeriod );
 
-    // result should be > 0.
-    //assert( unnormalizedShare >= 0.0 );
+    // result should be > 0 if we have a non-zero share-weight (it is -infinity when zero)
+    assert( mShareWeight[ aPeriod ] == 0.0 || unnormalizedShare >= 0.0 );
 
     return unnormalizedShare; 
 }

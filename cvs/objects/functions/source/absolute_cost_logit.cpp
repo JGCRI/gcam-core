@@ -57,7 +57,7 @@ using namespace xercesc;
 //! constructor: arg values <= 0 (including default) will get filled in with the default
 AbsoluteCostLogit::AbsoluteCostLogit():
 mLogitExponent( 1 ),
-mBaseCost( 0 ),
+mBaseCost( 0.001 ),
 mParsedBaseCost( false )
 {
 }
@@ -195,18 +195,17 @@ double AbsoluteCostLogit::calcUnnormalizedShare( const double aShareWeight, cons
 double AbsoluteCostLogit::calcAverageCost( const double aUnnormalizedShareSum,
                                             const int aPeriod ) const
 {
-    const double minInf = -std::numeric_limits<double>::infinity();
     double ret;
     if( mLogitExponent[ aPeriod ] == 0.0 ) {
         // TODO: what to do with zero logit?
-        ret = 1.0;
+        ret = mOutputCost * aUnnormalizedShareSum;
     }
-    else if( ( aUnnormalizedShareSum == minInf || aUnnormalizedShareSum == 0 ) && mLogitExponent[ aPeriod ] < 0 ) {
+    else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] < 0 ) {
         // No Valid options and negative logit so return a large cost so a nested
         // logit would not want to choose this nest.
         ret = util::getLargeNumber();
     }
-    else if( ( aUnnormalizedShareSum == minInf || aUnnormalizedShareSum == 0 ) && mLogitExponent[ aPeriod ] > 0 ) {
+    else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] > 0 ) {
         // No Valid options and positive logit so return a large negative cost
         // so a nested logit would not want to choose this nest.
         ret = -util::getLargeNumber();
@@ -239,13 +238,25 @@ double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCo
 
 double AbsoluteCostLogit::calcShareWeight( const double aShare, const double aCost, const int aPeriod ) const {
     double coef = mLogitExponent[ aPeriod ] / mBaseCost;
-    return ( aShare ) * exp( coef * -aCost );
+    // guard against numerical instability in the exp when the share was zero anyway
+    return aShare == 0.0 ? 0.0 : ( aShare ) * exp( coef * -aCost );
 }
 
 double AbsoluteCostLogit::calcImpliedCost( const double aShare, const double aCost, const int aPeriod ) const {
-    // TODO: double check this, it seems somewhat arbitrary since really it wants to work on differences
-    // we rescale it to be +/- around aCost however that doesn't garuntee we won't get out negative values
-    return ( 1.0 + ( log( aShare ) / mLogitExponent[ aPeriod ] ) ) * aCost + aCost;
+    if( mLogitExponent[ aPeriod ] == 0 ) {
+        return aCost;
+    }
+    else if( aShare == 0.0 && mLogitExponent[ aPeriod ] < 0 ) {
+        return util::getLargeNumber();
+    }
+    else if( aShare == 0.0 && mLogitExponent[ aPeriod ] > 0 ) {
+        return -util::getLargeNumber();
+    }
+    else {
+        // TODO: double check this, it seems somewhat arbitrary since really it wants to work on differences
+        // we rescale it to be +/- around aCost however that doesn't garuntee we won't get out negative values
+        return ( 1.0 + ( log( aShare ) / mLogitExponent[ aPeriod ] ) ) * aCost + aCost;
+    }
 }
 
 void AbsoluteCostLogit::setOutputCost( const double aCost ) {
@@ -253,7 +264,7 @@ void AbsoluteCostLogit::setOutputCost( const double aCost ) {
 }
 
 void AbsoluteCostLogit::setBaseCost( const double aBaseCost ) {
-    if( !mParsedBaseCost ) {
+    if( !mParsedBaseCost && aBaseCost != 0.0) {
         mBaseCost = aBaseCost;
     }
 }

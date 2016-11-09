@@ -231,10 +231,11 @@ const string& LandNode::getXMLNameStatic() {
 void LandNode::completeInit( const string& aRegionName,
                              const IInfo* aRegionInfo )
 {
-    if( ! mChoiceFn.get() ) {
+    if( !mChoiceFn.get() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "No Discrete Choice function set in " << aRegionName << ", " << mName << endl;
+        mainLog << "No Discrete Choice function set in " << getXMLName() << " for "
+                << aRegionName << ", " << mName << endl;
         abort();
     }
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -257,16 +258,6 @@ void LandNode::initCalc( const string& aRegionName, const int aPeriod )
             mShareWeight[ aPeriod ] = mShareWeight[ aPeriod - 1 ];
         }
     }
-    /*
-    if ( mShareWeight[ aPeriod ] == -1 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Negative profit scaler in period " << aPeriod
-                << " for region " << aRegionName << " in land node "
-                << mName << endl;
-        abort();
-    }
-    */
 
     // Call initCalc on any children
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -372,10 +363,8 @@ double LandNode::calcLandShares( const string& aRegionName,
                                  const int aPeriod )
 {
 
-    // TODO: clean up
     double unnormalizedSum;
     vector<double> unnormalizedShares( mChildren.size() );
-    double unnormalizedShare = 0.0;
 
     // Step 1.  Calculate the unnormalized shares.
     // These calls need to be made to initiate recursion into lower nests even
@@ -385,88 +374,28 @@ double LandNode::calcLandShares( const string& aRegionName,
                                                                   mChoiceFn.get(),
                                                                   aPeriod );
         // TODO: worry about numerical overflow
-        unnormalizedShares[ i ] = exp( unnormalizedShares[ i ] );
+        unnormalizedShares[ i ] = max( exp( unnormalizedShares[ i ] ), 0.0 );
     }
     unnormalizedSum = accumulate( unnormalizedShares.begin(),
-                                   unnormalizedShares.end(),
-                                    0.0 );
+                                  unnormalizedShares.end(),
+                                  0.0 );
 
-    // Step 2 Option (a). If this is a zero-logit exponent, fixed share node
-    // then set shares equal to initshares if set by calibration in a 
-    // calibration period, or set to the previous period's value if not set.
-    // Test to check if shares have changed from initialized value of -1 
-    // set in the constructor of a_land_allocator class.
-    /*
-    if ( mLogitExponent[ aPeriod ] == 0 && aPeriod > 0) {
-        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-            // copy forward previous period share if this is not a calibration
-            // period in which case it will be set to something
-            if ( mChildren[ i ]->getShare( aPeriod ) == -1) {
-                 mChildren[ i ]->setShare( mChildren[ i ]->getShare( aPeriod - 1 ),
-                                      aPeriod );
-            }
-            else { //do nothing for now.  Assume it has been set by calibration
-            }
-        }
-    }
-    // Step 2 Option (b). Otherwise (as in most cases), node is not a fixed share node
-    // and shares are computed based on relative profits as usual  
-    else {
-    */
-        // But first check to make sure at least one child has a non-zero share
-        if ( unnormalizedSum == 0.0 ){ // which means all children have zero share
-           for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-               mChildren[ i ]->setShare( 0.0,
-                                      aPeriod );
-           }
-        }
-        else {
-           // Calculate and set the share of each child
-           for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-               mChildren[ i ]->setShare( unnormalizedShares[i] <= 0.0 ? 0.0 : unnormalizedShares[ i ] / unnormalizedSum,
-                                      aPeriod );
-           }
-        }
-     //}
-      
-
-   // Step 3 Option (a) . compute node profit based on share denominator
-   // but only if logit exponent >0. If logit exponent is zero, math will crash.
-    if ( /*mLogitExponent[ aPeriod ] > 0 &&*/ unnormalizedSum > 0.0 ) {
-        mProfitRate[ aPeriod ] = mChoiceFn->calcAverageCost( unnormalizedSum /* * mAdjustForNewTech[ aPeriod ]*/, aPeriod );
-    }
-    /*
-    else if ( mLogitExponent[ aPeriod ] == 0 ) {
-        // Step 3 Option (b). Profit for nodes with zero logit exponent will not change, 
-        // so we set the profit rate equal to the read in value of unmanaged land.
-        // Note: this profit rate shouldn't matter
-        // Note: if profit rates of children change over time this wouldn't capture that
-        mProfitRate[ aPeriod ] = mUnManagedLandValue;
-    } 
-    */
-    else /*if ( unnormalizedSum == 0 )*/ { 
-        // Step 3 Option (c). If unnormalizedSum == 0 then all children must have had
-        // zero profit rates.  So, set the profit rate of the node to zero.
-        mProfitRate[ aPeriod ] = 0.0;
+    // Step 2 Normalize and set the share of each child
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        // guard against divide by zero
+        mChildren[ i ]->setShare( unnormalizedSum <= 0.0 ? 0.0 : unnormalizedShares[ i ] / unnormalizedSum,
+                aPeriod );
     }
 
-    // Step 4. Calculate the unnormalized share for this node, but here using the logit exponent of the 
+    // Step 3 Option (a) . compute node profit based on share denominator
+    mProfitRate[ aPeriod ] = mChoiceFn->calcAverageCost( unnormalizedSum, aPeriod );
+
+    // Step 4. Calculate the unnormalized share for this node, but here using the discrete choice of the 
     // containing or parant node.  This will be used to determine this nodes share within its 
     // parent node.
-    /*
-    if( aLogitExpAbove > 0 ){ // unnormalized share will be ignored if logitexpo = 0
-        unnormalizedShare = pow( mProfitScaler[ aPeriod ] * mProfitRate[ aPeriod ] * mAdjustForNewTech[ aPeriod ],
-                                 aLogitExpAbove );
-    }
-    else {
-        // Can't calculate share, so return zero.
-        unnormalizedShare = 0.0;
-    }
-    */
-    unnormalizedShare = aChoiceFnAbove->calcUnnormalizedShare( mProfitRate[ aPeriod ] > 0.0 ? mShareWeight[ aPeriod ].get() : 0.0, mProfitRate[ aPeriod ], aPeriod );
-
+    double unnormalizedShareAbove = aChoiceFnAbove->calcUnnormalizedShare( mShareWeight[ aPeriod ], mProfitRate[ aPeriod ], aPeriod );
     
-    return unnormalizedShare; // the unnormalized share of this node.
+    return unnormalizedShareAbove; // the unnormalized share of this node.
 }
 
 void LandNode::calculateShareWeights( const string& aRegionName, 
@@ -521,12 +450,17 @@ void LandNode::calculateNodeProfitRates( const string& aRegionName,
 {
     const Modeltime* modeltime = scenario->getModeltime();
     // store this value in this node 
-    double avgProfitRate = -std::numeric_limits<double>::infinity();
+    double avgProfitRate = -util::getSmallNumber();
+    // If we have a valid profit rate above then we can calculate the implied profit rate this node
+    // would have to recieve the share it did.  If not (such as at the root) we just use the
+    // unmanaged land value.
     if( aAverageProfitRateAbove > 0.0 ) {
         if( mShare[ aPeriod ] > 0.0 ) {
             avgProfitRate = aChoiceFnAbove->calcImpliedCost( mShare[ aPeriod ], aAverageProfitRateAbove, aPeriod );
         }
         else if( aPeriod == modeltime->getFinalCalibrationPeriod() ) {
+            // It may be the case that this node contains only "future" crop/technologies.  In this case
+            // we use the ghost share in it's first available year to calculate the implied profit rate.
             for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper() && avgProfitRate < 0.0; ++futurePer ) {
                 if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
                     avgProfitRate = aChoiceFnAbove->calcImpliedCost( mGhostUnormalizedShare[ futurePer ],
@@ -540,6 +474,7 @@ void LandNode::calculateNodeProfitRates( const string& aRegionName,
         avgProfitRate = mUnManagedLandValue;
     }
 
+    // Store the profit rate which will be used during calibration when calculating share-weights, etc.
     mProfitRate[ aPeriod ] = avgProfitRate;
     mChoiceFn->setOutputCost( avgProfitRate );
 
@@ -550,8 +485,8 @@ void LandNode::calculateNodeProfitRates( const string& aRegionName,
                                                   mChoiceFn.get(), aPeriod );
     }
 
-    // Calculate a reasonable "base" profit rate to use the set the scale for
-    // when changes in absolute profit rates would be relative.  We do this by
+    // Calculate a reasonable "base" profit rate to use set the scale for when
+    // changes in absolute profit rates would be made relative.  We do this by
     // taking the higest profit rate from any of the direct child items.
     double maxChildProfitRate = -std::numeric_limits<double>::infinity();
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {

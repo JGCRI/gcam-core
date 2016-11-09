@@ -88,20 +88,7 @@ bool RelativeCostLogit::XMLParse( const DOMNode *aNode ) {
             continue;
         }
         else if( nodeName == "logit-exponent" ) {
-            /*
-            double value = XMLHelper<double>::getValue( curr );
-            if( value > 0 ) {
-                ILogger& mainlog = ILogger::getLogger( "main_log" );
-                mainlog.setLevel( ILogger::WARNING );
-                mainlog << "Skipping invalid value for logit exponent: " << value
-                        << " while parsing " << getXMLNameStatic() << "."
-                        << endl;
-                parsingSuccessful = false;
-            }
-            else {
-            */
-                XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
-            //}
+            XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent, modeltime );
         }
         else {
             ILogger& mainlog = ILogger::getLogger( "main_log" );
@@ -152,7 +139,7 @@ double RelativeCostLogit::calcUnnormalizedShare( const double aShareWeight, cons
     /*!
      * \pre A valid logit exponent has been set.
      */
-    assert( mLogitExponent[ aPeriod ] <= 0 );
+    //assert( mLogitExponent[ aPeriod ] <= 0 );
     
     // Zero share weight implies no share which is signaled by negative infinity.
     const double minInf = -std::numeric_limits<double>::infinity();
@@ -173,14 +160,14 @@ double RelativeCostLogit::calcAverageCost( const double aUnnormalizedShareSum,
     double ret;
     if( mLogitExponent[ aPeriod ] == 0.0 ) {
         // TODO: what to do with zero logit?
-        ret = 1.0;
+        ret = aUnnormalizedShareSum * mOutputCost;
     }
-    else if( ( aUnnormalizedShareSum == minInf || aUnnormalizedShareSum == 0 ) && mLogitExponent[ aPeriod ] < 0 ) {
+    else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] < 0 ) {
         // No Valid options and negative logit so return a large cost so a nested
         // logit would not want to choose this nest.
         ret = util::getLargeNumber();
     }
-    else if( ( aUnnormalizedShareSum == minInf || aUnnormalizedShareSum == 0 ) && mLogitExponent[ aPeriod ] > 0 ) {
+    else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] > 0 ) {
         // No Valid options and positive logit so return a large negative cost
         // so a nested logit would not want to choose this nest.
         ret = -util::getLargeNumber();
@@ -217,14 +204,25 @@ double RelativeCostLogit::calcShareWeight( const double aShare, const double aCo
 double RelativeCostLogit::calcShareWeight( const double aShare, const double aCost, const int aPeriod ) const {
     // Negative costs are not allowed so they are instead capped at getMinCostThreshold()
     double cappedCost = std::max( aCost, getMinCostThreshold() );
-    return ( aShare ) * pow( mOutputCost / cappedCost, mLogitExponent[ aPeriod ] );
+    // guard against numerical instability in the pow when the share was zero anyway
+    return aShare == 0.0 ? 0.0 : ( aShare ) * pow( mOutputCost / cappedCost, mLogitExponent[ aPeriod ] );
 }
 
 double RelativeCostLogit::calcImpliedCost( const double aShare, const double aCost, const int aPeriod ) const {
-    // Negative costs are not allowed so they are instead capped at getMinCostThreshold()
-    double cappedCost = std::max( aCost, getMinCostThreshold() );
-    return mLogitExponent[ aPeriod ] == 0.0 ? cappedCost
-        : ( cappedCost ) * pow( aShare, 1.0 / mLogitExponent[ aPeriod ] );
+    if( mLogitExponent[ aPeriod ] == 0 ) {
+        return aCost;
+    }
+    else if( aShare == 0.0 && mLogitExponent[ aPeriod ] < 0 ) {
+        return util::getLargeNumber();
+    }
+    else if( aShare == 0.0 && mLogitExponent[ aPeriod ] > 0 ) {
+        return -util::getLargeNumber();
+    }
+    else {
+        // Negative costs are not allowed so they are instead capped at getMinCostThreshold()
+        double cappedCost = std::max( aCost, getMinCostThreshold() );
+        return ( cappedCost ) * pow( aShare, 1.0 / mLogitExponent[ aPeriod ] );
+    }
 }
 
 void RelativeCostLogit::setOutputCost( const double aCost ) {
