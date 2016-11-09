@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' module_modeltime("MAKE")
+#' module_modeltime("MAKE", all_data = NULL)
 module_modeltime <- function(command, ...) {
   if(command == driver.DECLARE) {
     modeltime_declaredata()

@@ -18,7 +18,7 @@ Depends on \code{command}
 A test module that can't make data until modeltime data is available
 }
 \examples{
-module_test("MAKE")
+module_atest("MAKE", all_data = NULL)
 }
 \author{
 BBL

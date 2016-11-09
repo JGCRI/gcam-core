@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-#' module_test("MAKE")
+#' module_atest("MAKE", all_data = NULL)
 module_atest <- function(command, ...) {
   if(command == driver.DECLARE) {
     atest_declaredata()
