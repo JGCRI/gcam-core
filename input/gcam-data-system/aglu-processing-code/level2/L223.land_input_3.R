@@ -336,6 +336,16 @@ L223.LN1_UnmgdAllocation_prot$LandNode2 <- NULL
 L223.LN1_UnmgdAllocation_prot$LandNode3 <- NULL
 L223.LN1_UnmgdAllocation_prot$allocation <- L223.LN1_UnmgdAllocation_prot$allocation * protect_land_fract
 
+printlog( "L223.LN1_Logit_prot: Logit")
+L223.LN1_Logit_prot <- L223.LN1_UnmgdAllocation_prot
+L223.LN1_Logit_prot$unManagedLandValue <- 1
+L223.LN1_Logit_prot$logit.year.fillout <- min( model_base_years )
+L223.LN1_Logit_prot$logit.exponent <- 0
+L223.LN1_Logit_prot$logit.type <- NA
+L223.LN1_LogitTables_Prot <- get_logit_fn_tables( L223.LN1_Logit_prot, names_LN1_LogitType,
+                                                  base.header="LN1_Logit_", include.equiv.table=T, write.all.regions=F )
+L223.LN1_Logit_prot <- L223.LN1_Logit_prot[ names_LN1_ValueLogit ]
+
 printlog( "L223.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected")
 L223.LN1_UnmgdCarbon_prot <- remove_OtherArable( L223.LN3_UnmgdCarbon )
 L223.LN1_UnmgdCarbon_prot$UnmanagedLandLeaf <- paste0( "Protected", L223.LN1_UnmgdCarbon_prot$UnmanagedLandLeaf )
@@ -452,6 +462,11 @@ write_mi_data( L223.LN3_MgdCarbon_bio, "LN3_MgdCarbon", "AGLU_LEVEL2_DATA", "L22
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_3.xml", "AGLU_XML_FINAL", "land_input_3.xml", "", xml_tag="outFile" )
 
 #protected lands files
+for( curr_table in L223.LN1_LogitTables_Prot ) {
+  write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0( "L223.", curr_table$header ), "AGLU_XML_BATCH", "batch_protected_land_input_3.xml" )
+}
+write_mi_data( L223.LN1_Logit_prot, IDstring="LN1_ValueLogit", domain="AGLU_LEVEL2_DATA", fn="L223.LN1_Logit_prot",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_protected_land_input_3.xml" )
 write_mi_data( L223.LN3_HistUnmgdAllocation_noprot, "LN3_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L223.LN3_HistUnmgdAllocation_noprot", "AGLU_XML_BATCH", "batch_protected_land_input_3.xml" )
 write_mi_data( L223.LN3_UnmgdAllocation_noprot, "LN3_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L223.LN3_UnmgdAllocation_noprot", "AGLU_XML_BATCH", "batch_protected_land_input_3.xml" )
 

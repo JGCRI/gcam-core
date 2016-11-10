@@ -121,7 +121,7 @@ L222.LN2_UnmgdAllocation_noprot$allocation <- L222.LN2_UnmgdAllocation$allocatio
 
 #no changes needed to carbon file for the non-protected lands
 
-printlog( "Protected land files: modified land allocations, different names, different nesting structure" )
+printlog( "Protected land files: logits, modified land allocations, different names, different nesting structure" )
 printlog( "L222.LN1_HistUnmgdAllocation_prot: unmanaged land cover, protected")
 L222.LN1_HistUnmgdAllocation_prot <- L222.LN2_HistUnmgdAllocation
 L222.LN1_HistUnmgdAllocation_prot$UnmanagedLandLeaf <- paste0( "Protected", L222.LN2_HistUnmgdAllocation$UnmanagedLandLeaf )
@@ -135,6 +135,16 @@ L222.LN1_UnmgdAllocation_prot$UnmanagedLandLeaf <- paste0( "Protected", L222.LN1
 L222.LN1_UnmgdAllocation_prot$LandNode1 <- L222.LN1_UnmgdAllocation_prot$UnmanagedLandLeaf
 L222.LN1_UnmgdAllocation_prot$LandNode2 <- NULL
 L222.LN1_UnmgdAllocation_prot$allocation <- L222.LN2_UnmgdAllocation$allocation * protect_land_fract
+
+printlog( "L223.LN1_Logit_prot: Logit")
+L222.LN1_Logit_prot <- L222.LN1_UnmgdAllocation_prot
+L222.LN1_Logit_prot$unManagedLandValue <- 1
+L222.LN1_Logit_prot$logit.year.fillout <- min( model_base_years )
+L222.LN1_Logit_prot$logit.exponent <- 0
+L222.LN1_Logit_prot$logit.type <- NA
+L222.LN1_LogitTables_Prot <- get_logit_fn_tables( L222.LN1_Logit_prot, names_LN1_LogitType,
+                                                  base.header="LN1_Logit_", include.equiv.table=T, write.all.regions=F )
+L222.LN1_Logit_prot <- L222.LN1_Logit_prot[ names_LN1_ValueLogit ]
 
 printlog( "L222.LN1_UnmgdCarbon_prot: unmanaged carbon info, protected")
 L222.LN1_UnmgdCarbon_prot <- L222.LN2_UnmgdCarbon
@@ -164,6 +174,11 @@ write_mi_data( L222.LN2_HistUnmgdAllocation_noprot, "LN2_HistUnmgdAllocation", "
 write_mi_data( L222.LN2_UnmgdAllocation_noprot, "LN2_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L222.LN2_UnmgdAllocation_noprot", "AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
 write_mi_data( L222.LN2_UnmgdCarbon, "LN2_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L222.LN2_UnmgdCarbon", "AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
 
+for( curr_table in L222.LN1_LogitTables_Prot ) {
+  write_mi_data( curr_table$data, curr_table$header, "AGLU_LEVEL2_DATA", paste0( "L222.", curr_table$header ), "AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
+}
+write_mi_data( L222.LN1_Logit_prot, IDstring="LN1_ValueLogit", domain="AGLU_LEVEL2_DATA", fn="L222.LN1_Logit_prot",
+               batch_XML_domain="AGLU_XML_BATCH", batch_XML_file="batch_protected_land_input_2.xml" )
 write_mi_data( L222.LN1_HistUnmgdAllocation_prot, "LN1_HistUnmgdAllocation", "AGLU_LEVEL2_DATA", "L222.LN1_HistUnmgdAllocation_prot", "AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
 write_mi_data( L222.LN1_UnmgdAllocation_prot, "LN1_UnmgdAllocation", "AGLU_LEVEL2_DATA", "L222.LN1_UnmgdAllocation_prot", "AGLU_XML_BATCH", "batch_protected_land_input_2.xml" )
 write_mi_data( L222.LN1_UnmgdCarbon_prot, "LN1_UnmgdCarbon", "AGLU_LEVEL2_DATA", "L222.LN1_UnmgdCarbon_prot", "AGLU_XML_BATCH", "batch_protected_land_input_2.xml", node_rename=T )
