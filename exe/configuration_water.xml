@@ -54,8 +54,8 @@
 		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/land_input_2.xml</Value>
 		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/land_input_3_IRR.xml</Value>
 		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/land_input_4_IRR.xml</Value>
-		<!--Value name = "land">../input/gcam-data-system/xml/aglu-xml/protected_land_input_2.xml</Value-->
-		<!--Value name = "land">../input/gcam-data-system/xml/aglu-xml/protected_land_input_3.xml</Value-->
+		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/protected_land_input_2.xml</Value>
+		<Value name = "land">../input/gcam-data-system/xml/aglu-xml/protected_land_input_3.xml</Value>
 		<Value name = "demand">../input/gcam-data-system/xml/aglu-xml/demand_input.xml</Value>
 		<Value name = "bio_trade">../input/gcam-data-system/xml/aglu-xml/bio_trade.xml</Value>
 		<Value name = "ag_water">../input/gcam-data-system/xml/aglu-xml/ag_water_input_IRR.xml</Value>
@@ -65,7 +65,7 @@
 		<Value name = "nonco2_fgas">../input/gcam-data-system/xml/emissions-xml/all_fgas_emissions.xml</Value>
 		<Value name = "nonco2_unmgd">../input/gcam-data-system/xml/emissions-xml/all_unmgd_emissions.xml</Value>
 		<Value name = "nonco2_aglu">../input/gcam-data-system/xml/emissions-xml/all_aglu_emissions_IRR.xml</Value>
-		<!--Value name = "nonco2_aglu">../input/gcam-data-system/xml/emissions-xml/all_protected_unmgd_emissions.xml</Value-->
+		<Value name = "nonco2_aglu">../input/gcam-data-system/xml/emissions-xml/all_protected_unmgd_emissions.xml</Value>
 		
 		<Value name = "water">../input/gcam-data-system/xml/water-xml/unlimited_water_supply.xml</Value>
 		<Value name = "water">../input/gcam-data-system/xml/water-xml/water_mapping.xml</Value>
