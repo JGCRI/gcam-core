@@ -37,6 +37,9 @@ L110.water_demand_primary_R_S_W_m3_GJ <- readdata( "WATER_LEVEL1_DATA", "L110.wa
 printlog( "L210.TechCoef: Just read in water coefficients for all years" )
 L210.TechCoef <- merge( L110.water_demand_primary_R_S_W_m3_GJ, rbind( A21.globaltech_coef[, c( supp, subs, tech ) ],
     A22.globaltech_coef[ grepl( 'nuclear', A22.globaltech_coef[[supp]] ), c( supp, subs, tech ) ] ) )
+# Avoid double acounting unconventional oil in the regional oil sector as it is already
+# accounted for in unconventional oil production.
+L210.TechCoef <- L210.TechCoef[!( L210.TechCoef[[supp]] == "regional oil" & L210.TechCoef[[subs]] == "unconventional oil" ), ]
 L210.TechCoef[[water_sector]] <- "Mining"
 L210.TechCoef$minicam.energy.input <- get_water_inputs_for_mapping( L210.TechCoef, A03.sector )
 L210.TechCoef <- merge( L210.TechCoef, GCAM_region_names )
