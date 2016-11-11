@@ -30,7 +30,7 @@ A_bio_supplysector <- readdata( "AGLU_ASSUMPTIONS", "A_bio_supplysector" )
 A_bio_subsector_logit <- readdata( "AGLU_ASSUMPTIONS", "A_bio_subsector_logit" )
 A_bio_subsector <- readdata( "AGLU_ASSUMPTIONS", "A_bio_subsector" )
 L120.LC_bm2_R_LT_Yh_GLU <- readdata( "AGLU_LEVEL1_DATA", "L120.LC_bm2_R_LT_Yh_GLU" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -146,7 +146,7 @@ L243.SubsectorShrwtFllt_TradedBio$share.weight <- L243.TechShrwt$Shrwt[ match( L
 L243.SubsectorShrwtFllt_TradedBio$share.weight[ is.na( L243.SubsectorShrwtFllt_TradedBio$share.weight ) ] <- 0
 
 # First, determine which regions are in which groupings.
-L243.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L243.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP4" )
 L243.pcgdp_2010 <- L243.pcgdp_2010[ names( L243.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
 L243.pcgdp_2010 <- add_region_name( L243.pcgdp_2010 )
 L243.pcgdp_2010$X2010 <- L243.pcgdp_2010$X2010 * conv_1990_2010_USD

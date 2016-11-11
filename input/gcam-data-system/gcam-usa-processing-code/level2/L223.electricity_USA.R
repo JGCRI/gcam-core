@@ -50,6 +50,15 @@ L126.out_EJ_state_td_elec <- readdata( "GCAMUSA_LEVEL1_DATA", "L126.out_EJ_state
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
+
+#Set up equivalent sector and technology tag names. 
+
+printlog( "L223.SectorNodeEquiv: Sets up equivalent sector tag names to avoid having to partition input tables" )
+L223.SectorNodeEquiv <- data.frame( t( c( "SectorXMLTags", "supplysector", "pass-through-sector" ) ) )
+
+printlog( "L223.TechNodeEquiv: Sets up equivalent technology tag names to avoid having to partition input tables" )
+L223.TechNodeEquiv <- data.frame( t( c( "TechnologyXMLTags", "technology", "intermittent-technology", "pass-through-technology" ) ) )
+
 grid_regions <- sort( unique( states_subregions$grid_region ) )
 elec_gen_names <- "electricity"
 
@@ -177,6 +186,20 @@ L223.TechCoef_elec_FERC[[input]] <- L223.TechCoef_elec_FERC[[supp]]
 L223.TechCoef_elec_FERC$coefficient <- 1
 L223.TechCoef_elec_FERC$market.name <- substr( L223.TechCoef_elec_FERC[[tech]], 1, nchar( L223.TechCoef_elec_FERC[[subs]] ) - nchar( L223.TechCoef_elec_FERC[[supp]]) - 1 )
 
+printlog( "Create a L223.PassThroughSector_elec dataframe" )
+#Create a L223.PassThroughSector_elec dataframe (to be converted into a csv table later). The marginal revenue sector is the 
+#region's electricity sector whereas the marginal revenue market is the grid region.
+L223.PassThroughSector_elec <- data.frame(region=states_subregions$state, passthrough.sector="electricity",marginal.revenue.sector = "electricity", marginal.revenue.market = states_subregions$grid_region)
+
+printlog( "Create a L223.PassThroughTech_elec_FERC dataframe" )
+#Create a L223.PassThroughTech_elec_FERC dataframe (to be converted into a csv table later). This one should contain 
+#region, supplysector, subsector, technology for the grid regions to which electricity produced in states is passed through. 
+#Note that the "technology" in this data-frame will be called "passthrough technology"
+L223.PassThroughTech_elec_FERC <- data.frame(region=L223.TechShrwt_elec_FERC$region, 
+                                             supplysector = L223.TechShrwt_elec_FERC$supplysector, 
+                                             subsector = L223.TechShrwt_elec_FERC$subsector, 
+                                             technology = L223.TechShrwt_elec_FERC$technology)
+
 printlog( "L223.Production_elec_FERC: calibrated electricity production in USA (consuming output of grid subregions)" )
 L1231.out_EJ_state_elec_F_tech.melt <- interpolate_and_melt( L1231.out_EJ_state_elec_F_tech, model_base_years, value.name = "calOutputValue", digits = digits_calOutput )
 L1231.out_EJ_state_elec_F_tech.melt[[supp]] <- calibrated_techs[[supp]][
@@ -216,6 +239,16 @@ L223.LaborForceFillout_FERC <- data.frame(
 printlog( "PART 3: THE STATES" )
 printlog( "All tables for which processing is identical are done in a for loop")
 printlog( "This applies to the supplysectors, subsectors, and stub tech characteristics of the states")
+
+printlog("Writing Passthrough Sector files first")
+#Writing Passthrough Sector files first. Equivalent tag names specified earlier should take care of consistency across xml files
+#as long as the L223.SectorNodeEquiv and L223TechNodeEquiv files are read in first in the xml batch file (batch_electricity_USA.xml)
+
+write_mi_data( L223.SectorNodeEquiv, "EQUIV_TABLE", "GCAMUSA_LEVEL2_DATA", "L223.SectorNodeEquiv", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
+write_mi_data( L223.TechNodeEquiv, "EQUIV_TABLE", "GCAMUSA_LEVEL2_DATA", "L223.TechNodeEquiv", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
+write_mi_data( L223.PassThroughSector_elec, "PassThroughSector", "GCAMUSA_LEVEL2_DATA", "L223.PassthroughSector_elec_USA", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
+write_mi_data( L223.PassThroughTech_elec_FERC, "PassThroughTech", "GCAMUSA_LEVEL2_DATA", "L223.PassthroughTech_elec_FERC", "GCAMUSA_XML_BATCH", "batch_electricity_USA.xml" )
+
 printlog( "NOTE: writing out the tables in this step as well")
 L223.tables <- list( L223.Supplysector_elec = L223.Supplysector_elec,
                      L223.ElecReserve = L223.ElecReserve,
@@ -234,6 +267,9 @@ L223.tables <- list( L223.Supplysector_elec = L223.Supplysector_elec,
 L223.tables <- c( read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L223.Supplysector_", skip=4, include.equiv.table=T ),
                   read_logit_fn_tables( "ENERGY_LEVEL2_DATA", "L223.SubsectorLogit_", skip=4, include.equiv.table=F ),
                   L223.tables )
+
+
+
 
 for( i in 1:length( L223.tables ) ){
   if( !is.null( L223.tables[[i]] ) ){

@@ -230,8 +230,8 @@ void RelativeCostLogit::setOutputCost( const double aCost ) {
     mOutputCost = std::max( aCost, getMinCostThreshold() );
 }
 
-void RelativeCostLogit::setBaseCost( const double aBaseCost ) {
-    // the relative cost logit does not utilize this parameter.
+void RelativeCostLogit::setBaseCost( const double aBaseCost, const std::string &aFailMsg ) {
+    // the relative cost logit does not utilize this parameter, so this function is a no-op
 }
 
 /*!

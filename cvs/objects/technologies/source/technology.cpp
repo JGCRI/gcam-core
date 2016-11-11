@@ -1571,6 +1571,13 @@ bool Technology::isAllCalibrated( const int aPeriod,
 
     // Compare calibrated to actual output.
     double output = getOutput( aPeriod );
+	double fixedOutput = getFixedOutput(aRegionName, aSectorName, false, "", mMarginalRevenue, aPeriod );
+	if (fixedOutput > 0) {
+		// While technologies do not typically have both fixed output and calibrated output at the same
+		// time this may be true to pass-through-technologies.  We need to adjust the output to account
+		// for this to avoid erroneous calibration failure messages.
+		output -= fixedOutput;
+	}
     double relativeDiff;
     double sectorOutput = scenario->getMarketplace()->getSupply( aSectorName, aRegionName, aPeriod );
 

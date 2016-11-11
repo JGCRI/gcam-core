@@ -30,7 +30,7 @@ GCAMLandLeaf_CdensityLT <- readdata( "AGLU_MAPPINGS", "GCAMLandLeaf_CdensityLT" 
 A_LandLeaf_Unmgd2 <- readdata( "AGLU_ASSUMPTIONS", "A_LandLeaf_Unmgd2" )
 A_LandLeaf2 <- readdata( "AGLU_ASSUMPTIONS", "A_LandLeaf2" )
 L125.LC_bm2_R_LT_Yh_GLU <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R_LT_Yh_GLU" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -74,7 +74,7 @@ printlog( "L242.LN2_MgdAllocation: Model base period land cover, managed land in
 L242.LN2_MgdAllocation_ALL <- L242.LC_bm2_R_Mgd2_Yh_GLU.melt[ L242.LC_bm2_R_Mgd2_Yh_GLU.melt[[Y]] %in% model_base_years, names_LN2_MgdAllocation ]
 
 # Create SSP4 pasture inputs
-L242.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L242.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP4" )
 L242.pcgdp_2010 <- L242.pcgdp_2010[ names( L242.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
 L242.pcgdp_2010 <- add_region_name( L242.pcgdp_2010 )
 L242.pcgdp_2010$X2010 <- L242.pcgdp_2010$X2010 * conv_1990_2010_USD

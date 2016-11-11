@@ -28,7 +28,7 @@ GCAM_sector_tech <- readdata( "EMISSIONS_MAPPINGS", "GCAM_sector_tech" )
 GAINS_sector <- readdata( "EMISSIONS_MAPPINGS", "gains_to_gcam_sector" )
 GAINS_activities <- readdata( "EMISSIONS_LEVEL0_DATA", "GAINS_activities" )
 GAINS_emissions <- readdata( "EMISSIONS_LEVEL0_DATA", "GAINS_emissions" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y")
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y")
 L111.nonghg_tgej_R_en_S_F_Yh <- readdata( "EMISSIONS_LEVEL1_DATA", "L111.nonghg_tgej_R_en_S_F_Yh" )
 L114.bcoc_tgej_R_en_S_F_2000 <- readdata( "EMISSIONS_LEVEL1_DATA", "L114.bcoc_tgej_R_en_S_F_2000")
 
@@ -134,7 +134,7 @@ L161.em_fact_2030$MFR_em_fact <- L161.em_fact_2030$MFR_em_fact * L161.em_fact_20
 L161.em_fact_2030 <- L161.em_fact_2030[ names( L161.em_fact_2030 ) %!in% c( "CLE_scaler", "SLE_scaler", "MFR_scaler" )]
 
 printlog( "Determine region groupings" )
-L161.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L161.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP4" )
 L161.pcgdp_2010 <- L161.pcgdp_2010[ names( L161.pcgdp_2010 ) %in% c( "GCAM_region_ID", "X2010" ) ]
 L161.pcgdp_2010$X2010 <- L161.pcgdp_2010$X2010 * conv_1990_2010_USD
 L161.highmed_reg <- L161.pcgdp_2010$GCAM_region_ID[ L161.pcgdp_2010$X2010 >= lo_pcgdp ]

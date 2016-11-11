@@ -102,7 +102,7 @@ public:
 
     virtual void setOutputCost( const double aCost );
 
-    virtual void setBaseCost( const double aBaseCost );
+    virtual void setBaseCost( const double aBaseCost, const std::string &aFailMsg );
 
 private:
     //! The logit exponents by period.

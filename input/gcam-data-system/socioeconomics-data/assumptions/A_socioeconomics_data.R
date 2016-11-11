@@ -11,6 +11,10 @@ X_Maddison_GDP_years <- paste0( "X", Maddison_GDP_years )
 UN_historical_years <- c( 1950, 1971:2010 )
 X_UN_historical_years <- paste0( "X", UN_historical_years )
 
+#Years for which to use near term IMF GDP projection
+IMF_future_years <- seq( 2010, 2020, 1 )
+X_IMF_future_years <- paste0( "X", IMF_future_years )
+
 pop_model <- "IIASA-WiC POP"
 gdp_model <- "OECD Env-Growth"
 base_pop_scen <- "SSP2"

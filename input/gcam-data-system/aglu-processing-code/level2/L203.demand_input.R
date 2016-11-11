@@ -44,7 +44,7 @@ L134.pcFood_kcald_R_Dmnd_Y_ssp3 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kc
 L134.pcFood_kcald_R_Dmnd_Y_ssp4 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_ssp4" )
 L134.pcFood_kcald_R_Dmnd_Y_ssp5 <- readdata( "AGLU_LEVEL1_DATA", "L134.pcFood_kcald_R_Dmnd_Y_ssp5" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -67,7 +67,7 @@ L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt <- interpolate_and_melt( L134.pcFood_kcald_
 L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_ssp4, aglu_demand_futureyears )
 L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt <- interpolate_and_melt( L134.pcFood_kcald_R_Dmnd_Y_ssp5, aglu_demand_futureyears )
 L203.Pop_thous_R_Yh <- interpolate_and_melt( L101.Pop_thous_R_Yh, aglu_demand_calyears )
-L203.pcgdp_thous90USD_SSP_R_Y.melt <- interpolate_and_melt( L102.pcgdp_thous90USD_SSP_R_Y, c( model_base_years, model_future_years ) )
+L203.pcgdp_thous90USD_Scen_R_Y.melt <- interpolate_and_melt( L102.pcgdp_thous90USD_Scen_R_Y, c( model_base_years, model_future_years ) )
 
 #Adding lookup vectors to level1 output tables
 printlog( "Adding region names to Level1 data tables" )
@@ -85,7 +85,7 @@ L203.pcFood_kcald_R_Dmnd_Y_ssp3.melt <- add_region_name( L203.pcFood_kcald_R_Dmn
 L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_ssp4.melt )
 L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt <- add_region_name( L203.pcFood_kcald_R_Dmnd_Y_ssp5.melt )
 L203.Pop_thous_R_Yh <- add_region_name( L203.Pop_thous_R_Yh )
-L203.pcgdp_thous90USD_SSP_R_Y.melt <- add_region_name( L203.pcgdp_thous90USD_SSP_R_Y.melt )
+L203.pcgdp_thous90USD_Scen_R_Y.melt <- add_region_name( L203.pcgdp_thous90USD_Scen_R_Y.melt )
 
 printlog( "L203.Supplysector_demand: generic info for demand sectors" )
 L203.SectorLogitTables <- get_logit_fn_tables( A_demand_supplysector, names_SupplysectorLogitType,
@@ -323,8 +323,8 @@ L203.pcFoodRatio_R_Dmnd_Y_ssp5[ X_aglu_demand_futureyears ] <- L203.pcFoodRatio_
 
 printlog( "Step 4: Calculating the per-capita GDP trajectories over the same time period" )
 printlog( "NOTE: only computing elasticities based on the specified GDP scenario" )
-L203.pcgdp_thous90USD_R_Y.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
-       L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == diet_gdpScen & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_thous90USD_R_Y.melt <- L203.pcgdp_thous90USD_Scen_R_Y.melt[
+       L203.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] == diet_gdpScen & L203.pcgdp_thous90USD_Scen_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y <- dcast( L203.pcgdp_thous90USD_R_Y.melt, region ~ variable )
 L203.pcgdpRatio_R_Y <- L203.pcgdp_usd_R_Y
 L203.pcgdpRatio_R_Y[ X_model_years[ -1 ] ] <-
@@ -332,8 +332,8 @@ L203.pcgdpRatio_R_Y[ X_model_years[ -1 ] ] <-
       L203.pcgdp_usd_R_Y[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y[ X_model_years[1] ] <- 1
 
-L203.pcgdp_thous90USD_R_Y_SSP1.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
-  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP1" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_thous90USD_R_Y_SSP1.melt <- L203.pcgdp_thous90USD_Scen_R_Y.melt[
+  L203.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] == "SSP1" & L203.pcgdp_thous90USD_Scen_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP1 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP1.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP1 <- L203.pcgdp_usd_R_Y_SSP1
 L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ -1 ] ] <-
@@ -341,8 +341,8 @@ L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ -1 ] ] <-
   L203.pcgdpRatio_R_Y_SSP1[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP1[ X_model_years[1] ] <- 1
 
-L203.pcgdp_thous90USD_R_Y_SSP2.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
-  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP2" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_thous90USD_R_Y_SSP2.melt <- L203.pcgdp_thous90USD_Scen_R_Y.melt[
+  L203.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] == "SSP2" & L203.pcgdp_thous90USD_Scen_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP2 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP2.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP2 <- L203.pcgdp_usd_R_Y_SSP2
 L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ -1 ] ] <-
@@ -350,8 +350,8 @@ L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ -1 ] ] <-
   L203.pcgdpRatio_R_Y_SSP2[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP2[ X_model_years[1] ] <- 1
 
-L203.pcgdp_thous90USD_R_Y_SSP3.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
-  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP3" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_thous90USD_R_Y_SSP3.melt <- L203.pcgdp_thous90USD_Scen_R_Y.melt[
+  L203.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] == "SSP3" & L203.pcgdp_thous90USD_Scen_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP3 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP3.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP3 <- L203.pcgdp_usd_R_Y_SSP3
 L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ -1 ] ] <-
@@ -359,8 +359,8 @@ L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ -1 ] ] <-
   L203.pcgdpRatio_R_Y_SSP3[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP3[ X_model_years[1] ] <- 1
 
-L203.pcgdp_thous90USD_R_Y_SSP4.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
-  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP4" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_thous90USD_R_Y_SSP4.melt <- L203.pcgdp_thous90USD_Scen_R_Y.melt[
+  L203.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] == "SSP4" & L203.pcgdp_thous90USD_Scen_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP4 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP4.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP4 <- L203.pcgdp_usd_R_Y_SSP4
 L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ -1 ] ] <-
@@ -368,8 +368,8 @@ L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ -1 ] ] <-
   L203.pcgdpRatio_R_Y_SSP4[ X_model_years[ -length( X_model_years ) ] ]
 L203.pcgdpRatio_R_Y_SSP4[ X_model_years[1] ] <- 1
 
-L203.pcgdp_thous90USD_R_Y_SSP5.melt <- L203.pcgdp_thous90USD_SSP_R_Y.melt[
-  L203.pcgdp_thous90USD_SSP_R_Y.melt[[Scen]] == "SSP5" & L203.pcgdp_thous90USD_SSP_R_Y.melt[[Y]] %in% model_years, ]
+L203.pcgdp_thous90USD_R_Y_SSP5.melt <- L203.pcgdp_thous90USD_Scen_R_Y.melt[
+  L203.pcgdp_thous90USD_Scen_R_Y.melt[[Scen]] == "SSP5" & L203.pcgdp_thous90USD_Scen_R_Y.melt[[Y]] %in% model_years, ]
 L203.pcgdp_usd_R_Y_SSP5 <- dcast( L203.pcgdp_thous90USD_R_Y_SSP5.melt, region ~ variable )
 L203.pcgdpRatio_R_Y_SSP5 <- L203.pcgdp_usd_R_Y_SSP5
 L203.pcgdpRatio_R_Y_SSP5[ X_model_years[ -1 ] ] <-

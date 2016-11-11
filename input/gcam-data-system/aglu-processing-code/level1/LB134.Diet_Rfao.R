@@ -32,7 +32,7 @@ L100.FAO_an_Food_t <- readdata( "AGLU_LEVEL1_DATA", "L100.FAO_an_Food_t" )
 L101.ag_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_Food_Pcal_R_C_Y" )
 L105.an_Food_Pcal_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L105.an_Food_Pcal_R_C_Y" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y")
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y")
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -138,13 +138,13 @@ L134.pcFood_kcald_R_Dmnd_Y <- gcam_interp( L134.pcFood_kcald_R_Dmnd_Y, c( histor
 L134.pcFood_kcald_R_Dmnd_Y <- L134.pcFood_kcald_R_Dmnd_Y[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
 
 printlog( "Alternative diet scenarios for the SSPs" )
-L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP1" )
+L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP1" )
 L134.pcFood_est_R_Dmnd_Y_ssp1_crops$GCAM_demand <- "crops"
 L134.pcFood_est_R_Dmnd_Y_ssp1_crops[ c( X_historical_years, X_future_years) ] <- 4545 / ( 1 + exp( -0.099 * log( L134.pcFood_est_R_Dmnd_Y_ssp1_crops[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp1_crops <- L134.pcFood_est_R_Dmnd_Y_ssp1_crops[ names( L134.pcFood_est_R_Dmnd_Y_ssp1_crops ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
 L134.pcFood_ratio_R_Dmnd_Y_ssp1_crops <- L134.pcFood_est_R_Dmnd_Y_ssp1_crops
 
-L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP1" )
+L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP1" )
 L134.pcFood_est_R_Dmnd_Y_ssp1_meat$GCAM_demand <- "meat"
 L134.pcFood_est_R_Dmnd_Y_ssp1_meat[ c( X_historical_years, X_future_years) ] <- 818 / ( 1 + exp( -2.31 * log( L134.pcFood_est_R_Dmnd_Y_ssp1_meat[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp1_meat <- L134.pcFood_est_R_Dmnd_Y_ssp1_meat[ names( L134.pcFood_est_R_Dmnd_Y_ssp1_meat ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
@@ -177,13 +177,13 @@ for( i in X_future_years ){
 L134.pcFood_kcald_R_Dmnd_Y_ssp1 <- rbind( L134.pcFood_kcald_R_Dmnd_Y_ssp1_crops, L134.pcFood_kcald_R_Dmnd_Y_ssp1_meat )
 L134.pcFood_kcald_R_Dmnd_Y_ssp1 <- L134.pcFood_kcald_R_Dmnd_Y_ssp1[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
 
-L134.pcFood_est_R_Dmnd_Y_ssp2_crops <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP2" )
+L134.pcFood_est_R_Dmnd_Y_ssp2_crops <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP2" )
 L134.pcFood_est_R_Dmnd_Y_ssp2_crops$GCAM_demand <- "crops"
 L134.pcFood_est_R_Dmnd_Y_ssp2_crops[ c( X_historical_years, X_future_years) ] <- 4545 / ( 1 + exp( -0.099 * log( L134.pcFood_est_R_Dmnd_Y_ssp2_crops[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp2_crops <- L134.pcFood_est_R_Dmnd_Y_ssp2_crops[ names( L134.pcFood_est_R_Dmnd_Y_ssp2_crops ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
 L134.pcFood_ratio_R_Dmnd_Y_ssp2_crops <- L134.pcFood_est_R_Dmnd_Y_ssp2_crops
 
-L134.pcFood_est_R_Dmnd_Y_ssp2_meat <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP2" )
+L134.pcFood_est_R_Dmnd_Y_ssp2_meat <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP2" )
 L134.pcFood_est_R_Dmnd_Y_ssp2_meat$GCAM_demand <- "meat"
 L134.pcFood_est_R_Dmnd_Y_ssp2_meat[ c( X_historical_years, X_future_years) ] <- 818 / ( 1 + exp( -2.31 * log( L134.pcFood_est_R_Dmnd_Y_ssp2_meat[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp2_meat <- L134.pcFood_est_R_Dmnd_Y_ssp2_meat[ names( L134.pcFood_est_R_Dmnd_Y_ssp2_meat ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
@@ -215,13 +215,13 @@ for( i in X_future_years ){
 L134.pcFood_kcald_R_Dmnd_Y_ssp2 <- rbind( L134.pcFood_kcald_R_Dmnd_Y_ssp2_crops, L134.pcFood_kcald_R_Dmnd_Y_ssp2_meat )
 L134.pcFood_kcald_R_Dmnd_Y_ssp2 <- L134.pcFood_kcald_R_Dmnd_Y_ssp2[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
 
-L134.pcFood_est_R_Dmnd_Y_ssp3_crops <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP3" )
+L134.pcFood_est_R_Dmnd_Y_ssp3_crops <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP3" )
 L134.pcFood_est_R_Dmnd_Y_ssp3_crops$GCAM_demand <- "crops"
 L134.pcFood_est_R_Dmnd_Y_ssp3_crops[ c( X_historical_years, X_future_years) ] <- 4545 / ( 1 + exp( -0.099 * log( L134.pcFood_est_R_Dmnd_Y_ssp3_crops[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp3_crops <- L134.pcFood_est_R_Dmnd_Y_ssp3_crops[ names( L134.pcFood_est_R_Dmnd_Y_ssp3_crops ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
 L134.pcFood_ratio_R_Dmnd_Y_ssp3_crops <- L134.pcFood_est_R_Dmnd_Y_ssp3_crops
 
-L134.pcFood_est_R_Dmnd_Y_ssp3_meat <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP3" )
+L134.pcFood_est_R_Dmnd_Y_ssp3_meat <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP3" )
 L134.pcFood_est_R_Dmnd_Y_ssp3_meat$GCAM_demand <- "meat"
 L134.pcFood_est_R_Dmnd_Y_ssp3_meat[ c( X_historical_years, X_future_years) ] <- 818 / ( 1 + exp( -2.31 * log( L134.pcFood_est_R_Dmnd_Y_ssp3_meat[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp3_meat <- L134.pcFood_est_R_Dmnd_Y_ssp3_meat[ names( L134.pcFood_est_R_Dmnd_Y_ssp3_meat ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
@@ -254,13 +254,13 @@ for( i in X_future_years ){
 L134.pcFood_kcald_R_Dmnd_Y_ssp3 <- rbind( L134.pcFood_kcald_R_Dmnd_Y_ssp3_crops, L134.pcFood_kcald_R_Dmnd_Y_ssp3_meat )
 L134.pcFood_kcald_R_Dmnd_Y_ssp3 <- L134.pcFood_kcald_R_Dmnd_Y_ssp3[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
 
-L134.pcFood_est_R_Dmnd_Y_ssp4_crops <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L134.pcFood_est_R_Dmnd_Y_ssp4_crops <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP4" )
 L134.pcFood_est_R_Dmnd_Y_ssp4_crops$GCAM_demand <- "crops"
 L134.pcFood_est_R_Dmnd_Y_ssp4_crops[ c( X_historical_years, X_future_years) ] <- 4545 / ( 1 + exp( -0.099 * log( L134.pcFood_est_R_Dmnd_Y_ssp4_crops[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp4_crops <- L134.pcFood_est_R_Dmnd_Y_ssp4_crops[ names( L134.pcFood_est_R_Dmnd_Y_ssp4_crops ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
 L134.pcFood_ratio_R_Dmnd_Y_ssp4_crops <- L134.pcFood_est_R_Dmnd_Y_ssp4_crops
 
-L134.pcFood_est_R_Dmnd_Y_ssp4_meat <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L134.pcFood_est_R_Dmnd_Y_ssp4_meat <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP4" )
 L134.pcFood_est_R_Dmnd_Y_ssp4_meat$GCAM_demand <- "meat"
 L134.pcFood_est_R_Dmnd_Y_ssp4_meat[ c( X_historical_years, X_future_years) ] <- 818 / ( 1 + exp( -2.31 * log( L134.pcFood_est_R_Dmnd_Y_ssp4_meat[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp4_meat <- L134.pcFood_est_R_Dmnd_Y_ssp4_meat[ names( L134.pcFood_est_R_Dmnd_Y_ssp4_meat ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
@@ -293,13 +293,13 @@ for( i in X_future_years ){
 L134.pcFood_kcald_R_Dmnd_Y_ssp4 <- rbind( L134.pcFood_kcald_R_Dmnd_Y_ssp4_crops, L134.pcFood_kcald_R_Dmnd_Y_ssp4_meat )
 L134.pcFood_kcald_R_Dmnd_Y_ssp4 <- L134.pcFood_kcald_R_Dmnd_Y_ssp4[ c( R, "GCAM_demand", X_historical_years, X_future_years ) ]
 
-L134.pcFood_est_R_Dmnd_Y_ssp5_crops <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP5" )
+L134.pcFood_est_R_Dmnd_Y_ssp5_crops <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP5" )
 L134.pcFood_est_R_Dmnd_Y_ssp5_crops$GCAM_demand <- "crops"
 L134.pcFood_est_R_Dmnd_Y_ssp5_crops[ c( X_historical_years, X_future_years) ] <- 4545 / ( 1 + exp( -0.099 * log( L134.pcFood_est_R_Dmnd_Y_ssp5_crops[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp5_crops <- L134.pcFood_est_R_Dmnd_Y_ssp5_crops[ names( L134.pcFood_est_R_Dmnd_Y_ssp5_crops ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]
 L134.pcFood_ratio_R_Dmnd_Y_ssp5_crops <- L134.pcFood_est_R_Dmnd_Y_ssp5_crops
 
-L134.pcFood_est_R_Dmnd_Y_ssp5_meat <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP5" )
+L134.pcFood_est_R_Dmnd_Y_ssp5_meat <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP5" )
 L134.pcFood_est_R_Dmnd_Y_ssp5_meat$GCAM_demand <- "meat"
 L134.pcFood_est_R_Dmnd_Y_ssp5_meat[ c( X_historical_years, X_future_years) ] <- 818 / ( 1 + exp( -2.31 * log( L134.pcFood_est_R_Dmnd_Y_ssp5_meat[ c( X_historical_years, X_future_years) ] ) ) )
 L134.pcFood_est_R_Dmnd_Y_ssp5_meat <- L134.pcFood_est_R_Dmnd_Y_ssp5_meat[ names( L134.pcFood_est_R_Dmnd_Y_ssp5_meat ) %in% c( R, "GCAM_demand", X_final_historical_year , X_future_years )]

@@ -1,3 +1,0 @@
-# All Java source code files will have their newlines normalized for the current
-# platform
-*.java text=auto

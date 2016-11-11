@@ -39,6 +39,8 @@
 */
 
 #include "util/base/include/definitions.h"
+#include "util/base/include/timer.h"
+
 #include <string>
 #include <cassert>
 #include <vector>
@@ -183,7 +185,12 @@ void World::completeInit() {
     depFinder->createOrdering();
     mGlobalOrdering = depFinder->getOrdering();
 #if GCAM_PARALLEL_ENABLED
+    Timer &totalgraphtimer = TimerRegistry::getInstance().getTimer("total-graph");
+    totalgraphtimer.start();
     mTBBGraphGlobal = depFinder->getFlowGraph();
+    totalgraphtimer.stop();
+    ILogger &mainlog = ILogger::getLogger("main_log");
+    totalgraphtimer.print(mainlog, "Total of all graph analysis setup:  ");
 #endif
 }
 

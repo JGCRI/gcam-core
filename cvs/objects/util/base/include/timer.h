@@ -67,6 +67,9 @@ private:
     
     //! Time the timer stopped
     boost::posix_time::ptime mStopTime;
+
+    //! State flag
+    bool mRunning;
     
     //! The total time measured by this timer between all starts and stops.
     double mTotalTime;
@@ -81,7 +84,11 @@ private:
  *          predefined enumerations where performance is critical and another they
  *          are named by string which is more convenient.
  * \warning Timers are not thread safe.
- * \author Pralit Patel and Robert Link
+ * \note We will probably need to make the timers thread safe
+ *          eventually.  The easiest way to do that would be to make
+ *          the state flag a counter, starting when we increment from
+ *          zero and stopping when we decrement to zero.
+* \author Pralit Patel and Robert Link
  */
 class TimerRegistry {
 public:
@@ -100,6 +107,7 @@ public:
         EDFUN_PRE,
         EDFUN_POST,
         EDFUN_AN_RESET,
+        WRITE_DATA,
         END
     };
     

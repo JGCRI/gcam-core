@@ -41,6 +41,7 @@ import org.basex.core.cmd.Check;
 import org.basex.core.cmd.Add;
 import org.basex.core.cmd.Close;
 import org.basex.query.QueryProcessor;
+import org.basex.io.IO;
 
 /**
  * A helper class which gives GCAM a simple interface for adding or appending
@@ -91,14 +92,27 @@ public class WriteLocalBaseXDB implements Runnable {
      *                    written to disk.  This would only be useful if the users
      *                    were going to run queries on it after since as soon as the
      *                    database is closed the data is lost.
+     * @param aOpenDBWait A timeout in seconds to wait for user intervention before
+     *                    attempting to write to a DB which appears to be open. A
+     *                    negative value indicates to wait indefinately.
      */
-    public WriteLocalBaseXDB( final String aDBLocation, final String aDocName, final boolean aInMemoryDB ) throws Exception {
+    public WriteLocalBaseXDB( final String aDBLocation, final String aDocName,
+                              final boolean aInMemoryDB, final int aOpenDBWait ) throws Exception
+    {
         // Set the DB location and doc name.
-        mDBLocation = aDBLocation;
+        // Opening a DB in memory while having a DB location pointing to an actual on
+        // disk DB does not appear to be well defined.  We will override the DB location
+        // to (hopefully) an unused container name.
+        final String IN_MEM_DB_NAME = "./__IN_MEMORY_DB_CONTAINER__";
+        mDBLocation = aInMemoryDB ? IN_MEM_DB_NAME : aDBLocation;
         mDocName = aDocName;
 
+        if ( aInMemoryDB ) {
+            System.out.println("Opening in-memory database");
+        }
+	
         // Open the database
-        openDB( aInMemoryDB );
+        openDB( aInMemoryDB, aOpenDBWait );
     }
 
     /**
@@ -122,34 +136,27 @@ public class WriteLocalBaseXDB implements Runnable {
      * Opens the database.  We will "Check" the database which will open it
      * if it already exists or create a new one otherwise.
      * @param aInMemoryDB If the databse is to be stored in memory only.
+     * @param aOpenDBWait A timeout in seconds to wait for user intervention before
+     *                    attempting to write to a DB which appears to be open. A
+     *                    negative value indicates to wait indefinately.
      */
-    private void openDB( final boolean aInMemoryDB ) throws Exception {
-        // Figure out the path to the database
-        // First try the unix file separator
-        int indexOfFileSep = mDBLocation.lastIndexOf( '/' );
-        String path = null;
-        String containerName = null;
-        if( indexOfFileSep == -1 ) {
-            // that wasn't found so try the windows
-            indexOfFileSep = mDBLocation.lastIndexOf( '\\' );
-            if( indexOfFileSep == -1 ) {
-                // still not found, maybe there was no path so just assume current directory
-                path = ".";
-                containerName = mDBLocation;
-            }
-        }
-
-        // Parse out the path and the container name from the DB location.
-        if( indexOfFileSep != -1 ) {
-            path = mDBLocation.substring( 0, indexOfFileSep );
-            // TODO: worry about invalid characters in the DB name?
-            containerName = mDBLocation.substring( indexOfFileSep + 1 );
+    private void openDB( final boolean aInMemoryDB, final int aOpenDBWait ) throws Exception {
+        // We need to seperate the path to the DB and the container name (last name in the path)
+        File dbLocationFile = new File( mDBLocation ).getAbsoluteFile();
+        // The path may be a relative path so we must convert it to absolute here.
+        String path = dbLocationFile.getParentFile().getCanonicalPath();
+        // BaseX is particular about valid container names and will change them without warning
+        // so we check explicitly.
+        String containerNameUnmodified = dbLocationFile.getName();
+        String containerName = IO.get( containerNameUnmodified ).dbname();
+        if( !containerNameUnmodified.equals( containerName ) ) {
+            System.out.println( "WARNING: container name '"+containerNameUnmodified+
+                    "' contains invalid characters, it has been changed to: '"+containerName+"'" );
         }
 
         // The db Context will check the org.basex.DBPATH property when it is created
         // and use it as the base path for finding all collections/containers
-        // The path may be a relative path so we must convert it to absolute here.
-        System.setProperty( "org.basex.DBPATH", new File( path ).getAbsolutePath() );
+        System.setProperty( "org.basex.DBPATH", path );
         mContext = new Context();
 
         // Set some default behaviors
@@ -168,6 +175,29 @@ public class WriteLocalBaseXDB implements Runnable {
         mContext.options.set( MainOptions.INTPARSE, true );
         // Open the database in memory if requested.
         mContext.options.set( MainOptions.MAINMEM, aInMemoryDB );
+
+        // Check if the database is "pinned" or open already in which case
+        // ask the user to close it before procceeding.
+        if( mContext.pinned( containerName ) ) {
+            // Rings bell on most terminals
+            System.out.print((char)7);
+            System.out.println( "The database "+containerName+" appears to be open.");
+            // If the timeout is less than 0 we will wait indefinately.
+            if( aOpenDBWait < 0 ) {
+                System.out.println( "Please close it and press return to continue.." );
+                System.in.read();
+            } else {
+                //BufferedReader in = new BufferedReader( new InputStreamReader( System.in ) );
+                final long startTime = System.currentTimeMillis();
+                System.out.println( "Please close it and press return to continue (waiting "+aOpenDBWait+" seconds).." );
+                while( ( System.currentTimeMillis() - startTime ) < aOpenDBWait * 1000
+                       && System.in.available() == 0 )
+                {
+                    // busy wait
+                }
+            }
+            System.out.println( "Attempting to write again." );
+        }
 
         // The Check command will open the database if it already exists or
         // create a new one otherwise.

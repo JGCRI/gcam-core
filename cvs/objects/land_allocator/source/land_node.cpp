@@ -493,7 +493,7 @@ void LandNode::calculateNodeProfitRates( const string& aRegionName,
         maxChildProfitRate = std::max( maxChildProfitRate,
                 mChildren[i]->getProfitRate( aPeriod ) );
     }
-    mChoiceFn->setBaseCost( maxChildProfitRate );
+    mChoiceFn->setBaseCost( maxChildProfitRate, mName );
 }
 
 /*!

@@ -79,19 +79,6 @@ bool subsetp(const std::set<T1> &sub, const std::set<T1> &super)
   return true;
 }
 
-#if 0
-template <class T1, class T2, class P>
-void filter(typename std::map<T1,T2>::const_iterator strt,
-            typename std::map<T1,T2>::const_iterator fin,
-            std::map<T1,T2> outmap,
-            const P &predicate)
-{
-  //add to outmap all of the elements between strt and fin (not
-  //including the latter) that satisfy the predicate.  The predicate
-  //must take a dereferenced map iterator (i.e., pair<T1,T2>)
-  typename std::map<T1,T2>::const_iterator 
-#endif
-
 #endif
 
       

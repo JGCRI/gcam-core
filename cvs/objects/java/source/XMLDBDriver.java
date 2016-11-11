@@ -36,6 +36,10 @@ import java.io.PipedOutputStream;
 import java.io.IOException;
 import java.io.File;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import joptsimple.OptionException;
+
 /**
  * A helper class which gives GCAM a simple interface for adding or appending
  * XML to a BaseX database.  GCAM can create an instance of this class
@@ -44,8 +48,8 @@ import java.io.File;
  * via the receiveDataFromGCAM method.  When all data has been sent the finish
  * method is called which will wait until the BaseX has finished adding all of
  * the data.  Users can optionally configure this class to:
- *  - Apply a filter on the XML as it is stremed into the database.
- *  - Run a Model Interface batch file to exectue queries afer a GCAM scenario has
+ *  - Apply a filter on the XML as it is streamed into the database.
+ *  - Run a Model Interface batch file to execute queries after a GCAM scenario has
  *    finished running.
  *  - Create the database in memory so that they can be queries and discarded without
  *    the performance penalty to writing thmm to disk.
@@ -73,7 +77,7 @@ public class XMLDBDriver {
      * A class that can be used to run queries against the BaseX DB.
      * If null no queries will be run. These will wait to run until finalizeAndClose
      * is called so that we can ensure that all data has been appended to the database
-     * and GCASM has cleared out some memory.
+     * and GCAM has cleared out some memory.
      */
     private RunQueries mRunQueries = null;
 
@@ -100,15 +104,17 @@ public class XMLDBDriver {
 
             // always open the database optionally in memory (off by default)
             boolean inMemDB = Boolean.parseBoolean( config.getProperty( "in-memory", "false" ) );
-            mWriteDB = new WriteLocalBaseXDB( aDBLocation, aDocName, inMemDB );
+            int openDBWait = Integer.parseInt( config.getProperty( "open-db-wait", "-1" ) );
+            mWriteDB = new WriteLocalBaseXDB( aDBLocation, aDocName, inMemDB, openDBWait );
 
             // optionally filter output using an XSLT style script (off by default)
             String filterScript = config.getProperty( "filter-script", "" );
             mFilterOutput = filterScript.isEmpty() ? null : new FilterOutput( filterScript );
 
-            // optionally run a batch batch query (off by default)
+            // optionally run a batch query (off by default), with output optionally routed to a log file
+            String batchLog  = config.getProperty( "batch-logfile", "" );
             String batchFile = config.getProperty( "batch-queries", "" );
-            mRunQueries = batchFile.isEmpty() ? null : new RunQueries( batchFile );
+            mRunQueries = batchFile.isEmpty() ? null : new RunQueries( batchFile, batchLog );
 
             // connect up the XML streams so that it passes from:
             // GCAM -> Filter (if it exists) -> DB
@@ -247,6 +253,28 @@ public class XMLDBDriver {
     }
 
     /**
+     * Print the help/usage options for running the XMLDBDriver directly from the command line.
+     * The usage method and description of each of the command line arguments are printed then
+     * we exit.
+     * @param aParser The option parser which can print help messages about each of the command
+     *               line options it has been configured to parse.
+     */
+    private static void printUsage( OptionParser aParser ) {
+        try {
+            System.err.println( "USAGE:" );
+            System.err.println( "   java -cp XMLDBDriver.jar XMLDBDriver --db-path=PATH --doc-name=NAME --xml=FILE\nor" );
+            System.err.println( "   java -cp XMLDBDriver.jar XMLDBDriver --print-java-path\n" );
+            System.err.println( "NOTE: If the first form is used, the arguments -db-path, --doc-name, and --xml are all required." );
+            System.err.println("      Options can be abbreviated using any unique prefix, e.g., --db=XXX --doc=YYY -x foo.xml\n" );
+            aParser.printHelpOn( System.out );
+        } catch (Exception e) {
+            System.err.println( "Failed to write usage message" );
+            System.exit(1);
+        }
+        System.exit(1);
+    }
+
+    /**
      * Provide a main method to run the driver as a stand alone tool apart from GCAM by reading
      * the XML from a file instead.
      * This may be useful for a number of reasons:
@@ -261,71 +289,82 @@ public class XMLDBDriver {
      */
     public static void main( String[] aArgs ) throws Exception {
         // Parse command line arguments
-        String error = null;
         String dbPath = null;
         String docName = null;
         String xmlFile = null;
-        for( int i = 0; i < aArgs.length && error == null; ) {
-            if( ( i + 1 ) >= aArgs.length ) {
-                error = "Insufficient number of arguments.";
-            }
-            else if( aArgs[ i ].equals( "--db-path" ) ) {
-                dbPath = aArgs[ i + 1 ];
-            }
-            else if( aArgs[ i ].equals( "--doc-name" ) ) {
-                docName = aArgs[ i + 1 ];
-            }
-            else if( aArgs[ i ].equals( "--xml" ) ) {
-                xmlFile = aArgs[ i + 1 ];
+
+        // Set all of the available command line arguments here.
+        // The first argument being the command line switch and the second a short description.
+        // In addition they can be marked required via .withRequiredArg()
+        OptionParser parser = new OptionParser();
+        parser.accepts( "help", "Print this message" ).forHelp();
+        parser.accepts( "db-path", "Path to XML database" ).withRequiredArg();
+        parser.accepts( "doc-name", "The unique name to call the document in the DB" ).withRequiredArg();
+        parser.accepts( "xml", "The exported GCAM results XML file to load" ).withRequiredArg();
+        parser.accepts( "print-java-home", "Print the path to the Java home directory and exit" );
+
+        // Parse the command line options
+        OptionSet opts = null;
+        try {
+            opts = parser.parse( aArgs );
+        } catch ( OptionException e ) {
+            System.err.println( e );
+            System.err.println( "" );
+            printUsage( parser );
+        }
+
+        // If the help command line option is set print the usage notice and exit.
+        if ( opts.has( "help" ) ) {
+            printUsage( parser );
+        }
+
+        // If the print-java-home command line option is set print the running java's home
+        // file path and exit.  We also check and make sure we have a 64 bit JVM which is required
+        // for running GCAM.  Note having one will then cause an error message and error status 1.
+        if ( opts.has( "print-java-home" ) ) {
+            if( System.getProperty( "sun.arch.data.model" ).equals( "64" ) ) {
+                System.out.println( System.getProperty( "java.home" ) );
+                System.exit(0);
             }
             else {
-                error = "Uknown argument: "+aArgs[ i ];
-            }
-            i += 2;
-        }
-        // ensure all of the required flags were parsed
-        // do not override an already existing error message
-        if( error == null ) {
-            if( dbPath == null ) {
-                error = "Flag --db-path was not set";
-            }
-            else if( docName == null ) {
-                error = "Flag --doc-name was not set";
-            }
-            else if( xmlFile == null ) {
-                error = "Flag --xml was not set";
+                System.err.println( "A 64-bit Java runtime is required to run GCAM." );
+                System.exit(1);
             }
         }
-        // Check if we have an error message for any reason, if so print it and exit
-        if( error != null ) {
-            System.err.println( "ERROR: "+error );
-            System.err.println( "Usage: java -cp XMLDBDriver.jar XMLDBDriver --db-path [Path to DB]" );
-            System.err.println( "            --doc-name [The unique name to call the document in the DB" );
-            System.err.println( "            --xml [The exported GCAM results XML file to load]" );
-        }
-        else {
-            // Run the XMLDBDriver by mimicing the sequence of method calls GCAM would make
-            XMLDBDriver driver = new XMLDBDriver( dbPath, docName );
 
-            // copy the XML file through processing streams via receiveDataFromGCAM
-            FileInputStream xmlRead = new FileInputStream( xmlFile );
-            byte[] buffer = new byte[ XMLDBDriver.BUFFER_SIZE ];
-            int read = 0;
-            while( ( read = xmlRead.read( buffer ) ) != -1 ) {
-                boolean hadError = driver.receiveDataFromGCAM( buffer, read );
-                if( hadError ) {
-                    // There was an error in set up.  Those messages have already been
-                    // printed so we just need to stop trying to send data.
-                    break;
-                }
-            }
-            xmlRead.close();
+        // Note all options that print help/diagnostics and quite should have already been
+        // handled by this point and exited.
+        // Get the options for running the XMLDBDriver.  Each of these options are required
+        // and not having them will result in error.
+        dbPath  = opts.has( "db-path" ) ? (String)opts.valueOf( "db-path") : null;
+        docName = opts.has( "doc-name" ) ? (String)opts.valueOf( "doc-name" ) : null;
+        xmlFile = opts.has( "xml" ) ? (String)opts.valueOf( "xml" ) : null;
 
-            // wait for the XML to be finished processing and stored
-            driver.finish();
-            // run any potential queries and close the DB
-            driver.finalizeAndClose();
+        if( dbPath == null || docName == null || xmlFile == null ) {
+            printUsage( parser );
         }
+
+        // Run the XMLDBDriver by mimicking the sequence of method calls GCAM would make
+        XMLDBDriver driver = new XMLDBDriver( dbPath, docName );
+
+        // copy the XML file through processing streams via receiveDataFromGCAM
+        FileInputStream xmlRead = new FileInputStream( xmlFile );
+        byte[] buffer = new byte[ XMLDBDriver.BUFFER_SIZE ];
+        int read = 0;
+        while( ( read = xmlRead.read( buffer ) ) != -1 ) {
+            boolean hadError = driver.receiveDataFromGCAM( buffer, read );
+            if( hadError ) {
+                // There was an error in set up.  Those messages have already been
+                // printed so we just need to stop trying to send data.
+                break;
+            }
+        }
+        xmlRead.close();
+
+        // wait for the XML to be finished processing and stored
+        driver.finish();
+        // run any potential queries and close the DB
+        driver.finalizeAndClose();
     }
 }
 

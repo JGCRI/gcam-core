@@ -141,8 +141,9 @@ public:
      * \warning This value may be ignored if a user explicitly parsed a value to
      *          use instead.
      * \param aBaseCost The base cost to set.
+     * \param aFailMsg String to prepend to log message, if an illegal value is passed for aBaseCost.
      */
-    virtual void setBaseCost( const double aBaseCost ) = 0;
+    virtual void setBaseCost( const double aBaseCost, const std::string &aFailMsg ) = 0;
 };
 
 // Inline function definitions.

@@ -99,7 +99,7 @@ L222.GlobalTechCoef_en <- L222.globaltech_coef.melt[ names_GlobalTechCoef ]
 
 #Costs of global technologies
 printlog( "L222.GlobalTechCost_en: Costs of global technologies for energy transformation" )
-L222.globaltech_cost.melt <- interpolate_and_melt( A22.globaltech_cost, model_years, value.name="input.cost", digits = digits_cost )
+L222.globaltech_cost.melt <- interpolate_and_melt( A22.globaltech_cost, model_years, value.name="input.cost", digits = digits_cost, rule=3 )
 L222.globaltech_cost.melt[ c( "sector.name", "subsector.name" ) ] <- L222.globaltech_cost.melt[ c( "supplysector", "subsector" ) ]
 L222.GlobalTechCost_en <- L222.globaltech_cost.melt[ names_GlobalTechCost ]
 

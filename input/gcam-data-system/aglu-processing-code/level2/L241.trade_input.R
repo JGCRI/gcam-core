@@ -30,12 +30,12 @@ A_demand_technology <- readdata( "AGLU_ASSUMPTIONS", "A_demand_technology" )
 A_an_input_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_technology" )
 L101.ag_kcalg_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_kcalg_R_C_Y" )
 L2011.AgProduction_ag_irr <- readdata( "AGLU_LEVEL2_DATA", "L2011.AgProduction_ag_irr", skip = 4 )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
 # First, determine which regions are in which groupings.
-L241.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, scenario == "SSP4" )
+L241.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_Scen_R_Y, scenario == "SSP4" )
 L241.pcgdp_2010 <- L241.pcgdp_2010[ names( L241.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
 L241.pcgdp_2010 <- add_region_name( L241.pcgdp_2010 )
 L241.pcgdp_2010$X2010 <- L241.pcgdp_2010$X2010 * conv_1990_2010_USD

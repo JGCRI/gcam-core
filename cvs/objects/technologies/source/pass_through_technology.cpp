@@ -151,6 +151,21 @@ double PassThroughTechnology::getFixedOutput( const string& aRegionName,
     return mPassThroughFixedOutput;
 }
 
+double PassThroughTechnology::getCalibrationOutput( const bool aHasRequiredInput,
+                                                    const string& aRequiredInput, 
+                                                    const int aPeriod ) const
+{
+    double calOutput = Technology::getCalibrationOutput( aHasRequiredInput, aRequiredInput, aPeriod );
+    // If there is a calibration value we must adjust it by the fixed output amount to ensure
+    // share-weights are only calibrated on the variable amounts.
+    if( calOutput != -1 ) {
+        // TODO: check the ordering of this to make sure it is retreived before the calibration
+        // value is requested
+        calOutput -= mPassThroughFixedOutput;
+    }
+    return calOutput;
+}
+
 bool PassThroughTechnology::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
     // no additional parameters are parsed by this technology
     return false;

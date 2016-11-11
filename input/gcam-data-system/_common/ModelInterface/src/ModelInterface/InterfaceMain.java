@@ -33,6 +33,7 @@ import java.util.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFrame;
@@ -47,9 +48,14 @@ import javax.swing.undo.UndoManager;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CannotRedoException;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import joptsimple.OptionException;
 
 import ModelInterface.ConfigurationEditor.configurationeditor.ConfigurationEditor;
 import ModelInterface.DMsource.DMViewer;
@@ -60,6 +66,7 @@ import ModelInterface.common.RecentFilesList;
 
 import ModelInterface.ModelGUI2.XMLFilter;
 import ModelInterface.ConfigurationEditor.utils.FileUtils;
+import ModelInterface.ConfigurationEditor.utils.DOMUtils;
 import ModelInterface.common.FileChooser;
 import ModelInterface.common.FileChooserFactory;
 import ModelInterface.BatchRunner;
@@ -124,10 +131,6 @@ public class InterfaceMain implements ActionListener {
 	 * Main function, creates a new thread for the gui and runs it.
 	 */
 	public static void main(String[] args) {
-		System.out.println("Library Path: "+System.getProperty("java.library.path"));
-
-		//Schedule a job for the event-dispatching thread:
-		//creating and showing this application's GUI.
 
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			public void uncaughtException(Thread t, Throwable e) {
@@ -135,37 +138,78 @@ public class InterfaceMain implements ActionListener {
                     InterfaceMain.getInstance().showMessageDialog(e, "Unexpected Error", 
                         JOptionPane.ERROR_MESSAGE);
                 }
-				// still print the stack trace to the console for debugging
-				e.printStackTrace();
+                // still print the stack trace to the console for debugging
+                e.printStackTrace();
 			}
-		});
+        });
 
-        if(args.length > 0 && args.length != 2) {
-            System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
-            return;
-        } else if(args.length == 2) {
-            if(args[0].equals("-b")) {
-                System.setProperty("java.awt.headless", "true");
-                System.out.println("Running headless? "+GraphicsEnvironment.isHeadless());
-                File batchFile = new File(args[1]);
-                main  = new InterfaceMain();
+		// -b <batch file> -l <log file>
+		OptionParser parser = new OptionParser();
+		parser.accepts("help", "print usage information").forHelp();
+		parser.accepts("b", "XML batch file to process").withRequiredArg();
+		parser.accepts("l", "log file into which to redirect ModelInterface output").withRequiredArg();
+		
+		OptionSet opts = null;
+		try {
+		    opts = parser.parse(args);
+		} catch (OptionException e) {
+		    System.err.println(e);
+		    System.exit(1);
+		}
 
-                // Construct the subset of menu adders that are also BatchRunner while
-                // avoiding creating any GUI components
-                // TODO: avoid code duplication
-                final MenuAdder dbView = new DbViewer();
-                final MenuAdder inputView = new InputViewer();
-                main.menuAdders = new ArrayList<MenuAdder>(2);
-                main.menuAdders.add(dbView);
-                main.menuAdders.add(inputView);
-
-                // Run the batch file
-                main.runBatch(batchFile);
-            } else {
-                System.out.println("Usage: java -jar ModelInterface.jar -b <batch file>");
+        if (opts.has("help")) {
+            try {
+                System.out.println("Usage: java -jar ModelInterface.jar -b <batch file> -l <log file>");
+                parser.printHelpOn(System.out);
+            } catch (Exception e) {
+                System.err.println("Failed to write usage message");
+                System.exit(1);
             }
-            return;
+            System.exit(1);
         }
+
+        // if the -l option is set then we will redirect standard output to the specified log file
+        PrintStream stdout = System.out;
+        if (opts.has("l")) {
+            String logFile = (String) opts.valueOf("l");
+            stdout.println("InterfaceMain: Directing stdout to " + logFile);
+            try {
+                FileOutputStream log = new FileOutputStream(logFile);
+                System.setOut(new PrintStream(log));
+            } catch (Exception e) {
+                // If there was an error opening the log file we will post a message indicating as
+                // much but continue on with out the redirect.
+                System.err.println("Failed to open log file '" + logFile + "' for writing: " + e);
+            }
+        }
+
+		if (opts.has("b")) {
+		    String filename = (String) opts.valueOf("b");
+		    System.out.println("InterfaceMain: batchFile: " + filename);
+
+		    System.setProperty("java.awt.headless", "true");
+		    System.out.println("Running headless? "+GraphicsEnvironment.isHeadless());
+            Document batchDoc = filename.equals("-") ? DOMUtils.parseInputStream(System.in) : FileUtils.loadDocument(new File(filename), null);
+		    main  = new InterfaceMain();
+
+		    // Construct the subset of menu adders that are also BatchRunner while
+		    // avoiding creating any GUI components
+		    // TODO: avoid code duplication
+		    final MenuAdder dbView = new DbViewer();
+		    final MenuAdder inputView = new InputViewer();
+		    main.menuAdders = new ArrayList<MenuAdder>(2);
+		    main.menuAdders.add(dbView);
+		    main.menuAdders.add(inputView);
+
+		    // Run the batch file
+            if(batchDoc != null) {
+                main.runBatch(batchDoc.getDocumentElement());
+            } else {
+                System.out.println("Skipping batch "+filename+" due to parsing errors.");
+            }
+		    System.setOut(stdout);
+		    return;
+		}
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -173,7 +217,6 @@ public class InterfaceMain implements ActionListener {
 			// warn the user.. should be ok to keep going
 			System.out.println("Error setting look and feel: " + e);
 		}
-
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -386,7 +429,13 @@ public class InterfaceMain implements ActionListener {
                 public void run() {
                     if(result != null) {
                         for(File file : result) {
-                            runBatch(file);
+                            Document doc = FileUtils.loadDocument(file, null);
+                            // Only run if the batch file was parsed correctly
+                            // note and error would have already been given if it wasn't
+                            // parsed correctly
+                            if(doc != null) {
+                                runBatch(doc.getDocumentElement());
+                            }
                         }
                     }
                     // TODO: message that all were run
@@ -578,13 +627,11 @@ public class InterfaceMain implements ActionListener {
 	 * Runs the given batch file.  Relys on the menuAdders list
 	 * and if any of the class implements BatchRunner it will pass
 	 * it off the command to that class. 
-	 * @param file The batch file to run.
+	 * @param doc The batch file parsed into a DOM document which contains
+     *            the commands to run.
 	 * @see BatchRunner 
 	 */
-	private void runBatch(File file) {
-		// don't really care about document element's name
-		Node doc = FileUtils.loadDocument(file, null).getDocumentElement();
-
+	private void runBatch(Node doc) {
 		// TODO: remove this check once batch queries get merged
 		if(doc.getNodeName().equals("queries")) {
 			System.out.println("Batch queries are not yet merged with this functionality.");
@@ -609,7 +656,7 @@ public class InterfaceMain implements ActionListener {
 			}
 		}
 		showMessageDialog(
-				"Finished running batch file "+file.getName(),
+				"Finished running batch file",
 				"Batch File Complete", JOptionPane.INFORMATION_MESSAGE);
 	}
     /**

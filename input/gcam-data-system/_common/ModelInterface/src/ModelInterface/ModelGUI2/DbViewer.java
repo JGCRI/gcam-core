@@ -95,6 +95,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.ls.*;
 import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+import org.w3c.dom.traversal.NodeFilter;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
@@ -1235,6 +1236,17 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		final String replaceResultsPropName = "batchQueryReplaceResults";
 		Properties prop = InterfaceMain.getInstance().getProperties();
 
+        // determine the proper number of threads to use for queries by
+        // checking the configuration parameter which defaults to the
+        // total number of cores on the system
+        final String coresToUsePropertyName = "coresToUse";
+        final int numSystemCores = Runtime.getRuntime().availableProcessors();
+        // TODO: set the default cores to use low until we figure out how to get BaseX to
+        // perform better with many parallel queries.
+        //final int numCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(numSystemCores)));
+        final int defaultNumCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(2)));
+		prop.setProperty(coresToUsePropertyName, Integer.toString(defaultNumCoresToUse));
+
 		// Create a Select Scenarios dialog to get which scenarios to run
 		final JList scenarioList = new JList(tempScns); 
 		final JDialog scenarioDialog = new JDialog(parentFrame, "Select Scenarios to Run", true);
@@ -1342,7 +1354,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
         allRegions.remove("Global");
 
 		final BatchWindow bWindow = new BatchWindow(excelFile, toRunScns, allRegions, singleSheetCheckBox.isSelected(), drawPicsCheckBox.isSelected(), 
-				numQueries,res, overwriteCheckBox.isSelected());
+				numQueries,res, overwriteCheckBox.isSelected(), defaultNumCoresToUse);
 		//create listener for window
 	}
 
@@ -1389,6 +1401,53 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			return ((DOMImplementation)implls).createDocument("", "queries", null);
 		}
 	}
+    /**
+     * Filter and existing DOM subtree with an LSParserFilter.  This traverses the child
+     * nodes of the given node recursively removing any rejected nodes in the same manner
+     * that the LSParser would.
+     * @param parentNode The current node who's children will be processed recursively.
+     * @param filter The LSParserFilter to apply.
+     */
+    public void filterNodes(Node parentNode, LSParserFilter filter) {
+        Node currNode = parentNode.getFirstChild();
+        final int whatToShow = filter.getWhatToShow();
+        while(currNode != null) {
+            Node nextNode = currNode.getNextSibling();
+            // First determine if we should even inspect this kind of node.
+            boolean showNode;
+            switch(currNode.getNodeType()) {
+                case Node.ATTRIBUTE_NODE: {
+                    showNode = (whatToShow & NodeFilter.SHOW_ATTRIBUTE) != 0;
+                    break;
+                }
+                case Node.COMMENT_NODE: {
+                    showNode = (whatToShow & NodeFilter.SHOW_COMMENT) != 0;
+                    break;
+                }
+                case Node.ELEMENT_NODE: {
+                    showNode = (whatToShow & NodeFilter.SHOW_ELEMENT) != 0;
+                    break;
+                }
+                case Node.TEXT_NODE: {
+                    showNode = (whatToShow & NodeFilter.SHOW_TEXT) != 0;
+                    break;
+                }
+                default: {
+                    showNode = (whatToShow & NodeFilter.SHOW_ALL) != 0;
+                    break;
+                }
+            }
+            if(showNode && filter.acceptNode(currNode) == LSParserFilter.FILTER_REJECT) {
+                // the node was rejected so remove it
+                parentNode.removeChild(currNode);
+            } else {
+                // either the node should not be tested or it was accepted so we
+                // keep and and recursively process from this node
+                filterNodes(currNode, filter);
+            }
+            currNode = nextNode;
+        }
+    }
 	private void writeQueries() {
 		try {
 			Document tempDoc = DocumentBuilderFactory.newInstance().newDocumentBuilder()
@@ -1715,6 +1774,18 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 		final String includeChartsPropName ="batchQueryIncludeCharts";
 		final String splitRunsPropName = "batchQuerySplitRunsInDifferentSheets";
 		final String replaceResultsPropName = "batchQueryReplaceResults";
+
+        // determine the proper number of threads to use for queries by
+        // checking the configuration parameter which defaults to the
+        // total number of cores on the system
+        final String coresToUsePropertyName = "coresToUse";
+        final int numSystemCores = Runtime.getRuntime().availableProcessors();
+        // TODO: set the default cores to use low until we figure out how to get BaseX to
+        // perform better with many parallel queries.
+        //final int numCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(numSystemCores)));
+        final int defaultNumCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(2)));
+		prop.setProperty(coresToUsePropertyName, Integer.toString(defaultNumCoresToUse));
+
 		NodeList children = command.getChildNodes();
 		for(int i = 0; i < children.getLength(); ++i ) {
 			Node child = children.item(i);
@@ -1728,6 +1799,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 			}
 			if(actionCommand.equals("XMLDB Batch File")) {
 				File queryFile = null;
+                Node queriesNode = null;
 				File outFile = null;
 				String dbFile = null;
 				List<String> scenariosNames = new ArrayList<String>();
@@ -1735,6 +1807,7 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 				boolean includeCharts = Boolean.parseBoolean(prop.getProperty(includeChartsPropName, "true"));
 				boolean splitRuns = Boolean.parseBoolean(prop.getProperty(splitRunsPropName, "false"));
 				boolean replaceResults = Boolean.parseBoolean(prop.getProperty(replaceResultsPropName, "false"));
+                int numCoresToUse = defaultNumCoresToUse;
 				// read file names for header file, csv files, and the output file
 				NodeList fileNameChildren = child.getChildNodes();
 				for(int j = 0; j < fileNameChildren.getLength(); ++j) {
@@ -1744,6 +1817,8 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 					}
 					if(fileNode.getNodeName().equals("queryFile")) {
 						queryFile = new File(fileNode.getTextContent());
+                    } else if(fileNode.getNodeName().equals("queries")) {
+                        queriesNode = fileNode;
 					} else if(fileNode.getNodeName().equals("outFile")) {
 						outFile = new File(fileNode.getTextContent());
 					} else if(fileNode.getNodeName().equals("xmldbLocation")) {
@@ -1758,22 +1833,26 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                         splitRuns = Boolean.parseBoolean(fileNode.getFirstChild().getNodeValue());
                     } else if(fileNode.getNodeName().equals(replaceResultsPropName)) {
                         replaceResults = Boolean.parseBoolean(fileNode.getFirstChild().getNodeValue());
+                    } else if(fileNode.getNodeName().equals(coresToUsePropertyName)) {
+                        numCoresToUse = Integer.parseInt(fileNode.getFirstChild().getNodeValue());
 					} else {
 						System.out.println("Unknown tag: "+fileNode.getNodeName());
 						// should I print this error to the screen?
 					}
 				}
+                boolean wasDBOpened = false;
                 try {
                     // make sure we have enough to run the batch query 
                     // which means we have a query file, output file, and
                     // at database location
-                    if(queryFile == null || outFile == null || dbFile == null) {
+                    if((queryFile == null && queriesNode == null) || outFile == null || dbFile == null) {
                         throw new Exception("Not enough information provided to run batch query.");
                     }
                     // The database may have already been opeened by a calling implementation to
                     // for instance connect to an in memory database.
                     if(XMLDB.getInstance() == null) {
                         XMLDB.openDatabase(dbFile);
+                        wasDBOpened = true;
                     }
 
                     Vector<ScenarioListItem> scenariosInDb = getScenarios();
@@ -1798,9 +1877,22 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
                         throw new Exception("Could not find scenarios to run.");
                     }
 
-                    // read the batch query file
-                    Document queries = readQueries(queryFile);
-                    final NodeList res = (NodeList)XPathFactory.newInstance().newXPath().evaluate("/queries/node()", queries, XPathConstants.NODESET);
+                    // Figure out where to get the queries they may have been specified as a seperate query
+                    // file we need to load or inline in which case we already have the XML parsed.
+                    // Note a user can only specify the queries one way or the other not both.
+                    if(queryFile != null && queriesNode != null) {
+                        throw new Exception("Setting both a queryFile and inline queries is not allowed.");
+                    } else if(queryFile != null) {
+                        // read the batch query file
+                        queriesNode = readQueries(queryFile).getDocumentElement();
+                    } else {
+                        // filter the nodes taken directly from the batch file in the same way they would
+                        // have been in readQueries since none of the query parsing methods that will look
+                        // at these nodes are expecting empty text() nodes.
+                        filterNodes(queriesNode, new ParseFilter());
+                    }
+
+                    final NodeList res = (NodeList)XPathFactory.newInstance().newXPath().evaluate("./aQuery", queriesNode, XPathConstants.NODESET);
 
                     final int numQueries = res.getLength();
                     if(numQueries == 0) {
@@ -1823,14 +1915,17 @@ public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 
                     // run the queries and wait for them to finish so that we
                     // can close the database
-                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet, includeCharts, numQueries, res, replaceResults);
+                    BatchWindow runner = new BatchWindow(outFile, toRunScns, allRegions, singleSheet,
+                            includeCharts, numQueries, res, replaceResults, numCoresToUse);
                     if(runner != null) {
                         runner.waitForFinish();
                     }
                 } catch(Exception e) {
                     e.printStackTrace();
                 } finally {
-                    XMLDB.closeDatabase();
+                    if(wasDBOpened) {
+                        XMLDB.closeDatabase();
+                    }
                 }
 			} else {
 				System.out.println("Unknown command: "+actionCommand);

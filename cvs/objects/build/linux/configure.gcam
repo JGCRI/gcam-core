@@ -56,28 +56,19 @@ NOCLEARRESTORE = 0
 
 #### flag indicating whether or not to use hector
 #### If we are using hector, there are some other variables to set.
-ifndef USE_HECTOR
-USE_HECTOR = 0
-endif
+USE_HECTOR = 1
 
 ifeq ($(USE_HECTOR),1)
 
-  ifeq ($(strip $(GSLROOT)),)
-    GSLROOT	= /usr/local
-  endif
-
-  GSLLIB	= $(GSLROOT)/lib
+  # hector Makefile is looking for slightly different names for BOOST
+  # include and lib
+  BOOSTROOT=$(BOOST_INCLUDE)
+  BOOSTLIB=$(BOOST_LIB)
+  export BOOSTROOT BOOSTLIB
 
   HECTOR_INCLUDE = -I../../climate/source/hector/headers
 
-  ifeq ($(USE_MKL),1)
-    ## If we're using MKL, then we should be linking the MKL BLAS, so don't link the GSL one.
-    HECTOR_BLAS = 
-  else
-    HECTOR_BLAS = -lgslcblas
-  endif
-
-  HECTOR_LIB = -L$(GSLLIB) -L$(BOOST_LIB) -Wl,-rpath,$(GSLLIB),-rpath,$(BOOST_LIB) -lhector -lgsl $(HECTOR_BLAS) -lboost_system -lboost_filesystem
+  HECTOR_LIB = -L$(BOOST_LIB) -Wl,-rpath,$(BOOST_LIB) -lhector -lboost_system -lboost_filesystem
 endif  # if(USE_HECTOR==1)
 
 ### TBB setup:  On Evergreen, using tap intel-tbb-gnu (or variants for other compilers) will set
@@ -168,7 +159,7 @@ LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRA
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
 CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
-CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD
+CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=c++11 -Wno-deprecated
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
 LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(LAPACK_RPATH) $(MKL_LDFLAGS)

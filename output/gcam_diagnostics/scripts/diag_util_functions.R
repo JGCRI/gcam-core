@@ -93,9 +93,6 @@ compute_energy_reduction <- function(d, var_name, base_scn_name=BASE_SCENARIO_NA
     d.reduction[, !(names(d.reduction) %in% c("region", "Year"))] <- 
          d.reduction[,base_scn_name] - d.reduction[, !(names(d.reduction) %in% c("region", "Year"))]
     d.reduction <- melt(d.reduction, id.vars=c("region", "Year"), variable.name="scenario")
-    # TODO: total hack because it can't seem to handle when there are not negative values
-    #d.reduction <- subset(d.reduction, scenario != base_scn_name)
-    d.reduction[d.reduction$Year == 1990, "value"] <- -0.0000001
     d.reduction[, var_name] <- "energy reduction"
     d.reduction$Units <- d$Units[1]
     #for(scn in unique(d.reduction$scenario)) {
@@ -110,9 +107,11 @@ compute_energy_reduction <- function(d, var_name, base_scn_name=BASE_SCENARIO_NA
 # A helper function to generate a bar graph that will have negative values by
 # spliting the plot into: positive values and negative.
 split_neg_geom_bar <- function(p) {
-    old_geom <- p$layers[[1]]
-    p$layers[[1]] <- geom_bar(subset=.(value >= 0), old_geom$mapping, stat=old_geom$stat)
-    p$layers[[2]] <- geom_bar(subset=.(value < 0), old_geom$mapping, stat=old_geom$stat)
+    # The subset functionality has been removed from ggplot. With no
+    # reliable way of doing this in a way that will be compatible with
+    # do_graph's page_variables we will have to simply set a flag for
+    # now and let do_graph. detect it and do the split then.
+    p$do_neg_split <- TRUE
     return(p)
 }
 

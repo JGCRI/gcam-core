@@ -1,4 +1,3 @@
-#if USE_HECTOR 
 /*
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
@@ -46,6 +45,9 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "climate/include/hector_model.hpp"
+
+#if USE_HECTOR 
+
 #include "util/base/include/model_time.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
@@ -194,7 +196,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
         climatelog << "Setting up stub Hector core." << endl;
         // TODO: shouldn't have to fool with the hector logger here.
         if( !hector_log_is_init ) {
-            Hector::Logger::getGlobalLogger().open( "hector", true, Hector::Logger::DEBUG );
+            Hector::Logger::getGlobalLogger().open( "hector", true, Hector::Logger::WARNING );
             hector_log_is_init = true; 
         }
         if( mHcore.get() ) {
@@ -731,20 +733,6 @@ void HectorModel::setupConcTbl() {
 void HectorModel::storeRF(const int aYear ) {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
     int i = yearlyDataIndex( aYear );
-
-        //     // XXX DEBUG
-        // ILogger &climatelog = ILogger::getLogger("climate-log");
-        // climatelog.setLevel(ILogger::DEBUG);
-        // climatelog << "storeRF:  year: " << aYear << "  i= " << i
-        //            << "  totrfsize= " << mTotRFTable.size()
-        //            << "  co2size= " << mGasRFTable["CO2"].size()
-        //            << "  ch4size= " << mGasRFTable["CH4"].size()
-        //            << "  N2Osize= " << mGasRFTable["N2O"].size()
-        //            << "  BCsize= " << mGasRFTable["BC"].size()
-        //            << "  OCsize= " << mGasRFTable["OC"].size()
-        //            << "\n";
-        // // XXX end debug
-
     
     // total
     mTotRFTable[i]             = mHcore->sendMessage( M_GETDATA, D_RF_TOTAL );
@@ -899,8 +887,8 @@ void HectorModel::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
 double HectorModel::getEmissions( const string& aGasName, const int aYear ) const {
     ILogger& climatelog = ILogger::getLogger( "climate-log" );
-    
-    if( aYear < mModeltime->getEndYear() && aYear > mModeltime->getStartYear() ) {
+
+    if( aYear <= mModeltime->getEndYear() && aYear >= mModeltime->getStartYear() ) {
         if( aGasName == "CO2NetLandUse" ) {
             return (mEmissionsTable.find( aGasName )->second)[ yearlyDataIndex( aYear ) ]; 
         }

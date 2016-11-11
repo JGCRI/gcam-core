@@ -46,7 +46,7 @@ L1322.in_EJ_R_indfeed_F_Yh <- readdata( "ENERGY_LEVEL1_DATA", "L1322.in_EJ_R_ind
 A32.inc_elas_output <- readdata( "SOCIO_ASSUMPTIONS", "A32.inc_elas_output" )
 L101.Pop_thous_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_R_Y" )
 L102.pcgdp_thous90USD_GCAM3_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_GCAM3_R_Y" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
@@ -309,7 +309,7 @@ printlog( "L232.IncomeElasticity_ind_scen: income elasticity of industry (scenar
 #Combine GCAM 3.0 with the SSPs, and subset only the relevant years
 L102.pcgdp_thous90USD_GCAM3_R_Y[[Scen]] <- "GCAM3"
 L232.pcgdp_thous90USD_ALL_R_Y <- rbind(
-      L102.pcgdp_thous90USD_SSP_R_Y,
+      L102.pcgdp_thous90USD_Scen_R_Y,
       L102.pcgdp_thous90USD_GCAM3_R_Y )[ c( Scen_R, X_final_model_base_year, X_model_future_years ) ]
 
 # Per-capita GDP ratios, which are used in the equation for demand growth

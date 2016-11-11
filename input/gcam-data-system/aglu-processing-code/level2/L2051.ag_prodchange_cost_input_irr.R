@@ -38,7 +38,7 @@ L171.ag_rfdEcYield_kgm2_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L171.ag_rfdE
 L205.AgProdChange_bio_ref <- readdata( "AGLU_LEVEL2_DATA", "L205.AgProdChange_bio_ref", skip = 4 )
 L205.AgCost_bio <- readdata( "AGLU_LEVEL2_DATA", "L205.AgCost_bio", skip = 4 )
 L205.AgCost_For <- readdata( "AGLU_LEVEL2_DATA", "L205.AgCost_For", skip = 4 )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables
@@ -126,7 +126,7 @@ L2051.AgProdChange_irr_low <- L2051.AgProdChange_ag_irr_ref
 L2051.AgProdChange_irr_low$AgProdChange <- L2051.AgProdChange_irr_low$AgProdChange * low_ag_prod_growth_mult
 
 printlog( "Table L2051.AgProdChange_irr_ssp4: SSP4 ag prod change (not incl biomass)" )
-L225.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, scenario == "SSP4" )
+L225.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_Scen_R_Y, scenario == "SSP4" )
 L225.pcgdp_2010 <- L225.pcgdp_2010[ names( L225.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
 L225.pcgdp_2010 <- add_region_name( L225.pcgdp_2010 )
 L225.pcgdp_2010$X2010 <- L225.pcgdp_2010$X2010 * conv_1990_2010_USD

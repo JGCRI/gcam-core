@@ -220,7 +220,8 @@ public class BatchWindow {
 	 */
 	public BatchWindow(final File outputFile, final Vector<Object[]> toRunScns,
 			final Vector<String> allRegions, final boolean singleSheet, final boolean drawPics,
-			final int numQueries, final NodeList res, final boolean overwriteFile) {
+			final int numQueries, final NodeList res, final boolean overwriteFile,
+            final int numCoresToUse) {
 
 
 
@@ -234,17 +235,6 @@ public class BatchWindow {
 		this.res = res;
 		this.overwriteFile = overwriteFile;
 
-        // determine the proper number of threads to use for queries by
-        // checking the configuration parameter which defaults to the
-        // total number of cores on the system
-        final String coresToUsePropertyName = "coresToUse";
-        final int numSystemCores = Runtime.getRuntime().availableProcessors();
-		Properties prop = InterfaceMain.getInstance().getProperties();
-        // TODO: set the default cores to use low until we figure out how to get BaseX to
-        // perform better with many parallel queries.
-        //final int numCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(numSystemCores)));
-        final int numCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(2)));
-		prop.setProperty(coresToUsePropertyName, Integer.toString(numCoresToUse));
         // Create a thread pool to run queries in
         queryThreadPool = Executors.newFixedThreadPool(numCoresToUse);
         final int totalQueriesToExcute = numQueries*toRunScns.size();
@@ -544,7 +534,7 @@ public class BatchWindow {
                 fos.close();
                 if(numErrors == 0) {
                     InterfaceMain.getInstance().showMessageDialog(
-                            "Sucessfully ran batch query",
+                            "Successfully ran batch query",
                             "Batch Query", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // warn the users that some queries had errors
@@ -628,7 +618,7 @@ public class BatchWindow {
                 outputStream.close();
                 if(numErrors == 0) {
                     InterfaceMain.getInstance().showMessageDialog(
-                            "Sucessfully ran batch query",
+                            "Successfully ran batch query",
                             "Batch Query", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     // warn the users that some queries had errors

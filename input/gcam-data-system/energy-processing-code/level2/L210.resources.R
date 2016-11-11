@@ -43,7 +43,7 @@ L115.RsrcCurves_EJ_R_roofPV <- readdata( "ENERGY_LEVEL1_DATA", "L115.RsrcCurves_
 L116.RsrcCurves_EJ_R_geo <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_geo" )
 L116.RsrcCurves_EJ_R_EGS <- readdata( "ENERGY_LEVEL1_DATA", "L116.RsrcCurves_EJ_R_EGS" )
 L117.RsrcCurves_EJ_R_tradbio <- readdata( "ENERGY_LEVEL1_DATA", "L117.RsrcCurves_EJ_R_tradbio" )
-L102.pcgdp_thous90USD_SSP_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_SSP_R_Y" )
+L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables for CSVs
@@ -315,7 +315,7 @@ L210.DepRsrcEnvironCost_SSP3 <- subset( L210.DepRsrcEnvironCost_SSPs, L210.DepRs
 L210.DepRsrcEnvironCost_SSP3 <- L210.DepRsrcEnvironCost_SSP3[ names( L210.DepRsrcEnvironCost_SSP3 ) != "SSP" ]
 
 #SSP4
-L210.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_SSP_R_Y, L102.pcgdp_thous90USD_SSP_R_Y$scenario == "SSP4" )
+L210.pcgdp_2010 <- subset( L102.pcgdp_thous90USD_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y$scenario == "SSP4" )
 L210.pcgdp_2010 <- L210.pcgdp_2010[ names( L210.pcgdp_2010) %in% c( "GCAM_region_ID", "X2010" ) ]
 L210.pcgdp_2010 <- add_region_name( L210.pcgdp_2010 )
 L210.pcgdp_2010$X2010 <- L210.pcgdp_2010$X2010 * conv_1990_2010_USD
