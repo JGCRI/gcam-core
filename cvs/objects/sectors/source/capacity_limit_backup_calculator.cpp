@@ -158,6 +158,7 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& a
                                                                  const string& aElectricSector,
                                                                  const string& aResource,
                                                                  const string& aRegion,
+                                                                 const double aTechCapacityFactor,
                                                                  const double aReserveMargin,
                                                                  const double aAverageGridCapacityFactor,
                                                                  const int aPeriod ) const
@@ -174,27 +175,26 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& a
                                                                aElectricSector,
                                                                aResource,
                                                                aRegion,
+                                                               aTechCapacityFactor,
                                                                aReserveMargin,
                                                                aAverageGridCapacityFactor,
                                                                aPeriod );
  
-    // Get resource capacity factor.
-    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
- 
 
     // This is confusing but mathematically correct.  The marginal backupCapacityFraction is in units of 
-    // GW per GW.  The denominator (intermittent sector capacity GW)needs to be converted to energy, 
+    // GW per GW.  The denominator (intermittent sector capacity GW)sneeds to be converted to energy,
     // therefore the quotient is divided by the conversion from capacity to energy, 
-    // using the resource capacity factor, which is the same as multiplying by
+    // using the technology capacity factor, which is the same as multiplying by
     // the conversion from energy to capacity as done here. Units returned here are GW/EJ.
    
-    return SectorUtils::convertEnergyToCapacity( resourceCapacityFactor, marginalBackup );
+    return SectorUtils::convertEnergyToCapacity( aTechCapacityFactor, marginalBackup );
 }
 
 double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aSector,
                                                                 const string& aElectricSector,
                                                                 const string& aResource,
                                                                 const string& aRegion,
+                                                                const double aTechCapacityFactor,
                                                                 const double aReserveMargin,
                                                                 const double aAverageGridCapacityFactor,
                                                                 const int aPeriod ) const
@@ -206,22 +206,21 @@ double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aS
     assert( aReserveMargin >= 0 );
     assert( aAverageGridCapacityFactor > 0 );
 
-    // Determine the intermittent share of output.
-    double elecShare = calcIntermittentShare( aSector, aElectricSector, aResource,
-                                              aRegion, aReserveMargin, aAverageGridCapacityFactor,
-                                              aPeriod );
+    double renewElecShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod );
 
     // No backup required for zero share.
-    if( elecShare < util::getVerySmallNumber() ){
+    if( renewElecShare < util::getVerySmallNumber() ){
         return 0;
     }
 
     // Compute total backup using the integral of the marginal backup function
-    double xmid;
-    xmid = mCapacityLimit;
-
-    double totalBackup = mFmax * mTau / mC * ( log ( 1.0 + exp( mC * ( xmid - elecShare ) / mTau ) )
-                         - mC * ( xmid - elecShare ) / mTau );
+    double xmid = mCapacityLimit;
+    double capacityRatio = aAverageGridCapacityFactor / aTechCapacityFactor;
+    double capacityShare = renewElecShare * capacityRatio;
+    
+    double totalBackup = mFmax * mTau / mC * ( log ( 1.0 + exp( mC * ( xmid - capacityShare ) / mTau ) )
+                         - mC * ( xmid - capacityShare ) / mTau );
+    
     // MAW believes this calculation of average backup is correct, but future generations should
     // feel free to re-visit it. The S-curve backup function is 
     // already the marginal fraction of backup required as a function of the intermittent sector 
@@ -231,18 +230,15 @@ double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aS
     // up to that market share.
     // This average is what is applied to the total output of the sector to get the total
     // backup energy used.
-    double averageBackup = totalBackup / elecShare;
+    double averageBackup = totalBackup / capacityShare;
 
-   // Get resource capacity factor.
-    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
- 
-    // This is confusing but mathematically correct.  The averagebackupFraction is in units of 
-    // GW per GW.  The denominator (intermittent sector capacity GW)needs to be converted to energy, 
+    // This is confusing but mathematically correct.  The averagebackupFraction is in units of
+    // GW per GW.  The denominator (intermittent sector capacity GW) needs to be converted to energy,
     // therefore the quotient is divided by the conversion from capacity to energy, 
-    // using the resource capacity factor, which is the same as multiplying by
+    // using the technology capacity factor, which is the same as multiplying by
     // the conversion from energy to capacity as done here. Units returned here are GW/EJ.
    
-    return SectorUtils::convertEnergyToCapacity( resourceCapacityFactor, averageBackup );
+    return SectorUtils::convertEnergyToCapacity( aTechCapacityFactor, averageBackup );
 }
 
 /*!
@@ -267,6 +263,7 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacityFraction( const s
                                                                          const string& aElectricSector,
                                                                          const string& aResource,
                                                                          const string& aRegion,
+                                                                         const double aTechCapacityFactor,
                                                                          const double aReserveMargin,
                                                                          const double aAverageGridCapacityFactor,
                                                                          const int aPeriod ) const
@@ -278,14 +275,10 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacityFraction( const s
     assert( !aResource.empty() );
     assert( !aRegion.empty() );
 
-    double elecShare = calcIntermittentShare( aSector, aElectricSector,
-                                              aResource,
-                                              aRegion, aReserveMargin,
-                                              aAverageGridCapacityFactor,
-                                              aPeriod );
-
+    double renewElecShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod );
+    
     // No backup required for zero share.
-    if( elecShare < util::getVerySmallNumber() ){
+    if( renewElecShare < util::getVerySmallNumber() ){
         return 0;
     }
 
@@ -294,10 +287,12 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacityFraction( const s
     
     // Calculate the marginal backup requirement at this share of the total.
     double backupCapacity;
-    double xmid;
-    xmid = mCapacityLimit;
+    double xmid = mCapacityLimit;
 
-    backupCapacity = mFmax / ( 1.0 + exp( mC * ( xmid - elecShare ) / mTau ) );
+    double capacityRatio = aAverageGridCapacityFactor / aTechCapacityFactor;
+    double capacityShare = renewElecShare * capacityRatio;
+    
+    backupCapacity = mFmax / ( 1.0 + exp( mC * ( xmid - capacityShare ) / mTau ) );
 
     // This returned value is in terms of fraction of backup capacity per capacity
     // of intermittent sector capacity (e.g., GW/GW)
@@ -332,7 +327,6 @@ double CapacityLimitBackupCalculator::calcIntermittentShare( const string& aSect
                                                              const double aAverageGridCapacityFactor,
                                                              const int aPeriod ) const
 {
-    assert( SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod ) > 0 );
 
     double capacityShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ) * 
                            aAverageGridCapacityFactor / 

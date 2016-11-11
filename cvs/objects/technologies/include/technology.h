@@ -329,6 +329,9 @@ protected:
     //! The Logit share weight that was parsed by the user
     Value mParsedShareWeight;
     
+    //! The annual capacity factor
+    double mCapacityFactor;
+    
     //! Price multiplier (multiplies costs but not secondary revenue)
     double mPMultiplier;
 

@@ -41,6 +41,7 @@ A23.globaltech_shrwt <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_shrwt" )
 A23.globaltech_interp <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_interp" )
 A23.globaltech_keyword <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_keyword" )
 A23.globaltech_eff <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_eff" )
+A23.globaltech_capacity_factor <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capacity_factor" )
 A23.globaltech_capital <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital" )
 A23.globaltech_capital_adv <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital_adv" )
 A23.globaltech_capital_low <- readdata( "ENERGY_ASSUMPTIONS", "A23.globaltech_capital_low" )
@@ -173,6 +174,14 @@ L223.GlobalTechEff_elec <- L223.globaltech_eff.melt[ names_GlobalTechEff ]
 
 L223.GlobalIntTechEff_elec <- subset_inttechs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 L223.GlobalTechEff_elec <- subset_techs( L223.GlobalTechEff_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+
+#Capacity factor of global technologies
+printlog( "L223.GlobalTechCapFac_elec: Capacity factor of global electricity generation technologies" )
+L223.globaltech_capfac.melt <- interpolate_and_melt( A23.globaltech_capacity_factor, c( model_base_years, model_future_years ), value.name="capacity.factor", digits = digits_efficiency, rule=2 )
+L223.globaltech_capfac.melt[ c( "sector.name", "subsector.name" ) ] <- L223.globaltech_capfac.melt[ c( "supplysector", "subsector" ) ]
+L223.GlobalTechCapFac_elec <- L223.globaltech_capfac.melt[ names_GlobalTechCapFac ]
+L223.GlobalIntTechCapFac_elec <- subset_inttechs( L223.GlobalTechCapFac_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
+L223.GlobalTechCapFac_elec <- subset_techs( L223.GlobalTechCapFac_elec, inttech.table = A23.globalinttech, sector.name="sector.name", subsector.name="subsector.name" )
 
 #Costs of global technologies
 printlog( "L223.GlobalTechCapital_elec: Capital costs of global electricity generation technologies" )
@@ -409,7 +418,7 @@ printlog("L223.StubTechCapFactor_elec: regional adjustments to wind capacity fac
 L223.StubTechCapFactor_elec <- L114.RsrcCurves_EJ_R_wind[, c( "GCAM_region_ID", "base.price" ) ]
 # Gather the global assumptions for wind cost in the base year from which we will make
 # regional adjustments
-L223.names_GlobalIntTechCapital <- names_GlobalTechCapital[ !( names_GlobalTechCapital %in% c( "year", "capacity.factor" ) ) ]
+L223.names_GlobalIntTechCapital <- names_GlobalTechCapital[ !( names_GlobalTechCapital %in% c( "year" ) ) ]
 L223.names_StubTechCapital <- L223.names_GlobalIntTechCapital
 L223.names_StubTechCapital[ L223.names_StubTechCapital %in% names_GlobalTech ] <- names_StubTech[ names_StubTech != "region" ]
 L223.names_GlobalIntTechCapital <- sub( "technology", "intermittent.technology", L223.names_GlobalIntTechCapital )
@@ -423,13 +432,11 @@ L223.StubTechCapFactor_elec[, c( "input.OM.fixed", "OM.fixed" ) ] <-
     subset( L223.GlobalIntTechOMfixed_elec, intermittent.technology == "wind" & year == wind_base_cost_year,
         select=c( "input.OM.fixed", "OM.fixed" ) )
 # Calculate a new capacity factor to match the regional base.price
-# Note that there is only one capactiy factor but the same value needs to be read in for capital
-# and fixed O&M.
 L223.StubTechCapFactor_elec$capacity.factor <- with( L223.StubTechCapFactor_elec, ( capital.overnight * fixed.charge.rate +
     OM.fixed ) / ( conv_kwh_GJ * conv_year_hours ) / ( base.price - ( OM.var / ( 1000 * conv_kwh_GJ ) ) ) )
-L223.StubTechCapFactor_elec$capacity.factor.capital <- round( L223.StubTechCapFactor_elec$capacity.factor, digits_capacity_factor )
-L223.StubTechCapFactor_elec$capacity.factor.OM <- round( L223.StubTechCapFactor_elec$capacity.factor, digits_capacity_factor )
+L223.StubTechCapFactor_elec$capacity.factor <- round( L223.StubTechCapFactor_elec$capacity.factor, digits_capacity_factor )
 L223.StubTechCapFactor_elec <- add_region_name( L223.StubTechCapFactor_elec )
+# This fixes the capacity factor for all future years and is inconsistent if future capacity factors are assumed to change.
 L223.StubTechCapFactor_elec <- repeat_and_add_vector( L223.StubTechCapFactor_elec, Y, model_years )
 L223.StubTechCapFactor_elec <- L223.StubTechCapFactor_elec[, names_StubTechCapFactor ]
 # The same capacity factor should apply to wind with storage as well.
@@ -438,27 +445,24 @@ L223.StubTechCapFactor_elec.storage$stub.technology <- "wind_storage"
 L223.StubTechCapFactor_elec <- rbind( L223.StubTechCapFactor_elec, L223.StubTechCapFactor_elec.storage )
 
 # Regional adjustment for solar capacity factors.  We will use relative total and direct irradiance
-# to scale the capacitfy factors for central PV and CSP respectively.
+# to scale the capacity factors for central PV and CSP, and distributed rooftop PV respectively.
 printlog( "Regional capacity factor adjustment for solar technologies" )
-L223.StubTechCapFactor_solar <- subset( A23.globaltech_capital, subsector %in% c( "solar", "rooftop_pv" ), select=
-    names( A23.globaltech_capital )[ !grepl( '^X|fixed|improvement', names( A23.globaltech_capital ) ) ] )
-names( L223.StubTechCapFactor_solar )[ names( L223.StubTechCapFactor_solar ) == "capacity.factor" ] <- "capacity.factor.capital"
-L223.StubTechCapFactor_solar.om <- subset( A23.globaltech_OMfixed, subsector %in% c( "solar", "rooftop_pv" ), select=
-    names( A23.globaltech_OMfixed )[ !grepl( '^X', names( A23.globaltech_OMfixed ) ) ] )
-names( L223.StubTechCapFactor_solar.om )[ names( L223.StubTechCapFactor_solar.om ) == "capacity.factor" ] <- "capacity.factor.OM"
-L223.StubTechCapFactor_solar <- merge( L223.StubTechCapFactor_solar, L223.StubTechCapFactor_solar.om )
+L223.StubTechCapFactor_solar <- subset( L223.GlobalIntTechCapFac_elec, subsector.name %in% c( "solar", "rooftop_pv" ) )
+# get PV_storage and CSP_storage capacity factors to adjust
+L223.StubTechCapFactor_solar_storage <- subset( L223.GlobalTechCapFac_elec, subsector.name %in% c( "solar" ) )
+names( L223.StubTechCapFactor_solar_storage )[ names( L223.StubTechCapFactor_solar_storage ) == "technology" ] <- "intermittent.technology"
+L223.StubTechCapFactor_solar <- rbind(L223.StubTechCapFactor_solar, L223.StubTechCapFactor_solar_storage)
 L223.StubTechCapFactor_solar <- merge( L223.StubTechCapFactor_solar, L119.Irradiance_rel_R )
-L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] <-
-    L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] * 
-    L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$technology, ignore.case=TRUE ), "irradiance_avg_rel" ]
-L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] <-
-    L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), c( "capacity.factor.capital", "capacity.factor.OM" ) ] * 
-    L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$technology ), "dni_avg_rel" ]
-names( L223.StubTechCapFactor_solar )[ names( L223.StubTechCapFactor_solar ) == "technology" ] <- "stub.technology"
-L223.StubTechCapFactor_solar[ L223.StubTechCapFactor_solar$capacity.factor.capital > 0.85, "capacity.factor.capital" ] <- 0.85
-L223.StubTechCapFactor_solar[ L223.StubTechCapFactor_solar$capacity.factor.OM > 0.85, "capacity.factor.OM" ] <- 0.85
+L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$intermittent.technology, ignore.case=TRUE ), c( "capacity.factor" ) ] <-
+    L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$intermittent.technology, ignore.case=TRUE ), c( "capacity.factor" ) ] * 
+    L223.StubTechCapFactor_solar[ grep( 'PV', L223.StubTechCapFactor_solar$intermittent.technology, ignore.case=TRUE ), "irradiance_avg_rel" ]
+L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$intermittent.technology ), c( "capacity.factor" ) ] <-
+    L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$intermittent.technology ), c( "capacity.factor" ) ] * 
+    L223.StubTechCapFactor_solar[ grep( 'CSP', L223.StubTechCapFactor_solar$intermittent.technology ), "dni_avg_rel" ]
+names( L223.StubTechCapFactor_solar )[ names( L223.StubTechCapFactor_solar ) == "intermittent.technology" ] <- "stub.technology"
+L223.StubTechCapFactor_solar[ L223.StubTechCapFactor_solar$capacity.factor > 0.85, "capacity.factor" ] <- 0.85
 L223.StubTechCapFactor_solar <- add_region_name( L223.StubTechCapFactor_solar )
-L223.StubTechCapFactor_solar <- repeat_and_add_vector( L223.StubTechCapFactor_solar, Y, model_years )
+names(L223.StubTechCapFactor_solar)[names(L223.StubTechCapFactor_solar) %in% c( "sector.name", "subsector.name" )] <- c( "supplysector", "subsector" )
 L223.StubTechCapFactor_elec <- rbind( L223.StubTechCapFactor_elec,
     L223.StubTechCapFactor_solar[, names( L223.StubTechCapFactor_elec ) ] )
 
@@ -496,6 +500,8 @@ if( exists( "L223.SubsectorInterpTo_elec" ) ) {
 write_mi_data( L223.StubTech_elec, "StubTech", "ENERGY_LEVEL2_DATA", "L223.StubTech_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalIntTechEff_elec, "GlobalIntTechEff", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechEff_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalTechEff_elec, "GlobalTechEff", "ENERGY_LEVEL2_DATA", "L223.GlobalTechEff_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
+write_mi_data( L223.GlobalTechCapFac_elec, "GlobalTechCapFac", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapFac_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
+write_mi_data( L223.GlobalIntTechCapFac_elec, "GlobalIntTechCapFac", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechCapFac_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalTechCapital_elec, "GlobalTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalTechCapital_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalIntTechCapital_elec, "GlobalIntTechCapital", "ENERGY_LEVEL2_DATA", "L223.GlobalIntTechCapital_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )
 write_mi_data( L223.GlobalTechOMfixed_elec, "GlobalTechOMfixed", "ENERGY_LEVEL2_DATA", "L223.GlobalTechOMfixed_elec", "ENERGY_XML_BATCH", "batch_electricity.xml" )

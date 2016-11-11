@@ -108,6 +108,7 @@ double WindBackupCalculator::getAverageBackupCapacity( const string& aSector,
                                                        const string& aElectricSector,
                                                        const string& aResource,
                                                        const string& aRegion,
+                                                       const double aTechCapacityFactor,
                                                        const double aReserveMargin,
                                                        const double aAverageGridCapacityFactor,
                                                        const int aPeriod ) const
@@ -120,26 +121,19 @@ double WindBackupCalculator::getAverageBackupCapacity( const string& aSector,
     assert( aReserveMargin >= 0 );
     assert( aAverageGridCapacityFactor > 0 );
     
-    // This can be called from initCalc and the value may not be initialized
-    // yet. Should be correct in equilibrium.
-    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
-
-    if( resourceCapacityFactor < util::getSmallNumber() ){
-        return 0;
-    }
-
     double backupFraction = getBackupCapacityFraction( aSector,
                                                        aElectricSector,
                                                        aResource,
                                                        aRegion,
+                                                       aTechCapacityFactor,
                                                        aReserveMargin,
                                                        aAverageGridCapacityFactor,
                                                        aPeriod );
     
     // This is confusing but mathematically correct.  The backupCapacityFraction is in units of 
-    // GW per GW.  The denominator (intermittent sector capacity GW)needs to be converted to energy, 
+    // GW per GW.  The denominator (intermittent sector capacity GW) needs to be converted to energy,
     // therefore the quotient is divided by the conversion from capacity to energy, 
-    // using the resource capacity factor, which is the same as multiplying by
+    // using the technology capacity factor, which is the same as multiplying by
     // the conversion from energy to capacity as done here. Units returned here are GW/EJ.
 
     return backupFraction;
@@ -149,6 +143,7 @@ double WindBackupCalculator::getMarginalBackupCapacity( const string& aSector,
                                                         const string& aElectricSector,
                                                         const string& aResource,
                                                         const string& aRegion,
+                                                        const double aTechCapacityFactor,
                                                         const double aReserveMargin,
                                                         const double aAverageGridCapacityFactor,
                                                         const int aPeriod ) const
@@ -166,16 +161,15 @@ double WindBackupCalculator::getMarginalBackupCapacity( const string& aSector,
     const double UC = 1 / (EJ_PER_GWH * HOURS_PER_YEAR); // [GWe/EJ]
 
     double variance = SectorUtils::getVariance( aResource, aRegion, aPeriod );
-    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
     double trialCapacityShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod )
-                              * ( aAverageGridCapacityFactor / resourceCapacityFactor );
+                              * ( aAverageGridCapacityFactor / aTechCapacityFactor );
     
     // Compute terms for Winds operating reserve due to intermittency formula
     // This is the derivative of the total backup capacity equation.
     //TODO  We need to get the documentation on this derivative, which was done
     // by Stephen Herwig for Josh Lurz. Otherwise, might simplify this and use average
     // for cost as an approximation.
-    double backupCapacity = variance * trialCapacityShare * UC / aReserveMargin / resourceCapacityFactor
+    double backupCapacity = variance * trialCapacityShare * UC / aReserveMargin / aTechCapacityFactor
                           / sqrt( 1.0 + variance / pow( aReserveMargin, 2 ) * pow( trialCapacityShare, 2 ) );
     
     assert( backupCapacity >= 0 && util::isValidNumber( backupCapacity ) );
@@ -206,6 +200,7 @@ double WindBackupCalculator::getBackupCapacityFraction( const string& aSector,
                                                         const string& aElectricSector,
                                                         const string& aResource,
                                                         const string& aRegion,
+                                                        const double aTechCapacityFactor,
                                                         const double aReserveMargin,
                                                         const double aAverageGridCapacityFactor,
                                                         const int aPeriod ) const
@@ -223,12 +218,11 @@ double WindBackupCalculator::getBackupCapacityFraction( const string& aSector,
     const double UC = 1 / (EJ_PER_GWH * HOURS_PER_YEAR); // [GWe/EJ]
 
     double variance = SectorUtils::getVariance( aResource, aRegion, aPeriod );
-    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
     double trialCapacityShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod )
-                              * ( aAverageGridCapacityFactor / resourceCapacityFactor );
+                              * ( aAverageGridCapacityFactor / aTechCapacityFactor );
 
     // Compute terms for Winds operating reserve due to intermittency formula
-    double backupCapacityFraction = aReserveMargin * UC / resourceCapacityFactor / trialCapacityShare *
+    double backupCapacityFraction = aReserveMargin * UC / aTechCapacityFactor / trialCapacityShare *
         ( pow( ( 1.0 + variance / pow( aReserveMargin, 2 ) * pow( trialCapacityShare, 2) ), 0.5 ) - 1.0 );
 
     // Backup capacity fraction is positive.
@@ -266,6 +260,7 @@ double WindBackupCalculator::getSectorCapacity( const string& aRegionName,
                                                 const string& aSectorName,
                                                 const string& aDependentSectorName,
                                                 const string& aResourceName,
+                                                const double aTechCapacityFactor,
                                                 const int aPeriod ) const
 {
     // Get trial amount of energy produced by the sector.
@@ -277,15 +272,10 @@ double WindBackupCalculator::getSectorCapacity( const string& aRegionName,
         return 0;
     }
 
-    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResourceName, aRegionName, aPeriod );
-    if( resourceCapacityFactor < util::getSmallNumber() ){
-        return 0;
-    }
-
     // Using average capacity factor for resource, translate sector supply
     // in electricity or energy terms in EJ to equivalent capacity terms in
     // GW or gigawatts. Note that model's energy units need to be converted
     // to capacity units for use in the NREL WINDS operating reserve
     // computation.
-    return SectorUtils::convertEnergyToCapacity( resourceCapacityFactor, sectorSupply );
+    return SectorUtils::convertEnergyToCapacity( aTechCapacityFactor, sectorSupply );
 }

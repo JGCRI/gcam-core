@@ -45,6 +45,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 using namespace xercesc;
@@ -133,10 +134,6 @@ void InputOMFixed::XMLParse( const xercesc::DOMNode* node ) {
         if ( nodeName == "OM-fixed" ) {
             mOMFixed = XMLHelper<double>::getValue( curr );
         }
-        // TODO: Create capacity factor for technology and use that instead.
-        else if( nodeName == "capacity-factor" ){
-            mCapacityFactor = XMLHelper<double>::getValue( curr );
-        }
         else if( nodeName == "tech-change" ){
             mTechChange = XMLHelper<double>::getValue( curr );
         }
@@ -154,7 +151,6 @@ void InputOMFixed::toInputXML( ostream& aOut,
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElement( mOMFixed, "OM-fixed", aOut, aTabs );
-    XMLWriteElement( mCapacityFactor, "capacity-factor", aOut, aTabs );
     XMLWriteElementCheckDefault( mTechChange, "tech-change", aOut, aTabs, Value( 0 ) );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -179,6 +175,10 @@ void InputOMFixed::completeInit( const string& aRegionName,
                                  const string& aTechName,
                                  const IInfo* aTechInfo )
 {   
+    // technology capacity factor
+    // capacity factor needed before levelized fixed om cost calculation
+    mCapacityFactor = aTechInfo->getDouble("tech-capacity-factor", true);
+
     // completeInit() is called for each technology for each period
     // so levelized O&M fixed cost calculation is done here.
 
