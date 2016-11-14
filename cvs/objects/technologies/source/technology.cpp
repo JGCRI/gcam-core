@@ -388,7 +388,6 @@ void Technology::completeInit( const string& aRegionName,
     
     // Complete the initialization of the inputs. Pass the inputs and outputs
     // the most local info object available.
-    //const IInfo* localInfo = getTechInfo() != 0 ? getTechInfo() : aSubsectorInfo;
     const IInfo* localInfo = getTechInfo() != 0 ? getTechInfo() : mTechnologyInfo.get();
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
         mInputs[ i ]->completeInit( aRegionName, aSectorName, aSubsectorName, mName, localInfo );

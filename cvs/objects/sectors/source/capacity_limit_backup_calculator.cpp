@@ -182,7 +182,7 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& a
  
 
     // This is confusing but mathematically correct.  The marginal backupCapacityFraction is in units of 
-    // GW per GW.  The denominator (intermittent sector capacity GW)sneeds to be converted to energy,
+    // GW per GW.  The denominator (intermittent sector capacity GW) needs to be converted to energy,
     // therefore the quotient is divided by the conversion from capacity to energy, 
     // using the technology capacity factor, which is the same as multiplying by
     // the conversion from energy to capacity as done here. Units returned here are GW/EJ.
