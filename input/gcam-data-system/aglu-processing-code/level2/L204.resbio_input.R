@@ -113,7 +113,7 @@ L204.AgResBio_ag$mass.conversion <- 1
 L204.AgResBio_ag$harvest.index <- round( L204.AgResBio_ag$HarvestIndex, digits_harvest_index )
 L204.AgResBio_ag$eros.ctrl <- round( L204.AgResBio_ag$ErosCtrl_tHa * conv_tha_kgm2, digits_eros_ctrl )
 L204.AgResBio_ag$mass.to.energy <- round( L204.AgResBio_ag$ResEnergy_GJt * conv_kg_t, digits_res_energy )
-L204.AgResBio_ag$water.content <- round( L204.AgResBio_ag$WaterContent * conv_kg_t, digits_water_content )
+L204.AgResBio_ag$water.content <- round( L204.AgResBio_ag$WaterContent, digits_water_content )
 L204.AgResBio_ag <- L204.AgResBio_ag[ names_AgResBio ]
 
 printlog( "L204.AgResBioCurve_ag: Agricultural residue biomass supply curves" )
