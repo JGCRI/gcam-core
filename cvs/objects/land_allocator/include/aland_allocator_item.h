@@ -364,6 +364,20 @@ public:
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod ) = 0;
+    
+    /*!
+     * \brief Reset the read in land allocation
+     * \details Reset land allocation for calibration purposes. We'll
+     *          want to do this when there is a land allocation but no
+     *          calOutput.
+     * \param aRegionName Region name.
+     * \param aNewLandAllocation New land allocation.
+     * \param aPeriod Model period
+     * \author Kate Calvin
+     */
+    virtual void resetCalLandAllocation( const std::string& aRegionName,
+                                            double aNewLandAllocation,
+                                        const int aPeriod ) {}
 
     void setShare( const double aShare,
                    const int aPeriod );

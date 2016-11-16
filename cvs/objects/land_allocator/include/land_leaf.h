@@ -128,6 +128,10 @@ public:
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
+    
+    virtual void resetCalLandAllocation( const std::string& aRegionName,
+                                            double aNewLandAllocation,
+                                            const int aPeriod );
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 

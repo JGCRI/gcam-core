@@ -312,6 +312,30 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
     }
 
     setCalYields( aRegionName );
+
+    // We want to guard against cases where land is read in but no output.
+    // (setCalYields deals with the converse). These cases cause numerical instabilities
+    // and solver problems in UCT cases, where the land leaf will have a profit but no yield.
+    int techPeriod = scenario->getModeltime()->getyr_to_per( year );
+    double calLandUsed = mProductLeaf->getCalLandAllocation( ALandAllocatorItem::LandAllocationType::eManaged, techPeriod );
+    if ( mCalValue.get() ) {
+        if ( calLandUsed > 0 && mCalValue->getCalOutput() == 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Land read in, but no CalOutput for technology"
+            << aRegionName << " " << mName << ". Resetting land to zero." << endl;
+            mProductLeaf->resetCalLandAllocation( aRegionName, 0.0, techPeriod );
+            
+        }
+    }
+    else if ( calLandUsed > 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Land read in, but no CalOutput for technology"
+            << aRegionName << " " << mName << ". Resetting land to zero." << endl;
+        mProductLeaf->resetCalLandAllocation( aRegionName, 0.0, techPeriod );
+    }
+
     
     // Indicate that this ag supply sector is dependent on the land allocator.
     scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",

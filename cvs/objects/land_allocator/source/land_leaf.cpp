@@ -399,6 +399,12 @@ void LandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
 	// Only takes action on unmanaged leaves, which is a type derived from LandLeaf
 }
 
+void LandLeaf::resetCalLandAllocation( const string& aRegionName,
+                                          double aNewLandAllocation, const int aPeriod ) {
+    mReadinLandAllocation[ aPeriod ] = aNewLandAllocation;
+}
+
+
 
 void LandLeaf::calculateNodeProfitRates( const string& aRegionName, 
                                          double aAverageProfitRateAbove, 
@@ -444,7 +450,7 @@ double LandLeaf::calcLandShares( const string& aRegionName,
     // The unnormalized share is used by the parent node to 
     // calculate the leaf's share of the parent's land
     double unnormalizedShare = aChoiceFnAbove->calcUnnormalizedShare( mShareWeight[ aPeriod ], mProfitRate[ aPeriod ], aPeriod );
-
+    
     // result should be > 0 if we have a non-zero share-weight (it is -infinity when zero)
     assert( mShareWeight[ aPeriod ] == 0.0 || unnormalizedShare >= 0.0 );
 
