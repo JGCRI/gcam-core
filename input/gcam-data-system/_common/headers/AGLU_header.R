@@ -134,3 +134,13 @@ add_carbon_info <- function( data, carbon_info_table, carbon_info_table_names = 
 	data$min.soil.carbon.density <- min.soil.carbon.density
 	return( data )
 }
+
+remove_zero_output_land_leafs <- function( land, prod ) {
+  prod <- subset( prod, calOutputValue > 0 )
+  land$id <- paste( land$region, land$LandLeaf, land$year )
+  prod$id <- paste( prod$region, prod$AgProductionTechnology, prod$year )
+  land <- subset( land, id %in% unique( prod$id ) )
+  land$id <- NULL
+  
+  return( land )
+}

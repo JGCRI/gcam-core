@@ -38,6 +38,7 @@ L2241.LN4_MgdCarbon_crop <- readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_MgdCarbon_c
 #Na.omit to drop the node rename table, if present
 L2241.LN4_MgdCarbon_bio <- na.omit( readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_MgdCarbon_bio", skip = 4 ) )
 L2241.LN4_LeafGhostShare <- readdata( "AGLU_LEVEL2_DATA", "L2241.LN4_LeafGhostShare", skip = 4 )
+L2012.AgProduction_ag_irr_mgmt <- readdata( "AGLU_LEVEL2_DATA", "L2012.AgProduction_ag_irr_mgmt", skip = 4 )
 
 # -----------------------------------------------------------------------------
 #The methods in this code file will be to start with existing (landnode4) tables, and add another level of detail
@@ -90,7 +91,7 @@ L2252.LN5_MgdAllocation_crop$allocation <- round(
          match( vecpaste( L2252.LN5_MgdAllocation_crop[ c( reg, Y, "LandLeaf" ) ] ),
                 vecpaste( L2252.LC_bm2_R_C_Yh_GLU_irr_mgmt[ c( reg, Y, "LandLeaf" ) ] ) ) ],
       digits_land_use )
-
+L2252.LN5_MgdAllocation_crop <- remove_zero_output_land_leafs( L2252.LN5_MgdAllocation_crop, L2012.AgProduction_ag_irr_mgmt )
 
 printlog( "L2252.LN5_HistMgdAllocation_bio: No changes (just switch the structure)" )
 L2252.LN5_HistMgdAllocation_bio <- convert_LN4_to_LN5( L2241.LN4_HistMgdAllocation_bio, names_LN5_HistMgdAllocation )
