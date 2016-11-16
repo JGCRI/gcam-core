@@ -51,6 +51,7 @@
 #include "util/base/include/ivisitor.h"
 #include "functions/include/idiscrete_choice.hpp"
 #include "functions/include/discrete_choice_factory.hpp"
+#include "sectors/include/sector_utils.h"
 #include <numeric>
 
 using namespace std;
@@ -365,6 +366,7 @@ double LandNode::calcLandShares( const string& aRegionName,
 
     double unnormalizedSum;
     vector<double> unnormalizedShares( mChildren.size() );
+    vector<double> normalizedShares( mChildren.size() );
 
     // Step 1.  Calculate the unnormalized shares.
     // These calls need to be made to initiate recursion into lower nests even
@@ -374,21 +376,21 @@ double LandNode::calcLandShares( const string& aRegionName,
                                                                   mChoiceFn.get(),
                                                                   aPeriod );
         // TODO: worry about numerical overflow
+        normalizedShares[ i ] = unnormalizedShares[ i ];
         unnormalizedShares[ i ] = max( exp( unnormalizedShares[ i ] ), 0.0 );
     }
     unnormalizedSum = accumulate( unnormalizedShares.begin(),
                                   unnormalizedShares.end(),
                                   0.0 );
+    SectorUtils::normalizeLogShares( normalizedShares );
 
     // Step 2 Normalize and set the share of each child
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        // guard against divide by zero
-        mChildren[ i ]->setShare( unnormalizedSum <= 0.0 ? 0.0 : unnormalizedShares[ i ] / unnormalizedSum,
-                aPeriod );
+        mChildren[ i ]->setShare( normalizedShares[ i ], aPeriod );
     }
 
     // Step 3 Option (a) . compute node profit based on share denominator
-    mProfitRate[ aPeriod ] = mChoiceFn->calcAverageCost( unnormalizedSum, aPeriod );
+    mProfitRate[ aPeriod ] = std::min( mChoiceFn->calcAverageCost( unnormalizedSum, aPeriod ), 1e24 );
 
     // Step 4. Calculate the unnormalized share for this node, but here using the discrete choice of the 
     // containing or parant node.  This will be used to determine this nodes share within its 
