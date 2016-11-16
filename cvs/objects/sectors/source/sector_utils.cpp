@@ -649,8 +649,14 @@ void SectorUtils::fillMissingPeriodVectorInterpolated( objects::PeriodVector<Val
             int nextYear = modeltime->getper_to_yr( nextPer );
             Value nextValue = aPeriodVector[ nextPer ];
             // Initialize period vector with interpolated values.
-            aPeriodVector[ per ].set( prevYear != nextYear ? util::linearInterpolateY( 
-                currYear, prevYear, nextYear, prevValue, nextValue ) : prevValue.get() );
+            // Note we are allowing interpolation from uninitialized end points (which
+            // will have a value of 0) but not if both are uninitialized.  The subtle
+            // difference is if the isInited() flag on the interpolated value is set
+            // or not.
+            if( prevValue.isInited() || nextValue.isInited() ) {
+                aPeriodVector[ per ].set( prevYear != nextYear ? util::linearInterpolateY( 
+                    currYear, prevYear, nextYear, prevValue, nextValue ) : prevValue.get() );
+            }
         }
     }
 }
