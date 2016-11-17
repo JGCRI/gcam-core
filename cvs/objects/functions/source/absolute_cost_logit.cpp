@@ -193,12 +193,13 @@ double AbsoluteCostLogit::calcUnnormalizedShare( const double aShareWeight, cons
 }
 
 double AbsoluteCostLogit::calcAverageCost( const double aUnnormalizedShareSum,
-                                            const int aPeriod ) const
+                                           const double aLogShareFac,
+                                           const int aPeriod ) const
 {
     double ret;
     if( mLogitExponent[ aPeriod ] == 0.0 ) {
         // TODO: what to do with zero logit?
-        ret = mOutputCost * aUnnormalizedShareSum;
+        ret = mOutputCost * aUnnormalizedShareSum * exp( aLogShareFac );
     }
     else if( aUnnormalizedShareSum == 0 && mLogitExponent[ aPeriod ] < 0 ) {
         // No Valid options and negative logit so return a large cost so a nested
@@ -211,7 +212,8 @@ double AbsoluteCostLogit::calcAverageCost( const double aUnnormalizedShareSum,
         ret = -util::getLargeNumber();
     }
     else {
-        ret = log( aUnnormalizedShareSum ) * ( mOutputCost / mLogitExponent[ aPeriod ] ) + mOutputCost;
+        ret = ( aLogShareFac + log( aUnnormalizedShareSum ) )
+              * ( mOutputCost / mLogitExponent[ aPeriod ] ) + mOutputCost;
     }
 
     return ret;

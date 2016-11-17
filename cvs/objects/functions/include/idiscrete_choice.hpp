@@ -108,10 +108,14 @@ public:
      * \param aUnnormalizedShareSum The sum of all of the shares as calculated by
      *                              exp( calcUnnormalizedShare ) which will be used to
      *                              calculate the mean cost.
+     * \param aLogShareFac A log( unnormalized share ) factor that has been factored
+     *                     out of aUnnormalizedShareSum.  Doing this allows for calculating
+     *                     the average cost in a numerically stable way.
      * \param aPeriod The current model period.
      * \return The average cost.
      */
     virtual double calcAverageCost( const double aUnnormalizedShareSum,
+                                    const double aLogShareFac,
                                     const int aPeriod ) const = 0;
 
     /*!

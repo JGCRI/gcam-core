@@ -475,13 +475,14 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
     }
 
     // Normalize the shares.  After normalization they will be true shares, not log(shares).
-    double shareSum = SectorUtils::normalizeLogShares( subsecShares );
-    if( !util::isEqual( shareSum, 1.0 ) && !outputsAllFixed( aPeriod ) ){
+    pair<double, double> shareSum = SectorUtils::normalizeLogShares( subsecShares );
+    if( shareSum.first == 0.0 && !outputsAllFixed( aPeriod ) ){
         // This should no longer happen, but it's still technically possible.
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Shares for sector " << name << " in region " << regionName
-            << " did not normalize correctly. Sum is " << shareSum << "." << endl;
+            << " did not normalize correctly. Sum is " << shareSum.first << " * exp( "
+            << shareSum.second << " ) "<< "." << endl;
         
         // All shares are zero likely due to underflow.  Give 100% share to the
         // minimum cost subsector.

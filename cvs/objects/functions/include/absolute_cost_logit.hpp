@@ -90,6 +90,7 @@ public:
                                           const int aPeriod ) const;
 
     virtual double calcAverageCost( const double aUnnormalizedShareSum,
+                                    const double aLogShareFac,
                                     const int aPeriod ) const;
 
     virtual double calcShareWeight( const double aShare, const double aCost, const double aAnchorShare,
