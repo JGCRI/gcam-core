@@ -285,7 +285,7 @@ void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     const Value defaultValue;
     XMLWriteVector( mReadinLandAllocation, "landAllocation", aOut, aTabs, modeltime, defaultValue );
-    XMLWriteVector( mGhostUnormalizedShare, "ghost-share-node", aOut, aTabs, modeltime, defaultValue );  
+    XMLWriteVector( mGhostUnormalizedShare, "ghost-unnormalized-share", aOut, aTabs, modeltime, defaultValue );  
     XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", aOut, aTabs );
     XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", aOut, aTabs );
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );

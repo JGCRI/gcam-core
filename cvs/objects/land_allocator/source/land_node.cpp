@@ -165,7 +165,7 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
 
     const Modeltime* modeltime = scenario->getModeltime();
     const Value defaultValue;
-    XMLWriteVector( mGhostUnormalizedShare, "ghost-share-node", out, tabs, modeltime, defaultValue );  
+    XMLWriteVector( mGhostUnormalizedShare, "ghost-unnormalized-share", out, tabs, modeltime, defaultValue );  
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
 
     if( mLandUseHistory.get() ){
