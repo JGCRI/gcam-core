@@ -1,5 +1,5 @@
-# Central Case potential units are EJ and price units are 2007 dollars per kWh
-region,maxResource,mid_price,curve_exponent,base_cost
+# Central Case potential units are EJ and price units are 2007 dollars per kWh,,,,
+region,maxResource,mid_price_2007USDkwh,curve_exponent,base_cost_2007USDkwh
 AL,2.133142,0.039745,4.569628,0.084
 AK,18.338829,0.069636,3.536482,0.0577
 AZ,3.519324,0.035565,2.2761,0.0993
