@@ -283,9 +283,18 @@ void LandLeaf::initLandUseHistory( const string& aRegionName )
 void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
     const Modeltime* modeltime = scenario->getModeltime();
-    const Value defaultValue;
-    XMLWriteVector( mReadinLandAllocation, "landAllocation", aOut, aTabs, modeltime, defaultValue );
-    XMLWriteVector( mGhostUnormalizedShare, "ghost-unnormalized-share", aOut, aTabs, modeltime, defaultValue );  
+    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
+        if( mReadinLandAllocation[ period ].isInited() ) {
+            const int year = modeltime->getper_to_yr( period );
+            XMLWriteElement( mReadinLandAllocation[ period ], "landAllocation", aOut, aTabs, year );
+        }
+    }
+    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
+        if( mGhostUnormalizedShare[ period ].isInited() ) {
+            const int year = modeltime->getper_to_yr( period );
+            XMLWriteElement( mGhostUnormalizedShare[ period ], "ghost-unnormalized-share", aOut, aTabs, year );
+        }
+    }
     XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", aOut, aTabs );
     XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", aOut, aTabs );
     XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );
