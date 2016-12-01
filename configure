@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# This script copies all R files in the $DIRECTORY over to R/, flattening
+# directory trees as it goes. We do this because the R CMD BUILD needs
+# all R files in a single directory (R/) whereas we'd like to maintain
+# a folder structure.
+
 DIRECTORY=data_system_source/
 
 # Remove all R files in R/
