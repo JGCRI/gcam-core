@@ -2,16 +2,15 @@
 
 #' Run the entire data system
 #'
+#' @importFrom magrittr "%>%"
 #' @export
-#' @importFrom tibble tibble
-#' @importFrom dplyr select mutate filter
 driver <- function() {
 
   # Get a list of chunks in this package
   # These are functions with a name of "module_{modulename}_{chunkname}"
   ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*_.*$") %>%
     tibble(name = .) %>%
-    separate(name, into = c("x", "module", "chunk"), remove = FALSE, sep = "_") %>%
+    tidyr::separate(name, into = c("x", "module", "chunk"), remove = FALSE, sep = "_") %>%
     dplyr::select(-x) %>%
     dplyr::mutate(done = FALSE) ->
     chunklist

@@ -3,7 +3,5 @@
 export(driver)
 export(module_atest_xxx)
 export(module_modeltime_L200.modeltime)
-importFrom(dplyr,filter)
-importFrom(dplyr,mutate)
-importFrom(dplyr,select)
+importFrom(magrittr,"%>%")
 importFrom(tibble,tibble)
