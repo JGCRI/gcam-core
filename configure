@@ -1,9 +1,10 @@
 #!/bin/sh
 
-# This script copies all R files in the $DIRECTORY over to R/, flattening
-# directory trees as it goes. We do this because the R CMD BUILD needs
+# This script is automatically called by the R package build system.
+# It copies all R files in the $DIRECTORY over to R/, flattening
+# directory trees as it goes. We do this because R CMD BUILD needs
 # all R files in a single directory (R/) whereas we'd like to maintain
-# a folder structure.
+# a folder structure, given the number of data system files.
 
 DIRECTORY=data_system_source/
 
