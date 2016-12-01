@@ -3,53 +3,69 @@
 #' Run the entire data system
 #'
 #' @export
+#' @importFrom tibble tibble
+#' @importFrom dplyr select mutate filter
 driver <- function() {
 
-  # Get a list of modules in this package
-  # These are functions with a name of "module_XXXX"
-  modules <- ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*$")
-  cat("Found", length(modules), "modules\n")
-  all_data <- list()
+  # Get a list of chunks in this package
+  # These are functions with a name of "module_{modulename}_{chunkname}"
+  ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*_.*$") %>%
+    tibble(name = .) %>%
+    separate(name, into = c("x", "module", "chunk"), remove = FALSE, sep = "_") %>%
+    dplyr::select(-x) %>%
+    dplyr::mutate(done = FALSE) ->
+    chunklist
+
+  cat("Found", nrow(chunklist), "chunks\n")
+  print(chunklist)
+
+  # Get list of data required by each chunk
+  chunkinputs <- list()
+  for(i in seq_len(nrow(chunklist))) {
+    cl <- call(chunklist$name[i], driver.DECLARE_INPUTS)
+    reqdata <- eval(cl)
+    if(!is.null(reqdata)) {
+      chunkinputs[[i]] <- tibble(name = chunklist$name[i], input = reqdata)
+    }
+  }
+  chunkinputs <- dplyr::bind_rows(chunkinputs)
+
+  cat("Found", nrow(chunkinputs), "chunk data requirements\n")
 
   # Get all the data produced by each module
-  have_all_data <- FALSE
-  while(!have_all_data) {
+  all_data <- list()
+  while(!all(chunklist$done)) {
     have_all_data <- TRUE  # let's hope for the best
 
     # Loop through all modules and make everyone build their data
-    for(m in modules) {
-      print(m)
+    for(i in seq_len(nrow(chunklist))) {
+      chunk <- chunklist$name[i]
+      print(chunk)
 
-      # Order module `m` to build its data
-      cl <- call(m, driver.MAKE, all_data)
-      m_data <- eval(cl)
+      if(chunklist$done[i]) {
+        print("- already done, skip")
+        next  # chunk has already run
+      }
+
+      if(!all(dplyr::filter(chunkinputs, name == chunk)$input %in% names(all_data))) {
+        print("- not available, skip")
+        next  # chunk's inputs are not available yet
+      }
+
+      # Order chunk to build its data
+      print("- make")
+      cl <- call(chunk, driver.MAKE, all_data)
+      chunk_data <- eval(cl)
 
       # Add this module's data to the global data store
       # This will overwrite any previous data returned by `m`
-      for(md in names(m_data)) {
-        all_data[[md]] <- m_data[[md]]
+      for(cd in names(chunk_data)) {
+        all_data[[cd]] <- chunk_data[[cd]]
       }
 
-      # Check that `m` didn't return any NULL data
-      data_ok <- !unlist(lapply(m_data, is.null))
-      if(!all(data_ok)) {
-        print(paste("- NULL", names(m_data)[!data_ok]))
-        have_all_data <- FALSE
-      }
-
-      # Check that all data declared by `m` are actually present,
-      # and all data returned were declared
-      m_declared <- eval(call(m, driver.DECLARE))
-      names_ok <- identical(sort(m_declared), sort(names(m_data)))
-      if(!names_ok) {
-        print(paste("- Missing", setdiff(m_declared, names(m_data))))
-        print(paste("- Extra", setdiff(names(m_data), m_declared)))
-        have_all_data <- FALSE
-      }
-
-      if(have_all_data) {
-        print("- OK")
-      }
+      chunklist$done[i] <- TRUE
     } # for
-  } # while !have_all_data
+  } # while
+
+  all_data
 }
