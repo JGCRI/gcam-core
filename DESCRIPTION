@@ -4,8 +4,7 @@ Title: Build the GCAM Input Datasets
 Version: 0.1.0
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: Build the GCAM XML input files.
 License: MIT + file LICENSE
 Imports:
     dplyr (>= 0.5.0),
