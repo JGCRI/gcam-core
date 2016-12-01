@@ -3,6 +3,9 @@
 .Rhistory
 .RData
 
+# Remake files
+.remake/
+
 # R directory files - using data_system_source instead
 R/*
 
