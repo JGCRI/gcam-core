@@ -1,6 +1,6 @@
 #!/bin/sh
 
-return 0
+# NOT EXECUTING THIS CURRENTLY
 
 # This preflight script is automatically called by the R package build system.
 # It copies all R files in the $DIRECTORY over to R/, flattening directory

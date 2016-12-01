@@ -11,13 +11,13 @@ test_that("handles unknown command", {
 })
 
 test_that("DECLARE and MAKE names match", {
-  mtnames <- module_modeltime(driver.DECLARE)
-  mtdata <- module_modeltime(driver.MAKE)
+  mtnames <- module_modeltime_L200.modeltime(driver.DECLARE_OUTPUTS)
+  mtdata <- module_modeltime_L200.modeltime(driver.MAKE)
   expect_equal(sort(mtnames), sort(names(mtdata)))
 })
 
 test_that("matches old data system output", {
-  mtdata <- module_modeltime(driver.MAKE)
+  mtdata <- module_modeltime_L200.modeltime(driver.MAKE)
   expect_is(mtdata, "list")
 
   # For each named element in `mtdata`, load corresponding dataset
