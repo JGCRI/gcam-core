@@ -1,5 +1,7 @@
 #!/bin/sh
 
+return 0
+
 # This preflight script is automatically called by the R package build system.
 # It copies all R files in the $DIRECTORY over to R/, flattening directory
 # trees as it goes. We do this because R CMD BUILD needs all R files in a
@@ -9,9 +11,9 @@
 DIRECTORY=data_system_source/
 
 # Remove all R files in R/
-rm -f R/*.R
+#rm -f R/*.R
 
 # Copy all R scripts out of the directory tree into R/
-if [ -d "$DIRECTORY" ]; then
-  find $DIRECTORY -name "*.R" -exec cp {} ./R \;
-fi
+#if [ -d "$DIRECTORY" ]; then
+#  find $DIRECTORY -name "*.R" -exec cp {} ./R \;
+#fi

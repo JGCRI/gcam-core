@@ -1,5 +1,5 @@
 
-#' module_atest
+#' module_atest_xxx
 #'
 #' A test module that can't make data until modeltime data is available
 #'
@@ -10,26 +10,17 @@
 #' @export
 #'
 #' @examples
-#' module_atest("MAKE", all_data = NULL)
-module_atest <- function(command, ...) {
-  if(command == driver.DECLARE) {
-    atest_declaredata()
+#' module_atest_xxx("MAKE", all_data = NULL)
+module_atest_xxx <- function(command, ...) {
+  if(command == driver.DECLARE_INPUTS) {
+    return("L200.ModelTime")
+  } else if(command == driver.DECLARE_OUTPUTS) {
+    return("atestoutput")
   } else if(command == driver.MAKE) {
     atest_makedata(...)
   } else {
     stop("Unknown command")
   }
-}
-
-
-#' atest_declaredata
-#'
-#' Declare what data are produced by \code{atest}
-#'
-#' @return Names of all test data
-#'
-atest_declaredata <- function() {
-  c("atestoutput")
 }
 
 
@@ -40,13 +31,7 @@ atest_declaredata <- function() {
 #'
 atest_makedata <- function(all_data) {
 
-  modeltime_data_we_need <- all_data[["L200.ModelTime"]]
+  stopifnot(!is.null(all_data["L200.ModelTime"]))
 
-  if(is.null(modeltime_data_we_need)) {
-    atestoutput <- NULL
-  } else {
-    atestoutput <- 1
-  }
-
-  list("atestoutput" = atestoutput)
+  list("atestoutput" = 1)
 }

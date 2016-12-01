@@ -2,7 +2,9 @@
 # ======================================================================
 # Driver constants
 driver.MAKE <- "MAKE"
-driver.DECLARE <- "DECLARE"
+#driver.DECLARE <- "DECLARE"
+driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
+driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
 
 
 # ======================================================================

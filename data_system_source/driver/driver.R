@@ -3,31 +3,52 @@
 #' Run the entire data system
 #'
 #' @export
+#' @importFrom tibble tibble
 driver <- function() {
 
-  # Get a list of modules in this package
-  # These are functions with a name of "module_XXXX"
-  modules <- ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*$")
-  cat("Found", length(modules), "modules\n")
-  all_data <- list()
+  # Get a list of chunks in this package
+  # These are functions with a name of "module_{modulename}_{chunkname}"
+  ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*_.*$") %>%
+    tibble(name = .) %>%
+    separate(name, into = c("x", "module", "chunk"), remove = FALSE, sep = "_") %>%
+    dplyr::select(-x) ->
+    chunklist
+
+  cat("Found", nrow(chunklist), "chunks\n")
+
+  # Get list of data required by each chunk
+  chunkinputs <- list()
+  for(i in seq_len(nrow(chunklist))) {
+    cl <- call(chunklist$name, driver.DECLARE_INPUTS, all_data)
+    reqdata <- eval(cl)
+    if(!is.null(reqdata)) {
+      chunkinputs[[i]] <- tibble(chunk = chunklist$name[i], input = reqdata)
+    }
+  }
+  chunkinputs <- dplyr::bind_rows(chunkinputs)
+
+  return(chunkinputs)
 
   # Get all the data produced by each module
+  all_data <- list()
   have_all_data <- FALSE
   while(!have_all_data) {
     have_all_data <- TRUE  # let's hope for the best
 
     # Loop through all modules and make everyone build their data
-    for(m in modules) {
+    for(chunk in chunklist$name) {
       print(m)
 
-      # Order module `m` to build its data
-      cl <- call(m, driver.MAKE, all_data)
-      m_data <- eval(cl)
+      # Check to see whether all of chunk's data requirements are available
+
+      # Order chunk to build its data
+      cl <- call(chunk, driver.MAKE, all_data)
+      chunk_data <- eval(cl)
 
       # Add this module's data to the global data store
       # This will overwrite any previous data returned by `m`
-      for(md in names(m_data)) {
-        all_data[[md]] <- m_data[[md]]
+      for(cd in names(chunk_data)) {
+        all_data[[cd]] <- chunk_data[[cd]]
       }
 
       # Check that `m` didn't return any NULL data

@@ -1,5 +1,5 @@
 
-#' module_modeltime
+#' module_modeltime_L200.modeltime
 #'
 #' Construct the \code{modeltime} data structures
 #'
@@ -11,9 +11,14 @@
 #'
 #' @examples
 #' module_modeltime("MAKE", all_data = NULL)
-module_modeltime <- function(command, ...) {
-  if(command == driver.DECLARE) {
-    modeltime_declaredata()
+module_modeltime_L200.modeltime <- function(command, ...) {
+  if(command == driver.DECLARE_OUTPUTS) {
+    return(c("L200.ModelTime",
+      "L200.ModelTimeInterYears",
+      "L200.MAGICC",
+      "L200.hector"))
+    } else if(command == driver.DECLARE_INPUTS) {
+    return(NULL)   # modeltime doesn't depend on anything
   } else if(command == driver.MAKE) {
     modeltime_makedata(...)
   } else {
@@ -21,28 +26,12 @@ module_modeltime <- function(command, ...) {
   }
 }
 
-
-#' modeltime_declaredata
-#'
-#' Declare what data are produced by \code{modeltime}
-#'
-#' @return Names of all modeltime data
-#'
-modeltime_declaredata <- function() {
-  c("L200.ModelTime",
-    "L200.ModelTimeInterYears",
-    "L200.MAGICC",
-    "L200.hector")
-}
-
-
 #' modeltime_makedata
 #'
 #' @param all_data A named list, holding all data system products so far
 #' @return A named list with all available modeltime data
-#'
+#' @importFrom tibble tibble
 modeltime_makedata <- function(all_data) {
-  tibble <- tibble::tibble
 
   # Calculate the read-in timesteps in the model
   GCAM_timesteps <- diff(modeltime.YEARS)
