@@ -6,6 +6,7 @@
 #' @return a list of all built data
 #' @export
 #' @importFrom magrittr "%>%"
+#' @importFrom assertthat assert_that
 driver <- function() {
 
   # Get a list of chunks in this package
@@ -51,6 +52,7 @@ driver <- function() {
       print("- make")
       cl <- call(chunk, driver.MAKE, all_data)
       chunk_data <- eval(cl)
+      assert_that(is.list(chunk_data))
 
       # Add this chunk's data to the global data store
       # This will overwrite any previous data returned

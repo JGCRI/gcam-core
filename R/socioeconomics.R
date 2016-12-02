@@ -48,25 +48,31 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
 #' socioeconomics_L100.GDP_hist_makedata
 #'
 #' @param all_data A named list, holding all data system products so far
-#' @return A named list with all socioeconomics data
+#' @return A named list with all socioeconomics_L100.GDP_hist_makedata data
 #' @importFrom assertthat assert_that
+#' @importFrom dplyr filter mutate select
 socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
 
   #printlog( "Historical GDP downscaled to modern country" )
-  USDA_GDP_MER <- all_data[["socioeconomics.USDA_GDP_MER"]]
-  assert_that(is.data.frame(USDA_GDP_MER))
+  usda_gdp_mer <- all_data[["socioeconomics.USDA_GDP_MER"]]
+  assert_that(is.data.frame(usda_gdp_mer))
+
   # At present the GDP database used requires no downscaling and all
   # major countries are included, so really no processing steps are needed.
   # All that happens in this file right now is subsetting the years that
   # will be required by later files, and converting the units to GCAM's
   # GDP unit (million 1990 USD)
-  #  L100.gdp_mil90usd_ctry_Yh <- na.omit(
-  #   data.frame(
-  #     USDA_GDP_MER[ "iso" ],
-  #     USDA_GDP_MER[ X_historical_years ] * conv_bil_mil / conv_1990_2005_USD ) )
-  #
-  # comments.L100.gdp_mil90usd_ctry_Yh <- c( "Historical GDP downscaled to country (iso)","Unit = million 1990 US dollars" )
 
-  #  list("L100.gdp_mil90usd_ctry_Yh" = L100.gdp_mil90usd_ctry_Yh)
+  # Convert to long form, filter to historical years, convert units
+  usda_gdp_mer %>%
+    tidyr::gather(year, value, -Country, -iso) %>%
+    filter(year %in% HISTORICAL_YEARS, !is.na(value)) %>%
+    mutate(value = value * CONV_BIL_MIL / CONV_1990_2005_USD) %>%
+    select(-Country) ->
+    L100.gdp_mil90usd_ctry_Yh
+
+  comment(L100.gdp_mil90usd_ctry_Yh) <- c("Historical GDP downscaled to country (iso)",
+                                          "Unit = million 1990 US dollars")
+
+  list("L100.gdp_mil90usd_ctry_Yh" = L100.gdp_mil90usd_ctry_Yh)
 }
-

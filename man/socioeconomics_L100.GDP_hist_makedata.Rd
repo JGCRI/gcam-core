@@ -10,7 +10,7 @@ socioeconomics_L100.GDP_hist_makedata(all_data)
 \item{all_data}{A named list, holding all data system products so far}
 }
 \value{
-A named list with all socioeconomics data
+A named list with all socioeconomics_L100.GDP_hist_makedata data
 }
 \description{
 socioeconomics_L100.GDP_hist_makedata

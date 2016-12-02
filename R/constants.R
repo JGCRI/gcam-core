@@ -1,5 +1,11 @@
 
 # ======================================================================
+HISTORICAL_YEARS <- 1971:2010
+FUTURE_YEARS <- seq( 2015, 2100, 5 )
+CONV_BIL_MIL <- 1000
+CONV_1990_2005_USD <- 1.383
+
+# ======================================================================
 # Driver constants
 driver.MAKE <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
