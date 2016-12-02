@@ -7,6 +7,7 @@ Maintainer: The package maintainer <yourself@somewhere.net>
 Description: Build the GCAM XML input files.
 License: MIT + file LICENSE
 Imports:
+    assertthat (>= 0.1),
     dplyr (>= 0.5.0),
     magrittr (>= 1.5),
     tibble (>= 1.1),

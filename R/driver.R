@@ -12,7 +12,8 @@ driver <- function() {
   # These are functions with a name of "module_{modulename}_{chunkname}"
   ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*_.*$") %>%
     tibble(name = .) %>%
-    tidyr::separate(name, into = c("x", "module", "chunk"), remove = FALSE, sep = "_") %>%
+    tidyr::separate(name, into = c("x", "module", "chunk"), remove = FALSE,
+                    sep = "_", extra = "merge") %>%
     dplyr::select(-x) ->
     chunklist
 

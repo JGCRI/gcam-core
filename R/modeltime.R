@@ -26,7 +26,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
 #' modeltime_makedata
 #'
 #' @param all_data A named list, holding all data system products so far
-#' @return A named list with all available modeltime data
+#' @return A named list with all modeltime data
 #' @importFrom tibble tibble
 modeltime_makedata <- function(all_data) {
 
