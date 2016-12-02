@@ -87,6 +87,9 @@ private:
 
     //! The market in which to find the marginal revenue sector.
     std::string mMarginalRevenueMarket;
+    
+    //! State value used to set the fixed output to market.
+    mutable double mLastCalcFixedOutput;
 };
 
 /*!

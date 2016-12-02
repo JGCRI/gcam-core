@@ -76,9 +76,6 @@ public:
                                   const std::string& aSectorName,
                                   const int aPeriod );
 
-    static void askToCreateTrialSupply( const std::string& aRegionName,
-                                        const std::string& aSectorName );
-
     static double calcFixedOutputScaleFactor( const double aMarketDemand,
                                               const double aFixedOutput );
 
