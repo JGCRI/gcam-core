@@ -8,7 +8,7 @@
 .remake/
 
 # R directory files - using data_system_source instead
-R/*.R
+#R/*.R
 R/*.html
 
 # Vignette files
