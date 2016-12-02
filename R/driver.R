@@ -13,12 +13,10 @@ driver <- function() {
   ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*_.*$") %>%
     tibble(name = .) %>%
     tidyr::separate(name, into = c("x", "module", "chunk"), remove = FALSE, sep = "_") %>%
-    dplyr::select(-x) %>%
-    dplyr::mutate(done = FALSE) ->
+    dplyr::select(-x) ->
     chunklist
 
   cat("Found", nrow(chunklist), "chunks\n")
-  print(chunklist)
 
   # Get list of data required by each chunk
   chunkinputs <- list()
@@ -33,23 +31,18 @@ driver <- function() {
 
   cat("Found", nrow(chunkinputs), "chunk data requirements\n")
 
-  # Get all the data produced by each module
+  # all_data holds all the data produced by chunks
   all_data <- list()
-  while(!all(chunklist$done)) {
-    have_all_data <- TRUE  # let's hope for the best
+  chunks_to_run <- chunklist$name
+  while(length(chunks_to_run)) {
+    nchunks <- length(chunks_to_run)
 
-    # Loop through all modules and make everyone build their data
-    for(i in seq_len(nrow(chunklist))) {
-      chunk <- chunklist$name[i]
+    # Loop through all chunks and see who can run (i.e. all dependencies are available)
+    for(chunk in chunks_to_run) {
       print(chunk)
 
-      if(chunklist$done[i]) {
-        print("- already done, skip")
-        next  # chunk has already run
-      }
-
       if(!all(dplyr::filter(chunkinputs, name == chunk)$input %in% names(all_data))) {
-        print("- not available, skip")
+        print("- data not available yet")
         next  # chunk's inputs are not available yet
       }
 
@@ -58,15 +51,23 @@ driver <- function() {
       cl <- call(chunk, driver.MAKE, all_data)
       chunk_data <- eval(cl)
 
-      # Add this module's data to the global data store
+      # Add this chunk's data to the global data store
       # This will overwrite any previous data returned
       for(cd in names(chunk_data)) {
         all_data[[cd]] <- chunk_data[[cd]]
       }
 
-      chunklist$done[i] <- TRUE
+      # Remove the current chunk from the to-run list
+      chunks_to_run <- chunks_to_run[chunks_to_run != chunk]
     } # for
+
+    # We have to be able to run at >=1 chunk every loop iteration
+    if(length(chunks_to_run) == nchunks) {
+      stop("No chunks were run--we are stuck")
+    }
   } # while
 
-  all_data
+  cat(length(all_data), "data frames generated\n")
+  cat("All done.\n")
+  invisible(all_data)
 }
