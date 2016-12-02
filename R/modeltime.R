@@ -8,9 +8,6 @@
 #' @return Depends on \code{command}
 #' @author BBL
 #' @export
-#'
-#' @examples
-#' module_modeltime("MAKE", all_data = NULL)
 module_modeltime_L200.modeltime <- function(command, ...) {
   if(command == driver.DECLARE_OUTPUTS) {
     return(c("L200.ModelTime",

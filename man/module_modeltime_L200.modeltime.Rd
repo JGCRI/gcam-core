@@ -17,9 +17,6 @@ Depends on \code{command}
 \description{
 Construct the \code{modeltime} data structures
 }
-\examples{
-module_modeltime("MAKE", all_data = NULL)
-}
 \author{
 BBL
 }

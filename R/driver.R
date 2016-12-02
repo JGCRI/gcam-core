@@ -1,9 +1,11 @@
-# Driver
 
+#' driver
+#'
 #' Run the entire data system
 #'
-#' @importFrom magrittr "%>%"
+#' @return a list of all built data
 #' @export
+#' @importFrom magrittr "%>%"
 driver <- function() {
 
   # Get a list of chunks in this package
@@ -57,7 +59,7 @@ driver <- function() {
       chunk_data <- eval(cl)
 
       # Add this module's data to the global data store
-      # This will overwrite any previous data returned by `m`
+      # This will overwrite any previous data returned
       for(cd in names(chunk_data)) {
         all_data[[cd]] <- chunk_data[[cd]]
       }
