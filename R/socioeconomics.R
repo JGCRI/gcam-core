@@ -16,10 +16,7 @@ module_socioeconomics_inputs <- function(command, ...) {
     return("socioeconomics.USDA_GDP_MER")
   } else if(command == driver.MAKE) {
     # Read an input file and return data
-    # TODO: obviously this will be extracted to a load function later
-    fqfn <- system.file("extdata", "USDA_GDP_MER.csv", package = "gcamdata")
-    df <- readr::read_csv(fqfn, comment = "#")
-    return(list("socioeconomics.USDA_GDP_MER" = df))
+    return(list("socioeconomics.USDA_GDP_MER" = load_csv("USDA_GDP_MER.csv")))
   } else {
     stop("Unknown command")
   }
