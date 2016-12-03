@@ -51,6 +51,7 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
 #' @return A named list with all socioeconomics_L100.GDP_hist_makedata data
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
+#' @importFrom tidyr gather spread
 socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
 
   #printlog( "Historical GDP downscaled to modern country" )
@@ -65,7 +66,7 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
 
   # Convert to long form, filter to historical years, convert units
   usda_gdp_mer %>%
-    tidyr::gather(year, value, -Country, -iso) %>%
+    gather(year, value, -Country, -iso) %>%
     filter(year %in% HISTORICAL_YEARS, !is.na(value)) %>%
     mutate(value = value * CONV_BIL_MIL / CONV_1990_2005_USD) %>%
     select(-Country) ->

@@ -9,28 +9,10 @@
 #' @importFrom assertthat assert_that
 driver <- function() {
 
-  # Get a list of chunks in this package
-  # These are functions with a name of "module_{modulename}_{chunkname}"
-  ls(name = parent.env(environment()), pattern = "^module_[a-zA-Z]*_.*$") %>%
-    tibble(name = .) %>%
-    tidyr::separate(name, into = c("x", "module", "chunk"), remove = FALSE,
-                    sep = "_", extra = "merge") %>%
-    dplyr::select(-x) ->
-    chunklist
-
+  chunklist <- find_chunks()
   cat("Found", nrow(chunklist), "chunks\n")
 
-  # Get list of data required by each chunk
-  chunkinputs <- list()
-  for(i in seq_len(nrow(chunklist))) {
-    cl <- call(chunklist$name[i], driver.DECLARE_INPUTS)
-    reqdata <- eval(cl)
-    if(!is.null(reqdata)) {
-      chunkinputs[[i]] <- tibble(name = chunklist$name[i], input = reqdata)
-    }
-  }
-  chunkinputs <- dplyr::bind_rows(chunkinputs)
-
+  chunkinputs <- chunk_dependencies(chunklist$name)
   cat("Found", nrow(chunkinputs), "chunk data requirements\n")
 
   # all_data holds all the data produced by chunks

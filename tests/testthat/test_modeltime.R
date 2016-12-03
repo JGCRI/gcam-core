@@ -6,10 +6,6 @@ library(tibble)
 library(readr)
 
 
-test_that("handles unknown command", {
-  expect_error(module_modeltime("SDKJFHDJKHF"))
-})
-
 test_that("DECLARE and MAKE names match", {
   mtnames <- module_modeltime_L200.modeltime(driver.DECLARE_OUTPUTS)
   mtdata <- module_modeltime_L200.modeltime(driver.MAKE)
