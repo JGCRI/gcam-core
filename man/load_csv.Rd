@@ -9,7 +9,7 @@ load_csv(filename, ...)
 \arguments{
 \item{filename}{Name of file to load}
 
-\item{...}{Any other parameter to pass to \code{read_csv}}
+\item{...}{Any other parameter to pass to \code{readr::read_csv}}
 }
 \value{
 data frame from file
