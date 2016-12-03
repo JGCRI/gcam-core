@@ -150,7 +150,7 @@ file_fqn <- function( domain, fn, extension=".csv" ) {
 # readdata: read an arbitrary data file
 # params: fn (filename )
 # TODO: error handling (probably using try/catch)
-readdata <- function( domain="none", fn="none", extension=".csv", na.strings="", must.exist=TRUE, ... ) {
+readdata <- function( domain="none", fn="none", extension=".csv", na.strings="", must.exist=TRUE, replace_GLU = FALSE, ... ) {
 
 	if( domain=="none" | fn=="none" ) {
 		printlog( "ERROR: no domain/file specified", fn )
@@ -167,6 +167,11 @@ readdata <- function( domain="none", fn="none", extension=".csv", na.strings="",
 							comment.char=GCAM_DATA_COMMENT,	# Our comment signal
 							... ) )	
 		printlog( "...OK.", nrow( x ), "rows,", ncol( x ), "cols", ts=F )
+		
+		# If indicated, switch the GLU column from codes to names, or vice versa
+		if( replace_GLU ){
+		  x <- replace_GLU( x )
+		}
 
 		# Update dependency list, if necessary
 		deps <- DEPENDENCIES[[ GCAM_SOURCE_FN[ GCAM_SOURCE_RD ] ]]
@@ -683,6 +688,26 @@ set_traded_names <- function( data, apply.to="selected" ) {
     data_new$region <- GCAM_region_names$region[1]
     return( data_new )
   }
+}
+
+# replace_GLU: a function for replacing GLU numerical codes with names, and vice versa
+replace_GLU <- function( d, map = basin_to_country_mapping, GLUpat = "GLU[0-9]{3}" ){
+  # First figure out whether there is a GLU column
+  if( GLU %in% names( d ) ){
+    # Then determine the direction of the change based on character string matching in the first element
+    if( grepl( GLUpat, d[[GLU]][1] ) ){
+      printlog( "switching from GLU numerical codes to names")
+      d[[GLU]] <- map$GLU_name[ match( d[[GLU]], map$GLU_code ) ]
+    } else {
+      printlog( "switching from GLU names to numerical codes")
+      d[[GLU]] <- map$GLU_code[ match( d[[GLU]], map[["GLU_name"]] ) ]
+    }
+  } else {
+    # do nothing if there is no GLU column. just print a warning message
+    printlog( "WARNING: no GLU column in data frame" )
+  }
+  # no matter what, return the data frame
+  return( d )
 }
 
 

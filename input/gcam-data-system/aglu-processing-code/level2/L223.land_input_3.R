@@ -26,6 +26,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
+basin_to_country_mapping <- readdata( "WATER_MAPPINGS", "basin_to_country_mapping" )
 GCAMLandLeaf_CdensityLT <- readdata( "AGLU_MAPPINGS", "GCAMLandLeaf_CdensityLT" )
 A_bio_ghost_share <- readdata( "AGLU_ASSUMPTIONS", "A_bio_ghost_share" )
 A_Fodderbio_chars <- readdata( "AGLU_ASSUMPTIONS", "A_Fodderbio_chars" )
@@ -34,11 +35,11 @@ A_LandNode_logit <- readdata( "AGLU_ASSUMPTIONS", "A_LandNode_logit" )
 A_LandLeaf_Unmgd3 <- readdata( "AGLU_ASSUMPTIONS", "A_LandLeaf_Unmgd3" )
 A_LandLeaf3 <- readdata( "AGLU_ASSUMPTIONS", "A_LandLeaf3" )
 L111.ag_resbio_R_C <- readdata( "AGLU_LEVEL1_DATA", "L111.ag_resbio_R_C" )
-L121.CarbonContent_kgm2_R_LT_GLU <- readdata( "AGLU_LEVEL1_DATA", "L121.CarbonContent_kgm2_R_LT_GLU" )
-L122.ag_EcYield_kgm2_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_EcYield_kgm2_R_C_Y_GLU" )
-L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- readdata ( "AGLU_LEVEL1_DATA", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU" )
-L123.For_Yield_m3m2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Yield_m3m2_R_GLU" )
-L125.LC_bm2_R_LT_Yh_GLU <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R_LT_Yh_GLU" )
+L121.CarbonContent_kgm2_R_LT_GLU <- readdata( "AGLU_LEVEL1_DATA", "L121.CarbonContent_kgm2_R_LT_GLU", replace_GLU = T )
+L122.ag_EcYield_kgm2_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_EcYield_kgm2_R_C_Y_GLU", replace_GLU = T )
+L122.LC_bm2_R_HarvCropLand_C_Yh_GLU <- readdata ( "AGLU_LEVEL1_DATA", "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU", replace_GLU = T )
+L123.For_Yield_m3m2_R_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Yield_m3m2_R_GLU", replace_GLU = T )
+L125.LC_bm2_R_LT_Yh_GLU <- readdata( "AGLU_LEVEL1_DATA", "L125.LC_bm2_R_LT_Yh_GLU", replace_GLU = T )
 L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
 L133.ag_Cost_75USDkg_C <- readdata( "AGLU_LEVEL1_DATA", "L133.ag_Cost_75USDkg_C" )
 L201.AgYield_bio_grass <- readdata( "AGLU_LEVEL2_DATA", "L201.AgYield_bio_grass", skip = 4 )
@@ -382,8 +383,9 @@ L223.LN3_ProfitRate_domcrop[[R]] <- GCAM_region_names[[R]][
 L223.LN3_ProfitRate_domcrop$LandLeaf <- L223.LN3_ProfitRate_domcrop_tmp$LandLeaf[
   match( vecpaste( L223.LN3_ProfitRate_domcrop[ c( reg, Y, GLU, "allocation" ) ] ),
          vecpaste( L223.LN3_ProfitRate_domcrop_tmp[ c( reg, Y, GLU, "allocation" ) ] ) ) ]
-L223.LN3_ProfitRate_domcrop[[C]] <- substr( L223.LN3_ProfitRate_domcrop$LandLeaf, 1,
-                                            regexpr( "_GLU", L223.LN3_ProfitRate_domcrop$LandLeaf, fixed = T ) - 1 )
+L223.LN3_ProfitRate_domcrop[[C]] <- with( L223.LN3_ProfitRate_domcrop,
+                                          substr( LandLeaf, 1,
+                                            nchar( LandLeaf ) - nchar( GLU ) - 1 ) )
 
 # Match in the prices, costs, and yields
 L223.LN3_ProfitRate_domcrop$Price <- L132.ag_an_For_Prices$calPrice[

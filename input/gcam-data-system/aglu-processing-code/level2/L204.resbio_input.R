@@ -26,13 +26,14 @@ sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
+basin_to_country_mapping <- readdata( "WATER_MAPPINGS", "basin_to_country_mapping" )
 A_AgSupplySector <- readdata( "AGLU_ASSUMPTIONS", "A_agSupplySector" )
 A_demand_technology <- readdata( "AGLU_ASSUMPTIONS", "A_demand_technology" )
 A_resbio_curves <- readdata( "AGLU_ASSUMPTIONS", "A_resbio_curves" )
 A_bio_frac_prod_R <- readdata( "AGLU_ASSUMPTIONS", "A_bio_frac_prod_R" )
 L111.ag_resbio_R_C <- readdata( "AGLU_LEVEL1_DATA", "L111.ag_resbio_R_C" )
-L103.ag_Prod_Mt_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_Y_GLU" )
-L123.For_Prod_bm3_R_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Prod_bm3_R_Y_GLU" )
+L103.ag_Prod_Mt_R_C_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L103.ag_Prod_Mt_R_C_Y_GLU", replace_GLU = T )
+L123.For_Prod_bm3_R_Y_GLU <- readdata( "AGLU_LEVEL1_DATA", "L123.For_Prod_bm3_R_Y_GLU", replace_GLU = T )
 
 # -----------------------------------------------------------------------------
 # 2. Build tables

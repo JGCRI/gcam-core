@@ -2,32 +2,6 @@
 MODULE_PROC_ROOT		<- AGLUPROC_DIR
 
 # -----------------------------------------------------------------------------
-# rename_biocrops: a function for changing the names of "biomass" in selected region/AEZs
-rename_biocrops <- function( data, lookup, data_matchvar, lookup_matchvar, data_var1, data_var2=NA, data_var3 = NA, data_var4 = NA ){
-     data_new <- data
-     data_new$ID <- paste( data_new$region, data_new[[data_matchvar]] )
-     lookup$ID <- paste( lookup$region, lookup[[lookup_matchvar]] )
-     data_new[ data_new$ID %in% lookup$ID, data_var1 ] <- lookup[
-      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
-      data_var1 ]
-     if( !is.na( data_var2 ) ) {
-        data_new[ data_new$ID %in% lookup$ID, data_var2 ] <- lookup[
-      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
-      data_var2 ] }
-     if( !is.na( data_var3 ) ) {
-        data_new[ data_new$ID %in% lookup$ID, data_var3 ] <- lookup[
-      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
-      data_var3 ] }
-     if( !is.na( data_var4 ) ) {
-        data_new[ data_new$ID %in% lookup$ID, data_var4 ] <- lookup[
-      match( data_new$ID[ data_new$ID %in% lookup$ID ], lookup$ID ),
-      data_var4 ] }
-     data_new <- data_new[ names( data_new ) != "ID" ]   
-     data_new <- data_new[ data_new[[ data_matchvar ]] != "delete", ]
-     return (data_new )
-     }            
-
-# -----------------------------------------------------------------------------
 #downscale_FAO_country: function to downscale the countries that separated into multiple modern countries (e.g. USSR).
 downscale_FAO_country <- function( data, country_name, dissolution_year, item_name = "item",
                                    element_name = "element", years = AGLU_historical_years ){
@@ -79,22 +53,30 @@ append_GLU <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = N
 	return( data )
 }
 
-#substring_GLU: get the GLU from an appended column
+#substring_GLU: get the GLU from a column where the GLU code is appended to the land use type
+# This function assumes that the GLU name starts at the first underscore and goes until the end of the name
+# So it should only be used on columns where the GLU is at the end of the strings
 substring_GLU <- function( data, from.var ){
-  GLU_nchar <- sum( nchar( GLU_name_delimiter ), nchar( GLU ), GLU_ndigits, nchar( crop_GLU_delimiter ) )
-  data[[GLU]] <- substr( data[[from.var]], nchar( data[[from.var]] ) - ( GLU_nchar - 1 - nchar( crop_GLU_delimiter ) ), nchar( data[[from.var]] ) )
+  data[[GLU]] <- substr( data[[from.var]],
+                         regexpr( crop_GLU_delimiter, data[[from.var]], fixed = T ) + 1,
+                         nchar( data[[from.var]] ) )
+  #Run this another time in case there are underscores in the element names (e.g., Root_Tuber)
+  data[[GLU]] <- substr( data[[GLU]],
+                         regexpr( crop_GLU_delimiter, data[[GLU]], fixed = T ) + 1,
+                         nchar( data[[GLU]] ) )
   return( data )
 }
 
-#remove_GLU: function to remove the GLU name from all specified variables
+#remove_GLU: function to remove the GLU from the ends of all specified variables
 remove_GLU <- function( data, var1 = "LandNode1", var2 = NA, var3 = NA, var4 = NA, var5 = NA ){
-  GLU_nchar <- sum( nchar( GLU_name_delimiter ), nchar( GLU ), GLU_ndigits, nchar( crop_GLU_delimiter ) )
   data <- substring_GLU( data, from.var = var1 )
-  data[[var1]] <- substr( data[[var1]], 1, nchar( data[[var1]] ) - GLU_nchar )
-  if( !is.na( var2 ) ) data[[var2]] <- substr( data[[var2]], 1, nchar( data[[var2]] ) - GLU_nchar )
-  if( !is.na( var3 ) ) data[[var3]] <- substr( data[[var3]], 1, nchar( data[[var3]] ) - GLU_nchar )
-  if( !is.na( var4 ) ) data[[var4]] <- substr( data[[var4]], 1, nchar( data[[var4]] ) - GLU_nchar )
-  if( !is.na( var5 ) ) data[[var5]] <- substr( data[[var5]], 1, nchar( data[[var5]] ) - GLU_nchar )
+  data$GLU_nchar <- nchar( data[[GLU]] ) + 1
+  data[[var1]] <- substr( data[[var1]], 1, nchar( data[[var1]] ) - data$GLU_nchar )
+  if( !is.na( var2 ) ) data[[var2]] <- substr( data[[var2]], 1, nchar( data[[var2]] ) - data$GLU_nchar )
+  if( !is.na( var3 ) ) data[[var3]] <- substr( data[[var3]], 1, nchar( data[[var3]] ) - data$GLU_nchar )
+  if( !is.na( var4 ) ) data[[var4]] <- substr( data[[var4]], 1, nchar( data[[var4]] ) - data$GLU_nchar )
+  if( !is.na( var5 ) ) data[[var5]] <- substr( data[[var5]], 1, nchar( data[[var5]] ) - data$GLU_nchar )
+  data$GLU_nchar <- NULL
   return( data )
 }
 
@@ -144,3 +126,4 @@ remove_zero_output_land_leafs <- function( land, prod ) {
   
   return( land )
 }
+

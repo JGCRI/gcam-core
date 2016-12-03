@@ -25,7 +25,8 @@ sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 sourcedata( "WATER_ASSUMPTIONS", "A_water_data", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
-L125.LC_bm2_R_GLU <- readdata("AGLU_LEVEL1_DATA", "L125.LC_bm2_R_GLU")
+basin_to_country_mapping <- readdata( "WATER_MAPPINGS", "basin_to_country_mapping" )
+L125.LC_bm2_R_GLU <- readdata("AGLU_LEVEL1_DATA", "L125.LC_bm2_R_GLU", replace_GLU = T )
 L165.ag_IrrEff_R <- readdata("AGLU_LEVEL1_DATA", "L165.ag_IrrEff_R")
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A03.sector <- readdata( "WATER_ASSUMPTIONS", "A03.sector" )
@@ -37,9 +38,6 @@ A03.sector <- readdata( "WATER_ASSUMPTIONS", "A03.sector" )
 L125.R_GLU <- L125.LC_bm2_R_GLU[ R_GLU ]
 L203.mapping_irr <- merge( L125.R_GLU, A03.sector[ A03.sector[[water_sector]] %in% irr_water_sector, ] )
 L203.mapping_irr <- add_region_name( L203.mapping_irr )
-
-#For getting water inputs, the GLU name needs to be just the number
-L203.mapping_irr[[GLU]] <- as.numeric( sub( "GLU", "", L203.mapping_irr[[GLU]] ) )
 
 L203.mapping_nonirr <- merge( GCAM_region_names, A03.sector[ A03.sector[[water_sector]] %in% nonirr_water_sectors, ] )
 L203.mapping_nonirr[[GLU]] <- NA

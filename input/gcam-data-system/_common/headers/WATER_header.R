@@ -48,10 +48,8 @@ get_water_inputs_for_mapping <- function( d, water_mapping, water_sector.col=wat
         d_temp[ d_temp[[water_sector.col]] != "Irrigation" & d_temp[[water_type.col]] %in% mapped_water_types, "water_type_short"], sep="_" )
     if( use_GLU ) {
         d_temp[ d_temp[[water_sector.col]] == "Irrigation" & d_temp[[water_type.col]] %in% mapped_water_types, "new_name"] <- paste(
-                paste0(
                 d_temp[ d_temp[[water_sector.col]] == "Irrigation" & d_temp[[water_type.col]] %in% mapped_water_types, "base_name"],
-                sprintf( "%03d",
-                    d_temp[ d_temp[[water_sector.col]] == "Irrigation" & d_temp[[water_type.col]] %in% mapped_water_types, GLU.col ] ) ),
+                d_temp[ d_temp[[water_sector.col]] == "Irrigation" & d_temp[[water_type.col]] %in% mapped_water_types, GLU.col ],
                 d_temp[ d_temp[[water_sector.col]] == "Irrigation" & d_temp[[water_type.col]] %in% mapped_water_types, "water_type_short"], sep="_" )
     }
     return( d_temp$new_name )
