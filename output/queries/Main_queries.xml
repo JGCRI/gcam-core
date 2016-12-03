@@ -447,7 +447,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <comments/>
          </supplyDemandQuery>
          <supplyDemandQuery title="regional primary energy prices">
-            <axis1 name="sector">sector</axis1>
+            <axis1 name="fuel">sector</axis1>
             <axis2 name="Year">cost</axis2>
             <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='regional oil' or @name='regional natural gas'
             or @name='regional coal' or @name='regional biomass' or @name='nuclearFuelGenIII')]/
@@ -870,7 +870,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                </labelRewriteList>
             </supplyDemandQuery>
             <supplyDemandQuery title="elec prices by sector">
-               <axis1 name="sector">sector</axis1>
+               <axis1 name="fuel">sector</axis1>
                <axis2 name="Year">cost</axis2>
                <xPath buildList="true" dataName="price" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='elect_td_bld' or @name='elect_td_ind'
                or @name='elect_td_trn')]/cost/text()</xPath>
@@ -1476,7 +1476,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <comments>includes passthrough sectors for refining</comments>
             </supplyDemandQuery>
             <supplyDemandQuery title="refined liquids prices by sector">
-               <axis1 name="sector">sector</axis1>
+               <axis1 name="fuel">sector</axis1>
                <axis2 name="Year">cost</axis2>
                <xPath buildList="true" dataName="price" group="false" sumAll="false">*[@type='sector' and (@name='refining' or @name='refined liquids enduse' or
                @name='refined liquids industrial')]/cost/text()</xPath>
@@ -1527,7 +1527,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="hydrogen prices by sector">
-               <axis1 name="sector">sector</axis1>
+               <axis1 name="fuel">sector</axis1>
                <axis2 name="Year">cost</axis2>
                <xPath buildList="true" dataName="price" group="false" sumAll="false">*[@type='sector' and (@name='H2 central production' or @name='H2 forecourt production' or
                @name='H2 enduse' or @name='H2 distribution')]/cost/text()</xPath>
@@ -1568,7 +1568,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="gas prices by sector">
-               <axis1 name="sector">sector</axis1>
+               <axis1 name="fuel">sector</axis1>
                <axis2 name="Year">price</axis2>
                <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='gas processing' or @name='gas pipeline' or
                @name='wholesale gas' or @name='delivered gas')]/cost/text()</xPath>
@@ -1714,7 +1714,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             </labelRewriteList>
          </supplyDemandQuery>
          <supplyDemandQuery title="final energy prices">
-            <axis1 name="sector">sector</axis1>
+            <axis1 name="fuel">sector</axis1>
             <axis2 name="Year">cost</axis2>
             <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='wholesale gas' or @name='delivered gas' or
             @name='delivered coal' or @name='delivered biomass' or @name='traditional biomass' or
@@ -1726,7 +1726,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
        </queryGroup>
          <queryGroup name="buildings">
             <supplyDemandQuery title="building floorspace">
-               <axis1 name="Building">gcam-consumer[@name]</axis1>
+               <axis1 name="building">gcam-consumer[@name]</axis1>
                <axis2 name="Year">floorspace[@year]</axis2>
                <xPath buildList="true" dataName="floorspace" group="false" sumAll="false">gcam-consumer//floorspace/node()</xPath>
                <comments/>
@@ -1902,7 +1902,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="total service cost per unit floorspace">
-               <axis1 name="Building">building-node-input[@name]</axis1>
+               <axis1 name="building">building-node-input[@name]</axis1>
                <axis2 name="Year">price[@year]</axis2>
                <xPath buildList="true" dataName="cost by unit floorspace" group="false" sumAll="false">gcam-consumer//building-node-input/price/node()</xPath>
                <comments/>
@@ -1915,7 +1915,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="fuel prices to buildings">
-               <axis1 name="sector">sector</axis1>
+               <axis1 name="fuel">sector</axis1>
                <axis2 name="Year">cost</axis2>
                <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='delivered gas' or @name='traditional biomass' or
                @name='delivered coal' or @name='delivered biomass' or @name='elect_td_bld' or
@@ -2066,7 +2066,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                </labelRewriteList>
             </supplyDemandQuery>
             <supplyDemandQuery title="cement prices">
-               <axis1 name="fuel">sector</axis1>
+               <axis1 name="sector">sector</axis1>
                <axis2 name="Year">cost</axis2>
                <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='cement')]/cost/text()</xPath>
                <comments/>
@@ -2096,7 +2096,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="fertilizer prices">
-               <axis1 name="fuel">sector</axis1>
+               <axis1 name="sector">sector</axis1>
                <axis2 name="Year">cost</axis2>
                <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='N fertilizer')]/cost/text()</xPath>
                <comments/>
@@ -2230,7 +2230,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="fuel prices to transport">
-               <axis1 name="sector">sector</axis1>
+               <axis1 name="fuel">sector</axis1>
                <axis2 name="Year">cost</axis2>
                <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='delivered gas' or @name='delivered coal' or @name='elect_td_trn'
                or @name='refined liquids enduse' or @name='H2 enduse')]/cost/text()</xPath>
@@ -3781,19 +3781,19 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <comments/>
       </demographicsQuery>
       <gdpQueryBuilder title="GDP MER by region">
-         <axis1 name="Region">region</axis1>
+         <axis1 name="region">region</axis1>
          <axis2 name="Year">gdp-mer</axis2>
          <xPath buildList="true" dataName="gdp-mer" group="false" sumAll="false">GDP/gdp-mer/text()</xPath>
          <comments/>
       </gdpQueryBuilder>
       <gdpQueryBuilder title="GDP per capita MER by region">
-         <axis1 name="Region">region</axis1>
+         <axis1 name="region">region</axis1>
          <axis2 name="Year">gdp-per-capita-mer</axis2>
          <xPath buildList="true" dataName="gdp-per-capita-mer" group="false" sumAll="false">GDP/gdp-per-capita-mer/text()</xPath>
          <comments/>
       </gdpQueryBuilder>
       <gdpQueryBuilder title="GDP per capita PPP by region">
-         <axis1 name="Region">region</axis1>
+         <axis1 name="region">region</axis1>
          <axis2 name="Year">gdp-per-capita-ppp</axis2>
          <xPath buildList="true" dataName="gdp-per-capita-ppp" group="false" sumAll="false">GDP/gdp-per-capita-ppp/text()</xPath>
          <comments/>
@@ -3807,25 +3807,25 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <comments/>
       </marketQuery>
       <costCurveQuery title="policy cost by period">
-         <axis1 name="Region">Curve</axis1>
+         <axis1 name="region">Curve</axis1>
          <axis2 name="Year">DataPoint</axis2>
          <xPath buildList="true" dataName="Cost" group="false" sumAll="false">PointSet/DataPoint/y/text()</xPath>
          <comments/>
       </costCurveQuery>
       <costCurveQuery title="undiscounted policy cost">
          <axis1 name="UndiscountedCost">UndiscountedCost</axis1>
-         <axis2 name="Region">UndiscountedCost</axis2>
+         <axis2 name="region">UndiscountedCost</axis2>
          <xPath buildList="true" dataName="Undiscounted Cost" group="false" sumAll="false">/text()</xPath>
          <comments/>
       </costCurveQuery>
       <costCurveQuery title="discounted policy cost">
          <axis1 name="DiscountedCost">DiscountedCost</axis1>
-         <axis2 name="Region">DiscountedCost</axis2>
+         <axis2 name="region">DiscountedCost</axis2>
          <xPath buildList="true" dataName="Discounted Cost" group="false" sumAll="false">/text()</xPath>
          <comments/>
       </costCurveQuery>
       <costCurveQuery title="regional CO2 MAC curves by period">
-         <axis1 name="Region">Curve</axis1>
+         <axis1 name="region">Curve</axis1>
          <axis2 name="Tax">DataPoint</axis2>
          <chartLabelColumn>CostCurves</chartLabelColumn>
          <xPath buildList="true" dataName="Cost" group="false" sumAll="false">PointSet/DataPoint/x/text()</xPath>
