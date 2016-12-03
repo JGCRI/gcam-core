@@ -1,3 +1,4 @@
+# socioeconomics.R
 
 
 #' module_socioeconomics_inputs
@@ -67,13 +68,14 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
   # Convert to long form, filter to historical years, convert units
   usda_gdp_mer %>%
     gather(year, value, -Country, -iso) %>%
-    filter(year %in% HISTORICAL_YEARS, !is.na(value)) %>%
+    filter(year %in% HISTORICAL_YEARS, !is.na(value), !is.na(iso)) %>%
     mutate(value = value * CONV_BIL_MIL / CONV_1990_2005_USD) %>%
-    select(-Country) ->
+    select(-Country) %>%
+    add_dscomments(c("Historical GDP downscaled to country (iso)",
+                     "Unit = million 1990 US dollars")) %>%
+    # flag that this dataset is in different form from original
+    add_dscomments(LONG_NO_X_FORM) ->
     L100.gdp_mil90usd_ctry_Yh
-
-  comment(L100.gdp_mil90usd_ctry_Yh) <- c("Historical GDP downscaled to country (iso)",
-                                          "Unit = million 1990 US dollars")
 
   list("L100.gdp_mil90usd_ctry_Yh" = L100.gdp_mil90usd_ctry_Yh)
 }

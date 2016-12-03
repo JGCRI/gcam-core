@@ -17,4 +17,8 @@ data frame from file
 \description{
 Load an internal, i.e. included with the package, csv (or csv.gz) data file
 }
+\details{
+The data frame read in is marked as an input, not one that has
+been computed, via \code{\link{add_dscomments}}.
+}
 

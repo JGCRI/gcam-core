@@ -6,20 +6,23 @@
 #' Load an internal, i.e. included with the package, csv (or csv.gz) data file
 #' @param filename Name of file to load
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
+#' @details The data frame read in is marked as an input, not one that has
+#' been computed, via \code{\link{add_dscomments}}.
 #' @return data frame from file
 load_csv <- function(filename, ...) {
   assertthat::assert_that(is.character(filename))
   fqfn <- system.file("extdata", filename, package = "gcamdata")
-  suppressMessages(readr::read_csv(fqfn, comment = "#", ...))
+  df <- suppressMessages(readr::read_csv(fqfn, comment = "#", ...))
+  add_dscomments(df, INPUT_DATA_MARKER)
 }
 
 
 #' save_chunkdata
 #'
-#' @param chunkdata Named list of data frames to write
+#' @param chunkdata Named list of tibbles (data frames) to write
+#' @param write_inputs Write data that were read as inputs, not computed?
 #' Write data produced by chunks to csv files.
-#' @param chunkdata List of tibbles to write
-save_chunkdata <- function(chunkdata) {
+save_chunkdata <- function(chunkdata, write_inputs = FALSE) {
   assertthat::assert_that(is.list(chunkdata))
   assertthat::assert_that(!is.null(names(chunkdata)))
 
@@ -29,8 +32,21 @@ save_chunkdata <- function(chunkdata) {
     suppressWarnings(file.remove(fqfn))
 
     cd <- chunkdata[[cn]]
-    if(!is.null(comment(cd))) {
-      cat(paste("#", comment(cd)), file = fqfn, sep = "\n")
+    cmnts <- get_dscomments(cd)
+
+    # If data is in a different from for original data system, indicate
+    # that by writing to first line of file
+    if(LONG_NO_X_FORM %in% cmnts) {
+      cat(LONG_NO_X_FORM, file = fqfn, sep = "\n")
+    }
+
+    # If these data have been tagged as input data, don't write
+    if(INPUT_DATA_MARKER %in% cmnts & !write_inputs) {
+      next
+    }
+
+    if(!is.null(cmnts)) {
+      cat(paste("#", cmnts), file = fqfn, sep = "\n", append = TRUE)
     }
     readr::write_csv(cd, fqfn, append = TRUE, col_names = TRUE)
   }
@@ -70,4 +86,24 @@ chunk_dependencies <- function(chunks = find_chunks()$name) {
     }
   }
   dplyr::bind_rows(chunkinputs)
+}
+
+
+#' add_dscomments
+#'
+#' @param x An object
+#' @param comments A character vector of comments
+#' @return \code{x} with comments appended to any existing comments
+add_dscomments <- function(x, comments) {
+  assertthat::assert_that(is.character(comments))
+  comment(x) <- c(comment(x), comments)
+  x
+}
+
+#' get_dscomments
+#'
+#' @param x An object
+#' @return comments attached to \code{x}
+get_dscomments <- function(x) {
+  comment(x)
 }

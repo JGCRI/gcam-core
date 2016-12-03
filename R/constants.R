@@ -2,6 +2,9 @@
 # ======================================================================
 # Behavior constants
 OUTPUTS_DIR <- "outputs/"
+INPUT_DATA_MARKER <- "INPUT_DATA"
+INPUT_TABLE_MARKER <- "INPUT_TABLE"
+LONG_NO_X_FORM <- "LONG_NO_X_FORM"
 
 # ======================================================================
 # Time constants
