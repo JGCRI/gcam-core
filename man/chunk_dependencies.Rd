@@ -7,7 +7,7 @@
 chunk_dependencies(chunks = find_chunks()$name)
 }
 \arguments{
-\item{chunklist}{A character vector of chunks names}
+\item{chunks}{A character vector of chunks names}
 }
 \value{
 A tibble with columns 'name' (chunk name) and 'input' (name of data)
