@@ -33,7 +33,7 @@ find_chunks <- function(pattern = "^module_[a-zA-Z]*_.*$") {
 
 #' chunk_dependencies
 #'
-#' @param chunklist A character vector of chunks names
+#' @param chunks A character vector of chunks names
 #' @return A tibble with columns 'name' (chunk name) and 'input' (name of data)
 chunk_dependencies <- function(chunks = find_chunks()$name) {
   # Get list of data required by each chunk
