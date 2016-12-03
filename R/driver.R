@@ -11,6 +11,7 @@
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
 driver <- function(write_outputs = TRUE) {
+  assert_that(is.logical(write_outputs))
 
   chunklist <- find_chunks()
   cat("Found", nrow(chunklist), "chunks\n")
