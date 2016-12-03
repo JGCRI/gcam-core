@@ -77,13 +77,13 @@ L203.SubsectorShrwtFllt <- L203.SubsectorShrwtFllt[, names_SubsectorShrwtFllt ]
 
 printlog( "L203.TechShrwt: Pass-through technology to the water resource, no competition" )
 L203.TechShrwt <- L203.mapping_all[, names_Tech ]
-L203.TechShrwt$year <- model_years[1]
+L203.TechShrwt <- repeat_and_add_vector( L203.TechShrwt, "year", model_years )
 L203.TechShrwt$share.weight <- 1
 
 printlog( "L203.TechCoef: Pass-through technology to the water resource" )
 L203.TechCoef <- L203.mapping_all[, c( names_Tech, water_type, "coefficient" ) ]
 L203.TechCoef$minicam.energy.input <- L203.TechCoef[[water_type]]
-L203.TechCoef$year <- model_years[1]
+L203.TechCoef <- repeat_and_add_vector( L203.TechCoef, "year", model_years )
 L203.TechCoef$market.name <- L203.TechCoef[[reg]]
 L203.TechCoef <- L203.TechCoef[, names_TechCoef ]
 

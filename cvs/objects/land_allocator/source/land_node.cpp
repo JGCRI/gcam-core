@@ -165,8 +165,12 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
     const Modeltime* modeltime = scenario->getModeltime();
-    const Value defaultValue;
-    XMLWriteVector( mGhostUnormalizedShare, "ghost-unnormalized-share", out, tabs, modeltime, defaultValue );  
+    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
+        if( mGhostUnormalizedShare[ period ].isInited() ) {
+            const int year = modeltime->getper_to_yr( period );
+            XMLWriteElement( mGhostUnormalizedShare[ period ], "ghost-unnormalized-share", out, tabs, year );
+        }
+    }
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
 
     if( mLandUseHistory.get() ){

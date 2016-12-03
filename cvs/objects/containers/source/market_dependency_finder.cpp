@@ -40,6 +40,7 @@
 
 #include "util/base/include/definitions.h"
 #include <cassert>
+#include <boost/algorithm/string/predicate.hpp>
 #include "containers/include/market_dependency_finder.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/marketplace.h"
@@ -825,15 +826,21 @@ void MarketDependencyFinder::createTrialsForItem( CItemIterator aItemToReset, Ca
     // Remove dependencies on the demand vertex now that it is solved.
     // Dependencies on the price vertex must remain since it is responsible
     // for setting it's actual price into the marketplace.
+    vector<CalcVertex*> fixedOutputVertices;
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         for( VertexIterator vertexIter = (*it)->mDemandVertices.begin(); vertexIter != (*it)->mDemandVertices.end(); ++vertexIter ) {
             VertexIterator dependIter = find( (*vertexIter)->mOutEdges.begin(), (*vertexIter)->mOutEdges.end(), (*aItemToReset)->getFirstDemandVertex() );
             if( dependIter != (*vertexIter)->mOutEdges.end() ) {
-                (*vertexIter)->mOutEdges.erase( dependIter );
+                if( boost::algorithm::ends_with( (*vertexIter)->mCalcItem->getDescription(), "-fixed-output" ) ) {
+                    fixedOutputVertices.push_back( *vertexIter );
+                }
+                else {
+                    (*vertexIter)->mOutEdges.erase( dependIter );
+                }
             }
         }
     }
-    aNumDependencies[ (*aItemToReset)->getFirstDemandVertex() ] = 0;
+    aNumDependencies[ (*aItemToReset)->getFirstDemandVertex() ] = fixedOutputVertices.size();
 
     // Lookup/create the associated market linkages to the price and demand
     // vertices.
@@ -846,6 +853,10 @@ void MarketDependencyFinder::createTrialsForItem( CItemIterator aItemToReset, Ca
     // price/demand trial price changes.
     (*priceMrktIter)->mImpliedVertices.insert( (*aItemToReset)->getFirstPriceVertex() );
     (*demandMrktIter)->mImpliedVertices.insert( (*aItemToReset)->getFirstDemandVertex() );
+    
+    for( VertexIterator fixedVertexIt = fixedOutputVertices.begin(); fixedVertexIt != fixedOutputVertices.end(); ++fixedVertexIt ) {
+        (*demandMrktIter)->mImpliedVertices.insert( *fixedVertexIt );
+    }
 
     // Make dependencies from these price vertices implied only.
     for( VertexIterator dependIter = (*aItemToReset)->getLastPriceVertex()->mOutEdges.begin(); dependIter != (*aItemToReset)->getLastPriceVertex()->mOutEdges.end(); ) {

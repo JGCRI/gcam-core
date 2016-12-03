@@ -121,7 +121,6 @@ void PassThroughTechnology::completeInit( const string& aRegionName,
     // Ensure we gather the fixed demands after we calculate prices / before we
     // set supplies
     depFinder->addDependency( fixedDemandActivityName, mPassThroughMarketName, aSectorName, aRegionName );
-    depFinder->addDependency( fixedDemandActivityName, mPassThroughMarketName, aSectorName+ "-fixed-output", aRegionName );
 }
 
 void PassThroughTechnology::production( const string& aRegionName,
@@ -145,9 +144,9 @@ double PassThroughTechnology::getFixedOutput( const string& aRegionName,
                                               const int aPeriod ) const
 {
     // Retrieve the fixed output from the pass-through sector which will store this
-    // information in it's info object
-    IInfo* passThroughInfo = scenario->getMarketplace()->getMarketInfo( mPassThroughSectorName, mPassThroughMarketName, aPeriod, true );
-    const_cast<PassThroughTechnology*>( this )->mPassThroughFixedOutput = passThroughInfo->getDouble( "fixed-output", true );
+    // information in a unsolved trial market.
+    const string fixedDemandActivityName = mPassThroughSectorName + "-fixed-output";
+    const_cast<PassThroughTechnology*>( this )->mPassThroughFixedOutput = scenario->getMarketplace()->getPrice( fixedDemandActivityName, aRegionName, aPeriod );
     return mPassThroughFixedOutput;
 }
 

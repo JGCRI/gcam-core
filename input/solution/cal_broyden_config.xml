@@ -87,7 +87,7 @@
             <bracket-interval>0.05</bracket-interval>
             <max-bracket-iterations>20</max-bracket-iterations>
             <max-iterations>10</max-iterations>
-            <solution-info-filter>unsolved &amp;&amp; solvable</solution-info-filter>
+            <solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; price-greater-than="0"</solution-info-filter>
         </bisect-all-solver-component>
     </user-configurable-solver>
     <!-- The SolutionInfoParamParser object allows us to specify the following solution algorithm

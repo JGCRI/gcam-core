@@ -177,33 +177,6 @@ double SectorUtils::getTrialSupply( const string& aRegionName,
 }
 
 /*!
- * \brief Set a request for a sector to create a trial supply market for
- *          itself.
- * \details Sets a flag in the sector's market info asking it to create a trial
- *          supply market for itself. This must be done before the initCalc
- *          method is called for the sector in the period where the trial supply
- *          is required.
- * \param aRegion Region of the sector.
- * \param aSector Sector which should create a trial supply market.
- * \todo Find a more elegant way to do this.
- */
-void SectorUtils::askToCreateTrialSupply( const string& aRegionName,
-                                          const string& aSectorName )
-{
-    // Get the market info for the sector.
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    // Always set the flag in period 0.
-    IInfo* sectorInfo = marketplace->getMarketInfo( aSectorName, aRegionName, 0, true );
-
-    // If the market does not exist the sector info will not exist. The
-    // marketplace will print a warning.
-    if( sectorInfo ){
-        sectorInfo->setBoolean( "create-trial-supply", true );
-    }
-}
-
-/*!
  * \brief Calculate the scale factor used to reduce fixed output.
  * \details Calculates the scaling factor applied to fixed output in the sector
  *          when fixed output exceeds the market demand. The scale factor is one

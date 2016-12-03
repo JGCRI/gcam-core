@@ -315,11 +315,9 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     // greatly affect the trial values.
 
                     // Never intentionally set a trial demand or trial value
-                    // to something less than zero.  If a trial demand
-                    // is less than zero, set it to a small positive
-                    // number.
+                    // to something less than zero.
                     if(pass>0) {
-                        if(olddmnd <= 0.0) {
+                        if(oldprice <= 0.0) {
                             newprice = util::getSmallNumber();
                             solvable[i].setPrice(newprice);
                             chg = true;
