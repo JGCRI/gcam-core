@@ -43,9 +43,14 @@ test_that("matches old data system output", {
     # Finally, test (NB rounding numeric columns to a sensible number of
     # digits; otherwise spurious mismatches occur)
     DIGITS <- 3
-    olddata <- rapply(object = olddata, f = round, classes = "numeric", how = "replace", digits = DIGITS)
-    newdata <- rapply(object = newdata, f = round, classes = "numeric", how = "replace", digits = DIGITS)
+    round_df <- function(x, digits = DIGITS) {
+      numeric_columns <- sapply(x, class) == "numeric"
+      x[numeric_columns] <- round(x[numeric_columns], digits)
+      x
+    }
 
-    expect_equivalent(newdata, olddata, label = paste(basename(newf), "doesn't match"))
+    expect_equivalent(round_df(olddata),
+                      round_df(newdata),
+                      label = paste(basename(newf), "doesn't match"))
   }
 })
