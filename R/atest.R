@@ -30,5 +30,5 @@ atest_makedata <- function(all_data) {
 
   stopifnot(!is.null(all_data["L200.ModelTime"]))
 
-  list("atestoutput" = 1)
+  list("atestoutput" = tibble::tibble(x = 1))
 }

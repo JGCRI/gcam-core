@@ -5,11 +5,35 @@
 #'
 #' Load an internal, i.e. included with the package, csv (or csv.gz) data file
 #' @param filename Name of file to load
-#' @param ... Any other parameter to pass to \code{read_csv}
+#' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @return data frame from file
 load_csv <- function(filename, ...) {
+  assertthat::assert_that(is.character(filename))
   fqfn <- system.file("extdata", filename, package = "gcamdata")
   suppressMessages(readr::read_csv(fqfn, comment = "#", ...))
+}
+
+
+#' save_chunkdata
+#'
+#' @param chunkdata Named list of data frames to write
+#' Write data produced by chunks to csv files.
+#' @param chunkdata List of tibbles to write
+save_chunkdata <- function(chunkdata) {
+  assertthat::assert_that(is.list(chunkdata))
+  assertthat::assert_that(!is.null(names(chunkdata)))
+
+  dir.create(OUTPUTS_DIR, showWarnings = FALSE, recursive = TRUE)
+  for(cn in names(chunkdata)) {
+    fqfn <- file.path(OUTPUTS_DIR, paste0(cn, ".csv"))
+    suppressWarnings(file.remove(fqfn))
+
+    cd <- chunkdata[[cn]]
+    if(!is.null(comment(cd))) {
+      cat(paste("#", comment(cd)), file = fqfn, sep = "\n")
+    }
+    readr::write_csv(cd, fqfn, append = TRUE, col_names = TRUE)
+  }
 }
 
 

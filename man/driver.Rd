@@ -4,7 +4,10 @@
 \alias{driver}
 \title{driver}
 \usage{
-driver()
+driver(write_outputs = FALSE)
+}
+\arguments{
+\item{write_outputs}{Write all chunk outputs to disk?}
 }
 \value{
 a list of all built data

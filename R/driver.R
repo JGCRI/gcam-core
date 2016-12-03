@@ -5,11 +5,12 @@
 #'
 #' Run the entire data system
 #'
+#' @param write_outputs Write all chunk outputs to disk?
 #' @return a list of all built data
 #' @export
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
-driver <- function() {
+driver <- function(write_outputs = TRUE) {
 
   chunklist <- find_chunks()
   cat("Found", nrow(chunklist), "chunks\n")
@@ -48,13 +49,19 @@ driver <- function() {
       chunks_to_run <- chunks_to_run[chunks_to_run != chunk]
     } # for
 
-    # We have to be able to run at >=1 chunk every loop iteration
+    # We have to be able to run >=1 chunk every loop iteration
     if(length(chunks_to_run) == nchunks) {
       stop("No chunks were run--we are stuck")
     }
   } # while
 
   cat(length(all_data), "data frames generated\n")
+
+  if(write_outputs) {
+    cat("Writing chunk data...\n")
+    save_chunkdata(all_data)
+  }
+
   cat("All done.\n")
   invisible(all_data)
 }
