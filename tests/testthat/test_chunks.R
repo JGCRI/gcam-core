@@ -33,10 +33,25 @@ test_that("handles DECLARE_OUTPUTS", {
 })
 
 test_that("errors if required data not available", {
-  chunklist <- chunk_dependencies()
+  chunkdeps <- chunk_dependencies()
 
-  for(ch in unique(chunklist$name)) {
+  for(ch in unique(chunkdeps$name)) {
     cl <- call(ch, driver.MAKE, NULL)
     expect_error(eval(cl), label = ch)
+  }
+})
+
+test_that("DECLARE_OUTPUTS and MAKE names match if no dependencies", {
+  chunklist <- find_chunks()
+  chunkdeps <- chunk_dependencies()
+  nodeps <- setdiff(chunklist$name, chunkdeps$name)
+
+  for(ch in nodeps) {
+    cl <- call(ch, driver.DECLARE_OUTPUTS)
+    chnames <- eval(cl)
+    cl <- call(ch, driver.MAKE, NULL)
+    chdata <- eval(cl)
+
+    expect_equal(sort(chnames), sort(names(chdata)), label = ch)
   }
 })
