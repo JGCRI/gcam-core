@@ -3,11 +3,11 @@
 
 #' module_socioeconomics_L100.GDP_hist
 #'
-#' Construct the \code{socioeconomics} data structures
+#' Construct the \code{socioeconomics} data structures.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}
+#' @return Depends on \code{command}.
 #' @author BBL
 #' @export
 module_socioeconomics_L100.GDP_hist <- function(command, ...) {
@@ -26,7 +26,7 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
 #' socioeconomics_L100.GDP_hist_makedata
 #'
 #' @param all_data A named list, holding all data system products so far
-#' @return A named list with all socioeconomics_L100.GDP_hist_makedata data
+#' @return A named list with all \code{socioeconomics_L100.GDP_hist_makedata} data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread

@@ -3,11 +3,11 @@
 
 #' driver
 #'
-#' Run the entire data system
+#' Run the entire data system.
 #'
 #' @param write_outputs Write all chunk outputs to disk?
-#' @param all_data Data already loaded into data system
-#' @return a list of all built data
+#' @param all_data Data to be pre-loaded into data system
+#' @return A list of all built data.
 #' @export
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that

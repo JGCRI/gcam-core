@@ -3,11 +3,11 @@
 
 #' module_modeltime_L200.modeltime
 #'
-#' Construct the \code{modeltime} data structures
+#' Construct the \code{modeltime} data structures.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}
+#' @return Depends on \code{command}.
 #' @author BBL
 #' @export
 module_modeltime_L200.modeltime <- function(command, ...) {
@@ -28,7 +28,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
 #' modeltime_makedata
 #'
 #' @param all_data A named list, holding all data system products so far
-#' @return A named list with all modeltime data
+#' @return A named list with all modeltime data.
 #' @importFrom tibble tibble
 modeltime_makedata <- function(all_data) {
 

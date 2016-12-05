@@ -8,7 +8,7 @@
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @details The data frames read in are marked as inputs, not ones that have
 #' been computed, via \code{\link{add_dscomments}}.
-#' @return list of data frames (tibbles)
+#' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
 load_csv_files <- function(filenames, ...) {
   assertthat::assert_that(is.character(filenames))
@@ -28,7 +28,7 @@ load_csv_files <- function(filenames, ...) {
 #'
 #' Find an internal, i.e. included with the package, data file.
 #' @param filename Bare (no extension) filename to find
-#' @return full name of file
+#' @return Full name of file.
 find_csv_file <- function(filename) {
   assertthat::assert_that(is.character(filename))
   assert_that(assert_that(length(filename) == 1))
@@ -83,7 +83,7 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE) {
 #' find_chunks
 #'
 #' Get a list of chunks in this package.
-#' These are functions with a name of "module_{modulename}_{chunkname}"
+#' These are functions with a name of "module_{modulename}_{chunkname}".
 #' @param pattern Regular expression pattern to search for
 #' @return A data frame with fields 'name', 'module', and 'chunk'.
 #' @importFrom magrittr "%>%"
@@ -119,11 +119,12 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 
 #' chunk_outputs
 #'
+#' List all chunk outputs.
+#'
 #' @param chunks A character vector of chunks names
 #' @return A tibble with columns 'name' (chunk name) and 'output' (name of data)
 #' @export
 chunk_outputs <- function(chunks = find_chunks()$name) {
-  # Get list of data required by each chunk
   chunkinputs <- list()
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
@@ -140,17 +141,18 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
 #'
 #' @param x An object
 #' @param comments A character vector of comments
-#' @return \code{x} with comments appended to any existing comments
+#' @return \code{x} with comments appended to any existing comments.
 add_dscomments <- function(x, comments) {
   assertthat::assert_that(is.character(comments))
   comment(x) <- c(comment(x), comments)
   x
 }
 
+
 #' get_dscomments
 #'
 #' @param x An object
-#' @return comments attached to \code{x}
+#' @return Comments attached to \code{x}.
 get_dscomments <- function(x) {
   comment(x)
 }
@@ -163,7 +165,7 @@ get_dscomments <- function(x) {
 #'
 #' @param all_data Data structure
 #' @param name Name of data to return
-#' @return Data structure (currently, a tibble or data frame)
+#' @return Data object (currently, a tibble or data frame).
 get_data <- function(all_data, name) {
   all_data[[name]]
 }
