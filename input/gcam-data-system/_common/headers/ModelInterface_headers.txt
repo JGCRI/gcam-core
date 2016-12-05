@@ -7,7 +7,7 @@ ModelTime, modeltime/+{time-step}start-year, modeltime/+start-year, modeltime/+f
 
 ModelTimeInterYears, modeltime/+{time-step}inter-year, modeltime/+inter-year, scenario, scenario/modeltime
 
-MAGICC, MagiccModel/+last-historical-year, MagiccModel/+bc-unit-forcing, MagiccModel/+carbon-model-start-year, scenario, scenario/world, world/MagiccModel
+MAGICC, MagiccModel/+last-historical-year, MagiccModel/+bc-unit-forcing, MagiccModel/+ghgInputFileName, MagiccModel/+carbon-model-start-year, scenario, scenario/world, world/MagiccModel
 
 hector, HectorModel/+hector-end-year, HectorModel/+emissions-switch-year, HectorModel/+hector-ini-file, HectorModel/+carbon-model-start-year, scenario, scenario/world, world/HectorModel
 
