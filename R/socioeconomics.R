@@ -56,8 +56,8 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
 socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
 
   #printlog( "Historical GDP downscaled to modern country" )
-  usda_gdp_mer <- all_data[["socioeconomics.USDA_GDP_MER"]]
-  assert_that(is.data.frame(usda_gdp_mer))
+  usda_gdp_mer <- get_data(all_data, "socioeconomics.USDA_GDP_MER")
+  assert_that(tibble::is.tibble(usda_gdp_mer))
 
   # At present the GDP database used requires no downscaling and all
   # major countries are included, so really no processing steps are needed.
@@ -77,5 +77,5 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
     add_dscomments(LONG_NO_X_FORM) ->
     L100.gdp_mil90usd_ctry_Yh
 
-  list("L100.gdp_mil90usd_ctry_Yh" = L100.gdp_mil90usd_ctry_Yh)
+  return_data(L100.gdp_mil90usd_ctry_Yh)
 }

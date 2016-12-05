@@ -56,8 +56,5 @@ modeltime_makedata <- function(all_data) {
                         hector.ini.file         = modeltime.HECTOR_INI_FILE,
                         carbon.model.start.year = modeltime.MAGICC_C_START_YEAR)
 
-  list("L200.ModelTime"           = L200.ModelTime,
-       "L200.ModelTimeInterYears" = L200.ModelTimeInterYears,
-       "L200.MAGICC"              = L200.MAGICC,
-       "L200.hector"              = L200.hector)
+  return_data(L200.ModelTime, L200.ModelTimeInterYears, L200.MAGICC, L200.hector)
 }

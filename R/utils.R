@@ -107,3 +107,29 @@ add_dscomments <- function(x, comments) {
 get_dscomments <- function(x) {
   comment(x)
 }
+
+
+#' getdata
+#'
+#' This function returns a data frame (currently) in \code{all_data},
+#' abstract away the mechanism for access it.
+#'
+#' @param all_data Data structure
+#' @param name Name of data to return
+#' @return Data structure (currently, a tibble or data frame)
+get_data <- function(all_data, name) {
+  all_data[[name]]
+}
+
+
+#' return_data
+#'
+#' Construct a data structure of objects (\code{...}) and return it.
+#' Abstracts this away from chunk function code.
+#' @param ... Objects to handle
+#' @return Object ready for insertion into the data system data structure.
+return_data <- function(...) {
+  dots <- list(...)
+  names(dots) <- as.list(substitute(list(...)))[-1L]
+  dots
+}
