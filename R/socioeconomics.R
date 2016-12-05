@@ -1,29 +1,6 @@
 # socioeconomics.R
 
 
-#' module_socioeconomics_inputs
-#'
-#' Load the \code{socioeconomics} input data
-#'
-#' @param command API command to execute
-#' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}
-#' @author BBL
-#' @export
-module_socioeconomics_inputs <- function(command, ...) {
-  if(command == driver.DECLARE_INPUTS) {
-    return(NULL)   # module_socioeconomics_inputs doesn't depend on anything
-  } else if(command == driver.DECLARE_OUTPUTS) {
-    return("socioeconomics.USDA_GDP_MER")
-  } else if(command == driver.MAKE) {
-    # Read an input file and return data
-    return(list("socioeconomics.USDA_GDP_MER" = load_csv("USDA_GDP_MER.csv")))
-  } else {
-    stop("Unknown command")
-  }
-}
-
-
 #' module_socioeconomics_L100.GDP_hist
 #'
 #' Construct the \code{socioeconomics} data structures
@@ -35,7 +12,7 @@ module_socioeconomics_inputs <- function(command, ...) {
 #' @export
 module_socioeconomics_L100.GDP_hist <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return("socioeconomics.USDA_GDP_MER")
+    return("USDA_GDP_MER")
   } else if(command == driver.DECLARE_OUTPUTS) {
     return("L100.gdp_mil90usd_ctry_Yh")
   } else if(command == driver.MAKE) {
@@ -56,7 +33,7 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
 socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
 
   #printlog( "Historical GDP downscaled to modern country" )
-  usda_gdp_mer <- get_data(all_data, "socioeconomics.USDA_GDP_MER")
+  usda_gdp_mer <- get_data(all_data, "USDA_GDP_MER")
   assert_that(tibble::is.tibble(usda_gdp_mer))
 
   # At present the GDP database used requires no downscaling and all

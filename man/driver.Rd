@@ -4,10 +4,12 @@
 \alias{driver}
 \title{driver}
 \usage{
-driver(write_outputs = TRUE)
+driver(write_outputs = TRUE, all_data = empty_data())
 }
 \arguments{
 \item{write_outputs}{Write all chunk outputs to disk?}
+
+\item{all_data}{Data already loaded into data system}
 }
 \value{
 a list of all built data

@@ -1,19 +1,46 @@
 # utils.R
 
 
-#' load_csv
+#' load_csv_files
 #'
-#' Load an internal, i.e. included with the package, csv (or csv.gz) data file
-#' @param filename Name of file to load
+#' Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.
+#' @param filenames Character vector of filenames to load
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
-#' @details The data frame read in is marked as an input, not one that has
+#' @details The data frames read in are marked as inputs, not ones that have
 #' been computed, via \code{\link{add_dscomments}}.
-#' @return data frame from file
-load_csv <- function(filename, ...) {
+#' @return list of data frames (tibbles)
+#' @importFrom magrittr "%>%"
+load_csv_files <- function(filenames, ...) {
+  assertthat::assert_that(is.character(filenames))
+  filedata <- list()
+  for(f in filenames) {
+    cat("Loading", f, "...\n")
+    fqfn <- find_csv_file(f)
+    suppressMessages(readr::read_csv(fqfn, comment = "#", ...)) %>%
+      add_dscomments(INPUT_DATA_MARKER) ->
+      filedata[[f]]
+  }
+  filedata
+}
+
+
+#' find_csv_file
+#'
+#' Find an internal, i.e. included with the package, data file.
+#' @param filename Bare (no extension) filename to find
+#' @return full name of file
+find_csv_file <- function(filename) {
   assertthat::assert_that(is.character(filename))
-  fqfn <- system.file("extdata", filename, package = "gcamdata")
-  df <- suppressMessages(readr::read_csv(fqfn, comment = "#", ...))
-  add_dscomments(df, INPUT_DATA_MARKER)
+  assert_that(assert_that(length(filename) == 1))
+  extensions <- c("", ".csv", ".csv.gz", ".csv.zip")
+  for(ex in extensions) {
+    fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
+    if(fqfn != "") {
+      cat("Found", fqfn, "\n")
+      return(fqfn)  # found it
+    }
+  }
+  stop("Couldn't find required data ", filename)
 }
 
 
@@ -71,11 +98,12 @@ find_chunks <- function(pattern = "^module_[a-zA-Z]*_.*$") {
 }
 
 
-#' chunk_dependencies
+#' chunk_inputs
 #'
 #' @param chunks A character vector of chunks names
 #' @return A tibble with columns 'name' (chunk name) and 'input' (name of data)
-chunk_dependencies <- function(chunks = find_chunks()$name) {
+#' @export
+chunk_inputs <- function(chunks = find_chunks()$name) {
   # Get list of data required by each chunk
   chunkinputs <- list()
   for(ch in chunks) {
@@ -83,6 +111,25 @@ chunk_dependencies <- function(chunks = find_chunks()$name) {
     reqdata <- eval(cl)
     if(!is.null(reqdata)) {
       chunkinputs[[ch]] <- tibble(name = ch, input = reqdata)
+    }
+  }
+  dplyr::bind_rows(chunkinputs)
+}
+
+
+#' chunk_outputs
+#'
+#' @param chunks A character vector of chunks names
+#' @return A tibble with columns 'name' (chunk name) and 'output' (name of data)
+#' @export
+chunk_outputs <- function(chunks = find_chunks()$name) {
+  # Get list of data required by each chunk
+  chunkinputs <- list()
+  for(ch in chunks) {
+    cl <- call(ch, driver.DECLARE_OUTPUTS)
+    reqdata <- eval(cl)
+    if(!is.null(reqdata)) {
+      chunkinputs[[ch]] <- tibble(name = ch, output = reqdata)
     }
   }
   dplyr::bind_rows(chunkinputs)
@@ -132,4 +179,26 @@ return_data <- function(...) {
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]
   dots
+}
+
+
+#' empty_data
+#'
+#' @return An empty data store
+empty_data <- function() { list() }
+
+
+#' add_data
+#'
+#' Add \code{data_list} to an existing data store.
+#'
+#' @param data_list List of data frames or other objects
+#' @param all_data An existing (possibly empty) data store
+#'
+#' @return An empty data store
+add_data <- function(data_list, all_data) {
+  for(d in names(data_list)) {
+    all_data[[d]] <- data_list[[d]]
+  }
+  all_data
 }

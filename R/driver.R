@@ -6,21 +6,32 @@
 #' Run the entire data system
 #'
 #' @param write_outputs Write all chunk outputs to disk?
+#' @param all_data Data already loaded into data system
 #' @return a list of all built data
 #' @export
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
-driver <- function(write_outputs = TRUE) {
+driver <- function(write_outputs = TRUE, all_data = empty_data()) {
   assert_that(is.logical(write_outputs))
 
   chunklist <- find_chunks()
   cat("Found", nrow(chunklist), "chunks\n")
 
-  chunkinputs <- chunk_dependencies(chunklist$name)
+  chunkinputs <- chunk_inputs(chunklist$name)
   cat("Found", nrow(chunkinputs), "chunk data requirements\n")
+  chunkoutputs <- chunk_outputs(chunklist$name)
+  cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
-  # all_data holds all the data produced by chunks
-  all_data <- list()
+  # If there are any unaccounted for input requirements,
+  # try to load them from csv files
+  unfound_inputs <- setdiff(chunkinputs$input, chunkoutputs$output)
+  if(length(unfound_inputs)) {
+    cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
+    load_csv_files(unfound_inputs) %>%
+      add_data(all_data) ->
+      all_data
+  }
+
   chunks_to_run <- chunklist$name
   while(length(chunks_to_run)) {
     nchunks <- length(chunks_to_run)
@@ -42,9 +53,7 @@ driver <- function(write_outputs = TRUE) {
 
       # Add this chunk's data to the global data store
       # This will overwrite any previous data returned
-      for(cd in names(chunk_data)) {
-        all_data[[cd]] <- chunk_data[[cd]]
-      }
+      all_data <- add_data(chunk_data, all_data)
 
       # Remove the current chunk from the to-run list
       chunks_to_run <- chunks_to_run[chunks_to_run != chunk]
