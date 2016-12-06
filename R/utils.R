@@ -19,7 +19,7 @@ load_csv_files <- function(filenames, quiet = FALSE, ...) {
     if(!quiet) cat("Loading", f, "...\n")
     fqfn <- find_csv_file(f, quiet = quiet)
     suppressMessages(readr::read_csv(fqfn, comment = "#", ...)) %>%
-      add_dscomments(INPUT_DATA_MARKER) ->
+      add_dsflags(FLAG_INPUT_DATA) ->
       filedata[[f]]
   }
   filedata
@@ -65,15 +65,16 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE) {
 
     cd <- chunkdata[[cn]]
     cmnts <- get_dscomments(cd)
+    flags <- get_dsflags(cd)
 
     # If data is in a different from for original data system, indicate
     # that by writing to first line of file
-    if(LONG_NO_X_FORM %in% cmnts) {
-      cat(LONG_NO_X_FORM, file = fqfn, sep = "\n")
+    if(FLAG_LONG_NO_X_FORM %in% flags) {
+      cat(FLAG_LONG_NO_X_FORM, file = fqfn, sep = "\n")
     }
 
     # If these data have been tagged as input data, don't write
-    if(INPUT_DATA_MARKER %in% cmnts & !write_inputs) {
+    if(FLAG_INPUT_DATA %in% flags & !write_inputs) {
       next
     }
 
@@ -148,6 +149,9 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
 
 #' add_dscomments
 #'
+#' Add character comments to a data system object. Comments are written out
+#' with the data when the file is saved.
+#'
 #' @param x An object
 #' @param comments A character vector of comments
 #' @return \code{x} with comments appended to any existing comments.
@@ -166,6 +170,29 @@ get_dscomments <- function(x) {
   comment(x)
 }
 
+
+#' add_dsflag
+#'
+#' Add character flags to a data system object. Flags are use internally, and in some
+#' cases (for testing data) are written out with the data when the file is saved.
+#'
+#' @param x An object
+#' @param comments A character vector of flags
+#' @return \code{x} with flags appended to any existing flags
+add_dsflags <- function(x, flags) {
+  assertthat::assert_that(is.character(flags))
+  attr(x, "flags") <- c(attr(x, "flags"), flags)
+  x
+}
+
+
+#' get_dsflags
+#'
+#' @param x An object
+#' @return Flags attached to \code{x}.
+get_dsflags <- function(x) {
+  attr(x, "flags")
+}
 
 #' getdata
 #'

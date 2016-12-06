@@ -19,13 +19,22 @@ test_that("handle empty input", {
   expect_equal(nrow(d), 0)
 })
 
-test_that("commenting system", {
+test_that("commenting system works", {
   cmnt <- "test"
   d <- tibble::tibble()
   c1 <- comment(d)
   d <- add_dscomments(d, cmnt)
   expect_gt(length(comment(d)), length(c1))
   expect_equal(get_dscomments(d), cmnt)
+})
+
+test_that("commenting system works", {
+  flag <- "test"
+  d <- tibble::tibble()
+  c1 <- get_dsflags(d)
+  d <- add_dsflags(d, flag)
+  expect_gt(length(get_dsflags(d)), length(c1))
+  expect_equal(get_dsflags(d), flag)
 })
 
 test_that("return_data works", {

@@ -18,14 +18,14 @@ test_that("matches old data system output", {
     # reshaped, and save_chunkdata puts a special marker at top of the file.
     new_firstline <- readLines(newf, n = 1)
     newskip <- 0
-    if(new_firstline %in% c(LONG_NO_X_FORM)) {
+    if(new_firstline %in% c(FLAG_LONG_NO_X_FORM)) {
       newskip <- 1
     }
 
     newdata <- read_csv(newf, comment = "#", skip = newskip)
 
     # Reshape new data if necessary--see comment above
-    if(new_firstline == LONG_NO_X_FORM) {
+    if(new_firstline == FLAG_LONG_NO_X_FORM) {
       newdata %>%
         mutate(year = paste0("X", newdata$year)) %>%
         spread(year, value) ->

@@ -15,6 +15,7 @@ add_dscomments(x, comments)
 \code{x} with comments appended to any existing comments.
 }
 \description{
-add_dscomments
+Add character comments to a data system object. Comments are written out
+with the data when the file is saved.
 }
 
