@@ -18,7 +18,7 @@ load_csv_files <- function(filenames, quiet = FALSE, ...) {
   for(f in filenames) {
     if(!quiet) cat("Loading", f, "...\n")
     fqfn <- find_csv_file(f, quiet = quiet)
-    suppressMessages(readr::read_csv(fqfn, comment = "#", ...)) %>%
+    suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
       add_dsflags(FLAG_INPUT_DATA) ->
       filedata[[f]]
   }
@@ -53,33 +53,36 @@ find_csv_file <- function(filename, quiet = FALSE) {
 #'
 #' @param chunkdata Named list of tibbles (data frames) to write
 #' @param write_inputs Write data that were read as inputs, not computed?
+#' @param outputs_dir Directory to save data into
 #' Write data produced by chunks to csv files.
-save_chunkdata <- function(chunkdata, write_inputs = FALSE) {
+save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUTS_DIR) {
   assertthat::assert_that(is.list(chunkdata))
   assertthat::assert_that(!is.null(names(chunkdata)))
+  assertthat::assert_that(is.logical(write_inputs))
+  assertthat::assert_that(is.character(outputs_dir))
 
   dir.create(OUTPUTS_DIR, showWarnings = FALSE, recursive = TRUE)
   for(cn in names(chunkdata)) {
-    fqfn <- file.path(OUTPUTS_DIR, paste0(cn, ".csv"))
+    fqfn <- file.path(outputs_dir, paste0(cn, ".csv"))
     suppressWarnings(file.remove(fqfn))
 
     cd <- chunkdata[[cn]]
     cmnts <- get_dscomments(cd)
     flags <- get_dsflags(cd)
 
-    # If data is in a different from for original data system, indicate
-    # that by writing to first line of file
-    if(FLAG_LONG_NO_X_FORM %in% flags) {
-      cat(FLAG_LONG_NO_X_FORM, file = fqfn, sep = "\n")
-    }
-
     # If these data have been tagged as input data, don't write
     if(FLAG_INPUT_DATA %in% flags & !write_inputs) {
       next
     }
 
+    # If data is in a different from for original data system, indicate
+    # that by writing to first line of file
+    if(!is.null(flags)) {
+      cat(paste(flags, collapse = " "), file = fqfn, sep = "\n")
+    }
+
     if(!is.null(cmnts)) {
-      cat(paste("#", cmnts), file = fqfn, sep = "\n", append = TRUE)
+      cat(paste(COMMENT_CHAR, cmnts), file = fqfn, sep = "\n", append = TRUE)
     }
     readr::write_csv(cd, fqfn, append = TRUE, col_names = TRUE)
   }
@@ -177,7 +180,7 @@ get_dscomments <- function(x) {
 #' cases (for testing data) are written out with the data when the file is saved.
 #'
 #' @param x An object
-#' @param comments A character vector of flags
+#' @param flags A character vector of flags
 #' @return \code{x} with flags appended to any existing flags
 add_dsflags <- function(x, flags) {
   assertthat::assert_that(is.character(flags))

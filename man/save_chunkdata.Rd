@@ -4,12 +4,14 @@
 \alias{save_chunkdata}
 \title{save_chunkdata}
 \usage{
-save_chunkdata(chunkdata, write_inputs = FALSE)
+save_chunkdata(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT_DIR)
 }
 \arguments{
 \item{chunkdata}{Named list of tibbles (data frames) to write}
 
-\item{write_inputs}{Write data that were read as inputs, not computed?
+\item{write_inputs}{Write data that were read as inputs, not computed?}
+
+\item{outputs_dir}{Directory to save data into
 Write data produced by chunks to csv files.}
 }
 \description{
