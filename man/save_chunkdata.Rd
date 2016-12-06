@@ -4,7 +4,7 @@
 \alias{save_chunkdata}
 \title{save_chunkdata}
 \usage{
-save_chunkdata(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT_DIR)
+save_chunkdata(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUTS_DIR)
 }
 \arguments{
 \item{chunkdata}{Named list of tibbles (data frames) to write}
