@@ -13,6 +13,6 @@ chunk_outputs(chunks = find_chunks()$name)
 A tibble with columns 'name' (chunk name) and 'output' (name of data)
 }
 \description{
-chunk_outputs
+List all chunk outputs.
 }
 

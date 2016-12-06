@@ -12,10 +12,10 @@ module_socioeconomics_L100.GDP_hist(command, ...)
 \item{...}{other optional parameters, depending on command}
 }
 \value{
-Depends on \code{command}
+Depends on \code{command}.
 }
 \description{
-Construct the \code{socioeconomics} data structures
+Construct the \code{socioeconomics} data structures.
 }
 \author{
 BBL

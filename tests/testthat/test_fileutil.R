@@ -15,4 +15,10 @@ test_that("handle empty input", {
   x <- load_csv_files(character(0))
   expect_is(x, "list")
   expect_length(x, 0)
+  expect_error(file_csv_file(character(0)))
+})
+
+test_that("nonexistent file", {
+  expect_error(load_csv_files("SDFKJFDJKSHGF", quiet = TRUE))
+  expect_error(find_csv_file("SDFKJFDJKSHGF", quiet = TRUE))
 })

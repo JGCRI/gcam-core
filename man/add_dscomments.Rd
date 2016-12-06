@@ -12,7 +12,7 @@ add_dscomments(x, comments)
 \item{comments}{A character vector of comments}
 }
 \value{
-\code{x} with comments appended to any existing comments
+\code{x} with comments appended to any existing comments.
 }
 \description{
 add_dscomments

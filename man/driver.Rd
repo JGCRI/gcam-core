@@ -9,12 +9,12 @@ driver(write_outputs = TRUE, all_data = empty_data())
 \arguments{
 \item{write_outputs}{Write all chunk outputs to disk?}
 
-\item{all_data}{Data already loaded into data system}
+\item{all_data}{Data to be pre-loaded into data system}
 }
 \value{
-a list of all built data
+A list of all built data.
 }
 \description{
-Run the entire data system
+Run the entire data system.
 }
 

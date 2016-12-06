@@ -4,15 +4,17 @@
 \alias{load_csv_files}
 \title{load_csv_files}
 \usage{
-load_csv_files(filenames, ...)
+load_csv_files(filenames, quiet = FALSE, ...)
 }
 \arguments{
 \item{filenames}{Character vector of filenames to load}
 
+\item{quiet}{Logical - suppress messages?}
+
 \item{...}{Any other parameter to pass to \code{readr::read_csv}}
 }
 \value{
-list of data frames (tibbles)
+A list of data frames (tibbles).
 }
 \description{
 Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.

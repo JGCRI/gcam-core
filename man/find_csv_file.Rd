@@ -4,13 +4,15 @@
 \alias{find_csv_file}
 \title{find_csv_file}
 \usage{
-find_csv_file(filename)
+find_csv_file(filename, quiet = FALSE)
 }
 \arguments{
-\item{filename}{Bare (no extension) filename to find}
+\item{filename}{Filename (extension optional) to find}
+
+\item{quiet}{Logical - suppress messages?}
 }
 \value{
-full name of file
+Full name of file.
 }
 \description{
 Find an internal, i.e. included with the package, data file.

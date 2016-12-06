@@ -10,7 +10,7 @@ get_dscomments(x)
 \item{x}{An object}
 }
 \value{
-comments attached to \code{x}
+Comments attached to \code{x}.
 }
 \description{
 get_dscomments

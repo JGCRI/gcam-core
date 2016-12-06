@@ -5,17 +5,19 @@
 #'
 #' Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.
 #' @param filenames Character vector of filenames to load
+#' @param quiet Logical - suppress messages?
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @details The data frames read in are marked as inputs, not ones that have
 #' been computed, via \code{\link{add_dscomments}}.
 #' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
-load_csv_files <- function(filenames, ...) {
+load_csv_files <- function(filenames, quiet = FALSE, ...) {
   assertthat::assert_that(is.character(filenames))
+  assertthat::assert_that(is.logical(quiet))
   filedata <- list()
   for(f in filenames) {
-    cat("Loading", f, "...\n")
-    fqfn <- find_csv_file(f)
+    if(!quiet) cat("Loading", f, "...\n")
+    fqfn <- find_csv_file(f, quiet = quiet)
     suppressMessages(readr::read_csv(fqfn, comment = "#", ...)) %>%
       add_dscomments(INPUT_DATA_MARKER) ->
       filedata[[f]]
@@ -27,16 +29,19 @@ load_csv_files <- function(filenames, ...) {
 #' find_csv_file
 #'
 #' Find an internal, i.e. included with the package, data file.
-#' @param filename Bare (no extension) filename to find
+#' @param filename Filename (extension optional) to find
+#' @param quiet Logical - suppress messages?
 #' @return Full name of file.
-find_csv_file <- function(filename) {
+find_csv_file <- function(filename, quiet = FALSE) {
   assertthat::assert_that(is.character(filename))
   assert_that(assert_that(length(filename) == 1))
+  assertthat::assert_that(is.logical(quiet))
+
   extensions <- c("", ".csv", ".csv.gz", ".csv.zip")
   for(ex in extensions) {
     fqfn <- system.file("extdata", paste0(filename, ex), package = "gcamdata")
     if(fqfn != "") {
-      cat("Found", fqfn, "\n")
+      if(!quiet) cat("Found", fqfn, "\n")
       return(fqfn)  # found it
     }
   }
@@ -104,6 +109,8 @@ find_chunks <- function(pattern = "^module_[a-zA-Z]*_.*$") {
 #' @return A tibble with columns 'name' (chunk name) and 'input' (name of data)
 #' @export
 chunk_inputs <- function(chunks = find_chunks()$name) {
+  assertthat::assert_that(is.character(chunks))
+
   # Get list of data required by each chunk
   chunkinputs <- list()
   for(ch in chunks) {
@@ -125,6 +132,8 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 #' @return A tibble with columns 'name' (chunk name) and 'output' (name of data)
 #' @export
 chunk_outputs <- function(chunks = find_chunks()$name) {
+  assertthat::assert_that(is.character(chunks))
+
   chunkinputs <- list()
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
@@ -160,8 +169,8 @@ get_dscomments <- function(x) {
 
 #' getdata
 #'
-#' This function returns a data frame (currently) in \code{all_data},
-#' abstract away the mechanism for access it.
+#' This function returns a tibble (currently) in \code{all_data},
+#' abstracting away the mechanism for accessing it from the chunks.
 #'
 #' @param all_data Data structure
 #' @param name Name of data to return
@@ -199,6 +208,8 @@ empty_data <- function() { list() }
 #'
 #' @return An empty data store
 add_data <- function(data_list, all_data) {
+  assertthat::assert_that(!is.null(names(data_list)))
+
   for(d in names(data_list)) {
     all_data[[d]] <- data_list[[d]]
   }

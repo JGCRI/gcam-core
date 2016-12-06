@@ -14,6 +14,6 @@ A data frame with fields 'name', 'module', and 'chunk'.
 }
 \description{
 Get a list of chunks in this package.
-These are functions with a name of "module_{modulename}_{chunkname}"
+These are functions with a name of "module_{modulename}_{chunkname}".
 }
 

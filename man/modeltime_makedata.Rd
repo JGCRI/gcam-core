@@ -10,7 +10,7 @@ modeltime_makedata(all_data)
 \item{all_data}{A named list, holding all data system products so far}
 }
 \value{
-A named list with all modeltime data
+A named list with all modeltime data.
 }
 \description{
 modeltime_makedata

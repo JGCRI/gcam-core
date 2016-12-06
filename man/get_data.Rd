@@ -12,10 +12,10 @@ get_data(all_data, name)
 \item{name}{Name of data to return}
 }
 \value{
-Data structure (currently, a tibble or data frame)
+Data object (currently, a tibble or data frame).
 }
 \description{
-This function returns a data frame (currently) in \code{all_data},
-abstract away the mechanism for access it.
+This function returns a tibble (currently) in \code{all_data},
+abstracting away the mechanism for accessing it from the chunks.
 }
 

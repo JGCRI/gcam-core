@@ -12,10 +12,10 @@ module_modeltime_L200.modeltime(command, ...)
 \item{...}{other optional parameters, depending on command}
 }
 \value{
-Depends on \code{command}
+Depends on \code{command}.
 }
 \description{
-Construct the \code{modeltime} data structures
+Construct the \code{modeltime} data structures.
 }
 \author{
 BBL
