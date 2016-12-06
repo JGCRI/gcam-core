@@ -22,7 +22,7 @@ test_that("matches old data system output", {
       newskip <- 1
     }
 
-    newdata <- read_csv(newf, comment = "#", skip = newskip)
+    newdata <- read_csv(newf, comment = COMMENT_CHAR, skip = newskip)
 
     # Reshape new data if necessary--see comment above
     if(new_firstline == FLAG_LONG_NO_X_FORM) {
@@ -38,7 +38,7 @@ test_that("matches old data system output", {
     # If the old file has an "INPUT_TABLE" header, need to skip that
     old_firstline <- readLines(oldf, n = 1)
     oldskip <- ifelse(old_firstline == "INPUT_TABLE", 4, 0)
-    olddata <- read_csv(oldf, comment = "#", skip = oldskip)
+    olddata <- read_csv(oldf, comment = COMMENT_CHAR, skip = oldskip)
 
     # Finally, test (NB rounding numeric columns to a sensible number of
     # digits; otherwise spurious mismatches occur)

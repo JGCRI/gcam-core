@@ -2,6 +2,7 @@
 # ======================================================================
 # Behavior constants
 OUTPUTS_DIR <- "outputs/"
+COMMENT_CHAR <- "#"
 FLAG_INPUT_DATA <- "INPUT_DATA"
 FLAG_LONG_NO_X_FORM <- "LONG_NO_X_FORM"
 

@@ -9,7 +9,7 @@ add_dsflags(x, flags)
 \arguments{
 \item{x}{An object}
 
-\item{comments}{A character vector of flags}
+\item{flags}{A character vector of flags}
 }
 \value{
 \code{x} with flags appended to any existing flags
