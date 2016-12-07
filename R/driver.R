@@ -46,9 +46,11 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
       }
 
       # Order chunk to build its data
-      print("- make")
-      cl <- call(chunk, driver.MAKE, all_data)
-      chunk_data <- eval(cl)
+      tim <- system.time({
+        cl <- call(chunk, driver.MAKE, all_data)
+        chunk_data <- eval(cl)
+      })
+      print(paste("- make", format(round(tim[1], 2), nsmall = 2)))
       assert_that(is.list(chunk_data))
 
       # Add this chunk's data to the global data store
