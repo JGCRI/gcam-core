@@ -5,6 +5,7 @@ OUTPUTS_DIR <- "outputs/"
 COMMENT_CHAR <- "#"
 FLAG_INPUT_DATA <- "INPUT_DATA"
 FLAG_LONG_NO_X_FORM <- "LONG_NO_X_FORM"
+FLAG_NO_OUTPUT <- "NO_OUTPUT"
 
 # ======================================================================
 # Time constants
@@ -14,6 +15,8 @@ FUTURE_YEARS <- seq( 2015, 2100, 5 )
 # ======================================================================
 # Conversion constants
 CONV_BIL_MIL <- 1000
+CONV_MIL_THOUS <- 1000
+CONV_ONES_THOUS <- 0.001
 CONV_1990_2005_USD <- 1.383
 
 # ======================================================================

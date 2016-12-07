@@ -71,7 +71,8 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
     flags <- get_dsflags(cd)
 
     # If these data have been tagged as input data, don't write
-    if(FLAG_INPUT_DATA %in% flags & !write_inputs) {
+    if(FLAG_NO_OUTPUT %in% flags |
+       FLAG_INPUT_DATA %in% flags & !write_inputs) {
       next
     }
 
@@ -96,7 +97,7 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
 #' @param pattern Regular expression pattern to search for
 #' @return A data frame with fields 'name', 'module', and 'chunk'.
 #' @importFrom magrittr "%>%"
-find_chunks <- function(pattern = "^module_[a-zA-Z]*_.*$") {
+find_chunks <- function(pattern = "^module_[a-zA-Z-]*_.*$") {
   assertthat::assert_that(is.character(pattern))
 
   ls(name = parent.env(environment()), pattern = pattern) %>%
@@ -176,7 +177,7 @@ get_dscomments <- function(x) {
 
 #' add_dsflag
 #'
-#' Add character flags to a data system object. Flags are use internally, and in some
+#' Add character flags to a data system object. Flags are used internally, and in some
 #' cases (for testing data) are written out with the data when the file is saved.
 #'
 #' @param x An object
@@ -201,11 +202,13 @@ get_dsflags <- function(x) {
 #'
 #' This function returns a tibble (currently) in \code{all_data},
 #' abstracting away the mechanism for accessing it from the chunks.
+#' Throws an error if data is not present.
 #'
 #' @param all_data Data structure
 #' @param name Name of data to return
 #' @return Data object (currently, a tibble or data frame).
 get_data <- function(all_data, name) {
+  assertthat::assert_that(!is.null(all_data[[name]]))
   all_data[[name]]
 }
 
@@ -244,4 +247,25 @@ add_data <- function(data_list, all_data) {
     all_data[[d]] <- data_list[[d]]
   }
   all_data
+}
+
+
+#' approx_fun
+#'
+#' \code{\link{approx}} for use in a dplyr pipeline.
+#'
+#' @param year Numeric year, in a melted tibble or data frame
+#' @param value Numeric value to interpolate
+#' @param rule Rule to use; see \code{\link{approx}} and details
+#' @return Interpolated values.
+#' @export
+#' @examples
+#' df <- data.frame(year = 1:5, value = c(1, 2, NA, 4, 5))
+#' approx_fun(df$year, df$value, rule = 2)
+approx_fun <- function(year, value, rule = 1) {
+  if(rule == 1 | rule == 2 ) {
+    approx(as.vector(year), value, rule = rule, xout = year)$y
+  } else {
+    stop("Not implemented yet!")
+  }
 }
