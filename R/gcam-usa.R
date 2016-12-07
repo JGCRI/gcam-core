@@ -1,8 +1,6 @@
 # gcam-usa.R
 
 
-
-
 #' module_gcam-usa_LA100.Socioeconomics
 #'
 #' Construct the \code{gcam-usa} data structures.
@@ -57,6 +55,8 @@
   # printlog( "estimate what the actual per-capita GDP trends were in the pre-1987 years that have all missing values")
 
   # Reshape and interpolate input datasets
+  states_subregions <- select(states_subregions, state, state_name)
+
   BEA_pcGDP_97USD_state %>%
     gather(year, value, -Fips, -Area) %>%
     PH_year_value_historical %>%
@@ -80,16 +80,15 @@
     ungroup %>%
     filter(!year %in% unique(BEA_pcGDP_09USD_state$year)) %>%
     bind_rows(BEA_pcGDP_09USD_state) %>%
-    # Merge with state name/codes
-    left_join(states_subregions[c("state", "state_name")],
-              by = c("Area" = "state_name")) %>%
+    # merge with state name/codes
+    left_join(states_subregions, by = c("Area" = "state_name")) %>%
     select(state, year, value) %>%
-    # Merge with census data, and compute total GDP (population * per capita GDP)
+    # merge with census data, and compute total GDP (population * per capita GDP)
     left_join(Census_pop_hist, by = c("state", "year")) %>%
     mutate(value = value * 1e-6 * population) %>%
     arrange(state, year) %>%
     select(-population) %>%
-    # Compute by-state shares by year
+    # compute by-state shares by year
     group_by(year) %>%
     mutate(share = value / sum(value)) %>%
     select(-value) ->
@@ -101,6 +100,7 @@
     right_join(L100.GDPshare_state, by = c("year")) %>%
     mutate(value = value * share) %>%
     select(-share, -iso) %>%
+    # flag that this dataset is in different form from original
     add_dscomments(c("GDP by state", "Unit = million 1990 USD")) %>%
     add_dsflags(FLAG_LONG_NO_X_FORM) ->
     L100.GDP_mil90usd_state
@@ -110,6 +110,7 @@
     left_join(Census_pop_hist, by = c("state", "year")) %>%
     mutate(value = value * CONV_MIL_THOUS / population) %>%
     select(-population) %>%
+    # flag that this dataset is in different form from original
     add_dscomments(c("Per-capita GDP by state", "Unit = thousand 1990 USD per capita")) %>%
     add_dsflags(FLAG_LONG_NO_X_FORM) ->
     L100.pcGDP_thous90usd_state
@@ -130,7 +131,7 @@
     mutate(pop_ratio = population / first(population)) %>%
     arrange(state, year) %>%
     rename(state_name = state) %>%
-    left_join(states_subregions[c("state", "state_name")], by = "state_name") %>%
+    left_join(states_subregions, by = "state_name") %>%
     ungroup %>%
     select(-state_name, -population) ->
     L100.Pop_ratio_state
@@ -142,11 +143,12 @@
     right_join(L100.Pop_ratio_state, by = c("state")) %>%
     filter(year > max(HISTORICAL_YEARS)) %>%
     mutate(population = population * pop_ratio) %>%
-    select(-pop_ratio) %>%
     bind_rows(Census_pop_hist) %>%
-    mutate(population = population * CONV_ONES_THOUS) %>%
+    mutate(value = population * CONV_ONES_THOUS) %>%
+    select(-population, -pop_ratio) %>%
     arrange(state, year) %>%
-    add_dsflags(FLAG_NO_OUTPUT) %>%
+    # flag that this dataset is in different form from original
+    add_dsflags(FLAG_LONG_NO_X_FORM) %>%
     add_dscomments(c("Population by state", "Unit = thousand persons")) ->
     L100.Pop_thous_state
 
