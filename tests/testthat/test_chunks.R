@@ -36,7 +36,7 @@ test_that("errors if required data not available", {
   chunkdeps <- chunk_inputs()
 
   for(ch in unique(chunkdeps$name)) {
-    cl <- call(ch, driver.MAKE, NULL)
+    cl <- call(ch, driver.MAKE, empty_data())
     expect_error(eval(cl), label = ch)
   }
 })

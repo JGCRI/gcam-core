@@ -56,5 +56,5 @@ test_that("add/get data work", {
   expect_identical(get_data(all_data, "d1"), d1)
   expect_identical(get_data(all_data, "cars"), cars)
   expect_identical(get_data(all_data, "iris"), iris)
-  expect_null(get_data(all_data, "not_there"))
+  expect_error(get_data(all_data, "not_there"))
 })
