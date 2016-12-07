@@ -32,7 +32,7 @@ test_that("matches old data system output", {
         newdata
     }
 
-    oldf <- file.path("comparison_data", basename(newf))
+    oldf <- list.files("comparison_data", pattern = basename(newf), recursive = TRUE, full.names = TRUE)
     expect_true(file.exists(oldf), label = paste0(oldf, "doesn't exist"))
 
     # If the old file has an "INPUT_TABLE" header, need to skip that

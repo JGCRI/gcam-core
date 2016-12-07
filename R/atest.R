@@ -28,7 +28,7 @@ module_atest_xxx <- function(command, ...) {
 #' @importFrom magrittr "%>%"
 atest_makedata <- function(all_data) {
 
-  stopifnot(!is.null(all_data["L200.ModelTime"]))
+  get_data(all_data, "L200.ModelTime")
 
   tibble::tibble(x = 1) %>%
     add_dsflags(FLAG_INPUT_DATA) ->

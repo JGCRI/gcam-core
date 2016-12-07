@@ -12,7 +12,7 @@
 #' @export
 module_socioeconomics_L100.GDP_hist <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return("USDA_GDP_MER")
+    return("socioeconomics/USDA_GDP_MER")
   } else if(command == driver.DECLARE_OUTPUTS) {
     return("L100.gdp_mil90usd_ctry_Yh")
   } else if(command == driver.MAKE) {
@@ -33,7 +33,7 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
 socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
 
   #printlog( "Historical GDP downscaled to modern country" )
-  usda_gdp_mer <- get_data(all_data, "USDA_GDP_MER")
+  usda_gdp_mer <- get_data(all_data, "socioeconomics/USDA_GDP_MER")
   assert_that(tibble::is.tibble(usda_gdp_mer))
 
   # At present the GDP database used requires no downscaling and all
@@ -45,6 +45,7 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
   # Convert to long form, filter to historical years, convert units
   usda_gdp_mer %>%
     gather(year, value, -Country, -iso) %>%
+    mutate(year = as.numeric(year)) %>%
     filter(year %in% HISTORICAL_YEARS, !is.na(value), !is.na(iso)) %>%
     mutate(value = value * CONV_BIL_MIL / CONV_1990_2005_USD) %>%
     select(-Country) %>%

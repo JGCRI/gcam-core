@@ -4,7 +4,7 @@
 \alias{find_chunks}
 \title{find_chunks}
 \usage{
-find_chunks(pattern = "^module_[a-zA-Z]*_.*$")
+find_chunks(pattern = "^module_[a-zA-Z-]*_.*$")
 }
 \arguments{
 \item{pattern}{Regular expression pattern to search for}

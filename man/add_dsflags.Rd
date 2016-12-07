@@ -15,7 +15,7 @@ add_dsflags(x, flags)
 \code{x} with flags appended to any existing flags
 }
 \description{
-Add character flags to a data system object. Flags are use internally, and in some
+Add character flags to a data system object. Flags are used internally, and in some
 cases (for testing data) are written out with the data when the file is saved.
 }
 
