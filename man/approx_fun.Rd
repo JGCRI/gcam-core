@@ -4,7 +4,7 @@
 \alias{approx_fun}
 \title{approx_fun}
 \usage{
-approx_fun(year, value, rule)
+approx_fun(year, value, rule = 1)
 }
 \arguments{
 \item{year}{Numeric year, in a melted tibble or data frame}
