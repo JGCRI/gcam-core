@@ -228,7 +228,7 @@ return_data <- function(...) {
 
 #' empty_data
 #'
-#' @return An empty data store
+#' @return An empty data store.
 empty_data <- function() { list() }
 
 
@@ -239,7 +239,7 @@ empty_data <- function() { list() }
 #' @param data_list List of data frames or other objects
 #' @param all_data An existing (possibly empty) data store
 #'
-#' @return An empty data store
+#' @return The modified data store.
 add_data <- function(data_list, all_data) {
   assertthat::assert_that(!is.null(names(data_list)))
 
@@ -257,6 +257,7 @@ add_data <- function(data_list, all_data) {
 #' @param year Numeric year, in a melted tibble or data frame
 #' @param value Numeric value to interpolate
 #' @param rule Rule to use; see \code{\link{approx}} and details
+#' @details This was \code{gcam_interp} in the original data system.
 #' @return Interpolated values.
 #' @export
 #' @examples
@@ -264,7 +265,7 @@ add_data <- function(data_list, all_data) {
 #' approx_fun(df$year, df$value, rule = 2)
 approx_fun <- function(year, value, rule = 1) {
   if(rule == 1 | rule == 2 ) {
-    approx(as.vector(year), value, rule = rule, xout = year)$y
+    stats::approx(as.vector(year), value, rule = rule, xout = year)$y
   } else {
     stop("Not implemented yet!")
   }
