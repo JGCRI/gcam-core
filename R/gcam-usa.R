@@ -38,15 +38,12 @@
 #' @return A named list with all gcam-usa data.
 #' @importFrom tibble tibble
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select group_by
+#' @importFrom dplyr filter mutate select group_by rename left_join
 #' @importFrom tidyr gather spread
 #' @export
 `gcam-usa_LA100.Socioeconomics_makedata` <- function(all_data) {
 
   # printlog( "Historical GDP and per-capita GDP by state" )
-  #
-  # # -----------------------------------------------------------------------------
-  # # 1. Read files
 
   states_subregions         <- get_data(all_data, "gcam-usa/states_subregions")
   BEA_pcGDP_09USD_state     <- get_data(all_data, "gcam-usa/BEA_pcGDP_09USD_state")
@@ -55,74 +52,50 @@
   PRIMA_pop                 <- get_data(all_data, "gcam-usa/PRIMA_pop")
   L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
 
-  # # Bind the two per-capita GDP data frames to get a continuous time series, and extrapolate
   # printlog( "Building historical per-capita GDP time series" )
   # printlog( "NOTE: only using these datasets to disaggregate national GDP totals, so no need to convert units or" )
   # printlog( "estimate what the actual per-capita GDP trends were in the pre-1987 years that have all missing values")
 
-  # GDP97_years <- as.numeric( substr( names( BEA_pcGDP_97USD_state )[ names( BEA_pcGDP_97USD_state ) %in% X_historical_years ], 2, 5 ) )
-  # BEA_pcGDP_97USD_state <- gcam_interp( BEA_pcGDP_97USD_state, GDP97_years, rule = 2 )
-  # BEA_pcGDP_97USD_state$state <- states_subregions$state[ match( BEA_pcGDP_97USD_state$Area, states_subregions$state_name ) ]
-
-  # TODO: I bet we'll do this a lot: melt, filter to historic, interpolate
-  # Will probably become its own function
+  # Reshape and interpolate input datasets
   BEA_pcGDP_97USD_state %>%
     gather(year, value, -Fips, -Area) %>%
-    mutate(year = as.numeric(year),
-           value = as.numeric(value)) %>%
-    filter(year %in% HISTORICAL_YEARS) %>%
+    PH_year_value_historical %>%
     group_by(Area) %>%
     mutate(value = approx_fun(year, value, rule = 2)) ->
     BEA_pcGDP_97USD_state
 
   BEA_pcGDP_09USD_state %>%
     gather(year, value, -Fips, -Area) %>%
-    mutate(year = as.numeric(year),
-           value = as.numeric(value)) %>%
-    filter(year %in% HISTORICAL_YEARS) ->
+    PH_year_value_historical ->
     BEA_pcGDP_09USD_state
 
   Census_pop_hist %>%
-    gather(year, population, -state) %>%
-    mutate(year = as.numeric(year),
-           population = as.numeric(population)) %>%
-    filter(year %in% HISTORICAL_YEARS) ->
+    gather(year, value, -state) %>%
+    PH_year_value_historical %>%
+    rename(population = value) ->
     Census_pop_hist
 
-  # L100.pcGDP_state_unscaled <- data.frame(
-  #   BEA_pcGDP_97USD_state[ state ],
-  #   BEA_pcGDP_97USD_state[ names( BEA_pcGDP_97USD_state  ) %in% X_historical_years & !names( BEA_pcGDP_97USD_state ) %in% names( BEA_pcGDP_09USD_state ) ],
-  #   BEA_pcGDP_09USD_state[ names( BEA_pcGDP_09USD_state  ) %in% X_historical_years ] )
-  # L100.GDP_state_unscaled <- L100.pcGDP_state_unscaled
-  # L100.GDP_state_unscaled[ X_historical_years ] <- L100.pcGDP_state_unscaled[ X_historical_years ] * 1e-6 *    #avoiding "integer overflow" by dividing by a million
-  #   Census_pop_hist[ match( L100.GDP_state_unscaled$state, Census_pop_hist$state ),
-  #                    X_historical_years ]
+  # Bind the '97 and '09 GDP datasets to get a continuous time series
   BEA_pcGDP_97USD_state %>%
     ungroup %>%
     filter(!year %in% unique(BEA_pcGDP_09USD_state$year)) %>%
     bind_rows(BEA_pcGDP_09USD_state) %>%
+    # Merge with state name/codes
     left_join(states_subregions[c("state", "state_name")],
               by = c("Area" = "state_name")) %>%
     select(state, year, value) %>%
+    # Merge with census data, and compute total GDP (population * per capita GDP)
     left_join(Census_pop_hist, by = c("state", "year")) %>%
     mutate(value = value * 1e-6 * population) %>%
     arrange(state, year) %>%
-    select(-population) ->
-    L100.GDP_state_unscaled
-
-  # L100.GDPshare_state <- L100.GDP_state_unscaled
-  # L100.GDPshare_state[ X_historical_years ] <- sweep( L100.GDP_state_unscaled[ X_historical_years ],
-  #                                                     2, colSums( L100.GDP_state_unscaled[ X_historical_years ] ), "/" )
-  L100.GDP_state_unscaled %>%
+    select(-population) %>%
+    # Compute by-state shares by year
     group_by(year) %>%
     mutate(share = value / sum(value)) %>%
     select(-value) ->
     L100.GDPshare_state
 
-  # # Multiply the country-level GDP by the state shares
-  # L100.GDP_mil90usd_state <- apportion_to_states(
-  #   nation_data = subset( L100.gdp_mil90usd_ctry_Yh, iso == "usa" ),
-  #   state_share_data = L100.GDPshare_state )
+  # Multiply the country-level GDP by the state shares
   L100.gdp_mil90usd_ctry_Yh %>%
     filter(iso == "usa") %>%
     right_join(L100.GDPshare_state, by = c("year")) %>%
@@ -132,11 +105,7 @@
     add_dsflags(FLAG_LONG_NO_X_FORM) ->
     L100.GDP_mil90usd_state
 
-  # L100.pcGDP_thous90usd_state <- L100.GDP_mil90usd_state
-  # L100.pcGDP_thous90usd_state[ X_historical_years ] <-
-  #   L100.GDP_mil90usd_state[ X_historical_years ] * conv_mil_thous / Census_pop_hist[
-  #     match( L100.GDP_mil90usd_state$state, Census_pop_hist$state ),
-  #     X_historical_years ]
+  # Compute per capita GDP by state
   L100.GDP_mil90usd_state %>%
     left_join(Census_pop_hist, by = c("state", "year")) %>%
     mutate(value = value * CONV_MIL_THOUS / population) %>%
@@ -145,30 +114,20 @@
     add_dsflags(FLAG_LONG_NO_X_FORM) ->
     L100.pcGDP_thous90usd_state
 
-  # # Future population by scenario. Right now just one scenario.
-  # L100.Pop_ratio_state <- gcam_interp( PRIMA_pop, c( final_historical_year, future_years ) )
-  # L100.Pop_ratio_state[ c( X_final_historical_year, X_future_years ) ] <-
-  #   L100.Pop_ratio_state[ c( X_final_historical_year, X_future_years ) ] /
-  #   L100.Pop_ratio_state[[ X_final_historical_year ]]
-  # L100.Pop_ratio_state$state <- states_subregions$state[ match( L100.Pop_ratio_state$state, states_subregions$state_name ) ]
+  # Future population by scenario. Right now just one scenario.
   PRIMA_pop %>%
+    # reshape
     gather(year, population, -state) %>%
     mutate(year = as.numeric(year),
-           population = as.numeric(population)) ->
-    PRIMA_pop
-
-  PRIMA_pop %>%
-    filter(!year %in% c(max(HISTORICAL_YEARS), FUTURE_YEARS)) ->
-    PRIMA_pop_old
-
-  PRIMA_pop %>%
+           population = as.numeric(population)) %>%
+    # interpolate any missing data from end of history into future
     filter(year %in% c(max(HISTORICAL_YEARS), FUTURE_YEARS)) %>%
     group_by(state) %>%
     mutate(population = approx_fun(year, population)) %>%
     arrange(state, year) %>%
+    # compute ratios (change from end of history)
     group_by(state) %>%
     mutate(pop_ratio = population / first(population)) %>%
-#    bind_rows(PRIMA_pop_old) %>%
     arrange(state, year) %>%
     rename(state_name = state) %>%
     left_join(states_subregions[c("state", "state_name")], by = "state_name") %>%
@@ -176,12 +135,7 @@
     select(-state_name, -population) ->
     L100.Pop_ratio_state
 
-  # L100.Pop_thous_state <- data.frame(
-  #   Census_pop_hist[ "state" ],
-  #   Census_pop_hist[ X_historical_years ] * conv_ones_thous )
-  # L100.Pop_thous_state[ X_future_years ] <- L100.Pop_thous_state[[ X_final_historical_year ]] *
-  #   L100.Pop_ratio_state[ match( L100.Pop_thous_state$state, L100.Pop_ratio_state$state ),
-  #                         X_future_years ]
+  # Starting from end of history, project state populations into future
   Census_pop_hist %>%
     filter(year == max(HISTORICAL_YEARS)) %>%
     select(-year) %>%
