@@ -75,7 +75,8 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   # sourcedata("COMMON_ASSUMPTIONS", "A_common_data")
   # sourcedata("AGLU_ASSUMPTIONS", "A_aglu_data")
   get_data(all_data, "aglu/AGLU_ctry") %>%
-    select(iso, FAO_country) ->
+    select(iso, FAO_country) %>%
+    distinct ->
     AGLU_ctry
 
   FAO_ag_HA_ha_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_HA_ha_PRODSTAT")
@@ -153,20 +154,38 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
       if(!"2010" %in% colnames(df)) df$`2010` <- df$`2009`
       if(!"2011" %in% colnames(df)) df$`2011` <- df$`2009`
       df %>%
+        ungroup %>%
         select(-element) %>%
-        gather(year, value, -coitel_columns) %>%
-        mutate(value = as.numeric(value))
+        gather(year, value, -countries, -`country codes`, -item, -`item codes`, -`element codes`) %>%
+        mutate(year = as.numeric(year),
+               value = as.numeric(value))
     }) %>%
     # combine everything together
-    bind_rows(.id = "element") %>%
-    # Match to iso codes
-    left_join(AGLU_ctry, by = c("countries" = "FAO_country")) ->
+    bind_rows(.id = "element") ->
     FAO_data_ALL
+
+  # Match the iso names
+  # Note that one of dplyr's join operations will not work here!
+  # `match` returns the first match, and that's the behavior we want to duplicate
+  FAO_data_ALL$iso <- AGLU_ctry$iso[match(FAO_data_ALL$countries, AGLU_ctry$FAO_country)]
 
   # Replace all missing values with 0
   FAO_data_ALL$value[is.na(FAO_data_ALL$value)] <- 0
 
-  #  browser()
+  # Check that data is the same!
+  # new1 <- spread(FAO_data_ALL, year, value)
+  # old1 <- readr::read_csv("~/Desktop/FAO_data_all_old1.csv")
+  # new1 <- new1[c(2:5, 1, 6, 8:58, 7)]
+  # new1$element <- gsub(pattern = "_[A-Z]*$", "", new1$element)
+  # new1$element <- gsub(pattern = "^FAO_", "", new1$element)
+  # new1 <- arrange(new1, countries, `country codes`, item,
+  #                 `item codes`, element, `element codes`)
+  # old1 <- arrange(old1, countries, country.codes, item,
+  #                 item.codes, element, element.codes)
+  # names(new1) <- names(old1)
+  # readr::write_csv(new1,"~/Desktop/FAO_data_all_new1.csv")
+  # print(all.equal(new1, old1))
+  browser()
 
   # Downscale countries individually NOTE: This is complicated. The FAO data need to be downscaled
   # to all FAO historical years (i.e. back to 1961 regardless of when we are starting our
