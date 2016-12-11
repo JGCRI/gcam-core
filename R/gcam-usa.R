@@ -36,8 +36,8 @@
 #' @return A named list with all gcam-usa data.
 #' @importFrom tibble tibble
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select group_by rename left_join
 #' @importFrom tidyr gather spread
+#' @import dplyr
 #' @export
 `gcam-usa_LA100.Socioeconomics_makedata` <- function(all_data) {
 

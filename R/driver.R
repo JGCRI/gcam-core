@@ -52,6 +52,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
       })
       print(paste("- make", format(round(tim[1], 2), nsmall = 2)))
       assert_that(is.list(chunk_data))
+      assert_that(tibble::is.tibble(chunk_data[[1]]))
 
       # Add this chunk's data to the global data store
       # This will overwrite any previous data returned

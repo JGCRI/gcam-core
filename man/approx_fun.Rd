@@ -19,6 +19,9 @@ Interpolated values.
 \description{
 \code{\link{approx}} for use in a dplyr pipeline.
 }
+\details{
+This was \code{gcam_interp} in the original data system.
+}
 \examples{
 df <- data.frame(year = 1:5, value = c(1, 2, NA, 4, 5))
 approx_fun(df$year, df$value, rule = 2)
