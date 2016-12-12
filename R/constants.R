@@ -13,6 +13,11 @@ HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq( 2015, 2100, 5 )
 
 # ======================================================================
+# aglu constants
+AGLU_HISTORICAL_YEARS <- 1971:2010
+FAO_HISTORICAL_YEARS <- 1961:2011
+
+# ======================================================================
 # Conversion constants
 CONV_BIL_MIL <- 1000
 CONV_MIL_THOUS <- 1000

@@ -132,10 +132,14 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   FAO_Fert_Cons_tN_RESOURCESTAT <- f(FAO_Fert_Cons_tN_RESOURCESTAT, FAO_Fert_Cons_tN_RESOURCESTAT_archv)
   FAO_Fert_Prod_tN_RESOURCESTAT <- f(FAO_Fert_Prod_tN_RESOURCESTAT, FAO_Fert_Prod_tN_RESOURCESTAT_archv)
 
-  list("FAO_ag_Exp_t_SUA" = FAO_ag_Exp_t_SUA, "FAO_ag_Feed_t_SUA" = FAO_ag_Feed_t_SUA,
-       "FAO_ag_Food_t_SUA" = FAO_ag_Food_t_SUA, "FAO_ag_Imp_t_SUA" = FAO_ag_Imp_t_SUA,
-       "FAO_an_Exp_t_SUA" = FAO_an_Exp_t_SUA, "FAO_an_Food_t_SUA" = FAO_an_Food_t_SUA,
-       "FAO_an_Imp_t_SUA" = FAO_an_Imp_t_SUA, "FAO_an_Prod_t_SUA" = FAO_an_Prod_t_SUA,
+  list("FAO_ag_Exp_t_SUA" = FAO_ag_Exp_t_SUA,
+       "FAO_ag_Feed_t_SUA" = FAO_ag_Feed_t_SUA,
+       "FAO_ag_Food_t_SUA" = FAO_ag_Food_t_SUA,
+       "FAO_ag_Imp_t_SUA" = FAO_ag_Imp_t_SUA,
+       "FAO_an_Exp_t_SUA" = FAO_an_Exp_t_SUA,
+       "FAO_an_Food_t_SUA" = FAO_an_Food_t_SUA,
+       "FAO_an_Imp_t_SUA" = FAO_an_Imp_t_SUA,
+       "FAO_an_Prod_t_SUA" = FAO_an_Prod_t_SUA,
        "FAO_Fert_Cons_tN_RESOURCESTAT" = FAO_Fert_Cons_tN_RESOURCESTAT,
        "FAO_Fert_Prod_tN_RESOURCESTAT" = FAO_Fert_Prod_tN_RESOURCESTAT,
        "FAO_ag_HA_ha_PRODSTAT" = FAO_ag_HA_ha_PRODSTAT,
@@ -167,6 +171,7 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   # Match the iso names
   # Note that one of dplyr's join operations will not work here!
   # `match` returns the first match, and that's the behavior we want to duplicate
+  # Could also I guess join, then filter for row_number==1
   FAO_data_ALL$iso <- AGLU_ctry$iso[match(FAO_data_ALL$countries, AGLU_ctry$FAO_country)]
 
   # Replace all missing values with 0
@@ -185,26 +190,18 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   # names(new1) <- names(old1)
   # readr::write_csv(new1,"~/Desktop/FAO_data_all_new1.csv")
   # print(all.equal(new1, old1))
-  browser()
+  #browser()
 
   # Downscale countries individually NOTE: This is complicated. The FAO data need to be downscaled
   # to all FAO historical years (i.e. back to 1961 regardless of when we are starting our
   # historical time series). Otherwise the early historical years will get averaged with zeroes.
   # Czechoslovakia
-  # FAO_data_ALL %>%
-  #   subset(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Czechoslovakia"]) %>%
-  #   downscale_FAO_country("Czechoslovakia", 1993, years = FAO_historical_years) ->
-  #   FAO_data_ALL_cze
-  # FAO_data_ALL %>%
-  #   filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Czechoslovakia"]) %>%
-  #   downscale_FAO_country() ->
-  #   FAO_data_ALL_cze
+  FAO_data_ALL %>%
+    filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Czechoslovakia"]) %>%
+    downscale_FAO_country("Czechoslovakia", 1993, years = FAO_HISTORICAL_YEARS) ->
+    FAO_data_ALL_cze
 
   # USSR
-  # FAO_data_ALL %>%
-  #   subset(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "USSR"]) %>%
-  #   downscale_FAO_country("USSR", 1992, years = FAO_historical_years) ->
-  #   FAO_data_ALL_ussr
   # FAO_data_ALL %>%
   #   filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "USSR"]) %>%
   #   downscale_FAO_country() ->
@@ -212,15 +209,11 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
 
   # # Yugoslavia
   # FAO_data_ALL %>%
-  #   subset(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Yugoslav SFR"]) %>%
-  #   downscale_FAO_country("Yugoslav SFR", 1992, years = FAO_historical_years) ->
-  #   FAO_data_ALL_yug
-  # FAO_data_ALL %>%
   #   filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Yugoslav SFR"]) %>%
   #   downscale_FAO_country() %>%
   #   # combine these downscaled databases
-  #   bind_rows(FAO_data_ALL_cze, FAO_data_ALL_ussr) ->
-  #   FAO_data_ALL_downscaled
+    # bind_rows(FAO_data_ALL_cze, FAO_data_ALL_ussr) ->
+    # FAO_data_ALL_downscaled
 
   # Drop these countries from the full database and combine
   # FAO_data_ALL %>%
