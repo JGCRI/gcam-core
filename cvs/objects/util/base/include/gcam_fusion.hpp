@@ -57,39 +57,6 @@
 
 extern Scenario* scenario;
 
-struct DoSomeThingNotSure {
-    typedef int ProcessPushStep;
-    typedef int ProcessPopStep;
-    typedef int ProcessData;
-    template<typename DataType, typename IDType>
-    void pushFilterStep( const DataType& aData, const IDType* aIDValue )  {
-        if( aIDValue ) {
-            std::cout << "Pushed: " << *aIDValue << std::endl;
-        }
-    }
-    template<typename DataType>
-    void popFilterStep( const DataType& aData )  {
-        std::cout << "Popped" << std::endl;
-    }
-    /*template<typename T>
-    typename boost::disable_if<boost::is_same<T, Value>, void>::type processData( T& aData ) {
-        std::cout << "WARNING got data of unexpected type: " << typeid(aData).name() << std::endl;
-    }
-    template<typename T>
-    typename boost::enable_if<boost::is_same<T, Value>, void>::type processData( T& aData ) {
-        std::cout << "Saw: " << aData << std::endl;
-    }*/
-    template<typename T>
-    void processData( T& aData ) {
-        std::cout << "WARNING got data of unexpected type: " << typeid(aData).name() << std::endl;
-        //RegionMiniCAM a = aData;
-    }
-    void processData( Value& aData ) {
-        std::cout << "Saw: " << aData << std::endl;
-        aData *= 1.2;
-    }
-};
-
 struct GetIndexAsYear {
     template<typename T>
     static int convertIterToYear( const std::vector<T>& aArray, const typename std::vector<T>::const_iterator& aIter ) {
@@ -247,7 +214,7 @@ struct NamedFilter {
     filter_value_type mCurrFilterValue;
     template<typename T>
     bool operator()( const T* aContainer ) {
-        if( mMatcher->matchesString( aContainer->getName() ) ) {
+        if( aContainer && mMatcher->matchesString( aContainer->getName() ) ) {
             mCurrFilterValue = &aContainer->getName();
             return true;
         }
@@ -274,7 +241,7 @@ struct YearFilter {
     filter_value_type mCurrFilterValue;
     template<typename T>
     bool operator()( const T* aContainer ) {
-        if( mMatcher->matchesInt( aContainer->getYear() ) ) {
+        if( aContainer && mMatcher->matchesInt( aContainer->getYear() ) ) {
             // getYear will likely return an int by value which we can not store
             // a reference to.  Instead we will copy the value into a member variable
             // and reference that.
@@ -362,10 +329,7 @@ struct FilterStep {
         >,
     void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
         //assert( matchesDataName( aData ) );
-        // Do not process null data.
-        if( !aData.mData ) {
-            return;
-        }
+
         // Note compiler error of the type Incomeplete type 'XYZ' named in nesed name specifier
         // here may indicate that the header file for that class was not included in
         // util/base/include/gcam_data_containers.h
@@ -375,10 +339,12 @@ struct FilterStep {
             // use NULL as the current filter value as no filter is set
             typename DataType::filter_type::filter_value_type nullFilterValue = 0;
             if( !aIsLastStep ) {
-                aHandler.pushFilterStep( aData.mData, nullFilterValue );
-                aData.mData->doDataExpansion( getDataVector );
-                getDataVector.getFullDataVector( aHandler );
-                aHandler.popFilterStep( aData.mData );
+                if( aData.mData ) {
+                    aHandler.pushFilterStep( aData.mData, nullFilterValue );
+                    aData.mData->doDataExpansion( getDataVector );
+                    getDataVector.getFullDataVector( aHandler );
+                    aHandler.popFilterStep( aData.mData );
+                }
             }
             else {
                 aHandler.processData( aData.mData );
@@ -428,10 +394,12 @@ struct FilterStep {
             typename DataType::filter_type::filter_value_type nullFilterValue = 0;
             for( auto container : aData.mData ) {
                 if( !aIsLastStep ) {
-                    aHandler.pushFilterStep( container, nullFilterValue );
-                    container->doDataExpansion( getDataVector );
-                    getDataVector.getFullDataVector( aHandler );
-                    aHandler.popFilterStep( container );
+                    if( container ) {
+                        aHandler.pushFilterStep( container, nullFilterValue );
+                        container->doDataExpansion( getDataVector );
+                        getDataVector.getFullDataVector( aHandler );
+                        aHandler.popFilterStep( container );
+                    }
                 }
                 else {
                     aHandler.processData( container );
@@ -501,10 +469,12 @@ struct FilterStep {
             typename DataType::filter_type::filter_value_type nullFilterValue = 0;
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
                 if( !aIsLastStep ) {
-                    aHandler.pushFilterStep( (*iter).second, nullFilterValue );
-                    (*iter).second->doDataExpansion( getDataVector );
-                    getDataVector.getFullDataVector( aHandler );
-                    aHandler.popFilterStep( (*iter).second );
+                    if( (*iter).second ) {
+                        aHandler.pushFilterStep( (*iter).second, nullFilterValue );
+                        (*iter).second->doDataExpansion( getDataVector );
+                        getDataVector.getFullDataVector( aHandler );
+                        aHandler.popFilterStep( (*iter).second );
+                    }
                 }
                 else {
                     aHandler.processData( (*iter).second );
@@ -615,6 +585,9 @@ struct FilterStep {
     }
 };
 
+FilterStep* parseFilterStepStr( const std::string& aFilterStepStr );
+std::vector<FilterStep*> parseFilterString( const std::string& aFilterStr );
+
 BOOST_MPL_HAS_XXX_TRAIT_DEF( ProcessPushStep );
 BOOST_MPL_HAS_XXX_TRAIT_DEF( ProcessPopStep );
 BOOST_MPL_HAS_XXX_TRAIT_DEF( ProcessData );
@@ -650,6 +623,13 @@ class GCAMFusion {
             if( this->mFilterSteps[ mCurrStep ]->matchesDataName( aData ) ) {
                 //std::cout << "Matches!!!! " << aData.mDataName << std::endl;
                 this->mFilterSteps[ mCurrStep ]->applyFilter( aData, *this, isAtLastStep );
+                // explicitly handle the "descendant" step case where we need to
+                // both handle taking one step down and no steps down.
+                if( !isAtLastStep && this->mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
+                    ++this->mCurrStep;
+                    this->mFilterSteps[ mCurrStep ]->applyFilter( aData, *this, this->isAtLastStep() );
+                    --this->mCurrStep;
+                }
             }
         } );
     }
@@ -657,28 +637,36 @@ class GCAMFusion {
     template<typename DataType, typename IDType>
     typename boost::enable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessPushStep<DataProcessor> >,
     void>::type pushFilterStep( const DataType& aData, const IDType* aIDValue )  {
-        ++mCurrStep;
+        if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
+            ++mCurrStep;
+        }
         //std::cout << "Pushed step: " << mCurrStep << std::endl;
         mDataProcessor.pushFilterStep( aData, aIDValue );
     }
     template<typename DataType, typename IDType>
     typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessPushStep<DataProcessor> >,
     void>::type pushFilterStep( const DataType& aData, const IDType* aIDValue )  {
-        ++mCurrStep;
+        if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
+            ++mCurrStep;
+        }
         //std::cout << "Pushed step: " << mCurrStep << std::endl;
     }
 
     template<typename DataType>
     typename boost::enable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessPopStep<DataProcessor> >,
     void>::type popFilterStep( const DataType& aData )  {
-        --mCurrStep;
+        if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
+            --mCurrStep;
+        }
         //std::cout << "Popped step: " << mCurrStep << std::endl;
         mDataProcessor.popFilterStep( aData );
     }
     template<typename DataType>
     typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessPopStep<DataProcessor> >,
     void>::type popFilterStep( const DataType& aData )  {
-        --mCurrStep;
+        if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
+            --mCurrStep;
+        }
         //std::cout << "Popped step: " << mCurrStep << std::endl;
     }
 
@@ -705,78 +693,5 @@ class GCAMFusion {
 
     int mCurrStep;
 };
-
-FilterStep* parseFilterStepStr( const std::string& aFilterStepStr ) {
-    auto openBracketIter = std::find( aFilterStepStr.begin(), aFilterStepStr.end(), '[' );
-    if( openBracketIter == aFilterStepStr.end() ) {
-        std::cout << "Descendant filter step" << std::endl;
-        // no filter just the data name
-        return new FilterStep( aFilterStepStr );
-    }
-    else {
-        std::string dataName( aFilterStepStr.begin(), openBracketIter );
-        std::cout << "Data name is: >" << dataName << "<" << std::endl;
-        std::string filterStr( openBracketIter + 1, std::find( openBracketIter, aFilterStepStr.end(), ']' ) );
-        std::vector<std::string> filterOptions;
-        boost::split( filterOptions, filterStr, boost::is_any_of( "," ) );
-        std::cout << "matcher is: >" << filterOptions[ 1 ] << "< with value >" << filterOptions[ 2 ] << "< on filter >" << filterOptions[ 0 ] << "<" << std::endl;
-        // [0] = filter type (name, year, index)
-        // [1] = match type
-        // [2:] = match type options
-        AMatchesValue* matcher = 0;
-        if( filterOptions[ 1 ] == "StringEquals" ) {
-            matcher = new StringEquals( filterOptions[ 2 ] );
-        }
-        else if( filterOptions[ 1 ] == "StringRegexMatches" ) {
-            matcher = new StringRegexMatches( filterOptions[ 2 ] );
-        }
-        else if( filterOptions[ 1 ] == "IntEquals" ) {
-            matcher = new IntEquals( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
-        }
-        else if( filterOptions[ 1 ] == "IntGreaterThan" ) {
-            matcher = new IntGreaterThan( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
-        }
-        else if( filterOptions[ 1 ] == "IntGreaterThanEq" ) {
-            matcher = new IntGreaterThanEq( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
-        }
-        else if( filterOptions[ 1 ] == "IntLessThan" ) {
-            matcher = new IntLessThan( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
-        }
-        else if( filterOptions[ 1 ] == "IntLessThanEq" ) {
-            matcher = new IntLessThanEq( boost::lexical_cast<int>( filterOptions[ 2 ] ) );
-        }
-        else {
-            std::cout << "Didn't match matcher" << std::endl;
-        }
-
-        FilterStep* filterStep = 0;
-        if( filterOptions[ 0 ] == "NoFilter" ) {
-            filterStep = new FilterStep( dataName, new NoFilter() );
-        }
-        else if( filterOptions[ 0 ] == "IndexFilter" ) {
-            filterStep = new FilterStep( dataName, new IndexFilter( matcher ) );
-        }
-        else if( filterOptions[ 0 ] == "NamedFilter" ) {
-            filterStep = new FilterStep( dataName, new NamedFilter( matcher ) );
-        }
-        else if( filterOptions[ 0 ] == "YearFilter" ) {
-            filterStep = new FilterStep( dataName, new YearFilter( matcher ) );
-        }
-        else {
-            std::cout << "Didn't match filter" << std::endl;
-        }
-        return filterStep;
-    }
-}
-
-std::vector<FilterStep*> parseFilterString( const std::string& aFilterStr ) {
-    std::vector<std::string> filterStepsStr;
-    boost::split( filterStepsStr, aFilterStr, boost::is_any_of( "/" ) );
-    std::vector<FilterStep*> filterSteps( filterStepsStr.size() );
-    for( size_t i = 0; i < filterStepsStr.size(); ++i ) {
-        filterSteps[ i ] = parseFilterStepStr( filterStepsStr[ i ] );
-    }
-    return filterSteps;
-}
 
 #endif // _GCAM_FUSION_H_
