@@ -6,6 +6,7 @@ COMMENT_CHAR <- "#"
 FLAG_INPUT_DATA <- "INPUT_DATA"
 FLAG_LONG_NO_X_FORM <- "LONG_NO_X_FORM"
 FLAG_NO_OUTPUT <- "NO_OUTPUT"
+FLAG_NO_X_FORM <- "NO_X_FORM"
 
 # ======================================================================
 # Time constants
