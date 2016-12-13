@@ -18,7 +18,7 @@ test_that("matches old data system output", {
     # reshaped, and save_chunkdata puts a special marker at top of the file.
     new_firstline <- readLines(newf, n = 1)
     newskip <- 0
-    if(new_firstline %in% c(FLAG_LONG_NO_X_FORM)) {
+    if(new_firstline %in% c(FLAG_LONG_NO_X_FORM, FLAG_NO_X_FORM)) {
       newskip <- 1
     }
 
@@ -30,9 +30,13 @@ test_that("matches old data system output", {
         mutate(year = paste0("X", newdata$year)) %>%
         spread(year, value) ->
         newdata
+    } else if (new_firstline == FLAG_NO_X_FORM) {
+        yearcols <- grep("^[0-9]{4}$", names(newdata))
+        names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
     }
 
     oldf <- list.files("comparison_data", pattern = basename(newf), recursive = TRUE, full.names = TRUE)
+    expect_true(length(oldf) == 1)
     expect_true(file.exists(oldf), label = paste0(oldf, "doesn't exist"))
 
     # If the old file has an "INPUT_TABLE" header, need to skip that

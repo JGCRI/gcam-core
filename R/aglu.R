@@ -60,6 +60,41 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 }
 
 
+#' downscale_FAO_country
+#'
+#' Helper function to downscale the countries that separated into
+#' multiple modern countries (e.g. USSR).
+#'
+#' @param data Data to downscale
+#' @param country_name Country name, pre-dissolution
+#' @param dissolution_year Year of country dissolution
+#' @param item_name Item column name
+#' @param element_name Element column name
+#' @param years Years to operate on
+#' @return Downscaled data.
+downscale_FAO_country <- function(data, country_name, dissolution_year, item_name = "item",
+                                  element_name = "element", years = AGLU_HISTORICAL_YEARS) {
+
+  # Compute the ratio for all years leading up to the dissolution year, and including it
+  # I.e. normalizing the time series by the value in the dissolution year
+  ctry_years <- years[years < dissolution_year]
+  yrs <- as.character(c(ctry_years, dissolution_year))
+  data_ratio <- aggregate(data[yrs],
+                          by = as.list(data[c(item_name, element_name)]),
+                          sum)
+  data_ratio[yrs] <- data_ratio[yrs] / data_ratio[[as.character(dissolution_year)]]
+
+  # Use these ratios to project the post-dissolution country data backwards in time
+  newyrs <- as.character(ctry_years)
+  data_new <- subset(data, countries != country_name)
+  data_new[newyrs] <- data_new[[as.character(dissolution_year)]] *
+    data_ratio[match(paste(data_new[[item_name]], data_new[[element_name]]),
+                     paste(data_ratio[[item_name]], data_ratio[[element_name]])), newyrs]
+  data_new[newyrs][is.na(data_new[newyrs])] <- 0
+  data_new
+}
+
+
 #' aglu_LA100.FAO_downscale_ctry_makedata
 #'
 #' @param all_data A named list, holding all data system products so far
@@ -72,8 +107,6 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   # printlog("Historical agricultural data from the FAO downscaled to modern country")
 
-  # sourcedata("COMMON_ASSUMPTIONS", "A_common_data")
-  # sourcedata("AGLU_ASSUMPTIONS", "A_aglu_data")
   get_data(all_data, "aglu/AGLU_ctry") %>%
     select(iso, FAO_country) %>%
     distinct ->
@@ -100,9 +133,9 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   FAO_For_Imp_m3_FORESTAT <- get_data(all_data, "aglu/FAO_For_Imp_m3_FORESTAT")
   FAO_For_Prod_m3_FORESTAT <- get_data(all_data, "aglu/FAO_For_Prod_m3_FORESTAT")
 
-  coitel_colnames <- c("countries", "country codes", "item", "item codes", "element", "element codes")
-  coitel_columns <- 1:6
   itel_colnames <- c("item", "item codes", "element", "element codes")
+  coitel_colnames <- c("countries", "country codes", itel_colnames)
+  FAO_histyear_cols <- as.character(FAO_HISTORICAL_YEARS)
 
   # Replace the item and element code names with what is used in the more recent datasets
   FAO_Fert_Cons_tN_RESOURCESTAT_archv[itel_colnames] <- FAO_Fert_Cons_tN_RESOURCESTAT[1, itel_colnames]
@@ -111,27 +144,30 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   # Merge resourcestat fertilizer databases with 'archive' years (1961-2002) and more recent
   # years (2002-2010). FAOSTAT notes that the methods changed between the two datasets; we
   # ignore this discrepancy but use the 2002 data from the more recent dataset
+  FAO_Fert_Cons_tN_RESOURCESTAT_archv$`2002` <- NULL
+  FAO_Fert_Prod_tN_RESOURCESTAT_archv$`2002` <- NULL
 
-  # Helper function - applied to both the "Cons" and "Prod" datasets
-  f <- function(d, d_archv) {
-    d_archv %>%
-      select(-`2002`) %>%
-      full_join(d, by = coitel_colnames) %>%
-      # dplyr seems to have a weird bug - if we group by quoted column
-      # names, they get included in the summarise_all call, causing an
-      # error. Rename them temporarily to work around this.
-      rename(element.codes = `element codes`,
-             item.codes = `item codes`,
-             country.codes = `country codes`) %>%
-      group_by(countries, country.codes, item, item.codes, element, element.codes) %>%
-      summarise_all(sum, na.rm = TRUE) %>%
-      rename(`element codes` = element.codes,
-             `item codes` = item.codes,
-             `country codes` = country.codes)
-  }
-  FAO_Fert_Cons_tN_RESOURCESTAT <- f(FAO_Fert_Cons_tN_RESOURCESTAT, FAO_Fert_Cons_tN_RESOURCESTAT_archv)
-  FAO_Fert_Prod_tN_RESOURCESTAT <- f(FAO_Fert_Prod_tN_RESOURCESTAT, FAO_Fert_Prod_tN_RESOURCESTAT_archv)
+  # Interesting: dplyr can't go as fast as the approach taken in the original data system
+  # A number of dplyr operations are *considerably* slower with this big dataset, and take more lines
+  # So most of this function, the slowest in the entire data system, retains the original
+  # code (though cleaned up considerably) and logic
+  cons <- merge(FAO_Fert_Cons_tN_RESOURCESTAT_archv,
+                FAO_Fert_Cons_tN_RESOURCESTAT,
+                all.x = TRUE, all.y = TRUE)
+  prod <- merge(FAO_Fert_Prod_tN_RESOURCESTAT_archv,
+                FAO_Fert_Prod_tN_RESOURCESTAT,
+                all.x = TRUE, all.y = TRUE)
 
+  # Aggregate to complete the merge of the two datasets
+  FAO_Fert_Cons_tN_RESOURCESTAT <- aggregate(cons[names(cons) %in% FAO_histyear_cols],
+                                             by = as.list(cons[coitel_colnames]),
+                                             sum, na.rm = TRUE)
+  FAO_Fert_Prod_tN_RESOURCESTAT <- aggregate(prod[names(prod) %in% FAO_histyear_cols],
+                                             by = as.list(prod[coitel_colnames]),
+                                             sum, na.rm = TRUE)
+
+  # Not all databases go to 2011. Extrapolate each dataset to 2011, repeating
+  # the data for 2009/10. Where missing 1961, substitute 1962
   list("FAO_ag_Exp_t_SUA" = FAO_ag_Exp_t_SUA,
        "FAO_ag_Feed_t_SUA" = FAO_ag_Feed_t_SUA,
        "FAO_ag_Food_t_SUA" = FAO_ag_Food_t_SUA,
@@ -152,45 +188,21 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
        "FAO_For_Prod_m3_FORESTAT" = FAO_For_Prod_m3_FORESTAT) %>%
     # apply the following function over all list elements
     lapply(FUN = function(df) {
-      # Not all databases go to 2011. Extrapolate each dataset to 2011, repeating
-      # the data for 2009/10. Where missing 1961, substitute 1962
       if(!"1961" %in% colnames(df)) df$`1961` <- df$`1962`
       if(!"2010" %in% colnames(df)) df$`2010` <- df$`2009`
       if(!"2011" %in% colnames(df)) df$`2011` <- df$`2009`
-      df %>%
-        ungroup %>%
-        select(-element) %>%
-        gather(year, value, -countries, -`country codes`, -item, -`item codes`, -`element codes`) %>%
-        mutate(year = as.numeric(year),
-               value = as.numeric(value))
+      df$element <- NULL
+      df
     }) %>%
     # combine everything together
     bind_rows(.id = "element") ->
     FAO_data_ALL
 
-  # Match the iso names
-  # Note that one of dplyr's join operations will not work here!
-  # `match` returns the first match, and that's the behavior we want to duplicate
-  # Could also I guess join, then filter for row_number==1
-  FAO_data_ALL$iso <- AGLU_ctry$iso[match(FAO_data_ALL$countries, AGLU_ctry$FAO_country)]
-
   # Replace all missing values with 0
-  FAO_data_ALL$value[is.na(FAO_data_ALL$value)] <- 0
+  FAO_data_ALL[is.na(FAO_data_ALL)] <- 0
 
-  # Check that data is the same!
-  # new1 <- spread(FAO_data_ALL, year, value)
-  # old1 <- readr::read_csv("~/Desktop/FAO_data_all_old1.csv")
-  # new1 <- new1[c(2:5, 1, 6, 8:58, 7)]
-  # new1$element <- gsub(pattern = "_[A-Z]*$", "", new1$element)
-  # new1$element <- gsub(pattern = "^FAO_", "", new1$element)
-  # new1 <- arrange(new1, countries, `country codes`, item,
-  #                 `item codes`, element, `element codes`)
-  # old1 <- arrange(old1, countries, country.codes, item,
-  #                 item.codes, element, element.codes)
-  # names(new1) <- names(old1)
-  # readr::write_csv(new1,"~/Desktop/FAO_data_all_new1.csv")
-  # print(all.equal(new1, old1))
-  #browser()
+  # Match the iso names
+  FAO_data_ALL$iso <- AGLU_ctry$iso[match(FAO_data_ALL$countries, AGLU_ctry$FAO_country)]
 
   # Downscale countries individually NOTE: This is complicated. The FAO data need to be downscaled
   # to all FAO historical years (i.e. back to 1961 regardless of when we are starting our
@@ -220,118 +232,116 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
     bind_rows(FAO_data_ALL_cze, FAO_data_ALL_ussr, FAO_data_ALL_yug) ->
     FAO_data_ALL
 
-  browser()
+  # Drop observations where all years are zero
+  FAO_data_ALL <- FAO_data_ALL[rowSums(FAO_data_ALL[FAO_histyear_cols]) != 0, ]
 
-  # Drop observations where all years are zero (9.7s)
-  #  FAO_data_ALL <- FAO_data_ALL[rowSums(FAO_data_ALL[X_FAO_historical_years]) != 0, ]
-  FAO_data_ALL %>%
-    group_by(element, countries, item, iso) %>%
-    summarise(drop = all(value == 0)) %>%
-    right_join(FAO_data_ALL, by = c("element", "countries", "item", "iso")) %>%
-    filter(!drop) %>%
-    select(-drop) ->
-    FAO_data_ALL
+  # Calculate rolling five-year averages from available data
+  FAO_data_ALL_5yr <- FAO_data_ALL
 
-# filter: 10s; rollmean: 37s; roll_mean: 8.2; original code: 0.8s WOW!!!
-  FAO_data_ALL %>%
-    group_by(countries, `country codes`, item, `item codes`, element, `element codes`) %>%
-    arrange(year) %>%
-    mutate(value = RcppRoll::roll_mean(value, n = 5, align = "center", fill = 0)) %>%
-#    mutate(value = as.numeric(stats::filter(value, rep(1/5, 5), method = "c"))) %>%
-#    mutate(value = zoo::rollmean(value, 5, fill = NA)) %>%
-    filter(year %in% HISTORICAL_YEARS) ->
+  # In the first and last two years, use the 3 and 4 available years
+  FAO_data_ALL_5yr[FAO_histyear_cols][1] <- rowMeans(FAO_data_ALL[FAO_histyear_cols][1:3])
+  FAO_data_ALL_5yr[FAO_histyear_cols][2] <- rowMeans(FAO_data_ALL[FAO_histyear_cols][1:4])
+
+  # Precalculate a few things for loop speed
+  lastcol <- ncol(FAO_data_ALL_5yr[FAO_histyear_cols]) - 2
+  x <- FAO_data_ALL[FAO_histyear_cols]
+  lenXFAO <- length(FAO_histyear_cols)
+
+  # Main calculation loop
+  for(i in 3:lastcol) {
+    FAO_data_ALL_5yr[FAO_histyear_cols][, i] <- rowMeans(x[i + -2:2])
+  }
+  FAO_data_ALL_5yr[FAO_histyear_cols][lenXFAO - 1] <-
+    rowMeans(FAO_data_ALL[FAO_histyear_cols][(lenXFAO - 3):lenXFAO])
+  FAO_data_ALL_5yr[FAO_histyear_cols][lenXFAO] <-
+    rowMeans(FAO_data_ALL[FAO_histyear_cols][(lenXFAO - 2):lenXFAO])
+
+  # From here on, only use the specified AGLU historical years
+  FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(coitel_colnames, "iso", as.character(AGLU_HISTORICAL_YEARS))]
+
+  # Check that data is the same!
+  # old2 <- readr::read_csv("~/Desktop/FAO_data_ALL2.csv")
+  # new2 <- FAO_data_ALL[c(2,3,4,5,1,6, 7:58)]
+  # new2$element <- gsub(pattern = "_[A-Z]*$", "", new2$element)
+  # new2$element <- gsub(pattern = "^FAO_", "", new2$element)
+  # names(new2) <- names(old2)
+  # print(all.equal(new2, old2))
+  # browser()
+
+  # Rename columns to old names
+  FAO_data_ALL_5yr %>%
+    rename(country.codes = `country codes`,
+           element.codes = `element codes`,
+           item.codes = `item codes`) ->
     FAO_data_ALL_5yr
 
-    # ----------------------------------------------------------------------------- 3.
-  # Calculate rolling five-year averages from available data
-  # FAO_data_ALL_5yr <- FAO_data_ALL
-  #
-  # # In the first and last two years, use the 3 and 4 available years
-  # FAO_data_ALL_5yr[X_FAO_historical_years][1] <- rowMeans(FAO_data_ALL[X_FAO_historical_years][1:3])
-  # FAO_data_ALL_5yr[X_FAO_historical_years][2] <- rowMeans(FAO_data_ALL[X_FAO_historical_years][1:4])
-  #
-  # # Precalculate a few things for loop speed
-  # lastcol <- ncol(FAO_data_ALL_5yr[X_FAO_historical_years]) - 2
-  # x <- FAO_data_ALL[X_FAO_historical_years]
-  # lenXFAO <- length(X_FAO_historical_years)
-  #
-  # # Main calculation loop
-  # for(i in 3:lastcol) {
-  #   FAO_data_ALL_5yr[X_FAO_historical_years][, i] <- rowMeans(x[i + -2:2])
-  # }
-  # FAO_data_ALL_5yr[X_FAO_historical_years][lenXFAO - 1] <-
-  #   rowMeans(FAO_data_ALL[X_FAO_historical_years][(lenXFAO - 3):lenXFAO])
-  # FAO_data_ALL_5yr[X_FAO_historical_years][lenXFAO] <-
-  #   rowMeans(FAO_data_ALL[X_FAO_historical_years][(lenXFAO - 2):lenXFAO])
-  #
-  # # From here on, only use the specified AGLU historical years
-  # FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(coitel_colnames, "iso", X_AGLU_historical_years)]
-
-  # FAO_data_ALL_5yr %>%
-  #   filter(year %in% HISTORICAL_YEARS) %>%
-  #   group_by(element)
+  # Reorder columns and change `element` columns to match old data
+  FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(1:6,8:47,7)]
+  FAO_data_ALL_5yr$element <- gsub(pattern = "_[A-Z]*$", "", FAO_data_ALL_5yr$element)
+  FAO_data_ALL_5yr$element <- gsub(pattern = "^FAO_", "", FAO_data_ALL_5yr$element)
 
   # Re-split into separate tables for each element
-  # for(i in unique(FAO_data_ALL$element)) {
-  #   assign(i, filter(FAO_data_ALL, element == i))
-  # }
+  for(i in unique(FAO_data_ALL_5yr$element)) {
+    filter(FAO_data_ALL_5yr, element == i) %>%
+      add_dsflags(FLAG_NO_X_FORM) ->
+      df
+    assign(paste0("L100.FAO_", i), df)
+  }
 
-  # # ----------------------------------------------------------------------------- 4.
-  # # Write tables as CSV files
-  # writedata(FAO_ag_HA_ha, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_ag_HA_ha",
-  #           comments = c("FAO agricultural harvested area by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_ag_Prod_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_ag_Prod_t",
-  #           comments = c("FAO agricultural production by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_ag_Exp_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_ag_Exp_t",
-  #           comments = c("FAO agricultural exports by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_ag_Feed_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_ag_Feed_t",
-  #           comments = c("FAO agricultural feed by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_ag_Food_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_ag_Food_t",
-  #           comments = c("FAO agricultural food consumption by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_ag_Imp_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_ag_Imp_t",
-  #           comments = c("FAO agricultural imports by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_an_Exp_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_an_Exp_t",
-  #           comments = c("FAO animal exports by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_an_Food_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_an_Food_t",
-  #           comments = c("FAO animal food consumption by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_an_Imp_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_an_Imp_t",
-  #           comments = c("FAO animal imports by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_an_Prod_t, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_an_Prod_t",
-  #           comments = c("FAO animal production by country / item / year", "Unit = t"),
-  #           readr = TRUE)
-  # writedata(FAO_CL_kha, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_CL_kha",
-  #           comments = c("FAO cropland area by country / year", "Unit = kha"),
-  #           readr = TRUE)
-  # writedata(FAO_fallowland_kha, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_fallowland_kha",
-  #           comments = c("FAO fallow land area by country / year", "Unit = kha"),
-  #           readr = TRUE)
-  # writedata(FAO_harv_CL_kha, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_harv_CL_kha",
-  #           comments = c("FAO harvested cropland (temporary crops) by country / year", "Unit = kha"),
-  #           readr = TRUE)
-  # writedata(FAO_Fert_Cons_tN, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_Fert_Cons_tN",
-  #           comments = c("FAO fertilizer consumption by country / year", "Unit = tonnes of N"),
-  #           readr = TRUE)
-  # writedata(FAO_Fert_Prod_tN, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_Fert_Prod_tN",
-  #           comments = c("FAO fertilizer production by country / year", "Unit = tonnes of N"),
-  #           readr = TRUE)
-  # writedata(FAO_For_Exp_m3, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_For_Exp_m3",
-  #           comments = c("FAO forestry exports by country / year", "Unit = m3"),
-  #           readr = TRUE)
-  # writedata(FAO_For_Imp_m3, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_For_Imp_m3",
-  #           comments = c("FAO forestry imports by country / year", "Unit = m3"),
-  #           readr = TRUE)
-  # writedata(FAO_For_Prod_m3, domain = "AGLU_LEVEL1_DATA", fn = "L100.FAO_For_Prod_m3",
-  #           comments = c("FAO forestry production by country / year", "Unit = m3"),
-  #           readr = TRUE)
-  FAO_For_Prod_m3 <- tibble(x=1)
-  return_data(FAO_For_Prod_m3)
+  # Add comments and we're done
+  L100.FAO_ag_HA_ha <- add_dscomments(L100.FAO_ag_HA_ha,
+                                      c("FAO agricultural harvested area by country / item / year", "Unit = t"))
+  L100.FAO_ag_Prod_t <- add_dscomments(L100.FAO_ag_Prod_t,
+                                       c("FAO agricultural production by country / item / year", "Unit = t"))
+  L100.FAO_ag_Exp_t <- add_dscomments(L100.FAO_ag_Exp_t,
+                                      c("FAO agricultural exports by country / item / year", "Unit = t"))
+  L100.FAO_ag_Feed_t <- add_dscomments(L100.FAO_ag_Feed_t,
+                                       c("FAO agricultural feed by country / item / year", "Unit = t"))
+  L100.FAO_ag_Food_t <- add_dscomments(L100.FAO_ag_Food_t,
+                                       c("FAO agricultural food consumption by country / item / year", "Unit = t"))
+  L100.FAO_ag_Imp_t <- add_dscomments(L100.FAO_ag_Imp_t,
+                                      c("FAO agricultural imports by country / item / year", "Unit = t"))
+  L100.FAO_an_Exp_t <- add_dscomments(L100.FAO_an_Exp_t,
+                                      c("FAO agricultural exports by country / item / year", "Unit = t"))
+  L100.FAO_an_Food_t <- add_dscomments(L100.FAO_an_Food_t,
+                                       c("FAO animal food consumption by country / item / year", "Unit = t"))
+  L100.FAO_an_Imp_t <- add_dscomments(L100.FAO_an_Imp_t,
+                                      c("FAO animal imports by country / item / year", "Unit = t"))
+  L100.FAO_an_Prod_t <- add_dscomments(L100.FAO_an_Prod_t,
+                                       c("FAO animal production by country / item / year", "Unit = t"))
+  L100.FAO_CL_kha <- add_dscomments(L100.FAO_CL_kha,
+                                    c("FAO cropland area by country / year", "Unit = kha"))
+  L100.FAO_fallowland_kha <- add_dscomments(L100.FAO_fallowland_kha,
+                                            c("FAO fallow land area by country / year", "Unit = kha"))
+  L100.FAO_harv_CL_kha <- add_dscomments(L100.FAO_harv_CL_kha,
+                                         c("FAO harvested cropland (temporary crops) by country / year", "Unit = kha"))
+  L100.FAO_Fert_Cons_tN <- add_dscomments(L100.FAO_Fert_Cons_tN,
+                                          c("FAO fertilizer consumption by country / year", "Unit = tonnes of N"))
+  L100.FAO_Fert_Prod_tN <- add_dscomments(L100.FAO_Fert_Prod_tN,
+                                          c("FAO fertilizer production by country / year", "Unit = tonnes of N"))
+  L100.FAO_For_Exp_m3 <- add_dscomments(L100.FAO_For_Exp_m3,
+                                        c("FAO forestry exports by country / year", "Unit = m3"))
+  L100.FAO_For_Imp_m3 <- add_dscomments(L100.FAO_For_Imp_m3,
+                                        c("FAO forestry imports by country / year", "Unit = m3"))
+  L100.FAO_For_Prod_m3 <- add_dscomments(L100.FAO_For_Prod_m3,
+                                         c("FAO forestry production by country / year", "Unit = m3"))
+
+  return_data(L100.FAO_ag_HA_ha,
+              L100.FAO_ag_Prod_t,
+              L100.FAO_ag_Exp_t,
+              L100.FAO_ag_Feed_t,
+              L100.FAO_ag_Food_t,
+              L100.FAO_ag_Imp_t,
+              L100.FAO_an_Exp_t,
+              L100.FAO_an_Food_t,
+              L100.FAO_an_Imp_t,
+              L100.FAO_an_Prod_t,
+              L100.FAO_CL_kha,
+              L100.FAO_fallowland_kha,
+              L100.FAO_harv_CL_kha,
+              L100.FAO_Fert_Cons_tN,
+              L100.FAO_Fert_Prod_tN,
+              L100.FAO_For_Exp_m3,
+              L100.FAO_For_Imp_m3,
+              L100.FAO_For_Prod_m3)
 }
