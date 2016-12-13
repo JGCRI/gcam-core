@@ -218,8 +218,8 @@ downscale_FAO_country <- function(df, country_name, dissolution_year,
     mutate(value = ifelse(is.na(value), 0, value)) %>%
     select(-ratio) %>%
     bind_rows(filter(df, countries != country_name,
-                     !year %in% c(ctry_years, dissolution_year))) ->
-    test
+                     !year %in% c(ctry_years, dissolution_year))) #->
+  #  test
 
   # old <- readr::read_csv("~/Desktop/FAO_data_ALL_cze.csv")
   # test <- tidyr::spread(test, year, value)
@@ -234,5 +234,4 @@ downscale_FAO_country <- function(df, country_name, dissolution_year,
   # old <- arrange(old, countries, country.codes, item,
   #                item.codes, element, element.codes)
   # print(all.equal(test, old))
-
 }

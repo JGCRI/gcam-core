@@ -202,30 +202,48 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
     FAO_data_ALL_cze
 
   # USSR
-  # FAO_data_ALL %>%
-  #   filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "USSR"]) %>%
-  #   downscale_FAO_country() ->
-  #   FAO_data_ALL_ussr
+  FAO_data_ALL %>%
+    filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "USSR"]) %>%
+    downscale_FAO_country("USSR", 1992, years = FAO_HISTORICAL_YEARS) ->
+    FAO_data_ALL_ussr
 
   # # Yugoslavia
-  # FAO_data_ALL %>%
-  #   filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Yugoslav SFR"]) %>%
-  #   downscale_FAO_country() %>%
-  #   # combine these downscaled databases
-    # bind_rows(FAO_data_ALL_cze, FAO_data_ALL_ussr) ->
-    # FAO_data_ALL_downscaled
+  FAO_data_ALL %>%
+    filter(iso %in% AGLU_ctry$iso[AGLU_ctry$FAO_country == "Yugoslav SFR"]) %>%
+    downscale_FAO_country("Yugoslav SFR", 1992, years = FAO_HISTORICAL_YEARS) ->
+    FAO_data_ALL_yug
 
   # Drop these countries from the full database and combine
-  # FAO_data_ALL %>%
-  #   filter(!iso %in% unique(FAO_data_ALL_downscaled$iso)) %>%
-  #   bind_rows(FAO_data_ALL_downscaled) ->
-  #   FAO_data_ALL
+  FAO_data_ALL %>%
+    filter(!iso %in% unique(c(FAO_data_ALL_cze$iso, FAO_data_ALL_ussr$iso, FAO_data_ALL_yug$iso))) %>%
+    # combine these downscaled databases
+    bind_rows(FAO_data_ALL_cze, FAO_data_ALL_ussr, FAO_data_ALL_yug) ->
+    FAO_data_ALL
 
-  # # Drop rows where all years are 0
-  # FAO_data_ALL <- FAO_data_ALL[rowSums(FAO_data_ALL[X_FAO_historical_years]) != 0, ]
-  #
-  # # ----------------------------------------------------------------------------- 3.
-  # # Calculate rolling five-year averages from available data
+  browser()
+
+  # Drop observations where all years are zero (9.7s)
+  #  FAO_data_ALL <- FAO_data_ALL[rowSums(FAO_data_ALL[X_FAO_historical_years]) != 0, ]
+  FAO_data_ALL %>%
+    group_by(element, countries, item, iso) %>%
+    summarise(drop = all(value == 0)) %>%
+    right_join(FAO_data_ALL, by = c("element", "countries", "item", "iso")) %>%
+    filter(!drop) %>%
+    select(-drop) ->
+    FAO_data_ALL
+
+# filter: 10s; rollmean: 37s; roll_mean: 8.2; original code: 0.8s WOW!!!
+  FAO_data_ALL %>%
+    group_by(countries, `country codes`, item, `item codes`, element, `element codes`) %>%
+    arrange(year) %>%
+    mutate(value = RcppRoll::roll_mean(value, n = 5, align = "center", fill = 0)) %>%
+#    mutate(value = as.numeric(stats::filter(value, rep(1/5, 5), method = "c"))) %>%
+#    mutate(value = zoo::rollmean(value, 5, fill = NA)) %>%
+    filter(year %in% HISTORICAL_YEARS) ->
+    FAO_data_ALL_5yr
+
+    # ----------------------------------------------------------------------------- 3.
+  # Calculate rolling five-year averages from available data
   # FAO_data_ALL_5yr <- FAO_data_ALL
   #
   # # In the first and last two years, use the 3 and 4 available years
