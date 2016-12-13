@@ -4,3 +4,5 @@
 
 # gcamdata
 GCAM data system rewrite
+
+![](https://github.com/bpbond/gcamdata/blob/master/network/network.png)

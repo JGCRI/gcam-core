@@ -14,6 +14,7 @@ Imports:
     tidyr (>= 0.6.0),
     readr (>= 1.0.0)
 Suggests:
+    igraph (>= 1.0.1),
     testthat (>= 1.0.2)
 Encoding: UTF-8
 LazyData: true

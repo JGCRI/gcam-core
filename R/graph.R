@@ -9,8 +9,6 @@
 #' @return A plot
 #' @export
 graph_chunks <- function(chunklist = find_chunks()) {
-  library(igraph)
-
   chunklist$num <- 1:nrow(chunklist)
   chunklist$modulenum <- as.numeric(as.factor(chunklist$module))
   chunk_inputs() %>%
@@ -23,6 +21,13 @@ graph_chunks <- function(chunklist = find_chunks()) {
     select(name, output, num) ->
     chunkoutputs
   cat("Found", nrow(chunkoutputs), "chunk data products\n")
+
+  # Compute number of outputs
+  chunkoutputs %>%
+    group_by(name) %>%
+    summarise(noutputs = n()) %>%
+    right_join(chunklist, by = "name") ->
+    chunklist
 
   # Compute edges (dependencies)
   chunkinputs %>%
@@ -37,8 +42,9 @@ graph_chunks <- function(chunklist = find_chunks()) {
   }
 
   # Plot it
-  plot(graph.adjacency(mat),
+  plot(igraph::graph.adjacency(mat),
        vertex.color = rainbow(nrow(chunklist))[chunklist$modulenum],
+ #      vertex.size = chunklist$noutputs * 3,
        vertex.label.dist = 1)
 
 }
