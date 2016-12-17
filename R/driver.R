@@ -46,11 +46,12 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
       }
 
       # Order chunk to build its data
-      tim <- system.time({
-        cl <- call(chunk, driver.MAKE, all_data)
+      time1 <- Sys.time()
+      cl <- call(chunk, driver.MAKE, all_data)
         chunk_data <- eval(cl)
-      })
-      print(paste("- make", format(round(tim[1], 2), nsmall = 2)))
+      tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
+
+      print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
       assert_that(is.list(chunk_data))
       assert_that(tibble::is.tibble(chunk_data[[1]]))
 
