@@ -31,6 +31,9 @@ driver.MAKE <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS <- "DECLARE_INPUTS"
 
+# ======================================================================
+# Column names (?)
+GCAM_REGION_ID <- "GCAM_region_ID"
 
 # ======================================================================
 # Modeltime constants
