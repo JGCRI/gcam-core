@@ -73,7 +73,11 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     return(c("common/iso_GCAM_regID",
              "socioeconomics/SSP_database_v9",
              "socioeconomics/GCAM3_GDP",
-             "L100.gdp_mil90usd_ctry_Yh"))
+             "L100.gdp_mil90usd_ctry_Yh",
+             "L101.Pop_thous_GCAM3_R_Y",
+             "L101.Pop_thous_GCAM3_ctry_Y",
+             "L101.Pop_thous_R_Yh",
+             "L101.Pop_thous_SSP_R_Yfut"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return("L102.PPP_MER_R")
   } else if(command == driver.MAKE) {
@@ -103,10 +107,10 @@ socioeconomics_L102.GDP_makedata <- function(all_data) {
 
   GCAM3_GDP <- get_data(all_data, "socioeconomics/GCAM3_GDP")
   L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
-  # L101.Pop_thous_GCAM3_R_Y <- readdata("SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_R_Y")
-  # L101.Pop_thous_GCAM3_ctry_Y <- readdata("SOCIO_LEVEL1_DATA", "L101.Pop_thous_GCAM3_ctry_Y")
-  # L101.Pop_thous_R_Yh <- readdata("SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh")
-  # L101.Pop_thous_SSP_R_Yfut <- readdata("SOCIO_LEVEL1_DATA", "L101.Pop_thous_SSP_R_Yfut")
+  L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
+  L101.Pop_thous_GCAM3_ctry_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_ctry_Y")
+  L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
+  L101.Pop_thous_SSP_R_Yfut <- get_data(all_data, "L101.Pop_thous_SSP_R_Yfut")
   #
   # # ----------------------------------------------------------------------------- 2.
   # # Perform computations
@@ -289,7 +293,7 @@ socioeconomics_L102.GDP_makedata <- function(all_data) {
 }
 
 
-#' module_socioeconomics_L100.GDP_hist
+#' module_socioeconomics_L101.Population
 #'
 #' Construct the \code{socioeconomics} data structures.
 #'
@@ -325,10 +329,10 @@ module_socioeconomics_L101.Population <- function(command, ...) {
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-socioeconomics_L102.GDP_makedata <- function(all_data) {
+socioeconomics_L101.Population_makedata <- function(all_data) {
 
-  iso_GCAM_regID <- get_data(all_data, "iso_GCAM_regID")
-  GCAM3_population <- get_data(all_data, "GCAM3_population")
+  iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+  GCAM3_population <- get_data(all_data, "socioeconomics/GCAM3_population")
   L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
   L100.Pop_thous_SSP_ctry_Yfut <- get_data(all_data, "L100.Pop_thous_SSP_ctry_Yfut")
 
@@ -405,4 +409,181 @@ socioeconomics_L102.GDP_makedata <- function(all_data) {
     L101.Pop_thous_GCAM3_R_Y <-
     L101.Pop_thous_GCAM3_ctry_Y <- tibble(x=1)
   return_data(L101.Pop_thous_R_Yh, L101.Pop_thous_SSP_R_Yfut, L101.Pop_thous_GCAM3_R_Y, L101.Pop_thous_GCAM3_ctry_Y)
+}
+
+
+#' module_socioeconomics_L100.Population_downscale_ctry
+#'
+#' Construct the \code{L100.Population_downscale_ctry} data structures.
+#'
+#' @param command API command to execute
+#' @param ... other optional parameters, depending on command
+#' @return Depends on \code{command}.
+#' @author BBL
+#' @export
+module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
+  if(command == driver.DECLARE_INPUTS) {
+    return(c("socioeconomics/socioeconomics_ctry",
+             "socioeconomics/Maddison_population",
+             "socioeconomics/SSP_database_v9",
+             "socioeconomics/UN_popTot"))
+  } else if(command == driver.DECLARE_OUTPUTS) {
+    return(c("L100.Pop_thous_ctry_Yh",
+             "L100.Pop_thous_SSP_ctry_Yfut"))
+  } else if(command == driver.MAKE) {
+    socioeconomics_L100.Population_downscale_ctry_makedata(...)
+  } else {
+    stop("Unknown command")
+  }
+}
+
+
+#' socioeconomics_L100.Population_downscale_ctry_makedata
+#'
+#' @param all_data A named list, holding all data system products so far
+#' @return A named list with all \code{L100.Population_downscale_ctry} data.
+#' @importFrom assertthat assert_that
+#' @importFrom dplyr filter mutate select
+#' @importFrom tidyr gather spread
+socioeconomics_L100.Population_downscale_ctry_makedata <- function(all_data) {
+
+  socioeconomics_ctry <- get_data(all_data, "socioeconomics/socioeconomics_ctry")
+  Maddison_population <- get_data(all_data, "socioeconomics/Maddison_population")
+  SSP_database_v9 <- get_data(all_data, "socioeconomics/SSP_database_v9")
+  UN_popTot <- get_data(all_data, "socioeconomics/UN_popTot")
+
+  # # ----------------------------------------------------------------------------- 2.
+  # # Perform computations
+  # printlog("Part 1: Downscaling Maddison population data to all countries with modern iso codes")
+  # # First, subset the years that will be used in this analysis (many are missing in the
+  # # database, and filling them out would be tedious)
+  # X_Maddison_years <- names(Maddison_population[grepl(XYEARPATTERN, names(Maddison_population))])
+  # Maddison_years <- as.numeric(substr(X_Maddison_years, 2, 5))
+  #
+  # # Downscale countries that split over time
+  # Maddison_population <- subset(Maddison_population, !is.na(Maddison_population$Country))
+  # Maddison_population$iso <- socioeconomics_ctry$iso[match(Maddison_population$Country,
+  #                                                          socioeconomics_ctry$Maddison_ctry)]
+  # # Czechoslovakia
+  # iso_cze <- socioeconomics_ctry$iso[!is.na(socioeconomics_ctry$Downscale_from) & socioeconomics_ctry$Downscale_from ==
+  #                                      "Czechoslovakia"]
+  # Maddison_population <- downscale_Maddison_country(Maddison_population, "Czechoslovakia",
+  #                                                   iso_cze, 1950)
+  # # USSR
+  # iso_ussr <- socioeconomics_ctry$iso[!is.na(socioeconomics_ctry$Downscale_from) & socioeconomics_ctry$Downscale_from ==
+  #                                       "Total Former USSR"]
+  # Maddison_population <- downscale_Maddison_country(Maddison_population, "Total Former USSR",
+  #                                                   iso_ussr, 1950)
+  # # Yugoslavia
+  # iso_yug <- socioeconomics_ctry$iso[!is.na(socioeconomics_ctry$Downscale_from) & socioeconomics_ctry$Downscale_from ==
+  #                                      "Yugoslavia"]
+  # Maddison_population <- downscale_Maddison_country(Maddison_population, "Yugoslavia",
+  #                                                   iso_yug, 1950)
+  #
+  # # Subset only the rows with assigned iso codes
+  # Pop_Maddison <- subset(Maddison_population, !is.na(Maddison_population$iso))
+  #
+  # # Interpolate any of the desired historical years that are not in the dataset
+  # Pop_Maddison <- gcam_interp(Pop_Maddison, c(Maddison_historical_years, UN_historical_years[1]))
+  #
+  # # For countries with 1820 as the first available year, set the estimate in 1800 equal
+  # # to the 1820 estimate
+  # Pop_Maddison$X1800 <- ifelse(is.na(Pop_Maddison$X1800), Pop_Maddison$X1820,
+  #                              Pop_Maddison$X1800)
+  #
+  # # Subset only the years for which we want population data over this timeframe. Fill
+  # # out missing values based on global total
+  # Pop_Maddison_Yhh <- Pop_Maddison[c("iso", X_Maddison_historical_years, X_UN_historical_years[1])]
+  # Pop_Maddison_glbl_nomissing <- colSums(Pop_Maddison_Yhh[c(X_Maddison_historical_years,
+  #                                                           X_UN_historical_years[1])], na.rm = T)
+  # Pop_Maddison_glbl <- gcam_interp(subset(Maddison_population, Country == "World Total"),
+  #                                  c(Maddison_historical_years, UN_historical_years[1]))
+  # Pop_Maddison_glbl <- Pop_Maddison_glbl[c(X_Maddison_historical_years, X_UN_historical_years[1])]
+  # Pop_Maddison_missing <- data.frame(iso = "all missing", Pop_Maddison_glbl -
+  #                                      Pop_Maddison_glbl_nomissing)
+  #
+  # # Calculate the shares in each time peiod and multiply through. Do this with a for
+  # # loop that starts right and moves left
+  # for (i in (length(X_Maddison_historical_years) + 1):2) {
+  #   Pop_Maddison_Yhh[[i]][is.na(Pop_Maddison_Yhh[[i]])] <- Pop_Maddison_missing[[i]] *
+  #     Pop_Maddison_Yhh[[i + 1]][is.na(Pop_Maddison_Yhh[[i]])]/sum(Pop_Maddison_Yhh[[i +
+  #                                                                                     1]][is.na(Pop_Maddison_Yhh[[i]])])
+  # }
+  #
+  # printlog("Calculating population ratios from the start of the UN population database")
+  # # Calculate population ratios from the first UN nation at the level of the country
+  # PopRatio_Maddison_Yhh <- Pop_Maddison_Yhh[c("iso", X_Maddison_historical_years)]
+  # PopRatio_Maddison_Yhh[X_Maddison_historical_years] <- Pop_Maddison_Yhh[X_Maddison_historical_years]/Pop_Maddison_Yhh[[X_UN_historical_years[1]]]
+  #
+  # printlog("Part 2: Applying these ratios to the historical UN population data")
+  # UN_popTot$iso <- tolower(UN_popTot$Country)
+  # UN_popTot$XYear <- year_to_xyear(UN_popTot$Year)
+  # Pop_thous_ctry_Yh <- dcast(subset(UN_popTot, Scenario == "EST"), iso ~ XYear, value.var = "Value")
+  # # Reset XEA to Taiwan
+  # Pop_thous_ctry_Yh$iso[Pop_thous_ctry_Yh$iso == "xea"] <- "twn"
+  # Pop_thous_ctry_Yh[X_Maddison_historical_years] <- Pop_thous_ctry_Yh[[X_UN_historical_years[1]]] *
+  #   PopRatio_Maddison_Yhh[match(Pop_thous_ctry_Yh$iso, PopRatio_Maddison_Yhh$iso),
+  #                         X_Maddison_historical_years]
+  #
+  # # This leaves some missing values worth changing. Manually set Serbia and Montenegro,
+  # # and use Indonesia population ratio for East Timor
+  # Pop_thous_ctry_Yh[Pop_thous_ctry_Yh$iso == "mne", X_Maddison_historical_years] <- Pop_thous_ctry_Yh[Pop_thous_ctry_Yh$iso ==
+  #                                                                                                       "mne", X_UN_historical_years[1]] * PopRatio_Maddison_Yhh[PopRatio_Maddison_Yhh$iso ==
+  #                                                                                                                                                                  "scg", X_Maddison_historical_years]
+  # Pop_thous_ctry_Yh[Pop_thous_ctry_Yh$iso == "srb", X_Maddison_historical_years] <- Pop_thous_ctry_Yh[Pop_thous_ctry_Yh$iso ==
+  #                                                                                                       "srb", X_UN_historical_years[1]] * PopRatio_Maddison_Yhh[PopRatio_Maddison_Yhh$iso ==
+  #                                                                                                                                                                  "scg", X_Maddison_historical_years]
+  # Pop_thous_ctry_Yh[Pop_thous_ctry_Yh$iso == "tls", X_Maddison_historical_years] <- Pop_thous_ctry_Yh[Pop_thous_ctry_Yh$iso ==
+  #                                                                                                       "tls", X_UN_historical_years[1]] * PopRatio_Maddison_Yhh[PopRatio_Maddison_Yhh$iso ==
+  #                                                                                                                                                                  "idn", X_Maddison_historical_years]
+  #
+  # # At this point the remaining mismatched countries are small, so set to zero
+  # Pop_thous_ctry_Yh[is.na(Pop_thous_ctry_Yh)] <- 0
+  # Pop_thous_ctry_Yh <- Pop_thous_ctry_Yh[c("iso", X_Maddison_historical_years,
+  #                                          X_UN_historical_years)]
+  #
+  # printlog("Part 3: Downscaling SSP scenarios to the modern day iso level")
+  # X_final_historical_year <- X_UN_historical_years[length(X_UN_historical_years)]
+  #
+  # # Subset the SSP scenarios from the appropriate model and drop the version name from
+  # # the scenario name
+  # pop_mil_SSP_ctry_Yfut <- subset(SSP_database_v9, MODEL == pop_model & VARIABLE ==
+  #                                   "Population")
+  # pop_mil_SSP_ctry_Yfut$iso <- tolower(pop_mil_SSP_ctry_Yfut$REGION)
+  # pop_mil_SSP_ctry_Yfut[[Scen]] <- substr(pop_mil_SSP_ctry_Yfut$SCENARIO, 1, 4)
+  #
+  # # Romania is called 'rou' in the SSP database. reset this
+  # pop_mil_SSP_ctry_Yfut$iso[pop_mil_SSP_ctry_Yfut$iso == "rou"] <- "rom"
+  #
+  # # Compute ratios to final historical year in the SSP scenarios
+  # X_SSP_years <- c(X_final_historical_year, X_future_years)
+  # popRatio_SSP_ctry_Yfut <- pop_mil_SSP_ctry_Yfut[c(Scen, "iso", X_future_years)]
+  # popRatio_SSP_ctry_Yfut[X_future_years] <- pop_mil_SSP_ctry_Yfut[X_future_years]/pop_mil_SSP_ctry_Yfut[[X_final_historical_year]]
+  #
+  # # Multiply these ratios by the country-level population data from the UN
+  # Pop_thous_ctry_Yfut <- Pop_thous_ctry_Yh[c("iso", X_final_historical_year)]
+  # Pop_thous_SSP_ctry_Yfut <- repeat_and_add_vector(Pop_thous_ctry_Yfut, Scen,
+  #                                                  unique(popRatio_SSP_ctry_Yfut[[Scen]]))
+  # Pop_thous_SSP_ctry_Yfut[X_future_years] <- Pop_thous_SSP_ctry_Yfut[[X_final_historical_year]] *
+  #   popRatio_SSP_ctry_Yfut[match(vecpaste(Pop_thous_SSP_ctry_Yfut[c(Scen, "iso")]),
+  #                                vecpaste(popRatio_SSP_ctry_Yfut[c(Scen, "iso")])), X_future_years]
+  #
+  # # For countries not covered in the SSPs, set the future population equal to its value
+  # # in the base year
+  # Pop_thous_SSP_ctry_Yfut[is.na(Pop_thous_SSP_ctry_Yfut[[X_future_years[1]]]),
+  #                         X_future_years] <- Pop_thous_SSP_ctry_Yfut[[X_final_historical_year]][is.na(Pop_thous_SSP_ctry_Yfut[[X_future_years[1]]])]
+  # Pop_thous_SSP_ctry_Yfut <- Pop_thous_SSP_ctry_Yfut[c(Scen, "iso", X_future_years)]
+  #
+  # # ----------------------------------------------------------------------------- 3.
+  # # Output
+  # writedata(Pop_thous_ctry_Yh, domain = "SOCIO_LEVEL1_DATA", fn = "L100.Pop_thous_ctry_Yh",
+  #           comments = c("Population by country over the historical time period", "Unit = thous persons"),
+  #           readr = TRUE)
+  # writedata(Pop_thous_SSP_ctry_Yfut, domain = "SOCIO_LEVEL1_DATA", fn = "L100.Pop_thous_SSP_ctry_Yfut",
+  #           comments = c("Population by SSP and country for future time periods", "Unit = thous persons"),
+  #           readr = TRUE)
+  #
+  L100.Pop_thous_ctry_Yh <-
+    L100.Pop_thous_SSP_ctry_Yfut <- tibble()
+  return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)
 }

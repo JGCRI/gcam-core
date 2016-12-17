@@ -16,6 +16,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
 
   chunklist <- find_chunks()
   cat("Found", nrow(chunklist), "chunks\n")
+  #cat(chunklist$chunk, "\n")
 
   chunkinputs <- chunk_inputs(chunklist$name)
   cat("Found", nrow(chunkinputs), "chunk data requirements\n")
@@ -48,7 +49,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
       # Order chunk to build its data
       time1 <- Sys.time()
       cl <- call(chunk, driver.MAKE, all_data)
-        chunk_data <- eval(cl)
+      chunk_data <- eval(cl)
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
 
       print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
