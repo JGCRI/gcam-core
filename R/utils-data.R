@@ -62,7 +62,9 @@ get_dsflags <- function(x) {
 #' @param name Name of data to return
 #' @return Data object (currently, a tibble or data frame).
 get_data <- function(all_data, name) {
-  assertthat::assert_that(!is.null(all_data[[name]]))
+  if(is.null(all_data[[name]])) {
+    stop("Data system: couldn't find ", name)
+  }
   all_data[[name]]
 }
 
