@@ -27,7 +27,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
   unfound_inputs <- setdiff(chunkinputs$input, chunkoutputs$output)
   if(length(unfound_inputs)) {
     cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
-    load_csv_files(unfound_inputs) %>%
+    load_csv_files(unfound_inputs, quiet = TRUE) %>%
       add_data(all_data) ->
       all_data
   }
