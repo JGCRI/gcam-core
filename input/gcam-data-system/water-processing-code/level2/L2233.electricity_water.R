@@ -348,17 +348,18 @@ L2233.GlobalTechCoef_elec_cool[ c( "water_withdrawals", "water_consumption" ) ] 
          c( "water_withdrawals", "water_consumption" ) ] / conv_MWh_GJ,
       digits_coefficient )
 L2233.GlobalTechCoef_elec_cool <- melt( L2233.GlobalTechCoef_elec_cool,
-      id.vars = c( "to.supplysector", "to.subsector", "to.technology" ),
       measure.vars = c( "water_consumption", "water_withdrawals" ),
       variable.name = input,
       value.name = "coefficient" )
 names( L2233.GlobalTechCoef_elec_cool )[ names( L2233.GlobalTechCoef_elec_cool ) %in% c( "to.supplysector", "to.subsector", "to.technology" ) ] <-
       c( "sector.name", "subsector.name", "technology" )
-L2233.GlobalTechCoef_elec_cool <- repeat_and_add_vector( L2233.GlobalTechCoef_elec_cool, Y, model_years )[ names_GlobalTechCoef ]
+L2233.GlobalTechCoef_elec_cool <- repeat_and_add_vector( L2233.GlobalTechCoef_elec_cool, Y, model_years )
 L2233.GlobalTechCoef_elec_cool[[input]] <- sub( "_", " ", L2233.GlobalTechCoef_elec_cool[[input]])
 #Seawater is only relevant for water withdrawals, not consumption (values reflect temperature rises in inland water bodies, and we don't care about seawater scarcity)
-L2233.GlobalTechCoef_elec_cool <- subset( L2233.GlobalTechCoef_elec_cool, paste( technology, minicam.energy.input ) != "seawater water consumption" )
-L2233.GlobalTechCoef_elec_cool[[input]][ L2233.GlobalTechCoef_elec_cool[[tech]] == "seawater" ] <- "seawater"
+L2233.GlobalTechCoef_elec_cool <- subset( L2233.GlobalTechCoef_elec_cool, !( water_type == "seawater" & minicam.energy.input == "water consumption" ) )
+#Rename seawater withdrawals
+L2233.GlobalTechCoef_elec_cool[[input]][ L2233.GlobalTechCoef_elec_cool$water_type == "seawater" ] <- "seawater"
+L2233.GlobalTechCoef_elec_cool <- L2233.GlobalTechCoef_elec_cool[ names_GlobalTechCoef ]
 
 #TODO This needs to be partitioned between int-techs and standard techs
 L2233.GlobalTechCoef_elec_cool[ c( "from.supplysector", "from.subsector", "from.technology" ) ] <- elec_tech_water_map[
