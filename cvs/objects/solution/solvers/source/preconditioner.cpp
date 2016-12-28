@@ -267,18 +267,28 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     } 
                     else if (oldprice > ub &&
                              oldsply > olddmnd) {
-                        // price is above the top of the supply curve,
-                        // and there little demand.  Set new price at
-                        // the top of the supply curve.  We are
-                        // conservative about this adjustment because
-                        // it frequently happens that the supply of
-                        // certain resources runs out, and the
-                        // clearing price will be above the top of the
-                        // supply curve.
+                      // price is above the top of the supply curve,
+                      // and there little demand.  This is not
+                      // necessarily wrong.  When a resource runs out,
+                      // the clearing price *should* be above the top
+                      // of the supply curve, so this is not
+                      // necessarily an error.  Therefore, we will be
+                      // a little conservative in this adjustment.
+                      // When demand is less than 1% of supply, we set
+                      // the price to the upper bound.  When demand is
+                      // greater than or equal to supply, we leave the
+                      // price alone.  In between we interpolate.
+                      double sthresh = 100.0; // the 1% threshold described above.
+                      if(oldsply >= sthresh*olddmnd) {
                         newprice = ub;
-                        solvable[i].setPrice(newprice);
-                        chg = true;
-                        ++nchg;
+                      }
+                      else {
+                        double k = (sthresh - (oldsply-olddmnd)) / sthresh;
+                        newprice = ub + k * (oldprice-ub);
+                      }
+                      solvable[i].setPrice(newprice);
+                      chg = true;
+                      ++nchg;
                     }
                     break; 
                 case IMarketType::PRICE:
