@@ -28,23 +28,20 @@ L108.ag_Feed_Mt_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L108.ag_Feed_Mt_R_C_Y" )
 L110.For_ALL_bm3_R_Y <- readdata( "AGLU_LEVEL1_DATA", "L110.For_ALL_bm3_R_Y" )
 L120.LC_bm2_R_LT_Yh_GLU <- readdata( "AGLU_LEVEL1_DATA", "L120.LC_bm2_R_LT_Yh_GLU" )
 L121.CarbonContent_kgm2_R_LT_GLU <- readdata( "AGLU_LEVEL1_DATA", "L121.CarbonContent_kgm2_R_LT_GLU" )
+L121.Yield_kgm2_R_Past_GLU <- readdata( "AGLU_LEVEL1_DATA", "L121.Yield_kgm2_R_Past_GLU" )
 L101.Pop_thous_R_Yh <- readdata( "SOCIO_LEVEL1_DATA", "L101.Pop_thous_R_Yh" )
 
 # -----------------------------------------------------------------------------
 # 2. Perform computations
 printlog( "Part 1: Managed pasture production and land cover" )
-#Calculate yields of pasture by GLU from the GTAP/LDS data on FodderGrass ( hay ) production. Assume the global average in all regions.
-printlog( "NOTE: Using global average hay yields to estimate production of grass in all pastures" )
-#Production
-L123.ag_Yield_kgm2_Past <- sum( L102.ag_Prod_Mt_R_C_GLU$value[ L102.ag_Prod_Mt_R_C_GLU[[C]] == "FodderGrass" ] ) /
-  sum( L102.ag_HA_bm2_R_C_GLU$value[ L102.ag_HA_bm2_R_C_GLU[[C]] == "FodderGrass" ] )
-
 #Calculate bottom-up estimate of pasture production by region and GLU ( yield times land area )
 printlog( "Calculating total pasture grass production by region and GLU" )
 L123.ag_potentialProd_Mt_R_Past_Y_GLU <- L120.LC_bm2_R_LT_Yh_GLU[
   L120.LC_bm2_R_LT_Yh_GLU[[LT]] =="Pasture", c( R_LT_GLU, X_AGLU_historical_years ) ]
-L123.ag_potentialProd_Mt_R_Past_Y_GLU[ X_AGLU_historical_years ] <-
-  L123.ag_potentialProd_Mt_R_Past_Y_GLU[ X_AGLU_historical_years ] * L123.ag_Yield_kgm2_Past
+L123.ag_potentialProd_Mt_R_Past_Y_GLU[ X_AGLU_historical_years ] <- L123.ag_potentialProd_Mt_R_Past_Y_GLU[ X_AGLU_historical_years ] *
+  L121.Yield_kgm2_R_Past_GLU$pasture_yield[
+    match( vecpaste( L123.ag_potentialProd_Mt_R_Past_Y_GLU[ R_LT_GLU ] ),
+           vecpaste( L121.Yield_kgm2_R_Past_GLU[ R_LT_GLU ] ) ) ]
 
 #Use this "potential production" to disaggregate actual pastureland production to GLUs
 printlog( "NOTE: using pasture grass production by region and GLU to disaggregate regional pasture consumption to GLU" )
@@ -68,8 +65,11 @@ L123.ag_Prod_Mt_R_Past_Y_GLU[ X_AGLU_historical_years ] <- L123.ag_PastureProdfr
 #Calculate land requirements.
 printlog( "Calculating pasture land required to produce grass consumed in pastures. This is managed pasture" )
 L123.LC_bm2_R_MgdPast_Y_GLU <- L123.ag_Prod_Mt_R_Past_Y_GLU[ R_C_GLU ]
-L123.LC_bm2_R_MgdPast_Y_GLU[ X_AGLU_historical_years ] <- L123.ag_Prod_Mt_R_Past_Y_GLU[ X_AGLU_historical_years ] / L123.ag_Yield_kgm2_Past
 names( L123.LC_bm2_R_MgdPast_Y_GLU )[ names( L123.LC_bm2_R_MgdPast_Y_GLU) == C ] <- LT
+L123.LC_bm2_R_MgdPast_Y_GLU[ X_AGLU_historical_years ] <- L123.ag_Prod_Mt_R_Past_Y_GLU[ X_AGLU_historical_years ] /
+  L121.Yield_kgm2_R_Past_GLU$pasture_yield[
+    match( vecpaste( L123.LC_bm2_R_MgdPast_Y_GLU[ R_LT_GLU ] ),
+           vecpaste( L121.Yield_kgm2_R_Past_GLU[ R_LT_GLU ] ) ) ]
 
 #Where managed pasture is greater than assumed threshold percentage of total pasture, reduce the managed pasture land.
 #Output is unaffected so these regions have higher yields.
@@ -103,7 +103,7 @@ L123.ag_Yield_kgm2_R_Past_Y_GLU[ X_AGLU_historical_years ] <- L123.ag_Yield_kgm2
     match( vecpaste( L123.ag_Yield_kgm2_R_Past_Y_GLU[ R_C_GLU ] ),
            vecpaste( L123.LC_bm2_R_MgdPast_Y_GLU_adj[ R_LT_GLU ] ) ),
     X_AGLU_historical_years ]
-L123.ag_Yield_kgm2_R_Past_Y_GLU[ is.na( L123.ag_Yield_kgm2_R_Past_Y_GLU ) ] <- L123.ag_Yield_kgm2_Past
+L123.ag_Yield_kgm2_R_Past_Y_GLU[ is.na( L123.ag_Yield_kgm2_R_Past_Y_GLU ) ] <- 0
 
 #Multiply "managed" shares in the earliest available year by prior pasture land cover pathway to get historical managed pasture
 printlog( "Building managed pasture land use history" )

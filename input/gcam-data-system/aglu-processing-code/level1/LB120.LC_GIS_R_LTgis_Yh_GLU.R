@@ -80,12 +80,21 @@ L120.LC_bm2_R_Tundra_Yh_GLU <- L120.LC_bm2_R_LT_Yh_GLU[ L120.LC_bm2_R_LT_Yh_GLU[
 L120.LC_bm2_R_RckIceDsrt_Yh_GLU <- L120.LC_bm2_R_LT_Yh_GLU[ L120.LC_bm2_R_LT_Yh_GLU[[LT]] =="RockIceDesert", ]
 
 #LAND COVER FOR CARBON CONTENT CALCULATION
+printlog( "Compiling data for land carbon content calculation on unmanaged lands" )
 # Note: not just using the final year, as some land use types may have gone to zero over the historical period.
-# Instead, just use the median of the available years within our "historical" years
+# Instead, just use the mean of the available years within our "historical" years
 L120.LC_bm2_ctry_LTsage_GLU_Y <- subset( L100.Land_type_area_ha, LT_HYDE == "Unmanaged" )[
   c( "iso", R_GLU, "land_code", "LT_SAGE", LT, Y, "Area_bm2" ) ]
 L120.LC_bm2_ctry_LTsage_GLU <- aggregate( L120.LC_bm2_ctry_LTsage_GLU_Y[ "Area_bm2" ],
                                           by = L120.LC_bm2_ctry_LTsage_GLU_Y[ c( "iso", R_GLU, "land_code", "LT_SAGE", LT ) ],
+                                          mean )
+
+# Land cover for pasture
+printlog( "Compiling data for land carbon content calculation on pasture lands" )
+L120.LC_bm2_ctry_LTpast_GLU_Y <- subset( L100.Land_type_area_ha, LT_HYDE == "Pasture" )[
+  c( "iso", R_GLU, "land_code", "LT_SAGE", LT, Y, "Area_bm2" ) ]
+L120.LC_bm2_ctry_LTpast_GLU <- aggregate( L120.LC_bm2_ctry_LTpast_GLU_Y[ "Area_bm2" ],
+                                          by = L120.LC_bm2_ctry_LTpast_GLU_Y[ c( "iso", R_GLU, "land_code", "LT_SAGE", LT ) ],
                                           mean )
 
 # -----------------------------------------------------------------------------
@@ -96,6 +105,7 @@ comments.L120.LC_bm2_R_UrbanLand_Yh_GLU <- c( "Urban land cover by GCAM region /
 comments.L120.LC_bm2_R_Tundra_Yh_GLU <- c( "Tundra land cover by GCAM region / historical year / GLU","bm2" )
 comments.L120.LC_bm2_R_RckIceDsrt_Yh_GLU <- c( "Rock/ice/desert land cover by GCAM region / historical year / GLU","bm2" )
 comments.L120.LC_bm2_ctry_LTsage_GLU <- c( "Land cover by country / SAGE15 land type / GLU","Unit = bm2" )
+comments.L120.LC_bm2_ctry_LTpast_GLU <- c( "Land cover by country / SAGE15 land type / GLU","Unit = bm2" )
 
 #Write it out
 writedata( L120.LC_bm2_R_LT_Yh_GLU, domain="AGLU_LEVEL1_DATA", fn="L120.LC_bm2_R_LT_Yh_GLU", comments=comments.L120.LC_bm2_R_LT_Yh_GLU )
@@ -103,6 +113,7 @@ writedata( L120.LC_bm2_R_UrbanLand_Yh_GLU, domain="AGLU_LEVEL1_DATA", fn="L120.L
 writedata( L120.LC_bm2_R_Tundra_Yh_GLU, domain="AGLU_LEVEL1_DATA", fn="L120.LC_bm2_R_Tundra_Yh_GLU", comments=comments.L120.LC_bm2_R_Tundra_Yh_GLU )
 writedata( L120.LC_bm2_R_RckIceDsrt_Yh_GLU, domain="AGLU_LEVEL1_DATA", fn="L120.LC_bm2_R_RckIceDsrt_Yh_GLU", comments=comments.L120.LC_bm2_R_RckIceDsrt_Yh_GLU )
 writedata( L120.LC_bm2_ctry_LTsage_GLU, domain="AGLU_LEVEL1_DATA", fn="L120.LC_bm2_ctry_LTsage_GLU", comments=comments.L120.LC_bm2_ctry_LTsage_GLU )
+writedata( L120.LC_bm2_ctry_LTpast_GLU, domain="AGLU_LEVEL1_DATA", fn="L120.LC_bm2_ctry_LTpast_GLU", comments=comments.L120.LC_bm2_ctry_LTpast_GLU )
 
 # Every script should finish with this line
 logstop()
