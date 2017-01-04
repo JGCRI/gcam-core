@@ -68,7 +68,7 @@
         <solution-tolerance>0.001</solution-tolerance>
         <solution-floor>0.0001</solution-floor>
         <calibration-tolerance>0.01</calibration-tolerance>
-        <max-model-calcs>2500</max-model-calcs>
+        <max-model-calcs>5200</max-model-calcs>
 
         <preconditioner-solver-component>
             <solution-info-filter>solvable &amp;&amp; unsolved</solution-info-filter>
@@ -77,7 +77,7 @@
         </preconditioner-solver-component>
 
         <broyden-solver-component>
-            <max-iterations>20</max-iterations>
+            <max-iterations>50</max-iterations>
             <ftol>1.0e-4</ftol>
             <linear-price/>
             <solution-info-filter>solvable-nr || (market-type="Tax" &amp;&amp; solvable)</solution-info-filter>
