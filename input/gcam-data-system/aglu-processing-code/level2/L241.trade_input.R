@@ -29,7 +29,7 @@ GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 A_demand_technology <- readdata( "AGLU_ASSUMPTIONS", "A_demand_technology" )
 A_an_input_technology <- readdata( "AGLU_ASSUMPTIONS", "A_an_input_technology" )
 L101.ag_kcalg_R_C_Y <- readdata( "AGLU_LEVEL1_DATA", "L101.ag_kcalg_R_C_Y" )
-L2011.AgProduction_ag_irr <- readdata( "AGLU_LEVEL2_DATA", "L2011.AgProduction_ag_irr", skip = 4 )
+L2012.AgProduction_ag_irr_mgmt <- readdata( "AGLU_LEVEL2_DATA", "L2012.AgProduction_ag_irr_mgmt", skip = 4 )
 L102.pcgdp_thous90USD_Scen_R_Y <- readdata( "SOCIO_LEVEL1_DATA", "L102.pcgdp_thous90USD_Scen_R_Y" )
 
 # -----------------------------------------------------------------------------
@@ -83,7 +83,7 @@ L241.StubAgTradeCoeff_feed <- repeat_and_add_vector( L241.StubAgTradeCoeff_feed,
 L241.StubAgTradeCoeff_feed <- L241.StubAgTradeCoeff_feed[ names_StubTechCoef_NM ]
 
 printlog( "L241.AgProdTech_RES_output: output coefficient for RES ag_trade of food crops (incl secondary products)" )
-L241.AgProdTech_RES_output <- subset( L2011.AgProduction_ag_irr, year == max( model_base_years))
+L241.AgProdTech_RES_output <- subset( L2012.AgProduction_ag_irr_mgmt, year == max( model_base_years))
 L241.AgProdTech_RES_output <- repeat_and_add_vector( L241.AgProdTech_RES_output, "year", aglu_demand_futureyears )
 L241.AgProdTech_RES_output$res.secondary.output <- "ag_trade"
 L241.AgProdTech_RES_output$output.ratio <- 1

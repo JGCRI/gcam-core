@@ -306,9 +306,14 @@ plotvars <- function(data, mktids, title="", skip=0, transforms=NULL, use.names=
     
   ## use market names or id numbers, as requested
   if(use.names)
-    plotdata$cvar <- plotdata$mktname
+    plotdata$cvar <- factor(plotdata$mktname, levels=mkt.names(data,mktids), ordered=TRUE)
   else
-    plotdata$cvar <- as.factor(plotdata$mktid)
+    plotdata$cvar <- factor(plotdata$mktid, levels=mktids, ordered=TRUE)
+
+  ## order the facets conveniently
+  varl <- unique(c('fx', 'dxprop', 'deltax', 'deltafx', 'x', 'price','supply','demand','diagB',
+                   plotdata$variable))
+  plotdata$variable <- factor(plotdata$variable, levels=varl, ordered=TRUE)
   
   ## select a color scheme.  Use Set1 from color brewer, unless there are
   ## too many markets being displayed, in which case use Set3 (using too
@@ -320,7 +325,7 @@ plotvars <- function(data, mktids, title="", skip=0, transforms=NULL, use.names=
   else
     cpal <- 'Set3'
   
-  ggplot(data=plotdata, aes(x=iter,y=value,color=cvar)) + geom_line() +
+  ggplot(data=plotdata, aes(x=iter,y=value,color=cvar)) + geom_line(size=1.1) +
     facet_wrap(facets=~variable,scales='free_y') + 
     scale_color_brewer(name="market",palette=cpal)
 }
