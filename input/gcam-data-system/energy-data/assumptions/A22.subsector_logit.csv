@@ -5,7 +5,7 @@ gas processing,biomass gasification,-6,
 gas processing,coal gasification,-6,
 nuclearFuelGenII,enrichedUranium,-6,
 nuclearFuelGenIII,enrichedUranium,-6,
-refining,oil refining,-6,
+refining,oil refining,-6,absolute-cost-logit
 refining,biomass liquids,-6,absolute-cost-logit
-refining,coal to liquids,-6,
-refining,gas to liquids,-6,
+refining,coal to liquids,-6,absolute-cost-logit
+refining,gas to liquids,-6,absolute-cost-logit

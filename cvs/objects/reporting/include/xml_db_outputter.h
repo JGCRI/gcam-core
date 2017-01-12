@@ -321,6 +321,8 @@ private:
     bool isTechnologyOperating( const int aPeriod );
     
     std::iostream* popBufferStack();
+    
+    static std::map<std::string, std::string> decomposeLandName( std::string aLandName );
 
 #if( __HAVE_JAVA__ )
     /*!

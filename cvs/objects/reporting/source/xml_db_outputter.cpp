@@ -1564,8 +1564,18 @@ void XMLDBOutputter::endVisitLandNode( const LandNode* aLandNode,
 void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
                                          const int aPeriod )
 {
-    // Write the opening gdp tag.
-    XMLWriteOpeningTag( "LandLeaf", mBuffer, mTabs.get(), aLandLeaf->getName() );
+    // Write the opening LandLeaf tag except we need to decompose the name and write
+    // each out as an attribute.
+    // TODO: just put this in as a utility such as XMLWriteOpeningTagWithAttributes?
+    map<string, string> decomposedNames = decomposeLandName( aLandLeaf->getName() );
+    mTabs->writeTabs( mBuffer );
+    mBuffer << "<" << LandLeaf::getXMLNameStatic();
+    typedef typename map<string, string>::const_iterator MapIterator;
+    for( MapIterator entry = decomposedNames.begin(); entry != decomposedNames.end(); ++entry ){
+        mBuffer << " " << entry->first <<"=\"" << entry->second << "\"";
+    }
+    mBuffer << ">" << std::endl;
+    mTabs->increaseIndent();
 
     // Loop over the periods to output LandLeaf information.
     // The loops are separated so the types are grouped together to make it easier to
@@ -2095,6 +2105,48 @@ bool XMLDBOutputter::isTechnologyOperating( const int aPeriod ){
  iostream* XMLDBOutputter::popBufferStack(){
     iostream* ret = mBufferStack.top();
     mBufferStack.pop();
+    return ret;
+}
+
+/**
+ * \brief The name of LandLeaf / AgProductionTechnology actually compose of potentially
+ *        several identifiers.  This method decomposes that name into it's component
+ *        identifiers so each can be written as it's own attribute.
+ * \details This method will attempt to parse out identifiers by spliting on underscore
+ *          characters from right to left first checking to see if it finds:
+ *          "mgmt-tech"=(hi|lo)
+ *          "water"=(IRR|RFD)
+ *          The next token will be assumed to be the "land-region" and the rest will
+ *          be assumed to be "crop".  Note the full name will also be included in the
+ *          results under "name".
+ * \return A map of identifiers to their corresponding values as detailed above.
+ */
+map<string, string> XMLDBOutputter::decomposeLandName( string aLandName ) {
+    bool foundLandRegion = false;
+    size_t pos;
+    map<string, string> ret;
+    // Include the full unparsed name in the results.
+    ret[ "name " ] = aLandName;
+    
+    // Split the name on underscores from right to left.  Once we have found the
+    // land-region we will assume the rest of the name is just the crop (some of
+    // which include underscores in their names).
+    while( !foundLandRegion && ( pos = aLandName.rfind( '_' ) ) != string::npos ) {
+        string currName = aLandName.substr( pos + 1, aLandName.length() - pos );
+        aLandName.erase( pos, aLandName.length() );
+        if( currName == "hi" || currName == "lo" ) {
+            ret[ "mgmt-tech" ] = currName;
+        }
+        else if( currName == "IRR" || currName == "RFD" ) {
+            ret[ "water" ] = currName;
+        }
+        else {
+            ret[ "land-region" ] = currName;
+            foundLandRegion = true;
+        }
+    }
+    ret[ "crop" ] = aLandName;
+    
     return ret;
 }
 

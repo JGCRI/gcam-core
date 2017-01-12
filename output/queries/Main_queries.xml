@@ -3051,18 +3051,109 @@ element input {
    </queryGroup>
    <queryGroup name="agriculture and land use">
       <queryGroup name="land use">
-         <query title="land allocation">
-            <axis1 name="LandLeaf">LandLeaf</axis1>
+         <query title="detailed land allocation">
+            <axis1 name="LandLeaf">LandLeaf[@name]</axis1>
             <axis2 name="Year">land-allocation[@year]</axis2>
             <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//land-allocation/text()</xPath>
             <comments/>
          </query>
-         <query title="land allocation in a specified land use region">
-            <axis1 name="LandLeaf">LandLeaf</axis1>
+         <query title="land allocation by crop">
+            <axis1 name="LandLeaf">LandLeaf[@crop]</axis1>
             <axis2 name="Year">land-allocation[@year]</axis2>
-            <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]/
-            *[contains( @name, 'GLU223')]//
+            <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//land-allocation/text()</xPath>
+            <comments/>
+         </query>
+         <query title="aggregated land allocation">
+            <axis1 name="LandLeaf">LandLeaf[@crop]</axis1>
+            <axis2 name="Year">land-allocation[@year]</axis2>
+            <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//land-allocation/text()</xPath>
+            <comments/>
+            <labelRewriteList append-values="false">
+               <level name="LandLeaf">
+                  <rewrite from="Corn" to="crops"/>
+                  <rewrite from="FiberCrop" to="crops"/>
+                  <rewrite from="FodderGrass" to="crops"/>
+                  <rewrite from="FodderHerb" to="crops"/>
+                  <rewrite from="Forest" to="forest (managed)"/>
+                  <rewrite from="Grassland" to="grass"/>
+                  <rewrite from="MiscCrop" to="crops"/>
+                  <rewrite from="OilCrop" to="crops"/>
+                  <rewrite from="OtherArableLand" to="otherarable"/>
+                  <rewrite from="OtherGrain" to="crops"/>
+                  <rewrite from="PalmFruit" to="crops"/>
+                  <rewrite from="Pasture" to="pasture (grazed)"/>
+                  <rewrite from="ProtectedGrassland" to="grass"/>
+                  <rewrite from="ProtectedShrubland" to="shrubs"/>
+                  <rewrite from="ProtectedUnmanagedForest" to="forest (unmanaged)"/>
+                  <rewrite from="ProtectedUnmanagedPasture" to="pasture (other)"/>
+                  <rewrite from="Rice" to="crops"/>
+                  <rewrite from="RockIceDesert" to="rock and desert"/>
+                  <rewrite from="Root_Tuber" to="crops"/>
+                  <rewrite from="Shrubland" to="shrubs"/>
+                  <rewrite from="SugarCrop" to="crops"/>
+                  <rewrite from="Tundra" to="tundra"/>
+                  <rewrite from="UnmanagedForest" to="forest (unmanaged)"/>
+                  <rewrite from="UnmanagedPasture" to="pasture (other)"/>
+                  <rewrite from="UrbanLand" to="urban"/>
+                  <rewrite from="Wheat" to="crops"/>
+                  <rewrite from="biomass_grass" to="biomass"/>
+                  <rewrite from="biomass_tree" to="biomass"/>
+               </level>
+            </labelRewriteList>
+         </query>
+         <query title="land allocation in a specified land use region">
+            <axis1 name="LandLeaf">LandLeaf[@name]</axis1>
+            <axis2 name="Year">land-allocation[@year]</axis2>
+            <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//
+            LandLeaf[@land-region='MissouriR']/
             land-allocation/text()</xPath>
+            <comments/>
+         </query>
+         <query title="land allocation by crop and water source">
+            <axis1 name="water">water[@name]</axis1>
+            <axis2 name="Year">land-allocation[@year]</axis2>
+            <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">
+            declare function local:nest-land-category($leaf as node(), $level as xs:string, $child as node()*) as node() {
+                let $attrMatch := $leaf/@*[name()=$level],
+                    $attrValue := if(exists($attrMatch)) then string($attrMatch) else "NA"
+                return element { $level } {
+                    attribute name { $attrValue },
+                    $child
+                }
+            };
+            declare function local:run-nest-land-categories($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+                let $regionsG := if(not($regions[1] = 'Global'))
+                                 then $regions
+                                 else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+                return
+                    for $scenario in $scenarios, 	    
+                        $region in $regionsG 	
+                    let $scenario_split := tokenize($scenario, ' '), 	    
+                        $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
+                        $landLeaves := $currTree//LandNode[@name='root' or @type='LandNode' (:collapse:)]//LandLeaf,
+                        $ret := document {
+                            element scenario {
+                                attribute name { $scenario_split[1] },
+                                attribute date { $scenario_split[2] },
+                                element region {
+                                    attribute type { "region" },
+                                    attribute name { $region },
+                                    for $leaf in $landLeaves
+                                    (: TODO: not sure why I have to explicitly copy the land-allocation :)
+                                    let $copy := for $landAlloc in $leaf/land-allocation
+                                                 return element land-allocation {
+                                                    $landAlloc/@*,
+                                                    text { $landAlloc/text() }
+                                                 }
+                                    (: A user could choose to nest by recursively calling for any of: ("crop", "land-region", "water", "mgmt-tech") :)
+                                    return local:nest-land-category($leaf, "crop", local:nest-land-category($leaf, "water", $copy))
+                                }
+                            }
+                        }
+                    return $ret//text()
+            };
+            local:run-nest-land-categories((:scenarios:), (:regions:), (:collection:))
+            </xPath>
             <comments/>
          </query>
          <query title="LUC emissions by region">
@@ -3082,8 +3173,8 @@ element input {
          <query title="LUC emissions by LUT in a specified land use region">
             <axis1 name="LandLeaf">LandLeaf</axis1>
             <axis2 name="Year">land-use-change-emission[@year]</axis2>
-            <xPath buildList="true" dataName="land-use-change-emission" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]/
-            *[contains( @name, 'GLU223')]//
+            <xPath buildList="true" dataName="land-use-change-emission" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//
+            LandLeaf[@land-region='MissouriR']//
              land-use-change-emission[@year&gt;1970]/text()</xPath>
             <comments/>
          </query>
@@ -3103,8 +3194,8 @@ element input {
          <query title="profit rate in a specified land use region">
             <axis1 name="LandLeaf">LandLeaf</axis1>
             <axis2 name="Year">profit-rate[@year]</axis2>
-            <xPath buildList="true" dataName="profit-rate" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]/
-            *[contains( @name, 'GLU223')]//
+            <xPath buildList="true" dataName="profit-rate" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//
+            LandLeaf[@land-region='MissouriR']/
             profit-rate/text()</xPath>
             <comments/>
          </query>
@@ -3117,8 +3208,8 @@ element input {
          <query title="land leaf shares in a specified land use region">
             <axis1 name="LandLeaf">LandLeaf</axis1>
             <axis2 name="Year">share[@year]</axis2>
-            <xPath buildList="true" dataName="share" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]/
-            *[contains( @name, 'GLU223')]//
+            <xPath buildList="true" dataName="share" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//
+            LandLeaf[@land-region='MissouriR']/
             share/text()</xPath>
             <comments/>
          </query>
