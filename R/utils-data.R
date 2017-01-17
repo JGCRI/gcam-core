@@ -35,7 +35,7 @@ get_dscomments <- function(x) {
 #' cases (for testing data) are written out with the data when the file is saved.
 #'
 #' @param x An object
-#' @param flags A character vector of flags
+#' @param ... One or more flags (that can be coerced to character)
 #' @return \code{x} with flags appended to any existing flags
 add_dsflags <- function(x, ...) {
   flags <- paste(..., collapse = " ")
