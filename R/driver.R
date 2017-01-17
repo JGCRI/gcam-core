@@ -25,13 +25,20 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
 
   # If there are any unaccounted for input requirements,
   # try to load them from csv files
-  # unfound_inputs <- setdiff(chunkinputs$input, chunkoutputs$output)
-  # if(length(unfound_inputs)) {
-  #   cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
-  #   load_csv_files(unfound_inputs, quiet = FALSE) %>%
-  #     add_data(all_data) ->
-  #     all_data
-  # }
+  unfound_inputs <- setdiff(chunkinputs$input, chunkoutputs$output)
+  if(length(unfound_inputs)) {
+
+    # These should all be marked as 'from_file'
+    ff <- chunkinputs$from_file[chunkinputs$input %in% unfound_inputs]
+    if(any(!ff)) {
+      stop("Unfound inputs not marked as from file:", unfound_inputs[!ff])
+    }
+
+    cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
+    load_csv_files(unfound_inputs, quiet = TRUE) %>%
+      add_data(all_data) ->
+      all_data
+  }
 
   chunks_to_run <- chunklist$name
   while(length(chunks_to_run)) {
@@ -41,7 +48,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
     for(chunk in chunks_to_run) {
       print(chunk)
 
-      if(!all(dplyr::filter(chunkinputs, name == chunk, !from_file)$input %in% names(all_data))) {
+      if(!all(dplyr::filter(chunkinputs, name == chunk)$input %in% names(all_data))) {
         print("- data not available yet")
         next  # chunk's inputs are not all available
       }
