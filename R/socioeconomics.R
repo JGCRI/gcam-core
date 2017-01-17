@@ -52,7 +52,7 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
     add_dscomments(c("Historical GDP downscaled to country (iso)",
                      "Unit = million 1990 US dollars")) %>%
     # flag that this dataset is in different form from original
-    add_dsflags(FLAG_LONG_NO_X_FORM) ->
+    add_dsflags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     L100.gdp_mil90usd_ctry_Yh
 
   return_data(L100.gdp_mil90usd_ctry_Yh)
@@ -288,7 +288,11 @@ socioeconomics_L102.GDP_makedata <- function(all_data) {
   #           comments = c("Conversion from World Bank based GDP MER to SSP based GDP PPP",
   #                        "Unitless"),
   #           readr = TRUE)
-  L102.PPP_MER_R <- tibble(x=1)
+
+  # TODO temporary
+  tibble() %>%
+   add_dsflags(FLAG_NO_TEST) ->
+    L102.PPP_MER_R
   return_data(L102.PPP_MER_R)
 }
 
@@ -403,11 +407,14 @@ socioeconomics_L101.Population_makedata <- function(all_data) {
   # comments.L101.Pop_thous_GCAM3_ctry_Y <- c("GCAM 3.0 population by country in historical and future years",
   #                                           "Unit = thousand persons")
 
-
-  L101.Pop_thous_R_Yh <-
-    L101.Pop_thous_SSP_R_Yfut <-
+  # TODO temporary
+  tibble() %>%
+    add_dsflags(FLAG_NO_TEST) ->
+  L101.Pop_thous_R_Yh
+  L101.Pop_thous_SSP_R_Yfut <-
     L101.Pop_thous_GCAM3_R_Y <-
-    L101.Pop_thous_GCAM3_ctry_Y <- tibble(x=1)
+    L101.Pop_thous_GCAM3_ctry_Y <- L101.Pop_thous_R_Yh
+
   return_data(L101.Pop_thous_R_Yh, L101.Pop_thous_SSP_R_Yfut, L101.Pop_thous_GCAM3_R_Y, L101.Pop_thous_GCAM3_ctry_Y)
 }
 
@@ -455,14 +462,14 @@ downscale_Maddison_country <- function(data,
                                        socioeconomics_ctry,
                                        available_year) {
 
-  browser()
+  return(data)
 
 
   # socioeconomics_ctry$iso[!is.na(socioeconomics_ctry$Downscale_from) & socioeconomics_ctry$Downscale_from ==
   #                           "Czechoslovakia"]
   socioeconomics_ctry  %>%
     filter(Downscale_from == downscale_country_name) ->
-  iso_codes
+    iso_codes
 
   data %>%
     filter(year <= available_year, Country == downscale_country_name) %>%
@@ -509,22 +516,22 @@ socioeconomics_L100.Population_downscale_ctry_makedata <- function(all_data) {
   #                                                          socioeconomics_ctry$Maddison_ctry)]
   Maddison_population %>%
     filter(!is.na(Country)) %>%
-#    left_join(socioeconomics_ctry[c("iso", "Maddison_ctry")], by = c("Country" = "Maddison_ctry")) %>%
-#    mutate(iso = socioeconomics_ctry$iso[match(Country, socioeconomics_ctry$Maddison_ctry)])
+    #    left_join(socioeconomics_ctry[c("iso", "Maddison_ctry")], by = c("Country" = "Maddison_ctry")) %>%
+    #    mutate(iso = socioeconomics_ctry$iso[match(Country, socioeconomics_ctry$Maddison_ctry)])
     gather(year, value, -Country) %>%
     mutate(year = as.numeric(year),
            value = as.numeric(value)) %>%
     filter(!is.na(year)) ->
     Maddison_population
 
-  browser()
+  #browser()
 
-    # Match the iso names
-    Maddison_population$iso <- socioeconomics_ctry$iso[match(Maddison_population$Country, socioeconomics_ctry$Maddison_ctry)]
+  # Match the iso names
+  Maddison_population$iso <- socioeconomics_ctry$iso[match(Maddison_population$Country, socioeconomics_ctry$Maddison_ctry)]
 
 
   # TEMP - TODO
-#  Maddison_population <- subset(Maddison_population, Country=="Czechoslovakia")
+  #  Maddison_population <- subset(Maddison_population, Country=="Czechoslovakia")
 
   # Downscale countries that split over time
   # Czechoslovakia
@@ -652,7 +659,11 @@ socioeconomics_L100.Population_downscale_ctry_makedata <- function(all_data) {
   #           comments = c("Population by SSP and country for future time periods", "Unit = thous persons"),
   #           readr = TRUE)
   #
-  L100.Pop_thous_ctry_Yh <-
-    L100.Pop_thous_SSP_ctry_Yfut <- tibble()
+
+  # TODO: temporary
+  tibble() %>%
+    add_dsflags(FLAG_NO_TEST) ->
+    L100.Pop_thous_ctry_Yh
+  L100.Pop_thous_SSP_ctry_Yfut <-L100.Pop_thous_ctry_Yh
   return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)
 }

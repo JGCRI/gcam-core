@@ -37,8 +37,8 @@ get_dscomments <- function(x) {
 #' @param x An object
 #' @param flags A character vector of flags
 #' @return \code{x} with flags appended to any existing flags
-add_dsflags <- function(x, flags) {
-  assertthat::assert_that(is.character(flags))
+add_dsflags <- function(x, ...) {
+  flags <- paste(..., collapse = " ")
   attr(x, "flags") <- c(attr(x, "flags"), flags)
   x
 }

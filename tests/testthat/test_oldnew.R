@@ -15,22 +15,30 @@ test_that("matches old data system output", {
     # nor are we going to spend time unnecessarily reshaping datasets
     # (i.e. wide to long and back). But we still need to be able to
     # verify old versus new datasets! Chunks tag the data if it's
-    # reshaped, and save_chunkdata puts a special marker at top of the file.
+    # reshaped, and save_chunkdata puts flag(s) at top of the file.
     new_firstline <- readLines(newf, n = 1)
+
+    if(grepl(FLAG_NO_TEST, new_firstline)) {
+      next
+    }
+
+    flag_long_form <- grepl(FLAG_LONG_FORM, new_firstline)
+    flag_no_xyear_form <- grepl(FLAG_NO_XYEAR, new_firstline)
+
     newskip <- 0
-    if(new_firstline %in% c(FLAG_LONG_NO_X_FORM, FLAG_NO_X_FORM)) {
+    if(flag_long_form | flag_no_xyear_form) {
       newskip <- 1
     }
 
     newdata <- read_csv(newf, comment = COMMENT_CHAR, skip = newskip)
 
     # Reshape new data if necessary--see comment above
-    if(new_firstline == FLAG_LONG_NO_X_FORM) {
+    if(flag_long_form) {
       newdata %>%
-        mutate(year = paste0("X", newdata$year)) %>%
         spread(year, value) ->
         newdata
-    } else if (new_firstline == FLAG_NO_X_FORM) {
+    }
+    if(flag_no_xyear_form) {
         yearcols <- grep("^[0-9]{4}$", names(newdata))
         names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
     }

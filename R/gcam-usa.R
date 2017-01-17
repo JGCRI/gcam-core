@@ -102,7 +102,7 @@
     select(-share, -iso) %>%
     # flag that this dataset is in different form from original
     add_dscomments(c("GDP by state", "Unit = million 1990 USD")) %>%
-    add_dsflags(FLAG_LONG_NO_X_FORM) ->
+    add_dsflags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     L100.GDP_mil90usd_state
 
   # Compute per capita GDP by state
@@ -112,7 +112,7 @@
     select(-population) %>%
     # flag that this dataset is in different form from original
     add_dscomments(c("Per-capita GDP by state", "Unit = thousand 1990 USD per capita")) %>%
-    add_dsflags(FLAG_LONG_NO_X_FORM) ->
+    add_dsflags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     L100.pcGDP_thous90usd_state
 
   # Future population by scenario. Right now just one scenario.
@@ -148,7 +148,7 @@
     select(-population, -pop_ratio) %>%
     arrange(state, year) %>%
     # flag that this dataset is in different form from original
-    add_dsflags(FLAG_LONG_NO_X_FORM) %>%
+    add_dsflags(FLAG_LONG_FORM, FLAG_NO_XYEAR) %>%
     add_dscomments(c("Population by state", "Unit = thousand persons")) ->
     L100.Pop_thous_state
 

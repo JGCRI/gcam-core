@@ -283,7 +283,7 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   # Re-split into separate tables for each element
   for(i in unique(FAO_data_ALL_5yr$element)) {
     filter(FAO_data_ALL_5yr, element == i) %>%
-      add_dsflags(FLAG_NO_X_FORM) ->
+      add_dsflags(FLAG_NO_XYEAR) ->
       df
     assign(paste0("L100.FAO_", i), df)
   }
