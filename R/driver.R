@@ -23,6 +23,12 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
   chunkoutputs <- chunk_outputs(chunklist$name)
   cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
+  # Outputs should all be unique
+  dupes <- duplicated(chunkoutputs$output)
+  if(any(dupes)) {
+    stop("Outputs appear multiple times: ", chunkoutputs$output[dupes])
+  }
+
   # If there are any unaccounted for input requirements,
   # try to load them from csv files
   unfound_inputs <- setdiff(chunkinputs$input, chunkoutputs$output)
@@ -31,7 +37,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
     # These should all be marked as 'from_file'
     ff <- chunkinputs$from_file[chunkinputs$input %in% unfound_inputs]
     if(any(!ff)) {
-      stop("Unfound inputs not marked as from file:", unfound_inputs[!ff])
+      stop("Unfound inputs not marked as from file: ", unfound_inputs[!ff])
     }
 
     cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")

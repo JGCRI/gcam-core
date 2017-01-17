@@ -147,15 +147,15 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 chunk_outputs <- function(chunks = find_chunks()$name) {
   assertthat::assert_that(is.character(chunks))
 
-  chunkinputs <- list()
+  chunkoutputs <- list()
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
     reqdata <- eval(cl)
     if(!is.null(reqdata)) {
-      chunkinputs[[ch]] <- tibble(name = ch, output = reqdata)
+      chunkoutputs[[ch]] <- tibble(name = ch, output = reqdata)
     }
   }
-  dplyr::bind_rows(chunkinputs)
+  dplyr::bind_rows(chunkoutputs)
 }
 
 
