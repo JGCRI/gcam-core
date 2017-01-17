@@ -4,8 +4,8 @@ context("fileutil")
 
 
 test_that("error with bad input", {
-  expect_error(load_csv_files(TRUE))
-  expect_error(load_csv_files(1))
+  expect_error(load_csv_file(TRUE))
+  expect_error(load_csv_file(1))
   expect_error(find_csv_file(TRUE))
   expect_error(find_csv_file(1))
   expect_error(find_csv_file(c("h","i")))
@@ -15,14 +15,12 @@ test_that("error with bad input", {
 })
 
 test_that("handle empty input", {
-  x <- load_csv_files(character(0))
-  expect_is(x, "list")
-  expect_length(x, 0)
+  expect_error(load_csv_file(character(0)))
   expect_error(file_csv_file(character(0)))
 })
 
 test_that("nonexistent file", {
-  expect_error(load_csv_files("SDFKJFDJKSHGF", quiet = TRUE))
+  expect_error(load_csv_file("SDFKJFDJKSHGF", quiet = TRUE))
   expect_error(find_csv_file("SDFKJFDJKSHGF", quiet = TRUE))
 })
 

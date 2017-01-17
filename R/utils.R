@@ -1,28 +1,25 @@
 # utils.R
 
 
-#' load_csv_files
+#' load_csv_file
 #'
 #' Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.
-#' @param filenames Character vector of filenames to load
+#' @param filename Filename to load
 #' @param quiet Logical - suppress messages?
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @details The data frames read in are marked as inputs, not ones that have
 #' been computed, via \code{\link{add_dscomments}}.
 #' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
-load_csv_files <- function(filenames, quiet = FALSE, ...) {
-  assertthat::assert_that(is.character(filenames))
+load_csv_file <- function(filename, quiet = FALSE, ...) {
+  assertthat::assert_that(is.character(filename))
+  assertthat::assert_that(length(filename) == 1)
   assertthat::assert_that(is.logical(quiet))
-  filedata <- list()
-  for(f in filenames) {
-    if(!quiet) cat("Loading", f, "...\n")
-    fqfn <- find_csv_file(f, quiet = quiet)
-    suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
-      add_dsflags(FLAG_INPUT_DATA) ->
-      filedata[[f]]
-  }
-  filedata
+
+  if(!quiet) cat("Loading", filename, "...\n")
+  fqfn <- find_csv_file(filename, quiet = quiet)
+  suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
+    add_dsflags(FLAG_INPUT_DATA)
 }
 
 
@@ -121,8 +118,15 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_INPUTS)
     reqdata <- eval(cl)
+
+    # Chunks mark their file inputs specially, using vector names
+    if(is.null(names(reqdata))) {
+      fileinputs <- FALSE
+    } else {
+      fileinputs <- names(reqdata) == "FILE"
+    }
     if(!is.null(reqdata)) {
-      chunkinputs[[ch]] <- tibble(name = ch, input = reqdata)
+      chunkinputs[[ch]] <- tibble(name = ch, input = reqdata, from_file = fileinputs)
     }
   }
   dplyr::bind_rows(chunkinputs)

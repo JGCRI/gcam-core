@@ -4,12 +4,12 @@
 \alias{add_dsflags}
 \title{add_dsflag}
 \usage{
-add_dsflags(x, flags)
+add_dsflags(x, ...)
 }
 \arguments{
 \item{x}{An object}
 
-\item{flags}{A character vector of flags}
+\item{...}{One or more flags (that can be coerced to character)}
 }
 \value{
 \code{x} with flags appended to any existing flags

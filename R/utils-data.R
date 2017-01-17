@@ -62,10 +62,18 @@ get_dsflags <- function(x) {
 #' @param name Name of data to return
 #' @return Data object (currently, a tibble or data frame).
 get_data <- function(all_data, name) {
-  if(is.null(all_data[[name]])) {
-    stop("Data system: couldn't find ", name)
+
+  if(!is.null(all_data[[name]])) {
+    return(all_data[[name]])
   }
-  all_data[[name]]
+
+  # Data do not exist yet; try to load from file
+  ci <- chunk_inputs()
+  if(!all(ci$from_file[ci$input == name])) {
+    stop("Data system: couldn't find ", name, "and it's not marked as a file")
+  }
+
+  load_csv_file(name, quiet = TRUE)
 }
 
 

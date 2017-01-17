@@ -16,11 +16,11 @@
              "L100.GDP_mil90usd_state",
              "L100.Pop_thous_state"))
   } else if(command == driver.DECLARE_INPUTS) {
-    return(c("gcam-usa/states_subregions",
-             "gcam-usa/BEA_pcGDP_09USD_state",
-             "gcam-usa/BEA_pcGDP_97USD_state",
-             "gcam-usa/Census_pop_hist",
-             "gcam-usa/PRIMA_pop",
+    return(c(FILE = "gcam-usa/states_subregions",
+             FILE = "gcam-usa/BEA_pcGDP_09USD_state",
+             FILE = "gcam-usa/BEA_pcGDP_97USD_state",
+             FILE = "gcam-usa/Census_pop_hist",
+             FILE = "gcam-usa/PRIMA_pop",
              "L100.gdp_mil90usd_ctry_Yh"))
   } else if(command == driver.MAKE) {
     `gcam-usa_LA100.Socioeconomics_makedata`(...)

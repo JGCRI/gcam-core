@@ -12,7 +12,7 @@
 #' @export
 module_socioeconomics_L100.GDP_hist <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return("socioeconomics/USDA_GDP_MER")
+    return(c(FILE = "socioeconomics/USDA_GDP_MER"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return("L100.gdp_mil90usd_ctry_Yh")
   } else if(command == driver.MAKE) {
@@ -70,9 +70,9 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
 #' @export
 module_socioeconomics_L102.GDP <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("common/iso_GCAM_regID",
-             "socioeconomics/SSP_database_v9",
-             "socioeconomics/GCAM3_GDP",
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "socioeconomics/SSP_database_v9",
+             FILE = "socioeconomics/GCAM3_GDP",
              "L100.gdp_mil90usd_ctry_Yh",
              "L101.Pop_thous_GCAM3_R_Y",
              "L101.Pop_thous_GCAM3_ctry_Y",
@@ -308,9 +308,9 @@ socioeconomics_L102.GDP_makedata <- function(all_data) {
 #' @export
 module_socioeconomics_L101.Population <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("common/iso_GCAM_regID",
-             "socioeconomics/GCAM3_population",
-             "socioeconomics/GCAM3_GDP",
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "socioeconomics/GCAM3_population",
+             FILE = "socioeconomics/GCAM3_GDP",
              "L100.Pop_thous_ctry_Yh",
              "L100.Pop_thous_SSP_ctry_Yfut"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -430,10 +430,10 @@ socioeconomics_L101.Population_makedata <- function(all_data) {
 #' @export
 module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("socioeconomics/socioeconomics_ctry",
-             "socioeconomics/Maddison_population",
-             "socioeconomics/SSP_database_v9",
-             "socioeconomics/UN_popTot"))
+    return(c(FILE = "socioeconomics/socioeconomics_ctry",
+             FILE = "socioeconomics/Maddison_population",
+             FILE = "socioeconomics/SSP_database_v9",
+             FILE = "socioeconomics/UN_popTot"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L100.Pop_thous_ctry_Yh",
              "L100.Pop_thous_SSP_ctry_Yfut"))
@@ -449,14 +449,12 @@ module_socioeconomics_L100.Population_downscale_ctry <- function(command, ...) {
 #'
 #'function to downscale the countries that separated into multiple modern countries (e.g. USSR).
 #'
-#' @param data
-#' @param country_name
-#' @param socioeconomics_ctry
-#' @param available_year
-#' @return
+#' @param data data
+#' @param downscale_country_name country_name
+#' @param socioeconomics_ctry socioeconomics_ctry
+#' @param available_year available_year
+#' @return something
 #' @export
-#'
-#' @examples
 downscale_Maddison_country <- function(data,
                                        downscale_country_name,
                                        socioeconomics_ctry,

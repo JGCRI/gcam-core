@@ -15,8 +15,8 @@ module_energy_LA113.MSW <- function(command, ...) {
     return(c("L113.RsrcCurves_EJ_R_MSW"))
   } else if(command == driver.DECLARE_INPUTS) {
     return(c("L100.gdp_mil90usd_ctry_Yh",
-             "energy/A13.MSW_curves.csv",
-             "common/iso_GCAM_regID.csv"))
+             FILE = "energy/A13.MSW_curves.csv",
+             FILE = "common/iso_GCAM_regID.csv"))
   } else if(command == driver.MAKE) {
     energy_LA113.MSW(...)
   } else {

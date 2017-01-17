@@ -35,6 +35,14 @@ test_that("handles DECLARE_OUTPUTS", {
 test_that("errors if required data not available", {
   chunkdeps <- chunk_inputs()
 
+  # Filter out any chunks that only depend on file inputs
+  chunkdeps %>%
+    filter(from_file == FALSE) %>%
+    group_by(name) %>%
+    summarise(some_internal = any(!from_file)) %>%
+    left_join(chunkdeps) ->
+    chunkdeps
+
   for(ch in unique(chunkdeps$name)) {
     cl <- call(ch, driver.MAKE, empty_data())
     expect_error(eval(cl), label = ch)
