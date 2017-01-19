@@ -11,7 +11,6 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}.
 #' @author Author name
-#' @export
 module_sample_sample <- function(command, ...) {
   if(command == driver.DECLARE_OUTPUTS) {
     return(c("first_output",

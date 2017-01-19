@@ -37,6 +37,7 @@ test_that("catches unmarked file inputs", {
 })
 
 test_that("catches lying chunks", {
+  skip_on_travis()
   # Create a (fake) chunk that declares and produces different outputs
   chunknames <- c("test1")
   with_mock(
@@ -72,4 +73,3 @@ test_that("run_chunk runs chunk", {
     expect_true(gcamdata:::run_chunk("module_sample_sample", 1))
   )
 })
-
