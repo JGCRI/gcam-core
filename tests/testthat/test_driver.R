@@ -2,14 +2,10 @@
 
 context("driver")
 
-# find_chunks.old <- find_chunks
-# chunk_inputs.old <- chunk_inputs
 
-# Not much to do here yet
-
-test_that("errors with bad input", {
-  expect_error(driver(1))
-  expect_error(driver("1"))
+test_that("catches bad input", {
+  expect_error(driver(1, 1))
+  expect_error(driver("1", 1))
 })
 
 test_that("catches non-unique outputs", {
@@ -40,20 +36,6 @@ test_that("catches unmarked file inputs", {
   )
 })
 
-test_that("catches stuck", {
-  # Create a couple (fake) chunks that depend on each other
-  chunknames <- c("test1", "test2")
-  with_mock(
-    find_chunks = function(...) tibble(name = chunknames),
-    chunk_inputs = function(...) tibble(name = chunknames,
-                                        input = c("i1", "i2"),
-                                        from_file = FALSE),
-    chunk_outputs = function(...) tibble(name = chunknames,
-                                         output = c("i1", "i2")),
-    expect_error(driver(), regexp = "we are stuck")
-  )
-})
-
 test_that("catches lying chunks", {
   # Create a (fake) chunk that declares and produces different outputs
   chunknames <- c("test1")
@@ -69,3 +51,25 @@ test_that("catches lying chunks", {
     expect_error(driver(), regexp = "is not returning what it promised")
   )
 })
+
+test_that("catches stuck", {
+  # Create a couple (fake) chunks that depend on each other
+  chunknames <- c("test1", "test2")
+  with_mock(
+    find_chunks = function(...) tibble(name = chunknames),
+    chunk_inputs = function(...) tibble(name = chunknames,
+                                        input = c("i1", "i2"),
+                                        from_file = FALSE),
+    chunk_outputs = function(...) tibble(name = chunknames,
+                                         output = c("i1", "i2")),
+    expect_error(driver(), regexp = "we are stuck")
+  )
+})
+
+test_that("run_chunk runs chunk", {
+  with_mock(
+    module_sample_sample = function(...) TRUE,
+    expect_true(gcamdata:::run_chunk("module_sample_sample", 1))
+  )
+})
+
