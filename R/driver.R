@@ -54,20 +54,27 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
     for(chunk in chunks_to_run) {
       print(chunk)
 
-      if(!all(dplyr::filter(chunkinputs, name == chunk)$input %in% names(all_data))) {
+      input_names <- dplyr::filter(chunkinputs, name == chunk)$input
+      if(!all(input_names %in% names(all_data))) {
         print("- data not available yet")
         next  # chunk's inputs are not all available
       }
 
       # Order chunk to build its data
       time1 <- Sys.time()
-      cl <- call(chunk, driver.MAKE, all_data)
+      cl <- call(chunk, driver.MAKE, all_data[input_namesd])
       chunk_data <- eval(cl)
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
 
       print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
       assert_that(is.list(chunk_data))
       assert_that(tibble::is.tibble(chunk_data[[1]]))
+
+      # Chunk should return EXACTLY what it promised
+      promised <- subset(chunkoutputs, name == chunk)$output
+      if(!identical(sort(names(chunk_data)), sort(promised))) {
+        stop("Chunk ", chunk, "is not returning what it promised!")
+      }
 
       # Add this chunk's data to the global data store
       # This will overwrite any previous data returned
