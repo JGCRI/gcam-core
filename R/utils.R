@@ -98,6 +98,7 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
 #' @param pattern Regular expression pattern to search for
 #' @return A data frame with fields 'name', 'module', and 'chunk'.
 #' @importFrom magrittr "%>%"
+#' @export
 find_chunks <- function(pattern = "^module_[a-zA-Z-]*_.*$") {
   assertthat::assert_that(is.character(pattern))
 
