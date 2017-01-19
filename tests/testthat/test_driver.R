@@ -37,7 +37,6 @@ test_that("catches unmarked file inputs", {
 })
 
 test_that("catches lying chunks", {
-  skip_on_travis()
   # Create a (fake) chunk that declares and produces different outputs
   chunknames <- c("test1")
   with_mock(
@@ -47,8 +46,8 @@ test_that("catches lying chunks", {
                                         from_file = TRUE),
     chunk_outputs = function(...) tibble(name = chunknames,
                                          output = "o1"),
-    load_csv_files = function(...) { i1 <- tibble(); return_data(i1) },
-    run_chunk = function(...) { o2 <- tibble(); return_data(o2) },
+    `gcamdata:::load_csv_files` = function(...) { i1 <- tibble(); return_data(i1) },
+    `gcamdata::run_chunk` = function(...) { o2 <- tibble(); return_data(o2) },
     expect_error(driver(), regexp = "is not returning what it promised")
   )
 })

@@ -15,6 +15,9 @@ A named list with all output data.
 \description{
 gcam-sample_sample_makedata
 }
+\details{
+A detailed description of what this chunk does.
+}
 \author{
 Author name
 }

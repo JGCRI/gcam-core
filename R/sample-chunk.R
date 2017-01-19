@@ -5,8 +5,6 @@
 #'
 #' Briefly describe what this chunk does.
 #'
-#' @details Give a detailed description of what this chunk does.
-#'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}.
@@ -17,8 +15,8 @@ module_sample_sample <- function(command, ...) {
     return(c("first_output",
              "second_output"))
   } else if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "sample/sample_file_input",
-             "L200.ModelTime"))
+    return(c(FILE = "common/iso_GCAM_regID",  # input from a file
+             "L200.ModelTime"))  # input produced by another chunk
   } else if(command == driver.MAKE) {
     sample_sample_makedata(...)
   } else {
@@ -28,6 +26,8 @@ module_sample_sample <- function(command, ...) {
 
 
 #' gcam-sample_sample_makedata
+#'
+#' @details A detailed description of what this chunk does.
 #'
 #' @param all_data A named list, holding necessary input data
 #' @return A named list with all output data.
@@ -41,9 +41,13 @@ sample_sample_makedata <- function(all_data) {
 
   # printlog( "Historical GDP and per-capita GDP by state" )
 
+  # Load data
   input1 <- get_data(all_data, "sample/sample_file_input")
   input2 <- get_data(all_data, "L200.ModelTime")
 
+  # Process...
+
+  # Produce outputs, add appropriate flags and comments
   input1 %>%
     add_dsflags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
     add_dscomments("Sample chunk output") ->

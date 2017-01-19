@@ -17,9 +17,6 @@ Depends on \code{command}.
 \description{
 Briefly describe what this chunk does.
 }
-\details{
-Give a detailed description of what this chunk does.
-}
 \author{
 Author name
 }
