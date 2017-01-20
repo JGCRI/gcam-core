@@ -42,7 +42,7 @@ sample_sample_makedata <- function(all_data) {
   # printlog( "Historical GDP and per-capita GDP by state" )
 
   # Load data
-  input1 <- get_data(all_data, "sample/sample_file_input")
+  input1 <- get_data(all_data, "common/iso_GCAM_regID")
   input2 <- get_data(all_data, "L200.ModelTime")
 
   # Process...
