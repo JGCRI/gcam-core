@@ -15,7 +15,8 @@ Imports:
     readr (>= 1.0.0)
 Suggests:
     igraph (>= 1.0.1),
-    testthat (>= 1.0.2)
+    testthat (>= 1.0.2),
+    mockr (>= 0.0.2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1

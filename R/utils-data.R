@@ -62,6 +62,7 @@ get_dsflags <- function(x) {
 #' @param name Name of data to return
 #' @return Data object (currently, a tibble or data frame).
 get_data <- function(all_data, name) {
+  assertthat::assert_that(is.list(all_data))
   if(is.null(all_data[[name]])) {
     stop("Data system: couldn't find ", name)
   }
@@ -94,10 +95,12 @@ empty_data <- function() { list() }
 #'
 #' @param data_list List of data frames or other objects
 #' @param all_data An existing (possibly empty) data store
-#'
+#' @importFrom assertthat assert_that
 #' @return The modified data store.
 add_data <- function(data_list, all_data) {
-  assertthat::assert_that(!is.null(names(data_list)))
+  assert_that(is.list(data_list))
+  assert_that(!is.null(names(data_list)))
+  assert_that(is.list(all_data))
 
   for(d in names(data_list)) {
     all_data[[d]] <- data_list[[d]]

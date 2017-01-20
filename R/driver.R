@@ -74,8 +74,8 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
       time1 <- Sys.time()
       chunk_data <- run_chunk(chunk, all_data[input_names])
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
-
       print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
+
       assert_that(is.list(chunk_data))
       assert_that(tibble::is.tibble(chunk_data[[1]]))
 
@@ -86,7 +86,6 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
       }
 
       # Add this chunk's data to the global data store
-      # This will overwrite any previous data returned
       all_data <- add_data(chunk_data, all_data)
 
       # Remove the current chunk from the to-run list
