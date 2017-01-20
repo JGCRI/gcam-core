@@ -6,7 +6,7 @@
 
 context("driver")
 
-if(require(mockr, warn.conflicts = FALSE)) {
+if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
   test_that("catches bad input", {
     expect_error(driver(1, 1))
@@ -23,7 +23,7 @@ if(require(mockr, warn.conflicts = FALSE)) {
                                           from_file = TRUE),
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = c("o1", "o1")),
-      expect_error(driver(), regexp = "Outputs appear multiple times")
+      expect_error(driver(quiet = TRUE), regexp = "Outputs appear multiple times")
     )
   })
 
@@ -37,7 +37,7 @@ if(require(mockr, warn.conflicts = FALSE)) {
                                           from_file = c(TRUE, FALSE)),
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = c("o1", "o2")),
-      expect_error(driver(), regexp = "not marked as from file")
+      expect_error(driver(quiet = TRUE), regexp = "not marked as from file")
     )
   })
 
@@ -53,7 +53,7 @@ if(require(mockr, warn.conflicts = FALSE)) {
                                            output = "o1"),
       load_csv_files = function(...) { i1 <- tibble(); return_data(i1) },
       run_chunk = function(...) { o2 <- tibble(); return_data(o2) },
-      expect_error(driver(), regexp = "is not returning what it promised")
+      expect_error(driver(quiet = TRUE), regexp = "is not returning what it promised")
     )
   })
 
@@ -67,7 +67,7 @@ if(require(mockr, warn.conflicts = FALSE)) {
                                           from_file = FALSE),
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = c("i1", "i2")),
-      expect_error(driver(), regexp = "we are stuck")
+      expect_error(driver(quiet = TRUE), regexp = "we are stuck")
     )
   })
 

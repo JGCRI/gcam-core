@@ -18,20 +18,19 @@ run_chunk <- function(chunk, all_data) {
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param all_data Data to be pre-loaded into data system
 #' @return A list of all built data.
-#' @export
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
-driver <- function(write_outputs = TRUE, all_data = empty_data()) {
+#' @export
+driver <- function(write_outputs = TRUE, all_data = empty_data(), quiet = FALSE) {
   assert_that(is.logical(write_outputs))
 
   chunklist <- find_chunks()
-  cat("Found", nrow(chunklist), "chunks\n")
-  #cat(chunklist$chunk, "\n")
+  if(!quiet) cat("Found", nrow(chunklist), "chunks\n")
 
   chunkinputs <- chunk_inputs(chunklist$name)
-  cat("Found", nrow(chunkinputs), "chunk data requirements\n")
+  if(!quiet) cat("Found", nrow(chunkinputs), "chunk data requirements\n")
   chunkoutputs <- chunk_outputs(chunklist$name)
-  cat("Found", nrow(chunkoutputs), "chunk data products\n")
+  if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
   # Outputs should all be unique
   dupes <- duplicated(chunkoutputs$output)
@@ -50,7 +49,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
       stop("Unfound inputs not marked as from file: ", unfound_inputs[!ff])
     }
 
-    cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
+    if(!quiet) cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
     load_csv_files(unfound_inputs, quiet = TRUE) %>%
       add_data(all_data) ->
       all_data
@@ -62,11 +61,11 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
 
     # Loop through all chunks and see who can run (i.e. all dependencies are available)
     for(chunk in chunks_to_run) {
-      print(chunk)
+      if(!quiet) print(chunk)
 
       input_names <- dplyr::filter(chunkinputs, name == chunk)$input
       if(!all(input_names %in% names(all_data))) {
-        print("- data not available yet")
+        if(!quiet) print("- data not available yet")
         next  # chunk's inputs are not all available
       }
 
@@ -74,7 +73,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
       time1 <- Sys.time()
       chunk_data <- run_chunk(chunk, all_data[input_names])
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
-      print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
+      if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 
       assert_that(is.list(chunk_data))
       assert_that(tibble::is.tibble(chunk_data[[1]]))
@@ -98,13 +97,13 @@ driver <- function(write_outputs = TRUE, all_data = empty_data()) {
     }
   } # while
 
-  cat(length(all_data), "data frames generated\n")
+  if(!quiet) cat(length(all_data), "data frames generated\n")
 
   if(write_outputs) {
-    cat("Writing chunk data...\n")
+    if(!quiet) cat("Writing chunk data...\n")
     save_chunkdata(all_data)
   }
 
-  cat("All done.\n")
+  if(!quiet) cat("All done.\n")
   invisible(all_data)
 }
