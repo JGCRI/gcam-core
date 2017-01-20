@@ -1,4 +1,4 @@
-# energy.R
+# module-energy.R
 
 
 #' module_energy_LA113.MSW

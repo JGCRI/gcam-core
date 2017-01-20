@@ -1,4 +1,4 @@
-# socioeconomics.R
+# module-socioeconomics.R
 
 
 #' module_socioeconomics_L100.GDP_hist

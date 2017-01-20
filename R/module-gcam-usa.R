@@ -1,4 +1,4 @@
-# gcam-usa.R
+# module-gcam-usa.R
 
 
 #' module_gcam-usa_LA100.Socioeconomics
