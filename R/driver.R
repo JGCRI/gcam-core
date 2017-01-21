@@ -17,6 +17,7 @@ run_chunk <- function(chunk, all_data) {
 #'
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param all_data Data to be pre-loaded into data system
+#' @param quiet Suppress output?
 #' @return A list of all built data.
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
@@ -50,7 +51,9 @@ driver <- function(write_outputs = TRUE, all_data = empty_data(), quiet = FALSE)
     }
 
     if(!quiet) cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
-    load_csv_files(unfound_inputs, quiet = TRUE) %>%
+    out <- capture.output(csv_data <- load_csv_files(unfound_inputs, quiet = TRUE))
+    if(!quiet) cat(out, sep = "\n")
+    csv_data %>%
       add_data(all_data) ->
       all_data
   }
@@ -71,7 +74,8 @@ driver <- function(write_outputs = TRUE, all_data = empty_data(), quiet = FALSE)
 
       # Order chunk to build its data
       time1 <- Sys.time()
-      chunk_data <- run_chunk(chunk, all_data[input_names])
+      out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
+      if(!quiet) cat(out, sep = "\n")
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 
