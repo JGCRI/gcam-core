@@ -4,7 +4,7 @@
 \alias{driver}
 \title{driver}
 \usage{
-driver(write_outputs = TRUE, all_data = empty_data())
+driver(write_outputs = TRUE, all_data = empty_data(), quiet = FALSE)
 }
 \arguments{
 \item{write_outputs}{Write all chunk outputs to disk?}
