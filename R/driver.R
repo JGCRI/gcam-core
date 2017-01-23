@@ -15,14 +15,19 @@ run_chunk <- function(chunk, all_data) {
 #'
 #' Run the entire data system.
 #'
-#' @param write_outputs Write all chunk outputs to disk?
 #' @param all_data Data to be pre-loaded into data system
+#' @param write_outputs Write all chunk outputs to disk?
 #' @param quiet Suppress output?
 #' @return A list of all built data.
+#' @details The driver loads any necessary data from input files,
+#' runs all code chunks in an order dictated by their dependencies,
+#' does error-checking, and writes outputs. For more details, see
+#' the relevant wiki page at \url{ https://github.com/bpbond/gcamdata/wiki/Driver}.
 #' @importFrom magrittr "%>%"
 #' @importFrom assertthat assert_that
 #' @export
-driver <- function(write_outputs = TRUE, all_data = empty_data(), quiet = FALSE) {
+#' @author BBL
+driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE) {
   assert_that(is.logical(write_outputs))
 
   chunklist <- find_chunks()
@@ -75,7 +80,7 @@ driver <- function(write_outputs = TRUE, all_data = empty_data(), quiet = FALSE)
       # Order chunk to build its data
       time1 <- Sys.time()
       out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
-      if(!quiet) cat(out, sep = "\n")
+      if(!quiet & length(out)) cat(out, sep = "\n")
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 

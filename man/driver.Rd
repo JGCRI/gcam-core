@@ -4,12 +4,12 @@
 \alias{driver}
 \title{driver}
 \usage{
-driver(write_outputs = TRUE, all_data = empty_data(), quiet = FALSE)
+driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 }
 \arguments{
-\item{write_outputs}{Write all chunk outputs to disk?}
-
 \item{all_data}{Data to be pre-loaded into data system}
+
+\item{write_outputs}{Write all chunk outputs to disk?}
 
 \item{quiet}{Suppress output?}
 }
@@ -18,5 +18,14 @@ A list of all built data.
 }
 \description{
 Run the entire data system.
+}
+\details{
+The driver loads any necessary data from input files,
+runs all code chunks in an order dictated by their dependencies,
+does error-checking, and writes outputs. For more details, see
+the relevant wiki page at \url{ https://github.com/bpbond/gcamdata/wiki/Driver}.
+}
+\author{
+BBL
 }
 

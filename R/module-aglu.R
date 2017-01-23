@@ -232,6 +232,8 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
     bind_rows(FAO_data_ALL_cze, FAO_data_ALL_ussr, FAO_data_ALL_yug) ->
     FAO_data_ALL
 
+  # Make sure histyear_cols uses only names in our data set
+  FAO_histyear_cols <- intersect(FAO_histyear_cols, names(FAO_data_ALL))
   # Drop observations where all years are zero
   FAO_data_ALL <- FAO_data_ALL[rowSums(FAO_data_ALL[FAO_histyear_cols]) != 0, ]
 
