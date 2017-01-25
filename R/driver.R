@@ -79,8 +79,9 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 
       # Order chunk to build its data
       time1 <- Sys.time()
-      out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
-      if(!quiet & length(out)) cat(out, sep = "\n")
+#      chunk_data <- run_chunk(chunk, all_data[input_names])
+     out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
+     if(!quiet & length(out)) cat(out, sep = "\n")
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 

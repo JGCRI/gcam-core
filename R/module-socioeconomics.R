@@ -291,7 +291,7 @@ socioeconomics_L102.GDP_makedata <- function(all_data) {
 
   # TODO temporary
   tibble() %>%
-   add_dsflags(FLAG_NO_TEST) ->
+    add_dsflags(FLAG_NO_TEST) ->
     L102.PPP_MER_R
   return_data(L102.PPP_MER_R)
 }
@@ -410,10 +410,10 @@ socioeconomics_L101.Population_makedata <- function(all_data) {
   # TODO temporary
   tibble() %>%
     add_dsflags(FLAG_NO_TEST) ->
-  L101.Pop_thous_R_Yh
-  L101.Pop_thous_SSP_R_Yfut <-
-    L101.Pop_thous_GCAM3_R_Y <-
-    L101.Pop_thous_GCAM3_ctry_Y <- L101.Pop_thous_R_Yh
+    L101.Pop_thous_R_Yh ->
+    L101.Pop_thous_SSP_R_Yfut ->
+    L101.Pop_thous_GCAM3_R_Y ->
+    L101.Pop_thous_GCAM3_ctry_Y
 
   return_data(L101.Pop_thous_R_Yh, L101.Pop_thous_SSP_R_Yfut, L101.Pop_thous_GCAM3_R_Y, L101.Pop_thous_GCAM3_ctry_Y)
 }
@@ -661,7 +661,7 @@ socioeconomics_L100.Population_downscale_ctry_makedata <- function(all_data) {
   # TODO: temporary
   tibble() %>%
     add_dsflags(FLAG_NO_TEST) ->
-    L100.Pop_thous_ctry_Yh
-  L100.Pop_thous_SSP_ctry_Yfut <-L100.Pop_thous_ctry_Yh
+    L100.Pop_thous_ctry_Yh ->
+    L100.Pop_thous_SSP_ctry_Yfut
   return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)
 }
