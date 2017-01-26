@@ -1,0 +1,62 @@
+#' LB109.ag_an_ALL_R_C_Y
+#'
+#' Briefly describe what this chunk does.
+#'
+#' @param command API command to execute
+#' @param ... other optional parameters, depending on command
+#' @return Depends on \code{command}: either a vector of required inputs,
+#' a vector of output names, or (if \code{command} is "MAKE") all
+#' the generated outputs: DOCOUT_PATTERN
+#' @details Describe in detail what this chunk does.
+#' @author Author name
+#' @export
+LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
+  if(command == driver.DECLARE_INPUTS) {
+    return(c(FILE = "A_common_data",
+FILE = "A_aglu_data",
+"L101.ag_Food_Mt_R_C_Y",
+"L104.ag_Prod_Mt_R_C_Y",
+"L105.an_Food_Mt_R_C_Y",
+"L105.an_Prod_Mt_R_C_Y",
+"L106.ag_NetExp_Mt_R_C_Y",
+"L106.an_NetExp_Mt_R_C_Y",
+"L108.ag_Feed_Mt_R_C_Y",
+"L108.ag_NetExp_Mt_R_FodderHerb_Y",
+"L122.in_Mt_R_C_Yh"))
+  } else if(command == driver.DECLARE_OUTPUTS) {
+    return(c("L109.ag_ALL_Mt_R_C_Y",
+"L109.an_ALL_Mt_R_C_Y"))
+  } else if(command == driver.MAKE) {
+
+    all_data <- list(...)[[1]]
+
+    # Load required inputs
+      A_common_data <- get_data(all_data, "A_common_data")
+  A_aglu_data <- get_data(all_data, "A_aglu_data")
+  L101.ag_Food_Mt_R_C_Y <- get_data(all_data, "L101.ag_Food_Mt_R_C_Y")
+  L104.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L104.ag_Prod_Mt_R_C_Y")
+  L105.an_Food_Mt_R_C_Y <- get_data(all_data, "L105.an_Food_Mt_R_C_Y")
+  L105.an_Prod_Mt_R_C_Y <- get_data(all_data, "L105.an_Prod_Mt_R_C_Y")
+  L106.ag_NetExp_Mt_R_C_Y <- get_data(all_data, "L106.ag_NetExp_Mt_R_C_Y")
+  L106.an_NetExp_Mt_R_C_Y <- get_data(all_data, "L106.an_NetExp_Mt_R_C_Y")
+  L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
+  L108.ag_NetExp_Mt_R_FodderHerb_Y <- get_data(all_data, "L108.ag_NetExp_Mt_R_FodderHerb_Y")
+  L122.in_Mt_R_C_Yh <- get_data(all_data, "L122.in_Mt_R_C_Yh")
+
+    # Below is the code of the original data system file
+    # This should all be deleted eventually
+    COMMENTED_CODE_PATTERN
+
+    # Produce outputs, adding appropriate flags and comments
+    # Temporary code below
+    tibble() %>%
+  add_dsflags(FLAG_NO_TEST) ->
+  L109.ag_ALL_Mt_R_C_Y ->
+  L109.an_ALL_Mt_R_C_Y
+
+    return_data(RETURN_c("L109.ag_ALL_Mt_R_C_Y",
+"L109.an_ALL_Mt_R_C_Y"))
+  } else {
+    stop("Unknown command")
+  }
+}
