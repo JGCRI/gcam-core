@@ -9,6 +9,7 @@
 
 # Files produced by data system
 outputs/
+sample-generator/outputs/
 
 # R directory files - using data_system_source instead
 #R/*.R

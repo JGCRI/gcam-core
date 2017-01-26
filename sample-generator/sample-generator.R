@@ -127,5 +127,5 @@ pattern <- gsub(pattern = "RETURNOUT_PATTERN",
                 fixed = TRUE)
 
 # Write out chunk (appending to proper file)
-newfn <- paste0("sample-generator/test_", basename(fn))
+newfn <- paste0("sample-generator/outputs/test_", basename(fn))
 cat(pattern, file = newfn, sep = "\n")
