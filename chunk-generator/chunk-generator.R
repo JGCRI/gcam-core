@@ -17,9 +17,10 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   pattern <- readLines(patternfile)
 
   print(basename(fn))
-  filecode <- readLines(fn)
+  filecode <- readLines(fn, warn = FALSE)
 
   # Isolate the module and level information from the filename
+  fn <- gsub("//", "/", fn, fixed = TRUE)
   x <- strsplit(fn, "/")[[1]]
   level <- x[length(x) - 1]
   module <- gsub("-processing-code", "", x[length(x) - 2], fixed = TRUE)
@@ -43,23 +44,30 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   newfn <- make.names(gsub("\\.R$", "", basename(fn)))
   pattern <- gsub(pattern = "CHUNK_NAME", replacement = newfn, pattern, fixed = TRUE)
 
-  extract_argument <- function(pattern, dsfile, stringpos = 2) {
+  # General function to pull info out of code function calls
+  extract_argument <- function(pattern, filecode, stringpos = 2) {
     newinputstring <- ""
-    inputlines <- grep(pattern, dsfile, fixed = TRUE)
+    inputlines <- grep(pattern, filecode, fixed = TRUE)
     newinputs <- NULL
     if(length(inputlines)) {
       for(il in inputlines) {
-        x <- strsplit(dsfile[il], ",")[[1]][stringpos]
+        x <- strsplit(filecode[il], ",")[[1]][stringpos]
         x <- gsub(pattern, "", x, fixed = TRUE)
         x <- gsub("\"", "", x)
         x <- gsub(")", "", x)
         x <- trimws(x)
 
-        if(grepl("COMMON_MAPPINGS", dsfile[il])) {
+        if(grepl("COMMON_MAPPINGS", filecode[il])) {
           domain <- "common/"
-        } else if (grepl("LEVEL[01]_DATA", dsfile[il])) {
+          # These next three will *usually* be right, but not always
+          # In particular, sometimes scripts pull data, mapping, or assumptions
+          # from outside of their module
+          # I think it's not worth it to worry about here...? Check
+        } else if (grepl("LEVEL[01]_DATA", filecode[il])) {
           domain <- paste0(module, "/")
-        } else if (grepl("MAPPINGS", dsfile[il])) {
+        } else if (grepl("MAPPINGS", filecode[il])) {
+          domain <- paste0(module, "/")
+        } else if (grepl("ASSUMPTIONS", filecode[il])) {
           domain <- paste0(module, "/")
         } else {
           domain <- ""
@@ -106,8 +114,8 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   # Find output lines
   writedata_string <- extract_argument("writedata(", filecode, stringpos = 1)
   midata_string <- extract_argument("write_mi_data(", filecode, stringpos = 1)
-  dataprefix <- c(rep("", length(writedata_string)), rep("XML =", length(midata_string)))
-  writedata_string <- c(writedata_string, midata_string)
+  dataprefix <- c(rep("", length(writedata_string)), rep("XML = ", length(midata_string)))
+  writedata_string <- basename(c(writedata_string, midata_string))
   no_outputs <- is.null(writedata_string)
 
   if(no_outputs) {
@@ -115,7 +123,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     replacement <- "NULL"
   } else {
     writedata_string_q <- paste0("\"", writedata_string, "\"")
-    replacement <- paste0("c(", paste(paste(dataprefix, writedata_string_q), collapse = ",\n"), ")")
+    replacement <- paste0("c(", paste(paste0(dataprefix, writedata_string_q), collapse = ",\n"), ")")
   }
 
   # Replace OUTPUTS_PATTERN
@@ -167,21 +175,29 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 }
 
 
-
-files <- c("/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LB109.ag_an_ALL_R_C_Y.R",
-           "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LA106.ag_an_NetExp_FAO_R_C_Y.R",
-           "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level2/L204.resbio_input.R")
+files <- list.files("/Users/d3x290/Desktop/gcam-data-system-master/",
+                    pattern = "*.R$", full.names = TRUE, recursive = TRUE)
+files <- files[grepl("processing-code", files, fixed = TRUE)]
+# files <- c("/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LB109.ag_an_ALL_R_C_Y.R",
+#            "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LA106.ag_an_NetExp_FAO_R_C_Y.R",
+#            "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level2/L204.resbio_input.R")
 
 for(fn in files) {
+  # Isolate the module and level information from the filename
+  fn <- gsub("//", "/", fn, fixed = TRUE)
+  x <- strsplit(fn, "/")[[1]]
+  level <- x[length(x) - 1]
+  module <- gsub("-processing-code", "", x[length(x) - 2], fixed = TRUE)
+  newfn <- file.path("sample-generator", "outputs", paste0(module, "-", level, ".R"))
+
   out <- NULL
   try(out <- make_substitutions(fn))
   if(is.null(out)) {
-    warning("Ran into error with", basename(fn))
+    warning("Ran into error with ", basename(fn))
   } else {
-    newfn <- paste0("sample-generator/outputs/test_", basename(fn))
-    cat(out, file = newfn, sep = "\n")
+    #    newfn <- paste0("sample-generator/outputs/test_", basename(fn))
+    cat(out, "\n", file = newfn, sep = "\n", append = TRUE)
   }
 }
-
 
 # Write out chunk (appending to proper file)

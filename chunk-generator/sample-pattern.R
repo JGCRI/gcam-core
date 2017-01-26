@@ -6,7 +6,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: DOCOUT_PATTERN. This corresponding file in the
+#' the generated outputs: DOCOUT_PATTERN. The corresponding file in the
 #' original data system was \code{ORIGINALFILE_PATTERN} (MODULE_PATTERN LEVEL_PATTERN).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
@@ -37,3 +37,4 @@ CHUNK_NAME <- function(command, ...) {
     stop("Unknown command")
   }
 }
+
