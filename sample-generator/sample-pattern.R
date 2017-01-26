@@ -26,11 +26,7 @@ CHUNK_NAME <- function(command, ...) {
     # Load required inputs
     LOAD_PATTERN
 
-    # Below is the code of the original data system file
-    # This should all be deleted eventually
-    COMMENTED_CODE_PATTERN
-
-    # Produce outputs, adding appropriate flags and comments
+    # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
     tibble() %>%
       add_dsflags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
