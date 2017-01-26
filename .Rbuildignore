@@ -3,4 +3,5 @@
 .travis.yml
 .remake/
 outputs/
+sample-generator/
 network/
