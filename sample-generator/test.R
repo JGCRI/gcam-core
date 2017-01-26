@@ -6,9 +6,13 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: DOCOUT_PATTERN
+#' the generated outputs: DOCOUT_PATTERN. This corresponding file in the
+#' original data system was \code{LB109.ag_an_ALL_R_C_Y.R} (aglu level1).
 #' @details Describe in detail what this chunk does.
-#' @author Author name
+#' @importFrom assertthat assert_that
+#' @importFrom dplyr filter mutate select
+#' @importFrom tidyr gather spread
+#' @author Author name(s)
 #' @export
 LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -48,10 +52,10 @@ FILE = "A_aglu_data",
     COMMENTED_CODE_PATTERN
 
     # Produce outputs, adding appropriate flags and comments
-    # Temporary code below
+    # Temporary code below sends back empty data frames marked "don't test"
     tibble() %>%
-  add_dsflags(FLAG_NO_TEST) ->
-  L109.ag_ALL_Mt_R_C_Y ->
+      add_dsflags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
+    L109.ag_ALL_Mt_R_C_Y ->
   L109.an_ALL_Mt_R_C_Y
 
     return_data(L109.ag_ALL_Mt_R_C_Y, L109.an_ALL_Mt_R_C_Y)

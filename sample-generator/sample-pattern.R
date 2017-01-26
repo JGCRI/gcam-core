@@ -6,9 +6,13 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: DOCOUT_PATTERN
+#' the generated outputs: DOCOUT_PATTERN. This corresponding file in the
+#' original data system was \code{ORIGINALFILE_PATTERN} (MODULE_PATTERN LEVEL_PATTERN).
 #' @details Describe in detail what this chunk does.
-#' @author Author name
+#' @importFrom assertthat assert_that
+#' @importFrom dplyr filter mutate select
+#' @importFrom tidyr gather spread
+#' @author Author name(s)
 #' @export
 CHUNK_NAME <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -27,7 +31,9 @@ CHUNK_NAME <- function(command, ...) {
     COMMENTED_CODE_PATTERN
 
     # Produce outputs, adding appropriate flags and comments
-    # Temporary code below
+    # Temporary code below sends back empty data frames marked "don't test"
+    tibble() %>%
+      add_dsflags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     MAKEOUT_PATTERN
 
     return_data(RETURNOUT_PATTERN)
