@@ -152,8 +152,15 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
   for(ch in chunks) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
     reqdata <- eval(cl)
+
+    # Chunks mark their file inputs specially, using vector names
+    if(is.null(names(reqdata))) {
+      fileoutputs <- FALSE
+    } else {
+      fileoutputs <- names(reqdata) == "XML"
+    }
     if(!is.null(reqdata)) {
-      chunkoutputs[[ch]] <- tibble(name = ch, output = reqdata)
+      chunkoutputs[[ch]] <- tibble(name = ch, output = reqdata, to_xml = fileoutputs)
     }
   }
   dplyr::bind_rows(chunkoutputs)

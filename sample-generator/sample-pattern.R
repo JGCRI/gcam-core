@@ -26,10 +26,10 @@ CHUNK_NAME <- function(command, ...) {
     # Load required inputs
     LOAD_PATTERN
 
+    # TRANSLATED PROCESSING CODE GOES HERE...
+
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
-    tibble() %>%
-      add_dsflags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     MAKEOUT_PATTERN
 
     return_data(RETURNOUT_PATTERN)

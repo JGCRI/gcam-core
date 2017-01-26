@@ -4,128 +4,184 @@
 # Try the script for real - does the generated file fly as a chunk?!?
 # Note PP said gcam-usa level2 has programmatic inputs so this will probably break on that
 
+# Look for write_mi_data and for those variables...
+# write_mi_data( L204.AgResBioCurve_Jatr, "AgResBioCurve", "AGLU_LEVEL2_DATA", "L204.AgResBioCurve_Jatr", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
+# How does data system handle this?
+# Hmm... ideally it scoops up all XML-tagged outputs
+# Would be great to put those into dependency graph too
 
-
-library(magrittr)
-
-DS_CODE <- ""
-DS_DATA <- ""
 PATTERNFILE <- "sample-generator/sample-pattern.R"
 
-pattern <- readLines(PATTERNFILE)
 
+make_substitutions <- function(fn, patternfile = PATTERNFILE) {
+  pattern <- readLines(patternfile)
 
-fn <- "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LB109.ag_an_ALL_R_C_Y.R"
-fn <- "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LA106.ag_an_NetExp_FAO_R_C_Y.R"
-filecode <- readLines(fn)
+  print(basename(fn))
+  filecode <- readLines(fn)
 
-# Isolate the module and level information from the filename
-x <- strsplit(fn, "/")[[1]]
-level <- x[length(x) - 1]
-module <- gsub("-processing-code", "", x[length(x) - 2], fixed = TRUE)
+  # Isolate the module and level information from the filename
+  x <- strsplit(fn, "/")[[1]]
+  level <- x[length(x) - 1]
+  module <- gsub("-processing-code", "", x[length(x) - 2], fixed = TRUE)
 
-# Replace file info
-pattern <- gsub(pattern = "ORIGINALFILE_PATTERN",
-                replacement = basename(fn),
-                pattern,
-                fixed = TRUE)
-pattern <- gsub(pattern = "MODULE_PATTERN",
-                replacement = module,
-                pattern,
-                fixed = TRUE)
-pattern <- gsub(pattern = "LEVEL_PATTERN",
-                replacement = level,
-                pattern,
-                fixed = TRUE)
+  # Replace file info
+  pattern <- gsub(pattern = "ORIGINALFILE_PATTERN",
+                  replacement = basename(fn),
+                  pattern,
+                  fixed = TRUE)
+  pattern <- gsub(pattern = "MODULE_PATTERN",
+                  replacement = module,
+                  pattern,
+                  fixed = TRUE)
+  pattern <- gsub(pattern = "LEVEL_PATTERN",
+                  replacement = level,
+                  pattern,
+                  fixed = TRUE)
 
-# Replace CHUNK_NAME with file name (minus .R)
-# Use make.names to ensure syntactically valid
-newfn <- make.names(gsub("\\.R$", "", basename(fn)))
-pattern <- gsub(pattern = "CHUNK_NAME", replacement = newfn, pattern, fixed = TRUE)
+  # Replace CHUNK_NAME with file name (minus .R)
+  # Use make.names to ensure syntactically valid
+  newfn <- make.names(gsub("\\.R$", "", basename(fn)))
+  pattern <- gsub(pattern = "CHUNK_NAME", replacement = newfn, pattern, fixed = TRUE)
 
-extract_argument <- function(pattern, dsfile, stringpos = 2) {
-  newinputstring <- ""
-  inputlines <- grep(pattern, dsfile, fixed = TRUE)
-  if(length(inputlines)) {
+  extract_argument <- function(pattern, dsfile, stringpos = 2) {
+    newinputstring <- ""
+    inputlines <- grep(pattern, dsfile, fixed = TRUE)
     newinputs <- NULL
-    for(il in inputlines) {
-      x <- strsplit(dsfile[il], ",")[[1]][stringpos]
-      x <- gsub(pattern, "", x, fixed = TRUE)
-      x <- gsub("\"", "", x)
-      x <- gsub(")", "", x)
-      x <- trimws(x)
+    if(length(inputlines)) {
+      for(il in inputlines) {
+        x <- strsplit(dsfile[il], ",")[[1]][stringpos]
+        x <- gsub(pattern, "", x, fixed = TRUE)
+        x <- gsub("\"", "", x)
+        x <- gsub(")", "", x)
+        x <- trimws(x)
 
-      if(grepl("COMMON_MAPPINGS", dsfile[il])) {
-        domain <- "common/"
-      } else if (grepl("LEVEL0_DATA", dsfile[il])) {
-        domain <- paste0(module, "/")
-      } else if (grepl("MAPPINGS", dsfile[il])) {
-        domain <- paste0(module, "/")
-      } else {
-        domain <- ""
+        if(grepl("COMMON_MAPPINGS", dsfile[il])) {
+          domain <- "common/"
+        } else if (grepl("LEVEL[01]_DATA", dsfile[il])) {
+          domain <- paste0(module, "/")
+        } else if (grepl("MAPPINGS", dsfile[il])) {
+          domain <- paste0(module, "/")
+        } else {
+          domain <- ""
+        }
+        newinputs <- c(newinputs, paste0(domain, x))
       }
-      newinputs <- c(newinputs, paste0(domain, x))
     }
+    newinputs
   }
-  newinputs
+
+
+  # Find readdata lines
+  readdata_string <- extract_argument("readdata(", filecode)
+  no_inputs <- is.null(readdata_string)
+  if(no_inputs) {
+    warning("No inputs for ", basename(fn))
+    replacement <- "NULL"
+  } else {
+    readdata_string_q <- paste0("\"", readdata_string, "\"")
+    fileinputs <- grep("/", readdata_string, fixed = TRUE)
+    fileprefix <- rep("", length(readdata_string))
+    fileprefix[fileinputs] <- "FILE ="
+    replacement <- paste0("c(", paste(paste(fileprefix, readdata_string_q), collapse = ",\n"), ")")
+  }
+
+  # Replace INPUTS_PATTERN, marking "FILE =" as necessary
+  pattern <- gsub(pattern = "INPUTS_PATTERN",
+                  replacement = replacement,
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace LOAD_PATTERN
+  if(no_inputs) {
+    load_string <- ""
+  } else {
+    load_string <- paste0("  ", basename(readdata_string), " <- get_data(all_data, ", readdata_string_q, ")")
+  }
+
+  pattern <- gsub(pattern = "LOAD_PATTERN",
+                  replacement = paste(load_string, collapse = "\n"),
+                  pattern,
+                  fixed = TRUE)
+
+  # Find output lines
+  writedata_string <- extract_argument("writedata(", filecode, stringpos = 1)
+  midata_string <- extract_argument("write_mi_data(", filecode, stringpos = 1)
+  dataprefix <- c(rep("", length(writedata_string)), rep("XML =", length(midata_string)))
+  writedata_string <- c(writedata_string, midata_string)
+  no_outputs <- is.null(writedata_string)
+
+  if(no_outputs) {
+    warning("No outputs for ", basename(fn))
+    replacement <- "NULL"
+  } else {
+    writedata_string_q <- paste0("\"", writedata_string, "\"")
+    replacement <- paste0("c(", paste(paste(dataprefix, writedata_string_q), collapse = ",\n"), ")")
+  }
+
+  # Replace OUTPUTS_PATTERN
+  pattern <- gsub(pattern = "OUTPUTS_PATTERN",
+                  replacement = replacement,
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace DOCOUT_PATTERN
+  if(no_outputs) {
+    writedata_string_doc <- "(none)"
+  } else {
+    writedata_string_doc <- paste0("\\code{", writedata_string, "}")
+  }
+  pattern <- gsub(pattern = "DOCOUT_PATTERN",
+                  replacement = paste(writedata_string_doc, collapse = ", "),
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace MAKEOUT_PATTERN
+  if(no_outputs) {
+    makeoutputs_string <- ""
+  } else {
+    makeoutputs_string <- rep(NA, length(writedata_string))
+    for(i in seq_along(writedata_string)) {
+      if(dataprefix[i] == "") {
+        txt <- "add_dsflags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR)"
+      } else {
+        txt <- "add_dsflags(FLAG_NO_TEST) %>%\n  add_xml_data()"
+      }
+      makeoutputs_string[i] <- paste("tibble() %>%\n  ", txt, "->\n  ", writedata_string[i])
+    }
+    makeoutputs_string <- paste(makeoutputs_string, collapse = "\n")
+  }
+
+
+  pattern <- gsub(pattern = "MAKEOUT_PATTERN",
+                  replacement = makeoutputs_string,
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace RETURNOUT_PATTERN
+  pattern <- gsub(pattern = "RETURNOUT_PATTERN",
+                  replacement = paste(writedata_string, collapse = ", "),
+                  pattern,
+                  fixed = TRUE)
+
+  pattern
 }
 
 
-# Find readdata lines
-readdata_string <- extract_argument("readdata(", filecode)
-readdata_string_q <- paste0("\"", readdata_string, "\"")
-fileinputs <- grep("/", readdata_string, fixed = TRUE)
-fileprefix <- rep("", length(readdata_string))
-fileprefix[fileinputs] <- "FILE ="
 
-# Replace INPUTS_PATTERN, marking "FILE =" as necessary
-pattern <- gsub(pattern = "INPUTS_PATTERN",
-                replacement = paste0("c(", paste(paste(fileprefix, readdata_string_q), collapse = ",\n"), ")"),
-                pattern,
-                fixed = TRUE)
+files <- c("/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LB109.ag_an_ALL_R_C_Y.R",
+           "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LA106.ag_an_NetExp_FAO_R_C_Y.R",
+           "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level2/L204.resbio_input.R")
 
-# Replace LOAD_PATTERN
-load_string <- paste0("  ", basename(readdata_string),
-                      " <- get_data(all_data, ",
-                      readdata_string_q, ")")
+for(fn in files) {
+  out <- NULL
+  try(out <- make_substitutions(fn))
+  if(is.null(out)) {
+    warning("Ran into error with", basename(fn))
+  } else {
+    newfn <- paste0("sample-generator/outputs/test_", basename(fn))
+    cat(out, file = newfn, sep = "\n")
+  }
+}
 
-pattern <- gsub(pattern = "LOAD_PATTERN",
-                replacement = paste(load_string, collapse = "\n"),
-                pattern,
-                fixed = TRUE)
-
-# Construct COMMENTED_CODE_PATTERN
-
-# Find output lines
-writedata_string <- extract_argument("writedata(", filecode, stringpos = 1)
-
-# Replace DOCOUT_PATTERN
-writedata_string_doc <- paste0("\\code{", writedata_string, "}")
-pattern <- gsub(pattern = "DOCOUT_PATTERN",
-                replacement = paste(writedata_string_doc, collapse = ", "),
-                pattern,
-                fixed = TRUE)
-
-# Replace OUTPUTS_PATTERN
-writedata_string_q <- paste0("\"", writedata_string, "\"")
-pattern <- gsub(pattern = "OUTPUTS_PATTERN",
-                replacement = paste0("c(", paste(writedata_string_q, collapse = ",\n"), ")"),
-                pattern,
-                fixed = TRUE)
-
-# Replace MAKEOUT_PATTERN
-makeoutputs_string <- paste(writedata_string, collapse = " ->\n  ")
-pattern <- gsub(pattern = "MAKEOUT_PATTERN",
-                replacement = makeoutputs_string,
-                pattern,
-                fixed = TRUE)
-
-# Replace RETURNOUT_PATTERN
-pattern <- gsub(pattern = "RETURNOUT_PATTERN",
-                replacement = paste(writedata_string, collapse = ", "),
-                pattern,
-                fixed = TRUE)
 
 # Write out chunk (appending to proper file)
-newfn <- paste0("sample-generator/outputs/test_", basename(fn))
-cat(pattern, file = newfn, sep = "\n")
