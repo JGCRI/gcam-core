@@ -1,18 +1,16 @@
-# Take `sample-chunk-pattern.R` and use it as a pattern
+# A utility script to find all the data system R scripts in a directory
+# tree, parse them one by one, and fill in a template form to generate
+# one chunk per script. We write these to files in the outputs/ dir
 
-# TODO:
-# Try the script for real - does the generated file fly as a chunk?!?
-# Note PP said gcam-usa level2 has programmatic inputs so this will probably break on that
+PATTERNFILE <- "chunk-generator/sample-pattern.R"
 
-# Look for write_mi_data and for those variables...
-# write_mi_data( L204.AgResBioCurve_Jatr, "AgResBioCurve", "AGLU_LEVEL2_DATA", "L204.AgResBioCurve_Jatr", "AGLU_XML_BATCH", "batch_resbio_input.xml" )
-# How does data system handle this?
-# Hmm... ideally it scoops up all XML-tagged outputs
-# Would be great to put those into dependency graph too
+DOMAIN_MAP <- c("AGLU" = "aglu/",
+                "ENERGY" = "energy/",
+                "EMISSIONS" = "emissions/",
+                "SOCIO" = "socioeconomics/",
+                "GCAMUSA" = "gcam-usa/")
 
-PATTERNFILE <- "sample-generator/sample-pattern.R"
-
-
+# Workhorse function to read, parse, construct new strings/code, and substitute
 make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   pattern <- readLines(patternfile)
 
@@ -51,7 +49,8 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     newinputs <- NULL
     if(length(inputlines)) {
       for(il in inputlines) {
-        x <- strsplit(filecode[il], ",")[[1]][stringpos]
+        xsplit <- strsplit(filecode[il], ",")[[1]]
+        x <- xsplit[[stringpos]]
         x <- gsub(pattern, "", x, fixed = TRUE)
         x <- gsub("\"", "", x)
         x <- gsub(")", "", x)
@@ -59,16 +58,15 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 
         if(grepl("COMMON_MAPPINGS", filecode[il])) {
           domain <- "common/"
-          # These next three will *usually* be right, but not always
-          # In particular, sometimes scripts pull data, mapping, or assumptions
-          # from outside of their module
-          # I think it's not worth it to worry about here...? Check
         } else if (grepl("LEVEL[01]_DATA", filecode[il])) {
           domain <- paste0(module, "/")
-        } else if (grepl("MAPPINGS", filecode[il])) {
-          domain <- paste0(module, "/")
-        } else if (grepl("ASSUMPTIONS", filecode[il])) {
-          domain <- paste0(module, "/")
+        } else if (grepl("MAPPINGS", filecode[il]) | grepl("ASSUMPTIONS", filecode[il])) {
+          # Chunks might load mapping/assumption data from their own domain (module),
+          # or from somewhere else. Find and parse the string to figure it out
+          domaininfo <- regexpr("[A-Z]*_(MAPPINGS|ASSUMPTIONS)", filecode[il])
+          domain <- substr(filecode[il], domaininfo, domaininfo + attr(domaininfo, "match.length") - 1)
+          domain <- strsplit(domain, "_")[[1]][1]
+          domain <- DOMAIN_MAP[domain]
         } else {
           domain <- ""
         }
@@ -175,12 +173,14 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 }
 
 
+
+# ----------------------- MAIN -----------------------
+
 files <- list.files("/Users/d3x290/Desktop/gcam-data-system-master/",
                     pattern = "*.R$", full.names = TRUE, recursive = TRUE)
+# Limit to scripts in the processing code folers
 files <- files[grepl("processing-code", files, fixed = TRUE)]
-# files <- c("/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LB109.ag_an_ALL_R_C_Y.R",
-#            "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level1/LA106.ag_an_NetExp_FAO_R_C_Y.R",
-#            "/Users/d3x290/Desktop/gcam-data-system-master/aglu-processing-code/level2/L204.resbio_input.R")
+
 
 for(fn in files) {
   # Isolate the module and level information from the filename
@@ -188,7 +188,7 @@ for(fn in files) {
   x <- strsplit(fn, "/")[[1]]
   level <- x[length(x) - 1]
   module <- gsub("-processing-code", "", x[length(x) - 2], fixed = TRUE)
-  newfn <- file.path("sample-generator", "outputs", paste0(module, "-", level, ".R"))
+  newfn <- file.path("chunk-generator", "outputs", paste0(module, "-", level, ".R"))
 
   out <- NULL
   try(out <- make_substitutions(fn))
@@ -199,5 +199,3 @@ for(fn in files) {
     cat(out, "\n", file = newfn, sep = "\n", append = TRUE)
   }
 }
-
-# Write out chunk (appending to proper file)
