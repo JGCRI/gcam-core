@@ -8,17 +8,30 @@
 #' @param chunklist A tibble of chunks
 #' @return A plot
 #' @export
-graph_chunks <- function(chunklist = find_chunks()) {
+graph_chunks <- function(chunklist = find_chunks(), plot_gcam = TRUE) {
+
+
+  chunkinputs <- chunk_inputs()
+  chunkoutputs <- chunk_outputs()
+
+  if(plot_gcam) {
+    xml_outputs <- tibble(name="GCAM", input=filter(chunkoutputs, to_xml)$output, from_file = FALSE)
+    chunkinputs <- bind_rows(chunkinputs, xml_outputs)
+    tibble(name = "GCAM", module = "GCAM", chunk = "GCAM") %>%
+      bind_rows(chunklist) ->
+      chunklist
+  }
+
   chunklist$num <- 1:nrow(chunklist)
   chunklist$modulenum <- as.numeric(as.factor(chunklist$module))
-  chunk_inputs() %>%
+  chunkinputs %>%
     left_join(chunklist, by = "name") %>%
     select(name, input, num) ->
     chunkinputs
   cat("Found", nrow(chunkinputs), "chunk data requirements\n")
-  chunk_outputs() %>%
+  chunkoutputs %>%
     left_join(chunklist, by = "name") %>%
-    select(name, output, num) ->
+    select(name, output, to_xml, num) ->
     chunkoutputs
   cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
@@ -42,7 +55,7 @@ graph_chunks <- function(chunklist = find_chunks()) {
   }
 
   # Plot it
-  set.seed(123)
+  set.seed(1224)
   plot(igraph::graph.adjacency(mat),
        vertex.color = rainbow(length(unique(chunklist$modulenum)))[chunklist$modulenum],
        #      vertex.size = chunklist$noutputs p* 3,
