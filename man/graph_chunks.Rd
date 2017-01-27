@@ -4,10 +4,12 @@
 \alias{graph_chunks}
 \title{graph_chunks}
 \usage{
-graph_chunks(chunklist = find_chunks())
+graph_chunks(chunklist = find_chunks(), plot_gcam = TRUE)
 }
 \arguments{
 \item{chunklist}{A tibble of chunks}
+
+\item{plot_gcam}{Plot a node for GCAM (all XMLs feed to)?}
 }
 \value{
 A plot

@@ -6,13 +6,13 @@
 #' graph_chunks
 #'
 #' @param chunklist A tibble of chunks
+#' @param plot_gcam Plot a node for GCAM (all XMLs feed to)?
 #' @return A plot
 #' @export
 graph_chunks <- function(chunklist = find_chunks(), plot_gcam = TRUE) {
 
-
-  chunkinputs <- chunk_inputs()
-  chunkoutputs <- chunk_outputs()
+  chunkinputs <- chunk_inputs(chunklist$name)
+  chunkoutputs <- chunk_outputs(chunklist$name)
 
   if(plot_gcam) {
     xml_outputs <- tibble(name="GCAM", input=filter(chunkoutputs, to_xml)$output, from_file = FALSE)
