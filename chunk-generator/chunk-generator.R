@@ -39,12 +39,13 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 
   # Replace CHUNK_NAME with file name (minus .R)
   # Use make.names to ensure syntactically valid
-  newfn <- make.names(gsub("\\.R$", "", basename(fn)))
-  pattern <- gsub(pattern = "CHUNK_NAME", replacement = newfn, pattern, fixed = TRUE)
+  chunkname <- make.names(paste("module", module, gsub("\\.R$", "", basename(fn)), sep = "_"))
+  pattern <- gsub(pattern = "CHUNK_NAME", replacement = chunkname, pattern, fixed = TRUE)
 
   # General function to pull info out of code function calls
   extract_argument <- function(pattern, filecode, stringpos = 2) {
     newinputstring <- ""
+    filecode <- filecode[grep("^(\\s)*#", filecode, invert = TRUE)]  # remove comments
     inputlines <- grep(pattern, filecode, fixed = TRUE)
     newinputs <- NULL
     if(length(inputlines)) {
@@ -59,7 +60,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
         if(grepl("COMMON_MAPPINGS", filecode[il])) {
           domain <- "common/"
         } else if (grepl("LEVEL[01]_DATA", filecode[il])) {
-          domain <- paste0(module, "/")
+          domain <- ""
         } else if (grepl("MAPPINGS", filecode[il]) | grepl("ASSUMPTIONS", filecode[il])) {
           # Chunks might load mapping/assumption data from their own domain (module),
           # or from somewhere else. Find and parse the string to figure it out
@@ -188,7 +189,7 @@ for(fn in files) {
   x <- strsplit(fn, "/")[[1]]
   level <- x[length(x) - 1]
   module <- gsub("-processing-code", "", x[length(x) - 2], fixed = TRUE)
-  newfn <- file.path("chunk-generator", "outputs", paste0(module, "-", level, ".R"))
+  newfn <- file.path("chunk-generator", "outputs", paste0("module-", module, "-", level, ".R"))
 
   out <- NULL
   try(out <- make_substitutions(fn))
