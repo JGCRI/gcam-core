@@ -42,9 +42,15 @@ graph_chunks <- function(chunklist = find_chunks()) {
   }
 
   # Plot it
+  set.seed(123)
   plot(igraph::graph.adjacency(mat),
-       vertex.color = rainbow(nrow(chunklist))[chunklist$modulenum],
- #      vertex.size = chunklist$noutputs * 3,
-       vertex.label.dist = 1)
+       vertex.color = rainbow(length(unique(chunklist$modulenum)))[chunklist$modulenum],
+       #      vertex.size = chunklist$noutputs p* 3,
+       #      vertex.label.dist = 1,
+       vertex.label.cex = .5,
+       vertex.size = 5,
+       edge.arrow.size = 0.5,
+       margin = -0.2)
 
+  invisible(mat)
 }
