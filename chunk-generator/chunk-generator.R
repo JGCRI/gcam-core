@@ -10,8 +10,13 @@
 # Hmm... ideally it scoops up all XML-tagged outputs
 # Would be great to put those into dependency graph too
 
-PATTERNFILE <- "sample-generator/sample-pattern.R"
+PATTERNFILE <- "chunk-generator/sample-pattern.R"
 
+DOMAIN_MAP <- c("AGLU" = "aglu/",
+                "ENERGY" = "energy/",
+                "EMISSIONS" = "emissions/",
+                "SOCIO" = "socioeconomics/",
+                "GCAMUSA" = "gcam-usa/")
 
 make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   pattern <- readLines(patternfile)
@@ -51,7 +56,8 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     newinputs <- NULL
     if(length(inputlines)) {
       for(il in inputlines) {
-        x <- strsplit(filecode[il], ",")[[1]][stringpos]
+        xsplit <- strsplit(filecode[il], ",")[[1]]
+        x <- xsplit[[stringpos]]
         x <- gsub(pattern, "", x, fixed = TRUE)
         x <- gsub("\"", "", x)
         x <- gsub(")", "", x)
@@ -59,16 +65,15 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 
         if(grepl("COMMON_MAPPINGS", filecode[il])) {
           domain <- "common/"
-          # These next three will *usually* be right, but not always
-          # In particular, sometimes scripts pull data, mapping, or assumptions
-          # from outside of their module
-          # I think it's not worth it to worry about here...? Check
         } else if (grepl("LEVEL[01]_DATA", filecode[il])) {
           domain <- paste0(module, "/")
-        } else if (grepl("MAPPINGS", filecode[il])) {
-          domain <- paste0(module, "/")
-        } else if (grepl("ASSUMPTIONS", filecode[il])) {
-          domain <- paste0(module, "/")
+        } else if (grepl("MAPPINGS", filecode[il]) | grepl("ASSUMPTIONS", filecode[il])) {
+          # Chunks might load mapping/assumption data from their own domain (module),
+          # or from somewhere else. Find and parse the string to figure it out
+          domaininfo <- regexpr("[A-Z]*_(MAPPINGS|ASSUMPTIONS)", filecode[il])
+          domain <- substr(filecode[il], domaininfo, domaininfo + attr(domaininfo, "match.length") - 1)
+          domain <- strsplit(domain, "_")[[1]][1]
+          domain <- DOMAIN_MAP[domain]
         } else {
           domain <- ""
         }
@@ -188,7 +193,7 @@ for(fn in files) {
   x <- strsplit(fn, "/")[[1]]
   level <- x[length(x) - 1]
   module <- gsub("-processing-code", "", x[length(x) - 2], fixed = TRUE)
-  newfn <- file.path("sample-generator", "outputs", paste0(module, "-", level, ".R"))
+  newfn <- file.path("chunk-generator", "outputs", paste0(module, "-", level, ".R"))
 
   out <- NULL
   try(out <- make_substitutions(fn))
