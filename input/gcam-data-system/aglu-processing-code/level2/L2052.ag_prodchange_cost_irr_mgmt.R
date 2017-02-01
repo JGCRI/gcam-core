@@ -54,39 +54,12 @@ L2052.AgCost_For <- L2051.AgCost_For
 L2052.Ag_ProdChange_files.list <- L2051.Ag_ProdChange_files.list
 names( L2052.Ag_ProdChange_files.list ) <- sub( "L2051", "L2052", names( L2052.Ag_ProdChange_files.list ) )
 
-# Removing reference scenario ag prod change from the lo-input tech of the scenarios
-# First, subset the reference scenario whose improvement rates will be deducted from all climate change impacts scenarios
-# Note that we can't just subtract agprodchange values; need to calculate ratios and divide in order for the math to work
-L2052.RefProdChange <- L2052.Ag_ProdChange_files.list[["L2052.AgProdChange_ref"]]
-timestep_length <- data.frame( year = model_future_years,
-                               years = model_future_years - c( max( model_base_years ), model_future_years[ 1:( length( model_future_years ) - 1 ) ] ) )
-L2052.RefProdChange$years <- timestep_length$years[ match( L2052.RefProdChange$year, timestep_length$year ) ]
-L2052.RefProdChange$Ratio <- ( 1 + L2052.RefProdChange$AgProdChange ) ^ L2052.RefProdChange$years
-for( i in 1:length( L2052.Ag_ProdChange_files.list ) ){
-   # assuming that all climate impacts tables will have rcp in the name
-   # for tables without climate impacts, simply write ag prod change for the "hi" technologies, and do nothing with the "lo" ones (don't even write them out)
-   if( !grepl( "rcp", names( L2052.Ag_ProdChange_files.list[i] ) ) ){
-      L2052.Ag_ProdChange_files.list[[i]][[agtech]] <- paste( L2052.Ag_ProdChange_files.list[[i]][[agtech]], "hi", sep = mgmt_delimiter )
-      L2052.Ag_ProdChange_files.list[[i]] <- subset( L2052.Ag_ProdChange_files.list[[i]], AgProdChange != 0 )
-   } else {
-      L2052.Ag_ProdChange_files.list[[i]]$years <- timestep_length$years[ match( L2052.Ag_ProdChange_files.list[[i]]$year, timestep_length$year ) ]
-      L2052.Ag_ProdChange_files.list[[i]]$Ratio <- ( 1 + L2052.Ag_ProdChange_files.list[[i]]$AgProdChange ) ^ L2052.Ag_ProdChange_files.list[[i]]$years
-      L2052.Ag_ProdChange_files.list[[i]]$RatioDivisor <- L2052.RefProdChange$Ratio[
-         match( vecpaste( L2052.Ag_ProdChange_files.list[[i]][ c( reg, agsupp, agsubs, agtech, Y ) ] ),
-                vecpaste( L2052.RefProdChange[ c( reg, agsupp, agsubs, agtech, Y ) ] ) )
-      ]
-      L2052.Ag_ProdChange_files.list[[i]]$RatioDivisor[ is.na( L2052.Ag_ProdChange_files.list[[i]]$RatioDivisor ) ] <- 1
-      L2052.Ag_ProdChange_files.list[[i]] <- repeat_and_add_vector( L2052.Ag_ProdChange_files.list[[i]], lvl, c( "lo", "hi" ) )
-   # we're not deducting the reference tech change from the "hi" input technology
-      L2052.Ag_ProdChange_files.list[[i]]$RatioDivisor[ L2052.Ag_ProdChange_files.list[[i]][[lvl]] == "hi" ] <- 1
-      L2052.Ag_ProdChange_files.list[[i]]$FinalRatio <- L2052.Ag_ProdChange_files.list[[i]]$Ratio / L2052.Ag_ProdChange_files.list[[i]]$RatioDivisor
-      L2052.Ag_ProdChange_files.list[[i]]$AgProdChange <- round(
-         L2052.Ag_ProdChange_files.list[[i]]$FinalRatio ^ (1 / L2052.Ag_ProdChange_files.list[[i]]$years ) - 1,
-         digits_AgProdChange )
-      L2052.Ag_ProdChange_files.list[[i]][[agtech]] <- paste( L2052.Ag_ProdChange_files.list[[i]][[agtech]], L2052.Ag_ProdChange_files.list[[i]][[lvl]], sep = mgmt_delimiter )
-      L2052.Ag_ProdChange_files.list[[i]] <- L2052.Ag_ProdChange_files.list[[i]][ names_AgProdChange ]	
-      L2052.Ag_ProdChange_files.list[[i]] <- subset( L2052.Ag_ProdChange_files.list[[i]], AgProdChange != 0 )
-   }
+printlog( "Modified method - just apply the prod change to both hi and lo technologies equally" )
+for( i in names( L2052.Ag_ProdChange_files.list ) ){
+  L2052.Ag_ProdChange_files.list[[i]] <- repeat_and_add_vector( L2052.Ag_ProdChange_files.list[[i]], lvl, c( "lo", "hi" ) )
+  L2052.Ag_ProdChange_files.list[[i]][[agtech]] <- paste( L2052.Ag_ProdChange_files.list[[i]][[agtech]],
+                                                          L2052.Ag_ProdChange_files.list[[i]][[lvl]], sep = mgmt_delimiter )
+  L2052.Ag_ProdChange_files.list[[i]] <- L2052.Ag_ProdChange_files.list[[i]][ names_AgProdChange ]
 }
 
 #Not writing the files out in a loop for now, since we want to change the names of the XML files from the object names here

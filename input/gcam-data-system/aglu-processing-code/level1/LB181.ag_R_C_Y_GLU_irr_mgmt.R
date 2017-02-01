@@ -206,6 +206,12 @@ L181.YieldLevels_R_C_GLU_irr[ c( "yieldmult_lo", "yieldmult_hi" ) ] <-
   L181.YieldLevels_R_C_GLU_irr[ c( "wt_yieldmult_lo", "wt_yieldmult_hi" ) ] /
   L181.YieldLevels_R_C_GLU_irr[[ "HA_ha" ]]
 
+printlog( "HACK TO SET THE SAME YIELD MULTIPLIERS EVERYWHERE" )
+# first, set the yield multiplier that goes from the observed to the "hi". "lo" will be the reciprocal of this
+YIELDMULT_HI <- 1.25
+L181.YieldLevels_R_C_GLU_irr$yieldmult_hi <- YIELDMULT_HI
+L181.YieldLevels_R_C_GLU_irr$yieldmult_lo <- 1 / YIELDMULT_HI
+
 printlog( "Applying yield multipliers to the baseline historical economic yields" )
 #Multipliers are applied to economic yields (kg/m2/yr, not kg/m2/harvest), and shares are applied to land areas.
 # Production is calculated as land area times yield
@@ -312,11 +318,18 @@ max_bio_mult_hi <- 3
 L181.YieldLevels_R_GLU_irr$yieldmult_hi <- pmin( L181.YieldLevels_R_GLU_irr$yieldmult_hi, max_bio_mult_hi )
 L181.YieldMult_R_bio_GLU_irr <- L181.YieldLevels_R_GLU_irr[ c( R_GLU_irr, "yieldmult_lo", "yieldmult_hi" ) ]
 
+printlog( "APPLYING HACK TO SET THE SAME YIELD MULTIPLIERS EVERYWHERE" )
+L181.YieldMult_R_bio_GLU_irr$yieldmult_hi <- YIELDMULT_HI
+L181.YieldMult_R_bio_GLU_irr$yieldmult_lo <- 1 / YIELDMULT_HI
+
 printlog( "Calculating bioenergy land shares" )
 #For bioenergy ghost shares, write out the table of land shares
 L181.YieldLevels_R_GLU_irr$landshare_lo <- with( L181.YieldLevels_R_GLU_irr, ( 1 - yieldmult_hi ) / (yieldmult_lo - yieldmult_hi ) )
 L181.YieldLevels_R_GLU_irr$landshare_hi <- 1 - L181.YieldLevels_R_GLU_irr$landshare_lo
 L181.LandShare_R_bio_GLU_irr <- L181.YieldLevels_R_GLU_irr[ c( R_GLU_irr, "landshare_lo", "landshare_hi" ) ]
+
+printlog( "HACK" )
+L181.LandShare_R_bio_GLU_irr[ c( "landshare_lo", "landshare_hi" ) ] <- 0.5
 
 # -----------------------------------------------------------------------------
 # 3. Output
