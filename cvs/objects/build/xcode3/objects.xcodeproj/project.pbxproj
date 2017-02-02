@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E05C9011E435B3600C73D94 /* gcam_fusion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E05C9001E435B3600C73D94 /* gcam_fusion.cpp */; };
 		0E0BB18F1CB2CF3F002F78F2 /* market_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E0BB18E1CB2CF3F002F78F2 /* market_container.cpp */; };
 		0E36093313F03D350002F67C /* price_greater_than_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E36093213F03D350002F67C /* price_greater_than_solution_info_filter.cpp */; };
 		0E36094413F0457A0002F67C /* price_less_than_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E36094313F0457A0002F67C /* price_less_than_solution_info_filter.cpp */; };
@@ -363,6 +364,7 @@
 
 /* Begin PBXFileReference section */
 		0E052F511CB6C39600AFDDAC /* gcam_data_containers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gcam_data_containers.h; sourceTree = "<group>"; };
+		0E05C9001E435B3600C73D94 /* gcam_fusion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gcam_fusion.cpp; sourceTree = "<group>"; };
 		0E0BB18D1CB2B718002F78F2 /* market_container.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = market_container.h; sourceTree = "<group>"; };
 		0E0BB18E1CB2CF3F002F78F2 /* market_container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_container.cpp; sourceTree = "<group>"; };
 		0E36093013F03C490002F67C /* price_greater_than_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = price_greater_than_solution_info_filter.h; sourceTree = "<group>"; };
@@ -2310,6 +2312,7 @@
 		CD4886EE122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				0E05C9001E435B3600C73D94 /* gcam_fusion.cpp */,
 				CD4886EF122873C200F5A88A /* atom.cpp */,
 				CD4886F0122873C200F5A88A /* atom_registry.cpp */,
 				CD4886F1122873C200F5A88A /* calibrate_resource_visitor.cpp */,
@@ -2782,6 +2785,7 @@
 				CD488827122873C200F5A88A /* fixed_interpolation_function.cpp in Sources */,
 				CD488828122873C200F5A88A /* input_finder.cpp in Sources */,
 				CD488829122873C200F5A88A /* interpolation_function_factory.cpp in Sources */,
+				0E05C9011E435B3600C73D94 /* gcam_fusion.cpp in Sources */,
 				CD48882A122873C200F5A88A /* interpolation_rule.cpp in Sources */,
 				CD48882B122873C200F5A88A /* linear_interpolation_function.cpp in Sources */,
 				CD48882C122873C200F5A88A /* model_time.cpp in Sources */,

@@ -22,6 +22,7 @@ OBJS       = atom.o \
              fixed_interpolation_function.o \
              linear_interpolation_function.o \
              s_curve_interpolation_function.o \
+             gcam_fusion.o \
              util.o
 
 util_base_dir: ${OBJS}
