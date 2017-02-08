@@ -188,23 +188,23 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, objects::PeriodVector<Value>, "physical-output" ),
+        DEFINE_VARIABLE( ARRAY, "physical-output", mPhysicalOutputs, objects::PeriodVector<Value> ),
 
         //! Name of the secondary output. Corresponds to a market for this good 
         //! which must be explicitly solved for.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Ratio of the secondary output to primary output production such that
         //! primary output multiplied by the ratio is equal to secondary output.
-        CREATE_SIMPLE_VARIABLE( mOutputRatio, Value, "output-ratio" ),
+        DEFINE_VARIABLE( SIMPLE, "output-ratio", mOutputRatio, Value ),
         
         //! Piece-wise linear cost curve that contains price driven fraction adjustments
         //! to mOutputRatio.
-        CREATE_CONTAINER_VARIABLE( mCostCurve, Curve*, NoFilter, "fraction-produced" ),
+        DEFINE_VARIABLE( CONTAINER, "fraction-produced", mCostCurve, Curve* ),
                                 
         //! The market name in which this output is adjusting the value.  If empty
         //! the current region is assumed.
-        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market-name" )
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string )
     )
     
     //! State value necessary to use Marketplace::addToDemand

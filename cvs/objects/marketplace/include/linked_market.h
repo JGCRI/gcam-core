@@ -93,11 +93,11 @@ protected:
     
         //! A price scalar which could be used to convert units from this good to those
         //! of the linked market.
-        CREATE_SIMPLE_VARIABLE( mPriceMult, double, "price-adjust" ),
+        DEFINE_VARIABLE( SIMPLE, "price-adjust", mPriceMult, double ),
         
         //! A quantity scalar which could be used to convert units from this good to those
         //! of the linked market.
-        CREATE_SIMPLE_VARIABLE( mQuantityMult, double, "demand-adjust" )
+        DEFINE_VARIABLE( SIMPLE, "demand-adjust", mQuantityMult, double )
     )
     
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;

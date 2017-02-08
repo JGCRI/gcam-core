@@ -123,7 +123,7 @@ protected:
         AgProductionTechnology,
 
         //! Name of leaf or node to use as driver for this technology
-        CREATE_SIMPLE_VARIABLE( mLandItemName, std::string, "itemName" )
+        DEFINE_VARIABLE( SIMPLE, "itemName", mLandItemName, std::string )
     )
 
 

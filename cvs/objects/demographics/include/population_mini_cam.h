@@ -87,7 +87,7 @@ protected:
         Population,
         
         //! Fraction of the total population which is assumed to be of working age
-        CREATE_SIMPLE_VARIABLE( mFractionWorking, double, "fraction-working" )
+        DEFINE_VARIABLE( SIMPLE, "fraction-working", mFractionWorking, double )
     )
     
     virtual const std::string& getXMLName() const;

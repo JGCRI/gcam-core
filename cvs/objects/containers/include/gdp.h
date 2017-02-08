@@ -103,64 +103,64 @@ protected:
         DEFINE_SUBCLASS_FAMILY( GDP ),
         
         /*! \brief labor productivity growth rate. */
-        CREATE_ARRAY_VARIABLE( laborProdGrowthRate, std::vector<Value>, "laborproductivity" ),
+        DEFINE_VARIABLE( ARRAY, "laborproductivity", laborProdGrowthRate, std::vector<Value> ),
                 
         /*! \brief labor force participation percent. */
-        CREATE_ARRAY_VARIABLE( laborForceParticipationPercent, std::vector<Value>, "laborforce" ),
+        DEFINE_VARIABLE( ARRAY, "laborforce", laborForceParticipationPercent, std::vector<Value> ),
         
         /*! \brief actual labor force. */
-        CREATE_ARRAY_VARIABLE( laborForce, std::vector<double>, "total-laborForce" ),
+        DEFINE_VARIABLE( ARRAY, "total-laborForce", laborForce, std::vector<double> ),
         
         /*! \brief approximate regional gross domestic product in constant dollars, not adjusted for energy price for this period. */
-        CREATE_ARRAY_VARIABLE( gdpValue, std::vector<double>, "gdpValue" ),
+        DEFINE_VARIABLE( ARRAY, "gdpValue", gdpValue, std::vector<double> ),
         
         /*! \brief regional gross domestic product per capita in constant dollars ($). */
-        CREATE_ARRAY_VARIABLE( gdpPerCapita, std::vector<double>, "gdpPerCapita" ),
+        DEFINE_VARIABLE( ARRAY, "gdpPerCapita", gdpPerCapita, std::vector<double> ),
         
         /*! \brief regional gross domestic product adjusted for energy price feedback. */
-        CREATE_ARRAY_VARIABLE( gdpValueAdjusted, std::vector<double>, "gdpValueAdjusted" ),
+        DEFINE_VARIABLE( ARRAY, "gdpValueAdjusted", gdpValueAdjusted, std::vector<double> ),
         
         /*! \brief regional gross domestic product without any adjustments for energy price feedback in any period. */
-        CREATE_ARRAY_VARIABLE( gdpValueNotAdjusted, std::vector<double>, "gdpValueNotAdjusted" ),
+        DEFINE_VARIABLE( ARRAY, "gdpValueNotAdjusted", gdpValueNotAdjusted, std::vector<double> ),
         
         /*! \brief regional GDP per cap without any adjustments for energy price feedback in any period. */
-        CREATE_ARRAY_VARIABLE( gdpPerCapitaNotAdjusted, std::vector<double>, "gdpPerCapitaNotAdjusted" ),
+        DEFINE_VARIABLE( ARRAY, "gdpPerCapitaNotAdjusted", gdpPerCapitaNotAdjusted, std::vector<double> ),
         
         /*! \brief regional adjusted GDP in PPP terms. */
-        CREATE_ARRAY_VARIABLE( gdpValueAdjustedPPP, std::vector<double>, "gdpValueAdjustedPPP" ),
+        DEFINE_VARIABLE( ARRAY, "gdpValueAdjustedPPP", gdpValueAdjustedPPP, std::vector<double> ),
         
         /*! \brief regional gross domestic product per capita in constant dollars ($). */
-        CREATE_ARRAY_VARIABLE( gdpPerCapitaAdjusted, std::vector<double>, "gdpPerCapitaAdjusted" ),
+        DEFINE_VARIABLE( ARRAY, "gdpPerCapitaAdjusted", gdpPerCapitaAdjusted, std::vector<double> ),
         
         /*! \brief regional gross domestic product per capita in constant dollars ($). */
-        CREATE_ARRAY_VARIABLE( gdpPerCapitaAdjustedPPP, std::vector<double>, "gdpPerCapitaAdjustedPPP" ),
+        DEFINE_VARIABLE( ARRAY, "gdpPerCapitaAdjustedPPP", gdpPerCapitaAdjustedPPP, std::vector<double> ),
         
         /*! \brief approximate regional GDP per capita PPP terms (before energy price adjustment). */
-        CREATE_ARRAY_VARIABLE( gdpPerCapitaApproxPPP, std::vector<double>, "gdpPerCapitaApproxPPP" ),
+        DEFINE_VARIABLE( ARRAY, "gdpPerCapitaApproxPPP", gdpPerCapitaApproxPPP, std::vector<double> ),
                 
         /*! \brief flag to tell if GDPs have been adjusted yet. */
-        CREATE_SIMPLE_VARIABLE( gdpAdjustedFlag, std::vector<bool>, "gdpAdjustedFlag" ),
+        DEFINE_VARIABLE( SIMPLE, "gdpAdjustedFlag", gdpAdjustedFlag, std::vector<bool> ),
         
         /*! \brief Calibration values for GDP (constant dollars). */
-        CREATE_ARRAY_VARIABLE( calibrationGDPs, std::vector<double>, "calibrationGDPs" ),
+        DEFINE_VARIABLE( ARRAY, "calibrationGDPs", calibrationGDPs, std::vector<double> ),
                 
         /*! \brief Unit for GDP. */
-        CREATE_SIMPLE_VARIABLE( mGDPUnit, std::string, "GDP-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "GDP-unit", mGDPUnit, std::string ),
                 
         /*! \brief Base-year value (constant dollars) for regional GDP. */
-        CREATE_SIMPLE_VARIABLE( baseGDP, double, "baseGDP" ),
+        DEFINE_VARIABLE( SIMPLE, "baseGDP", baseGDP, double ),
                 
         /*! \brief Energy service price feedback elasticity for GDP. */
-        CREATE_SIMPLE_VARIABLE( mEnergyGDPElasticity, double, "e_GDP_elas" ),
+        DEFINE_VARIABLE( SIMPLE, "e_GDP_elas", mEnergyGDPElasticity, double ),
         
         /*! \brief 1990 Ratio of PPP to Market GDP. */
-        CREATE_SIMPLE_VARIABLE( PPPConversionFact, double, "PPPConversionFact" ),
+        DEFINE_VARIABLE( SIMPLE, "PPPConversionFact", PPPConversionFact, double ),
         
         /*! \brief Internal exponent variable for PPP conversion. */
-        CREATE_SIMPLE_VARIABLE( PPPDelta, double, "PPPDelta" ),
+        DEFINE_VARIABLE( SIMPLE, "PPPDelta", PPPDelta, double ),
                 
         /*! \brief Flag to turn on dynamic ratio of PPP to Market GDP. */
-        CREATE_SIMPLE_VARIABLE( constRatio, bool, "PPPConvert" )
+        DEFINE_VARIABLE( SIMPLE, "PPPConvert", constRatio, bool )
     )
 
     double calculatePPPPerCap( const int period,const double marketGDPperCap ); // function to calculate PPP values

@@ -94,10 +94,10 @@ protected:
         IProductionState,
 
         //! The output level of the vintage in its initial period.
-        CREATE_SIMPLE_VARIABLE( mBaseOutput, Value, "base-output" ),
+        DEFINE_VARIABLE( SIMPLE, "base-output", mBaseOutput, Value ),
 
         //! The initial year of the vintage.
-        CREATE_SIMPLE_VARIABLE( mInitialYear, int, "initial-year" )
+        DEFINE_VARIABLE( SIMPLE, "initial-year", mInitialYear, int )
     )
 
     /*

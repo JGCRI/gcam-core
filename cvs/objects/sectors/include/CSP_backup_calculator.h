@@ -108,16 +108,16 @@ protected:
 
         // Parameters hard-coded in constructor for first step
         //! Maximum Backup Fraction is the maximum backup fraction required.
-        CREATE_SIMPLE_VARIABLE( mMaxBackupFraction, double, "max-backup-fraction" ),
+        DEFINE_VARIABLE( SIMPLE, "max-backup-fraction", mMaxBackupFraction, double ),
 
          //! Fraction of electric sector that is intermediate and peak
-        CREATE_SIMPLE_VARIABLE( mMaxSectorLoadServed, double, "max-sector-load-served" ),
+        DEFINE_VARIABLE( SIMPLE, "max-sector-load-served", mMaxSectorLoadServed, double ),
 
         //! Backup function exponent parameter
-        CREATE_SIMPLE_VARIABLE( mBackupExponent, double, "backup-exponent" ),
+        DEFINE_VARIABLE( SIMPLE, "backup-exponent", mBackupExponent, double ),
 
         //! Fraction of year backup mode operates (during no-sun days)
-        CREATE_SIMPLE_VARIABLE( mNoSunDayBackup, double, "no-sun-days" )
+        DEFINE_VARIABLE( SIMPLE, "no-sun-days", mNoSunDayBackup, double )
     )
     
     //! Backup fraction -- cached for reporting

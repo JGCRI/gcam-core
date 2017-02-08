@@ -122,13 +122,13 @@ protected:
          */
         DEFINE_SUBCLASS_FAMILY( Curve, PointSetCurve ),
                 
-        CREATE_SIMPLE_VARIABLE( numericalLabel, double, "numericalLabel" ),
-        CREATE_SIMPLE_VARIABLE( name, std::string, "name" ),
-        CREATE_SIMPLE_VARIABLE( title, std::string, "title" ),
-        CREATE_SIMPLE_VARIABLE( xAxisLabel, std::string, "xAxisLabel" ),
-        CREATE_SIMPLE_VARIABLE( yAxisLabel, std::string, "yAxisLabel" ),
-        CREATE_SIMPLE_VARIABLE( xAxisUnits, std::string, "xAxisUnit" ),
-        CREATE_SIMPLE_VARIABLE( yAxisUnits, std::string, "yAxisUnit" )
+        DEFINE_VARIABLE( SIMPLE, "numericalLabel", numericalLabel, double ),
+        DEFINE_VARIABLE( SIMPLE, "name", name, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "title", title, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "xAxisLabel", xAxisLabel, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "yAxisLabel", yAxisLabel, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "xAxisUnit", xAxisUnits, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "yAxisUnit", yAxisUnits, std::string )
     )
     
     void copy( const Curve& aOther );

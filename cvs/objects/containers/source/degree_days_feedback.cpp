@@ -135,7 +135,7 @@ void DegreeDaysFeedback::calcFeedbacksAfterPeriod( Scenario* aScenario, const IC
     emissFilterSteps.push_back( new FilterStep( "ghg", new NamedFilter( new StringEquals( "CO2" ) ) ) );
     emissFilterSteps.push_back( new FilterStep( "emissions", new IndexFilter( new IntEquals( aPeriod ) ) ) );
     GatherEmiss gatherEmissProc;
-    GCAMFusion<GatherEmiss> gatherEmiss( gatherEmissProc, emissFilterSteps );
+    GCAMFusion<GatherEmiss, true> gatherEmiss( gatherEmissProc, emissFilterSteps );
     gatherEmiss.startFilter( aScenario );
     for( auto filterStep : emissFilterSteps ) {
         delete filterStep;
@@ -150,13 +150,13 @@ void DegreeDaysFeedback::calcFeedbacksAfterPeriod( Scenario* aScenario, const IC
     mCurrDDScaler = 1.0 / ( currGlobalEmiss / mBaseYearValue ) * mHDDCoef;
     vector<FilterStep*> ddFilterSteps = parseFilterString( "world/region/consumer/nodeInput/nodeInput/nodeInput[NamedFilter,StringRegexMatches,heating]" );
     ddFilterSteps.push_back( new FilterStep( "degree-days", new IndexFilter( new IntEquals( aPeriod + 1 ) ) ) );
-    GCAMFusion<DegreeDaysFeedback> scaleHDD( *this, ddFilterSteps );
+    GCAMFusion<DegreeDaysFeedback, true> scaleHDD( *this, ddFilterSteps );
     scaleHDD.startFilter( aScenario );
     
     mCurrDDScaler = ( currGlobalEmiss / mBaseYearValue ) * mCDDCoef;
     delete ddFilterSteps[ ddFilterSteps.size() - 2 ];
     ddFilterSteps[ ddFilterSteps.size() - 2 ] = new FilterStep( "nodeInput", new NamedFilter( new StringRegexMatches( "cooling" ) ) );
-    GCAMFusion<DegreeDaysFeedback> scaleCDD( *this, ddFilterSteps );
+    GCAMFusion<DegreeDaysFeedback, true, true> scaleCDD( *this, ddFilterSteps );
     scaleCDD.startFilter( aScenario );
     for( auto filterStep : ddFilterSteps ) {
         delete filterStep;
@@ -184,3 +184,15 @@ template<>
 void DegreeDaysFeedback::processData<Value>( Value& aData ) {
     aData *= mCurrDDScaler;
 }
+
+void DegreeDaysFeedback::pushFilterStep( INamed* const& aContainer ) {
+    std::cout << "Saw step " << aContainer->getName() << std::endl;
+}
+
+template<typename T>
+typename boost::disable_if<
+    boost::is_base_of<INamed, typename boost::remove_pointer<T>::type>,
+void>::type DegreeDaysFeedback::pushFilterStep( const T& aContainer ) {
+    std::cout << "Saw unknown " << typeid( T ).name() << std::endl;
+}
+

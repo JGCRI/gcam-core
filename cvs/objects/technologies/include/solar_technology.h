@@ -180,65 +180,65 @@ protected :
         IntermittentTechnology,
     
        //! The key used for total annual irradiance
-       CREATE_SIMPLE_VARIABLE( mTotalAnnualIrradianceKey, std::string, "irradiance-tagname" ),
+       DEFINE_VARIABLE( SIMPLE, "irradiance-tagname", mTotalAnnualIrradianceKey, std::string ),
 
        //! Capital cost [$/MW Capacity]
-       CREATE_SIMPLE_VARIABLE( mCapitalCost, double, "capital-cost" ),
+       DEFINE_VARIABLE( SIMPLE, "capital-cost", mCapitalCost, double ),
 
        //! Connection cost (used internally)
-       CREATE_SIMPLE_VARIABLE( mCConnect, double, "c-connect" ),
+       DEFINE_VARIABLE( SIMPLE, "c-connect", mCConnect, double ),
 
        //! Net plant solar to electricity conversion efficiency
-       CREATE_SIMPLE_VARIABLE( mCSPEfficiency, double, "net-solar-conversion-efficiency" ),
+       DEFINE_VARIABLE( SIMPLE, "net-solar-conversion-efficiency", mCSPEfficiency, double ),
 
        //! Plant availability (% of year plant is available at scheduled time)
-       CREATE_SIMPLE_VARIABLE( mPlantAvailability, double, "plant-availability-fraction" ),
+       DEFINE_VARIABLE( SIMPLE, "plant-availability-fraction", mPlantAvailability, double ),
 
        //! Plant Maintenance Fraction (% of year plant need to be down for scheduled maintenance)
-       CREATE_SIMPLE_VARIABLE( mScheduledMaintenance, double, "plant-scheduled-maintenance-fraction" ),
+       DEFINE_VARIABLE( SIMPLE, "plant-scheduled-maintenance-fraction", mScheduledMaintenance, double ),
 
        //! Fraction of scheduled maintenance that can be accomplished during no-sun day outages
-       CREATE_SIMPLE_VARIABLE( mRandomMaintenanceFraction, double, "random-maintence-fraction" ),
+       DEFINE_VARIABLE( SIMPLE, "random-maintence-fraction", mRandomMaintenanceFraction, double ),
 
        //! Generation cost (used internally)
-       CREATE_SIMPLE_VARIABLE( mCGeneration, double, "c-generation" ),
+       DEFINE_VARIABLE( SIMPLE, "c-generation", mCGeneration, double ),
 
        //! The average capacity factor for the CSP plant. [unitless] (used internally)
-       CREATE_SIMPLE_VARIABLE( mCSPCapacityFactor, double, "csp-capacity-factor" ),
+       DEFINE_VARIABLE( SIMPLE, "csp-capacity-factor", mCSPCapacityFactor, double ),
 
        //! [unitless]
-       CREATE_SIMPLE_VARIABLE( mFCR, double, "fcr" ),
+       DEFINE_VARIABLE( SIMPLE, "fcr", mFCR, double ),
 
        //! The unit connection cost [$/km/MW capacity]. 
-       CREATE_SIMPLE_VARIABLE( mGridConnectionCost, double, "grid-connection-cost" ),
+       DEFINE_VARIABLE( SIMPLE, "grid-connection-cost", mGridConnectionCost, double ),
 
        //! [$]
-       CREATE_SIMPLE_VARIABLE( mOM, double, "om" ),
+       DEFINE_VARIABLE( SIMPLE, "om", mOM, double ),
 
        //! The current region name (cached)
-       CREATE_SIMPLE_VARIABLE( mRegionName, std::string, "region-name" ),
+       DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
 
        //! The current sector name (cached)
-       CREATE_SIMPLE_VARIABLE( mSectorName, std::string, "sector-name" ),
+       DEFINE_VARIABLE( SIMPLE, "sector-name", mSectorName, std::string ),
 
        /*! The fraction of the resource area that is actually occupied
         *  by the solar field. [unitless]
         */
-       CREATE_SIMPLE_VARIABLE( mSolarFieldFraction, double, "solar-field-fraction" ),
+       DEFINE_VARIABLE( SIMPLE, "solar-field-fraction", mSolarFieldFraction, double ),
 
-       CREATE_SIMPLE_VARIABLE( mSolarFieldArea, double, "solar-field-area" ),
+       DEFINE_VARIABLE( SIMPLE, "solar-field-area", mSolarFieldArea, double ),
 
        //! The maximum energy loss fraction
-       CREATE_SIMPLE_VARIABLE( mMaxLoss, double, "max-solar-loss" ),
+       DEFINE_VARIABLE( SIMPLE, "max-solar-loss", mMaxLoss, double ),
 
        //! Exponent for energy loss as a function of penetration
-       CREATE_SIMPLE_VARIABLE( mEfficiencyLossExponent, double, "loss-exponent" ),
+       DEFINE_VARIABLE( SIMPLE, "loss-exponent", mEfficiencyLossExponent, double ),
 
        //! The max potential fraction of the sector's load that can be served by this technology
-       CREATE_SIMPLE_VARIABLE( mMaxSectorLoadServed, double, "max-sector-load-served" ),
+       DEFINE_VARIABLE( SIMPLE, "max-sector-load-served", mMaxSectorLoadServed, double ),
 
        //! Number of no sun days
-       CREATE_SIMPLE_VARIABLE( mNoSunDays, double, "no-sun-days" )
+       DEFINE_VARIABLE( SIMPLE, "no-sun-days", mNoSunDays, double )
     )
     
     void copy( const SolarTechnology& aOther );

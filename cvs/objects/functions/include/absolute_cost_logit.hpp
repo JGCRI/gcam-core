@@ -102,13 +102,13 @@ protected:
         IDiscreteChoice,
                             
         //! The logit exponents by period.
-        CREATE_ARRAY_VARIABLE( mLogitExponent, objects::PeriodVector<double>, "logit-exponent" ),
+        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> ),
 
         //! scale factor for cost -- may be parsed or set in calibration
-        CREATE_SIMPLE_VARIABLE( mBaseCost, double, "base-cost" ),
+        DEFINE_VARIABLE( SIMPLE, "base-cost", mBaseCost, double ),
 
         //! flag indicating whether a base cost was set in the XML input
-        CREATE_SIMPLE_VARIABLE( mParsedBaseCost, bool, "is-base-cost-parsed" )
+        DEFINE_VARIABLE( SIMPLE, "is-base-cost-parsed", mParsedBaseCost, bool )
     )
 };
 

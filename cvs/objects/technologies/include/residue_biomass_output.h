@@ -139,34 +139,34 @@ protected :
         IOutput,
 
         //! Physical output by period.
-        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, value_vector_type, "physical-output" ),
+        DEFINE_VARIABLE( ARRAY, "physical-output", mPhysicalOutputs, value_vector_type ),
 
         /*!
         * Name of the secondary output. Corresponds to a market for this good
         * and a supply sector which supplies this good as its primary output.
         */
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! CO2 emissions coefficient cached from the marketplace.
-        CREATE_SIMPLE_VARIABLE( mCachedCO2Coef, Value, "co2-coef" ),
+        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value ),
 
         //! The harvest index
-        CREATE_SIMPLE_VARIABLE( mHarvestIndex, double, "harvest-index" ),
+        DEFINE_VARIABLE( SIMPLE, "harvest-index", mHarvestIndex, double ),
 
         //! The mass per unit area of biomass to be retained to prevent erosion
-        CREATE_SIMPLE_VARIABLE( mErosCtrl, double, "eros-ctrl" ),
+        DEFINE_VARIABLE( SIMPLE, "eros-ctrl", mErosCtrl, double ),
 
         //! The energy to mass conversion of the crop
-        CREATE_SIMPLE_VARIABLE( mMassConversion, double, "mass-conversion" ),
+        DEFINE_VARIABLE( SIMPLE, "mass-conversion", mMassConversion, double ),
         
         //! Water content of residue
-        CREATE_SIMPLE_VARIABLE( mWaterContent, double, "water-content" ),
+        DEFINE_VARIABLE( SIMPLE, "water-content", mWaterContent, double ),
 
         //! The mass to energy conversion of the crop residue
-        CREATE_SIMPLE_VARIABLE( mMassToEnergy, double, "mass-to-energy" ),
+        DEFINE_VARIABLE( SIMPLE, "mass-to-energy", mMassToEnergy, double ),
 
         //! Piece-wise linear cost curve 
-        CREATE_CONTAINER_VARIABLE( mCostCurve, Curve*, NoFilter, "fract-harvested" )
+        DEFINE_VARIABLE( CONTAINER, "fract-harvested", mCostCurve, Curve* )
     )
 
     // These variables are for debugging purposes. Values are written to debug.xml

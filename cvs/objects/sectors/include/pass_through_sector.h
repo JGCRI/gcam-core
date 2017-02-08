@@ -83,10 +83,10 @@ protected:
         
         //! The appropriate sector name for which's marginal revenue should be used
         //! when calculating fixed output.
-        CREATE_SIMPLE_VARIABLE( mMarginalRevenueSector, std::string, "marginal-revenue-sector" ),
+        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-sector", mMarginalRevenueSector, std::string ),
         
         //! The market in which to find the marginal revenue sector.
-        CREATE_SIMPLE_VARIABLE( mMarginalRevenueMarket, std::string, "marginal-revenue-market" )
+        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-market", mMarginalRevenueMarket, std::string )
     )
 
 private:

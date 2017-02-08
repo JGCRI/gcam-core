@@ -73,12 +73,12 @@ protected:
         ICalData,
 
         //! Calibrated output on a per capita basis.
-        CREATE_SIMPLE_VARIABLE( mCalOutputPercapValue, double, "calOutputPercapValue" ),
+        DEFINE_VARIABLE( SIMPLE, "calOutputPercapValue", mCalOutputPercapValue, double ),
 
         /*! \brief Cached population for the period of the calibration value.
         * \todo If population becomes dynamic this will have to change.
         */
-        CREATE_SIMPLE_VARIABLE( mPopulation, double, "population" )
+        DEFINE_VARIABLE( SIMPLE, "population", mPopulation, double )
     )
 };
 

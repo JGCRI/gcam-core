@@ -47,6 +47,7 @@
 
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
+#include "util/base/include/inamed.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -64,7 +65,7 @@ class MACControl;
  * \details The AEmissionsControl class describes a means of reducing emissions.
  * \author Kate Calvin
  */
-class AEmissionsControl: public IRoundTrippable {
+class AEmissionsControl: public INamed, public IRoundTrippable {
 public:
     //! Virtual Destructor.
     virtual ~AEmissionsControl();
@@ -165,10 +166,10 @@ protected:
         DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl ),
         
         //! Name of the reduction so that users can have multiple emissions reductions
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Reduction (usually calculated)
-        CREATE_SIMPLE_VARIABLE( mReduction, double, "reduction" )
+        DEFINE_VARIABLE( SIMPLE, "reduction", mReduction, double )
     )
 
 private:

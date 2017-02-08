@@ -98,7 +98,7 @@ protected:
         Sector,
 
         //! Trial supply market prices
-        CREATE_ARRAY_VARIABLE( mPriceTrialSupplyMarket, objects::PeriodVector<double>, "price-trial-supply" )
+        DEFINE_VARIABLE( ARRAY, "price-trial-supply", mPriceTrialSupplyMarket, objects::PeriodVector<double> )
     )
 };
 

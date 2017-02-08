@@ -116,20 +116,20 @@ protected:
         Technology,
 
         //! The non-land cost of producing a unit of product
-        CREATE_SIMPLE_VARIABLE( mNonLandVariableCost, double, "nonLandVariableCost" ),
+        DEFINE_VARIABLE( SIMPLE, "nonLandVariableCost", mNonLandVariableCost, double ),
 
         //! Annual percent reduction in non-land variableCost
-        CREATE_SIMPLE_VARIABLE( mNonLandCostTechChange, double, "nonLandCostTechChange" ),
+        DEFINE_VARIABLE( SIMPLE, "nonLandCostTechChange", mNonLandCostTechChange, double ),
 
         //! optional input of yield used only for sectors with no current production
         //! but maybe also use for calibrated yield?
-        CREATE_SIMPLE_VARIABLE( mYield, double, "yield" ),
+        DEFINE_VARIABLE( SIMPLE, "yield", mYield, double ),
         
         //! the technological change factor
-        CREATE_SIMPLE_VARIABLE( mAgProdChange, double, "agProdChange" ),
+        DEFINE_VARIABLE( SIMPLE, "agProdChange", mAgProdChange, double ),
 
         //! Measure of multiple cropping
-        CREATE_SIMPLE_VARIABLE( mHarvestsPerYear, double, "harvests-per-year" )
+        DEFINE_VARIABLE( SIMPLE, "harvests-per-year", mHarvestsPerYear, double )
     )
  
     ILandAllocator* mLandAllocator;

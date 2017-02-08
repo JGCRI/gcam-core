@@ -95,10 +95,10 @@ protected:
         SupplySector,
     
         //! Vector of read-in fixed prices.
-        CREATE_ARRAY_VARIABLE( mFixedPrices, objects::PeriodVector<double>, "sectorprice" ),
+        DEFINE_VARIABLE( ARRAY, "sectorprice", mFixedPrices, objects::PeriodVector<double> ),
 
         //! The market region into which the sector is exporting.
-        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market" )
+        DEFINE_VARIABLE( SIMPLE, "market", mMarketName, std::string )
     )
 };
 

@@ -55,6 +55,7 @@
 
 #include "technologies/include/expenditure.h"
 #include "investment/include/iinvestable.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "containers/include/iinfo.h"
@@ -126,7 +127,7 @@ class GCAMConsumer;
  * \author Pralit Patel, Sonny Kim
  */
 
-class BaseTechnology: public IInvestable, public IRoundTrippable, private boost::noncopyable
+class BaseTechnology: public INamed, public IInvestable, public IRoundTrippable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
     friend class InvestableCounterVisitor;
@@ -253,10 +254,10 @@ protected:
         DEFINE_SUBCLASS_FAMILY( BaseTechnology, Consumer, GCAMConsumer ),
                 
         //! Name
-        CREATE_SIMPLE_VARIABLE( name, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", name, std::string ),
         
         //! The root of the nested inputs
-        CREATE_CONTAINER_VARIABLE( mNestedInputRoot, INestedInput*, NamedFilter, "nodeInput" )
+        DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputRoot, INestedInput* )
     )
 
     std::string categoryName; //!< Category name, used for reporting

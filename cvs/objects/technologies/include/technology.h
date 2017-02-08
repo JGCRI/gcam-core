@@ -289,64 +289,64 @@ protected:
         // variables type.
 
         //! Suite of greenhouse gases
-        CREATE_CONTAINER_VARIABLE( mGHG, std::vector<AGHG*>, NamedFilter, "ghg" ),
+        DEFINE_VARIABLE( CONTAINER, "ghg", mGHG, std::vector<AGHG*> ),
 
         //! Vector of output objects representing the outputs of the technology.
-        CREATE_CONTAINER_VARIABLE( mOutputs, std::vector<IOutput*>, NamedFilter, "output" ),
+        DEFINE_VARIABLE( CONTAINER, "output", mOutputs, std::vector<IOutput*> ),
 
         //! Vector of inputs to the Technology.
-        CREATE_CONTAINER_VARIABLE( mInputs, std::vector<IInput*>, NamedFilter, "input" ),
+        DEFINE_VARIABLE( CONTAINER, "input", mInputs, std::vector<IInput*> ),
                                 
         //! The current production state for each period.
-        CREATE_CONTAINER_VARIABLE( mProductionState, objects::PeriodVector<IProductionState*>, NamedFilter, "production-state" ),
+        DEFINE_VARIABLE( CONTAINER, "production-state", mProductionState, objects::PeriodVector<IProductionState*> ),
 
         //! The objects which combine to calculate the shutdown coefficient.
-        CREATE_CONTAINER_VARIABLE( mShutdownDeciders, std::vector<IShutdownDecider*>, NamedFilter, "shutdown-decider" ),
+        DEFINE_VARIABLE( CONTAINER, "shutdown-decider", mShutdownDeciders, std::vector<IShutdownDecider*> ),
                                 
         //! An add-on which sequesters emissions.
-        CREATE_CONTAINER_VARIABLE( mCaptureComponent, ICaptureComponent*, NamedFilter, "capture-component" ),
+        DEFINE_VARIABLE( CONTAINER, "capture-component", mCaptureComponent, ICaptureComponent* ),
                                 
         //! Calibration value
-        CREATE_CONTAINER_VARIABLE( mCalValue, ICalData*, NoFilter, "calibration-value" ),
+        DEFINE_VARIABLE( CONTAINER, "calibration-value", mCalValue, ICalData* ),
 
         //! An add-on which calculates technical change for the Technology.
-        CREATE_CONTAINER_VARIABLE( mTechChangeCalc, ITechnicalChangeCalc*, NamedFilter, "tech-change-calc" ),
+        DEFINE_VARIABLE( CONTAINER, "tech-change-calc", mTechChangeCalc, ITechnicalChangeCalc* ),
 
         /*!
          * \brief The calculated cost of the Technology period.
          * \note calcCost must be called in an iteration before this value is valid.
          * \sa Technology::calcCost
          */
-        CREATE_ARRAY_VARIABLE( mCosts, objects::PeriodVector<double>, "cost" ),
+        DEFINE_VARIABLE( ARRAY, "cost", mCosts, objects::PeriodVector<double> ),
 
         //! A map of a keyword to its keyword group
-        CREATE_SIMPLE_VARIABLE( mKeywordMap, std::map<std::string, std::string>, "keyword" ),
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
 
         //! Name of this technology.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Logit share weight
-        CREATE_SIMPLE_VARIABLE( mShareWeight, Value, "share-weight" ),
+        DEFINE_VARIABLE( SIMPLE, "share-weight", mShareWeight, Value ),
 
         //! The Logit share weight that was parsed by the user
-        CREATE_SIMPLE_VARIABLE( mParsedShareWeight, Value, "parsed-share-weight" ),
+        DEFINE_VARIABLE( SIMPLE, "parsed-share-weight", mParsedShareWeight, Value ),
         
         //! Price multiplier (multiplies costs but not secondary revenue)
-        CREATE_SIMPLE_VARIABLE( mPMultiplier, double, "pMultiplier" ),
+        DEFINE_VARIABLE( SIMPLE, "pMultiplier", mPMultiplier, double ),
 
         //! Amount of fixed supply for this tech, exclusive of constraints
-        CREATE_SIMPLE_VARIABLE( mFixedOutput, double, "fixedOutput" ),
+        DEFINE_VARIABLE( SIMPLE, "fixedOutput", mFixedOutput, double ),
 
         //! Alpha-zero coefficient for the current period. This is calculated by the
         //! mTechChangeCalc if one exists, otherwise it is set to 1. It is constant
         //! throughout a period.
-        CREATE_SIMPLE_VARIABLE( mAlphaZero, double, "alpha-zero" ),
+        DEFINE_VARIABLE( SIMPLE, "alpha-zero", mAlphaZero, double ),
 
         //! period year or vintage
-        CREATE_SIMPLE_VARIABLE( mYear, int, "year" ),
+        DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),
 
         //! Number of years for which the vintage exists.
-        CREATE_SIMPLE_VARIABLE( mLifetimeYears, int, "lifetime" )
+        DEFINE_VARIABLE( SIMPLE, "lifetime", mLifetimeYears, int )
     )
 
     //! The technology's information store.

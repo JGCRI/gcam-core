@@ -83,16 +83,16 @@ protected:
         SubResource,
 
         //! The maximum achievable resource production at a price of infinity.
-        CREATE_SIMPLE_VARIABLE( mMaxSubResource, double, "maxSubResource" ),
+        DEFINE_VARIABLE( SIMPLE, "maxSubResource", mMaxSubResource, double ),
 
         //! elasticity on GDP growth that controls expansion of the max subresource.
-        CREATE_SIMPLE_VARIABLE( mGdpSupplyElasticity, double, "gdpSupplyElast" ),
+        DEFINE_VARIABLE( SIMPLE, "gdpSupplyElast", mGdpSupplyElasticity, double ),
 
         //! subresource variance now read in rather than computed
-        CREATE_SIMPLE_VARIABLE( mSubResourceVariance, double, "subResourceVariance" ),
+        DEFINE_VARIABLE( SIMPLE, "subResourceVariance", mSubResourceVariance, double ),
 
         //! read in average capacity factor for each subresource
-        CREATE_SIMPLE_VARIABLE( mSubResourceCapacityFactor, double, "subResourceCapacityFactor" )
+        DEFINE_VARIABLE( SIMPLE, "subResourceCapacityFactor", mSubResourceCapacityFactor, double )
     )
 
     virtual const std::string& getXMLName() const;

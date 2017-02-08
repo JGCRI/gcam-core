@@ -51,6 +51,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/iyeared.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
@@ -69,7 +70,7 @@ class PopulationSGMRate;
 *  populationMiniCAM derive from it. They all share a totalPopulation value and year.
 */
 
-class Population: public IRoundTrippable, IVisitable, private boost::noncopyable
+class Population: public IYeared, public IRoundTrippable, public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter; // For getXMLName()
 public:
@@ -103,19 +104,19 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Population, PopulationMiniCAM, PopulationSGMFixed, PopulationSGMRate ),
 
         //! year
-        CREATE_SIMPLE_VARIABLE( mYear, int, "year" ),
+        DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),
         
         //! total population for this year
-        CREATE_SIMPLE_VARIABLE( mTotalPop, double, "totalPop" ),
+        DEFINE_VARIABLE( SIMPLE, "totalPop", mTotalPop, double ),
         
         //! unit of population numbers
-        CREATE_SIMPLE_VARIABLE( mPopulationUnit, std::string, "population-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "population-unit", mPopulationUnit, std::string ),
         
         //! minimum working age.
-        CREATE_SIMPLE_VARIABLE( mWorkingAgeMin, int, "min-working-age" ),
+        DEFINE_VARIABLE( SIMPLE, "min-working-age", mWorkingAgeMin, int ),
         
         //! maximum working age.
-        CREATE_SIMPLE_VARIABLE( mWorkingAgeMax, int, "max-working-age" )
+        DEFINE_VARIABLE( SIMPLE, "max-working-age", mWorkingAgeMax, int )
     )
 
     virtual const std::string& getXMLName() const = 0;

@@ -88,7 +88,7 @@ protected:
         ICalData,
 
         //! Calibrated output value.
-        CREATE_SIMPLE_VARIABLE( mCalOutputValue, double, "calOutputValue" )
+        DEFINE_VARIABLE( SIMPLE, "calOutputValue", mCalOutputValue, double )
     )
 };
 

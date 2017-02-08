@@ -49,6 +49,7 @@
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
@@ -58,7 +59,7 @@
 * \brief Class which defines a portfolio standard policy. 
 * \author Sonny Kim
 */
-class PolicyPortfolioStandard: public IRoundTrippable, private boost::noncopyable {
+class PolicyPortfolioStandard: public INamed, public IRoundTrippable, private boost::noncopyable {
 public:
     PolicyPortfolioStandard();
 
@@ -76,27 +77,28 @@ protected:
         DEFINE_SUBCLASS_FAMILY( PolicyPortfolioStandard ),
         
         //! Policy name
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Name of the market
-        CREATE_SIMPLE_VARIABLE( mMarket, std::string, "market" ),
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
         
         //! Type of policy (tax or subsidy)
-        CREATE_SIMPLE_VARIABLE( mPolicyType, std::string, "policyType" ),
+        DEFINE_VARIABLE( SIMPLE, "policyType", mPolicyType, std::string ),
         
         //! Boolean to use share of total or quantity constraint
-        CREATE_SIMPLE_VARIABLE( mIsShareBased, bool, "isShareBased" ),
+        DEFINE_VARIABLE( SIMPLE, "isShareBased", mIsShareBased, bool ),
         
         //! Quantity constraint by year
-        CREATE_ARRAY_VARIABLE( mConstraint, objects::PeriodVector<double>, "constraint" ),
+        DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<double> ),
         
         //! Fixed tax on Fuel by year($/GJ)
-        CREATE_ARRAY_VARIABLE( mFixedTax, objects::PeriodVector<double>, "fixedTax" ),
+        DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<double> ),
         
         //! Share of total or sectoral output
-        CREATE_ARRAY_VARIABLE( mShareOfSectorOutput, objects::PeriodVector<double>, "share-of-sector-output" ),
+        DEFINE_VARIABLE( ARRAY, "share-of-sector-output", mShareOfSectorOutput, objects::PeriodVector<double> ),
+        
         //! The minimum price below which the constraint is considered non-binding.
-        CREATE_ARRAY_VARIABLE( mMinPrice, objects::PeriodVector<double>, "min-price" )
+        DEFINE_VARIABLE( ARRAY, "min-price", mMinPrice, objects::PeriodVector<double> )
     )
 };
 

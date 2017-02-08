@@ -100,7 +100,7 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         Curve,
 
-        CREATE_CONTAINER_VARIABLE( pointSet, PointSet*, NoFilter, "point-set" )
+        DEFINE_VARIABLE( CONTAINER, "point-set", pointSet, PointSet* )
     )
     
     static double linearInterpolateY( const double xVal, const double x1, const double y1, const double x2, const double y2 );

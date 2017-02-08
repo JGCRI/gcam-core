@@ -114,14 +114,14 @@ protected:
         IShutdownDecider,
 
         //! The name of this shutdown decider in case we want to stack multiple.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! The steepness of the curve. This rate may be zero
         //! which is the equivalent to not reading in the s-curve shutdown decider.
-        CREATE_SIMPLE_VARIABLE( mSteepness, double, "steepness" ),
+        DEFINE_VARIABLE( SIMPLE, "steepness", mSteepness, double ),
         
         //! Half life in terms of years after which 50% shutdown is achieved.
-        CREATE_SIMPLE_VARIABLE( mHalfLife, double, "half-life" )
+        DEFINE_VARIABLE( SIMPLE, "half-life", mHalfLife, double )
     )
 
     S_CurveShutdownDecider();

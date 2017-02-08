@@ -169,25 +169,25 @@ protected:
         
         //! Cost of the non-energy input adjusted for the additional costs of the
         //! capture component.
-        CREATE_ARRAY_VARIABLE( mAdjustedCosts, objects::PeriodVector<Value>, "adjusted-cost" ),
+        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::PeriodVector<Value> ),
         
         //! Coefficient for production or demand function. Coefficients are not
         // read in and are initialized to 1, but can increase over time with
         // technical change.
-        CREATE_ARRAY_VARIABLE( mAdjustedCoefficients, objects::PeriodVector<Value>, "adjusted-coef" ),
+        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::PeriodVector<Value> ),
         
         //! Input specific technical change.
-        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "tech-change" ),
+        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
         
         //! Variable O&M cost.
-        CREATE_SIMPLE_VARIABLE( mOMFixed, Value, "OM-fixed" ),
+        DEFINE_VARIABLE( SIMPLE, "OM-fixed", mOMFixed, Value ),
         
         //! Calculated value for the levelized cost of capital.
-        CREATE_SIMPLE_VARIABLE( mLevelizedOMFixedCost, Value, "levelized-OM-fixed" ),
+        DEFINE_VARIABLE( SIMPLE, "levelized-OM-fixed", mLevelizedOMFixedCost, Value ),
         
         //! Technology capacity factor.
         // TODO: create one in technology and use that instead.
-        CREATE_SIMPLE_VARIABLE( mCapacityFactor, double, "capacity-factor" )
+        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double )
     )
     
     void copy( const InputOMFixed& aOther );

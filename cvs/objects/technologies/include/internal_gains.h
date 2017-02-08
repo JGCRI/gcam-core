@@ -178,17 +178,17 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, objects::PeriodVector<Value>, "physical-output" ),
+        DEFINE_VARIABLE( ARRAY, "physical-output", mPhysicalOutputs, objects::PeriodVector<Value> ),
 
         //! The name of the output
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Internal Gains trial market name.
-        CREATE_SIMPLE_VARIABLE( mTrialMarketName, std::string, "internal-gains-market-name" ),
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mTrialMarketName, std::string ),
 
         //! Ratio of the internal gains to primary output production such that
         //! primary output multiplied by the ratio is equal to internal gains.
-        CREATE_SIMPLE_VARIABLE( mOutputRatio, Value, "output-ratio" )
+        DEFINE_VARIABLE( SIMPLE, "output-ratio", mOutputRatio, Value )
     )
     
     //! State value necessary to use addToTrialDemand

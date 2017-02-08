@@ -125,28 +125,28 @@ protected:
         Region,
 
         /*! \brief GDP object. */
-        CREATE_CONTAINER_VARIABLE( mGDP, GDP*, NoFilter, "GDP" ),
+        DEFINE_VARIABLE( CONTAINER, "GDP", mGDP, GDP* ),
         
         /*! \brief Regional land allocator. */
-        CREATE_CONTAINER_VARIABLE( mLandAllocator, LandAllocator*, NoFilter, "land-allocator" ),
+        DEFINE_VARIABLE( CONTAINER, "land-allocator", mLandAllocator, LandAllocator* ),
         
         /*! \brief vector of pointers to demand sector objects */
-        CREATE_CONTAINER_VARIABLE( mFinalDemands, std::vector<AFinalDemand*>, NamedFilter, "final-demand" ),
+        DEFINE_VARIABLE( CONTAINER, "final-demand", mFinalDemands, std::vector<AFinalDemand*> ),
         
         /*! \brief GCAM consumers */
-        CREATE_CONTAINER_VARIABLE( mConsumers, std::vector<Consumer*>, NamedFilter, "consumer" ),
+        DEFINE_VARIABLE( CONTAINER, "consumer", mConsumers, std::vector<Consumer*> ),
         
         /*! \brief GDPs to calibrate to */
-        CREATE_ARRAY_VARIABLE( mCalibrationGDPs, objects::PeriodVector<double>, "calibrationGDPs" ),
+        DEFINE_VARIABLE( ARRAY, "calibrationGDPs", mCalibrationGDPs, objects::PeriodVector<double> ),
         
         /*! \brief GDP per capita to calibrate to */
-        CREATE_ARRAY_VARIABLE( mGDPcalPerCapita, objects::PeriodVector<double>, "GDPcalPerCapita" ),
+        DEFINE_VARIABLE( ARRAY, "GDPcalPerCapita", mGDPcalPerCapita, objects::PeriodVector<double> ),
         
         /*! \brief map of CO2 emissions coefficient for primary fuels only */
-        CREATE_SIMPLE_VARIABLE( mPrimaryFuelCO2Coef, std::map<std::string, double>, "PrimaryFuelCO2Coef" ),
+        DEFINE_VARIABLE( SIMPLE, "PrimaryFuelCO2Coef", mPrimaryFuelCO2Coef, std::map<std::string, double> ),
         
         /*! \brief Interest rate for the region. */
-        CREATE_SIMPLE_VARIABLE( mInterestRate, double, "interest-rate" )
+        DEFINE_VARIABLE( SIMPLE, "interest-rate", mInterestRate, double )
     )
     
     std::vector<Summary> summary; //!< summary values and totals for reporting

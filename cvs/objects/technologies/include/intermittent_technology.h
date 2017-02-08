@@ -133,46 +133,46 @@ protected:
         Technology,
 
         //! A calculator which determines the amount of backup per unit output.
-        CREATE_CONTAINER_VARIABLE( mBackupCalculator, IBackupCalculator*, NamedFilter, "backup-calculator" ),
+        DEFINE_VARIABLE( CONTAINER, "backup-calculator", mBackupCalculator, IBackupCalculator* ),
 
         //! Name of the electricity sector which this Technology will supply.
-        CREATE_SIMPLE_VARIABLE( mElectricSectorName, std::string, "electric-sector-name" ),
+        DEFINE_VARIABLE( SIMPLE, "electric-sector-name", mElectricSectorName, std::string ),
         
-        CREATE_SIMPLE_VARIABLE( mElectricSectorMarket, std::string, "electric-sector-market" ),
+        DEFINE_VARIABLE( SIMPLE, "electric-sector-market", mElectricSectorMarket, std::string ),
 
         //! Name of trial market associated with this Intermittent Technology.
-        CREATE_SIMPLE_VARIABLE( mTrialMarketName, std::string, "trial-market-name" ),
+        DEFINE_VARIABLE( SIMPLE, "trial-market-name", mTrialMarketName, std::string ),
 
         //! Name of trial market readin for this Intermittent Technology.
-        CREATE_SIMPLE_VARIABLE( mTrialMarketNameParsed, std::string, "trial-market-name-parsed" ),
+        DEFINE_VARIABLE( SIMPLE, "trial-market-name-parsed", mTrialMarketNameParsed, std::string ),
 
         //! Cached input containing the resource.
-        CREATE_SIMPLE_VARIABLE( mResourceInput, InputIterator, "resource-input-pointer" ),
+        DEFINE_VARIABLE( SIMPLE, "resource-input-pointer", mResourceInput, InputIterator ),
 
         //! Cached input containing the backup.
-        CREATE_SIMPLE_VARIABLE( mBackupInput, InputIterator, "backup-input-pointer" ),
+        DEFINE_VARIABLE( SIMPLE, "backup-input-pointer", mBackupInput, InputIterator ),
 
         //! Cached input containing the capital costs for backup.
-        CREATE_SIMPLE_VARIABLE( mBackupCapCostInput, InputIterator, "backup-cap-cost-input-pointer" ),
+        DEFINE_VARIABLE( SIMPLE, "backup-cap-cost-input-pointer", mBackupCapCostInput, InputIterator ),
 
         //! Cached input containing the technology costs.
-        CREATE_SIMPLE_VARIABLE( mTechCostInput, InputIterator, "tech-cost-input-pointer" ),
+        DEFINE_VARIABLE( SIMPLE, "tech-cost-input-pointer", mTechCostInput, InputIterator ),
 
         //! Backup capacity factor read in at the Sector level.
-        CREATE_SIMPLE_VARIABLE( mBackupCapacityFactor, Value, "backup-capacity-factor" ),
+        DEFINE_VARIABLE( SIMPLE, "backup-capacity-factor", mBackupCapacityFactor, Value ),
 
         //! Backup capital cost.
-        CREATE_SIMPLE_VARIABLE( mBackupCapitalCost, Value, "backup-capital-cost" ),
+        DEFINE_VARIABLE( SIMPLE, "backup-capital-cost", mBackupCapitalCost, Value ),
 
         //! Electric reserve cost read in at the Sector level.
-        CREATE_SIMPLE_VARIABLE( mElecReserveMargin, Value, "electricity-reserve-margin" ),
+        DEFINE_VARIABLE( SIMPLE, "electricity-reserve-margin", mElecReserveMargin, Value ),
 
         //! Average grid capacity factor read in at the Sector level.
         //todo dynamically calculate average grid capacity factor
-        CREATE_SIMPLE_VARIABLE( mAveGridCapacityFactor, Value, "average-grid-capacity-factor" ),
+        DEFINE_VARIABLE( SIMPLE, "average-grid-capacity-factor", mAveGridCapacityFactor, Value ),
 
         //! Trial market price updated with solution price.
-        CREATE_SIMPLE_VARIABLE( mTrialMarketPrice, Value, "trial-market-price" )
+        DEFINE_VARIABLE( SIMPLE, "trial-market-price", mTrialMarketPrice, Value )
     )
     
     //! Info object used to pass parameter information into backup calculators.

@@ -101,49 +101,49 @@ protected:
         Technology,
     
         //! name of secondary fertile material used for making nuclear fuel
-        CREATE_SIMPLE_VARIABLE( fertileFuelName, std::string, "fertileFuelName" ),
+        DEFINE_VARIABLE( SIMPLE, "fertileFuelName", fertileFuelName, std::string ),
 
         //! name of secondary fertile material used for breeding fissile material
-        CREATE_SIMPLE_VARIABLE( blanketFuelName, std::string, "blanketFuelName" ),
+        DEFINE_VARIABLE( SIMPLE, "blanketFuelName", blanketFuelName, std::string ),
 
         //! Unit Conversion factor, used to be fmult.
-        CREATE_SIMPLE_VARIABLE( mConversionFactor, double, "fMultiplier" ),
+        DEFINE_VARIABLE( SIMPLE, "fMultiplier", mConversionFactor, double ),
 
         //! Ratio of blanket to fuel materials (kgBlanket/kgFuel)
-        CREATE_SIMPLE_VARIABLE( blanketFuelRatio, double, "blanketFuelRatio" ),
+        DEFINE_VARIABLE( SIMPLE, "blanketFuelRatio", blanketFuelRatio, double ),
 
         //! designed burnup of fuel associated with nuclear plant (MWd/kgHM)
-        CREATE_SIMPLE_VARIABLE( burnup, double, "burnup" ),
+        DEFINE_VARIABLE( SIMPLE, "burnup", burnup, double ),
 
         //! uranium ore conversion cost ($/kgU)
-        CREATE_SIMPLE_VARIABLE( conversionCost, double, "conversionCost" ),
+        DEFINE_VARIABLE( SIMPLE, "conversionCost", conversionCost, double ),
 
         //! fissile material enrichment (%)
-        CREATE_SIMPLE_VARIABLE( enrichmentProd, double, "enrichmentProd" ),
+        DEFINE_VARIABLE( SIMPLE, "enrichmentProd", enrichmentProd, double ),
 
         //! feed material enrichment (%)
-        CREATE_SIMPLE_VARIABLE( enrichmentFeed, double, "enrichmentFeed" ),
+        DEFINE_VARIABLE( SIMPLE, "enrichmentFeed", enrichmentFeed, double ),
 
         //! tail enrichment (%)
-        CREATE_SIMPLE_VARIABLE( enrichmentTail, double, "enrichmentTail" ),
+        DEFINE_VARIABLE( SIMPLE, "enrichmentTail", enrichmentTail, double ),
 
         //! uranium enrichment cost ($/SWU)
-        CREATE_SIMPLE_VARIABLE( enrichmentCost, double, "enrichmentCost" ),
+        DEFINE_VARIABLE( SIMPLE, "enrichmentCost", enrichmentCost, double ),
 
         //! primary fuel fuel fabrication cost ($/kgHM)
-        CREATE_SIMPLE_VARIABLE( fabricationCost, double, "fabricationCost" ),
+        DEFINE_VARIABLE( SIMPLE, "fabricationCost", fabricationCost, double ),
 
         //! blanket material fabrication cost ($/kgHM)
-        CREATE_SIMPLE_VARIABLE( blanketFabCost, double, "blanketFabCost" ),
+        DEFINE_VARIABLE( SIMPLE, "blanketFabCost", blanketFabCost, double ),
 
         //! interim storage cost of spent fuel ($/kgHM)
-        CREATE_SIMPLE_VARIABLE( interimStorageCost, double, "interimStorageCost" ),
+        DEFINE_VARIABLE( SIMPLE, "interimStorageCost", interimStorageCost, double ),
 
         //! cost of permenant waste disposal ($/kgHM)
-        CREATE_SIMPLE_VARIABLE( geologicWasteDisposalCost, double, "geologicWasteDisposalCost" ),
+        DEFINE_VARIABLE( SIMPLE, "geologicWasteDisposalCost", geologicWasteDisposalCost, double ),
 
         //! reprocessing cost of spent fuel ($/kgHM)
-        CREATE_SIMPLE_VARIABLE( reprocessingCost, double, "reprocessingCost" )
+        DEFINE_VARIABLE( SIMPLE, "reprocessingCost", reprocessingCost, double )
     )
     
     //! State value for fertile fuel market necessary to use Marketplace::addToDemand

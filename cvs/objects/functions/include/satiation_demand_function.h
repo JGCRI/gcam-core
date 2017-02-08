@@ -129,27 +129,27 @@ protected:
 
         //! Calibrate the satiation level based on a multiplier increase of base
         //! year demand.  Note this value must be strictly greater than 1.
-        CREATE_SIMPLE_VARIABLE( mBaseYearSatiationMultiplier, Value, "satiation-base-year-increase" ),
+        DEFINE_VARIABLE( SIMPLE, "satiation-base-year-increase", mBaseYearSatiationMultiplier, Value ),
 
         //! The satiation level which may have been parsed directly by the user.
-        CREATE_SIMPLE_VARIABLE( mParsedSatiationLevel, Value, "parsed-satiation-level" ),
+        DEFINE_VARIABLE( SIMPLE, "parsed-satiation-level", mParsedSatiationLevel, Value ),
 
         //! The satiation level to use during calcDemand.  This could have been read
         //! in directly by the user or set as a percentage increase from the base year
         //! demand.
-        CREATE_SIMPLE_VARIABLE( mSatiationLevel, Value, "satiation-level" ),
+        DEFINE_VARIABLE( SIMPLE, "satiation-level", mSatiationLevel, Value ),
 
         //! Satiation impedance or midpoint demand driver.  Note that this value is
         //! calibrated via calibrateSatiationImpedance.
-        CREATE_SIMPLE_VARIABLE( mSatiationImpedance, Value, "satiation-impedance" ),
+        DEFINE_VARIABLE( SIMPLE, "satiation-impedance", mSatiationImpedance, Value ),
 
         //! Satiation adder, determines subsistence level.  This is the parsed value
         //! and will not change.
-        CREATE_SIMPLE_VARIABLE( mParsedSatiationAdder, Value, "parsed-satiation-adder" ),
+        DEFINE_VARIABLE( SIMPLE, "parsed-satiation-adder", mParsedSatiationAdder, Value ),
 
         //! Satiation adder, determines subsistence level.  This value may be adjusted
         //! from the parsed value during some calibration periods.
-        CREATE_SIMPLE_VARIABLE( mSatiationAdder, Value, "satiation-adder" )
+        DEFINE_VARIABLE( SIMPLE, "satiation-adder", mSatiationAdder, Value )
     )
     
     void copy( const SatiationDemandFunction& aOther );

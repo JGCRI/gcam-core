@@ -54,6 +54,7 @@ class ICaptureComponent;
 class IInfo;
 class ILandAllocator;
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
@@ -82,7 +83,7 @@ class GenericOutput;
 *          and quantity calculations.
 * \author Josh Lurz
 */
-class IOutput : public IVisitable, public IParsable, public IRoundTrippable, private boost::noncopyable {
+class IOutput : public INamed, public IRoundTrippable, private boost::noncopyable {
 public:
     /*! 
      * \brief Constructor.

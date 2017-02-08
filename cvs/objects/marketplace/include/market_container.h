@@ -50,6 +50,7 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "marketplace/include/imarket_type.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -65,7 +66,7 @@ namespace objects {
  *          Market.
  * \author Pralit Patel
  */
-class MarketContainer : private boost::noncopyable {
+class MarketContainer : public INamed, private boost::noncopyable {
 public:
     MarketContainer( const IMarketType::Type aMarketType, const std::string& aGoodName, const std::string& aRegionName );
     MarketContainer( MarketContainer* aMarketToLink, const std::string& aGoodName, const std::string& aRegionName );
@@ -112,22 +113,22 @@ protected:
 
         //! The period vector of the contained markets which has all of the actual
         //! market data such as prices, supplies, and demands.
-        CREATE_CONTAINER_VARIABLE( mMarkets, objects::PeriodVector<Market*>, YearFilter, "market-period" ),
+        DEFINE_VARIABLE( CONTAINER, "market-period", mMarkets, objects::PeriodVector<Market*> ),
                 
         //! The name of the market.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! The good the market represents
-        CREATE_SIMPLE_VARIABLE( mGood, std::string, "good" ),
+        DEFINE_VARIABLE( SIMPLE, "good", mGood, std::string ),
         
         //! The region of the market.
-        CREATE_SIMPLE_VARIABLE( mRegion, std::string, "region" ),
+        DEFINE_VARIABLE( SIMPLE, "region", mRegion, std::string ),
 
         //! serial number for putting markets into canonical order
-        CREATE_SIMPLE_VARIABLE( mSerialNumber, int, "serial-number" ),
+        DEFINE_VARIABLE( SIMPLE, "serial-number", mSerialNumber, int ),
         
         //! Vector of atoms of all regions contained within this market.
-        CREATE_ARRAY_VARIABLE( mContainedRegions, std::vector<const objects::Atom*>, "contained-regions" )
+        DEFINE_VARIABLE( ARRAY, "contained-regions", mContainedRegions, std::vector<const objects::Atom*> )
     )
     
     Market* createMarket( const IMarketType::Type aMarketType );

@@ -103,7 +103,7 @@ protected:
         IDiscreteChoice,
         
         //! The logit exponents by period.
-        CREATE_ARRAY_VARIABLE( mLogitExponent, objects::PeriodVector<double>, "logit-exponent" )
+        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> )
     )
 
     static double getMinCostThreshold();

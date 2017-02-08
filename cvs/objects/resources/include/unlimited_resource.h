@@ -124,13 +124,13 @@ protected:
         AResource,
                             
         //! Read in prices.
-        CREATE_ARRAY_VARIABLE( mFixedPrices, objects::PeriodVector<Value>, "price" ),
+        DEFINE_VARIABLE( ARRAY, "price", mFixedPrices, objects::PeriodVector<Value> ),
 
         //! Capacity factor.
-        CREATE_SIMPLE_VARIABLE( mCapacityFactor, Value, "capacity-factor" ),
+        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, Value ),
 
         //! Variance.
-        CREATE_SIMPLE_VARIABLE( mVariance, Value, "variance" )
+        DEFINE_VARIABLE( SIMPLE, "variance", mVariance, Value )
     )
 
     void setMarket( const std::string& aRegionName );

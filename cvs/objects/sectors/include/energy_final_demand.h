@@ -194,22 +194,22 @@ protected:
         AFinalDemand,
     
         //! Name of the final demand and the good it consumes.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Total end-use sector service after technical change is applied.
-        CREATE_ARRAY_VARIABLE( mServiceDemands, objects::PeriodVector<double>, "service" ),
+        DEFINE_VARIABLE( ARRAY, "service", mServiceDemands, objects::PeriodVector<double> ),
 
         //! Income elasticity 
-        CREATE_ARRAY_VARIABLE( mIncomeElasticity, objects::PeriodVector<Value>, "income-elasticity" ),
+        DEFINE_VARIABLE( ARRAY, "income-elasticity", mIncomeElasticity, objects::PeriodVector<Value> ),
 
         //! Price elasticity.
-        CREATE_ARRAY_VARIABLE( mPriceElasticity, objects::PeriodVector<Value>, "price-elasticity" ),
+        DEFINE_VARIABLE( ARRAY, "price-elasticity", mPriceElasticity, objects::PeriodVector<Value> ),
 
         //! Service demand without technical change applied.
-        CREATE_ARRAY_VARIABLE( mPreTechChangeServiceDemand, objects::PeriodVector<double>, "service-pre-tech-change" ),
+        DEFINE_VARIABLE( ARRAY, "service-pre-tech-change", mPreTechChangeServiceDemand, objects::PeriodVector<double> ),
 
         //! Per capita service for each period to which to calibrate.
-        CREATE_ARRAY_VARIABLE( mBaseService, objects::PeriodVector<Value>, "base-service" )
+        DEFINE_VARIABLE( ARRAY, "base-service", mBaseService, objects::PeriodVector<Value> )
     )
 
     //! Demand function used to calculate unscaled demand.

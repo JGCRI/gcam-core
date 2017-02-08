@@ -115,10 +115,10 @@ protected :
         SubRenewableResource,
         
         //! Multiplier price increase
-        CREATE_SIMPLE_VARIABLE( mPriceExponent, double, "price-exponent" ),
+        DEFINE_VARIABLE( SIMPLE, "price-exponent", mPriceExponent, double ),
         
         //! Mid-price for cost curve, assuming no technical change
-        CREATE_SIMPLE_VARIABLE( mMidPrice, double, "mid-price" )
+        DEFINE_VARIABLE( SIMPLE, "mid-price", mMidPrice, double )
     )
 
    //! The cost curve calculator

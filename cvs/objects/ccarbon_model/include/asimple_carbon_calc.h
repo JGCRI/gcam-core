@@ -112,26 +112,26 @@ protected:
 
         //! Stored above ground emissions which are necessary to clear the total emissions
         //! when recalculating a period.
-        CREATE_ARRAY_VARIABLE( mStoredEmissionsAbove, objects::PeriodVector<objects::YearVector<double>*>, "above-emissions-by-period" ),
+        DEFINE_VARIABLE( ARRAY, "above-emissions-by-period", mStoredEmissionsAbove, objects::PeriodVector<objects::YearVector<double>*> ),
         
         //! Stored above ground emissions which are necessary to clear the total emissions
         //! when recalculating a period.
-        CREATE_ARRAY_VARIABLE( mStoredEmissionsBelow, objects::PeriodVector<objects::YearVector<double>*>, "below-emissions-by-period" ),
+        DEFINE_VARIABLE( ARRAY, "below-emissions-by-period", mStoredEmissionsBelow, objects::PeriodVector<objects::YearVector<double>*> ),
         
         //! Total emissions by year.
-        CREATE_ARRAY_VARIABLE( mTotalEmissions, objects::YearVector<double>, "land-use-change-emissions" ),
+        DEFINE_VARIABLE( ARRAY, "land-use-change-emissions", mTotalEmissions, objects::YearVector<double> ),
         
         //! Above ground total emissions by year
-        CREATE_ARRAY_VARIABLE( mTotalEmissionsAbove, objects::YearVector<double>, "above-ground-land-use-change-emissions" ),
+        DEFINE_VARIABLE( ARRAY, "above-ground-land-use-change-emissions", mTotalEmissionsAbove, objects::YearVector<double> ),
         
         //! Below ground total emissions by year
-        CREATE_ARRAY_VARIABLE( mTotalEmissionsBelow, objects::YearVector<double>, "above-ground-land-use-change-emissions" ),
+        DEFINE_VARIABLE( ARRAY, "above-ground-land-use-change-emissions", mTotalEmissionsBelow, objects::YearVector<double> ),
         
         //! Above ground carbon stock
-        CREATE_ARRAY_VARIABLE( mCarbonStock, objects::YearVector<double>, "above-ground-carbon-stock" ),
+        DEFINE_VARIABLE( ARRAY, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<double> ),
         
         //! Time scale for soil carbon emissions
-        CREATE_SIMPLE_VARIABLE( mSoilTimeScale, int, "soil-time-scale" )
+        DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int )
     )
 
     //! Total land used by period as copied from the land leaf.

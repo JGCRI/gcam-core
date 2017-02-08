@@ -230,49 +230,49 @@ protected :
        IntermittentTechnology,
 
        //! Capital cost [2004 $/kW] based on rated capacity
-       CREATE_SIMPLE_VARIABLE( mCapitalCost, double, sXMLTagNames[ CAPITAL_COST_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ CAPITAL_COST_KEY ], mCapitalCost, double ),
 
        //! Connection cost
-       CREATE_SIMPLE_VARIABLE( mConnectCost, double, "connection-cost" ),
+       DEFINE_VARIABLE( SIMPLE, "connection-cost", mConnectCost, double ),
 
        //! Turbine cutout speed [m/s]
-       CREATE_SIMPLE_VARIABLE( mCutOutSpeed, double, sXMLTagNames[ CUTOUT_SPEED_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ CUTOUT_SPEED_KEY ], mCutOutSpeed, double ),
 
        //! fixed charge rate [unitless]
-       CREATE_SIMPLE_VARIABLE( mFCR, double, sXMLTagNames[ FCR_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ FCR_KEY ], mFCR, double ),
 
        //! Generation cost
-       CREATE_SIMPLE_VARIABLE( mGenerationCost, double, "generation-cost" ),
+       DEFINE_VARIABLE( SIMPLE, "generation-cost", mGenerationCost, double ),
 
        //! Grid connection cost [$/km/MW capacity] based on rated capacity
-       CREATE_SIMPLE_VARIABLE( mGridConnectionCost, double, sXMLTagNames[ GRID_CONNECTION_COST_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ GRID_CONNECTION_COST_KEY ], mGridConnectionCost, double ),
 
        //! [2004 $/kW/Yr] based on rated capacity
-       CREATE_SIMPLE_VARIABLE( mOM, double, sXMLTagNames[ OM_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ OM_KEY ], mOM, double ),
 
        //! Realized turbine output
-       CREATE_SIMPLE_VARIABLE( mRealizedTurbineOutput, double, "realized-turbine-output" ),
+       DEFINE_VARIABLE( SIMPLE, "realized-turbine-output", mRealizedTurbineOutput, double ),
 
        //! Turbine rotor diameter [m]
-       CREATE_SIMPLE_VARIABLE( mRotorDiameter, double, sXMLTagNames[ ROTOR_DIAMETER_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ ROTOR_DIAMETER_KEY ], mRotorDiameter, double ),
 
        //! Land per turbine [MW/km2]
-       CREATE_SIMPLE_VARIABLE( mTurbineDensity, double, sXMLTagNames[ TURBINE_DENSITY_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ TURBINE_DENSITY_KEY ], mTurbineDensity, double ),
 
        //! Percentage of loss from ideal operation [unitless]
-       CREATE_SIMPLE_VARIABLE( mTurbineDerating, double, sXMLTagNames[ TURBINE_DERATING_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ TURBINE_DERATING_KEY ], mTurbineDerating, double ),
 
        //! Turbine hub height [m]
-       CREATE_SIMPLE_VARIABLE( mTurbineHubHeight, double, sXMLTagNames[ TURBINE_HUB_HEIGHT_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ TURBINE_HUB_HEIGHT_KEY ], mTurbineHubHeight, double ),
 
        //! Turbine output rating [unitless]
-       CREATE_SIMPLE_VARIABLE( mTurbineRating, double, sXMLTagNames[ TURBINE_RATING_KEY ] ),
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ TURBINE_RATING_KEY ], mTurbineRating, double ),
 
        //! Wind capacity factor
-       CREATE_SIMPLE_VARIABLE( mWindCapacityFactor, double, "wind-capacity-factor" ),
+       DEFINE_VARIABLE( SIMPLE, "wind-capacity-factor", mWindCapacityFactor, double ),
 
        //! Percentage of loss from turbine to grid [unitless]
-       CREATE_SIMPLE_VARIABLE( mWindFarmLoss, double, sXMLTagNames[ WIND_FARM_LOSS_KEY ] )
+       DEFINE_VARIABLE( SIMPLE, sXMLTagNames[ WIND_FARM_LOSS_KEY ], mWindFarmLoss, double )
    )
     
    //! Wind Power Variance

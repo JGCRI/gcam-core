@@ -138,17 +138,17 @@ protected:
 
         //! Capacity limit which sets the fraction of total output at which the backup curve
         //! returns a value of 50% of the upper limit for backup (i.e.,50 of mFmax)
-        CREATE_SIMPLE_VARIABLE( mCapacityLimit, double, "capacity-limit" ),
+        DEFINE_VARIABLE( SIMPLE, "capacity-limit", mCapacityLimit, double ),
 
         //! Parameter for max rate of back up (e.g. specify 1 for 1-to-1 backup as max)
-        CREATE_SIMPLE_VARIABLE( mFmax, double, "fmax" ),
+        DEFINE_VARIABLE( SIMPLE, "fmax", mFmax, double ),
 
         //! Parameter for steepness of backup curve. Higher number means steeper ascent.
-        CREATE_SIMPLE_VARIABLE( mC, double, "c" ),
+        DEFINE_VARIABLE( SIMPLE, "c", mC, double ),
        
         //! Parameter for steepness of backup curve. Lower means steeper ascent. Ascent depends
         //! on the ratio of c/tau
-        CREATE_SIMPLE_VARIABLE( mTau, double, "tau" )
+        DEFINE_VARIABLE( SIMPLE, "tau", mTau, double )
     )
 };
 

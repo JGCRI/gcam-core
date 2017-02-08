@@ -106,11 +106,11 @@ protected:
         IInterpolationFunction,
 
         //! Parameter for the steepness of the s-curve. Higher number means steeper ascent.
-        CREATE_SIMPLE_VARIABLE( mSteepness, double, "steepness" ),
+        DEFINE_VARIABLE( SIMPLE, "steepness", mSteepness, double ),
 
         //! Parameter for at which x-value the curve will have exactly the median of
         //! the y-values from the left and right data points.
-        CREATE_SIMPLE_VARIABLE( mMedianXValue, double, "median-x-value" )
+        DEFINE_VARIABLE( SIMPLE, "median-x-value", mMedianXValue, double )
     )
 };
 

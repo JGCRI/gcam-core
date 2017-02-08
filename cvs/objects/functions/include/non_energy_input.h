@@ -166,18 +166,18 @@ protected:
 
         //! Cost of the non-energy input adjusted for the additional costs of the
         //! capture component.
-        CREATE_ARRAY_VARIABLE( mAdjustedCosts, objects::PeriodVector<Value>, "adjusted-cost" ),
+        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::PeriodVector<Value> ),
 
         //! Coefficient for production or demand function. Coefficients are not
         // read in and are initialized to 1, but can increase over time with
         // technical change.
-        CREATE_ARRAY_VARIABLE( mAdjustedCoefficients, objects::PeriodVector<Value>, "adjusted-coef" ),
+        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::PeriodVector<Value> ),
 
         //! Cost of the non-energy input.
-        CREATE_SIMPLE_VARIABLE( mCost, Value, "input-cost" ),
+        DEFINE_VARIABLE( SIMPLE, "input-cost", mCost, Value ),
 
         //! Input specific technical change.
-        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "tech-change" )
+        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value )
     )
     
     void copy( const NonEnergyInput& aOther );

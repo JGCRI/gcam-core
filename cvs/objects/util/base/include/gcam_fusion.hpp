@@ -51,6 +51,8 @@
 #include <boost/fusion/include/pair.hpp>
 
 #include "util/base/include/expand_data_vector.h"
+#include "util/base/include/inamed.h"
+#include "util/base/include/iyeared.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h"
@@ -165,115 +167,67 @@ private:
     const int mInt;
 };
 
-
 struct NoFilter {
-    using filter_value_type = int*;
     template<typename T>
     bool operator()( const T* aContainer ) {
         return false;
     }
-    filter_value_type getCurrValue() const {
-        return 0;
-    }
-    void reset() {
-    }
 };
 
 struct IndexFilter {
-    using filter_value_type = const int*;
-    IndexFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ), mCurrFilterValue( 0 ) {}
+    IndexFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ) {}
     ~IndexFilter() {
         delete mMatcher;
     }
     const AMatchesValue* mMatcher;
-    filter_value_type mCurrFilterValue;
-    bool operator()( const int aIndex ) {
-        if( mMatcher->matchesInt( aIndex ) ) {
-            mCurrFilterValue = &aIndex;
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    filter_value_type getCurrValue() const {
-        return mCurrFilterValue;
-    }
-    void reset() {
-        mCurrFilterValue = 0;
+    bool operator()( const int aIndex ) const {
+        return mMatcher->matchesInt( aIndex );
     }
 };
 
 struct NamedFilter {
-    using filter_value_type = const std::string*;
-    NamedFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ), mCurrFilterValue( 0 ) {}
+    NamedFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ) {}
     ~NamedFilter() {
         delete mMatcher;
     }
     const AMatchesValue* mMatcher;
-    filter_value_type mCurrFilterValue;
-    template<typename T>
-    bool operator()( const T* aContainer ) {
-        if( aContainer && mMatcher->matchesString( aContainer->getName() ) ) {
-            mCurrFilterValue = &aContainer->getName();
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    filter_value_type getCurrValue() const {
-        return mCurrFilterValue;
-    }
-    void reset() {
-        mCurrFilterValue = 0;
+    bool operator()( const INamed* aContainer ) const {
+        return aContainer && mMatcher->matchesString( aContainer->getName() );
     }
 };
 
 struct YearFilter {
-    using filter_value_type = const int*;
-    YearFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ), mCurrFilterValue( 0 ) {}
+    YearFilter( const AMatchesValue* aMatcher ):mMatcher( aMatcher ) {}
     ~YearFilter() {
         delete mMatcher;
     }
     const AMatchesValue* mMatcher;
-    int mCurrFilterValueCopy;
-    filter_value_type mCurrFilterValue;
-    template<typename T>
-    bool operator()( const T* aContainer ) {
-        if( aContainer && mMatcher->matchesInt( aContainer->getYear() ) ) {
-            // getYear will likely return an int by value which we can not store
-            // a reference to.  Instead we will copy the value into a member variable
-            // and reference that.
-            mCurrFilterValueCopy = aContainer->getYear();
-            mCurrFilterValue = &mCurrFilterValueCopy;
-            return true;
-        }
-        else {
-            return false;
-        }
+    bool operator()( const IYeared* aContainer ) const {
+        return aContainer && mMatcher->matchesInt( aContainer->getYear() );
     }
     // specialization where the year has been converted for us
-    bool operator()( const int* aYear ) {
-        if( mMatcher->matchesInt( *aYear ) ) {
-            mCurrFilterValue = aYear;
-            return true;
-        }
-        else {
-            return false;
-        }
+    bool operator()( const int aYear ) const {
+        return mMatcher->matchesInt( aYear );
     }
-    filter_value_type getCurrValue() const {
-        return mCurrFilterValue;
-    }
-    void reset() {
-        mCurrFilterValue = 0;
-    }
+};
+
+template<typename Container, typename Enable=void>
+struct GetFilterForContainer {
+    typedef NoFilter filter_type;
+};
+
+template<typename Container>
+struct GetFilterForContainer<Container, typename boost::enable_if<boost::is_base_of<INamed, Container> >::type> {
+    typedef NamedFilter filter_type;
+};
+
+template<typename Container>
+struct GetFilterForContainer<Container, typename boost::enable_if<boost::is_base_of<IYeared, Container> >::type> {
+    typedef YearFilter filter_type;
 };
 
 typedef boost::mpl::vector<NoFilter, IndexFilter, NamedFilter, YearFilter> FilterTypes;
 
-BOOST_MPL_HAS_XXX_TRAIT_DEF( filter_type );
 BOOST_MPL_HAS_XXX_TRAIT_DEF( key_type );
 BOOST_MPL_HAS_XXX_TRAIT_DEF( iterator );
 
@@ -281,9 +235,6 @@ struct FilterStep {
     using FilterPtrTypes = typename boost::mpl::transform<FilterTypes, boost::add_pointer<boost::mpl::_> >::type;
     using FilterMapType = typename boost::fusion::result_of::as_map<typename boost::fusion::result_of::as_vector<typename boost::mpl::transform_view<boost::mpl::zip_view< boost::mpl::vector<FilterTypes, FilterPtrTypes> >, boost::mpl::unpack_args<boost::fusion::pair<boost::mpl::_1, boost::mpl::_2> > > >::type>::type;
     FilterStep( const std::string& aDataName ):mDataName( aDataName ), mFilterMap(), mNoFilters( true ) {}
-    FilterStep( const std::string& aDataName, NoFilter* aFilter ):mDataName( aDataName ), mFilterMap(), mNoFilters( false ) {
-        boost::fusion::at_key<NoFilter>( mFilterMap ) = aFilter;
-    }
     FilterStep( const std::string& aDataName, IndexFilter* aFilter ):mDataName( aDataName ), mFilterMap(), mNoFilters( false ) {
         boost::fusion::at_key<IndexFilter>( mFilterMap ) = aFilter;
     }
@@ -304,13 +255,6 @@ struct FilterStep {
     bool isDescendantStep() const {
         return mDataName.empty() && mNoFilters;
     }
-    void reset() {
-        boost::fusion::for_each( mFilterMap, [] ( auto& aPair ) {
-            if( aPair.second ) {
-                aPair.second->reset();
-            }
-        } );
-    }
     template<typename DataType>
     bool matchesDataName( const DataType& aData ) {
         return mDataName.empty() || mDataName == aData.mDataName;
@@ -324,7 +268,7 @@ struct FilterStep {
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
         boost::mpl::and_<
-            boost::is_same<DataType, ContainerData<typename DataType::value_type, typename DataType::filter_type> >,
+            boost::integral_constant<bool, DataType::hasDataFlag( CONTAINER )>,
             boost::is_pointer<typename DataType::value_type>
         >,
     void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
@@ -333,14 +277,16 @@ struct FilterStep {
         // Note compiler error of the type Incomeplete type 'XYZ' named in nesed name specifier
         // here may indicate that the header file for that class was not included in
         // util/base/include/gcam_data_containers.h
-        ExpandDataVector<typename boost::remove_pointer<decltype( aData.mData )>::type::SubClassFamilyVector> getDataVector;
+        using ContainerType = typename boost::remove_pointer<typename DataType::value_type>::type;
+        ExpandDataVector<typename ContainerType::SubClassFamilyVector> getDataVector;
+        // Construct what the appropriate Filter type would be to identify this
+        // type of container such as by name or year.
+        using ContainerIDFilterType = typename GetFilterForContainer<ContainerType>::filter_type;
         if( mNoFilters ) {
             // No filters accept all containers
-            // use NULL as the current filter value as no filter is set
-            typename DataType::filter_type::filter_value_type nullFilterValue = 0;
             if( !aIsLastStep ) {
                 if( aData.mData ) {
-                    aHandler.pushFilterStep( aData.mData, nullFilterValue );
+                    aHandler.pushFilterStep( aData.mData );
                     aData.mData->doDataExpansion( getDataVector );
                     getDataVector.getFullDataVector( aHandler );
                     aHandler.popFilterStep( aData.mData );
@@ -350,13 +296,13 @@ struct FilterStep {
                 aHandler.processData( aData.mData );
             }
         }
-        else if( boost::fusion::at_key<typename DataType::filter_type>( mFilterMap ) ) {
+        else if( boost::fusion::at_key<ContainerIDFilterType>( mFilterMap ) ) {
             // Apply the filter that was set to determine if the container
             // matches and take a step on.
-            auto& filterPred = *boost::fusion::at_key<typename DataType::filter_type>( mFilterMap );
+            auto& filterPred = *boost::fusion::at_key<ContainerIDFilterType>( mFilterMap );
             if( filterPred( aData.mData ) ) {
                 if( !aIsLastStep ) {
-                    aHandler.pushFilterStep( aData.mData, filterPred.getCurrValue() );
+                    aHandler.pushFilterStep( aData.mData );
                     aData.mData->doDataExpansion( getDataVector );
                     getDataVector.getFullDataVector( aHandler );
                     aHandler.popFilterStep( aData.mData );
@@ -379,7 +325,7 @@ struct FilterStep {
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
         boost::mpl::and_<
-            boost::is_same<DataType, ContainerData<typename DataType::value_type, typename DataType::filter_type> >,
+            boost::integral_constant<bool, DataType::hasDataFlag( CONTAINER )>,
             boost::mpl::and_<has_iterator<typename DataType::value_type>, boost::mpl::not_<has_key_type<typename DataType::value_type> > >
         >,
     void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
@@ -387,15 +333,17 @@ struct FilterStep {
         // Note compiler error of the type Incomeplete type 'XYZ' named in nesed name specifier
         // here may indicate that the header file for that class was not included in
         // util/base/include/gcam_data_containers.h
-        ExpandDataVector<typename boost::remove_pointer<typename decltype( aData.mData )::value_type>::type::SubClassFamilyVector> getDataVector;
+        using ContainerType = typename boost::remove_pointer<typename DataType::value_type::value_type>::type;
+        ExpandDataVector<typename ContainerType::SubClassFamilyVector> getDataVector;
+        // Construct what the appropriate Filter type would be to identify this
+        // type of container such as by name or year.
+        using ContainerIDFilterType = typename GetFilterForContainer<ContainerType>::filter_type;
         if( mNoFilters ) {
             // No filters accept all element containers
-            // use NULL as the current filter value as no filter is set
-            typename DataType::filter_type::filter_value_type nullFilterValue = 0;
             for( auto container : aData.mData ) {
                 if( !aIsLastStep ) {
                     if( container ) {
-                        aHandler.pushFilterStep( container, nullFilterValue );
+                        aHandler.pushFilterStep( container );
                         container->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( container );
@@ -406,14 +354,14 @@ struct FilterStep {
                 }
             }
         }
-        else if( boost::fusion::at_key<typename DataType::filter_type>( mFilterMap ) ) {
+        else if( boost::fusion::at_key<ContainerIDFilterType>( mFilterMap ) ) {
             // Apply the filter that was set to determine which element containers to
             // accept and take a step on
-            auto& filterPred = *boost::fusion::at_key<typename DataType::filter_type>( mFilterMap );
+            auto& filterPred = *boost::fusion::at_key<ContainerIDFilterType>( mFilterMap );
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
                 if( filterPred( *iter ) ) {
                     if( !aIsLastStep ) {
-                        aHandler.pushFilterStep( *iter, filterPred.getCurrValue() );
+                        aHandler.pushFilterStep( *iter );
                         (*iter)->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( *iter );
@@ -431,7 +379,7 @@ struct FilterStep {
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
                 if( filterPred( iter - aData.mData.begin() ) ) {
                     if( !aIsLastStep ) {
-                        aHandler.pushFilterStep( *iter, filterPred.getCurrValue() );
+                        aHandler.pushFilterStep( *iter );
                         (*iter)->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( *iter );
@@ -451,7 +399,7 @@ struct FilterStep {
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
         boost::mpl::and_<
-            boost::is_same<DataType, ContainerData<typename DataType::value_type, typename DataType::filter_type> >,
+            boost::integral_constant<bool, DataType::hasDataFlag( CONTAINER )>,
             has_key_type<typename DataType::value_type>
         >,
     void>::type applyFilter( const DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
@@ -462,15 +410,17 @@ struct FilterStep {
         // Note compiler error of the type Incomeplete type 'XYZ' named in nesed name specifier
         // here may indicate that the header file for that class was not included in
         // util/base/include/gcam_data_containers.h
-        ExpandDataVector<typename boost::remove_pointer<typename decltype( aData.mData )::mapped_type>::type::SubClassFamilyVector> getDataVector;
+        using ContainerType = typename boost::remove_pointer<typename DataType::value_type::mapped_type>::type;
+        ExpandDataVector<typename ContainerType::SubClassFamilyVector> getDataVector;
+        // Construct what the appropriate Filter type would be to identify this
+        // type of container such as by name or year.
+        using ContainerIDFilterType = typename GetFilterForContainer<ContainerType>::filter_type;
         if( mNoFilters ) {
             // No filters accept all element containers
-            // use NULL as the current filter value as no filter is set
-            typename DataType::filter_type::filter_value_type nullFilterValue = 0;
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
                 if( !aIsLastStep ) {
                     if( (*iter).second ) {
-                        aHandler.pushFilterStep( (*iter).second, nullFilterValue );
+                        aHandler.pushFilterStep( (*iter).second );
                         (*iter).second->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( (*iter).second );
@@ -481,14 +431,14 @@ struct FilterStep {
                 }
             }
         }
-        else if( boost::fusion::at_key<typename DataType::filter_type>( mFilterMap ) ) {
+        else if( boost::fusion::at_key<ContainerIDFilterType>( mFilterMap ) ) {
             // Apply the filter that was set to determine which element containers to
             // accept and take a step on
-            auto& filterPred = *boost::fusion::at_key<typename DataType::filter_type>( mFilterMap );
+            auto& filterPred = *boost::fusion::at_key<ContainerIDFilterType>( mFilterMap );
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
                 if( filterPred( (*iter).second ) ) {
                     if( !aIsLastStep ) {
-                        aHandler.pushFilterStep( (*iter).second, filterPred.getCurrValue() );
+                        aHandler.pushFilterStep( (*iter).second );
                         (*iter).second->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( (*iter).second );
@@ -509,7 +459,7 @@ struct FilterStep {
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
                 if( filterPred( index ) ) {
                     if( !aIsLastStep ) {
-                        aHandler.pushFilterStep( (*iter).second, filterPred.getCurrValue() );
+                        aHandler.pushFilterStep( (*iter).second );
                         (*iter).second->doDataExpansion( getDataVector );
                         getDataVector.getFullDataVector( aHandler );
                         aHandler.popFilterStep( (*iter).second );
@@ -529,7 +479,9 @@ struct FilterStep {
 
     // Specializations for arrays of non-containers i.e. actual data
     template<typename DataType, typename DataVectorHandler>
-    typename boost::enable_if<boost::is_same<DataType, ArrayData<typename DataType::value_type> >, void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
+    typename boost::enable_if<
+        boost::integral_constant<bool, DataType::hasDataFlag( ARRAY )>,
+    void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
         //assert( matchesDataName( aData ) );
         if( !aIsLastStep ) {
             // error?
@@ -544,7 +496,7 @@ struct FilterStep {
             auto& filterPred = *boost::fusion::at_key<YearFilter>( mFilterMap );
             for( auto iter = aData.mData.begin(); iter != aData.mData.end(); ++iter ) {
                 const int year = GetIndexAsYear::convertIterToYear( aData.mData, iter );
-                if( filterPred( &year ) ) {
+                if( filterPred( year ) ) {
                     aHandler.processData( *iter );
                 }
             }
@@ -569,7 +521,9 @@ struct FilterStep {
     }
     // Specializations for non-containers i.e. actual data that is a single value
     template<typename DataType, typename DataVectorHandler>
-    typename boost::enable_if<boost::is_same<DataType, Data<typename DataType::value_type> >, void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
+    typename boost::enable_if<
+        boost::integral_constant<bool, DataType::hasDataFlag( SIMPLE )>,
+    void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
         //assert( matchesDataName( aData ) );
         if( !mNoFilters ) {
             // There was a filter set however a simple DataType can not be filtered
@@ -588,21 +542,11 @@ struct FilterStep {
 FilterStep* parseFilterStepStr( const std::string& aFilterStepStr );
 std::vector<FilterStep*> parseFilterString( const std::string& aFilterStr );
 
-BOOST_MPL_HAS_XXX_TRAIT_DEF( ProcessPushStep );
-BOOST_MPL_HAS_XXX_TRAIT_DEF( ProcessPopStep );
-BOOST_MPL_HAS_XXX_TRAIT_DEF( ProcessData );
-
-template<typename DataProcessor>
+template<typename DataProcessor, bool ProcessData=false, bool ProcessPushStep=false, bool ProcessPopStep=false>
 class GCAMFusion {
     public:
     GCAMFusion( DataProcessor& aDataProcessor, std::vector<FilterStep*> aFilterSteps ):mDataProcessor( aDataProcessor ), mFilterSteps( aFilterSteps), mCurrStep( 0 ) {}
     ~GCAMFusion() {
-        // TODO: decide who will own what memory.
-        /*
-        for( auto filterStep : mFilterSteps ) {
-            delete filterStep;
-        }
-         */
     }
     template<typename ContainerType>
     void startFilter( ContainerType* aContainer ) {
@@ -634,18 +578,19 @@ class GCAMFusion {
         } );
     }
 
-    template<typename DataType, typename IDType>
-    typename boost::enable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessPushStep<DataProcessor> >,
-    void>::type pushFilterStep( const DataType& aData, const IDType* aIDValue )  {
+    template<typename DataType>
+    typename boost::enable_if<
+        boost::mpl::and_<boost::is_same<DataType, DataType>, boost::integral_constant<bool, ProcessPushStep> >,
+    void>::type pushFilterStep( const DataType& aData )  {
         if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
             ++mCurrStep;
         }
         //std::cout << "Pushed step: " << mCurrStep << std::endl;
-        mDataProcessor.pushFilterStep( aData, aIDValue );
+        mDataProcessor.pushFilterStep( aData );
     }
-    template<typename DataType, typename IDType>
-    typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessPushStep<DataProcessor> >,
-    void>::type pushFilterStep( const DataType& aData, const IDType* aIDValue )  {
+    template<typename DataType>
+    typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, boost::integral_constant<bool, ProcessPushStep> >,
+    void>::type pushFilterStep( const DataType& aData )  {
         if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
             ++mCurrStep;
         }
@@ -653,7 +598,7 @@ class GCAMFusion {
     }
 
     template<typename DataType>
-    typename boost::enable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessPopStep<DataProcessor> >,
+    typename boost::enable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, boost::integral_constant<bool, ProcessPopStep> >,
     void>::type popFilterStep( const DataType& aData )  {
         if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
             --mCurrStep;
@@ -662,7 +607,7 @@ class GCAMFusion {
         mDataProcessor.popFilterStep( aData );
     }
     template<typename DataType>
-    typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessPopStep<DataProcessor> >,
+    typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, boost::integral_constant<bool, ProcessPopStep> >,
     void>::type popFilterStep( const DataType& aData )  {
         if( !mFilterSteps[ mCurrStep ]->isDescendantStep() ) {
             --mCurrStep;
@@ -671,13 +616,13 @@ class GCAMFusion {
     }
 
     template<typename DataType>
-    typename boost::enable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessData<DataProcessor> >,
+    typename boost::enable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, boost::integral_constant<bool, ProcessData> >,
     void>::type processData( DataType& aData )  {
         //std::cout << "Done! 1" << std::endl;
         mDataProcessor.processData( aData );
     }
     template<typename DataType>
-    typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, has_ProcessData<DataProcessor> >,
+    typename boost::disable_if<boost::mpl::and_<boost::is_same<DataType, DataType>, boost::integral_constant<bool, ProcessData> >,
     void>::type processData( DataType& aData )  {
         //std::cout << "Done! 2" << std::endl;
     }

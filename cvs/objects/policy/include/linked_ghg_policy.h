@@ -116,21 +116,21 @@ protected:
         GHGPolicy,
 
         //! The name of the policy to link to.
-        CREATE_SIMPLE_VARIABLE( mLinkedPolicyName, std::string, "linked-policy" ),
+        DEFINE_VARIABLE( SIMPLE, "linked-policy", mLinkedPolicyName, std::string ),
 
         //! A label for the price units of this market
-        CREATE_SIMPLE_VARIABLE( mPriceUnits, std::string, "price-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnits, std::string ),
 
         //! A label for the units of this market
-        CREATE_SIMPLE_VARIABLE( mOutputUnits, std::string, "output-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnits, std::string ),
         
         //! A price adjustment factor by period.  Could be useful for unit conversion or
         //! "turning off" price feedbacks from the linked market.
-        CREATE_ARRAY_VARIABLE( mPriceAdjust, objects::PeriodVector<Value>, "price-adjust" ),
+        DEFINE_VARIABLE( ARRAY, "price-adjust", mPriceAdjust, objects::PeriodVector<Value> ),
         
         //! A demand adjustment factor by period.  Could be useful for unit conversion (GWP) or
         //! "turning off" participation in the linked market.
-        CREATE_ARRAY_VARIABLE( mDemandAdjust, objects::PeriodVector<Value>, "demand-adjust" )
+        DEFINE_VARIABLE( ARRAY, "demand-adjust", mDemandAdjust, objects::PeriodVector<Value> )
     )
     
     void copy( const LinkedGHGPolicy& aOther );

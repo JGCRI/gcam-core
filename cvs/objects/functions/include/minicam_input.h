@@ -222,10 +222,10 @@ protected:
         IInput,
                             
         //! Name of the Input.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! A map of a keyword to its keyword group
-        CREATE_SIMPLE_VARIABLE( mKeywordMap, std::map<std::string, std::string>, "keyword" )
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> )
     )
     
     void copy( const MiniCAMInput& aOther );

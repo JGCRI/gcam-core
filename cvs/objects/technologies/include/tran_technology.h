@@ -108,7 +108,7 @@ protected:
         Technology,
 
         //! Vehicle load factor.
-        CREATE_SIMPLE_VARIABLE( mLoadFactor, double, "loadFactor" )
+        DEFINE_VARIABLE( SIMPLE, "loadFactor", mLoadFactor, double )
     )
     
     void copy( const TranTechnology& aOther );

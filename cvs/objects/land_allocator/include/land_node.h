@@ -189,37 +189,37 @@ protected:
         ALandAllocatorItem,
 
         //! Land allocated -- used for conceptual roots
-        CREATE_ARRAY_VARIABLE( mLandAllocation, objects::PeriodVector<double>, "landAllocation" ),
+        DEFINE_VARIABLE( ARRAY, "landAllocation", mLandAllocation, objects::PeriodVector<double> ),
             
         //! Logit exponent -- should be positive since we are sharing on profit
-        CREATE_ARRAY_VARIABLE( mLogitExponent, objects::PeriodVector<double>, "logit-exponent" ),
+        DEFINE_VARIABLE( ARRAY, "logit-exponent", mLogitExponent, objects::PeriodVector<double> ),
 
         //! Share Profit scaler for new technologies in this node
-        CREATE_ARRAY_VARIABLE( mNewTechProfitScaler, objects::PeriodVector<double>, "new-tech-profit-scaler" ),
+        DEFINE_VARIABLE( ARRAY, "new-tech-profit-scaler", mNewTechProfitScaler, objects::PeriodVector<double> ),
         
         //! Numerator that determines share for new technologies IF the right profit conditions hold
         //! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
         //! the profit of the new technology is equal to the profit of the dominant technology in 
         //! the base year, and all other profits stay the same.
-        CREATE_ARRAY_VARIABLE( mGhostShareNumerator, objects::PeriodVector<double>, "default-share" ),
+        DEFINE_VARIABLE( ARRAY, "default-share", mGhostShareNumerator, objects::PeriodVector<double> ),
         
         //! Double storing the average price of land in a region or subregion
-        CREATE_SIMPLE_VARIABLE( mUnManagedLandValue, double, "unManagedLandValue" ),
+        DEFINE_VARIABLE( SIMPLE, "unManagedLandValue", mUnManagedLandValue, double ),
 
         //! Boolean indicating that scalers in this node should be adjusted for new technologies
         // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
-        CREATE_SIMPLE_VARIABLE( mAdjustScalersForNewTech, bool, "adjustForNewTech" ),
+        DEFINE_VARIABLE( SIMPLE, "adjustForNewTech", mAdjustScalersForNewTech, bool ),
 
         //! List of the children of this land node located below it in the land
         //! allocation tree.
-        CREATE_CONTAINER_VARIABLE( mChildren, std::vector<ALandAllocatorItem*>, NamedFilter, "child-nodes" ),
+        DEFINE_VARIABLE( CONTAINER, "child-nodes", mChildren, std::vector<ALandAllocatorItem*> ),
 
         //! Container of historical land use.
-        CREATE_CONTAINER_VARIABLE( mLandUseHistory, LandUseHistory*, NoFilter, "land-use-history" ),
+        DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),
 
         //! (optional) A carbon calculation which can used when children maybe similar
         //! in terms of switching between them does not mean carbon is emitted per se.
-        CREATE_CONTAINER_VARIABLE( mCarbonCalc, NodeCarbonCalc*, NoFilter, "node-carbon-calc" )
+        DEFINE_VARIABLE( CONTAINER, "node-carbon-calc", mCarbonCalc, NodeCarbonCalc* )
     )
 };
 

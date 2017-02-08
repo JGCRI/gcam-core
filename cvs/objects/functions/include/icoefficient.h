@@ -49,6 +49,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -68,7 +69,8 @@ class Intensity;
  *          coefficient.
  * \author Josh Lurz
  */
-class ICoefficient : public ISimpleComponent,
+class ICoefficient : public INamed,
+                     public ISimpleComponent,
                      public IRoundTrippable,
                      private boost::noncopyable
 {

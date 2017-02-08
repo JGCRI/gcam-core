@@ -131,13 +131,13 @@ protected:
         AResource,
 
         //! Fixed resource quantity currently available.
-        CREATE_SIMPLE_VARIABLE( mFixedResource, Value, "fixed-resource" ),
+        DEFINE_VARIABLE( SIMPLE, "fixed-resource", mFixedResource, Value ),
 
         //! The rate at which the resource depletes.
-        CREATE_SIMPLE_VARIABLE( mDepletionRate, Value, "depletion-rate" ),
+        DEFINE_VARIABLE( SIMPLE, "depletion-rate", mDepletionRate, Value ),
 
         //! The initial price for this resource.
-        CREATE_SIMPLE_VARIABLE( mInitialPrice, Value, "price" )
+        DEFINE_VARIABLE( SIMPLE, "price", mInitialPrice, Value )
     )
 
     void setMarket( const std::string& aRegionName );

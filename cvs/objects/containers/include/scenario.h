@@ -122,27 +122,27 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Scenario ),
                 
         /*! \brief The Scenario name. */
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         /*! \brief The modeltime for the scenario. */
-        CREATE_SIMPLE_VARIABLE( mModeltime, const Modeltime*, "modeltime" ),
+        DEFINE_VARIABLE( SIMPLE, "modeltime", mModeltime, const Modeltime* ),
 
         /*! \brief The goods and services marketplace. */
-        CREATE_CONTAINER_VARIABLE( mMarketplace, Marketplace*, NoFilter, "marketplace" ),
+        DEFINE_VARIABLE( CONTAINER, "marketplace", mMarketplace, Marketplace* ),
                 
         /*! \brief The goods and services marketplace. */
-        CREATE_CONTAINER_VARIABLE( mWorld, World*, NoFilter, "world" ),
+        DEFINE_VARIABLE( CONTAINER, "world", mWorld, World* ),
                 
         /*! \brief A vector booleans, one per period, which denotes whether each period is valid. */
-        CREATE_SIMPLE_VARIABLE( mIsValidPeriod, std::vector<bool>, "is-valid-period" ),
+        DEFINE_VARIABLE( SIMPLE, "is-valid-period", mIsValidPeriod, std::vector<bool> ),
                 
         /*! \brief Unsolved periods. */
-        CREATE_ARRAY_VARIABLE( mUnsolvedPeriods, std::vector<int>, "unsolved-periods" ),
+        DEFINE_VARIABLE( ARRAY, "unsolved-periods", mUnsolvedPeriods, std::vector<int> ),
                 
         /*! \brief A pass through object used to parse SolutionInfo parameters
          *         until markets are created.
          */
-        CREATE_CONTAINER_VARIABLE( mSolutionInfoParamParser, SolutionInfoParamParser*, NoFilter, "solution-info-param-parser" )
+        DEFINE_VARIABLE( CONTAINER, "solution-info-param-parser", mSolutionInfoParamParser, SolutionInfoParamParser* )
     )
     
     //! Pointer to solution mechanisms by period.  Note we can't use a period vector

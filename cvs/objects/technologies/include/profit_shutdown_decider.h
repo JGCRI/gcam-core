@@ -122,16 +122,16 @@ protected:
         IShutdownDecider,
 
         //! The name of this shutdown decider in case we want to stack multiple.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Parameter for max rate of shutdown (e.g. 1 means entire vintage can be shutdown)
-        CREATE_SIMPLE_VARIABLE( mMaxShutdown, double, "max-shutdown" ),
+        DEFINE_VARIABLE( SIMPLE, "max-shutdown", mMaxShutdown, double ),
 
         //! Parameter for steepness of backup curve. Higher number means steeper ascent.
-        CREATE_SIMPLE_VARIABLE( mSteepness, double, "steepness" ),
+        DEFINE_VARIABLE( SIMPLE, "steepness", mSteepness, double ),
 
         //! Parameter for profitRate at which 50% of is shutdown.
-        CREATE_SIMPLE_VARIABLE( mMedianShutdownPoint, double, "median-shutdown-point" )
+        DEFINE_VARIABLE( SIMPLE, "median-shutdown-point", mMedianShutdownPoint, double )
     )
 };
 

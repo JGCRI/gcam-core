@@ -116,13 +116,13 @@ protected:
         ITechnicalChangeCalc,
                             
         //! Annual Hicks-Neutral technical change.
-        CREATE_SIMPLE_VARIABLE( mHicksNeutralTechChange, Value, "hicks-neutral" ),
+        DEFINE_VARIABLE( SIMPLE, "hicks-neutral", mHicksNeutralTechChange, Value ),
 
         //! Annual energy only technical change.
-        CREATE_SIMPLE_VARIABLE( mEnergyTechChange, Value, "energy-only" ),
+        DEFINE_VARIABLE( SIMPLE, "energy-only", mEnergyTechChange, Value ),
 
         //! Annual material only technical change.
-        CREATE_SIMPLE_VARIABLE( mMaterialTechChange, Value, "material-only" )
+        DEFINE_VARIABLE( SIMPLE, "material-only", mMaterialTechChange, Value )
     )
     
     void copy( const StandardTechnicalChangeCalc& aOther );

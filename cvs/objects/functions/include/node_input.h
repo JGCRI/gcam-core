@@ -313,51 +313,51 @@ protected:
         INestedInput,
                             
         //! Vector of child inputs
-        CREATE_CONTAINER_VARIABLE( mNestedInputs, std::vector<INestedInput*>, NamedFilter, "nodeInput" ),
+        DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputs, std::vector<INestedInput*> ),
         
         //! The name of this input
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
                                 
         //! Type of function used
-        CREATE_SIMPLE_VARIABLE( mProdDmdFnType, std::string, "prodDmdFnType" ),
+        DEFINE_VARIABLE( SIMPLE, "prodDmdFnType", mProdDmdFnType, std::string ),
 
         /*! 
          * Value used for initialization.  This is the same thing as the sum
          * of the children's currency demand
          */
-        CREATE_SIMPLE_VARIABLE( mNodeCurrencyDemand, Value, "demandCurrency" ),
+        DEFINE_VARIABLE( SIMPLE, "demandCurrency", mNodeCurrencyDemand, Value ),
                                 
         //! Sigma used to operate new capital
-        CREATE_SIMPLE_VARIABLE( mSigmaNewCapital, Value, "Sigma1" ),
+        DEFINE_VARIABLE( SIMPLE, "Sigma1", mSigmaNewCapital, Value ),
 
         //! Sigma used to operate old capital
-        CREATE_SIMPLE_VARIABLE( mSigmaOldCapital, Value, "Sigma2" ),
+        DEFINE_VARIABLE( SIMPLE, "Sigma2", mSigmaOldCapital, Value ),
 
         //! The current Sigma to use
-        CREATE_SIMPLE_VARIABLE( mCurrentSigma, Value, "current-Sigma" ),
+        DEFINE_VARIABLE( SIMPLE, "current-Sigma", mCurrentSigma, Value ),
 
         //! Alpha, for the root node this would be Alpha zero
-        CREATE_SIMPLE_VARIABLE( mAlphaCoef, Value, "coefficient" ),
+        DEFINE_VARIABLE( SIMPLE, "coefficient", mAlphaCoef, Value ),
 
         //! Price paid, for the root this would be price recieved
-        CREATE_SIMPLE_VARIABLE( mPricePaid, Value, "price-recieved" ),
+        DEFINE_VARIABLE( SIMPLE, "price-recieved", mPricePaid, Value ),
 
         //! Price paid in the base year, for the root this would be price recieved
-        CREATE_SIMPLE_VARIABLE( mBasePricePaid, Value, "base-price-paid" ),
+        DEFINE_VARIABLE( SIMPLE, "base-price-paid", mBasePricePaid, Value ),
 
         // TODO: these shouldn't really be in here, they are specific to the UtilityDemandFunction
         //! Alpha param
-        CREATE_SIMPLE_VARIABLE( mAlphaUtilityParam, Value, "alpha-utility-param" ),
+        DEFINE_VARIABLE( SIMPLE, "alpha-utility-param", mAlphaUtilityParam, Value ),
 
         //! Beta param
-        CREATE_SIMPLE_VARIABLE( mBetaUtilityParam, Value, "beta-utility-param" ),
+        DEFINE_VARIABLE( SIMPLE, "beta-utility-param", mBetaUtilityParam, Value ),
 
         /*! 
          * The technical change that would get applied to the node.  Note that it
          * only gets applied during the initial vintage of a technology and will
          * never get passed forward.
          */
-        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "technicalChange" )
+        DEFINE_VARIABLE( SIMPLE, "technicalChange", mTechChange, Value )
     )
     
     //! Pointer to function this class will use

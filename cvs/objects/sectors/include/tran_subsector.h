@@ -92,22 +92,22 @@ protected:
         Subsector,
 
         //! Speed of Mode in Miles/hour
-        CREATE_ARRAY_VARIABLE( mSpeed, objects::PeriodVector<Value>, "speed" ),
+        DEFINE_VARIABLE( ARRAY, "speed", mSpeed, objects::PeriodVector<Value> ),
 
         //! copy of population from demographics
-        CREATE_ARRAY_VARIABLE( mPopulation, objects::PeriodVector<double>, "population" ),
+        DEFINE_VARIABLE( ARRAY, "population", mPopulation, objects::PeriodVector<double> ),
 
         //! Population Density Elasticity of mode
-        CREATE_ARRAY_VARIABLE( mPopDenseElasticity, objects::PeriodVector<double>, "popDenseElasticity" ),
+        DEFINE_VARIABLE( ARRAY, "popDenseElasticity", mPopDenseElasticity, objects::PeriodVector<double> ),
 
         //! population density per land area
-        CREATE_SIMPLE_VARIABLE( mPopDensity, double, "popDensity" ),
+        DEFINE_VARIABLE( SIMPLE, "popDensity", mPopDensity, double ),
 
         //! Time value multiplier
-        CREATE_ARRAY_VARIABLE( mTimeValueMult, objects::PeriodVector<Value>, "time-value-multiplier" ),
+        DEFINE_VARIABLE( ARRAY, "time-value-multiplier", mTimeValueMult, objects::PeriodVector<Value> ),
 
         //! add value of time to price term
-        CREATE_SIMPLE_VARIABLE( mAddTimeValue, bool, "addTimeValue" )
+        DEFINE_VARIABLE( SIMPLE, "addTimeValue", mAddTimeValue, bool )
     )
     
     //! Save time value for debugging purposes.

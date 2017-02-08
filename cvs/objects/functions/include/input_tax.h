@@ -165,11 +165,11 @@ protected:
         MiniCAMInput,
         
         //! Physical Demand.
-        CREATE_ARRAY_VARIABLE( mPhysicalDemand, objects::PeriodVector<Value>, "physical-demand" ),
+        DEFINE_VARIABLE( ARRAY, "physical-demand", mPhysicalDemand, objects::PeriodVector<Value> ),
         
         //! Current coefficient after adjustments have been made by the technology's
         //! capture component.
-        CREATE_ARRAY_VARIABLE( mAdjustedCoefficients, objects::PeriodVector<Value>, "current-coef" )
+        DEFINE_VARIABLE( ARRAY, "current-coef", mAdjustedCoefficients, objects::PeriodVector<Value> )
     )
     
     //! State value necessary to use Marketpalce::addToDemand

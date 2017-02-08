@@ -177,36 +177,36 @@ protected:
         MiniCAMInput,
 
         //! Coefficient for production or demand function.
-        CREATE_CONTAINER_VARIABLE( mCoefficient, ICoefficient*, NoFilter, "coefficient" ),
+        DEFINE_VARIABLE( CONTAINER, "coefficient", mCoefficient, ICoefficient* ),
         
         //! Cached CO2 coefficient.
-        CREATE_SIMPLE_VARIABLE( mCO2Coefficient, Value, "co2-coef" ),
+        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCO2Coefficient, Value ),
 
         //! Read-in calibration value.
-        CREATE_SIMPLE_VARIABLE( mCalibrationInput, Value, "calibrated-value" ),
+        DEFINE_VARIABLE( SIMPLE, "calibrated-value", mCalibrationInput, Value ),
 
         //! Income elasticity.
-        CREATE_SIMPLE_VARIABLE( mIncomeElasticity, Value, "income-elasticity" ),
+        DEFINE_VARIABLE( SIMPLE, "income-elasticity", mIncomeElasticity, Value ),
         
         //! Input specific technical change.
-        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "tech-change" ),
+        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
 
         //! The market name from which to demand.  It will default to the region
         //! in which this input is contained.
-        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market-name" ),
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string ),
 
         //! Conversion factor to change the market price units to working units
-        CREATE_SIMPLE_VARIABLE( mPriceUnitConversionFactor, Value, "price-unit-conversion" ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit-conversion", mPriceUnitConversionFactor, Value ),
 
         //! Physical Demand.
-        CREATE_ARRAY_VARIABLE( mPhysicalDemand, objects::PeriodVector<Value>, "physical-demand" ),
+        DEFINE_VARIABLE( ARRAY, "physical-demand", mPhysicalDemand, objects::PeriodVector<Value> ),
 
         //! Carbon content of input by period.
-        CREATE_ARRAY_VARIABLE( mCarbonContent, objects::PeriodVector<Value>, "carbon-content" ),
+        DEFINE_VARIABLE( ARRAY, "carbon-content", mCarbonContent, objects::PeriodVector<Value> ),
 
         //! Current coefficient after adjustments have been made by the technology's
         //! capture component.
-        CREATE_ARRAY_VARIABLE( mAdjustedCoefficients, objects::PeriodVector<Value>, "current-coef" )
+        DEFINE_VARIABLE( ARRAY, "current-coef", mAdjustedCoefficients, objects::PeriodVector<Value> )
     )
     
     //! A pre-located market which has been cahced from the marketplace to get

@@ -158,32 +158,32 @@ protected:
         DEFINE_SUBCLASS_FAMILY( InterpolationRule ),
 
         //! The from-year that this rule applies.
-        CREATE_SIMPLE_VARIABLE( mFromYear, int, "from-year" ),
+        DEFINE_VARIABLE( SIMPLE, "from-year", mFromYear, int ),
 
         //! The optional from-value to use during interpolations
-        CREATE_SIMPLE_VARIABLE( mFromValue, Value, "from-value" ),
+        DEFINE_VARIABLE( SIMPLE, "from-value", mFromValue, Value ),
 
         //! The to-year that this rule applies.
-        CREATE_SIMPLE_VARIABLE( mToYear, int, "to-year" ),
+        DEFINE_VARIABLE( SIMPLE, "to-year", mToYear, int ),
 
         //! The optional to-value to use during interpolations
-        CREATE_SIMPLE_VARIABLE( mToValue, Value, "to-value" ),
+        DEFINE_VARIABLE( SIMPLE, "to-value", mToValue, Value ),
 
         //! The interpolation function that will be used to perform the
         //! interpolations
-        CREATE_CONTAINER_VARIABLE( mInterpolationFunction, IInterpolationFunction*, NoFilter, IInterpolationFunction::getXMLNameStatic() ),
+        DEFINE_VARIABLE( CONTAINER, IInterpolationFunction::getXMLNameStatic(), mInterpolationFunction, IInterpolationFunction* ),
 
         //! The policy this rule will use in the event that an existing
         //! value may get overwritten.
-        CREATE_SIMPLE_VARIABLE( mOverwritePolicy, OverwritePolicy, "overwrite-policy" ),
+        DEFINE_VARIABLE( SIMPLE, "overwrite-policy", mOverwritePolicy, OverwritePolicy ),
 
         //! A flag to indicate a warning should be produced when an
         //! existing value gets overwritten.
-        CREATE_SIMPLE_VARIABLE( mWarnWhenOverwritting, bool, "overwrite-warn" ),
+        DEFINE_VARIABLE( SIMPLE, "overwrite-warn", mWarnWhenOverwritting, bool ),
 
         //! The XML name for what this rule applies to.  Currently
         //! this is only here for toInputXML.
-        CREATE_SIMPLE_VARIABLE( mApplyTo, std::string, "apply-to" )
+        DEFINE_VARIABLE( SIMPLE, "apply-to", mApplyTo, std::string )
     )
 
     //! Flag to check if the interpolation function is fixed in which

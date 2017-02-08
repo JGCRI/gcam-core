@@ -87,10 +87,7 @@ FilterStep* parseFilterStepStr( const std::string& aFilterStepStr ) {
         }
         
         FilterStep* filterStep = 0;
-        if( filterOptions[ 0 ] == "NoFilter" ) {
-            filterStep = new FilterStep( dataName, new NoFilter() );
-        }
-        else if( filterOptions[ 0 ] == "IndexFilter" ) {
+        if( filterOptions[ 0 ] == "IndexFilter" ) {
             filterStep = new FilterStep( dataName, new IndexFilter( matcher ) );
         }
         else if( filterOptions[ 0 ] == "NamedFilter" ) {

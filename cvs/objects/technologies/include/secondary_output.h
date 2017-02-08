@@ -182,25 +182,25 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        CREATE_ARRAY_VARIABLE( mPhysicalOutputs, objects::PeriodVector<Value>, "physical-output" ),
+        DEFINE_VARIABLE( ARRAY, "physical-output", mPhysicalOutputs, objects::PeriodVector<Value> ),
 
         //! Name of the secondary output. Corresponds to a market for this good and
         //! a supply sector which supplies this good as its primary output.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! CO2 emissions coefficient cached from the marketplace.
-        CREATE_SIMPLE_VARIABLE( mCachedCO2Coef, Value, "co2-coef" ),
+        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value ),
 
         //! Ratio of the secondary output to primary output production such that
         //! primary output multiplied by the ratio is equal to secondary output.
-        CREATE_SIMPLE_VARIABLE( mOutputRatio, Value, "output-ratio" ),
+        DEFINE_VARIABLE( SIMPLE, "output-ratio", mOutputRatio, Value ),
 
         //! Multiplier to price of secondary good to allow unit changes.
-        CREATE_SIMPLE_VARIABLE( mPriceMult, double, "pMultiplier" ),
+        DEFINE_VARIABLE( SIMPLE, "pMultiplier", mPriceMult, double ),
         
         //! The market name in which this output is adjusting the value.  If empty
         //! the current region is assumed.
-        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market-name" )
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string )
     )
     
     void copy( const SecondaryOutput& aOther );

@@ -163,25 +163,25 @@ protected:
         ICaptureComponent,
 
         //! Sequestered quantity by period.
-        CREATE_ARRAY_VARIABLE( mSequesteredAmount, objects::PeriodVector<double>, "sequestered-amount" ),
+        DEFINE_VARIABLE( ARRAY, "sequestered-amount", mSequesteredAmount, objects::PeriodVector<double> ),
 
         //! Name of the storage market.
-        CREATE_SIMPLE_VARIABLE( mStorageMarket, std::string, "storage-market" ),
+        DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, std::string ),
 
         //! The name of the gas which will be sequestered.
-        CREATE_SIMPLE_VARIABLE( mTargetGas, std::string, "target-gas" ),
+        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),
 
         //! Fraction of carbon removed from fuel.
-        CREATE_SIMPLE_VARIABLE( mRemoveFraction, double, "remove-fraction" ),
+        DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double ),
         
         //! Storage cost associated with the remove fraction.
-        CREATE_SIMPLE_VARIABLE( mStorageCost, double, "storage-cost" ),
+        DEFINE_VARIABLE( SIMPLE, "storage-cost", mStorageCost, double ),
 
         //! Energy intensity penalty.
-        CREATE_SIMPLE_VARIABLE( mIntensityPenalty, double, "intensity-penalty" ),
+        DEFINE_VARIABLE( SIMPLE, "intensity-penalty", mIntensityPenalty, double ),
 
         //! Multiplicative non-energy cost penalty.
-        CREATE_SIMPLE_VARIABLE( mNonEnergyCostPenalty, double, "non-energy-penalty" )
+        DEFINE_VARIABLE( SIMPLE, "non-energy-penalty", mNonEnergyCostPenalty, double )
     )
     
     //! State value necessary to use Marketplace::addToDemand

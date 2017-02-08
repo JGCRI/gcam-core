@@ -94,7 +94,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Demographic ),
         
         //! Vector of Population objects by period.
-        CREATE_CONTAINER_VARIABLE( population, std::vector<Population*>, YearFilter, "population" )
+        DEFINE_VARIABLE( CONTAINER, "population", population, std::vector<Population*> )
     )
 private:
     void clear();

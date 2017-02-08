@@ -44,9 +44,9 @@ class Base : public AbstractBase {
     protected:
     DEFINE_DATA_WITH_PARENT(
         AbstractBase,
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
-        CREATE_SIMPLE_VARIABLE( mYear, int, "year" ),
-        CREATE_SIMPLE_VARIABLE( mCoef0, double, "coef-0" )
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),
+        DEFINE_VARIABLE( SIMPLE, "coef-0", mCoef0, double )
     )
 };
 
@@ -65,7 +65,7 @@ class D1 : public Base {
     protected:
     DEFINE_DATA_WITH_PARENT(
         Base,
-        CREATE_SIMPLE_VARIABLE( mCoef1, double, "coef-1" )
+        DEFINE_VARIABLE( SIMPLE, "coef-1", mCoef1, double )
     )
 };
 
@@ -84,7 +84,7 @@ class D2 : public D1 {
     protected:
     DEFINE_DATA_WITH_PARENT(
         D1,
-        CREATE_SIMPLE_VARIABLE( mCoef2, double, "coef-2" )
+        DEFINE_VARIABLE( SIMPLE, "coef-2", mCoef2, double )
     )
 };
 
@@ -127,7 +127,7 @@ class Container: private boost::noncopyable {
     protected:
     DEFINE_DATA(
         DEFINE_SUBCLASS_FAMILY( Container ),
-        CREATE_CONTAINER_VARIABLE( mCalculators, std::vector<AbstractBase*>, NamedFilter, "calculator" )
+        DEFINE_VARIABLE( CONTAINER, "calculator", mCalculators, std::vector<AbstractBase*> )
     )
 };
 

@@ -128,64 +128,64 @@ protected:
         IClimateModel,
 
         //! A map of the gases Magicc can report out.
-        CREATE_SIMPLE_VARIABLE( mOutputGasNameMap, std::map<std::string,int>, "output-gas-name-map" ),
+        DEFINE_VARIABLE( SIMPLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
         
         //! Emissions levels by gas and period from model
-        CREATE_ARRAY_VARIABLE( mModelEmissionsByGas, std::vector<std::vector<double> >, "model-emission-by-gas" ),
+        DEFINE_VARIABLE( ARRAY, "model-emission-by-gas", mModelEmissionsByGas, std::vector<std::vector<double> > ),
         
         //! Default emissions levels by gas and year from exogenous input file
-        CREATE_ARRAY_VARIABLE( mDefaultEmissionsByGas, std::vector<std::vector<double> >, "default-emissions-by-gas" ),
+        DEFINE_VARIABLE( ARRAY, "default-emissions-by-gas", mDefaultEmissionsByGas, std::vector<std::vector<double> > ),
         
         //! A vector of years for the default emissions
-        CREATE_ARRAY_VARIABLE( mDefaultEmissionsYears, std::vector<int>, "default-emission-years" ),
+        DEFINE_VARIABLE( ARRAY, "default-emission-years", mDefaultEmissionsYears, std::vector<int> ),
         
         //! LUC CO2 Emissions by year.
-        CREATE_ARRAY_VARIABLE( mLUCEmissionsByYear, std::vector<double>, "land-use-change-emissions" ),
+        DEFINE_VARIABLE( ARRAY, "land-use-change-emissions", mLUCEmissionsByYear, std::vector<double> ),
         
         //! Name of the scenario.
-        CREATE_SIMPLE_VARIABLE( mScenarioName, std::string, "scenario-name" ),
+        DEFINE_VARIABLE( SIMPLE, "scenario-name", mScenarioName, std::string ),
         
         //! Whether the climate model output is updated.
-        CREATE_SIMPLE_VARIABLE( mIsValid, bool, "is-valid" ),
+        DEFINE_VARIABLE( SIMPLE, "is-valid", mIsValid, bool ),
         
         //! Name of a GHG input file to use.
-        CREATE_SIMPLE_VARIABLE( mGHGInputFileName, std::string, "ghgInputFileName" ),
+        DEFINE_VARIABLE( SIMPLE, "ghgInputFileName", mGHGInputFileName, std::string ),
         
         //! Climate Sensitivity.
-        CREATE_SIMPLE_VARIABLE( mClimateSensitivity, double, "climateSensitivity" ),
+        DEFINE_VARIABLE( SIMPLE, "climateSensitivity", mClimateSensitivity, double ),
         
         //! Soil Feedback Factor (MAGICC Parameter btSoil)
-        CREATE_SIMPLE_VARIABLE( mSoilTempFeedback, double, "soilTempFeedback" ),
+        DEFINE_VARIABLE( SIMPLE, "soilTempFeedback", mSoilTempFeedback, double ),
         
         //! Humus Feedback Factor (MAGICC Parameter btHumus)
-        CREATE_SIMPLE_VARIABLE( mHumusTempFeedback, double, "humusTempFeedback" ),
+        DEFINE_VARIABLE( SIMPLE, "humusTempFeedback", mHumusTempFeedback, double ),
         
         //! GPP Feedback Factor (MAGICC Parameter btGPP)
-        CREATE_SIMPLE_VARIABLE( mGPPTempFeedback, double, "GPPTempFeedback" ),
+        DEFINE_VARIABLE( SIMPLE, "GPPTempFeedback", mGPPTempFeedback, double ),
         
         //! 1980s Ocean Uptake (MAGICC Parameter FUSER)
-        CREATE_SIMPLE_VARIABLE( mOceanCarbFlux80s, double, "oceanFlux80s" ),
+        DEFINE_VARIABLE( SIMPLE, "oceanFlux80s", mOceanCarbFlux80s, double ),
         
         //! 1980s net terrestrial Deforestation (MAGICC Parameter DUSER)
-        CREATE_SIMPLE_VARIABLE( mNetDeforestCarbFlux80s, double, "deforestFlux80s" ),
+        DEFINE_VARIABLE( SIMPLE, "deforestFlux80s", mNetDeforestCarbFlux80s, double ),
         
         //! 1990 Direct Sulfate Forcing (MAGICC Parameter S90Duser)
-        CREATE_SIMPLE_VARIABLE( mSO2Dir1990, double, "base-so2dir-forcing" ),
+        DEFINE_VARIABLE( SIMPLE, "base-so2dir-forcing", mSO2Dir1990, double ),
         
         //! 1990 Indirect Sulfate Forcing (MAGICC Parameter S90Iuser)
-        CREATE_SIMPLE_VARIABLE( mSO2Ind1990, double, "base-so2ind-forcing" ),
+        DEFINE_VARIABLE( SIMPLE, "base-so2ind-forcing", mSO2Ind1990, double ),
         
         //! Forcing per Tg BC Emissions
-        CREATE_SIMPLE_VARIABLE( mBCUnitForcing, double, "bc-unit-forcing" ),
+        DEFINE_VARIABLE( SIMPLE, "bc-unit-forcing", mBCUnitForcing, double ),
         
         //! Forcing per Tg OC Emissions
-        CREATE_SIMPLE_VARIABLE( mOCUnitForcing, double, "oc-unit-forcing" ),
+        DEFINE_VARIABLE( SIMPLE, "oc-unit-forcing", mOCUnitForcing, double ),
         
         //! Use read-in default emissions up until this year
-        CREATE_SIMPLE_VARIABLE( mLastHistoricalYear, int, "last-historical-year" ),
+        DEFINE_VARIABLE( SIMPLE, "last-historical-year", mLastHistoricalYear, int ),
         
         //! The year the carbon model should start running.
-        CREATE_SIMPLE_VARIABLE( mCarbonModelStartYear, int, "carbon-model-start-year" )
+        DEFINE_VARIABLE( SIMPLE, "carbon-model-start-year", mCarbonModelStartYear, int )
     )
     
     //! Number of historical data points read in.

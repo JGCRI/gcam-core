@@ -175,22 +175,22 @@ protected:
         ICaptureComponent,
 
         //! Sequestered quantity by period.
-        CREATE_ARRAY_VARIABLE( mSequesteredAmount, objects::PeriodVector<double>, "sequestered-amount" ),
+        DEFINE_VARIABLE( ARRAY, "sequestered-amount", mSequesteredAmount, objects::PeriodVector<double> ),
 
         //! Name of the storage market.
-        CREATE_SIMPLE_VARIABLE( mStorageMarket, std::string, "storage-market" ),
+        DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, std::string ),
 
         //! The name of the gas which will be sequestered.
-        CREATE_SIMPLE_VARIABLE( mTargetGas, std::string, "target-gas" ),
+        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),
 
          //! Fraction of carbon removed from the emissions stream.
-        CREATE_SIMPLE_VARIABLE( mRemoveFraction, double, "remove-fraction" ),
+        DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double ),
 
         //! The amount of energy required to capture one unit of the emitted gas.
-        CREATE_SIMPLE_VARIABLE( mCaptureEnergy, double, "capture-energy" ),
+        DEFINE_VARIABLE( SIMPLE, "capture-energy", mCaptureEnergy, double ),
 
         //! Non-energy cost penalty.
-        CREATE_SIMPLE_VARIABLE( mNonEnergyCostPenalty, double, "non-energy-penalty" )
+        DEFINE_VARIABLE( SIMPLE, "non-energy-penalty", mNonEnergyCostPenalty, double )
     )
 
     //! Stored emissions coefficient for the fuel.

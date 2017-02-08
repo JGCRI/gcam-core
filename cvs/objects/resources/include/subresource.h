@@ -48,6 +48,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -70,7 +71,7 @@ class SmoothRenewableSubresource;
 * \author Sonny Kim
 */
 
-class SubResource: public IVisitable, private boost::noncopyable
+class SubResource: public INamed, public IVisitable, private boost::noncopyable
 {
 	friend class XMLDBOutputter;
     friend class CalibrateResourceVisitor;
@@ -111,40 +112,40 @@ protected:
         DEFINE_SUBCLASS_FAMILY( SubResource, SubRenewableResource, SmoothRenewableSubresource ),
         
         //! SubResource name.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! total available resource
-        CREATE_ARRAY_VARIABLE( mAvailable, objects::PeriodVector<double>, "available" ),
+        DEFINE_VARIABLE( ARRAY, "available", mAvailable, objects::PeriodVector<double> ),
         
         //! annual production of SubResource
-        CREATE_ARRAY_VARIABLE( mAnnualProd, objects::PeriodVector<double>, "annualprod" ),
+        DEFINE_VARIABLE( ARRAY, "annualprod", mAnnualProd, objects::PeriodVector<double> ),
         
         //! cumulative production of SubResource
-        CREATE_ARRAY_VARIABLE( mCumulProd, objects::PeriodVector<double>, "cumulprod" ),
+        DEFINE_VARIABLE( ARRAY, "cumulprod", mCumulProd, objects::PeriodVector<double> ),
         
         //! Cumulative Technical Change for this subsector
-        CREATE_ARRAY_VARIABLE( mCumulativeTechChange, objects::PeriodVector<double>, "cumulative-tech-change" ),
+        DEFINE_VARIABLE( ARRAY, "cumulative-tech-change", mCumulativeTechChange, objects::PeriodVector<double> ),
         
         //! effective price (global price + price adder)
-        CREATE_ARRAY_VARIABLE( mEffectivePrice, objects::PeriodVector<double>, "effective-price" ),
+        DEFINE_VARIABLE( ARRAY, "effective-price", mEffectivePrice, objects::PeriodVector<double> ),
         
         //! calibrated production
-        CREATE_ARRAY_VARIABLE( mCalProduction, objects::PeriodVector<double>, "cal-production" ),
+        DEFINE_VARIABLE( ARRAY, "cal-production", mCalProduction, objects::PeriodVector<double> ),
         
         //! technical change
-        CREATE_ARRAY_VARIABLE( mTechChange, objects::PeriodVector<Value>, "techChange" ),
+        DEFINE_VARIABLE( ARRAY, "techChange", mTechChange, objects::PeriodVector<Value> ),
         
         //! Environmental costs
-        CREATE_ARRAY_VARIABLE( mEnvironCost, objects::PeriodVector<Value>, "environCost" ),
+        DEFINE_VARIABLE( ARRAY, "environCost", mEnvironCost, objects::PeriodVector<Value> ),
         
         //! Severance Tax (exogenous)
-        CREATE_ARRAY_VARIABLE( mSeveranceTax, objects::PeriodVector<Value>, "severanceTax" ),
+        DEFINE_VARIABLE( ARRAY, "severanceTax", mSeveranceTax, objects::PeriodVector<Value> ),
         
         //! price adder used for calibration purposes
-        CREATE_ARRAY_VARIABLE( mPriceAdder, objects::PeriodVector<Value>, "price-adder" ),
+        DEFINE_VARIABLE( ARRAY, "price-adder", mPriceAdder, objects::PeriodVector<Value> ),
     
         //! amount of SubResource for each grade
-        CREATE_CONTAINER_VARIABLE( mGrade, std::vector<Grade*>, NamedFilter, "grade" )
+        DEFINE_VARIABLE( CONTAINER, "grade", mGrade, std::vector<Grade*> )
     )
     
     //!< The subsector's information store.

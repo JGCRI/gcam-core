@@ -50,6 +50,7 @@
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
@@ -62,7 +63,7 @@ class LinkedGHGPolicy;
 * \brief Class which defines greenhouse gas mitigation policy. 
 * \author Sonny Kim
 */
-class GHGPolicy: public IRoundTrippable, private boost::noncopyable {
+class GHGPolicy: public INamed, public IRoundTrippable, private boost::noncopyable {
 public:
     GHGPolicy();
     GHGPolicy( const std::string aName,
@@ -89,16 +90,16 @@ protected:
         DEFINE_SUBCLASS_FAMILY( GHGPolicy, LinkedGHGPolicy ),
 
         //! GHG name
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
                 
         //! Name of the market
-        CREATE_SIMPLE_VARIABLE( mMarket, std::string, "market" ),
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
                     
         //! Emissions constraint by year(tgC or MTC)
-        CREATE_ARRAY_VARIABLE( mConstraint, objects::PeriodVector<double>, "constraint" ),
+        DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<double> ),
                     
         //! Fixed tax on Emissions by year($/TC)
-        CREATE_ARRAY_VARIABLE( mFixedTax, objects::PeriodVector<double>, "fixedTax" )
+        DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<double> )
     )
     
     void copy( const GHGPolicy& aOther );

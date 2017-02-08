@@ -109,11 +109,11 @@ protected:
         IShutdownDecider,
 
         //! The name of this shutdown decider in case we want to stack multiple.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! The annual rate at which to shutdown production. This rate may be zero
         //! which is the equivalent to not reading in the phased shutdown decider.
-        CREATE_SIMPLE_VARIABLE( mShutdownRate, double, "shutdown-rate" )
+        DEFINE_VARIABLE( SIMPLE, "shutdown-rate", mShutdownRate, double )
     )
 
     PhasedShutdownDecider();

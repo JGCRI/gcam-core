@@ -90,10 +90,10 @@ protected:
         AEmissionsControl,
         
         //! Boolean indicating whether reductions should occur at a zero carbon price
-        CREATE_SIMPLE_VARIABLE( mNoZeroCostReductions, bool, "no-zero-cost-reductions" ),
+        DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
         
         //! The underlying Curve (as read in)
-        CREATE_CONTAINER_VARIABLE( mMacCurve, PointSetCurve*, NoFilter, "mac-reduction" )
+        DEFINE_VARIABLE( CONTAINER, "mac-reduction", mMacCurve, PointSetCurve* )
     )
 
 private:

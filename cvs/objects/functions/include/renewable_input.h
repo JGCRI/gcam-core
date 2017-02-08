@@ -155,7 +155,7 @@ protected:
         MiniCAMInput,
 
         //! Physical Demand.
-        CREATE_ARRAY_VARIABLE( mPhysicalDemand, objects::PeriodVector<Value>, "physical-demand" )
+        DEFINE_VARIABLE( ARRAY, "physical-demand", mPhysicalDemand, objects::PeriodVector<Value> )
     )
     
     void copy( const RenewableInput& aOther );

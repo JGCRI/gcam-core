@@ -96,19 +96,19 @@ protected:
         AResource,
 
         //! subresource objects for each Resource
-        CREATE_CONTAINER_VARIABLE( mSubResource, std::vector<SubResource*>, NamedFilter, "subresource" ),
+        DEFINE_VARIABLE( CONTAINER, "subresource", mSubResource, std::vector<SubResource*> ),
 
         //! Resource price
-        CREATE_ARRAY_VARIABLE( mResourcePrice, objects::PeriodVector<double>, "price" ),
+        DEFINE_VARIABLE( ARRAY, "price", mResourcePrice, objects::PeriodVector<double> ),
 
         //! total Resource available
-        CREATE_ARRAY_VARIABLE( mAvailable, objects::PeriodVector<double>, "available" ),
+        DEFINE_VARIABLE( ARRAY, "available", mAvailable, objects::PeriodVector<double> ),
 
         //! annual production rate of Resource
-        CREATE_ARRAY_VARIABLE( mAnnualProd, objects::PeriodVector<double>, "annualprod" ),
+        DEFINE_VARIABLE( ARRAY, "annualprod", mAnnualProd, objects::PeriodVector<double> ),
 
         //! cumulative production of Resource
-        CREATE_ARRAY_VARIABLE( mCumulProd, objects::PeriodVector<double>, "cummprod" )
+        DEFINE_VARIABLE( ARRAY, "cummprod", mCumulProd, objects::PeriodVector<double> )
     )
     
     //! Pointer to the resource's information store.
@@ -183,10 +183,10 @@ protected:
         Resource,
 
         //! average resource variance computed from subresources
-        CREATE_ARRAY_VARIABLE( mResourceVariance, objects::PeriodVector<double>, "resourceVariance" ),
+        DEFINE_VARIABLE( ARRAY, "resourceVariance", mResourceVariance, objects::PeriodVector<double> ),
 
         //! average resource capacity factor computed from subresources
-        CREATE_ARRAY_VARIABLE( mResourceCapacityFactor, objects::PeriodVector<double>, "resourceCapacityFactor" )
+        DEFINE_VARIABLE( ARRAY, "resourceCapacityFactor", mResourceCapacityFactor, objects::PeriodVector<double> )
     )
 
     bool XMLDerivedClassParse( const std::string& nodename, const xercesc::DOMNode* node );

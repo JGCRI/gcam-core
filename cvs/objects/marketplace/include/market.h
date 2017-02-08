@@ -50,6 +50,7 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "marketplace/include/imarket_type.h"
+#include "util/base/include/iyeared.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -109,7 +110,7 @@ class LinkedMarket;
  * \author Sonny Kim
  */
 
-class Market: public IVisitable, private boost::noncopyable
+class Market: public IYeared, public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
     friend class PriceMarket;
@@ -191,47 +192,47 @@ protected:
                                 TrialValueMarket, PriceMarket, LinkedMarket ),
 
         //! Whether to solve the market given other constraints are satisfied.
-        CREATE_SIMPLE_VARIABLE( mSolveMarket, bool, "solved_Market_Flag" ),
+        DEFINE_VARIABLE( SIMPLE, "solved_Market_Flag", mSolveMarket, bool ),
         
         //! The market price.
-        CREATE_SIMPLE_VARIABLE( mPrice, double, "price" ),
+        DEFINE_VARIABLE( SIMPLE, "price", mPrice, double ),
         
         //! The stored market price.
-        CREATE_SIMPLE_VARIABLE( mStoredPrice, double, "storedPrice" ),
+        DEFINE_VARIABLE( SIMPLE, "storedPrice", mStoredPrice, double ),
         
         //! The original market price.
-        CREATE_SIMPLE_VARIABLE( mOriginal_price, double, "orginal_price" ),
+        DEFINE_VARIABLE( SIMPLE, "orginal_price", mOriginal_price, double ),
 
         //! Forecast price (used for setting solver initial guess)
-        CREATE_SIMPLE_VARIABLE( mForecastPrice, double, "forecast-price" ),
+        DEFINE_VARIABLE( SIMPLE, "forecast-price", mForecastPrice, double ),
 
         //! Forecast demand (used for rescaling in solver)
-        CREATE_SIMPLE_VARIABLE( mForecastDemand, double, "forecast-demand" ),
+        DEFINE_VARIABLE( SIMPLE, "forecast-demand", mForecastDemand, double ),
         
         //! The market demand.
 #if GCAM_PARALLEL_ENABLED
         // have to make this mutable because tbb::combinable::combine is not const
-        CREATE_SIMPLE_VARIABLE( mDemand, mutable tbb::combinable<double>, "demand" ),
+        DEFINE_VARIABLE( SIMPLE, "demand", mDemand, mutable tbb::combinable<double> ),
 #else
-        CREATE_SIMPLE_VARIABLE( mDemand, double, "demand" ),
+        DEFINE_VARIABLE( SIMPLE, "demand", mDemand, double ),
 #endif
         
         //! The stored demand.
-        CREATE_SIMPLE_VARIABLE( mStoredDemand, double, "storedDemand" ),
+        DEFINE_VARIABLE( SIMPLE, "storedDemand", mStoredDemand, double ),
         
         //! The market supply.
 #if GCAM_PARALLEL_ENABLED
         // have to make this mutable because tbb::combinable::combine is not const
-        CREATE_SIMPLE_VARIABLE( mSupply, mutable tbb::combinable<double>, "supply" ),
+        DEFINE_VARIABLE( SIMPLE, "supply", mSupply, mutable tbb::combinable<double> ),
 #else
-        CREATE_SIMPLE_VARIABLE( mSupply, double, "supply" ),
+        DEFINE_VARIABLE( SIMPLE, "supply", mSupply, double ),
 #endif
         
         //! The stored supply.
-        CREATE_SIMPLE_VARIABLE( mStoredSupply, double, "storedSupply" ),
+        DEFINE_VARIABLE( SIMPLE, "storedSupply", mStoredSupply, double ),
                 
         //! The year associated with this market.
-        CREATE_SIMPLE_VARIABLE( mYear, int, "year" )
+        DEFINE_VARIABLE( SIMPLE, "year", mYear, int )
     )
     
     //! Object containing information related to the market.

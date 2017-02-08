@@ -102,20 +102,20 @@ protected:
                             
         //! Actual above ground carbon content by year.  Note that these are for
         //! GCAM model years only since historical years have a seperate value.
-        CREATE_ARRAY_VARIABLE( mAboveGroundCarbon, objects::YearVector<double>, "actual-above-ground-carbon-density" ),
+        DEFINE_VARIABLE( ARRAY, "actual-above-ground-carbon-density", mAboveGroundCarbon, objects::YearVector<double> ),
         
         //! Actual below ground carbon content by year.  Note that these are for
         //! GCAM model years only since historical years have a seperate value.
-        CREATE_ARRAY_VARIABLE( mBelowGroundCarbon, objects::YearVector<double>, "actual-below-ground-carbon-density" ),
+        DEFINE_VARIABLE( ARRAY, "actual-below-ground-carbon-density", mBelowGroundCarbon, objects::YearVector<double> ),
         
         //! Average above ground carbon content (read in).
-        CREATE_SIMPLE_VARIABLE( mAvgAboveGroundCarbon, double, "above-ground-carbon-density" ),
+        DEFINE_VARIABLE( SIMPLE, "above-ground-carbon-density", mAvgAboveGroundCarbon, double ),
         
         //! Average below ground carbon content (read in).
-        CREATE_SIMPLE_VARIABLE( mAvgBelowGroundCarbon, double, "below-ground-carbon-density" ),
+        DEFINE_VARIABLE( SIMPLE, "below-ground-carbon-density", mAvgBelowGroundCarbon, double ),
         
         //! Age at maturity.  This is used to grow forests slowly.
-        CREATE_SIMPLE_VARIABLE( mMatureAge, int, "mature-age" )
+        DEFINE_VARIABLE( SIMPLE, "mature-age", mMatureAge, int )
     )
 };
 

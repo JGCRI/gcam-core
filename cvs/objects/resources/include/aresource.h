@@ -46,6 +46,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -69,7 +70,7 @@ class DepletingFixedResource;
 * \todo This class needs much more documentation.
 * \author Josh Lurz
 */
-class AResource: public IVisitable, private boost::noncopyable {
+class AResource: public INamed, public IVisitable, private boost::noncopyable {
     friend class XMLDBOutputter;
 public:
     virtual ~AResource();
@@ -119,25 +120,25 @@ protected:
                                 RenewableResource, UnlimitedResource, DepletingFixedResource ),
 
         //! Resource name.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Unit of resource output
-        CREATE_SIMPLE_VARIABLE( mOutputUnit, std::string, "output-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, std::string ),
 
         //! Unit of resource price
-        CREATE_SIMPLE_VARIABLE( mPriceUnit, std::string, "price-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, std::string ),
 
         //! Market name.
-        CREATE_SIMPLE_VARIABLE( mMarket, std::string, "market" ),
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
 
         //! A map of a keyword to its keyword group
-        CREATE_SIMPLE_VARIABLE( mKeywordMap, std::map<std::string, std::string>, "keyword" ),
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
 
         //! Vector of output objects representing the outputs of the technology.
-        CREATE_CONTAINER_VARIABLE( mOutputs, std::vector<IOutput*>, NamedFilter, "output" ),
+        DEFINE_VARIABLE( CONTAINER, "output", mOutputs, std::vector<IOutput*> ),
 
         //! Suite of greenhouse gases
-        CREATE_CONTAINER_VARIABLE( mGHG, std::vector<AGHG*>, NamedFilter, "ghg" )
+        DEFINE_VARIABLE( CONTAINER, "ghg", mGHG, std::vector<AGHG*> )
     )
 };
 

@@ -106,13 +106,13 @@ protected:
         AGHG,
 
         //! The emissions coefficient.
-        CREATE_SIMPLE_VARIABLE( mEmissionsCoef, Value, "emiss-coef" ),
+        DEFINE_VARIABLE( SIMPLE, "emiss-coef", mEmissionsCoef, Value ),
 
         //! Emissions to calibrate to if provided.
-        CREATE_SIMPLE_VARIABLE( mInputEmissions, Value, "input-emissions" ),
+        DEFINE_VARIABLE( SIMPLE, "input-emissions", mInputEmissions, Value ),
                                 
         //! Set of emissions controls
-        CREATE_CONTAINER_VARIABLE( mEmissionsControls, std::vector<AEmissionsControl*>, NamedFilter, "emissions-control" )
+        DEFINE_VARIABLE( CONTAINER, "emissions-control", mEmissionsControls, std::vector<AEmissionsControl*> )
     )
 
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef

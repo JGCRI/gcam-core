@@ -318,16 +318,16 @@ protected:
         INestedInput,
 
         //! The name of this input.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Building service demand by period.
-        CREATE_ARRAY_VARIABLE( mServiceDemand, objects::PeriodVector<Value>, "base-service" ),
+        DEFINE_VARIABLE( ARRAY, "base-service", mServiceDemand, objects::PeriodVector<Value> ),
 
         //! Energy service density for reporting.
-        CREATE_ARRAY_VARIABLE( mServiceDensity, objects::PeriodVector<Value>, "service-density" ),
+        DEFINE_VARIABLE( ARRAY, "service-density", mServiceDensity, objects::PeriodVector<Value> ),
 
         //! Satiation demand function.
-        CREATE_CONTAINER_VARIABLE( mSatiationDemandFunction, SatiationDemandFunction*, NoFilter, "satiation-demand-function" )
+        DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )
     )
     
     //! State value necessary to use Marketplace::addToDemand

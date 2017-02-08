@@ -87,10 +87,10 @@ protected:
         AEmissionsControl,
 
         //! Steepness -- this parameter dictates how quickly you approach the minimum factor
-        CREATE_SIMPLE_VARIABLE( mSteepness, Value, "steepness" ),
+        DEFINE_VARIABLE( SIMPLE, "steepness", mSteepness, Value ),
         
         //! Maximum reduction
-        CREATE_SIMPLE_VARIABLE( mMaxReduction, Value, "max-reduction" )
+        DEFINE_VARIABLE( SIMPLE, "max-reduction", mMaxReduction, Value )
     )
 
 private:

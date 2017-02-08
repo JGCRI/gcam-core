@@ -60,28 +60,64 @@
 #include <boost/preprocessor/control/iif.hpp>
 #include <boost/preprocessor/punctuation/is_begin_parens.hpp>
 
-/*
-#include <boost/static_assert.hpp>
-#include <boost/type_traits/is_copy_constructible.hpp>
-#include <boost/type_traits/is_copy_assignable.hpp>
-*/
 #include <type_traits>
 
 #include "util/base/include/expand_data_vector.h"
 
-struct NamedFilter;
-struct NoFilter;
-struct YearFilter;
+/*!
+ * \brief An enumeration of flags that could be useful as tags on the various Data
+ *        definitions.
+ * \details All Data definitions will have a flag of SIMPLE, ARRAY, or CONTAINER
+ *          however even more flags may be added to give even more context about
+ *          the definition such as SIMPLE | STATE which could then also be used to
+ *          for instance search by in GCAMFusion.
+ */
+enum DataFlags {
+    /*!
+     * \brief A flag to indicate this Data definition is a simple member variable.
+     * \details A SIMPLE data would be something such as an int or std::string.
+     *          Basically a kind of data that would not contain any further Data
+     *          definitions (of interest during introspection) and would not make
+     *          sense to be indexed into such as with ARRAY definitions.
+     */
+    SIMPLE = 1 << 0,
+    
+    /*!
+     * \brief A flag to indicate this Data definition is a simple array member variable.
+     * \details A ARRAY data would be something such as PeriodVector<double>.
+     *          Basically a kind of data that would not contain any further Data
+     *          definitions (of interest during introspection) however can be
+     *          indexed, for instance to only get the double in 10th position.
+     */
+    ARRAY = 1 << 1,
+    
+    /*!
+     * \brief A flag to indicate this Data definition which contains a GCAM class
+     *        that itself would have futher data definitions within it.
+     * \details A CONTAINER data would be something such as IDiscreteChoice* or
+     *          std::vector<Subsector*> where by the choice function and subsector
+     *          each have further Data member variables themselves.  As implied
+     *          earlier both "single containers" or "arrays of containers" can be
+     *          tagged with just this flag (i.e. no need to add the ARRAY flag too).
+     */
+    CONTAINER = 1 << 2
+    
+    // potentially more flags here such as to tag "state" or "non-parsable" Data
+};
 
 /*!
  * \brief Basic structure for holding data members for GCAM classes.
  * \details The idea behind this structure is that every data member
- *          has three important properties: the data itself, a name
- *          used to refer to it (e.g., in XML inputs), and a type.
- *          This structure makes all three of those available for
- *          inspection by other objects and functions.
+ *          has two important properties: the data itself and a name
+ *          used to refer to it (e.g., in XML inputs).  In addition
+ *          there may be some additional compile time meta data that
+ *          would be useful to generate code or search by in GCAM
+ *          Fusion such as the data type or some combination from the
+ *          enumeration DataFlags.
+ *          This structure makes all of those available for inspection
+ *          by other objects and functions.
  */
-template<typename T>
+template<typename T, int DataFlagsDefinition>
 struct Data {
     Data( const char* aDataName ):mDataName( aDataName ) {}
     Data( const std::string& aDataName ):mDataName( aDataName ) {}
@@ -90,29 +126,40 @@ struct Data {
      *           themselves.
      */
     virtual ~Data() { }
-
-    /*! \brief Type for this data item */
-    typedef T value_type;
-    /*! \brief The human readable name for this data. */
+    
+    /*!
+     * \brief The human readable name for this data. 
+     */
     const std::string mDataName;
 
-    /*! \brief The actual data stored. */
+    /*!
+     * \brief The actual data stored.
+     */
     T mData;
-};
-
-template<typename T, typename Filter>
-struct ContainerData : public Data<T> {
-    ContainerData( const char* aDataName ):Data<T>( aDataName ) {}
-    ContainerData( const std::string& aDataName ):Data<T>( aDataName ) {}
-    virtual ~ContainerData() { }
-    typedef Filter filter_type;
-};
-
-template<typename T>
-struct ArrayData : public Data<T> {
-    ArrayData( const char* aDataName ):Data<T>( aDataName ) {}
-    ArrayData( const std::string& aDataName ):Data<T>( aDataName ) {}
-    virtual ~ArrayData() { }
+    
+    /*!
+     * \brief Type for this data item
+     */
+    typedef T value_type;
+    
+    /*!
+     * \brief A constexpr (compile time) function that checks if a given aDataFlag
+     *        matches any of the flags set set in DataFlagsDefinition.
+     * \param aDataFlag A Flag that may be some combination of the flags declared
+     *                  in the enumeration DataFlags.
+     * \return True if aTypeFlag was set in the data definition flags used to
+     *         define this data structure.
+     */
+    static constexpr bool hasDataFlag( const int aDataFlag ) {
+        return ( ( aDataFlag & ~DataFlagsDefinition ) == 0 );
+    }
+    
+    /*!
+     * \pre All Data definitions must at the very least be tagged as SIMPLE,
+     *      ARRAY, or CONTAINER.
+     */
+    static_assert( hasDataFlag( SIMPLE ) || hasDataFlag( ARRAY ) || hasDataFlag( CONTAINER ),
+                   "Invalid Data definition: failed to declare the kind of data." );
 };
 
 //! The name to call the variable which will hold all Data structs in a vector.
@@ -136,78 +183,36 @@ struct ArrayData : public Data<T> {
     }
 
 /*!
- * \brief A Macro to define a Data struct for simple data such as an int.
- 
- * \details This macro produces a declaration for a struct Data (see
- *          above).  The arguments to the macro are the name of the
- *          member (i.e., the token that will be used to refer to it
- *          in the class's methods) the type, and the string that
- *          gives the human-readable name (i.e., what will be used to
- *          refer to the data outside of the class, for example in XML
- *          input files).  For example, the declaration:
- *
+ * \brief This Macro is how GCAM member variables definitions that should be
+ *        available for introspection should be made.
+ * \details Note that while this is how all Data definitions should be generated
+ *          the result of this Macro will not make sense unless called from within
+ *          DEFINE_DATA_INTERNAL (through it proxy Macro calls DEFINE_DATA or
+ *          DEFINE_DATA_WITH_PARENT).  The purpose of this Macro then is simply to
+ *          collect all of the required pieces of a Data definition, reorganize them,
+ *          and put them into a sequence of tokens so that then can be safely processed
+ *          and stiched together in DEFINE_DATA_INTERNAL.  Thus a call such as
  *          ```
- *          DEFINE_SIMPLE_VARIABLE( int, "year" )
- *          ```
- *          will expand to
- *          ```
- *          Data< int >
- *          ```
- *          The variable name is thrown away.  The reason that the
- *          variable name is included at all is that the type name
- *          could have commas in it, which will make it look to the
- *          macro like a sequence of arguments.  This macro does the
- *          work of separating the name from the type and uses the
- *          latter to generate the declaration.
- *
- * \warning We need to be careful about commas being in the type definition (such
- *          as with map definitions).  We therfore assume the last argument is the
- *          data name and the rest is the type definition.  We also avoid adding commas
- *          now and instead just keep it as a SEQ.
- * \param ...[0:n-1] The type definition.
- * \param ...[n:n] The human readable name.
- * \param The Data definition as a sequence of tokens.
- */
-#define DEFINE_SIMPLE_DATA_STRUCT( aTypeAndName... ) \
-    BOOST_PP_VARIADIC_TO_SEQ( Data< BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( aTypeAndName ) ) ) > )
-
-#define DEFINE_CONTAINER_DATA_STRUCT( aTypeAndName... ) \
-    BOOST_PP_VARIADIC_TO_SEQ( ContainerData< BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( aTypeAndName ) ) ) > )
-
-#define DEFINE_ARRAY_DATA_STRUCT( aTypeAndName... ) \
-    BOOST_PP_VARIADIC_TO_SEQ( ArrayData< BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_POP_BACK( BOOST_PP_VARIADIC_TO_SEQ( aTypeAndName ) ) ) > )
-
-/*!
- * \brief Gathers the definiiton for a piece of data to be collected as a sequence
- *        of tokens to be stiched together into a vector of definitions.
- 
- * \details This macro takes a sequence of (variable-name, type, human-name) and
- *          transforms the type in the sequence to a Data struct.  Thus:
- *          ```
- *          CREATE_SIMPLE_VARIABLE( mYear, int, "year")
+ *          DEFINE_VARIABLE( CONTAINER, "period", mVintages, std::map<int, ITechnology*> )
  *          ```
  *          will expand to:
  *          ```
- *          (mYear, Data< int > , "year")
+ *          ( "period", mVintages, (Data<std::map<int)(ITechnology*>)(CONTAINER>) )
  *          ```
- *          This sequence will be used by other macros to generate the
- *          declarations needed by the class declaration.
+ *          Note the special consideration given to ensure type definitions with
+ *          commas in them get handled properly.  This sequence will be used by
+ *          DEFINE_DATA_INTERNAL to generate the declarations needed by the class declaration.
+ * \param aDataTypeFlags DataFlags used to determine properties about this data.  Note this flag
+ *                       must at least contain one of SIMPLE, ARRAY, or CONTAINER.
+ * \param aDataName The human readable name.
  * \param aVarName The variable the user of the class will use for direct access to this Data.
- * \param ...[0:n-1] The type definition.
- * \param ...[n:n] The human readable name.
+ * \param aTypeDef The type definition of the member variable.
  */
-#define CREATE_SIMPLE_VARIABLE( aVarName, aTypeAndName... ) \
-    ( aVarName, DEFINE_SIMPLE_DATA_STRUCT( aTypeAndName ), BOOST_PP_VARIADIC_ELEM( BOOST_PP_DEC( BOOST_PP_VARIADIC_SIZE( aTypeAndName ) ), aTypeAndName ) )
-
-#define CREATE_CONTAINER_VARIABLE( aVarName, aTypeAndName... ) \
-    ( aVarName, DEFINE_CONTAINER_DATA_STRUCT( aTypeAndName ), BOOST_PP_VARIADIC_ELEM( BOOST_PP_DEC( BOOST_PP_VARIADIC_SIZE( aTypeAndName ) ), aTypeAndName ) )
-
-#define CREATE_ARRAY_VARIABLE( aVarName, aTypeAndName... ) \
-    ( aVarName, DEFINE_ARRAY_DATA_STRUCT( aTypeAndName ), BOOST_PP_VARIADIC_ELEM( BOOST_PP_DEC( BOOST_PP_VARIADIC_SIZE( aTypeAndName ) ), aTypeAndName ) )
+#define DEFINE_VARIABLE( aDataTypeFlags, aDataName, aVarName, aTypeDef... ) \
+    ( aDataName, aVarName, BOOST_PP_VARIADIC_TO_SEQ( Data<aTypeDef, aDataTypeFlags> ) )
 
 /*!
  * \brief Identity transformation. To be used with FOR_EACH metafunction to Flatten the nesting of sequences one level.
-
  * \details Example.  Starting with a sequence like this
  *          ```
  *          (a) (b) (c)
@@ -250,8 +255,8 @@ struct ArrayData : public Data<T> {
  *          given like:
  *          ```
  *          #define DECLS  \
- *            ( VAR_1, TYPE_1, NAME_1), \
- *            ( VAR_2, TYPE_2, NAME_2)
+ *            ( NAME_1, VAR_1, TYPE_1 ), \
+ *            ( NAME_2, VAR_2, TYPE_2 )
  *          ```
  *          The macro calls:
  *          ```
@@ -261,9 +266,9 @@ struct ArrayData : public Data<T> {
  *          ```   
  *          Would then be transformed to:
  *          ```
+ *          (NAME_1) (NAME_2)
  *          (VAR_1) (VAR_2)
  *          (TYPE_1) (TYPE_2)
- *          (NAME_1) (NAME_2)
  *          ```
  */
 #define UNZIP_MACRO(s, data, elem) BOOST_PP_TUPLE_ELEM(data, elem)
@@ -276,7 +281,7 @@ struct ArrayData : public Data<T> {
     )
 
 /*!
- * \brief Collects each CREATE_*_VARIABLE definition and generates the full set of Data definitions.
+ * \brief Collects each DEFINE_VARIABLE definition and generates the full set of Data definitions.
  * \details The collected data generates the following definitions:
  *          1) A boost::mpl::vector that contains all of the Data definitions types in a
  *             vector and forms the type to base mDataVector off of.
@@ -285,16 +290,38 @@ struct ArrayData : public Data<T> {
  *             will be defined in a member variable in the name defined by DATA_VECTOR_NAME.
  *          3) Aliases for direct access varible definitions such as mName, mYear so that
  *             users can continue to use the member variables as normal.
+ *
+ *          For instance a call such as:
+ *          ```
+ *          DEFINE_DATA_INTERNAL( DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ) )
+ *          ```
+ *          Would then be transformed to (although perhaps to so well fomatted):
+ *          ```
+ *          typedef boost::mpl::vector<Data<std::string, SIMPLE> > DataVectorType;
+ *          boost::fusion::result_of::as_vector<DataVectorType>::type mDataVector =
+ *              boost::fusion::result_of::as_vector<DataVectorType>::type( "name" );
+ *          boost::mpl::at_c< DataVectorType, 0 >::type::value_type& mName= boost::fusion::at_c<0>( mDataVector ).mData;
+ *          ```
  */
 #define DEFINE_DATA_INTERNAL( aDefList... ) \
-    typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_FOR_EACH( FLATTEN, BOOST_PP_EMPTY, UNZIP( 1, aDefList ) ) )> DataVectorType; \
-    boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type( BOOST_PP_SEQ_ENUM( UNZIP( 2, aDefList ) ) ); \
-    BOOST_PP_SEQ_FOR_EACH_I( MAKE_VAR_REF,  BOOST_PP_EMPTY, UNZIP( 0, aDefList ) )
+    typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_FOR_EACH( FLATTEN, BOOST_PP_EMPTY, UNZIP( 2, aDefList ) ) )> DataVectorType; \
+    boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type( BOOST_PP_SEQ_ENUM( UNZIP( 0, aDefList ) ) ); \
+    BOOST_PP_SEQ_FOR_EACH_I( MAKE_VAR_REF,  BOOST_PP_EMPTY, UNZIP( 1, aDefList ) )
 
+/*!
+ * \brief A Macro to handle the special case where there are no Data definitions
+ *        to be made.  This will correctly make the data definitions in a way that
+ *        won't result in compiler error.
+ */
 #define DEFINE_DATA_INTERNAL_EMPTY() \
     typedef boost::mpl::vector<> DataVectorType; \
     boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type();
 
+/*!
+ * \brief A helper Macro to detect if we do or do not actually have any DEFINE_VARIABLE
+ *        definitions.  We need to check explicitly since DEFINE_DATA_INTERNAL would
+ *        generate invalid syntax if it's argument was infact empty.
+ */
 #define DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList... ) \
     BOOST_PP_IIF( BOOST_PP_IS_BEGIN_PARENS( aDefList ), DEFINE_DATA_INTERNAL, DEFINE_DATA_INTERNAL_EMPTY ) ( aDefList )
 

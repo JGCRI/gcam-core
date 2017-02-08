@@ -50,6 +50,7 @@
 #include <boost/noncopyable.hpp>
 
 #include "containers/include/tree_item.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
@@ -110,6 +111,7 @@ enum LandAllocatorItemType {
  *          - Elements: None
  */
 class ALandAllocatorItem : public TreeItem<ALandAllocatorItem>,
+                           public INamed,
                            public IVisitable,
                            public IParsable,
                            public IRoundTrippable,
@@ -420,40 +422,40 @@ protected:
          *          allocated to node above. This is always the normalized share and
          *          so is always between zero and one inclusive.
          */
-        CREATE_ARRAY_VARIABLE( mShare, objects::PeriodVector<double>, "share" ),
+        DEFINE_VARIABLE( ARRAY, "share", mShare, objects::PeriodVector<double> ),
         
         //! Profit scaler 
-        CREATE_ARRAY_VARIABLE( mProfitScaler, objects::PeriodVector<double>, "profit-scaler" ),
+        DEFINE_VARIABLE( ARRAY, "profit-scaler", mProfitScaler, objects::PeriodVector<double> ),
 
         //! Boolean indicating a node or leaf is new
         // TODO: should this be in the leaf?
-        CREATE_ARRAY_VARIABLE( mIsNewTech, objects::PeriodVector<bool>, "isNewTechnology" ),
+        DEFINE_VARIABLE( ARRAY, "isNewTechnology", mIsNewTech, objects::PeriodVector<bool> ),
 
         //! Double that adjusts a profit scaler to account for the availability of new technologies
-        CREATE_ARRAY_VARIABLE( mAdjustForNewTech, objects::PeriodVector<double>, "adjustment" ),
+        DEFINE_VARIABLE( ARRAY, "adjustment", mAdjustForNewTech, objects::PeriodVector<double> ),
 
         //! Calibration Profit or Calibration Land Rental Rate in dollars
         // This is the profit rate implied by the shares in the calibration data
         //It is not read in but computed as part of the calibration
-        CREATE_ARRAY_VARIABLE( mCalibrationProfitRate, objects::PeriodVector<double>, "CalProfitRate" ),
+        DEFINE_VARIABLE( ARRAY, "CalProfitRate", mCalibrationProfitRate, objects::PeriodVector<double> ),
 
         //! Land observed profit rate
-        CREATE_ARRAY_VARIABLE( mProfitRate, objects::PeriodVector<double>, "ProfitRate" ),
+        DEFINE_VARIABLE( ARRAY, "ProfitRate", mProfitRate, objects::PeriodVector<double> ),
         
         //! Name of the land allocator item. This is the name of the product for
         //! leafs and name of the type of land for nodes.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         /*!
          * \brief Enum that stores the item's type.
          * \note This is stored to avoid a virtual function call.
          */
-        CREATE_SIMPLE_VARIABLE( mType, LandAllocatorItemType, "land-type" ),
+        DEFINE_VARIABLE( SIMPLE, "land-type", mType, LandAllocatorItemType ),
 
         //! name of land expansion constraint cost curve
         // TODO: should these be in the leaf?
-        CREATE_SIMPLE_VARIABLE( mLandExpansionCostName, std::string, "landConstraintCurve" ),
-        CREATE_SIMPLE_VARIABLE( mIsLandExpansionCost, bool, "is-land-expansion-cost" )
+        DEFINE_VARIABLE( SIMPLE, "landConstraintCurve", mLandExpansionCostName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "is-land-expansion-cost", mIsLandExpansionCost, bool )
     )
 };
 

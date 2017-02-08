@@ -130,13 +130,13 @@ protected:
         ICaptureComponent,
 
         //! Sequestered quantity by period.
-        CREATE_ARRAY_VARIABLE( mSequesteredAmount, objects::PeriodVector<double>, "sequestered-amount" ),
+        DEFINE_VARIABLE( ARRAY, "sequestered-amount", mSequesteredAmount, objects::PeriodVector<double> ),
 
         //! The name of the gas which will be sequestered.
-        CREATE_SIMPLE_VARIABLE( mTargetGas, std::string, "target-gas" ),
+        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),
 
         //! Fraction of carbon removed from the emissions stream.
-        CREATE_SIMPLE_VARIABLE( mRemoveFraction, double, "remove-fraction" )
+        DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double )
     )
 };
 

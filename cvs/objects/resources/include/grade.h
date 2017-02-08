@@ -49,6 +49,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
@@ -69,7 +70,7 @@ class AccumulatedPostGrade;
 * \author Sonny Kim
 */
 
-class Grade: public IVisitable, private boost::noncopyable
+class Grade: public INamed, public IVisitable, private boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
@@ -98,16 +99,16 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Grade, AccumulatedGrade, AccumulatedPostGrade ),
         
         //! Grade name.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! amount of Grade for each Grade
-        CREATE_SIMPLE_VARIABLE( mAvailable, double, "available" ),
+        DEFINE_VARIABLE( SIMPLE, "available", mAvailable, double ),
         
         //! extraction cost of each Grade
-        CREATE_SIMPLE_VARIABLE( mExtractCost, double, "extractioncost" ),
+        DEFINE_VARIABLE( SIMPLE, "extractioncost", mExtractCost, double ),
         
         //! total cost
-        CREATE_ARRAY_VARIABLE( mTotalCost, objects::PeriodVector<double>, "totalcost" )
+        DEFINE_VARIABLE( ARRAY, "totalcost", mTotalCost, objects::PeriodVector<double> )
     )
 
     //! The Grade's information store.

@@ -94,10 +94,10 @@ protected:
         SupplySector,
 
         // TODO: Should this be a vector?
-        CREATE_SIMPLE_VARIABLE( mCalPrice, double, "calPrice" ),
+        DEFINE_VARIABLE( SIMPLE, "calPrice", mCalPrice, double ),
 
         //! Name of the market for this good.
-        CREATE_SIMPLE_VARIABLE( mMarketName, std::string, "market" )
+        DEFINE_VARIABLE( SIMPLE, "market", mMarketName, std::string )
     )
 };
 

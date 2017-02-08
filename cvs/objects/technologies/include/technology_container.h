@@ -150,24 +150,24 @@ private:
 
         //! The name of the technology which will be duplicated in each contained
         //! technology.
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! The map that will be the primary data structure to contain technology vintages
         //! which do not have to align to model periods
-        CREATE_CONTAINER_VARIABLE( mVintages, std::map<int, ITechnology*>, YearFilter, "period" ),
+        DEFINE_VARIABLE( CONTAINER, "period", mVintages, std::map<int, ITechnology*> ),
                                 
         //! Optional parameter for the first year in which a vintage should exist.
-        CREATE_SIMPLE_VARIABLE( mInitialAvailableYear, int, "initial-available-year" ),
+        DEFINE_VARIABLE( SIMPLE, "initial-available-year", mInitialAvailableYear, int ),
         
         //! Optional parameter for the last year in which a technology can be invested in.
-        CREATE_SIMPLE_VARIABLE( mFinalAvailableYear, int, "final-available-year" ),
+        DEFINE_VARIABLE( SIMPLE, "final-available-year", mFinalAvailableYear, int ),
         
         //! A list of technology years that were created by interpolations.  This could
         //! be used to avoid writing them back out in toInputXML
-        CREATE_ARRAY_VARIABLE( mInterpolatedTechYears, std::vector<int>, "interpolated-years" ),
+        DEFINE_VARIABLE( ARRAY, "interpolated-years", mInterpolatedTechYears, std::vector<int> ),
                                 
         //! Interpolation rules for technology share weight values.
-        CREATE_CONTAINER_VARIABLE( mShareWeightInterpRules, std::vector<InterpolationRule*>, NoFilter, "interpolation-rule" )
+        DEFINE_VARIABLE( CONTAINER, "interpolation-rule", mShareWeightInterpRules, std::vector<InterpolationRule*> )
     )
     
     // Typedef iterators to help keep code readable

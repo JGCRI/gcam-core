@@ -89,7 +89,7 @@ protected:
         ICoefficient,
                             
         //! The read-in efficiency.
-        CREATE_SIMPLE_VARIABLE( mReadInEfficiency, Value, "efficiency" )
+        DEFINE_VARIABLE( SIMPLE, "efficiency", mReadInEfficiency, Value )
     )
 };
 

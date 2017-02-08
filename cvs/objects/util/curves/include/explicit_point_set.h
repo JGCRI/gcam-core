@@ -102,7 +102,7 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         PointSet,
         
-        CREATE_ARRAY_VARIABLE( points, std::vector<DataPoint*>, "points" )
+        DEFINE_VARIABLE( ARRAY, "points", points, std::vector<DataPoint*> )
     )
 
     typedef std::vector<DataPoint*>::iterator DataPointIterator;

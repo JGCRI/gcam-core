@@ -53,6 +53,7 @@
 #include <boost/core/noncopyable.hpp>
 
 #include "investment/include/iinvestable.h"
+#include "util/base/include/inamed.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
@@ -91,7 +92,8 @@ class SubsectorAddTechCosts;
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
 
-class Subsector: public IInvestable,
+class Subsector: public INamed,
+                 public IInvestable,
                  public IRoundTrippable,
                  private boost::noncopyable
 {
@@ -122,31 +124,31 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Subsector, TranSubsector, AgSupplySubsector, SubsectorAddTechCosts ),
 
         //! subsector name
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! region name
-        CREATE_SIMPLE_VARIABLE( mRegionName, std::string, "region-name" ),
+        DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
 
         //! sector name
-        CREATE_SIMPLE_VARIABLE( mSectorName, std::string, "sector-name" ),
+        DEFINE_VARIABLE( SIMPLE, "sector-name", mSectorName, std::string ),
 
         //! Subsector logit share weights
-        CREATE_ARRAY_VARIABLE( mShareWeights, objects::PeriodVector<Value>, "share-weight" ),
+        DEFINE_VARIABLE( ARRAY, "share-weight", mShareWeights, objects::PeriodVector<Value> ),
 
         //! The original subsector logit share weights that were parsed
-        CREATE_ARRAY_VARIABLE( mParsedShareWeights, objects::PeriodVector<Value>, "parsed-share-weight" ),
+        DEFINE_VARIABLE( ARRAY, "parsed-share-weight", mParsedShareWeights, objects::PeriodVector<Value> ),
                     
         //! Fuel preference elasticity
-        CREATE_ARRAY_VARIABLE( mFuelPrefElasticity, objects::PeriodVector<double>, "fuelprefElasticity" ),
+        DEFINE_VARIABLE( ARRAY, "fuelprefElasticity", mFuelPrefElasticity, objects::PeriodVector<double> ),
         
         //! Vector of technology containers by name
-        CREATE_CONTAINER_VARIABLE( mTechContainers, std::vector<ITechnologyContainer*>, NamedFilter, "technology" ),
+        DEFINE_VARIABLE( CONTAINER, "technology", mTechContainers, std::vector<ITechnologyContainer*> ),
 
         //! Interpolation rules for subsector share weight values.
-        CREATE_CONTAINER_VARIABLE( mShareWeightInterpRules, std::vector<InterpolationRule*>, NoFilter, "interpolation-rule" ),
+        DEFINE_VARIABLE( CONTAINER, "interpolation-rule", mShareWeightInterpRules, std::vector<InterpolationRule*> ),
 
         //! Discrete choice model used for allocating technology shares
-        CREATE_CONTAINER_VARIABLE( mDiscreteChoiceModel, IDiscreteChoice*, NoFilter, "discreate-choice-function" )
+        DEFINE_VARIABLE( CONTAINER, "discreate-choice-function", mDiscreteChoiceModel, IDiscreteChoice* )
     )
     
     // Some typedefs for technology interators

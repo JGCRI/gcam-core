@@ -50,6 +50,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/iyeared.h"
 #include "util/base/include/istandard_component.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
@@ -102,7 +103,7 @@ struct PreviousPeriodInfo {
 *
 * \author Pralit Patel
 */
-class ITechnology: public IParsedComponent, private boost::noncopyable
+class ITechnology: public IYeared, public IParsedComponent, private boost::noncopyable
 {
 public:
     virtual ITechnology* clone() const = 0;

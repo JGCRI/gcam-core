@@ -129,16 +129,16 @@ protected:
         Consumer,
 
         //! Subregional population for reporting
-        CREATE_ARRAY_VARIABLE( mSubregionalPopulation, objects::PeriodVector<Value>, "subregional-population" ),
+        DEFINE_VARIABLE( ARRAY, "subregional-population", mSubregionalPopulation, objects::PeriodVector<Value> ),
 
         //! Subregional income for reporting
-        CREATE_ARRAY_VARIABLE( mSubregionalIncome, objects::PeriodVector<Value>, "subregional-income" ),
+        DEFINE_VARIABLE( ARRAY, "subregional-income", mSubregionalIncome, objects::PeriodVector<Value> ),
 
         //! Subregional Population Share
-        CREATE_ARRAY_VARIABLE( mSubregionalPopulationShare, objects::PeriodVector<Value>, "subregional-population-share" ),
+        DEFINE_VARIABLE( ARRAY, "subregional-population-share", mSubregionalPopulationShare, objects::PeriodVector<Value> ),
 
         //! Subregional Income Share
-        CREATE_ARRAY_VARIABLE( mSubregionalIncomeShare, objects::PeriodVector<Value>, "subregional-income-share" )
+        DEFINE_VARIABLE( ARRAY, "subregional-income-share", mSubregionalIncomeShare, objects::PeriodVector<Value> )
     )
 
     void copy( const GCAMConsumer& aOther );

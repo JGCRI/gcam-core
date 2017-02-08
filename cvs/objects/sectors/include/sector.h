@@ -114,35 +114,35 @@ protected:
                                 PassThroughSector ),
 
         //! Sector name
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! unit of good or service produced by sector
-        CREATE_SIMPLE_VARIABLE( mOutputUnit, std::string, "output-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, std::string ),
 
         //! unit of input demanded by sector
-        CREATE_SIMPLE_VARIABLE( mInputUnit, std::string, "input-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "input-unit", mInputUnit, std::string ),
 
         //! price unit of good or service produced by sector
-        CREATE_SIMPLE_VARIABLE( mPriceUnit, std::string, "price-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, std::string ),
 
         //! region name
-        CREATE_SIMPLE_VARIABLE( mRegionName, std::string, "region-name" ),
+        DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
 
         //! subsector objects
-        CREATE_CONTAINER_VARIABLE( mSubsectors, std::vector<Subsector*>, NamedFilter, "subsector" ),
+        DEFINE_VARIABLE( CONTAINER, "subsector", mSubsectors, std::vector<Subsector*> ),
         
         //! Sector price by period updated with solution prices.
-        CREATE_ARRAY_VARIABLE( mPrice, objects::PeriodVector<double>, "price" ),
+        DEFINE_VARIABLE( ARRAY, "price", mPrice, objects::PeriodVector<double> ),
 
         //! A map of a keyword to its keyword group
-        CREATE_SIMPLE_VARIABLE( mKeywordMap, std::map<std::string, std::string>, "keyword" ),
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
         
         //! The discrete choice model used to calculate sector shares.
-        CREATE_CONTAINER_VARIABLE( mDiscreteChoiceModel, IDiscreteChoice*, NoFilter, "discrete-choice-function" ),
-
+        DEFINE_VARIABLE( CONTAINER, "discrete-choice-function", mDiscreteChoiceModel, IDiscreteChoice* ),
+        
         //! A flag that will force the market dependency finder to create trial price/demand
         //! markets for this sector.
-        CREATE_SIMPLE_VARIABLE( mUseTrialMarkets, bool, "use-trial-market" )
+        DEFINE_VARIABLE( SIMPLE, "use-trial-market", mUseTrialMarkets, bool )
     )
     
     typedef std::vector<Subsector*>::iterator SubsectorIterator;

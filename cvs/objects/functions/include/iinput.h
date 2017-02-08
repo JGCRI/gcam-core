@@ -49,6 +49,7 @@
 #include <iosfwd> // remove when csv output is removed.
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -82,7 +83,7 @@ class InputCapital;
  * \details
  * \author Josh Lurz
  */
-class IInput: public IVisitable, private boost::noncopyable {
+class IInput: public INamed, public IVisitable, private boost::noncopyable {
 public:
     /*!
      * \brief Define different type attributes of inputs. These are not mutually

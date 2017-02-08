@@ -373,48 +373,48 @@ protected:
         INestedInput,
 
         //! Vector of child inputs
-        CREATE_CONTAINER_VARIABLE( mNestedInputs, std::vector<INestedInput*>, NamedFilter, "nodeInput" ),
+        DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputs, std::vector<INestedInput*> ),
         
         //! The name of this input
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Type of function used
-        CREATE_SIMPLE_VARIABLE( mFunctionType, std::string, "prodDmdFnType" ),
+        DEFINE_VARIABLE( SIMPLE, "prodDmdFnType", mFunctionType, std::string ),
 
         //! Building size by period.
-        CREATE_ARRAY_VARIABLE( mBuildingSize, objects::PeriodVector<Value>, "base-building-size" ),
+        DEFINE_VARIABLE( ARRAY, "base-building-size", mBuildingSize, objects::PeriodVector<Value> ),
 
         //! Price exponent by period.
-        CREATE_ARRAY_VARIABLE( mPriceExponent, objects::PeriodVector<Value>, "price-exponent" ),
+        DEFINE_VARIABLE( ARRAY, "price-exponent", mPriceExponent, objects::PeriodVector<Value> ),
 
         //! Satiation demand function.
-        CREATE_CONTAINER_VARIABLE( mSatiationDemandFunction, SatiationDemandFunction*, NoFilter, "satiation-demand-function" ),
+        DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* ),
 
         //! Shell conductance by period.
-        CREATE_ARRAY_VARIABLE( mShellConductance, objects::PeriodVector<Value>, "shell-conductance" ),
+        DEFINE_VARIABLE( ARRAY, "shell-conductance", mShellConductance, objects::PeriodVector<Value> ),
 
         //! Floor to surface ratio by period.
-        CREATE_ARRAY_VARIABLE( mFloorToSurfaceRatio, objects::PeriodVector<Value>, "floor-to-surface-ratio" ),
+        DEFINE_VARIABLE( ARRAY, "floor-to-surface-ratio", mFloorToSurfaceRatio, objects::PeriodVector<Value> ),
 
         //! Internal gains market name
-        CREATE_SIMPLE_VARIABLE( mInternalGainsMarketname, std::string, "internal-gains-market-name" ),
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mInternalGainsMarketname, std::string ),
 
         //! Internal gains output unit used to create the market
-        CREATE_SIMPLE_VARIABLE( mInternalGainsUnit, std::string, "internal-gains-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-unit", mInternalGainsUnit, std::string ),
 
         //! Current Subregional population.  Note that this is just a
         //! temporary value used during demand calculations
-        CREATE_SIMPLE_VARIABLE( mCurrentSubregionalPopulation, Value, "subregional-population" ),
+        DEFINE_VARIABLE( SIMPLE, "subregional-population", mCurrentSubregionalPopulation, Value ),
 
         //! Current Subregional income.  Note that this is just a
         //! temporary value used during demand calculations
-        CREATE_SIMPLE_VARIABLE( mCurrentSubregionalIncome, Value, "subregional-income" ),
+        DEFINE_VARIABLE( SIMPLE, "subregional-income", mCurrentSubregionalIncome, Value ),
 
         //! Stored trial internal gains trial supply for reporting
-        CREATE_ARRAY_VARIABLE( mInternalGainsTrialSupply, objects::PeriodVector<double>, "internal-gains-trial-supply" ),
+        DEFINE_VARIABLE( ARRAY, "internal-gains-trial-supply", mInternalGainsTrialSupply, objects::PeriodVector<double> ),
 
         //! The sum product of energy service price necessary to drive demands.
-        CREATE_ARRAY_VARIABLE( mPrice, objects::PeriodVector<double>, "price" )
+        DEFINE_VARIABLE( ARRAY, "price", mPrice, objects::PeriodVector<double> )
     )
                            
     //! Pointer to function this class will use

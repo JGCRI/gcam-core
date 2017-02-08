@@ -121,13 +121,13 @@ protected:
         DEFINE_SUBCLASS_FAMILY( LandUseHistory ),
 
         //! Sparse mapping of year to land allocation.
-        CREATE_ARRAY_VARIABLE( mHistoricalLand, LandMapType, "allocation" ),
+        DEFINE_VARIABLE( ARRAY, "allocation", mHistoricalLand, LandMapType ),
 
         //! Average above ground carbon content historically.
-        CREATE_SIMPLE_VARIABLE( mHistoricAboveGroundCarbonDensity, double, "above-ground-carbon-density" ),
+        DEFINE_VARIABLE( SIMPLE, "above-ground-carbon-density", mHistoricAboveGroundCarbonDensity, double ),
 
         //! Average below ground carbon content historically.
-        CREATE_SIMPLE_VARIABLE( mHistoricBelowGroundCarbonDensity, double, "below-ground-carbon-density" )
+        DEFINE_VARIABLE( SIMPLE, "below-ground-carbon-density", mHistoricBelowGroundCarbonDensity, double )
     )
 };
 

@@ -53,6 +53,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/summary.h"
@@ -78,7 +79,7 @@ class RegionCGE;
 * \author Sonny Kim
 */
 
-class Region: public IVisitable, public IRoundTrippable, protected boost::noncopyable
+class Region: public INamed, public IVisitable, public IRoundTrippable, protected boost::noncopyable
 {
     friend class XMLDBOutputter;
 public:
@@ -122,25 +123,25 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Region, RegionMiniCAM, RegionCGE ),
                 
         /*! \brief Region name */
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         /*! \brief Population object */
-        CREATE_CONTAINER_VARIABLE( mDemographic, Demographic*, NoFilter, "demographic" ),
+        DEFINE_VARIABLE( CONTAINER, "demographic", mDemographic, Demographic* ),
         
         /*! \brief  vector of pointers to supply sector objects */
-        CREATE_CONTAINER_VARIABLE( mSupplySector, std::vector<Sector*>, NamedFilter, "sector" ),
+        DEFINE_VARIABLE( CONTAINER, "sector", mSupplySector, std::vector<Sector*> ),
         
         /*! \brief vector of pointers to ghg market objects, container for constraints and emissions */
-        CREATE_CONTAINER_VARIABLE( mGhgPolicies, std::vector<GHGPolicy*>, NamedFilter, "ghg-policies" ),
+        DEFINE_VARIABLE( CONTAINER, "ghg-policies", mGhgPolicies, std::vector<GHGPolicy*> ),
         
         /*! \brief vector of pointers to portfolio standard market objects, container for constraints */
-        CREATE_CONTAINER_VARIABLE( mPolicies, std::vector<PolicyPortfolioStandard*>, NamedFilter, "policies" ),
+        DEFINE_VARIABLE( CONTAINER, "policies", mPolicies, std::vector<PolicyPortfolioStandard*> ),
         
         /*! \brief vector of pointers to resource objects */
-        CREATE_CONTAINER_VARIABLE( mResources, std::vector<AResource*>, NamedFilter, "resource" ),
+        DEFINE_VARIABLE( CONTAINER, "resource", mResources, std::vector<AResource*> ),
         
         /*! \brief The region's information store. */
-        CREATE_SIMPLE_VARIABLE( mRegionInfo, IInfo*, "info" )
+        DEFINE_VARIABLE( SIMPLE, "info", mRegionInfo, IInfo* )
     )
 
     virtual const std::string& getXMLName() const = 0;

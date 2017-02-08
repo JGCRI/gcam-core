@@ -52,6 +52,7 @@
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/time_vector.h"
@@ -83,7 +84,7 @@ class NonCO2Emissions;
  *          The last one of these read in determines the method used.
  * \author Sonny Kim, Marshall Wise, Steve Smith, Nick Fernandez, Jim Naslund
  */
-class AGHG: public IVisitable, public IRoundTrippable, private boost::noncopyable
+class AGHG: public INamed, public IVisitable, public IRoundTrippable, private boost::noncopyable
 { 
     friend class XMLDBOutputter;
 
@@ -201,22 +202,22 @@ protected:
         DEFINE_SUBCLASS_FAMILY( AGHG, CO2Emissions, NonCO2Emissions ),
         
         //! GHG name
-        CREATE_SIMPLE_VARIABLE( mName, std::string, "name" ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! Unit of emissions
-        CREATE_SIMPLE_VARIABLE( mEmissionsUnit, std::string, "emissions-unit" ),
+        DEFINE_VARIABLE( SIMPLE, "emissions-unit", mEmissionsUnit, std::string ),
 
         //! Emissions (calculated)
         //! TODO: These are sized to store emissions for all periods however only
         //!       a fraction of that will actually be used (depending on the technology
         //!       vintage and lifetime.
-        CREATE_ARRAY_VARIABLE( mEmissions, objects::PeriodVector<double>, "emissions" ),
+        DEFINE_VARIABLE( ARRAY, "emissions", mEmissions, objects::PeriodVector<double> ),
 
         //! Emissions sequestered by a ICaptureComponent
         //! TODO: These are sized to store emissions for all periods however only
         //!       a fraction of that will actually be used (depending on the technology
         //!       vintage and lifetime.
-        CREATE_ARRAY_VARIABLE( mEmissionsSequestered, objects::PeriodVector<double>, "emissions-sequestered" )
+        DEFINE_VARIABLE( ARRAY, "emissions-sequestered", mEmissionsSequestered, objects::PeriodVector<double> )
     )
     
     //! Pre-located market which has been cached from the marketplace to get the price

@@ -47,6 +47,7 @@
 #include <vector>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/istandard_component.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -70,7 +71,7 @@ class RetiredProductionState;
  *          over its lifetime.
  * \author Josh Lurz
  */
-class IProductionState: public ISimpleComponent, private boost::noncopyable
+class IProductionState: public INamed, public ISimpleComponent, private boost::noncopyable
 {
 public:
 	// Clone operator must be declared explicitly even though it is inherited

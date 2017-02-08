@@ -102,7 +102,7 @@ protected:
         IProductionState,
 
         //! The level of fixed output.
-        CREATE_SIMPLE_VARIABLE( mFixedOutput, Value, "base-output" )
+        DEFINE_VARIABLE( SIMPLE, "base-output", mFixedOutput, Value )
     )
 };
 

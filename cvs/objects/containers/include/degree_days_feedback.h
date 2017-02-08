@@ -78,8 +78,12 @@ public:
     template<typename T>
     void processData( T& aData );
     
-    // Flag to GCAMFusion to enable processData
-    typedef int ProcessData;
+    void pushFilterStep( INamed* const& aContainer );
+    
+    template<typename T>
+    typename boost::disable_if<
+        boost::is_base_of<INamed, typename boost::remove_pointer<T>::type>,
+    void>::type pushFilterStep( const T& aContainer );
     
 protected:
     //! The name of this feedback
@@ -103,8 +107,6 @@ protected:
         // call back method for GCAMFusion
         template<typename T>
         void processData( T& aData );
-        // Flag to GCAMFusion to enable processData
-        typedef int ProcessData;
     };
 };
 

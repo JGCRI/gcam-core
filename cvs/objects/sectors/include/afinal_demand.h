@@ -46,6 +46,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
+#include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/iparsable.h"
@@ -68,7 +69,8 @@ class EnergyFinalDemand;
  *          but are in aggregate the consumers of the economy.
  */
 
-class AFinalDemand: public IParsable,
+class AFinalDemand: public INamed,
+                    public IParsable,
                     public IRoundTrippable,
                     public IVisitable,
                     private boost::noncopyable

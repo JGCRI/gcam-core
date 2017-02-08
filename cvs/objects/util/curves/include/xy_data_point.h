@@ -82,8 +82,8 @@ class XYDataPoint: public DataPoint {
         DEFINE_DATA_WITH_PARENT(
             DataPoint,
                             
-            CREATE_SIMPLE_VARIABLE( x, double, "x" ),
-            CREATE_SIMPLE_VARIABLE( y, double, "y" )
+            DEFINE_VARIABLE( SIMPLE, "x", x, double ),
+            DEFINE_VARIABLE( SIMPLE, "y", y, double )
         )
         void print( std::ostream& out ) const;
     };

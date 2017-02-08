@@ -169,33 +169,33 @@ protected:
         
         //! Cost of the non-energy input adjusted for the additional costs of the
         //! capture component.
-        CREATE_ARRAY_VARIABLE( mAdjustedCosts, objects::PeriodVector<Value>, "adjusted-cost" ),
+        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::PeriodVector<Value> ),
         
         //! Coefficient for production or demand function. Coefficients are not
         // read in and are initialized to 1, but can increase over time with
         // technical change.
-        CREATE_ARRAY_VARIABLE( mAdjustedCoefficients, objects::PeriodVector<Value>, "adjusted-coef" ),
+        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::PeriodVector<Value> ),
         
         //! Input specific technical change.
-        CREATE_SIMPLE_VARIABLE( mTechChange, Value, "tech-change" ),
+        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
         
         //! Overnight cost of capital.
-        CREATE_SIMPLE_VARIABLE( mCapitalOvernight, Value, "capital-overnight" ),
+        DEFINE_VARIABLE( SIMPLE, "capital-overnight", mCapitalOvernight, Value ),
         
         //! Fixed charge rate for levelizing capital.
         // TODO: this should come from the capital market.
-        CREATE_SIMPLE_VARIABLE( mFixedChargeRate, double, "fixed-charge-rate" ),
+        DEFINE_VARIABLE( SIMPLE, "fixed-charge-rate", mFixedChargeRate, double ),
         
         //! Lifetime of capital that may be different from lifetime of technology.
         // This is a Value object so as to include units.
-        CREATE_SIMPLE_VARIABLE( mLifetimeCapital, Value, "lifetime-capital" ),
+        DEFINE_VARIABLE( SIMPLE, "lifetime-capital", mLifetimeCapital, Value ),
         
         //! Calculated value for the levelized cost of capital.
-        CREATE_SIMPLE_VARIABLE( mLevelizedCapitalCost, Value, "levelized-capital-cost" ),
+        DEFINE_VARIABLE( SIMPLE, "levelized-capital-cost", mLevelizedCapitalCost, Value ),
         
         //! Technology capacity factor.
         // TODO: create one in technology and use that instead.
-        CREATE_SIMPLE_VARIABLE( mCapacityFactor, double, "capacity-factor" )
+        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double )
     )
     
     void copy( const InputCapital& aOther );

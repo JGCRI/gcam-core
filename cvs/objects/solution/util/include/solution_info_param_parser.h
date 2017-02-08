@@ -173,7 +173,7 @@ protected:
         //! A data structure that will go from periods to the pair of good name / market
         //! type and region name which maps to the struct SolutionInfoValues which will
         //! contain each of the possible values for a solution info.
-        CREATE_ARRAY_VARIABLE( mSolutionInfoParams, objects::PeriodVector<std::map<std::pair<std::string, std::string>, SolutionInfoValues> >, "solution-info-param" )
+        DEFINE_VARIABLE( ARRAY, "solution-info-param", mSolutionInfoParams, objects::PeriodVector<std::map<std::pair<std::string, std::string>, SolutionInfoValues> > )
     )
     
     std::vector<SolutionInfoValues*> getSolutionInfoValuesFromAttrs( const xercesc::DOMNode* aNode );

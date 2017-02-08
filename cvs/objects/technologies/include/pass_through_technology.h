@@ -105,13 +105,13 @@ protected:
         Technology,
 
         //! The name of the sector this technology is retrieving fixed output from (extracted from the input objects).
-        CREATE_SIMPLE_VARIABLE( mPassThroughSectorName, std::string, "pass-through-name" ),
+        DEFINE_VARIABLE( SIMPLE, "pass-through-name", mPassThroughSectorName, std::string ),
 
         //! The market name in which mPassThroughSectorName exists (extracted from the input objects).
-        CREATE_SIMPLE_VARIABLE( mPassThroughMarketName, std::string, "pass-through-market-name" ),
+        DEFINE_VARIABLE( SIMPLE, "pass-through-market-name", mPassThroughMarketName, std::string ),
 
         //! The level of fixed output that exists in mPassThroughSectorName.
-        CREATE_SIMPLE_VARIABLE( mPassThroughFixedOutput, double, "pass-through-fixed-output" )
+        DEFINE_VARIABLE( SIMPLE, "pass-through-fixed-output", mPassThroughFixedOutput, double )
     )
     
     void copy( const PassThroughTechnology& aOther );

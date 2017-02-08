@@ -124,13 +124,13 @@ protected:
         BuildingServiceInput,
 
         //! Internal gains scaling parameter.
-        CREATE_SIMPLE_VARIABLE( mInternalGainsScalar, Value, "internal-gains-scalar" ),
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-scalar", mInternalGainsScalar, Value ),
         
         //! Degree days by period.
-        CREATE_ARRAY_VARIABLE( mDegreeDays, objects::PeriodVector<Value>, "degree-days" ),
+        DEFINE_VARIABLE( ARRAY, "degree-days", mDegreeDays, objects::PeriodVector<Value> ),
         
         //! Demand function coefficients to capture base year thermal characteristics.
-        CREATE_SIMPLE_VARIABLE( mCoefficient, Value, "coefficient" )
+        DEFINE_VARIABLE( SIMPLE, "coefficient", mCoefficient, Value )
     )
     
     void copy( const ThermalBuildingServiceInput& aInput );

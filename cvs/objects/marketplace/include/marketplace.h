@@ -216,7 +216,7 @@ protected:
 
         //! List of all markets.  Note that MarketContainer wraps the list of markets by
         //! period.
-        CREATE_CONTAINER_VARIABLE( mMarkets, std::vector<MarketContainer*>, NamedFilter, "market" )
+        DEFINE_VARIABLE( CONTAINER, "market", mMarkets, std::vector<MarketContainer*> )
     )
 
     //! An object which determines the correct market number.
