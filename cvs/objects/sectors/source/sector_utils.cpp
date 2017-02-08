@@ -191,7 +191,7 @@ double SectorUtils::getTrialSupply( const string& aRegionName,
     
     // The market should have existed if the trial market name search succeeded.
     assert( trialPrice != Marketplace::NO_MARKET_PRICE );
-    return max( trialPrice, 0.0 );
+    return trialPrice;
 }
 
 /*!

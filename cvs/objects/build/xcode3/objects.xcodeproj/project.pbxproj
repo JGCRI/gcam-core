@@ -316,6 +316,9 @@
 		CDF83C1413A30CA600DF178D /* s_curve_shutdown_decider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C1213A30CA600DF178D /* s_curve_shutdown_decider.cpp */; };
 		CDF83C1A13A30CC500DF178D /* kyoto_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C1813A30CC500DF178D /* kyoto_forcing_target.cpp */; };
 		CDF83C1B13A30CC500DF178D /* secanter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C1913A30CC500DF178D /* secanter.cpp */; };
+		E120FEE81E83FD2400AE093A /* consumer_final_demand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E120FEE71E83FD2400AE093A /* consumer_final_demand.cpp */; };
+		E120FEEC1E83FE1300AE093A /* fooddemandsystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E120FEEB1E83FE1300AE093A /* fooddemandsystem.cpp */; };
+		E1228D8D1E8BE9C400923646 /* idemandsystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E1228D8C1E8BE9C400923646 /* idemandsystem.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1065,6 +1068,12 @@
 		CDF83C1713A30CB800DF178D /* secanter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = secanter.h; sourceTree = "<group>"; };
 		CDF83C1813A30CC500DF178D /* kyoto_forcing_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = kyoto_forcing_target.cpp; sourceTree = "<group>"; };
 		CDF83C1913A30CC500DF178D /* secanter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = secanter.cpp; sourceTree = "<group>"; };
+		E120FEE61E83FD1200AE093A /* consumer_final_demand.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = consumer_final_demand.hpp; sourceTree = "<group>"; };
+		E120FEE71E83FD2400AE093A /* consumer_final_demand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = consumer_final_demand.cpp; sourceTree = "<group>"; };
+		E120FEE91E83FDFD00AE093A /* fooddemandsystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fooddemandsystem.hpp; sourceTree = "<group>"; };
+		E120FEEA1E83FDFD00AE093A /* idemandsystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = idemandsystem.hpp; sourceTree = "<group>"; };
+		E120FEEB1E83FE1300AE093A /* fooddemandsystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fooddemandsystem.cpp; sourceTree = "<group>"; };
+		E1228D8C1E8BE9C400923646 /* idemandsystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = idemandsystem.cpp; path = ../../functions/source/idemandsystem.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1082,6 +1091,7 @@
 		08FB7794FE84155DC02AAC07 /* objects */ = {
 			isa = PBXGroup;
 			children = (
+				E1228D8C1E8BE9C400923646 /* idemandsystem.cpp */,
 				CD966E671D92F1BB00A93938 /* hector.xcodeproj */,
 				CD488409122873C000F5A88A /* objects */,
 				CD299E9711B9C11800E6D196 /* Products */,
@@ -1486,6 +1496,8 @@
 		CD4884CE122873C100F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				E120FEE91E83FDFD00AE093A /* fooddemandsystem.hpp */,
+				E120FEEA1E83FDFD00AE093A /* idemandsystem.hpp */,
 				CD693FA41AF02DC200805384 /* discrete_choice_factory.hpp */,
 				CD693FA11AEFF09200805384 /* absolute_cost_logit.hpp */,
 				CD693F9E1AEFE09200805384 /* relative_cost_logit.hpp */,
@@ -1539,6 +1551,7 @@
 		CD4884F4122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				E120FEEB1E83FE1300AE093A /* fooddemandsystem.cpp */,
 				CD693FA51AF0315E00805384 /* discrete_choice_factory.cpp */,
 				CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */,
 				CD693F9F1AEFE0CE00805384 /* relative_cost_logit.cpp */,
@@ -1876,6 +1889,7 @@
 		CD4885E4122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				E120FEE61E83FD1200AE093A /* consumer_final_demand.hpp */,
 				CD8FDEC71C0647050099C752 /* pass_through_sector.h */,
 				CD4885E5122873C200F5A88A /* afinal_demand.h */,
 				CD4885E6122873C200F5A88A /* ag_supply_sector.h */,
@@ -1906,6 +1920,7 @@
 		CD488600122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				E120FEE71E83FD2400AE093A /* consumer_final_demand.cpp */,
 				CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */,
 				CD488601122873C200F5A88A /* ag_supply_sector.cpp */,
 				CD488602122873C200F5A88A /* ag_supply_subsector.cpp */,
@@ -2611,6 +2626,7 @@
 				CD48877F122873C200F5A88A /* sgm_input.cpp in Sources */,
 				CD488780122873C200F5A88A /* trade_demand_function.cpp in Sources */,
 				CD488781122873C200F5A88A /* trade_input.cpp in Sources */,
+				E120FEE81E83FD2400AE093A /* consumer_final_demand.cpp in Sources */,
 				CD488782122873C200F5A88A /* utility_demand_function.cpp in Sources */,
 				CD488783122873C200F5A88A /* accelerator.cpp in Sources */,
 				CD488784122873C200F5A88A /* get_distributed_investment_visitor.cpp in Sources */,
@@ -2782,6 +2798,7 @@
 				CD488831122873C200F5A88A /* util.cpp in Sources */,
 				CD488832122873C200F5A88A /* curve.cpp in Sources */,
 				CD488833122873C200F5A88A /* data_point.cpp in Sources */,
+				E1228D8D1E8BE9C400923646 /* idemandsystem.cpp in Sources */,
 				CD488834122873C200F5A88A /* explicit_point_set.cpp in Sources */,
 				CD488835122873C200F5A88A /* point_set.cpp in Sources */,
 				CD488836122873C200F5A88A /* point_set_curve.cpp in Sources */,
@@ -2837,6 +2854,7 @@
 				CDE29985198C82C400556032 /* mac_control.cpp in Sources */,
 				CDE29986198C82C400556032 /* nonco2_emissions.cpp in Sources */,
 				CDE29989198C831E00556032 /* emissions_control_factory.cpp in Sources */,
+				E120FEEC1E83FE1300AE093A /* fooddemandsystem.cpp in Sources */,
 				CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */,
 				981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */,
 				CD165BC51A2513D5005F3A8B /* preconditioner.cpp in Sources */,
@@ -2866,6 +2884,10 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
+					NDEBUG,
+				);
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = objects;
 			};

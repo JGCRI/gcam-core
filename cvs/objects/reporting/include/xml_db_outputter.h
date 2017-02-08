@@ -109,6 +109,11 @@ public:
     void startVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod );
     void endVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod );
 
+    void startVisitConsumerFinalDemand( const ConsumerFinalDemand
+                                        *aConsumerFinalDemand, int aPeriod ); 
+    void endVisitConsumerFinalDemand( const ConsumerFinalDemand
+                                      *aConsumerFinalDemand, int aPeriod ); 
+
     void startVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod );
     void endVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod );
 

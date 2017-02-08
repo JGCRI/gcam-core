@@ -95,6 +95,7 @@ public:
     operator double() const;
     double get() const;
     bool isInited() const;
+    Value& operator=( double );
     Value& operator+=( const Value& aValue );
     Value& operator-=( const Value& aValue );
     Value& operator*=( const Value& aValue );
@@ -155,6 +156,17 @@ inline Value::operator double() const {
  */
 inline double Value::get() const {
     return mValue;
+}
+
+/*!
+ * \brief Assignment operator for rvalue of type double
+ * \param arvalue number to be asigned
+ * \return Reference to this object for chaining
+ */
+inline Value &Value::operator=( double arvalue )
+{
+    set(arvalue);
+    return *this;
 }
 
 /*! 

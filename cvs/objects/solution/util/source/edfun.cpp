@@ -118,7 +118,7 @@ double LogEDFun::partialSize(int ip) const
 
 void LogEDFun::operator()(const UBVECTOR<double> &ax, UBVECTOR<double> &fx)
 {
-  assert(x.size() == mkts.size());
+  assert(ax.size() == mkts.size());
   assert(fx.size() == mkts.size());
 
   Timer& edfunMiscTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_MISC );

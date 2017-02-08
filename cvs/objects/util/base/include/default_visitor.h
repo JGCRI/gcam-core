@@ -238,6 +238,15 @@ public:
 
     virtual void startVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod ){}
     virtual void endVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod ){}
+
+    virtual void startVisitConsumerFinalDemand( const ConsumerFinalDemand
+                                                *aConsumerFinalDemand, int
+                                                aPeriod ) {}
+    virtual void endVisitConsumerFinalDemand( const
+                                              ConsumerFinalDemand
+                                              *aConsumerFinalDemand,
+                                              int aPeriod ) {}
+
 };
 
 #endif // _DEFAULT_VISITOR_H_

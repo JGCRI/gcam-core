@@ -53,6 +53,7 @@
 #include "resources/include/resource.h"
 #include "sectors/include/afinal_demand.h"
 #include "sectors/include/energy_final_demand.h"
+#include "sectors/include/consumer_final_demand.hpp"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
 #include "technologies/include/technology.h"
@@ -746,7 +747,27 @@ void XMLDBOutputter::endVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergy
 
 
     // Write the closing finalDemand tag.
-    XMLWriteClosingTag( aEnergyFinalDemand->getXMLNameStatic(), mBuffer, mTabs.get() );
+    XMLWriteClosingTag( aEnergyFinalDemand->getXMLName(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitConsumerFinalDemand( const ConsumerFinalDemand
+                                                    *aConsumerFinalDemand, int aPeriod )
+{
+    XMLWriteOpeningTag( aConsumerFinalDemand->getXMLName(), mBuffer,
+                        mTabs.get(), aConsumerFinalDemand->getName(),
+                        0, "final-demand" );
+
+    // It's not clear that we actually need to write anything here.
+    // The actual demands will be written by the supply sectors.
+    // Perhaps we will eventually write out the budget fractions?
+}
+
+
+void XMLDBOutputter::endVisitConsumerFinalDemand( const ConsumerFinalDemand
+                                                  *aConsumerFinalDemand, int aPeriod )
+{
+    XMLWriteClosingTag( aConsumerFinalDemand->getXMLNameStatic(),
+                        mBuffer, mTabs.get() );
 }
 
 

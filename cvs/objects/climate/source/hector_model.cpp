@@ -68,7 +68,7 @@ using namespace xercesc;
 namespace {
     // These are multiplicative conversion factors.  I.e., if you have
     // the first unit, multiply by the factor to get the second.
-    const double TG_TO_PG = 1.0e-3; // 1 Pg = 1000 Tg
+    //const double TG_TO_PG = 1.0e-3; // 1 Pg = 1000 Tg (not currently used)
     const double TG_TO_GG = 1.0e3;  // Also, 1Tg = 1Mt
     const double GG_TO_TG = 1.0e-3;
     const double N_TO_N2O = 44.0/28.0; // 44g N2O has 28 g of N
