@@ -54,6 +54,7 @@
     <ProjectName>objects-main</ProjectName>
     <ProjectGuid>{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -71,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -370,7 +371,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..;..\..\climate\source\hector\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -540,6 +541,7 @@
     <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp" />
     <ClCompile Include="..\..\containers\source\batch_runner.cpp" />
     <ClCompile Include="..\..\containers\source\consumer_activity.cpp" />
+    <ClCompile Include="..\..\containers\source\degree_days_feedback.cpp" />
     <ClCompile Include="..\..\containers\source\dependency_finder.cpp" />
     <ClCompile Include="..\..\containers\source\final_demand_activity.cpp" />
     <ClCompile Include="..\..\containers\source\gdp.cpp" />
@@ -602,6 +604,7 @@
     <ClCompile Include="..\..\marketplace\source\inverse_calibration_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\linked_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\market_container.cpp" />
     <ClCompile Include="..\..\marketplace\source\market_locator.cpp" />
     <ClCompile Include="..\..\marketplace\source\market_RES.cpp" />
     <ClCompile Include="..\..\marketplace\source\market_subsidy.cpp" />
@@ -729,6 +732,7 @@
     <ClCompile Include="..\..\util\base\source\calibrate_share_weight_visitor.cpp" />
     <ClCompile Include="..\..\util\base\source\configuration.cpp" />
     <ClCompile Include="..\..\util\base\source\fixed_interpolation_function.cpp" />
+    <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp" />
     <ClCompile Include="..\..\util\base\source\input_finder.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_function_factory.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp" />
@@ -846,12 +850,14 @@
     <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />
     <ClInclude Include="..\..\containers\include\batch_runner.h" />
     <ClInclude Include="..\..\containers\include\consumer_activity.h" />
+    <ClInclude Include="..\..\containers\include\degree_days_feedback.h" />
     <ClInclude Include="..\..\containers\include\dependency_finder.h" />
     <ClInclude Include="..\..\containers\include\final_demand_activity.h" />
     <ClInclude Include="..\..\containers\include\gdp.h" />
     <ClInclude Include="..\..\containers\include\iactivity.h" />
     <ClInclude Include="..\..\containers\include\icycle_breaker.h" />
     <ClInclude Include="..\..\containers\include\iinfo.h" />
+    <ClInclude Include="..\..\containers\include\imodel_feedback_calc.h" />
     <ClInclude Include="..\..\containers\include\info.h" />
     <ClInclude Include="..\..\containers\include\info_factory.h" />
     <ClInclude Include="..\..\containers\include\iscenario_runner.h" />
@@ -918,6 +924,7 @@
     <ClInclude Include="..\..\marketplace\include\inverse_calibration_market.h" />
     <ClInclude Include="..\..\marketplace\include\linked_market.h" />
     <ClInclude Include="..\..\marketplace\include\market.h" />
+    <ClInclude Include="..\..\marketplace\include\market_container.h" />
     <ClInclude Include="..\..\marketplace\include\market_locator.h" />
     <ClInclude Include="..\..\marketplace\include\market_RES.h" />
     <ClInclude Include="..\..\marketplace\include\market_subsidy.h" />
@@ -1075,10 +1082,15 @@
     <ClInclude Include="..\..\util\base\include\calibrate_resource_visitor.h" />
     <ClInclude Include="..\..\util\base\include\calibrate_share_weight_visitor.h" />
     <ClInclude Include="..\..\util\base\include\configuration.h" />
+    <ClInclude Include="..\..\util\base\include\data_definition_util.h" />
     <ClInclude Include="..\..\util\base\include\default_visitor.h" />
     <ClInclude Include="..\..\util\base\include\definitions.h" />
+    <ClInclude Include="..\..\util\base\include\expand_data_vector.h" />
+    <ClInclude Include="..\..\util\base\include\factory.h" />
     <ClInclude Include="..\..\util\base\include\fixed_interpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\fltcmp.hpp" />
+    <ClInclude Include="..\..\util\base\include\gcam_data_containers.h" />
+    <ClInclude Include="..\..\util\base\include\gcam_fusion.hpp" />
     <ClInclude Include="..\..\util\base\include\hash_map.h" />
     <ClInclude Include="..\..\util\base\include\iinterpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\inamed.h" />
@@ -1090,6 +1102,7 @@
     <ClInclude Include="..\..\util\base\include\istandard_component.h" />
     <ClInclude Include="..\..\util\base\include\ivisitable.h" />
     <ClInclude Include="..\..\util\base\include\ivisitor.h" />
+    <ClInclude Include="..\..\util\base\include\iyeared.h" />
     <ClInclude Include="..\..\util\base\include\linear_interpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\model_time.h" />
     <ClInclude Include="..\..\util\base\include\object_meta_info.h" />

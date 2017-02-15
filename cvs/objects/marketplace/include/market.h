@@ -210,23 +210,23 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "forecast-demand", mForecastDemand, double ),
         
         //! The market demand.
-#if GCAM_PARALLEL_ENABLED
+/*#if GCAM_PARALLEL_ENABLED
         // have to make this mutable because tbb::combinable::combine is not const
         DEFINE_VARIABLE( SIMPLE, "demand", mDemand, mutable tbb::combinable<double> ),
-#else
+#else*/
         DEFINE_VARIABLE( SIMPLE, "demand", mDemand, double ),
-#endif
+//#endif
         
         //! The stored demand.
         DEFINE_VARIABLE( SIMPLE, "storedDemand", mStoredDemand, double ),
         
         //! The market supply.
-#if GCAM_PARALLEL_ENABLED
+/*#if GCAM_PARALLEL_ENABLED
         // have to make this mutable because tbb::combinable::combine is not const
         DEFINE_VARIABLE( SIMPLE, "supply", mSupply, mutable tbb::combinable<double> ),
-#else
+#else*/
         DEFINE_VARIABLE( SIMPLE, "supply", mSupply, double ),
-#endif
+//#endif
         
         //! The stored supply.
         DEFINE_VARIABLE( SIMPLE, "storedSupply", mStoredSupply, double ),

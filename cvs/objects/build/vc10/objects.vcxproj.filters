@@ -1076,6 +1076,15 @@
     <ClCompile Include="..\..\technologies\source\pass_through_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp">
+      <Filter>Source Files\util\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\containers\source\degree_days_feedback.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\marketplace\source\market_container.cpp">
+      <Filter>Source Files\marketplace</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2190,6 +2199,33 @@
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\pass_through_technology.h">
       <Filter>Header Files\technologies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\degree_days_feedback.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\imodel_feedback_calc.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\data_definition_util.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\expand_data_vector.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\factory.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\gcam_data_containers.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\gcam_fusion.hpp">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\iyeared.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\marketplace\include\market_container.h">
+      <Filter>Header Files\marketplace</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

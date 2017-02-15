@@ -59,6 +59,19 @@
 
 extern Scenario* scenario;
 
+/*!
+ * \brief A helper struct to call the constexpr function hasDataFlag to check if a Data
+ *        is declared as SIMPLE, ARRAY, or CONTAINER.  This hack is necessary to work
+ *        around Visual Studio's lack of support for expressions in SFINAE (enable_if)
+ *        which as of Visual Studio 2015 Update 3 still has not been implemented.
+ */
+template<typename DataType>
+struct CheckDataFlagHelper {
+    using is_simple = boost::integral_constant<bool, DataType::hasDataFlag(SIMPLE)>;
+    using is_array = boost::integral_constant<bool, DataType::hasDataFlag(ARRAY)>;
+    using is_container = boost::integral_constant<bool, DataType::hasDataFlag(CONTAINER)>;
+};
+
 struct GetIndexAsYear {
     template<typename T>
     static int convertIterToYear( const std::vector<T>& aArray, const typename std::vector<T>::const_iterator& aIter ) {
@@ -268,7 +281,7 @@ struct FilterStep {
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
         boost::mpl::and_<
-            boost::integral_constant<bool, DataType::hasDataFlag( CONTAINER )>,
+            typename CheckDataFlagHelper<DataType>::is_container,
             boost::is_pointer<typename DataType::value_type>
         >,
     void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
@@ -325,7 +338,7 @@ struct FilterStep {
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
         boost::mpl::and_<
-            boost::integral_constant<bool, DataType::hasDataFlag( CONTAINER )>,
+            typename CheckDataFlagHelper<DataType>::is_container,
             boost::mpl::and_<has_iterator<typename DataType::value_type>, boost::mpl::not_<has_key_type<typename DataType::value_type> > >
         >,
     void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
@@ -399,7 +412,7 @@ struct FilterStep {
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
         boost::mpl::and_<
-            boost::integral_constant<bool, DataType::hasDataFlag( CONTAINER )>,
+            typename CheckDataFlagHelper<DataType>::is_container,
             has_key_type<typename DataType::value_type>
         >,
     void>::type applyFilter( const DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
@@ -480,7 +493,7 @@ struct FilterStep {
     // Specializations for arrays of non-containers i.e. actual data
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
-        boost::integral_constant<bool, DataType::hasDataFlag( ARRAY )>,
+        typename CheckDataFlagHelper<DataType>::is_array,
     void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
         //assert( matchesDataName( aData ) );
         if( !aIsLastStep ) {
@@ -522,7 +535,7 @@ struct FilterStep {
     // Specializations for non-containers i.e. actual data that is a single value
     template<typename DataType, typename DataVectorHandler>
     typename boost::enable_if<
-        boost::integral_constant<bool, DataType::hasDataFlag( SIMPLE )>,
+        typename CheckDataFlagHelper<DataType>::is_simple,
     void>::type applyFilter( DataType& aData, DataVectorHandler& aHandler, const bool aIsLastStep ) {
         //assert( matchesDataName( aData ) );
         if( !mNoFilters ) {

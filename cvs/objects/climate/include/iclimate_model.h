@@ -294,13 +294,15 @@ protected:
     /* We must declare all subclasses of IClimateModel in this interface to allow
      * automatic traversal of the hierarchy under introspection.
      */
-    DEFINE_DATA(
 #if USE_HECTOR
+    DEFINE_DATA(
         DEFINE_SUBCLASS_FAMILY( IClimateModel, MagiccModel, HectorModel )
-#else
-        DEFINE_SUBCLASS_FAMILY( IClimateModel, MagiccModel )
-#endif // USE_HECTOR
     )
+#else
+    DEFINE_DATA(
+        DEFINE_SUBCLASS_FAMILY(IClimateModel, MagiccModel)
+    )
+#endif // USE_HECTOR
 };
 
 // Inline definitions to avoid compiler warnings and errors.

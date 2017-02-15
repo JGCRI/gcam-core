@@ -206,10 +206,10 @@ struct Data {
  *                       must at least contain one of SIMPLE, ARRAY, or CONTAINER.
  * \param aDataName The human readable name.
  * \param aVarName The variable the user of the class will use for direct access to this Data.
- * \param aTypeDef The type definition of the member variable.
+ * \param aTypeDef (... / __VA_ARGS__) The type definition of the member variable.
  */
-#define DEFINE_VARIABLE( aDataTypeFlags, aDataName, aVarName, aTypeDef... ) \
-    ( aDataName, aVarName, BOOST_PP_VARIADIC_TO_SEQ( Data<aTypeDef, aDataTypeFlags> ) )
+#define DEFINE_VARIABLE( aDataTypeFlags, aDataName, aVarName, ... ) \
+    ( aDataName, aVarName, BOOST_PP_VARIADIC_TO_SEQ( Data<__VA_ARGS__, aDataTypeFlags> ) )
 
 /*!
  * \brief Identity transformation. To be used with FOR_EACH metafunction to Flatten the nesting of sequences one level.
@@ -303,10 +303,10 @@ struct Data {
  *          boost::mpl::at_c< DataVectorType, 0 >::type::value_type& mName= boost::fusion::at_c<0>( mDataVector ).mData;
  *          ```
  */
-#define DEFINE_DATA_INTERNAL( aDefList... ) \
-    typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_FOR_EACH( FLATTEN, BOOST_PP_EMPTY, UNZIP( 2, aDefList ) ) )> DataVectorType; \
-    boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type( BOOST_PP_SEQ_ENUM( UNZIP( 0, aDefList ) ) ); \
-    BOOST_PP_SEQ_FOR_EACH_I( MAKE_VAR_REF,  BOOST_PP_EMPTY, UNZIP( 1, aDefList ) )
+#define DEFINE_DATA_INTERNAL( ... ) \
+    typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( BOOST_PP_SEQ_FOR_EACH( FLATTEN, BOOST_PP_EMPTY, UNZIP( 2, __VA_ARGS__ ) ) )> DataVectorType; \
+    boost::fusion::result_of::as_vector<DataVectorType>::type DATA_VECTOR_NAME = boost::fusion::result_of::as_vector<DataVectorType>::type( BOOST_PP_SEQ_ENUM( UNZIP( 0, __VA_ARGS__ ) ) ); \
+    BOOST_PP_SEQ_FOR_EACH_I( MAKE_VAR_REF,  BOOST_PP_EMPTY, UNZIP( 1, __VA_ARGS__ ) )
 
 /*!
  * \brief A Macro to handle the special case where there are no Data definitions
@@ -322,8 +322,8 @@ struct Data {
  *        definitions.  We need to check explicitly since DEFINE_DATA_INTERNAL would
  *        generate invalid syntax if it's argument was infact empty.
  */
-#define DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList... ) \
-    BOOST_PP_IIF( BOOST_PP_IS_BEGIN_PARENS( aDefList ), DEFINE_DATA_INTERNAL, DEFINE_DATA_INTERNAL_EMPTY ) ( aDefList )
+#define DEFINE_DATA_INTERNAL_CHECK_ARGS( ... ) \
+    BOOST_PP_IIF( BOOST_PP_IS_BEGIN_PARENS( __VA_ARGS__ ), DEFINE_DATA_INTERNAL, DEFINE_DATA_INTERNAL_EMPTY ) ( __VA_ARGS__ )
 
 /*!
  * \brief Define data entry point.  In this definition a user must give a sequence
@@ -335,10 +335,10 @@ struct Data {
  *          The DEFINE_SUBCLASS_FAMILY macro can be used to create the SubClassFamilySeq
  *          argument.
  */
-#define DEFINE_DATA( aSubClassFamilySeq, aDefList... ) \
+#define DEFINE_DATA( aSubClassFamilySeq, ... ) \
     public: typedef boost::mpl::vector<BOOST_PP_SEQ_ENUM( aSubClassFamilySeq )> SubClassFamilyVector; \
     ACCEPT_EXPAND_DATA_VECTOR_METHOD( SubClassFamilyVector ) protected: \
-    DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList )
+    DEFINE_DATA_INTERNAL_CHECK_ARGS( __VA_ARGS__ )
 
 /*!
  * \brief Define data entry point which adds a typdef to give reference to the direct
@@ -347,15 +347,15 @@ struct Data {
  * \details The first argument is used to typeef the reference to the direct parent class,
  *          and the rest is given to DEFINE_DATA_INTERNAL to process the actual data definitions.
  */
-#define DEFINE_DATA_WITH_PARENT( aParentClass, aDefList... ) \
+#define DEFINE_DATA_WITH_PARENT( aParentClass, ... ) \
     public: typedef aParentClass ParentClass; \
     ACCEPT_EXPAND_DATA_VECTOR_METHOD( get_base_class<ParentClass>::type::SubClassFamilyVector ) protected: \
-    DEFINE_DATA_INTERNAL_CHECK_ARGS( aDefList )
+    DEFINE_DATA_INTERNAL_CHECK_ARGS( __VA_ARGS__ )
 
 /*!
  * \brief A helper to organize the subclass family members into a sequence.
  */
-#define DEFINE_SUBCLASS_FAMILY( aClassList... ) \
-    BOOST_PP_VARIADIC_TO_SEQ( aClassList )
+#define DEFINE_SUBCLASS_FAMILY( ... ) \
+    BOOST_PP_VARIADIC_TO_SEQ( __VA_ARGS__ )
 
 #endif // _DATA_DEFINITION_UTIL_H_

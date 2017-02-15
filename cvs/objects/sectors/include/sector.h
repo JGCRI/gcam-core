@@ -58,10 +58,10 @@
 #include "util/base/include/object_meta_info.h"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/data_definition_util.h"
+#include "util/base/include/summary.h"
 
 // Forward declarations
 class Subsector;
-class Summary;
 class ILogger;
 class GDP;
 class Tabs;
