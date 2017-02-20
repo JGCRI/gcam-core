@@ -95,7 +95,10 @@ private:
     //! Length of time in years to phase in no-cost MAC reductions
     int mZeroCostPhaseInTime;
     
-     //! Conversion factor if getting price from its own market.
+    //! Flag to determine where the MAC curves finds its price. -1: no MAC curve; 0: CO2 market; 1: market with own name
+    int mLookForOwnPrice;
+    
+    //! Conversion factor if getting price from its own market
     double mCovertPriceValue;
     
     //! Name of market to look for
@@ -103,9 +106,6 @@ private:
     
     //! Vintage year (year built) of parent technology
     int mVintageYear;
-    
-    //! (Optional) Year after which this mac will not operate
-    int mOperateOnlyBeforeVintageYear;
     
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;

@@ -68,7 +68,6 @@ mNoZeroCostReductions( false ),
 mCovertPriceValue( 1 ),
 mPriceMarketName( "CO2" ),
 mZeroCostPhaseInTime( 25 ),
-mOperateOnlyBeforeVintageYear( -1 ),
 mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
 {
 }
@@ -105,7 +104,6 @@ void MACControl::copy( const MACControl& aOther ){
     mZeroCostPhaseInTime = aOther.mZeroCostPhaseInTime;
     mCovertPriceValue = aOther.mCovertPriceValue;
     mPriceMarketName = aOther.mPriceMarketName;
-    mOperateOnlyBeforeVintageYear = aOther.mOperateOnlyBeforeVintageYear;
 }
 
 /*!
@@ -145,9 +143,6 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
     else if ( aNodeName == "market-name" ){
         mPriceMarketName = XMLHelper<string>::getValue( aCurrNode );
     }
-    else if ( aNodeName == "operate-only-before-vintage-year" ){
-        mOperateOnlyBeforeVintageYear = XMLHelper<Value>::getValue( aCurrNode );
-    }
     else{
         return false;
     }    
@@ -168,7 +163,6 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );    
     XMLWriteElement( mCovertPriceValue, "mac-price-conversion", aOut, aTabs );
     XMLWriteElement( mPriceMarketName, "market-name", aOut, aTabs );
-    XMLWriteElementCheckDefault( mOperateOnlyBeforeVintageYear, "operate-only-before-vintage-year", aOut, aTabs, -1 );
 }
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
@@ -181,10 +175,13 @@ void MACControl::completeInit( const string& aRegionName, const string& aSectorN
                                const IInfo* aTechInfo )
 {
     scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName, aRegionName, "CO2", aRegionName );
-    // If no value read in then reset to default - operate mac over all years
-    if ( mOperateOnlyBeforeVintageYear < 0 ) {
-        mOperateOnlyBeforeVintageYear = scenario->getModeltime()->getEndYear() + 1;
+
+    if ( mMacCurve->getMaxX() == -DBL_MAX ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "MAC Curve " << getName() << " appears to have no data. " << endl;
     }
+    
 }
 
 void MACControl::initCalc( const string& aRegionName,
@@ -192,13 +189,6 @@ void MACControl::initCalc( const string& aRegionName,
                            const NonCO2Emissions* parentGHG,
                            const int aPeriod )
 {
-    // TODO: Figure out what gas this is & print more meaningful information
-    if ( mMacCurve->getMaxX() == -DBL_MAX ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "MAC Curve appears to have no data. " << endl;
-    }
-
     // Default to current year for objects that do not report a vintage (such as resources)
     mVintageYear = scenario->getModeltime()->getper_to_yr( aPeriod );
 
@@ -232,17 +222,7 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
         reduction = 0.0;
     }
 
-    // If technology vintage is > than specified year, do not operate
-    // Still include below zero reductions (for consistency with ref case) unless explicitly turned off
-    if ( mVintageYear >= mOperateOnlyBeforeVintageYear ) {
-        if( mNoZeroCostReductions && emissionsPrice == 0.0 ) {
-            reduction = 0.0;
-        } else {
-            reduction = getMACValue( 0.0 );
-        }
-    }
-
-    /*!  Adjust to smoothly phase-in "no-cost" emission reductions
+   /*!  Adjust to smoothly phase-in "no-cost" emission reductions
      Some MAC curves have non-zero abatement at zero emissions price. Unless the users sets
      mNoZeroCostReductions, this reduction will occur even without an emissions price. This
      code smoothly phases in this abatement so that a sudden change in emissions does not
@@ -281,7 +261,6 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
 /*! \brief Get MAC curve value
  *  Wrapper function that takes care of error handling for MAC curve values.
  *  If there is an error, a value of zero is returned and a message is logged.
- *  Errors can happen if no MAC curve values are read in, although perhaps other error situations can occur.
  * \param aCarbonPrice carbon price
  */
 double MACControl::getMACValue( const double aCarbonPrice ) const {
@@ -292,8 +271,13 @@ double MACControl::getMACValue( const double aCarbonPrice ) const {
 
     double reduction = mMacCurve->getY( effectiveCarbonPrice );
 
-    // Check to see if an error has occurred.
-    if ( reduction == -DBL_MAX ) {
+    // If no mac curve read in then reduction should be zero.
+    // This is a legitimate option for a user to remove a mac curve
+    if ( mMacCurve->getMinX() == mMacCurve->getMaxY() == 0 ) {
+        reduction = 0;
+    }
+    // Check to see if some other error has occurred
+    else if ( reduction == -DBL_MAX ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << " An error occured when evaluating MAC curve for a GHG." << endl;

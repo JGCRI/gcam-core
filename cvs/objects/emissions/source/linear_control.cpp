@@ -156,6 +156,12 @@ void LinearControl::completeInit( const string& aRegionName, const string& aSect
                                const IInfo* aTechInfo )
 {
 
+    if ( ( mTargetYear == 0 ) || !mFinalEmCoefficient.isInited() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Linear control function " << getName() << " has not been parameterized. " << endl;
+    }
+    
 }
 
 void LinearControl::initCalc( const string& aRegionName,
@@ -163,13 +169,6 @@ void LinearControl::initCalc( const string& aRegionName,
                            const NonCO2Emissions* parentGHG,
                            const int aPeriod )
 {
-    // TODO: Figure out what gas this is & print more meaningful information
-    if ( ( mTargetYear == 0 ) || !mFinalEmCoefficient.isInited() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Linear control function has not been parameterized. " << endl;
-    }
-    
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
     double baseYear = scenario->getModeltime()->getper_to_yr( finalCalibPer );
 
