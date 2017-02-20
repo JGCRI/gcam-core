@@ -411,6 +411,7 @@ void Technology::completeInit( const string& aRegionName,
     }
 
     // For GHGs create a new info object so we can pass the vintage year
+    // since aSubsectorInfo is const and can't be changed here
     std::auto_ptr<IInfo> infoForGHGs;
     infoForGHGs.reset( InfoFactory::constructInfo( aSubsectorInfo, aSubsectorName + "-" + mName ) );
     
