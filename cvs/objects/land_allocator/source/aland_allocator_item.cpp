@@ -61,7 +61,8 @@ ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
     : mParent( aParent ), 
       mLandAllocation( 0.0 ),
       mShare( -1.0 ), // this is so initialization can be checked.
-      mProfitRate( 0.0 ), 
+      mProfitRate( 0.0 ),
+      mIsGhostShareRelativeToDominantCrop( false ),
       mType( aType ),
       mIsLandExpansionCost( false )
 {
@@ -128,10 +129,30 @@ void ALandAllocatorItem::calculateShareWeights( const string& aRegionName,
     // we do that now with the current profit rate in the final calibration period.
     const Modeltime* modeltime = scenario->getModeltime();
     if( aPeriod == modeltime->getFinalCalibrationPeriod() ) {
+        double shareAdj = 1.0;
+        double profitRateForCal = mProfitRate[ aPeriod ];
+        if( mIsGhostShareRelativeToDominantCrop ) {
+            double newCropAvgProfitRate;
+            getObservedAverageProfitRate( newCropAvgProfitRate, shareAdj, aPeriod );
+            double dominantCropAvgProfitRate;
+            const ALandAllocatorItem* maxChild = getParent()->getChildWithHighestShare( aPeriod );
+            if( maxChild ) {
+                maxChild->getObservedAverageProfitRate( dominantCropAvgProfitRate, shareAdj, aPeriod );
+                profitRateForCal *= dominantCropAvgProfitRate / newCropAvgProfitRate;
+            }
+            else {
+                // there are no valid crops in this nest and we were instructed to make the ghost share
+                // profit rate relative to them so we will zero out this land item.
+                for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
+                    mShareWeight[ futurePer ] = 0.0;
+                }
+                return;
+            }
+        }
         for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
             if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
-                double profitRateForCal = mProfitRate[ aPeriod ];
-                mShareWeight[ futurePer ] = aChoiceFnAbove->calcShareWeight( mGhostUnormalizedShare[ futurePer ],
+                
+                mShareWeight[ futurePer ] = aChoiceFnAbove->calcShareWeight( mGhostUnormalizedShare[ futurePer ] /* * shareAdj */,
                                                                              profitRateForCal,
                                                                              futurePer );
             }
@@ -148,6 +169,7 @@ void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTa
     XMLWriteElement( mShare[ aPeriod ], "share", aOut, aTabs );
     XMLWriteElement( mShareWeight[ aPeriod ], "share-weight", aOut, aTabs );
     XMLWriteElement( mGhostUnormalizedShare[ aPeriod ], "ghost-unnormalized-share", aOut, aTabs );
+    XMLWriteElement( mIsGhostShareRelativeToDominantCrop, "is-ghost-share-relative", aOut, aTabs );
 
     // if we are in the final calibration year and we have "ghost" share-weights to calculate it
     // would be useful to see what was calculated.

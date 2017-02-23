@@ -378,6 +378,31 @@ public:
     virtual void resetCalLandAllocation( const std::string& aRegionName,
                                             double aNewLandAllocation,
                                         const int aPeriod ) {}
+    
+    /*!
+     * \brief Get the actual average profit rate in a calibration year at this
+     *        land item.
+     * \details This will use the actual profit rate and the calibration shares
+     *          to come up with the average.  Note if this item does not exist in
+     *          the calibration but has a "ghost" share that will be used instead
+     *          to calculate the average profite rate.
+     * \param aProfitRate [out] Return the average profit rate at this item.
+     * \param aShare [out] Return the appropriate share to use if further weighting
+     *               is necessary.
+     * \param aPeriod Model Period.
+     * \return The observed average profite rate at this land item.
+     */
+    virtual void getObservedAverageProfitRate( double& aProfitRate, double& aShare, const int aPeriod ) const = 0;
+    
+    /*!
+     * \brief Get the child that has the highest share.
+     * \note Unmanaged land leaves are not considered.
+     * \param aPeriod Model period.
+     * \return The child land item that has the highest share.  Note that it may
+     *         be null if for instance only unmanged land leaves are available or
+     *         all shares are zero.
+     */
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const int aPeriod ) const = 0;
 
     void setShare( const double aShare,
                    const int aPeriod );
@@ -422,6 +447,12 @@ protected:
     //! get if it was available in the final calibration period at the profit rate
     //! calculated in the final calibration period.
     objects::PeriodVector<Value> mGhostUnormalizedShare;
+    
+    //! A flag to indicate that this land item intends to use it's ghost share in
+    //! in terms of the share it would recieve if it's average profitability were
+    //! the same as.. TODO!!! finish off this comment when we figure out exactly
+    //! what we want out of it.
+    bool mIsGhostShareRelativeToDominantCrop;
     
     //! Name of the land allocator item. This is the name of the product for
     //! leafs and name of the type of land for nodes.

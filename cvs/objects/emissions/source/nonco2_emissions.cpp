@@ -75,6 +75,7 @@ mGDP( 0 )
 
 //! Default destructor.
 NonCO2Emissions::~NonCO2Emissions(){
+    clear();
 }
 
 //! Copy constructor.

@@ -146,7 +146,11 @@ public:
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
-           
+    
+    virtual void getObservedAverageProfitRate( double& aProfitRate, double& aShare, const int aPeriod ) const;
+    
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const int aPeriod ) const;
+    
 	virtual bool isUnmanagedLandLeaf( )  const;
 
     virtual void accept( IVisitor* aVisitor, 

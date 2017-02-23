@@ -140,6 +140,9 @@ bool LandNode::XMLParse( const xercesc::DOMNode* aNode ){
         else if( nodeName == "ghost-unnormalized-share" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mGhostUnormalizedShare, scenario->getModeltime() );
         }
+        else if( nodeName == "is-ghost-share-relative" ){
+            mIsGhostShareRelativeToDominantCrop = XMLHelper<bool>::getValue( curr );
+        }
         else if( nodeName == "unManagedLandValue" ){
             mUnManagedLandValue = XMLHelper<double>::getValue( curr );
         }
@@ -171,6 +174,7 @@ void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
             XMLWriteElement( mGhostUnormalizedShare[ period ], "ghost-unnormalized-share", out, tabs, year );
         }
     }
+    XMLWriteElementCheckDefault( mIsGhostShareRelativeToDominantCrop, "is-ghost-share-relative", out, tabs, false );
     XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
 
     if( mLandUseHistory.get() ){
@@ -607,6 +611,48 @@ double LandNode::getCalLandAllocation( const LandAllocationType aType,
         sum += mChildren[ i ]->getCalLandAllocation( aType, aPeriod );
     }
     return sum;
+}
+
+void LandNode::getObservedAverageProfitRate( double& aProfitRate, double& aShare,
+                                             const int aPeriod ) const
+{
+    aProfitRate = 0.0;
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        double currProfitRate;
+        double currShare;
+        mChildren[ i ]->getObservedAverageProfitRate( currProfitRate, currShare, aPeriod );
+        aProfitRate += currShare * currProfitRate;
+    }
+    
+    // If this leaf has a calibration share return that and if not try for a ghost
+    // share.
+    if( mShare[ aPeriod ] > 0 ) {
+        aShare = mShare[ aPeriod ];
+    }
+    else {
+        const Modeltime* modeltime = scenario->getModeltime();
+        for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
+            if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
+                aShare = mGhostUnormalizedShare[ futurePer ];
+                return;
+            }
+        }
+        // If we get here then there was no ghost share either so just set a share
+        // of zero.
+        aShare = 0.0;
+    }
+}
+
+const ALandAllocatorItem* LandNode::getChildWithHighestShare( const int aPeriod ) const {
+    double maxShare = 0.0;
+    const ALandAllocatorItem* maxChild = 0;
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        if( !mChildren[ i ]->isUnmanagedLandLeaf() && mChildren[ i ]->getShare( aPeriod ) > maxShare ) {
+            maxShare = mChildren[ i ]->getShare( aPeriod );
+            maxChild = mChildren[ i ];
+        }
+    }
+    return maxChild;
 }
 
 void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {

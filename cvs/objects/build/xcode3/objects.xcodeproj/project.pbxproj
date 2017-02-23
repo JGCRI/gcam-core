@@ -2873,6 +2873,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs/tbb/lib";
 				PRODUCT_NAME = objects;
 			};
 			name = Debug;
@@ -2886,6 +2887,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs/tbb/lib";
 				PRODUCT_NAME = objects;
 			};
 			name = Release;
@@ -3030,6 +3032,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs/tbb/lib";
 				PRODUCT_NAME = objects;
 			};
 			name = "Release - LAPACK";
@@ -3096,6 +3099,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
+				LD_RUNPATH_SEARCH_PATHS = "../libs/xercesc/lib ../libs/java/lib ../libs/boost-lib/stage/lib ../libs/tbb/lib";
 				PRODUCT_NAME = objects;
 			};
 			name = "Release - TBB";

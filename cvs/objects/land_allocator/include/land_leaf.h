@@ -132,6 +132,10 @@ public:
     virtual void resetCalLandAllocation( const std::string& aRegionName,
                                             double aNewLandAllocation,
                                             const int aPeriod );
+    
+    virtual void getObservedAverageProfitRate( double& aProfitRate, double& aShare, const int aPeriod ) const;
+    
+    virtual const ALandAllocatorItem* getChildWithHighestShare( const int aPeriod ) const;
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
