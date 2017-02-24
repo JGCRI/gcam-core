@@ -8,7 +8,7 @@
 #' @param quiet Logical - suppress messages?
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @details The data frames read in are marked as inputs, not ones that have
-#' been computed, via \code{\link{add_dscomments}}.
+#' been computed, via \code{\link{add_comments}}.
 #' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
 load_csv_files <- function(filenames, quiet = FALSE, ...) {
@@ -20,7 +20,7 @@ load_csv_files <- function(filenames, quiet = FALSE, ...) {
     if(!quiet) cat("Loading", f, "...\n")
     fqfn <- find_csv_file(f, quiet = quiet)
     suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
-      add_dsflags(FLAG_INPUT_DATA) ->
+      add_flags(FLAG_INPUT_DATA) ->
       filedata[[f]]
   }
   filedata
@@ -68,8 +68,8 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
     suppressWarnings(file.remove(fqfn))
 
     cd <- chunkdata[[cn]]
-    cmnts <- get_dscomments(cd)
-    flags <- get_dsflags(cd)
+    cmnts <- get_comments(cd)
+    flags <- get_flags(cd)
 
     # If these data have been tagged as input data, don't write
     if(FLAG_NO_OUTPUT %in% flags |
@@ -96,14 +96,19 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
 #' Get a list of chunks in this package.
 #' These are functions with a name of "module_{modulename}_{chunkname}".
 #' @param pattern Regular expression pattern to search for
+#' @param include_disabled Return names of disabled chunks?
 #' @return A data frame with fields 'name', 'module', and 'chunk'.
+#' @details If a chunk name ends with \code{_DISABLED}, by default its name
+#' will not be returned.
 #' @importFrom magrittr "%>%"
 #' @export
-find_chunks <- function(pattern = "^module_[a-zA-Z-]*_.*$") {
+find_chunks <- function(pattern = "^module_[a-zA-Z-]*_.*$", include_disabled = FALSE) {
   assertthat::assert_that(is.character(pattern))
 
   ls(name = parent.env(environment()), pattern = pattern) %>%
-    tibble::tibble(name = .) %>%
+    tibble::tibble(name = .,
+                   disabled = grepl("_DISABLED$", name)) %>%
+    filter(include_disabled | !disabled) %>%
     tidyr::separate(name, into = c("x", "module", "chunk"), remove = FALSE,
                     sep = "_", extra = "merge") %>%
     dplyr::select(-x)
