@@ -149,9 +149,9 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     makeoutputs_string <- rep(NA, length(writedata_string))
     for(i in seq_along(writedata_string)) {
       if(dataprefix[i] == "") {
-        txt <- "add_dsflags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR)"
+        txt <- "add_flags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR)"
       } else {
-        txt <- "add_dsflags(FLAG_NO_TEST) %>%\n  add_xml_data()"
+        txt <- "add_flags(FLAG_NO_TEST) %>%\n  add_xml_data()"
       }
       makeoutputs_string[i] <- paste("tibble() %>%\n  ", txt, "->\n  ", writedata_string[i])
     }

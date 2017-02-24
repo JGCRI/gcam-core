@@ -49,10 +49,10 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
     filter(year %in% HISTORICAL_YEARS, !is.na(value), !is.na(iso)) %>%
     mutate(value = value * CONV_BIL_MIL / CONV_1990_2005_USD) %>%
     select(-Country) %>%
-    add_dscomments(c("Historical GDP downscaled to country (iso)",
+    add_comments(c("Historical GDP downscaled to country (iso)",
                      "Unit = million 1990 US dollars")) %>%
     # flag that this dataset is in different form from original
-    add_dsflags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
+    add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     L100.gdp_mil90usd_ctry_Yh
 
   return_data(L100.gdp_mil90usd_ctry_Yh)
@@ -291,7 +291,7 @@ socioeconomics_L102.GDP_makedata <- function(all_data) {
 
   # TODO temporary
   tibble() %>%
-    add_dsflags(FLAG_NO_TEST) ->
+    add_flags(FLAG_NO_TEST) ->
     L102.PPP_MER_R
   return_data(L102.PPP_MER_R)
 }
@@ -409,7 +409,7 @@ socioeconomics_L101.Population_makedata <- function(all_data) {
 
   # TODO temporary
   tibble() %>%
-    add_dsflags(FLAG_NO_TEST) ->
+    add_flags(FLAG_NO_TEST) ->
     L101.Pop_thous_R_Yh ->
     L101.Pop_thous_SSP_R_Yfut ->
     L101.Pop_thous_GCAM3_R_Y ->
@@ -660,7 +660,7 @@ socioeconomics_L100.Population_downscale_ctry_makedata <- function(all_data) {
 
   # TODO: temporary
   tibble() %>%
-    add_dsflags(FLAG_NO_TEST) ->
+    add_flags(FLAG_NO_TEST) ->
     L100.Pop_thous_ctry_Yh ->
     L100.Pop_thous_SSP_ctry_Yfut
   return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)

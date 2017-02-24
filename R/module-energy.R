@@ -82,7 +82,7 @@ energy_LA113.MSW <- function(all_data) {
          curve.exponent = unique(A13.MSW_curves$`curve-exponent`),
          gdpSupplyElast = unique(A13.MSW_curves$gdpSupplyElast)) %>%
     left_join(L113.MSW_maxSubResource[c(GCAM_REGION_ID, "maxSubResource")], by = GCAM_REGION_ID) %>%
-    add_dscomments(c("MSW resource curves by GCAM region", "Unit = EJ")) ->
+    add_comments(c("MSW resource curves by GCAM region", "Unit = EJ")) ->
     L113.RsrcCurves_EJ_R_MSW
 
   # 2b. Historical biomass prices (currently determined at global level, so no level 1

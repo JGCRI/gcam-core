@@ -23,18 +23,18 @@ test_that("commenting system works", {
   cmnt <- "test"
   d <- tibble::tibble()
   c1 <- comment(d)
-  d <- add_dscomments(d, cmnt)
+  d <- add_comments(d, cmnt)
   expect_gt(length(comment(d)), length(c1))
-  expect_equal(get_dscomments(d), cmnt)
+  expect_equal(get_comments(d), cmnt)
 })
 
 test_that("commenting system works", {
   flag <- "test"
   d <- tibble::tibble()
-  c1 <- get_dsflags(d)
-  d <- add_dsflags(d, flag)
-  expect_gt(length(get_dsflags(d)), length(c1))
-  expect_equal(get_dsflags(d), flag)
+  c1 <- get_flags(d)
+  d <- add_flags(d, flag)
+  expect_gt(length(get_flags(d)), length(c1))
+  expect_equal(get_flags(d), flag)
 })
 
 test_that("return_data works", {

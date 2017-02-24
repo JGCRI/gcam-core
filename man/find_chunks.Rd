@@ -4,10 +4,12 @@
 \alias{find_chunks}
 \title{find_chunks}
 \usage{
-find_chunks(pattern = "^module_[a-zA-Z-]*_.*$")
+find_chunks(pattern = "^module_[a-zA-Z-]*_.*$", include_disabled = FALSE)
 }
 \arguments{
 \item{pattern}{Regular expression pattern to search for}
+
+\item{include_disabled}{Return names of disabled chunks?}
 }
 \value{
 A data frame with fields 'name', 'module', and 'chunk'.
@@ -15,5 +17,9 @@ A data frame with fields 'name', 'module', and 'chunk'.
 \description{
 Get a list of chunks in this package.
 These are functions with a name of "module_{modulename}_{chunkname}".
+}
+\details{
+If a chunk name ends with \code{_DISABLED}, by default its name
+will not be returned.
 }
 

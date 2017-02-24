@@ -40,7 +40,7 @@ test_that("save_chunkdata saves", {
 
 test_that("save_chunkdata does comments and flags", {
   cmnts <- c("this", "is", "a", "test")
-  df <- add_dscomments(tibble::tibble(x = 1:3), cmnts)
+  df <- add_comments(tibble::tibble(x = 1:3), cmnts)
   all_data <- add_data(return_data(df), empty_data())
   td <- tempdir()
   save_chunkdata(all_data, outputs_dir = td)
@@ -52,7 +52,7 @@ test_that("save_chunkdata does comments and flags", {
   expect_equal(lines1[1:length(cmnts)], paste(COMMENT_CHAR, cmnts))
 
   flags <- c("FLAG1", "FLAG2")
-  df <- add_dsflags(df, flags)
+  df <- add_flags(df, flags)
   all_data <- add_data(return_data(df), empty_data())
   save_chunkdata(all_data, outputs_dir = td)
   lines2 <- readLines(out)

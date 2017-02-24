@@ -21,6 +21,6 @@ Load one or more internal, i.e. included with the package, csv (or csv.gz) data 
 }
 \details{
 The data frames read in are marked as inputs, not ones that have
-been computed, via \code{\link{add_dscomments}}.
+been computed, via \code{\link{add_comments}}.
 }
 

@@ -5,7 +5,23 @@
 # Everyone accesses the data store through add_data, get_data, etc.
 
 
-#' add_dscomments
+#' add_title
+#'
+#' Add character units to a data system object. Units are written out
+#' with the data when the file is saved.
+#'
+#' @param x An object
+#' @param title Title of object (character)
+#' @return \code{x} with units appended to any existing comments.
+add_title <- function(x, title) {
+  assertthat::assert_that(is.character(title))
+  assertthat::assert_that(is.null(attr(x, "title"))) # not allowed to overwrite title
+  attr(x, "title") <- title
+  x
+}
+
+
+#' add_comments
 #'
 #' Add character comments to a data system object. Comments are written out
 #' with the data when the file is saved.
@@ -13,23 +29,55 @@
 #' @param x An object
 #' @param comments A character vector of comments
 #' @return \code{x} with comments appended to any existing comments.
-add_dscomments <- function(x, comments) {
+add_comments <- function(x, comments) {
   assertthat::assert_that(is.character(comments))
   comment(x) <- c(comment(x), comments)
   x
 }
 
 
-#' get_dscomments
+#' get_comments
 #'
 #' @param x An object
 #' @return Comments attached to \code{x}.
-get_dscomments <- function(x) {
+get_comments <- function(x) {
   comment(x)
 }
 
+#' add_units
+#'
+#' Add character units to a data system object. Units are written out
+#' with the data when the file is saved.
+#'
+#' @param x An object
+#' @param variable Variable name (character)
+#' @param units Units (character)
+#' @return \code{x} with units appended to any existing comments.
+add_units <- function(x, variable, units) {
+  assertthat::assert_that(is.character(variable))
+  assertthat::assert_that(is.character(units))
+  assertthat::assert_that(is.null(attr(x, "units"))) # not allowed to overwrite units
+  attr(x, "units") <- units
+  x
+}
 
-#' add_dsflag
+
+#' add_precursors
+#'
+#' Add names of precursors to a data system object. This allows for granular tracking
+#' of dependencies across the data system.
+#'
+#' @param x An object
+#' @param ... Names of precursor objects (character)
+#' @return \code{x} with units appended to any existing comments.
+add_precursors <- function(x, ...) {
+  pc <- as.character(list(...))
+  attr(x, "precursors") <- c(attr(x, "precursors"), pc)
+  x
+}
+
+
+#' add_flags
 #'
 #' Add character flags to a data system object. Flags are used internally, and in some
 #' cases (for testing data) are written out with the data when the file is saved.
@@ -37,18 +85,18 @@ get_dscomments <- function(x) {
 #' @param x An object
 #' @param ... One or more flags (that can be coerced to character)
 #' @return \code{x} with flags appended to any existing flags
-add_dsflags <- function(x, ...) {
+add_flags <- function(x, ...) {
   flags <- paste(..., collapse = " ")
   attr(x, "flags") <- c(attr(x, "flags"), flags)
   x
 }
 
 
-#' get_dsflags
+#' get_flags
 #'
 #' @param x An object
 #' @return Flags attached to \code{x}.
-get_dsflags <- function(x) {
+get_flags <- function(x) {
   attr(x, "flags")
 }
 

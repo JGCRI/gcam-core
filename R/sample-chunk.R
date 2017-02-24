@@ -31,13 +31,13 @@ module_sample_sample <- function(command, ...) {
 
     # Produce outputs, add appropriate flags and comments
     input1 %>%
-      add_dsflags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
-      add_dscomments("Sample chunk output") ->
+      add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
+      add_comments("Sample chunk output") ->
       first_output
 
     input2 %>%
-      add_dsflags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
-      add_dscomments("Sample chunk output") ->
+      add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
+      add_comments("Sample chunk output") ->
       second_output
 
     return_data(first_output, second_output)
