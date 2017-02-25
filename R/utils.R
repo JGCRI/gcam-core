@@ -158,7 +158,7 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
     reqdata <- eval(cl)
 
-    # Chunks mark their file inputs specially, using vector names
+    # Chunks mark any XML file outputs using vector names
     if(is.null(names(reqdata))) {
       fileoutputs <- FALSE
     } else {

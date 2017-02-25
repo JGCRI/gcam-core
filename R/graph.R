@@ -7,16 +7,24 @@
 #'
 #' @param chunklist A tibble of chunks
 #' @param plot_gcam Plot a node for GCAM (all XMLs feed to)?
+#' @param include_disabled Plots nodes of disabled chunks?
 #' @return A plot
 #' @export
-graph_chunks <- function(chunklist = find_chunks(), plot_gcam = TRUE) {
+graph_chunks <- function(chunklist, plot_gcam = FALSE, include_disabled = FALSE) {
 
+  if(missing(chunklist)) {
+    chunklist <- find_chunks(include_disabled = include_disabled)
+  }
   chunkinputs <- chunk_inputs(chunklist$name)
   chunkoutputs <- chunk_outputs(chunklist$name)
 
   if(plot_gcam) {
-    xml_outputs <- tibble(name="GCAM", input=filter(chunkoutputs, to_xml)$output, from_file = FALSE)
-    chunkinputs <- bind_rows(chunkinputs, xml_outputs)
+    chunkoutputs %>%
+      rename(input = output) %>%
+      mutate(name = "GCAM", from_file = FALSE) %>%
+      filter(to_xml) %>%
+      bind_rows(chunkinputs) ->
+      chunkinputs
     tibble(name = "GCAM", module = "GCAM", chunk = "GCAM") %>%
       bind_rows(chunklist) ->
       chunklist
