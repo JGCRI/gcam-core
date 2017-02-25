@@ -22,13 +22,13 @@ test_that("handle empty input", {
 test_that("commenting system works", {
   cmnt <- "test"
   d <- tibble::tibble()
-  c1 <- comment(d)
+  c1 <- get_comments(d)
   d <- add_comments(d, cmnt)
-  expect_gt(length(comment(d)), length(c1))
+  expect_gt(length(get_comments(d)), length(c1))
   expect_equal(get_comments(d), cmnt)
 })
 
-test_that("commenting system works", {
+test_that("flag system works", {
   flag <- "test"
   d <- tibble::tibble()
   c1 <- get_flags(d)

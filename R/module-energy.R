@@ -42,7 +42,7 @@ energy_LA113.MSW <- function(all_data) {
   A13.MSW_curves <- get_data(all_data, "energy/A13.MSW_curves.csv")
 
   # Perform computations 2a. Municipal solid waste supply curves
-  # printlog("Downscaling GCAM 3.0 MSW supply curves to countries on the basis of GDP")
+  # Downscale GCAM 3.0 MSW supply curves to countries on the basis of GDP
   # Calculate GDP shares of GCAM regions within region_GCAM3
   L100.gdp_mil90usd_ctry_Yh %>%
     PH_year_value_historical %>%
@@ -59,8 +59,8 @@ energy_LA113.MSW <- function(all_data) {
     mutate(maxSubResource = share * maxSubResource) ->
     L113.GDP_ctry
 
-  # printlog("Aggregating country-level MSW resources to GCAM regions")
-  # printlog("NOTE: this method assumes that all regions have the same curve shape parameters")
+  # Aggregate country-level MSW resources to GCAM regions
+  # This method assumes that all regions have the same curve shape parameters
   if(length(unique(A13.MSW_curves$resource)) > 1 |
      length(unique(A13.MSW_curves$subresource)) > 1 |
      length(unique(A13.MSW_curves$`mid-price`)) > 1 |
@@ -82,7 +82,14 @@ energy_LA113.MSW <- function(all_data) {
          curve.exponent = unique(A13.MSW_curves$`curve-exponent`),
          gdpSupplyElast = unique(A13.MSW_curves$gdpSupplyElast)) %>%
     left_join(L113.MSW_maxSubResource[c(GCAM_REGION_ID, "maxSubResource")], by = GCAM_REGION_ID) %>%
-    add_comments(c("MSW resource curves by GCAM region", "Unit = EJ")) ->
+
+    # Documentation
+    add_title("Municipal solid waste resource curves by GCAM region") %>%
+    add_units("EJ") %>%
+    add_comments("Downscale GCAM 3.0 MSW supply curves to countries on GDP basis; aggregate to GCAM regions") %>%
+    add_precursors("L100.gdp_mil90usd_ctry_Yh",
+                   "energy/A13.MSW_curves.csv",
+                   "common/iso_GCAM_regID.csv") ->
     L113.RsrcCurves_EJ_R_MSW
 
   # 2b. Historical biomass prices (currently determined at global level, so no level 1

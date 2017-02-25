@@ -5,6 +5,11 @@
 # Everyone accesses the data store through add_data, get_data, etc.
 
 
+ATTR_TITLE <- "title"
+ATTR_UNITS <- "units"
+ATTR_COMMENTS <- "comments"
+ATTR_PRECURSORS <- "precursors"
+
 #' add_title
 #'
 #' Add character units to a data system object. Units are written out
@@ -15,8 +20,11 @@
 #' @return \code{x} with units appended to any existing comments.
 add_title <- function(x, title) {
   assertthat::assert_that(is.character(title))
-  assertthat::assert_that(is.null(attr(x, "title"))) # not allowed to overwrite title
-  attr(x, "title") <- title
+
+  if(!is.null(attr(x, ATTR_TITLE))) {
+    stop("Not allowed to overwrite current title '", attr(x, ATTR_TITLE), "'")
+  }
+  attr(x, ATTR_TITLE) <- title
   x
 }
 
@@ -31,7 +39,7 @@ add_title <- function(x, title) {
 #' @return \code{x} with comments appended to any existing comments.
 add_comments <- function(x, comments) {
   assertthat::assert_that(is.character(comments))
-  comment(x) <- c(comment(x), comments)
+  attr(x, ATTR_COMMENTS) <- c(attr(x, ATTR_COMMENTS), comments)
   x
 }
 
@@ -41,7 +49,7 @@ add_comments <- function(x, comments) {
 #' @param x An object
 #' @return Comments attached to \code{x}.
 get_comments <- function(x) {
-  comment(x)
+  attr(x, ATTR_COMMENTS)
 }
 
 #' add_units
@@ -53,11 +61,9 @@ get_comments <- function(x) {
 #' @param variable Variable name (character)
 #' @param units Units (character)
 #' @return \code{x} with units appended to any existing comments.
-add_units <- function(x, variable, units) {
-  assertthat::assert_that(is.character(variable))
+add_units <- function(x, units) {
   assertthat::assert_that(is.character(units))
-  assertthat::assert_that(is.null(attr(x, "units"))) # not allowed to overwrite units
-  attr(x, "units") <- units
+  attr(x, ATTR_UNITS) <- c(attr(x, ATTR_UNITS), units)
   x
 }
 
@@ -72,7 +78,7 @@ add_units <- function(x, variable, units) {
 #' @return \code{x} with units appended to any existing comments.
 add_precursors <- function(x, ...) {
   pc <- as.character(list(...))
-  attr(x, "precursors") <- c(attr(x, "precursors"), pc)
+  attr(x, ATTR_PRECURSORS) <- c(attr(x, ATTR_PRECURSORS), pc)
   x
 }
 
@@ -127,7 +133,17 @@ get_data <- function(all_data, name) {
 return_data <- function(...) {
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]
-  dots
+
+  # Check that the chunk has provided required data for all objects
+  for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_PRECURSORS)) {
+    for(obj in names(dots)) {
+      if(is.null(attr(dots[[obj]], at))) {
+        warning("No '", at, "' attached to ", obj)
+      }
+    }
+  }
+
+    dots
 }
 
 

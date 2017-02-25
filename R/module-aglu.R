@@ -292,46 +292,101 @@ aglu_LA100.FAO_downscale_ctry_makedata <- function(all_data) {
   }
 
   # Add description, units, process (done above), and precursor information
+
   L100.FAO_ag_HA_ha %>%
-    add_title("FAO agricultural harvested area by country / item / year") %>%
-    add_units("FAO_ag_HA_ha", "t") %>%
+    add_title("FAO agricultural harvested area by country, item, year") %>%
+    add_units("t") %>%
     add_precursors("aglu/FAO_ag_HA_ha_PRODSTAT", "aglu/AGLU_ctry") ->
     L100.FAO_ag_HA_ha
-
-  L100.FAO_ag_Prod_t <- add_comments(L100.FAO_ag_Prod_t,
-                                     c("FAO agricultural production by country / item / year", "Unit = t"))
-  L100.FAO_ag_Exp_t <- add_comments(L100.FAO_ag_Exp_t,
-                                    c("FAO agricultural exports by country / item / year", "Unit = t"))
-  L100.FAO_ag_Feed_t <- add_comments(L100.FAO_ag_Feed_t,
-                                     c("FAO agricultural feed by country / item / year", "Unit = t"))
-  L100.FAO_ag_Food_t <- add_comments(L100.FAO_ag_Food_t,
-                                     c("FAO agricultural food consumption by country / item / year", "Unit = t"))
-  L100.FAO_ag_Imp_t <- add_comments(L100.FAO_ag_Imp_t,
-                                    c("FAO agricultural imports by country / item / year", "Unit = t"))
-  L100.FAO_an_Exp_t <- add_comments(L100.FAO_an_Exp_t,
-                                    c("FAO agricultural exports by country / item / year", "Unit = t"))
-  L100.FAO_an_Food_t <- add_comments(L100.FAO_an_Food_t,
-                                     c("FAO animal food consumption by country / item / year", "Unit = t"))
-  L100.FAO_an_Imp_t <- add_comments(L100.FAO_an_Imp_t,
-                                    c("FAO animal imports by country / item / year", "Unit = t"))
-  L100.FAO_an_Prod_t <- add_comments(L100.FAO_an_Prod_t,
-                                     c("FAO animal production by country / item / year", "Unit = t"))
-  L100.FAO_CL_kha <- add_comments(L100.FAO_CL_kha,
-                                  c("FAO cropland area by country / year", "Unit = kha"))
-  L100.FAO_fallowland_kha <- add_comments(L100.FAO_fallowland_kha,
-                                          c("FAO fallow land area by country / year", "Unit = kha"))
-  L100.FAO_harv_CL_kha <- add_comments(L100.FAO_harv_CL_kha,
-                                       c("FAO harvested cropland (temporary crops) by country / year", "Unit = kha"))
-  L100.FAO_Fert_Cons_tN <- add_comments(L100.FAO_Fert_Cons_tN,
-                                        c("FAO fertilizer consumption by country / year", "Unit = tonnes of N"))
-  L100.FAO_Fert_Prod_tN <- add_comments(L100.FAO_Fert_Prod_tN,
-                                        c("FAO fertilizer production by country / year", "Unit = tonnes of N"))
-  L100.FAO_For_Exp_m3 <- add_comments(L100.FAO_For_Exp_m3,
-                                      c("FAO forestry exports by country / year", "Unit = m3"))
-  L100.FAO_For_Imp_m3 <- add_comments(L100.FAO_For_Imp_m3,
-                                      c("FAO forestry imports by country / year", "Unit = m3"))
-  L100.FAO_For_Prod_m3 <- add_comments(L100.FAO_For_Prod_m3,
-                                       c("FAO forestry production by country / year", "Unit = m3"))
+  L100.FAO_ag_Prod_t %>%
+    add_title("FAO agricultural production by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_ag_Prod_t_PRODSTAT", "aglu/AGLU_ctry") ->
+    L100.FAO_ag_Prod_t
+  L100.FAO_ag_Exp_t %>%
+    add_title("FAO agricultural exports by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_ag_Exp_t_SUA", "aglu/AGLU_ctry") ->
+    L100.FAO_ag_Exp_t
+  L100.FAO_ag_Feed_t %>%
+    add_title("FAO agricultural feed by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_ag_Feed_t_SUA", "aglu/AGLU_ctry") ->
+    L100.FAO_ag_Feed_t
+  L100.FAO_ag_Food_t %>%
+    add_title("FAO agricultural food consumption by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_ag_Food_t_SUA", "aglu/AGLU_ctry") ->
+    L100.FAO_ag_Food_t
+  L100.FAO_ag_Imp_t %>%
+    add_title("FAO agricultural imports by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_ag_Imp_t_SUA", "aglu/AGLU_ctry") ->
+    L100.FAO_ag_Imp_t
+  L100.FAO_an_Exp_t %>%
+    add_title("FAO animal exports by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_an_Exp_t_SUA", "aglu/AGLU_ctry") ->
+    L100.FAO_an_Exp_t
+  L100.FAO_an_Food_t %>%
+    add_title("FAO animal food consumption by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_an_Food_t_SUA", "aglu/AGLU_ctry") ->
+    L100.FAO_an_Food_t
+  L100.FAO_an_Imp_t %>%
+    add_title("FAO animal imports by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_an_Imp_t_SUA", "aglu/AGLU_ctry") ->
+    L100.FAO_an_Imp_t
+  L100.FAO_an_Prod_t %>%
+    add_title("FAO animal production by country, item, year") %>%
+    add_units("t") %>%
+    add_precursors("aglu/FAO_an_Prod_t_SUA", "aglu/AGLU_ctry") ->
+    L100.FAO_an_Prod_t
+  L100.FAO_CL_kha %>%
+    add_title("FAO cropland area by country, year") %>%
+    add_units("kha") %>%
+    add_precursors("aglu/FAO_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
+    L100.FAO_CL_kha
+  L100.FAO_fallowland_kha %>%
+    add_title("FAO fallow land area by country, year") %>%
+    add_units("kha") %>%
+    add_precursors("aglu/FAO_fallowland_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
+    L100.FAO_fallowland_kha
+  L100.FAO_harv_CL_kha %>%
+    add_title("FAO harvested cropland (temporary crops) area by country, year") %>%
+    add_units("kha") %>%
+    add_precursors("aglu/FAO_harv_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
+    L100.FAO_harv_CL_kha
+  L100.FAO_Fert_Cons_tN %>%
+    add_title("FAO fertilizer consumption by country, year") %>%
+    add_units("tonnes N") %>%
+    add_precursors("aglu/FAO_Fert_Cons_tN_RESOURCESTAT",
+                   "aglu/FAO_Fert_Cons_tN_RESOURCESTAT_archv",
+                    "aglu/AGLU_ctry") ->
+    L100.FAO_Fert_Cons_tN
+  L100.FAO_Fert_Prod_tN %>%
+    add_title("FAO fertilizer production by country, year") %>%
+    add_units("tonnes N") %>%
+    add_precursors("aglu/FAO_Fert_Prod_tN_RESOURCESTAT",
+                   "aglu/FAO_Fert_Prod_tN_RESOURCESTAT_archv",
+                   "aglu/AGLU_ctry") ->
+    L100.FAO_Fert_Prod_tN
+  L100.FAO_For_Exp_m3 %>%
+    add_title("FAO forestry exports by country, year") %>%
+    add_units("m3") %>%
+    add_precursors("aglu/FAO_For_Exp_m3_FORESTAT", "aglu/AGLU_ctry") ->
+    L100.FAO_For_Exp_m3
+  L100.FAO_For_Imp_m3 %>%
+    add_title("FAO forestry imports by country, year") %>%
+    add_units("m3") %>%
+    add_precursors("aglu/FAO_For_Imp_m3_FORESTAT", "aglu/AGLU_ctry") ->
+    L100.FAO_For_Imp_m3
+  L100.FAO_For_Prod_m3 %>%
+    add_title("FAO forestry production by country, year") %>%
+    add_units("m3") %>%
+    add_precursors("aglu/FAO_For_Prod_m3_FORESTAT", "aglu/AGLU_ctry") ->
+    L100.FAO_For_Prod_m3
 
   return_data(L100.FAO_ag_HA_ha,
               L100.FAO_ag_Prod_t,

@@ -100,8 +100,14 @@
     right_join(L100.GDPshare_state, by = c("year")) %>%
     mutate(value = value * share) %>%
     select(-share, -iso) %>%
+    add_title("GDP by state") %>%
+    add_units("million 1990 USD") %>%
+    add_comments("") %>%
+    add_precursors("L100.gdp_mil90usd_ctry_Yh",
+                   "gcam-usa/BEA_pcGDP_97USD_state",
+                   "gcam-usa/BEA_pcGDP_09USD_state",
+                   "gcam-usa/Census_pop_hist") %>%
     # flag that this dataset is in different form from original
-    add_comments(c("GDP by state", "Unit = million 1990 USD")) %>%
     add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     L100.GDP_mil90usd_state
 
@@ -110,8 +116,11 @@
     left_join(Census_pop_hist, by = c("state", "year")) %>%
     mutate(value = value * CONV_MIL_THOUS / population) %>%
     select(-population) %>%
+    add_title("Per-capita GDP by state") %>%
+    add_units("thousand 1990 USD per capita") %>%
+    add_comments("") %>%
+    add_precursors("L100.GDP_mil90usd_state") %>%
     # flag that this dataset is in different form from original
-    add_comments(c("Per-capita GDP by state", "Unit = thousand 1990 USD per capita")) %>%
     add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     L100.pcGDP_thous90usd_state
 
@@ -147,9 +156,16 @@
     mutate(value = population * CONV_ONES_THOUS) %>%
     select(-population, -pop_ratio) %>%
     arrange(state, year) %>%
+    add_title("Population by state") %>%
+    add_units("thousand persons") %>%
+    add_comments("") %>%
+    add_precursors("L100.gdp_mil90usd_ctry_Yh",
+                   "gcam-usa/BEA_pcGDP_97USD_state",
+                   "gcam-usa/BEA_pcGDP_09USD_state",
+                   "gcam-usa/PRIMA_pop",
+                   "gcam-usa/states_subregions") %>%
     # flag that this dataset is in different form from original
-    add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) %>%
-    add_comments(c("Population by state", "Unit = thousand persons")) ->
+    add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     L100.Pop_thous_state
 
   return_data(L100.pcGDP_thous90usd_state,
