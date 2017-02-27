@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/JGCRI/gcamdata.svg?branch=master)](https://travis-ci.org/JGCRI/gcamdata)
 
-[![codecov](https://codecov.io/gh/bpbond/gcamdata/branch/master/graph/badge.svg)](https://codecov.io/gh/bpbond/gcamdata)
+[![codecov](https://codecov.io/gh/JGCRI/gcamdata/branch/master/graph/badge.svg)](https://codecov.io/gh/JGCRI/gcamdata)
 
 # gcamdata
 GCAM data system rewrite
