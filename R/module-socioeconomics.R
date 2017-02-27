@@ -51,7 +51,7 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
     select(-Country) %>%
     add_title("Historical GDP downscaled to country (iso)") %>%
     add_comments("Filtered to historical years, units converted") %>%
-    add_precursors("usda_gdp_mer") %>%
+    add_precursors("socioeconomics/USDA_GDP_MER") %>%
     add_units("Million 1990 USD") %>%
     # flag that this dataset is in different form from original
     add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->

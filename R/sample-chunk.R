@@ -33,7 +33,7 @@ module_sample_sample <- function(command, ...) {
     tibble() %>%
       add_title("First output") %>%
       add_units("None") %>%
-      add_precursors("None") %>%
+      add_precursors("L200.ModelTime") %>%
       add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
       add_comments("Sample chunk output") ->
       first_output
@@ -41,7 +41,7 @@ module_sample_sample <- function(command, ...) {
     tibble() %>%
       add_title("Second output") %>%
       add_units("None") %>%
-      add_precursors("None") %>%
+      add_precursors("L200.ModelTime") %>%
       add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
       add_comments("Sample chunk output") ->
       second_output

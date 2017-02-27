@@ -11,6 +11,52 @@ run_chunk <- function(chunk, all_data) {
   do.call(chunk, list(driver.MAKE, all_data))
 }
 
+
+#' check_chunk_outputs
+#'
+#' Checks chunk outputs for a variety of problems: correct structure,
+#' correct attributes attached, matches promised outputs. Generates
+#' warnings and/or errors if any deviance.
+#'
+#' @param chunk Chunk name, character
+#' @param chunk_data Data produced by chunk
+#' @param chunk_inputs Names of chunk inputs, character
+#' @param promised_outputs Names of chunk's promised outputs, character
+check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_outputs) {
+  assert_that(is.list(chunk_data))
+
+  # Check that the chunk has provided required data for all objects
+  empty_precursors <- TRUE
+  for(obj in names(chunk_data)) {
+    assert_that(tibble::is.tibble(chunk_data[[obj]]))
+    for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS)) {
+      if(is.null(attr(chunk_data[[obj]], at))) {
+        warning("No '", at, "' attached to ", obj, " - chunk ", chunk)
+      }
+    }
+    # Data precursors should all appear in input list
+    pc <- attr(chunk_data[[obj]], ATTR_PRECURSORS)
+    empty_precursors <- empty_precursors & is.null(pc)
+    matches <- pc %in% c(chunk_inputs, promised_outputs)
+    if(!all(matches)) {
+      stop("Precursors '", pc[!matches], "' for '", obj, "' aren't inputs - chunk ", chunk)
+    }
+    if(obj %in% pc) {
+      stop("Precursors for '", obj, "' include itself - chunk ", chunk)
+    }
+  }
+
+  # If chunk has inputs, some output should have a precursor
+  if(empty_precursors & length(chunk_inputs)) {
+    stop("No output precursors, but there are inputs - chunk ", chunk)
+  }
+  # Chunk should have returned EXACTLY what it promised
+  if(!identical(sort(names(chunk_data)), sort(promised_outputs))) {
+    stop("Chunk ", chunk, "is not returning what it promised!")
+  }
+}
+
+
 #' driver
 #'
 #' Run the entire data system.
@@ -79,20 +125,16 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 
       # Order chunk to build its data
       time1 <- Sys.time()
-#      chunk_data <- run_chunk(chunk, all_data[input_names])
-     out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
-     if(!quiet & length(out)) cat(out, sep = "\n")
+      #      chunk_data <- run_chunk(chunk, all_data[input_names])
+      out <- capture.output(chunk_data <- run_chunk(chunk, all_data[input_names]))
+      if(!quiet & length(out)) cat(out, sep = "\n")
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 
-      assert_that(is.list(chunk_data))
-      assert_that(tibble::is.tibble(chunk_data[[1]]))
-
-      # Chunk should return EXACTLY what it promised
-      promised <- subset(chunkoutputs, name == chunk)$output
-      if(!identical(sort(names(chunk_data)), sort(promised))) {
-        stop("Chunk ", chunk, "is not returning what it promised!")
-      }
+      check_chunk_outputs(chunk,
+                          chunk_data,
+                          input_names,
+                          promised_outputs = subset(chunkoutputs, name == chunk)$output)
 
       # Add this chunk's data to the global data store
       all_data <- add_data(chunk_data, all_data)

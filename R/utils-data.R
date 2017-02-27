@@ -58,7 +58,6 @@ get_comments <- function(x) {
 #' with the data when the file is saved.
 #'
 #' @param x An object
-#' @param variable Variable name (character)
 #' @param units Units (character)
 #' @return \code{x} with units appended to any existing comments.
 add_units <- function(x, units) {
@@ -133,17 +132,7 @@ get_data <- function(all_data, name) {
 return_data <- function(...) {
   dots <- list(...)
   names(dots) <- as.list(substitute(list(...)))[-1L]
-
-  # Check that the chunk has provided required data for all objects
-  for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_PRECURSORS)) {
-    for(obj in names(dots)) {
-      if(is.null(attr(dots[[obj]], at))) {
-        warning("No '", at, "' attached to ", obj)
-      }
-    }
-  }
-
-    dots
+  dots
 }
 
 

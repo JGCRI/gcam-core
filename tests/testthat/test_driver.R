@@ -52,9 +52,56 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = "o1"),
       load_csv_files = function(...) { i1 <- tibble(); return_data(i1) },
-      run_chunk = function(...) { o2 <- tibble(); return_data(o2) },
+      run_chunk = function(...) {
+        tibble() %>% add_title("o2") %>% add_units("units") %>%
+          add_comments("comments") %>% add_precursors("i1") -> o2
+        return_data(o2)
+      },
       expect_error(driver(quiet = TRUE), regexp = "is not returning what it promised")
     )
+  })
+
+  test_that("check_chunk_outputs works", {
+    chunk <- "test1"
+    po <- "o1"  # promised outputs
+
+    # Nothing missing
+    tibble() %>% add_title("o1") %>% add_units("units") %>%
+      add_comments("comments") %>% add_precursors("i1") -> o1
+    expect_silent(check_chunk_outputs("c1", return_data(o1), "i1", po))
+
+    # Missing title
+    tibble() %>% add_units("units") %>%
+      add_comments("comments") %>% add_precursors("i1") -> o1
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po))
+
+    # Missing units
+    tibble() %>% add_title("o1") %>%
+      add_comments("comments") %>% add_precursors("i1") -> o1
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po))
+
+    # Missing comments
+    tibble() %>% add_title("o1") %>% add_units("units") %>%
+      add_precursors("i1") -> o1
+    expect_warning(check_chunk_outputs("c1", return_data(o1), "i1", po))
+
+    # No precursors at all, even with inputs
+    tibble() %>% add_title("o1") %>% add_units("units") %>%
+      add_comments("comments") -> o1
+    expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po))
+
+    # Recursive precursor
+    tibble() %>% add_title("o1") %>% add_units("units") %>%
+      add_comments("comments") %>% add_precursors("o1") -> o1
+    expect_error(check_chunk_outputs("c1", return_data(o1), "i1", po))
+
+    # Precursor can be another chunk product
+    po <- c("o1", "o2")  # promised outputs
+    tibble() %>% add_title("o1") %>% add_units("units") %>%
+      add_comments("comments") %>% add_precursors("i1") -> o1
+    tibble() %>% add_title("o2") %>% add_units("units") %>%
+      add_comments("comments") %>% add_precursors("o1") -> o2
+    expect_silent(check_chunk_outputs("c1", return_data(o1, o2), "i1", po))
   })
 
   test_that("catches stuck", {

@@ -4,12 +4,10 @@
 \alias{add_units}
 \title{add_units}
 \usage{
-add_units(x, variable, units)
+add_units(x, units)
 }
 \arguments{
 \item{x}{An object}
-
-\item{variable}{Variable name (character)}
 
 \item{units}{Units (character)}
 }
