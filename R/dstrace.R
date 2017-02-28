@@ -22,7 +22,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
   chunk_index <- which(co$output == object_name)
   obj <- get_data(all_data, object_name)
 
-  cat(tracenum, object_name, "- ")
+  cat(tracenum, "-", object_name, "- ")
   isfile <- FLAG_INPUT_DATA %in% get_flags(obj)
   if(isfile) {
     cat("read from file\n")

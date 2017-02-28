@@ -158,7 +158,7 @@
     arrange(state, year) %>%
     add_title("Population by state") %>%
     add_units("thousand persons") %>%
-    add_comments("") %>%
+    add_comments("State populations from end of history projected into future") %>%
     add_precursors("L100.gdp_mil90usd_ctry_Yh",
                    "gcam-usa/BEA_pcGDP_97USD_state",
                    "gcam-usa/BEA_pcGDP_09USD_state",
