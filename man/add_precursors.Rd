@@ -15,7 +15,8 @@ add_precursors(x, ...)
 \code{x} with units appended to any existing comments.
 }
 \description{
-Add names of precursors to a data system object. This allows for granular tracking
+Add names of precursors (objects that contribute to the computation)
+to a data system object. This allows for granular tracking
 of dependencies across the data system.
 }
 

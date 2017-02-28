@@ -131,9 +131,7 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
       tdiff <- as.numeric(difftime(Sys.time(), time1, units = "secs"))
       if(!quiet) print(paste("- make", format(round(tdiff, 2), nsmall = 2)))
 
-      check_chunk_outputs(chunk,
-                          chunk_data,
-                          input_names,
+      check_chunk_outputs(chunk, chunk_data, input_names,
                           promised_outputs = subset(chunkoutputs, name == chunk)$output)
 
       # Add this chunk's data to the global data store

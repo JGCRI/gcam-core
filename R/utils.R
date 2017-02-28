@@ -20,6 +20,8 @@ load_csv_files <- function(filenames, quiet = FALSE, ...) {
     if(!quiet) cat("Loading", f, "...\n")
     fqfn <- find_csv_file(f, quiet = quiet)
     suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
+      add_title(f) %>%
+      add_comments(paste("Read from", fqfn)) %>%
       add_flags(FLAG_INPUT_DATA) ->
       filedata[[f]]
   }

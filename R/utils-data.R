@@ -28,6 +28,7 @@ add_title <- function(x, title) {
   x
 }
 
+get_title <- function(x) { attr(x, ATTR_TITLE) }
 
 #' add_comments
 #'
@@ -66,6 +67,7 @@ add_units <- function(x, units) {
   x
 }
 
+get_units <- function(x) { attr(x, ATTR_UNITS) }
 
 #' add_precursors
 #'
@@ -81,6 +83,8 @@ add_precursors <- function(x, ...) {
   attr(x, ATTR_PRECURSORS) <- c(attr(x, ATTR_PRECURSORS), pc)
   x
 }
+
+get_precursors <- function(x) { attr(x, ATTR_PRECURSORS) }
 
 
 #' add_flags
