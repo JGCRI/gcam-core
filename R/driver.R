@@ -23,7 +23,7 @@ run_chunk <- function(chunk, all_data) {
 #' @param chunk_inputs Names of chunk inputs, character
 #' @param promised_outputs Names of chunk's promised outputs, character
 check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_outputs) {
-  assert_that(is.list(chunk_data))
+  assert_that(is_data_list(chunk_data))
 
   # Check that the chunk has provided required data for all objects
   empty_precursors <- TRUE

@@ -57,7 +57,7 @@ find_csv_file <- function(filename, quiet = FALSE) {
 #' @param outputs_dir Directory to save data into
 #' Write data produced by chunks to csv files.
 save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUTS_DIR) {
-  assertthat::assert_that(is.list(chunkdata))
+  assertthat::assert_that(is_data_list(chunkdata))
   assertthat::assert_that(!is.null(names(chunkdata)))
   assertthat::assert_that(is.logical(write_inputs))
   assertthat::assert_that(is.character(outputs_dir))

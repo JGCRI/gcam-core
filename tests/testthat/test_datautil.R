@@ -45,7 +45,7 @@ test_that("return_data works", {
 
 test_that("add/get data work", {
   all_data <- empty_data()
-  expect_true(is.list(all_data))
+  expect_true(is_data_list(all_data))
   expect_equal(length(all_data), 0)
 
   d1 <- tibble(x=1:3)

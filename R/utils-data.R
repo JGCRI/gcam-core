@@ -69,7 +69,8 @@ add_units <- function(x, units) {
 
 #' add_precursors
 #'
-#' Add names of precursors to a data system object. This allows for granular tracking
+#' Add names of precursors (objects that contribute to the computation)
+#' to a data system object. This allows for granular tracking
 #' of dependencies across the data system.
 #'
 #' @param x An object
@@ -115,7 +116,7 @@ get_flags <- function(x) {
 #' @param name Name of data to return
 #' @return Data object (currently, a tibble or data frame).
 get_data <- function(all_data, name) {
-  assertthat::assert_that(is.list(all_data))
+  assertthat::assert_that(is_data_list(all_data))
   if(is.null(all_data[[name]])) {
     stop("Data system: couldn't find ", name)
   }
@@ -127,6 +128,7 @@ get_data <- function(all_data, name) {
 #'
 #' Construct a data structure of objects (\code{...}) and return it.
 #' Abstracts this away from chunk function code.
+#'
 #' @param ... Objects to handle
 #' @return Object ready for insertion into the data system data structure.
 return_data <- function(...) {
@@ -151,12 +153,24 @@ empty_data <- function() { list() }
 #' @importFrom assertthat assert_that
 #' @return The modified data store.
 add_data <- function(data_list, all_data) {
-  assert_that(is.list(data_list))
+  assert_that(is_data_list(data_list))
   assert_that(!is.null(names(data_list)))
-  assert_that(is.list(all_data))
+  assert_that(is_data_list(all_data))
 
   for(d in names(data_list)) {
     all_data[[d]] <- data_list[[d]]
   }
   all_data
+}
+
+
+#' is_data_list
+#'
+#' Check whether an object is a valid list (collection) of data objects.
+#'
+#' @param data_list List of data frames or other objects
+#' @return TRUE or FALSE.
+#' @details Currently a data_list is just a list.
+is_data_list <- function(data_list) {
+  is.list(data_list)
 }
