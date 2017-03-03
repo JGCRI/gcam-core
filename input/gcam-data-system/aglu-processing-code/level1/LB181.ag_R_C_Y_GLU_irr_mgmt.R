@@ -23,6 +23,7 @@ printlog( "Agricultural production and cropland area by region, GLU, crop, year,
 sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
+sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_mgmt_data", extension = ".R" )
 iso_GCAM_regID <- readdata( "COMMON_MAPPINGS", "iso_GCAM_regID" )
 Mueller_yield_levels <- readdata( "AGLU_LDS_DATA", "Mueller_yield_levels", na.strings = "NA" )
 Muller_crops <- readdata( "AGLU_MAPPINGS", "Muller_crops" )
@@ -208,7 +209,6 @@ L181.YieldLevels_R_C_GLU_irr[ c( "yieldmult_lo", "yieldmult_hi" ) ] <-
 
 printlog( "HACK TO SET THE SAME YIELD MULTIPLIERS EVERYWHERE" )
 # first, set the yield multiplier that goes from the observed to the "hi". "lo" will be the reciprocal of this
-MGMT_YIELD_ADJ <- 0.25
 L181.YieldLevels_R_C_GLU_irr$yieldmult_hi <- 1 + MGMT_YIELD_ADJ
 L181.YieldLevels_R_C_GLU_irr$yieldmult_lo <- 1 - MGMT_YIELD_ADJ
 

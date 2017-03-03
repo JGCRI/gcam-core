@@ -24,6 +24,7 @@ sourcedata( "COMMON_ASSUMPTIONS", "A_common_data", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "level2_data_names", extension = ".R" )
 sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
+sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_mgmt_data", extension = ".R" )
 sourcedata( "MODELTIME_ASSUMPTIONS", "A_modeltime_data", extension = ".R" )
 GCAM_region_names <- readdata( "COMMON_MAPPINGS", "GCAM_region_names" )
 basin_to_country_mapping <- readdata( "WATER_MAPPINGS", "basin_to_country_mapping" )
@@ -56,9 +57,6 @@ convert_LN4_to_LN5 <- function( data, names ){
 # -----------------------------------------------------------------------------
 # 2. Build tables
 printlog( "L2252.LN5_Logit: Logit exponent between lo and hi managed techs")
-# Keeping this assumption in this file for now; keeps changes from forcing re-builds of other files.
-mgmt_logit <- 0.1
-mgmt_logit_type <- "absolute-cost-logit"
 L2252.LN5_Logit <- repeat_and_add_vector( L2241.LN4_Logit, irr, c( "IRR", "RFD" ) )
 L2252.LN5_Logit$LandNode5 <- paste( L2252.LN5_Logit$LandNode4, L2252.LN5_Logit[[irr]], sep = irr_delimiter )
 L2252.LN5_Logit$logit.exponent <- mgmt_logit
