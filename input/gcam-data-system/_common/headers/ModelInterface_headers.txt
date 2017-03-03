@@ -539,6 +539,8 @@ LN3_NodeGhostShare, world/+{name}region, region/+{name}LandAllocatorRoot, LandAl
 
 LN3_LeafGhostShare, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, LandLeaf/+{year}ghost-unnormalized-share, LandLeaf/+ghost-unnormalized-share, scenario, scenario/world
 
+LN3_LeafIsGhostShareRel, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandLeaf, LandLeaf/+is-ghost-share-relative, scenario, scenario/world
+
 LN3_HistUnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, land-use-history/+{year}allocation, land-use-history/+allocation, scenario, scenario/world, UnmanagedLandLeaf/land-use-history
 
 LN3_UnmgdAllocation, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}UnmanagedLandLeaf, UnmanagedLandLeaf/+{year}landAllocation, UnmanagedLandLeaf/+landAllocation, scenario, scenario/world
@@ -575,6 +577,8 @@ LN4_MgdCarbon,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorR
 LN4_LeafGhostShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{name}LandLeaf,LandLeaf/+{year}ghost-unnormalized-share, LandLeaf/+ghost-unnormalized-share,scenario,scenario/world
 
 LN4_NodeGhostShare,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+{year}ghost-unnormalized-share,LandNode4/+ghost-unnormalized-share,scenario,scenario/world
+
+LN4_NodeIsGhostShareRel,world/+{name}region,region/+{name}LandAllocatorRoot,LandAllocatorRoot/+{name}LandNode1,LandNode1/+{name}LandNode2,LandNode2/+{name}LandNode3,LandNode3/+{name}LandNode4,LandNode4/+is-ghost-share-relative,scenario,scenario/world
 
 LN5_Logit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name}LandNode4, LandNode4/+{name}LandNode5, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, LandNode5/dummy-logit-tag, scenario, scenario/world
 

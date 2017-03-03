@@ -155,6 +155,7 @@ names_LN3_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "
 names_LN3_LogitType <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "logit.type" )
 names_LN3_NodeGhostShare <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "year", "ghost.unnormalized.share" )
 names_LN3_LeafGhostShare <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year", "ghost.unnormalized.share" )
+names_LN3_LeafIsGhostShareRel<- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "is.ghost.share.relative" )
 names_LN3_HistUnmgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf", "year", "allocation" )
 names_LN3_UnmgdAllocation <- names_LN3_HistUnmgdAllocation
 names_LN3_HistMgdAllocation <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandLeaf", "year", "allocation" )
@@ -176,6 +177,7 @@ names_LN4_MgdCarbon <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2
                           "veg.carbon.density", "soil.carbon.density", "mature.age.year.fillout", "mature.age", "min.veg.carbon.density", "min.soil.carbon.density" )
 names_LN4_LeafGhostShare<- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandLeaf", "year", "ghost.unnormalized.share" )
 names_LN4_NodeGhostShare<- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "year", "ghost.unnormalized.share" )
+names_LN4_NodeIsGhostShareRel<- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "is.ghost.share.relative" )
 
 names_LN5_Logit <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "logit.year.fillout", "logit.exponent" )
 names_LN5_LogitType <- c( "region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "logit.type" )

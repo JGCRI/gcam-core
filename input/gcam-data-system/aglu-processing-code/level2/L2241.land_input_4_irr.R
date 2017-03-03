@@ -43,6 +43,7 @@ L223.LN3_HistMgdAllocation_bio <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_HistMg
 L223.LN3_MgdAllocation_bio <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_MgdAllocation_bio", skip = 4 )
 L223.LN3_MgdAllocation_crop <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_MgdAllocation_crop", skip = 4 )
 L223.LN3_LeafGhostShare <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_LeafGhostShare", skip = 4 )
+L223.LN3_LeafIsGhostShareRel <- readdata( "AGLU_LEVEL2_DATA", "L223.LN3_LeafIsGhostShareRel", skip = 4 )
 L2011.AgYield_bio_grass_irr <- readdata( "AGLU_LEVEL2_DATA", "L2011.AgYield_bio_grass_irr", skip = 4 )
 L2011.AgYield_bio_tree_irr <- readdata( "AGLU_LEVEL2_DATA", "L2011.AgYield_bio_tree_irr", skip = 4 )
 
@@ -256,6 +257,8 @@ printlog( "L2241.LN4_NodeGhostShare: Indicate that the bioenergy node is availab
 # We can just copy that data frame and just rename the LandLeaf column to LandNode.
 L2241.LN4_NodeGhostShare <- L223.LN3_LeafGhostShare
 names( L2241.LN4_NodeGhostShare ) <- names_LN4_NodeGhostShare
+L2241.LN4_NodeIsGhostShareRel <- L223.LN3_LeafIsGhostShareRel
+names( L2241.LN4_NodeIsGhostShareRel ) <- names_LN4_NodeIsGhostShareRel
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
@@ -272,7 +275,8 @@ write_mi_data( L2241.LN4_MgdAllocation_bio, "LN4_MgdAllocation", "AGLU_LEVEL2_DA
 write_mi_data( L2241.LN4_MgdCarbon_crop, "LN4_MgdCarbon", "AGLU_LEVEL2_DATA", "L2241.LN4_MgdCarbon_crop", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
 write_mi_data( L2241.LN4_MgdCarbon_bio, "LN4_MgdCarbon", "AGLU_LEVEL2_DATA", "L2241.LN4_MgdCarbon_bio", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
 write_mi_data( L2241.LN4_LeafGhostShare, "LN4_LeafGhostShare", "AGLU_LEVEL2_DATA", "L2241.LN4_LeafGhostShare", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
-write_mi_data( L2241.LN4_NodeGhostShare, "LN4_NodeGhostShare", "AGLU_LEVEL2_DATA", "L2241.LN4_NodeGhostShare", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml", node_rename=T )
+write_mi_data( L2241.LN4_NodeGhostShare, "LN4_NodeGhostShare", "AGLU_LEVEL2_DATA", "L2241.LN4_NodeGhostShare", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml" )
+write_mi_data( L2241.LN4_NodeIsGhostShareRel, "LN4_NodeIsGhostShareRel", "AGLU_LEVEL2_DATA", "L2241.LN4_NodeIsGhostShareRel", "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml", node_rename=T )
 
 insert_file_into_batchxml( "AGLU_XML_BATCH", "batch_land_input_4_IRR.xml", "AGLU_XML_FINAL", "land_input_4_IRR.xml", "", xml_tag="outFile" )
 

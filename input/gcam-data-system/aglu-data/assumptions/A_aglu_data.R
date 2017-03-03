@@ -203,9 +203,6 @@ bio_grass_Yield_kgCm2 <- 0.34
 bio_tree_Fert_IO_gNm2 <- 3.36
 bio_tree_Yield_kgCm2 <- 0.345
 
-# base year biomass prices (for calculating profit rates of biomass)
-bio_price_75USD_GJ <- 1.05
-
 #Water characteristics
 Irr_Cons_name <- "water consumption"
 Irr_W_name <- "water withdrawals"
