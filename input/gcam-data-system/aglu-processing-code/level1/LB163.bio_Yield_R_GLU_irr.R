@@ -81,7 +81,11 @@ L163.YieldIndex_R_GLU_irr <- aggregate( L163.ag_Yield_tha_ctry_crop_irr[ c( "HA"
 L163.YieldIndex_R_GLU_irr$YieldIndex <- with( L163.YieldIndex_R_GLU_irr, Ratio_weight / HA )
 
 #Bioenergy yields are equal to this region/zone-specific index multiplied by a base yield
-L163.base_bio_yield_tha <- Max_bio_yield_tha / max( L163.YieldIndex_R_GLU_irr$YieldIndex )
+# The base yield is taken to be the maximum of the yields in the USA region, or the region containing the USA,
+# because the Wullschleger paper from which the yield estimate was derived was for the USA.
+USAreg <- iso_GCAM_regID[[R]][ iso_GCAM_regID$iso == "usa" ][1]
+L163.base_bio_yield_tha <- Max_bio_yield_tha / max( L163.YieldIndex_R_GLU_irr$YieldIndex[
+  L163.YieldIndex_R_GLU_irr[[R]] == USAreg ] )
 L163.base_bio_yield_GJm2 <- L163.base_bio_yield_tha * bio_GJt / conv_Ha_m2
 L163.ag_bioYield_GJm2_R_GLU_irr <- data.frame(
   L163.YieldIndex_R_GLU_irr[ R_GLU_irr ],
