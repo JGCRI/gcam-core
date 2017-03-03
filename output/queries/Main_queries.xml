@@ -1094,8 +1094,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <supplyDemandQuery title="elec sector water withdrawals">
                <axis1 name="input">input</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='electricity' or
-               @name='elect_td_bld' or contains(@name, 'elec_') and not(contains(@name, 'water_td')))]//
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) ]//
                *[@type='input' and (@name='water_td_elec_W')]/
                demand-physical/node()</xPath>
                <comments/>
@@ -1103,8 +1102,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <supplyDemandQuery title="elec sector water consumption">
                <axis1 name="input">input</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='electricity' or
-               @name='elect_td_bld' or contains(@name, 'elec_') and not(contains(@name, 'water_td')))]//
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) ]//
                *[@type='input' and (@name='water_td_elec_C')]/
                demand-physical/node()</xPath>
                <comments/>
@@ -1112,8 +1110,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <supplyDemandQuery title="elec water withdrawals by gen tech">
                <axis1 name="input">input</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='elect_td_bld' or
-               contains(@name, 'elec_') and not(contains(@name, 'water_td')))]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/
                *[@type='subsector' and not(@name='elect_td_bld')]/*[@type='technology']/
                *[@type='input' and (@name='water_td_elec_W')]/demand-physical/node()</xPath>
                <comments/>
@@ -1250,8 +1247,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <supplyDemandQuery title="elec water consumption by gen tech">
                <axis1 name="input">input</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='elect_td_bld' or 
-               contains(@name, 'elec_') and not(contains(@name, 'water_td')))]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' ]/
                *[@type='subsector' and not(@name='elect_td_bld')]/*[@type='technology']/
                *[@type='input' and (@name='water_td_elec_C')]/demand-physical/node()</xPath>
                <comments/>
@@ -1388,8 +1384,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <supplyDemandQuery title="elec water withdrawals by gen tech and cooling tech">
                <axis1 name="input">input</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='elect_td_bld' or 
-               contains(@name, 'elec_') and not(contains(@name, 'water_td')))]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/
                *[@type='subsector']/*[@type='technology']/
                *[@type='input' and (@name='water_td_elec_W')]/
                demand-physical/node()</xPath>
@@ -1441,8 +1436,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <supplyDemandQuery title="elec water consumption by gen tech and cooling tech">
                <axis1 name="input">input</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='elect_td_bld' or
-               contains(@name, 'elec_') and not(contains(@name, 'water_td')))]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/
                *[@type='subsector']/*[@type='technology']/*[@type='input' and (@name='water_td_elec_C')]/
                demand-physical/node()</xPath>
                <comments/>
@@ -1493,8 +1487,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <supplyDemandQuery title="elec water withdrawals by gen tech and cooling tech (new)">
                <axis1 name="input">input</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='elect_td_bld' or 
-               contains(@name, 'elec_') and not(contains(@name, 'water_td')))]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/
                *[@type='subsector']/*[@type='technology']/
                *[@type='input' and (@name='water_td_elec_W')]/
                demand-physical[
@@ -1547,8 +1540,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
             <supplyDemandQuery title="elec water consumption by gen tech and cooling tech (new)">
                <axis1 name="input">input</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='electricity' or @name='elect_td_bld' or 
-               contains(@name, 'elec_') and not(contains(@name, 'water_td')))]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/
                *[@type='subsector']/*[@type='technology']/
                *[@type='input' and (@name='water_td_elec_C')]/
                demand-physical[
@@ -3234,7 +3226,7 @@ element input {
             <axis1 name="technology">technology[@name]</axis1>
             <axis2 name="Year">physical-output[@vintage]</axis2>
             <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (local-name()='AgSupplySector')]/
-            *[@type='subsector' and contains(@name,'GLU218')]//
+            *[@type='subsector' and contains(@name,'MissouriR')]//
             output-primary/physical-output/node()</xPath>
             <comments>primary output only (no residue biomass)</comments>
          </supplyDemandQuery>
@@ -3260,11 +3252,11 @@ element input {
             *[@type='subsector']/*[@type='technology']/yield/text()</xPath>
             <comments/>
          </supplyDemandQuery>
-         <supplyDemandQuery title="ag tech yield in a specified GLU">
+         <supplyDemandQuery title="ag tech yield in a specified land region">
             <axis1 name="technology">technology</axis1>
             <axis2 name="Year">technology</axis2>
             <xPath buildList="true" dataName="yield" group="false" sumAll="false">*[@type='sector' and (local-name()='AgSupplySector')]/
-            *[@type='subsector']/*[@type='technology' and contains(@name,'GLU218')]/yield/text()</xPath>
+            *[@type='subsector']/*[@type='technology' and contains(@name,'MissouriR')]/yield/text()</xPath>
             <comments/>
          </supplyDemandQuery>
          <supplyDemandQuery title="ag commodity prices">
@@ -3278,60 +3270,60 @@ element input {
             <supplyDemandQuery title="irrigation water withdrawals by region">
                <axis1 name="region">region</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (local-name()='AgSupplySector')]//
-               *[@type='input' (:collapse:) and contains(@name, 'water_td') and contains(@name, '_W')]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) ]//
+               *[@type='input' (:collapse:) and contains(@name, 'water_td_irr') and ends-with(@name, '_W')]/
                demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="irrigation water withdrawals by crop type">
                <axis1 name="sector">sector</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">AgSupplySector//*[@type='input' (:collapse:) and contains(@name, 'water_td') and contains(@name, '_W')]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='input' (:collapse:) and contains(@name, 'water_td_irr') and ends-with(@name, '_W')]/
                demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
-            <supplyDemandQuery title="irrigation water withdrawals by crop type and GLU">
+            <supplyDemandQuery title="irrigation water withdrawals by crop type and land region">
                <axis1 name="sector">sector</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">AgSupplySector/*[@type='subsector']//*[@type='input' and contains(@name, 'water_td')
-               and contains(@name, '_W')]/demand-physical/node()</xPath>
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']//*[@type='input' and contains(@name, 'water_td_irr')
+               and ends-with(@name, '_W')]/demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="irrigation water withdrawals by ag tech">
                <axis1 name="sector">sector</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">AgSupplySector/*[@type='subsector']/*[@type='technology']/
-               *[@type='input' and contains(@name, 'water_td') and contains(@name, '_W')]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/
+               *[@type='input' and contains(@name, 'water_td_irr') and ends-with(@name, '_W')]/
                demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="irrigation water consumption by region">
                <axis1 name="region">region</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (local-name()='AgSupplySector')]//
-               *[@type='input' (:collapse:) and contains(@name, 'water_td') and contains(@name, '_C')]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) ]//
+               *[@type='input' (:collapse:) and contains(@name, 'water_td_irr') and ends-with(@name, '_C')]/
                demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="irrigation water consumption by crop type">
                <axis1 name="sector">sector</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">AgSupplySector//*[@type='input' (:collapse:) and contains(@name, 'water_td')
-               and contains(@name, '_C')]/demand-physical/node()</xPath>
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='input' (:collapse:) and contains(@name, 'water_td_irr')
+               and ends-with(@name, '_C')]/demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
-            <supplyDemandQuery title="irrigation water consumption by crop type and GLU">
+            <supplyDemandQuery title="irrigation water consumption by crop type and land region">
                <axis1 name="sector">sector</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">AgSupplySector/*[@type='subsector']//*[@type='input' and contains(@name, 'water_td')
-               and contains(@name, '_C')]/demand-physical/node()</xPath>
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']//*[@type='input' and contains(@name, 'water_td_irr')
+               and ends-with(@name, '_C')]/demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="irrigation water consumption by ag tech">
                <axis1 name="sector">sector</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="input" group="false" sumAll="false">AgSupplySector/*[@type='subsector']/*[@type='technology']/
-               *[@type='input' and contains(@name, 'water_td') and contains(@name, '_C')]/
+               <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/
+               *[@type='input' and contains(@name, 'water_td_irr') and ends-with(@name, '_C')]/
                demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
@@ -3350,7 +3342,7 @@ element input {
                (@name='biophysical water consumption')]/demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
-            <supplyDemandQuery title="biophysical water demand by crop type and GLU">
+            <supplyDemandQuery title="biophysical water demand by crop type and land region">
                <axis1 name="sector">sector</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
                <xPath buildList="true" dataName="input" group="false" sumAll="false">AgSupplySector/*[@type='subsector']//*[@type='input' and (@name='biophysical water consumption')]/
@@ -3486,9 +3478,8 @@ element input {
             <supplyDemandQuery title="water consumption by meat and dairy production">
                <axis1 name="sector">sector</axis1>
                <axis2 name="Year">demand-physical[@vintage]</axis2>
-               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and
-               (@name='Beef' or @name='SheepGoat' or @name='Pork' or @name='Dairy' or @name='Poultry')]//
-               *[@type='input' and contains(@name,'water_td') and contains(@name,'_C')]/
+               <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']//
+               *[@type='input' and contains(@name,'water_td_an') and ends-with(@name,'_C')]/
                demand-physical/node()</xPath>
                <comments/>
             </supplyDemandQuery>
@@ -4099,21 +4090,21 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <axis1 name="region">region</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:)]//*[@type='input' (:collapse:) and contains(@name,'water_td')
-         and contains(@name,'_W')]/demand-physical/node()</xPath>
+         and ends-with(@name,'_W')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="water withdrawals by water mapping source">
          <axis1 name="input">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:)]//*[@type='input' and contains(@name,'water_td')
-         and contains(@name,'_W')]/demand-physical/node()</xPath>
+         and ends-with(@name,'_W')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="water withdrawals by sector">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='input' (:collapse:) and contains(@name,'water_td')
-         and contains(@name,'_W')]/demand-physical/node()</xPath>
+         and ends-with(@name,'_W')]/demand-physical/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
@@ -4137,7 +4128,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <axis1 name="subsector">subsector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']//*[@type='input' (:collapse:)
-         and contains(@name,'water_td') and contains(@name,'_W')]/demand-physical/node()</xPath>
+         and contains(@name,'water_td') and ends-with(@name,'_W')]/demand-physical/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
@@ -4176,7 +4167,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='input' (:collapse:)
-         and contains(@name,'water_td') and contains(@name,'_W')]/demand-physical/node()</xPath>
+         and contains(@name,'water_td') and ends-with(@name,'_W')]/demand-physical/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
@@ -4200,21 +4191,21 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <axis1 name="region">region</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:)]//*[@type='input' (:collapse:) and contains(@name,'water_td')
-         and contains(@name,'_C')]/demand-physical/node()</xPath>
+         and ends-with(@name,'_C')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="water consumption by water mapping source">
          <axis1 name="input">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:)]//*[@type='input' and contains(@name,'water_td')
-         and contains(@name,'_C')]/demand-physical/node()</xPath>
+         and ends-with(@name,'_C')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="water consumption by sector">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='input' (:collapse:) and contains(@name,'water_td')
-         and contains(@name,'_C')]/demand-physical/node()</xPath>
+         and ends-with(@name,'_C')]/demand-physical/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
@@ -4238,7 +4229,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <axis1 name="subsector">subsector</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']//*[@type='input' (:collapse:) and contains(@name,'water_td')
-         and contains(@name,'_C')]/demand-physical/node()</xPath>
+         and ends-with(@name,'_C')]/demand-physical/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
@@ -4277,7 +4268,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='input' (:collapse:)
-         and contains(@name,'water_td') and contains(@name,'_C')]/demand-physical/node()</xPath>
+         and contains(@name,'water_td') and ends-with(@name,'_C')]/demand-physical/node()</xPath>
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
