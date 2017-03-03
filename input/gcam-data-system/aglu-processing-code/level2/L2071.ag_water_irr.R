@@ -145,6 +145,9 @@ L2071.AgCoef_IrrWaterCons_bio$coefficient <- round(
   digits_calOutput )
 L2071.AgCoef_IrrWaterCons_bio$coefficient[ is.na( L2071.AgCoef_IrrWaterCons_bio$coefficient ) ] <- 0
 
+# Irrigated water consumption only applies to the irrigated techs, which are assumed to end in the string "IRR"
+L2071.AgCoef_IrrWaterCons_bio <- L2071.AgCoef_IrrWaterCons_bio[ grepl( "IRR$", L2071.AgCoef_IrrWaterCons_bio[[agtech]] ), ]
+
 #Remove extra columns
 L2071.AgCoef_IrrWaterCons_bio <- L2071.AgCoef_IrrWaterCons_bio[ names_AgCoef ] 
 
