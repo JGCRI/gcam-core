@@ -211,9 +211,9 @@ Bio_start_year <- 2020
 
 #Carbon content adjustments from unmanaged to managed
 Cveg_Mult_UnmgdFor_MgdFor <- 0.5
-Csoil_Mult_UnmgdFor_MgdFor <- 0.87
+Csoil_Mult_UnmgdFor_MgdFor <- 0.87      #source: Guo and Gifford 2002
 Cveg_Mult_UnmgdPast_MgdPast <- 0.5
-Csoil_Mult_UnmgdPast_MgdPast <- 0.75
+Csoil_Mult_UnmgdPast_MgdPast <- 0.9     # stay conservative here b/c no data source
 
 #Carbon content of all cellulose
 Ccontent_cellulose <- 0.45

@@ -173,6 +173,14 @@ L213.LN3_MgdCarbon <- add_node_leaf_names( L213.LN3_MgdCarbon,
 L213.LN3_MgdCarbon <- add_carbon_info( L213.LN3_MgdCarbon,
       veg_data = L213.VegC_kgm2_R_LT_AEZ.melt, soil_data = L213.SoilC_kgm2_R_LT_AEZ.melt, age_data = L213.MatureAge_R_LT_AEZ.melt )
 
+printlog( "Reducing managed carbon densities according to exogenous assumptions" )
+# Vegetation carbon is reduced to approximate avg carbon density during time of vegetative re-growth
+# soil carbon may be reduced due to long-term effects of carbon export, disturbance, etc
+L213.LN3_MgdCarbon[ L213.LN3_MgdCarbon[[LT]] == "Forest", c( "hist.veg.carbon.density", "veg.carbon.density" ) ] <- 
+  L213.LN3_MgdCarbon[ L213.LN3_MgdCarbon[[LT]] == "Forest", c( "hist.veg.carbon.density", "veg.carbon.density" ) ] * Cveg_Mult_UnmgdFor_MgdFor
+L213.LN3_MgdCarbon[ L213.LN3_MgdCarbon[[LT]] == "Pasture", c( "hist.soil.carbon.density", "soil.carbon.density" ) ] <- 
+  L213.LN3_MgdCarbon[ L213.LN3_MgdCarbon[[LT]] == "Pasture", c( "hist.soil.carbon.density", "soil.carbon.density" ) ] * Csoil_Mult_UnmgdFor_MgdFor
+
 printlog( "L213.LN3_MgdCarbon_noncrop: Carbon content info, managed land in the third nest (noncrop)" )
 L213.LN3_MgdCarbon_noncrop <- L213.LN3_MgdCarbon[ L213.LN3_MgdCarbon[[LT]] %!in% c( "biomass", L213.LC_bm2_R_HarvCropLand_C_Yh_AEZ.melt[[C]] ), names_LN3_MgdCarbon ]
 
