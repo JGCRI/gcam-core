@@ -133,10 +133,7 @@ L212.LN2_MgdCarbon <- add_carbon_info( L212.LN2_MgdCarbon,
 printlog( "Reducing managed carbon densities according to exogenous assumptions" )
 # Vegetation carbon is reduced to approximate avg carbon density during time of vegetative re-growth
 # soil carbon may be reduced due to long-term effects of carbon export, disturbance, etc
-L212.LN2_MgdCarbon[ L212.LN2_MgdCarbon[[LT]] == "Pasture", c( "hist.veg.carbon.density", "veg.carbon.density" ) ] <- 
-  L212.LN2_MgdCarbon[ L212.LN2_MgdCarbon[[LT]] == "Pasture", c( "hist.veg.carbon.density", "veg.carbon.density" ) ] * Cveg_Mult_UnmgdPast_MgdPast
-L212.LN2_MgdCarbon[ L212.LN2_MgdCarbon[[LT]] == "Pasture", c( "hist.soil.carbon.density", "soil.carbon.density" ) ] <- 
-  L212.LN2_MgdCarbon[ L212.LN2_MgdCarbon[[LT]] == "Pasture", c( "hist.soil.carbon.density", "soil.carbon.density" ) ] * Csoil_Mult_UnmgdPast_MgdPast
+L212.LN2_MgdCarbon <- reduce_mgd_carbon( L212.LN2_MgdCarbon )
 L212.LN2_MgdCarbon <- L212.LN2_MgdCarbon[ names_LN2_MgdCarbon ]
 
 printlog( "Removing non-existent AEZs from all tables" )
