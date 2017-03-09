@@ -1,4 +1,4 @@
-#' CHUNK_NAME
+#' CHUNK_NAME_DISABLED
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -26,10 +26,27 @@ CHUNK_NAME <- function(command, ...) {
     # Load required inputs
     LOAD_PATTERN
 
+    # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
+    #
+    # If you find a mistake in the old code (hey, we all make them) and
+    # fixing it will change the output data, causing the tests to fail,
+    # (i) open an issue on GitHub, (ii) consult with colleagues, and
+    # then (iii) code a fix:
+    #
+    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
+    #   ... code that replicates old, incorrect behavior
+    # } else {
+    #   ... new code with a fix
+    # }
+    #
+    # ===================================================
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
+    # Remove FLAG_NO_TEST when an output dataset is ready
+    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
+    # If no precursors (very rare) don't call `add_precursor` at all
     MAKEOUT_PATTERN
 
     return_data(RETURNOUT_PATTERN)

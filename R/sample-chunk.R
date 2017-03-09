@@ -51,21 +51,3 @@ module_sample_sample <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-#' gcam-sample_sample_makedata
-#'
-#' @details A detailed description of what this chunk does.
-#'
-#' @param all_data A named list, holding necessary input data
-#' @return A named list with all output data.
-#' @importFrom tibble tibble
-#' @importFrom assertthat assert_that
-#' @importFrom tidyr gather spread
-#' @import dplyr
-#' @author Author name
-#' @export
-sample_sample_makedata <- function(all_data) {
-
-
-}

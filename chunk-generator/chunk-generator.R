@@ -148,12 +148,13 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   } else {
     makeoutputs_string <- rep(NA, length(writedata_string))
     for(i in seq_along(writedata_string)) {
+      txt1 <- 'add_title("descriptive title of data") %>%\n add_units("units") %>%\n add_comments("comments describing how data generated") %>%\n add_comments("can be multiple lines") %>%\n add_precursors("precursor1", "precursor2", "etc") %>%\n # typical flags, but there are others--see `constants.R` \n'
       if(dataprefix[i] == "") {
-        txt <- "add_flags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR)"
+        txt2 <- "add_flags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR)"
       } else {
-        txt <- "add_flags(FLAG_NO_TEST) %>%\n  add_xml_data()"
+        txt2 <- "add_flags(FLAG_NO_TEST) %>%\n  add_xml_data()"
       }
-      makeoutputs_string[i] <- paste("tibble() %>%\n  ", txt, "->\n  ", writedata_string[i])
+      makeoutputs_string[i] <- paste("tibble() %>%\n  ", txt1, txt2, "->\n  ", writedata_string[i])
     }
     makeoutputs_string <- paste(makeoutputs_string, collapse = "\n")
   }
@@ -196,7 +197,7 @@ for(fn in files) {
   if(is.null(out)) {
     warning("Ran into error with ", basename(fn))
   } else {
-    #    newfn <- paste0("sample-generator/outputs/test_", basename(fn))
-    cat(out, "\n", file = newfn, sep = "\n", append = TRUE)
+    newfn <- paste0("chunk-generator/outputs/chunk_", basename(fn))
+    cat(out, "\n", file = newfn, sep = "\n", append = FALSE)
   }
 }

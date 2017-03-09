@@ -3,6 +3,7 @@
 # General behavior constants
 OUTPUTS_DIR  <- "outputs/"
 COMMENT_CHAR <- "#"
+OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 
 # ======================================================================
 # Flags used by chunks

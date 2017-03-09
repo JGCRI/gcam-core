@@ -9,6 +9,8 @@
 #' @export
 dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = TRUE) {
 
+  # 'tracenum' is the number that gets printed next to all entries
+  # Allows easy and consistent referencing in what could be a long list
   if(is.null(previous_tracelist)) {
     tracenum <- 1
     previous_tracelist <- tibble(object_name = object_name, tracenum = tracenum)
@@ -22,6 +24,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
   chunk_index <- which(co$output == object_name)
   obj <- get_data(all_data, object_name)
 
+  # Print basic information about the current object
   cat(tracenum, "-", object_name, "- ")
   isfile <- FLAG_INPUT_DATA %in% get_flags(obj)
   if(isfile) {
@@ -41,7 +44,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
     cat("\tNo precursors\n")
   } else {
     # print precursors, checking against previous_tracelist ("see #x above")
-    # for any precursors not found, recurse
+    # for any precursors not found and prepare ("see #x below") to recurse
     new_tracelist <- NULL
     for(pc in pcs) {
       cat("\t", "Precursor: ", pc, " (#", sep = "")
@@ -53,7 +56,7 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
         new_tracelist %>%
           bind_rows(tibble(object_name = pc, tracenum = tn)) ->
           new_tracelist
-        cat(tn, " below", sep = "")
+        cat(tn, "below")
         tn <- tn + 1
       }
       cat(")\n")
@@ -63,7 +66,6 @@ dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = 
     if(recurse) {
       previous_tracelist <- bind_rows(previous_tracelist, new_tracelist)
       for(i in seq_len(nrow(new_tracelist))) {
-        #        cat("Recurse for", new_tracelist$object_name[i], new_tracelist$tracenum[i], "\n")
         previous_tracelist <- dstrace(new_tracelist$object_name[i], all_data, previous_tracelist)
       } # for
     } #if
