@@ -63,8 +63,6 @@ public:
     
     static const std::string& getXMLNameStatic();
 
-    virtual const std::string& getXMLName() const;
-
     virtual double getGHGValue( const std::string& aRegionName,
                                 const std::vector<IInput*>& aInputs,
                                 const std::vector<IOutput*>& aOutputs,
@@ -79,6 +77,7 @@ public:
                                const int aPeriod );
 
 protected:
+    virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
