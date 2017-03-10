@@ -203,7 +203,7 @@ void MACControl::initCalc( const string& aRegionName,
 
 void MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
     // Check first if MAC curve operation should be turned off
-    if ( mCovertPriceValue == -1 ) { // User flag to turn off MAC curves
+    if ( mCovertPriceValue < 0 ) { // User flag to turn off MAC curves
         setEmissionsReduction( 0 );
         return;
     }
@@ -218,7 +218,7 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
 
     double reduction = getMACValue( emissionsPrice );
     
-    if( mNoZeroCostReductions && emissionsPrice == 0.0 ) {
+    if( mNoZeroCostReductions && emissionsPrice <= 0.0 ) {
         reduction = 0.0;
     }
 
@@ -273,8 +273,8 @@ double MACControl::getMACValue( const double aCarbonPrice ) const {
 
     // If no mac curve read in then reduction should be zero.
     // This is a legitimate option for a user to remove a mac curve
-    if ( mMacCurve->getMinX() == mMacCurve->getMaxY() == 0 ) {
-        reduction = 0;
+    if ( ( mMacCurve->getMinX() == mMacCurve->getMaxX() ) && ( mMacCurve->getMaxX() == 0 ) ) {
+         reduction = 0;
     }
     // Check to see if some other error has occurred
     else if ( reduction == -DBL_MAX ) {

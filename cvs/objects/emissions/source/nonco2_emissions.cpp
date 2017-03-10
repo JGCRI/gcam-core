@@ -156,16 +156,6 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
     
     mGDP = prevComplexGHG->mGDP;
     
-    // As with other variables, only copy if something is not already present
-    if( mEmissionsControls.empty() ) {
-        clear();
-        for ( CControlIterator controlIt = prevComplexGHG->mEmissionsControls.begin();
-             controlIt != prevComplexGHG->mEmissionsControls.end(); ++controlIt )
-        {
-            mEmissionsControls.push_back( (*controlIt)->clone() );
-        }
-    }
-    
     // If no control objects were read in this period then clear any memory before copying
     // objects forward from previous period.
     if( mEmissionsControls.empty() ) {
@@ -173,19 +163,21 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
     }
 
     // Always copy control objects from previous period except for those read in for this period that
-    // have the same name and type as an object from the previous period. In that latter case, replace
-    // the older object with the newer one.
+    // have the same name and type as an object from the previous period. In that latter case, use
+    // the newer one instead of copying the older one.
     // Loop through all prev control objects.
+    // TODO: Also check for match of type of object once this is supported (GCAM Fusion may facilitate this)
     for ( CControlIterator prevControlIt = prevComplexGHG->mEmissionsControls.begin();
          prevControlIt != prevComplexGHG->mEmissionsControls.end(); ++prevControlIt )
     {
+        // Default to no match, which means will copy forward
+        // If there is nothing read in this is what we want to happen
         bool isAMatch = false;
         // Check if any of the new objects match the previous objects
-        for ( CControlIterator newControlIt = prevComplexGHG->mEmissionsControls.begin();
-             newControlIt != prevComplexGHG->mEmissionsControls.end(); ++newControlIt )
+        for ( CControlIterator newControlIt = mEmissionsControls.begin();
+             newControlIt != mEmissionsControls.end(); ++newControlIt )
         {
-            isAMatch = ( // ( (*newControlIt)->getXMLName() == (*prevControlIt)->getXMLName() ) &&
-                         ( (*newControlIt)->getName() == (*prevControlIt)->getName() ) &&
+            isAMatch = ( ( (*newControlIt)->getName() == (*prevControlIt)->getName() ) &&
                          // Don't replace if no name was read in since this is ambiguous.
                          // User needs to read in names for control objects to use this functionality.
                          ( (*newControlIt)->getName() != "" ) );

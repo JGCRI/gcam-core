@@ -95,10 +95,7 @@ private:
     //! Length of time in years to phase in no-cost MAC reductions
     int mZeroCostPhaseInTime;
     
-    //! Flag to determine where the MAC curves finds its price. -1: no MAC curve; 0: CO2 market; 1: market with own name
-    int mLookForOwnPrice;
-    
-    //! Conversion factor if getting price from its own market
+     //! Conversion factor if getting price from its own market.
     double mCovertPriceValue;
     
     //! Name of market to look for

@@ -417,10 +417,8 @@ void Technology::completeInit( const string& aRegionName,
     
     infoForGHGs->setInteger( "vintage-year", year );
 
-    bool hasCO2Object = false;
     for( CGHGIterator it = ghg.begin(); it != ghg.end(); ++it ) {
         (*it)->completeInit( aRegionName, aSectorName, infoForGHGs.get() );
-        hasCO2Object |= (*it)->getXMLName() == CO2Emissions::getXMLNameStatic();
     }
 
     // Initialize the production function. Uses a virtual method so that
@@ -448,7 +446,8 @@ void Technology::completeInit( const string& aRegionName,
     // Accidentally missing CO2 is very easy to do, and would cause big
     // problems. Add it automatically if it does not exist. Warn the user so
     // they remember to add it.
-    if( !hasCO2Object ) {
+    const string CO2 = "CO2";
+    if( util::searchForValue( ghg, CO2 ) == ghg.end() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Adding CO2 to Technology " << mName << " in region " << aRegionName << " in sector " << aSectorName << "." << endl;
