@@ -411,7 +411,7 @@ void Technology::completeInit( const string& aRegionName,
     }
 
     for( CGHGIterator it = ghg.begin(); it != ghg.end(); ++it ) {
-        (*it)->completeInit( aRegionName, aSectorName, aSubsectorInfo );
+        (*it)->completeInit( aRegionName, aSectorName, localInfo );
     }
 
     // Initialize the production function. Uses a virtual method so that
