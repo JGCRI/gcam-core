@@ -101,9 +101,6 @@ private:
     //! Name of market to look for
     std::string mPriceMarketName;
     
-    //! Vintage year (year built) of parent technology
-    int mVintageYear;
-    
     void copy( const MACControl& other );
     double getMACValue( const double aCarbonPrice ) const;
 };

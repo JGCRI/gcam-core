@@ -410,15 +410,8 @@ void Technology::completeInit( const string& aRegionName,
         mOutputs[ i ]->completeInit( aSectorName, aRegionName, localInfo, !hasNoInputOrOutput( 0 ) );
     }
 
-    // For GHGs create a new info object so we can pass the vintage year
-    // since aSubsectorInfo is const and can't be changed here
-    std::auto_ptr<IInfo> infoForGHGs;
-    infoForGHGs.reset( InfoFactory::constructInfo( aSubsectorInfo, aSubsectorName + "-" + mName ) );
-    
-    infoForGHGs->setInteger( "vintage-year", year );
-
     for( CGHGIterator it = ghg.begin(); it != ghg.end(); ++it ) {
-        (*it)->completeInit( aRegionName, aSectorName, infoForGHGs.get() );
+        (*it)->completeInit( aRegionName, aSectorName, aSubsectorInfo );
     }
 
     // Initialize the production function. Uses a virtual method so that
@@ -654,7 +647,6 @@ void Technology::initCalc( const string& aRegionName,
     setProductionState( aPeriod );
     
     mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
-    mTechnologyInfo->setInteger( "vintage-year", year );
    
     for( unsigned int i = 0; i < ghg.size(); i++ ) {
         ghg[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );

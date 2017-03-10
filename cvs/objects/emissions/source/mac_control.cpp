@@ -167,7 +167,6 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     toInputXMLDerived( aOut, aTabs );
-    XMLWriteElement( mVintageYear, "vintage-year", aOut, aTabs);
     
 }
 
@@ -189,16 +188,6 @@ void MACControl::initCalc( const string& aRegionName,
                            const NonCO2Emissions* parentGHG,
                            const int aPeriod )
 {
-    // Default to current year for objects that do not report a vintage (such as resources)
-    mVintageYear = scenario->getModeltime()->getper_to_yr( aPeriod );
-
-    if ( aLocalInfo != 0 ) {
-        mVintageYear = aLocalInfo->getInteger( "vintage-year", false );
-        // If vintage-year is zero, reset to current year
-        if ( mVintageYear ) {
-            mVintageYear = scenario->getModeltime()->getper_to_yr( aPeriod );
-        }
-    }
 }
 
 void MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
