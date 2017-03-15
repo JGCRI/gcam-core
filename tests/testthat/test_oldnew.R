@@ -54,8 +54,13 @@ test_that("matches old data system output", {
 
     # Finally, test (NB rounding numeric columns to a sensible number of
     # digits; otherwise spurious mismatches occur)
+    # Also first converts integer columns to numeric (otherwise test will
+    # fail when comparing <int> and <dbl> columns)
     DIGITS <- 3
     round_df <- function(x, digits = DIGITS) {
+      integer_columns <- sapply(x, class) == "integer"
+      x[, integer_columns] <- sapply(x[, integer_columns], as.numeric)
+
       numeric_columns <- sapply(x, class) == "numeric"
       x[numeric_columns] <- round(x[numeric_columns], digits)
       x
