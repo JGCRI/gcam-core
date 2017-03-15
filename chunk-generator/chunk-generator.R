@@ -12,6 +12,8 @@ DOMAIN_MAP <- c("AGLU" = "aglu/",
                 "SOCIO" = "socioeconomics/",
                 "GCAMUSA" = "gcam-usa/")
 
+XMLBATCH_LIST <- list()
+
 # Workhorse function to read, parse, construct new strings/code, and substitute
 make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   pattern <- readLines(patternfile)
@@ -53,10 +55,12 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     if(length(inputlines)) {
       for(il in inputlines) {
         xsplit <- strsplit(filecode[il], ",")[[1]]
-        x <- xsplit[[stringpos]]
+        x <- xsplit[stringpos]
         x <- gsub(pattern, "", x, fixed = TRUE)
         x <- gsub("\"", "", x)
         x <- gsub(")", "", x)
+        x <- gsub("IDstring=", "", x)
+        x <- gsub("batch_XML_file=", "", x)
         x <- trimws(x)
 
         if(grepl("COMMON_MAPPINGS", filecode[il])) {
@@ -114,8 +118,37 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 
   # Find output lines
   writedata_string <- extract_argument("writedata(", filecode, stringpos = 1)
-  midata_string <- extract_argument("write_mi_data(", filecode, stringpos = 1)
-  dataprefix <- c(rep("", length(writedata_string)), rep("XML = ", length(midata_string)))
+  midata_arr <- extract_argument("write_mi_data(", filecode, stringpos = c(1, 2, 6))
+  batchxml_arr <- extract_argument("insert_file_into_batchxml(", filecode, stringpos = c(2, 3, 4))
+
+  midata_string <- c()
+  i <- 1
+  while(i < length(midata_arr)) {
+      midata <- midata_arr[i]
+      miheader <- midata_arr[i+1]
+      mibatch <- midata_arr[i+2]
+      i <- i + 3
+      if(is.null(XMLBATCH_LIST[[mibatch]])) {
+          XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
+      }
+      XMLBATCH_LIST[[mibatch]]$data <<- c(XMLBATCH_LIST[[mibatch]]$data, midata)
+      XMLBATCH_LIST[[mibatch]]$header <<- c(XMLBATCH_LIST[[mibatch]]$header, miheader)
+      midata_string <- c(midata_string, midata)
+  }
+
+  i <- 1
+  while(i < length(batchxml_arr)) {
+      mibatch <- batchxml_arr[i]
+      mimodule <- tolower(gsub("_XML_FINAL", "", batchxml_arr[i+1]))
+      mixml <- batchxml_arr[i+2]
+      i <- i + 3
+      if(is.null(XMLBATCH_LIST[[mibatch]])) {
+          XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
+      }
+      XMLBATCH_LIST[[mibatch]]$xml <<- mixml
+      XMLBATCH_LIST[[mibatch]]$module <<- mimodule
+  }
+
   writedata_string <- basename(c(writedata_string, midata_string))
   no_outputs <- is.null(writedata_string)
 
@@ -124,7 +157,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     replacement <- "NULL"
   } else {
     writedata_string_q <- paste0("\"", writedata_string, "\"")
-    replacement <- paste0("c(", paste(paste0(dataprefix, writedata_string_q), collapse = ",\n"), ")")
+    replacement <- paste0("c(", paste(writedata_string_q, collapse = ",\n"), ")")
   }
 
   # Replace OUTPUTS_PATTERN
@@ -157,11 +190,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
                      ' add_legacy_name("', writedata_string[i], '") %>%\n',
                      ' add_precursors("precursor1", "precursor2", "etc") %>%\n',
                      ' # typical flags, but there are others--see `constants.R` \n')
-      if(dataprefix[i] == "") {
-        txt2 <- "add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)"
-      } else {
-        txt2 <- "add_flags(FLAG_NO_TEST) %>%\n  add_xml_data()"
-      }
+      txt2 <- "add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)"
       makeoutputs_string[i] <- paste("tibble() %>%\n  ", txt1, txt2, "->\n  ", writedata_string[i])
     }
     makeoutputs_string <- paste(makeoutputs_string, collapse = "\n")
@@ -182,7 +211,113 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   pattern
 }
 
+batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
+  pattern <- readLines(patternfile)
+  batchdata <- XMLBATCH_LIST[[mibatch]]
 
+  fn <- paste0(mibatch, ".R")
+  print(basename(fn))
+
+  # Replace file info
+  pattern <- gsub(pattern = "ORIGINALFILE_PATTERN",
+                  replacement = basename(fn),
+                  pattern,
+                  fixed = TRUE)
+  pattern <- gsub(pattern = "MODULE_PATTERN",
+                  replacement = batchdata$module,
+                  pattern,
+                  fixed = TRUE)
+  pattern <- gsub(pattern = "LEVEL_PATTERN",
+                  replacement = "XML",
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace CHUNK_NAME with file name (minus .R)
+  # Use make.names to ensure syntactically valid
+  chunkname <- make.names(paste("module", batchdata$module, gsub("\\.R$", "", basename(fn)), sep = "_"))
+  pattern <- gsub(pattern = "CHUNK_NAME", replacement = chunkname, pattern, fixed = TRUE)
+
+  # Find readdata lines
+  readdata_string <- batchdata$data
+  no_inputs <- is.null(readdata_string)
+  if(no_inputs) {
+    stop("No inputs for ", basename(fn))
+  } else {
+    readdata_string_q <- paste0("\"", readdata_string, "\"")
+    fileinputs <- grep("/", readdata_string, fixed = TRUE)
+    fileprefix <- rep("", length(readdata_string))
+    fileprefix[fileinputs] <- "FILE ="
+    replacement <- paste0("c(", paste(paste(fileprefix, readdata_string_q), collapse = ",\n"), ")")
+  }
+
+  # Replace INPUTS_PATTERN, marking "FILE =" as necessary
+  pattern <- gsub(pattern = "INPUTS_PATTERN",
+                  replacement = replacement,
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace LOAD_PATTERN
+  if(no_inputs) {
+    load_string <- ""
+  } else {
+    load_string <- paste0("  ", basename(readdata_string), " <- get_data(all_data, ", readdata_string_q, ")")
+  }
+
+  pattern <- gsub(pattern = "LOAD_PATTERN",
+                  replacement = paste(load_string, collapse = "\n"),
+                  pattern,
+                  fixed = TRUE)
+
+  # Find output lines
+
+  if(batchdata$xml == "") {
+    stop("No outputs for ", basename(fn))
+  } else {
+    replacement <- paste0("c( XML=\"", batchdata$xml, "\")")
+  }
+
+  # Replace OUTPUTS_PATTERN
+  pattern <- gsub(pattern = "OUTPUTS_PATTERN",
+                  replacement = replacement,
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace DOCOUT_PATTERN
+  if(batchdata$xml == "") {
+    writedata_string_doc <- "(none)"
+  } else {
+    writedata_string_doc <- paste0("\\code{", batchdata$xml, "}")
+  }
+  pattern <- gsub(pattern = "DOCOUT_PATTERN",
+                  replacement = paste(writedata_string_doc, collapse = ", "),
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace MAKEOUT_PATTERN
+  if(no_inputs) {
+    makeoutputs_string <- ""
+  } else {
+    header_quote <- paste0('"', batchdata$header, '"')
+    create_xml_string <- paste0("create_xml(\"", batchdata$xml, "\")")
+    add_data_string <- paste0("add_xml_data(", paste(batchdata$data, header_quote, sep=","), ")")
+    run_conversion_string <- "run_xml_conversion()"
+    makeoutputs_string <- paste(c(create_xml_string, add_data_string, run_conversion_string), collapse = " %>%\n")
+  }
+
+
+  pattern <- gsub(pattern = "MAKEOUT_PATTERN",
+                  replacement = makeoutputs_string,
+                  pattern,
+                  fixed = TRUE)
+
+  # Replace RETURNOUT_PATTERN
+  pattern <- gsub(pattern = "RETURNOUT_PATTERN",
+                  replacement = paste0('"', batchdata$xml, '"'), # TODO: what to return?
+                  pattern,
+                  fixed = TRUE)
+
+  pattern
+}
 
 # ----------------------- MAIN -----------------------
 
@@ -216,3 +351,17 @@ for(fn in files) {
 
 linedata <- dplyr::bind_rows(linedata)
 readr::write_csv(linedata, "chunk-generator/linedata.csv")
+
+for(bf in names(XMLBATCH_LIST)) {
+  newfn <- file.path("chunk-generator", "outputs", paste0("module-", XMLBATCH_LIST[[bf]]$module, "-", bf, ".R"))
+
+  out <- NULL
+  try(out <- batch_substitutions(bf))
+  if(is.null(out)) {
+    warning("Ran into error with ", basename(fn))
+  } else {
+    #    newfn <- paste0("sample-generator/outputs/test_", basename(fn))
+    cat(out, "\n", file = newfn, sep = "\n", append = TRUE)
+  }
+}
+
