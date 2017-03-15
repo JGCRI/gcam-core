@@ -1,4 +1,4 @@
-#' module_energy_LA112.U_DISABLED
+#' module_energy_LA112_DEMO.U
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -14,13 +14,13 @@
 #' @importFrom tidyr gather spread
 #' @author Author name(s)
 #' @export
-module_energy_LA112.U_DISABLED <- function(command, ...) {
+module_energy_LA112.U_DEMO <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/A12.U_curves",
              "L113.RsrcCurves_EJ_R_MSW"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("DEMO_L112.RsrcCurves_Mt_R_U"))
+    return(c("L112.RsrcCurves_Mt_R_U_DEMO"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -49,10 +49,10 @@ module_energy_LA112.U_DISABLED <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
-      L112.RsrcCurves_Mt_R_U
+      add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
+      L112.RsrcCurves_Mt_R_U_DEMO
 
-    return_data(DEMO_L112.RsrcCurves_Mt_R_U)
+    return_data(L112.RsrcCurves_Mt_R_U_DEMO)
   } else {
     stop("Unknown command")
   }
