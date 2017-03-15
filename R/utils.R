@@ -173,3 +173,100 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
   dplyr::bind_rows(chunkoutputs)
 }
 
+#' approx_fun
+#'
+#' \code{\link{approx}} for use in a dplyr pipeline.
+#'
+#' @param year Numeric year, in a melted tibble or data frame
+#' @param value Numeric value to interpolate
+#' @param rule Rule to use; see \code{\link{approx}} and details
+#' @details This was \code{gcam_interp} in the original data system.
+#' @return Interpolated values.
+#' @export
+#' @examples
+#' df <- data.frame(year = 1:5, value = c(1, 2, NA, 4, 5))
+#' approx_fun(df$year, df$value, rule = 2)
+approx_fun <- function(year, value, rule = 1) {
+  if(rule == 1 | rule == 2 ) {
+    stats::approx(as.vector(year), value, rule = rule, xout = year)$y
+  } else {
+    stop("Not implemented yet!")
+  }
+}
+
+#' create_xml
+#'
+#' The basis to define how to convert data to an XML file.  This method
+#' simple requires the name to save the XML file as and optionally the
+#' model interface "header" file that defines the transformation lookup
+#' to go from tabular data to hierarchical.  The result of this should be
+#' used in a dplyr pipeline with one or more calls to \code{\link{add_xml_data}}
+#' to add the data to convert and finally ending with \code{\link{run_xml_conversion}}
+#' to run the conversion.
+#'
+#' @param xml_file The name to save the XML file to.
+#' @param mi_header The model interface "header".  This will default to the one
+#' included in this package.
+#' @return A "data structure" to hold the various parts needed to run the model
+#' interface CSV to XML conversion.
+#' @export
+create_xml <- function(xml_file, mi_header=NULL) {
+    if(is.null(mi_header)) {
+        # TODO: where to find file.
+    }
+
+    list(xml_file=xml_file, mi_header=mi_header, data_tables=list())
+}
+
+#' add_xml_data
+#'
+#' Add a table to include for conversion to XML.  We need the tibble to convert
+#' and a header tag which can be looked up in the header file to convert the
+#' tibble.  This method is meant to be included in a pipeline between calls of
+#' \code{\link{create_xml}} and \code{\link{run_xml_conversion}}.
+#'
+#' @param dot The current state of the pipeline started from \code{create_xml}.
+#' @param data The tibble of data to add to the conversion.
+#' @param header The header tag to can be looked up in the header file to
+#' convert \code{data}.
+#' @return A "data structure" to hold the various parts needed to run the model
+#' interface CSV to XML conversion.
+#' @export
+add_xml_data <- function(dot, data, header) {
+    curr_table <- list(data=data, header=header)
+    dot$data_tables <- c(dot$data_tables, curr_table)
+
+    dot
+}
+
+#' run_xml_conversion
+#'
+#' Run the CSV to XML conversion using the model interface tool.  This method
+#' is should be the final call in a pipeline started with \code{\link{create_xml}}
+#' and one or more calls to \code{\link{add_xml_data}}.
+#'
+#' @param dot The current state of the pipeline started from \code{create_xml}.
+#' @export
+run_xml_conversion <- function(dot) {
+    cmd <- c(
+             "java",
+             "-cp ModelInterface.jar", # where?
+             "-Xmx2g", # TODO: memory limits?
+             "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
+             dot$xml_file,
+             dot$mi_header,
+             "-" # Read from STDIN
+             )
+    conv_pipe <- pipe(paste(cmd), open="w")
+
+    for(i in seq_along(dot$data_tables)) {
+        table <- dot$data_tables[[i]]
+        cat("INPUT_TABLE", conv_pipe)
+        cat("Variable ID", conv_pipe)
+        cat(table$header, conv_pipe)
+        cat("", conv_pipe)
+        write.table( table$data, conv_pipe, sep=",", row.names=F, col.names=T, quote=F )
+        cat("", conv_pipe)
+    }
+    close(conv_pipe)
+}
