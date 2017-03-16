@@ -147,7 +147,17 @@ add_carbon_info <- function( data, veg_data, soil_data, age_data, LT_name = "Cde
 	return( data )
 }
 
-
+reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture" ){
+  data[ data[[LT]] == LTpast, c( "hist.veg.carbon.density", "veg.carbon.density" ) ] <- 
+    data[ data[[LT]] == LTpast, c( "hist.veg.carbon.density", "veg.carbon.density" ) ] * Cveg_Mult_UnmgdPast_MgdPast
+  data[ data[[LT]] == LTpast, c( "hist.soil.carbon.density", "soil.carbon.density" ) ] <- 
+    data[ data[[LT]] == LTpast, c( "hist.soil.carbon.density", "soil.carbon.density" ) ] * Csoil_Mult_UnmgdPast_MgdPast
+  data[ data[[LT]] == LTfor, c( "hist.veg.carbon.density", "veg.carbon.density" ) ] <- 
+    data[ data[[LT]] == LTfor, c( "hist.veg.carbon.density", "veg.carbon.density" ) ] * Cveg_Mult_UnmgdFor_MgdFor
+  data[ data[[LT]] == LTfor, c( "hist.soil.carbon.density", "soil.carbon.density" ) ] <- 
+    data[ data[[LT]] == LTfor, c( "hist.soil.carbon.density", "soil.carbon.density" ) ] * Csoil_Mult_UnmgdFor_MgdFor
+  return( data )
+}
 
 
 
