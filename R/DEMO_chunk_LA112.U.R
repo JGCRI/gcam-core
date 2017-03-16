@@ -1,4 +1,4 @@
-#' module_energy_LA112_DEMO.U
+#' module_energy_LA112.U_DEMO_DISABLED
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author Author name(s)
 #' @export
-module_energy_LA112.U_DEMO <- function(command, ...) {
+module_energy_LA112.U_DEMO_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/A12.U_curves",
