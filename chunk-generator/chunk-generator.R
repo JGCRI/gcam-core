@@ -178,7 +178,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 
 # ----------------------- MAIN -----------------------
 
-files <- list.files("/Users/d3x290/Desktop/gcam-data-system-master/",
+files <- list.files("~/Documents/Work/Code/gcam-data-system-OLD/",
                     pattern = "*.R$", full.names = TRUE, recursive = TRUE)
 # Limit to scripts in the processing code folers
 files <- files[grepl("processing-code", files, fixed = TRUE)]

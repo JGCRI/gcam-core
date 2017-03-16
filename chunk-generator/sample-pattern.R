@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author Author name(s)
 #' @export
-CHUNK_NAME <- function(command, ...) {
+CHUNK_NAME_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(INPUTS_PATTERN)
   } else if(command == driver.DECLARE_OUTPUTS) {
