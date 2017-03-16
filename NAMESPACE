@@ -2,7 +2,6 @@
 
 export("gcam-usa_LA100.Socioeconomics_makedata")
 export("module_gcam-usa_LA100.Socioeconomics")
-export(aglu_LA100.FAO_downscale_ctry_makedata)
 export(approx_fun)
 export(chunk_inputs)
 export(chunk_outputs)
