@@ -87,6 +87,7 @@ energy_LA113.MSW <- function(all_data) {
     add_title("Municipal solid waste resource curves by GCAM region") %>%
     add_units("EJ") %>%
     add_comments("Downscale GCAM 3.0 MSW supply curves to countries on GDP basis; aggregate to GCAM regions") %>%
+    add_legacy_name("L113.RsrcCurves_EJ_R_MSW") %>%
     add_precursors("L100.gdp_mil90usd_ctry_Yh",
                    "energy/A13.MSW_curves.csv",
                    "common/iso_GCAM_regID.csv") ->

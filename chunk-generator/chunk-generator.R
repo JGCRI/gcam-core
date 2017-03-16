@@ -148,7 +148,13 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   } else {
     makeoutputs_string <- rep(NA, length(writedata_string))
     for(i in seq_along(writedata_string)) {
-      txt1 <- 'add_title("descriptive title of data") %>%\n add_units("units") %>%\n add_comments("comments describing how data generated") %>%\n add_comments("can be multiple lines") %>%\n add_precursors("precursor1", "precursor2", "etc") %>%\n # typical flags, but there are others--see `constants.R` \n'
+      txt1 <- paste0('add_title("descriptive title of data") %>%\n',
+                     ' add_units("units") %>%\n',
+                     ' add_comments("comments describing how data generated") %>%\n',
+                     ' add_comments("can be multiple lines") %>%\n',
+                     ' add_legacy_name("', writedata_string[i], '") %>%\n',
+                     ' add_precursors("precursor1", "precursor2", "etc") %>%\n',
+                     ' # typical flags, but there are others--see `constants.R` \n')
       if(dataprefix[i] == "") {
         txt2 <- "add_flags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR)"
       } else {

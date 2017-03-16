@@ -35,6 +35,7 @@ module_sample_sample <- function(command, ...) {
       add_units("None") %>%
       add_precursors("L200.ModelTime") %>%
       add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
+      add_legacy_name("<none>") %>%
       add_comments("Sample chunk output") ->
       first_output
 
@@ -43,6 +44,7 @@ module_sample_sample <- function(command, ...) {
       add_units("None") %>%
       add_precursors("L200.ModelTime") %>%
       add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR, FLAG_NO_TEST, FLAG_NO_OUTPUT) %>%
+      add_legacy_name("<none>") %>%
       add_comments("Sample chunk output") ->
       second_output
 
