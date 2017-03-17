@@ -39,7 +39,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
     empty_precursors <- empty_precursors & is.null(pc)
     matches <- pc %in% c(chunk_inputs, promised_outputs)
     if(!all(matches)) {
-      stop("Precursors '", pc[!matches], "' for '", obj, "' aren't inputs - chunk ", chunk)
+      stop("Some precursors for '", obj, "' aren't inputs - chunk ", chunk)
     }
     if(obj %in% pc) {
       stop("Precursors for '", obj, "' include itself - chunk ", chunk)
