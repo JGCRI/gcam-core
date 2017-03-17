@@ -41,6 +41,7 @@ modeltime_makedata <- function(all_data) {
          end.year               = max(modeltime.FUTURE_YEARS)) %>%
     add_title("GCAM time information") %>%
     add_units("years") %>%
+    add_legacy_name("L200.ModelTime") %>%
     add_comments("GCAM time information generated from constants") ->
     L200.ModelTime
 
@@ -52,6 +53,7 @@ modeltime_makedata <- function(all_data) {
          inter.year          = GCAM_interyears) %>%
     add_title("GCAM timestep change information") %>%
     add_units("years") %>%
+    add_legacy_name("L200.ModelTimeInterYears") %>%
     add_comments("GCAM timestep change points, generated from constants") ->
     L200.ModelTimeInterYears
 
@@ -60,6 +62,7 @@ modeltime_makedata <- function(all_data) {
          carbon.model.start.year = modeltime.MAGICC_C_START_YEAR) %>%
     add_title("MAGICC time information") %>%
     add_units("years") %>%
+    add_legacy_name("L200.MAGICC") %>%
     add_comments("MAGICC time information generated from constants") ->
     L200.MAGICC
 
@@ -69,6 +72,7 @@ modeltime_makedata <- function(all_data) {
          carbon.model.start.year = modeltime.MAGICC_C_START_YEAR) %>%
     add_title("Hector time and INI file information") %>%
     add_units("various") %>%
+    add_legacy_name("L200.hector") %>%
     add_comments("Hector time and INI file information generated from constants") ->
     L200.hector
 

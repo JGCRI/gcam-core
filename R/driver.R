@@ -29,7 +29,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
   empty_precursors <- TRUE
   for(obj in names(chunk_data)) {
     assert_that(tibble::is.tibble(chunk_data[[obj]]))
-    for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS)) {
+    for(at in c(ATTR_TITLE, ATTR_UNITS, ATTR_COMMENTS, ATTR_LEGACY_NAME)) {
       if(is.null(attr(chunk_data[[obj]], at))) {
         warning("No '", at, "' attached to ", obj, " - chunk ", chunk)
       }

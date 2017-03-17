@@ -49,6 +49,7 @@ module_energy_LA112.U_DEMO_DISABLED <- function(command, ...) {
       add_comments("can be multiple lines") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
+      add_legacy_name("L112.RsrcCurves_Mt_R_U_DEMO") %>%
       add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
       L112.RsrcCurves_Mt_R_U_DEMO
 

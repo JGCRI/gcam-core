@@ -9,6 +9,7 @@ ATTR_TITLE <- "title"
 ATTR_UNITS <- "units"
 ATTR_COMMENTS <- "comments"
 ATTR_PRECURSORS <- "precursors"
+ATTR_LEGACY_NAME <- "legacy_name"
 
 #' add_title
 #'
@@ -44,6 +45,22 @@ add_comments <- function(x, comments) {
   x
 }
 
+#' add_legacy_name
+#'
+#' Add the legacy (old data system) name to a data system object.
+#'
+#' @param x An object
+#' @param legacy_name Legacy name (character)
+#' @return \code{x} with legacy name set.
+add_legacy_name <- function(x, legacy_name) {
+  assertthat::assert_that(is.character(legacy_name))
+
+  if(!is.null(attr(x, ATTR_LEGACY_NAME))) {
+    stop("Not allowed to overwrite current title '", attr(x, ATTR_LEGACY_NAME), "'")
+  }
+  attr(x, ATTR_LEGACY_NAME) <- legacy_name
+  x
+}
 
 #' get_comments
 #'

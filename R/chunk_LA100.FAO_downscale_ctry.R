@@ -238,11 +238,13 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 
     # Re-split into separate tables for each element
     for(i in unique(FAO_data_ALL_5yr$element)) {
+      legacy_name <- paste0("L100.FAO_", i)
       filter(FAO_data_ALL_5yr, element == i) %>%
         add_comments("Downscale countries; calculate 5-yr averages") %>%
+        add_legacy_name(legacy_name) %>%
         add_flags(FLAG_NO_XYEAR) ->
         df
-      assign(paste0("L100.FAO_", i), df)
+      assign(legacy_name, df)
     }
 
     # Add description, units, process (done above), and precursor information

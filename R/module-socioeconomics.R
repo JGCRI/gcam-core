@@ -54,6 +54,7 @@ socioeconomics_L100.GDP_hist_makedata <- function(all_data) {
     add_precursors("socioeconomics/USDA_GDP_MER") %>%
     add_units("Million 1990 USD") %>%
     # flag that this dataset is in different form from original
+    add_legacy_name("L100.gdp_mil90usd_ctry_Yh") %>%
     add_flags(FLAG_LONG_FORM, FLAG_NO_XYEAR) ->
     L100.gdp_mil90usd_ctry_Yh
 
