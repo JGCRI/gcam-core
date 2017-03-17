@@ -9,7 +9,7 @@ add_legacy_name(x, legacy_name)
 \arguments{
 \item{x}{An object}
 
-\item{title}{Legacy name (character)}
+\item{legacy_name}{Legacy name (character)}
 }
 \value{
 \code{x} with legacy name set.

@@ -50,7 +50,7 @@ add_comments <- function(x, comments) {
 #' Add the legacy (old data system) name to a data system object.
 #'
 #' @param x An object
-#' @param title Legacy name (character)
+#' @param legacy_name Legacy name (character)
 #' @return \code{x} with legacy name set.
 add_legacy_name <- function(x, legacy_name) {
   assertthat::assert_that(is.character(legacy_name))
