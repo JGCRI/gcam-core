@@ -20,16 +20,15 @@ chunk_readylist <- function() {
   chunklist %>%
     filter(disabled) %>%
     left_join(ci, by = "name") %>%
-    filter(!from_file) %>%
     select(-name) %>%
     left_join(enabled_outputs, by = c("input" = "output")) %>%
-    mutate(available = if_else(is.na(available), FALSE, TRUE)) %>%
+    mutate(available = if_else(is.na(available) & !from_file, FALSE, TRUE)) %>%
     group_by(module, chunk, disabled) %>%
     summarise(n_inputs = length(available),
               n_avail = sum(available),
               all_avail = all(available),
-              n_deps = count_dependencies(chunk[1], chunklist, ci, co),
-              n_deps_total = count_dependencies(chunk[1], chunklist, ci, co, TRUE)) ->
+              n_deps = count_dependencies(chunk[1], chunklist, ci, co)[["deps"]],
+              n_deps_total = count_dependencies(chunk[1], chunklist, ci, co, TRUE)[["deps"]]) ->
     readylist
 
   # Add number of code lines
@@ -42,7 +41,7 @@ chunk_readylist <- function() {
 
 
 # internal function, used by chunk_readylist above
-count_dependencies <- function(chunkname, chunklist, ci, co, recurse = FALSE) {
+count_dependencies <- function(chunkname, chunklist, ci, co, recurse = FALSE, excludes = NA) {
   chunklist %>%
     select(name, chunk) %>%
     right_join(co, by = "name") %>%
@@ -52,15 +51,20 @@ count_dependencies <- function(chunkname, chunklist, ci, co, recurse = FALSE) {
     left_join(chunklist, by = "name") ->
     outputlist
 
-  deps <- length(unique(outputlist$name))
+  depnames <- unique(outputlist$name)
+  deps <- length(setdiff(depnames, excludes))
 
   if(recurse) {
     for(i in unique(outputlist$chunk)) {
-      deps <- deps + count_dependencies(i, chunklist, ci, co, recurse)
+      x <- count_dependencies(i, chunklist, ci, co,
+                                        recurse = recurse,
+                                        excludes = depnames)
+      deps <- deps + x$deps
+      depnames <- c(depnames, x$depnames)
     }
   }
 
-  deps
+  list("deps" = deps, "depnames" = depnames)
 }
 
 
