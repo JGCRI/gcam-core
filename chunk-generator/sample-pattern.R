@@ -1,4 +1,4 @@
-#' CHUNK_NAME_DISABLED
+#' CHUNK_NAME
 #'
 #' Briefly describe what this chunk does.
 #'
