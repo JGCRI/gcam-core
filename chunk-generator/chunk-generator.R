@@ -2,6 +2,8 @@
 # tree, parse them one by one, and fill in a template form to generate
 # one chunk per script. We write these to files in the outputs/ dir
 
+library(tibble)
+
 PATTERNFILE <- "chunk-generator/sample-pattern.R"
 
 DOMAIN_MAP <- c("AGLU" = "aglu/",
