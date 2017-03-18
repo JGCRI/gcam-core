@@ -189,6 +189,7 @@ files <- list.files("~/Documents/Work/Code/gcam-data-system-OLD/",
 # Limit to scripts in the processing code folers
 files <- files[grepl("processing-code", files, fixed = TRUE)]
 
+linedata <- list()
 
 for(fn in files) {
   # Isolate the module and level information from the filename
@@ -206,4 +207,10 @@ for(fn in files) {
     newfn <- paste0("chunk-generator/outputs/chunk_", basename(fn))
     cat(out, "\n", file = newfn, sep = "\n", append = FALSE)
   }
+  linedata[[newfn]] <- tibble(filename = basename(newfn),
+                              lines = length(readLines(fn)))
+
 }
+
+linedata <- dplyr::bind_rows(linedata)
+readr::write_csv(linedata, "chunk-generator/linedata.csv")
