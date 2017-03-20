@@ -1,6 +1,6 @@
 #' module_energy_LA113.MSW
 #'
-#' Briefly describe what this chunk does.
+#' Generate municipal solid waste data.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -10,10 +10,10 @@
 #' original data system was \code{LA113.MSW.R} (energy level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom tibble tibble
+#' @import dplyr
 #' @importFrom tidyr gather spread
-#' @author Author name(s)
-#' @export
+#' @author BBL
 module_energy_LA113.MSW <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",

@@ -10,10 +10,10 @@
 #' original data system was \code{L100.GDP_hist.R} (socioeconomics level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom tibble tibble
+#' @import dplyr
 #' @importFrom tidyr gather spread
-#' @author Author name(s)
-#' @export
+#' @author BBL
 module_socioeconomics_L100.GDP_hist <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "socioeconomics/USDA_GDP_MER"))

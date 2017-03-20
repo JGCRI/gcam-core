@@ -18,12 +18,12 @@ the generated outputs: \code{L113.RsrcCurves_EJ_R_MSW}. The corresponding file i
 original data system was \code{LA113.MSW.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+Generate municipal solid waste data.
 }
 \details{
 Describe in detail what this chunk does.
 }
 \author{
-Author name(s)
+BBL
 }
 
