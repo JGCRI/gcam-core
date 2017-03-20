@@ -8,7 +8,7 @@ OLD_DATA_SYSTEM_BEHAVIOR <- TRUE
 # ======================================================================
 # Flags used by chunks
 FLAG_INPUT_DATA <- "INPUT_DATA"
-FLAG_LONG_FORM  <- "LONG_FORM"
+FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
 FLAG_NO_OUTPUT  <- "NO_OUTPUT"
 FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"

@@ -22,18 +22,18 @@ test_that("matches old data system output", {
       next
     }
 
-    flag_long_form <- grepl(FLAG_LONG_FORM, new_firstline)
+    flag_long_year_form <- grepl(FLAG_LONG_YEAR_FORM, new_firstline)
     flag_no_xyear_form <- grepl(FLAG_NO_XYEAR, new_firstline)
 
     newskip <- 0
-    if(flag_long_form | flag_no_xyear_form) {
+    if(flag_long_year_form | flag_no_xyear_form) {
       newskip <- 1
     }
 
     newdata <- read_csv(newf, comment = COMMENT_CHAR, skip = newskip)
 
     # Reshape new data if necessary--see comment above
-    if(flag_long_form) {
+    if(flag_long_year_form) {
       newdata %>%
         spread(year, value) ->
         newdata
