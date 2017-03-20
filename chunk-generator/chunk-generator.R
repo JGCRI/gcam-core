@@ -61,12 +61,12 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 
         if(grepl("COMMON_MAPPINGS", filecode[il])) {
           domain <- "common/"
-        } else if (grepl("LEVEL[01]_DATA", filecode[il])) {
+        } else if (grepl("LEVEL1_DATA", filecode[il])) {
           domain <- ""
-        } else if (grepl("MAPPINGS", filecode[il]) | grepl("ASSUMPTIONS", filecode[il])) {
+        } else if (grepl("(MAPPINGS|ASSUMPTIONS|LEVEL0)", filecode[il])) {
           # Chunks might load mapping/assumption data from their own domain (module),
           # or from somewhere else. Find and parse the string to figure it out
-          domaininfo <- regexpr("[A-Z]*_(MAPPINGS|ASSUMPTIONS)", filecode[il])
+          domaininfo <- regexpr("[A-Z]*_(MAPPINGS|ASSUMPTIONS|LEVEL0)", filecode[il])
           domain <- substr(filecode[il], domaininfo, domaininfo + attr(domaininfo, "match.length") - 1)
           domain <- strsplit(domain, "_")[[1]][1]
           domain <- DOMAIN_MAP[domain]
