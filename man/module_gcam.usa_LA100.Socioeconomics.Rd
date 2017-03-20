@@ -24,6 +24,6 @@ Briefly describe what this chunk does.
 Describe in detail what this chunk does.
 }
 \author{
-Author name(s)
+BBL
 }
 

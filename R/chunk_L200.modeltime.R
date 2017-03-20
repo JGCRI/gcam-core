@@ -10,10 +10,10 @@
 #' original data system was \code{L200.modeltime.R} (modeltime level2).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom tibble tibble
+#' @import dplyr
 #' @importFrom tidyr gather spread
-#' @author Author name(s)
-#' @export
+#' @author BBL
 module_modeltime_L200.modeltime <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(NULL)

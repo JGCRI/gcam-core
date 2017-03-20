@@ -10,10 +10,10 @@
 #' original data system was \code{LA100.FAO_downscale_ctry.R} (aglu level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom tibble tibble
+#' @import dplyr
 #' @importFrom tidyr gather spread
-#' @author Author name(s)
-#' @export
+#' @author BBL
 module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/AGLU_ctry",
