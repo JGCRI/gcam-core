@@ -158,7 +158,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
                      ' add_precursors("precursor1", "precursor2", "etc") %>%\n',
                      ' # typical flags, but there are others--see `constants.R` \n')
       if(dataprefix[i] == "") {
-        txt2 <- "add_flags(FLAG_NO_TEST, FLAG_LONG_FORM, FLAG_NO_XYEAR)"
+        txt2 <- "add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR)"
       } else {
         txt2 <- "add_flags(FLAG_NO_TEST) %>%\n  add_xml_data()"
       }
