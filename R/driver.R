@@ -98,7 +98,8 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
     # These should all be marked as 'from_file'
     ff <- chunkinputs$from_file[chunkinputs$input %in% unfound_inputs]
     if(any(!ff)) {
-      stop("Unfound inputs not marked as from file: ", unfound_inputs[!ff])
+      stop("Unfound inputs not marked as from file: ",
+           paste(unfound_inputs[!ff], collapse = ", "))
     }
 
     if(!quiet) cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")

@@ -104,7 +104,7 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
 #' will not be returned.
 #' @importFrom magrittr "%>%"
 #' @export
-find_chunks <- function(pattern = "^module_[a-zA-Z-]*_.*$", include_disabled = FALSE) {
+find_chunks <- function(pattern = "^module_[a-zA-Z\\.]*_.*$", include_disabled = FALSE) {
   assertthat::assert_that(is.character(pattern))
 
   ls(name = parent.env(environment()), pattern = pattern) %>%
