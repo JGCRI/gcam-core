@@ -26,6 +26,16 @@ test_that("nonexistent file", {
   expect_error(find_csv_file("SDFKJFDJKSHGF", quiet = TRUE))
 })
 
+test_that("loads test file", {
+  fn <- "tests/cars.csv"
+  fqfn <- system.file("extdata", fn, package = "gcamdata")
+  f1 <- readr::read_csv(fqfn, col_types = "dd")
+  expect_output(find_csv_file(fn, quiet = FALSE))
+  expect_silent(find_csv_file(fn, quiet = TRUE))
+  f2 <- load_csv_files(fn, quiet = TRUE)[[1]]
+  expect_equal(f1, f2)
+})
+
 test_that("save_chunkdata saves", {
   df <- tibble::tibble(x = 1:3)
   all_data <- add_data(return_data(df), empty_data())
