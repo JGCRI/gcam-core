@@ -12,7 +12,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author Author name(s)
+#' @author YourInitials CurrentMonthName 2017
 #' @export
 CHUNK_NAME_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
