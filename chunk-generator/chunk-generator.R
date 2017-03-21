@@ -321,7 +321,7 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
 
 # ----------------------- MAIN -----------------------
 
-files <- list.files("~/Documents/Work/Code/gcam-data-system-OLD/",
+files <- list.files("~/models/gcam-data-system-OLD/",
                     pattern = "*.R$", full.names = TRUE, recursive = TRUE)
 # Limit to scripts in the processing code folers
 files <- files[grepl("processing-code", files, fixed = TRUE)]
@@ -358,10 +358,10 @@ for(bf in names(XMLBATCH_LIST)) {
   out <- NULL
   try(out <- batch_substitutions(bf))
   if(is.null(out)) {
-    warning("Ran into error with ", basename(fn))
+    warning("Ran into error with ", basename(bf))
   } else {
-    #    newfn <- paste0("sample-generator/outputs/test_", basename(fn))
-    cat(out, "\n", file = newfn, sep = "\n", append = TRUE)
+    newfn <- paste0("chunk-generator/outputs/chunk_", basename(bf), ".R")
+    cat(out, "\n", file = newfn, sep = "\n", append = FALSE)
   }
 }
 
