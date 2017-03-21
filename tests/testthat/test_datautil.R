@@ -19,24 +19,6 @@ test_that("handle empty input", {
   expect_equal(nrow(d), 0)
 })
 
-test_that("commenting system works", {
-  cmnt <- "test"
-  d <- tibble::tibble()
-  c1 <- get_comments(d)
-  d <- add_comments(d, cmnt)
-  expect_gt(length(get_comments(d)), length(c1))
-  expect_equal(get_comments(d), cmnt)
-})
-
-test_that("flag system works", {
-  flag <- "test"
-  d <- tibble::tibble()
-  c1 <- get_flags(d)
-  d <- add_flags(d, flag)
-  expect_gt(length(get_flags(d)), length(c1))
-  expect_equal(get_flags(d), flag)
-})
-
 test_that("return_data works", {
   d <- return_data(cars, iris)
   expect_is(d, "list")

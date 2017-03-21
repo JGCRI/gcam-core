@@ -62,6 +62,8 @@ add_legacy_name <- function(x, legacy_name) {
   x
 }
 
+get_legacy_name <- function(x) { attr(x, ATTR_LEGACY_NAME) }
+
 #' get_comments
 #'
 #' @param x An object
@@ -98,6 +100,18 @@ get_units <- function(x) { attr(x, ATTR_UNITS) }
 add_precursors <- function(x, ...) {
   pc <- as.character(list(...))
   attr(x, ATTR_PRECURSORS) <- c(attr(x, ATTR_PRECURSORS), pc)
+  x
+}
+
+#' same_precursors_as
+#'
+#' Copy precursors from one object to another.
+#'
+#' @param x An object (source of precursors)
+#' @param y Another object (that should get same precursors as \code{x})
+#' @return \code{x} with precursors set to those of \code{y}.
+same_precursors_as <- function(x, y) {
+  attr(x, ATTR_PRECURSORS) <- c(attr(x, ATTR_PRECURSORS), attr(y, ATTR_PRECURSORS))
   x
 }
 

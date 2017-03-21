@@ -29,7 +29,7 @@ CHUNK_NAME_DISABLED <- function(command, ...) {
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
     #
-    # If you find a mistake in the old code (hey, we all make them) and
+    # If you find a mistake/thing to update in the old code and
     # fixing it will change the output data, causing the tests to fail,
     # (i) open an issue on GitHub, (ii) consult with colleagues, and
     # then (iii) code a fix:
@@ -44,8 +44,8 @@ CHUNK_NAME_DISABLED <- function(command, ...) {
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
-    # Remove FLAG_NO_TEST when an output dataset is ready
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
+    # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
     MAKEOUT_PATTERN
 
