@@ -173,27 +173,6 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
   dplyr::bind_rows(chunkoutputs)
 }
 
-#' approx_fun
-#'
-#' \code{\link{approx}} for use in a dplyr pipeline.
-#'
-#' @param year Numeric year, in a melted tibble or data frame
-#' @param value Numeric value to interpolate
-#' @param rule Rule to use; see \code{\link{approx}} and details
-#' @details This was \code{gcam_interp} in the original data system.
-#' @return Interpolated values.
-#' @export
-#' @examples
-#' df <- data.frame(year = 1:5, value = c(1, 2, NA, 4, 5))
-#' approx_fun(df$year, df$value, rule = 2)
-approx_fun <- function(year, value, rule = 1) {
-  if(rule == 1 | rule == 2 ) {
-    stats::approx(as.vector(year), value, rule = rule, xout = year)$y
-  } else {
-    stop("Not implemented yet!")
-  }
-}
-
 #' create_xml
 #'
 #' The basis to define how to convert data to an XML file.  This method
@@ -211,11 +190,12 @@ approx_fun <- function(year, value, rule = 1) {
 #' interface CSV to XML conversion.
 #' @export
 create_xml <- function(xml_file, mi_header=NULL) {
-    if(is.null(mi_header)) {
-        # TODO: where to find file.
-    }
+  if(is.null(mi_header)) {
+    mi_header <- system.file("extdata/mi_headers", "ModelInterface_headers.txt",
+                             package="gcamdata")
+  }
 
-    list(xml_file=xml_file, mi_header=mi_header, data_tables=list())
+  list(xml_file=xml_file, mi_header=mi_header, data_tables=list())
 }
 
 #' add_xml_data
@@ -233,10 +213,10 @@ create_xml <- function(xml_file, mi_header=NULL) {
 #' interface CSV to XML conversion.
 #' @export
 add_xml_data <- function(dot, data, header) {
-    curr_table <- list(data=data, header=header)
-    dot$data_tables <- c(dot$data_tables, curr_table)
+  curr_table <- list(data=data, header=header)
+  dot$data_tables[[length(dot$data_tables)+1]] <- curr_table
 
-    dot
+  dot
 }
 
 #' run_xml_conversion
@@ -248,25 +228,30 @@ add_xml_data <- function(dot, data, header) {
 #' @param dot The current state of the pipeline started from \code{create_xml}.
 #' @export
 run_xml_conversion <- function(dot) {
-    cmd <- c(
-             "java",
-             "-cp ModelInterface.jar", # where?
-             "-Xmx2g", # TODO: memory limits?
-             "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
-             dot$xml_file,
-             dot$mi_header,
-             "-" # Read from STDIN
-             )
-    conv_pipe <- pipe(paste(cmd), open="w")
+  java_cp <- system.file("extdata/ModelInterface", "CSVToXML.jar",
+                         package="gcamdata")
+  cmd <- c(
+    "java",
+    "-cp", java_cp,
+    "-Xmx2g", # TODO: memory limits?
+    "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
+    "-", # Read from STDIN
+    dot$mi_header,
+    dot$xml_file
+  )
+  conv_pipe <- pipe(paste(cmd, collapse=" "), open="w")
 
+  tryCatch({
     for(i in seq_along(dot$data_tables)) {
-        table <- dot$data_tables[[i]]
-        cat("INPUT_TABLE", conv_pipe)
-        cat("Variable ID", conv_pipe)
-        cat(table$header, conv_pipe)
-        cat("", conv_pipe)
-        write.table( table$data, conv_pipe, sep=",", row.names=F, col.names=T, quote=F )
-        cat("", conv_pipe)
+      table <- dot$data_tables[[i]]
+      cat("INPUT_TABLE", file=conv_pipe, sep="\n")
+      cat("Variable ID", file=conv_pipe, sep="\n")
+      cat(table$header, file=conv_pipe, sep="\n")
+      cat("", file=conv_pipe, sep="\n")
+      write.table( table$data, file=conv_pipe, sep=",", row.names=F, col.names=T, quote=F )
+      cat("", file=conv_pipe, sep="\n")
     }
+  }, finally={
     close(conv_pipe)
+  })
 }
