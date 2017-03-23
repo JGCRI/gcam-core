@@ -78,3 +78,13 @@ test_that("same_precursors_as works", {
   y <- same_precursors_as(tibble(), x)
   expect_equal(get_precursors(x), get_precursors(y))
 })
+
+test_that("reference system works", {
+  ref <- "test"
+  d <- tibble::tibble()
+  expect_true(is.null(get_reference(d)))
+  expect_error(add_reference(d, 1))
+
+  d <- add_reference(d, ref)
+  expect_equal(get_reference(d), ref)
+})

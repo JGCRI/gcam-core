@@ -115,11 +115,11 @@ test_that("parse_csv_header works", {
          "#Units: units",
          "# Description: desc1",
          "# desc2",
-         "# Source: source1",
-         "# source2",
+         "# Source: source",
          "data,start",
          "1,2")
   tf <- tempfile()
+  x[1] <- paste("# File:", basename(tf))
   obj_original <- tibble()
   expect_error(parse_csv_header(obj_original, tf))  # file doesn't exist yet
   writeLines(x, tf)
@@ -130,6 +130,7 @@ test_that("parse_csv_header works", {
   expect_equal(get_title(obj), "title")
   expect_equal(get_units(obj), "units")
   expect_equal(get_comments(obj), c("desc1", "desc2"))
+  expect_equal(get_reference(obj), "source")
 
   # GZ'd file
   if(require(R.utils)) {
@@ -151,11 +152,17 @@ test_that("parse_csv_header works", {
   }
 
   # File without required data
-  x <- c("# File: file")
+  writeLines(x[1], tf)
+  expect_error(parse_csv_header(obj_original, tf, enforce_requirements = TRUE))
+
+  # File with wrong filename
+  correctx1 <- x[1]
+  x[1] <- "# File: xxxx"
   writeLines(x, tf)
   expect_error(parse_csv_header(obj_original, tf, enforce_requirements = TRUE))
 
   # File with Excel-quote error
+  x[1] <- correctx1
   x[3] <- '"# Excel,is,stupid"'
   writeLines(x, tf)
   expect_error(parse_csv_header(obj_original, tf))

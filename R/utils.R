@@ -127,12 +127,17 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = FALSE
     stop('A quoted comment (# prefixed by a double quote, probably due to Excel) detected in ', basename(filename))
   }
 
+  # The 'File:' field has to match the actual filename
+  filecheck <- extract_header_info(x, "File:", filename, required = enforce_requirements)
+  if(enforce_requirements & !identical(filecheck, basename(filename))) {
+    stop("'File:' given in header doesn't match filename in ", filename)
+  }
+
   obj %>%
     add_title(extract_header_info(x, "Title:", filename, required = enforce_requirements)) %>%
     add_units(extract_header_info(x, "Units:", filename, required = enforce_requirements)) %>%
-    add_comments(extract_header_info(x, "Comments:", filename, multiline = TRUE)) %>%
-    add_comments(extract_header_info(x, "Description:", filename, multiline = TRUE)) %>%
-    add_comments(extract_header_info(x, "References?:", filename))
+    add_comments(extract_header_info(x, "(Comments|Description):", filename, multiline = TRUE)) %>%
+    add_reference(extract_header_info(x, "(References?|Sources?):", filename, multiline = TRUE))
 }
 
 
