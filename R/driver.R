@@ -103,7 +103,7 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
     }
 
     if(!quiet) cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
-    out <- capture.output(csv_data <- load_csv_files(unfound_inputs, quiet = TRUE))
+    out <- utils::capture.output(csv_data <- load_csv_files(unfound_inputs, quiet = TRUE))
     if(!quiet) cat(out, sep = "\n")
     csv_data %>%
       add_data(all_data) ->
