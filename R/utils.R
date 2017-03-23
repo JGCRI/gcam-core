@@ -233,25 +233,22 @@ run_xml_conversion <- function(dot) {
   cmd <- c(
     "java",
     "-cp", java_cp,
-    "-Xmx2g", # TODO: memory limits?
+    "-Xmx1g", # TODO: memory limits?
     "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
     "-", # Read from STDIN
     dot$mi_header,
     dot$xml_file
   )
   conv_pipe <- pipe(paste(cmd, collapse=" "), open="w")
+  on.exit(close(conv_pipe))
 
-  tryCatch({
-    for(i in seq_along(dot$data_tables)) {
-      table <- dot$data_tables[[i]]
-      cat("INPUT_TABLE", file=conv_pipe, sep="\n")
-      cat("Variable ID", file=conv_pipe, sep="\n")
-      cat(table$header, file=conv_pipe, sep="\n")
-      cat("", file=conv_pipe, sep="\n")
-      write.table( table$data, file=conv_pipe, sep=",", row.names=F, col.names=T, quote=F )
-      cat("", file=conv_pipe, sep="\n")
-    }
-  }, finally={
-    close(conv_pipe)
-  })
+  for(i in seq_along(dot$data_tables)) {
+    table <- dot$data_tables[[i]]
+    cat("INPUT_TABLE", file=conv_pipe, sep="\n")
+    cat("Variable ID", file=conv_pipe, sep="\n")
+    cat(table$header, file=conv_pipe, sep="\n")
+    cat("", file=conv_pipe, sep="\n")
+    write.table( table$data, file=conv_pipe, sep=",", row.names=F, col.names=T, quote=F )
+    cat("", file=conv_pipe, sep="\n")
+  }
 }
