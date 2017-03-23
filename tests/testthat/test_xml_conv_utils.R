@@ -2,8 +2,6 @@
 
 context("xml")
 
-if(FALSE) {
-
 test_that("default MI header exists in the package", {
   conv_test <- create_xml("test.xml")
 
@@ -90,4 +88,3 @@ test_that("get warning for missing header", {
   expect_identical(test_xml, '<?xml version="1.0" encoding="UTF-8"?><scenario><world><region name="USA"><interest-rate>1.0</interest-rate></region></world></scenario>')
 })
 
-}
