@@ -126,11 +126,13 @@ test_that("parse_csv_header works", {
   expect_equal(get_comments(obj), c("desc1", "desc2"))
 
   # GZ'd file
-  gztf <- R.utils::gzip(tf, remove = FALSE)
-  if(file.exists(gztf)) {
-    obj <- parse_csv_header(obj_original, gztf)
-    expect_equal(get_title(obj), "title")
-    file.remove(gztf)
+  if(require(R.utils)) {
+    gztf <- R.utils::gzip(tf, remove = FALSE)
+    if(file.exists(gztf)) {
+      obj <- parse_csv_header(obj_original, gztf)
+      expect_equal(get_title(obj), "title")
+      file.remove(gztf)
+    }
   }
 
   # Zipped file
