@@ -35,6 +35,8 @@ test_that("loads test file", {
   f2 <- load_csv_files(fn, quiet = TRUE)[[1]]
   expect_equal(f1, f2)
 
+  expect_output(load_csv_files(fn, quiet = FALSE))
+
   # Did header metadata get parsed?
   expect_is(get_title(f2), "character")
 })
@@ -80,6 +82,8 @@ test_that("extract_header_info works", {
   x <- c("# File: file",
          "# Title: title",
          "#Units: units",
+         "# Dupe: dupe1",
+         "# Dupe: dupe2",
          "# Description: desc1",
          "# desc2",
          "# Source: source1",
@@ -94,6 +98,8 @@ test_that("extract_header_info works", {
   expect_null(extract_header_info(x, "XXXXX:", "filename", required = FALSE))
   # Label not present, is required
   expect_error(extract_header_info(x, "XXXXX:", "filename", required = TRUE))
+  # Duplicated label
+  expect_error(extract_header_info(x, "Dupe:", "filename"))
   # Multiline label terminated by another label
   expect_equal(extract_header_info(x, "Description:", "filename", multiline = TRUE), c("desc1", "desc2"))
   # Multiline label terminated by data
@@ -147,12 +153,12 @@ test_that("parse_csv_header works", {
   # File without required data
   x <- c("# File: file")
   writeLines(x, tf)
-  expect_error(parse_csv_header(tf, enforce_requirements = TRUE))
+  expect_error(parse_csv_header(obj_original, tf, enforce_requirements = TRUE))
 
   # File with Excel-quote error
   x[3] <- '"# Excel,is,stupid"'
   writeLines(x, tf)
-  expect_error(parse_csv_header(tf))
+  expect_error(parse_csv_header(obj_original, tf))
 
   file.remove(tf)
 })
