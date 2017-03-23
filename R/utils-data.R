@@ -20,7 +20,7 @@ ATTR_LEGACY_NAME <- "legacy_name"
 #' @param title Title of object (character)
 #' @return \code{x} with units appended to any existing comments.
 add_title <- function(x, title) {
-  assertthat::assert_that(is.character(title))
+  assertthat::assert_that(is.character(title) | is.null(title))
 
   if(!is.null(attr(x, ATTR_TITLE))) {
     stop("Not allowed to overwrite current title '", attr(x, ATTR_TITLE), "'")
@@ -40,7 +40,7 @@ get_title <- function(x) { attr(x, ATTR_TITLE) }
 #' @param comments A character vector of comments
 #' @return \code{x} with comments appended to any existing comments.
 add_comments <- function(x, comments) {
-  assertthat::assert_that(is.character(comments))
+  assertthat::assert_that(is.character(comments) | is.null(comments))
   attr(x, ATTR_COMMENTS) <- c(attr(x, ATTR_COMMENTS), comments)
   x
 }
@@ -53,7 +53,7 @@ add_comments <- function(x, comments) {
 #' @param legacy_name Legacy name (character)
 #' @return \code{x} with legacy name set.
 add_legacy_name <- function(x, legacy_name) {
-  assertthat::assert_that(is.character(legacy_name))
+  assertthat::assert_that(is.character(legacy_name) | is.null(legacy_name))
 
   if(!is.null(attr(x, ATTR_LEGACY_NAME))) {
     stop("Not allowed to overwrite current title '", attr(x, ATTR_LEGACY_NAME), "'")
@@ -81,7 +81,7 @@ get_comments <- function(x) {
 #' @param units Units (character)
 #' @return \code{x} with units appended to any existing comments.
 add_units <- function(x, units) {
-  assertthat::assert_that(is.character(units))
+  assertthat::assert_that(is.character(units) | is.null(units))
   attr(x, ATTR_UNITS) <- c(attr(x, ATTR_UNITS), units)
   x
 }

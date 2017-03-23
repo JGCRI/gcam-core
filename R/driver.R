@@ -98,11 +98,12 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
     # These should all be marked as 'from_file'
     ff <- chunkinputs$from_file[chunkinputs$input %in% unfound_inputs]
     if(any(!ff)) {
-      stop("Unfound inputs not marked as from file: ", unfound_inputs[!ff])
+      stop("Unfound inputs not marked as from file: ",
+           paste(unfound_inputs[!ff], collapse = ", "))
     }
 
     if(!quiet) cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
-    out <- capture.output(csv_data <- load_csv_files(unfound_inputs, quiet = TRUE))
+    out <- utils::capture.output(csv_data <- load_csv_files(unfound_inputs, quiet = TRUE))
     if(!quiet) cat(out, sep = "\n")
     csv_data %>%
       add_data(all_data) ->

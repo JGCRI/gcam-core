@@ -20,12 +20,119 @@ load_csv_files <- function(filenames, quiet = FALSE, ...) {
     if(!quiet) cat("Loading", f, "...\n")
     fqfn <- find_csv_file(f, quiet = quiet)
     suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
-      add_title(f) %>%
+      parse_csv_header(fqfn) %>%
       add_comments(paste("Read from", gsub("^.*extdata", "extdata", fqfn))) %>%
       add_flags(FLAG_INPUT_DATA) ->
       filedata[[f]]
+
+    # Title might have been filled in, or not
+    if(is.null(get_title(filedata[[f]]))) {
+      filedata[[f]] <- add_title(filedata[[f]], f)
+    }
+
   }
   filedata
+}
+
+
+#' extract_header_info
+#'
+#' Extract information from CSV headers.
+#'
+#' @param header_lines Character vector holding raw header lines
+#' @param label Label to search for - character
+#' @param filename Filename (for error reporting purposes)
+#' @param required Is this label required? (logical)
+#' @param multiline Can this label hold multi-line information? (logical)
+#' @details CSV files can have headers, commented lines of the form "# Title: xxxx",
+#' "# Source: xxxx", etc. Extract this information if present. This function is called
+#' by \code{\link{parse_csv_header}}.
+#' @return Extracted label information, as a character vector
+extract_header_info <- function(header_lines, label, filename, required = FALSE, multiline = FALSE) {
+  assert_that(is.character(header_lines))
+  assert_that(is.character(label))
+  assert_that(is.character(filename))
+  assert_that(is.logical(required))
+  assert_that(is.logical(multiline))
+
+  label_regex <- paste0("^", COMMENT_CHAR, "\\s*", trimws(label))
+  label_line <- grep(label_regex, header_lines)
+  if(length(label_line) > 1) {
+    stop("Header label ", label, " appears on >1 line in ", basename(filename))
+  } else if(length(label_line) == 1) {
+    if(multiline) {
+      # Multiline comments may end with the last comment line before data...
+      comment_end1 <- max(grep(paste0("^", COMMENT_CHAR), header_lines))
+      # ...or at the next label (xxx:)...
+      all_label_lines <- grep(paste0("^", COMMENT_CHAR, "\\s*[a-zA-Z]*:"), header_lines)
+      if(any(all_label_lines > label_line)) {
+        comment_end2 <- min(all_label_lines[all_label_lines > label_line])
+      } else {
+        comment_end2 <- NA  # no next label
+      }
+      # ... whichever comes first
+      comment_end <- min(comment_end1, comment_end2 - 1, na.rm = TRUE)
+    } else {
+      comment_end <- label_line
+    }
+    # Pull out information and return
+    header_lines[label_line:comment_end] %>%
+      gsub(label_regex, "", .) %>%
+      gsub(paste0("^", COMMENT_CHAR), "", .) %>%
+      trimws
+  } else {
+    if(required) {
+      stop("Required metadata label '", label, "not found in ", basename(filename))
+    }
+    NULL   # label not present
+  }
+}
+
+
+#' parse_csv_header
+#'
+#' Parse a CSV file's header, if present.
+#'
+#' @param obj The object to attach attributes to
+#' @param filename Fully-qualified filename
+#' @param n Number of lines to read from the beginning of the file
+#' @param enforce_requirements Enforce mandatory fields?
+#' @details Headers are given at the top of files and consist of labels ("Title:", "Units:", etc)
+#' prefixed by comment characters (#). The parser looks for these, and calls \code{\link{add_title}} and
+#' similar functions to return an empty data frame with appropriate attribute set.
+#' @return An empty \code{\link{tibble}} with appropriate attributes filled in.
+#' @export
+parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = FALSE) {
+  assert_that(tibble::is_tibble(obj))
+  assert_that(is.character(filename))
+  assert_that(is.numeric(n))
+  assert_that(is.logical(enforce_requirements))
+  assert_that(file.exists(filename))
+
+  # File may be compressed; handle this via a connection
+  if(grepl("\\.gz", filename)) {
+    con <- gzfile(filename)
+  } else if(grepl("\\.zip", filename)) {
+    con <- unz(filename, filename = basename(gsub("\\.zip$", "", filename)))
+  } else {
+    con <- file(filename)
+  }
+
+  x <- readLines(con, n = n)
+  close(con)
+
+  # Excel tries to be 'helpful' and, when working with CSV files, quotes lines with
+  # commas in them...which you CAN'T SEE when re-opening in Excel. Trap this problem.
+  if(any(grepl(paste0('^"', COMMENT_CHAR), x))) {
+    stop('A quoted comment (# prefixed by a double quote, probably due to Excel) detected in ', basename(filename))
+  }
+
+  obj %>%
+    add_title(extract_header_info(x, "Title:", filename, required = enforce_requirements)) %>%
+    add_units(extract_header_info(x, "Units:", filename, required = enforce_requirements)) %>%
+    add_comments(extract_header_info(x, "Comments:", filename, multiline = TRUE)) %>%
+    add_comments(extract_header_info(x, "Description:", filename, multiline = TRUE)) %>%
+    add_comments(extract_header_info(x, "References?:", filename))
 }
 
 
@@ -104,7 +211,7 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
 #' will not be returned.
 #' @importFrom magrittr "%>%"
 #' @export
-find_chunks <- function(pattern = "^module_[a-zA-Z-]*_.*$", include_disabled = FALSE) {
+find_chunks <- function(pattern = "^module_[a-zA-Z\\.]*_.*$", include_disabled = FALSE) {
   assertthat::assert_that(is.character(pattern))
 
   ls(name = parent.env(environment()), pattern = pattern) %>%
