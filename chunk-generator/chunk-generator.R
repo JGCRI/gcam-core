@@ -10,7 +10,8 @@ DOMAIN_MAP <- c("AGLU" = "aglu/",
                 "ENERGY" = "energy/",
                 "EMISSIONS" = "emissions/",
                 "SOCIO" = "socioeconomics/",
-                "GCAMUSA" = "gcam-usa/")
+                "GCAMUSA" = "gcam-usa/",
+                "WATER" = "water/")
 
 # Workhorse function to read, parse, construct new strings/code, and substitute
 make_substitutions <- function(fn, patternfile = PATTERNFILE) {
@@ -188,7 +189,7 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 
 files <- list.files("~/Documents/Work/Code/gcam-data-system-OLD/",
                     pattern = "*.R$", full.names = TRUE, recursive = TRUE)
-# Limit to scripts in the processing code folers
+# Limit to scripts in the processing code folders
 files <- files[grepl("processing-code", files, fixed = TRUE)]
 
 linedata <- list()
