@@ -42,6 +42,14 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
                   pattern,
                   fixed = TRUE)
 
+  # Warnings (advice to coders)
+  warnstring <- "#"
+  if(any(grepl("(merge|match)", filecode))) {
+    warnstring <- c(warnstring, "# NOTE: there are `merge` and/or 'match' calls in this code. Be careful!",
+                    "# For more information, see https://github.com/JGCRI/gcamdata/wiki/Merge-and-Match")
+  }
+  pattern <- gsub("WARNING_PATTERN", paste(warnstring, collapse = "\n"), pattern, fixed = TRUE)
+
   # Replace CHUNK_NAME with file name (minus .R)
   # Use make.names to ensure syntactically valid
   chunkname <- make.names(paste("module", module, gsub("\\.R$", "", basename(fn)), sep = "_"))
@@ -125,29 +133,29 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   midata_string <- c()
   i <- 1
   while(i < length(midata_arr)) {
-      midata <- midata_arr[i]
-      miheader <- midata_arr[i+1]
-      mibatch <- midata_arr[i+2]
-      i <- i + 3
-      if(is.null(XMLBATCH_LIST[[mibatch]])) {
-          XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
-      }
-      XMLBATCH_LIST[[mibatch]]$data <<- c(XMLBATCH_LIST[[mibatch]]$data, midata)
-      XMLBATCH_LIST[[mibatch]]$header <<- c(XMLBATCH_LIST[[mibatch]]$header, miheader)
-      midata_string <- c(midata_string, midata)
+    midata <- midata_arr[i]
+    miheader <- midata_arr[i+1]
+    mibatch <- midata_arr[i+2]
+    i <- i + 3
+    if(is.null(XMLBATCH_LIST[[mibatch]])) {
+      XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
+    }
+    XMLBATCH_LIST[[mibatch]]$data <<- c(XMLBATCH_LIST[[mibatch]]$data, midata)
+    XMLBATCH_LIST[[mibatch]]$header <<- c(XMLBATCH_LIST[[mibatch]]$header, miheader)
+    midata_string <- c(midata_string, midata)
   }
 
   i <- 1
   while(i < length(batchxml_arr)) {
-      mibatch <- batchxml_arr[i]
-      mimodule <- tolower(gsub("_XML_FINAL", "", batchxml_arr[i+1]))
-      mixml <- batchxml_arr[i+2]
-      i <- i + 3
-      if(is.null(XMLBATCH_LIST[[mibatch]])) {
-          XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
-      }
-      XMLBATCH_LIST[[mibatch]]$xml <<- mixml
-      XMLBATCH_LIST[[mibatch]]$module <<- mimodule
+    mibatch <- batchxml_arr[i]
+    mimodule <- tolower(gsub("_XML_FINAL", "", batchxml_arr[i+1]))
+    mixml <- batchxml_arr[i+2]
+    i <- i + 3
+    if(is.null(XMLBATCH_LIST[[mibatch]])) {
+      XMLBATCH_LIST[[mibatch]] <<- list(data=c(), header=c(), xml="", module="")
+    }
+    XMLBATCH_LIST[[mibatch]]$xml <<- mixml
+    XMLBATCH_LIST[[mibatch]]$module <<- mimodule
   }
 
   writedata_string <- basename(c(writedata_string, midata_string))
@@ -322,7 +330,7 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
 
 # ----------------------- MAIN -----------------------
 
-files <- list.files("~/models/gcam-data-system-OLD/",
+files <- list.files("../gcam-data-system-OLD/",
                     pattern = "*.R$", full.names = TRUE, recursive = TRUE)
 # Limit to scripts in the processing code folders
 files <- files[grepl("processing-code", files, fixed = TRUE)]
@@ -342,7 +350,7 @@ for(fn in files) {
   if(is.null(out)) {
     warning("Ran into error with ", basename(fn))
   } else {
-    newfn <- paste0("chunk-generator/outputs/chunk_", basename(fn))
+    newfn <- paste0("chunk-generator/outputs/zchunk_", basename(fn))
     cat(out, "\n", file = newfn, sep = "\n", append = FALSE)
   }
   linedata[[newfn]] <- tibble(filename = basename(newfn),
@@ -361,8 +369,7 @@ for(bf in names(XMLBATCH_LIST)) {
   if(is.null(out)) {
     warning("Ran into error with ", basename(bf))
   } else {
-    newfn <- paste0("chunk-generator/outputs/chunk_", basename(bf), ".R")
+    newfn <- paste0("chunk-generator/outputs/zchunk_", basename(bf), ".R")
     cat(out, "\n", file = newfn, sep = "\n", append = FALSE)
   }
 }
-

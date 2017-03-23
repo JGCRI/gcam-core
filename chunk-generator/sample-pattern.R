@@ -40,6 +40,7 @@ CHUNK_NAME_DISABLED <- function(command, ...) {
     #   ... new code with a fix
     # }
     #
+   WARNING_PATTERN
     # ===================================================
 
     # Produce outputs
