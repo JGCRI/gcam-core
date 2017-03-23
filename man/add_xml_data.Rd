@@ -24,3 +24,4 @@ and a header tag which can be looked up in the header file to convert the
 tibble.  This method is meant to be included in a pipeline between calls of
 \code{\link{create_xml}} and \code{\link{run_xml_conversion}}.
 }
+
