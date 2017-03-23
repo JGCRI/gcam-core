@@ -301,13 +301,13 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
 #' @return A "data structure" to hold the various parts needed to run the model
 #' interface CSV to XML conversion.
 #' @export
-create_xml <- function(xml_file, mi_header=NULL) {
+create_xml <- function(xml_file, mi_header = NULL) {
   if(is.null(mi_header)) {
     mi_header <- system.file("extdata/mi_headers", "ModelInterface_headers.txt",
-                             package="gcamdata")
+                             package = "gcamdata")
   }
 
-  list(xml_file=xml_file, mi_header=mi_header, data_tables=list())
+  list(xml_file = xml_file, mi_header = mi_header, data_tables = list())
 }
 
 #' add_xml_data
@@ -325,7 +325,7 @@ create_xml <- function(xml_file, mi_header=NULL) {
 #' interface CSV to XML conversion.
 #' @export
 add_xml_data <- function(dot, data, header) {
-  curr_table <- list(data=data, header=header)
+  curr_table <- list(data = data, header = header)
   dot$data_tables[[length(dot$data_tables)+1]] <- curr_table
 
   dot
@@ -341,7 +341,7 @@ add_xml_data <- function(dot, data, header) {
 #' @export
 run_xml_conversion <- function(dot) {
   java_cp <- system.file("extdata/ModelInterface", "CSVToXML.jar",
-                         package="gcamdata")
+                         package = "gcamdata")
   cmd <- c(
     "java",
     "-cp", java_cp,
@@ -351,16 +351,16 @@ run_xml_conversion <- function(dot) {
     dot$mi_header,
     dot$xml_file
   )
-  conv_pipe <- pipe(paste(cmd, collapse=" "), open="w")
+  conv_pipe <- pipe(paste(cmd, collapse=" "), open = "w")
   on.exit(close(conv_pipe))
 
   for(i in seq_along(dot$data_tables)) {
     table <- dot$data_tables[[i]]
-    cat("INPUT_TABLE", file=conv_pipe, sep="\n")
-    cat("Variable ID", file=conv_pipe, sep="\n")
-    cat(table$header, file=conv_pipe, sep="\n")
-    cat("", file=conv_pipe, sep="\n")
-    write.table( table$data, file=conv_pipe, sep=",", row.names=F, col.names=T, quote=F )
-    cat("", file=conv_pipe, sep="\n")
+    cat("INPUT_TABLE", file = conv_pipe, sep = "\n")
+    cat("Variable ID", file = conv_pipe, sep = "\n")
+    cat(table$header, file = conv_pipe, sep = "\n")
+    cat("", file = conv_pipe, sep = "\n")
+    write.table( table$data, file=conv_pipe, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
+    cat("", file = conv_pipe, sep = "\n")
   }
 }
