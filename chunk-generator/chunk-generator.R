@@ -10,7 +10,8 @@ DOMAIN_MAP <- c("AGLU" = "aglu/",
                 "ENERGY" = "energy/",
                 "EMISSIONS" = "emissions/",
                 "SOCIO" = "socioeconomics/",
-                "GCAMUSA" = "gcam-usa/")
+                "GCAMUSA" = "gcam-usa/",
+                "WATER" = "water/")
 
 XMLBATCH_LIST <- list()
 
@@ -239,14 +240,6 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
                   replacement = "XML",
                   pattern,
                   fixed = TRUE)
-
-  # Warnings (advice to coders)
-  warnstring <- "#"
-  if(any(grepl("(merge|match)", filecode))) {
-    warnstring <- c(warnstring, "# NOTE: there are `merge` and/or 'match' calls in this code. Be careful!",
-                    "# For more information, see https://github.com/JGCRI/gcamdata/wiki/Merge-and-Match")
-  }
-  pattern <- gsub("WARNING_PATTERN", paste(warnstring, collapse = "\n"), pattern, fixed = TRUE)
 
   # Replace CHUNK_NAME with file name (minus .R)
   # Use make.names to ensure syntactically valid
