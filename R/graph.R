@@ -1,20 +1,18 @@
 
-
-# Playing around!
-
-
 #' graph_chunks
 #'
-#' @param chunklist A tibble of chunks
+#' @param module_filter Optional name of module to filter by
 #' @param plot_gcam Plot a node for GCAM (all XMLs feed to)?
 #' @param include_disabled Plots nodes of disabled chunks?
 #' @return A plot
 #' @export
-graph_chunks <- function(chunklist, plot_gcam = FALSE, include_disabled = FALSE) {
+graph_chunks <- function(module_filter = NULL,
+                         plot_gcam = FALSE, include_disabled = FALSE) {
 
-  if(missing(chunklist)) {
-    chunklist <- find_chunks(include_disabled = include_disabled)
-  }
+  chunklist = find_chunks(include_disabled = include_disabled)
+  chunklist$modulenum <- as.numeric(as.factor(chunklist$module))
+  vertexcolors <- rainbow(length(unique(chunklist$modulenum)))
+
   chunkinputs <- chunk_inputs(chunklist$name)
   chunkoutputs <- chunk_outputs(chunklist$name)
 
@@ -30,8 +28,33 @@ graph_chunks <- function(chunklist, plot_gcam = FALSE, include_disabled = FALSE)
       chunklist
   }
 
+  if(!is.null(module_filter)) {
+    # We want just chunks in 'module' AND anything that feeds them
+    cl_main <- filter(chunklist, module == module_filter)
+
+    # Join chunks to their inputs, and then to outputs; looking for
+    # chunks that feed chunks in the current (filtered) module
+    cl_main %>%
+      left_join(chunkinputs, by = "name") %>%
+      left_join(chunkoutputs, by = c("input"= "output")) %>%
+      filter(!is.na(name.y)) %>%
+      select(name.y) %>%
+      distinct ->
+      module_feeders
+
+    # Add those into the main chunklist
+    chunklist %>%
+      filter(name %in% module_feeders$name.y) %>%
+      bind_rows(cl_main) %>%
+      distinct ->
+      chunklist
+
+    chunkinputs <- chunk_inputs(chunklist$name)
+    chunkoutputs <- chunk_outputs(chunklist$name)
+
+  }
+
   chunklist$num <- 1:nrow(chunklist)
-  chunklist$modulenum <- as.numeric(as.factor(chunklist$module))
   chunkinputs %>%
     left_join(chunklist, by = "name") %>%
     select(name, input, num) ->
@@ -64,14 +87,20 @@ graph_chunks <- function(chunklist, plot_gcam = FALSE, include_disabled = FALSE)
 
   # Plot it
   set.seed(1224)
-  plot(igraph::graph.adjacency(mat),
-       vertex.color = rainbow(length(unique(chunklist$modulenum)))[chunklist$modulenum],
+  g <- igraph::graph.adjacency(mat)
+  coords <- igraph::layout_nicely(g)
+
+  plot(g,
+       vertex.color = vertexcolors[chunklist$modulenum],
        #      vertex.size = chunklist$noutputs p* 3,
        #      vertex.label.dist = 1,
        vertex.label.cex = .5,
        vertex.size = 5,
-       edge.arrow.size = 0.5,
-       margin = -0.2)
+       edge.arrow.size = 0.3,
+       layout = coords)#,
+  # margin = -0.2)
+
+  title(module_filter, sub = paste("DSR-integration", date()))
 
   invisible(mat)
 }

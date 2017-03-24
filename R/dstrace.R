@@ -6,8 +6,13 @@
 #' @param previous_tracelist Information about previous objects printed
 #' @param recurse Recurse to print information about precursor objects?
 #' @return Boolean (object_name found, or not)
+#' @importFrom assertthat assert_that
 #' @export
 dstrace <- function(object_name, all_data, previous_tracelist = NULL, recurse = TRUE) {
+
+  assert_that(is.character(object_name))
+  assert_that(is_data_list(all_data))
+  assert_that(is.logical(recurse))
 
   # 'tracenum' is the number that gets printed next to all entries
   # Allows easy and consistent referencing in what could be a long list

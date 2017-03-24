@@ -10,6 +10,7 @@ ATTR_UNITS <- "units"
 ATTR_COMMENTS <- "comments"
 ATTR_PRECURSORS <- "precursors"
 ATTR_LEGACY_NAME <- "legacy_name"
+ATTR_REFERENCE <- "reference"
 
 #' add_title
 #'
@@ -140,6 +141,24 @@ add_flags <- function(x, ...) {
 get_flags <- function(x) {
   attr(x, "flags")
 }
+
+#' add_reference
+#'
+#' Add character units to a data system object. Units are written out
+#' with the data when the file is saved.
+#'
+#' @param x An object
+#' @param reference Reference for object (character)
+#' @return \code{x} with units appended to any existing references
+add_reference <- function(x, reference) {
+  assertthat::assert_that(is.character(reference) | is.null(reference))
+
+  attr(x, ATTR_REFERENCE) <- c(attr(x, ATTR_REFERENCE), reference)
+  x
+}
+
+get_reference <- function(x) { attr(x, ATTR_REFERENCE) }
+
 
 #' getdata
 #'
