@@ -295,9 +295,9 @@ chunk_outputs <- function(chunks = find_chunks()$name) {
 #' to add the data to convert and finally ending with \code{\link{run_xml_conversion}}
 #' to run the conversion.
 #'
-#' @param xml_file The name to save the XML file to.
+#' @param xml_file The name to save the XML file to
 #' @param mi_header The model interface "header".  This will default to the one
-#' included in this package.
+#' included in this package
 #' @return A "data structure" to hold the various parts needed to run the model
 #' interface CSV to XML conversion.
 #' @export
@@ -317,12 +317,13 @@ create_xml <- function(xml_file, mi_header = NULL) {
 #' tibble.  This method is meant to be included in a pipeline between calls of
 #' \code{\link{create_xml}} and \code{\link{run_xml_conversion}}.
 #'
-#' @param dot The current state of the pipeline started from \code{create_xml}.
-#' @param data The tibble of data to add to the conversion.
+#' @param dot The current state of the pipeline started from \code{create_xml}
+#' @param data The tibble of data to add to the conversion
 #' @param header The header tag to can be looked up in the header file to
-#' convert \code{data}.
+#' convert \code{data}
 #' @return A "data structure" to hold the various parts needed to run the model
 #' interface CSV to XML conversion.
+#' @author PP March 2017
 #' @export
 add_xml_data <- function(dot, data, header) {
   curr_table <- list(data = data, header = header)
@@ -373,15 +374,16 @@ make_run_xml_conversion <- function() {
 #' run_xml_conversion
 #'
 #' Run the CSV to XML conversion using the model interface tool.  This method
-#' is should be the final call in a pipeline started with \code{\link{create_xml}}
+#' should be the final call in a pipeline started with \code{\link{create_xml}}
 #' and one or more calls to \code{\link{add_xml_data}}.
 #'
-#' Not that this method relies on Java to run the conversion.  To avoid errros for
+#' Not that this method relies on Java to run the conversion.  To avoid errors for
 #' users who do not have Java installed it will check the global option
 #' \code{gcamdata.use_java} before attempting to run the conversion.  If the flag
 #' is set to \code{FALSE} a warning will be issued and the conversion skipped.
 #' To enable the use of Java a user can set \code{options(gcamdata.use_java=TRUE)}
 #'
-#' @param dot The current state of the pipeline started from \code{create_xml}.
+#' @param dot The current state of the pipeline started from \code{create_xml}
+#' @author PP March 2017
 #' @export
 run_xml_conversion <- make_run_xml_conversion()

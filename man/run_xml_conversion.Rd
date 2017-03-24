@@ -7,17 +7,21 @@
 run_xml_conversion(dot)
 }
 \arguments{
-\item{dot}{The current state of the pipeline started from \code{create_xml}.}
+\item{dot}{The current state of the pipeline started from \code{create_xml}}
 }
 \description{
 Run the CSV to XML conversion using the model interface tool.  This method
-is should be the final call in a pipeline started with \code{\link{create_xml}}
+should be the final call in a pipeline started with \code{\link{create_xml}}
 and one or more calls to \code{\link{add_xml_data}}.
 }
 \details{
-Not that this method relies on Java to run the conversion.  To avoid errros for
+Not that this method relies on Java to run the conversion.  To avoid errors for
 users who do not have Java installed it will check the global option
 \code{gcamdata.use_java} before attempting to run the conversion.  If the flag
 is set to \code{FALSE} a warning will be issued and the conversion skipped.
 To enable the use of Java a user can set \code{options(gcamdata.use_java=TRUE)}
 }
+\author{
+PP March 2017
+}
+
