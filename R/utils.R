@@ -331,36 +331,57 @@ add_xml_data <- function(dot, data, header) {
   dot
 }
 
+# Note: we have put the definition of run_xml_conversion inside of the "closure"
+# make_run_xml_conversion so that we may stash the XML_WARNING_GIVEN flag in an
+# environment that can only be reached by run_xml_conversion.
+make_run_xml_conversion <- function() {
+  XML_WARNING_GIVEN <- FALSE
+  function(dot) {
+    use_java <- getOption("gcamdata.use_java")
+    if(!isTRUE(use_java) && !XML_WARNING_GIVEN) {
+      warning("Skipping conversion as global option gcamdata.use_java is not TRUE")
+      # set the flag to avoid repeating the warning.
+      XML_WARNING_GIVEN <<- TRUE
+    } else if(isTRUE(use_java)) {
+      java_cp <- system.file("extdata/ModelInterface", "CSVToXML.jar",
+                             package = "gcamdata")
+      cmd <- c(
+        "java",
+        "-cp", java_cp,
+        "-Xmx1g", # TODO: memory limits?
+        "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
+        "-", # Read from STDIN
+        dot$mi_header,
+        dot$xml_file
+      )
+      conv_pipe <- pipe(paste(cmd, collapse=" "), open = "w")
+      on.exit(close(conv_pipe))
+
+      for(i in seq_along(dot$data_tables)) {
+        table <- dot$data_tables[[i]]
+        cat("INPUT_TABLE", file = conv_pipe, sep = "\n")
+        cat("Variable ID", file = conv_pipe, sep = "\n")
+        cat(table$header, file = conv_pipe, sep = "\n")
+        cat("", file = conv_pipe, sep = "\n")
+        write.table( table$data, file=conv_pipe, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
+        cat("", file = conv_pipe, sep = "\n")
+      }
+    }
+  }
+}
+
 #' run_xml_conversion
 #'
 #' Run the CSV to XML conversion using the model interface tool.  This method
 #' is should be the final call in a pipeline started with \code{\link{create_xml}}
 #' and one or more calls to \code{\link{add_xml_data}}.
 #'
+#' Not that this method relies on Java to run the conversion.  To avoid errros for
+#' users who do not have Java installed it will check the global option
+#' \code{gcamdata.use_java} before attempting to run the conversion.  If the flag
+#' is set to \code{FALSE} a warning will be issued and the conversion skipped.
+#' To enable the use of Java a user can set \code{options(gcamdata.use_java=TRUE)}
+#'
 #' @param dot The current state of the pipeline started from \code{create_xml}.
 #' @export
-run_xml_conversion <- function(dot) {
-  java_cp <- system.file("extdata/ModelInterface", "CSVToXML.jar",
-                         package = "gcamdata")
-  cmd <- c(
-    "java",
-    "-cp", java_cp,
-    "-Xmx1g", # TODO: memory limits?
-    "ModelInterface.ModelGUI2.csvconv.CSVToXMLMain",
-    "-", # Read from STDIN
-    dot$mi_header,
-    dot$xml_file
-  )
-  conv_pipe <- pipe(paste(cmd, collapse=" "), open = "w")
-  on.exit(close(conv_pipe))
-
-  for(i in seq_along(dot$data_tables)) {
-    table <- dot$data_tables[[i]]
-    cat("INPUT_TABLE", file = conv_pipe, sep = "\n")
-    cat("Variable ID", file = conv_pipe, sep = "\n")
-    cat(table$header, file = conv_pipe, sep = "\n")
-    cat("", file = conv_pipe, sep = "\n")
-    write.table( table$data, file=conv_pipe, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
-    cat("", file = conv_pipe, sep = "\n")
-  }
-}
+run_xml_conversion <- make_run_xml_conversion()
