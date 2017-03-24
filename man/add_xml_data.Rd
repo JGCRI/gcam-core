@@ -7,12 +7,12 @@
 add_xml_data(dot, data, header)
 }
 \arguments{
-\item{dot}{The current state of the pipeline started from \code{create_xml}.}
+\item{dot}{The current state of the pipeline started from \code{create_xml}}
 
-\item{data}{The tibble of data to add to the conversion.}
+\item{data}{The tibble of data to add to the conversion}
 
 \item{header}{The header tag to can be looked up in the header file to
-convert \code{data}.}
+convert \code{data}}
 }
 \value{
 A "data structure" to hold the various parts needed to run the model
@@ -23,5 +23,8 @@ Add a table to include for conversion to XML.  We need the tibble to convert
 and a header tag which can be looked up in the header file to convert the
 tibble.  This method is meant to be included in a pipeline between calls of
 \code{\link{create_xml}} and \code{\link{run_xml_conversion}}.
+}
+\author{
+PP March 2017
 }
 

@@ -7,10 +7,10 @@
 create_xml(xml_file, mi_header = NULL)
 }
 \arguments{
-\item{xml_file}{The name to save the XML file to.}
+\item{xml_file}{The name to save the XML file to}
 
 \item{mi_header}{The model interface "header".  This will default to the one
-included in this package.}
+included in this package}
 }
 \value{
 A "data structure" to hold the various parts needed to run the model

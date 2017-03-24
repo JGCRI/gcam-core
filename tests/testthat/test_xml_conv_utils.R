@@ -9,21 +9,30 @@ test_that("default MI header exists in the package", {
 })
 
 test_that("bogus MI header causes error", {
-  # TODO: need to find a way to get messages from Java
+  if(!isTRUE(getOption("gcamdata.use_java"))) {
+    skip("Skipping test as global option gcamdata.use_java is not TRUE")
+  }
+  # TODO: need to find a way to get messages from Java (issue )
   # conv_test <- create_xml("test.xml", "bogus.txt")
   #
   # expect_message(run_xml_conversion(conv_test), regex="java.io.FileNotFoundException: bogus.txt", all=F)
 })
 
 test_that("converting without adding data causes error", {
-  # TODO: need to find a way to get messages from Java
+  if(!isTRUE(getOption("gcamdata.use_java"))) {
+    skip("Skipping test as global option gcamdata.use_java is not TRUE")
+  }
+  # TODO: need to find a way to get messages from Java (See issue #102)
   # conv_test <- create_xml("test.xml")
   #
   # expect_message(run_xml_conversion(conv_test), regex="java.lang.NullPointerException", all=F)
 })
 
 test_that("converting bogus data causes error", {
-  # TODO: need to find a way to get messages from Java
+  if(!isTRUE(getOption("gcamdata.use_java"))) {
+    skip("Skipping test as global option gcamdata.use_java is not TRUE")
+  }
+  # TODO: need to find a way to get messages from Java (See issue #102)
   # create_xml("test.xml") %>%
   #   add_xml_data("bogus", "InterestRate") -> conv_test
   #
@@ -31,6 +40,9 @@ test_that("converting bogus data causes error", {
 })
 
 test_that("can convert single table", {
+  if(!isTRUE(getOption("gcamdata.use_java"))) {
+    skip("Skipping test as global option gcamdata.use_java is not TRUE")
+  }
   test_fn <- "test.xml"
   data1 <- data.frame(region = "USA", interest.rate = "1.0")
   create_xml(test_fn) %>%
@@ -48,6 +60,9 @@ test_that("can convert single table", {
 })
 
 test_that("can convert multiple table", {
+  if(!isTRUE(getOption("gcamdata.use_java"))) {
+    skip("Skipping test as global option gcamdata.use_java is not TRUE")
+  }
   test_fn <- "test.xml"
   data1 <- data.frame(region = "USA", interest.rate = "1.0")
   data2 <- data.frame(region = "USA", PrimaryFuel = "shoes", PrimaryFuelCO2Coef = 0.007653)
@@ -67,6 +82,9 @@ test_that("can convert multiple table", {
 })
 
 test_that("get warning for missing header", {
+  if(!isTRUE(getOption("gcamdata.use_java"))) {
+    skip("Skipping test as global option gcamdata.use_java is not TRUE")
+  }
   test_fn <- "test.xml"
   data1 <- data.frame(region = "USA", interest.rate = "1.0")
   data2 <- data.frame(region = "USA", PrimaryFuel = "shoes", PrimaryFuelCO2Coef = 0.007653)
@@ -74,7 +92,7 @@ test_that("get warning for missing header", {
     add_xml_data(data1, "InterestRate") %>%
     add_xml_data(data2, "Will_Not_Find") ->
     conv_test
-  # TODO: need to find a way to get messages from Java
+  # TODO: need to find a way to get messages from Java (See issue #102)
   #expect_message(run_xml_conversion(conv_test), regex = "Warning: skipping table: Will_Not_Find!", all = FALSE)
   run_xml_conversion(conv_test)
 
