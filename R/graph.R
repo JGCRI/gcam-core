@@ -13,7 +13,7 @@ graph_chunks <- function(module_filter = NULL,
   chunklist$modulenum <- as.numeric(as.factor(chunklist$module))
   vertexcolors <- rainbow(length(unique(chunklist$modulenum)))
 
-    chunkinputs <- chunk_inputs(chunklist$name)
+  chunkinputs <- chunk_inputs(chunklist$name)
   chunkoutputs <- chunk_outputs(chunklist$name)
 
   if(plot_gcam) {
@@ -98,7 +98,7 @@ graph_chunks <- function(module_filter = NULL,
        vertex.size = 5,
        edge.arrow.size = 0.3,
        layout = coords)#,
-      # margin = -0.2)
+  # margin = -0.2)
 
   title(module_filter, sub = paste("DSR-integration", date()))
 
