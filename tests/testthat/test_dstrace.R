@@ -25,6 +25,8 @@ test_that("handles bad input", {
 
   all_data <- add_data(list("o1" = o1, "o2" = o2, "o3" = o3), empty_data())
 
+  # Errors if object not present
+  expect_error(dstrace("o4", all_data))
   # Identifies objects with no precursors
   expect_output(dstrace("o1", all_data), regexp = "No precursors")
   # Identifies objects read from file
