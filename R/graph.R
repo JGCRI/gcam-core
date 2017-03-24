@@ -32,16 +32,21 @@ graph_chunks <- function(module_filter = NULL,
     # We want just chunks in 'module' AND anything that feeds them
     cl_main <- filter(chunklist, module == module_filter)
 
+    # Join chunks to their inputs, and then to outputs; looking for
+    # chunks that feed chunks in the current (filtered) module
     cl_main %>%
       left_join(chunkinputs, by = "name") %>%
       left_join(chunkoutputs, by = c("input"= "output")) %>%
+      filter(!is.na(name.y)) %>%
       select(name.y) %>%
       distinct ->
       module_feeders
 
+    # Add those into the main chunklist
     chunklist %>%
       filter(name %in% module_feeders$name.y) %>%
-      bind_rows(cl_main) ->
+      bind_rows(cl_main) %>%
+      distinct ->
       chunklist
 
     chunkinputs <- chunk_inputs(chunklist$name)
