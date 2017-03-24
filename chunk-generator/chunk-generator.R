@@ -359,7 +359,7 @@ for(fn in files) {
 }
 
 linedata <- dplyr::bind_rows(linedata)
-readr::write_csv(linedata, "chunk-generator/linedata.csv")
+readr::write_csv(linedata, "chunk-generator/outputs/linedata.csv")
 
 for(bf in names(XMLBATCH_LIST)) {
   newfn <- file.path("chunk-generator", "outputs", paste0("module-", XMLBATCH_LIST[[bf]]$module, "-", bf, ".R"))
