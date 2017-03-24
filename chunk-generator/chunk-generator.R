@@ -332,7 +332,7 @@ batch_substitutions <- function(mibatch, patternfile = PATTERNFILE) {
 
 files <- list.files("../gcam-data-system-OLD/",
                     pattern = "*.R$", full.names = TRUE, recursive = TRUE)
-# Limit to scripts in the processing code folers
+# Limit to scripts in the processing code folders
 files <- files[grepl("processing-code", files, fixed = TRUE)]
 
 linedata <- list()
@@ -359,7 +359,7 @@ for(fn in files) {
 }
 
 linedata <- dplyr::bind_rows(linedata)
-readr::write_csv(linedata, "chunk-generator/linedata.csv")
+readr::write_csv(linedata, "chunk-generator/outputs/linedata.csv")
 
 for(bf in names(XMLBATCH_LIST)) {
   newfn <- file.path("chunk-generator", "outputs", paste0("module-", XMLBATCH_LIST[[bf]]$module, "-", bf, ".R"))
