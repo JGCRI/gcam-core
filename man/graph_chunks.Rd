@@ -4,14 +4,15 @@
 \alias{graph_chunks}
 \title{graph_chunks}
 \usage{
-graph_chunks(chunklist, plot_gcam = FALSE, include_disabled = FALSE)
+graph_chunks(module_filter = NULL, plot_gcam = FALSE,
+  include_disabled = FALSE)
 }
 \arguments{
-\item{chunklist}{A tibble of chunks}
-
 \item{plot_gcam}{Plot a node for GCAM (all XMLs feed to)?}
 
 \item{include_disabled}{Plots nodes of disabled chunks?}
+
+\item{chunklist}{A tibble of chunks}
 }
 \value{
 A plot
