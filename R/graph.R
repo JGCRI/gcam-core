@@ -1,7 +1,7 @@
 
 #' graph_chunks
 #'
-#' @param chunklist A tibble of chunks
+#' @param module_filter Optional name of module to filter by
 #' @param plot_gcam Plot a node for GCAM (all XMLs feed to)?
 #' @param include_disabled Plots nodes of disabled chunks?
 #' @return A plot
