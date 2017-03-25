@@ -15,7 +15,7 @@ test_that("bogus MI header causes error", {
   # TODO: need to find a way to get messages from Java (issue )
   # conv_test <- create_xml("test.xml", "bogus.txt")
   #
-  # expect_message(run_xml_conversion(conv_test), regex="java.io.FileNotFoundException: bogus.txt", all=F)
+  # expect_message(run_xml_conversion(conv_test), regex = "java.io.FileNotFoundException: bogus.txt", all = FALSE)
 })
 
 test_that("converting without adding data causes error", {
@@ -25,7 +25,7 @@ test_that("converting without adding data causes error", {
   # TODO: need to find a way to get messages from Java (See issue #102)
   # conv_test <- create_xml("test.xml")
   #
-  # expect_message(run_xml_conversion(conv_test), regex="java.lang.NullPointerException", all=F)
+  # expect_message(run_xml_conversion(conv_test), regex = "java.lang.NullPointerException", all = FALSE)
 })
 
 test_that("converting bogus data causes error", {
@@ -76,7 +76,7 @@ test_that("can convert multiple table", {
   unlink(test_fn)
   test_xml %>%
     gsub("^\\s+|\\s+$", "", .) %>%
-    paste(., collapse="") ->
+    paste(., collapse = "") ->
     test_xml
   expect_identical(test_xml, '<?xml version="1.0" encoding="UTF-8"?><scenario><world><region name="USA"><interest-rate>1.0</interest-rate><PrimaryFuelCO2Coef name="shoes">0.007653</PrimaryFuelCO2Coef></region></world></scenario>')
 })
