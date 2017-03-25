@@ -5,12 +5,14 @@
 #' @param plot_gcam Plot a node for GCAM (all XMLs feed to)?
 #' @param include_disabled Plots nodes of disabled chunks?
 #' @param quiet Suppress messages?
+#' @param plot_graph Produce a plot?
 #' @return Adjacency matrix showing chunk-to-chunk data flows
 #' @export
 graph_chunks <- function(module_filter = NULL,
                          plot_gcam = FALSE,
                          include_disabled = FALSE,
-                         quiet = TRUE) {
+                         quiet = TRUE,
+                         plot_graph = TRUE) {
 
   assert_that(is.null(module_filter) | is.character(module_filter))
   assert_that(is.logical(plot_gcam))
@@ -105,16 +107,17 @@ graph_chunks <- function(module_filter = NULL,
   g <- igraph::graph.adjacency(mat)
   coords <- igraph::layout_nicely(g)
 
-  plot(g,
-       vertex.color = vertexcolors[chunklist$modulenum],
-       #      vertex.size = chunklist$noutputs p* 3,
-       #      vertex.label.dist = 1,
-       vertex.label.cex = .5,
-       vertex.size = 5,
-       edge.arrow.size = 0.3,
-       layout = coords)
-
-  title(module_filter, sub = paste("DSR-integration", date()))
+  if(plot_graph) {
+    plot(g,
+         vertex.color = vertexcolors[chunklist$modulenum],
+         #      vertex.size = chunklist$noutputs p* 3,
+         #      vertex.label.dist = 1,
+         vertex.label.cex = .5,
+         vertex.size = 5,
+         edge.arrow.size = 0.3,
+         layout = coords)
+    title(module_filter, sub = paste("DSR-integration", date()))
+  }
 
   invisible(mat)
 }

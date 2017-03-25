@@ -5,7 +5,7 @@
 \title{graph_chunks}
 \usage{
 graph_chunks(module_filter = NULL, plot_gcam = FALSE,
-  include_disabled = FALSE, quiet = TRUE)
+  include_disabled = FALSE, quiet = TRUE, plot_graph = TRUE)
 }
 \arguments{
 \item{module_filter}{Optional name of module to filter by}
@@ -15,6 +15,8 @@ graph_chunks(module_filter = NULL, plot_gcam = FALSE,
 \item{include_disabled}{Plots nodes of disabled chunks?}
 
 \item{quiet}{Suppress messages?}
+
+\item{plot_graph}{Produce a plot?}
 }
 \value{
 Adjacency matrix showing chunk-to-chunk data flows

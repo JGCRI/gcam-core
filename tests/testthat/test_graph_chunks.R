@@ -30,13 +30,14 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                            output = c("o1", "o2"),
                                            to_xml = FALSE),
       # output should be a numeric matrix
-      expect_is(graph_chunks(), "matrix"),
-      expect_equal(dim(graph_chunks()), c(2, 2)),
-      expect_equal(colnames(graph_chunks()), chunknames),
+      expect_is(graph_chunks(plot_graph = FALSE), "matrix"),
+      expect_equal(dim(graph_chunks(plot_graph = FALSE)), c(2, 2)),
+      expect_equal(colnames(graph_chunks(plot_graph = FALSE)), chunknames),
       # no dependencies
-      expect_true(all(graph_chunks() == 0)),
+      expect_true(all(graph_chunks(plot_graph = FALSE) == 0)),
       # filter works
-      expect_equal(dim(graph_chunks(module_filter = "m1")), c(1, 1)),
+      expect_equal(dim(graph_chunks(module_filter = "m1", plot_graph = FALSE)),
+                   c(1, 1)),
       # filter for nonexistent module
       expect_warning(graph_chunks(module_filter = "xxxxx"))
     )
@@ -58,14 +59,16 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                              output = c("o1", "o2"),
                                              to_xml = c(FALSE, TRUE)),
         # output should be a numeric matrix
-        expect_is(graph_chunks(), "matrix"),
-        expect_equal(dim(graph_chunks(include_disabled = FALSE)), c(1, 1)),
-        expect_equal(dim(graph_chunks(include_disabled = TRUE)), c(2, 2)),
+        expect_is(graph_chunks(plot_graph = FALSE), "matrix"),
+        expect_equal(dim(graph_chunks(include_disabled = FALSE, plot_graph = FALSE)), c(1, 1)),
+        expect_equal(dim(graph_chunks(include_disabled = TRUE, plot_graph = FALSE)), c(2, 2)),
         # adds a node for gcam
         expect_equal(dim(graph_chunks(include_disabled = TRUE,
-                                      plot_gcam = TRUE)), c(3, 3)),
+                                      plot_gcam = TRUE,
+                                      plot_graph = FALSE)), c(3, 3)),
         # dependencies
-        expect_equal(sum(graph_chunks(include_disabled = TRUE) > 0), 1)
+        expect_equal(sum(graph_chunks(include_disabled = TRUE,
+                                      plot_graph = FALSE) > 0), 1)
       )
     })
 
