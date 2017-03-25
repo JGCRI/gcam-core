@@ -27,8 +27,8 @@ chunk_readylist <- function() {
     summarise(n_inputs = length(available),
               n_avail = sum(available),
               all_avail = all(available),
-              n_deps = count_dependencies(chunk[1], chunklist, ci, co)[["deps"]],
-              n_deps_total = count_dependencies(chunk[1], chunklist, ci, co, TRUE)[["deps"]]) ->
+              n_deps = count_downstream_dependencies(chunk[1], chunklist, ci, co)[["deps"]],
+              n_deps_total = count_downstream_dependencies(chunk[1], chunklist, ci, co, TRUE)[["deps"]]) ->
     readylist
 
   # Add number of code lines
@@ -41,7 +41,7 @@ chunk_readylist <- function() {
 
 
 # internal function, used by chunk_readylist above
-count_dependencies <- function(chunkname, chunklist, ci, co, recurse = FALSE, excludes = NA) {
+count_downstream_dependencies <- function(chunkname, chunklist, ci, co, recurse = FALSE, excludes = NA) {
   chunklist %>%
     select(name, chunk) %>%
     right_join(co, by = "name") %>%
@@ -56,9 +56,9 @@ count_dependencies <- function(chunkname, chunklist, ci, co, recurse = FALSE, ex
 
   if(recurse) {
     for(i in unique(outputlist$chunk)) {
-      x <- count_dependencies(i, chunklist, ci, co,
-                              recurse = recurse,
-                              excludes = depnames)
+      x <- count_downstream_dependencies(i, chunklist, ci, co,
+                                         recurse = recurse,
+                                         excludes = depnames)
       deps <- deps + x$deps
       depnames <- c(depnames, x$depnames)
     }
