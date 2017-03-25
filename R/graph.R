@@ -4,10 +4,18 @@
 #' @param module_filter Optional name of module to filter by
 #' @param plot_gcam Plot a node for GCAM (all XMLs feed to)?
 #' @param include_disabled Plots nodes of disabled chunks?
-#' @return A plot
+#' @param quiet Suppress messages?
+#' @return Adjacency matrix showing chunk-to-chunk data flows
 #' @export
 graph_chunks <- function(module_filter = NULL,
-                         plot_gcam = FALSE, include_disabled = FALSE) {
+                         plot_gcam = FALSE,
+                         include_disabled = FALSE,
+                         quiet = TRUE) {
+
+  assert_that(is.null(module_filter) | is.character(module_filter))
+  assert_that(is.logical(plot_gcam))
+  assert_that(is.logical(include_disabled))
+  assert_that(is.logical(quiet))
 
   chunklist = find_chunks(include_disabled = include_disabled)
   chunklist$modulenum <- as.numeric(as.factor(chunklist$module))
@@ -32,6 +40,11 @@ graph_chunks <- function(module_filter = NULL,
     # We want just chunks in 'module' AND anything that feeds them
     cl_main <- filter(chunklist, module == module_filter)
 
+    if(nrow(cl_main) == 0) {
+      warning("No chunks in module ", module_filter)
+      return(NULL)
+    }
+
     # Join chunks to their inputs, and then to outputs; looking for
     # chunks that feed chunks in the current (filtered) module
     cl_main %>%
@@ -51,20 +64,22 @@ graph_chunks <- function(module_filter = NULL,
 
     chunkinputs <- chunk_inputs(chunklist$name)
     chunkoutputs <- chunk_outputs(chunklist$name)
-
   }
 
-  chunklist$num <- 1:nrow(chunklist)
+  # Filter (unless caller has asked to include disabled chunks)
+  chunklist <- filter(chunklist, !disabled | include_disabled)
+
+  chunklist$num <- seq_len(nrow(chunklist))
   chunkinputs %>%
     left_join(chunklist, by = "name") %>%
     select(name, input, num) ->
     chunkinputs
-  cat("Found", nrow(chunkinputs), "chunk data requirements\n")
+  if(!quiet) cat("Found", nrow(chunkinputs), "chunk data requirements\n")
   chunkoutputs %>%
     left_join(chunklist, by = "name") %>%
     select(name, output, to_xml, num) ->
     chunkoutputs
-  cat("Found", nrow(chunkoutputs), "chunk data products\n")
+  if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
   # Compute number of outputs
   chunkoutputs %>%
@@ -79,7 +94,7 @@ graph_chunks <- function(module_filter = NULL,
     edgelist
 
   # Make an adjacency matrix
-  mat <- matrix(0, nrow=nrow(chunklist), ncol=nrow(chunklist))
+  mat <- matrix(0, nrow = nrow(chunklist), ncol = nrow(chunklist))
   colnames(mat) <- chunklist$chunk
   for(i in seq_len(nrow(edgelist))) {
     mat[edgelist$num.y[i], edgelist$num.x[i]] <- 1
@@ -97,8 +112,7 @@ graph_chunks <- function(module_filter = NULL,
        vertex.label.cex = .5,
        vertex.size = 5,
        edge.arrow.size = 0.3,
-       layout = coords)#,
-  # margin = -0.2)
+       layout = coords)
 
   title(module_filter, sub = paste("DSR-integration", date()))
 

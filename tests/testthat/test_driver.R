@@ -1,17 +1,17 @@
 # Test the driver
 
-# This code is written using the `mockr` package, currently only
+context("driver")
+
+test_that("catches bad input", {
+  expect_error(driver(1, 1))
+  expect_error(driver("1", 1))
+})
+
+# The following code is written using the `mockr` package, currently only
 # available via GitHub. Apparently `testthat::with_mock` is going
 # to be deprecated soon.
 
-context("driver")
-
 if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
-
-  test_that("catches bad input", {
-    expect_error(driver(1, 1))
-    expect_error(driver("1", 1))
-  })
 
   test_that("catches non-unique outputs", {
     # Create a couple (fake) chunks that produce the same thing
