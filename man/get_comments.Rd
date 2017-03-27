@@ -15,4 +15,3 @@ Comments attached to \code{x}.
 \description{
 get_comments
 }
-

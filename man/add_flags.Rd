@@ -18,4 +18,3 @@ add_flags(x, ...)
 Add character flags to a data system object. Flags are used internally, and in some
 cases (for testing data) are written out with the data when the file is saved.
 }
-

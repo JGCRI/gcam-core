@@ -17,4 +17,3 @@ same_precursors_as(x, y)
 \description{
 Copy precursors from one object to another.
 }
-

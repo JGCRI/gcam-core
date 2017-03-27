@@ -12,4 +12,3 @@ An empty data store.
 \description{
 empty_data
 }
-

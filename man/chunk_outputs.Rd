@@ -15,4 +15,3 @@ A tibble with columns 'name' (chunk name) and 'output' (name of data)
 \description{
 List all chunk outputs.
 }
-

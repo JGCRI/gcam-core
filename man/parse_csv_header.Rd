@@ -26,4 +26,3 @@ Headers are given at the top of files and consist of labels ("Title:", "Units:",
 prefixed by comment characters (#). The parser looks for these, and calls \code{\link{add_title}} and
 similar functions to return an empty data frame with appropriate attribute set.
 }
-

@@ -27,4 +27,3 @@ tibble.  This method is meant to be included in a pipeline between calls of
 \author{
 PP March 2017
 }
-
