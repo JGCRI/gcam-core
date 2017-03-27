@@ -12,4 +12,3 @@ Returns a list of disabled chunks: their lines of code, inputs and available inp
 \description{
 chunk_readylist
 }
-

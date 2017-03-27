@@ -28,4 +28,3 @@ Downscaled data.
 Helper function to downscale the countries that separated into
 multiple modern countries (e.g. USSR).
 }
-

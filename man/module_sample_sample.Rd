@@ -20,4 +20,3 @@ Briefly describe what this chunk does.
 \author{
 Author name
 }
-

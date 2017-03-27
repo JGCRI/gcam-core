@@ -21,4 +21,3 @@ run_chunk
 Putting this \code{do.call} into this one-line
 function lets us mock it when testing.
 }
-

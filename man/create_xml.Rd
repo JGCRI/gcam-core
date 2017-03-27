@@ -25,4 +25,3 @@ used in a dplyr pipeline with one or more calls to \code{\link{add_xml_data}}
 to add the data to convert and finally ending with \code{\link{run_xml_conversion}}
 to run the conversion.
 }
-

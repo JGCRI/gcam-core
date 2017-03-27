@@ -17,4 +17,3 @@ Full name of file.
 \description{
 Find an internal, i.e. included with the package, data file.
 }
-

@@ -17,4 +17,3 @@ add_legacy_name(x, legacy_name)
 \description{
 Add the legacy (old data system) name to a data system object.
 }
-

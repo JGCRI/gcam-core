@@ -24,4 +24,3 @@ To enable the use of Java a user can set \code{options(gcamdata.use_java=TRUE)}
 \author{
 PP March 2017
 }
-

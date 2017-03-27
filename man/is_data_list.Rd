@@ -18,4 +18,3 @@ Check whether an object is a valid list (collection) of data objects.
 \details{
 Currently a data_list is just a list.
 }
-

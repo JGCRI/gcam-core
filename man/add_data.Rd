@@ -17,4 +17,3 @@ The modified data store.
 \description{
 Add \code{data_list} to an existing data store.
 }
-
