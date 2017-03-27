@@ -62,6 +62,11 @@ graph_chunks <- function(module_filter = NULL,
       distinct ->
       chunklist
 
+    # AGLU special case
+    #     x <- substr(chunklist$chunk, 1, 2) %in% c("L1")
+    #     y <- substr(chunklist$chunk, 1, 3) %in% c("LA1", "LB1")
+    # chunklist <- chunklist[x | y,]
+
     chunkinputs <- chunk_inputs(chunklist$name)
     chunkoutputs <- chunk_outputs(chunklist$name)
   }
