@@ -39,35 +39,37 @@ test_that("matches old data system output", {
         newdata
     }
     if(flag_no_xyear_form) {
-        yearcols <- grep("^[0-9]{4}$", names(newdata))
-        names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
+      yearcols <- grep("^[0-9]{4}$", names(newdata))
+      names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
     }
 
     oldf <- list.files("comparison_data", pattern = basename(newf), recursive = TRUE, full.names = TRUE)
-    expect_true(length(oldf) == 1)
-    expect_true(file.exists(oldf), label = paste0(oldf, "doesn't exist"))
+    expect_true(length(oldf) == 1, info = paste("Either zero, or multiple, comparison datasets found for", basename(newf)))
 
-    # If the old file has an "INPUT_TABLE" header, need to skip that
-    old_firstline <- readLines(oldf, n = 1)
-    oldskip <- ifelse(old_firstline == "INPUT_TABLE", 4, 0)
-    olddata <- read_csv(oldf, comment = COMMENT_CHAR, skip = oldskip)
+    if(length(oldf) == 1) {
+      # If the old file has an "INPUT_TABLE" header, need to skip that
+      old_firstline <- readLines(oldf, n = 1)
+      oldskip <- ifelse(old_firstline == "INPUT_TABLE", 4, 0)
+      olddata <- read_csv(oldf, comment = COMMENT_CHAR, skip = oldskip)
 
-    # Finally, test (NB rounding numeric columns to a sensible number of
-    # digits; otherwise spurious mismatches occur)
-    # Also first converts integer columns to numeric (otherwise test will
-    # fail when comparing <int> and <dbl> columns)
-    DIGITS <- 3
-    round_df <- function(x, digits = DIGITS) {
-      integer_columns <- sapply(x, class) == "integer"
-      x[, integer_columns] <- sapply(x[, integer_columns], as.numeric)
+      # Finally, test (NB rounding numeric columns to a sensible number of
+      # digits; otherwise spurious mismatches occur)
+      # Also first converts integer columns to numeric (otherwise test will
+      # fail when comparing <int> and <dbl> columns)
+      DIGITS <- 3
+      round_df <- function(x, digits = DIGITS) {
+        integer_columns <- sapply(x, class) == "integer"
+        x[, integer_columns] <- sapply(x[, integer_columns], as.numeric)
 
-      numeric_columns <- sapply(x, class) == "numeric"
-      x[numeric_columns] <- round(x[numeric_columns], digits)
-      x
+        numeric_columns <- sapply(x, class) == "numeric"
+        x[numeric_columns] <- round(x[numeric_columns], digits)
+        x
+      }
+
+      expect_equivalent(round_df(olddata),
+                        round_df(newdata),
+                        label = paste(basename(newf), "doesn't match"))
     }
 
-    expect_equivalent(round_df(olddata),
-                      round_df(newdata),
-                      label = paste(basename(newf), "doesn't match"))
   }
 })
