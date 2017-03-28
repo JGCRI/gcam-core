@@ -23,4 +23,3 @@ These are functions with a name of "module_{modulename}_{chunkname}".
 If a chunk name ends with \code{_DISABLED}, by default its name
 will not be returned.
 }
-

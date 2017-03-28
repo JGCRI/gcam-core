@@ -15,4 +15,3 @@ Flags attached to \code{x}.
 \description{
 get_flags
 }
-

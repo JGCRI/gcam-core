@@ -29,4 +29,3 @@ CSV files can have headers, commented lines of the form "# Title: xxxx",
 "# Source: xxxx", etc. Extract this information if present. This function is called
 by \code{\link{parse_csv_header}}.
 }
-

@@ -15,4 +15,3 @@ A tibble with columns 'name' (chunk name) and 'input' (name of data)
 \description{
 chunk_inputs
 }
-

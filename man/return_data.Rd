@@ -16,4 +16,3 @@ Object ready for insertion into the data system data structure.
 Construct a data structure of objects (\code{...}) and return it.
 Abstracts this away from chunk function code.
 }
-

@@ -19,4 +19,4 @@ Suggests:
     mockr (>= 0.0.2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

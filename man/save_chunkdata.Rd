@@ -17,4 +17,3 @@ Write data produced by chunks to csv files.}
 \description{
 save_chunkdata
 }
-

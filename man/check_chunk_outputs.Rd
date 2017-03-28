@@ -20,4 +20,3 @@ Checks chunk outputs for a variety of problems: correct structure,
 correct attributes attached, matches promised outputs. Generates
 warnings and/or errors if any deviance.
 }
-
