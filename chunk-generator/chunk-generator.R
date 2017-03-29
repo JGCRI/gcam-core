@@ -44,9 +44,25 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
 
   # Warnings (advice to coders)
   warnstring <- "#"
+  if(any(grepl("merge", filecode))) {
+    warnstring <- c(warnstring, "# NOTE: there are `merge` calls in this code. Be careful!",
+                    "# For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function")
+  }
   if(any(grepl("(merge|match)", filecode))) {
-    warnstring <- c(warnstring, "# NOTE: there are `merge` and/or 'match' calls in this code. Be careful!",
-                    "# For more information, see https://github.com/JGCRI/gcamdata/wiki/Merge-and-Match")
+    warnstring <- c(warnstring, "# NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match",
+                    "# For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function")
+  }
+  if(any(grepl("translate_to_full_table", filecode))) {
+    warnstring <- c(warnstring, "# NOTE: This code uses translate_to_full_table",
+                    "# This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function")
+  }
+  if(any(grepl("vecpaste", filecode))) {
+    warnstring <- c(warnstring, "# NOTE: This code uses vecpaste",
+                    "# This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function")
+  }
+  if(any(grepl("repeat_and_add_vector", filecode))) {
+    warnstring <- c(warnstring, "# NOTE: This code uses repeat_and_add_vector",
+                    "# This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function")
   }
   pattern <- gsub("WARNING_PATTERN", paste(warnstring, collapse = "\n"), pattern, fixed = TRUE)
 

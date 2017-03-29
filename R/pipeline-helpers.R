@@ -11,6 +11,30 @@ PH_year_value_historical <- function(d) {
 }
 
 
+#' left_join_error_no_match
+#'
+#' A restrictive version of \code{\link{left_join}}.
+#'
+#' @param d Data frame (typically from pipeline)
+#' @param ... Rest of call to \code{\link{left_join}}
+#' @return Joined data.
+#' @details Restrictive version of dplyr::left_join meant for replacing `match` calls.
+# Ensures that number of rows of data doesn't change, and everything has matched data.
+#' @export
+left_join_error_no_match <- function(d, ...) {
+  dnames <- names(d)
+  drows <- nrow(d)
+  d <- left_join(d, ...)
+  if(nrow(d) != drows) {
+    stop("left_join_no_match: number of rows in data changed")
+  }
+  if(any(is.na(d[setdiff(names(d), dnames)]))) {
+    stop("left_join_no_match: NA values in new data columns")
+  }
+  d
+}
+
+
 #' approx_fun
 #'
 #' \code{\link{approx}} (interpolation) for use in a dplyr pipeline.
