@@ -65,6 +65,11 @@ public:
                                          const IInfo* aTechnologyInfo,
                                          const std::string& aMarketName = std::string() );
 
+    static bool createTrialSupplyMarket( const std::string& aRegionName,
+                                         const std::string& aSectorName,
+                                         const std::string& aUnitStr,
+                                         const std::string& aMarketName = std::string() );    
+
     static void addToTrialDemand( const std::string& aRegionName,
                                   const std::string& aSectorName,
                                   const double aSupply,

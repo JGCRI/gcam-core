@@ -61,6 +61,25 @@ HashMap<std::string, std::string> SectorUtils::sTrialMarketNames;
 typedef HashMap<string, string>::const_iterator NameIterator;
 
 /*!
+ * \brief Create a trial value market
+ * \details This is a backward-compatibility wrapper around a
+ *          version that does not require the IInfo structure,
+ *          which was being used only to convey a unit string.  New
+ *          calls to this function should use the version that accepts
+ *          the unit string directly.
+ * \note Deprecated
+ */
+bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
+                                           const string& aSectorName,
+                                           const IInfo *aTechnologyInfo,
+                                           const string& aMarketName )
+{
+    string unitname = aTechnologyInfo->getString( "output-unit", true );
+    return createTrialSupplyMarket(aRegionName, aSectorName, unitname, aMarketName);
+}
+
+
+/*!
  * \brief Create a trial market for the supply of a given good.
  * \details Sets up a trial value market for the given good in the given region.
  *          The trial market will be solved for all periods after the base
@@ -76,7 +95,7 @@ typedef HashMap<string, string>::const_iterator NameIterator;
  */
 bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
                                            const string& aSectorName,
-                                           const IInfo* aTechnologyInfo,
+                                           const string& aUnitStr,
                                            const string& aMarketName )
 {
     const string& marketName = aMarketName.empty() ? aRegionName : aMarketName;
@@ -92,11 +111,10 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
                                                   IMarketType::TRIAL_VALUE );
 
     // Set price and output units for period 0 market info
-    const string outputUnitStr = aTechnologyInfo->getString( "output-unit", true );
     // no operating trial market for base period, although vector always contains base period
     IInfo* marketInfoTrialSupplySector = marketplace->getMarketInfo( trialName, aRegionName, 0, true );
-    marketInfoTrialSupplySector->setString( "price-unit", outputUnitStr );
-    marketInfoTrialSupplySector->setString( "output-unit", outputUnitStr );
+    marketInfoTrialSupplySector->setString( "price-unit", aUnitStr );
+    marketInfoTrialSupplySector->setString( "output-unit", aUnitStr );
 
     // Set the market to solve.
     for( int per = 1; per < scenario->getModeltime()->getmaxper(); ++per ){
