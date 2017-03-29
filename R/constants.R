@@ -28,7 +28,7 @@ FAO_HISTORICAL_YEARS <- 1961:2011
 CONV_BIL_MIL <- 1000
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
-CONV_1990_2005_USD <- 1.383
+CONV_1990_2010_USD <- 1.510
 
 # ======================================================================
 # Driver constants
