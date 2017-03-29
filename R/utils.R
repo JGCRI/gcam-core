@@ -135,7 +135,7 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = FALSE
 
   obj %>%
     add_title(extract_header_info(x, "Title:", filename, required = enforce_requirements)) %>%
-    add_units(extract_header_info(x, "Units:", filename, required = enforce_requirements)) %>%
+    add_units(extract_header_info(x, "Units?:", filename, required = enforce_requirements)) %>%
     add_comments(extract_header_info(x, "(Comments|Description):", filename, multiline = TRUE)) %>%
     add_reference(extract_header_info(x, "(References?|Sources?):", filename, multiline = TRUE))
 }
