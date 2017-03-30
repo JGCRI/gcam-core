@@ -82,7 +82,7 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
       trimws
   } else {
     if(required) {
-      stop("Required metadata label '", label, "not found in ", basename(filename))
+      stop("Required metadata label '", label, "' not found in ", basename(filename))
     }
     NULL   # label not present
   }
@@ -102,7 +102,7 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
 #' similar functions to return an empty data frame with appropriate attribute set.
 #' @return An empty \code{\link{tibble}} with appropriate attributes filled in.
 #' @export
-parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = FALSE) {
+parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE) {
   assert_that(tibble::is_tibble(obj))
   assert_that(is.character(filename))
   assert_that(is.numeric(n))
@@ -129,8 +129,12 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = FALSE
 
   # The 'File:' field has to match the actual filename
   filecheck <- extract_header_info(x, "File:", filename, required = enforce_requirements)
-  if(enforce_requirements & !identical(filecheck, basename(filename))) {
-    stop("'File:' given in header doesn't match filename in ", filename)
+  # Remove trailing commas - stupid Excel
+  filecheck <- gsub(",*$", "", filecheck)
+  # Remove any compression extension
+  filename_clean <- gsub("\\.(zip|gz)$", "", filename) %>% basename
+  if(enforce_requirements & !identical(filecheck, filename_clean)) {
+    stop("'File:' given in header (", filecheck, ") doesn't match filename in ", filename)
   }
 
   obj %>%

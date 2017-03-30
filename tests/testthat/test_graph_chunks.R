@@ -13,7 +13,8 @@ test_that("catches bad input", {
 # available via GitHub. Apparently `testthat::with_mock` is going
 # to be deprecated soon.
 
-if(require(igraph) & require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
+if(require(igraph, quietly = TRUE, warn.conflicts = FALSE) &
+   require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
 
   test_that("runs-no dependencies", {
     # Create a couple (fake) chunks that don't depend on each other
