@@ -1,7 +1,9 @@
 # File: FAO_ag_CROSIT.csv,,,,,,,,,,,,
+# Title: NA
+# Units: NA
 # Author: Page Kyle,,,,,,,,,,,,
-# Description: FAO projections to 2050 by country and commodity,,,,,,,,,,,,
-# Original source: RawData/FAO/AT2050 CROSIT 108 countries  121010.xls / ag_CROSIT_2005_2050,,,,,,,,,,,,
+# Description: FAO projections to 2050 by country and commodity
+# Source: RawData/FAO/AT2050 CROSIT 108 countries  121010.xls / ag_CROSIT_2005_2050,,,,,,,,,,,,
 # ----------,,,,,,,,,,,,
 country_ID,crop_ID,year,HA_kha_rainfed,Yield_kgHa_rainfed,Prod_kt_rainfed,HA_kha_irrigated,Yield_kgHa_irrigated,Prod_kt_irrigated,HA_kha,Yield_kgHa,Prod_kt,lookup
 1,1,2005,1697,1365,2317,89,2809,250,1786,1437,2567,1_1_2005
