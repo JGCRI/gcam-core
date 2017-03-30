@@ -109,6 +109,12 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
   assert_that(is.logical(enforce_requirements))
   assert_that(file.exists(filename))
 
+  # TEMPORARY: don't enforce metadata for data injection (from old d.s.) files
+  if(isTRUE(grepl("temp-data-inject", filename,fixed = TRUE))) {
+    enforce_requirements <- FALSE
+  }
+
+
   # File may be compressed; handle this via a connection
   if(grepl("\\.gz", filename)) {
     con <- gzfile(filename)
