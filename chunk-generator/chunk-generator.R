@@ -15,6 +15,8 @@ DOMAIN_MAP <- c("AGLU" = "aglu/",
 
 XMLBATCH_LIST <- list()
 
+stopifnot(length(list.files("chunk-generator/outputs/", pattern = "*.R")) == 0)
+
 # Workhorse function to read, parse, construct new strings/code, and substitute
 make_substitutions <- function(fn, patternfile = PATTERNFILE) {
   pattern <- readLines(patternfile)
@@ -367,6 +369,10 @@ for(fn in files) {
     warning("Ran into error with ", basename(fn))
   } else {
     newfn <- paste0("chunk-generator/outputs/zchunk_", basename(fn))
+    while(file.exists(newfn)) {
+      newfn <- gsub(".R", "-x.R", newfn, fixed = TRUE)
+      message(newfn)
+    }
     cat(out, "\n", file = newfn, sep = "\n", append = FALSE)
   }
   linedata[[newfn]] <- tibble(filename = basename(newfn),
