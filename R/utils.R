@@ -1,5 +1,6 @@
 # utils.R
 
+TEMP_DATA_INJECT <- "temp-data-inject"
 
 #' load_csv_files
 #'
@@ -109,11 +110,11 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
   assert_that(is.logical(enforce_requirements))
   assert_that(file.exists(filename))
 
-  # TEMPORARY: don't enforce metadata for data injection (from old d.s.) files
-  if(isTRUE(grepl("temp-data-inject", filename,fixed = TRUE))) {
+  # TEMPORARY: don't enforce metadata, for test, for data injection (from old d.s.)
+  if(isTRUE(grepl(TEMP_DATA_INJECT, filename, fixed = TRUE))) {
     enforce_requirements <- FALSE
+    obj <- add_flags(obj, FLAG_NO_TEST)
   }
-
 
   # File may be compressed; handle this via a connection
   if(grepl("\\.gz", filename)) {
@@ -143,7 +144,7 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
     stop("'File:' given in header (", filecheck, ") doesn't match filename in ", filename)
   }
 
-  obj %>%
+obj %>%
     add_title(extract_header_info(x, "Title:", filename, required = enforce_requirements)) %>%
     add_units(extract_header_info(x, "Units?:", filename, required = enforce_requirements)) %>%
     add_comments(extract_header_info(x, "(Comments|Description):", filename, multiline = TRUE)) %>%
