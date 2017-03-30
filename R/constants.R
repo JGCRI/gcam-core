@@ -17,6 +17,7 @@ FLAG_NO_TEST    <- "NO_TEST"
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq( 2015, 2100, 5 )
+FINAL_HISTORICAL_YEAR <- 2010
 
 # ======================================================================
 # aglu constants
