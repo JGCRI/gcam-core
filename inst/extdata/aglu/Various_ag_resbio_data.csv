@@ -1,7 +1,8 @@
 # File: Various_ag_resbio_data.csv,,,,,
+# Title: Various_ag_resbio_data,,,,,
+# Units: Varied,,,,,
 # Description: Residue biomass characteristics by crop type,,,,,
 # Original source: see aglu data documentation,,,,,
-# ----------,,,,,
 item,HarvestIndex,ErosCtrl_tHa,ResEnergy_GJt,Root_Shoot,WaterContent
 "Almonds, with shell",0.42,0.013,16.8,0.15,0.2
 "Anise, badian, fennel, corian.",1,0,0,0.15,0
