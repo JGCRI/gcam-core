@@ -132,9 +132,9 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
   # Remove trailing commas - stupid Excel
   filecheck <- gsub(",*$", "", filecheck)
   # Remove any compression extension
-  filename_clean <- gsub("\\.(zip|gz)$", "", filecheck) %>% basename
+  filename_clean <- gsub("\\.(zip|gz)$", "", filename) %>% basename
   if(enforce_requirements & !identical(filecheck, filename_clean)) {
-    stop("'File:' given in header doesn't match filename in ", filename)
+    stop("'File:' given in header (", filecheck, ") doesn't match filename in ", filename)
   }
 
   obj %>%
