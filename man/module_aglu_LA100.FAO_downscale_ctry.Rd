@@ -18,13 +18,11 @@ the generated outputs: \code{L100.FAO_ag_HA_ha}, \code{L100.FAO_ag_Prod_t}, \cod
 original data system was \code{LA100.FAO_downscale_ctry.R} (aglu level1).
 }
 \description{
-Initial processing of all FAO data.
+Briefly describe what this chunk does.
 }
 \details{
-Read FAO data; merge archive and modern fertilizer data; match with
-ISO codes and downscale some individual countries; calculate rolling 5-year
-averages; and other miscellaneous steps.
+Describe in detail what this chunk does.
 }
 \author{
-BBL January 2017
+BBL
 }

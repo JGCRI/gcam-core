@@ -1,4 +1,4 @@
-#' module_aglu_LB110.For_FAO_R_Y
+#' module_aglu_LB113.bio_Yield_R_GLU
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,31 +6,29 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L110.For_ALL_bm3_R_Y}. The corresponding file in the
-#' original data system was \code{LB110.For_FAO_R_Y.R} (aglu level1).
+#' the generated outputs: \code{L113.ag_bioYield_GJm2_R_GLU}. The corresponding file in the
+#' original data system was \code{LB113.bio_Yield_R_GLU.R} (aglu level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB110.For_FAO_R_Y_DISABLED <- function(command, ...) {
+module_aglu_LB113.bio_Yield_R_GLU_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             "L100.FAO_For_Prod_m3",
-             "L100.FAO_For_Imp_m3",
-             "L100.FAO_For_Exp_m3"))
+             "L100.LDS_ag_HA_ha",
+             "L100.LDS_ag_prod_t"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L110.For_ALL_bm3_R_Y"))
+    return(c("L113.ag_bioYield_GJm2_R_GLU"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L100.FAO_For_Prod_m3 <- get_data(all_data, "L100.FAO_For_Prod_m3")
-    L100.FAO_For_Imp_m3 <- get_data(all_data, "L100.FAO_For_Imp_m3")
-    L100.FAO_For_Exp_m3 <- get_data(all_data, "L100.FAO_For_Exp_m3")
+    L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
+    L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -47,8 +45,10 @@ module_aglu_LB110.For_FAO_R_Y_DISABLED <- function(command, ...) {
     # }
     #
     #
-    # NOTE: there are `merge` and/or 'match' calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Merge-and-Match
+    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
+    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # NOTE: This code uses vecpaste
+    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -61,14 +61,17 @@ module_aglu_LB110.For_FAO_R_Y_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L110.For_ALL_bm3_R_Y") %>%
+      add_legacy_name("L113.ag_bioYield_GJm2_R_GLU") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L110.For_ALL_bm3_R_Y
+      L113.ag_bioYield_GJm2_R_GLU
 
-    return_data(L110.For_ALL_bm3_R_Y)
+    return_data(L113.ag_bioYield_GJm2_R_GLU)
   } else {
     stop("Unknown command")
   }
 }
+
+
+
