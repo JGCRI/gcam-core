@@ -21,8 +21,8 @@ Repeat a data frame for each entry in a second, binding the columns together.
 This corresponds to \code{repeat_and_add_vector} in the old data system.
 }
 \examples{
-x <- tibble::tibble(x=1:3)
-y <- tibble::tibble(y = c(4, 5), z = c(6,7))
+x <- tibble::tibble(x = 1:3)
+y <- tibble::tibble(y = c(4, 5), z = c(6, 7))
 repeat_add_columns(x, y)
 }
 \author{

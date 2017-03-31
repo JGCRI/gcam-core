@@ -18,7 +18,7 @@ the generated outputs: \code{L111.ag_resbio_R_C}. The corresponding file in the
 original data system was \code{LB111.ag_resbio_R_C.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate the production-weighted parameters of residue biomass by GCAM region and commodity
 }
 \details{
 This chunk calculates the production-weighted average
