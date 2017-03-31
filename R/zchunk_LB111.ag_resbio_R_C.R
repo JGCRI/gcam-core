@@ -1,6 +1,6 @@
 #' module_aglu_LB111.ag_resbio_R_C
 #'
-#' Briefly describe what this chunk does.
+#' Calculate the production-weighted parameters of residue biomass by GCAM region and commodity
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -45,7 +45,7 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
     # also drop rows where production weights are zero, as these would return missing values later on
       filter(prod != 0) %>%
     # Multiply by production to get weights, change to long-format for easier calculation
-      gather(resbio_params, value, -c(iso, item, prod)) %>%
+      gather(resbio_params, value, -iso, -item, -prod) %>%
       mutate(value = value * prod) %>%
     # Add vectors for GCAM regions and commodities, collapse, and divide by production to get residue biomass values
       left_join_error_no_match(iso_GCAM_regID[c( "iso", "GCAM_region_ID")], by = "iso") %>%

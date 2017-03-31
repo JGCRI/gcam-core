@@ -1,7 +1,12 @@
 # File: Various_ag_resbio_data.csv,,,,,
 # Title: Various_ag_resbio_data,,,,,
-# Units: Varied,,,,,
+"# Units: Varied, see below",,,,,
 # Description: Residue biomass characteristics by crop type,,,,,
+# Harvest Index (unitless): mass of harvested crop divided by total above-ground biomass.,,,,,
+# ErosCtrl (tonnes per hectare): minimum residue required to be left in situ for erosion control. ,,,,,
+# ResEnergy (Gigajoules per tonne): energy content of residue biomass at time of harvest,,,,,
+# Root_Shoot (unitless): Mass of roots (below-ground biomass) divided by mass of shoots (above-ground biomass),,,,,
+# WaterContent (unitless): Water content of aboveground crop biomass,,,,,
 # Original source: see aglu data documentation,,,,,
 item,HarvestIndex,ErosCtrl_tHa,ResEnergy_GJt,Root_Shoot,WaterContent
 "Almonds, with shell",0.42,0.013,16.8,0.15,0.2
