@@ -2,8 +2,7 @@
 #'
 #' This module builds Forest Production, Net Export (FAO Exports - FAO Imports), and
 #' Consumption  (Production - Net Exports) information for every GCAM region in each year, from
-#' FAO Production, Export, and Import data. FAO Production data is used to scale Net Exports
-#' at the Region level such that Global Production equals Consumption.
+#' FAO Production, Export, and Import data.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
