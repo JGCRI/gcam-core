@@ -62,6 +62,6 @@ modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 # ======================================================================
 # AgLU constants
 
-# used in LB110.For_FAO_R_Y
+# Conversion factor: cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
 

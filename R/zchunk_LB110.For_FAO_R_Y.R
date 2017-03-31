@@ -1,6 +1,9 @@
 #' module_aglu_LB110.For_FAO_R_Y
 #'
-#' Briefly describe what this chunk does.
+#' This module builds Forest Production, Net Export (FAO Exports - FAO Imports), and
+#' Consumption  (Production - Net Exports) information for every GCAM region in each year, from
+#' FAO Production, Export, and Import data. FAO Production data is used to scale Net Exports
+#' at the Region level such that Global Production equals Consumption.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -10,7 +13,7 @@
 #' original data system was \code{LB110.For_FAO_R_Y.R} (aglu level1).
 #' @details This module builds Forest Production, Net Export (FAO Exports - FAO Imports), and
 #' Consumption  (Production - Net Exports) information for every GCAM region in each year, from
-#' FAO Production, Export, and Import data.FAO Production data is used to scale Net Exports
+#' FAO Production, Export, and Import data. FAO Production data is used to scale Net Exports
 #' at the Region level such that Global Production equals Consumption.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -58,7 +61,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
 
     # combine all three L100.FAO_For_X tibbles into a single tibble
     # this tibble will be summed over by flow later, calculating export-import to give net export
-    L110.FAO_For_ALL_m3 <- rbind( L100.FAO_For_Prod_m3, L100.FAO_For_Imp_m3, L100.FAO_For_Exp_m3 )
+    L110.FAO_For_ALL_m3 <- bind_rows( L100.FAO_For_Prod_m3, L100.FAO_For_Imp_m3, L100.FAO_For_Exp_m3 )
 
 
     # Lines 41-60 in original file
@@ -70,13 +73,13 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       # do a left join on For_ALL tibble, match up the iso labels from the iso tibble,
       #   This appends to the For_ALL tibble all of the information from the iso_GCAM_regID, including the column we actually
       #   want, GCAM_region_ID. This column is all that we save:
-      mutate(GCAM_region_ID =  left_join( L110.FAO_For_ALL_m3, iso_GCAM_regID, by = c("iso"))$GCAM_region_ID ) %>%
+      mutate(GCAM_region_ID =  left_join_error_no_match( L110.FAO_For_ALL_m3, iso_GCAM_regID, by = c("iso"))$GCAM_region_ID ) %>%
       #
       mutate(GCAM_commodity = "Forest") %>%                   # add the forest commodity label
       mutate(value = CONV_M3_BM3*value) %>%                   # convert the value units from m3 to bm3, had to add this constant to constants.R
       mutate(flow = sub( "_m3", "_bm3", flow ) )  %>%         # update the labels in flow to reflect the new units of bm3
       #
-      #we don't care about other identifiers anymore, only region id, commodity, flow and year corresponding to value:
+      # we don't care about other identifiers anymore, only region id, commodity, flow and year corresponding to value:
       select(GCAM_region_ID, GCAM_commodity, flow, year, value) %>%
       #
       # these two lines (group_by and summarise) compute Export-Import to give net exports, and leave the Prod alone,
@@ -96,7 +99,9 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
 
     # Lines 62 - 64 in original file
     # Form Global values by summing over regions for each Prod, NetExp, Cons in tibble L110.For_ALL_bm3_R_Y;
-    # Then use the Global values to calculate the global consumption scaler that satisfies Global Production = Consumption
+    # Then use the Global values to calculate the global consumption scaler that satisfies Global Production = Consumption.
+    # It is a scaler on consumption rather than production because production data is prioritized over consumption data when
+    # there is a mismatch.
     L110.For_ALL_bm3_R_Y %>%                     # take the region year R_Y tibble
       group_by(GCAM_commodity, year) %>%         # For each commodity and year
       summarise_all(sum) %>%                     # sum over each remaining column
@@ -111,7 +116,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       select(year,GCAM_commodity, Cons_scaler) ->
       dummyGlobalTable
     L110.For_ALL_bm3_R_Y %>%                                               # take the region year R_Y tibble
-      left_join(., dummyGlobalTable, by = c("year","GCAM_commodity")) %>%
+      left_join_error_no_match(., dummyGlobalTable, by = c("year","GCAM_commodity")) %>%
       # ^ Use Left Join to add the Global Cons_scaler corresponding to each year in each region. This command adds
       #   more information than we need or care about, so only keep the Cons_scaler column that matters
       mutate(Cons_bm3 = Cons_bm3 * Cons_scaler)  %>%                       # Use the scaler to recalculate Cons_bm3
@@ -136,7 +141,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     # If no precursors (very rare) don't call `add_precursor` at all
     L110.For_ALL_bm3_R_Y %>%
       add_title("Forest products mass balance by GCAM region / year") %>%
-      add_units("bm3") %>%
+      add_units("billion cubic meters (bm3)") %>%
       add_comments( "FAO production data is used to scale Net Exports (FAO Exports - FAO Imports) at the Region level" ) %>%
       add_comments("such that Global Production equals Consumption (Production - Net Exports).") %>%
       add_legacy_name("L110.For_ALL_bm3_R_Y") %>%
