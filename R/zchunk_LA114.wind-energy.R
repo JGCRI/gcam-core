@@ -72,6 +72,3 @@ module_energy_LA114.wind_DISABLED <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
