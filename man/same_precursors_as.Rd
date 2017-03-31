@@ -7,9 +7,9 @@
 same_precursors_as(x, y)
 }
 \arguments{
-\item{x}{An object (source of precursors)}
+\item{x}{An object (that should get same precursors as \code{y})}
 
-\item{y}{Another object (that should get same precursors as \code{x})}
+\item{y}{Another object (source of precursors)}
 }
 \value{
 \code{x} with precursors set to those of \code{y}.
