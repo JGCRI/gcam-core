@@ -21,8 +21,9 @@ original data system was \code{LA117.tradbio.R} (energy level1).
 Briefly describe what this chunk does.
 }
 \details{
-Describe in detail what this chunk does.
+Creates regional traditional biomass supply curves by multiplying the max historical amount
+used in each region by the supply curve amount in the global assumption supply curve
 }
 \author{
-YourInitials CurrentMonthName 2017
+RH March 2017
 }

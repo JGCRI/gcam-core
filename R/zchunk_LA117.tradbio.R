@@ -8,12 +8,13 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L117.RsrcCurves_EJ_R_tradbio}. The corresponding file in the
 #' original data system was \code{LA117.tradbio.R} (energy level1).
-#' @details Creates regional traditional biomass supply curves by multiplying the max historical amount used in each region by the global assumption supply curve amount
+#' @details Creates regional traditional biomass supply curves by multiplying the max historical amount
+#' used in each region by the supply curve amount in the global assumption supply curve
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH March 2017
-#' @export
+#'
 module_energy_LA117.tradbio <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
