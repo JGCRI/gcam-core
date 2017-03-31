@@ -23,6 +23,10 @@ FUTURE_YEARS <- seq( 2015, 2100, 5 )
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 
+# GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
+aglu.GLU <- "GLU"
+aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
+
 # ======================================================================
 # Conversion constants
 CONV_BIL_MIL <- 1000

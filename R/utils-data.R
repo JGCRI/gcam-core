@@ -108,8 +108,8 @@ add_precursors <- function(x, ...) {
 #'
 #' Copy precursors from one object to another.
 #'
-#' @param x An object (source of precursors)
-#' @param y Another object (that should get same precursors as \code{x})
+#' @param x An object (that should get same precursors as \code{y})
+#' @param y Another object (source of precursors)
 #' @return \code{x} with precursors set to those of \code{y}.
 same_precursors_as <- function(x, y) {
   attr(x, ATTR_PRECURSORS) <- c(attr(x, ATTR_PRECURSORS), attr(y, ATTR_PRECURSORS))
@@ -117,6 +117,24 @@ same_precursors_as <- function(x, y) {
 }
 
 get_precursors <- function(x) { attr(x, ATTR_PRECURSORS) }
+
+
+#' same_attributes_as
+#'
+#' Copy attributes from one data system object to another.
+#'
+#' @param x An object (that should get same data system attributes as \code{y})
+#' @param y Another object (source of attributes)
+#' @return \code{x} with attributes set to those of \code{y}.
+same_attributes_as <- function(x, y) {
+  attr(x, ATTR_TITLE) <- attr(y, ATTR_TITLE)
+  attr(x, ATTR_UNITS) <- attr(y, ATTR_UNITS)
+  attr(x, ATTR_COMMENTS) <- attr(y, ATTR_COMMENTS)
+  attr(x, ATTR_PRECURSORS) <- attr(y, ATTR_PRECURSORS)
+  attr(x, ATTR_LEGACY_NAME) <- attr(y, ATTR_LEGACY_NAME)
+  attr(x, ATTR_REFERENCE) <- attr(y, ATTR_REFERENCE)
+  x
+}
 
 
 #' add_flags
