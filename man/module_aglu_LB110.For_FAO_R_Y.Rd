@@ -18,9 +18,7 @@ the generated outputs: \code{L110.For_ALL_bm3_R_Y}. The corresponding file in th
 original data system was \code{LB110.For_FAO_R_Y.R} (aglu level1).
 }
 \description{
-This module builds Forest Production, Net Export (FAO Exports - FAO Imports), and
-Consumption  (Production - Net Exports) information for every GCAM region in each year, from
-FAO Production, Export, and Import data.
+Build FAO forestry production, export, import, and consumption data for every GCAM region in each year.
 }
 \details{
 This module builds Forest Production, Net Export (FAO Exports - FAO Imports), and

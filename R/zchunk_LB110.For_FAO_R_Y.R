@@ -1,8 +1,6 @@
 #' module_aglu_LB110.For_FAO_R_Y
 #'
-#' This module builds Forest Production, Net Export (FAO Exports - FAO Imports), and
-#' Consumption  (Production - Net Exports) information for every GCAM region in each year, from
-#' FAO Production, Export, and Import data.
+#' Build FAO forestry production, export, import, and consumption data for every GCAM region in each year.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -35,9 +33,6 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     L100.FAO_For_Prod_m3 <- get_data(all_data, "L100.FAO_For_Prod_m3")
     L100.FAO_For_Imp_m3 <- get_data(all_data, "L100.FAO_For_Imp_m3")
     L100.FAO_For_Exp_m3 <- get_data(all_data, "L100.FAO_For_Exp_m3")
-
-
-
 
     # Lines 34-39 in original file
     # indicate flow on each tibble - flow is a directional quantity indicating net export or production
@@ -95,7 +90,6 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       select(GCAM_region_ID, GCAM_commodity, year, Prod_bm3, NetExp_bm3, Cons_bm3) ->  # reorder columns
       L110.For_ALL_bm3_R_Y                                                             # save it in the region year R_Y tibble
 
-
     # Lines 62 - 64 in original file
     # Form Global values by summing over regions for each Prod, NetExp, Cons in tibble L110.For_ALL_bm3_R_Y;
     # Then use the Global values to calculate the global consumption scaler that satisfies Global Production = Consumption.
@@ -107,7 +101,6 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       select(-GCAM_region_ID) %>%                # drop the region id, since we are calculating a global quantity
       mutate(Cons_scaler = Prod_bm3/Cons_bm3) -> # add a variable for the consumption scaler
       L110.For_ALL_bm3_glbl_Y                    # store in the global tibble
-
 
     # Lines 65-71 in original file
     # Use the global consumption scaler in tibble L110.For_ALL_bm3_glbl_Y  to scale regions
