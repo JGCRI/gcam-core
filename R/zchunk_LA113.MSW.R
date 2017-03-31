@@ -90,6 +90,3 @@ module_energy_LA113.MSW <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
