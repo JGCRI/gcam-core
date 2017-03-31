@@ -23,7 +23,7 @@ FUTURE_YEARS <- seq( 2015, 2100, 5 )
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 
-# TODO: what does GLU stand for?
+# GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
 aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 

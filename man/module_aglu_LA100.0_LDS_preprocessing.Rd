@@ -18,12 +18,15 @@ the generated outputs: \code{object}. The corresponding file in the
 original data system was \code{LA100.0_LDS_preprocessing.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Read in and process LDS (Land Data System) files.
 }
 \details{
 Read in the various LDS datasets; regularize their column names and
-GLU data; change Taiwan ISO to that of mainland China; make LDS_ag_HA_ha and
-LDS_ag_prod_t tables consistent.
+GLU (Geographic Land Unit) data; change Taiwan ISO to that of mainland China; make LDS_ag_HA_ha and
+LDS_ag_prod_t tables consistent. See Di Vittorio, A., P. Kyle, and W. Collins. 2016.
+What are the effects of Agro-Ecological Zones and land use region boundaries on
+land resource projection using the Global Change Assessment Model? Environmental
+Modelling & Software 85, 246-265. http://dx.doi.org/10.1016/j.envsoft.2016.08.016.
 }
 \author{
 BBL March 2017
