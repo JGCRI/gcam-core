@@ -1,6 +1,6 @@
 #' module_aglu_LA100.FAO_downscale_ctry
 #'
-#' Initial processing of all FAO data.
+#' Briefly describe what this chunk does.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,37 +8,35 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L100.FAO_ag_HA_ha}, \code{L100.FAO_ag_Prod_t}, \code{L100.FAO_ag_Exp_t}, \code{L100.FAO_ag_Feed_t}, \code{L100.FAO_ag_Food_t}, \code{L100.FAO_ag_Imp_t}, \code{L100.FAO_an_Exp_t}, \code{L100.FAO_an_Food_t}, \code{L100.FAO_an_Imp_t}, \code{L100.FAO_an_Prod_t}, \code{L100.FAO_CL_kha}, \code{L100.FAO_fallowland_kha}, \code{L100.FAO_harv_CL_kha}, \code{L100.FAO_Fert_Cons_tN}, \code{L100.FAO_Fert_Prod_tN}, \code{L100.FAO_For_Exp_m3}, \code{L100.FAO_For_Imp_m3}, \code{L100.FAO_For_Prod_m3}. The corresponding file in the
 #' original data system was \code{LA100.FAO_downscale_ctry.R} (aglu level1).
-#' @details Read FAO data; merge archive and modern fertilizer data; match with
-#' ISO codes and downscale some individual countries; calculate rolling 5-year
-#' averages; and other miscellaneous steps.
+#' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @import dplyr
 #' @importFrom tidyr gather spread
-#' @author BBL January 2017
+#' @author BBL
 module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO/FAO_ag_HA_ha_PRODSTAT",
-             FILE = "aglu/FAO/FAO_ag_Prod_t_PRODSTAT",
-             FILE = "aglu/FAO/FAO_ag_Exp_t_SUA",
-             FILE = "aglu/FAO/FAO_ag_Feed_t_SUA",
-             FILE = "aglu/FAO/FAO_ag_Food_t_SUA",
-             FILE = "aglu/FAO/FAO_ag_Imp_t_SUA",
-             FILE = "aglu/FAO/FAO_an_Exp_t_SUA",
-             FILE = "aglu/FAO/FAO_an_Food_t_SUA",
-             FILE = "aglu/FAO/FAO_an_Imp_t_SUA",
-             FILE = "aglu/FAO/FAO_an_Prod_t_SUA",
-             FILE = "aglu/FAO/FAO_CL_kha_RESOURCESTAT",
-             FILE = "aglu/FAO/FAO_fallowland_kha_RESOURCESTAT",
-             FILE = "aglu/FAO/FAO_harv_CL_kha_RESOURCESTAT",
-             FILE = "aglu/FAO/FAO_Fert_Cons_tN_RESOURCESTAT_archv",
-             FILE = "aglu/FAO/FAO_Fert_Cons_tN_RESOURCESTAT",
-             FILE = "aglu/FAO/FAO_Fert_Prod_tN_RESOURCESTAT_archv",
-             FILE = "aglu/FAO/FAO_Fert_Prod_tN_RESOURCESTAT",
-             FILE = "aglu/FAO/FAO_For_Exp_m3_FORESTAT",
-             FILE = "aglu/FAO/FAO_For_Imp_m3_FORESTAT",
-             FILE = "aglu/FAO/FAO_For_Prod_m3_FORESTAT"))
+             FILE = "aglu/FAO_ag_HA_ha_PRODSTAT",
+             FILE = "aglu/FAO_ag_Prod_t_PRODSTAT",
+             FILE = "aglu/FAO_ag_Exp_t_SUA",
+             FILE = "aglu/FAO_ag_Feed_t_SUA",
+             FILE = "aglu/FAO_ag_Food_t_SUA",
+             FILE = "aglu/FAO_ag_Imp_t_SUA",
+             FILE = "aglu/FAO_an_Exp_t_SUA",
+             FILE = "aglu/FAO_an_Food_t_SUA",
+             FILE = "aglu/FAO_an_Imp_t_SUA",
+             FILE = "aglu/FAO_an_Prod_t_SUA",
+             FILE = "aglu/FAO_CL_kha_RESOURCESTAT",
+             FILE = "aglu/FAO_fallowland_kha_RESOURCESTAT",
+             FILE = "aglu/FAO_harv_CL_kha_RESOURCESTAT",
+             FILE = "aglu/FAO_Fert_Cons_tN_RESOURCESTAT_archv",
+             FILE = "aglu/FAO_Fert_Cons_tN_RESOURCESTAT",
+             FILE = "aglu/FAO_Fert_Prod_tN_RESOURCESTAT_archv",
+             FILE = "aglu/FAO_Fert_Prod_tN_RESOURCESTAT",
+             FILE = "aglu/FAO_For_Exp_m3_FORESTAT",
+             FILE = "aglu/FAO_For_Imp_m3_FORESTAT",
+             FILE = "aglu/FAO_For_Prod_m3_FORESTAT"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L100.FAO_ag_HA_ha",
              "L100.FAO_ag_Prod_t",
@@ -68,26 +66,26 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       distinct ->
       AGLU_ctry
 
-    FAO_ag_HA_ha_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_HA_ha_PRODSTAT")
-    FAO_ag_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_Prod_t_PRODSTAT")
-    FAO_ag_Exp_t_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_Exp_t_SUA")
-    FAO_ag_Feed_t_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_Feed_t_SUA")
-    FAO_ag_Food_t_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_Food_t_SUA")
-    FAO_ag_Imp_t_SUA <- get_data(all_data, "aglu/FAO/FAO_ag_Imp_t_SUA")
-    FAO_an_Exp_t_SUA <- get_data(all_data, "aglu/FAO/FAO_an_Exp_t_SUA")
-    FAO_an_Food_t_SUA <- get_data(all_data, "aglu/FAO/FAO_an_Food_t_SUA")
-    FAO_an_Imp_t_SUA <- get_data(all_data, "aglu/FAO/FAO_an_Imp_t_SUA")
-    FAO_an_Prod_t_SUA <- get_data(all_data, "aglu/FAO/FAO_an_Prod_t_SUA")
-    FAO_CL_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO/FAO_CL_kha_RESOURCESTAT")
-    FAO_fallowland_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO/FAO_fallowland_kha_RESOURCESTAT")
-    FAO_harv_CL_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO/FAO_harv_CL_kha_RESOURCESTAT")
-    FAO_Fert_Cons_tN_RESOURCESTAT_archv <- get_data(all_data, "aglu/FAO/FAO_Fert_Cons_tN_RESOURCESTAT_archv")
-    FAO_Fert_Cons_tN_RESOURCESTAT <- get_data(all_data, "aglu/FAO/FAO_Fert_Cons_tN_RESOURCESTAT")
-    FAO_Fert_Prod_tN_RESOURCESTAT_archv <- get_data(all_data, "aglu/FAO/FAO_Fert_Prod_tN_RESOURCESTAT_archv")
-    FAO_Fert_Prod_tN_RESOURCESTAT<- get_data(all_data, "aglu/FAO/FAO_Fert_Prod_tN_RESOURCESTAT")
-    FAO_For_Exp_m3_FORESTAT <- get_data(all_data, "aglu/FAO/FAO_For_Exp_m3_FORESTAT")
-    FAO_For_Imp_m3_FORESTAT <- get_data(all_data, "aglu/FAO/FAO_For_Imp_m3_FORESTAT")
-    FAO_For_Prod_m3_FORESTAT <- get_data(all_data, "aglu/FAO/FAO_For_Prod_m3_FORESTAT")
+    FAO_ag_HA_ha_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_HA_ha_PRODSTAT")
+    FAO_ag_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_Prod_t_PRODSTAT")
+    FAO_ag_Exp_t_SUA <- get_data(all_data, "aglu/FAO_ag_Exp_t_SUA")
+    FAO_ag_Feed_t_SUA <- get_data(all_data, "aglu/FAO_ag_Feed_t_SUA")
+    FAO_ag_Food_t_SUA <- get_data(all_data, "aglu/FAO_ag_Food_t_SUA")
+    FAO_ag_Imp_t_SUA <- get_data(all_data, "aglu/FAO_ag_Imp_t_SUA")
+    FAO_an_Exp_t_SUA <- get_data(all_data, "aglu/FAO_an_Exp_t_SUA")
+    FAO_an_Food_t_SUA <- get_data(all_data, "aglu/FAO_an_Food_t_SUA")
+    FAO_an_Imp_t_SUA <- get_data(all_data, "aglu/FAO_an_Imp_t_SUA")
+    FAO_an_Prod_t_SUA <- get_data(all_data, "aglu/FAO_an_Prod_t_SUA")
+    FAO_CL_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO_CL_kha_RESOURCESTAT")
+    FAO_fallowland_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO_fallowland_kha_RESOURCESTAT")
+    FAO_harv_CL_kha_RESOURCESTAT <- get_data(all_data, "aglu/FAO_harv_CL_kha_RESOURCESTAT")
+    FAO_Fert_Cons_tN_RESOURCESTAT_archv <- get_data(all_data, "aglu/FAO_Fert_Cons_tN_RESOURCESTAT_archv")
+    FAO_Fert_Cons_tN_RESOURCESTAT <- get_data(all_data, "aglu/FAO_Fert_Cons_tN_RESOURCESTAT")
+    FAO_Fert_Prod_tN_RESOURCESTAT_archv <- get_data(all_data, "aglu/FAO_Fert_Prod_tN_RESOURCESTAT_archv")
+    FAO_Fert_Prod_tN_RESOURCESTAT<- get_data(all_data, "aglu/FAO_Fert_Prod_tN_RESOURCESTAT")
+    FAO_For_Exp_m3_FORESTAT <- get_data(all_data, "aglu/FAO_For_Exp_m3_FORESTAT")
+    FAO_For_Imp_m3_FORESTAT <- get_data(all_data, "aglu/FAO_For_Imp_m3_FORESTAT")
+    FAO_For_Prod_m3_FORESTAT <- get_data(all_data, "aglu/FAO_For_Prod_m3_FORESTAT")
 
     itel_colnames <- c("item", "item codes", "element", "element codes")
     coitel_colnames <- c("countries", "country codes", itel_colnames)
@@ -217,6 +215,15 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # From here on, only use the specified AGLU historical years
     FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(coitel_colnames, "iso", as.character(AGLU_HISTORICAL_YEARS))]
 
+    # Check that data is the same!
+    # old2 <- readr::read_csv("~/Desktop/FAO_data_ALL2.csv")
+    # new2 <- FAO_data_ALL[c(2,3,4,5,1,6, 7:58)]
+    # new2$element <- gsub(pattern = "_[A-Z]*$", "", new2$element)
+    # new2$element <- gsub(pattern = "^FAO_", "", new2$element)
+    # names(new2) <- names(old2)
+    # print(all.equal(new2, old2))
+    # browser()
+
     # Rename columns to old names
     FAO_data_ALL_5yr %>%
       rename(country.codes = `country codes`,
@@ -248,96 +255,96 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     L100.FAO_ag_HA_ha %>%
       add_title("FAO agricultural harvested area by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_ag_HA_ha_PRODSTAT", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_ag_HA_ha_PRODSTAT", "aglu/AGLU_ctry") ->
       L100.FAO_ag_HA_ha
     L100.FAO_ag_Prod_t %>%
       add_title("FAO agricultural production by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_ag_Prod_t_PRODSTAT", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_ag_Prod_t_PRODSTAT", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Prod_t
     L100.FAO_ag_Exp_t %>%
       add_title("FAO agricultural exports by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_ag_Exp_t_SUA", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_ag_Exp_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Exp_t
     L100.FAO_ag_Feed_t %>%
       add_title("FAO agricultural feed by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_ag_Feed_t_SUA", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_ag_Feed_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Feed_t
     L100.FAO_ag_Food_t %>%
       add_title("FAO agricultural food consumption by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_ag_Food_t_SUA", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_ag_Food_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Food_t
     L100.FAO_ag_Imp_t %>%
       add_title("FAO agricultural imports by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_ag_Imp_t_SUA", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_ag_Imp_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_ag_Imp_t
     L100.FAO_an_Exp_t %>%
       add_title("FAO animal exports by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_an_Exp_t_SUA", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_an_Exp_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Exp_t
     L100.FAO_an_Food_t %>%
       add_title("FAO animal food consumption by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_an_Food_t_SUA", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_an_Food_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Food_t
     L100.FAO_an_Imp_t %>%
       add_title("FAO animal imports by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_an_Imp_t_SUA", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_an_Imp_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Imp_t
     L100.FAO_an_Prod_t %>%
       add_title("FAO animal production by country, item, year") %>%
       add_units("t") %>%
-      add_precursors("aglu/FAO/FAO_an_Prod_t_SUA", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_an_Prod_t_SUA", "aglu/AGLU_ctry") ->
       L100.FAO_an_Prod_t
     L100.FAO_CL_kha %>%
       add_title("FAO cropland area by country, year") %>%
       add_units("kha") %>%
-      add_precursors("aglu/FAO/FAO_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_CL_kha
     L100.FAO_fallowland_kha %>%
       add_title("FAO fallow land area by country, year") %>%
       add_units("kha") %>%
-      add_precursors("aglu/FAO/FAO_fallowland_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_fallowland_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_fallowland_kha
     L100.FAO_harv_CL_kha %>%
       add_title("FAO harvested cropland (temporary crops) area by country, year") %>%
       add_units("kha") %>%
-      add_precursors("aglu/FAO/FAO_harv_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_harv_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_harv_CL_kha
     L100.FAO_Fert_Cons_tN %>%
       add_title("FAO fertilizer consumption by country, year") %>%
       add_units("tonnes N") %>%
-      add_precursors("aglu/FAO/FAO_Fert_Cons_tN_RESOURCESTAT",
-                     "aglu/FAO/FAO_Fert_Cons_tN_RESOURCESTAT_archv",
+      add_precursors("aglu/FAO_Fert_Cons_tN_RESOURCESTAT",
+                     "aglu/FAO_Fert_Cons_tN_RESOURCESTAT_archv",
                      "aglu/AGLU_ctry") ->
       L100.FAO_Fert_Cons_tN
     L100.FAO_Fert_Prod_tN %>%
       add_title("FAO fertilizer production by country, year") %>%
       add_units("tonnes N") %>%
-      add_precursors("aglu/FAO/FAO_Fert_Prod_tN_RESOURCESTAT",
-                     "aglu/FAO/FAO_Fert_Prod_tN_RESOURCESTAT_archv",
+      add_precursors("aglu/FAO_Fert_Prod_tN_RESOURCESTAT",
+                     "aglu/FAO_Fert_Prod_tN_RESOURCESTAT_archv",
                      "aglu/AGLU_ctry") ->
       L100.FAO_Fert_Prod_tN
     L100.FAO_For_Exp_m3 %>%
       add_title("FAO forestry exports by country, year") %>%
       add_units("m3") %>%
-      add_precursors("aglu/FAO/FAO_For_Exp_m3_FORESTAT", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_For_Exp_m3_FORESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_For_Exp_m3
     L100.FAO_For_Imp_m3 %>%
       add_title("FAO forestry imports by country, year") %>%
       add_units("m3") %>%
-      add_precursors("aglu/FAO/FAO_For_Imp_m3_FORESTAT", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_For_Imp_m3_FORESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_For_Imp_m3
     L100.FAO_For_Prod_m3 %>%
       add_title("FAO forestry production by country, year") %>%
       add_units("m3") %>%
-      add_precursors("aglu/FAO/FAO_For_Prod_m3_FORESTAT", "aglu/AGLU_ctry") ->
+      add_precursors("aglu/FAO_For_Prod_m3_FORESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_For_Prod_m3
 
     return_data(L100.FAO_ag_HA_ha,
