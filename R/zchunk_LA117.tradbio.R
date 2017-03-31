@@ -8,17 +8,17 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L117.RsrcCurves_EJ_R_tradbio}. The corresponding file in the
 #' original data system was \code{LA117.tradbio.R} (energy level1).
-#' @details Describe in detail what this chunk does.
+#' @details Creates regional traditional biomass supply curves by multiplying the max historical amount used in each region by the global assumption supply curve amount
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author RH March 2017
 #' @export
-module_energy_LA117.tradbio_DISABLED <- function(command, ...) {
+module_energy_LA117.tradbio <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A_regions",
              FILE = "common/iso_GCAM_regID",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh",
+             FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
              FILE = "energy/A17.tradbio_curves"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L117.RsrcCurves_EJ_R_tradbio"))
@@ -29,28 +29,26 @@ module_energy_LA117.tradbio_DISABLED <- function(command, ...) {
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh")
     A17.tradbio_curves <- get_data(all_data, "energy/A17.tradbio_curves")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+
+    # Calculating the max resource of tradbio as the maximum during the historical years
+    L117.maxSubResource_tradbio <- L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+      filter(fuel == "biomass_tradbio", sector == "TPES") %>%
+      gather(Xyear, value, X1971:X2010) %>%
+      group_by(GCAM_region_ID, sector, fuel) %>%
+      summarise(value = max(value))
+
+    # Writing the supply curves to all regions, multiplying maxSubResouce by quantity available at each grade
+    repeat_add_columns(A17.tradbio_curves,L117.maxSubResource_tradbio) %>%
+      arrange(GCAM_region_ID) %>%
+      mutate(available = available*value) %>%
+    # Removing resource curves in regions where this fuel does not apply
+      filter(value != 0) %>%
+      select(GCAM_region_ID, resource, subresource, grade, available, extractioncost) %>%
+
     # ===================================================
 
     # Produce outputs
@@ -58,15 +56,14 @@ module_energy_LA117.tradbio_DISABLED <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+      add_title("Traditional biomass resources by GCAM region ") %>%
+      add_units("EJ") %>%
+      add_comments("Multiply the max historical amount used in each region by the supply curve amount") %>%
       add_legacy_name("L117.RsrcCurves_EJ_R_tradbio") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A17.tradbio_curves") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_NO_XYEAR) ->
       L117.RsrcCurves_EJ_R_tradbio
 
     return_data(L117.RsrcCurves_EJ_R_tradbio)
