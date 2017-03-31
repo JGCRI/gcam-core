@@ -36,7 +36,7 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
     # Compute weighted averages of each parameter ( HarvestIndex, ErosionControl, and ResidueEnergyContent ) for each crop type in each GCAM region
     L100.FAO_ag_Prod_t %>%
       select(iso, item, year, value) %>%
-      filter(year %in% FINAL_HISTORICAL_YEAR) %>%
+      filter(year %in% max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
       rename(prod = value) %>%
       full_join(Various_ag_resbio_data, by = "item") %>%
@@ -48,8 +48,8 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
       gather(resbio_params, value, -c(iso, item, prod)) %>%
       mutate(value = value * prod) %>%
     # Add vectors for GCAM regions and commodities, collapse, and divide by production to get residue biomass values
-      left_join(iso_GCAM_regID[c( "iso", "GCAM_region_ID")], by = "iso") %>%
-      left_join(FAO_ag_items_PRODSTAT[c( "item", "GCAM_commodity")], by = "item") %>%
+      left_join_error_no_match(iso_GCAM_regID[c( "iso", "GCAM_region_ID")], by = "iso") %>%
+      left_join_error_no_match(FAO_ag_items_PRODSTAT[c( "item", "GCAM_commodity")], by = "item") %>%
       group_by(GCAM_region_ID, GCAM_commodity, resbio_params) %>%
       summarize_if(is.numeric, sum) %>%
     # Dividing by production to get weighted average residue biomass parameters by region and crop
@@ -59,14 +59,10 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
       spread(resbio_params, value) %>%
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
       add_title("Weighted average residue biomass parameters by GCAM region / commodity") %>%
       add_units("units: varied") %>%
-      add_comments("Weighted average residue biomass parameters by GCAM region / commodity") %>%
-      add_comments("Units: varied") %>%
+      add_comments("Calculate the HarvestIndex, ErosCtrl, ResEnergy, Root_Shoot, and WaterContent of residue biomass") %>%
+      add_comments("These parameters are weighted by production when calculating the average by GCAM region and commodity") %>%
       add_legacy_name("L111.ag_resbio_R_C") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
