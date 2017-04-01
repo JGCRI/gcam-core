@@ -37,6 +37,10 @@ CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_1990_2010_USD <- 1.510
 
+# Cubic meters (m3) to billion cubic meters (bm3)
+CONV_M3_BM3 <- 1e-09
+
+
 # ======================================================================
 # Driver constants
 driver.MAKE <- "MAKE"
