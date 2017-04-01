@@ -77,7 +77,7 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
+                           const IInfo* aTechIInfo,
                            const int aPeriod );
 
     virtual double getGHGValue( const std::string& aRegionName,

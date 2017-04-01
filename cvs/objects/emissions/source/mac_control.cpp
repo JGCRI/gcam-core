@@ -65,9 +65,9 @@ extern Scenario* scenario;
 MACControl::MACControl():
 AEmissionsControl(),
 mNoZeroCostReductions( false ),
+mZeroCostPhaseInTime( 25 ),
 mCovertPriceValue( 1 ),
 mPriceMarketName( "CO2" ),
-mZeroCostPhaseInTime( 25 ),
 mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
 {
 }
@@ -135,10 +135,10 @@ bool MACControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* a
         mNoZeroCostReductions = true;
     }
     else if ( aNodeName == "zero-cost-phase-in-time" ){
-        mZeroCostPhaseInTime = XMLHelper<Value>::getValue( aCurrNode );
+        mZeroCostPhaseInTime = XMLHelper<int>::getValue( aCurrNode );
     }
     else if ( aNodeName == "mac-price-conversion" ){
-        mCovertPriceValue = XMLHelper<Value>::getValue( aCurrNode );
+        mCovertPriceValue = XMLHelper<double>::getValue( aCurrNode );
     }
     else if ( aNodeName == "market-name" ){
         mPriceMarketName = XMLHelper<string>::getValue( aCurrNode );
@@ -159,33 +159,31 @@ void MACControl::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
         attrs[ "tax" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
-    XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 20 );
+    XMLWriteElementCheckDefault( mZeroCostPhaseInTime, "zero-cost-phase-in-time", aOut, aTabs, 25 );
     XMLWriteElementCheckDefault( mNoZeroCostReductions, "no-zero-cost-reductions", aOut, aTabs, false );    
-    XMLWriteElement( mCovertPriceValue, "mac-price-conversion", aOut, aTabs );
+    XMLWriteElementCheckDefault( mCovertPriceValue, "mac-price-conversion", aOut, aTabs, 1.0 );
     XMLWriteElement( mPriceMarketName, "market-name", aOut, aTabs );
 }
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     toInputXMLDerived( aOut, aTabs );
-    
 }
 
 void MACControl::completeInit( const string& aRegionName, const string& aSectorName,
                                const IInfo* aTechInfo )
 {
-    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName, aRegionName, "CO2", aRegionName );
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName, aRegionName, mPriceMarketName, aRegionName );
 
     if ( mMacCurve->getMaxX() == -DBL_MAX ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "MAC Curve " << getName() << " appears to have no data. " << endl;
     }
-    
 }
 
 void MACControl::initCalc( const string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const NonCO2Emissions* parentGHG,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod )
 {
 }
@@ -211,15 +209,14 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
         reduction = 0.0;
     }
 
-   /*!  Adjust to smoothly phase-in "no-cost" emission reductions
-     Some MAC curves have non-zero abatement at zero emissions price. Unless the users sets
-     mNoZeroCostReductions, this reduction will occur even without an emissions price. This
-     code smoothly phases in this abatement so that a sudden change in emissions does not
-     occur. The phase-in period has a default value that can be altered
-     by the user. This code also reduces this phase-in period if there is a emissions-price,
-     which avoids an illogical situation where a high emissions price is present and mitigation
-     is maxed out, but the "no-cost" reductions are not fully phased in.
-*/
+    // Adjust to smoothly phase-in "no-cost" emission reductions
+    // Some MAC curves have non-zero abatement at zero emissions price. Unless the users sets
+    // mNoZeroCostReductions, this reduction will occur even without an emissions price. This
+    // code smoothly phases in this abatement so that a sudden change in emissions does not
+    // occur. The phase-in period has a default value that can be altered
+    // by the user. This code also reduces this phase-in period if there is a emissions-price,
+    // which avoids an illogical situation where a high emissions price is present and mitigation
+    // is maxed out, but the "no-cost" reductions are not fully phased in.
     const int lastCalYear = scenario->getModeltime()->getper_to_yr( 
                             scenario->getModeltime()->getFinalCalibrationPeriod() );
     int modelYear = scenario->getModeltime()->getper_to_yr( aPeriod );
@@ -228,7 +225,8 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
     double zeroCostReduction = getMACValue( 0 );
 
     if ( ( reduction > 0.0 ) && ( zeroCostReduction > 0.0 ) &&
-        ( modelYear <= ( lastCalYear + mZeroCostPhaseInTime ) ) ) {
+        ( modelYear <= ( lastCalYear + mZeroCostPhaseInTime ) ) )
+    {
         const double maxEmissionsTax = mMacCurve->getMaxX();
 
 		// Fraction of zero cost that is removed from original reduction value

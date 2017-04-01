@@ -75,6 +75,7 @@ mGDP( 0 )
 
 //! Default destructor.
 NonCO2Emissions::~NonCO2Emissions(){
+    clear();
 }
 
 //! Copy constructor.
@@ -156,12 +157,6 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
     
     mGDP = prevComplexGHG->mGDP;
     
-    // If no control objects were read in this period then clear any memory before copying
-    // objects forward from previous period.
-    if( mEmissionsControls.empty() ) {
-        clear();
-    }
-
     // Always copy control objects from previous period except for those read in for this period that
     // have the same name and type as an object from the previous period. In that latter case, use
     // the newer one instead of copying the older one.
@@ -296,7 +291,7 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
 
     // Ensure the user set an emissions coefficient in the input, either by reading it in, copying it from the previous period
     // or reading in the emissions
-    if( !mEmissionsCoef.isInited() && !mShouldCalibrateEmissCoef ){
+    if( !mEmissionsCoef.isInited() && !mShouldCalibrateEmissCoef && aTechInfo->getBoolean( "is-tech-operating", true ) ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "No emissions coefficient set for " << getName() << " in " << aRegionName << " in period " << aPeriod << endl;
@@ -305,10 +300,10 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
 }
 
 double NonCO2Emissions::getGHGValue( const string& aRegionName,
-                                    const vector<IInput*>& aInputs,
-                                    const vector<IOutput*>& aOutputs,
-                                    const ICaptureComponent* aSequestrationDevice,
-                                    const int aPeriod ) const
+                                     const vector<IInput*>& aInputs,
+                                     const vector<IOutput*>& aOutputs,
+                                     const ICaptureComponent* aSequestrationDevice,
+                                     const int aPeriod ) const
 {
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
@@ -322,7 +317,7 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
     
     // Get carbon storage cost from the sequestrion device if there is one.
     double storageCost = aSequestrationDevice ?
-    aSequestrationDevice->getStorageCost( aRegionName, getName(), aPeriod ) : 0;
+        aSequestrationDevice->getStorageCost( aRegionName, getName(), aPeriod ) : 0;
     
     // Get the remove fraction from the sequestration device. The remove
     // fraction is zero if there is no sequestration device.
@@ -347,7 +342,7 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
     // Adjust the GHG tax by taking into account the fraction sequestered, storage costs and adjusting
     // for the emissions intensity as well as reductions.
     double generalizedCost = ( ( 1.0 - removeFraction ) * GHGTax + removeFraction * storageCost ) *
-    mEmissionsCoef * emissMult / CVRT90 * CVRT_Tg_per_EJ_to_Tonne_per_GJ;
+        mEmissionsCoef * emissMult / CVRT90 * CVRT_Tg_per_EJ_to_Tonne_per_GJ;
     
     // The generalized cost returned by the GHG may be negative if
     // emissions crediting is occurring.
@@ -355,11 +350,11 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
 }
 
 void NonCO2Emissions::calcEmission( const string& aRegionName,
-                                   const vector<IInput*>& aInputs,
-                                   const vector<IOutput*>& aOutputs,
-                                   const GDP* aGDP,
-                                   ICaptureComponent* aSequestrationDevice,
-                                   const int aPeriod )
+                                    const vector<IInput*>& aInputs,
+                                    const vector<IOutput*>& aOutputs,
+                                    const GDP* aGDP,
+                                    ICaptureComponent* aSequestrationDevice,
+                                    const int aPeriod )
 {
     // Stash the GDP object if it has not been already.
     if( !mGDP ) {
@@ -419,8 +414,8 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
 }
 
 void NonCO2Emissions::doInterpolations( const int aYear, const int aPreviousYear,
-                                       const int aNextYear, const AGHG* aPreviousGHG,
-                                       const AGHG* aNextGHG )
+                                        const int aNextYear, const AGHG* aPreviousGHG,
+                                        const AGHG* aNextGHG )
 {
     const NonCO2Emissions* prevComplexEmiss = static_cast<const NonCO2Emissions*>( aPreviousGHG );
     const NonCO2Emissions* nextComplexEmiss = static_cast<const NonCO2Emissions*>( aNextGHG );

@@ -70,6 +70,6 @@ auto_ptr<AEmissionsControl> EmissionsControlFactory::create( const string& aType
 
 bool EmissionsControlFactory::isEmissionsControlNode( const string& aNodeName ){
     return aNodeName == MACControl::getXMLNameStatic() ||
-    aNodeName == GDPControl::getXMLNameStatic() ||
-    aNodeName == LinearControl::getXMLNameStatic()  ;
+           aNodeName == GDPControl::getXMLNameStatic() ||
+           aNodeName == LinearControl::getXMLNameStatic();
 }

@@ -48,11 +48,11 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include "util/base/include/iround_trippable.h"
-#include "emissions/include/nonco2_emissions.h"
 
 // Forward declarations
 class GDP;
 class IInfo;
+class NonCO2Emissions;
 
 /*! 
  * \ingroup Objects
@@ -92,12 +92,13 @@ public:
     /*!
      * \brief Perform initializations that only need to be done once per period.
      * \param aRegionName Region name.
-     * \param aLocalInfo The local information object.
+     * \param aTechInfo The local information object.
+     * \param aParentGHG The NonCO2Emissions that contains this object.
      * \param aPeriod Model period.
      */
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const NonCO2Emissions* parentGHG,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod ) = 0;
 
 protected:

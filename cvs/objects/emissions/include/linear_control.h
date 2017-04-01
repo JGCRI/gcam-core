@@ -38,7 +38,7 @@
 
 
 /*! 
- * \file gdp_control.h
+ * \file linear_control.h
  * \ingroup Objects
  * \brief LinearControl class header file.
  * \author Steve Smith
@@ -67,8 +67,8 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const NonCO2Emissions* parentGHG,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
 
 protected: 
@@ -86,7 +86,7 @@ private:
     //! Target year for final emissions factor. Does not have to be a model period.
     int mTargetYear;
     
-    //! Year to start emission factor decline. Must be a model period.
+    //! Year to start emission factor decline. Must be a model year.
     int mStartYear;
     
     //! Final emissions coefficient

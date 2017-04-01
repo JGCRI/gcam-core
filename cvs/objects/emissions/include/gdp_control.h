@@ -68,7 +68,7 @@ public:
 
     virtual void initCalc( const std::string& aRegionName,
                            const IInfo* aTechIInfo,
-                           const NonCO2Emissions* parentGHG,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
 
 protected: 

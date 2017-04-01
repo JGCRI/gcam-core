@@ -61,7 +61,7 @@ L252.ResMAC_fos <- na.omit( L252.ResMAC_fos )
 # Add column for market variable
 L252.ResMAC_fos$market.name <- MAC_Market
 # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
-L252.ResMAC_fos <- L252.ResMAC_fos[, -which( names( L252.ResMAC_fos ) == "EPA_region" ) ]
+L252.ResMAC_fos <- L252.ResMAC_fos[, names( L252.ResMAC_fos ) != "EPA_region" ]
 
 printlog( "L252.AgMAC: Agricultural abatement (including bioenergy)" )
 L252.AgMAC <- rbind(
@@ -84,7 +84,7 @@ L252.AgMAC <- na.omit( L252.AgMAC )
 # Add column for market variable
 L252.AgMAC$market.name <- MAC_Market
 # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
-L252.AgMAC <- L252.AgMAC[, -which( names( L252.AgMAC ) == "EPA_region" ) ]
+L252.AgMAC <- L252.AgMAC[, names( L252.AgMAC ) != "EPA_region" ]
 
 printlog( "L252.MAC_an: Abatement from animal production" )
 L252.MAC_an <- subset( L211.an_emissions[ c( names_StubTechYr, "Non.CO2" ) ], year == min( L211.an_emissions$year ) & Non.CO2 %in% ag_MACC_GHG_names )
@@ -103,7 +103,7 @@ L252.MAC_an <- na.omit( L252.MAC_an )
 # Add column for market variable
 L252.MAC_an$market.name <- MAC_Market
 # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
-L252.MAC_an <- L252.MAC_an[, -which( names( L252.MAC_an ) == "EPA_region" ) ]
+L252.MAC_an <- L252.MAC_an[, names( L252.MAC_an ) != "EPA_region" ]
 
 printlog( "L252.MAC_prc: Abatement from industrial and urban processes" )
 L252.MAC_prc <- subset( L232.nonco2_prc[ c( names_StubTechYr, "Non.CO2" ) ], year == min( L232.nonco2_prc$year ) & Non.CO2 %in% GHG_names )
@@ -123,7 +123,7 @@ L252.MAC_prc <- na.omit( L252.MAC_prc )
 # Add column for market variable
 L252.MAC_prc$market.name <- MAC_Market
 # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
-L252.MAC_prc <- L252.MAC_prc[, -which( names( L252.MAC_prc ) == "EPA_region" ) ]
+L252.MAC_prc <- L252.MAC_prc[, names( L252.MAC_prc ) != "EPA_region" ]
 
 printlog( "L252.MAC_higwp: Abatement from HFCs, PFCs, and SF6" )
 L252.MAC_higwp <- rbind(
@@ -145,7 +145,7 @@ L252.MAC_higwp <- na.omit( L252.MAC_higwp )
 # Add column for market variable
 L252.MAC_higwp$market.name <- MAC_Market
 # Remove EPA_Region - useful up to now for diagnostic, but not needed for csv->xml conversion
-L252.MAC_higwp <- L252.MAC_higwp[, -which( names( L252.MAC_higwp ) == "EPA_region" ) ]
+L252.MAC_higwp <- L252.MAC_higwp[, names( L252.MAC_higwp ) != "EPA_region" ]
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

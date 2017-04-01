@@ -647,6 +647,7 @@ void Technology::initCalc( const string& aRegionName,
     setProductionState( aPeriod );
     
     mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
+    mTechnologyInfo->setBoolean( "is-tech-operating", mProductionState[ aPeriod ]->isOperating() );
    
     for( unsigned int i = 0; i < ghg.size(); i++ ) {
         ghg[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );

@@ -70,8 +70,8 @@ public:
                                const IInfo* aTechIInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const NonCO2Emissions* parentGHG,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
 
 protected:
@@ -98,7 +98,7 @@ private:
      //! Conversion factor if getting price from its own market.
     double mCovertPriceValue;
     
-    //! Name of market to look for
+    //! Name of market who's price is used to look up the curve.
     std::string mPriceMarketName;
     
     void copy( const MACControl& other );

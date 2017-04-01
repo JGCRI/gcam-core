@@ -145,8 +145,8 @@ void GDPControl::completeInit( const string& aRegionName, const string& aSectorN
 }
 
 void GDPControl::initCalc( const string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const NonCO2Emissions* parentGHG,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod )
 {
     // TODO: Figure out what gas this is & print more meaningful information

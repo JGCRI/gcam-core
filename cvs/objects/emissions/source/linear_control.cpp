@@ -44,6 +44,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "emissions/include/linear_control.h"
+#include "emissions/include/nonco2_emissions.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/ilogger.h"
@@ -165,8 +166,8 @@ void LinearControl::completeInit( const string& aRegionName, const string& aSect
 }
 
 void LinearControl::initCalc( const string& aRegionName,
-                           const IInfo* aLocalInfo,
-                           const NonCO2Emissions* parentGHG,
+                           const IInfo* aTechInfo,
+                           const NonCO2Emissions* aParentGHG,
                            const int aPeriod )
 {
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
@@ -194,7 +195,7 @@ void LinearControl::initCalc( const string& aRegionName,
     // for linear decline.
     int startPeriod = scenario->getModeltime()->getyr_to_per( mStartYear );
     if ( aPeriod ==  ( startPeriod + 1 ) ) {
-        mBaseEmissionsCoef = parentGHG->mSavedEmissionsCoef[ startPeriod ];
+        mBaseEmissionsCoef = aParentGHG->mSavedEmissionsCoef[ startPeriod ];
     }
     
     // Note, the emissions driver in NonCO2Emissions::calcEmission for input driver is 
