@@ -1,7 +1,5 @@
 # utils.R
 
-TEMP_DATA_INJECT <- "temp-data-inject"
-
 #' load_csv_files
 #'
 #' Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.
