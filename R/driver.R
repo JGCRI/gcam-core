@@ -1,5 +1,8 @@
 # driver.R
 
+
+TEMP_DATA_INJECT <- "temp-data-inject/"
+
 #' run_chunk
 #'
 #' @param chunk Chunk name, character
@@ -84,6 +87,8 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
   chunkoutputs <- chunk_outputs(chunklist$name)
   if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
+  warn_data_injects()
+
   # Outputs should all be unique
   dupes <- duplicated(chunkoutputs$output)
   if(any(dupes)) {
@@ -158,4 +163,34 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 
   if(!quiet) cat("All done.\n")
   invisible(all_data)
+}
+
+
+#' warn_data_injects
+#'
+#' Check whether chunks are using any temporary (old data system data) 'injected' inputs.
+#'
+#' @return Number of temporary data objects being used inappropriately.
+warn_data_injects <- function() {
+
+  # We want to know if any chunks (including disabled ones) are using temp-data-inject
+  # data that is available to them through the data system
+  ci <- chunk_inputs(find_chunks(include_disabled = TRUE)$name)
+  chunk_outputs(find_chunks(include_disabled = FALSE)$name) %>%
+    rename(upstream_chunk = name) ->
+    co
+
+  # Look for TEMP_DATA_INJECT pattern in the chunk input list
+  ci[grep(TEMP_DATA_INJECT, ci$input),] %>%
+    mutate(base_input = basename(input)) %>%
+    # Look for any tdi inputs that appear in the enabled chunks' outputs
+    filter(base_input %in% co$output) %>%
+    left_join(select(co, upstream_chunk, output), by = c("base_input" = "output")) ->
+    ci_tdi
+
+  # Print messages
+  for(i in seq_len(nrow(ci_tdi))) {
+    message("NOTE: chunk ", ci_tdi$name[i], " reads `", ci_tdi$input[i], "`\n\tbut this is available from ", ci_tdi$upstream_chunk[i])
+  }
+  nrow(ci_tdi)
 }
