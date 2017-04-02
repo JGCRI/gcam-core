@@ -9,7 +9,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L101.ag_Food_Mt_R_C_Y}, \code{L101.ag_Food_Pcal_R_C_Y}, \code{L101.ag_kcalg_R_C_Y}, \code{L101.ag_HA_bm2_R_C_Y}, \code{L101.ag_Prod_Mt_R_C_Y}. The corresponding file in the
 #' original data system was \code{LA101.ag_FAO_R_C_Y.R} (aglu level1).
-#' @details This chunk aggregates FAO food consumption, agricultural production, 
+#' @details This chunk aggregates FAO food consumption, agricultural production,
 #' and harvested area data up to GCAM commodities and GCAM regions. Data is converted
 #' from FAO units (tons, hectares) to GCAM units (Mt, Pcal, billion km2). Note that
 #' FAO's alfalfa production in the USA is divided by 4 "for consistency with USDA".
@@ -45,11 +45,11 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
     L100.FAO_ag_Prod_t <- get_data(all_data, "L100.FAO_ag_Prod_t")
 
     # Process FAO food consumption data (tons): remove unnecessary columns, convert units, aggregate to region and commodity
-    L100.FAO_ag_Food_t %>% 
+    L100.FAO_ag_Food_t %>%
       select(-countries, -country.codes, -item.codes, -element, -element.codes) %>%                                # Remove unnecessary columns
       left_join_error_no_match(iso_GCAM_regID, by=c("iso"))  %>%                                                   # Map in ISO codes
       left_join(FAO_ag_items_cal_SUA, by=c("item"))  %>%                                                           # Map in GCAM commodities
-      filter(GCAM_commodity != "NA") %>%                                                                           # Remove commodities not included in GCAM
+      filter(!is.na(GCAM_commodity)) %>%                                                                           # Remove commodities not included in GCAM
       mutate(value = value * CONV_TON_MEGATON)  %>%                                                                # Convert from tons to Mt
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                                           # Group by region, commodity, year
       summarize(value=sum(value)) %>%                                                                              # Aggregate then map to appropriate data frame
@@ -57,13 +57,13 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                 GCAM_commodity, year, fill = list(value = 0)) ->                                                   # Fill in missing region/commodity combinations with 0
       L101.ag_Food_Mt_R_C_Y
-    
+
     # Process FAO food consumption data (Pcal): remove unnecessary columns, convert units, aggregate to region and commodity
-    L100.FAO_ag_Food_t %>% 
+    L100.FAO_ag_Food_t %>%
       select(-countries, -country.codes, -item.codes, -element, -element.codes) %>%                                # Remove unnecessary columns
       left_join_error_no_match(iso_GCAM_regID, by=c("iso"))  %>%                                                   # Map in ISO codes
       left_join(FAO_ag_items_cal_SUA, by=c("item"))  %>%                                                           # Map in GCAM commodities
-      filter(GCAM_commodity != "NA") %>%                                                                           # Remove commodities not included in GCAM
+      filter(!is.na(GCAM_commodity)) %>%                                                                      # Remove commodities not included in GCAM      mutate(value = value * CONV_HA_BM2)  %>%                                                                     # Convert from hectares to billion square kilometers
       mutate(value = value * Mcal_t * CONV_MCAL_PCAL)  %>%                                                         # Convert from tons to Pcal
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                                           # Group by region, commodity, year
       summarize(value=sum(value)) %>%                                                                              # Aggregate then map to appropriate data frame
@@ -71,44 +71,44 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                 GCAM_commodity, year, fill = list(value = 0)) ->                                                   # Fill in missing region/commodity combinations with 0
       L101.ag_Food_Pcal_R_C_Y
-    
+
     # Calculate average caloric content of consumed commodities (kcal/g)
-    L101.ag_Food_Pcal_R_C_Y %>% 
+    L101.ag_Food_Pcal_R_C_Y %>%
       left_join(L101.ag_Food_Mt_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%                  # Join food in Mt to food in Pcal
-      mutate(value = ifelse(value.y == 0, 1, value.x / value.y))  %>%                                           # Calculate average caloric content, set NA values to 1
+      mutate(value = if_else(value.y == 0, 1, value.x / value.y))  %>%                                           # Calculate average caloric content, set NA values to 1
       select(-value.x, -value.y) ->                                                                             # Remove extra columns
       L101.ag_kcalg_R_C_Y
-    
+
     # Clean FAO production and harvested area tables
-    L100.FAO_ag_HA_ha %>% 
+    L100.FAO_ag_HA_ha %>%
       select(-countries, -country.codes, -item.codes, -element, -element.codes) %>%                             # Remove unnecessary columns
       group_by(item, iso, year) %>%
       summarize(value = sum(value)) ->                                                                          # Aggregate by ISO, item, and region (some iso codes apply to multiple lines in data)
       FAO_ag_HA_ha
-    
-    L100.FAO_ag_Prod_t %>% 
+
+    L100.FAO_ag_Prod_t %>%
       select(-countries, -country.codes, -item.codes, -element, -element.codes) %>%                             # Remove unnecessary columns
-      mutate(value = ifelse(iso == "usa" & item == "Alfalfa for forage and silage", value / 4,                  # Divide USA Alfalfa production by 4 "for consistency with USDA"
-                              value)) %>%                                                           
+      mutate(value = if_else(iso == "usa" & item == "Alfalfa for forage and silage", value / 4,                  # Divide USA Alfalfa production by 4 "for consistency with USDA"
+                              value)) %>%
       group_by(item, iso, year) %>%
       summarize(value = sum(value)) ->                                                                          # Aggregate by ISO, item, and region (some iso codes apply to multiple lines in data)
       FAO_ag_Prod_t
-    
+
     # Set production to zero when harvested area is zero and vice versa
-    FAO_ag_HA_ha %>% 
+    FAO_ag_HA_ha %>%
       inner_join(FAO_ag_Prod_t, by=c("iso", "item", "year")) %>%                                                # Join production and harvested area
       rename(harvested.area = value.x, production = value.y)   %>%                                              # Rename variables
-      mutate(harvested.area = ifelse(production == 0, 0, harvested.area)) %>%                                   # Set harvested area to zero if production is zero
-      mutate(production = ifelse(harvested.area == 0, 0, production)) ->                                        # Set production to zero if harvested area is zero
+      mutate(harvested.area = if_else(production == 0, 0, harvested.area)) %>%                                   # Set harvested area to zero if production is zero
+      mutate(production = if_else(harvested.area == 0, 0, production)) ->                                        # Set production to zero if harvested area is zero
       FAO_PRODSTAT_MERGED
-    
+
     # Now, Process FAO production data: convert units, aggregate to region and commodity
-    FAO_PRODSTAT_MERGED %>% 
+    FAO_PRODSTAT_MERGED %>%
       select(iso, item, year, production) %>%                                                                   # Select relevant columns (not harvested.area)
       rename(value = production) %>%                                                                            # Rename column since tests are expecting "value"
       left_join_error_no_match(iso_GCAM_regID, by=c("iso"))  %>%                                                # Map in ISO codes
       left_join(unique(FAO_ag_items_PRODSTAT[ c("item", "GCAM_commodity")]), by=c("item"))  %>%                 # Map in GCAM commodities
-      filter(GCAM_commodity != "NA") %>%                                                                        # Remove commodities not included in GCAM      mutate(value = value * CONV_TON_MEGATON)  %>%                                                                # Convert from tons to Mt
+      filter(!is.na(GCAM_commodity)) %>%                                                                      # Remove commodities not included in GCAM      mutate(value = value * CONV_HA_BM2)  %>%                                                                     # Convert from hectares to billion square kilometers
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                                        # Group by region, commodity, year
       summarize(value=sum(value)) %>%                                                                           # Aggregate then map to appropriate data frame
       mutate(value = value * CONV_TON_MEGATON)  %>%                                                             # Convert from tons to Mt
@@ -116,14 +116,14 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                 GCAM_commodity, year, fill = list(value = 0))  ->                                               # Fill in missing region/commodity combinations with 0
       L101.ag_Prod_Mt_R_C_Y
-    
+
     # Now, Process FAO harvested area data: convert units, aggregate to region and commodity
-    FAO_PRODSTAT_MERGED %>% 
+    FAO_PRODSTAT_MERGED %>%
       select(iso, item, year, harvested.area) %>%                                                             # Select relevant columns (not production)
       rename(value = harvested.area) %>%                                                                      # Rename column since tests are expecting "value"
       left_join_error_no_match(iso_GCAM_regID, by=c("iso"))  %>%                                              # Map in ISO codes
       left_join(unique(FAO_ag_items_PRODSTAT[ c("item", "GCAM_commodity")]), by=c("item"))  %>%               # Map in GCAM commodities
-      filter(GCAM_commodity != "NA") %>%                                                                      # Remove commodities not included in GCAM      mutate(value = value * CONV_HA_BM2)  %>%                                                                     # Convert from hectares to billion square kilometers
+      filter(!is.na(GCAM_commodity)) %>%                                                                      # Remove commodities not included in GCAM      mutate(value = value * CONV_HA_BM2)  %>%                                                                     # Convert from hectares to billion square kilometers
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%                                                      # Group by region, commodity, year
       summarize(value=sum(value)) %>%                                                                         # Aggregate then map to appropriate data frame
       mutate(value = value * CONV_HA_BM2)  %>%                                                                # Convert from hectares to billion km2
@@ -131,7 +131,7 @@ module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
                 GCAM_commodity, year, fill = list(value = 0)) ->                                              # Fill in missing region/commodity combinations with 0
       L101.ag_HA_bm2_R_C_Y
-    
+
     # Produce outputs
     L101.ag_Food_Mt_R_C_Y %>%
       add_title("FAO food consumption by GCAM region, commodity, and year") %>%
