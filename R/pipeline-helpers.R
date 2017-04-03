@@ -101,10 +101,10 @@ repeat_add_columns <- function(x, y) {
 #' @param col The name of the columns with the ISO codes (default = 'iso')
 #' @return Tibble with the old iso code replaced by the new one.
 #' @export
-change_iso_code <- function(d, from, to, col='iso')
-{
+change_iso_code <- function(d, from, to, col='iso') {
+  assertthat::assert_that(tibble::is_tibble(d))
   iso <- d[[col]]
-  d[[col]] <- if_else(iso==from, to, iso)
+  d[[col]] <- if_else(iso == from, to, iso)
   d
 }
 
@@ -117,8 +117,8 @@ change_iso_code <- function(d, from, to, col='iso')
 #' @return Tibble with the iso codes converted to lower case. If the column with
 #'   the codes was not called 'iso', it will be renamed to 'iso'.
 #' @export
-standardize_iso <- function(d, col='iso')
-{
+standardize_iso <- function(d, col='iso') {
+  assertthat::assert_that(tibble::is_tibble(d))
   d[['iso']] <- tolower(d[[col]])
   if(col != 'iso') {
     ## This is surprisingly hard to do using dplyr
@@ -152,17 +152,16 @@ standardize_iso <- function(d, col='iso')
 #' protect_integer_cols(df) %>%
 #'     dplyr::select_if(function(col){!any(is.na(col))}) %>%
 #'     unprotect_integer_cols
-protect_integer_cols <- function(d)
-{
+protect_integer_cols <- function(d) {
+  assertthat::assert_that(tibble::is_tibble(d))
   names(d) <- sub('^([0-9]+)$', 'X\\1', names(d))
   d
 }
 
-
-#' @export
 #' @rdname protect_integer_cols
-unprotect_integer_cols <- function(d)
-{
+#' @export
+unprotect_integer_cols <- function(d) {
+  assertthat::assert_that(tibble::is_tibble(d))
   names(d) <- sub('^X([0-9]+)$', '\\1', names(d))
   d
 }
