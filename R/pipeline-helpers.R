@@ -61,8 +61,6 @@ approx_fun <- function(year, value, rule = 1) {
   }
 }
 
-
-
 #' repeat_add_columns
 #'
 #' Repeat a data frame for each entry in a second, binding the columns together.
@@ -86,4 +84,84 @@ repeat_add_columns <- function(x, y) {
     mutate(UNIQUE_JOIN_FIELD = 1) %>%
     full_join(mutate(y, UNIQUE_JOIN_FIELD = 1), by = "UNIQUE_JOIN_FIELD") %>%
     select(-UNIQUE_JOIN_FIELD)
+}
+
+#' Change a particular ISO code in a table to another code.
+#'
+#' A few countries have changed their ISO codes over time.  Usually this is because countries
+#' split or merged; occasionally it's because they just didn't like the old one.  This function
+#' allows us to insert an ISO code change into a pipeline.
+#'
+#' If you're dealing with a split or a merger, then making this change will generally create
+#' duplicate rows, so you should follow it up with an appropriate aggregation.
+#'
+#' @param d The data to be transformed
+#' @param from The old ISO code
+#' @param to The replacement ISO code
+#' @param col The name of the columns with the ISO codes (default = 'iso')
+#' @return Tibble with the old iso code replaced by the new one.
+#' @export
+change_iso_code <- function(d, from, to, col='iso') {
+  assertthat::assert_that(tibble::is_tibble(d))
+  iso <- d[[col]]
+  d[[col]] <- if_else(iso == from, to, iso)
+  d
+}
+
+#' Standardize the ISO column by converting to lower case and renaming to 'iso'
+#'
+#' Most of the processing functions expect ISO codes to be in lower case and in
+#' a column called ISO.
+#' @param d The data to be transformed.
+#' @param col The column currently containing the iso codes (default = 'iso')
+#' @return Tibble with the iso codes converted to lower case. If the column with
+#'   the codes was not called 'iso', it will be renamed to 'iso'.
+#' @export
+standardize_iso <- function(d, col='iso') {
+  assertthat::assert_that(tibble::is_tibble(d))
+  d[['iso']] <- tolower(d[[col]])
+  if(col != 'iso') {
+    ## This is surprisingly hard to do using dplyr
+    d[[col]] <- NULL
+  }
+  d
+}
+
+#' Protect column names that are bare integers from being interpreted as integers
+#'
+#' \code{protect_integer_cols} will prepend an 'X' to column names that are bare
+#' integers to protect them from being misinterpreted during sensitive
+#' operations (see below).  \code{unprotect_integer_cols} will reverse the
+#' effect, reverting the column names to their original form.
+#'
+#' Some of our data frames have column names that are years, such as "2005".  In
+#' some cases a column name of this form can be misinterpreted as a column
+#' index, the (likely nonexistent) 2005th column in this example.  The *_if
+#' functions in dplyr are examples of such circumstances.  Protecting the column
+#' names with a leading character allows these functions to perform normally.
+#'
+#' Much of the data system is expecting years in column names to be bare
+#' integers; therefore, you should unprotect the column names as soon as the
+#' sensitive operations are complete.
+#' @param d The data to have integer column names protected or unprotected
+#' @return Tibble with the integer column names protected
+#' @export
+#' @examples
+#' library(magrittr)
+#' df <- dplyr::tibble(iso=c('bad','dum'), `2005`=c(123.45, NA), `2050`=c(867, 5309))
+#' protect_integer_cols(df) %>%
+#'     dplyr::select_if(function(col){!any(is.na(col))}) %>%
+#'     unprotect_integer_cols
+protect_integer_cols <- function(d) {
+  assertthat::assert_that(tibble::is_tibble(d))
+  names(d) <- sub('^([0-9]+)$', 'X\\1', names(d))
+  d
+}
+
+#' @rdname protect_integer_cols
+#' @export
+unprotect_integer_cols <- function(d) {
+  assertthat::assert_that(tibble::is_tibble(d))
+  names(d) <- sub('^X([0-9]+)$', '\\1', names(d))
+  d
 }
