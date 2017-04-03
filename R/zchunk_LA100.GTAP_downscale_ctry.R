@@ -1,6 +1,6 @@
 #' module_aglu_LA100.GTAP_downscale_ctry
 #'
-#' Briefly describe what this chunk does.
+#' Downscale GTAP region-level data to all countries.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LA100.GTAP_downscale_ctry_DISABLED <- function(command, ...) {
+module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/AGLU_ctry",
              FILE = "aglu/FAO_ag_items_PRODSTAT",
@@ -32,43 +32,70 @@ module_aglu_LA100.GTAP_downscale_ctry_DISABLED <- function(command, ...) {
     L100.LDS_value_milUSD <- get_data(all_data, "L100.LDS_value_milUSD")
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses repeat_and_add_vector
-    # This function changed to repeat_add_columns; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # Downscale GTAP region-level data to all countries
+    FAO_ag_items_PRODSTAT %>%
+      select(GTAP_use) %>%
+      unique() %>%
+      na.omit() ->
+      GTAP_uses
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    AGLU_ctry %>%
+      select(iso, GTAP_region) %>%
+      distinct(iso, .keep_all = TRUE) -> # There are cases where more than one GTAP_region values for one iso, pick the first for now, check later
+      GTAP_ctry
+
+    L100.LDS_ag_prod_t %>%
+      select(iso, GLU) %>%
+      unique() %>%
+      repeat_add_columns(GTAP_uses) %>%
+      left_join_error_no_match(GTAP_ctry, by = "iso") %>%
+      # Match in the land value for the entire GTAP region. These will be multiplied by country shares
+      left_join(L100.LDS_value_milUSD, by = c("GTAP_region", "GLU", "GTAP_use")) %>%
+      mutate(value = ifelse(is.na(value), 0, value)) ->
+      LV_Rgtap
+
+    # Compute the country-within-GTAP region shares for each of the commodity classes
+    # Compute production by GTAP region
+    L100.LDS_ag_prod_t %>%
+      left_join_error_no_match(GTAP_ctry, by = "iso") %>%
+      left_join(FAO_ag_items_PRODSTAT[c("GTAP_crop", "GTAP_use")], by = "GTAP_crop") %>%
+      filter(!is.na(GTAP_use)) %>%
+      group_by(GTAP_region, GLU, GTAP_use) %>%
+      summarise_if(is.numeric, sum) %>%
+      ungroup() %>%
+      rename(prod_rgn = value) ->
+      Ag_Prod_Rgtap
+
+    # Share = production by country and GTAP use / production by GTAP region and GTAP use
+    L100.LDS_ag_prod_t %>%
+      left_join(FAO_ag_items_PRODSTAT[c("GTAP_crop", "GTAP_use")], by = "GTAP_crop") %>%
+      filter(!is.na(GTAP_use)) %>%
+      group_by(iso, GLU, GTAP_use) %>%
+      summarise_if(is.numeric, sum) %>%
+      ungroup() %>%
+      rename(prod_ctry = value) %>%
+      left_join_error_no_match(GTAP_ctry, by = "iso") %>%
+      left_join_error_no_match(Ag_Prod_Rgtap, by = c( "GTAP_region", "GLU", "GTAP_use" )) %>%
+      mutate(share = prod_ctry / prod_rgn) %>%
+      mutate(share = ifelse(is.na(share), 0, share )) %>%
+      # Multiply the land values by the shares
+      right_join(LV_Rgtap, by = c("iso", "GTAP_region", "GLU", "GTAP_use")) %>%
+      mutate(value = value * share) %>%
+      mutate(value = ifelse(is.na(value), 0, value)) %>%
+      select(-prod_ctry, -prod_rgn, -share) %>%
+
+      # Produce outputs
+      add_title("Land value by country / GLU / GTAP commodity class") %>%
+      add_units("units: Million US Dollars") %>%
+      add_comments("Downscale the GTAP region-level land value to contries by production share") %>%
+      add_comments("Compute the country-within-GTAP region shares for each of the commodity classes") %>%
       add_legacy_name("L100.GTAP_LV_milUSD") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("aglu/AGLU_ctry",
+                     "aglu/FAO_ag_items_PRODSTAT",
+                     "L100.LDS_value_milUSD",
+                     "L100.LDS_ag_prod_t") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_NO_XYEAR) ->
       L100.GTAP_LV_milUSD
 
     return_data(L100.GTAP_LV_milUSD)
