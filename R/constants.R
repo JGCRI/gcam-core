@@ -12,6 +12,7 @@ FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
 FLAG_NO_OUTPUT  <- "NO_OUTPUT"
 FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"
+FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 
 # ======================================================================
 # Time constants
@@ -32,6 +33,9 @@ aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 CONV_BIL_MIL <- 1000
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
+CONV_TON_MEGATON <- 1e-6
+CONV_MCAL_PCAL <- 1e-9
+CONV_HA_BM2 <- 1e-5
 CONV_1990_2010_USD <- 1.510
 
 # Cubic meters (m3) to billion cubic meters (bm3)
