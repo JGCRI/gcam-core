@@ -18,7 +18,7 @@ the generated outputs: \code{L117.RsrcCurves_EJ_R_tradbio}. The corresponding fi
 original data system was \code{LA117.tradbio.R} (energy level1).
 }
 \description{
-Briefly describe what this chunk does.
+Creates regional traditional biomass supply curves
 }
 \details{
 Creates regional traditional biomass supply curves by multiplying the max historical amount
