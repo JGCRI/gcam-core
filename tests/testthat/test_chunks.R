@@ -40,3 +40,17 @@ test_that("errors if required data not available", {
     expect_error(eval(cl), label = ch)
   }
 })
+
+test_that("doesn't use forbidden calls", {
+  chunklist <- find_chunks()
+  forbiddens <- c("[^error_no_]match", "ifelse", "melt", "cast")
+
+  for(ch in unique(chunklist$name)) {
+    code <- capture.output(getFromNamespace(ch, ns = "gcamdata"))
+    code <- gsub("#.*$", "", code)  # remove comments
+    for(f in forbiddens) {
+      expect_equal(grep(f, code), integer(),   # should be no matches
+                      info = paste(ch, "uses", f))
+    }
+  }
+})
