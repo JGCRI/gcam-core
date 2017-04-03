@@ -1,6 +1,5 @@
 # utils.R
 
-
 #' load_csv_files
 #'
 #' Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.
@@ -82,7 +81,7 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
       trimws
   } else {
     if(required) {
-      stop("Required metadata label '", label, "not found in ", basename(filename))
+      stop("Required metadata label '", label, "' not found in ", basename(filename))
     }
     NULL   # label not present
   }
@@ -102,12 +101,18 @@ extract_header_info <- function(header_lines, label, filename, required = FALSE,
 #' similar functions to return an empty data frame with appropriate attribute set.
 #' @return An empty \code{\link{tibble}} with appropriate attributes filled in.
 #' @export
-parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = FALSE) {
+parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE) {
   assert_that(tibble::is_tibble(obj))
   assert_that(is.character(filename))
   assert_that(is.numeric(n))
   assert_that(is.logical(enforce_requirements))
   assert_that(file.exists(filename))
+
+  # TEMPORARY: don't enforce metadata, for test, for data injection (from old d.s.)
+  if(isTRUE(grepl(TEMP_DATA_INJECT, filename, fixed = TRUE))) {
+    enforce_requirements <- FALSE
+    obj <- add_flags(obj, FLAG_NO_TEST)
+  }
 
   # File may be compressed; handle this via a connection
   if(grepl("\\.gz", filename)) {
@@ -129,13 +134,17 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = FALSE
 
   # The 'File:' field has to match the actual filename
   filecheck <- extract_header_info(x, "File:", filename, required = enforce_requirements)
-  if(enforce_requirements & !identical(filecheck, basename(filename))) {
-    stop("'File:' given in header doesn't match filename in ", filename)
+  # Remove trailing commas - stupid Excel
+  filecheck <- gsub(",*$", "", filecheck)
+  # Remove any compression extension
+  filename_clean <- gsub("\\.(zip|gz)$", "", filename) %>% basename
+  if(enforce_requirements & !identical(filecheck, filename_clean)) {
+    stop("'File:' given in header (", filecheck, ") doesn't match filename in ", filename)
   }
 
-  obj %>%
+obj %>%
     add_title(extract_header_info(x, "Title:", filename, required = enforce_requirements)) %>%
-    add_units(extract_header_info(x, "Units:", filename, required = enforce_requirements)) %>%
+    add_units(extract_header_info(x, "Units?:", filename, required = enforce_requirements)) %>%
     add_comments(extract_header_info(x, "(Comments|Description):", filename, multiline = TRUE)) %>%
     add_reference(extract_header_info(x, "(References?|Sources?):", filename, multiline = TRUE))
 }

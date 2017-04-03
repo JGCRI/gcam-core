@@ -4,7 +4,7 @@
 \alias{parse_csv_header}
 \title{parse_csv_header}
 \usage{
-parse_csv_header(obj, filename, n = 20, enforce_requirements = FALSE)
+parse_csv_header(obj, filename, n = 20, enforce_requirements = TRUE)
 }
 \arguments{
 \item{obj}{The object to attach attributes to}
@@ -26,4 +26,3 @@ Headers are given at the top of files and consist of labels ("Title:", "Units:",
 prefixed by comment characters (#). The parser looks for these, and calls \code{\link{add_title}} and
 similar functions to return an empty data frame with appropriate attribute set.
 }
-

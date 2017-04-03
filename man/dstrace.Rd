@@ -21,4 +21,3 @@ Boolean (object_name found, or not)
 \description{
 dstrace
 }
-

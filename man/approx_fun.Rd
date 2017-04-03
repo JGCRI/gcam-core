@@ -26,4 +26,3 @@ This was \code{gcam_interp} in the original data system.
 df <- data.frame(year = 1:5, value = c(1, 2, NA, 4, 5))
 approx_fun(df$year, df$value, rule = 2)
 }
-

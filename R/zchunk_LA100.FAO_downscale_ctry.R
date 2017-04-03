@@ -156,7 +156,9 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     FAO_data_ALL[is.na(FAO_data_ALL)] <- 0
 
     # Match the iso names
-    FAO_data_ALL$iso <- AGLU_ctry$iso[match(FAO_data_ALL$countries, AGLU_ctry$FAO_country)]
+    FAO_data_ALL %>%
+      left_join(distinct(AGLU_ctry, FAO_country, .keep_all = TRUE), by = c("countries" = "FAO_country")) ->
+      FAO_data_ALL
 
     # Downscale countries individually NOTE: This is complicated. The FAO data need to be downscaled
     # to all FAO historical years (i.e. back to 1961 regardless of when we are starting our
@@ -231,10 +233,13 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
              item.codes = `item codes`) ->
       FAO_data_ALL_5yr
 
-    # Reorder columns and change `element` columns to match old data
+    # Reorder columns and change `element` columns to match old data and reshape
     FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(1:6,8:47,7)]
     FAO_data_ALL_5yr$element <- gsub(pattern = "_[A-Z]*$", "", FAO_data_ALL_5yr$element)
     FAO_data_ALL_5yr$element <- gsub(pattern = "^FAO_", "", FAO_data_ALL_5yr$element)
+    FAO_data_ALL_5yr %>%
+      gather(year, value, -countries, -country.codes, -item, -item.codes, -element, -element.codes, -iso) ->
+      FAO_data_ALL_5yr
 
     # Re-split into separate tables for each element
     for(i in unique(FAO_data_ALL_5yr$element)) {
@@ -242,7 +247,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       filter(FAO_data_ALL_5yr, element == i) %>%
         add_comments("Downscale countries; calculate 5-yr averages") %>%
         add_legacy_name(legacy_name) %>%
-        add_flags(FLAG_NO_XYEAR) ->
+        add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
         df
       assign(legacy_name, df)
     }

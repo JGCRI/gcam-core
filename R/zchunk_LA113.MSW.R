@@ -36,7 +36,7 @@ module_energy_LA113.MSW <- function(command, ...) {
     L100.gdp_mil90usd_ctry_Yh %>%
       PH_year_value_historical %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
-      left_join(iso_GCAM_regID[c("iso", "region_GCAM3", GCAM_REGION_ID)], by = "iso") ->
+      left_join_error_no_match(iso_GCAM_regID[c("iso", "region_GCAM3", GCAM_REGION_ID)], by = "iso") ->
       L113.GDP_ctry
 
     L113.GDP_ctry %>%
@@ -44,7 +44,7 @@ module_energy_LA113.MSW <- function(command, ...) {
       summarise(sumvalue = sum(value)) %>%
       full_join(L113.GDP_ctry, by = "region_GCAM3") %>%
       mutate(share = value / sumvalue) %>%
-      left_join(A13.MSW_curves[c("region_GCAM3", "maxSubResource")], by = "region_GCAM3") %>%
+      left_join_error_no_match(A13.MSW_curves[c("region_GCAM3", "maxSubResource")], by = "region_GCAM3") %>%
       mutate(maxSubResource = share * maxSubResource) ->
       L113.GDP_ctry
 
@@ -70,7 +70,7 @@ module_energy_LA113.MSW <- function(command, ...) {
            mid.price = unique(A13.MSW_curves$`mid-price`),
            curve.exponent = unique(A13.MSW_curves$`curve-exponent`),
            gdpSupplyElast = unique(A13.MSW_curves$gdpSupplyElast)) %>%
-      left_join(L113.MSW_maxSubResource[c(GCAM_REGION_ID, "maxSubResource")], by = GCAM_REGION_ID) %>%
+      left_join_error_no_match(L113.MSW_maxSubResource[c(GCAM_REGION_ID, "maxSubResource")], by = GCAM_REGION_ID) %>%
 
       # Documentation
       add_title("Municipal solid waste resource curves by GCAM region") %>%
@@ -90,6 +90,3 @@ module_energy_LA113.MSW <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-

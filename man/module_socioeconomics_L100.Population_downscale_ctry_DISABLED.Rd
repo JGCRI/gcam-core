@@ -26,4 +26,3 @@ Describe in detail what this chunk does.
 \author{
 YourInitials CurrentMonthName 2017
 }
-

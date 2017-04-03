@@ -70,7 +70,7 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
       filter(!year %in% unique(BEA_pcGDP_09USD_state$year)) %>%
       bind_rows(BEA_pcGDP_09USD_state) %>%
       # merge with state name/codes
-      left_join(states_subregions, by = c("Area" = "state_name")) %>%
+      left_join_error_no_match(states_subregions, by = c("Area" = "state_name")) %>%
       select(state, year, value) %>%
       # merge with census data, and compute total GDP (population * per capita GDP)
       left_join(Census_pop_hist, by = c("state", "year")) %>%
@@ -131,7 +131,7 @@ module_gcam.usa_LA100.Socioeconomics <- function(command, ...) {
       mutate(pop_ratio = population / first(population)) %>%
       arrange(state, year) %>%
       rename(state_name = state) %>%
-      left_join(states_subregions, by = "state_name") %>%
+      left_join_error_no_match(states_subregions, by = "state_name") %>%
       ungroup %>%
       select(-state_name, -population) ->
       L100.Pop_ratio_state

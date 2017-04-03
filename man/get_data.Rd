@@ -19,4 +19,3 @@ This function returns a tibble (currently) in \code{all_data},
 abstracting away the mechanism for accessing it from the chunks.
 Throws an error if data is not present.
 }
-
