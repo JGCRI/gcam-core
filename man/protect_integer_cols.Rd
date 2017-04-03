@@ -33,10 +33,9 @@ integers; therefore, you should unprotect the column names as soon as the
 sensitive operations are complete.
 }
 \examples{
-\dontrun{
+library(magrittr)
 df <- dplyr::tibble(iso=c('bad','dum'), `2005`=c(123.45, NA), `2050`=c(867, 5309))
 protect_integer_cols(df) \%>\%
     dplyr::select_if(function(col){!any(is.na(col))}) \%>\%
     unprotect_integer_cols
-}
 }
