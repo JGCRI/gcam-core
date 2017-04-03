@@ -10,11 +10,11 @@
 #' original data system was \code{L110.water.demand.primary.R} (water level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select
+#' @importFrom dplyr filter mutate select arrange left_join
 #' @importFrom tidyr gather spread
+#' @importFrom tibble as_tibble
 #' @author YourInitials CurrentMonthName 2017
-#' @export
-module_water_L110.water.demand.primary_DISABLED <- function(command, ...) {
+module_water_L110.water.demand.primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A227.resource_water_coef_mapping",
@@ -33,45 +33,78 @@ module_water_L110.water.demand.primary_DISABLED <- function(command, ...) {
     resource_water_share <- get_data(all_data, "water/resource_water_share")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` and/or 'match' calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Merge-and-Match
+
+    # Get water consumption (m^3/TJ) by fuel and supply sector
+    A227.resource_water_coef_mapping %>%
+      left_join(resource_water_data, by = c("fuel", "subsector", "technology")) %>%
+      select(fuel, supplysector, water.coefficient.m3.per.TJ) %>%
+      arrange(fuel) %>%
+      select(-fuel) %>%
+      unique() -> L110.global_water_cons_coef
+
+    # Create tibble for all regions and supply sectors
+    GCAM_region_names %>%
+      merge(L110.global_water_cons_coef) %>%
+      tibble::as_tibble() %>%
+      select(-region) %>%
+      arrange(GCAM_region_ID) -> L110.water_coef_region_supplysector
+
+    # Get water consumption and withdrawal ratios 32 GCAM regions...
+    # ... all regions other than Middle East set to US values
+    GCAM_region_names %>%
+      mutate(region_GCAM3 = region) %>%
+      left_join(resource_water_share, "region_GCAM3") %>%
+      select(-c(region_GCAM3, region)) -> L110.resource_water_share
+    names(L110.resource_water_share) <- c("GCAM_region_ID", "sal", "fresh", "cons_fr", "cons_tot")
+    L110.resource_water_share[is.na(L110.resource_water_share$sal), 2:5] <-
+      filter(L110.resource_water_share, GCAM_region_ID == 1)[2:5]
+
+    # Bring consumption ratios and water usage coefficents into single table
+    L110.resource_water_share %>%
+      left_join(L110.water_coef_region_supplysector, by = "GCAM_region_ID") -> L110.water_ratios_coef
+
+    # Calculate water withdrawal, seawater, and consumption, then bind to single tibble
+    L110.water_ratios_coef %>%
+      mutate(water_type = "water withdrawals") %>%
+      mutate(coefficient_WC = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
+      mutate(coefficient = coefficient_WC / cons_fr) %>%
+      select(-coefficient_WC) -> L110.water_withdrawals
+    L110.water_ratios_coef %>%
+      mutate(water_type = "seawater") %>%
+      mutate(coefficient = sal * water.coefficient.m3.per.TJ * 1e-3) -> L110.seawater
+    L110.water_ratios_coef %>%
+      mutate(water_type = "water consumption") %>%
+      mutate(coefficient = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
+      rbind(L110.water_withdrawals, L110.seawater) %>%
+      select(GCAM_region_ID, supplysector, water_type, coefficient) ->
+      L110.water_demand_primary
+
+    L110.water_demand_primary %>%
+      add_title("Primary energy water coefficients by region ID / supply sector / water type") %>%
+      add_units("m^3 / GJ") %>%
+      add_comments("Primary energy water use coefficients calculated using US data for fractions of saline and freshwater share") %>%
+      add_legacy_name("L110.water_demand_primary_R_S_W_m3_GJ") %>%
+      add_precursors("common/GCAM_region_names",
+                     "water/A227.resource_water_coef_mapping",
+                     "water/resource_water_data",
+                     "water/resource_water_share") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_NO_XYEAR) -> L110.water_demand_primary_R_S_W_m3_GJ
+
+    # Reinistate old behavior for test (i.e., Middle East same as all other regions)
+    # See issue #179 on gcamdata repo
+     if(OLD_DATA_SYSTEM_BEHAVIOR) {
+       L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ==21, "coefficient"] <-
+         L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ==1, "coefficient"]
+       return_data(L110.water_demand_primary_R_S_W_m3_GJ)
+       } else {
+       return_data(L110.water_demand_primary_R_S_W_m3_GJ)
+       }
+
     # ===================================================
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L110.water_demand_primary_R_S_W_m3_GJ") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L110.water_demand_primary_R_S_W_m3_GJ
 
-    return_data(L110.water_demand_primary_R_S_W_m3_GJ)
   } else {
     stop("Unknown command")
   }
 }
-
-
-
