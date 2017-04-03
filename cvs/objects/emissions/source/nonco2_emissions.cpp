@@ -270,13 +270,6 @@ void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSe
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->completeInit( aRegionName, aSectorName, aTechInfo );
     }
-    
-    if ( !mEmissionsDriver.get() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "No emissions driver set for " << getName() << " in sector " << aSectorName 
-                << " in " << aRegionName << endl;
-    }
 }
 
 /*!
@@ -296,14 +289,22 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
         (*controlIt)->initCalc( aRegionName, aTechInfo, this, aPeriod );
     }
 
+    const bool isTechOperating = aTechInfo->getBoolean( "is-tech-operating", true );
     // Ensure the user set an emissions coefficient in the input, either by reading it in, copying it from the previous period
     // or reading in the emissions
-    if( !mEmissionsCoef.isInited() && !mShouldCalibrateEmissCoef && aTechInfo->getBoolean( "is-tech-operating", true ) ){
+    if( !mEmissionsCoef.isInited() && !mShouldCalibrateEmissCoef && isTechOperating ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "No emissions coefficient set for " << getName() << " in " << aRegionName << " in period " << aPeriod << endl;
     }
     
+    
+    if ( isTechOperating && !mEmissionsDriver.get() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "No emissions driver set for " << getName()
+                << " in " << aRegionName << endl;
+    }
 }
 
 double NonCO2Emissions::getGHGValue( const string& aRegionName,
