@@ -36,7 +36,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
 
     # Get water consumption (m^3/TJ) by fuel and supply sector
     A227.resource_water_coef_mapping %>%
-      left_join(resource_water_data, by = c("fuel", "subsector", "technology")) %>%
+      left_join_error_no_match(resource_water_data, by = c("fuel", "subsector", "technology")) %>%
       select(fuel, supplysector, water.coefficient.m3.per.TJ) %>%
       arrange(fuel) %>%
       select(-fuel) %>%
@@ -44,8 +44,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
 
     # Create tibble for all regions and supply sectors
     GCAM_region_names %>%
-      merge(L110.global_water_cons_coef) %>%
-      tibble::as_tibble() %>%
+      repeat_add_columns(L110.global_water_cons_coef) %>%
       select(-region) %>%
       arrange(GCAM_region_ID) -> L110.water_coef_region_supplysector
 
@@ -54,10 +53,16 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     GCAM_region_names %>%
       mutate(region_GCAM3 = region) %>%
       left_join(resource_water_share, "region_GCAM3") %>%
-      select(-c(region_GCAM3, region)) -> L110.resource_water_share
+      select(-region_GCAM3, -region) -> L110.resource_water_share
     names(L110.resource_water_share) <- c("GCAM_region_ID", "sal", "fresh", "cons_fr", "cons_tot")
-    L110.resource_water_share[is.na(L110.resource_water_share$sal), 2:5] <-
-      filter(L110.resource_water_share, GCAM_region_ID == 1)[2:5]
+    L110.resource_water_share$sal[is.na(L110.resource_water_share$sal)] <-
+      filter(L110.resource_water_share, GCAM_region_ID == 1)$sal
+    L110.resource_water_share$fresh[is.na(L110.resource_water_share$fresh)] <-
+      filter(L110.resource_water_share, GCAM_region_ID == 1)$fresh
+    L110.resource_water_share$cons_fr[is.na(L110.resource_water_share$cons_fr)] <-
+      filter(L110.resource_water_share, GCAM_region_ID == 1)$cons_fr
+    L110.resource_water_share$cons_tot[is.na(L110.resource_water_share$cons_tot)] <-
+      filter(L110.resource_water_share, GCAM_region_ID == 1)$cons_tot
 
     # Bring consumption ratios and water usage coefficents into single table
     L110.resource_water_share %>%
@@ -94,8 +99,8 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     # Reinistate old behavior for test (i.e., Middle East same as all other regions)
     # See issue #179 on gcamdata repo
      if(OLD_DATA_SYSTEM_BEHAVIOR) {
-       L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ==21, "coefficient"] <-
-         L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ==1, "coefficient"]
+       L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ == 21, "coefficient"] <-
+         L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ == 1, "coefficient"]
        return_data(L110.water_demand_primary_R_S_W_m3_GJ)
        } else {
        return_data(L110.water_demand_primary_R_S_W_m3_GJ)
