@@ -58,9 +58,7 @@ class IInfo;
  * \author Kate Calvin
  */
 class NonCO2Emissions: public AGHG {
-    friend class GDPControl;
-    friend class MACControl;
-    friend class LinearControl;
+
 public:
     NonCO2Emissions();
     
@@ -96,7 +94,11 @@ public:
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const AGHG* aPreviousGHG,
                                    const AGHG* aNextGHG );
-protected: 
+    //! Return emissions coefficient
+    //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls
+    double getEmissionsCoefficient( const int aPeriod ) const;
+    
+protected:
     NonCO2Emissions( const NonCO2Emissions& aOther );
     NonCO2Emissions& operator=( const NonCO2Emissions& aOther );
     
@@ -113,6 +115,7 @@ private:
     Value mInputEmissions;
     
     //! Stored Emissions Coefficient (needed for some control technologies)
+    //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
     std::vector<double> mSavedEmissionsCoef; 
     
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef

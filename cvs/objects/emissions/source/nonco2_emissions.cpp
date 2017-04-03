@@ -270,6 +270,13 @@ void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSe
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->completeInit( aRegionName, aSectorName, aTechInfo );
     }
+    
+    if ( !mEmissionsDriver.get() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "No emissions driver set for " << getName() << " in sector " << aSectorName 
+                << " in " << aRegionName << endl;
+    }
 }
 
 /*!
@@ -335,14 +342,13 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
      * \pre Attampting to recalibrate the emissions coefficient while trying to price the emissions
      *      will lead to inconsistent GHG value calculations because the value must be calculated
      *      before the new coefficient can be recalibrated.
-     *      However, not relevant for periods whre there is no GHG price
      */
-    if ( GHGTax ) assert( !mShouldCalibrateEmissCoef );
+    assert( !mShouldCalibrateEmissCoef );
     
     // Adjust the GHG tax by taking into account the fraction sequestered, storage costs and adjusting
     // for the emissions intensity as well as reductions.
     double generalizedCost = ( ( 1.0 - removeFraction ) * GHGTax + removeFraction * storageCost ) *
-        mEmissionsCoef * emissMult / CVRT90 * CVRT_Tg_per_EJ_to_Tonne_per_GJ;
+    mEmissionsCoef * emissMult / CVRT90 * CVRT_Tg_per_EJ_to_Tonne_per_GJ;
     
     // The generalized cost returned by the GHG may be negative if
     // emissions crediting is occurring.
@@ -381,8 +387,6 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     // If emissions were read in and this is an appropraite period, compute emissions coefficient
     if( mShouldCalibrateEmissCoef ) {
         mEmissionsCoef = emissDriver > 0 ? mInputEmissions / emissDriver : 0;
-        // Since have updated emissions coefficient, updated stashed coefficient
-        mSavedEmissionsCoef[ aPeriod ] = mEmissionsCoef;
     }
     
     // Compute emissions reductions. These are only applied in future years
@@ -429,4 +433,9 @@ void NonCO2Emissions::doInterpolations( const int aYear, const int aPreviousYear
      * \pre We are given a valid AComplexEmissions for the next ghg.
      */
     assert( nextComplexEmiss );
+}
+
+double NonCO2Emissions::getEmissionsCoefficient( const int aPeriod ) const
+{
+    return mSavedEmissionsCoef[ aPeriod ];
 }
