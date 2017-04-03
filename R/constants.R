@@ -34,6 +34,10 @@ CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_1990_2010_USD <- 1.510
 
+# Cubic meters (m3) to billion cubic meters (bm3)
+CONV_M3_BM3 <- 1e-09
+
+
 # ======================================================================
 # Driver constants
 driver.MAKE <- "MAKE"

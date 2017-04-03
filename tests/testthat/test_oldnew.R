@@ -6,6 +6,12 @@ library(readr)
 
 test_that("matches old data system output", {
 
+  # If we're on Travis, need to run the driver to ensure chunk outputs saved
+  # Don't do this locally, to speed things up
+  if (identical(Sys.getenv("TRAVIS"), "true")) {
+    driver(write_outputs = TRUE)
+  }
+
   # For each file in OUTPUTS_DIR, look for corresponding file in our
   # comparison data. Load them, reshape new data if necessary, compare.
   outputs_dir <- file.path("../..", OUTPUTS_DIR)
