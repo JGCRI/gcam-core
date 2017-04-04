@@ -35,21 +35,22 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
       left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                                         # Map in ISO codes
       mutate(value = value * CONV_2001_1975_USD) %>%                                                    # Convert to 1975$
       group_by(GCAM_region_ID, GLU) %>%                                                                 # Group by GCAM_region_ID and GLU
-      summarize(value = sum(value)) ->                                                                  # Aggregate value to GCAM region and GLU
+      summarize(value = sum(value)) %>%                                                                 # Aggregate value to GCAM region and GLU
+      rename(LV_milUSD75 = value) ->                                                                    # Rename column to what is used in old data system
       LV_R_GLU
     
     # Prepare land area for use in compuating land value
     L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
       gather(year, value, -GCAM_region_ID, -GLU, -Land_Type) %>%                                      # Convert to long format
       filter(year == X_GTAP_HISTORICAL_YEAR) %>%                                                      # Only use cropland area from the GTAP historical year
-      rename(crop_area = value) ->                                                                    # Rename column to make life easier later
+      rename(HarvCropLand_bm2 = value) ->                                                             # Rename column to what is used in old data system
       LC_R_GLU
     
     # Compute value in $/m2
     LV_R_GLU %>% 
       left_join(LC_R_GLU, by = c( "GCAM_region_ID", "GLU"))  %>%                                      # Map in GTAP harvested cropland area
-      mutate(value = value / CONV_BIL_MIL / crop_area) %>%                                            # Calculate land value ($/m2) using value and cropland area
-      select(-crop_area, -Land_Type, -year ) ->                                                       # Remove extra column
+      mutate(LV_USD75_m2 = LV_milUSD75 / CONV_BIL_MIL / HarvCropLand_bm2) %>%                         # Calculate land value ($/m2) using value and cropland area
+      select(-Land_Type, -year ) ->                                                                   # Remove extra columns
       L131.LV_USD75_m2_R_GLU
 
     # Produce outputs
