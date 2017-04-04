@@ -14,10 +14,10 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB131.LV_R_GLU_DISABLED <- function(command, ...) {
+module_aglu_LB131.LV_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             "L100.GTAP_LV_milUSD",
+             FILE = "temp-data-inject/L100.GTAP_LV_milUSD",
              FILE = "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L131.LV_USD75_m2_R_GLU"))
@@ -27,7 +27,7 @@ module_aglu_LB131.LV_R_GLU_DISABLED <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L100.GTAP_LV_milUSD <- get_data(all_data, "L100.GTAP_LV_milUSD")
+    L100.GTAP_LV_milUSD <- get_data(all_data, "temp-data-inject/L100.GTAP_LV_milUSD")
     L122.LC_bm2_R_HarvCropLand_Yh_GLU <- get_data(all_data, "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU")
 
     # ===================================================
@@ -62,7 +62,7 @@ module_aglu_LB131.LV_R_GLU_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L131.LV_USD75_m2_R_GLU") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("temp-data-inject/L100.GTAP_LV_milUSD", "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU", "common/iso_GCAM_regID") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L131.LV_USD75_m2_R_GLU
