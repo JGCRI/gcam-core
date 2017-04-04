@@ -18,11 +18,12 @@ the generated outputs: \code{L100.GTAP_LV_milUSD}. The corresponding file in the
 original data system was \code{LA100.GTAP_downscale_ctry.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Downscale GTAP region-level land value data to all countries.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk downscales the GTAP region-level land value to all countries
+based on production share by GLU and GTAP commodity class.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC April 2017
 }
