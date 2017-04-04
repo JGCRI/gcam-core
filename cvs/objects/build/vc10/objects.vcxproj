@@ -581,6 +581,7 @@
     <ClCompile Include="..\..\emissions\source\ghg_factory.cpp" />
     <ClCompile Include="..\..\emissions\source\input_driver.cpp" />
     <ClCompile Include="..\..\emissions\source\input_output_driver.cpp" />
+    <ClCompile Include="..\..\emissions\source\linear_control.cpp" />
     <ClCompile Include="..\..\emissions\source\luc_emissions_summer.cpp" />
     <ClCompile Include="..\..\emissions\source\mac_control.cpp" />
     <ClCompile Include="..\..\emissions\source\nonco2_emissions.cpp" />
@@ -896,6 +897,7 @@
     <ClInclude Include="..\..\emissions\include\ghg_factory.h" />
     <ClInclude Include="..\..\emissions\include\input_driver.h" />
     <ClInclude Include="..\..\emissions\include\input_output_driver.h" />
+    <ClInclude Include="..\..\emissions\include\linear_control.h" />
     <ClInclude Include="..\..\emissions\include\luc_emissions_summer.h" />
     <ClInclude Include="..\..\emissions\include\mac_control.h" />
     <ClInclude Include="..\..\emissions\include\nonco2_emissions.h" />
