@@ -310,6 +310,7 @@
 		CDE29985198C82C400556032 /* mac_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE29981198C82C400556032 /* mac_control.cpp */; };
 		CDE29986198C82C400556032 /* nonco2_emissions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE29982198C82C400556032 /* nonco2_emissions.cpp */; };
 		CDE29989198C831E00556032 /* emissions_control_factory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE29988198C831E00556032 /* emissions_control_factory.cpp */; };
+		CDE659AE1E940BA600C562D8 /* linear_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE659AD1E940BA600C562D8 /* linear_control.cpp */; };
 		CDF0CA10139FD0C100B20B01 /* luc_emissions_summer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF0CA0F139FD0C100B20B01 /* luc_emissions_summer.cpp */; };
 		CDF83C0E13A30C7C00DF178D /* market_RES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C0D13A30C7C00DF178D /* market_RES.cpp */; };
 		CDF83C1313A30CA600DF178D /* res_secondary_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C1113A30CA600DF178D /* res_secondary_output.cpp */; };
@@ -1021,6 +1022,8 @@
 		CDE29982198C82C400556032 /* nonco2_emissions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = nonco2_emissions.cpp; sourceTree = "<group>"; };
 		CDE29987198C831400556032 /* emissions_control_factory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emissions_control_factory.h; sourceTree = "<group>"; };
 		CDE29988198C831E00556032 /* emissions_control_factory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = emissions_control_factory.cpp; sourceTree = "<group>"; };
+		CDE659AC1E940B8E00C562D8 /* linear_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linear_control.h; sourceTree = "<group>"; };
+		CDE659AD1E940BA600C562D8 /* linear_control.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linear_control.cpp; sourceTree = "<group>"; };
 		CDF0CA0E139FD0BB00B20B01 /* luc_emissions_summer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luc_emissions_summer.h; sourceTree = "<group>"; };
 		CDF0CA0F139FD0C100B20B01 /* luc_emissions_summer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luc_emissions_summer.cpp; sourceTree = "<group>"; };
 		CDF83C0C13A30C7200DF178D /* market_RES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_RES.h; sourceTree = "<group>"; };
@@ -1403,6 +1406,7 @@
 		CD4884A4122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDE659AC1E940B8E00C562D8 /* linear_control.h */,
 				CDE29987198C831400556032 /* emissions_control_factory.h */,
 				CDE2997B198C82A200556032 /* aemissions_control.h */,
 				CDE2997C198C82A200556032 /* gdp_control.h */,
@@ -1425,6 +1429,7 @@
 		CD4884B9122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDE659AD1E940BA600C562D8 /* linear_control.cpp */,
 				CDE29988198C831E00556032 /* emissions_control_factory.cpp */,
 				CDE2997F198C82C400556032 /* aemissions_control.cpp */,
 				CDE29980198C82C400556032 /* gdp_control.cpp */,
@@ -2562,6 +2567,7 @@
 				CD488798122873C200F5A88A /* cached_market.cpp in Sources */,
 				CD488799122873C200F5A88A /* calibration_market.cpp in Sources */,
 				CD693FA61AF0315E00805384 /* discrete_choice_factory.cpp in Sources */,
+				CDE659AE1E940BA600C562D8 /* linear_control.cpp in Sources */,
 				CD48879A122873C200F5A88A /* demand_market.cpp in Sources */,
 				CD48879B122873C200F5A88A /* inverse_calibration_market.cpp in Sources */,
 				CD48879C122873C200F5A88A /* market.cpp in Sources */,
