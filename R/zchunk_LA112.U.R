@@ -17,7 +17,7 @@
 module_energy_LA112.U <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-FILE = "energy/A12.U_curves"))
+             FILE = "energy/A12.U_curves"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L112.RsrcCurves_Mt_R_U"))
   } else if(command == driver.MAKE) {
@@ -25,40 +25,37 @@ FILE = "energy/A12.U_curves"))
     all_data <- list(...)[[1]]
 
     # Load required inputs
-      GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-  A12.U_curves <- get_data(all_data, "energy/A12.U_curves")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    A12.U_curves <- get_data(all_data, "energy/A12.U_curves")
 
-  # Uranium supply curves, reprinting from input
-  # Currently not built up from inventory data; just using GCAM 3.0 values
-  # These were not disaggregated to regions in GCAM 3.0. Keeping this convention for now.
-  # NOTE: Assigning global uranium supply curve to USA: GCAM_region_ID 1
+    # Uranium supply curves, reprinting from input
+    # Currently not built up from inventory data; just using GCAM 3.0 values
+    # These were not disaggregated to regions in GCAM 3.0. Keeping this convention for now.
+    # NOTE: Assigning global uranium supply curve to USA: GCAM_region_ID 1
 
     tibble(GCAM_region_ID = 1,
-    resource = A12.U_curves$resource,
-    subresource = A12.U_curves$subresource,
-    grade = A12.U_curves$grade,
-    extractioncost = A12.U_curves$extractioncost,
-    available = A12.U_curves$available ) %>%
+           resource = A12.U_curves$resource,
+           subresource = A12.U_curves$subresource,
+           grade = A12.U_curves$grade,
+           extractioncost = A12.U_curves$extractioncost,
+           available = A12.U_curves$available ) %>%
 
-  # Historical uranium prices (currently assumed at global level, so no level 1 processing necessary)
+      # Historical uranium prices (currently assumed at global level, so no level 1 processing necessary)
 
-    # Produce outputs
- add_title("Uranium resource curves for global supply") %>%
- add_units("1975$/kgU; MtU") %>%
- add_comments("Uranium supply and extraction costs imported from GCAM 3.0 data") %>%
- add_comments("All global supply is assigned to a single region") %>%
- add_legacy_name("L112.RsrcCurves_Mt_R_U") %>%
- add_precursors("common/GCAM_region_names",
-                "energy/A12.U_curves") %>%
- # typical flags, but there are others--see `constants.R`
- add_flags(FLAG_NO_XYEAR) ->
-   L112.RsrcCurves_Mt_R_U
+      # Produce outputs
+      add_title("Uranium resource curves for global supply") %>%
+      add_units("1975$/kgU; MtU") %>%
+      add_comments("Uranium supply and extraction costs imported from GCAM 3.0 data") %>%
+      add_comments("All global supply is assigned to a single region") %>%
+      add_legacy_name("L112.RsrcCurves_Mt_R_U") %>%
+      add_precursors("common/GCAM_region_names",
+                     "energy/A12.U_curves") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_NO_XYEAR) ->
+      L112.RsrcCurves_Mt_R_U
 
     return_data(L112.RsrcCurves_Mt_R_U)
   } else {
     stop("Unknown command")
   }
 }
-
-
-
