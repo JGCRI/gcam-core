@@ -1,6 +1,6 @@
 #' module_aglu_LB131.LV_R_GLU
 #'
-#' Briefly describe what this chunk does.
+#' Compute average value of land in $/m2
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L131.LV_USD75_m2_R_GLU}. The corresponding file in the
 #' original data system was \code{LB131.LV_R_GLU.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Computes average value of land in $/m2, using total land value
+#' and harvested cropland area.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author KVC April 2017
 #' @export
 module_aglu_LB131.LV_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -55,14 +56,11 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
 
     # Produce outputs
     L131.LV_USD75_m2_R_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Land value by GCAM region and GLU") %>%
+      add_units("1975$ per m2") %>%
+      add_comments("Compute average value of land using total value from L100 and harvested area from L122") %>%
       add_legacy_name("L131.LV_USD75_m2_R_GLU") %>%
       add_precursors("temp-data-inject/L100.GTAP_LV_milUSD", "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU", "common/iso_GCAM_regID") ->
-      # typical flags, but there are others--see `constants.R`
-      #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L131.LV_USD75_m2_R_GLU
 
     return_data(L131.LV_USD75_m2_R_GLU)
