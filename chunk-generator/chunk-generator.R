@@ -369,6 +369,10 @@ for(fn in files) {
     warning("Ran into error with ", basename(fn))
   } else {
     newfn <- paste0("chunk-generator/outputs/zchunk_", basename(fn))
+    if(file.exists(file.path("R", basename(newfn)))) {
+      cat("- already exists in ./R; skipping\n")
+      next
+    }
     while(file.exists(newfn)) {
       newfn <- gsub(".R", "-x.R", newfn, fixed = TRUE)
       message(newfn)
