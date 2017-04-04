@@ -1,6 +1,8 @@
 # File: A51.min_coeff.csv
-# Title: Minimum (i.e., fully controlled) emissions coefficients by technology and emissions species, for non-greenhouse gases
-# Units: kg / GJ
+# Title: Minimum (i.e., fully controlled) emissions coefficients (unit emissions per unit fuel input or output, or something else) by technology and emissions species, for non-greenhouse gases
+# Units: kg / GJ (or TgXXX / EJ, where XXX is the particular gas)
+# Description: Minimum emissions coefficient for various technologies and gases. Emissions coefficients decline with GDP until these levels are reached, after which no further declines are possible.
+# Source: GCAM3 emissions files (e.g., SO2 are from NonCO2_energy_input.xls, SO2_calcs tab, table starting at row 509)
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
 cement,cement,cement,,,,,,
 district heat,biomass,biomass,,,,,,
