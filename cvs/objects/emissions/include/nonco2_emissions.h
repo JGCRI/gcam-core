@@ -45,6 +45,7 @@
  */
 
 #include "emissions/include/aghg.h"
+#include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 
 // Forward declaration
@@ -94,9 +95,8 @@ public:
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const AGHG* aPreviousGHG,
                                    const AGHG* aNextGHG );
-    //! Return emissions coefficient
-    //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls
-    double getEmissionsCoefficient( const int aPeriod ) const;
+
+    double getAdjustedEmissCoef( const int aPeriod ) const;
     
 protected:
     NonCO2Emissions( const NonCO2Emissions& aOther );
@@ -116,7 +116,7 @@ private:
     
     //! Stored Emissions Coefficient (needed for some control technologies)
     //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls   
-    std::vector<double> mSavedEmissionsCoef; 
+    objects::PeriodVector<Value> mAdjustedEmissCoef; 
     
     //! A flag to indicate if mInputEmissions should be used recalibrate mEmissionsCoef
     //! in the current model period.

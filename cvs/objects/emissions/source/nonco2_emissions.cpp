@@ -110,7 +110,7 @@ void NonCO2Emissions::clear() {
 //! Copy helper function.
 void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
     mEmissionsCoef = aOther.mEmissionsCoef;
-    mSavedEmissionsCoef = aOther.mSavedEmissionsCoef;
+    mAdjustedEmissCoef = aOther.mAdjustedEmissCoef;
     mGDP = aOther.mGDP;
     
     // Deep copy the auto_ptr
@@ -137,7 +137,7 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Bad dynamic cast occurred in copyGHGParameters." << endl;
-        return;
+        abort();
     }
     
     if( !mEmissionsDriver.get() ) {
@@ -148,12 +148,13 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Warning, the driver has been changed from "<< prevComplexGHG->mEmissionsDriver->getXMLName() << " to "
-        << mEmissionsDriver->getXMLName() << "." << endl;
+                << mEmissionsDriver->getXMLName() << "." << endl;
     }
     
     if( !mEmissionsCoef.isInited() ) {
         mEmissionsCoef = prevComplexGHG->mEmissionsCoef;
     }
+    mAdjustedEmissCoef = prevComplexGHG->mAdjustedEmissCoef;
     
     mGDP = prevComplexGHG->mGDP;
     
@@ -162,23 +163,22 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
     // the newer one instead of copying the older one.
     // Loop through all prev control objects.
     // TODO: Also check for match of type of object once this is supported (GCAM Fusion may facilitate this)
-    for ( CControlIterator prevControlIt = prevComplexGHG->mEmissionsControls.begin();
+    for( CControlIterator prevControlIt = prevComplexGHG->mEmissionsControls.begin();
          prevControlIt != prevComplexGHG->mEmissionsControls.end(); ++prevControlIt )
     {
         // Default to no match, which means will copy forward
         // If there is nothing read in this is what we want to happen
         bool isAMatch = false;
         // Check if any of the new objects match the previous objects
-        for ( CControlIterator newControlIt = mEmissionsControls.begin();
-             newControlIt != mEmissionsControls.end(); ++newControlIt )
+        for( CControlIterator newControlIt = mEmissionsControls.begin();
+             !isAMatch && newControlIt != mEmissionsControls.end(); ++newControlIt )
         {
-            isAMatch = ( ( (*newControlIt)->getName() == (*prevControlIt)->getName() ) &&
-                         // Don't replace if no name was read in since this is ambiguous.
-                         // User needs to read in names for control objects to use this functionality.
-                         ( (*newControlIt)->getName() != "" ) );
+            isAMatch = (*newControlIt)->getName() == (*prevControlIt)->getName();
         }
         // If there was no match, then copy old object forward
-        if ( !isAMatch ) mEmissionsControls.push_back( (*prevControlIt)->clone() );
+        if( !isAMatch ) {
+            mEmissionsControls.push_back( (*prevControlIt)->clone() );
+        }
     }
 }
                             
@@ -223,7 +223,7 @@ void NonCO2Emissions::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
     XMLWriteElementCheckDefault( mInputEmissions, "input-emissions", aOut, aTabs, Value() );
     
-    if ( mEmissionsDriver.get() )  XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
+    XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
     
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->toInputXML( aOut, aTabs );
@@ -233,9 +233,9 @@ void NonCO2Emissions::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mEmissionsCoef, "emiss-coef", aOut, aTabs );
     XMLWriteElement( mInputEmissions, "input-emissions", aOut, aTabs );
-    XMLWriteElement( mSavedEmissionsCoef[ aPeriod ], "saved-ef", aOut, aTabs );
+    XMLWriteElement( mAdjustedEmissCoef[ aPeriod ], "control-adjusted-emiss-coef", aOut, aTabs );
     
-    if ( mEmissionsDriver.get() )  XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
+    XMLWriteElement( "", mEmissionsDriver->getXMLName(), aOut, aTabs );
     
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->toDebugXML( aPeriod, aOut, aTabs );
@@ -252,20 +252,9 @@ void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs*
  * \warning Markets are not necessarily set when completeInit is called
  */
 void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSectorName,
-                                   const IInfo* aTechInfo )
+                                    const IInfo* aTechInfo )
 {
     AGHG::completeInit( aRegionName, aSectorName, aTechInfo );
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    mSavedEmissionsCoef.resize( modeltime->getmaxper(), -1.0 );
-    
-    // If an emissions coefficient was read-in or otherwise set, stash this coefficient
-    if ( mEmissionsCoef.isInited() ) {
-        // Initialize all years with initial value. Will be updated as calcuation proceeds.
-        for( unsigned int aPeriod = 0; aPeriod < mSavedEmissionsCoef.size(); ++aPeriod ) {
-            mSavedEmissionsCoef[ aPeriod ] = mEmissionsCoef;
-        }
-    }
     
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
         (*controlIt)->completeInit( aRegionName, aSectorName, aTechInfo );
@@ -296,6 +285,7 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "No emissions coefficient set for " << getName() << " in " << aRegionName << " in period " << aPeriod << endl;
+        abort();
     }
     
     
@@ -304,6 +294,7 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "No emissions driver set for " << getName()
                 << " in " << aRegionName << endl;
+        abort();
     }
 }
 
@@ -382,8 +373,7 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
      *       to the GHG) to identify which object is the driver to be used for emissions.
      */
     const double totalInput = FunctionUtils::getPhysicalDemandSum( aInputs, aPeriod );
-    double emissDriver = 0;
-    if ( mEmissionsDriver.get() ) emissDriver = mEmissionsDriver->calcEmissionsDriver( totalInput, primaryOutput );
+    const double emissDriver = mEmissionsDriver->calcEmissionsDriver( totalInput, primaryOutput );
     
     // If emissions were read in and this is an appropraite period, compute emissions coefficient
     if( mShouldCalibrateEmissCoef ) {
@@ -413,7 +403,7 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     
     // Stash actual emissions coefficient including impact of any controls. Needed by control
     // objects that apply reductions relative to this emission coefficient value
-    mSavedEmissionsCoef[ aPeriod ] = emissDriver > 0 ? totalEmissions / emissDriver : 0;
+    mAdjustedEmissCoef[ aPeriod ] = emissDriver > 0 ? totalEmissions / emissDriver : 0;
     
     addEmissionsToMarket( aRegionName, aPeriod );
 }
@@ -436,7 +426,25 @@ void NonCO2Emissions::doInterpolations( const int aYear, const int aPreviousYear
     assert( nextComplexEmiss );
 }
 
-double NonCO2Emissions::getEmissionsCoefficient( const int aPeriod ) const
+/*!
+ * \brief Get the emissions control adjusted emissions coefficient.
+ * \details This method gives access to the actual emissions coefficient used
+ *          in a given period that includes any adjustments made by all the
+ *          emissions controls.  This value is saved during calcEmission so it
+ *          may be used by some future emissions control object.
+ * \param aPeriod The model period to get the coefficient.
+ * \return The emissions coefficient adjusted by emissions controls.
+ * \warning This value is a by product of calcEmission and therefore may change
+ *          within each model iterations.  It is therefore only safe to retrieve
+ *          the value for periods before the current model period.
+ */
+double NonCO2Emissions::getAdjustedEmissCoef( const int aPeriod ) const
 {
-    return mSavedEmissionsCoef[ aPeriod ];
+    /*!
+     * \pre The adjusted emissions coefficient has been calculated for this period.
+     */
+    assert( mAdjustedEmissCoef[ aPeriod ].isInited() );
+
+    return mAdjustedEmissCoef[ aPeriod ];
 }
+

@@ -195,7 +195,7 @@ void LinearControl::initCalc( const string& aRegionName,
     // for linear decline.
     int startPeriod = scenario->getModeltime()->getyr_to_per( mStartYear );
     if ( aPeriod ==  ( startPeriod + 1 ) ) {
-        mBaseEmissionsCoef = aParentGHG->getEmissionsCoefficient( startPeriod );
+        mBaseEmissionsCoef = aParentGHG->getAdjustedEmissCoef( startPeriod );
     }
     
     // Note, the emissions driver in NonCO2Emissions::calcEmission for input driver is 
