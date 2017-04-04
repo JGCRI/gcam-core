@@ -101,7 +101,7 @@ repeat_add_columns <- function(x, y) {
 #' @param col The name of the columns with the ISO codes (default = 'iso')
 #' @return Tibble with the old iso code replaced by the new one.
 #' @export
-change_iso_code <- function(d, from, to, col='iso') {
+change_iso_code <- function(d, from, to, col = "iso") {
   assertthat::assert_that(tibble::is_tibble(d))
   iso <- d[[col]]
   d[[col]] <- if_else(iso == from, to, iso)
@@ -117,11 +117,11 @@ change_iso_code <- function(d, from, to, col='iso') {
 #' @return Tibble with the iso codes converted to lower case. If the column with
 #'   the codes was not called 'iso', it will be renamed to 'iso'.
 #' @export
-standardize_iso <- function(d, col='iso') {
+standardize_iso <- function(d, col = "iso") {
   assertthat::assert_that(tibble::is_tibble(d))
-  d[['iso']] <- tolower(d[[col]])
-  if(col != 'iso') {
-    ## This is surprisingly hard to do using dplyr
+  d[["iso"]] <- tolower(d[[col]])
+  if(col != "iso") {
+    # This is surprisingly hard to do using dplyr
     d[[col]] <- NULL
   }
   d
