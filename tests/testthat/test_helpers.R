@@ -25,7 +25,7 @@ test_that("left_join_error_no_match works", {
 
 
 test_that("repeat_add_columns works", {
-  x <- tibble::tibble(x=1:3)
+  x <- tibble::tibble(x = 1:3)
   y <- tibble::tibble(y = c(4, 5), z = c(6,7))
 
   expect_silent(repeat_add_columns(x, y))
