@@ -39,52 +39,42 @@ module_emissions_L151.ctrl_R_en_S_T <- function(command, ...) {
       mutate(year = as.numeric(substr(year, 2, 5))) ->
       L114.bcoc_tgej_R_en_S_F_2000
 
-    # Compute max emissions reduction for SO2, CO, NOx, NMVOC
     # First, set up min coeff data frame
     A51.min_coeff %>%
       gather(Non.CO2, value, -supplysector, -subsector, -stub.technology) %>%
       na.omit ->
       L151.min_coeff
 
-    # Map in relevant information
-    L111.nonghg_tgej_R_en_S_F_Yh %>%
-      filter(!year %in% c(2009, 2010)) %>%  # line doesn't seem necessary
-      filter(year == 2005) %>%
-      rename(curr_coeff = value) %>%
-      left_join(L151.min_coeff, by = c("supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
-      rename(min_coeff = value) %>%
-      na.omit ->
-      L151.nonghg_ctrl_R_en_S_T
+    # The following code is common to all gases
+    # It joins w/ the min coefficient d.f. and then computes max reduction
+    map_and_compute_max_reduction <- function(obj, L151.min_coeff) {
+      obj %>%
+        # Map in relevant information
+        rename(curr_coeff = value) %>%
+        left_join(L151.min_coeff, by = c("supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
+        rename(min_coeff = value) %>%
+        na.omit %>%
+        # Compute maximum reduction as percentage
+        mutate(max_reduction = 100 * (curr_coeff - min_coeff) / curr_coeff) %>%
+        na.omit %>%
+        mutate(max_reduction = if_else(max_reduction > 100, 100, max_reduction),
+               max_reduction = if_else(max_reduction < 0, 0, max_reduction))
+    } # map_and_compute_max_reduction
 
-    # Compute maximum reduction as percentage
-    L151.nonghg_ctrl_R_en_S_T %>%
-      mutate(max_reduction = 100 * (curr_coeff - min_coeff) / curr_coeff) %>%
-      na.omit %>%
-      mutate(max_reduction = if_else(max_reduction > 100, 100, max_reduction),
-             max_reduction = if_else(max_reduction < 0, 0, max_reduction)) ->
+
+    # Compute max emissions reduction for SO2, CO, NOx, NMVOC
+    L111.nonghg_tgej_R_en_S_F_Yh %>%
+      filter(year == 2005) %>%
+      map_and_compute_max_reduction(L151.min_coeff) ->
       L151.nonghg_ctrl_R_en_S_T
 
     # Compute max emissions reduction for BC & OC
-    # Map in relevant information
     L114.bcoc_tgej_R_en_S_F_2000 %>%
-      rename(curr_coeff = value) %>%
-      left_join(L151.min_coeff, by = c("supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
-      rename(min_coeff = value) %>%
-      na.omit ->
-      L151.bcoc_ctrl_R_en_S_T
+      map_and_compute_max_reduction(L151.min_coeff) %>%
 
-    # Finally, compute maximum reduction as percentage
-    L151.bcoc_ctrl_R_en_S_T %>%
-      mutate(max_reduction = 100 * (curr_coeff - min_coeff) / curr_coeff) %>%
-      na.omit %>%
-      mutate(max_reduction = if_else(max_reduction > 100, 100, max_reduction),
-             max_reduction = if_else(max_reduction < 0, 0, max_reduction)) %>%
-
-      # Combine dataframes and remove unnecessary columns
+      # Combine dataframes, remove unnecessary columns, output
       bind_rows(L151.nonghg_ctrl_R_en_S_T, .) %>%   # follow binding order of original script
       select(-curr_coeff, -min_coeff, -year) %>%
-
-      # Produce outputs
       add_title("Maximum reduction by region / sector / gas") %>%
       add_units("%") %>%
       add_comments("Compute maximum reduction by region and sector for SO2, CO, NOx, NMVOC (all 2005 reference), BC, and OC (2005)") %>%
