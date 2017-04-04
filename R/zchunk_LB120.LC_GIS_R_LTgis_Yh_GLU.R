@@ -1,6 +1,6 @@
 #' module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU
 #'
-#' Briefly describe what this chunk does.
+#' Land cover by GCAM region / aggregate land type / historical year / GLU.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,10 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L120.LC_bm2_R_LT_Yh_GLU}, \code{L120.LC_bm2_R_UrbanLand_Yh_GLU}, \code{L120.LC_bm2_R_Tundra_Yh_GLU}, \code{L120.LC_bm2_R_RckIceDsrt_Yh_GLU}, \code{L120.LC_bm2_ctry_LTsage_GLU}, \code{L120.LC_bm2_ctry_LTpast_GLU}. The corresponding file in the
 #' original data system was \code{LB120.LC_GIS_R_LTgis_Yh_GLU.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Aggregate the \code{L100.Land_type_area_ha} dataset, interpolate land use historical
+#' years, and split into various sub-categories. Missing values are set to zero.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather spread nesting
 #' @author BBL April 2017
 #' @export
 module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
@@ -72,81 +73,94 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       # TODO: is this corrrect?
       # Missing values should be set to 0 before interpolation, so that in-between years are interpolated correctly
       # Note that without this, some groups have all NAs and can't be interpolated
-      mutate(Area_bm2 = if_else(is.na(Area_bm2), 0, Area_bm2)) ->
-      L120.LC_bm2_R_LT_Yh_GLU
-
-    # Interpolation step
-    L120.LC_bm2_R_LT_Yh_GLU %>%
+      mutate(Area_bm2 = if_else(is.na(Area_bm2), 0, Area_bm2)) %>%
       ungroup %>%
       # Expand to all combinations using more years. Note the `ungroup` call above!!
       complete(nesting(GCAM_region_ID, Land_Type, GLU), year = unique(c(year, aglu.LAND_COVER_YEARS))) %>%
       arrange(GCAM_region_ID, Land_Type, GLU, year) %>%
       group_by(GCAM_region_ID, Land_Type, GLU) %>%
+      # Interpolate
       mutate(Area_bm2 = approx_fun(year, Area_bm2)) %>%
       # Replicate old behavior, replacing NAs with zeroes
-      mutate(Area_bm2 = if_else(is.na(Area_bm2), 0, Area_bm2)) ->
-      L120.LC_bm2_R_LT_Yh_GLU
+      mutate(Area_bm2 = if_else(is.na(Area_bm2), 0, Area_bm2)) %>%
+      filter(year %in% aglu.LAND_COVER_YEARS) %>%
+      rename(value = Area_bm2) ->
+      L120.LC_bm2_R_LT_Yh_GLU  # TODO: this is producing slightly different values
 
     # Subset the land types that are not further modified, and write them out
-    L120.LC_bm2_R_UrbanLand_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type =="UrbanLand")
-    L120.LC_bm2_R_Tundra_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type =="Tundra")
-    L120.LC_bm2_R_RckIceDsrt_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type =="RockIceDesert")
+    L120.LC_bm2_R_UrbanLand_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "UrbanLand")
+    L120.LC_bm2_R_Tundra_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Tundra")
+    L120.LC_bm2_R_RckIceDsrt_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "RockIceDesert")
 
+    # LAND COVER FOR CARBON CONTENT CALCULATION
+    # Compile data for land carbon content calculation on unmanaged lands
+    # Note: not just using the final year, as some land use types may have gone to zero over the historical period.
+    # Instead, use the mean of the available years within our "historical" years
+    L100.Land_type_area_ha %>%
+      filter(LT_HYDE == "Unmanaged") %>%
+      group_by(iso, GCAM_region_ID, GLU, land_code, LT_SAGE, Land_Type) %>%
+      summarise(Area_bm2 = mean(Area_bm2)) ->
+      L120.LC_bm2_ctry_LTsage_GLU
+
+    # Compile data for land carbon content calculation on pasture lands
+    L100.Land_type_area_ha %>%
+      filter(LT_HYDE == "Pasture") %>%
+      group_by(iso, GCAM_region_ID, GLU, land_code, LT_SAGE, Land_Type) %>%
+      summarise(Area_bm2 = mean(Area_bm2)) ->
+      L120.LC_bm2_ctry_LTpast_GLU
 
     # Produce outputs
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      add_title("Land cover by GCAM region / aggregate land type / historical year / GLU") %>%
+      add_units("bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L120.LC_bm2_R_LT_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L120.LC_bm2_R_LT_Yh_GLU
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L120.LC_bm2_R_UrbanLand_Yh_GLU %>%
+      add_title("Urban land cover by GCAM region / historical year / GLU") %>%
+      add_units("bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L120.LC_bm2_R_UrbanLand_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L120.LC_bm2_R_UrbanLand_Yh_GLU
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L120.LC_bm2_R_Tundra_Yh_GLU %>%
+      add_title("Tundra land cover by GCAM region / historical year / GLU") %>%
+      add_units("bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L120.LC_bm2_R_Tundra_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L120.LC_bm2_R_Tundra_Yh_GLU
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L120.LC_bm2_R_RckIceDsrt_Yh_GLU %>%
+      add_title("Rock/ice/desert land cover by GCAM region / historical year / GLU") %>%
+      add_units("bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L120.LC_bm2_R_RckIceDsrt_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L120.LC_bm2_R_RckIceDsrt_Yh_GLU
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L120.LC_bm2_ctry_LTsage_GLU %>%
+      add_title("Unmanaged land cover by country / SAGE15 land type / GLU") %>%
+      add_units("bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L120.LC_bm2_ctry_LTsage_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT") ->
       L120.LC_bm2_ctry_LTsage_GLU
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L120.LC_bm2_ctry_LTpast_GLU %>%
+      add_title("Pasture land cover by country / SAGE15 land type / GLU") %>%
+      add_units("bm2") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L120.LC_bm2_ctry_LTpast_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT") ->
       L120.LC_bm2_ctry_LTpast_GLU
 
     return_data(L120.LC_bm2_R_LT_Yh_GLU, L120.LC_bm2_R_UrbanLand_Yh_GLU, L120.LC_bm2_R_Tundra_Yh_GLU, L120.LC_bm2_R_RckIceDsrt_Yh_GLU, L120.LC_bm2_ctry_LTsage_GLU, L120.LC_bm2_ctry_LTpast_GLU)
