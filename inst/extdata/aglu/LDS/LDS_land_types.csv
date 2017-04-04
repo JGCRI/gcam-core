@@ -1,7 +1,7 @@
 # File: LDS_land_types.csv
 # Title: Mapping from LDS land categories to specific categories in databases
 # Units: NA
-# Source: land type area and pot veg carbon calc in: lds,,,
+# Source: Di Vittorio, A. P. Kyle, W.D. Collins. 2016. What are the effects of Agro-Ecological Zones and land use region boundaries on land resource projection using the Global Change Assessment Model? Environmental Modelling & Software 85:246-265
 # ----------,,,
 Category,LT_SAGE,LT_HYDE,LT_WDPA
 1,Unknown,Unmanaged,Protected
