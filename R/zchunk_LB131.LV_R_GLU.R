@@ -29,42 +29,39 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     L100.GTAP_LV_milUSD <- get_data(all_data, "temp-data-inject/L100.GTAP_LV_milUSD")
     L122.LC_bm2_R_HarvCropLand_Yh_GLU <- get_data(all_data, "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU")
-
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+  
+    # Calculate the total value of each geographic land unit (GLU)
+    L100.GTAP_LV_milUSD %>% 
+      left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                                         # Map in ISO codes
+      mutate(value = value * CONV_2001_1975_USD) %>%                                                    # Convert to 1975$
+      group_by(GCAM_region_ID, GLU) %>%                                                                 # Group by GCAM_region_ID and GLU
+      summarize(value = sum(value)) ->                                                                  # Aggregate value to GCAM region and GLU
+      LV_R_GLU
+    
+    # Prepare land area for use in compuating land value
+    L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
+      gather(year, value, -GCAM_region_ID, -GLU, -Land_Type) %>%                                      # Convert to long format
+      filter(year == X_GTAP_HISTORICAL_YEAR) %>%                                                      # Only use cropland area from the GTAP historical year
+      rename(crop_area = value) ->                                                                    # Rename column to make life easier later
+      LC_R_GLU
+    
+    # Compute value in $/m2
+    LV_R_GLU %>% 
+      left_join(LC_R_GLU, by = c( "GCAM_region_ID", "GLU"))  %>%                                      # Map in GTAP harvested cropland area
+      mutate(value = value / CONV_BIL_MIL / crop_area) %>%                                            # Calculate land value ($/m2) using value and cropland area
+      select(-crop_area, -Land_Type, -year ) ->                                                       # Remove extra column
+      L131.LV_USD75_m2_R_GLU
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+    L131.LV_USD75_m2_R_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L131.LV_USD75_m2_R_GLU") %>%
-      add_precursors("temp-data-inject/L100.GTAP_LV_milUSD", "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU", "common/iso_GCAM_regID") %>%
+      add_precursors("temp-data-inject/L100.GTAP_LV_milUSD", "temp-data-inject/L122.LC_bm2_R_HarvCropLand_Yh_GLU", "common/iso_GCAM_regID") ->
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      #add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L131.LV_USD75_m2_R_GLU
 
     return_data(L131.LV_USD75_m2_R_GLU)
