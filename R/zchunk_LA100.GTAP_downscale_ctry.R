@@ -34,12 +34,13 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
 
     # Create the iso - GTAP_region mapping file
+    # GTAP6 includes 87 regions, most of which are single countries, and 18 are aggregated regions of multiple countries.
     AGLU_ctry %>%
       select(iso, GTAP_region) %>%
       distinct(iso, .keep_all = TRUE) ->
       GTAP_ctry
 
-    # Prepare land value for entire GTAP region
+    # Prepare land value for each entire GTAP region
     FAO_ag_items_PRODSTAT %>%
       select(GTAP_use) %>%
       distinct() %>%
