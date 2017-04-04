@@ -87,18 +87,18 @@ private:
     int mTargetYear;
     
     //! Year to start emission factor decline. Must be a model year.
+    //! The default is the final calibration year.
     int mStartYear;
     
     //! Final emissions coefficient
     Value mFinalEmCoefficient;
   
-    //! Emissions coefficient passed in from parent ghg object
-    double mBaseEmissionsCoef;
-    
     //! Flag if wish to allow emissions factor increase
     bool mAllowIncrease;
     
     void copy( const LinearControl& aOther );
+
+    virtual void calcEmissionsReductionInternal( const double aBaseEmissionsCoef, const int aPeriod );
 };
 
 #endif // _LINEAR_CONTROL_H_
