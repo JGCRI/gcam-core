@@ -45,7 +45,8 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
       filter(year %in% energy.CDIAC_CO2_HISTORICAL_YEARS ) ->
       L100.CDIAC_CO2_ctry_hist
 
-    # Generate time series of Former Soviet Union by country, using national shares in the first available year
+    # Because the USSR broke up in the early 1990s, what was a single time series became multiple
+    # We use the post-breakup individual state values to project backwards in time from the pre-breakup USSR data
     USSR <- "USSR"
     L100.CO2_ctry_noUSSR_hist <- filter(L100.CDIAC_CO2_ctry_hist, nation != USSR)
     L100.CO2_USSR_hist <- filter(L100.CDIAC_CO2_ctry_hist, nation == USSR)
@@ -77,7 +78,8 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
       spread(category, value) ->
       L100.CO2_FSU_hist
 
-    # Repeat: generate time series of Yugoslavia by country, using national shares in the first available year
+    # Because Yugoslavia broke up in the early 1990s, what was a single time series became multiple
+    # We use the post-breakup individual state values to project backwards in time from the pre-breakup Yugoslavia data
     YUGOSLAVIA <- "YUGOSLAVIA (FORMER SOCIALIST FEDERAL REPUBLIC)"
     L100.CO2_ctry_noUSSR_Yug_hist <- filter(L100.CO2_ctry_noUSSR_hist, nation != YUGOSLAVIA) %>% na.omit
     L100.CO2_Yug_hist <- filter(L100.CO2_ctry_noUSSR_hist, nation == YUGOSLAVIA)
