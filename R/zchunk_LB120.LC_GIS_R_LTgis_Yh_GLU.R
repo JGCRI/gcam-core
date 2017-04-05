@@ -72,7 +72,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       summarise(Area_bm2 = sum(Area_bm2)) %>%
       ungroup %>%
       # Missing values should be set to 0 before interpolation, so that in-between years are interpolated correctly
-      # We dot his because Alan Di Vittorio (see sources above) isn't writing out all possible combinations of
+      # We do his because Alan Di Vittorio (see sources above) isn't writing out all possible combinations of
       # country, GLU, year (of which there are 30), and land use category (of which there are also about 30).
       # If something isn't written out by the LDS, that is because it is a zero; this step back-fills the zeroes.
       complete(nesting(GCAM_region_ID, Land_Type, GLU), year, fill = list(Area_bm2 = 0)) %>%
