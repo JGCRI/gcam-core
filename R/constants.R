@@ -23,7 +23,7 @@ FUTURE_YEARS <- seq( 2015, 2100, 5 )
 # aglu constants
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
-X_GTAP_HISTORICAL_YEAR <- "X2000"
+GTAP_HISTORICAL_YEAR <- 2000
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
