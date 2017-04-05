@@ -23,6 +23,7 @@ FUTURE_YEARS <- seq( 2015, 2100, 5 )
 # aglu constants
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
+GTAP_HISTORICAL_YEAR <- 2000
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -37,6 +38,7 @@ CONV_TON_MEGATON <- 1e-6
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_1990_2010_USD <- 1.510
+CONV_2001_1975_USD <- 0.3711
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
