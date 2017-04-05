@@ -156,7 +156,9 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     FAO_data_ALL[is.na(FAO_data_ALL)] <- 0
 
     # Match the iso names
-    FAO_data_ALL$iso <- AGLU_ctry$iso[match(FAO_data_ALL$countries, AGLU_ctry$FAO_country)]
+    FAO_data_ALL %>%
+      left_join(distinct(AGLU_ctry, FAO_country, .keep_all = TRUE), by = c("countries" = "FAO_country")) ->
+      FAO_data_ALL
 
     # Downscale countries individually NOTE: This is complicated. The FAO data need to be downscaled
     # to all FAO historical years (i.e. back to 1961 regardless of when we are starting our

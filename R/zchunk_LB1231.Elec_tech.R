@@ -1,4 +1,4 @@
-#' module_energy_LA114.wind
+#' module_gcam.usa_LB1231.Elec_tech
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,29 +6,36 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L114.RsrcCurves_EJ_R_wind}. The corresponding file in the
-#' original data system was \code{LA114.wind.R} (energy level1).
+#' the generated outputs: \code{L1231.in_EJ_state_elec_F_tech}, \code{L1231.out_EJ_state_elec_F_tech}. The corresponding file in the
+#' original data system was \code{LB1231.Elec_tech.R} (gcam-usa level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_LA114.wind_DISABLED <- function(command, ...) {
+module_gcam.usa_LB1231.Elec_tech_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "energy/Zhou_wind_supply_ctry_EJ",
-             FILE = "energy/A14.wind_curves"))
+    return(c( "L123.in_EJ_R_elec_F_Yh",
+              "L123.out_EJ_R_elec_F_Yh",
+              "L1231.in_EJ_R_elec_F_tech_Yh",
+              "L1231.out_EJ_R_elec_F_tech_Yh",
+              "L123.in_EJ_state_elec_F",
+              "L123.out_EJ_state_elec_F"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L114.RsrcCurves_EJ_R_wind"))
+    return(c("L1231.in_EJ_state_elec_F_tech",
+             "L1231.out_EJ_state_elec_F_tech"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    Zhou_wind_supply_ctry_EJ <- get_data(all_data, "energy/Zhou_wind_supply_ctry_EJ")
-    A14.wind_curves <- get_data(all_data, "energy/A14.wind_curves")
+    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
+    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
+    L1231.in_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.in_EJ_R_elec_F_tech_Yh")
+    L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
+    L123.in_EJ_state_elec_F <- get_data(all_data, "L123.in_EJ_state_elec_F")
+    L123.out_EJ_state_elec_F <- get_data(all_data, "L123.out_EJ_state_elec_F")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -45,10 +52,12 @@ module_energy_LA114.wind_DISABLED <- function(command, ...) {
     # }
     #
     #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # NOTE: This code uses vecpaste
+    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # NOTE: This code uses repeat_and_add_vector
+    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -61,13 +70,23 @@ module_energy_LA114.wind_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L114.RsrcCurves_EJ_R_wind") %>%
+      add_legacy_name("L1231.in_EJ_state_elec_F_tech") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L114.RsrcCurves_EJ_R_wind
+      L1231.in_EJ_state_elec_F_tech
+    tibble() %>%
+      add_title("descriptive title of data") %>%
+      add_units("units") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L1231.out_EJ_state_elec_F_tech") %>%
+      add_precursors("precursor1", "precursor2", "etc") %>%
+      # typical flags, but there are others--see `constants.R`
+      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L1231.out_EJ_state_elec_F_tech
 
-    return_data(L114.RsrcCurves_EJ_R_wind)
+    return_data(L1231.in_EJ_state_elec_F_tech, L1231.out_EJ_state_elec_F_tech)
   } else {
     stop("Unknown command")
   }

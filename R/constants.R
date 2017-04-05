@@ -12,6 +12,7 @@ FLAG_LONG_YEAR_FORM  <- "FLAG_LONG_YEAR_FORM"
 FLAG_NO_OUTPUT  <- "NO_OUTPUT"
 FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"
+FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 
 # ======================================================================
 # Time constants
@@ -22,6 +23,7 @@ FUTURE_YEARS <- seq( 2015, 2100, 5 )
 # aglu constants
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
+GTAP_HISTORICAL_YEAR <- 2000
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -32,7 +34,15 @@ aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 CONV_BIL_MIL <- 1000
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
+CONV_TON_MEGATON <- 1e-6
+CONV_MCAL_PCAL <- 1e-9
+CONV_HA_BM2 <- 1e-5
 CONV_1990_2010_USD <- 1.510
+CONV_2001_1975_USD <- 0.3711
+
+# Cubic meters (m3) to billion cubic meters (bm3)
+CONV_M3_BM3 <- 1e-09
+
 
 # ======================================================================
 # Driver constants
