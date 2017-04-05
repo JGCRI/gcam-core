@@ -1,8 +1,8 @@
 # File: USDA_Alfalfa_prices_USDt.csv,,,,,,,,,,,,,
-# Author: Page Kyle,,,,,,,,,,,,,
+# Title: USDA_Alfalfa_prices_USDt,,,,,,,,,,,,,
+# Unit: USD/tonne,,,,,,,,,,,,,
 # Description: PRICES RECEIVED FOR ALFALFA HAY IN DOLLARS PER TON,,,,,,,,,,,,,
 # Original source: RawData/USDA/Alfalfa_prices_USDt.csv,,,,,,,,,,,,,
-# ----------,,,,,,,,,,,,,
 year,jan,feb,mar,apr,may,jun,jul,aug,sep,oct,nov,dec,avg
 1996,99,95,98,98,108,112,111,106,108,109,107,113,110
 1997,112,116,110,110,112,110,114,113,116,108,114,110,111

@@ -23,10 +23,20 @@ FUTURE_YEARS <- seq( 2015, 2100, 5 )
 # aglu constants
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
+MODEL_PRICE_YEARS <- 2001:2005
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
 aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
+
+# cotton seed and lint conversion
+CONV_COTTON_LINT <- 0.4
+
+# Price conversion from alfalfa to grass hay
+PRICERATIO_GRASS_ALFALFA <- 0.7
+
+# NUMBERS OF DIGITS FOR MODEL INPUT DATA
+DIGITS_CALPRICE <- 4 #prices and costs
 
 # ======================================================================
 # Conversion constants
@@ -34,9 +44,12 @@ CONV_BIL_MIL <- 1000
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
+CONV_T_KG <- 1e3
+CONV_T_METRIC_SHORT <- 1000/908
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_1990_2010_USD <- 1.510
+CONV_2004_1975_USD <- 0.3472
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
