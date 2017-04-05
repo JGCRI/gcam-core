@@ -18,10 +18,12 @@ the generated outputs: \code{L120.LC_bm2_R_LT_Yh_GLU}, \code{L120.LC_bm2_R_Urban
 original data system was \code{LB120.LC_GIS_R_LTgis_Yh_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Land cover by GCAM region / aggregate land type / historical year / GLU.
 }
 \details{
-Describe in detail what this chunk does.
+Aggregate the \code{L100.Land_type_area_ha} dataset, interpolate land use historical
+years, and split into various sub-categories. Missing values are set to zero because the GLU files don't include
+zero values (i.e. they only report nonzero land use combinations).
 }
 \author{
 BBL April 2017
