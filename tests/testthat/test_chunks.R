@@ -48,6 +48,7 @@ test_that("doesn't use forbidden calls", {
   for(ch in unique(chunklist$name)) {
     code <- capture.output(getFromNamespace(ch, ns = "gcamdata"))
     code <- gsub("#.*$", "", code)  # remove comments
+    code <- gsub('".*"', "", code)   # remove quotes
     for(f in forbiddens) {
       expect_equal(grep(f, code), integer(),   # should be no matches
                       info = paste(ch, "uses", f))
