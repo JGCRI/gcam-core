@@ -31,6 +31,14 @@ GTAP_HISTORICAL_YEAR <- 2000
 aglu.GLU <- "GLU"
 aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 
+
+# ======================================================================
+# energy constants
+
+# At present the CO2 emissions inventory from CDIAC stops at 2009
+energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
+
+
 # ======================================================================
 # Conversion constants
 CONV_BIL_MIL <- 1000
