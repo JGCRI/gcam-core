@@ -95,6 +95,11 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
     # Compile data for land carbon content calculation on unmanaged lands
     # Note: not just using the final year, as some land use types may have gone to zero over the historical period.
     # Instead, use the mean of the available years within our "historical" years
+
+    # The HYDE data are provided in increments of 10 years, so any GCAM model time period
+    # or carbon cycle year that ends in a 5 (e.g., 1975) is computed as an average of
+    # surrounding time periods. For most of the years that we want, we aren't doing any real
+    # averaging or interpolation.
     L100.Land_type_area_ha %>%
       filter(LT_HYDE == "Unmanaged") %>%
       group_by(iso, GCAM_region_ID, GLU, land_code, LT_SAGE, Land_Type) %>%
