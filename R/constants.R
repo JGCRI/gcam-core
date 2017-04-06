@@ -24,6 +24,9 @@ FUTURE_YEARS <- seq( 2015, 2100, 5 )
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 MODEL_PRICE_YEARS <- 2001:2005
+LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
+aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
+GTAP_HISTORICAL_YEAR <- 2000
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -39,6 +42,13 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 DIGITS_CALPRICE <- 4 #prices and costs
 
 # ======================================================================
+# energy constants
+
+# At present the CO2 emissions inventory from CDIAC stops at 2009
+energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
+
+
+# ======================================================================
 # Conversion constants
 CONV_BIL_MIL <- 1000
 CONV_MIL_THOUS <- 1000
@@ -50,6 +60,7 @@ CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_1990_2010_USD <- 1.510
 CONV_2004_1975_USD <- 0.3472
+CONV_2001_1975_USD <- 0.3711
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
