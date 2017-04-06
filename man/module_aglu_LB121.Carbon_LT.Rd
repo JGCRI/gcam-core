@@ -18,11 +18,12 @@ the generated outputs: \code{L121.CarbonContent_kgm2_R_LT_GLU}, \code{L121.Yield
 original data system was \code{LB121.Carbon_LT.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Compute natural vegetation, managed land, and pasture carbon density, mature age, and yield.
 }
 \details{
-Describe in detail what this chunk does.
+Combine Houghton et al. (1999 and similar) carbon density, mature age, and pasture yield data with
+SAGE data to produce tables giving, for each GCAM region and land use type, data on these variables.
 }
 \author{
-YourInitials CurrentMonthName 2017
+BBL April 2017
 }

@@ -1,6 +1,6 @@
 #' module_aglu_LB121.Carbon_LT
 #'
-#' Briefly describe what this chunk does.
+#' Compute natural vegetation, managed land, and pasture carbon density, mature age, and yield.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,16 +8,16 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L121.CarbonContent_kgm2_R_LT_GLU}, \code{L121.Yield_kgm2_R_Past_GLU}. The corresponding file in the
 #' original data system was \code{LB121.Carbon_LT.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Combine Houghton et al. (1999 and similar) carbon density, mature age, and pasture yield data with
+#' SAGE data to produce tables giving, for each GCAM region and land use type, data on these variables.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author BBL April 2017
 #' @export
 module_aglu_LB121.Carbon_LT <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/SAGE_LT",
+    return(c(FILE = "aglu/SAGE_LT",
              FILE = "aglu/Various_CarbonData_LTsage",
              "L120.LC_bm2_R_LT_Yh_GLU",
              "L120.LC_bm2_ctry_LTsage_GLU",
@@ -30,24 +30,21 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     SAGE_LT <- get_data(all_data, "aglu/SAGE_LT")
     Various_CarbonData_LTsage <- get_data(all_data, "aglu/Various_CarbonData_LTsage")
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
     L120.LC_bm2_ctry_LTsage_GLU <- get_data(all_data, "L120.LC_bm2_ctry_LTsage_GLU")
     L120.LC_bm2_ctry_LTpast_GLU <- get_data(all_data, "L120.LC_bm2_ctry_LTpast_GLU")
 
-    # Convert characteristics by land type to correct units
+    # Convert characteristics by land type to correct units (kgC/m2)
     Various_CarbonData_LTsage %>%
-      mutate(value = if_else(unit == "tC/ha", value * CONV_THA_KGM2, value),
-             # TODO: this should be "kgC/m2"
-             unit = if_else(unit == "tC/ha", "kg/m2", unit)) %>%
+      mutate(value = if_else(unit == "tC/ha", value * CONV_THA_KGM2, value)) %>%
       select(-Source, -unit) %>%
       spread(variable, value) ->
       L121.Various_CarbonData_LTsage
 
     # Need to get rid of the spaces in the table for matching
-    L121.Various_CarbonData_LTsage$LT_SAGE <- gsub( " ", "", L121.Various_CarbonData_LTsage$LT_SAGE )
+    L121.Various_CarbonData_LTsage$LT_SAGE <- gsub(" ", "", L121.Various_CarbonData_LTsage$LT_SAGE)
 
     # Match carbon contents and mature age by land cover, by SAGE land type
     L120.LC_bm2_ctry_LTsage_GLU %>%
@@ -65,7 +62,8 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
       spread(year, value) %>%
       filter(Land_Type %in% c( "Cropland", "UrbanLand" )) %>%
       select(GCAM_region_ID, Land_Type, GLU) %>%
-      left_join_error_no_match(L121.Various_CarbonData_LTsage, by = c("Land_Type" = "LT_SAGE")) ->
+      left_join_error_no_match(select(L121.Various_CarbonData_LTsage, -pasture_yield),
+                               by = c("Land_Type" = "LT_SAGE")) ->
       L121.CarbonContent_kgm2_R_LTmgd_GLU
 
     # Pasture carbon contents
@@ -87,29 +85,26 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
     bind_rows(L121.CarbonContent_kgm2_R_LTnatveg_GLU,
               L121.CarbonContent_kgm2_R_LTpast_GLU,
               L121.CarbonContent_kgm2_R_LTmgd_GLU) %>%
+      select(GCAM_region_ID, Land_Type, GLU, `mature age`, soil_c, veg_c) %>%
       arrange(GCAM_region_ID, GLU, Land_Type) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Natural vegetation and managed land age and carbon density") %>%
+      add_units("Years (mature age) and kgC/m2 (others)") %>%
+      add_comments("From matching Houghton (1999) and SAGE data by GCAM region and land use type") %>%
       add_legacy_name("L121.CarbonContent_kgm2_R_LT_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/SAGE_LT", "aglu/Various_CarbonData_LTsage",
-                     "L120.LC_bm2_R_LT_Yh_GLU", "L120.LC_bm2_ctry_LTsage_GLU", "L120.LC_bm2_ctry_LTpast_GLU") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/SAGE_LT", "aglu/Various_CarbonData_LTsage",
+                     "L120.LC_bm2_R_LT_Yh_GLU", "L120.LC_bm2_ctry_LTsage_GLU", "L120.LC_bm2_ctry_LTpast_GLU") ->
       L121.CarbonContent_kgm2_R_LT_GLU
 
     # Pasture yields are separate
     L121.CarbonContent_kgm2_R_LTpast_GLU %>%
       select(GCAM_region_ID, Land_Type, GLU, pasture_yield) %>%
       mutate(pasture_yield = pasture_yield / aglu.CCONTENT_CELLULOSE) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Pasture land age, carbon density, and yield") %>%
+      add_units("Years (mature age) and kgC/m2 (others)") %>%
+      add_comments("From matching Houghton (1999) and SAGE data by GCAM region and land use type") %>%
       add_legacy_name("L121.Yield_kgm2_R_Past_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/SAGE_LT", "aglu/Various_CarbonData_LTsage",
-                     "L120.LC_bm2_R_LT_Yh_GLU", "L120.LC_bm2_ctry_LTsage_GLU", "L120.LC_bm2_ctry_LTpast_GLU") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/SAGE_LT", "aglu/Various_CarbonData_LTsage",
+                     "L120.LC_bm2_R_LT_Yh_GLU", "L120.LC_bm2_ctry_LTsage_GLU", "L120.LC_bm2_ctry_LTpast_GLU") ->
       L121.Yield_kgm2_R_Past_GLU
 
     return_data(L121.CarbonContent_kgm2_R_LT_GLU, L121.Yield_kgm2_R_Past_GLU)
@@ -117,6 +112,3 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
