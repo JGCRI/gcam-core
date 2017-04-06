@@ -43,8 +43,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
              # TODO: this should be "kgC/m2"
              unit = if_else(unit == "tC/ha", "kg/m2", unit)) %>%
       select(-Source, -unit) %>%
-      spread(variable, value) %>%
-      select(-pasture_yield) ->
+      spread(variable, value) ->
       L121.Various_CarbonData_LTsage
 
     # Need to get rid of the spaces in the table for matching
@@ -53,6 +52,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
     # Match carbon contents and mature age by land cover, by SAGE land type
     L120.LC_bm2_ctry_LTsage_GLU %>%
       left_join(L121.Various_CarbonData_LTsage, by = "LT_SAGE") %>%
+      select(-pasture_yield) %>%
       # Aggregate by GCAM region and GCAM land use type, using area-weighted mean
       group_by(GCAM_region_ID, Land_Type, GLU) %>%
       summarise(`mature age` = weighted.mean(`mature age`, Area_bm2),
@@ -83,21 +83,11 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
                 pasture_yield = weighted.mean(pasture_yield, Area_bm2)) ->
       L121.CarbonContent_kgm2_R_LTpast_GLU
 
-
-#     printlog( "Combining natural vegetation and managed land use tables" )
-#     L121.CarbonContent_kgm2_R_LT_GLU <- rbind( L121.CarbonContent_kgm2_R_LTnatveg_GLU,
-#                                                L121.CarbonContent_kgm2_R_LTpast_GLU[ names( L121.CarbonContent_kgm2_R_LTnatveg_GLU ) ],
-#                                                L121.CarbonContent_kgm2_R_LTmgd_GLU )
-#     L121.CarbonContent_kgm2_R_LT_GLU <- L121.CarbonContent_kgm2_R_LT_GLU[
-#       order( L121.CarbonContent_kgm2_R_LT_GLU[[R]], L121.CarbonContent_kgm2_R_LT_GLU[[GLU]], L121.CarbonContent_kgm2_R_LT_GLU[[LT]] ), ]
-#
-#     printlog( "Writing out pasture yields separately" )
-#     L121.Yield_kgm2_R_Past_GLU <- L121.CarbonContent_kgm2_R_LTpast_GLU[ c( R_LT_GLU, "pasture_yield" ) ]
-#     L121.Yield_kgm2_R_Past_GLU$pasture_yield <- L121.Yield_kgm2_R_Past_GLU$pasture_yield / Ccontent_cellulose
-
-
-    # Produce outputs
-    tibble() %>%
+    # Combine natural vegetation and managed land use tables
+    bind_rows(L121.CarbonContent_kgm2_R_LTnatveg_GLU,
+              L121.CarbonContent_kgm2_R_LTpast_GLU,
+              L121.CarbonContent_kgm2_R_LTmgd_GLU) %>%
+      arrange(GCAM_region_ID, GLU, Land_Type) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -107,7 +97,11 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
                      "L120.LC_bm2_R_LT_Yh_GLU", "L120.LC_bm2_ctry_LTsage_GLU", "L120.LC_bm2_ctry_LTpast_GLU") %>%
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L121.CarbonContent_kgm2_R_LT_GLU
-    tibble() %>%
+
+    # Pasture yields are separate
+    L121.CarbonContent_kgm2_R_LTpast_GLU %>%
+      select(GCAM_region_ID, Land_Type, GLU, pasture_yield) %>%
+      mutate(pasture_yield = pasture_yield / aglu.CCONTENT_CELLULOSE) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%

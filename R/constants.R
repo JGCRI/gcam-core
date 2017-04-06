@@ -31,6 +31,10 @@ GTAP_HISTORICAL_YEAR <- 2000
 aglu.GLU <- "GLU"
 aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 
+# Carbon content of all cellulose
+aglu.CCONTENT_CELLULOSE <- 0.45
+
+
 # ======================================================================
 # Conversion constants
 CONV_BIL_MIL <- 1000
