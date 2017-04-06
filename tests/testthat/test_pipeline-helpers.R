@@ -14,7 +14,6 @@ test_that("approx_fun works", {
   expect_true(all(is.numeric(z)))
   expect_equal(z[3], 6)
 
-  expect_error(approx_fun(year, value[-1]))
   expect_error(approx_fun(year, value, rule = 3))
 })
 
