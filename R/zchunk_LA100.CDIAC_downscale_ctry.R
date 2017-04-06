@@ -15,9 +15,9 @@
 #' @author BBL April 2017
 module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/CDIAC_CO2_by_nation",
-             FILE = "energy/CDIAC_Cseq_by_nation",
-             FILE = "energy/CDIAC_nation"))
+    return(c(FILE = "emissions/CDIAC_CO2_by_nation",
+             FILE = "emissions/CDIAC_Cseq_by_nation",
+             FILE = "emissions/CDIAC_nation"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L100.CDIAC_CO2_ctry_hist"))
   } else if(command == driver.MAKE) {
@@ -25,9 +25,9 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    CDIAC_CO2_by_nation <- get_data(all_data, "energy/CDIAC_CO2_by_nation")
-    CDIAC_Cseq_by_nation <- get_data(all_data, "energy/CDIAC_Cseq_by_nation")
-    CDIAC_nation <- get_data(all_data, "energy/CDIAC_nation")
+    CDIAC_CO2_by_nation <- get_data(all_data, "emissions/CDIAC_CO2_by_nation")
+    CDIAC_Cseq_by_nation <- get_data(all_data, "emissions/CDIAC_Cseq_by_nation")
+    CDIAC_nation <- get_data(all_data, "emissions/CDIAC_nation")
 
     # Merge the sequestration and emissions datasets
     CDIAC_nation %>%
@@ -119,9 +119,9 @@ module_energy_LA100.CDIAC_downscale_ctry <- function(command, ...) {
       add_comments("CDIAC sequestration and emissions datasets combined and limited to historical years") %>%
       add_comments("Post-breakup USSR and Yugoslavia numbers used to project back in time") %>%
       add_legacy_name("L100.CDIAC_CO2_ctry_hist") %>%
-      add_precursors("energy/CDIAC_CO2_by_nation",
-                     "energy/CDIAC_Cseq_by_nation",
-                     "energy/CDIAC_nation") ->
+      add_precursors("emissions/CDIAC_CO2_by_nation",
+                     "emissions/CDIAC_Cseq_by_nation",
+                     "emissions/CDIAC_nation") ->
       L100.CDIAC_CO2_ctry_hist
 
     return_data(L100.CDIAC_CO2_ctry_hist)
