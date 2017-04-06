@@ -1,6 +1,6 @@
 #' module_aglu_LB132.ag_an_For_Prices_USA_C_2005
 #'
-#' Briefly describe what this chunk does.
+#' Calculate the calibration prices for all GCAM AGLU commodities.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L132.ag_an_For_Prices}. The corresponding file in the
 #' original data system was \code{LB132.ag_an_For_Prices_USA_C_2005.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk calculates the production weighted average price by GCAM AGLU commodity
+#' and region over the calibration years.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author RC April 2017
 #' @export
 module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -57,7 +58,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(-country.codes, -item.codes, -element, -element.codes) %>%
       gather(year, price, -countries, -item) %>%
       filter(!(item == "Seed cotton" | item == "Cotton lint" | item == "Cottonseed" | item == "Game meat" | item == "Cattle meat")) %>%
-      rbind(extra_price) %>%
+      bind_rows(extra_price) %>%
       # Calculate unweighted averages for each FAO commodity over price years
       filter(year %in% MODEL_PRICE_YEARS) %>%
       group_by(countries, item) %>%
@@ -133,12 +134,12 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       mutate(Pasture = FodderGrass) %>%
       gather(GCAM_commodity, Price_USDt) %>%
       # Combine crop commodities to get all primary agricultural commodities in a single tibble
-      rbind(Price_ag) %>%
+      bind_rows(Price_ag) %>%
       # Convert to model units
       mutate(calPrice = round(Price_USDt * CONV_2004_1975_USD / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
       select(-Price_USDt) %>%
       # Combine animal products
-      rbind(Price_an) %>%
+      bind_rows(Price_an) %>%
       mutate(unit = "1975$/kg") ->
       Price_ag_an
 
@@ -158,7 +159,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(GCAM_commodity, calPrice) %>%
       mutate(unit = "1975$/m3") %>%
       # Part 4: merging everything into a single table
-      rbind(Price_ag_an) %>%
+      bind_rows(Price_ag_an) %>%
 
     # if(OLD_DATA_SYSTEM_BEHAVIOR) {
     #   ... code that replicates old, incorrect behavior
@@ -167,10 +168,10 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # }
 
     # Produce outputs
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Prices for all GCAM AGLU commodities") %>%
+      add_units("1975$/kg and 1975$/m3") %>%
+      add_comments("Calculate unweighted average prices over calibration years by agricultural item and country.") %>%
+      add_comments("Calculate production weighted average prices by GCAM AGLU commodity and region.") %>%
       add_legacy_name("L132.ag_an_For_Prices") %>%
       add_precursors("aglu/FAO_ag_items_PRODSTAT",
                      "aglu/FAO_an_items_PRODSTAT",
