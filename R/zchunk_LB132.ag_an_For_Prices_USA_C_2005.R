@@ -159,7 +159,24 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(GCAM_commodity, calPrice) %>%
       mutate(unit = "1975$/m3") %>%
       # Part 4: merging everything into a single table
-      bind_rows(Price_ag_an) %>%
+      bind_rows(Price_ag_an) ->
+      Price_ag_an_For
+
+    # Checking that all commodities being modeled have prices assigned
+    distinct(FAO_ag_items_PRODSTAT[c("GCAM_commodity")]) %>%
+      bind_rows(distinct(FAO_an_items_PRODSTAT[c("GCAM_commodity")])) %>%
+      na.omit() %>%
+      collect() %>%
+      .[['GCAM_commodity']] ->
+      commodities
+    Price_ag_an_For %>%
+      collect() %>%
+      .[['GCAM_commodity']] ->
+      prices
+      if(any(!(commodities %in% prices))){
+      missing_commodities <- commodities[!(commodities %in% prices)]
+      stop("Missing commodity prices for ", missing_commodities)
+    }
 
     # if(OLD_DATA_SYSTEM_BEHAVIOR) {
     #   ... code that replicates old, incorrect behavior
@@ -168,6 +185,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # }
 
     # Produce outputs
+    Price_ag_an_For %>%
       add_title("Prices for all GCAM AGLU commodities") %>%
       add_units("1975$/kg and 1975$/m3") %>%
       add_comments("Calculate unweighted average prices over calibration years by agricultural item and country.") %>%
