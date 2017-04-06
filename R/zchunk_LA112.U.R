@@ -49,9 +49,7 @@ module_energy_LA112.U <- function(command, ...) {
       add_comments("All global supply is assigned to a single region") %>%
       add_legacy_name("L112.RsrcCurves_Mt_R_U") %>%
       add_precursors("common/GCAM_region_names",
-                     "energy/A12.U_curves") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_XYEAR) ->
+                     "energy/A12.U_curves") ->
       L112.RsrcCurves_Mt_R_U
 
     return_data(L112.RsrcCurves_Mt_R_U)
