@@ -18,11 +18,14 @@ the generated outputs: \code{L107.an_Prod_Mt_R_C_Sys_Fd_Y}, \code{L107.an_Feed_M
 original data system was \code{LA107.an_IMAGE_R_C_Sys_Fd_Y.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Build IMAGE Animal Production, Feed Consumption, and Input-Output Coefficients for each GCAM region and GCAM commodity in every year.
 }
 \details{
-Describe in detail what this chunk does.
+This module builds three separate outputs at the GCAM region - GCAM commodity - Management system - Feed type - Year level of resolution.
+First, Animal Production is built at the country-level from IMAGE country-level total production, mixed system fraction, and feed type fraction and aggregated to region.
+Second, Feed Consumption is built at the country-level from IMAGE country-level input-output coefficients and animal production information and aggregated to region.
+Finally, Feed Input-Output coefficients are calculated from region-level Feed Consumption and Animal Production.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS April 2017
 }
