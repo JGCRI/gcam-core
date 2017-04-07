@@ -31,7 +31,10 @@ module_socioeconomics_L101.Population <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    GCAM3_population <- get_data(all_data, "socioeconomics/GCAM3_population")
+    get_data(all_data, "socioeconomics/GCAM3_population") %>%
+      gather(year, value, -region_GCAM3) %>%
+      mutate(year = as.integer(year)) ->
+      GCAM3_population
     get_data(all_data, "temp-data-inject/L100.Pop_thous_ctry_Yh") %>%
       # temporary
       gather(year, value, -iso) %>% mutate(year = as.integer(substr(year, 2, 5))) ->
@@ -73,7 +76,6 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       bind_rows(L101.Pop_thous_SSP_R_Yfut) ->
       L101.Pop_thous_Scen_R_Yfut
 
-
     # Downscale GCAM 3.0 population to country on the basis of UN historical data and base SSP in future years
     # This is done according to actual shares in the historical periods, and SSPbase in the future periods
     L100.Pop_thous_SSP_ctry_Yfut %>%
@@ -83,7 +85,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       left_join_error_no_match(spread(L100.Pop_thous_ctry_Yh, year, value), ., by = c("iso")) %>%
       select(-country_name, -scenario, -region_GCAM3) %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, region_GCAM3), by = "iso") %>%
-      gather(year, value, -iso, -GCAM_region_ID, -region_GCAM3) ->
+      gather(year, value, -iso, -GCAM_region_ID, -region_GCAM3) %>%
+      mutate(year = as.integer(year)) ->
       L101.Pop_thous_ctry_Y
 
     L101.Pop_thous_ctry_Y %>%
@@ -94,21 +97,57 @@ module_socioeconomics_L101.Population <- function(command, ...) {
 
     # Calculate shares of each country within its region over the historical time series
     L101.Pop_thous_ctry_Y %>%
-      select(iso, region_GCAM3, year, value) %>%
+      select(iso, region_GCAM3, year) %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-
-
+      left_join_error_no_match(select(L101.Pop_thous_ctry_Y, iso, region_GCAM3, year, value), by = c("iso", "region_GCAM3", "year")) %>%
+      left_join_error_no_match(L101.Pop_thous_SSPbase_RG3_Y, by = c("region_GCAM3", "year")) %>%
+      mutate(value = value.x / value.y) %>%
+      select(-value.x, -value.y) ->
       L101.Popshares_ctryRG3_Y
 
-    L101.Popshares_ctryRG3_Y[ c( X_historical_years, X_future_years ) ] <-
-      L101.Pop_thous_ctry_Y[ c( X_historical_years, X_future_years ) ] / L101.Pop_thous_SSPbase_RG3_Y[
-        match( L101.Pop_thous_ctry_Y$region_GCAM3, L101.Pop_thous_SSPbase_RG3_Y$region_GCAM3 ),
-        c( X_historical_years, X_future_years ) ]
+    # Interpolate the GCAM population data to all historical and future years
+    GCAM3_population %>%
+      complete(nesting(region_GCAM3), year = c(year, HISTORICAL_YEARS, FUTURE_YEARS)) %>%
+      arrange(region_GCAM3, year) %>%
+      group_by(region_GCAM3) %>%
+      mutate(value = approx_fun(year, value)) %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) ->
+      L101.Pop_thous_GCAM3_RG3_Y
 
+    # If necessary, extend GCAM 3.0 scenario to 2100 using SSPbase population ratios by GCAM 3.0 region
+    # TODO: see issue #234
+    if(2100 %in% FUTURE_YEARS & !(2100 %in% L101.Pop_thous_GCAM3_RG3_Y$year)) {
+      L101.Pop_thous_GCAM3_RG3_Y %>%
+        filter(year == 2095) %>%
+        left_join_error_no_match(L101.Pop_thous_SSPbase_RG3_Y, by = c("region_GCAM3", "year")) %>%
+        rename(SSPbase2095 = value.y) %>%
+        left_join_error_no_match(filter(L101.Pop_thous_SSPbase_RG3_Y, year == 2100), by = c("region_GCAM3")) %>%
+        rename(SSPbase2100 = value) %>%
+        # scale 2095 L101.Pop_thous_GCAM3_RG3_Y value by 2100/2095 L101.Pop_thous_SSPbase_RG3_Y ratio
+        mutate(value = value.x * SSPbase2100 / SSPbase2095) %>%
+        rename(year = year.y) %>%
+        select(-SSPbase2095, -SSPbase2100, -value.x, -year.x) %>%
+        bind_rows(L101.Pop_thous_GCAM3_RG3_Y, .) ->
+        L101.Pop_thous_GCAM3_RG3_Y
+    }
 
+    # Multiply these population numbers by the shares of each country within GCAM region
+    L101.Popshares_ctryRG3_Y %>%
+      left_join_error_no_match(L101.Pop_thous_GCAM3_RG3_Y, by = c("region_GCAM3", "year")) %>%
+      mutate(value = value.x * value.y) %>%
+      select(-value.x, -value.y) ->
+      L101.Pop_thous_GCAM3_ctry_Y
+
+    # Aggregate by GCAM regions
+    L101.Pop_thous_GCAM3_ctry_Y %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarise(value = sum(value)) ->
+      L101.Pop_thous_GCAM3_R_Y
 
     # Produce outputs
-    tibble() %>%
+
+    L101.Pop_thous_R_Yh %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -118,7 +157,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
                      "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.Pop_thous_R_Yh
-    tibble() %>%
+
+    L101.Pop_thous_Scen_R_Yfut %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -128,7 +168,8 @@ module_socioeconomics_L101.Population <- function(command, ...) {
                      "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.Pop_thous_Scen_R_Yfut
-    tibble() %>%
+
+    L101.Pop_thous_GCAM3_R_Y %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -138,7 +179,10 @@ module_socioeconomics_L101.Population <- function(command, ...) {
                      "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.Pop_thous_GCAM3_R_Y
-    tibble() %>%
+
+    L101.Pop_thous_GCAM3_ctry_Y %>%
+      select(iso, year, value) %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
