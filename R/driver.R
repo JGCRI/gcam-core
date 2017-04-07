@@ -97,22 +97,20 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 
   # If there are any unaccounted for input requirements,
   # try to load them from csv files
-  unfound_inputs <- setdiff(chunkinputs$input, chunkoutputs$output)
-  if(length(unfound_inputs)) {
+  unfound_inputs <- filter(chunkinputs, !input %in% chunkoutputs$output)
+  if(nrow(unfound_inputs)) {
 
     # These should all be marked as 'from_file'
-    ff <- filter(chunkinputs, input %in% unfound_inputs & !from_file)
+    ff <- filter(unfound_inputs, !from_file)
     if(nrow(ff)) {
       stop("Unfound inputs not marked as from file: ", paste(ff$input, collapse = ", "),
            " in ", paste(ff$name, collapse = ", "))
     }
 
-    if(!quiet) cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
-    out <- utils::capture.output(csv_data <- load_csv_files(unfound_inputs, quiet = TRUE))
+    if(!quiet) cat(nrow(unfound_inputs), "chunk data input(s) not accounted for\n")
+    out <- utils::capture.output(csv_data <- load_csv_files(unfound_inputs$input, unfound_inputs$optional, quiet = TRUE))
     if(!quiet) cat(out, sep = "\n")
-    csv_data %>%
-      add_data(all_data) ->
-      all_data
+      all_data <- add_data(csv_data, all_data)
   }
 
   chunks_to_run <- chunklist$name

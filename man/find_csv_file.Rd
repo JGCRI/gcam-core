@@ -4,16 +4,21 @@
 \alias{find_csv_file}
 \title{find_csv_file}
 \usage{
-find_csv_file(filename, quiet = FALSE)
+find_csv_file(filename, optional, quiet = FALSE)
 }
 \arguments{
 \item{filename}{Filename (extension optional) to find}
 
+\item{optional}{Logical: file optional to find?}
+
 \item{quiet}{Logical - suppress messages?}
 }
 \value{
-Full name of file.
+Full name of file, or NULL if file not found but is optional.
 }
 \description{
 Find an internal, i.e. included with the package, data file.
+}
+\details{
+Throws an error if file not found (and file is not optional).
 }
