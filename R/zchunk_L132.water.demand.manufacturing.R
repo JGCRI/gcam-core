@@ -12,9 +12,9 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author SWDT April 2017
 #' @export
-module_water_L132.water.demand.manufacturing_DISABLED <- function(command, ...) {
+module_water_L132.water.demand.manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
@@ -68,7 +68,12 @@ module_water_L132.water.demand.manufacturing_DISABLED <- function(command, ...) 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L132.water_coef_manufacturing_R_W_m3_GJ") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names",
+                     "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
+                     "temp-data-inject/L1322.in_EJ_R_indfeed_F_Yh",
+                     "water/manufacturing_water_mapping",
+                     "water/manufacturing_water_data",
+                     "water/manufacturing_water_ratios") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L132.water_coef_manufacturing_R_W_m3_GJ
