@@ -1,6 +1,6 @@
 #' module_water_L110.water.demand.primary
 #'
-#' Briefly describe what this chunk does.
+#' Gets water use coefficients for primary energy.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,13 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L110.water_demand_primary_R_S_W_m3_GJ}. The corresponding file in the
 #' original data system was \code{L110.water.demand.primary.R} (water level1).
-#' @details Describe in detail what this chunk does.
+#' @details Gets water use coefficients for primary energy using regional
+#' fractions of saline and freshwater shares.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select arrange left_join
 #' @importFrom tidyr gather spread
 #' @importFrom tibble as_tibble
-#' @author YourInitials CurrentMonthName 2017
+#' @author SWDT April 2017
 module_water_L110.water.demand.primary <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -80,7 +81,7 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     L110.water_ratios_coef %>%
       mutate(water_type = "water consumption") %>%
       mutate(coefficient = fresh * water.coefficient.m3.per.TJ * 1e-3) %>%
-      rbind(L110.water_withdrawals, L110.seawater) %>%
+      bind_rows(L110.water_withdrawals, L110.seawater) %>%
       select(GCAM_region_ID, supplysector, water_type, coefficient) ->
       L110.water_demand_primary
 
