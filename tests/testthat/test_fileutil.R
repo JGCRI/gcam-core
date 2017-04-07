@@ -7,35 +7,42 @@ test_that("error with bad input", {
   expect_error(load_csv_files(TRUE))
   expect_error(load_csv_files(1))
   expect_error(find_csv_file(TRUE))
+  expect_error(load_csv_files("hi", 1))
+  expect_error(load_csv_files("hi", c(TRUE, FALSE)))
   expect_error(find_csv_file(1))
-  expect_error(find_csv_file(c("h","i")))
+  expect_error(find_csv_file(c("h", "i")))
+  expect_error(find_csv_file("hi"))
   expect_error(save_chunkdata(1))
   expect_error(save_chunkdata(empty_data()))
   expect_error(save_chunkdata(write_inputs = 1))
 })
 
 test_that("handle empty input", {
-  x <- load_csv_files(character(0))
+  x <- load_csv_files(character(0), optionals = logical(0))
   expect_is(x, "list")
   expect_length(x, 0)
-  expect_error(file_csv_file(character(0)))
+  expect_error(find_csv_file(character(0), optionals = FALSE))
 })
 
 test_that("nonexistent file", {
-  expect_error(load_csv_files("SDFKJFDJKSHGF", quiet = TRUE))
-  expect_error(find_csv_file("SDFKJFDJKSHGF", quiet = TRUE))
+  expect_error(load_csv_files("SDFKJFDJKSHGF", optionals = FALSE, quiet = TRUE))
+  expect_silent(x <- load_csv_files("SDFKJFDJKSHGF", optionals = TRUE, quiet = TRUE))
+  expect_true(is.na(x))
+  expect_error(find_csv_file("SDFKJFDJKSHGF", optional = FALSE, quiet = TRUE))
+  expect_silent(x <- find_csv_file("SDFKJFDJKSHGF", optional = TRUE, quiet = TRUE))
+  expect_null(x)
 })
 
 test_that("loads test file", {
   fn <- "tests/cars.csv"
   fqfn <- system.file("extdata", fn, package = "gcamdata")
   f1 <- readr::read_csv(fqfn, col_types = "dd", comment = COMMENT_CHAR)
-  expect_output(find_csv_file(fn, quiet = FALSE))
-  expect_silent(find_csv_file(fn, quiet = TRUE))
-  f2 <- load_csv_files(fn, quiet = TRUE)[[1]]
+  expect_output(find_csv_file(fn, optional = FALSE, quiet = FALSE))
+  expect_silent(find_csv_file(fn, optional = FALSE, quiet = TRUE))
+  f2 <- load_csv_files(fn, optionals = FALSE, quiet = TRUE)[[1]]
   expect_equal(f1, f2)
 
-  expect_output(load_csv_files(fn, quiet = FALSE))
+  expect_output(load_csv_files(fn, optionals = FALSE, quiet = FALSE))
 
   # Did header metadata get parsed?
   expect_is(get_title(f2), "character")
@@ -51,6 +58,11 @@ test_that("save_chunkdata saves", {
   expect_true(file.exists(out))
   df2 <- readr::read_csv(out)
   expect_equal(df, df2)
+
+  # Handles NAs in data list?
+  NAdf <- NA
+  all_data <- add_data(return_data(NAdf), all_data)
+  expect_silent(save_chunkdata(all_data, outputs_dir = td))
 })
 
 test_that("save_chunkdata does comments and flags", {

@@ -11,6 +11,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
+#' @importFrom stats aggregate
 #' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author BBL
@@ -384,6 +385,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 #' @param item_name Item column name
 #' @param element_name Element column name
 #' @param years Years to operate on
+#' @importFrom stats aggregate
 #' @return Downscaled data.
 downscale_FAO_country <- function(data, country_name, dissolution_year, item_name = "item",
                                   element_name = "element", years = AGLU_HISTORICAL_YEARS) {
