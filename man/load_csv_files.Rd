@@ -4,10 +4,12 @@
 \alias{load_csv_files}
 \title{load_csv_files}
 \usage{
-load_csv_files(filenames, quiet = FALSE, ...)
+load_csv_files(filenames, optionals, quiet = FALSE, ...)
 }
 \arguments{
 \item{filenames}{Character vector of filenames to load}
+
+\item{optionals}{Logical vector, specifying whether corresponding file is optional}
 
 \item{quiet}{Logical - suppress messages?}
 
@@ -21,5 +23,6 @@ Load one or more internal, i.e. included with the package, csv (or csv.gz) data 
 }
 \details{
 The data frames read in are marked as inputs, not ones that have
-been computed, via \code{\link{add_comments}}.
+been computed, via \code{\link{add_comments}}. Optional files that are not found
+as returned as NA in the list.
 }
