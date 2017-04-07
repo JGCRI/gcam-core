@@ -18,11 +18,12 @@ the generated outputs: \code{L132.ag_an_For_Prices}. The corresponding file in t
 original data system was \code{LB132.ag_an_For_Prices_USA_C_2005.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate the calibration prices for all GCAM AGLU commodities.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk calculates the production weighted average price by GCAM AGLU commodity
+and region over the calibration years.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC April 2017
 }
