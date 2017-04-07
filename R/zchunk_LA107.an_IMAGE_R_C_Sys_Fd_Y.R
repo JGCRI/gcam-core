@@ -216,7 +216,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # If no precursors (very rare) don't call `add_precursor` at all
     L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
       add_title("Animal production by GCAM region / commodity / system / feed type / year") %>%
-      add_units("Million tonnes (Mt)") %>%
+      add_units("Megatons (Mt)") %>%
       add_comments("IMAGE country-level data regarding feed type fraction and mixed versus") %>%
       add_comments("pastoral system fraction are used to downscale IMAGE country-level total") %>%
       add_comments("animal production data.") %>%
@@ -231,7 +231,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       L107.an_Prod_Mt_R_C_Sys_Fd_Y
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
       add_title("Animal feed consumption by GCAM region / commodity / system / feed type / year") %>%
-      add_units("Million tonnes (Mt)") %>%
+      add_units("Megatons (Mt)") %>%
       add_comments("Country-level IMAGE feed type input-output coefficient data is used with") %>%
       add_comments("Country-level production data to calculate Feed Consumption.") %>%
       add_legacy_name("L107.an_Feed_Mt_R_C_Sys_Fd_Y") %>%
