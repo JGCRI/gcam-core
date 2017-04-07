@@ -1,8 +1,8 @@
-# File: GCAM_region_names.csv,
-# Title: GCAM region ID to GCAM region mapping,
-# Units: NA,
-# Description: Maps GCAM region IDs to region names,
-# ----------,
+# File: GCAM_region_names.csv
+# Title: GCAM 32-region names
+# Units: NA
+# Description: Maps GCAM region IDs to region names
+# ----------
 GCAM_region_ID,region
 1,USA
 2,Africa_Eastern
