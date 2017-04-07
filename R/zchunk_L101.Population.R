@@ -150,7 +150,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
 
     L101.Pop_thous_R_Yh %>%
       add_title("Population by region over the historical time period") %>%
-      add_units("million persons") %>%
+      add_units("thousand persons") %>%
       add_comments("Population by region over the historical time period") %>%
       add_legacy_name("L101.Pop_thous_R_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
@@ -160,7 +160,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
 
     L101.Pop_thous_Scen_R_Yfut %>%
       add_title("Population by region and gSSP SSP in future periods") %>%
-      add_units("million persons") %>%
+      add_units("thousand persons") %>%
       add_comments("Population by region and gSSP SSP in future periods") %>%
       add_legacy_name("L101.Pop_thous_Scen_R_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
