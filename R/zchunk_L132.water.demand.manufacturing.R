@@ -37,34 +37,45 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
     manufacturing_water_ratios <- get_data(all_data, "water/manufacturing_water_ratios")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+
+    # Pull out global ratio constants for manufacturing water
+    selfTotalRatio <- manufacturing_water_ratios$`self-to-total-ratio`
+    consWithRatio <- manufacturing_water_ratios$`cons-to-with-ratio`
+
+    # Get total industrial energy use for manufacturing water continent regions for 1995
+    L1322.in_EJ_R_indenergy_F_Yh %>%
+      bind_rows(L1322.in_EJ_R_indfeed_F_Yh) %>%
+      select(GCAM_region_ID, X1995) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(manufacturing_water_mapping, by = "region") %>%
+      group_by(continent) %>%
+      summarise(X1995 = sum(X1995)) %>%
+
+      # Join continental water withdrawals and consumtpion
+      left_join_error_no_match(manufacturing_water_data, by = "continent") %>%
+
+      # Convert withdrawals and consumption to km^3
+      mutate(withdrawals = withdrawals * CONV_MILLION_M3_KM3,
+             consumption = consumption * CONV_MILLION_M3_KM3) %>%
+
+      # Compute withdrawals and consumption in km^3 per EJ
+      mutate(`water withdrawals` = withdrawals / X1995 * selfTotalRatio) %>%
+      mutate(`water consumption` = `water withdrawals` * consWithRatio) %>%
+      select(continent, `water withdrawals`, `water consumption`) %>%
+      gather(water_type, coefficient, -continent) -> L132.manufacture_content_energy
+
+    # Map coefficients back to GCAM regions
+    L132.manufacture_content_energy %>%
+      right_join(manufacturing_water_mapping, by = "continent") %>%
+      left_join_error_no_match(GCAM_region_names, by = "region") %>%
+      arrange(region) %>%
+      select(GCAM_region_ID, water_type, coefficient) -> L132.water_coef_manufacturing
+
     # ===================================================
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L132.water_coef_manufacturing %>%
+      add_title("Manufacturing energy water coefficients by region and water type") %>%
+      add_units("m^3 / GJ") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L132.water_coef_manufacturing_R_W_m3_GJ") %>%
@@ -75,7 +86,7 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
                      "water/manufacturing_water_data",
                      "water/manufacturing_water_ratios") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_NO_XYEAR) ->
       L132.water_coef_manufacturing_R_W_m3_GJ
 
     return_data(L132.water_coef_manufacturing_R_W_m3_GJ)

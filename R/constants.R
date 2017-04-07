@@ -52,6 +52,7 @@ CONV_2001_1975_USD <- 0.3711
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
+CONV_MILLION_M3_KM3 <- 1e-03
 
 
 # ======================================================================
