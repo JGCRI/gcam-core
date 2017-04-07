@@ -22,7 +22,7 @@ module_data_Maddison_population <- function(command, ...) {
     return(c("Maddison_population"))
   } else if(command == driver.MAKE) {
 
-    fqfn <- find_csv_file("socioeconomics/Maddison_population", quiet = TRUE)
+    fqfn <- find_csv_file("socioeconomics/Maddison_population", optional = FALSE, quiet = TRUE)
     cn <- c("Country", as.character(c(1500, 1600, 1700, 1820:2008)), "deleteme", "2030")
     ct <- paste0("c", paste(rep("d", length(cn) - 1), collapse = ""))
 

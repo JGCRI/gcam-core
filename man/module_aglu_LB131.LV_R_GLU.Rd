@@ -18,11 +18,12 @@ the generated outputs: \code{L131.LV_USD75_m2_R_GLU}. The corresponding file in 
 original data system was \code{LB131.LV_R_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Compute average value of land in $/m2
 }
 \details{
-Describe in detail what this chunk does.
+Computes average value of land in $/m2, using total land value
+and harvested cropland area.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KVC April 2017
 }
