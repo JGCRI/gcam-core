@@ -1,6 +1,6 @@
 #' module_water_L132.water.demand.manufacturing
 #'
-#' Briefly describe what this chunk does.
+#' Computes manufacturing energy use coefficients.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,12 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L132.water_coef_manufacturing_R_W_m3_GJ}. The corresponding file in the
 #' original data system was \code{L132.water.demand.manufacturing.R} (water level1).
-#' @details Describe in detail what this chunk does.
+#' @details Computes manufacturing energy use coefficients for water withdrawal
+#' and consumption for all regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author SWDT April 2017
-#' @export
 module_water_L132.water.demand.manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -76,8 +76,8 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
     L132.water_coef_manufacturing %>%
       add_title("Manufacturing energy water coefficients by region and water type") %>%
       add_units("m^3 / GJ") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Uses continental industrial energy use coefficents (1995)") %>%
+      add_comments("to determine water withdrawal and consumption coefficients") %>%
       add_legacy_name("L132.water_coef_manufacturing_R_W_m3_GJ") %>%
       add_precursors("common/GCAM_region_names",
                      "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
@@ -85,7 +85,6 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
                      "water/manufacturing_water_mapping",
                      "water/manufacturing_water_data",
                      "water/manufacturing_water_ratios") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_XYEAR) ->
       L132.water_coef_manufacturing_R_W_m3_GJ
 

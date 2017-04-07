@@ -18,11 +18,12 @@ the generated outputs: \code{L110.water_demand_primary_R_S_W_m3_GJ}. The corresp
 original data system was \code{L110.water.demand.primary.R} (water level1).
 }
 \description{
-Briefly describe what this chunk does.
+Gets water use coefficients for primary energy.
 }
 \details{
-Describe in detail what this chunk does.
+Gets water use coefficients for primary energy using regional
+fractions of saline and freshwater shares.
 }
 \author{
-YourInitials CurrentMonthName 2017
+SWDT April 2017
 }
