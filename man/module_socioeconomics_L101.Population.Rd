@@ -18,10 +18,11 @@ the generated outputs: \code{L101.Pop_thous_R_Yh}, \code{L101.Pop_thous_Scen_R_Y
 original data system was \code{L101.Population.R} (socioeconomics level1).
 }
 \description{
-Briefly describe what this chunk does.
+Compute population for historical and future years, by region and SSP.
 }
 \details{
-Describe in detail what this chunk does.
+Interpolates GCAM population data to all historical and future years, aggregating by
+country and/or region and/or SPP as necessary.
 }
 \author{
 BBL April 2017

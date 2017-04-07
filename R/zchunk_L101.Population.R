@@ -1,6 +1,6 @@
 #' module_socioeconomics_L101.Population
 #'
-#' Briefly describe what this chunk does.
+#' Compute population for historical and future years, by region and SSP.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L101.Pop_thous_R_Yh}, \code{L101.Pop_thous_Scen_R_Yfut}, \code{L101.Pop_thous_GCAM3_R_Y}, \code{L101.Pop_thous_GCAM3_ctry_Y}. The corresponding file in the
 #' original data system was \code{L101.Population.R} (socioeconomics level1).
-#' @details Describe in detail what this chunk does.
+#' @details Interpolates GCAM population data to all historical and future years, aggregating by
+#' country and/or region and/or SPP as necessary.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -36,11 +37,11 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       mutate(year = as.integer(year)) ->
       GCAM3_population
     get_data(all_data, "temp-data-inject/L100.Pop_thous_ctry_Yh") %>%
-      # temporary
+      # temporary for data inject
       gather(year, value, -iso) %>% mutate(year = as.integer(substr(year, 2, 5))) ->
       L100.Pop_thous_ctry_Yh
     get_data(all_data, "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
-      # temporary
+      # temporary for data inject
       gather(year, value, -scenario, -iso) %>% mutate(year = as.integer(substr(year, 2, 5))) ->
       L100.Pop_thous_SSP_ctry_Yfut
 
@@ -148,10 +149,9 @@ module_socioeconomics_L101.Population <- function(command, ...) {
     # Produce outputs
 
     L101.Pop_thous_R_Yh %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Population by region over the historical time period") %>%
+      add_units("million persons") %>%
+      add_comments("Population by region over the historical time period") %>%
       add_legacy_name("L101.Pop_thous_R_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
                      "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
@@ -159,10 +159,9 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       L101.Pop_thous_R_Yh
 
     L101.Pop_thous_Scen_R_Yfut %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Population by region and gSSP SSP in future periods") %>%
+      add_units("million persons") %>%
+      add_comments("Population by region and gSSP SSP in future periods") %>%
       add_legacy_name("L101.Pop_thous_Scen_R_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
                      "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
@@ -170,10 +169,9 @@ module_socioeconomics_L101.Population <- function(command, ...) {
       L101.Pop_thous_Scen_R_Yfut
 
     L101.Pop_thous_GCAM3_R_Y %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("GCAM 3.0 population by region in historical and future years") %>%
+      add_units("thousand persons") %>%
+      add_comments("GCAM population data interpolated to all historical and future years") %>%
       add_legacy_name("L101.Pop_thous_GCAM3_R_Y") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
                      "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%
@@ -183,10 +181,9 @@ module_socioeconomics_L101.Population <- function(command, ...) {
     L101.Pop_thous_GCAM3_ctry_Y %>%
       select(iso, year, value) %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("GCAM 3.0 population by country in historical and future years") %>%
+      add_units("thousand persons") %>%
+      add_comments("GCAM population data interpolated to all historical and future years") %>%
       add_legacy_name("L101.Pop_thous_GCAM3_ctry_Y") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
                      "temp-data-inject/L100.Pop_thous_ctry_Yh", "temp-data-inject/L100.Pop_thous_SSP_ctry_Yfut") %>%

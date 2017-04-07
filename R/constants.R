@@ -88,7 +88,6 @@ modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 # Population years - note that these sequences shouldn't have any overlap,
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
-
 socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to use UN data
 
 socioeconomics.BASE_POP_SCEN <- "SSP2"
