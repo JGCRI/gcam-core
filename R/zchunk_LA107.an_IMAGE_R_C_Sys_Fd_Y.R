@@ -38,40 +38,34 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L100.IMAGE_an_FeedIO_ctry_C_Sys_Y <- get_data(all_data, "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y")
     L105.an_Prod_Mt_ctry_C_Y <- get_data(all_data, "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y")
 
-
     # The inputs L100.IMAGE_X and L105.an_Prod  are in wide format. Convert to long:
-      if (ncol(L100.IMAGE_an_Prodmixfrac_ctry_C_Y) > 5 ){
-        L100.IMAGE_an_Prodmixfrac_ctry_C_Y %>%
-          gather(year, value, -iso, -IMAGE_region_ID, -commodity) %>%
-          mutate( year = substr(year, 2, 5)) ->
-          L100.IMAGE_an_Prodmixfrac_ctry_C_Y
-      }
+    if (ncol(L100.IMAGE_an_Prodmixfrac_ctry_C_Y) > 5 ){
+      L100.IMAGE_an_Prodmixfrac_ctry_C_Y %>%
+        gather(year, value, -iso, -IMAGE_region_ID, -commodity) %>%
+        mutate( year = substr(year, 2, 5)) ->
+        L100.IMAGE_an_Prodmixfrac_ctry_C_Y
+    }
 
+    if (ncol(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y) > 7 ){
+      L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y %>%
+        gather(year, value, -iso, -IMAGE_region_ID, -commodity, -system, -input) %>%
+        mutate( year = substr(year, 2, 5)) ->
+        L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y
+    }
 
-      if (ncol(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y) > 7 ){
-        L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y %>%
-          gather(year, value, -iso, -IMAGE_region_ID, -commodity, -system, -input) %>%
-          mutate( year = substr(year, 2, 5)) ->
-          L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y
-      }
+    if (ncol(L100.IMAGE_an_FeedIO_ctry_C_Sys_Y) > 6 ){
+      L100.IMAGE_an_FeedIO_ctry_C_Sys_Y %>%
+        gather(year, value, -iso, -IMAGE_region_ID, -commodity, -system) %>%
+        mutate( year = substr(year, 2, 5)) ->
+        L100.IMAGE_an_FeedIO_ctry_C_Sys_Y
+    }
 
-
-      if (ncol(L100.IMAGE_an_FeedIO_ctry_C_Sys_Y) > 6 ){
-        L100.IMAGE_an_FeedIO_ctry_C_Sys_Y %>%
-          gather(year, value, -iso, -IMAGE_region_ID, -commodity, -system) %>%
-          mutate( year = substr(year, 2, 5)) ->
-          L100.IMAGE_an_FeedIO_ctry_C_Sys_Y
-      }
-
-
-      if (ncol(L105.an_Prod_Mt_ctry_C_Y) > 4 ){
-        L105.an_Prod_Mt_ctry_C_Y %>%
-          gather(year, value, -iso, -GCAM_commodity) %>%
-          mutate( year = substr(year, 2, 5)) ->
-          L105.an_Prod_Mt_ctry_C_Y
-      }
-
-
+    if (ncol(L105.an_Prod_Mt_ctry_C_Y) > 4 ){
+      L105.an_Prod_Mt_ctry_C_Y %>%
+        gather(year, value, -iso, -GCAM_commodity) %>%
+        mutate( year = substr(year, 2, 5)) ->
+        L105.an_Prod_Mt_ctry_C_Y
+    }
 
     # Perform computations:
     #
@@ -125,16 +119,9 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # store in a table specifying pastoral animal production by country, commodity, and year
       L107.an_Prod_Mt_ctry_C_past_Y
 
-
     # Combine the mixed production table, L107.an_Prod_Mt_ctry_C_mix_Y, and the pastoral production table, L107.an_Prod_Mt_ctry_C_past_Y,
     # to form a table organizing the amount of animal production by country, commodity, system, and year:
     L107.an_Prod_Mt_ctry_C_Sys_Y <- bind_rows( L107.an_Prod_Mt_ctry_C_mix_Y, L107.an_Prod_Mt_ctry_C_past_Y )
-
-
-
-
-
-
 
     # Lines 51-57 in original file
     # Use IMAGE feed fraction by country, commodity, system, feed type and year information, L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y,
@@ -161,9 +148,6 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # store in a table specifying animal production by country, commodity, system, feed, and year:
       L107.an_Prod_Mt_ctry_C_Sys_Fd_Y
 
-
-
-
     # Lines 59-64 in the original file
     # Use the country, commodity, system, feed, year animal production table, L107.an_Prod_Mt_ctry_C_Sys_Fd_Y
     # and IMAGE input-output coefficients by country, commodity, system, and year, L100.IMAGE_an_FeedIO_ctry_C_Sys_Y
@@ -179,10 +163,6 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       select(-value.x, -value.y, -IMAGE_region_ID)->
       # store in a table specifying animal feed comsumption by country, commodity, system, feed type, and year:
       L107.an_Feed_Mt_ctry_C_Sys_Fd_Y
-
-
-
-
 
     # Lines 66-71 in original file
     # Aggregate animal production into GCAM regions:
@@ -213,7 +193,6 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # store in a table specifying feed consumption by region, commodity, system, feed type, and year:
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
 
-
     # Lines 73-80 in original file
     # Calculate the weighted average feed input-output coefficients by region, commodity, system, feed, and year
 
@@ -229,14 +208,6 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       mutate(value=if_else(is.na(value), 100, value))->
       # store in a table specifying IO coefficients by region, commodity, system, feed type, and year:
       L107.an_FeedIO_R_C_Sys_Fd_Y
-
-
-
-
-
-
-
-
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
@@ -256,7 +227,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
                      "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L107.an_Prod_Mt_R_C_Sys_Fd_Y
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
       add_title("Animal feed consumption by GCAM region / commodity / system / feed type / year") %>%
@@ -270,7 +241,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
                      "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
     L107.an_FeedIO_R_C_Sys_Fd_Y %>%
       add_title("Animal production input-output coefficients by GCAM region / commodity / system / feed type / year") %>%
@@ -284,7 +255,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
                      "temp-data-inject/L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
                      "temp-data-inject/L105.an_Prod_Mt_ctry_C_Y") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L107.an_FeedIO_R_C_Sys_Fd_Y
 
     return_data(L107.an_Prod_Mt_R_C_Sys_Fd_Y, L107.an_Feed_Mt_R_C_Sys_Fd_Y, L107.an_FeedIO_R_C_Sys_Fd_Y)
@@ -292,6 +263,3 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
