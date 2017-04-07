@@ -1,25 +1,35 @@
 # utils.R
 
-TEMP_DATA_INJECT <- "temp-data-inject"
-
 #' load_csv_files
 #'
 #' Load one or more internal, i.e. included with the package, csv (or csv.gz) data files.
 #' @param filenames Character vector of filenames to load
+#' @param optionals Logical vector, specifying whether corresponding file is optional
 #' @param quiet Logical - suppress messages?
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @details The data frames read in are marked as inputs, not ones that have
-#' been computed, via \code{\link{add_comments}}.
+#' been computed, via \code{\link{add_comments}}. Optional files that are not found
+#' as returned as NA in the list.
 #' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
-load_csv_files <- function(filenames, quiet = FALSE, ...) {
-  assertthat::assert_that(is.character(filenames))
-  assertthat::assert_that(is.logical(quiet))
+#' @importFrom assertthat assert_that
+load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
+  assert_that(is.character(filenames))
+  assert_that(is.logical(optionals))
+  assert_that(is.logical(quiet))
+  assert_that(length(filenames) == length(optionals))
 
   filedata <- list()
-  for(f in filenames) {
+  for(fnum in seq_along(filenames)) {
+    f <- filenames[fnum]
     if(!quiet) cat("Loading", f, "...\n")
-    fqfn <- find_csv_file(f, quiet = quiet)
+    fqfn <- find_csv_file(f, optionals[fnum], quiet = quiet)
+
+    if(is.null(fqfn)) {
+      assert_that(optionals[fnum]) # if we get back a NULL, file has to be optional
+      filedata[[f]] <- NA
+      next
+    }
     suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
       parse_csv_header(fqfn) %>%
       add_comments(paste("Read from", gsub("^.*extdata", "extdata", fqfn))) %>%
@@ -144,7 +154,7 @@ parse_csv_header <- function(obj, filename, n = 20, enforce_requirements = TRUE)
     stop("'File:' given in header (", filecheck, ") doesn't match filename in ", filename)
   }
 
-obj %>%
+  obj %>%
     add_title(extract_header_info(x, "Title:", filename, required = enforce_requirements)) %>%
     add_units(extract_header_info(x, "Units?:", filename, required = enforce_requirements)) %>%
     add_comments(extract_header_info(x, "(Comments|Description):", filename, multiline = TRUE)) %>%
@@ -156,12 +166,16 @@ obj %>%
 #'
 #' Find an internal, i.e. included with the package, data file.
 #' @param filename Filename (extension optional) to find
+#' @param optional Logical: file optional to find?
 #' @param quiet Logical - suppress messages?
-#' @return Full name of file.
-find_csv_file <- function(filename, quiet = FALSE) {
-  assertthat::assert_that(is.character(filename))
+#' @return Full name of file, or NULL if file not found but is optional.
+#' @details Throws an error if file not found (and file is not optional).
+#' @importFrom assertthat assert_that
+find_csv_file <- function(filename, optional, quiet = FALSE) {
+  assert_that(is.character(filename))
   assert_that(assert_that(length(filename) == 1))
-  assertthat::assert_that(is.logical(quiet))
+  assert_that(is.logical(optional))
+  assert_that(is.logical(quiet))
 
   extensions <- c("", ".csv", ".csv.gz", ".csv.zip")
   for(ex in extensions) {
@@ -171,7 +185,11 @@ find_csv_file <- function(filename, quiet = FALSE) {
       return(fqfn)  # found it
     }
   }
-  stop("Couldn't find required data ", filename)
+  if(optional) {
+    return(NULL)
+  } else {
+    stop("Couldn't find required data ", filename)
+  }
 }
 
 
@@ -189,29 +207,32 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
 
   dir.create(OUTPUTS_DIR, showWarnings = FALSE, recursive = TRUE)
   for(cn in names(chunkdata)) {
-    fqfn <- file.path(outputs_dir, paste0(cn, ".csv"))
-    suppressWarnings(file.remove(fqfn))
-
     cd <- chunkdata[[cn]]
-    cmnts <- get_comments(cd)
-    flags <- get_flags(cd)
+    if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
 
-    # If these data have been tagged as input data, don't write
-    if(FLAG_NO_OUTPUT %in% flags |
-       FLAG_INPUT_DATA %in% flags & !write_inputs) {
-      next
-    }
+      fqfn <- file.path(outputs_dir, paste0(cn, ".csv"))
+      suppressWarnings(file.remove(fqfn))
 
-    # If data is in a different from for original data system, indicate
-    # that by writing to first line of file
-    if(!is.null(flags)) {
-      cat(paste(flags, collapse = " "), file = fqfn, sep = "\n")
-    }
+      cmnts <- get_comments(cd)
+      flags <- get_flags(cd)
 
-    if(!is.null(cmnts)) {
-      cat(paste(COMMENT_CHAR, cmnts), file = fqfn, sep = "\n", append = TRUE)
+      # If these data have been tagged as input data, don't write
+      if(FLAG_NO_OUTPUT %in% flags |
+         FLAG_INPUT_DATA %in% flags & !write_inputs) {
+        next
+      }
+
+      # If data is in a different from for original data system, indicate
+      # that by writing to first line of file
+      if(!is.null(flags)) {
+        cat(paste(flags, collapse = " "), file = fqfn, sep = "\n")
+      }
+
+      if(!is.null(cmnts)) {
+        cat(paste(COMMENT_CHAR, cmnts), file = fqfn, sep = "\n", append = TRUE)
+      }
+      readr::write_csv(cd, fqfn, append = TRUE, col_names = TRUE)
     }
-    readr::write_csv(cd, fqfn, append = TRUE, col_names = TRUE)
   }
 }
 
@@ -256,12 +277,17 @@ chunk_inputs <- function(chunks = find_chunks()$name) {
 
     # Chunks mark their file inputs specially, using vector names
     if(is.null(names(reqdata))) {
-      fileinputs <- FALSE
+      file_inputs <- FALSE
+      optional_file_inputs <- FALSE
     } else {
-      fileinputs <- names(reqdata) == "FILE"
+      file_inputs <- names(reqdata) %in% c("FILE", "OPTIONAL_FILE")
+      optional_file_inputs <- names(reqdata) == "OPTIONAL_FILE"
     }
     if(!is.null(reqdata)) {
-      chunkinputs[[ch]] <- tibble(name = ch, input = reqdata, from_file = fileinputs)
+      chunkinputs[[ch]] <- tibble(name = ch,
+                                  input = reqdata,
+                                  from_file = file_inputs,
+                                  optional = optional_file_inputs)
     }
   }
   dplyr::bind_rows(chunkinputs)
@@ -375,7 +401,7 @@ make_run_xml_conversion <- function() {
         cat("Variable ID", file = conv_pipe, sep = "\n")
         cat(table$header, file = conv_pipe, sep = "\n")
         cat("", file = conv_pipe, sep = "\n")
-        write.table( table$data, file=conv_pipe, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
+        utils::write.table(table$data, file = conv_pipe, sep=",", row.names = FALSE, col.names = TRUE, quote = FALSE)
         cat("", file = conv_pipe, sep = "\n")
       }
     }

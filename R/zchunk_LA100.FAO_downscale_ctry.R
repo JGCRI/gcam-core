@@ -11,6 +11,7 @@
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
+#' @importFrom stats aggregate
 #' @import dplyr
 #' @importFrom tidyr gather spread
 #' @author BBL
@@ -156,7 +157,9 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     FAO_data_ALL[is.na(FAO_data_ALL)] <- 0
 
     # Match the iso names
-    FAO_data_ALL$iso <- AGLU_ctry$iso[match(FAO_data_ALL$countries, AGLU_ctry$FAO_country)]
+    FAO_data_ALL %>%
+      left_join(distinct(AGLU_ctry, FAO_country, .keep_all = TRUE), by = c("countries" = "FAO_country")) ->
+      FAO_data_ALL
 
     # Downscale countries individually NOTE: This is complicated. The FAO data need to be downscaled
     # to all FAO historical years (i.e. back to 1961 regardless of when we are starting our
@@ -382,6 +385,7 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
 #' @param item_name Item column name
 #' @param element_name Element column name
 #' @param years Years to operate on
+#' @importFrom stats aggregate
 #' @return Downscaled data.
 downscale_FAO_country <- function(data, country_name, dissolution_year, item_name = "item",
                                   element_name = "element", years = AGLU_HISTORICAL_YEARS) {

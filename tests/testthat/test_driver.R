@@ -137,4 +137,44 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     )
   })
 
+  test_that("warn_data_injects works", {
+    # No chunks using temp-data-inject data
+    with_mock(
+      find_chunks = function(...) tibble(name = c("A", "B", "C")),
+      chunk_inputs = function(...) tibble(name = c("A", "B", "C"),
+                                          input = c("Ai", "Ao", "Bo")),
+      chunk_outputs = function(...) tibble(name = c("A", "B", "C"),
+                                           output = c("Ao", "Bo", "Co")),
+      expect_silent(warn_data_injects()),
+      expect_equal(warn_data_injects(), 0)
+    )
+
+    # Chunks using temp-data-inject data because 'A' not enabled yet
+    with_mock(
+      find_chunks = function(include_disabled)
+        if(include_disabled) {
+          tibble(name = c("A", "B", "C"))
+        } else {
+          tibble(name = c("B", "C"))
+        } ,
+      chunk_inputs = function(...) tibble(name = c("A", "B", "C"),
+                                          input = c("Ai", paste0(TEMP_DATA_INJECT, "Ao"), "Bo")),
+      chunk_outputs = function(...) tibble(name = c("B", "C"),
+                                           output = c("Bo", "Co")),
+      expect_silent(warn_data_injects()),
+      expect_equal(warn_data_injects(), 0)
+    )
+
+    # Chunk using temp-data-inject data but real data is available
+    with_mock(
+      find_chunks = function(...) tibble(name = c("A", "B", "C")),
+      chunk_inputs = function(...) tibble(name = c("A", "B", "C"),
+                                          input = c("Ai", paste0(TEMP_DATA_INJECT, "Ao"), "Bo")),
+      chunk_outputs = function(...) tibble(name = c("A", "B", "C"),
+                                           output = c("Ao", "Bo", "Co")),
+      expect_message(warn_data_injects()),
+      expect_equal(warn_data_injects(), 1)
+    )
+  })
+
 }

@@ -1,5 +1,8 @@
 # driver.R
 
+
+TEMP_DATA_INJECT <- "temp-data-inject/"
+
 #' run_chunk
 #'
 #' @param chunk Chunk name, character
@@ -84,6 +87,8 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
   chunkoutputs <- chunk_outputs(chunklist$name)
   if(!quiet) cat("Found", nrow(chunkoutputs), "chunk data products\n")
 
+  warn_data_injects()
+
   # Outputs should all be unique
   dupes <- duplicated(chunkoutputs$output)
   if(any(dupes)) {
@@ -92,22 +97,20 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 
   # If there are any unaccounted for input requirements,
   # try to load them from csv files
-  unfound_inputs <- setdiff(chunkinputs$input, chunkoutputs$output)
-  if(length(unfound_inputs)) {
+  unfound_inputs <- filter(chunkinputs, !input %in% chunkoutputs$output)
+  if(nrow(unfound_inputs)) {
 
     # These should all be marked as 'from_file'
-    ff <- filter(chunkinputs, input %in% unfound_inputs & !from_file)
+    ff <- filter(unfound_inputs, !from_file)
     if(nrow(ff)) {
       stop("Unfound inputs not marked as from file: ", paste(ff$input, collapse = ", "),
            " in ", paste(ff$name, collapse = ", "))
     }
 
-    if(!quiet) cat(length(unfound_inputs), "chunk data input(s) not accounted for\n")
-    out <- utils::capture.output(csv_data <- load_csv_files(unfound_inputs, quiet = TRUE))
+    if(!quiet) cat(nrow(unfound_inputs), "chunk data input(s) not accounted for\n")
+    out <- utils::capture.output(csv_data <- load_csv_files(unfound_inputs$input, unfound_inputs$optional, quiet = TRUE))
     if(!quiet) cat(out, sep = "\n")
-    csv_data %>%
-      add_data(all_data) ->
-      all_data
+      all_data <- add_data(csv_data, all_data)
   }
 
   chunks_to_run <- chunklist$name
@@ -158,4 +161,34 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 
   if(!quiet) cat("All done.\n")
   invisible(all_data)
+}
+
+
+#' warn_data_injects
+#'
+#' Check whether chunks are using any temporary (old data system data) 'injected' inputs.
+#'
+#' @return Number of temporary data objects being used inappropriately.
+warn_data_injects <- function() {
+
+  # We want to know if any chunks (including disabled ones) are using temp-data-inject
+  # data that is available to them through the data system
+  ci <- chunk_inputs(find_chunks(include_disabled = TRUE)$name)
+  chunk_outputs(find_chunks(include_disabled = FALSE)$name) %>%
+    rename(upstream_chunk = name) ->
+    co
+
+  # Look for TEMP_DATA_INJECT pattern in the chunk input list
+  ci[grep(TEMP_DATA_INJECT, ci$input),] %>%
+    mutate(base_input = basename(input)) %>%
+    # Look for any tdi inputs that appear in the enabled chunks' outputs
+    filter(base_input %in% co$output) %>%
+    left_join(select(co, upstream_chunk, output), by = c("base_input" = "output")) ->
+    ci_tdi
+
+  # Print messages
+  for(i in seq_len(nrow(ci_tdi))) {
+    message("NOTE: chunk ", ci_tdi$name[i], " reads `", ci_tdi$input[i], "`\n\tbut this is available from ", ci_tdi$upstream_chunk[i])
+  }
+  nrow(ci_tdi)
 }
