@@ -1,0 +1,39 @@
+# File: resource_water_data.csv
+# Title: Global estimates of energy production and water consumption for primary energy production in year 2005
+# Units: m3_per_TJ for 'water.coefficient.m3.per.TJ', EJ for 'energy.production.EJ', Million_m3 for  'total.water.consumption.million.m3'
+# Source: Maheu, A., 2009. Energy Choices and their Impacts on Demand for Water Resources : An Assessment of Current and Projected Water Consumption in Global Energy Production.
+fuel,region,subsector,technology,water.coefficient.m3.per.TJ ,energy.production.EJ,total.water.consumption.million.m3
+liquids.conventional,Non-OPEC,crude.oil.onshore,Primary recovery,6,31.8,175
+liquids.conventional,Non-OPEC,crude.oil.onshore,Secondary recovery,600,16,9588
+liquids.conventional,Non-OPEC,crude.oil.onshore,EOR steam,140,0.5,64
+liquids.conventional,Non-OPEC,crude.oil.onshore,EOR CO2,640,0.2,125
+liquids.conventional,Non-OPEC,natura.gas.liquids.onshore,NGL (onshore),6,6,36
+liquids.unconventional,Non-OPEC,natura.gas.liquids.onshore,Mining,26,1.1,30
+liquids.unconventional,Non-OPEC,natura.gas.liquids.onshore,In situ SAGD,8,0.5,4
+liquids.unconventional,Non-OPEC,natura.gas.liquids.onshore,In situ CSS,14,0.4,6
+liquids.unconventional,Non-OPEC,natura.gas.liquids.onshore,In situ multi-scheme,32,0,1
+liquids.conventional,OPEC,crude.oil.onshore,Crude oil (onshore),78,37.2,2903
+liquids.conventional,OPEC,natura.gas.liquids.onshore,NGL (onshore),6,5.5,33
+liquids.unconventional,OPEC,crude.oil.heavy,Extra-heavy oil,14,0.2,2
+natural.gas.component,global,conventional.gas,Conventional gas,0,88.9,0
+natural.gas.component,global,gas.unconventional,Unconventional gas,,,
+natural.gas.component,global,coalbed.methane,Coalbed methane,0,0.9,0
+natural.gas.component,global,gas.thight,Thight gas,0.42,2.8,1.2
+natural.gas.component,global,gas.shale,Shale gas,0.42,0.5,0.2
+coal.component,global,surface.mining,Surface mining,2,48,96
+coal.component,global,underground.mining,Underground mining,11.5,72,827
+coal.component,global,coal.upgrading,Coal upgrading,4,46,185
+nuclear.component,global,uranium.mining.milling,Open-pit,0,7,0
+nuclear.component,global,uranium.mining.milling,Underground,0,12,0
+nuclear.component,global,uranium.mining.milling,In situ leaching,0.1,8,1
+nuclear.component,global,uranium.mining.milling,Co-product,0,3,0
+nuclear.component,global,uranium.mining.milling,Uranium conversion,4,30,121
+nuclear.component,global,uranium.enrichment,Gaseous diffusion,12,12,145
+nuclear.component,global,uranium.enrichment,Centrifuge,2,18,36
+conventional.oil.onshore,global,onshore,conventional.oil.onshore,132.96,97.2,12924
+unconventional.oil.onshore,global,onshore,unconventional.oil.onshore,19.55,2.2,43
+crude oil,global,crude oil,crude oil,77.07,167.7,12924
+unconventional oil,global,unconventional oil production,unconventional oil production,11.17,3.85,43
+gas,global,regional natural gas,regional natural gas,0.015,93.1,1.4
+coal,global,regional coal,regional coal,6.67,166,1108
+nuclear,global,enrichedUranium,enrichedUranium,10.1,30,303

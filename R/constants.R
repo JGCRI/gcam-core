@@ -34,6 +34,12 @@ aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
 
+# ======================================================================
+# energy constants
+
+# At present the CO2 emissions inventory from CDIAC stops at 2009
+energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
+
 
 # ======================================================================
 # Conversion constants

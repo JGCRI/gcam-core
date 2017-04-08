@@ -43,7 +43,7 @@ test_that("errors if required data not available", {
 
 test_that("doesn't use forbidden calls", {
   chunklist <- find_chunks()
-  forbiddens <- c("[^error_no_]match", "ifelse", "melt", "cast")
+  forbiddens <- c("[^error_no_]match", "ifelse", "melt", "cast", "rbind", "cbind")
 
   for(ch in unique(chunklist$name)) {
     code <- capture.output(getFromNamespace(ch, ns = "gcamdata"))
