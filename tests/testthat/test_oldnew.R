@@ -41,12 +41,16 @@ test_that("matches old data system output", {
 
     # Reshape new data if necessary--see comment above
     if(flag_long_year_form) {
+      expect_true(all(c("year", "value") %in% names(newdata)),
+                  info = "FLAG_LONG_YEAR_FORM specified by no 'year' and 'value' columns present")
       newdata %>%
         spread(year, value) ->
         newdata
     }
     if(flag_no_xyear_form) {
       yearcols <- grep("^[0-9]{4}$", names(newdata))
+      expect_true(length(yearcols > 0),
+                  info = "FLAG_NO_XYEAR specified but no year-type columns seem to be present")
       names(newdata)[yearcols] <- paste0("X", names(newdata)[yearcols])
     }
 
