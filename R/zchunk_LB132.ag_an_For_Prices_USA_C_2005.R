@@ -197,11 +197,62 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       stop("Missing commodity prices for ", missing_commodities)
     }
 
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
+    # Animal products prices are in USD per metric tonne, so the CONV_T_METRIC_SHORT in the old data system is unnecessary and dropped.
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
+      # Animal products
+      FAO_USA_an_Prod_t_PRODSTAT %>%
+        select(-country.codes, -item.codes, -element, -element.codes) %>%
+        gather(year, prod, -countries, -item) %>%
+        # Calculate average production for each FAO animal product over price years
+        filter(year %in% MODEL_PRICE_YEARS) %>%
+        group_by(countries, item) %>%
+        summarise_at(vars(prod), mean, na.rm = TRUE) %>%
+        ungroup() %>%
+        filter(!is.na(prod)) %>%
+        # Match production and price for each FAO item to calculate revenue, avoid any missing value by inner_join
+        inner_join(Avg_price, by = c("countries", "item")) %>%
+        # Calculate revenue by commodity as production times price
+        mutate(V_USD = price * prod) %>%
+        left_join(FAO_an_items_PRODSTAT, by = "item") %>%
+        filter(!is.na(GCAM_commodity)) %>%
+        # Aggregate revenue and production by GCAM commodity
+        group_by(GCAM_commodity) %>%
+        summarize_at(vars(V_USD, prod), sum, na.rm = TRUE) %>%
+        ungroup() %>%
+        # Calculate production weighted average price for each GCAM commodity
+        mutate(Price_USDt = V_USD / prod) %>%
+        # Convert to model units
+        mutate(calPrice = round(Price_USDt * CONV_T_METRIC_SHORT * CONV_2004_1975_USD / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
+        select(GCAM_commodity, calPrice) ->
+        Price_an
+      } else {
+        # Animal products
+        FAO_USA_an_Prod_t_PRODSTAT %>%
+          select(-country.codes, -item.codes, -element, -element.codes) %>%
+          gather(year, prod, -countries, -item) %>%
+          # Calculate average production for each FAO animal product over price years
+          filter(year %in% MODEL_PRICE_YEARS) %>%
+          group_by(countries, item) %>%
+          summarise_at(vars(prod), mean, na.rm = TRUE) %>%
+          ungroup() %>%
+          filter(!is.na(prod)) %>%
+          # Match production and price for each FAO item to calculate revenue, avoid any missing value by inner_join
+          inner_join(Avg_price, by = c("countries", "item")) %>%
+          # Calculate revenue by commodity as production times price
+          mutate(V_USD = price * prod) %>%
+          left_join(FAO_an_items_PRODSTAT, by = "item") %>%
+          filter(!is.na(GCAM_commodity)) %>%
+          # Aggregate revenue and production by GCAM commodity
+          group_by(GCAM_commodity) %>%
+          summarize_at(vars(V_USD, prod), sum, na.rm = TRUE) %>%
+          ungroup() %>%
+          # Calculate production weighted average price for each GCAM commodity
+          mutate(Price_USDt = V_USD / prod) %>%
+          # Convert to model units, do not need to convert to short ton, drop CONV_T_METRIC_SHORT
+          mutate(calPrice = round(Price_USDt * CONV_2004_1975_USD / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
+          select(GCAM_commodity, calPrice) ->
+          Price_an
+      }
 
     # Produce outputs
     Price_ag_an_For %>%
@@ -216,8 +267,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
                      "aglu/FAO_USA_For_Exp_t_USD_FORESTAT",
                      "aglu/USDA_Alfalfa_prices_USDt",
                      "L100.FAO_ag_Prod_t",
-                     "aglu/FAO_USA_an_Prod_t_PRODSTAT") %>%
-      add_flags(FLAG_NO_XYEAR) ->
+                     "aglu/FAO_USA_an_Prod_t_PRODSTAT") ->
       L132.ag_an_For_Prices
     return_data(L132.ag_an_For_Prices)
   } else {
