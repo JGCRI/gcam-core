@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_gcam.usa_LA119.Solar_DISABLED <- function(command, ...) {
+module_gcam.usa_LA119.Solar <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/NREL_us_re_capacity_factors",
@@ -29,10 +29,37 @@ module_gcam.usa_LA119.Solar_DISABLED <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     NREL_us_re_capacity_factors <- get_data(all_data, "gcam-usa/NREL_us_re_capacity_factors")
-    NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
+    NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")   #This data is not being used in this chunk
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
+    # Perform computations: Create scalars to scale capacity factors read in in the assumptions file in the energy folder to adjust for varying irradiance by state.
+
+    NREL_us_re_capacity_factors %>% gather(fuel,average,-State) %>%
+      filter (State=="Average") %>%
+      select (-State) -> Average_fuel
+
+    NREL_us_re_capacity_factors %>%
+      gather(fuel,value,-State) %>%
+      filter (State != "Average") %>%
+      full_join(Average_fuel, by = "fuel") %>%
+      mutate(scaler = value/average, sector = "electricity generation") %>%
+      select(State,sector,fuel, scaler) -> NREL_us_re_capacity_factors
+
+    states_subregions %>%
+      mutate(State = state_name) %>%
+      select(state,State) %>%
+      full_join(NREL_us_re_capacity_factors, by = "State") %>%
+      select (-State) -> NREL_us_re_capacity_factors
+
+    NREL_us_re_capacity_factors %>%
+
+      filter(fuel == "Urban_Utility_scale_PV") %>%
+      mutate(fuel = "solar PV")      -> L119.CapFacScaler_PV_state
+
+    NREL_us_re_capacity_factors %>%
+      filter(fuel == "CSP") %>%
+      mutate(fuel = "solar CSP")   -> L119.CapFacScaler_CSP_state
+
+
     #
     # If you find a mistake/thing to update in the old code and
     # fixing it will change the output data, causing the tests to fail,
@@ -55,25 +82,25 @@ module_gcam.usa_LA119.Solar_DISABLED <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+    L119.CapFacScaler_PV_state %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L119.CapFacScaler_PV_state") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("gcam-usa/states_subregions","gcam-usa/NREL_us_re_capacity_factors", "gcam-usa/NREL_us_re_technical_potential") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_NO_TEST) ->
       L119.CapFacScaler_PV_state
-    tibble() %>%
+    L119.CapFacScaler_CSP_state %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L119.CapFacScaler_CSP_state") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("gcam-usa/states_subregions","gcam-usa/NREL_us_re_capacity_factors", "gcam-usa/NREL_us_re_technical_potential") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_NO_TEST) ->
       L119.CapFacScaler_CSP_state
 
     return_data(L119.CapFacScaler_PV_state, L119.CapFacScaler_CSP_state)
