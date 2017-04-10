@@ -1,5 +1,5 @@
 # File: FAO_an_items_PRODSTAT.csv,
-# Title: FAO_an_items_PRODSTAT,
+# Title: mapping file of FAO animal products and GCAM animal commodities,
 # Unit: Unitless,
 # Description: Maps FAO PRODSTAT animal products to GCAM animal products,
 # Sources: FAO,
