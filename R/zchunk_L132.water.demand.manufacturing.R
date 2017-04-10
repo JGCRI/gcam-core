@@ -30,11 +30,19 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh")
-    L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indfeed_F_Yh")
     manufacturing_water_mapping <- get_data(all_data, "water/manufacturing_water_mapping")
     manufacturing_water_data <- get_data(all_data, "water/manufacturing_water_data")
     manufacturing_water_ratios <- get_data(all_data, "water/manufacturing_water_ratios")
+
+    L1322.in_EJ_R_indenergy_F_Yh <-
+      get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+
+    L1322.in_EJ_R_indfeed_F_Yh <-
+      get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indfeed_F_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
 
     # ===================================================
 
@@ -45,11 +53,12 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
     # Get total industrial energy use for manufacturing water continent regions for 1995
     L1322.in_EJ_R_indenergy_F_Yh %>%
       bind_rows(L1322.in_EJ_R_indfeed_F_Yh) %>%
-      select(GCAM_region_ID, X1995) %>%
+      filter(year == 1995) %>%
+      select(GCAM_region_ID, value) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(manufacturing_water_mapping, by = "region") %>%
       group_by(continent) %>%
-      summarise(X1995 = sum(X1995)) %>%
+      summarise(value = sum(value)) %>%
 
       # Join continental water withdrawals and consumtpion
       left_join_error_no_match(manufacturing_water_data, by = "continent") %>%
@@ -59,7 +68,7 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
              consumption = consumption * CONV_MILLION_M3_KM3) %>%
 
       # Compute withdrawals and consumption in km^3 per EJ
-      mutate(`water withdrawals` = withdrawals / X1995 * selfTotalRatio) %>%
+      mutate(`water withdrawals` = withdrawals / value * selfTotalRatio) %>%
       mutate(`water consumption` = `water withdrawals` * consWithRatio) %>%
       select(continent, `water withdrawals`, `water consumption`) %>%
       gather(water_type, coefficient, -continent) -> L132.manufacture_content_energy
@@ -84,8 +93,7 @@ module_water_L132.water.demand.manufacturing <- function(command, ...) {
                      "temp-data-inject/L1322.in_EJ_R_indfeed_F_Yh",
                      "water/manufacturing_water_mapping",
                      "water/manufacturing_water_data",
-                     "water/manufacturing_water_ratios") %>%
-      add_flags(FLAG_NO_XYEAR) ->
+                     "water/manufacturing_water_ratios") ->
       L132.water_coef_manufacturing_R_W_m3_GJ
 
     return_data(L132.water_coef_manufacturing_R_W_m3_GJ)
