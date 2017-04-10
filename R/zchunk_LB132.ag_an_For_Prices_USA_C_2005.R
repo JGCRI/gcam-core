@@ -49,7 +49,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       # Modify item names to one word so that they can be used as column names when spreading item and doing calculations
       mutate(item = sub(" ", "_", item)) %>%
       spread(item, price) %>%
-      mutate(Seed_cotton = Cotton_lint * CONV_COTTON_LINT + Cottonseed * (1 - CONV_COTTON_LINT)) %>%
+      mutate(Seed_cotton = Cotton_lint * WEIGHT_COTTON_LINT + Cottonseed * (1 - WEIGHT_COTTON_LINT)) %>%
       mutate(Game_meat = Cattle_meat) %>%
       gather(item, price, -countries, -year) %>%
       # Change item names back to original for mapping GCAM commodities
@@ -71,8 +71,9 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
 
     # Computing average prices and production quantities of all commodities
     # Subset only the relevant country/item combinations from the ag prodstat database
-    # NOTE: This mostly excludes fodder crops and "not elsewhere specified" crops. It also excludes about seven crops that are
-    # minor enough to not distort price estimates, but their omission may cause problems if a large number of commodities is used
+    # NOTE: This mostly excludes fodder crops and "not elsewhere specified" crops. It also excludes several crops that are
+    # minor enough to not distort price estimates, including: Brans, Rubber, Sweeteners, Other, Tobacco, and etc.
+
 
     # Build tables with production and price, and calculate revenue
     # Part 1: Primary agricultural goods and animal products

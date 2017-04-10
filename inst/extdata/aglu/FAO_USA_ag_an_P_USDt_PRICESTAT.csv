@@ -1,6 +1,7 @@
 # File: FAO_USA_ag_an_P_USDt_PRICESTAT.csv,,,,,,,,,,,,,,,,,,,,,,,,,
 # Title: FAO USA producer prices of agricultural commodities,,,,,,,,,,,,,,,,,,,,,,,,,
 # Units: USD/tonne,,,,,,,,,,,,,,,,,,,,,,,,,
+"# Comments:  Indonesia prices are used for coconuts and oil palm, because there are no USA-based producer prices, and they are a GCAM commodity (PalmFruit). ",,,,,,,,,,,,,,,,,,,,,,,,,
 countries,country.codes,item,item.codes,element,element.codes,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010
 Indonesia,101,Coconuts,249,Producer Price (US $/tonne) (USD),60,81.5,102.8,93.3,97.3,142.5,143.7,112,69.8,82.7,54.9,65.1,53.9,63.2,54.3,106.5,125.2,130.2,166.3,155,179.7
 Indonesia,101,Oil palm fruit,254,Producer Price (US $/tonne) (USD),60,58.5,84,90.6,98,96.1,100.4,89.7,46.8,63.4,51.4,49.5,58.4,66.7,64.2,,,,,,

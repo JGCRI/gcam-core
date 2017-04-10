@@ -32,10 +32,17 @@ GTAP_HISTORICAL_YEAR <- 2000
 aglu.GLU <- "GLU"
 aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 
-# cotton seed and lint conversion
-CONV_COTTON_LINT <- 0.4
+# FAO PRICESTAT database disaggregates "cottonseed" and "cotton lint" as different commodities.
+# This is the weight used to calculate the weighted average producer price for "seed cotton",
+# based on that FAO total production volume of "seed cotton" is about 40% cotton lint and 60% cotton seeds.
+# Source: http://www.fao.org/es/faodef/fdef06e.htm
+WEIGHT_COTTON_LINT <- 0.4
 
 # Price conversion from alfalfa to grass hay
+# Sources:
+# Alfalfa price: USDA. 2011. Prices Received for Alfalfa Hay, Baled, Washington. National Agricultural Statistics Service, U.S. Department of Agriculture.
+# Grass price: Baker, A., and H. Lutman. 2008. Feed Year in Review (Domestic): Record Demand Drives U.S. Feed Grain Prices Higher in 2007/2008.
+# FDS-2008-01, Economic Research Service, United States Department of Agriculture. Available at http://usda.mannlib.cornell.edu/usda/ers/FDS-yearbook/2000s/2008/FDS-yearbook-05-23-2008_Special_Report.pdf
 PRICERATIO_GRASS_ALFALFA <- 0.7
 
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
@@ -55,7 +62,7 @@ CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
 CONV_T_KG <- 1e3
-CONV_T_METRIC_SHORT <- 1000/908
+CONV_T_METRIC_SHORT <- 1000/908  # Ratio between metric ton and short ton
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_1990_2010_USD <- 1.510
