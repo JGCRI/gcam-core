@@ -8,8 +8,8 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L132.ag_an_For_Prices}. The corresponding file in the
 #' original data system was \code{LB132.ag_an_For_Prices_USA_C_2005.R} (aglu level1).
-#' @details This chunk calculates the production weighted average price by GCAM AGLU commodity
-#' and region over the calibration years.
+#' @details This chunk calculates average prices over calibration years by GCAM commodity.
+#' Averages across years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
