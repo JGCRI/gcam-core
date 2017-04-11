@@ -92,8 +92,7 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
       add_precursors("aglu/AGLU_ctry",
                      "aglu/FAO_ag_items_PRODSTAT",
                      "L100.LDS_value_milUSD",
-                     "L100.LDS_ag_prod_t") %>%
-      add_flags(FLAG_NO_XYEAR) ->
+                     "L100.LDS_ag_prod_t") ->
       L100.GTAP_LV_milUSD
 
     return_data(L100.GTAP_LV_milUSD)
