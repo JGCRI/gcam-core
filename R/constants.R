@@ -84,3 +84,16 @@ modeltime.MAGICC_C_START_YEAR <- 1705
 modeltime.HECTOR_END_YEAR <- 2100
 modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
+
+# ======================================================================
+#Set a default electric efficiency
+DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
+
+# ======================================================================
+#Set a default electric efficiency
+ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
+
+# ======================================================================
+#Create X_HISTORICAL_YEARS
+X_HISTORICAL_YEARS <- paste( "X", HISTORICAL_YEARS, sep = "" )
+
