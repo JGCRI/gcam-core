@@ -61,7 +61,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       gather(year, price, -countries, -item) %>%
       filter(!(item == "Seed cotton" | item == "Cotton lint" | item == "Cottonseed" | item == "Game meat" | item == "Cattle meat")) %>%
       bind_rows(extra_price) %>%
-      # Calculate unweighted averages for each FAO commodity over price years
+      # Calculate a single unweighted average price over price years for each FAO agricultural item
       filter(year %in% MODEL_PRICE_YEARS) %>%
       group_by(countries, item) %>%
       summarise_at(vars(price), mean, na.rm = TRUE) %>%
@@ -74,13 +74,12 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # NOTE: This mostly excludes fodder crops and "not elsewhere specified" crops. It also excludes several crops that are
     # minor enough to not distort price estimates, including: Brans, Rubber, Sweeteners, Other, Tobacco, and etc.
 
-
-    # Build tables with production and price, and calculate revenue
+    # Build tables with production and price, and calculate production-weighted average price of each GCAM commodity.
     # Part 1: Primary agricultural goods and animal products
     # Primary agricultural goods
     L100.FAO_ag_Prod_t %>%
       rename(prod = value) %>%
-      # Calculate average production for each FAO primary agricultural good over price years
+      # Calculate a single unweighted average production value over price years for each FAO primary agricultural good
       filter(year %in% MODEL_PRICE_YEARS) %>%
       group_by(countries, item) %>%
       summarise_at(vars(prod), mean, na.rm = TRUE) %>%
@@ -91,7 +90,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       # Calculate revenue by commodity as production times price
       mutate(V_USD = price * prod) %>%
       left_join_error_no_match(select(FAO_ag_items_PRODSTAT, item, GCAM_commodity), by = "item") %>%
-      # Remove any fodder crops, calculated separately below
+      # Remove any fodder crops, calculated separately below in Part 3
       filter(!(GCAM_commodity %in% c("FodderHerb", "FodderGrass"))) %>%
       # 9/21/2016 GPK - removing Sorghum because it is used as a fodder crop in the USA, and its prices are relatively low.
       # The net effect of excluding it here is to raise the price of the OtherGrain commodity, and therefore the profit rate,
@@ -110,7 +109,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     FAO_USA_an_Prod_t_PRODSTAT %>%
       select(-country.codes, -item.codes, -element, -element.codes) %>%
       gather(year, prod, -countries, -item) %>%
-      # Calculate average production for each FAO animal product over price years
+      # Calculate a single unweighted average production value over price years for each FAO animal product
       filter(year %in% MODEL_PRICE_YEARS) %>%
       group_by(countries, item) %>%
       summarise_at(vars(prod), mean, na.rm = TRUE) %>%
@@ -133,11 +132,11 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       select(GCAM_commodity, calPrice) ->
       Price_an
 
-    # Part 2: Fodder crops and pasture
+    # Part 2: Fodder crops and pasture, and will be combined with outputs from Part 1
     # Calculate average FodderHerb prices from alfalfa prices
     USDA_Alfalfa_prices_USDt %>%
       select(year, avg) %>%
-      # Calculate average Alfalfa price over the price years
+      # Calculate a single unweighted average price of Alfalfa over the price years
       filter(year %in% MODEL_PRICE_YEARS) %>%
       summarise_at(vars(avg), mean, na.rm = TRUE) %>%
       rename(FodderHerb = avg) %>%
@@ -156,16 +155,17 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       mutate(unit = "1975$/kg") ->
       Price_ag_an
 
-    # Part 3: Forest products, use FAO forest export value and export quantities to estimate price
+    # Part 3: Forest products, and will be combined with outputs from Part 1 and Part 2
+    # Because roundwood producer prices are not reported in FAOSTAT, we use FAO forest export value and export quantities to estimate price
     FAO_USA_For_Exp_t_USD_FORESTAT %>%
       select(-countries, -country.codes, -item, -item.codes, -element.codes) %>%
       gather(year, value, -element) %>%
-      # Calculate average value and quantity over price years
+      # Calculate a single unweighted average export value and a single unweighted average export quantity over price years
       filter(year %in% MODEL_PRICE_YEARS) %>%
       group_by(element) %>%
       summarise_at(vars(value), mean, na.rm = TRUE) %>%
       ungroup() %>%
-      # Modity element names to one word so that they can be used as column names when spreading element and doing calculations
+      # Modify element names to one word so that they can be used as column names when spreading element and doing calculations
       mutate(element = if_else(element == "Export Quantity (m3)", "Exp_m3", "ExpV_USD")) %>%
       mutate(GCAM_commodity = "Forest") %>%
       spread(element, value) %>%
@@ -198,13 +198,15 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       stop("Missing commodity prices for ", missing_commodities)
     }
 
-    # Animal products prices are in USD per metric tonne, so the CONV_T_METRIC_SHORT in the old data system is unnecessary and dropped.
+    # This chunk produces exactly the same outputs as the old data system
+    # The codes below fix a mistake in the old data system
+    # Animal products prices are in USD per metric tonne, so the CONV_T_METRIC_SHORT in the old data system is unnecessary and dropped
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # Animal products
       FAO_USA_an_Prod_t_PRODSTAT %>%
         select(-country.codes, -item.codes, -element, -element.codes) %>%
         gather(year, prod, -countries, -item) %>%
-        # Calculate average production for each FAO animal product over price years
+        # Calculate a single unweighted average production value over price years for each FAO animal product
         filter(year %in% MODEL_PRICE_YEARS) %>%
         group_by(countries, item) %>%
         summarise_at(vars(prod), mean, na.rm = TRUE) %>%
@@ -231,7 +233,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
         FAO_USA_an_Prod_t_PRODSTAT %>%
           select(-country.codes, -item.codes, -element, -element.codes) %>%
           gather(year, prod, -countries, -item) %>%
-          # Calculate average production for each FAO animal product over price years
+          # Calculate a single unweighted average production value over price years for each FAO animal product
           filter(year %in% MODEL_PRICE_YEARS) %>%
           group_by(countries, item) %>%
           summarise_at(vars(prod), mean, na.rm = TRUE) %>%
@@ -259,8 +261,8 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     Price_ag_an_For %>%
       add_title("Prices for all GCAM AGLU commodities") %>%
       add_units("1975$/kg and 1975$/m3") %>%
-      add_comments("Calculate unweighted average prices over calibration years by agricultural item and country.") %>%
-      add_comments("Calculate production weighted average prices by GCAM AGLU commodity and region.") %>%
+      add_comments("Calculate average prices over calibration years by GCAM commodity.") %>%
+      add_comments("Averages across years are unweighted; averages over FAO item are weighted by production.") %>%
       add_legacy_name("L132.ag_an_For_Prices") %>%
       add_precursors("aglu/FAO_ag_items_PRODSTAT",
                      "aglu/FAO_an_items_PRODSTAT",
