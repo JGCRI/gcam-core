@@ -29,6 +29,8 @@ module_energy_LA123.electricity <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+
+
     # Load required inputs
     enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
     A23.chp_elecratio <- get_data(all_data, "energy/A23.chp_elecratio")
