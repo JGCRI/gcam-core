@@ -1,6 +1,6 @@
 #' module_gcam.usa_LA119.Solar
 #'
-#' Briefly describe what this chunk does.
+#' This chunk computes scalars by state to vary capacity factors by state.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +8,11 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L119.CapFacScaler_PV_state}, \code{L119.CapFacScaler_CSP_state}. The corresponding file in the
 #' original data system was \code{LA119.Solar.R} (gcam-usa level1).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk computes scalars by state to vary capacity factors for central station PV and CSP technologies by state.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author GI, FF, AS Apr 2017
 #' @export
 module_gcam.usa_LA119.Solar <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
