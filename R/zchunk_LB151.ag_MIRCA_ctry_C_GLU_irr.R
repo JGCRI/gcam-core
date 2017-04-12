@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr_DISABLED <- function(command, ...) {
+module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/AGLU_ctry",
@@ -77,7 +77,8 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L151.ag_irrHA_ha_ctry_crop") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID","aglu/AGLU_ctry","aglu/FAO_ag_items_PRODSTAT","aglu/FAO_ag_CROSIT",
+                     "L100.LDS_ag_HA_ha","L100.LDS_ag_prod_t","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L151.ag_irrHA_ha_ctry_crop
@@ -87,7 +88,8 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L151.ag_rfdHA_ha_ctry_crop") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID","aglu/AGLU_ctry","aglu/FAO_ag_items_PRODSTAT","aglu/FAO_ag_CROSIT",
+                     "L100.LDS_ag_HA_ha","L100.LDS_ag_prod_t","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L151.ag_rfdHA_ha_ctry_crop
@@ -97,7 +99,8 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L151.ag_irrProd_t_ctry_crop") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID","aglu/AGLU_ctry","aglu/FAO_ag_items_PRODSTAT","aglu/FAO_ag_CROSIT",
+                     "L100.LDS_ag_HA_ha","L100.LDS_ag_prod_t","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L151.ag_irrProd_t_ctry_crop
@@ -107,7 +110,8 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L151.ag_rfdProd_t_ctry_crop") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID","aglu/AGLU_ctry","aglu/FAO_ag_items_PRODSTAT","aglu/FAO_ag_CROSIT",
+                     "L100.LDS_ag_HA_ha","L100.LDS_ag_prod_t","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L151.ag_rfdProd_t_ctry_crop
