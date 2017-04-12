@@ -41,7 +41,6 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
 
     # Converting cotton back to primary equivalent (seed cotton)
     # Seed cotton has no price in PRICESTAT. Need to derive its price from cotton lint and cottonseed
-    # Assigning a price for game meat so that OtherMeat is assigned a price
     FAO_USA_ag_an_P_USDt_PRICESTAT %>%
       select(-country.codes, -item.codes, -element, -element.codes) %>%
       gather(year, price, -countries, -item) %>%
@@ -50,6 +49,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       mutate(item = sub(" ", "_", item)) %>%
       spread(item, price) %>%
       mutate(Seed_cotton = Cotton_lint * WEIGHT_COTTON_LINT + Cottonseed * (1 - WEIGHT_COTTON_LINT)) %>%
+      # Assigning a price for game meat so that OtherMeat is assigned a price
       mutate(Game_meat = Cattle_meat) %>%
       gather(item, price, -countries, -year) %>%
       # Change item names back to original for mapping GCAM commodities
