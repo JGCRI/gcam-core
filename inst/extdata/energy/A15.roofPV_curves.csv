@@ -1,6 +1,7 @@
 # File: A15.roofPV_curves.csv,,,,,,,
 # Title: GCAM 3.0 rooftop PV supply curves,,,,,,,
-# Units: NA,,,,,,,
+"# Units: EJ for maxSubResource, unitless for gdpSupply, subResourceCapacityFactor",,,,,,,
+"# Comments: From http://jgcri.github.io/gcam-doc/v3.2/Resource_Supply_Curves: ""For rooftop PV, GCAM does use supply curves, based on Denholm and Margolis’s (2008)<ref>Denholm, P., and R. Margolis. 2008. Supply Curves for Rooftop Solar PV-Generated Electricity for the United States. NREL/TP-6A0-44073, National Renewable Energy Laboratory. http://www.nrel.gov/docs/fy09osti/44073.pdf%3C/ref%3E supply curves for rooftop PV in the residential and commercial sectors in the USA. In other regions, the supply curves are assigned similar shape as the USA supply curve, with the available resource quantities adjusted by regional population, used as a proxy of available rooftop space, and by insolation.""",,,,,,,
 region_GCAM3,resource,subresource,maxSubResource,mid-price,curve-exponent,gdpSupplyElast,subResourceCapacityFactor
 USA,distributed_solar,distributed_solar,4.718453352,13.40917456,4.240486051,0.1,0.2
 Canada,distributed_solar,distributed_solar,0.374144475,16.52819307,4.240486051,0.1,0.2

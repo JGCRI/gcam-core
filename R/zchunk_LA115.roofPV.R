@@ -1,6 +1,6 @@
 #' module_energy_LA115.roofPV
 #'
-#' Briefly describe what this chunk does.
+#' This chunk converts rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3," to the 32 GCAM region IDs.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,18 +8,16 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L115.RsrcCurves_EJ_R_roofPV}. The corresponding file in the
 #' original data system was \code{LA115.roofPV.R} (energy level1).
-#' @details Describe in detail what this chunk does.
+#' @details Rooftop PV resources are given in the input file according to the 14 GCAM regions, i.e., "region_GCAM3." Because some regions span mutliple GCAM region IDs, population in 2010 was used to allocate proportionally.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author AJS April 2017
 module_energy_LA115.roofPV <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/A15.roofPV_curves",
-             FILE = "energy/A15.roofPV_TechChange",
-             FILE = "socioeconomics/L100.Pop_thous_ctry_Yh"))
+             FILE = "temp-data-inject/L100.Pop_thous_ctry_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L115.RsrcCurves_EJ_R_roofPV"))
   } else if(command == driver.MAKE) {
@@ -29,70 +27,45 @@ module_energy_LA115.roofPV <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     A15.roofPV_curves <- get_data(all_data, "energy/A15.roofPV_curves")
-    A15.roofPV_TechChange <- get_data(all_data, "energy/A15.roofPV_TechChange") #not used
-    L100.Pop_thous_ctry_Yh <- get_data(all_data, "socioeconomics/L100.Pop_thous_ctry_Yh")
+    L100.Pop_thous_ctry_Yh <- get_data(all_data, "temp-data-inject/L100.Pop_thous_ctry_Yh")
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-
-    #Categorizing countries and regions to GCAM Region ID; selecting population in 2010
+    # Categorizing countries and regions to GCAM Region ID; selecting population in 2010
     L100.Pop_thous_ctry_Yh %>%
-      select(iso, X2010) %>%
-      left_join(iso_GCAM_regID %>%
-                  select(-country_name)) %>%
-      select(-iso) ->
+      gather(year, value, X1700:X2010) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) %>%
+      filter(year == "2010") %>%
+      left_join(iso_GCAM_regID, by = "iso") %>%
+      select(-iso, -country_name, -year) ->
       x
 
-    #Sum of population by regions
+    # Sum of population by regions
     x %>%
       group_by(region_GCAM3) %>%
-      summarise(popSum = sum(X2010)) ->
+      summarise(popSum = sum(value)) ->
       pop_RG3
 
-
-    #Building resource curves by GCAM Region ID
+    # Building resource curves by GCAM Region ID. Because some regions span multiple GCAM Region IDs, population in 2010 is used to allocate.
     x %>%
       left_join(pop_RG3, by = "region_GCAM3") %>%
       left_join(A15.roofPV_curves, by = "region_GCAM3") %>%
-      mutate(maxSubResource = maxSubResource*X2010/popSum) %>%
+      mutate(maxSubResource = maxSubResource*value/popSum) %>%
       rename(`curve.exponent` = `curve-exponent`, `mid.price` = `mid-price`) %>%
       group_by(GCAM_region_ID, resource, subresource, curve.exponent, gdpSupplyElast, subResourceCapacityFactor) %>%
       summarise(maxSubResource = sum(maxSubResource),
                 mid.price = median(mid.price)) %>%
-      select(GCAM_region_ID, resource, subresource, maxSubResource, mid.price, curve.exponent, gdpSupplyElast, subResourceCapacityFactor) ->
+      select(GCAM_region_ID, resource, maxSubResource, mid.price, subresource, curve.exponent, gdpSupplyElast, subResourceCapacityFactor) ->
       L115.RsrcCurves_EJ_R_roofPV
 
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L115.RsrcCurves_EJ_R_roofPV %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Rooftop PV resources by GCAM region ID") %>%
+      add_units("EJ") %>%
+      add_comments("Resources converted from 14 GCAM regions to 32 GCAM region IDs") %>%
       add_legacy_name("L115.RsrcCurves_EJ_R_roofPV") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A15.roofPV_curves", "energy/A15.roofPV_TechChange", "socioeconomics/L100.Pop_thous_ctry_Yh") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST) ->
+      add_precursors("common/iso_GCAM_regID", "energy/A15.roofPV_curves", "temp-data-inject/L100.Pop_thous_ctry_Yh") %>%
+      add_flags() ->
       L115.RsrcCurves_EJ_R_roofPV
 
     return_data(L115.RsrcCurves_EJ_R_roofPV)
