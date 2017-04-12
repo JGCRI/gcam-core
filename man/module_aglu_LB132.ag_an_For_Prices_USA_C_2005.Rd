@@ -21,8 +21,8 @@ original data system was \code{LB132.ag_an_For_Prices_USA_C_2005.R} (aglu level1
 Calculate the calibration prices for all GCAM AGLU commodities.
 }
 \details{
-This chunk calculates the production weighted average price by GCAM AGLU commodity
-and region over the calibration years.
+This chunk calculates average prices over calibration years by GCAM commodity.
+Averages across years are unweighted; averages over FAO item are weighted by production.
 }
 \author{
 RC April 2017

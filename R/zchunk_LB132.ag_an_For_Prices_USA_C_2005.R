@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC April 2017
-#' @export
 module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/FAO_ag_items_PRODSTAT",
