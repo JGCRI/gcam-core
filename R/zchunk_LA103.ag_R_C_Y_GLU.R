@@ -71,7 +71,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       left_join(L101.ag_Prod_Mt_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       mutate(value = value.x * value.y) %>%
       filter(year %in% HISTORICAL_YEARS) %>%
-      select(-value.x, -value.y) ->
+      select(-value.x, -value.y) %>%
+      arrange(GLU) ->  # so we match old d.s. order
       L103.ag_Prod_Mt_R_C_Y_GLU
 
     # Remove crops from the written-out data that are zero in all years
@@ -86,14 +87,15 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     }
     L103.ag_Prod_Mt_R_C_Y_GLU <- remove_all_zeros(L103.ag_Prod_Mt_R_C_Y_GLU)
 
-    # Same operation steps again
+    # Same operation again
     L103.ag_HA_frac_R_C_GLU %>%
       left_join(L101.ag_HA_bm2_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       mutate(value = value.x * value.y) %>%
       filter(year %in% HISTORICAL_YEARS) %>%
-      select(-value.x, -value.y) ->
+      select(-value.x, -value.y) %>%
+      arrange(GLU) ->  # so we match old d.s. order
       L103.ag_HA_bm2_R_C_Y_GLU
-    L103.ag_Prod_Mt_R_C_Y_GLU <- remove_all_zeros(L103.ag_HA_bm2_R_C_Y_GLU)
+    L103.ag_HA_bm2_R_C_Y_GLU <- remove_all_zeros(L103.ag_HA_bm2_R_C_Y_GLU)
 
     # Calculate initial yield estimates in kilograms per square meter by region, crop, year, and GLU
     # Yield in kilograms per square meter
@@ -101,7 +103,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       left_join(L103.ag_HA_bm2_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
       mutate(value = value.x / value.y,
              value = if_else(is.na(value), 0, value)) %>%
-      select(-value.x, -value.y) ->
+      select(-value.x, -value.y) %>%
+      arrange(GLU) ->  # so we match old d.s. order
       L103.ag_Yield_kgm2_R_C_Y_GLU
 
     # Aggregate through GLUs to get production by region/crop/year; different from L101 production in that we have now dropped
@@ -110,7 +113,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%
       summarise(value = sum(value)) %>%
       ungroup %>%
-      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID), GCAM_commodity, year, fill = list(value = 0)) ->
+      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID), GCAM_commodity, year, fill = list(value = 0)) %>%
+      arrange(GCAM_commodity, GCAM_region_ID) ->  # so we match old d.s. order
       L103.ag_Prod_Mt_R_C_Y
 
 
@@ -121,9 +125,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "L101.ag_Prod_Mt_R_C_Y", "L101.ag_HA_bm2_R_C_Y",
-                     "temp-data-inject/L102.ag_Prod_Mt_R_C_GLU",
-                     "temp-data-inject/L102.ag_HA_bm2_R_C_GLU") %>%
+      add_precursors("L101.ag_Prod_Mt_R_C_Y",
+                     "temp-data-inject/L102.ag_Prod_Mt_R_C_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L103.ag_Prod_Mt_R_C_Y_GLU
 
@@ -133,9 +136,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "L101.ag_Prod_Mt_R_C_Y", "L101.ag_HA_bm2_R_C_Y",
-                     "temp-data-inject/L102.ag_Prod_Mt_R_C_GLU",
-                     "temp-data-inject/L102.ag_HA_bm2_R_C_GLU") %>%
+      same_precursors_as(L103.ag_Prod_Mt_R_C_Y_GLU) %>%
+      add_precursors("common/iso_GCAM_regID") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L103.ag_Prod_Mt_R_C_Y
 
@@ -145,8 +147,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L103.ag_HA_bm2_R_C_Y_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "L101.ag_Prod_Mt_R_C_Y", "L101.ag_HA_bm2_R_C_Y",
-                     "temp-data-inject/L102.ag_Prod_Mt_R_C_GLU",
+      add_precursors("L101.ag_HA_bm2_R_C_Y",
                      "temp-data-inject/L102.ag_HA_bm2_R_C_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L103.ag_HA_bm2_R_C_Y_GLU
@@ -157,9 +158,9 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L103.ag_Yield_kgm2_R_C_Y_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "L101.ag_Prod_Mt_R_C_Y", "L101.ag_HA_bm2_R_C_Y",
-                     "temp-data-inject/L102.ag_Prod_Mt_R_C_GLU",
-                     "temp-data-inject/L102.ag_HA_bm2_R_C_GLU") %>%
+      same_precursors_as(L103.ag_HA_bm2_R_C_Y_GLU) %>%
+      add_precursors("L101.ag_Prod_Mt_R_C_Y",
+                     "temp-data-inject/L102.ag_Prod_Mt_R_C_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L103.ag_Yield_kgm2_R_C_Y_GLU
 
