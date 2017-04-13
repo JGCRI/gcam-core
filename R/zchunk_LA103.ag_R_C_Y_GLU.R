@@ -124,8 +124,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
       add_title("Crop production by GCAM region / commodity / year / GLU") %>%
       add_units("Mt") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Crop production computed based on representative base year, and") %>%
+      add_comments("downscaled to regional production and harvested area in all years by GLU") %>%
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y_GLU") %>%
       add_precursors("L101.ag_Prod_Mt_R_C_Y",
                      "temp-data-inject/L102.ag_Prod_Mt_R_C_GLU") %>%
@@ -135,8 +135,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y %>%
       add_title("Crop production by GCAM region / commodity / year") %>%
       add_units("Mt") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Crop production computed based on representative base year, and") %>%
+      add_comments("downscaled to regional production and harvested area in all years") %>%
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y") %>%
       same_precursors_as(L103.ag_Prod_Mt_R_C_Y_GLU) %>%
       add_precursors("common/iso_GCAM_regID") %>%
@@ -148,8 +148,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     L103.ag_HA_bm2_R_C_Y_GLU %>%
       add_title("Harvested area by GCAM region / commodity / year / GLU") %>%
       add_units("bm2") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Agricultural harvested area computed based on representative base year, and") %>%
+      add_comments("downscaled to regional production and harvested area in all years by GLU") %>%
       add_legacy_name("L103.ag_HA_bm2_R_C_Y_GLU") %>%
       add_precursors("L101.ag_HA_bm2_R_C_Y",
                      "temp-data-inject/L102.ag_HA_bm2_R_C_GLU") %>%
@@ -161,8 +161,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     L103.ag_Yield_kgm2_R_C_Y_GLU %>%
       add_title("Unadjusted agronomic yield by GCAM region / commodity / year / GLU") %>%
       add_units("kg/m2") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Agricultural yield computed based on production and harvest area, and") %>%
+      add_comments("downscaled to regional values for all years") %>%
       add_legacy_name("L103.ag_Yield_kgm2_R_C_Y_GLU") %>%
       same_precursors_as(L103.ag_HA_bm2_R_C_Y_GLU) %>%
       add_precursors("L101.ag_Prod_Mt_R_C_Y",
