@@ -34,8 +34,8 @@ module_energy_LA115.roofPV <- function(command, ...) {
     L100.Pop_thous_ctry_Yh %>%
       gather(year, value, X1700:X2010) %>%
       mutate(year = as.integer(substr(year, 2, 5))) %>%
-      filter(year == "2010") %>%
-      left_join(iso_GCAM_regID, by = "iso") %>%
+      filter(year == 2010) %>%
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
       select(-iso, -country_name, -year) ->
       x
 
@@ -47,10 +47,10 @@ module_energy_LA115.roofPV <- function(command, ...) {
 
     # Building resource curves by GCAM Region ID. Because some regions span multiple GCAM Region IDs, population in 2010 is used to allocate.
     x %>%
-      left_join(pop_RG3, by = "region_GCAM3") %>%
-      left_join(A15.roofPV_curves, by = "region_GCAM3") %>%
+      left_join_error_no_match(pop_RG3, by = "region_GCAM3") %>%
+      left_join_error_no_match(A15.roofPV_curves, by = "region_GCAM3") %>%
       mutate(maxSubResource = maxSubResource*value/popSum) %>%
-      rename(`curve.exponent` = `curve-exponent`, `mid.price` = `mid-price`) %>%
+      rename(curve.exponent = `curve-exponent`, mid.price = `mid-price`) %>%
       group_by(GCAM_region_ID, resource, subresource, curve.exponent, gdpSupplyElast, subResourceCapacityFactor) %>%
       summarise(maxSubResource = sum(maxSubResource),
                 mid.price = median(mid.price)) %>%
