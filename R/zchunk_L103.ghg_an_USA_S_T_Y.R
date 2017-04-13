@@ -38,53 +38,49 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
 
     # Map EPA ghg emissions to GCAM sector and fuel,
     # aggregate and convert from Gg to Tg
+    # EPA data contains estimates for aggregate and disaggregate sectors. There should be NAs when
+    # mapping to GCAM sector and fuel to avoid double counting those totals.
 
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
     # Old system yields an emissions estimate of 0 for poultry because it has NA values.
-    L103.ghg_tg_USA_an_Sepa_F_2005 <- EPA_FCCC_AG_2005 %>%
+    EPA_FCCC_AG_2005 %>%
       left_join(EPA_ghg_tech, by = "Source_Category") %>%
       group_by(sector, fuel) %>%
       summarize_if(is.numeric , sum) %>%
       filter( !is.na(sector), !is.na(fuel)) %>%
       mutate_each( funs(replace(., is.na(.), 0))) %>%
-      mutate_if(is.numeric, funs( .*CONV_GG_TG))
+      mutate_if(is.numeric, funs( .*CONV_GG_TG)) -> L103.ghg_tg_USA_an_Sepa_F_2005
 
     } else {
       # Corrected poltry emissions estimate, methane emissions for poultry are relatively small
       # compared to other animals, but non-zero
-      L103.ghg_tg_USA_an_Sepa_F_2005 <- EPA_FCCC_AG_2005 %>%
+    EPA_FCCC_AG_2005 %>%
         left_join(EPA_ghg_tech, by = "Source_Category") %>%
         group_by(sector, fuel) %>%
-        summarize_if(is.numeric, sum, na.rm = T) %>%
-        filter( !is.na(sector) , !is.na( fuel )) %>%
+        summarize_if(is.numeric, sum, na.rm = TRUE) %>%
+        filter( !is.na(sector) , !is.na(fuel)) %>%
         mutate_each( funs( replace(., is.na(.), 0))) %>%
-        mutate_if(is.numeric, funs( .*CONV_GG_TG) )
+        mutate_if(is.numeric, funs(. * CONV_GG_TG)) -> L103.ghg_tg_USA_an_Sepa_F_2005
 
     }
 
-    L103.ghg_tg_USA_an_Sepa_F_2005 <- EPA_FCCC_AG_2005 %>%
-      left_join(EPA_ghg_tech, by = "Source_Category") %>%
-      group_by(sector, fuel) %>%
-      summarize_if(is.numeric, sum) %>%
-      filter( !is.na(sector) , !is.na(fuel) ) %>%
-      mutate_each( funs( replace(., is.na(.), 0)) ) %>%
-      mutate_if(is.numeric, funs(.*CONV_GG_TG))
-
-    # Aggergate FAO production to EPA sectors
-    L107.an_Prod_US_Sepa_2005 <- L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
-      left_join(GCAM_sector_tech,
-                by = c('GCAM_commodity' = 'sector', 'system' = 'fuel' , 'feed' = 'technology')) %>%
+    # Map FAO production to EPA sectors and aggregate
+    # Select region - US and year - 2005
+    # The old data system uses US methane emission factors for 2005 for all historical values in all regions.
+    L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
+      left_join_error_no_match( select(GCAM_sector_tech, sector, fuel, technology, EPA_agg_sector, EPA_agg_fuel),
+                 by = c('GCAM_commodity' = 'sector', 'system' = 'fuel' , 'feed' = 'technology')) %>%
       ungroup %>%
       mutate(year = as.numeric(year)) %>%
       filter(year == 2005, GCAM_region_ID == 1) %>%
       group_by(EPA_agg_sector, year) %>%
       select(EPA_agg_sector, year,value) %>%
-      summarise_if(is.numeric, sum)
+      summarise_if(is.numeric, sum) -> L107.an_Prod_US_Sepa_2005
 
     # Calculate CH4 emissions factor
     L103.ghg_tg_USA_an_Sepa_F_2005 %>%
-      left_join_error_no_match(L107.an_Prod_US_Sepa_2005, by = c('sector' = 'EPA_agg_sector')) %>%
-      mutate(ch4_em_factor = CH4/value) %>%
+      left_join(L107.an_Prod_US_Sepa_2005, by = c('sector' = 'EPA_agg_sector')) %>%
+      mutate(ch4_em_factor = CH4 / value) %>%
       select(sector, fuel, ch4_em_factor) %>%
       ungroup() -> L103.ghg_tgmt_USA_an_Sepa_F_2005
 
