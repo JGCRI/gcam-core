@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH March 2017
-#'
 module_energy_LA117.tradbio <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh",
@@ -26,20 +25,23 @@ module_energy_LA117.tradbio <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh")
+     get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L1011.en_bal_EJ_R_Si_Fi_Yh
     A17.tradbio_curves <- get_data(all_data, "energy/A17.tradbio_curves")
 
     # ===================================================
 
-    # Calculating the max resource of tradbio as the maximum during the historical years
-    L117.maxSubResource_tradbio <- L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    # Calculate the max resource of tradbio as the maximum during the historical years
+     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(fuel == "biomass_tradbio", sector == "TPES") %>%
-      gather(Xyear, value, starts_with("X")) %>%
       group_by(GCAM_region_ID, sector, fuel) %>%
-      summarise(value = max(value))
+      summarise(value = max(value)) ->
+      L117.maxSubResource_tradbio
 
     # Writing the supply curves to all regions, multiplying maxSubResouce by quantity available at each grade
-    repeat_add_columns(A17.tradbio_curves,L117.maxSubResource_tradbio) %>%
+    repeat_add_columns(A17.tradbio_curves, L117.maxSubResource_tradbio) %>%
       arrange(GCAM_region_ID) %>%
       mutate(available = available*value) %>%
     # Removing resource curves in regions where this fuel does not apply
