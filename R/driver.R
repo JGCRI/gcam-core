@@ -104,7 +104,7 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
     ff <- filter(unfound_inputs, !from_file)
     if(nrow(ff)) {
       stop("Unfound inputs not marked as from file: ", paste(ff$input, collapse = ", "),
-           " in ", paste(ff$name, collapse = ", "))
+           " in ", paste(unique(ff$name), collapse = ", "))
     }
 
     if(!quiet) cat(nrow(unfound_inputs), "chunk data input(s) not accounted for\n")
@@ -171,9 +171,8 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 #' @return Number of temporary data objects being used inappropriately.
 warn_data_injects <- function() {
 
-  # We want to know if any chunks (including disabled ones) are using temp-data-inject
-  # data that is available to them through the data system
-  ci <- chunk_inputs(find_chunks(include_disabled = TRUE)$name)
+  # Are any chunks are using temp-data-inject data that are also available to them through the data system?
+  ci <- chunk_inputs(find_chunks(include_disabled = FALSE)$name)
   chunk_outputs(find_chunks(include_disabled = FALSE)$name) %>%
     rename(upstream_chunk = name) ->
     co
