@@ -18,10 +18,13 @@ the generated outputs: \code{L103.ag_Prod_Mt_R_C_Y_GLU}, \code{L103.ag_Prod_Mt_R
 original data system was \code{LA103.ag_R_C_Y_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate production, harvested area, and yield by region, crop, GLU, and year.
 }
 \details{
-Describe in detail what this chunk does.
+We only have production and harvested area by region and GLU for a single
+representative base year (circa 2000), and are using that to downscale regional
+production and harvested area in all years. So, if GLU223 accounted for 20% of U.S.
+corn production in ~2000, then it accounted for 20% of US corn production in all years.
 }
 \author{
 BBL April 2017

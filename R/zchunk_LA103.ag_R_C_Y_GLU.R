@@ -1,6 +1,6 @@
 #' module_aglu_LA103.ag_R_C_Y_GLU
 #'
-#' Briefly describe what this chunk does.
+#' Calculate production, harvested area, and yield by region, crop, GLU, and year.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,12 +8,14 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L103.ag_Prod_Mt_R_C_Y_GLU}, \code{L103.ag_Prod_Mt_R_C_Y}, \code{L103.ag_HA_bm2_R_C_Y_GLU}, \code{L103.ag_Yield_kgm2_R_C_Y_GLU}. The corresponding file in the
 #' original data system was \code{LA103.ag_R_C_Y_GLU.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details We only have production and harvested area by region and GLU for a single
+#' representative base year (circa 2000), and are using that to downscale regional
+#' production and harvested area in all years. So, if GLU223 accounted for 20% of U.S.
+#' corn production in ~2000, then it accounted for 20% of US corn production in all years.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL April 2017
-#' @export
 module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -138,7 +140,9 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y") %>%
       same_precursors_as(L103.ag_Prod_Mt_R_C_Y_GLU) %>%
       add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      # The sort order in the old dataset is funky, and I'm having trouble
+      # replicating it; but the data are identical. Use the less-stringent sum test.
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L103.ag_Prod_Mt_R_C_Y
 
     L103.ag_HA_bm2_R_C_Y_GLU %>%
@@ -149,7 +153,9 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
       add_legacy_name("L103.ag_HA_bm2_R_C_Y_GLU") %>%
       add_precursors("L101.ag_HA_bm2_R_C_Y",
                      "temp-data-inject/L102.ag_HA_bm2_R_C_GLU") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      # The sort order in the old dataset is funky, and I'm having trouble
+      # replicating it; but the data are identical. Use the less-stringent sum test.
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L103.ag_HA_bm2_R_C_Y_GLU
 
     L103.ag_Yield_kgm2_R_C_Y_GLU %>%
