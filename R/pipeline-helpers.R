@@ -177,7 +177,7 @@ unprotect_integer_cols <- function(d) {
 #' @param base_year Base year in deflator calculation
 #' @details The GDP deflator is a measure of price inflation/deflation with respect to a specific base year.
 #' @note This returns slightly different values if \code{OLD_DATA_SYSTEM_BEHAVIOR} is TRUE.
-#' @return Deflator (GDP in \code{from_year} divided by GDP in \code{to_year}).
+#' @return Deflator (GDP in \code{year} divided by GDP in \code{base_year}).
 #' @source U.S. Bureau of Economic Analysis, Gross domestic product (implicit price deflator) [A191RD3A086NBEA], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/A191RD3A086NBEA, April 12, 2017
 #' @author BBL
 #' @export

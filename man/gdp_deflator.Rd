@@ -15,7 +15,7 @@ gdp_deflator(year, base_year)
 \item{base_year}{Base year in deflator calculation}
 }
 \value{
-Deflator (GDP in \code{from_year} divided by GDP in \code{to_year}).
+Deflator (GDP in \code{year} divided by GDP in \code{base_year}).
 }
 \description{
 Calculate a gross domestic product (GDP) implicit price deflator between two years.
