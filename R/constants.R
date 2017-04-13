@@ -31,6 +31,8 @@ GTAP_HISTORICAL_YEAR <- 2000
 aglu.GLU <- "GLU"
 aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 
+# Carbon content of all cellulose
+aglu.CCONTENT_CELLULOSE <- 0.45
 
 # ======================================================================
 # energy constants
@@ -49,6 +51,7 @@ CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_1990_2010_USD <- 1.510
 CONV_2001_1975_USD <- 0.3711
+CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
