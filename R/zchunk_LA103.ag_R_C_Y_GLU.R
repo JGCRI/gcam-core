@@ -124,8 +124,8 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
       add_title("Crop production by GCAM region / commodity / year / GLU") %>%
       add_units("Mt") %>%
-      add_comments("Crop production computed based on representative base year, and") %>%
-      add_comments("downscaled to regional production and harvested area in all years by GLU") %>%
+      add_comments("Crop production computed based on representative base year, using") %>%
+      add_comments("GLU-specific production and harvested area in all years") %>%
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y_GLU") %>%
       add_precursors("L101.ag_Prod_Mt_R_C_Y",
                      "temp-data-inject/L102.ag_Prod_Mt_R_C_GLU") %>%
@@ -135,8 +135,7 @@ module_aglu_LA103.ag_R_C_Y_GLU <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y %>%
       add_title("Crop production by GCAM region / commodity / year") %>%
       add_units("Mt") %>%
-      add_comments("Crop production computed based on representative base year, and") %>%
-      add_comments("downscaled to regional production and harvested area in all years") %>%
+      add_comments("Crop production computed based on representative base year") %>%
       add_legacy_name("L103.ag_Prod_Mt_R_C_Y") %>%
       same_precursors_as(L103.ag_Prod_Mt_R_C_Y_GLU) %>%
       add_precursors("common/iso_GCAM_regID") %>%
