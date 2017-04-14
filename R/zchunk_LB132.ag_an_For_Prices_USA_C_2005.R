@@ -127,7 +127,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       # Calculate production weighted average price for each GCAM commodity
       mutate(Price_USDt = V_USD / prod) %>%
       # Convert to model units
-      mutate(calPrice = round(Price_USDt * CONV_T_METRIC_SHORT * CONV_2004_1975_USD / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
+      mutate(calPrice = round(Price_USDt * CONV_T_METRIC_SHORT * gdp_deflator(1975, base_year = 2004) / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
       select(GCAM_commodity, calPrice) ->
       Price_an
 
@@ -147,7 +147,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       # Combine crop commodities to get all primary agricultural commodities in a single tibble
       bind_rows(Price_ag) %>%
       # Convert to model units
-      mutate(calPrice = round(Price_USDt * CONV_2004_1975_USD / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
+      mutate(calPrice = round(Price_USDt * gdp_deflator(1975, base_year = 2004) / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
       select(-Price_USDt) %>%
       # Combine animal products
       bind_rows(Price_an) %>%
@@ -171,7 +171,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       # Calculate forest price as export value (in thous USD) divided by export quantity
       mutate(Price_USDm3 = ExpV_USD * 1000 / Exp_m3) %>%
       # Convert to model units
-      mutate(calPrice = round(Price_USDm3 * CONV_2004_1975_USD, digits = DIGITS_CALPRICE)) %>%
+      mutate(calPrice = round(Price_USDm3 * gdp_deflator(1975, base_year = 2004), digits = DIGITS_CALPRICE)) %>%
       select(GCAM_commodity, calPrice) %>%
       mutate(unit = "1975$/m3") %>%
       # Part 4: merging everything into a single table
@@ -224,7 +224,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
         # Calculate production weighted average price for each GCAM commodity
         mutate(Price_USDt = V_USD / prod) %>%
         # Convert to model units
-        mutate(calPrice = round(Price_USDt * CONV_T_METRIC_SHORT * CONV_2004_1975_USD / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
+        mutate(calPrice = round(Price_USDt * CONV_T_METRIC_SHORT * gdp_deflator(1975, base_year = 2004) / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
         select(GCAM_commodity, calPrice) ->
         Price_an
       } else {
@@ -251,7 +251,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
           # Calculate production weighted average price for each GCAM commodity
           mutate(Price_USDt = V_USD / prod) %>%
           # Convert to model units, do not need to convert to short ton, drop CONV_T_METRIC_SHORT
-          mutate(calPrice = round(Price_USDt * CONV_2004_1975_USD / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
+          mutate(calPrice = round(Price_USDt * gdp_deflator(1975, base_year = 2004) / CONV_T_KG, digits = DIGITS_CALPRICE)) %>%
           select(GCAM_commodity, calPrice) ->
           Price_an
       }
