@@ -93,9 +93,8 @@ module_water_L110.water.demand.primary <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/A227.resource_water_coef_mapping",
                      "water/resource_water_data",
-                     "water/resource_water_share") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_XYEAR) -> L110.water_demand_primary_R_S_W_m3_GJ
+                     "water/resource_water_share") ->
+      L110.water_demand_primary_R_S_W_m3_GJ
 
     # Reinistate old behavior for test (i.e., Middle East same as all other regions)
     # See issue #179 on gcamdata repo

@@ -66,8 +66,7 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
                      "L100.FAO_ag_Prod_t",
-                     "aglu/Various_ag_resbio_data") %>%
-      add_flags(FLAG_NO_XYEAR) ->
+                     "aglu/Various_ag_resbio_data") ->
       L111.ag_resbio_R_C
 
     return_data(L111.ag_resbio_R_C)

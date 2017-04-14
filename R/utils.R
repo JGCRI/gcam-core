@@ -19,6 +19,10 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
   assert_that(is.logical(quiet))
   assert_that(length(filenames) == length(optionals))
 
+  # Remove duplicates
+  optionals <- optionals[!duplicated(filenames)]
+  filenames <- filenames[!duplicated(filenames)]
+
   filedata <- list()
   for(fnum in seq_along(filenames)) {
     f <- filenames[fnum]
