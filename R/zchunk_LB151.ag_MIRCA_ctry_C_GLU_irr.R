@@ -58,23 +58,16 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
     # }
     #
     #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
 
     # Compute shares of irrigated and rainfed harvested area from MIRCA data
     # Shares are by country (iso), land unit (GLU), and MIRCA_crop (different from GTAP crop or GCAM_commodity)
     # NOTE: MIRCA data is for a single year. We use the shares, but not the actual land areas.
-     L100.MIRCA_irrHA_ha %>% 
+     L100.MIRCA_irrHA_ha %>%
       mutate( MIRCA_crop = paste0( "Crop", MIRCA_crop )) %>%                    # Convert name of crop to include "Crop"
       rename( HA_irr = value ) ->                                               # Rename column to facilitate a future join
       MIRCA_irrHA_ha                                                            # Save temporarily
-    
-    L100.MIRCA_rfdHA_ha %>% 
+
+    L100.MIRCA_rfdHA_ha %>%
       mutate( MIRCA_crop = paste0( "Crop", MIRCA_crop )) %>%                    # Convert name of crop to include "Crop"
       rename( HA_rfd = value ) %>%                                              # Rename column to facilitate a future join
       # Join dataframes. Note we want all country/crop combinations even those that only exist in one of the two dataframes.
@@ -82,8 +75,8 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       replace_na( list(HA_irr = 0, HA_rfd = 0 ) ) %>%                           # Replace NA's with 0. These are expected.
       mutate( irrshareHA = HA_irr / ( HA_irr + HA_rfd ) ) ->                    # Calculate share of irrigated harvested area
       ag_irrshareHA_ctry_Cmir_GLU
-          
-    # Compute average share of irrigation by country and GLU. 
+
+    # Compute average share of irrigation by country and GLU.
     # This will be used as the default share in the event of missing values.
     ag_irrshareHA_ctry_Cmir_GLU %>%
       group_by( iso, GLU ) %>%
@@ -91,19 +84,19 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       mutate( avg_irrshare = HA_irr / ( HA_irr + HA_rfd ) ) %>%                 # Calculate share of irrigated harvested area
       select(-HA_irr, -HA_rfd ) ->                                              # Remove extra columns
       Avg_irrshareHA
-    
+
     # Compute harvested area for irrigated and rainfed land by country, GTAP crop, and GLU
     L100.LDS_ag_HA_ha %>%
       rename( totHA = value ) %>%
       left_join( FAO_ag_items_PRODSTAT[ c( "GTAP_crop", "MIRCA_crop" ) ], by = "GTAP_crop" ) %>%   # Map GTAP crops to MIRCA crops
-      left_join( ag_irrshareHA_ctry_Cmir_GLU, by = c( "iso", "GLU", "MIRCA_crop" ) ) %>%           # Map crop-specific irrigation share 
+      left_join( ag_irrshareHA_ctry_Cmir_GLU, by = c( "iso", "GLU", "MIRCA_crop" ) ) %>%           # Map crop-specific irrigation share
       left_join( Avg_irrshareHA, by = c( "iso", "GLU" )  ) %>%                                     # Map generic irrigation share for cases of missing crops
       mutate( irrshareHA = if_else( is.na( irrshareHA ), avg_irrshare, irrshareHA) ) %>%           # First try setting missing values to average irrigation share
       mutate( irrshareHA = if_else( is.na( irrshareHA ), 0, irrshareHA) ) %>%                      # If that doesn't work, set irrigation share to 0 (all rainfed)
       mutate( irrHA = totHA * irrshareHA, rfdHA = totHA * (1 - irrshareHA) ) %>%                   # Calculate irrigated and rainfed HA from shares and total harvested area
       select(-totHA, -MIRCA_crop, -HA_rfd, -HA_irr, -irrshareHA, - avg_irrshare ) ->               # Remove extra columns
       ag_HA_ha_ctry_crop
-    
+
     # Split irrigated and rainfed harvested area into separate dataframes
     ag_HA_ha_ctry_crop %>%
       select(-irrHA) ->                                                         # Remove extra columns
@@ -112,8 +105,51 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
     ag_HA_ha_ctry_crop %>%
       select(-rfdHA) ->                                                         # Remove extra columns
       L151.ag_irrHA_ha_ctry_crop
- 
-    
+
+
+    # Calculate production on irrigated and rainfed land, by country, GTAP crop, and GLU
+    # Use the ratio of irrigated to rainfed yield from the FAO CROSIT database,
+    # in combination with the harvested area data computed above to separate irrigated
+    # and rainfed production.
+    # First, Calculate the yield ratio for each country and crop, based on the CROSIT database
+    L100.LDS_ag_HA_ha %>%
+      select(iso, GTAP_crop, GLU) %>%
+      left_join(AGLU_ctry[ c("iso","CROSIT_country_ID")], by = "iso" ) %>%
+      left_join(FAO_ag_items_PRODSTAT[ c("GTAP_crop","CROSIT_cropID")], by = "GTAP_crop" ) %>%
+      left_join( FAO_ag_CROSIT[ c( "country_ID", "crop_ID", "Yield_kgHa_irrigated", "Yield_kgHa_rainfed" )],
+                 by = c( "CROSIT_country_ID" = "country_ID", "CROSIT_cropID" = "crop_ID")) %>%
+      mutate(yieldratio = Yield_kgHa_irrigated / Yield_kgHa_rainfed) %>%
+      select(-Yield_kgHa_irrigated, -Yield_kgHa_rainfed) %>%
+      mutate(if_else( is.na(yieldratio), 1, yieldratio )) %>%                                                # Replace NAs with 1
+      mutate(if_else( yieldratio==0, 1, yieldratio )) %>%                                                    # Replace zeros with 1
+      mutate(if_else( is.infinite(yieldratio), 1, yieldratio )) ->                                           # Replace Infs with 1
+      Yieldratio_ctry_crop
+
+    #
+    # #Use the yield ratio to solve for the production shares (irrigated versus rainfed)
+    # L151.ag_HA_ha_ctry_crop$yieldratio <- L151.ag_irr_rfd_yieldratio$yieldratio[
+    #   match( vecpaste( L151.ag_HA_ha_ctry_crop[ c( "iso", "GTAP_crop" ) ] ),
+    #          vecpaste( L151.ag_irr_rfd_yieldratio[ c( "iso", "GTAP_crop" ) ] ) ) ]
+    # L151.ag_HA_ha_ctry_crop$irrshareProd <- with( L151.ag_HA_ha_ctry_crop,
+    #                                               ( irrshareHA * yieldratio ) /
+    #                                                 ( ( irrshareHA * yieldratio ) + ( 1 - irrshareHA ) ) )
+    #
+    # #Multiply through to calculate rainfed and irrigated production
+    # L151.ag_Prod_t_ctry_crop <- L100.LDS_ag_prod_t
+    # names( L151.ag_Prod_t_ctry_crop )[ names( L151.ag_Prod_t_ctry_crop ) == "value" ] <- "totProd"
+    # L151.ag_Prod_t_ctry_crop$irrshareProd <- L151.ag_HA_ha_ctry_crop$irrshareProd[
+    #   match( vecpaste( L151.ag_Prod_t_ctry_crop[ c( "iso", GLU, "GTAP_crop" ) ] ),
+    #          vecpaste( L151.ag_HA_ha_ctry_crop[ c( "iso", GLU, "GTAP_crop" ) ] ) ) ]
+    # L151.ag_Prod_t_ctry_crop$irrProd <- with( L151.ag_Prod_t_ctry_crop, totProd * irrshareProd )
+    #
+    # #Subtract to get rainfed production
+    # L151.ag_Prod_t_ctry_crop$rfdProd <- with( L151.ag_Prod_t_ctry_crop, totProd - irrProd )
+    #
+    # #Prepare for the final write-out
+    # L151.ag_irrProd_t_ctry_crop <- L151.ag_Prod_t_ctry_crop[ c( "iso", "GTAP_crop", GLU, "irrProd" ) ]
+    # L151.ag_rfdProd_t_ctry_crop <- L151.ag_Prod_t_ctry_crop[ c( "iso", "GTAP_crop", GLU, "rfdProd" ) ]
+    #
+
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
