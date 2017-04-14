@@ -1,4 +1,4 @@
-#' module_emissions_L103.ghg_an_USA_S_T_Y
+#' module_emissions_L105.nh3_an_USA_S_T_Y
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,33 +6,33 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L103.ghg_tgmt_USA_an_Sepa_F_2005}. The corresponding file in the
-#' original data system was \code{L103.ghg_an_USA_S_T_Y.R} (emissions level1).
+#' the generated outputs: \code{L105.nh3_tgmt_USA_an_Yh}. The corresponding file in the
+#' original data system was \code{L105.nh3_an_USA_S_T_Y.R} (emissions level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_emissions_L103.ghg_an_USA_S_T_Y_DISABLED <- function(command, ...) {
+module_emissions_L105.nh3_an_USA_S_T_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EPA_ghg_tech",
+             FILE = "emissions/EPA_tech",
              FILE = "emissions/GCAM_sector_tech",
-             FILE = "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
-             FILE = "emissions/EPA_FCCC_AG_2005"))
+             "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
+             FILE = "emissions/EPA_NH3"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L103.ghg_tgmt_USA_an_Sepa_F_2005"))
+    return(c("L105.nh3_tgmt_USA_an_Yh"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
+    EPA_tech <- get_data(all_data, "emissions/EPA_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
-    EPA_FCCC_AG_2005 <- get_data(all_data, "emissions/EPA_FCCC_AG_2005")
+    EPA_NH3 <- get_data(all_data, "emissions/EPA_NH3")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -49,8 +49,8 @@ module_emissions_L103.ghg_an_USA_S_T_Y_DISABLED <- function(command, ...) {
     # }
     #
     #
-    # NOTE: there are `merge` and/or 'match' calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Merge-and-Match
+    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
+    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -63,13 +63,13 @@ module_emissions_L103.ghg_an_USA_S_T_Y_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L103.ghg_tgmt_USA_an_Sepa_F_2005") %>%
+      add_legacy_name("L105.nh3_tgmt_USA_an_Yh") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L103.ghg_tgmt_USA_an_Sepa_F_2005
+      L105.nh3_tgmt_USA_an_Yh
 
-    return_data(L103.ghg_tgmt_USA_an_Sepa_F_2005)
+    return_data(L105.nh3_tgmt_USA_an_Yh)
   } else {
     stop("Unknown command")
   }
