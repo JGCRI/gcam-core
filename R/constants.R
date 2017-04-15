@@ -99,4 +99,4 @@ socioeconomics.BASE_POP_SCEN <- "SSP2"
 
 emissions.EPA_HISTORICAL_YEARS <- 1971:2002
 emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
-
+emissions.NH3_EXTRA_YEARS <- 1971:1989

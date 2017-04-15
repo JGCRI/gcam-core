@@ -8,16 +8,15 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L101.so2_tgej_USA_en_Sepa_F_Yh}, \code{L101.co_tgej_USA_en_Sepa_F_Yh}, \code{L101.nox_tgej_USA_en_Sepa_F_Yh}, \code{L101.voc_tgej_USA_en_Sepa_F_Yh}, \code{L101.nh3_tgej_USA_en_Sepa_F_Yh}, \code{L101.in_EJ_R_en_Si_F_Yh}. The corresponding file in the
 #' original data system was \code{L101.nonghg_en_USA_S_T_Y.R} (emissions level1).
-#' @details Describe in detail what this chunk does.
-#' @importFrom assertthat assert_that
+#' @details Compute historical emissions factors for energy by GCAM technology, from EPA emissions data and IEA energy balances.
+#' For NH3, 1990 data are used for the 1971-1989 period because... TODO
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author BBL April 2017
 #' @export
 module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "energy/mappings/IEA_flow_sector",
+    return(c(FILE = "energy/mappings/IEA_flow_sector",
              FILE = "energy/mappings/IEA_product_fuel",
              FILE = "emissions/mappings/GCAM_sector_tech",
              FILE = "emissions/mappings/EPA_tech",
@@ -46,7 +45,6 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     IEA_flow_sector <- get_data(all_data, "energy/mappings/IEA_flow_sector")
     IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
     GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
@@ -81,7 +79,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
 
       # Bind all together
       bind_rows(L1231.in_EJ_R_elec_F_tech_Yh, temp) %>%
-      # Temporary data inject lines
+      # Temporary temp-data-inject lines - reshape data
       gather(year, value, -GCAM_region_ID, -sector, -fuel, -technology) %>%
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L101.in_EJ_R_en_Si_F_Yh
@@ -98,7 +96,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
       group_by(EPA_agg_sector, EPA_agg_fuel, year) %>%
       summarise(energy = sum(value)) %>%
       filter(!is.na(EPA_agg_sector)) ->
-      L101.in_EJ_USA_en_Sepa_F_Yh.melt
+      L101.in_EJ_USA_en_Sepa_F_Yh.mlt
 
     # Convert EPA SO2, CO, NOx, VOC, and NH3 emissions inventories to Tg and aggregate by sector and technology
     # We do this for each gas, so define a function with all the steps
@@ -121,64 +119,129 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     L101.voc_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_VOC, EPA_tech)
     L101.nh3_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_NH3, EPA_tech)
 
+    # Compute SO2, CO, NOx, VOC, and NH3 emissions factors by dividing EPA inventory by IEA energy balances
+    # We do this for each gas, so define a function with all the steps
+    EPA_compute_emissions_factors <- function(x, L101.in_EJ_USA_en_Sepa_F_Yh.mlt) {
+      L101.in_EJ_USA_en_Sepa_F_Yh.mlt %>%
+        left_join(x, by = c("EPA_agg_sector" = "sector", "EPA_agg_fuel" = "fuel", "year" = "year")) %>%
+        rename(emissions = value) %>%
+        mutate(emissions = if_else(is.na(emissions), 0, emissions),
+               em_factor = emissions / energy,
+               em_factor = if_else(is.nan(em_factor) | is.infinite(em_factor), 0, em_factor)) ->
+        x_em_factor
+
+      # Compute sector emissions. If these are zero, then reset all fuel em_factors to 1
+      x_em_factor %>%
+        group_by(EPA_agg_sector, year) %>%
+        summarise(sector_emissions = sum(emissions)) ->
+        x_sector_emissions
+
+      x_em_factor %>%
+        left_join_error_no_match(x_sector_emissions, by = c("EPA_agg_sector", "year")) %>%
+        mutate(em_factor = if_else(sector_emissions == 0, 1, em_factor)) %>%
+        rename(sector = EPA_agg_sector, fuel = EPA_agg_fuel) %>%
+        select(-energy, -emissions, -sector_emissions)
+    }
+
+    # Run code above for each gas
+    L101.so2_tgej_USA_en_Sepa_F_Yh <- EPA_compute_emissions_factors(L101.so2_tg_USA_en_Sepa_F_Yh, L101.in_EJ_USA_en_Sepa_F_Yh.mlt)
+    L101.co_tgej_USA_en_Sepa_F_Yh <- EPA_compute_emissions_factors(L101.co_tg_USA_en_Sepa_F_Yh, L101.in_EJ_USA_en_Sepa_F_Yh.mlt)
+    L101.nox_tgej_USA_en_Sepa_F_Yh <- EPA_compute_emissions_factors(L101.nox_tg_USA_en_Sepa_F_Yh, L101.in_EJ_USA_en_Sepa_F_Yh.mlt)
+    L101.voc_tgej_USA_en_Sepa_F_Yh <- EPA_compute_emissions_factors(L101.voc_tg_USA_en_Sepa_F_Yh, L101.in_EJ_USA_en_Sepa_F_Yh.mlt)
+    L101.nh3_tgej_USA_en_Sepa_F_Yh <- EPA_compute_emissions_factors(L101.nh3_tg_USA_en_Sepa_F_Yh, L101.in_EJ_USA_en_Sepa_F_Yh.mlt)
+
+    # Use 1990 NH3 data for 1971-1989 because... TODO
+    L101.nh3_tgej_USA_en_Sepa_F_Yh %>%
+      filter(year %in% emissions.NH3_EXTRA_YEARS) %>%
+      select(-em_factor, -year) %>%
+      left_join_error_no_match(filter(L101.nh3_tgej_USA_en_Sepa_F_Yh, year == 1990), by = c("sector", "fuel")) %>%
+      bind_rows(filter(L101.nh3_tgej_USA_en_Sepa_F_Yh, !year %in% emissions.NH3_EXTRA_YEARS)) ->
+      L101.nh3_tgej_USA_en_Sepa_F_Yh
 
     # Produce outputs
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L101.so2_tgej_USA_en_Sepa_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L101.so2_tgej_USA_en_Sepa_F_Yh
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L101.co_tgej_USA_en_Sepa_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L101.co_tgej_USA_en_Sepa_F_Yh
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L101.nox_tgej_USA_en_Sepa_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L101.nox_tgej_USA_en_Sepa_F_Yh
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L101.voc_tgej_USA_en_Sepa_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L101.voc_tgej_USA_en_Sepa_F_Yh
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
-      add_legacy_name("L101.nh3_tgej_USA_en_Sepa_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L101.nh3_tgej_USA_en_Sepa_F_Yh
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+    L101.in_EJ_R_en_Si_F_Yh %>%
+      add_title("Energy consumption by region / GCAM sector / fuel / historical year") %>%
+      add_units("EJ") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L101.in_EJ_R_en_Si_F_Yh") %>%
-      add_precursors("common/iso_GCAM_regID") %>%
+      add_precursors("energy/mappings/IEA_flow_sector",
+                     "energy/mappings/IEA_product_fuel",
+                     "emissions/mappings/GCAM_sector_tech",
+                     "emissions/mappings/EPA_tech",
+                     "temp-data-inject/L1231.in_EJ_R_elec_F_tech_Yh",
+                     "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
+                     "temp-data-inject/L144.in_EJ_R_bld_serv_F_Yh",
+                     "temp-data-inject/L154.in_EJ_R_trn_m_sz_tech_F_Yh",
+                     "temp-data-inject/L1322.Fert_Prod_MtN_R_F_Y",
+                     "temp-data-inject/L1321.in_EJ_R_cement_F_Y",
+                     "temp-data-inject/L124.in_EJ_R_heat_F_Yh",
+                     "temp-data-inject/L111.Prod_EJ_R_F_Yh") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.in_EJ_R_en_Si_F_Yh
 
-    return_data(L101.so2_tgej_USA_en_Sepa_F_Yh, L101.co_tgej_USA_en_Sepa_F_Yh, L101.nox_tgej_USA_en_Sepa_F_Yh, L101.voc_tgej_USA_en_Sepa_F_Yh, L101.nh3_tgej_USA_en_Sepa_F_Yh, L101.in_EJ_R_en_Si_F_Yh)
+    L101.so2_tgej_USA_en_Sepa_F_Yh %>%
+      rename(value = em_factor) %>%   # for testing system
+      add_title("SO2 emissions factors for the USA by EPA sector / fuel / historical year") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L101.so2_tgej_USA_en_Sepa_F_Yh") %>%
+      add_precursors("emissions/EPA_SO2") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L101.so2_tgej_USA_en_Sepa_F_Yh
+
+    L101.co_tgej_USA_en_Sepa_F_Yh %>%
+      rename(value = em_factor) %>%   # for testing system
+      add_title("CO emissions factors for the USA by EPA sector / fuel / historical year") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L101.co_tgej_USA_en_Sepa_F_Yh") %>%
+      same_precursors_as(L101.in_EJ_R_en_Si_F_Yh) %>%
+      add_precursors("emissions/EPA_CO") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L101.co_tgej_USA_en_Sepa_F_Yh
+
+    L101.nox_tgej_USA_en_Sepa_F_Yh %>%
+      rename(value = em_factor) %>%   # for testing system
+      add_title("NOx emissions factors for the USA by EPA sector / fuel / historical year") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L101.nox_tgej_USA_en_Sepa_F_Yh") %>%
+      same_precursors_as(L101.in_EJ_R_en_Si_F_Yh) %>%
+      add_precursors("emissions/EPA_NOx") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L101.nox_tgej_USA_en_Sepa_F_Yh
+
+    L101.voc_tgej_USA_en_Sepa_F_Yh %>%
+      rename(value = em_factor) %>%   # for testing system
+      add_title("VOC emissions factors for the USA by EPA sector / fuel / historical year") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L101.voc_tgej_USA_en_Sepa_F_Yh") %>%
+      same_precursors_as(L101.in_EJ_R_en_Si_F_Yh) %>%
+      add_precursors("emissions/EPA_VOC") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L101.voc_tgej_USA_en_Sepa_F_Yh
+
+    L101.nh3_tgej_USA_en_Sepa_F_Yh %>%
+      rename(value = em_factor) %>%   # for testing system
+      add_title("NH3 emissions factors for the USA by EPA sector / fuel / historical year") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("comments describing how data generated") %>%
+      add_comments("can be multiple lines") %>%
+      add_legacy_name("L101.nh3_tgej_USA_en_Sepa_F_Yh") %>%
+      same_precursors_as(L101.in_EJ_R_en_Si_F_Yh) %>%
+      add_precursors("emissions/EPA_NH3") %>%
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      L101.nh3_tgej_USA_en_Sepa_F_Yh
+
+    return_data(L101.so2_tgej_USA_en_Sepa_F_Yh, L101.co_tgej_USA_en_Sepa_F_Yh,
+                L101.nox_tgej_USA_en_Sepa_F_Yh, L101.voc_tgej_USA_en_Sepa_F_Yh,
+                L101.nh3_tgej_USA_en_Sepa_F_Yh, L101.in_EJ_R_en_Si_F_Yh)
   } else {
     stop("Unknown command")
   }
