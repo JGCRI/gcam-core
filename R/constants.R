@@ -93,3 +93,10 @@ socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to us
 
 socioeconomics.BASE_POP_SCEN <- "SSP2"
 
+
+# ======================================================================
+# emissions constants
+
+emissions.EPA_HISTORICAL_YEARS <- 1971:2002
+emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
+

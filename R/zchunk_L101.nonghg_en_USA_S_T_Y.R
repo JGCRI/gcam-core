@@ -66,6 +66,61 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "temp-data-inject/L124.in_EJ_R_heat_F_Yh")
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "temp-data-inject/L111.Prod_EJ_R_F_Yh")
 
+    # Add technology columns and combine all energy driver data into a single dataframe
+    bind_rows(L1322.in_EJ_R_indenergy_F_Yh, L1322.Fert_Prod_MtN_R_F_Y,
+              L1321.in_EJ_R_cement_F_Y, L124.in_EJ_R_heat_F_Yh, L111.Prod_EJ_R_F_Yh,
+              rename(L144.in_EJ_R_bld_serv_F_Yh, sector = service)) %>%
+      mutate(technology = fuel) ->
+      temp
+
+    L154.in_EJ_R_trn_m_sz_tech_F_Yh %>%
+      mutate(technology = fuel,
+             fuel = paste(mode, size.class, sep = "_"),
+             sector = UCD_sector) %>%
+      select(-mode, -UCD_sector, -size.class, -UCD_technology, -UCD_fuel) %>%
+
+      # Bind all together
+      bind_rows(L1231.in_EJ_R_elec_F_tech_Yh, temp) %>%
+      # Temporary data inject lines
+      gather(year, value, -GCAM_region_ID, -sector, -fuel, -technology) %>%
+      mutate(year = as.integer(substr(year, 2, 5))) ->
+      L101.in_EJ_R_en_Si_F_Yh
+
+    # Subset for USA only and aggregate to EPA categories
+    GCAM_sector_tech %>%
+      select(EPA_agg_sector, EPA_agg_fuel, sector, fuel) %>%
+      distinct(sector, fuel, .keep_all = TRUE) ->
+      temp   # dataset we're about to merge below, replicating `match` behavior
+
+    L101.in_EJ_R_en_Si_F_Yh %>%
+      filter(GCAM_region_ID == 1) %>%
+      left_join(temp, by = c("sector", "fuel")) %>%
+      group_by(EPA_agg_sector, EPA_agg_fuel, year) %>%
+      summarise(energy = sum(value)) %>%
+      filter(!is.na(EPA_agg_sector)) ->
+      L101.in_EJ_USA_en_Sepa_F_Yh.melt
+
+    # Convert EPA SO2, CO, NOx, VOC, and NH3 emissions inventories to Tg and aggregate by sector and technology
+    # We do this for each gas, so define a function with all the steps
+    EPA_convert_and_aggregate <- function(x, EPA_tech) {
+      x %>%
+        gather(year, value, -Source_Category_Raw, -Source_Category) %>%
+        mutate(year = as.integer(year)) %>%
+        left_join(distinct(EPA_tech), by = c("Source_Category" = "EPA_Category")) %>%
+        filter(year %in% emissions.EPA_HISTORICAL_YEARS, !is.na(fuel)) %>%
+        group_by(sector, fuel, year) %>%
+        # summarise and convert to Tg
+        summarise(value = sum(value) * emissions.TST_TO_TG) %>%
+        # set missing values to zero
+        mutate(value = if_else(is.na(value), 0, value))
+    }
+
+    L101.so2_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_SO2, EPA_tech)
+    L101.co_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_CO, EPA_tech)
+    L101.nox_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_NOx, EPA_tech)
+    L101.voc_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_VOC, EPA_tech)
+    L101.nh3_tg_USA_en_Sepa_F_Yh <- EPA_convert_and_aggregate(EPA_NH3, EPA_tech)
+
 
     # Produce outputs
     tibble() %>%
