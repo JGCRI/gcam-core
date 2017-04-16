@@ -21,8 +21,11 @@ original data system was \code{L101.nonghg_en_USA_S_T_Y.R} (emissions level1).
 Compute historical emissions factors for energy by GCAM technology, from EPA emissions data and IEA energy balances.
 }
 \details{
-Describe in detail what this chunk does.
+Compute historical emissions factors for energy (electricity, independent energy, buildings,
+transportation, fertilizer production, cement, heating, fossil production) by GCAM technology, from EPA
+emissions data and IEA energy balances.
+For NH3, 1990 data are used for the 1971-1989 period because... TODO
 }
 \author{
-YourInitials CurrentMonthName 2017
+BBL April 2017
 }

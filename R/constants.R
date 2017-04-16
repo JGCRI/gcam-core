@@ -20,6 +20,10 @@ HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq( 2015, 2100, 5 )
 
 # ======================================================================
+# GCAM constants
+gcam.USA_CODE <- 1
+
+# ======================================================================
 # aglu constants
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
