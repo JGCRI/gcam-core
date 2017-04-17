@@ -11,7 +11,10 @@
 #' @details Compute historical emissions factors for energy (electricity, independent energy, buildings,
 #' transportation, fertilizer production, cement, heating, fossil production) by GCAM technology, from EPA
 #' emissions data and IEA energy balances.
-#' For NH3, 1990 data are used for the 1971-1989 period because... TODO
+#' For NH3, 1990 data are used for the 1971-1989 period because these data don't go back
+#' as far as 1971, so we extrapolate in order to retain the capacity to run the model from
+#' any historical year (i.e., any year 1971-2010), representing subsequent historical years
+#'as future model time periods in order to check model performance against the observed data.
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL April 2017
@@ -153,7 +156,7 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
     L101.voc_tgej_USA_en_Sepa_F_Yh <- EPA_compute_emissions_factors(L101.voc_tg_USA_en_Sepa_F_Yh, L101.in_EJ_USA_en_Sepa_F_Yh.mlt)
     L101.nh3_tgej_USA_en_Sepa_F_Yh <- EPA_compute_emissions_factors(L101.nh3_tg_USA_en_Sepa_F_Yh, L101.in_EJ_USA_en_Sepa_F_Yh.mlt)
 
-    # Use 1990 NH3 data for 1971-1989 because... TODO
+    # Use 1990 NH3 data for 1971-1989 because this dataset doesn't go back that far
     L101.nh3_tgej_USA_en_Sepa_F_Yh %>%
       filter(year %in% emissions.NH3_EXTRA_YEARS) %>%
       select(-em_factor, year) %>%
