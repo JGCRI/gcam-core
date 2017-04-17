@@ -46,7 +46,7 @@ WEIGHT_COTTON_LINT <- 0.4
 PRICERATIO_GRASS_ALFALFA <- 0.7
 
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
-DIGITS_CALPRICE <- 4 #prices and costs
+aglu.DIGITS_CALPRICE <- 4 # prices and costs
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
