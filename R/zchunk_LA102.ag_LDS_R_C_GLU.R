@@ -8,12 +8,14 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L102.ag_HA_bm2_R_C_GLU}, \code{L102.ag_Prod_Mt_R_C_GLU}. The corresponding file in the
 #' original data system was \code{LA102.ag_LDS_R_C_GLU.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details This module takes LDS initialization data (sourced from HYDE, SAGE and other places) at the
+#' iso country-GLU-GTAP_crop level for both Harvested Area and Agricultural Production, and aggregates to the
+#' GCAM region and commodity level. This module also converts to GCAM model units of billion meters squared (bm2)
+#' for Harvested Area and of Megatons (Mt) for Production.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
+#' @author ACS April 2017
 module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",

@@ -18,11 +18,14 @@ the generated outputs: \code{L102.ag_HA_bm2_R_C_GLU}, \code{L102.ag_Prod_Mt_R_C_
 original data system was \code{LA102.ag_LDS_R_C_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Initializes harvested area and production values using LDS data for each GCAM Region-Commodity-GLU combination.
 }
 \details{
-Describe in detail what this chunk does.
+This module takes LDS initialization data (sourced from HYDE, SAGE and other places) at the
+iso country-GLU-GTAP_crop level for both Harvested Area and Agricultural Production, and aggregates to the
+GCAM region and commodity level. This module also converts to GCAM model units of billion meters squared (bm2)
+for Harvested Area and of Megatons (Mt) for Production.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS April 2017
 }
