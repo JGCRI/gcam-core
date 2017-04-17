@@ -49,7 +49,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
     # Take the harvested area table, L100.LDS_ag_HA_ha
     L100.LDS_ag_HA_ha %>%
       # append GCAM region information from the iso table:
-      left_join_error_no_match(iso_GCAM_regID, by=c("iso")) %>%
+      left_join_error_no_match(iso_GCAM_regID, by = c("iso")) %>%
       # remove the country_name and GCAM3 columns added from the iso table:
       select(-country_name, -region_GCAM3) %>%
       # append GCAM_commodity information from the FAO table using a left_join to preserve NA values as in old system:
@@ -70,7 +70,7 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
     # Take the production table, L100.LDS_ag_HA_ha
     L100.LDS_ag_prod_t %>%
       # append GCAM region information from the iso table:
-      left_join_error_no_match(iso_GCAM_regID, by=c("iso")) %>%
+      left_join_error_no_match(iso_GCAM_regID, by = c("iso")) %>%
       # remove the country_name and GCAM3 columns added from the iso table:
       select(-country_name, -region_GCAM3) %>%
       # append GCAM_commodity information from the FAO table using a left_join to preserve NA values as in old system:
@@ -90,10 +90,6 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
 
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L102.ag_HA_bm2_R_C_GLU %>%
       add_title("Harvested area by GCAM region / commodity / GLU") %>%
       add_units("Thousand km^2 = billion m^2 (bm2") %>%
