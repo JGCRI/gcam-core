@@ -104,7 +104,8 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
                      "L100.LDS_ag_HA_ha",
-                     "L100.LDS_ag_prod_t") ->
+                     "L100.LDS_ag_prod_t")  %>%
+      add_flags(FLAG_SUM_TEST) ->
       L102.ag_HA_bm2_R_C_GLU
     L102.ag_Prod_Mt_R_C_GLU %>%
       add_title("Crop production by GCAM region / commodity / GLU") %>%
@@ -116,7 +117,8 @@ module_aglu_LA102.ag_LDS_R_C_GLU <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
                      "L100.LDS_ag_HA_ha",
-                     "L100.LDS_ag_prod_t") ->
+                     "L100.LDS_ag_prod_t") %>%
+      add_flags(FLAG_SUM_TEST) ->
       L102.ag_Prod_Mt_R_C_GLU
 
     return_data(L102.ag_HA_bm2_R_C_GLU, L102.ag_Prod_Mt_R_C_GLU)

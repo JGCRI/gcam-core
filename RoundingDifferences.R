@@ -1,10 +1,13 @@
 library(dplyr)
 library(tidyr)
-#read in old DS output
-A <- read.csv(file="~/GitHub/gcamdata/tests/testthat/comparison_data/aglu/L102.ag_HA_bm2_R_C_GLU.csv", comment.char = "#")
 
-# read in new DS output
-B <- read.csv(file="~/GitHub/gcamdata/outputs/L102.ag_HA_bm2_R_C_GLU.csv",comment.char = "#")
+# read in old DS output
+#A <- read.csv(file="~/GitHub/gcamdata/tests/testthat/comparison_data/aglu/L102.ag_HA_bm2_R_C_GLU.csv", comment.char = "#")
+A <- read.csv(file="~/GitHub/gcamdata/tests/testthat/comparison_data/aglu/L102.ag_Prod_Mt_R_C_GLU.csv", comment.char = "#")
+
+#read in new DS output
+#B <- read.csv(file="~/GitHub/gcamdata/outputs/L102.ag_HA_bm2_R_C_GLU.csv",comment.char = "#")
+B <- read.csv(file="~/GitHub/gcamdata/outputs/L102.ag_Prod_Mt_R_C_GLU.csv",comment.char = "#")
 
 # arrange old DS so everything in same order
 A %>% arrange(GCAM_region_ID, GCAM_commodity) -> A1
@@ -57,3 +60,7 @@ B[B$GCAM_region_ID==29 & B$GLU=="GLU159" & B$GCAM_commodity=="PalmFruit",]
 A1$value - B$value -> fullDiff
 max(fullDiff)
 min(fullDiff)
+
+
+# mimic sum test
+sum(A$value) == sum(B$value)
