@@ -17,8 +17,8 @@
 module_emissions_L105.nh3_an_USA_S_T_Y_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "emissions/EPA_tech",
-             FILE = "emissions/GCAM_sector_tech",
+             FILE = "emissions/mappings/EPA_tech",
+             FILE = "emissions/mappings/GCAM_sector_tech",
              "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
              FILE = "emissions/EPA_NH3"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -29,8 +29,8 @@ module_emissions_L105.nh3_an_USA_S_T_Y_DISABLED <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    EPA_tech <- get_data(all_data, "emissions/EPA_tech")
-    GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
+    EPA_tech <- get_data(all_data, "emissions/mappings/EPA_tech")
+    GCAM_sector_tech <- get_data(all_data, "emissions/mappings/GCAM_sector_tech")
     L107.an_Prod_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Prod_Mt_R_C_Sys_Fd_Y")
     EPA_NH3 <- get_data(all_data, "emissions/EPA_NH3")
 
