@@ -40,7 +40,7 @@ module_socioeconomics_L100.GDP_hist <- function(command, ...) {
       gather(year, value, -iso) %>%
       mutate(year = as.numeric(year)) %>%
       filter(year %in% HISTORICAL_YEARS, !is.na(value), !is.na(iso)) %>%
-      mutate(value = value * CONV_BIL_MIL / CONV_1990_2010_USD) %>%
+      mutate(value = value * CONV_BIL_MIL / gdp_deflator(2010, base_year = 1990)) %>%
       add_title("Historical GDP downscaled to country (iso)") %>%
       add_comments("Filtered to historical years, units converted") %>%
       add_precursors("socioeconomics/USDA_GDP_MER") %>%
