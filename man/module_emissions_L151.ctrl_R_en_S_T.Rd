@@ -21,8 +21,12 @@ original data system was \code{L151.ctrl_R_en_S_T.R} (emissions level1).
 Compute maximum reduction by region / sector / gas.
 }
 \details{
-Compute maximum reduction by region and sector for SO2, CO, NOx, NMVOC (all 2005 reference), BC, and OC (2005).
-Reductions are limited to [0, 100].
+Compute maximum reduction by region and sector for SO2, CO, NOx, NMVOC (all 2005 reference),
+BC, and OC (2005). Reductions are limited to [0, 100]. EDGAR emissions inventory only goes up
+to 2008, so for calculating emissions coefficients, 2005 is the final base year. These steps
+calculate the "reduction" required to get from the 2005 observed emissions coefficients (for each
+region / technology / emissions species) to the exogenous minimum coefficient for each
+technology / emission species.
 }
 \author{
 BBL April 2017

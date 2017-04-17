@@ -53,6 +53,7 @@ CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
+CONV_MILLION_M3_KM3 <- 1e-03
 
 
 # ======================================================================
