@@ -54,6 +54,7 @@ CONV_GG_TG <- 0.001
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
+CONV_MILLION_M3_KM3 <- 1e-03
 
 
 # ======================================================================
