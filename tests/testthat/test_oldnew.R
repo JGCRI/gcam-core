@@ -64,7 +64,7 @@ test_that("matches old data system output", {
 
     if(length(oldf) == 1) {
       # If the old file has an "INPUT_TABLE" header, need to skip that
-      old_firstline <- readLines(oldf, n = 1)
+      old_firstline <- read_lines(oldf, n_max = 1)
       oldskip <- ifelse(old_firstline == "INPUT_TABLE", 4, 0)
       olddata <- read_csv(oldf, comment = COMMENT_CHAR, skip = oldskip)
 
