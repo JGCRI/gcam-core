@@ -18,7 +18,7 @@ FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq( 2015, 2100, 5 )
-
+EDGAR_YEARS <- 1971:2008
 # ======================================================================
 # GCAM constants
 gcam.USA_CODE <- 1
