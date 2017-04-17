@@ -136,7 +136,12 @@ module_emissions_L101.nonghg_en_USA_S_T_Y <- function(command, ...) {
                em_factor = if_else(is.nan(em_factor) | is.infinite(em_factor), 0, em_factor)) ->
         x_em_factor
 
-      # Compute sector emissions. If these are zero, then reset all fuel em_factors to 1
+      # Compute sector emissions.
+      # If these are zero, then reset all fuel em_factors to 1. Why? From Kate: I don't totally
+      # remember, but I think there was a specific case where this was required. Essentially,
+      # we will later scale these emissions to match EDGAR totals.
+      # If there is a zero here, but positive emissions in EDGAR, then the scaling won't work.
+
       x_em_factor %>%
         group_by(EPA_agg_sector, year) %>%
         summarise(sector_emissions = sum(emissions)) ->
