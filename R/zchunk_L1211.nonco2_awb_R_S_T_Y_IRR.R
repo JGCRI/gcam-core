@@ -17,7 +17,6 @@
 #' @importFrom tidyr gather spread
 #' @author CDL April 2017
 #' @export
-
 module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
@@ -64,17 +63,20 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
     # Second,aggregate to get the total by region/GLU/crop
     L1211.ag_Prod_Mt_R_C_Y_GLU_irr %>%
       filter(year %in% HISTORICAL_YEARS) %>%
-      group_by(GCAM_region_ID,GCAM_commodity,GLU,year) %>%
-      summarise(value=sum(value))  ->
+      group_by(GCAM_region_ID, GCAM_commodity, GLU, year) %>%
+      summarise(value = sum(value))  ->
       L1211.ag_Prod_Mt_R_C_Y_GLU
 
     # Third, divide to get the share of irr/rfd within region/GLU/crop
     L1211.ag_Prod_Mt_R_C_Y_GLU_irr %>%
+      # Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
+      # Note this step was NOT in the original data system
+      filter(year %in% HISTORICAL_YEARS) %>%
       left_join_error_no_match(L1211.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity","GLU", "year")) %>%
       # value.y is now the total (rfd+irr) production
-      mutate(value = value.x/value.y) %>%
-      select(-value.x,-value.y) %>%
-      mutate(value=if_else(is.na(value),0,value)) ->
+      mutate(value = value.x / value.y) %>%
+      select(-value.x, -value.y) %>%
+      mutate(value = if_else(is.na(value), 0, value)) ->
       L1211.ag_irrShare_R_C_Y_GLU_irr
 
     # This section creates L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
@@ -87,26 +89,25 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       # Why would there be na's?!?!?!?
       #mutate(Irr_Rfd=if_else(is.na(Irr_Rfd),0,Irr_Rfd)) ->
       # L121.nonco2_tg_R_awb_C_Y_GLU & L1211.ag_irrShare_R_C_Y_GLU_irr are not same size!?
+
+      # Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
+      # Note this step was NOT in the original data system
+      filter(year %in% HISTORICAL_YEARS) %>%
       left_join_error_no_match(L1211.ag_irrShare_R_C_Y_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity","GLU", "year", "Irr_Rfd")) %>%
       mutate(value = value.x * value.y) %>%
-      select(-value.x,-value.y) %>%
+      select(-value.x, -value.y) %>%
       filter(year %in% EDGAR_YEARS) ->
       L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
 
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L1211.nonco2_tg_R_awb_C_Y_GLU_IRR%>%
       add_title("Ag waste burning emissions by GCAM region / commodity / GLU / irrigation level / historical year") %>%
       add_units("Teragram (Tg)") %>%
       add_comments("Multiply emissions by region/GLU/crop/nonCO2 by irr/rfd production shares") %>%
       add_legacy_name("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR") %>%
       add_precursors("temp-data-inject/L121.nonco2_tg_R_awb_C_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
     L1211.ag_irrShare_R_C_Y_GLU_irr %>%
@@ -118,7 +119,6 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       add_legacy_name("L1211.ag_irrShare_R_C_Y_GLU_irr") %>%
       add_precursors("temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "temp-data-inject/L161.ag_rfdProd_Mt_R_C_Y_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L1211.ag_irrShare_R_C_Y_GLU_irr
 
