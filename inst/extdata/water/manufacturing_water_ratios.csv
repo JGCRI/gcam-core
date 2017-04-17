@@ -1,0 +1,7 @@
+# File: manufacturing_water_ratios.csv
+# Title: Global Consumption to withdrawal and self to total supply ratios
+# Units: Unitless
+# Comments: Based on US data
+# Source: Vassolo and Doll, 2005. Global-scale gridded estimates of thermoelectric power and manufacturing water use. Water Resources Research; EPRI, 2002. Water & Sustainability.
+region,cons-to-with-ratio,self-to-total-ratio
+global,0.135,0.814
