@@ -29,7 +29,7 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
         expect_is(x, "list", info = paste("Timeshift error invoking", chunk))
         x
       },
-      try(driver(quiet = TRUE))
+      try(driver(quiet = TRUE, write_outputs = FALSE))
     )
 
     # Reset to what it was before
