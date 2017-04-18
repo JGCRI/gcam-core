@@ -209,7 +209,10 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
   assertthat::assert_that(is.logical(write_inputs))
   assertthat::assert_that(is.character(outputs_dir))
 
-  dir.create(OUTPUTS_DIR, showWarnings = FALSE, recursive = TRUE)
+  # Create directory if necessary, and remove any previous outputs
+  dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
+  unlink(file.path(outputs_dir, "*.csv"))
+
   for(cn in names(chunkdata)) {
     cd <- chunkdata[[cn]]
     if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
