@@ -44,12 +44,11 @@ test_that("matches old data system output", {
       expect_true(all(c("year", "value") %in% names(newdata)),
                   info = paste("FLAG_LONG_YEAR_FORM specified in", basename(newf),
                                "but no 'year' and 'value' columns present"))
-      newdata <- spread(newdata, year, value)
-      # newdata <- try(spread(newdata, year, value))
-      # if(class(newdata) == "try-error") {
-      #   stop("Error reshaping ", basename(newf))
-      #   next
-      # }
+      newdata <- try(spread(newdata, year, value))
+      if(isTRUE(class(newdata) == "try-error")) {
+        stop("Error reshaping ", basename(newf), "; are there `year`` and `value` columns?")
+        next
+      }
     }
     if(flag_no_xyear_form) {
       yearcols <- grep("^[0-9]{4}$", names(newdata))
