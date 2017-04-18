@@ -1,6 +1,6 @@
 #' module_emissions_L105.nh3_an_USA_S_T_Y
 #'
-#' Briefly describe what this chunk does.
+#' Historical NH3 emissions factors for animals by GCAM technology, computed from EPA emissions data and FAO animal statistics
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,13 +8,15 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L105.nh3_tgmt_USA_an_Yh}. The corresponding file in the
 #' original data system was \code{L105.nh3_an_USA_S_T_Y.R} (emissions level1).
-#' @details Describe in detail what this chunk does.
+#' @details Historical NH3 emission factors for animal production are calculated from EPA NH3 estimates (1990 - 2002)
+#' and FAO production statistics by GCAM sector and technology.
+#' Emission factors for historical years (1971 - 1989) are estiamted as the emissions factor for 1990.
+#' All historical NH3 Emission factors use US values.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_emissions_L105.nh3_an_USA_S_T_Y_DISABLED <- function(command, ...) {
+#' @author RMH April 2017
+module_emissions_L105.nh3_an_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "emissions/mappings/EPA_tech",
@@ -53,19 +55,63 @@ module_emissions_L105.nh3_an_USA_S_T_Y_DISABLED <- function(command, ...) {
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
+    # Process EPA NH3 emissions estimates:
+    # Map to GCAM sector and Technology, convert to Tg and aggregate
+    # Notes:
+    # - when mapping from EPA sectors to GCAM sectors and technologies there should be NAs
+    #   (don't map very aggregate or very detailed EPA sectors to avoid double counting)
+
+    L105.nh3_tg_USA_an_Sepa_F_Yh <- EPA_NH3 %>%
+      left_join(EPA_tech, by = c("Source_Category" = "EPA_Category")) %>%
+      filter(sector == 'Animals',!is.na(fuel)) %>%
+      select(-Source_Category_Raw, -Source_Category) %>%
+      gather(year, value, -sector, -fuel) %>%
+      mutate(year = as.numeric(year)) %>%
+      filter(year %in% NH3_HISTORICAL_YEARS) %>%
+      mutate(value = value * CONV_TST_TG) %>%  # convert from thousand short tons to Tg
+      dplyr::rename(emissions = value)
+
+    # Process FAO production data:
+    # Subset US data, aggregate to EPA sectors (all animal production)
+
+    L105.out_Mt_USA_an_C_Sys_Fd_Yh <- L107.an_Prod_Mt_R_C_Sys_Fd_Y %>%
+      filter(GCAM_region_ID == 1) %>%
+      group_by(year) %>%
+      summarize_at(vars(value), funs(sum ) ) %>%
+      dplyr::rename(production = value) %>%
+      mutate(year = as.numeric(year))
+
+    # Compute GHG emissions factors by dividing EPA inventory by FAO animal production
+    L105.nh3_tgmt_USA_an_Yh <-  L105.nh3_tg_USA_an_Sepa_F_Yh %>%
+      left_join_error_no_match(L105.out_Mt_USA_an_C_Sys_Fd_Yh, by = "year") %>%
+      mutate(value = emissions/production) %>%
+      select(-emissions, -production)
+
+    # Add historical years (use 1990 estimate for other historical years (1971 - 1989) )
+    extend_sector <- L105.nh3_tgmt_USA_an_Yh %>% filter(year == 1990) %>% select(sector) %>% as.character
+    extend_fuel <- L105.nh3_tgmt_USA_an_Yh %>% filter(year == 1990) %>% select(fuel) %>% as.character
+    extend_value <- L105.nh3_tgmt_USA_an_Yh %>% filter(year == 1990) %>% select(value)%>% as.numeric
+
+    L105.nh3_tgmt_USA_an_Yh <- L105.nh3_tgmt_USA_an_Yh %>%
+      bind_rows( tibble(sector = rep(extend_sector, times = length(NH3_EXTRA_YEARS)),
+                    fuel = rep(extend_fuel, times = length(NH3_EXTRA_YEARS)),
+                    year = NH3_EXTRA_YEARS,
+                    value = rep(extend_value, times = length(NH3_EXTRA_YEARS)) )  ) %>%
+      arrange(year)
+
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    L105.nh3_tgmt_USA_an_Yh %>%
+      add_title("NH3 emissions factors for animals by sector / technology / year estiamted from EPA NH3 emissions and FAO production statistics") %>%
+      add_units("Tg/Mt") %>%
+      add_comments("NH3 animal emission factors for all historical years are estimates from US values") %>%
+      add_comments("Historical years 1971 - 1989 are estimated as 1990 values") %>%
       add_legacy_name("L105.nh3_tgmt_USA_an_Yh") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
+      add_precursors("common/iso_GCAM_regID",
+                     "emissions/mappings/EPA_tech",
+                     "emissions/mappings/GCAM_sector_tech",
+                     "L107.an_Prod_Mt_R_C_Sys_Fd_Y",
+                     "emissions/EPA_NH3") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L105.nh3_tgmt_USA_an_Yh
 

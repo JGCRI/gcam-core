@@ -18,6 +18,8 @@ FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq( 2015, 2100, 5 )
+NH3_HISTORICAL_YEARS <- 1990:2002
+NH3_EXTRA_YEARS <- 1971:1989
 
 # ======================================================================
 # GCAM constants
@@ -55,6 +57,7 @@ CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001
+CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
