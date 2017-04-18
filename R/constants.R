@@ -20,6 +20,10 @@ HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq( 2015, 2100, 5 )
 
 # ======================================================================
+# GCAM constants
+gcam.USA_CODE <- 1
+
+# ======================================================================
 # aglu constants
 AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
@@ -51,9 +55,11 @@ CONV_TON_MEGATON <- 1e-6
 CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
+CONV_GG_TG <- 0.001
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
+CONV_MILLION_M3_KM3 <- 1e-03
 
 
 # ======================================================================
@@ -94,3 +100,10 @@ socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to us
 
 socioeconomics.BASE_POP_SCEN <- "SSP2"
 
+
+# ======================================================================
+# emissions constants
+
+emissions.EPA_HISTORICAL_YEARS <- 1971:2002
+emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
+emissions.NH3_EXTRA_YEARS <- 1971:1989
