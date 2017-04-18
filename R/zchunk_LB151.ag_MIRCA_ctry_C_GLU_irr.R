@@ -43,22 +43,6 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
     L100.MIRCA_irrHA_ha <- get_data(all_data, "L100.MIRCA_irrHA_ha")
     L100.MIRCA_rfdHA_ha <- get_data(all_data, "L100.MIRCA_rfdHA_ha")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-
     # Compute shares of irrigated and rainfed harvested area from MIRCA data
     # Shares are by country (iso), land unit (GLU), and MIRCA_crop (different from GTAP crop or GCAM_commodity)
     # NOTE: MIRCA data is for a single year. We use the shares, but not the actual land areas.
@@ -111,50 +95,48 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
     # Use the ratio of irrigated to rainfed yield from the FAO CROSIT database,
     # in combination with the harvested area data computed above to separate irrigated
     # and rainfed production.
-    # First, Calculate the yield ratio for each country and crop, based on the CROSIT database
+    # First, prepare the country mapping file. The old data system uses the first entry when duplicates
+    # are found (which happens a lot in this file).
+    AGLU_ctry %>%
+      select(iso, CROSIT_country_ID) %>%
+      distinct(iso, .keep_all=TRUE) ->
+      Unique_AGLU_ctry
+
+    # Next, Calculate the yield ratio for each country and crop, based on the CROSIT database
     L100.LDS_ag_HA_ha %>%
-      select(iso, GTAP_crop, GLU) %>%
-      left_join(AGLU_ctry[ c("iso","CROSIT_country_ID")], by = "iso" ) %>%
+      select(iso, GLU, GTAP_crop) %>%
+      left_join(Unique_AGLU_ctry[ c( "iso", "CROSIT_country_ID") ], by = "iso" ) %>%
       left_join(FAO_ag_items_PRODSTAT[ c("GTAP_crop","CROSIT_cropID")], by = "GTAP_crop" ) %>%
-      left_join( FAO_ag_CROSIT[ c( "country_ID", "crop_ID", "Yield_kgHa_irrigated", "Yield_kgHa_rainfed" )],
+      left_join(FAO_ag_CROSIT[ c( "country_ID", "crop_ID", "Yield_kgHa_irrigated", "Yield_kgHa_rainfed", "year" )],
                  by = c( "CROSIT_country_ID" = "country_ID", "CROSIT_cropID" = "crop_ID")) %>%
+      filter(year == CROSIT_HISTORICAL_YEAR | is.na(year)) %>%
       mutate(yieldratio = Yield_kgHa_irrigated / Yield_kgHa_rainfed) %>%
       select(-Yield_kgHa_irrigated, -Yield_kgHa_rainfed) %>%
-      mutate(if_else( is.na(yieldratio), 1, yieldratio )) %>%                                                # Replace NAs with 1
-      mutate(if_else( yieldratio==0, 1, yieldratio )) %>%                                                    # Replace zeros with 1
-      mutate(if_else( is.infinite(yieldratio), 1, yieldratio )) ->                                           # Replace Infs with 1
+      mutate(yieldratio=if_else( is.na(yieldratio), 1, yieldratio )) %>%                                                # Replace NAs with 1
+      mutate(yieldratio=if_else( yieldratio==0, 1, yieldratio )) %>%                                                    # Replace zeros with 1
+      mutate(yieldratio=if_else( is.infinite(yieldratio), 1, yieldratio ))  ->                                          # Replace Infs with 1
+
       Yieldratio_ctry_crop
 
-    #
-    # #Use the yield ratio to solve for the production shares (irrigated versus rainfed)
-    # L151.ag_HA_ha_ctry_crop$yieldratio <- L151.ag_irr_rfd_yieldratio$yieldratio[
-    #   match( vecpaste( L151.ag_HA_ha_ctry_crop[ c( "iso", "GTAP_crop" ) ] ),
-    #          vecpaste( L151.ag_irr_rfd_yieldratio[ c( "iso", "GTAP_crop" ) ] ) ) ]
-    # L151.ag_HA_ha_ctry_crop$irrshareProd <- with( L151.ag_HA_ha_ctry_crop,
-    #                                               ( irrshareHA * yieldratio ) /
-    #                                                 ( ( irrshareHA * yieldratio ) + ( 1 - irrshareHA ) ) )
-    #
-    # #Multiply through to calculate rainfed and irrigated production
-    # L151.ag_Prod_t_ctry_crop <- L100.LDS_ag_prod_t
-    # names( L151.ag_Prod_t_ctry_crop )[ names( L151.ag_Prod_t_ctry_crop ) == "value" ] <- "totProd"
-    # L151.ag_Prod_t_ctry_crop$irrshareProd <- L151.ag_HA_ha_ctry_crop$irrshareProd[
-    #   match( vecpaste( L151.ag_Prod_t_ctry_crop[ c( "iso", GLU, "GTAP_crop" ) ] ),
-    #          vecpaste( L151.ag_HA_ha_ctry_crop[ c( "iso", GLU, "GTAP_crop" ) ] ) ) ]
-    # L151.ag_Prod_t_ctry_crop$irrProd <- with( L151.ag_Prod_t_ctry_crop, totProd * irrshareProd )
-    #
-    # #Subtract to get rainfed production
-    # L151.ag_Prod_t_ctry_crop$rfdProd <- with( L151.ag_Prod_t_ctry_crop, totProd - irrProd )
-    #
-    # #Prepare for the final write-out
-    # L151.ag_irrProd_t_ctry_crop <- L151.ag_Prod_t_ctry_crop[ c( "iso", "GTAP_crop", GLU, "irrProd" ) ]
-    # L151.ag_rfdProd_t_ctry_crop <- L151.ag_Prod_t_ctry_crop[ c( "iso", "GTAP_crop", GLU, "rfdProd" ) ]
-    #
+    # Now, use the yield ratio to solve for the production shares (irrigated versus rainfed)
+    ag_HA_ha_ctry_crop %>%
+      left_join( Yieldratio_ctry_crop[ c( "iso", "GLU", "GTAP_crop", "yieldratio") ], by = c( "iso", "GLU", "GTAP_crop") ) %>%
+      mutate(irrshareHA=irrHA/(irrHA + rfdHA)) %>%
+      mutate(irrshareProd=(irrshareHA*yieldratio)/((irrshareHA*yieldratio)+(1-irrshareHA))) %>%
+      right_join(L100.LDS_ag_prod_t, by=c("iso", "GLU", "GTAP_crop")) %>%
+      mutate(irrProd=value*irrshareProd, rfdProd=value*(1-irrshareProd)) ->
+      ag_Prod_t_ctry_crop
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
+    # Split irrigated and rainfed production into separate dataframes
+    ag_Prod_t_ctry_crop %>%
+      select(iso,GLU,GTAP_crop,rfdProd) ->                                      # Remove extra columns
+      L151.ag_rfdProd_t_ctry_crop
+    readr::write_csv(L151.ag_rfdProd_t_ctry_crop, "~/Documents/ag_rfdProd_t_ctry_crop.csv")
+
+    ag_Prod_t_ctry_crop %>%
+      select(iso,GLU,GTAP_crop,irrProd) ->                                      # Remove extra columns
+      L151.ag_irrProd_t_ctry_crop
+
     L151.ag_irrHA_ha_ctry_crop %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -171,27 +153,23 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
       add_legacy_name("L151.ag_rfdHA_ha_ctry_crop") %>%
       add_precursors("aglu/FAO_ag_items_PRODSTAT","L100.LDS_ag_HA_ha","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") ->
       L151.ag_rfdHA_ha_ctry_crop
-    tibble() %>%
+    L151.ag_irrProd_t_ctry_crop %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L151.ag_irrProd_t_ctry_crop") %>%
       add_precursors("common/iso_GCAM_regID","aglu/AGLU_ctry","aglu/FAO_ag_items_PRODSTAT","aglu/FAO_ag_CROSIT",
-                     "L100.LDS_ag_HA_ha","L100.LDS_ag_prod_t","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.LDS_ag_HA_ha","L100.LDS_ag_prod_t","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") ->
       L151.ag_irrProd_t_ctry_crop
-    tibble() %>%
+    L151.ag_rfdProd_t_ctry_crop %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L151.ag_rfdProd_t_ctry_crop") %>%
       add_precursors("common/iso_GCAM_regID","aglu/AGLU_ctry","aglu/FAO_ag_items_PRODSTAT","aglu/FAO_ag_CROSIT",
-                     "L100.LDS_ag_HA_ha","L100.LDS_ag_prod_t","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.LDS_ag_HA_ha","L100.LDS_ag_prod_t","L100.MIRCA_irrHA_ha","L100.MIRCA_rfdHA_ha") ->
       L151.ag_rfdProd_t_ctry_crop
 
     return_data(L151.ag_irrHA_ha_ctry_crop, L151.ag_rfdHA_ha_ctry_crop, L151.ag_irrProd_t_ctry_crop, L151.ag_rfdProd_t_ctry_crop)
