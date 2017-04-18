@@ -18,7 +18,7 @@ the generated outputs: \code{L1211.nonco2_tg_R_awb_C_Y_GLU_IRR}, \code{L1211.ag_
 original data system was \code{L1211.nonco2_awb_R_S_T_Y_IRR.R} (emissions level1).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk produces irrigated and rainfed production shares, and agricultural waste burning emissions by irrigated & rainfed production shares.
 }
 \details{
 First, we compute the irrigated and rainfed production shares within region, GLU, and crop.
