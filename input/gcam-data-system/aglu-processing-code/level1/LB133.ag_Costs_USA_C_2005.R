@@ -25,8 +25,8 @@ sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 USDA_crops <- readdata( "AGLU_MAPPINGS", "USDA_crops" )
 USDA_reg_AEZ <- readdata( "AGLU_MAPPINGS", "USDA_reg_AEZ" )
 USDA_item_cost <- readdata( "AGLU_MAPPINGS", "USDA_item_cost" )
-#Use the updated cost data from USDA
-USDA_cost_data <- readdata( "AGLU_LEVEL0_DATA", "USDA_cost_data_updated" )
+# USDA cost data updated in Jan 2017
+USDA_cost_data <- readdata( "AGLU_LEVEL0_DATA", "USDA_cost_data" )
 L122.ag_EcYield_kgm2_R_C_Y_AEZ <- readdata( "AGLU_LEVEL1_DATA", "L122.ag_EcYield_kgm2_R_C_Y_AEZ" )
 L132.ag_an_For_Prices <- readdata( "AGLU_LEVEL1_DATA", "L132.ag_an_For_Prices" )
 

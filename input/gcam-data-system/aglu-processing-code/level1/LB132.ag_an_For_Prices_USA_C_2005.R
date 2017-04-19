@@ -25,8 +25,8 @@ sourcedata( "COMMON_ASSUMPTIONS", "unit_conversions", extension = ".R" )
 sourcedata( "AGLU_ASSUMPTIONS", "A_aglu_data", extension = ".R" )
 FAO_ag_items_PRODSTAT <- readdata( "AGLU_MAPPINGS", "FAO_ag_items_PRODSTAT" )
 FAO_an_items_PRODSTAT <- readdata( "AGLU_MAPPINGS", "FAO_an_items_PRODSTAT" )
-# Use updated US.PP data from FAO
-FAO_USA_ag_an_P_USDt_PRICESTAT <- readdata( "AGLU_LEVEL0_DATA", "FAO_USA_ag_an_P_USDt_PRICESTAT_updated" )
+# FAO US producer price data updated in Jan 2017
+FAO_USA_ag_an_P_USDt_PRICESTAT <- readdata( "AGLU_LEVEL0_DATA", "FAO_USA_ag_an_P_USDt_PRICESTAT" )
 FAO_USA_For_Exp_t_USD_FORESTAT <- readdata( "AGLU_LEVEL0_DATA", "FAO_USA_For_Exp_t_USD_FORESTAT" )
 USDA_Alfalfa_prices_USDt <- readdata( "AGLU_LEVEL0_DATA", "USDA_Alfalfa_prices_USDt" )
 # Use level0 production data instead of level1 with the 5-yr rolling average
