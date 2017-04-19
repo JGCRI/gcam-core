@@ -155,7 +155,7 @@ printlog( "Part 4: Converting to model units and merging into a single table" )
 L132.ag_V_USA_C_fby$calPrice <- round( L132.ag_V_USA_C_fby$Price_USDt / conv_t_kg,
       digits = digits_calPrice )
 L132.ag_V_USA_C_fby$unit <- "1975$/kg"
-L132.an_V_USA_C_fby$calPrice <- round( L132.an_V_USA_C_fby$Price_USDt * conv_t_metric_short / conv_t_kg,
+L132.an_V_USA_C_fby$calPrice <- round( L132.an_V_USA_C_fby$Price_USDt / conv_t_kg,
       digits = digits_calPrice)
 L132.an_V_USA_C_fby$unit <- "1975$/kg"
 L132.For_V_USA_fby$calPrice <- round( L132.For_V_USA_fby$Price_USDm3, digits = digits_calPrice )
