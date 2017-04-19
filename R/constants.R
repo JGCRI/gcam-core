@@ -93,7 +93,7 @@ ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
 
 # ======================================================================
 #Create X_HISTORICAL_YEARS
-X_HISTORICAL_YEARS <- paste( "X", HISTORICAL_YEARS, sep = "" )
+#X_HISTORICAL_YEARS <- paste( "X", HISTORICAL_YEARS, sep = "" )
 
 # socioeconomics constants
 
