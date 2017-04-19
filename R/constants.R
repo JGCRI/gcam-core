@@ -18,7 +18,7 @@ FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq( 2015, 2100, 5 )
-EDGAR_YEARS <- 1971:2008
+
 # ======================================================================
 # GCAM constants
 gcam.USA_CODE <- 1
@@ -106,3 +106,4 @@ socioeconomics.BASE_POP_SCEN <- "SSP2"
 emissions.EPA_HISTORICAL_YEARS <- 1971:2002
 emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
 emissions.NH3_EXTRA_YEARS <- 1971:1989
+emissions.EDGAR_YEARS <- 1971:2008

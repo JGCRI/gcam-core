@@ -24,7 +24,7 @@ This chunk produces irrigated and rainfed production shares, and agricultural wa
 First, we compute the irrigated and rainfed production shares within region, GLU, and crop.
 Second, we sum the irrigated and rainfed production shares over the historical years to get the total by region, GLU, and crop.
 Third, we divide the irrigated and rainfed production shares over the historical years to get the share of irrigated and rainfed production within region, GLU, and crop.
-Finally, we multiply nonCO2 emissions within region, GLU, and crop by irrigated and rainfed production shares.
+Finally, we multiply non-CO2 emissions within region, GLU, and crop by irrigated and rainfed production shares.
 }
 \author{
 CDL April 2017

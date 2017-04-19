@@ -11,11 +11,12 @@
 #' @details First, we compute the irrigated and rainfed production shares within region, GLU, and crop.
 #' Second, we sum the irrigated and rainfed production shares over the historical years to get the total by region, GLU, and crop.
 #' Third, we divide the irrigated and rainfed production shares over the historical years to get the share of irrigated and rainfed production within region, GLU, and crop.
-#' Finally, we multiply nonCO2 emissions within region, GLU, and crop by irrigated and rainfed production shares.
+#' Finally, we multiply non-CO2 emissions within region, GLU, and crop by irrigated and rainfed production shares.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author CDL April 2017
+#' @export
 module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "temp-data-inject/L161.ag_irrProd_Mt_R_C_Y_GLU",
@@ -72,6 +73,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       # Note this step was NOT in the original data system
       filter(year %in% HISTORICAL_YEARS) %>%
       left_join_error_no_match(L1211.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity","GLU", "year")) %>%
+      # value.x is irr and rfd production shares, within each region/GLU/crop
       # value.y is now the total (rfd+irr) production
       mutate(value = value.x / value.y) %>%
       select(-value.x, -value.y) %>%
@@ -81,7 +83,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
     # This section creates L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
 
     # Multiply emissions by region/GLU/crop/nonCO2 by irr/rfd production shares
-    # NonCO2 emissions by R_C_GLU_irr = nonCO2 emissions by R_C_GLU * irrShare
+    # Non-CO2 emissions by R_C_GLU_irr = non-CO2 emissions by R_C_GLU * irrShare
     L121.nonco2_tg_R_awb_C_Y_GLU %>%
       repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR","RFD") )) %>%
       # Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
@@ -90,7 +92,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       left_join_error_no_match(L1211.ag_irrShare_R_C_Y_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity","GLU", "year", "Irr_Rfd")) %>%
       mutate(value = value.x * value.y) %>%
       select(-value.x, -value.y) %>%
-      filter(year %in% EDGAR_YEARS) ->
+      filter(year %in% emissions.EDGAR_YEARS) ->
       L1211.nonco2_tg_R_awb_C_Y_GLU_IRR
 
     # ===================================================
@@ -98,8 +100,8 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
     # Produce outputs
     L1211.nonco2_tg_R_awb_C_Y_GLU_IRR%>%
       add_title("Ag waste burning emissions by GCAM region / commodity / GLU / irrigation level / historical year") %>%
-      add_units("Teragram (Tg)") %>%
-      add_comments("Multiply nonCO2 emissions by region/GLU/crop/nonCO2 by irr/rfd production shares") %>%
+      add_units("Tg") %>%
+      add_comments("Multiply non-CO2 emissions by region/GLU/crop/non-CO2 by irr/rfd production shares") %>%
       add_legacy_name("L1211.nonco2_tg_R_awb_C_Y_GLU_IRR") %>%
       add_precursors("temp-data-inject/L121.nonco2_tg_R_awb_C_Y_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
