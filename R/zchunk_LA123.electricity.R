@@ -37,7 +37,6 @@ module_energy_LA123.electricity <- function(command, ...) {
       mutate(year = as.integer(substr(year, 2, 5))) -> L1011.en_bal_EJ_R_Si_Fi_Yh
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
 
     #Creates end use fuel for electricity to be used to create L123.in_EJ_R_elec_F_Yh
     enduse_fuel_aggregation %>%
