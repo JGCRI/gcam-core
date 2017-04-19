@@ -67,7 +67,6 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
                     "# This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function")
   }
   if(any(grepl("conv_[0-9]{4}_[0-4]{4}_USD", filecode))) {
-    message("*********")
     warnstring <- c(warnstring, "# NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant",
                     "# Use the `gdp_deflator(year, base_year)` function instead")
   }

@@ -24,7 +24,10 @@ Compute historical emissions factors for energy by GCAM technology, from EPA emi
 Compute historical emissions factors for energy (electricity, independent energy, buildings,
 transportation, fertilizer production, cement, heating, fossil production) by GCAM technology, from EPA
 emissions data and IEA energy balances.
-For NH3, 1990 data are used for the 1971-1989 period because... TODO
+For NH3, 1990 data are used for the 1971-1989 period because these data don't go back
+as far as 1971, so we extrapolate in order to retain the capacity to run the model from
+any historical year (i.e., any year 1971-2010), representing subsequent historical years
+as future model time periods in order to check model performance against the observed data.
 }
 \author{
 BBL April 2017
