@@ -1,6 +1,6 @@
-# File: enduse_fuel_aggregation.csv,,,,,
-# Title: Mapping from first intermediate fuel to sector-specific intermediate fuel,,,,,
-# Units: NA,,,,,
+# File: enduse_fuel_aggregation.csv
+# Title: Mapping from first intermediate fuel to sector-specific intermediate fuel
+# Units: None
 fuel,electricity,heat,bld,industry,trn
 biomass,biomass,biomass,biomass,biomass,
 biomass_tradbio,,,traditional biomass,,
