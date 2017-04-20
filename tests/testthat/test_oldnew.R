@@ -8,15 +8,21 @@ test_that("matches old data system output", {
 
   # If we're on Travis, need to run the driver to ensure chunk outputs saved
   # Don't do this locally, to speed things up
+
+  ## Look for output data in OUTPUTS_DIR under top level (this code will be run in
+  ## tests/testthat)
+  outputs_dir <- normalizePath(file.path("../..", OUTPUTS_DIR))
+
   if (identical(Sys.getenv("TRAVIS"), "true")) {
-    driver(write_outputs = TRUE)
+    driver(write_outputs = TRUE, outdir = outputs_dir)
   }
+  expect_equivalent(file.access(outputs_dir, mode=4), 0,  # outputs_dir exists and is readable
+                    info = paste('Directory', outputs_dir, "unreadable or does not exist."))
+  expect_true(file.info(outputs_dir)$isdir)
 
   # For each file in OUTPUTS_DIR, look for corresponding file in our
   # comparison data. Load them, reshape new data if necessary, compare.
-  outputs_dir <- file.path("../..", OUTPUTS_DIR)
   for(newf in list.files(outputs_dir, full.names = TRUE)) {
-
     # In this rewrite, we're not putting X's in front of years,
     # nor are we going to spend time unnecessarily reshaping datasets
     # (i.e. wide to long and back). But we still need to be able to
