@@ -216,15 +216,6 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # From here on, only use the specified AGLU historical years
     FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(coitel_colnames, "iso", as.character(AGLU_HISTORICAL_YEARS))]
 
-    # Check that data is the same!
-    # old2 <- readr::read_csv("~/Desktop/FAO_data_ALL2.csv")
-    # new2 <- FAO_data_ALL[c(2,3,4,5,1,6, 7:58)]
-    # new2$element <- gsub(pattern = "_[A-Z]*$", "", new2$element)
-    # new2$element <- gsub(pattern = "^FAO_", "", new2$element)
-    # names(new2) <- names(old2)
-    # print(all.equal(new2, old2))
-    # browser()
-
     # Rename columns to old names
     FAO_data_ALL_5yr %>%
       rename(country.codes = `country codes`,

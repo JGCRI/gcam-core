@@ -43,7 +43,7 @@ test_that("matches old data system output", {
       newskip <- 1
     }
 
-    newdata <- read_csv(newf, comment = COMMENT_CHAR, skip = newskip)
+    newdata <- read_csv(newf, comment = COMMENT_CHAR, skip = newskip, guess_max = 10000000)
 
     # Reshape new data if necessary--see comment above
     if(flag_long_year_form) {
@@ -101,6 +101,5 @@ test_that("matches old data system output", {
         expect_equivalent(round_df(olddata), round_df(newdata), label = paste(basename(newf), "doesn't match"))
       }
     }
-
   }
 })

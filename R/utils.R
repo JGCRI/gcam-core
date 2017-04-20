@@ -34,7 +34,7 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
       filedata[[f]] <- NA
       next
     }
-    suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, ...)) %>%
+    suppressMessages(readr::read_csv(fqfn, comment = COMMENT_CHAR, guess_max = 10000000, ...)) %>%
       parse_csv_header(fqfn) %>%
       add_comments(paste("Read from", gsub("^.*extdata", "extdata", fqfn))) %>%
       add_flags(FLAG_INPUT_DATA) ->
