@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{screen_forbidden}
 \alias{screen_forbidden}
-\title{Screen a function for use of functions forbidden by data system style guide.}
+\title{screen_forbidden}
 \usage{
 screen_forbidden(fn)
 }
@@ -15,6 +15,9 @@ Nx2 Character matrix of flagged lines and the test that tripped them
 (empty vector, if none)
 }
 \description{
+Screen a function for use of functions forbidden by data system style guide.
+}
+\details{
 Certain functions are forbidden by the dsr style guide from being used in
 code chunks.  This function tests a function for calls to forbidden functions
 and flags the offending lines.

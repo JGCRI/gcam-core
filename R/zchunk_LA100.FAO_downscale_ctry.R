@@ -107,9 +107,9 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # So most of this function, the slowest in the entire data system, retains the original
     # code (though cleaned up considerably) and logic
     cons <- full_join(FAO_Fert_Cons_tN_RESOURCESTAT_archv,
-                  FAO_Fert_Cons_tN_RESOURCESTAT)
+                  FAO_Fert_Cons_tN_RESOURCESTAT, by = c("countries", "country codes", "item", "item codes", "element", "element codes"))
     prod <- full_join(FAO_Fert_Prod_tN_RESOURCESTAT_archv,
-                  FAO_Fert_Prod_tN_RESOURCESTAT)
+                  FAO_Fert_Prod_tN_RESOURCESTAT, by = c("countries", "country codes", "item", "item codes", "element", "element codes"))
 
     # Aggregate to complete the merge of the two datasets
     FAO_Fert_Cons_tN_RESOURCESTAT <- aggregate(cons[names(cons) %in% FAO_histyear_cols],
