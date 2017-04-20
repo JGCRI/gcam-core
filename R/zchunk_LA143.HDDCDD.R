@@ -37,44 +37,46 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     # 1b. reading HDDCDD files in a loop as we do not know their names or how many there are
     GISfilepath <- "./inst/extdata/energy/GIS/"
     GISfiles <- list.files( GISfilepath )
-    #GISfiles.list <- list()
+    GISfiles.list <- list()
 
-    # Identifying and getting base year (2010) data to remove from HDDCDD_data
+    # Identifying and removing base year (2010) data
     base_year_HDDCDD_data <-  grep( "_2010", GISfiles )
+    GISfiles <- GISfiles[-base_year_HDDCDD_data]
+
+    # # Combining all HDDCDD files into one tibble
+    # data <- tibble(file = GISfiles[-base_year_HDDCDD_data]) %>% # create a data frame
+    #   # holding the file names
+    #   mutate(file_contents = purrr::map(paste0(GISfilepath,file),          # read files into
+    #                                     ~ readr::read_csv(.)) # a new data column
+    #   )
+    #
+    #
+    # HDDCDD_data <- tidyr::unnest(data)
+
+    # Putting all data into list
+    for( i in GISfiles){
+      index <- which( GISfiles == i )
+      GISfiles.list[[index]] <- read.csv( paste0(GISfilepath, i), stringsAsFactors = F)
+      GISfiles.list[[index]]$file <- sub(".csv","",i)
+    }
 
     # Combining all HDDCDD files into one tibble
-    data <- tibble(file = GISfiles[-base_year_HDDCDD_data]) %>% # create a data frame
-      # holding the file names
-      mutate(file_contents = purrr::map(paste0(GISfilepath,file),          # read files into
-                                        ~ readr::read_csv(.)) # a new data column
-      )
-
-
-    HDDCDD_data <- tidyr::unnest(data)
-
-    # for( i in 1:length(GISfiles)){
-    #   #index <- which( GISfiles == i )
-    #   # GISfiles.list[[index]] <- read.csv( paste0(GISfilepath, i))
-    #   # GISfiles.list[[index]]$file <- sub(".csv","",i)
-    #
-    #
-    #   GISfiles.list[[i]] <- read.csv( paste0(GISfilepath, GISfiles[i]))
-    #   GISfiles.list[[i]]$file <- sub(".csv","",GISfiles[i])
-    #
-    # }
-
+    HDDCDD_data <- do.call( bind_rows, GISfiles.list ) %>%
+      tibble::as_tibble()
 
     #--------------------------------------------------------------------------
 
     #Currently the HDDCDD data stops at 2099. If this is the case, add 2100
-    if( !"2100" %in% names( HDDCDD_data ) ){
-      HDDCDD_data <- HDDCDD_data %>% mutate(`2100` = `2099`)
+    if( !"X2100" %in% names( HDDCDD_data ) ){
+      HDDCDD_data <- HDDCDD_data %>% mutate(X2100 = X2099)
     }
 
     # Convert data to long format and add in id variables
     HDDCDD_data <- HDDCDD_data %>%
-      gather(year, value, num_range(prefix = "",range = 1971:2100)) %>%
+      gather(year, value, starts_with("X")) %>%
       mutate(
+        # Remove X years
+        year = substr(year,2,5),
         # Assuming that the variable is the 3rd word in the file name (separated by "_")
         variable = stringr::str_split_fixed(file, "_",5)[,3],
         # Assuming that the GCM comes after "DD_" and is 6 letters
@@ -87,15 +89,27 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
         value = if_else(value < 0, 0, value)
       )
 
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
     # Add in country iso
     L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
       # Drop file name
       select(-file) %>%
       # Filter only useful years
       filter( year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-      # Remove apostrophe in Cote d'Ivoire and add in country iso by country name
-      mutate(country = if_else(country == "Cote d'Ivoire", "Cote dIvoire", country)) %>%
+      # Drop Cote d'Ivoire--this is a mistake in old data system
+      filter(country != "Cote d'Ivoire") %>%
       left_join_error_no_match(GIS_ctry)
+    } else{
+      # Add in country iso
+      L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
+        # Drop file name
+        select(-file) %>%
+        # Filter only useful years
+        filter( year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
+        # Remove apostrophe in Cote d'Ivoire and add in country iso by country name
+        mutate(country = if_else(country == "Cote d'Ivoire", "Cote dIvoire", country)) %>%
+        left_join_error_no_match(GIS_ctry)
+    }
 
     # Serbia and Montenegro are currently combined. Copy to separated countries, assigning the same HDD and CDD to each
     if( "scg" %in% L143.HDDCDD_scen_ctry_Y$iso ){
@@ -135,11 +149,11 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       # Sum weighted degree day by GCAM 4 regions and divide by population
       L143.HDDCDD_scen_R_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         # Need to remove Cote dIvoire because it was accidently dropped in old data system
-        filter(country_name != "Cote dIvoire") %>%
+        #filter(country_name != "Cote dIvoire") %>%
         group_by(GCAM_region_ID, SRES, GCM, variable, year) %>%
         summarise(wtDD = sum(value * population)) %>%
         left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y) %>%
-        mutate(DD = wtDD/aggpop) %>%
+        mutate(value = wtDD/aggpop) %>%
         select(-wtDD, -aggpop)
 
       # Aggregate population data to GCAM 3 region
@@ -149,11 +163,11 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
 
       # Sum weighted degree day by GCAM 3 regions and divide by population
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
-        filter(country_name != "Cote dIvoire") %>%
+        #filter(country_name != "Cote dIvoire") %>%
         group_by(region_GCAM3, SRES, GCM, variable, year) %>%
         summarise(wtDD = sum(value * population)) %>%
         left_join_error_no_match(L101.Pop_thous_GCAM3_RG3_Y) %>%
-        mutate(DD = wtDD/aggpop)%>%
+        mutate(value = wtDD/aggpop)%>%
         select(-wtDD, -aggpop)
 
 
@@ -162,12 +176,12 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       # Calculate weighted degree day by GCAM 4 regions
       L143.HDDCDD_scen_R_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(GCAM_region_ID, SRES, GCM, variable, year) %>%
-        summarise(wtDD = weighted.mean(value, population))
+        summarise(value = weighted.mean(value, population))
 
       # Calculate weighted degree day by GCAM 3 regions
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
         group_by(region_GCAM3, SRES, GCM, variable, year) %>%
-        summarise(wtDD = weighted.mean(value, population))
+        summarise(value = weighted.mean(value, population))
     }
 
 
