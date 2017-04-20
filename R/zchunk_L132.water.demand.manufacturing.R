@@ -1,6 +1,6 @@
 #' module_water_L132.water.demand.manufacturing
 #'
-#' Briefly describe what this chunk does.
+#' Computes manufacturing energy use coefficients.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,13 +8,13 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L132.water_coef_manufacturing_R_W_m3_GJ}. The corresponding file in the
 #' original data system was \code{L132.water.demand.manufacturing.R} (water level1).
-#' @details Describe in detail what this chunk does.
+#' @details Computes manufacturing energy use coefficients for water withdrawal
+#' and consumption for all regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_water_L132.water.demand.manufacturing_DISABLED <- function(command, ...) {
+#' @author SWDT April 2017
+module_water_L132.water.demand.manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
@@ -30,47 +30,70 @@ module_water_L132.water.demand.manufacturing_DISABLED <- function(command, ...) 
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    L1322.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh")
-    L1322.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indfeed_F_Yh")
     manufacturing_water_mapping <- get_data(all_data, "water/manufacturing_water_mapping")
     manufacturing_water_data <- get_data(all_data, "water/manufacturing_water_data")
     manufacturing_water_ratios <- get_data(all_data, "water/manufacturing_water_ratios")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    L1322.in_EJ_R_indenergy_F_Yh <-
+      get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+
+    L1322.in_EJ_R_indfeed_F_Yh <-
+      get_data(all_data, "temp-data-inject/L1322.in_EJ_R_indfeed_F_Yh") %>%
+      gather(year, value, -GCAM_region_ID, -sector, -fuel) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+
     # ===================================================
 
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    # Pull out global ratio constants for manufacturing water
+    selfTotalRatio <- manufacturing_water_ratios$`self-to-total-ratio`
+    consWithRatio <- manufacturing_water_ratios$`cons-to-with-ratio`
+
+    # Get total industrial energy use for manufacturing water continent regions for 1995
+    L1322.in_EJ_R_indenergy_F_Yh %>%
+      bind_rows(L1322.in_EJ_R_indfeed_F_Yh) %>%
+      filter(year == 1995) %>%
+      select(GCAM_region_ID, value) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(manufacturing_water_mapping, by = "region") %>%
+      group_by(continent) %>%
+      summarise(value = sum(value)) %>%
+
+      # Join continental water withdrawals and consumtpion
+      left_join_error_no_match(manufacturing_water_data, by = "continent") %>%
+
+      # Convert withdrawals and consumption to km^3
+      mutate(withdrawals = withdrawals * CONV_MILLION_M3_KM3,
+             consumption = consumption * CONV_MILLION_M3_KM3) %>%
+
+      # Compute withdrawals and consumption in km^3 per EJ
+      mutate(`water withdrawals` = withdrawals / value * selfTotalRatio) %>%
+      mutate(`water consumption` = `water withdrawals` * consWithRatio) %>%
+      select(continent, `water withdrawals`, `water consumption`) %>%
+      gather(water_type, coefficient, -continent) -> L132.manufacture_content_energy
+
+    # Map coefficients back to GCAM regions
+    L132.manufacture_content_energy %>%
+      right_join(manufacturing_water_mapping, by = "continent") %>%
+      left_join_error_no_match(GCAM_region_names, by = "region") %>%
+      arrange(region) %>%
+      select(GCAM_region_ID, water_type, coefficient) -> L132.water_coef_manufacturing
+
+    # ===================================================
+
+    L132.water_coef_manufacturing %>%
+      add_title("Manufacturing energy water coefficients by region and water type") %>%
+      add_units("m^3 / GJ") %>%
+      add_comments("Uses continental industrial energy use coefficents (1995)") %>%
+      add_comments("to determine water withdrawal and consumption coefficients") %>%
       add_legacy_name("L132.water_coef_manufacturing_R_W_m3_GJ") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/GCAM_region_names",
+                     "temp-data-inject/L1322.in_EJ_R_indenergy_F_Yh",
+                     "temp-data-inject/L1322.in_EJ_R_indfeed_F_Yh",
+                     "water/manufacturing_water_mapping",
+                     "water/manufacturing_water_data",
+                     "water/manufacturing_water_ratios") ->
       L132.water_coef_manufacturing_R_W_m3_GJ
 
     return_data(L132.water_coef_manufacturing_R_W_m3_GJ)
