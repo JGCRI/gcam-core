@@ -18,11 +18,14 @@ the generated outputs: \code{L151.ag_irrHA_ha_ctry_crop}, \code{L151.ag_rfdHA_ha
 original data system was \code{LB151.ag_MIRCA_ctry_C_GLU_irr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Separates country and harvested area into irrigated and rainfed by country, GLU, and GTAP_crop.
 }
 \details{
-Describe in detail what this chunk does.
+Separates country and harvested area into irrigated and rainfed by country, GLU, and GTAP_crop.
+This chunk uses MIRCA irrigated and rainfed harvested area to separate harvested area from the LDS. This
+is then combined with ratios of irrigated to rainfed yield from the FAO CROSIT database to compute
+irrigated and rainfed production.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KVC April 2017
 }
