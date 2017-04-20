@@ -18,8 +18,8 @@ FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
 FUTURE_YEARS <- seq( 2015, 2100, 5 )
-NH3_HISTORICAL_YEARS <- 1990:2002
-NH3_EXTRA_YEARS <- 1971:1989
+emissions.NH3_HISTORICAL_YEARS <- 1990:2002
+emissions.NH3_EXTRA_YEARS <- 1971:1989
 
 # ======================================================================
 # GCAM constants
