@@ -1,6 +1,6 @@
 #' module_aglu_LB132.ag_an_For_Prices_USA_C_2005
 #'
-#' Briefly describe what this chunk does.
+#' Calculate the calibration prices for all GCAM AGLU commodities.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,13 +8,13 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L132.ag_an_For_Prices}. The corresponding file in the
 #' original data system was \code{LB132.ag_an_For_Prices_USA_C_2005.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details This chunk calculates average prices over calibration years by GCAM commodity.
+#' Averages across years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
-#' @export
-module_aglu_LB132.ag_an_For_Prices_USA_C_2005_DISABLED <- function(command, ...) {
+#' @author RC April 2017
+module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/FAO_ag_items_PRODSTAT",
              FILE = "aglu/FAO_an_items_PRODSTAT",
@@ -38,43 +38,193 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005_DISABLED <- function(command, ...)
     L100.FAO_ag_Prod_t <- get_data(all_data, "L100.FAO_ag_Prod_t")
     FAO_USA_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO_USA_an_Prod_t_PRODSTAT")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # Converting cotton back to primary equivalent (seed cotton)
+    # Seed cotton has no price in PRICESTAT. Need to derive its price from cotton lint and cottonseed
+    FAO_USA_ag_an_P_USDt_PRICESTAT %>%
+      select(-country.codes, -item.codes, -element, -element.codes) %>%
+      gather(year, price, -countries, -item) %>%
+      filter(item == "Seed cotton" | item == "Cotton lint" | item == "Cottonseed" | item == "Game meat" | item == "Cattle meat") %>%
+      # Modify item names to one word so that they can be used as column names when spreading item and doing calculations
+      mutate(item = sub(" ", "_", item)) %>%
+      spread(item, price) %>%
+      mutate(Seed_cotton = Cotton_lint * WEIGHT_COTTON_LINT + Cottonseed * (1 - WEIGHT_COTTON_LINT)) %>%
+      # Assigning a price for game meat so that OtherMeat is assigned a price
+      mutate(Game_meat = Cattle_meat) %>%
+      gather(item, price, -countries, -year) %>%
+      # Change item names back to original for mapping GCAM commodities
+      mutate(item = sub("_", " ", item)) ->
+      extra_price
+    # Put these calculated prices back to the dataset
+    FAO_USA_ag_an_P_USDt_PRICESTAT %>%
+      select(-country.codes, -item.codes, -element, -element.codes) %>%
+      gather(year, price, -countries, -item) %>%
+      filter(!(item == "Seed cotton" | item == "Cotton lint" | item == "Cottonseed" | item == "Game meat" | item == "Cattle meat")) %>%
+      bind_rows(extra_price) %>%
+      # Calculate a single unweighted average price over price years for each FAO agricultural item
+      filter(year %in% MODEL_PRICE_YEARS) %>%
+      group_by(countries, item) %>%
+      summarise_at(vars(price), mean, na.rm = TRUE) %>%
+      ungroup() %>%
+      filter(!is.na(price)) ->
+      Avg_price
+
+    # Computing average prices and production quantities of all commodities
+    # Subset only the relevant country/item combinations from the ag prodstat database
+    # NOTE: This mostly excludes fodder crops and "not elsewhere specified" crops. It also excludes several crops that are
+    # minor enough to not distort price estimates, including: Brans, Rubber, Sweeteners, Other, Tobacco, and etc.
+
+    # Build tables with production and price, and calculate production-weighted average price of each GCAM commodity.
+    # Part 1: Primary agricultural goods and animal products
+    # Primary agricultural goods
+    L100.FAO_ag_Prod_t %>%
+      rename(prod = value) %>%
+      # Calculate a single unweighted average production value over price years for each FAO primary agricultural good
+      filter(year %in% MODEL_PRICE_YEARS) %>%
+      group_by(countries, item) %>%
+      summarise_at(vars(prod), mean, na.rm = TRUE) %>%
+      ungroup() %>%
+      filter(!is.na(prod)) %>%
+      # Match production and price for each FAO item to calculate revenue, avoid any missing value by inner_join
+      inner_join(Avg_price, by = c("countries", "item")) %>%
+      # Calculate revenue by commodity as production times price
+      mutate(V_USD = price * prod) %>%
+      left_join_error_no_match(select(FAO_ag_items_PRODSTAT, item, GCAM_commodity), by = "item") %>%
+      # Remove any fodder crops, calculated separately below in Part 3
+      filter(!(GCAM_commodity %in% c("FodderHerb", "FodderGrass"))) %>%
+      # 9/21/2016 GPK - removing Sorghum because it is used as a fodder crop in the USA, and its prices are relatively low.
+      # The net effect of excluding it here is to raise the price of the OtherGrain commodity, and therefore the profit rate,
+      # which otherwise is the lowest of all crops. Any land use regions where this is dominant become bioenergy.
+      filter(item != "Sorghum") %>%
+      # Aggregate revenue and production by GCAM commodity
+      group_by(GCAM_commodity) %>%
+      summarize_at(vars(V_USD, prod), sum, na.rm = TRUE) %>%
+      ungroup() %>%
+      # Calculate production weighted average price for each GCAM commodity
+      mutate(Price_USDt = V_USD / prod) %>%
+      select(GCAM_commodity, Price_USDt) ->
+      Price_ag
+
+    # Animal products
+    FAO_USA_an_Prod_t_PRODSTAT %>%
+      select(-country.codes, -item.codes, -element, -element.codes) %>%
+      gather(year, prod, -countries, -item) %>%
+      # Calculate a single unweighted average production value over price years for each FAO animal product
+      filter(year %in% MODEL_PRICE_YEARS) %>%
+      group_by(countries, item) %>%
+      summarise_at(vars(prod), mean, na.rm = TRUE) %>%
+      ungroup() %>%
+      filter(!is.na(prod)) %>%
+      # Match production and price for each FAO item to calculate revenue, avoid any missing value by inner_join
+      inner_join(Avg_price, by = c("countries", "item")) %>%
+      # Calculate revenue by commodity as production times price
+      mutate(V_USD = price * prod) %>%
+      left_join(FAO_an_items_PRODSTAT, by = "item") %>%
+      filter(!is.na(GCAM_commodity)) %>%
+      # Aggregate revenue and production by GCAM commodity
+      group_by(GCAM_commodity) %>%
+      summarize_at(vars(V_USD, prod), sum, na.rm = TRUE) %>%
+      ungroup() %>%
+      # Calculate production weighted average price for each GCAM commodity
+      mutate(Price_USDt = V_USD / prod) ->
+      Price_an_incomplete
+
+    # Convert to model units
+    # The code below fixes a mistake in the old data system
+    # Animal products prices are in USD per metric tonne, so the CONV_T_METRIC_SHORT in the old data system is unnecessary and dropped
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
+      Price_an_incomplete %>%
+        mutate(calPrice = round(Price_USDt * CONV_T_METRIC_SHORT * gdp_deflator(1975, base_year = 2004) / CONV_T_KG, digits = aglu.DIGITS_CALPRICE)) ->
+        Price_an_incomplete
+    } else {
+      Price_an_incomplete %>%
+        mutate(calPrice = round(Price_USDt * gdp_deflator(1975, base_year = 2004) / CONV_T_KG, digits = aglu.DIGITS_CALPRICE)) ->
+        Price_an_incomplete
+    }
+    # Finish up
+    Price_an <- select(Price_an_incomplete, GCAM_commodity, calPrice)
+
+
+    # Part 2: Fodder crops and pasture, and will be combined with outputs from Part 1
+    # Calculate average FodderHerb prices from alfalfa prices
+    USDA_Alfalfa_prices_USDt %>%
+      select(year, avg) %>%
+      # Calculate a single unweighted average price of Alfalfa over the price years
+      filter(year %in% MODEL_PRICE_YEARS) %>%
+      summarise_at(vars(avg), mean, na.rm = TRUE) %>%
+      rename(FodderHerb = avg) %>%
+      # Note: Setting FodderGrass price as a ratio to FodderHerb
+      mutate(FodderGrass = FodderHerb * PRICERATIO_GRASS_ALFALFA) %>%
+      # NOTE: Setting Pasture price equal to FodderGrass price
+      mutate(Pasture = FodderGrass) %>%
+      gather(GCAM_commodity, Price_USDt) %>%
+      # Combine crop commodities to get all primary agricultural commodities in a single tibble
+      bind_rows(Price_ag) %>%
+      # Convert to model units
+      mutate(calPrice = round(Price_USDt * gdp_deflator(1975, base_year = 2004) / CONV_T_KG, digits = aglu.DIGITS_CALPRICE)) %>%
+      select(-Price_USDt) %>%
+      # Combine animal products
+      bind_rows(Price_an) %>%
+      mutate(unit = "1975$/kg") ->
+      Price_ag_an
+
+    # Part 3: Forest products, and will be combined with outputs from Part 1 and Part 2
+    # Because roundwood producer prices are not reported in FAOSTAT, we use FAO forest export value and export quantities to estimate price
+    FAO_USA_For_Exp_t_USD_FORESTAT %>%
+      select(-countries, -country.codes, -item, -item.codes, -element.codes) %>%
+      gather(year, value, -element) %>%
+      # Calculate a single unweighted average export value and a single unweighted average export quantity over price years
+      filter(year %in% MODEL_PRICE_YEARS) %>%
+      group_by(element) %>%
+      summarise_at(vars(value), mean, na.rm = TRUE) %>%
+      ungroup() %>%
+      # Modify element names to one word so that they can be used as column names when spreading element and doing calculations
+      mutate(element = if_else(element == "Export Quantity (m3)", "Exp_m3", "ExpV_USD")) %>%
+      mutate(GCAM_commodity = "Forest") %>%
+      spread(element, value) %>%
+      # Calculate forest price as export value (in thous USD) divided by export quantity
+      mutate(Price_USDm3 = ExpV_USD * 1000 / Exp_m3) %>%
+      # Convert to model units
+      mutate(calPrice = round(Price_USDm3 * gdp_deflator(1975, base_year = 2004), digits = aglu.DIGITS_CALPRICE)) %>%
+      select(GCAM_commodity, calPrice) %>%
+      mutate(unit = "1975$/m3") %>%
+      # Part 4: merging everything into a single table
+      bind_rows(Price_ag_an) ->
+      Price_ag_an_For
+
+    # Check that all commodities being modeled have prices assigned
+    FAO_ag_items_PRODSTAT %>%
+      select(GCAM_commodity) %>%
+      distinct() %>%
+      bind_rows(distinct(select(FAO_an_items_PRODSTAT, GCAM_commodity))) %>%
+      na.omit() %>%
+      # Convert tibble to vector
+      collect() %>%
+      .[['GCAM_commodity']] -> commodities
+    Price_ag_an_For %>%
+      collect() %>%
+      # Convert tibble to vector
+      .[['GCAM_commodity']] -> prices
+    # Check missing commodities
+    if(any(!(commodities %in% prices))){
+      missing_commodities <- commodities[!(commodities %in% prices)]
+      stop("Missing commodity prices for ", missing_commodities)
+    }
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    Price_ag_an_For %>%
+      add_title("Prices for all GCAM AGLU commodities") %>%
+      add_units("1975$/kg and 1975$/m3") %>%
+      add_comments("Calculate average prices over calibration years by GCAM commodity.") %>%
+      add_comments("Averages across years are unweighted; averages over FAO item are weighted by production.") %>%
       add_legacy_name("L132.ag_an_For_Prices") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("aglu/FAO_ag_items_PRODSTAT",
+                     "aglu/FAO_an_items_PRODSTAT",
+                     "aglu/FAO_USA_ag_an_P_USDt_PRICESTAT",
+                     "aglu/FAO_USA_For_Exp_t_USD_FORESTAT",
+                     "aglu/USDA_Alfalfa_prices_USDt",
+                     "L100.FAO_ag_Prod_t",
+                     "aglu/FAO_USA_an_Prod_t_PRODSTAT") ->
       L132.ag_an_For_Prices
-
     return_data(L132.ag_an_For_Prices)
   } else {
     stop("Unknown command")

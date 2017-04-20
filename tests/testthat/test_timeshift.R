@@ -26,10 +26,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     with_mock(
       run_chunk = function(chunk, all_data) {
         x <- do.call(chunk, list(driver.MAKE, all_data))
-        expect_is(x, "list", label = chunk)
+        expect_is(x, "list", info = paste("Timeshift error invoking", chunk))
         x
       },
-      driver(quiet = TRUE)
+      try(driver(quiet = TRUE, write_outputs = FALSE))
     )
 
     # Reset to what it was before

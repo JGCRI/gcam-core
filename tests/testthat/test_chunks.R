@@ -43,15 +43,18 @@ test_that("errors if required data not available", {
 
 test_that("doesn't use forbidden calls", {
   chunklist <- find_chunks()
-  forbiddens <- c("[^error_no_]match", "ifelse", "melt", "cast", "rbind", "cbind")
 
   for(ch in unique(chunklist$name)) {
-    code <- capture.output(getFromNamespace(ch, ns = "gcamdata"))
-    code <- gsub("#.*$", "", code)  # remove comments
-    code <- gsub('".*"', "", code)   # remove quotes
-    for(f in forbiddens) {
-      expect_equal(grep(f, code), integer(),   # should be no matches
-                      info = paste(ch, "uses", f))
+    fn <- getFromNamespace(ch, ns = "gcamdata")
+    chk <- screen_forbidden(fn)
+    if(length(chk > 0)) {
+        infostr <- paste('Forbidden functions called in ', ch, ':  \n',
+                         paste('[', chk[,1], ']', chk[,2], collapse='\n'))
     }
+    else {
+        infostr <- NULL
+    }
+    expect_equal(chk, character(),   # should be no matches
+                 info = infostr)
   }
 })
