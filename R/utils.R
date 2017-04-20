@@ -432,6 +432,9 @@ make_run_xml_conversion <- function() {
 #' @export
 run_xml_conversion <- make_run_xml_conversion()
 
+
+#' screen_forbidden
+#'
 #' Screen a function for use of functions forbidden by data system style guide.
 #'
 #' Certain functions are forbidden by the dsr style guide from being used in
@@ -444,20 +447,20 @@ run_xml_conversion <- make_run_xml_conversion()
 #' (empty vector, if none)
 #' @author RL 19 Apr 2017
 screen_forbidden <- function(fn) {
-    forbidden <- c('(?<!error_no_)match', 'ifelse', 'melt', 'cast', 'rbind',
-                   'cbind', 'merge')
+  forbidden <- c("(?<!error_no_)match", "ifelse", "melt", "cast", "rbind",
+                 "cbind", "merge")
 
-    code <- capture.output(fn)
-    code <- gsub("#.*$", "", code)      # remove comments
-    code <- gsub('"[^"]*"', "", code)   # remove double quoted material
-    code <- gsub("'[^']*'", "", code)   # remove single quoted material
-    rslt <- character()
-    for(f in forbidden) {
-        bad <- grep(f, code, perl=TRUE)
-        if(length(bad) > 0) {
-            rslt <- rbind(rslt,
-                          cbind(f, code[bad]))
-        }
+  code <- capture.output(fn)
+  code <- gsub("#.*$", "", code)      # remove comments
+  code <- gsub('"[^"]*"', "", code)   # remove double quoted material
+  code <- gsub("'[^']*'", "", code)   # remove single quoted material
+  rslt <- character()
+  for(f in forbidden) {
+    bad <- grep(f, code, perl = TRUE)
+    if(length(bad) > 0) {
+      rslt <- rbind(rslt,
+                    cbind(f, code[bad]))
     }
-    rslt
+  }
+  rslt
 }
