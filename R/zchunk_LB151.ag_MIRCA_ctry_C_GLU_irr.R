@@ -19,8 +19,7 @@
 #' @export
 module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/AGLU_ctry",
+    return(c(FILE = "aglu/AGLU_ctry",
              FILE = "aglu/FAO_ag_items_PRODSTAT",
              FILE = "aglu/FAO_ag_CROSIT",
              "L100.LDS_ag_HA_ha",
@@ -37,7 +36,6 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
     FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO_ag_items_PRODSTAT")
     FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO_ag_CROSIT")
@@ -97,8 +95,9 @@ module_aglu_LB151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
     # Use the ratio of irrigated to rainfed yield from the FAO CROSIT database,
     # in combination with the harvested area data computed above to separate irrigated
     # and rainfed production.
-    # First, prepare the country mapping file. The old data system uses the first entry when duplicates
-    # are found (which happens a lot in this file).
+    # First, prepare the country mapping file. The old data system uses the first entry when duplicated
+    # iso codes are found (which happens a lot in this file). Dplyr will include both identical entries,
+    # which we don't want.
     AGLU_ctry %>%
       select(iso, CROSIT_country_ID) %>%
       distinct(iso, .keep_all=TRUE) ->
