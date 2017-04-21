@@ -49,7 +49,7 @@ module_energy_LA115.roofPV <- function(command, ...) {
     x %>%
       left_join_error_no_match(pop_RG3, by = "region_GCAM3") %>%
       left_join_error_no_match(A15.roofPV_curves, by = "region_GCAM3") %>%
-      mutate(maxSubResource = maxSubResource*value/popSum) %>%
+      mutate(maxSubResource = maxSubResource * value / popSum) %>%
       rename(curve.exponent = `curve-exponent`, mid.price = `mid-price`) %>%
       group_by(GCAM_region_ID, resource, subresource, curve.exponent, gdpSupplyElast, subResourceCapacityFactor) %>%
       summarise(maxSubResource = sum(maxSubResource),
@@ -64,8 +64,7 @@ module_energy_LA115.roofPV <- function(command, ...) {
       add_units("EJ for maxSubResource; 1975 $/GJ for midprice; unitless for gdpSupplyElast and subResourceCapacityFactor") %>%
       add_comments("Resources converted from 14 GCAM regions to 32 GCAM region IDs") %>%
       add_legacy_name("L115.RsrcCurves_EJ_R_roofPV") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A15.roofPV_curves", "temp-data-inject/L100.Pop_thous_ctry_Yh") %>%
-      add_flags() ->
+      add_precursors("common/iso_GCAM_regID", "energy/A15.roofPV_curves", "temp-data-inject/L100.Pop_thous_ctry_Yh") ->
       L115.RsrcCurves_EJ_R_roofPV
 
     return_data(L115.RsrcCurves_EJ_R_roofPV)
