@@ -61,7 +61,7 @@ module_energy_LA115.roofPV <- function(command, ...) {
 
     L115.RsrcCurves_EJ_R_roofPV %>%
       add_title("Rooftop PV resources by GCAM region ID") %>%
-      add_units("EJ") %>%
+      add_units("EJ for maxSubResource; 1975 $/GJ for midprice; unitless for gdpSupplyElast and subResourceCapacityFactor") %>%
       add_comments("Resources converted from 14 GCAM regions to 32 GCAM region IDs") %>%
       add_legacy_name("L115.RsrcCurves_EJ_R_roofPV") %>%
       add_precursors("common/iso_GCAM_regID", "energy/A15.roofPV_curves", "temp-data-inject/L100.Pop_thous_ctry_Yh") %>%
