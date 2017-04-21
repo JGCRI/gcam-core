@@ -18,11 +18,12 @@ the generated outputs: \code{L109.ag_ALL_Mt_R_C_Y}, \code{L109.an_ALL_Mt_R_C_Y}.
 original data system was \code{LB109.ag_an_ALL_R_C_Y.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate primary agricultural good and animal product mass balances, by region / commodity / year.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk combines all flow tables of GCAM agricultural commodities, calculates mass balances by
+GCAM region, commodity and year, and adjusts global and regional net exports to remove negative other uses.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC April 2017
 }
