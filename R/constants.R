@@ -131,6 +131,13 @@ socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to us
 
 socioeconomics.BASE_POP_SCEN <- "SSP2"
 
+# ======================================================================
+# water constants
+
+IRRIGATION <- "Irrigation"
+MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
+MAPPED_WATER_TYPES_SHORT <- c("C", "W")
+names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 
 # ======================================================================
 # emissions constants
