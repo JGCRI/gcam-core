@@ -4,13 +4,17 @@
 \alias{get_water_inputs_for_mapping}
 \title{get_water_inputs_for_mapping}
 \usage{
-get_water_inputs_for_mapping(x, water_mapping)
+get_water_inputs_for_mapping(water_sector, water_type, water_mapping,
+  GLU = NA_character_)
 }
 \arguments{
-\item{x}{A tibble containing a \code{water.sector} and \code{water_type}
-(and \code{GLU} if the water sector is irrigation) to determine the new input names}
+\item{water_sector}{A character vector containing water sector information}
+
+\item{water_type}{A character vector containing water type information}
 
 \item{water_mapping}{A tibble with a mapping between \code{water.sector} and  \code{supplysector}}
+
+\item{GLU}{An optional character vector containing GLU information (only used for irrigation with mapped water types)}
 }
 \value{
 A vector of names of form supplysector_watertype or supplysector_GLU_watertype.
