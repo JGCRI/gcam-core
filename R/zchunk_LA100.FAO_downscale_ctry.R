@@ -302,11 +302,13 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     L100.FAO_fallowland_kha %>%
       add_title("FAO fallow land area by country, year") %>%
       add_units("kha") %>%
+      add_flags(FLAG_PROTECT_FLOAT) %>%
       add_precursors("aglu/FAO_fallowland_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_fallowland_kha
     L100.FAO_harv_CL_kha %>%
       add_title("FAO harvested cropland (temporary crops) area by country, year") %>%
       add_units("kha") %>%
+      add_flags(FLAG_PROTECT_FLOAT) %>%
       add_precursors("aglu/FAO_harv_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_harv_CL_kha
     L100.FAO_Fert_Cons_tN %>%
