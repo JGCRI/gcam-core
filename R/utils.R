@@ -19,6 +19,10 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, ...) {
   assert_that(is.logical(quiet))
   assert_that(length(filenames) == length(optionals))
 
+  # Remove duplicates
+  optionals <- optionals[!duplicated(filenames)]
+  filenames <- filenames[!duplicated(filenames)]
+
   filedata <- list()
   for(fnum in seq_along(filenames)) {
     f <- filenames[fnum]
@@ -205,7 +209,10 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
   assertthat::assert_that(is.logical(write_inputs))
   assertthat::assert_that(is.character(outputs_dir))
 
-  dir.create(OUTPUTS_DIR, showWarnings = FALSE, recursive = TRUE)
+  # Create directory if necessary, and remove any previous outputs
+  dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
+  unlink(file.path(outputs_dir, "*.csv"))
+
   for(cn in names(chunkdata)) {
     cd <- chunkdata[[cn]]
     if(!isTRUE(identical(NA, cd))) {   # NA means an optional file that wasn't found
@@ -424,3 +431,36 @@ make_run_xml_conversion <- function() {
 #' @author PP March 2017
 #' @export
 run_xml_conversion <- make_run_xml_conversion()
+
+
+#' screen_forbidden
+#'
+#' Screen a function for use of functions forbidden by data system style guide.
+#'
+#' Certain functions are forbidden by the dsr style guide from being used in
+#' code chunks.  This function tests a function for calls to forbidden functions
+#' and flags the offending lines.
+#'
+#' @param fn The function to be tested.  This is the actual function object, not
+#' the name of the function.
+#' @return Nx2 Character matrix of flagged lines and the test that tripped them
+#' (empty vector, if none)
+#' @author RL 19 Apr 2017
+screen_forbidden <- function(fn) {
+  forbidden <- c("(?<!error_no_)match", "ifelse", "melt", "cast", "rbind",
+                 "cbind", "merge")
+
+  code <- capture.output(fn)
+  code <- gsub("#.*$", "", code)      # remove comments
+  code <- gsub('"[^"]*"', "", code)   # remove double quoted material
+  code <- gsub("'[^']*'", "", code)   # remove single quoted material
+  rslt <- character()
+  for(f in forbidden) {
+    bad <- grep(f, code, perl = TRUE)
+    if(length(bad) > 0) {
+      rslt <- rbind(rslt,
+                    cbind(f, code[bad]))
+    }
+  }
+  rslt
+}
