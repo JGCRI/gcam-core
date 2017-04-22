@@ -15,10 +15,12 @@ test_that("matches old data system output", {
 
   if (identical(Sys.getenv("TRAVIS"), "true")) {
     driver(write_outputs = TRUE, outdir = outputs_dir)
+    # The following two tests are only run on Travis because they will fail
+    # during the R CMD CHECK process locally (as the R build process removes outputs/)
+    expect_equivalent(file.access(outputs_dir, mode = 4), 0,  # outputs_dir exists and is readable
+                      info = paste("Directory", outputs_dir, "unreadable or does not exist from", getwd()))
+    expect_true(file.info(outputs_dir)$isdir)
   }
-  expect_equivalent(file.access(outputs_dir, mode = 4), 0,  # outputs_dir exists and is readable
-                    info = paste("Directory", outputs_dir, "unreadable or does not exist."))
-  expect_true(file.info(outputs_dir)$isdir)
 
   # For each file in OUTPUTS_DIR, look for corresponding file in our
   # comparison data. Load them, reshape new data if necessary, compare.
