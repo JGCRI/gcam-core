@@ -72,7 +72,7 @@ module_emissions_L103.ghg_an_USA_S_T_Y <- function(command, ...) {
                  by = c("GCAM_commodity" = "sector", "system" = "fuel" , "feed" = "technology")) %>%
       ungroup %>%
       mutate(year = as.numeric(year)) %>%
-      filter(year == 2005, GCAM_region_ID == 1) %>%
+      filter(year == 2005, GCAM_region_ID == gcam.USA_CODE) %>%
       group_by(EPA_agg_sector, year) %>%
       select(EPA_agg_sector, year, value) %>%
       summarise_if(is.numeric, sum) ->
