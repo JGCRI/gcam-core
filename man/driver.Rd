@@ -4,7 +4,8 @@
 \alias{driver}
 \title{driver}
 \usage{
-driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
+driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
+  outdir = OUTPUTS_DIR)
 }
 \arguments{
 \item{all_data}{Data to be pre-loaded into data system}
@@ -12,6 +13,8 @@ driver(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 \item{write_outputs}{Write all chunk outputs to disk?}
 
 \item{quiet}{Suppress output?}
+
+\item{outdir}{Location to write output data.  (Ignored if \code{write_outputs} is \code{FALSE}.)}
 }
 \value{
 A list of all built data.

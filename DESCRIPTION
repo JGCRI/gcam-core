@@ -1,7 +1,7 @@
 Package: gcamdata
 Type: Package
 Title: Build the GCAM Input Datasets
-Version: 0.1.1
+Version: 0.1.2
 Author: Who wrote it
 Maintainer: Ben Bond-Lamberty <bondlamberty@pnnl.gov>
 Description: Build the GCAM XML input files.
