@@ -216,12 +216,13 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
 #' @param chunkdata Named list of tibbles (data frames) to write
 #' @param write_inputs Write data that were read as inputs, not computed?
 #' @param outputs_dir Directory to save data into
+#' @importFrom assertthat assert_that
 save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
-                               OUTPUTS_DIR) {
-  assertthat::assert_that(is_data_list(chunkdata))
-  assertthat::assert_that(!is.null(names(chunkdata)))
-  assertthat::assert_that(is.logical(write_inputs))
-  assertthat::assert_that(is.character(outputs_dir))
+                             OUTPUTS_DIR) {
+  assert_that(is_data_list(chunkdata))
+  assert_that(!is.null(names(chunkdata)))
+  assert_that(is.logical(write_inputs))
+  assert_that(is.character(outputs_dir))
 
   # Create directory if necessary, and remove any previous outputs
   dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
@@ -254,7 +255,7 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
       }
 
       if(!is.null(cmnts)) {
-          cat(paste(COMMENT_CHAR, cmnts), file = fqfn, sep = "\n", append = TRUE)
+        cat(paste(COMMENT_CHAR, cmnts), file = fqfn, sep = "\n", append = TRUE)
       }
 
       readr::write_csv(cd, fqfn, append = TRUE, col_names = TRUE)
@@ -283,17 +284,17 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
 #' @param df Data frame to have floats protected.
 #' @return Data frame with floating point columns converted to character.
 protect_float <- function(df) {
-    floatcols <- names(df)[sapply(df, function(col) {is.numeric(col) &&
-                                                         !is.integer(col)})]
-    for(col in floatcols) {
-        ## Write entries with very large or very small values in scientific
-        ## notation.  Other values will be in decimal notation.
+  floatcols <- names(df)[sapply(df, function(col) {is.numeric(col) &&
+      !is.integer(col)})]
+  for(col in floatcols) {
+    ## Write entries with very large or very small values in scientific
+    ## notation.  Other values will be in decimal notation.
 
-        df[[col]] <- if_else(abs(df[[col]]) < 1e-4 | abs(df[[col]]) > 1e6,
-                             sprintf("%e", df[[col]]),
-                             sprintf("%f", df[[col]]))
-    }
-    df
+    df[[col]] <- if_else(abs(df[[col]]) < 1e-4 | abs(df[[col]]) > 1e6,
+                         sprintf("%e", df[[col]]),
+                         sprintf("%f", df[[col]]))
+  }
+  df
 }
 
 #' find_chunks
