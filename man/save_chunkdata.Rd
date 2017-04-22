@@ -22,7 +22,7 @@ table flags, writes metadata comments, and so forth.
 One thing to be aware of is that there is a wart in \code{readr} v 1.1 and
 later that causes floating point data to be written as integers if they
 happen to have integer values.  This can cause problems if there are so many
-apparently-integer values before the first obviouisly-float value that
+apparently-integer values before the first obviously-float value that
 \code{read_csv} concludes that the column should have integer type.  If this
 seems to be happening to your table, add the PROTECT_FLOAT flag to it, and
 any floating point data in your table will be protected before it is

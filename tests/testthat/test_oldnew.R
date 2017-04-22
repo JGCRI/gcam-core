@@ -9,15 +9,15 @@ test_that("matches old data system output", {
   # If we're on Travis, need to run the driver to ensure chunk outputs saved
   # Don't do this locally, to speed things up
 
-  ## Look for output data in OUTPUTS_DIR under top level (this code will be run in
-  ## tests/testthat)
+  # Look for output data in OUTPUTS_DIR under top level
+  # (as this code will be run in tests/testthat)
   outputs_dir <- normalizePath(file.path("../..", OUTPUTS_DIR))
 
   if (identical(Sys.getenv("TRAVIS"), "true")) {
     driver(write_outputs = TRUE, outdir = outputs_dir)
   }
-  expect_equivalent(file.access(outputs_dir, mode=4), 0,  # outputs_dir exists and is readable
-                    info = paste('Directory', outputs_dir, "unreadable or does not exist."))
+  expect_equivalent(file.access(outputs_dir, mode = 4), 0,  # outputs_dir exists and is readable
+                    info = paste("Directory", outputs_dir, "unreadable or does not exist."))
   expect_true(file.info(outputs_dir)$isdir)
 
   # For each file in OUTPUTS_DIR, look for corresponding file in our
@@ -96,9 +96,9 @@ test_that("matches old data system output", {
         numeric_columns_old <- sapply(olddata, class) == "numeric"
         numeric_columns_new <- sapply(newdata, class) == "numeric"
         expect_equivalent(sum(olddata[numeric_columns_old]), sum(newdata[numeric_columns_new]),
-                          label = paste(basename(newf), "doesn't match (sum test)"))
+                          info = paste(basename(newf), "doesn't match (sum test)"))
       } else {
-        expect_equivalent(round_df(olddata), round_df(newdata), label = paste(basename(newf), "doesn't match"))
+        expect_equivalent(round_df(olddata), round_df(newdata), info = paste(basename(newf), "doesn't match"))
       }
     }
   }

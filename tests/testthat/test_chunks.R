@@ -7,7 +7,7 @@ test_that("errors on unknown command", {
 
   for(ch in chunklist$name) {
     cl <- call(ch, "THISMAKESNOSENSE")
-    expect_error(eval(cl), label = ch)
+    expect_error(eval(cl), info = ch)
   }
 })
 
@@ -18,7 +18,7 @@ test_that("handles DECLARE_INPUTS", {
     cl <- call(ch, driver.DECLARE_INPUTS)
     inputs <- eval(cl)
     expect_true(is.null(inputs) |  # might be no inputs
-                  is.character(inputs) & is.vector(inputs), label = ch)
+                  is.character(inputs) & is.vector(inputs), info = ch)
   }
 })
 
@@ -28,7 +28,7 @@ test_that("handles DECLARE_OUTPUTS", {
   for(ch in chunklist$name) {
     cl <- call(ch, driver.DECLARE_OUTPUTS)
     inputs <- eval(cl)
-    expect_true(is.character(inputs) & is.vector(inputs), label = ch)
+    expect_true(is.character(inputs) & is.vector(inputs), info = ch)
   }
 })
 
@@ -37,7 +37,7 @@ test_that("errors if required data not available", {
 
   for(ch in unique(chunkdeps$name)) {
     cl <- call(ch, driver.MAKE, empty_data())
-    expect_error(eval(cl), label = ch)
+    expect_error(eval(cl), info = ch)
   }
 })
 
