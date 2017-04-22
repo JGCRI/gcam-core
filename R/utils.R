@@ -197,17 +197,32 @@ find_csv_file <- function(filename, optional, quiet = FALSE) {
 }
 
 
-#' save_chunkdata
+#' Write data produced by chunks to csv files.
+#'
+#' Write the data produced by the chunks to their output files.  This is mostly
+#' a wrapper around \code{write_csv} that figures out file names, processes
+#' table flags, writes metadata comments, and so forth.
+#'
+#' One thing to be aware of is that there is a wart in \code{readr} v 1.1 and
+#' later that causes floating point data to be written as integers if they
+#' happen to have integer values.  This can cause problems if there are so many
+#' apparently-integer values before the first obviously-float value that
+#' \code{read_csv} concludes that the column should have integer type.  If this
+#' seems to be happening to your table, add the PROTECT_FLOAT flag to it, and
+#' any floating point data in your table will be protected before it is
+#' written.  Use this option sparingly, as the data written that way tends to be
+#' a lot bigger, owing to the large number of digits we have to write.
 #'
 #' @param chunkdata Named list of tibbles (data frames) to write
 #' @param write_inputs Write data that were read as inputs, not computed?
 #' @param outputs_dir Directory to save data into
-#' Write data produced by chunks to csv files.
-save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUTS_DIR) {
-  assertthat::assert_that(is_data_list(chunkdata))
-  assertthat::assert_that(!is.null(names(chunkdata)))
-  assertthat::assert_that(is.logical(write_inputs))
-  assertthat::assert_that(is.character(outputs_dir))
+#' @importFrom assertthat assert_that
+save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir =
+                             OUTPUTS_DIR) {
+  assert_that(is_data_list(chunkdata))
+  assert_that(!is.null(names(chunkdata)))
+  assert_that(is.logical(write_inputs))
+  assert_that(is.character(outputs_dir))
 
   # Create directory if necessary, and remove any previous outputs
   dir.create(outputs_dir, showWarnings = FALSE, recursive = TRUE)
@@ -224,8 +239,8 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
       flags <- get_flags(cd)
 
       # If these data have been tagged as input data, don't write
-      if(FLAG_NO_OUTPUT %in% flags |
-         FLAG_INPUT_DATA %in% flags & !write_inputs) {
+      if(FLAG_NO_OUTPUT %in% flags ||
+         FLAG_INPUT_DATA %in% flags && !write_inputs) {
         next
       }
 
@@ -235,14 +250,52 @@ save_chunkdata <- function(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUT
         cat(paste(flags, collapse = " "), file = fqfn, sep = "\n")
       }
 
+      if(FLAG_PROTECT_FLOAT %in% flags) {
+        cd <- protect_float(cd)
+      }
+
       if(!is.null(cmnts)) {
         cat(paste(COMMENT_CHAR, cmnts), file = fqfn, sep = "\n", append = TRUE)
       }
+
       readr::write_csv(cd, fqfn, append = TRUE, col_names = TRUE)
     }
   }
 }
 
+
+#' Protect floating point values in a data frame.
+#'
+#' All of the currently extant functions for writing tables render floating
+#' point values using C's %g format.  This format is badly broken, in that a
+#' value like 2.0 will be output as "2".  This can cause problems when the table
+#' is read in at some later time, as "2" looks like an integer.  This function
+#' converts all floating point columns in a data frame to character strings that
+#' are properly formatted as floating point literals.  Using
+#' \code{\link[readr]{write_csv}} on a data frame protected in this way will
+#' produce the expected output.
+#'
+#' @note The output produced this way will probably be a lot larger than one
+#' produced by the default behavior, so this function should be used only where
+#' the default behavior is causing problems.
+#' @note Because the numeric columns are converted to characters, a data
+#' frame converted in this way is no longer useful for computation.
+#'
+#' @param df Data frame to have floats protected.
+#' @return Data frame with floating point columns converted to character.
+protect_float <- function(df) {
+  floatcols <- names(df)[sapply(df, function(col) {is.numeric(col) &&
+      !is.integer(col)})]
+  for(col in floatcols) {
+    ## Write entries with very large or very small values in scientific
+    ## notation.  Other values will be in decimal notation.
+
+    df[[col]] <- if_else(abs(df[[col]]) < 1e-4 | abs(df[[col]]) > 1e6,
+                         sprintf("%e", df[[col]]),
+                         sprintf("%f", df[[col]]))
+  }
+  df
+}
 
 #' find_chunks
 #'

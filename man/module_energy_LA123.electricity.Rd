@@ -24,5 +24,5 @@ This script creates electricity generation and inputs by fuel, region and histor
 This script creates electricity generation and inputs by fuel, region and historical year. Estimates are adjusted by efficiency factors.
 }
 \author{
-FF, April 2017
+FF April 2017
 }
