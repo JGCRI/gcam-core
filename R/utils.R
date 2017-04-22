@@ -499,15 +499,18 @@ run_xml_conversion <- make_run_xml_conversion()
 #' (empty vector, if none)
 #' @author RL 19 Apr 2017
 screen_forbidden <- function(fn) {
-  forbidden <- c("(?<!error_no_)match", "ifelse", "melt", "cast", "rbind",
-                 "cbind", "merge")
+  forbidden <- c("(?<!error_no_)match", "ifelse",
+                 "melt", "cast",
+                 "rbind", "cbind", "merge",
+                 "read\\.csv", "write\\.csv",
+                 "summarise_each", "mutate_each")
 
   code <- capture.output(fn)
   code <- gsub("#.*$", "", code)      # remove comments
   code <- gsub('"[^"]*"', "", code)   # remove double quoted material
   code <- gsub("'[^']*'", "", code)   # remove single quoted material
   rslt <- character()
-  for(f in forbidden) {
+  for(f in unique(forbidden)) {
     bad <- grep(f, code, perl = TRUE)
     if(length(bad) > 0) {
       rslt <- rbind(rslt,

@@ -109,9 +109,8 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE,
     }
 
     if(!quiet) cat(nrow(unfound_inputs), "chunk data input(s) not accounted for\n")
-    out <- utils::capture.output(csv_data <- load_csv_files(unfound_inputs$input, unfound_inputs$optional, quiet = TRUE))
-    if(!quiet) cat(out, sep = "\n")
-      all_data <- add_data(csv_data, all_data)
+    csv_data <- load_csv_files(unfound_inputs$input, unfound_inputs$optional, quiet = TRUE)
+    all_data <- add_data(csv_data, all_data)
   }
 
   chunks_to_run <- chunklist$name
