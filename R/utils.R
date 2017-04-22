@@ -448,7 +448,7 @@ run_xml_conversion <- make_run_xml_conversion()
 #' @author RL 19 Apr 2017
 screen_forbidden <- function(fn) {
   forbidden <- c("(?<!error_no_)match", "ifelse", "melt", "cast", "rbind",
-                 "cbind", "merge")
+                 "cbind", "merge", "read\\.csv", "write\\.csv")
 
   code <- capture.output(fn)
   code <- gsub("#.*$", "", code)      # remove comments
