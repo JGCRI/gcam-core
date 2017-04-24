@@ -1,8 +1,8 @@
 ## Test the gdp join function
 
 context('gdp-join')
-library('tibble')
-library('magrittr')
+library('tibble', warn.conflicts=FALSE)
+library('magrittr', warn.conflicts=FALSE)
 
 ## set up test data
 past <- tibble(year=c(2000,2005,2010)) %>%

@@ -129,7 +129,6 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     L101.Pop_thous_R_Yh <- get_data(all_data, "temp-data-inject/L101.Pop_thous_R_Yh")
     L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "temp-data-inject/L101.Pop_thous_Scen_R_Yfut")
 
-    if(TRUE) {
     ## iso--region lookup without extraneous data.  We'll use this several times.
     iso_region32_lookup <- select(iso_GCAM_regID, iso, GCAM_region_ID)
 
@@ -220,13 +219,21 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
 
     ## Construct a table of population by scenario, region, and year.  We have a
     ## table of historical population, and a table of future population by
-    ## scenario, both in wide form.  Left join will add the historical years to
-    ## each row.
+    ## scenario, both in wide form.  Convert to long form and filter to the years
+    ## we need.  Add a scenario column to historical years, and combine the
+    ## whole thing into a single table.
+    pop.thous.fut <-
+        tidyr::gather(L101.Pop_thous_Scen_R_Yfut, year, population, -scenario,
+                      -GCAM_region_ID) %>%
+          filter(year %in% FUTURE_YEARS)
+    pop.thous.hist <-
+        tidyr::gather(L101.Pop_thous_R_Yh, year, population, -GCAM_region_ID) %>%
+          filter(year %in% HISTORICAL_YEARS) %>%
+          tidyr::crossing(scenario = unique(pop.thous.fut[['scenario']]))
     pop.thous.scen.rgn.yr <-
-        select(L101.Pop_thous_R_Yh, one_of('GCAM_region_ID', HISTORICAL_YEARS)) %>% # get rid of unwanted year cols
-          left_join(L101.Pop_thous_Scen_R_Yfut, . , by = 'GCAM_region_ID') %>%
-          tidyr::gather(year, population, -scenario, -GCAM_region_ID) %>%
-          mutate(year = as.integer(year), population=as.numeric(population))
+        bind_rows(pop.thous.hist, pop.thous.fut) %>%
+          mutate(year = as.integer(year), population=as.numeric(population)) %>%
+          select(scenario, GCAM_region_ID, year, population)
 
     ## calculate per-capita GDP.  This is another final output
     pcgdp.thous90usd.scen.rgn.yr <-
@@ -267,14 +274,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
           mutate(PPP_MER = PPP / MER)
 
 
-    } # main body XXX remove
-
-    # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-
+    ## Produce outputs
     gdp.mil90usd.scen.rgn.yr %>%
       add_title("Gross Domestic Product (GDP) by scenario, region, and year.") %>%
       add_units("Millions of 1990 USD (MER)") %>%
@@ -287,7 +287,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "socioeconomics/SSP_database_v9",
                      "socioeconomics/IMF_GDP_growth",
                      "L100.gdp_mil90usd_ctry_Yh") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L102.gdp_mil90usd_Scen_R_Y
 
     pcgdp.thous90usd.scen.rgn.yr %>%
@@ -302,7 +302,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "L100.gdp_mil90usd_ctry_Yh",
                      "temp-data-inject/L101.Pop_thous_R_Yh",
                      "temp-data-inject/L101.Pop_thous_Scen_R_Yfut") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L102.pcgdp_thous90USD_Scen_R_Y
 
     ppp.mer.rgn %>%
@@ -317,7 +317,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "socioeconomics/SSP_database_v9",
                      "socioeconomics/IMF_GDP_growth",
                      "L100.gdp_mil90usd_ctry_Yh") %>%
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L102.PPP_MER_R
 
     return_data(L102.gdp_mil90usd_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y, L102.PPP_MER_R)
