@@ -53,6 +53,7 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
+aglu.DIGITS_CALOUTPUT <- 7 # production
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
