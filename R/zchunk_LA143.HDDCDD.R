@@ -43,16 +43,16 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     GIS_ctry <- get_data(all_data, "energy/GIS_ctry")
     L101.Pop_thous_GCAM3_ctry_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_ctry_Y") %>%
       rename(population = value) %>% mutate(year = as.integer(year))
-    CDD_CCSM3x_A2 <- get_data(all_data, "energy/GIS/population_weighted_CDD_CCSM3x_A2.csv")
-    CDD_CCSM3x_B1 <- get_data(all_data, "energy/GIS/population_weighted_CDD_CCSM3x_B1.csv")
-    CDD_HadCM3_A2 <- get_data(all_data, "energy/GIS/population_weighted_CDD_HadCM3_A2.csv")
-    CDD_HadCM3_B1 <- get_data(all_data, "energy/GIS/population_weighted_CDD_HadCM3_B1.csv")
-    CDD_no_GCM_constdd <- get_data(all_data, "energy/GIS/population_weighted_CDD_no_GCM_constdd.csv")
-    HDD_CCSM3x_A2 <- get_data(all_data, "energy/GIS/population_weighted_HDD_CCSM3x_A2.csv")
-    HDD_CCSM3x_B1 <- get_data(all_data, "energy/GIS/population_weighted_HDD_CCSM3x_B1.csv")
-    HDD_HadCM3_A2 <- get_data(all_data, "energy/GIS/population_weighted_HDD_HadCM3_A2.csv")
-    HDD_HadCM3_B1 <- get_data(all_data, "energy/GIS/population_weighted_HDD_HadCM3_B1.csv")
-    HDD_no_GCM_constdd <- get_data(all_data, "energy/GIS/population_weighted_HDD_no_GCM_constdd.csv")
+    CDD_CCSM3x_A2 <- get_data(all_data, "energy/GIS/population_weighted_CDD_CCSM3x_A2")
+    CDD_CCSM3x_B1 <- get_data(all_data, "energy/GIS/population_weighted_CDD_CCSM3x_B1")
+    CDD_HadCM3_A2 <- get_data(all_data, "energy/GIS/population_weighted_CDD_HadCM3_A2")
+    CDD_HadCM3_B1 <- get_data(all_data, "energy/GIS/population_weighted_CDD_HadCM3_B1")
+    CDD_no_GCM_constdd <- get_data(all_data, "energy/GIS/population_weighted_CDD_no_GCM_constdd")
+    HDD_CCSM3x_A2 <- get_data(all_data, "energy/GIS/population_weighted_HDD_CCSM3x_A2")
+    HDD_CCSM3x_B1 <- get_data(all_data, "energy/GIS/population_weighted_HDD_CCSM3x_B1")
+    HDD_HadCM3_A2 <- get_data(all_data, "energy/GIS/population_weighted_HDD_HadCM3_A2")
+    HDD_HadCM3_B1 <- get_data(all_data, "energy/GIS/population_weighted_HDD_HadCM3_B1")
+    HDD_no_GCM_constdd <- get_data(all_data, "energy/GIS/population_weighted_HDD_no_GCM_constdd")
 
     # ===================================================
 
