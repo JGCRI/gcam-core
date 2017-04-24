@@ -98,8 +98,6 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       spread(flow, value) %>%
       # Set missing values in the complete combinations to zero
       mutate_if(is.numeric, funs(replace(., is.na(.), 0))) %>%
-      # Make sure year is integer
-      mutate(year = as.integer(year)) %>%
       # For any feed commodities (e.g. pasture, residue, scavenging) that are not reported in production or trade table,
       # assume all production are domestic, and set production = feed
       mutate(Prod_Mt = if_else(GCAM_commodity %in% Feed_commodities, Feed_Mt, Prod_Mt),
