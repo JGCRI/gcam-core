@@ -102,16 +102,14 @@ join.gdp.ts <- function(past, future, grouping) {
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RPL March 2017
-#' @export
 module_socioeconomics_L102.GDP <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "socioeconomics/SSP_database_v9",
              FILE = "socioeconomics/IMF_GDP_growth",
              "L100.gdp_mil90usd_ctry_Yh",
-             # Temporary data injection from old data system
-             FILE = "temp-data-inject/L101.Pop_thous_R_Yh",
-             FILE = "temp-data-inject/L101.Pop_thous_Scen_R_Yfut"))
+             "L101.Pop_thous_R_Yh",
+             "L101.Pop_thous_Scen_R_Yfut"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L102.gdp_mil90usd_Scen_R_Y",
              "L102.pcgdp_thous90USD_Scen_R_Y",
@@ -126,8 +124,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     IMF_GDP_growth <- get_data(all_data, "socioeconomics/IMF_GDP_growth")
     L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
     # Temporary data injection from old data system
-    L101.Pop_thous_R_Yh <- get_data(all_data, "temp-data-inject/L101.Pop_thous_R_Yh")
-    L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "temp-data-inject/L101.Pop_thous_Scen_R_Yfut")
+    L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
+    L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "L101.Pop_thous_Scen_R_Yfut")
 
     ## iso--region lookup without extraneous data.  We'll use this several times.
     iso_region32_lookup <- select(iso_GCAM_regID, iso, GCAM_region_ID)
@@ -223,11 +221,10 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## we need.  Add a scenario column to historical years, and combine the
     ## whole thing into a single table.
     pop.thous.fut <-
-        tidyr::gather(L101.Pop_thous_Scen_R_Yfut, year, population, -scenario,
-                      -GCAM_region_ID) %>%
+        rename(L101.Pop_thous_Scen_R_Yfut, population = value) %>%
           filter(year %in% FUTURE_YEARS)
     pop.thous.hist <-
-        tidyr::gather(L101.Pop_thous_R_Yh, year, population, -GCAM_region_ID) %>%
+        rename(L101.Pop_thous_R_Yh, population = value) %>%
           filter(year %in% HISTORICAL_YEARS) %>%
           tidyr::crossing(scenario = unique(pop.thous.fut[['scenario']]))
     pop.thous.scen.rgn.yr <-
@@ -276,6 +273,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
 
     ## Produce outputs
     gdp.mil90usd.scen.rgn.yr %>%
+      rename(value = gdp) %>%
       add_title("Gross Domestic Product (GDP) by scenario, region, and year.") %>%
       add_units("Millions of 1990 USD (MER)") %>%
       add_comments("For the SSP scenarios, SSP GDP projections are scaled to match ") %>%
@@ -291,6 +289,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       L102.gdp_mil90usd_Scen_R_Y
 
     pcgdp.thous90usd.scen.rgn.yr %>%
+      rename(value = pcgdp) %>%
       add_title("Gross Domestic Product (GDP) per capita, by scenario, region, and year.") %>%
       add_units("Thousands of 1990 USD (MER)") %>%
       add_comments("Computed as GDP/population.  Values prior to the base year (2010) are ") %>%
@@ -300,8 +299,8 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
                      "socioeconomics/SSP_database_v9",
                      "socioeconomics/IMF_GDP_growth",
                      "L100.gdp_mil90usd_ctry_Yh",
-                     "temp-data-inject/L101.Pop_thous_R_Yh",
-                     "temp-data-inject/L101.Pop_thous_Scen_R_Yfut") %>%
+                     "L101.Pop_thous_R_Yh",
+                     "L101.Pop_thous_Scen_R_Yfut") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L102.pcgdp_thous90USD_Scen_R_Y
 
@@ -316,8 +315,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "socioeconomics/SSP_database_v9",
                      "socioeconomics/IMF_GDP_growth",
-                     "L100.gdp_mil90usd_ctry_Yh") %>%
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+                     "L100.gdp_mil90usd_ctry_Yh") ->
       L102.PPP_MER_R
 
     return_data(L102.gdp_mil90usd_Scen_R_Y, L102.pcgdp_thous90USD_Scen_R_Y, L102.PPP_MER_R)
