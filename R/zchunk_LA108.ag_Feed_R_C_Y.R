@@ -35,26 +35,42 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y")
     L107.an_Feed_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses translate_to_full_table
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # ===================================================
+    # Part 1: FEEDCROPS
+    # Compute regional feedcrop demands by GCAM region, commodity, and year in Mt/yr.
+    # Use crop-specific information from FAO, in combination with feed totals from IMAGE,
+    # to calculate region/crop specific information. This ensures totals match IMAGE.
+    # First, calculate FAO crop-region totals
+    L100.FAO_ag_Feed_t %>%
+      select(iso, item, year, value) %>%
+      left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%                                     # Map in GCAM region ID
+      left_join(select(FAO_ag_items_cal_SUA, item, GCAM_commodity), by = "item") %>%               # Map in GCAM commodity
+      group_by(GCAM_region_ID, GCAM_commodity, year) %>%
+      summarize(value = sum(value)) %>%                                                            # Aggregate by crop, region, year
+      mutate(value = value * CONV_TON_MEGATON) %>%                                                 # Convert from tons to Mt
+      ungroup() %>%
+      complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
+               GCAM_commodity, year, fill = list(value = 0)) ->                                    # Fill in missing region/commodity combinations with 0
+      ag_Feed_Mt_R_Cnf_Y
+
+    # Then, calculate feedcrop shares by crop within each region
+    ag_Feed_Mt_R_Cnf_Y %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarize(total = sum(value)) %>%                                                            # Aggregate to compute regional totals
+      right_join(ag_Feed_Mt_R_Cnf_Y, by = c("GCAM_region_ID", "year")) %>%                         # Map back in the crop/region specific FAO data
+      mutate(Feedfrac = value / total) %>%                                                         # Calculate each crop's share of total feed in a region
+      mutate(Feedfrac = if_else(is.na(Feedfrac), 0, Feedfrac)) ->                                  # Replace missing data with 0 (assumes no share for those crops)
+      ag_Feedfrac_R_Cnf_Y
+
+    # Now, compute feedcrop demand by region, crop, and year using IMAGE totals and feed fractions computed above
+    L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
+      group_by(GCAM_region_ID, feed, year) %>%
+      summarize(value = sum(value)) %>%                                                            # Compute total feed by IMAGE feed system, region, year
+      filter(feed == "FeedCrops") %>%                                                              # Filter to only include "FeedCrops"
+      right_join(select(ag_Feedfrac_R_Cnf_Y, GCAM_region_ID, GCAM_commodity, year, Feedfrac),
+                 by = c("GCAM_region_ID", "year" ) ) %>%                                           # Map in feed fractions computed from FAO data
+      mutate(value = value * Feedfrac) ->                                                          # Compute FAO-IMAGE adjusted feed crop demand
+      ag_Feed_Mt_R_Cnf_Y_adj
+
 
     # Produce outputs
     # Temporary code below sends back empty data frames marked "don't test"
