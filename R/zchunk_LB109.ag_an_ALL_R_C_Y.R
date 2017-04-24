@@ -33,12 +33,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L101.ag_Food_Mt_R_C_Y <- get_data(all_data, "L101.ag_Food_Mt_R_C_Y") %>%
-      mutate(year = as.integer(year)) # year is character, convert to integer
-
-    L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y") %>%
-      mutate(year = as.integer(year)) # convert to integer
-
+    L101.ag_Food_Mt_R_C_Y <- get_data(all_data, "L101.ag_Food_Mt_R_C_Y")
+    L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y")
     L105.an_Food_Mt_R_C_Y <- get_data(all_data, "temp-data-inject/L105.an_Food_Mt_R_C_Y") %>%
       # The following two lines of code will be removed later, when we're using 'real' data
       gather(year, value, -GCAM_region_ID, -GCAM_commodity) %>%   # reshape
@@ -102,8 +98,6 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       spread(flow, value) %>%
       # Set missing values in the complete combinations to zero
       mutate_if(is.numeric, funs(replace(., is.na(.), 0))) %>%
-      # Make sure year is integer
-      mutate(year = as.integer(year)) %>%
       # For any feed commodities (e.g. pasture, residue, scavenging) that are not reported in production or trade table,
       # assume all production are domestic, and set production = feed
       mutate(Prod_Mt = if_else(GCAM_commodity %in% Feed_commodities, Feed_Mt, Prod_Mt),
@@ -152,7 +146,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
         filter(flow %in% ag_Flow_cols) %>%
         # Re-order the flow variables so the columns are in the right order
         mutate(flow = factor(flow, levels = ag_Flow_cols),
-               value = round(value, aglu.DIGITS_CALOUTPUT)) %>%
+               value = round(value, aglu.DIGITS_CALOUTPUT),
+               year = as.integer(year)) %>%
         spread(flow, value) ->
         L109.ag_ALL_Mt_R_C_Y
       }
@@ -171,7 +166,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       # Calculate the domestic supply
       mutate(Supply_Mt = Prod_Mt - NetExp_Mt,
              # Calculate other uses
-             OtherUses_Mt = Supply_Mt - Food_Mt) -> L109.an_ALL_Mt_R_C_Y
+             OtherUses_Mt = Supply_Mt - Food_Mt) ->
+      L109.an_ALL_Mt_R_C_Y
 
     # Adjust global and regional animal product mass balances to remove net negative other uses
     # Assign negative other net uses to imports, and adjust global trade to maintain balances
@@ -189,7 +185,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
         group_by(GCAM_commodity, year) %>%
         # Calculate the changes in global net exports = sum of negative other uses, global other uses =  sum of positive other uses
         summarise(GlobalNetExpAdj = sum(NegOtherUses_Mt),
-                  GlobalOtherUses_Mt = sum(OtherUses_Mt_adj)) -> L109.an_ALL_Mt_glbl_C_Y
+                  GlobalOtherUses_Mt = sum(OtherUses_Mt_adj)) ->
+        L109.an_ALL_Mt_glbl_C_Y
 
       # Second, distribute changes in global net exports among regions with positive other uses, according to regional shares
       L109.an_ALL_Mt_R_C_Y %>%
