@@ -40,9 +40,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    if(1) {
-
-    # Load required inputs, set to long format and change column names
+    # Load required inputs, set to long format and change column names where needed
 
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -110,16 +108,19 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       group_by(EPA_agg_sector,EPA_agg_fuel_ghg,Non.CO2) %>%
       left_join(L131.EPA_nonco2_indproc.mlt, by=c(EPA_agg_sector="sector", EPA_agg_fuel_ghg = "subsector","Non.CO2")) %>%
       rename(tech_emissions = x) %>%
-      mutate(tech_emissions=if_else(is.na(tech_emissions),1,tech_emissions)) %>%
+      mutate(tech_emissions=if_else(is.na(tech_emissions),1,tech_emissions)) ->
+      L131.nonco2_pct_R_prc_S_S_2005
+
+    L131.nonco2_pct_R_prc_S_S_2005 %>%
       group_by(EPA_agg_sector, Non.CO2) %>% #group by sector, and Non CO2
       summarise(tech_emissions=sum(tech_emissions)) ->
       L131.nonco2_gg_R_prc_S_2005
 
-    # breaking this into 2 sections for ease
+
     L131.nonco2_pct_R_prc_S_S_2005 %>%
       group_by(EPA_agg_sector, Non.CO2) %>%
       left_join(L131.nonco2_gg_R_prc_S_2005, by =c("EPA_agg_sector", "Non.CO2")) %>%
-      rename(sector_emissions = tech_emissions ) %>%
+      rename(sector_emissions = tech_emissions.y ) %>% #sector emisisons from thr join
       rename(tech_emissions = tech_emissions.x) %>%
       mutate(tech_share = tech_emissions/sector_emissions) ->
       L131.nonco2_pct_R_prc_S_S_2005
@@ -133,7 +134,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       EDGAR_VOC
 
     #rather than read in a new file (EDGAR_nation) let's make a new file
-    iso_GCAM_regID <- mutate_each(iso_GCAM_regID, funs(toupper))
+    iso_GCAM_regID <- mutate_all(iso_GCAM_regID, funs(toupper))
 
 
     # combine all of the nonco2s together in one file
@@ -167,16 +168,13 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
       na.omit() %>%  #delete rows with NAs
       mutate(input.emissions = EDGAR_emissions * tech_share) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
-      summarise(input.emissions=sum(input.emissions))
-
-    }
+      summarise(input.emissions=sum(input.emissions)) %>%
 
       # Produce outputs\
-    tibble() %>%
-      add_title("GHG emissions by GCAM region / sector / technology / historical year") %>%
+       add_title("GHG emissions by GCAM region / sector / technology / historical year") %>%
       add_units("Tg") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Calculate historical emissions from the processing sector by GCAM
+                   technology,computed from EDGAR emissions data and EPA emissions factors.") %>%
       add_legacy_name("L131.nonco2_tg_R_prc_S_S_Yh") %>%
       add_precursors("common/GCAM_region_names",
                      "common/iso_GCAM_regID",
