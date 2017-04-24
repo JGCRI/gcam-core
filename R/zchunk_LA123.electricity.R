@@ -12,7 +12,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author FF, April 2017
+#' @author FF April 2017
 module_energy_LA123.electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/enduse_fuel_aggregation",
@@ -32,13 +32,13 @@ module_energy_LA123.electricity <- function(command, ...) {
     enduse_fuel_aggregation <- get_data(all_data, "energy/enduse_fuel_aggregation")
     A23.chp_elecratio <- get_data(all_data, "energy/A23.chp_elecratio")
     get_data(all_data, "temp-data-inject/L1011.en_bal_EJ_R_Si_Fi_Yh") %>%
-      gather(year,value,-GCAM_region_ID,-fuel,-sector) %>%
+      gather(year, value, -GCAM_region_ID, -fuel, -sector) %>%
       mutate(year = as.integer(substr(year, 2, 5))) ->
       L1011.en_bal_EJ_R_Si_Fi_Yh
 
     # ===================================================
 
-    #Creates end use fuel for electricity to be used to create L123.in_EJ_R_elec_F_Yh
+    # Creates end use fuel for electricity to be used to create L123.in_EJ_R_elec_F_Yh
     enduse_fuel_aggregation %>%
       select(fuel,electricity) %>%
       filter(!is.na(electricity)) ->
@@ -53,8 +53,8 @@ module_energy_LA123.electricity <- function(command, ...) {
       mutate(fuel = electricity, input = value) %>%
       select(-electricity, -value) %>%
       filter(fuel %in% ELECTRICITY_INPUT_FUELS) %>%
-      group_by(GCAM_region_ID, sector, fuel, year ) %>%
-      summarise_each(funs(sum)) ->
+      group_by(GCAM_region_ID, sector, fuel, year) %>%
+      summarise_all(funs(sum)) ->
       L123.in_EJ_R_elec_F_Yh
 
     # Creates L123.out_EJ_R_elec_F_Yh based on L1011.en_bal_EJ_R_Si_Fi_Yh and enduse_fuel_aggregation_electricity
@@ -66,7 +66,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       mutate(fuel = electricity, outputs = value) %>%
       select(-electricity, -value) %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
-      summarise_each(funs(sum)) %>%
+      summarise_all(funs(sum)) %>%
       filter(!is.na(fuel)) ->
       L123.out_EJ_R_elec_F_Yh
 
@@ -84,7 +84,7 @@ module_energy_LA123.electricity <- function(command, ...) {
     # Taking care of NA, 0, and INF values generatted in previous step (efficiency calculations) and updating
     # the efficiency output L123.eff_R_elec_F_Yh
     L123.eff_R_elec_F_Yh %>%
-      mutate(value = if_else(!is.na(value),value,DEFAULT_ELECTRIC_EFFICIENCY)) %>%
+      mutate(value = if_else(!is.na(value), value, DEFAULT_ELECTRIC_EFFICIENCY)) %>%
       mutate(value = if_else(value == 0, DEFAULT_ELECTRIC_EFFICIENCY, value)) %>%
       mutate(value = if_else(is.infinite(value), DEFAULT_ELECTRIC_EFFICIENCY, value)) ->
       L123.eff_R_elec_F_Yh
@@ -123,20 +123,20 @@ module_energy_LA123.electricity <- function(command, ...) {
       mutate(fuel = replace(fuel, fuel == "heat", NA)) %>%
       mutate(fuel = replace(fuel, fuel == "electricity", NA)) %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
-      summarise_each(funs(sum)) %>%
+      summarise_all(funs(sum)) %>%
       filter(!is.na(fuel)) ->
       L123.out_EJ_R_indchp_F_Yh
 
     # Estimates inputs for CHP in the industry sector based on outputs and the electricity ration by fuel (output/elec_ratio)
     L123.out_EJ_R_indchp_F_Yh %>%
-      full_join(filter(A23.chp_elecratio,fuel!="hydrogen"), by = "fuel") %>%
+      full_join(filter(A23.chp_elecratio,fuel != "hydrogen"), by = "fuel") %>%
       mutate(outputs_ratio = value / elec_ratio) %>%
       select(-value, -elec_ratio) ->
       L123.in_EJ_R_indchp_F_Yh
 
     # Rename necessary outputs to value for long test flag
     L123.out_EJ_R_elec_F_Yh %>%
-      mutate(value=outputs) %>%
+      mutate(value = outputs) %>%
       select(-outputs) ->
       L123.out_EJ_R_elec_F_Yh
 
@@ -157,7 +157,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.out_EJ_R_elec_F_Yh") %>%
       add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
-      add_flags(FLAG_NO_XYEAR,FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.out_EJ_R_elec_F_Yh
 
     L123.in_EJ_R_elec_F_Yh %>%
@@ -166,7 +166,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.in_EJ_R_elec_F_Yh") %>%
       add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
-      add_flags(FLAG_NO_XYEAR,FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.in_EJ_R_elec_F_Yh
 
     L123.eff_R_elec_F_Yh %>%
@@ -175,7 +175,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.eff_R_elec_F_Yh") %>%
       add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
-      add_flags(FLAG_NO_XYEAR,FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.eff_R_elec_F_Yh
 
     L123.out_EJ_R_indchp_F_Yh %>%
@@ -184,7 +184,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.out_EJ_R_indchp_F_Yh") %>%
       add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
-      add_flags(FLAG_NO_XYEAR,FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.out_EJ_R_indchp_F_Yh
 
     L123.in_EJ_R_indchp_F_Yh %>%
@@ -193,7 +193,7 @@ module_energy_LA123.electricity <- function(command, ...) {
       add_comments("Written by LA123.electricity.R") %>%
       add_legacy_name("L123.in_EJ_R_indchp_F_Yh") %>%
       add_precursors("energy/enduse_fuel_aggregation", "energy/A23.chp_elecratio") %>%
-      add_flags(FLAG_NO_XYEAR,FLAG_LONG_YEAR_FORM) ->
+      add_flags(FLAG_NO_XYEAR, FLAG_LONG_YEAR_FORM) ->
       L123.in_EJ_R_indchp_F_Yh
 
     return_data(L123.out_EJ_R_elec_F_Yh, L123.in_EJ_R_elec_F_Yh, L123.eff_R_elec_F_Yh, L123.out_EJ_R_indchp_F_Yh, L123.in_EJ_R_indchp_F_Yh)

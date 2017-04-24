@@ -67,6 +67,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @param all_data Data to be pre-loaded into data system
 #' @param write_outputs Write all chunk outputs to disk?
 #' @param quiet Suppress output?
+#' @param outdir Location to write output data.  (Ignored if \code{write_outputs} is \code{FALSE}.)
 #' @return A list of all built data.
 #' @details The driver loads any necessary data from input files,
 #' runs all code chunks in an order dictated by their dependencies,
@@ -76,7 +77,7 @@ check_chunk_outputs <- function(chunk, chunk_data, chunk_inputs, promised_output
 #' @importFrom assertthat assert_that
 #' @export
 #' @author BBL
-driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE) {
+driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE, outdir = OUTPUTS_DIR) {
   assert_that(is.logical(write_outputs))
 
   chunklist <- find_chunks()
@@ -155,7 +156,7 @@ driver <- function(all_data = empty_data(), write_outputs = TRUE, quiet = FALSE)
 
   if(write_outputs) {
     if(!quiet) cat("Writing chunk data...\n")
-    save_chunkdata(all_data)
+    save_chunkdata(all_data, outputs_dir = outdir)
   }
 
   if(!quiet) cat("All done.\n")
