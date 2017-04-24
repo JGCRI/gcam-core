@@ -13,6 +13,7 @@ FLAG_NO_OUTPUT  <- "NO_OUTPUT"
 FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"
 FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
+FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
 
 # ======================================================================
 # Time constants
@@ -132,6 +133,13 @@ socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to us
 
 socioeconomics.BASE_POP_SCEN <- "SSP2"
 
+# ======================================================================
+# water constants
+
+IRRIGATION <- "Irrigation"
+MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
+MAPPED_WATER_TYPES_SHORT <- c("C", "W")
+names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 
 # ======================================================================
 # emissions constants
