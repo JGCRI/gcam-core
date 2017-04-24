@@ -76,6 +76,7 @@ CONV_MCAL_PCAL <- 1e-9
 CONV_HA_BM2 <- 1e-5
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
 CONV_GG_TG <- 0.001
+CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 
 # Cubic meters (m3) to billion cubic meters (bm3)
 CONV_M3_BM3 <- 1e-09
@@ -111,6 +112,17 @@ modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 
 # ======================================================================
+#Set a default electric efficiency
+DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
+
+# ======================================================================
+#Set a default electric efficiency
+ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
+
+# ======================================================================
+#Create X_HISTORICAL_YEARS
+#X_HISTORICAL_YEARS <- paste( "X", HISTORICAL_YEARS, sep = "" )
+
 # socioeconomics constants
 
 # Population years - note that these sequences shouldn't have any overlap,
@@ -126,5 +138,6 @@ socioeconomics.BASE_POP_SCEN <- "SSP2"
 
 emissions.EPA_HISTORICAL_YEARS <- 1971:2002
 emissions.TST_TO_TG <- 0.000907 # Conversion from thousand short tons to Tg
+emissions.NH3_HISTORICAL_YEARS <- 1990:2002
 emissions.NH3_EXTRA_YEARS <- 1971:1989
 emissions.EDGAR_YEARS <- 1971:2008

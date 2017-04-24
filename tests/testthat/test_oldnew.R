@@ -33,7 +33,7 @@ test_that("matches old data system output", {
     flag_sum_test <- grepl(FLAG_SUM_TEST, new_firstline)
 
     newskip <- 0
-    if(flag_long_year_form | flag_no_xyear_form) {
+    if(flag_long_year_form | flag_no_xyear_form | flag_sum_test) {
       newskip <- 1
     }
 
