@@ -228,7 +228,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     FAO_data_ALL_5yr$element <- gsub(pattern = "_[A-Z]*$", "", FAO_data_ALL_5yr$element)
     FAO_data_ALL_5yr$element <- gsub(pattern = "^FAO_", "", FAO_data_ALL_5yr$element)
     FAO_data_ALL_5yr %>%
-      gather(year, value, -countries, -country.codes, -item, -item.codes, -element, -element.codes, -iso) ->
+      gather(year, value, -countries, -country.codes, -item, -item.codes, -element, -element.codes, -iso) %>%
+      mutate(year = as.integer(year)) ->
       FAO_data_ALL_5yr
 
     # Re-split into separate tables for each element
