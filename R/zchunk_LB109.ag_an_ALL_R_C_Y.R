@@ -76,17 +76,18 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
 
     # Part 1: Primary agricultural goods
     # List of all flows for primary agricultural good balances
-    ag_Flow_cols <- c( "Prod_Mt", "NetExp_Mt", "Supply_Mt", "Food_Mt", "Feed_Mt", "Biofuels_Mt", "OtherUses_Mt" )
-    # List of any commodities (e.g. pasture, residue, scavenging) in feed but not in production tables
+    ag_Flow_cols <- c("Prod_Mt", "NetExp_Mt", "Supply_Mt", "Food_Mt", "Feed_Mt", "Biofuels_Mt", "OtherUses_Mt")
+    # List of commodities in production table
     L103.ag_Prod_Mt_R_C_Y %>%
       select(GCAM_commodity) %>%
       unique() %>%
-      .[['GCAM_commodity']] -> Primary_commodities
+      .[["GCAM_commodity"]] -> Primary_commodities
+    # List of any commodities (e.g. pasture, residue, scavenging) in feed but not in production table
     L108.ag_Feed_Mt_R_C_Y %>%
       filter(!(GCAM_commodity %in% Primary_commodities)) %>%
       select(GCAM_commodity) %>%
       unique() %>%
-      .[['GCAM_commodity']] -> Feed_commodities
+      .[["GCAM_commodity"]] -> Feed_commodities
 
     # Combine all flow tables
     L106.ag_NetExp_Mt_R_C_Y %>%
@@ -101,7 +102,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
       spread(flow, value) %>%
       # Set missing values in the complete combinations to zero
       mutate_if(is.numeric, funs(replace(., is.na(.), 0))) %>%
-      # For any feed commodities (e.g. pasture, residue, scavenging), set production = feed
+      # For any feed commodities (e.g. pasture, residue, scavenging) that are not reported in production or trade table,
+      # assume all production are domestic, and set production = feed
       mutate(Prod_Mt = if_else(GCAM_commodity %in% Feed_commodities, Feed_Mt, Prod_Mt),
              # Calculate the domestic supply
              Supply_Mt = Prod_Mt - NetExp_Mt,
@@ -123,7 +125,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
                NetExp_Mt_adj = NetExp_Mt + NegOtherUses_Mt) %>%
         group_by(GCAM_commodity, year) %>%
         # Calculate the changes in global net exports = sum of negative other uses, global other uses =  sum of positive other uses
-        summarise_at(vars(GlobalNetExpAdj = NegOtherUses_Mt, GlobalOtherUses_Mt = OtherUses_Mt_adj), sum) -> L109.ag_ALL_Mt_glbl_C_Y
+        summarise(GlobalNetExpAdj = sum(NegOtherUses_Mt),
+                  GlobalOtherUses_Mt = sum(OtherUses_Mt_adj)) -> L109.ag_ALL_Mt_glbl_C_Y
 
       # Second, distribute changes in global net exports among regions with positive other uses, according to regional shares
       L109.ag_ALL_Mt_R_C_Y %>%
@@ -154,7 +157,7 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
 
     # Part 2: Animal commodities
     # List of all flows for animal products
-    an_Flow_cols <- c( "Prod_Mt", "NetExp_Mt", "Supply_Mt", "Food_Mt", "OtherUses_Mt" )
+    an_Flow_cols <- c("Prod_Mt", "NetExp_Mt", "Supply_Mt", "Food_Mt", "OtherUses_Mt")
     # Name the flows in each table
     L105.an_Prod_Mt_R_C_Y %>%
       mutate(flow = "Prod_Mt") %>%
@@ -183,7 +186,8 @@ module_aglu_LB109.ag_an_ALL_R_C_Y <- function(command, ...) {
                NetExp_Mt_adj = NetExp_Mt + NegOtherUses_Mt) %>%
         group_by(GCAM_commodity, year) %>%
         # Calculate the changes in global net exports = sum of negative other uses, global other uses =  sum of positive other uses
-        summarise_at(vars(GlobalNetExpAdj = NegOtherUses_Mt, GlobalOtherUses_Mt = OtherUses_Mt_adj), sum) -> L109.an_ALL_Mt_glbl_C_Y
+        summarise(GlobalNetExpAdj = sum(NegOtherUses_Mt),
+                  GlobalOtherUses_Mt = sum(OtherUses_Mt_adj)) -> L109.an_ALL_Mt_glbl_C_Y
 
       # Second, distribute changes in global net exports among regions with positive other uses, according to regional shares
       L109.an_ALL_Mt_R_C_Y %>%
