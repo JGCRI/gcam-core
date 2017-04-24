@@ -13,6 +13,7 @@ FLAG_NO_OUTPUT  <- "NO_OUTPUT"
 FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"
 FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
+FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
 
 # ======================================================================
 # Time constants
@@ -52,6 +53,7 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
+aglu.DIGITS_CALOUTPUT <- 7 # production
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
@@ -111,6 +113,17 @@ modeltime.HECTOR_EMISSIONS_YEAR <- 2005
 modeltime.HECTOR_INI_FILE <- "../input/climate/hector-gcam.ini"
 
 # ======================================================================
+#Set a default electric efficiency
+DEFAULT_ELECTRIC_EFFICIENCY <- 0.33
+
+# ======================================================================
+#Set a default electric efficiency
+ELECTRICITY_INPUT_FUELS<- c( "biomass", "coal", "gas", "refined liquids" )
+
+# ======================================================================
+#Create X_HISTORICAL_YEARS
+#X_HISTORICAL_YEARS <- paste( "X", HISTORICAL_YEARS, sep = "" )
+
 # socioeconomics constants
 
 # Population years - note that these sequences shouldn't have any overlap,
@@ -120,6 +133,13 @@ socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to us
 
 socioeconomics.BASE_POP_SCEN <- "SSP2"
 
+# ======================================================================
+# water constants
+
+IRRIGATION <- "Irrigation"
+MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
+MAPPED_WATER_TYPES_SHORT <- c("C", "W")
+names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 
 # ======================================================================
 # emissions constants
