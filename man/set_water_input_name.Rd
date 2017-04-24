@@ -27,3 +27,6 @@ Get the appropriate minicam.energy.input name to use in the GCAM supplysector
 by looking up using a mapping to the water.sector and water_type. The minicam.energy.input
 name to use will have to be some water mapping sector for water_types that are "mapped".
 }
+\author{
+BBL April 2017
+}

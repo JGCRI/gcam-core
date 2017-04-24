@@ -16,6 +16,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @importFrom assertthat assert_that
+#' @author BBL April 2017
 set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = NA_character_) {
 
   # Sanity checks
