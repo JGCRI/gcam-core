@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_aglu_LA108.ag_Feed_R_C_Y_DISABLED <- function(command, ...) {
+module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/FAO_ag_items_cal_SUA",
@@ -67,7 +67,8 @@ module_aglu_LA108.ag_Feed_R_C_Y_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L108.ag_Feed_Mt_R_C_Y") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "aglu/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
+                     "L103.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L108.ag_Feed_Mt_R_C_Y
@@ -77,7 +78,8 @@ module_aglu_LA108.ag_Feed_R_C_Y_DISABLED <- function(command, ...) {
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L108.ag_NetExp_Mt_R_FodderHerb_Y") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/iso_GCAM_regID", "aglu/FAO_ag_items_cal_SUA", "L100.FAO_ag_Feed_t",
+                     "L103.ag_Prod_Mt_R_C_Y", "L107.an_Feed_Mt_R_C_Sys_Fd_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L108.ag_NetExp_Mt_R_FodderHerb_Y
