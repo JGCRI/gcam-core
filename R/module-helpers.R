@@ -1,7 +1,7 @@
 # module-helpers.R
 # Module specific helper functions
 
-#' get_water_inputs_for_mapping
+#' set_water_input_name
 #'
 #' Get the appropriate minicam.energy.input name to use in the GCAM supplysector.
 #'
@@ -16,7 +16,7 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @importFrom assertthat assert_that
-get_water_inputs_for_mapping <- function(water_sector, water_type, water_mapping, GLU = NA_character_) {
+set_water_input_name <- function(water_sector, water_type, water_mapping, GLU = NA_character_) {
 
   # Sanity checks
   assert_that(is.character(water_sector))
