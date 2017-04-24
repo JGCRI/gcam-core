@@ -14,11 +14,22 @@
 #' @importFrom tidyr gather spread
 #' @author RH April 2017
 
+
 module_energy_LA143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/GIS_ctry",
-             FILE = "L101.Pop_thous_GCAM3_ctry_Y"))
+             FILE = "L101.Pop_thous_GCAM3_ctry_Y",
+             FILE = "energy/GIS/population_weighted_CDD_CCSM3x_A2.csv",
+             FILE = "energy/GIS/population_weighted_CDD_CCSM3x_B1.csv",
+             FILE = "energy/GIS/population_weighted_CDD_HadCM3_A2.csv",
+             FILE = "energy/GIS/population_weighted_CDD_HadCM3_B1.csv",
+             FILE = "energy/GIS/population_weighted_CDD_no_GCM_constdd.csv",
+             FILE = "energy/GIS/population_weighted_HDD_CCSM3x_A2.csv",
+             FILE = "energy/GIS/population_weighted_HDD_CCSM3x_B1.csv",
+             FILE = "energy/GIS/population_weighted_HDD_HadCM3_A2.csv",
+             FILE = "energy/GIS/population_weighted_HDD_HadCM3_B1.csv",
+             FILE = "energy/GIS/population_weighted_HDD_no_GCM_constdd.csv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L143.HDDCDD_scen_R_Y",
              "L143.HDDCDD_scen_RG3_Y",
@@ -32,54 +43,44 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     GIS_ctry <- get_data(all_data, "energy/GIS_ctry")
     L101.Pop_thous_GCAM3_ctry_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_ctry_Y") %>%
       rename(population = value) %>% mutate(year = as.integer(year))
+    CDD_CCSM3x_A2 <- get_data(all_data, "energy/GIS/population_weighted_CDD_CCSM3x_A2.csv")
+    CDD_CCSM3x_B1 <- get_data(all_data, "energy/GIS/population_weighted_CDD_CCSM3x_B1.csv")
+    CDD_HadCM3_A2 <- get_data(all_data, "energy/GIS/population_weighted_CDD_HadCM3_A2.csv")
+    CDD_HadCM3_B1 <- get_data(all_data, "energy/GIS/population_weighted_CDD_HadCM3_B1.csv")
+    CDD_no_GCM_constdd <- get_data(all_data, "energy/GIS/population_weighted_CDD_no_GCM_constdd.csv")
+    HDD_CCSM3x_A2 <- get_data(all_data, "energy/GIS/population_weighted_HDD_CCSM3x_A2.csv")
+    HDD_CCSM3x_B1 <- get_data(all_data, "energy/GIS/population_weighted_HDD_CCSM3x_B1.csv")
+    HDD_HadCM3_A2 <- get_data(all_data, "energy/GIS/population_weighted_HDD_HadCM3_A2.csv")
+    HDD_HadCM3_B1 <- get_data(all_data, "energy/GIS/population_weighted_HDD_HadCM3_B1.csv")
+    HDD_no_GCM_constdd <- get_data(all_data, "energy/GIS/population_weighted_HDD_no_GCM_constdd.csv")
 
     # ===================================================
 
-    # 1b. reading HDDCDD files in a loop as we do not know their names or how many there are
-    GISfilepath <- "./inst/extdata/energy/GIS/"
-    GISfiles <- list.files( GISfilepath )
-    GISfiles.list <- list()
+    # Reading HDDCDD files in a list so that row binding will include a filename
+    HDDCDD_data_list <- list(CDD_CCSM3x_A2 = CDD_CCSM3x_A2, CDD_CCSM3x_B1 = CDD_CCSM3x_B1,
+                             CDD_HadCM3_A2 = CDD_HadCM3_A2, CDD_HadCM3_B1 = CDD_HadCM3_B1,
+                             CDD_no_GCM_constdd = CDD_no_GCM_constdd, HDD_CCSM3x_A2 = HDD_CCSM3x_A2,
+                             HDD_CCSM3x_B1 = HDD_CCSM3x_B1, HDD_HadCM3_A2 = HDD_HadCM3_A2,
+                             HDD_HadCM3_B1 = HDD_HadCM3_B1, HDD_no_GCM_constdd = HDD_no_GCM_constdd)
+    HDDCDD_data <- bind_rows(HDDCDD_data_list, .id = 'file')
 
-    # Identifying and removing base year (2010) data
-    base_year_HDDCDD_data <-  grep( "_2010", GISfiles )
-    GISfiles <- GISfiles[-base_year_HDDCDD_data]
-
-    # Putting all data into list
-    for( i in GISfiles){
-      index <- which( GISfiles == i )
-      GISfiles.list[[index]] <- read.csv( paste0(GISfilepath, i), stringsAsFactors = F)
-      GISfiles.list[[index]]$file <- sub(".csv","",i)
-    }
-
-    # Combining all HDDCDD files into one tibble
-    HDDCDD_data <- do.call( bind_rows, GISfiles.list ) %>%
-      tibble::as_tibble()
-
-    #--------------------------------------------------------------------------
-
-    #Currently the HDDCDD data stops at 2099. If this is the case, add 2100
-    if( !"X2100" %in% names( HDDCDD_data ) ){
-      HDDCDD_data <- HDDCDD_data %>% mutate(X2100 = X2099)
+    # Currently the HDDCDD data stops at 2099. If this is the case, add 2100
+    if( !"2100" %in% names( HDDCDD_data ) ){
+     HDDCDD_data <- HDDCDD_data %>% mutate(`2100` = `2099`)
     }
 
     # Convert data to long format and add in id variables
     HDDCDD_data <- HDDCDD_data %>%
-      gather(year, value, starts_with("X")) %>%
+      gather(year, value, -file, -country) %>%
       mutate(
         # Remove X years
-        year = substr(year,2,5),
-        # Assuming that the variable is the 3rd word in the file name (separated by "_")
-        variable = substr( file,
-                regexpr( "DD_", file, fixed = T ) - 1,
-                regexpr( "DD_", file, fixed = T ) + 1 ),
+        year = as.integer(year),
+        # Assuming that the variable is the first three letters
+        variable = substr(file, 1, 3),
         # Assuming that the GCM comes after "DD_" and is 6 letters
-        GCM = substr( file,
-                regexpr( "DD_", file, fixed = T ) + 3,
-                regexpr( "DD_", file, fixed = T ) + 8 ),
-        # Assuming that the last word is the scenario, starting ten letters pass DD_
-        SRES = substr( file,
-                regexpr( "DD_", file, fixed = T ) + 10,
-                length(file)),
+        GCM = substr(file,5,10),
+        # Assuming that the last word is the scenario, starting at twelve letters
+        SRES = substr(file,12,length(file)),
         # Set all negative values to 0
         value = if_else(value < 0, 0, value)
       )
@@ -90,26 +91,24 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
       # Drop file name
       select(-file) %>%
       # Filter only useful years
-      filter( year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-      mutate(year = as.integer(year)) %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       # Drop Cote d'Ivoire--this is a mistake in old data system
       filter(country != "Cote d'Ivoire") %>%
-      left_join_error_no_match(GIS_ctry, by = 'country')
+      left_join_error_no_match(GIS_ctry, by = "country")
     } else{
       # Add in country iso
       L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
         # Drop file name
         select(-file) %>%
         # Filter only useful years
-        filter( year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-        mutate(year = as.integer(year)) %>%
+        filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
         # Remove apostrophe in Cote d'Ivoire and add in country iso by country name
         mutate(country = if_else(country == "Cote d'Ivoire", "Cote dIvoire", country)) %>%
         left_join_error_no_match(GIS_ctry, by = 'country')
     }
 
     # Serbia and Montenegro are currently combined. Copy to separated countries, assigning the same HDD and CDD to each
-    if( "scg" %in% L143.HDDCDD_scen_ctry_Y$iso ){
+    if ("scg" %in% L143.HDDCDD_scen_ctry_Y$iso){
       # Create Serbia tibble
       L143.HDDCDD_scen_srb_Y <- L143.HDDCDD_scen_ctry_Y %>%
         filter(iso == "scg" ) %>%
@@ -125,9 +124,9 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     L143.wtHDDCDD_scen_ctry_Y <- L143.HDDCDD_scen_ctry_Y %>%
       # Join with population data converted to long format
       left_join_error_no_match(L101.Pop_thous_GCAM3_ctry_Y,
-                               by = c('iso', 'year')) %>%
+                               by = c("iso", "year")) %>%
       # Join with region ID data
-      left_join_error_no_match(iso_GCAM_regID, by = 'iso')
+      left_join_error_no_match(iso_GCAM_regID, by = "iso")
 
     # Old behavior divides total population*DD by total population in region, but
     # total population in region includes countries that don't have degree days recorded.
@@ -135,7 +134,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     if(OLD_DATA_SYSTEM_BEHAVIOR) {
       # Join region data with population data, aggregate by region_ID, GCAM3 regions
       L101.Pop_thous_GCAM3_ctry_Y <- L101.Pop_thous_GCAM3_ctry_Y %>%
-        left_join_error_no_match(iso_GCAM_regID, by = 'iso')
+        left_join_error_no_match(iso_GCAM_regID, by = "iso")
 
       # Aggregate population data to GCAM 4 region
       L101.Pop_thous_GCAM3_R_Y <- L101.Pop_thous_GCAM3_ctry_Y %>%
@@ -144,13 +143,11 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
 
       # Sum weighted degree day by GCAM 4 regions and divide by population
       L143.HDDCDD_scen_R_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
-        # Need to remove Cote dIvoire because it was accidently dropped in old data system
-        #filter(country_name != "Cote dIvoire") %>%
         group_by(GCAM_region_ID, SRES, GCM, variable, year) %>%
         summarise(wtDD = sum(value * population)) %>%
         left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y,
                                  by = c("GCAM_region_ID", "year")) %>%
-        mutate(value = wtDD/aggpop) %>%
+        mutate(value = wtDD / aggpop) %>%
         select(-wtDD, -aggpop)
 
       # Aggregate population data to GCAM 3 region
@@ -160,12 +157,11 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
 
       # Sum weighted degree day by GCAM 3 regions and divide by population
       L143.HDDCDD_scen_RG3_Y <- L143.wtHDDCDD_scen_ctry_Y %>%
-        #filter(country_name != "Cote dIvoire") %>%
         group_by(region_GCAM3, SRES, GCM, variable, year) %>%
         summarise(wtDD = sum(value * population)) %>%
         left_join_error_no_match(L101.Pop_thous_GCAM3_RG3_Y,
                                  by = c("region_GCAM3", "year")) %>%
-        mutate(value = wtDD/aggpop)%>%
+        mutate(value = wtDD / aggpop)%>%
         select(-wtDD, -aggpop)
 
 
