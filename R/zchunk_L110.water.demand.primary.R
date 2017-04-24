@@ -57,13 +57,13 @@ module_water_L110.water.demand.primary <- function(command, ...) {
       select(-region_GCAM3, -region) -> L110.resource_water_share
     names(L110.resource_water_share) <- c("GCAM_region_ID", "sal", "fresh", "cons_fr", "cons_tot")
     L110.resource_water_share$sal[is.na(L110.resource_water_share$sal)] <-
-      filter(L110.resource_water_share, GCAM_region_ID == 1)$sal
+      filter(L110.resource_water_share, GCAM_region_ID == gcam.USA_CODE)$sal
     L110.resource_water_share$fresh[is.na(L110.resource_water_share$fresh)] <-
-      filter(L110.resource_water_share, GCAM_region_ID == 1)$fresh
+      filter(L110.resource_water_share, GCAM_region_ID == gcam.USA_CODE)$fresh
     L110.resource_water_share$cons_fr[is.na(L110.resource_water_share$cons_fr)] <-
-      filter(L110.resource_water_share, GCAM_region_ID == 1)$cons_fr
+      filter(L110.resource_water_share, GCAM_region_ID == gcam.USA_CODE)$cons_fr
     L110.resource_water_share$cons_tot[is.na(L110.resource_water_share$cons_tot)] <-
-      filter(L110.resource_water_share, GCAM_region_ID == 1)$cons_tot
+      filter(L110.resource_water_share, GCAM_region_ID == gcam.USA_CODE)$cons_tot
 
     # Bring consumption ratios and water usage coefficents into single table
     L110.resource_water_share %>%
@@ -100,14 +100,11 @@ module_water_L110.water.demand.primary <- function(command, ...) {
     # See issue #179 on gcamdata repo
      if(OLD_DATA_SYSTEM_BEHAVIOR) {
        L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ == 21, "coefficient"] <-
-         L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ == 1, "coefficient"]
+         L110.water_demand_primary_R_S_W_m3_GJ[L110.water_demand_primary_R_S_W_m3_GJ == gcam.USA_CODE, "coefficient"]
        return_data(L110.water_demand_primary_R_S_W_m3_GJ)
        } else {
        return_data(L110.water_demand_primary_R_S_W_m3_GJ)
        }
-
-    # ===================================================
-
 
   } else {
     stop("Unknown command")
