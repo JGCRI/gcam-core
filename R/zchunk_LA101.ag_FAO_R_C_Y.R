@@ -17,7 +17,6 @@
 #' @importFrom dplyr filter mutate select left_join
 #' @importFrom tidyr gather spread complete
 #' @author KVC March 2017
-#' @export
 module_aglu_LA101.ag_FAO_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",

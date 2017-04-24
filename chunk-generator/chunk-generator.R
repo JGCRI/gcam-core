@@ -66,6 +66,10 @@ make_substitutions <- function(fn, patternfile = PATTERNFILE) {
     warnstring <- c(warnstring, "# NOTE: This code uses repeat_and_add_vector",
                     "# This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function")
   }
+  if(any(grepl("conv_[0-9]{4}_[0-4]{4}_USD", filecode))) {
+    warnstring <- c(warnstring, "# NOTE: This code converts gdp using a conv_xxxx_xxxx_USD constant",
+                    "# Use the `gdp_deflator(year, base_year)` function instead")
+  }
   pattern <- gsub("WARNING_PATTERN", paste(warnstring, collapse = "\n"), pattern, fixed = TRUE)
 
   # Replace CHUNK_NAME with file name (minus .R)

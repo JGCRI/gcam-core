@@ -36,3 +36,16 @@ test_that("repeat_add_columns works", {
   expect_equal(ncol(z), ncol(x) + ncol(y))
 })
 
+test_that("gdp_deflator works", {
+  # Errors for nonsense years
+  expect_error(gdp_deflator(-33, 1975))
+  expect_error(gdp_deflator(1975, -33))
+
+  # Computes something reasonable
+  expect_is(gdp_deflator(2008, 1950), "numeric")
+
+  # Correctly returns old data system values
+  if(OLD_DATA_SYSTEM_BEHAVIOR) {
+    expect_equal(gdp_deflator(2010, 1990), 1.510)
+  }
+})

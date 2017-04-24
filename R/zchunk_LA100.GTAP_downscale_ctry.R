@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RC April 2017
-#' @export
 module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/AGLU_ctry",
@@ -92,8 +91,7 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
       add_precursors("aglu/AGLU_ctry",
                      "aglu/FAO_ag_items_PRODSTAT",
                      "L100.LDS_value_milUSD",
-                     "L100.LDS_ag_prod_t") %>%
-      add_flags(FLAG_NO_XYEAR) ->
+                     "L100.LDS_ag_prod_t") ->
       L100.GTAP_LV_milUSD
 
     return_data(L100.GTAP_LV_milUSD)
