@@ -114,10 +114,10 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # Calculate OtherUses of FodderHerb
     # NOTE: When global FodderHerb production exceeds FodderHerb_Residue demand, the excess supply is mapped to other net uses
     ag_Residual_Mt_R_FodderHerbResidue_Y %>%
-      mutate(residual = if_else( residual < 0, 0, residual )) %>%                                               # Replace any negative residuals with 0
+      mutate(residual = if_else( residual < 0, 0, residual)) %>%                                                # Replace any negative residuals with 0
       group_by(year) %>%
       mutate(share = residual / sum(residual))  %>%                                                             # Compute share of residual in each region
-      left_join(ag_PosResidual_Mt_glbl_FodderHerbResidue_Y, by = "year")                                        # Map in global total residual
+      left_join(ag_Residual_Mt_glbl_FodderHerbResidue_Y, by = "year") %>%                                       # Map in global total residual
       mutate(total_residual = if_else( total_residual < 0, 0, total_residual )) %>%                             # Set all negative residuals to zero
       mutate(value = share * total_residual, GCAM_commodity = "FodderHerb") %>%                                 # Compute regional residual, set commodity name to FodderHerb
       select(-residual, -share, -total_residual) ->
