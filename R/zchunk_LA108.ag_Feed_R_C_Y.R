@@ -208,13 +208,16 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       bind_rows(ag_Feed_Mt_R_ScvgOthr_Y) ->
       ag_Feed_Mt_R_C_Y
 
-    # #Write out the net exports of FodderHerb
-    # L108.ag_NetExp_Mt_R_FodderHerb_Y <- data.frame(
-    #   GCAM_region_ID = sort( unique( iso_GCAM_regID$GCAM_region_ID ) ),
-    #   GCAM_commodity = "FodderHerb",
-    #   L108.ag_Prod_Mt_R_FodderHerb_Y[ X_AGLU_historical_years ] - L108.ag_Feed_Mt_R_FodderHerb_Y[ X_AGLU_historical_years ] -
-    #     L108.ag_OtherUses_Mt_R_FodderHerb_Y[ X_AGLU_historical_years ] )
-    #
+    # Write out the net exports of FodderHerb
+    ag_Prod_Mt_R_FodderHerb_Y %>%
+      rename(Production = value) %>%
+      left_join(ag_Feed_Mt_R_FodderHerb_Y, by=c("GCAM_commodity", "GCAM_region_ID", "year")) %>%
+      rename(Feed = value) %>%
+      left_join(ag_OtherUses_Mt_R_FodderHerb_Y, by=c("GCAM_commodity", "GCAM_region_ID", "year")) %>%
+      rename(OtherUses = value) %>%
+      mutate(value = Production - Feed - OtherUses) ->
+      ag_NetExp_Mt_R_FodderHerb_Y
+
     # Produce outputs
     ag_Feed_Mt_R_C_Y %>%
       add_title("descriptive title of data") %>%
@@ -227,7 +230,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L108.ag_Feed_Mt_R_C_Y
-    tibble() %>%
+    ag_NetExp_Mt_R_FodderHerb_Y %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
