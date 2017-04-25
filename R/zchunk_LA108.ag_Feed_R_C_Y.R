@@ -127,27 +127,13 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     ag_Residual_Mt_R_FodderHerbResidue_Y %>%
       mutate(residual = if_else( residual > 0, 0, residual )) %>%                                               # Replace any positive residuals with 0
       group_by(year) %>%
-      mutate(share = residual / sum(residual)) ->                                                               # Compute share of residual in each region
-      ag_NegResidual_share_R_FodderHerbResidue_Y                                                                # This dataframe is used to set Residue supply later
-
-    ag_Residual_Mt_glbl_FodderHerbResidue_Y %>%
-      mutate(total_residual = if_else( total_residual > 0, 0, total_residual )) %>%
-      mutate(total_residual = total_residual * -1 ) ->
-      ag_NegResidual_Mt_glbl_FodderHerbResidue_Y
-    # KVC: I think this can be blended with code above.
-
-    # KVC -- Move these notes to a more appropriate location.
-    # NOTE: Global non-food uses are apportioned to regions according to relative shares of excess supply
-    # NOTE: Global Residue production is apportioned to regions according to relative shares of excess demand
-
-    # Calculate residue supply for the FodderHerb_Residue feed category
-    # NOTE: When global FodderHerb production is less than FodderHerb_Residue demand, the excess demand is supplied by Residue
-    ag_NegResidual_share_R_FodderHerbResidue_Y %>%
-      left_join(ag_NegResidual_Mt_glbl_FodderHerbResidue_Y, by = "year") %>%
-      mutate(value = share * total_residual, GCAM_commodity = "Residue") %>%
+      mutate(share = residual / sum(residual)) %>%                                                              # Compute share of residual in each region
+      left_join(ag_Residual_Mt_glbl_FodderHerbResidue_Y, by = "year") %>%                                       # Map in global total residual
+      mutate(total_residual = if_else( total_residual > 0, 0, total_residual )) %>%                             # Set all positive residuals to zero
+      mutate(total_residual = total_residual * -1 ) %>%
+      mutate(value = share * total_residual, GCAM_commodity = "Residue") %>%                                    # Compute regional residual, set commodity name to Residue
       select(-residual, -share, -total_residual) ->
       ag_Feed_Mt_R_Residue_Y
-    # KVC: I think this can be blended with code above.
 
     # Calculate Feed from FodderHerb = FodderHerb_Residue minus Residue
     ag_Feed_Mt_R_Residue_Y %>%
