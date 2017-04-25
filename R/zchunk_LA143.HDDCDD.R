@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L143.HDDCDD_scen_R_Y}, \code{L143.HDDCDD_scen_RG3_Y}, \code{L143.HDDCDD_scen_ctry_Y}. The corresponding file in the
 #' original data system was \code{LA143.HDDCDD.R} (energy level1).
-#' @details Population weights HDDCDD from country level to GCAm region
+#' @details Population weights HDDCDD from country level to GCAM region
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
