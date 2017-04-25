@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{save_chunkdata}
 \alias{save_chunkdata}
-\title{save_chunkdata}
+\title{Write data produced by chunks to csv files.}
 \usage{
 save_chunkdata(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUTS_DIR)
 }
@@ -11,9 +11,21 @@ save_chunkdata(chunkdata, write_inputs = FALSE, outputs_dir = OUTPUTS_DIR)
 
 \item{write_inputs}{Write data that were read as inputs, not computed?}
 
-\item{outputs_dir}{Directory to save data into
-Write data produced by chunks to csv files.}
+\item{outputs_dir}{Directory to save data into}
 }
 \description{
-save_chunkdata
+Write the data produced by the chunks to their output files.  This is mostly
+a wrapper around \code{write_csv} that figures out file names, processes
+table flags, writes metadata comments, and so forth.
+}
+\details{
+One thing to be aware of is that there is a wart in \code{readr} v 1.1 and
+later that causes floating point data to be written as integers if they
+happen to have integer values.  This can cause problems if there are so many
+apparently-integer values before the first obviously-float value that
+\code{read_csv} concludes that the column should have integer type.  If this
+seems to be happening to your table, add the PROTECT_FLOAT flag to it, and
+any floating point data in your table will be protected before it is
+written.  Use this option sparingly, as the data written that way tends to be
+a lot bigger, owing to the large number of digits we have to write.
 }

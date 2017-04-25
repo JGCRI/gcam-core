@@ -15,7 +15,7 @@ test_that("constants are capitalized correctly", {
       # Globals may have an initial qualifier that's lowercase,
       # but after that needs to be all uppercase
       oname <- gsub(pattern = "^[a-z]*\\.", "", oname)
-      expect_identical(oname, toupper(oname), label = paste(oname, "incorrectly capitalized"))
+      expect_identical(oname, toupper(oname), info = paste(oname, "incorrectly capitalized"))
     }
   }
 })
