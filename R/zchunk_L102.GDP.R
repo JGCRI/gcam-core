@@ -239,9 +239,9 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
           mutate(pcgdp = gdp / population) %>%
           select(scenario, GCAM_region_ID, year, pcgdp)
 
-    ## Calculate the PPP-MER conversion factor for each region.  As far as I can
-    ## tell, we do this only in 2010 and assume it to be constant for all time
-    ## (?).  Our PPP values are in billions of 2005$, so we make that conversion
+    ## Calculate the PPP-MER conversion factor in 2010 for each region. 
+    ## Assume this conversion to be constant beyond 2010.
+    ## Our PPP values are in billions of 2005$, so we make that conversion
     ## here too.
     PPP.MER.baseyr <- 2010
     mer.rgn <- gdp_mil90usd_ctry %>%
