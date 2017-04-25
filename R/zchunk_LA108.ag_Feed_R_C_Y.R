@@ -147,18 +147,12 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # PASTURE & FODDERGRASS
     # Part 3: Calculating Pasture and FodderGrass inputs by region and year
 
-    # Calculate regional FodderGrass production
-    L103.ag_Prod_Mt_R_C_Y %>%
-      filter(GCAM_commodity == "FodderGrass") ->
-      ag_Prod_Mt_R_FodderGrass_Y
-    # Can replace future uses of this with filter
-
     # Calculate regional demands of grass (Pasture_FodderGrass)
     # Pasture demand is equal to Pasture_FodderGrass demand minus FodderGrass production within each region
     an_Feed_Mt_R_C_Y %>%
       filter(feed == "Pasture_FodderGrass") %>%
       rename(PastFodderGrass_Demand = value) %>%
-      left_join(ag_Prod_Mt_R_FodderGrass_Y, by = c( "GCAM_region_ID", "year")) %>%
+      left_join(filter(L103.ag_Prod_Mt_R_C_Y, GCAM_commodity == "FodderGrass"), by = c( "GCAM_region_ID", "year")) %>%
       mutate(value = PastFodderGrass_Demand - value, GCAM_commodity = "Pasture") %>%
       select(-feed, -PastFodderGrass_Demand) ->
       ag_Feed_Mt_R_Past_Y
@@ -175,7 +169,8 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       ag_Feed_Mt_R_Past_Y
 
     # FodderGrass used as feed = FodderGrass production - other uses
-    ag_Prod_Mt_R_FodderGrass_Y %>%
+    L103.ag_Prod_Mt_R_C_Y %>%
+      filter(GCAM_commodity == "FodderGrass") %>%
       rename(Production = value) %>%
       left_join(ag_OtherUses_Mt_R_FodderGrass_Y, by = c("GCAM_commodity", "GCAM_region_ID", "year")) %>%
       mutate(value = Production - value) %>%
