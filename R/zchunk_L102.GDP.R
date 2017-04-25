@@ -87,9 +87,9 @@ join.gdp.ts <- function(past, future, grouping) {
 #' by GCAM region.
 #'
 #' The scenarios generated include the SSPs, the gSSPs (SSPs modified by
-#' near-term IMF projections), and, for some reason, something derived from
-#' GCAM3.  GDP outputs are in millions of 1990 USD, which presumably means they
-#' are MER values.  Per-capita values are in thousands of 1990 USD.
+#' near-term IMF projections), and GCAM3 legacy scenario (unused) to be used for replicating old scenarios. 
+#' GDP outputs are in millions of 1990 USD, Market Exchange Rate (measured in 2010) is used for foreign currency. 
+#' Per-capita values are in thousands of 1990 USD.
 #'
 #'
 #' @param command API command to execute
