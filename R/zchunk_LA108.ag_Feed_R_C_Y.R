@@ -60,18 +60,11 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       mutate(value = value * CONV_TON_MEGATON) %>%                                                 # Convert from tons to Mt
       ungroup() %>%
       complete(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID),
-               GCAM_commodity, year, fill = list(value = 0)) ->                                    # Fill in missing region/commodity combinations with 0
-      ag_Feed_Mt_R_Cnf_Y
-
-    # Then, calculate feedcrop shares by crop within each region
-    ag_Feed_Mt_R_Cnf_Y %>%
+               GCAM_commodity, year, fill = list(value = 0)) %>%                                   # Fill in missing region/commodity combinations with 0
       group_by(GCAM_region_ID, year) %>%
-      summarize(total = sum(value)) %>%                                                            # Aggregate to compute regional totals
-      right_join(ag_Feed_Mt_R_Cnf_Y, by = c("GCAM_region_ID", "year")) %>%                         # Map back in the crop/region specific FAO data
-      mutate(Feedfrac = value / total) %>%                                                         # Calculate each crop's share of total feed in a region
+      mutate(Feedfrac = value / sum(value)) %>%                                                    # Calculate each crop's share of total feed in a region
       mutate(Feedfrac = if_else(is.na(Feedfrac), 0, Feedfrac)) ->                                  # Replace missing data with 0 (assumes no share for those crops)
-      ag_Feedfrac_R_Cnf_Y
-    # KVC: Can probably blend this with DF above
+      ag_Feed_Mt_R_Cnf_Y
 
     # Compute aggregate demand by region, feed, and year from the IMAGE data
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
@@ -83,7 +76,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     # Feedcrop demand: compute feedcrop demand by region, crop, and year using IMAGE totals and feed fractions computed above
     an_Feed_Mt_R_C_Y %>%
       filter(feed == "FeedCrops") %>%                                                              # Filter to only include "FeedCrops"
-      right_join(select(ag_Feedfrac_R_Cnf_Y, GCAM_region_ID, GCAM_commodity, year, Feedfrac),
+      right_join(select(ag_Feed_Mt_R_Cnf_Y, GCAM_region_ID, GCAM_commodity, year, Feedfrac),
                  by = c("GCAM_region_ID", "year" ) ) %>%                                           # Map in feed fractions computed from FAO data
       mutate(value = value * Feedfrac) %>%                                                         # Compute FAO-IMAGE adjusted feed crop demand
       select(-feed, -Feedfrac) ->
