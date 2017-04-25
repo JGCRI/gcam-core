@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author KVC April 2017
-#' @export
 module_aglu_LB131.LV_R_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -38,7 +37,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
     # Calculate the total value of each geographic land unit (GLU)
     L100.GTAP_LV_milUSD %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso")  %>%                                         # Map in ISO codes
-      mutate(value = value * CONV_2001_1975_USD) %>%                                                    # Convert to 1975$
+      mutate(value = value * gdp_deflator(1975, base_year = 2001)) %>%                                  # Convert to 1975$
       group_by(GCAM_region_ID, GLU) %>%                                                                 # Group by GCAM_region_ID and GLU
       summarize(value = sum(value)) %>%                                                                 # Aggregate value to GCAM region and GLU
       rename(LV_milUSD75 = value) ->                                                                    # Rename column to what is used in old data system
