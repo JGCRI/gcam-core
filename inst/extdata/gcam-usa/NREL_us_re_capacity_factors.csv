@@ -1,7 +1,7 @@
 # File: NREL_us_re_capacity_factors.csv,,,,,,
 # Title: Capacity factors by state by renewable technology,,,,,,
 # Units: Unitless,,,,,,
-# Comments: Source of information not clear. Need to look into this,,,,,,
+# Comments: Source: http://www.nrel.gov/gis/docs/us_re_technical_potential.xlsx. Capacity factors were calculated by dividing generation in GWh by (8760* capacity in GW),,,,,,
 State,Urban_Utility_scale_PV,Rural_Utility_scale_PV,Rooftop_PV,CSP,Onshore_Wind,Offshore_Wind
 Alabama,0.2,0.2,0.14,0,0.27,0
 Alaska,0.17,0.11,0,0,0.32,0

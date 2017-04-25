@@ -40,7 +40,7 @@ module_gcam.usa_LA119.Solar <- function(command, ...) {
     NREL_us_re_capacity_factors %>%
       gather(fuel, value, -State) %>%
       filter (State != "Average") %>%
-      full_join(Average_fuel, by = "fuel") %>%
+      left_join(Average_fuel, by = "fuel") %>%
       mutate(scaler = value / average, sector = "electricity generation") %>%
       select(State, sector, fuel, scaler) ->
       NREL_us_re_capacity_factors
@@ -48,7 +48,7 @@ module_gcam.usa_LA119.Solar <- function(command, ...) {
     states_subregions %>%
       mutate(State = state_name) %>%
       select(state, State) %>%
-      full_join(NREL_us_re_capacity_factors, by = "State") %>%
+      left_join(NREL_us_re_capacity_factors, by = "State") %>%
       select(-State) ->
       NREL_us_re_capacity_factors
 
