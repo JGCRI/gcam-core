@@ -18,8 +18,8 @@ FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
 # ======================================================================
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
-FUTURE_YEARS <- seq( 2015, 2100, 5 )
-IMF_FUTURE_YEARS <- seq( 2010, 2020, 1 )
+FUTURE_YEARS <- seq(2015, 2100, 5)
+IMF_FUTURE_YEARS <- seq(2010, 2020, 1)
 
 # ======================================================================
 # GCAM constants

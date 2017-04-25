@@ -56,7 +56,7 @@ join.gdp.ts <- function(past, future, grouping) {
         select(-year)
 
     gdp.future.ratio <- filter(future, year > base.year) %>%
-        left_join_error_no_match(baseyear.future.gdp, by=c('scenario',grouping)) %>%
+        left_join_error_no_match(baseyear.future.gdp, by=c('scenario', grouping)) %>%
         mutate(gdp.ratio = gdp / base.gdp) %>%
         select(one_of(c('scenario', grouping, 'year', 'gdp.ratio')))
 
@@ -72,10 +72,12 @@ join.gdp.ts <- function(past, future, grouping) {
         select(one_of(c('scenario', grouping, 'year', 'gdp'))) %>%
         bind_rows(gdp.past, .)
 
-    if(drop.scenario)
+    if(drop.scenario) {
         select(rslt, -scenario)
-    else
+    }
+    else {
         rslt
+    }
 }
 
 #' module_socioeconomics_L102.GDP
@@ -86,10 +88,10 @@ join.gdp.ts <- function(past, future, grouping) {
 #' outputs include GDP, pcGDP, and the PPP-MER conversion factor, all tabulated
 #' by GCAM region.
 #'
-#' The scenarios generated include the SSPs, the gSSPs (SSPs modified by
-#' near-term IMF projections), and GCAM3 legacy scenario (unused) to be used for replicating old scenarios. 
-#' GDP outputs are in millions of 1990 USD, Market Exchange Rate (measured in 2010) is used for foreign currency. 
-#' Per-capita values are in thousands of 1990 USD.
+#' The scenarios generated include the SSPs and the gSSPs (SSPs modified by
+#' near-term IMF projections).  GDP outputs are in millions of 1990 USD, Market
+#' Exchange Rate (measured in 2010) is used for foreign currency.  Per-capita
+#' values are in thousands of 1990 USD.
 #'
 #'
 #' @param command API command to execute
@@ -123,7 +125,6 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     SSP_database_v9 <- get_data(all_data, "socioeconomics/SSP_database_v9")
     IMF_GDP_growth <- get_data(all_data, "socioeconomics/IMF_GDP_growth")
     L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
-    # Temporary data injection from old data system
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
     L101.Pop_thous_Scen_R_Yfut <- get_data(all_data, "L101.Pop_thous_Scen_R_Yfut")
 
@@ -170,7 +171,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     imfgdp.growth <-
         select(IMF_GDP_growth, one_of(c('ISO', IMF_FUTURE_YEARS))) %>%
           standardize_iso('ISO') %>% change_iso_code('rou', 'rom') %>%
-          tidyr::gather(year, gdp.rate, -iso) %>%
+          gather(year, gdp.rate, -iso) %>%
           full_join( gdp_mil90usd_ctry %>% select(iso) %>% unique,
                     by='iso') %>%
           mutate(gdp.rate = if_else(gdp.rate == 'n/a', '0', gdp.rate)) %>% # Treat string 'n/a' as missing.
@@ -229,7 +230,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
           tidyr::crossing(scenario = unique(pop.thous.fut[['scenario']]))
     pop.thous.scen.rgn.yr <-
         bind_rows(pop.thous.hist, pop.thous.fut) %>%
-          mutate(year = as.integer(year), population=as.numeric(population)) %>%
+          mutate(year = as.integer(year), population = as.numeric(population)) %>%
           select(scenario, GCAM_region_ID, year, population)
 
     ## calculate per-capita GDP.  This is another final output
@@ -239,7 +240,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
           mutate(pcgdp = gdp / population) %>%
           select(scenario, GCAM_region_ID, year, pcgdp)
 
-    ## Calculate the PPP-MER conversion factor in 2010 for each region. 
+    ## Calculate the PPP-MER conversion factor in 2010 for each region.
     ## Assume this conversion to be constant beyond 2010.
     ## Our PPP values are in billions of 2005$, so we make that conversion
     ## here too.

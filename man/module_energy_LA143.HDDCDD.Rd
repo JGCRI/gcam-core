@@ -21,7 +21,7 @@ original data system was \code{LA143.HDDCDD.R} (energy level1).
 Reads in country level heating and cooling degree day data and returns GCAM region degree days via population weighting
 }
 \details{
-Population weights HDDCDD from country level to GCAm region
+Population weights HDDCDD from country level to GCAM region
 }
 \author{
 RH April 2017
