@@ -13,8 +13,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author RH April 2017
-
-
 module_energy_LA143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -65,8 +63,8 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     HDDCDD_data <- bind_rows(HDDCDD_data_list, .id = 'file')
 
     # Currently the HDDCDD data stops at 2099. If this is the case, add 2100
-    if( !"2100" %in% names( HDDCDD_data ) ){
-     HDDCDD_data <- HDDCDD_data %>% mutate(`2100` = `2099`)
+    if(!"2100" %in% names( HDDCDD_data)){
+      HDDCDD_data <- HDDCDD_data %>% mutate(`2100` = `2099`)
     }
 
     # Convert data to long format and add in id variables
@@ -85,17 +83,17 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
         value = if_else(value < 0, 0, value)
       )
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR){
-    # Add in country iso
-    L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
-      # Drop file name
-      select(-file) %>%
-      # Filter only useful years
-      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-      # Drop Cote d'Ivoire--this is a mistake in old data system
-      filter(country != "Cote d'Ivoire") %>%
-      left_join_error_no_match(GIS_ctry, by = "country")
-    } else{
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
+      # Add in country iso
+      L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
+        # Drop file name
+        select(-file) %>%
+        # Filter only useful years
+        filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
+        # Drop Cote d'Ivoire--this is a mistake in old data system
+        filter(country != "Cote d'Ivoire") %>%
+        left_join_error_no_match(GIS_ctry, by = "country")
+    } else {
       # Add in country iso
       L143.HDDCDD_scen_ctry_Y <- HDDCDD_data %>%
         # Drop file name
@@ -108,7 +106,7 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
     }
 
     # Serbia and Montenegro are currently combined. Copy to separated countries, assigning the same HDD and CDD to each
-    if ("scg" %in% L143.HDDCDD_scen_ctry_Y$iso){
+    if("scg" %in% L143.HDDCDD_scen_ctry_Y$iso) {
       # Create Serbia tibble
       L143.HDDCDD_scen_srb_Y <- L143.HDDCDD_scen_ctry_Y %>%
         filter(iso == "scg" ) %>%
@@ -163,7 +161,6 @@ module_energy_LA143.HDDCDD <- function(command, ...) {
                                  by = c("region_GCAM3", "year")) %>%
         mutate(value = wtDD / aggpop)%>%
         select(-wtDD, -aggpop)
-
 
     } else {
 
