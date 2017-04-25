@@ -1,6 +1,6 @@
 #' module_aglu_LB122.LC_R_Cropland_Yh_GLU
 #'
-#' Briefly describe what this chunk does.
+#' This chunk tries to integrate disparate data sources in order to calculate OtherArableLand
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -136,66 +136,105 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # joining by iso and countries (or country.codes) instead of simply iso. Alternatively, aggregating to the iso level in each
     # FAO table (L100.FAO_X) BEFORE doing further joins and calculations should also lead to the correct answer.
 
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Take the FAO cropland table, L100.FAO_CL_kha:
-      L100.FAO_CL_kha %>%
-        # pull off only the fallowland_year data:
-        filter(year == fallowland_year) %>%
-        # keep only the iso and the value for each; keep year information for easier joining:
-        select(iso, countries, value, year) %>%
-        # rename value to cropland:
-        rename(cropland = value) %>%
-        # append in fallow land data in fallowland_year from FAO, L100.FAO_fallowland_kha, keeping NA values as old DS does:
-        left_join(L100.FAO_fallowland_kha, by = c("iso","countries", "year")) %>%
-        # rename value to fallow:
-        rename(fallow = value) %>%
-        # MAKING MATCH OLD SYSTEM:
-        # Update the Ethiopia, Sudan and Belgium rows so that calculations match the old, incorrect DS:
-        mutate(fallow = if_else(iso == "eth", 762.5, if_else(iso == "sdn", 178, if_else(iso == "bel", 10, fallow)))) %>%
-        # select only the columns of interest:
-        select(iso, cropland, fallow) %>%
-        # remove NA values:
-        na.omit() %>%
-        # add GCAM region information from iso_GCAM_regID
-        mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
-        # remove all columns that are not GCAM_region_ID, cropland, and fallow values:
-        select(GCAM_region_ID, cropland, fallow) %>%
-        # aggregate cropland and fallow values to the GCAM region level:
-        group_by(GCAM_region_ID) %>%
-        summarise_all(sum) %>%
-        # calculate the fraction of total land in each GCAM region that is fallow:
-        mutate(fallow_frac = fallow/cropland) ->
-        # store in a table of cropland, fallow information by region:
+    # Take the FAO cropland table, L100.FAO_CL_kha:
+    L100.FAO_CL_kha %>%
+      # pull off only the fallowland_year data:
+      filter(year == fallowland_year) %>%
+      # keep only the iso country and the value for each:
+      select(iso, countries, value, year) %>%
+      # rename value to cropland:
+      rename(cropland = value) %>%
+      # append in fallow land data in fallowland_year from FAO, L100.FAO_fallowland_kha, keeping NA values:
+      left_join(L100.FAO_fallowland_kha, by = c("iso", "countries", "year")) %>%
+      # rename value to fallow:
+      rename(fallow = value) %>%
+      # remove NA values:
+      na.omit() %>%
+      # add GCAM region information from iso_GCAM_regID
+      mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      # remove all columns that are not GCAM_region_ID, cropland, and fallow values:
+      select(GCAM_region_ID, cropland, fallow) %>%
+      # ungroup:
+      ungroup() %>%
+      # aggregate cropland and fallow values to the GCAM region level:
+      group_by(GCAM_region_ID) %>%
+      summarise_all(sum) %>%
+      # calculate the fraction of total land in each GCAM region that is fallow:
+      mutate(fallow_frac = fallow/cropland) ->
+      # store in a table of cropland, fallow information by region:
+      L122.cropland_fallow_R
+
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      L122.cropland_fallow_R %>%
+      # Update GCAM_region 2 (Ethiopia, Sudan) and 12 (Belgium) rows so that calculations match the old, incorrect DS:
+        mutate(fallow = if_else(GCAM_region_ID == 2, 1881.7000, if_else(GCAM_region_ID == 13, 5060.2225,  fallow))) %>%
+        mutate(fallow_frac = if_else(GCAM_region_ID == 2, 0.057756913, if_else(GCAM_region_ID == 13, 0.072119754,  fallow_frac)))->
         L122.cropland_fallow_R
-    } else {
-      # Take the FAO cropland table, L100.FAO_CL_kha:
-      L100.FAO_CL_kha %>%
-        # pull off only the fallowland_year data:
-        filter(year == fallowland_year) %>%
-        # keep only the iso country and the value for each:
-        select(iso, countries, value, year) %>%
-        # rename value to cropland:
-        rename(cropland = value) %>%
-        # append in fallow land data in fallowland_year from FAO, L100.FAO_fallowland_kha, keeping NA values:
-        left_join(L100.FAO_fallowland_kha, by = c("iso", "countries", "year")) %>%
-        # rename value to fallow:
-        rename(fallow = value) %>%
-        # remove NA values:
-        na.omit() %>%
-        # add GCAM region information from iso_GCAM_regID
-        mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
-        # remove all columns that are not GCAM_region_ID, cropland, and fallow values:
-        select(GCAM_region_ID, cropland, fallow) %>%
-        # ungroup:
-        ungroup() %>%
-        # aggregate cropland and fallow values to the GCAM region level:
-        group_by(GCAM_region_ID) %>%
-        summarise_all(sum) %>%
-        # calculate the fraction of total land in each GCAM region that is fallow:
-        mutate(fallow_frac = fallow/cropland) ->
-        # store in a table of cropland, fallow information by region:
-        L122.cropland_fallow_R
+    }else{
+      # do nothing, the above code is correct
     }
+
+
+    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
+    #   # Take the FAO cropland table, L100.FAO_CL_kha:
+    #   L100.FAO_CL_kha %>%
+    #     # pull off only the fallowland_year data:
+    #     filter(year == fallowland_year) %>%
+    #     # keep only the iso and the value for each; keep year information for easier joining:
+    #     select(iso, countries, value, year) %>%
+    #     # rename value to cropland:
+    #     rename(cropland = value) %>%
+    #     # append in fallow land data in fallowland_year from FAO, L100.FAO_fallowland_kha, keeping NA values as old DS does:
+    #     left_join(L100.FAO_fallowland_kha, by = c("iso","countries", "year")) %>%
+    #     # rename value to fallow:
+    #     rename(fallow = value) %>%
+    #     # MAKING MATCH OLD SYSTEM:
+    #     # Update the Ethiopia, Sudan and Belgium rows so that calculations match the old, incorrect DS:
+    #     mutate(fallow = if_else(iso == "eth", 762.5, if_else(iso == "sdn", 178, if_else(iso == "bel", 10, fallow)))) %>%
+    #     # select only the columns of interest:
+    #     select(iso, cropland, fallow) %>%
+    #     # remove NA values:
+    #     na.omit() %>%
+    #     # add GCAM region information from iso_GCAM_regID
+    #     mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+    #     # remove all columns that are not GCAM_region_ID, cropland, and fallow values:
+    #     select(GCAM_region_ID, cropland, fallow) %>%
+    #     # aggregate cropland and fallow values to the GCAM region level:
+    #     group_by(GCAM_region_ID) %>%
+    #     summarise_all(sum) %>%
+    #     # calculate the fraction of total land in each GCAM region that is fallow:
+    #     mutate(fallow_frac = fallow/cropland) ->
+    #     # store in a table of cropland, fallow information by region:
+    #     L122.cropland_fallow_R
+    # } else {
+    #   # Take the FAO cropland table, L100.FAO_CL_kha:
+    #   L100.FAO_CL_kha %>%
+    #     # pull off only the fallowland_year data:
+    #     filter(year == fallowland_year) %>%
+    #     # keep only the iso country and the value for each:
+    #     select(iso, countries, value, year) %>%
+    #     # rename value to cropland:
+    #     rename(cropland = value) %>%
+    #     # append in fallow land data in fallowland_year from FAO, L100.FAO_fallowland_kha, keeping NA values:
+    #     left_join(L100.FAO_fallowland_kha, by = c("iso", "countries", "year")) %>%
+    #     # rename value to fallow:
+    #     rename(fallow = value) %>%
+    #     # remove NA values:
+    #     na.omit() %>%
+    #     # add GCAM region information from iso_GCAM_regID
+    #     mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+    #     # remove all columns that are not GCAM_region_ID, cropland, and fallow values:
+    #     select(GCAM_region_ID, cropland, fallow) %>%
+    #     # ungroup:
+    #     ungroup() %>%
+    #     # aggregate cropland and fallow values to the GCAM region level:
+    #     group_by(GCAM_region_ID) %>%
+    #     summarise_all(sum) %>%
+    #     # calculate the fraction of total land in each GCAM region that is fallow:
+    #     mutate(fallow_frac = fallow/cropland) ->
+    #     # store in a table of cropland, fallow information by region:
+    #     L122.cropland_fallow_R
+    # }
 
     # Lines 55-74 in original file
     # old comment: make table with cropped land compared to total arable land
@@ -205,74 +244,126 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     #
     # These lines of code also pull FAO data that is susceptible to the double labeling in Ethiopia, Sudan, and Belgium.
     # The same match error occurs as above, and we fix in the same way:
-    if(OLD_DATA_SYSTEM_BEHAVIOR) {
-      # Take the FAO cropland table, L100.FAO_CL_kha:
-      L100.FAO_CL_kha %>%
-        # pull off only the fallowland_year data:
-        filter(year == fallowland_year) %>%
-        # keep only the iso country and the value for each:
-        select(iso, countries, value, year) %>%
-        # rename value to cropland:
-        rename(cropland = value) %>%
-        # append in cropped land data in fallowland_year from FAO, L100.FAO_harv_CL_kha, keeping NA values:
-        left_join(L100.FAO_harv_CL_kha, by = c("iso", "countries", "year")) %>%
-        # rename value to cropped:
-        rename(cropped = value) %>%
-        # MAKING MATCH OLD SYSTEM:
-        # Update the Ethiopia, Sudan and Belgium rows so that calculations match the old, incorrect DS:
-        mutate(cropped = if_else(iso == "eth", 11772, if_else(iso == "sdn", 4086, if_else(iso == "bel", 747, cropped)))) %>%
-        # select only the columns of interest:
-        select(iso, cropland, cropped) %>%
-        # remove NA values:
-        na.omit() %>%
-        # add GCAM region information from iso_GCAM_regID
-        mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
-        # remove all columns that are not GCAM_region_ID, cropland, and cropped values:
-        select(GCAM_region_ID, cropland, cropped) %>%
-        # ungroup:
-        ungroup() %>%
-        # aggregate cropland and cropped values to the GCAM region level:
-        group_by(GCAM_region_ID) %>%
-        summarise_all(sum) %>%
-        # calculate the fraction of total land in each GCAM region that is cropped:
-        mutate(cropped_frac = cropped/cropland) ->
-        # store in a table of cropland, fallow information by region:
+
+    # Take the FAO cropland table, L100.FAO_CL_kha:
+    L100.FAO_CL_kha %>%
+      # pull off only the fallowland_year data:
+      filter(year == fallowland_year) %>%
+      # keep only the iso country and the value for each:
+      select(iso, countries, value, year) %>%
+      # rename value to cropland:
+      rename(cropland = value) %>%
+      # append in cropped land data in fallowland_year from FAO, L100.FAO_harv_CL_kha, keeping NA values:
+      left_join(L100.FAO_harv_CL_kha, by = c("iso", "countries", "year")) %>%
+      # rename value to cropped:
+      rename(cropped = value) %>%
+      # remove NA values:
+      na.omit() %>%
+      # add GCAM region information from iso_GCAM_regID
+      mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      # remove all columns that are not GCAM_region_ID, cropland, and cropped values:
+      select(GCAM_region_ID, cropland, cropped) %>%
+      # ungroup:
+      ungroup() %>%
+      # aggregate cropland and cropped values to the GCAM region level:
+      group_by(GCAM_region_ID) %>%
+      summarise_all(sum) %>%
+      # calculate the fraction of total land in each GCAM region that is cropped:
+      mutate(cropped_frac = cropped/cropland) ->
+      # store in a table of cropland, cropped information by region:
+      L122.cropland_cropped_R
+
+    if(OLD_DATA_SYSTEM_BEHAVIOR){
+      L122.cropland_cropped_R %>%
+        # Update GCAM_region 2 (Ethiopia, Sudan) and 12 (Belgium) rows so that calculations match the old, incorrect DS:
+        mutate(cropped = if_else(GCAM_region_ID == 2, 31746.925, if_else(GCAM_region_ID == 13, 42484.390,  cropped))) %>%
+        mutate(cropped_frac = if_else(GCAM_region_ID == 2, 0.8347940, if_else(GCAM_region_ID == 13, 0.6195761,  cropped_frac))) ->
         L122.cropland_cropped_R
-    } else {
-      # Take the FAO cropland table, L100.FAO_CL_kha:
-      L100.FAO_CL_kha %>%
-        # pull off only the fallowland_year data:
-        filter(year == fallowland_year) %>%
-        # keep only the iso country and the value for each:
-        select(iso, countries, value, year) %>%
-        # rename value to cropland:
-        rename(cropland = value) %>%
-        # append in cropped land data in fallowland_year from FAO, L100.FAO_harv_CL_kha, keeping NA values:
-        left_join(L100.FAO_harv_CL_kha, by = c("iso", "countries", "year")) %>%
-        # rename value to cropped:
-        rename(cropped = value) %>%
-        # remove NA values:
-        na.omit() %>%
-        # add GCAM region information from iso_GCAM_regID
-        mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
-        # remove all columns that are not GCAM_region_ID, cropland, and cropped values:
-        select(GCAM_region_ID, cropland, cropped) %>%
-        # ungroup:
-        ungroup() %>%
-        # aggregate cropland and cropped values to the GCAM region level:
-        group_by(GCAM_region_ID) %>%
-        summarise_all(sum) %>%
-        # calculate the fraction of total land in each GCAM region that is cropped:
-        mutate(cropped_frac = cropped/cropland) ->
-        # store in a table of cropland, fallow information by region:
-        L122.cropland_cropped_R
+    }else{
+      # do nothing, the above code is correct
     }
+
+    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
+    #   # Take the FAO cropland table, L100.FAO_CL_kha:
+    #   L100.FAO_CL_kha %>%
+    #     # pull off only the fallowland_year data:
+    #     filter(year == fallowland_year) %>%
+    #     # keep only the iso country and the value for each:
+    #     select(iso, countries, value, year) %>%
+    #     # rename value to cropland:
+    #     rename(cropland = value) %>%
+    #     # append in cropped land data in fallowland_year from FAO, L100.FAO_harv_CL_kha, keeping NA values:
+    #     left_join(L100.FAO_harv_CL_kha, by = c("iso", "countries", "year")) %>%
+    #     # rename value to cropped:
+    #     rename(cropped = value) %>%
+    #     # MAKING MATCH OLD SYSTEM:
+    #     # Update the Ethiopia, Sudan and Belgium rows so that calculations match the old, incorrect DS:
+    #     mutate(cropped = if_else(iso == "eth", 11772, if_else(iso == "sdn", 4086, if_else(iso == "bel", 747, cropped)))) %>%
+    #     # select only the columns of interest:
+    #     select(iso, cropland, cropped) %>%
+    #     # remove NA values:
+    #     na.omit() %>%
+    #     # add GCAM region information from iso_GCAM_regID
+    #     mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+    #     # remove all columns that are not GCAM_region_ID, cropland, and cropped values:
+    #     select(GCAM_region_ID, cropland, cropped) %>%
+    #     # ungroup:
+    #     ungroup() %>%
+    #     # aggregate cropland and cropped values to the GCAM region level:
+    #     group_by(GCAM_region_ID) %>%
+    #     summarise_all(sum) %>%
+    #     # calculate the fraction of total land in each GCAM region that is cropped:
+    #     mutate(cropped_frac = cropped/cropland) ->
+    #     # store in a table of cropland, fallow information by region:
+    #     L122.cropland_cropped_R
+    # } else {
+      # # Take the FAO cropland table, L100.FAO_CL_kha:
+      # L100.FAO_CL_kha %>%
+      #   # pull off only the fallowland_year data:
+      #   filter(year == fallowland_year) %>%
+      #   # keep only the iso country and the value for each:
+      #   select(iso, countries, value, year) %>%
+      #   # rename value to cropland:
+      #   rename(cropland = value) %>%
+      #   # append in cropped land data in fallowland_year from FAO, L100.FAO_harv_CL_kha, keeping NA values:
+      #   left_join(L100.FAO_harv_CL_kha, by = c("iso", "countries", "year")) %>%
+      #   # rename value to cropped:
+      #   rename(cropped = value) %>%
+      #   # remove NA values:
+      #   na.omit() %>%
+      #   # add GCAM region information from iso_GCAM_regID
+      #   mutate(GCAM_region_ID = left_join(.,iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
+      #   # remove all columns that are not GCAM_region_ID, cropland, and cropped values:
+      #   select(GCAM_region_ID, cropland, cropped) %>%
+      #   # ungroup:
+      #   ungroup() %>%
+      #   # aggregate cropland and cropped values to the GCAM region level:
+      #   group_by(GCAM_region_ID) %>%
+      #   summarise_all(sum) %>%
+      #   # calculate the fraction of total land in each GCAM region that is cropped:
+      #   mutate(cropped_frac = cropped/cropland) ->
+    #     # store in a table of cropland, fallow information by region:
+    #     L122.cropland_cropped_R
+    # }
 
     # Lines 76-89 in original file
     # old comment: calculate the average amount of cropland that is not in production as the fallow land fraction, where available, or else the non-cropped cropland
     # printlog ( "NOTE: based on availability, using (1) fallow land fraction, (2) land not in crop rotations, or (3) 0" )
+    # Calculating cropland not in production is (logically, not in terms of code) done via a series of nested if statements.
+    #
 
 
+
+
+
+
+
+    # This is part of the calculation for OtherArableLand values:
+    # residual = cropland - fallowland - sum(HarvestedArea). When residual > 0, OtherArableLand is easily calculated as
+    # OtherArableLand = fallowland + residual
+    # If residual <= 0 (for example, regions with multiple harvests in one year),
+    #   Further, if the ratio of sum(HarvestedArea) to cropland is greater than 2.5, we steal land from other land use types and
+    #   reassign to cropland.
 
 
 
