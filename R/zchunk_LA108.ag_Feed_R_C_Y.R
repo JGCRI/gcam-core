@@ -156,44 +156,58 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
       ag_Feed_Mt_R_FodderHerb_Y
 
     # PASTURE & FODDERGRASS
-    # printlog( "Part 3: Calculating Pasture and FodderGrass inputs by region and year" )
-    # #Calculate regional FodderGrass production
-    # L108.ag_Prod_Mt_R_FodderGrass_Y <- subset( L103.ag_Prod_Mt_R_C_Y, GCAM_commodity=="FodderGrass" )
-    #
-    # #Calculate regional demands of grass (Pasture_FodderGrass)
-    # L108.ag_Feed_Mt_R_PastFodderGrass_Y <- subset( L108.ag_Feed_Mt_R_F_Y, feed == "Pasture_FodderGrass" )
-    #
-    # #Pasture demand is equal to Pasture_FodderGrass demand minus FodderGrass production within each region
-    # L108.ag_Feed_Mt_R_Past_Y <- data.frame(
-    #   GCAM_region_ID = sort( unique( iso_GCAM_regID$GCAM_region_ID ) ),
-    #   GCAM_commodity = "Pasture",
-    #   L108.ag_Feed_Mt_R_PastFodderGrass_Y[ X_AGLU_historical_years ] - L108.ag_Prod_Mt_R_FodderGrass_Y[ X_AGLU_historical_years ] )
-    #
-    # #Where pasture demands are negative, set pasture to zero and treat this quantity of foddergrass demand as an other use
-    # L108.ag_OtherUses_Mt_R_FodderGrass_Y <- data.frame(
-    #   GCAM_region_ID = sort( unique( iso_GCAM_regID$GCAM_region_ID ) ),
-    #   GCAM_commodity = "FodderGrass",
-    #   L108.ag_Feed_Mt_R_Past_Y[ X_AGLU_historical_years ] * -1 )
-    # L108.ag_OtherUses_Mt_R_FodderGrass_Y[ X_AGLU_historical_years ][ L108.ag_OtherUses_Mt_R_FodderGrass_Y[ X_AGLU_historical_years ] < 0 ] <- 0
-    # L108.ag_Feed_Mt_R_Past_Y[ X_AGLU_historical_years ][L108.ag_Feed_Mt_R_Past_Y[ X_AGLU_historical_years ] < 0 ] <- 0
-    #
-    # #FodderGrass used as feed = FodderGrass production - other uses
-    # L108.ag_Feed_Mt_R_FodderGrass_Y <- data.frame(
-    #   GCAM_region_ID = sort( unique( iso_GCAM_regID$GCAM_region_ID ) ),
-    #   GCAM_commodity = "FodderGrass",
-    #   L108.ag_Prod_Mt_R_FodderGrass_Y[ X_AGLU_historical_years ] - L108.ag_OtherUses_Mt_R_FodderGrass_Y[ X_AGLU_historical_years ] )
-    #
-    # #SCAVENGING & OTHER
-    # printlog( "Part 4: Scavenging and other inputs" )
-    # #regional demands of scavenging_other determine the supplies; no calculations are needed here
-    # L108.ag_Feed_Mt_R_ScvgOthr_Y <- subset( L108.ag_Feed_Mt_R_F_Y, feed=="Scavenging_Other" )
-    # names( L108.ag_Feed_Mt_R_ScvgOthr_Y )[ names( L108.ag_Feed_Mt_R_ScvgOthr_Y )==Fd ] <- C
-    #
-    # #Merge all feed sources into a single table
-    # printlog( "Combining all feed tables into a single table for export" )
-    # L108.ag_Feed_Mt_R_C_Y <- rbind( L108.ag_Feed_Mt_R_Cnf_Y_adj, L108.ag_Feed_Mt_R_FodderHerb_Y, L108.ag_Feed_Mt_R_Residue_Y,
-    #                                 L108.ag_Feed_Mt_R_FodderGrass_Y, L108.ag_Feed_Mt_R_Past_Y, L108.ag_Feed_Mt_R_ScvgOthr_Y )
-    #
+    # Part 3: Calculating Pasture and FodderGrass inputs by region and year
+
+    # Calculate regional FodderGrass production
+    L103.ag_Prod_Mt_R_C_Y %>%
+      filter(GCAM_commodity == "FodderGrass") ->
+      ag_Prod_Mt_R_FodderGrass_Y
+
+    # Calculate regional demands of grass (Pasture_FodderGrass)
+    # Pasture demand is equal to Pasture_FodderGrass demand minus FodderGrass production within each region
+    an_Feed_Mt_R_C_Y %>%
+      filter(feed == "Pasture_FodderGrass") %>%
+      rename(PastFodderGrass_Demand = value) %>%
+      left_join(ag_Prod_Mt_R_FodderGrass_Y, by = c( "GCAM_region_ID", "year")) %>%
+      mutate(value = PastFodderGrass_Demand - value, GCAM_commodity = "Pasture") %>%
+      select(-PastFodderGrass_Demand, -feed) ->
+      ag_Feed_Mt_R_Past_Y
+
+    # Where pasture demands are negative, set pasture to zero and treat this quantity of foddergrass demand as an other use
+    ag_Feed_Mt_R_Past_Y %>%
+      mutate(value = value * -1, GCAM_commodity = "FodderGrass") %>%
+      mutate(value = if_else( value < 0, 0, value)) ->
+      ag_OtherUses_Mt_R_FodderGrass_Y
+
+    # Then, zero out all negative demands
+    ag_Feed_Mt_R_Past_Y %>%
+      mutate(value = if_else( value < 0, 0, value)) ->
+      ag_Feed_Mt_R_Past_Y
+
+    # FodderGrass used as feed = FodderGrass production - other uses
+    ag_Prod_Mt_R_FodderGrass_Y %>%
+      rename(Production = value) %>%
+      left_join(ag_OtherUses_Mt_R_FodderGrass_Y, by = c("GCAM_commodity", "GCAM_region_ID", "year")) %>%
+      mutate(value = Production - value) %>%
+      select(-Production, -feed) ->
+      ag_Feed_Mt_R_FodderGrass_Y
+
+    # SCAVENGING & OTHER
+    # Part 4: Scavenging and other inputs
+    # Regional demands of scavenging_other determine the supplies; no calculations are needed here
+    an_Feed_Mt_R_C_Y %>%
+      filter(feed == "Scavenging_Other") ->
+      ag_Feed_Mt_R_ScvgOthr_Y
+
+    # Merge all feed sources into a single table
+    ag_Feed_Mt_R_Cnf_Y_adj %>%
+      bind_rows(ag_Feed_Mt_R_FodderHerb_Y) %>%
+      bind_rows(ag_Feed_Mt_R_Residue_Y) %>%
+      bind_rows(ag_Feed_Mt_R_FodderGrass_Y) %>%
+      bind_rows(ag_Feed_Mt_R_Past_Y) %>%
+      bind_rows(ag_Feed_Mt_R_ScvgOthr_Y) ->
+      ag_Feed_Mt_R_C_Y
+
     # #Write out the net exports of FodderHerb
     # L108.ag_NetExp_Mt_R_FodderHerb_Y <- data.frame(
     #   GCAM_region_ID = sort( unique( iso_GCAM_regID$GCAM_region_ID ) ),
@@ -202,11 +216,7 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     #     L108.ag_OtherUses_Mt_R_FodderHerb_Y[ X_AGLU_historical_years ] )
     #
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
+    ag_Feed_Mt_R_C_Y %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
