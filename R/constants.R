@@ -33,6 +33,7 @@ LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
+SPEC_AG_PROD_YEARS <- seq(2010, 2050, 5) # Specified ag productivity years
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
