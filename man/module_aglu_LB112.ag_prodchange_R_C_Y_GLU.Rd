@@ -18,11 +18,13 @@ the generated outputs: \code{L112.ag_YieldRatio_R_C_Ysy_GLU}, \code{L112.ag_Yiel
 original data system was \code{LB112.ag_prodchange_R_C_Y_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Calculate yield change ratios and yield change rates by GCAM commodity / region / future years.
 }
 \details{
-Describe in detail what this chunk does.
+This chunk first calculates the yield ratios relative to the base year by GCAM commodity / region / future years to 2050,
+and calculates the annual productivity change rates by GCAM commodity / region / future years to 2100.
+Yield improvement rates are based on FAO estimates up to 2050 and the default agriculture productivity change assumptions beyond 2050.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RC April 2017
 }
