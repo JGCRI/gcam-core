@@ -254,7 +254,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # rename value to cropland:
       rename(cropland = value) %>%
       # append in cropped land data in fallowland_year from FAO, L100.FAO_harv_CL_kha, keeping NA values:
-      left_join(L100.FAO_harv_CL_kha, by = c("iso", "countries", "year")) %>%
+      left_join(L100.FAO_harv_CL_kha[L100.FAO_harv_CL_kha$year == fallowland_year, ],
+                by = c("iso", "countries", "year")) %>%
       # rename value to cropped:
       rename(cropped = value) %>%
       # remove NA values:
@@ -349,12 +350,91 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # Lines 76-89 in original file
     # old comment: calculate the average amount of cropland that is not in production as the fallow land fraction, where available, or else the non-cropped cropland
     # printlog ( "NOTE: based on availability, using (1) fallow land fraction, (2) land not in crop rotations, or (3) 0" )
-    # Calculating cropland not in production is (logically, not in terms of code) done via a series of nested if statements.
-    #
+    # Calculating cropland not in production is done via a series of nested if statements.
+
+    # take the unique GCAM regions
+    tibble::tibble(GCAM_region_ID = unique(iso_GCAM_regID$GCAM_region_ID)) %>%
+      # sort the ids:
+      arrange(GCAM_region_ID) %>%
+      # add a land type identifier for each region:
+      mutate(Land_Type = "Cropland") %>%
+      # join in fallow land table, L122.cropland_fallow_R, to get the fallow_frac for each region,
+      # maintaining NA's for use in determining data availability to calculate nonharvested_frac:
+      mutate(fallow_frac = left_join(.,L122.cropland_fallow_R, by = c("GCAM_region_ID"))$fallow_frac) %>%
+      # join in cropped land table, L122.cropland_cropped_R, to get the cropped_frac for each region, and
+      # use to calculate the uncropped fraction, maintaining NA's to set to 0 later:
+      mutate(uncropped_frac = 1 - left_join(.,L122.cropland_cropped_R, by = c("GCAM_region_ID"))$cropped_frac) %>%
+      # calculate the nonharvested fraction of land via nested if statements
+      #   based on availability, using (1) fallow land fraction, (2) land not in crop rotations, or (3) 0
+      #   This step determines (1) versus (2):
+      #                                  If there is no available fallow land data
+      mutate(nonharvested_frac = if_else(is.na(fallow_frac),
+      #                                  use the uncropped fraction
+                                         uncropped_frac,
+      #                                  otherwise, use the available fallow land data:
+                                         fallow_frac)) %>%
+      #   This step determines (3) when (1) and (2) are not available:
+      mutate(nonharvested_frac = if_else(is.na(nonharvested_frac), 0, nonharvested_frac)) ->
+      # store in a table of nonharvested cropland fractions by region:
+      L122.nonharvested_cropland_R
 
 
+    # lines 91-99 in original file
+    # old comment: make a table with fallow land, and the remaining cropland that is "available" for harvest, by region, year, and GLU
+    # printlog( "NOTE: applying regional average fallow fractions to all GLUs within each region" )
+    # Actually making two tables: the fallow land table and then, using the fallow land table, the available cropland table
+
+    # take cropland table with region, landtype and glu information for each year:
+    L122.LC_bm2_R_CropLand_Y_GLU %>%
+      # join in the non harvested fraction for each region:
+      #   Note that there is no information for GCAM region 30 in L122.LC_bm2_R_CropLand_Y_GLU, even though
+      #   a nonharvested fraction (of 0) is calculated in L122.nonharvested_cropland_R.
+      left_join(L122.nonharvested_cropland_R, by = c("GCAM_region_ID", "Land_Type")) %>%
+      # drop unnecessary columns that come from the join:
+      select(-fallow_frac, -uncropped_frac) %>%
+      # use the nonharvested_frac and the cropland area information (value) for each Region-GLU-Year to calculate
+      # the amouunt of fallowland in that Region-GLU-Year = value * nonharvested_frac
+      mutate(value = value * nonharvested_frac) %>%
+      # drop nonharvested_frac since no longer necessary:
+      select(-nonharvested_frac) %>%
+      # update the Land_Type identifier to reflect that this is now FallowLand, not Cropland
+      mutate(Land_Type = "FallowLand") ->
+      # store in a table of fallowland land cover in bm2 for each region-glu-year
+      L122.LC_bm2_R_FallowLand_Y_GLU
+
+    # Use the just made fallow land table to calculate a table of Available CropLand in each region-glu-year
+    # Available cropland = totalcropland from L122.LC_bm2_R_CropLand_Y_GLU - fallowland from L122.LC_bm2_R_FallowLand_Y_GLU
+    # Take the table of total cropland in each region-GLU-year:
+    L122.LC_bm2_R_CropLand_Y_GLU %>%
+      # join in the land that is fallow in each region-glu-year
+      # absolutely should match up and it's a problem at this point if they don't, so left_join_error_no_match:
+      left_join_error_no_match(L122.LC_bm2_R_FallowLand_Y_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
+      # value.x = value from Cropland table, the total amount of cropland in the region-glu-year
+      # value.y = value from FallowLand table, the amount of fallowland in the region-glu-year
+      # therefore, available cropland value = value.x-value.y:
+      mutate(value = value.x-value.y) %>%
+      # remove value.x, value.y and Land_Type.y as now unnecessary:
+      select(-value.x, -value.y, -Land_Type.y) %>%
+      # rename Land_Type.x to Land_Type:
+      rename(Land_Type = Land_Type.x) ->
+      # store in a table of available cropland:
+      L122.LC_bm2_R_AvailableCropLand_Y_GLU
 
 
+    # lines 101-107 in original file
+    # Calculate the harvested to cropped land ratio for all crops, by region, year, and GLU
+    # printlog( "NOTE: applying minimum and maximum harvested:cropped ratios" )
+
+    # take harvested area by region-glu-year:
+    # L122.ag_HA_bm2_R_Y_GLU %>%
+    #   # join the available cropland by region-glu-year
+    #   left_join_error_no_match(L122.LC_bm2_R_AvailableCropLand_Y_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
+    #   # value.x = value from L122.ag_HA_bm2_R_Y_GLU, the harvested area
+    #   # value.y = value from L122.LC_bm2_R_AvailableCropLand_Y_GLU, the available cropland
+    #   # harvested area to available cropland ratio is value.x/value.y
+    #   mutate(value = value.x/value.y) %>%
+    #   # remove unneeded columns:
+    #   select(-valuex., -value.y, -Land_Type)
 
 
 
