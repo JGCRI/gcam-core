@@ -58,6 +58,10 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
 
+# Minimum and maximum harvested:cropped ratios
+MIN_HA_TO_CROPLAND <- 1
+MAX_HA_TO_CROPLAND <- 3
+
 # ======================================================================
 # energy constants
 

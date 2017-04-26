@@ -421,21 +421,39 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       L122.LC_bm2_R_AvailableCropLand_Y_GLU
 
 
-    # lines 101-107 in original file
-    # Calculate the harvested to cropped land ratio for all crops, by region, year, and GLU
+    # lines 101-114 in original file
+    # old comment: Calculate the harvested to cropped land ratio for all crops, by region, year, and GLU
     # printlog( "NOTE: applying minimum and maximum harvested:cropped ratios" )
-
+    # old comment: Maximum harvested:cropped ratio may cause cropland to expand
+    # old comment: This additional cropland will need to be balanced by a deduction from other land types later on, so it is tracked below
     # take harvested area by region-glu-year:
-    # L122.ag_HA_bm2_R_Y_GLU %>%
-    #   # join the available cropland by region-glu-year
-    #   left_join_error_no_match(L122.LC_bm2_R_AvailableCropLand_Y_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
-    #   # value.x = value from L122.ag_HA_bm2_R_Y_GLU, the harvested area
-    #   # value.y = value from L122.LC_bm2_R_AvailableCropLand_Y_GLU, the available cropland
-    #   # harvested area to available cropland ratio is value.x/value.y
-    #   mutate(value = value.x/value.y) %>%
-    #   # remove unneeded columns:
-    #   select(-valuex., -value.y, -Land_Type)
+    L122.ag_HA_bm2_R_Y_GLU %>%
+      # join the available cropland by region-glu-year
+      left_join_error_no_match(L122.LC_bm2_R_AvailableCropLand_Y_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
+      # value.x = value from L122.ag_HA_bm2_R_Y_GLU, the harvested area
+      # value.y = value from L122.LC_bm2_R_AvailableCropLand_Y_GLU, the available cropland
+      # harvested area to available cropland ratio is value.x/value.y
+      mutate(value = value.x/value.y) %>%
+      # remove unneeded columns:
+      select(-value.x, -value.y, -Land_Type) %>%
+      # if the harvested to cropland ratio, value, is less than the min acceptable harvested area to cropland,
+      # MIN_HA_TO_CROPLAND, replace with MIN_HA_TO_CROPLAND
+      mutate(value = if_else(value < MIN_HA_TO_CROPLAND, MIN_HA_TO_CROPLAND, value))
+      # if the harvested to cropland ratio is greater than the max acceptable harvested area to cropland,
+      # MAX_HA_TO_CROPLAND, replace with MAX_HA_TO_CROPLAND
+      mutate(value = if_else(value > MAX_HA_TO_CROPLAND, MAX_HA_TO_CROPLAND, value)) ->
+      # store in a table of HA to cropland ratios by region-glu-year
+      L122.ag_HA_to_CropLand_R_Y_GLU
 
+### double check wording of old comments in above section with Page; in general, make sure understanding what all
+### tables actually mean so comments accurate
+### also, find out about printlogs for sure
+
+    # lines 116-123 in original file
+    # The ag_HA_to_CropLand ratio is assumed to be a property of the region and GLU ( not individual crops ), as individual sites are planted with different crops
+    # Calculate cropland requirements of each crop as harvested area divided by regional ag_HA_to_CropLand ratio
+    # printlog( "Calculating cropland requirements of each crop as harvested area divided by HA:CL" )
+    # Calculate land cover as harvested area divided by HA:CL
 
 
     # This is part of the calculation for OtherArableLand values:
