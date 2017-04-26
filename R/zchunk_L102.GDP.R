@@ -38,46 +38,46 @@
 #' 'GCAM_region_ID', but could be anything
 #' @return Time series with the past and future joined as described in details.
 join.gdp.ts <- function(past, future, grouping) {
-    if(! 'scenario' %in% names(future)) {
-        ## This saves us having to make a bunch of exceptions below when we
-        ## include 'scenario' among the columns to join by.
-        future$scenario <- 'scen'
-        drop.scenario <- TRUE
-    }
-    else {
-        drop.scenario <- FALSE
-    }
+  if(! 'scenario' %in% names(future)) {
+    ## This saves us having to make a bunch of exceptions below when we
+    ## include 'scenario' among the columns to join by.
+    future$scenario <- 'scen'
+    drop.scenario <- TRUE
+  }
+  else {
+    drop.scenario <- FALSE
+  }
 
-    ## Find the base year
-    base.year <- max(dplyr::intersect(past$year, future$year))
-    ## Base year gdp from the future dataset
-    baseyear.future.gdp <- filter(future, year==base.year) %>%
-        rename(base.gdp = gdp) %>%
-        select(-year)
+  ## Find the base year
+  base.year <- max(dplyr::intersect(past$year, future$year))
+  ## Base year gdp from the future dataset
+  baseyear.future.gdp <- filter(future, year==base.year) %>%
+    rename(base.gdp = gdp) %>%
+    select(-year)
 
-    gdp.future.ratio <- filter(future, year > base.year) %>%
-        left_join_error_no_match(baseyear.future.gdp, by=c('scenario', grouping)) %>%
-        mutate(gdp.ratio = gdp / base.gdp) %>%
-        select(one_of(c('scenario', grouping, 'year', 'gdp.ratio')))
+  gdp.future.ratio <- filter(future, year > base.year) %>%
+    left_join_error_no_match(baseyear.future.gdp, by=c('scenario', grouping)) %>%
+    mutate(gdp.ratio = gdp / base.gdp) %>%
+    select(one_of(c('scenario', grouping, 'year', 'gdp.ratio')))
 
-    ## add the scenario column to the past
-    gdp.past <- tidyr::crossing(past, scenario = unique(gdp.future.ratio[['scenario']]))
-    baseyear.past.gdp <- filter(gdp.past, year == base.year) %>%
-        rename(base.gdp = gdp) %>%
-        select(-year)
+  ## add the scenario column to the past
+  gdp.past <- tidyr::crossing(past, scenario = unique(gdp.future.ratio[['scenario']]))
+  baseyear.past.gdp <- filter(gdp.past, year == base.year) %>%
+    rename(base.gdp = gdp) %>%
+    select(-year)
 
-    rslt <- left_join(baseyear.past.gdp, gdp.future.ratio,
-                      by=c('scenario',grouping)) %>%
-        mutate(gdp = base.gdp * gdp.ratio) %>%
-        select(one_of(c('scenario', grouping, 'year', 'gdp'))) %>%
-        bind_rows(gdp.past, .)
+  rslt <- left_join(baseyear.past.gdp, gdp.future.ratio,
+                    by=c('scenario',grouping)) %>%
+    mutate(gdp = base.gdp * gdp.ratio) %>%
+    select(one_of(c('scenario', grouping, 'year', 'gdp'))) %>%
+    bind_rows(gdp.past, .)
 
-    if(drop.scenario) {
-        select(rslt, -scenario)
-    }
-    else {
-        rslt
-    }
+  if(drop.scenario) {
+    select(rslt, -scenario)
+  }
+  else {
+    rslt
+  }
 }
 
 #' module_socioeconomics_L102.GDP
@@ -92,7 +92,6 @@ join.gdp.ts <- function(past, future, grouping) {
 #' near-term IMF projections).  GDP outputs are in millions of 1990 USD, Market
 #' Exchange Rate (measured in 2010) is used for foreign currency.  Per-capita
 #' values are in thousands of 1990 USD.
-#'
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -134,29 +133,32 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## Add region IDs to historical GDP and aggregate by region. Hang onto the country-level data
     ## because we will use them again when we make the IMF adjustments
     gdp_mil90usd_ctry <-
-        left_join_error_no_match(L100.gdp_mil90usd_ctry_Yh, iso_region32_lookup,
-                                 by='iso') %>%
-          rename(gdp = value)
+      left_join_error_no_match(L100.gdp_mil90usd_ctry_Yh, iso_region32_lookup,
+                               by='iso') %>%
+      rename(gdp = value)
     gdp_mil90usd_rgn <- gdp_mil90usd_ctry %>%
-        group_by(GCAM_region_ID, year) %>% summarise(gdp=sum(gdp))
+      group_by(GCAM_region_ID, year) %>%
+      summarise(gdp = sum(gdp))
     ## gdp_mil90usd_ctry:  iso, GCAM_region_ID, year, gdp
     ## gdp_mil90usd_rgn:  GCAM_region_ID, year, gdp
 
     ## Get the future GDP in the SSP scenarios.  These, it turns out, are PPP
     ## values in 2005 dollars
     gdp_bilusd_rgn_Yfut <-
-      filter(SSP_database_v9,MODEL=='OECD Env-Growth' & VARIABLE=='GDP|PPP') %>%
-      standardize_iso('REGION') %>% change_iso_code('rou','rom') %>%
-      left_join_error_no_match(iso_region32_lookup, by='iso') %>%
+      filter(SSP_database_v9,MODEL == 'OECD Env-Growth' & VARIABLE == 'GDP|PPP') %>%
+      standardize_iso('REGION') %>%
+      change_iso_code('rou', 'rom') %>%
+      left_join_error_no_match(iso_region32_lookup, by = 'iso') %>%
       protect_integer_cols %>%
-      select_if(function(x){!any(is.na(x))}) %>% # apparently the SSP database has some missing in it; filter these out.
+      select_if(function(x) {!any(is.na(x))}) %>% # apparently the SSP database has some missing in it; filter these out.
       unprotect_integer_cols %>%
       select(-MODEL, -iso, -VARIABLE, -UNIT) %>%
       gather(year, gdp, -SCENARIO, -GCAM_region_ID) %>%
-      mutate(year = as.integer(year), gdp = as.numeric(gdp),
+      mutate(year = as.integer(year),
+             gdp = as.numeric(gdp),
              scenario=substr(SCENARIO, 1, 4)) %>% # Trim the junk off the end of
-                                        # the scenario names, leaving us with
-                                        # just SSP1, SSP2, etc.
+      # the scenario names, leaving us with
+      # just SSP1, SSP2, etc.
       group_by(scenario, GCAM_region_ID, year) %>%
       summarise(gdp = sum(gdp)) %>%
       select(scenario, GCAM_region_ID, year, gdp)
@@ -169,52 +171,54 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## Get the IMF GDP growth rates.  Some countries are missing, so we have to
     ## add them in with an assumed zero growth rate.
     imfgdp.growth <-
-        select(IMF_GDP_growth, one_of(c('ISO', IMF_FUTURE_YEARS))) %>%
-          standardize_iso('ISO') %>% change_iso_code('rou', 'rom') %>%
-          gather(year, gdp.rate, -iso) %>%
-          full_join( gdp_mil90usd_ctry %>% select(iso) %>% unique,
-                    by='iso') %>%
-          mutate(gdp.rate = if_else(gdp.rate == 'n/a', '0', gdp.rate)) %>% # Treat string 'n/a' as missing.
-          mutate(year=as.integer(year), gdp.rate=as.numeric(gdp.rate)) %>%
-          replace_na(list(year=2010)) %>% # have to do this for `complete` to work as expected.
-          complete(iso, year) %>%
-          replace_na(list(gdp.rate=0.0))
+      select(IMF_GDP_growth, one_of(c('ISO', IMF_FUTURE_YEARS))) %>%
+      standardize_iso('ISO') %>%
+      change_iso_code('rou', 'rom') %>%
+      gather(year, gdp.rate, -iso) %>%
+      full_join( gdp_mil90usd_ctry %>% select(iso) %>% unique,
+                 by = 'iso') %>%
+      mutate(gdp.rate = if_else(gdp.rate == 'n/a', '0', gdp.rate)) %>% # Treat string 'n/a' as missing.
+      mutate(year = as.integer(year),
+             gdp.rate = as.numeric(gdp.rate)) %>%
+      replace_na(list(year=2010)) %>% # have to do this for `complete` to work as expected.
+      complete(iso, year) %>%
+      replace_na(list(gdp.rate=0.0))
 
     imfgdp.ratio <-
-        imfgdp.growth %>%
-          mutate(gdp.ratio = 1.0 + gdp.rate/100.0) %>%
-          arrange(year) %>% group_by(iso) %>%
-          mutate(gdp = cumprod(gdp.ratio)) %>% # actually ratio of gdp to base-year
-                                        # gdp, but we're calling it "gdp" so
-                                        # that join.gdp.ts() can work with it.
-          select(iso, year, gdp)
+      imfgdp.growth %>%
+      mutate(gdp.ratio = 1.0 + gdp.rate / 100.0) %>%
+      arrange(year) %>% group_by(iso) %>%
+      mutate(gdp = cumprod(gdp.ratio)) %>% # actually ratio of gdp to base-year
+      # gdp, but we're calling it "gdp" so
+      # that join.gdp.ts() can work with it.
+      select(iso, year, gdp)
 
     gdp.mil90usd.imf.country.yr <-
-        select(gdp_mil90usd_ctry, iso, year, gdp) %>% #strip region id col b/c
-                                        #imfgdp.ratio doesn't have one.
-        join.gdp.ts(imfgdp.ratio, 'iso')
+      select(gdp_mil90usd_ctry, iso, year, gdp) %>% #strip region id col b/c
+      #imfgdp.ratio doesn't have one.
+      join.gdp.ts(imfgdp.ratio, 'iso')
     ## columns: iso, year, gdp
 
     ## Aggregate by GCAM region
     gdp.mil90usd.imf.rgn.yr <-
-        left_join_error_no_match(gdp.mil90usd.imf.country.yr,
-                                 iso_region32_lookup, by= 'iso') %>%
-          group_by(GCAM_region_ID, year) %>%
-          summarise(gdp = sum(gdp)) %>%
-          filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS))
+      left_join_error_no_match(gdp.mil90usd.imf.country.yr,
+                               iso_region32_lookup, by= 'iso') %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarise(gdp = sum(gdp)) %>%
+      filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS))
     ## columns:  GCAM_region_ID, year, gdp
 
     ## join the IMF near future up to the SSP distant future, rename scenarios
     ## to gSSP*
     gdp.mil90usd.gSSP.rgn.yr <-
-        join.gdp.ts(gdp.mil90usd.imf.rgn.yr, gdp_bilusd_rgn_Yfut, 'GCAM_region_ID') %>%
-          mutate(scenario = paste0('g', scenario))
+      join.gdp.ts(gdp.mil90usd.imf.rgn.yr, gdp_bilusd_rgn_Yfut, 'GCAM_region_ID') %>%
+      mutate(scenario = paste0('g', scenario))
     ## columns: scenario, GCAM_region_ID, year, gdp
 
     ## combine SSP and gSSP scenarios into a single table (this will be one of
     ## our final outputs)
     gdp.mil90usd.scen.rgn.yr <-
-        bind_rows(gdp.mil90usd.SSP.rgn.yr, gdp.mil90usd.gSSP.rgn.yr)
+      bind_rows(gdp.mil90usd.SSP.rgn.yr, gdp.mil90usd.gSSP.rgn.yr)
 
     ## Construct a table of population by scenario, region, and year.  We have a
     ## table of historical population, and a table of future population by
@@ -222,23 +226,24 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## we need.  Add a scenario column to historical years, and combine the
     ## whole thing into a single table.
     pop.thous.fut <-
-        rename(L101.Pop_thous_Scen_R_Yfut, population = value) %>%
-          filter(year %in% FUTURE_YEARS)
+      rename(L101.Pop_thous_Scen_R_Yfut, population = value) %>%
+      filter(year %in% FUTURE_YEARS)
     pop.thous.hist <-
-        rename(L101.Pop_thous_R_Yh, population = value) %>%
-          filter(year %in% HISTORICAL_YEARS) %>%
-          tidyr::crossing(scenario = unique(pop.thous.fut[['scenario']]))
+      rename(L101.Pop_thous_R_Yh, population = value) %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
+      tidyr::crossing(scenario = unique(pop.thous.fut[['scenario']]))
     pop.thous.scen.rgn.yr <-
-        bind_rows(pop.thous.hist, pop.thous.fut) %>%
-          mutate(year = as.integer(year), population = as.numeric(population)) %>%
-          select(scenario, GCAM_region_ID, year, population)
+      bind_rows(pop.thous.hist, pop.thous.fut) %>%
+      mutate(year = as.integer(year),
+             population = as.numeric(population)) %>%
+      select(scenario, GCAM_region_ID, year, population)
 
     ## calculate per-capita GDP.  This is another final output
     pcgdp.thous90usd.scen.rgn.yr <-
-        left_join(gdp.mil90usd.scen.rgn.yr, pop.thous.scen.rgn.yr,
-                  by = c('scenario', 'GCAM_region_ID', 'year')) %>%
-          mutate(pcgdp = gdp / population) %>%
-          select(scenario, GCAM_region_ID, year, pcgdp)
+      left_join(gdp.mil90usd.scen.rgn.yr, pop.thous.scen.rgn.yr,
+                by = c('scenario', 'GCAM_region_ID', 'year')) %>%
+      mutate(pcgdp = gdp / population) %>%
+      select(scenario, GCAM_region_ID, year, pcgdp)
 
     ## Calculate the PPP-MER conversion factor in 2010 for each region.
     ## Assume this conversion to be constant beyond 2010.
@@ -262,14 +267,15 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## one we'll use here.  Arguably we should average the values over the 5
     ## scenarios, but the differences are only 1 part in 10^4, so we can just
     ## let it slide.
-    ppp.rgn <- gdp_bilusd_rgn_Yfut %>% ungroup %>%
+    ppp.rgn <- gdp_bilusd_rgn_Yfut %>%
+      ungroup %>%
       filter(year == PPP.MER.baseyr, scenario == 'SSP1') %>%
       rename(PPP = gdp) %>%
       select(GCAM_region_ID, PPP)
 
     ppp.mer.rgn <-
-        left_join_error_no_match(mer.rgn, ppp.rgn, by = 'GCAM_region_ID') %>%
-          mutate(PPP_MER = PPP / MER)
+      left_join_error_no_match(mer.rgn, ppp.rgn, by = 'GCAM_region_ID') %>%
+      mutate(PPP_MER = PPP / MER)
 
 
     ## Produce outputs
@@ -324,6 +330,3 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
