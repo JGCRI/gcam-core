@@ -91,7 +91,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
     for (scen in L242.pcgdp_thous90USD_Scen_R_Y$scenario){
         assign(paste0("L242.IncomeElasticity_bld_",scen),
                L242.pcgdp_thous90USD_Scen_R_Y %>%
-                 filter(scen %in% scenario) %>%
+                 filter(scenario == scen) %>%
                  select(-scenario)
                  )
     }
