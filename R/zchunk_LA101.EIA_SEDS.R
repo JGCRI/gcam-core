@@ -13,15 +13,15 @@
 #' @details See above
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather spread fill
 #' @author AS April 2017
 #'
 module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/EIA_SEDS_fuels",
              FILE = "gcam-usa/EIA_SEDS_sectors",
-             FILE = "gcam-usa/EIA_use_all_Bbtu",
-             FILE = "gcam-usa/A_fuel_conv"))
+             FILE = "temp-data-inject/EIA_use_all_Bbtu",
+             FILE = "temp-data-inject/A_fuel_conv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L101.EIA_use_all_Bbtu",
              "L101.inEIA_EJ_state_S_F"))
@@ -32,22 +32,19 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
     # Load required inputs
     EIA_SEDS_fuels <- get_data(all_data, "gcam-usa/EIA_SEDS_fuels")
     EIA_SEDS_sectors <- get_data(all_data, "gcam-usa/EIA_SEDS_sectors")
-    EIA_use_all_Bbtu <- get_data(all_data, "gcam-usa/EIA_use_all_Bbtu")
-    A_fuel_conv <- get_data(all_data, "gcam-usa/A_fuel_conv")
+    EIA_use_all_Bbtu <- get_data(all_data, "temp-data-inject/EIA_use_all_Bbtu")
+    A_fuel_conv <- get_data(all_data, "temp-data-inject/A_fuel_conv")
 
     # ===================================================
 
-    # Define vector to be used for filtering
-    GCAM_year <- 1971:2010
-
     # Prep for output tables - add columns for GCAM sector and fuel names, using the substrings of the MSN code, and filter out U.S.
     EIA_use_all_Bbtu %>%
-      gather(year, value, 4:55) %>%
+      gather(year, value, -Data_Status, -State, -MSN) %>%
       mutate(year = as.integer(year)) %>%
-      mutate(EIA_fuel = substr(MSN, 1, 2 )) %>%
-      mutate(EIA_sector = substr(MSN, 3, 4)) %>%
-      left_join(EIA_SEDS_fuels, by="EIA_fuel") %>%
-      left_join(EIA_SEDS_sectors, by="EIA_sector") %>%
+      mutate(EIA_fuel = substr(MSN, 1, 2 )) %>% # First and second digits of MSN is energy code
+      mutate(EIA_sector = substr(MSN, 3, 4)) %>% # Third and fourth digits of MSN is sector code
+      left_join(EIA_SEDS_fuels, by = "EIA_fuel") %>%
+      left_join(EIA_SEDS_sectors, by = "EIA_sector") %>%
       filter(State != "US") %>%
       mutate(state = State, fuel = GCAM_fuel, sector = GCAM_sector) ->
       x
@@ -55,10 +52,10 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
     # Create 1 of the 2 ouput tables: narrow years from 1971-2010, convert billion BTU to EJ (fuel specific), remove rows that have no defined sector or fuel name
     x %>%
       select(state, sector, fuel, year, value) %>%
-      filter(year %in% GCAM_year) %>%
+      filter(year %in% HISTORICAL_YEARS) %>%
       filter(fuel != "NA", sector != "NA") %>%
-      left_join(A_fuel_conv, by="fuel") %>%
-      mutate(value = value*conv_Bbtu_EJ) %>%
+      left_join(A_fuel_conv, by = "fuel") %>%
+      mutate(value = value * conv_Bbtu_EJ) %>%
       group_by(state, sector, fuel, year) %>%
       summarise(value = sum(value)) %>%
       arrange(fuel, sector) ->
@@ -67,18 +64,15 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
     # Create other output table: leave units as billion BTU, replace NAs in 1971-1979 with values from one year more recent
     x %>%
       select(Data_Status, state, MSN, year, value, EIA_fuel, EIA_sector, sector, fuel, -State, -description.x, -description.y) %>%
-      spread(year, value) %>%
-      mutate(`1979` =if_else(!is.na(`1979`),`1979`,`1980`)) %>%
-      mutate(`1978` =if_else(!is.na(`1978`),`1978`,`1979`)) %>%
-      mutate(`1977` =if_else(!is.na(`1977`),`1977`,`1978`)) %>%
-      mutate(`1976` =if_else(!is.na(`1976`),`1976`,`1977`)) %>%
-      mutate(`1975` =if_else(!is.na(`1975`),`1975`,`1976`)) %>%
-      mutate(`1974` =if_else(!is.na(`1974`),`1974`,`1975`)) %>%
-      mutate(`1973` =if_else(!is.na(`1973`),`1973`,`1974`)) %>%
-      mutate(`1972` =if_else(!is.na(`1972`),`1972`,`1973`)) %>%
-      mutate(`1971` =if_else(!is.na(`1971`),`1971`,`1972`)) %>%
-      gather(year, value, 8:59) %>%
-      select(Data_Status, state, MSN, year, value, EIA_fuel, EIA_sector, sector, fuel) ->
+      arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) ->
+      y
+
+    # To create this second output table, I need to split the dataframe and recombine
+    y %>%
+      filter(year %in% 1971:2011) %>% # custom year range, want to keep NAs in 1960-1970
+      fill(value) %>%
+      bind_rows(filter(y, year %in% 1960:1970)) %>% # Reattaching 1960-1970 rows
+      arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) ->
       L101.EIA_use_all_Bbtu
 
     # ===================================================
@@ -88,7 +82,7 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       add_units("Billion BTU") %>%
       add_comments("GCAM sector and fuel names were added, NAs for years 1971-1979 were replaced with most recent year's data available") %>%
       add_legacy_name("L101.EIA_use_all_Bbtu") %>%
-      add_precursors("gcam-usa/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels", "gcam-usa/EIA_SEDS_sectors") %>%
+      add_precursors("temp-data-inject/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels", "gcam-usa/EIA_SEDS_sectors") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.EIA_use_all_Bbtu
     L101.inEIA_EJ_state_S_F %>%
@@ -96,7 +90,7 @@ module_gcam.usa_LA101.EIA_SEDS <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("GCAM sector and fuel names were added, units converted to EJ, data with no GCAM fuel or sector name removed") %>%
       add_legacy_name("L101.inEIA_EJ_state_S_F") %>%
-      add_precursors("gcam-usa/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels", "gcam-usa/EIA_SEDS_sectors", "gcam-usa/A_fuel_conv") %>%
+      add_precursors("temp-data-inject/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels", "gcam-usa/EIA_SEDS_sectors", "temp-data-inject/A_fuel_conv") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L101.inEIA_EJ_state_S_F
 
