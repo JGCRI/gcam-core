@@ -142,8 +142,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## gdp_mil90usd_ctry:  iso, GCAM_region_ID, year, gdp
     ## gdp_mil90usd_rgn:  GCAM_region_ID, year, gdp
 
-    ## Get the future GDP in the SSP scenarios.  These, it turns out, are PPP
-    ## values in 2005 dollars
+    ## Get the future GDP in the SSP scenarios.  These are PPP values in 2005 dollars
     gdp_bilusd_rgn_Yfut <-
       filter(SSP_database_v9,MODEL == 'OECD Env-Growth' & VARIABLE == 'GDP|PPP') %>%
       standardize_iso('REGION') %>%
@@ -165,13 +164,12 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## Units are billions of 2005$
 
 
-    gdp_bilusd_rgn_Yfut[['scenario']] <- substr(gdp_bilusd_rgn_Yfut[['scenario']], 1, 4)
     gdp.mil90usd.SSP.rgn.yr <- join.gdp.ts(gdp_mil90usd_rgn, gdp_bilusd_rgn_Yfut, 'GCAM_region_ID')
 
     ## Get the IMF GDP growth rates.  Some countries are missing, so we have to
     ## add them in with an assumed zero growth rate.
     imfgdp.growth <-
-      select(IMF_GDP_growth, one_of(c('ISO', IMF_FUTURE_YEARS))) %>%
+      select(IMF_GDP_growth, one_of(c('ISO', IMF_GDP_YEARS))) %>%
       standardize_iso('ISO') %>%
       change_iso_code('rou', 'rom') %>%
       gather(year, gdp.rate, -iso) %>%
@@ -246,7 +244,6 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
       select(scenario, GCAM_region_ID, year, pcgdp)
 
     ## Calculate the PPP-MER conversion factor in 2010 for each region.
-    ## Assume this conversion to be constant beyond 2010.
     ## Our PPP values are in billions of 2005$, so we make that conversion
     ## here too.
     PPP.MER.baseyr <- 2010
@@ -260,9 +257,9 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## The future data is given by SSP scenario, but the final table is scenario
     ## independent, as it should be, since this base year is meant to be a
     ## historical year.  Likewise, the GDP in the PPP/MER base year should also
-    ## be scenario-independent, and mostly it is, except for region 21, which
-    ## has four slightly different values across the 5 SSPs. (Since I know
-    ## you're wondering, it's SSP 2 and 4 that are the same).  The value
+    ## be scenario-independent, and mostly it is, except for the region containing
+    ## the Palestinian Territories, which has four slightly different values across
+    ## the 5 SSPs. (It's SSP 2 and 4 that are the same).  The value
     ## actually used in the old data system is the one for SSP1, so that's the
     ## one we'll use here.  Arguably we should average the values over the 5
     ## scenarios, but the differences are only 1 part in 10^4, so we can just
