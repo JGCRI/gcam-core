@@ -88,13 +88,11 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       arrange(year)
 
-    for (scen in L242.pcgdp_thous90USD_Scen_R_Y$scenario){
-        assign(paste0("L242.IncomeElasticity_bld_",scen),
-               L242.pcgdp_thous90USD_Scen_R_Y %>%
-                 filter(scenario == scen) %>%
-                 select(-scenario)
-                 )
-    }
+    # Split by scenario and remove scenario column from each tibble
+
+    L242.pcgdp_thous90USD_Scen_R_Y <- L242.pcgdp_thous90USD_Scen_R_Y %>%
+      split(.$scenario) %>%
+      lapply(function(df) {select(df, -scenario)})
 
     # ===================================================
 
@@ -111,7 +109,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
       add_flags() ->
       L242.IncomeElasticity_bld_GCAM3
 
-    L242.IncomeElasticity_bld_gSSP1 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["gSSP1"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -121,7 +119,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_gSSP1
 
-    L242.IncomeElasticity_bld_gSSP2 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["gSSP2"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -131,7 +129,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_gSSP2
 
-    L242.IncomeElasticity_bld_gSSP3 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["gSSP3"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -141,7 +139,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_gSSP3
 
-    L242.IncomeElasticity_bld_gSSP4 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["gSSP4"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -151,7 +149,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_gSSP4
 
-    L242.IncomeElasticity_bld_gSSP5 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["gSSP5"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -161,7 +159,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_gSSP5
 
-    L242.IncomeElasticity_bld_SSP1 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["SSP1"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -171,7 +169,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_SSP1
 
-    L242.IncomeElasticity_bld_SSP2 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["SSP2"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -181,7 +179,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_SSP2
 
-    L242.IncomeElasticity_bld_SSP3 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["SSP3"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -191,7 +189,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_SSP3
 
-    L242.IncomeElasticity_bld_SSP4 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["SSP4"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -201,7 +199,7 @@ module_socioeconomics_L242.Bld_Inc_Elas_scenarios <- function(command, ...) {
                      "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") ->
       L242.IncomeElasticity_bld_SSP4
 
-    L242.IncomeElasticity_bld_SSP5 %>%
+    L242.pcgdp_thous90USD_Scen_R_Y[["SSP5"]] %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
