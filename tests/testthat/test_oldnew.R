@@ -89,6 +89,8 @@ test_that("matches old data system output", {
         x
       }
 
+      expect_identical(dim(olddata), dim(newdata), info = paste("Dimensions are not the same for", basename(newf)))
+
       # Some datasets throw errors when tested via `expect_equivalent` because of
       # rounding issues, even when we verify that they're identical to three s.d.
       # I think this is because of differences between readr::write_csv and write.csv
