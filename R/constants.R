@@ -140,6 +140,8 @@ IRRIGATION <- "Irrigation"
 MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
 MAPPED_WATER_TYPES_SHORT <- c("C", "W")
 names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
+DEFAULT_UNLIMITED_WATER_PRICE <- 0
+DEFAULT_UNLIMITED_WITHD_WATER_PRICE <- 0.001
 
 # ======================================================================
 # emissions constants

@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_water_L102.water.supply.unlimited_DISABLED <- function(command, ...) {
+module_water_L102.water.supply.unlimited <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "water/A_unlimited_water_price"))
@@ -30,19 +30,27 @@ module_water_L102.water.supply.unlimited_DISABLED <- function(command, ...) {
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
+
+
+    # all 4 water types
+    water_type <- c( "water consumption", "water withdrawals", "seawater", "biophysical water consumption" )
+
+    # copy for ordering later
+    water_type_order <- water_type
+
+
+    # all historical and future years
+    year <- c(HISTORICAL_YEARS, FUTURE_YEARS)
+
+    # generate a long table format with the all the possible combinations between the 32 GCAM regions, 4 water types, and all the defined years
+    GCAM_region_names %>%
+      repeat_add_columns(tibble(water_type)) %>%
+      select(-region) %>%
+      repeat_add_columns(tibble(year)) %>%
+      mutate(value = if_else(water_type != "water withdrawals",DEFAULT_UNLIMITED_WATER_PRICE,DEFAULT_UNLIMITED_WITHD_WATER_PRICE),
+             year = as.integer(year)) ->
+      L102.all_region_water_type
+
     # ===================================================
 
     # Produce outputs
@@ -50,15 +58,15 @@ module_water_L102.water.supply.unlimited_DISABLED <- function(command, ...) {
     # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
     # There's also a `same_precursors_as(x)` you can use
     # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+
+    L102.all_region_water_type %>%
+      add_title("Water price data for different water types") %>%
+      add_units("$/m3") %>%
+      add_comments("nominal default water prices") %>%
       add_legacy_name("L102.unlimited_water_price_R_W_Y_75USDm3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "water/A_unlimited_water_price") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L102.unlimited_water_price_R_W_Y_75USDm3
 
     return_data(L102.unlimited_water_price_R_W_Y_75USDm3)
@@ -66,6 +74,3 @@ module_water_L102.water.supply.unlimited_DISABLED <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-
