@@ -32,6 +32,10 @@ module_energy_LA116.geo <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
+    # Note that the land area file is not the L100. file that has been pre-processed in the aglu module,
+    # because one of the steps that takes place in the pre-processing is to map Taiwan back to China,
+    # as Taiwan is not an agriculture and land use region. However it is an energy region, so we want
+    # to use the land area file that has Taiwan separated from China.
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     Land_type_area_ha <- get_data(all_data, "aglu/LDS/Land_type_area_ha")
     A16.geo_curves <- get_data(all_data, "energy/A16.geo_curves")
@@ -42,10 +46,10 @@ module_energy_LA116.geo <- function(command, ...) {
     # is the standard in GCAM as long as the model has existed, but still this needs to be
     # confirmed in this initial check
 
-    if( nrow(unique(A16.geo_curves[ c("grade", "extractioncost")])) > length( unique( A16.geo_curves$grade ) ) ){
+    if( n_distinct(A16.geo_curves[ c("grade", "extractioncost")]) > n_distinct(A16.geo_curves$grade)){
       stop( "The geothermal (hydrothermal) supply curves have regionally differentiated price points" )
     }
-    if( nrow(unique(A16.EGS_curves[ c("grade", "extractioncost")])) > length( unique( A16.EGS_curves$grade ) ) ){
+    if( n_distinct(A16.EGS_curves[ c("grade", "extractioncost")]) > n_distinct( A16.EGS_curves$grade)){
       stop( "The geothermal (EGS) supply curves have regionally differentiated price points" )
     }
 
@@ -54,9 +58,9 @@ module_energy_LA116.geo <- function(command, ...) {
     # if the last of the HISTORICAL_YEARS is in the land area data set, use that,
     # otherwise just use the most recent year in the land area data
     if(max(HISTORICAL_YEARS) %in% Land_type_area_ha$year) {
-      geo_land_year = max(HISTORICAL_YEARS)
+      geo_land_year <- max(HISTORICAL_YEARS)
     } else {
-      geo_land_year = max(Land_type_area_ha$year)
+      geo_land_year <- max(Land_type_area_ha$year)
     }
 
     Land_type_area_ha %>%
@@ -92,8 +96,8 @@ module_energy_LA116.geo <- function(command, ...) {
       L116.geothermal_rgn
 
     # Specify the names of the resource table that will be written out
-    L116.table.names <- c( GCAM_REGION_ID, "resource", "subresource", "grade", "available", "extractioncost" )
-    as_tibble( L116.geothermal_rgn[ L116.table.names ]) %>%
+    L116.geothermal_rgn %>%
+      select( GCAM_region_ID, resource, subresource, grade, available, extractioncost ) %>%
       # Documentation
       add_title("Hydrothermal geothermal supply curves by GCAM region") %>%
       add_units("EJ/yr") %>%
@@ -118,7 +122,8 @@ module_energy_LA116.geo <- function(command, ...) {
       summarise(available = sum(available)) ->
       L116.EGS_rgn
 
-    as_tibble( L116.EGS_rgn[ L116.table.names ]) %>%
+    L116.EGS_rgn %>%
+      select( GCAM_region_ID, resource, subresource, grade, available, extractioncost ) %>%
       # Documentation
       add_title("Enhanced Geothermal Systems (EGS) supply curves by GCAM region") %>%
       add_units("EJ/yr") %>%
