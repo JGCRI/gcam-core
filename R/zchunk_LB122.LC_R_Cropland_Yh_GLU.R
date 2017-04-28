@@ -1,6 +1,7 @@
 #' module_aglu_LB122.LC_R_Cropland_Yh_GLU
 #'
-#' This chunk integrates disparate data sources in order to calculate OtherArableLand
+#' This chunk integrates disparate data sources for landcover and harvested area from FAO, Monfreda, and Hyde in order to calculate OtherArableLand
+#' at the GCAM region-GLU level for each year, including historical years.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,11 +9,15 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L122.ag_HA_to_CropLand_R_Y_GLU}, \code{L122.ag_EcYield_kgm2_R_C_Y_GLU}, \code{L122.LC_bm2_R_OtherArableLand_Yh_GLU}, \code{L122.LC_bm2_R_ExtraCropLand_Yh_GLU}, \code{L122.LC_bm2_R_HarvCropLand_C_Yh_GLU}, \code{L122.LC_bm2_R_HarvCropLand_Yh_GLU}. The corresponding file in the
 #' original data system was \code{LB122.LC_R_Cropland_Yh_GLU.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details First, Hyde land cover data is aggregated to the region-GLU level in each year, and supplemented with Monfreda harvested area
+#' information when necessary. Second, FAO fallowland, cropland, and harvested areadata is aggregated from the country level to the region
+#' level. These processed data sources are used to calculate harvested area and available cropland area in each region-GLU in each year.
+#' Finally, fallowland information at the region-GLU level is combined with the residual area = harvested area - available cropland area
+#' at the region-GLU level to calculate OtherArableLand quantities, along with available ExtraCropLand quantities.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author ACS April 2017
 #' @export
 module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -567,8 +572,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     L122.ag_EcYield_kgm2_R_C_Y_GLU %>%
       add_title("Economic yield by GCAM region / commodity / year / GLU") %>%
       add_units("kilogram per meter squared (kg.m2)") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Monfreda agricultural production data is combined with aggregated harvested area data at the") %>%
+      add_comments("region-GLU-commodity level to calculate economic yield.") %>%
       add_legacy_name("L122.ag_EcYield_kgm2_R_C_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_fallowland_kha",
@@ -581,65 +586,63 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       L122.ag_EcYield_kgm2_R_C_Y_GLU
 
     L122.LC_bm2_R_OtherArableLand_Yh_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Other arable land cover by GCAM region / year / GLU") %>%
+      add_units("billion meters squared (bm2)") %>%
+      add_comments("Other Arable Land cover is calculated at the region-GLU level by using FAO fallow land data and ") %>%
+      add_comments("adding the difference Harvested Cropland - Available Cropland. ") %>%
       add_legacy_name("L122.LC_bm2_R_OtherArableLand_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_fallowland_kha",
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_OtherArableLand_Yh_GLU
 
     L122.LC_bm2_R_ExtraCropLand_Yh_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Extra cropland cover by GCAM region / year / GLU") %>%
+      add_units("billion meters squared (bm2)") %>%
+      add_comments("Any land at the region-GLU level for which Harvested Cropland - Available Cropland is positive,") %>%
+      add_comments("making it extra.") %>%
       add_legacy_name("L122.LC_bm2_R_ExtraCropLand_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_fallowland_kha",
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_ExtraCropLand_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Harvested cropland cover by GCAM region / commodity / year / GLU") %>%
+      add_units("billion meters squared (bm2)") %>%
+      add_comments("Harvested cropland at the region-GLU-commodity level is calculated by dividing Monfreda harvested area") %>%
+      add_comments("values by the HarvestedArea:CropLand ratio calculated from Monfreda, FAO, and Hyde land cover and ") %>%
+      add_comments("harvested area data.") %>%
       add_legacy_name("L122.LC_bm2_R_HarvCropLand_C_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_fallowland_kha",
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Harvested cropland cover by GCAM region / year / GLU") %>%
+      add_units("billion meters squared (bm2)") %>%
+      add_comments("Harvested cropland at the region-GLU-commodity level is calculated by dividing Monfreda harvested area") %>%
+      add_comments("values by the HarvestedArea:CropLand ratio calculated from Monfreda, FAO, and Hyde land cover and ") %>%
+      add_comments("harvested area data. This commodity information is then aggregated to the region-GLU level.") %>%
       add_legacy_name("L122.LC_bm2_R_HarvCropLand_Yh_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_fallowland_kha",
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_HarvCropLand_Yh_GLU
