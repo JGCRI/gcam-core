@@ -476,7 +476,9 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # missing values are overwritten to 0:
       mutate(value = if_else(is.na(value),0,value)) %>%
       # bind to the table of OtherArableLand information by region-glu-year:
-      bind_rows(L122.LC_bm2_R_OtherArableLand_Y_GLU, .) ->
+      bind_rows(L122.LC_bm2_R_OtherArableLand_Y_GLU, .) %>%
+      # update the landtype identifier
+      ungroup() %>% mutate(Land_Type = "OtherArableLand") ->
       # store in a table of OtherArableLand by region-glu-year, including historical years:
       L122.LC_bm2_R_OtherArableLand_Yh_GLU
 
@@ -600,7 +602,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_OtherArableLand_Yh_GLU
     L122.LC_bm2_R_ExtraCropLand_Yh_GLU %>%
       add_title("descriptive title of data") %>%
@@ -616,7 +618,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_ExtraCropLand_Yh_GLU
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
       add_title("descriptive title of data") %>%
@@ -632,7 +634,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
     L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
       add_title("descriptive title of data") %>%
