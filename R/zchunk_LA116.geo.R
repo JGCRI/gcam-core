@@ -1,6 +1,9 @@
 #' module_energy_LA116.geo
 #'
-#' Briefly describe what this chunk does.
+#' Generate geothermal (hydrothermal and engineered geothermal systems (EGS)) supply curves by GCAM region
+#' Supply curves developed for the 14 GCAM 3.0 regions are downscaled to the country level on the basis
+#' of land area, and aggregated to the current GCAM regions. The data source for the supply curves is
+#' Hannam et al. 2009: http://www.pnl.gov/main/publications/external/technical_reports/PNNL-19231.pdf
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -15,7 +18,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author GPK April 2017
-#' @export
 module_energy_LA116.geo <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -49,8 +51,16 @@ module_energy_LA116.geo <- function(command, ...) {
 
     # Downscale GCAM 3.0 geothermal resources to countries on the basis of land area
     # Calculate land area shares of countries within region_GCAM3
+    # if the last of the HISTORICAL_YEARS is in the land area data set, use that,
+    # otherwise just use the most recent year in the land area data
+    if(max(HISTORICAL_YEARS) %in% Land_type_area_ha$year) {
+      geo_land_year = max(HISTORICAL_YEARS)
+    } else {
+      geo_land_year = max(Land_type_area_ha$year)
+    }
+
     Land_type_area_ha %>%
-      filter(year == max(HISTORICAL_YEARS)) %>%
+      filter(year == geo_land_year) %>%
       group_by( iso ) %>%
       summarise(value = as.numeric(sum(value))) %>%
       left_join_error_no_match(iso_GCAM_regID[c("iso", "region_GCAM3", GCAM_REGION_ID)], by = "iso") ->
