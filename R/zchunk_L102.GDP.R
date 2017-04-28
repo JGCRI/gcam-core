@@ -51,12 +51,12 @@ join.gdp.ts <- function(past, future, grouping) {
   ## Find the base year
   base.year <- max(dplyr::intersect(past$year, future$year))
   ## Base year gdp from the future dataset
-  baseyear.future.gdp <- filter(future, year==base.year) %>%
+  baseyear.future.gdp <- filter(future, year == base.year) %>%
     rename(base.gdp = gdp) %>%
     select(-year)
 
   gdp.future.ratio <- filter(future, year > base.year) %>%
-    left_join_error_no_match(baseyear.future.gdp, by=c('scenario', grouping)) %>%
+    left_join_error_no_match(baseyear.future.gdp, by = c('scenario', grouping)) %>%
     mutate(gdp.ratio = gdp / base.gdp) %>%
     select(one_of(c('scenario', grouping, 'year', 'gdp.ratio')))
 
@@ -67,7 +67,7 @@ join.gdp.ts <- function(past, future, grouping) {
     select(-year)
 
   rslt <- left_join(baseyear.past.gdp, gdp.future.ratio,
-                    by=c('scenario',grouping)) %>%
+                    by = c('scenario',grouping)) %>%
     mutate(gdp = base.gdp * gdp.ratio) %>%
     select(one_of(c('scenario', grouping, 'year', 'gdp'))) %>%
     bind_rows(gdp.past, .)
@@ -134,7 +134,7 @@ module_socioeconomics_L102.GDP <- function(command, ...) {
     ## because we will use them again when we make the IMF adjustments
     gdp_mil90usd_ctry <-
       left_join_error_no_match(L100.gdp_mil90usd_ctry_Yh, iso_region32_lookup,
-                               by='iso') %>%
+                               by = 'iso') %>%
       rename(gdp = value)
     gdp_mil90usd_rgn <- gdp_mil90usd_ctry %>%
       group_by(GCAM_region_ID, year) %>%

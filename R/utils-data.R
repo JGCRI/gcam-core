@@ -42,6 +42,7 @@ get_title <- function(x) { attr(x, ATTR_TITLE) }
 #' @return \code{x} with comments appended to any existing comments.
 add_comments <- function(x, comments) {
   assertthat::assert_that(is.character(comments) | is.null(comments))
+  comments <- gsub("[\r\n]", " ", comments)  # remove any line breaks (h/t CH)
   attr(x, ATTR_COMMENTS) <- c(attr(x, ATTR_COMMENTS), comments)
   x
 }
