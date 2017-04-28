@@ -229,7 +229,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
         # Join the last period ratios
         full_join(YieldRatio.last, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
         # Translate from yield ratios to annual improvement rates for this period
-        mutate(value = YieldRatio / YieldRatio.last ^ (1 / timestep) - 1) %>%
+        mutate(value = (YieldRatio / YieldRatio.last) ^ (1 / timestep) - 1) %>%
         select(-YieldRatio, -YieldRatio.last) %>%
         # Bind all time periods in this loop
         bind_rows(L112.agBio_YieldRate) ->
