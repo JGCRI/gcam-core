@@ -18,9 +18,9 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/A23.globaltech_eff",
              FILE = "energy/calibrated_techs",
-             FILE = "temp-data-inject/L123.in_EJ_R_elec_F_Yh",
-             FILE = "temp-data-inject/L123.out_EJ_R_elec_F_Yh",
-             FILE = "temp-data-inject/L123.eff_R_elec_F_Yh"))
+             "L123.in_EJ_R_elec_F_Yh",
+             "L123.out_EJ_R_elec_F_Yh",
+             "L123.eff_R_elec_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1231.in_EJ_R_elec_F_tech_Yh",
              "L1231.out_EJ_R_elec_F_tech_Yh",
@@ -32,9 +32,9 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
     # Load required inputs
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "temp-data-inject/L123.in_EJ_R_elec_F_Yh")
-    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "temp-data-inject/L123.out_EJ_R_elec_F_Yh")
-    L123.eff_R_elec_F_Yh <- get_data(all_data, "temp-data-inject/L123.eff_R_elec_F_Yh")
+    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
+    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
+    L123.eff_R_elec_F_Yh <- get_data(all_data, "L123.eff_R_elec_F_Yh")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
