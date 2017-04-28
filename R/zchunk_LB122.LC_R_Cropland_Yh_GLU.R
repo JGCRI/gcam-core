@@ -438,7 +438,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       select(-value.x, -value.y, -Land_Type) %>%
       # if the harvested to cropland ratio, value, is less than the min acceptable harvested area to cropland,
       # MIN_HA_TO_CROPLAND, replace with MIN_HA_TO_CROPLAND
-      mutate(value = if_else(value < MIN_HA_TO_CROPLAND, MIN_HA_TO_CROPLAND, value))
+      mutate(value = if_else(value < MIN_HA_TO_CROPLAND, MIN_HA_TO_CROPLAND, value)) %>%
       # if the harvested to cropland ratio is greater than the max acceptable harvested area to cropland,
       # MAX_HA_TO_CROPLAND, replace with MAX_HA_TO_CROPLAND
       mutate(value = if_else(value > MAX_HA_TO_CROPLAND, MAX_HA_TO_CROPLAND, value)) ->
@@ -597,6 +597,82 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
 
     # Land use history
+    # Lines 181 - 200 in original file
+    # printlog( "Cropland quantities prior to the first AGLU historical year, for spinup of simple carbon cycle model" )
+    # printlog( "NOTE: Simply assigning this to other arable land" )
+    # old comment: This method differs from what we had done in the past, where 1971 land cover quantities were rolled back on the basis of the cropland ratios
+    # old comment: between each land history year and 1971. The problem with this method is that zero values in 1971 can not match non-zero values in prior years.
+    # old comment: The current method instead will have apparent land use change in going from the land history years to the model base years, but due to equal
+    # old comment: soil carbon contents, and similar/small vegetative carbon contents, the net emissions signal should be negligible.
+    # old comment: First, make a table with cropland in the pre-aglu years
+    L120.LC_bm2_R_LT_Yh_GLU %>%
+      # only save the years in pre-AGLU years:
+      filter(year %in% PREAGLU_YEARS) %>%
+      # insure that there is cropland for each GCAM region-glu that appear L122.LC_bm2_R_CropLand_Y_GLU:
+      tidyr::complete(Land_Type = unique(L122.LC_bm2_R_CropLand_Y_GLU$Land_Type),
+                      tidyr::nesting(GCAM_region_ID, GLU, year), fill = list(value = NA)) %>%
+      unique() %>%
+      # join this historical cropland information to the region-glu-landtypes of L122.LC_bm2_R_CropLand_Y_GLU, preserving
+      # NAs as in old DS:
+      left_join(unique(L122.LC_bm2_R_CropLand_Y_GLU[, colnames(L122.LC_bm2_R_CropLand_Y_GLU)
+                                                                   %in% c("GCAM_region_ID", "GLU", "Land_Type")]), .,
+                               by = c("GCAM_region_ID", "GLU", "Land_Type") ) %>%
+      # missing values are overwritten to 0:
+      mutate(value = if_else(is.na(value),0,value)) %>%
+      # bind to the table of OtherArableLand information by region-glu-year:
+      bind_rows(L122.LC_bm2_R_OtherArableLand_Y_GLU, .) ->
+      # store in a table of OtherArableLand by region-glu-year, including historical years:
+      L122.LC_bm2_R_OtherArableLand_Yh_GLU
+
+
+    # Lines 202-205 in original file
+    # printlog( "All other cropland uses are zero in the pre-aglu years" )
+    # Specifically, ExtraCropLand is expanded to include historical years in each region-glu, with a value of 0.
+    # Take ExtraCropLand by region-glu-year:
+    L122.LC_bm2_R_ExtraCropLand_Y_GLU %>%
+      # expand to include history years and fill in those values to be 0:
+      tidyr::complete(year = c(PREAGLU_YEARS, AGLU_HISTORICAL_YEARS),
+                      nesting(GCAM_region_ID, GLU, Land_Type),
+                      fill = list(value = 0)) ->
+      # store in a table of ExtraCropland by region-glu-year, including historical years:
+      L122.LC_bm2_R_ExtraCropLand_Yh_GLU
+
+
+    # Lines 207-210 in original file
+    # old comment: Harvested cropland history
+    # printlog( "Using historical cropland ratios to calculate land use history for harvested cropland, by crop" )
+    # Actually, HarvCropLand is expanded to include historical years for each region-glu-commodity, with a vlaue of 0.
+    # Take HarvCropLand by region-commodity-glu-year:
+    L122.LC_bm2_R_HarvCropLand_C_Y_GLU %>%
+      # expand to include history years and fill in those values to be 0:
+      tidyr::complete(year = c(PREAGLU_YEARS, AGLU_HISTORICAL_YEARS),
+                      nesting(GCAM_region_ID, GCAM_commodity, GLU, Land_Type),
+                      fill = list(value = 0)) ->
+      # store in a table of HarvCropland by region-commodity-glu-year, including historical years:
+      L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
+
+    # Lines 212-217 in original file
+    # old comment: Combine crop types to get land use history by all harvested cropland.
+    # Use the table of HarvCropland by region-commodity-glu-year, including historical years, L122.LC_bm2_R_HarvCropLand_C_Yh_GLU,
+    # and aggregate across commodity to arrive at a table of All Harvested Cropland by region-glu-year, including historical years.
+    # Take HarvCropland by region-commodity-glu-year:
+    L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+      # remove commodity because that is what aggregate over:
+      select(-GCAM_commodity) %>%
+      # group by region-glu-year to aggregate:
+      group_by(GCAM_region_ID, GLU, year) %>%
+      # aggregate:
+      summarise(value = sum(value)) ->
+      # store in a table of all HarvCropland by region-glu-year, including historical years:
+      L122.LC_bm2_R_HarvCropLand_Yh_GLU
+
+    # remove the now-unneeded Land_Type identifier from HarvCropland by region-commodity-glu-year:
+    L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
+      select(-Land_Type) ->
+      L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
+
+
+
 
 
 
@@ -638,7 +714,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.ag_EcYield_kgm2_R_C_Y_GLU
-    tibble() %>%
+    L122.LC_bm2_R_OtherArableLand_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -654,7 +730,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.LC_bm2_R_OtherArableLand_Yh_GLU
-    tibble() %>%
+    L122.LC_bm2_R_ExtraCropLand_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -670,7 +746,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.LC_bm2_R_ExtraCropLand_Yh_GLU
-    tibble() %>%
+    L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
@@ -686,7 +762,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
-    tibble() %>%
+    L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
