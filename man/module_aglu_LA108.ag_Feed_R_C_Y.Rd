@@ -18,11 +18,15 @@ the generated outputs: \code{L108.ag_Feed_Mt_R_C_Y}, \code{L108.ag_NetExp_Mt_R_F
 original data system was \code{LA108.ag_Feed_R_C_Y.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Compute (1) feed by GCAM commodity, region, and year, and (2) net exports of FodderHerb.
 }
 \details{
-Describe in detail what this chunk does.
+Computes (1) feed by GCAM commodity, region, and year, and (2) net exports of FodderHerb.
+The feed calculations combine IMAGE and FAO data together, using FAO to disaggregate IMAGE to GCAM_commodity.
+Some adjustments are needed to deal with inconsistencies between IMAGE demand & FAO supply.
+Excess supply is mapped to OtherUses. Excess demand is mapped to other sources (Residue, Pasture).
+This information is used to calculate net exports of FodderHerb too.
 }
 \author{
-YourInitials CurrentMonthName 2017
+KVC April 2017
 }
