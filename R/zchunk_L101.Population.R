@@ -14,7 +14,6 @@
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author BBL April 2017
-#' @export
 module_socioeconomics_L101.Population <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -135,7 +134,7 @@ module_socioeconomics_L101.Population <- function(command, ...) {
     # Multiply these population numbers by the shares of each country within GCAM region
     L101.Popshares_ctryRG3_Y %>%
       left_join_error_no_match(L101.Pop_thous_GCAM3_RG3_Y, by = c("region_GCAM3", "year")) %>%
-      mutate(value = value.x * value.y) %>%
+      mutate(value = value.x * value.y, year = as.integer(year)) %>%
       select(-value.x, -value.y) ->
       L101.Pop_thous_GCAM3_ctry_Y
 

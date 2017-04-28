@@ -83,7 +83,8 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       mutate(Area_bm2 = approx_fun(year, Area_bm2)) %>%
       filter(year %in% aglu.LAND_COVER_YEARS) %>%
       arrange(GCAM_region_ID, Land_Type, GLU, year) %>%
-      rename(value = Area_bm2) ->
+      rename(value = Area_bm2) %>%
+      mutate(year = as.integer(year)) ->
       L120.LC_bm2_R_LT_Yh_GLU
 
     # Subset the land types that are not further modified
