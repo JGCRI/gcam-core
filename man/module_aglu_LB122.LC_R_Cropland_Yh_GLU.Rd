@@ -18,11 +18,16 @@ the generated outputs: \code{L122.ag_HA_to_CropLand_R_Y_GLU}, \code{L122.ag_EcYi
 original data system was \code{LB122.LC_R_Cropland_Yh_GLU.R} (aglu level1).
 }
 \description{
-This chunk integrates disparate data sources in order to calculate OtherArableLand
+This chunk integrates disparate data sources for landcover and harvested area from FAO, Monfreda, and Hyde in order to calculate OtherArableLand
+at the GCAM region-GLU level for each year, including historical years.
 }
 \details{
-Describe in detail what this chunk does.
+First, Hyde land cover data is aggregated to the region-GLU level in each year, and supplemented with Monfreda harvested area
+information when necessary. Second, FAO fallowland, cropland, and harvested areadata is aggregated from the country level to the region
+level. These processed data sources are used to calculate harvested area and available cropland area in each region-GLU in each year.
+Finally, fallowland information at the region-GLU level is combined with the residual area = harvested area - available cropland area
+at the region-GLU level to calculate OtherArableLand quantities, along with available ExtraCropLand quantities.
 }
 \author{
-YourInitials CurrentMonthName 2017
+ACS April 2017
 }
