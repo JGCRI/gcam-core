@@ -21,8 +21,8 @@ test_that('screening for use of forbidden functions works', {
     gtfo <- match(x,y)
   }
 
-  expect_equal(gcamdata:::screen_forbidden(testgood), character())
-  tb <- gcamdata:::screen_forbidden(testbad)
+  expect_equal(screen_forbidden(testgood), character())
+  tb <- screen_forbidden(testbad)
   expect_equal(tb[,1], c("(?<!error_no_)match", "ifelse", "ifelse", "melt", "cast", "rbind",
                           "cbind", "merge"))
 })

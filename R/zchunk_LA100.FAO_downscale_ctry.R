@@ -216,15 +216,6 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     # From here on, only use the specified AGLU historical years
     FAO_data_ALL_5yr <- FAO_data_ALL_5yr[c(coitel_colnames, "iso", as.character(AGLU_HISTORICAL_YEARS))]
 
-    # Check that data is the same!
-    # old2 <- readr::read_csv("~/Desktop/FAO_data_ALL2.csv")
-    # new2 <- FAO_data_ALL[c(2,3,4,5,1,6, 7:58)]
-    # new2$element <- gsub(pattern = "_[A-Z]*$", "", new2$element)
-    # new2$element <- gsub(pattern = "^FAO_", "", new2$element)
-    # names(new2) <- names(old2)
-    # print(all.equal(new2, old2))
-    # browser()
-
     # Rename columns to old names
     FAO_data_ALL_5yr %>%
       rename(country.codes = `country codes`,
@@ -237,7 +228,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     FAO_data_ALL_5yr$element <- gsub(pattern = "_[A-Z]*$", "", FAO_data_ALL_5yr$element)
     FAO_data_ALL_5yr$element <- gsub(pattern = "^FAO_", "", FAO_data_ALL_5yr$element)
     FAO_data_ALL_5yr %>%
-      gather(year, value, -countries, -country.codes, -item, -item.codes, -element, -element.codes, -iso) ->
+      gather(year, value, -countries, -country.codes, -item, -item.codes, -element, -element.codes, -iso) %>%
+      mutate(year = as.integer(year)) ->
       FAO_data_ALL_5yr
 
     # Re-split into separate tables for each element
@@ -311,11 +303,13 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
     L100.FAO_fallowland_kha %>%
       add_title("FAO fallow land area by country, year") %>%
       add_units("kha") %>%
+      add_flags(FLAG_PROTECT_FLOAT) %>%
       add_precursors("aglu/FAO_fallowland_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_fallowland_kha
     L100.FAO_harv_CL_kha %>%
       add_title("FAO harvested cropland (temporary crops) area by country, year") %>%
       add_units("kha") %>%
+      add_flags(FLAG_PROTECT_FLOAT) %>%
       add_precursors("aglu/FAO_harv_CL_kha_RESOURCESTAT", "aglu/AGLU_ctry") ->
       L100.FAO_harv_CL_kha
     L100.FAO_Fert_Cons_tN %>%

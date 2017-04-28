@@ -5,4 +5,7 @@
 # gcamdata
 GCAM data system rewrite!
 
+![](https://github.com/bpbond/gcamdata/blob/master/figures/network_current.png)
+
 ![](https://github.com/bpbond/gcamdata/blob/master/figures/network.png)
+
