@@ -39,17 +39,6 @@ module_aglu_LA108.ag_Feed_R_C_Y <- function(command, ...) {
     L103.ag_Prod_Mt_R_C_Y <- get_data(all_data, "L103.ag_Prod_Mt_R_C_Y")
     L107.an_Feed_Mt_R_C_Sys_Fd_Y <- get_data(all_data, "L107.an_Feed_Mt_R_C_Sys_Fd_Y")
 
-    # TEMP: Fix integer year columns
-    L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
-      ungroup() %>%
-      mutate(year = as.integer(year) ) ->
-      L107.an_Feed_Mt_R_C_Sys_Fd_Y
-
-    L100.FAO_ag_Feed_t %>%
-      ungroup() %>%
-      mutate(year = as.integer(year) ) ->
-      L100.FAO_ag_Feed_t
-
     # Part 1: FEEDCROPS
     # Compute regional feedcrop demands by GCAM region, commodity, and year in Mt/yr.
     # Use crop-specific information from FAO, in combination with feed totals from IMAGE,

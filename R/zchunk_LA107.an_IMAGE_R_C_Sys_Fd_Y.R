@@ -42,28 +42,28 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     if (ncol(L100.IMAGE_an_Prodmixfrac_ctry_C_Y) > 5 ){
       L100.IMAGE_an_Prodmixfrac_ctry_C_Y %>%
         gather(year, value, -iso, -IMAGE_region_ID, -commodity) %>%
-        mutate( year = substr(year, 2, 5)) ->
+        mutate(year = as.integer(substr(year, 2, 5))) ->
         L100.IMAGE_an_Prodmixfrac_ctry_C_Y
     }
 
     if (ncol(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y) > 7 ){
       L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y %>%
         gather(year, value, -iso, -IMAGE_region_ID, -commodity, -system, -input) %>%
-        mutate( year = substr(year, 2, 5)) ->
+        mutate(year = as.integer(substr(year, 2, 5))) ->
         L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y
     }
 
     if (ncol(L100.IMAGE_an_FeedIO_ctry_C_Sys_Y) > 6 ){
       L100.IMAGE_an_FeedIO_ctry_C_Sys_Y %>%
         gather(year, value, -iso, -IMAGE_region_ID, -commodity, -system) %>%
-        mutate( year = substr(year, 2, 5)) ->
+        mutate(year = as.integer(substr(year, 2, 5))) ->
         L100.IMAGE_an_FeedIO_ctry_C_Sys_Y
     }
 
     if (ncol(L105.an_Prod_Mt_ctry_C_Y) > 4 ){
       L105.an_Prod_Mt_ctry_C_Y %>%
         gather(year, value, -iso, -GCAM_commodity) %>%
-        mutate( year = substr(year, 2, 5)) ->
+        mutate(year = as.integer(substr(year, 2, 5))) ->
         L105.an_Prod_Mt_ctry_C_Y
     }
 
@@ -99,13 +99,13 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L107.an_Prod_Mt_ctry_C_Y %>%
       # bring in the mixed fraction for each country, commodity, year as value.y. A left_join rather than
       # left_join_error_no_match is used because we preserve the NA's from mismatches:
-      left_join( L100.IMAGE_an_Prodmixfrac_ctry_C_Y, by = c("iso","year", "GCAM_commodity"="commodity"))%>%
+      left_join( L100.IMAGE_an_Prodmixfrac_ctry_C_Y, by = c("iso", "year", "GCAM_commodity"="commodity"))%>%
       # mixed animal production = total animal production * fraction mixed for each country, commodity, year:
       mutate(value = value.x * value.y) %>%
       # drop columns don't care about:
       select(-value.x, -value.y, - IMAGE_region_ID) %>%
       # add the system identifier indicating this is mixed production:
-      mutate(system="Mixed") ->
+      mutate(system = "Mixed") ->
       # store in a table specifying mixed animal production by country, commodity, and year
       L107.an_Prod_Mt_ctry_C_mix_Y
 
@@ -115,7 +115,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       # pastoral animal production = total animal production - mixed animal production for each country, commodity, year:
       mutate(value = value-L107.an_Prod_Mt_ctry_C_mix_Y$value) %>%
       # add the system identifier indicating this is pastoral production:
-      mutate(system="Pastoral") ->
+      mutate(system = "Pastoral") ->
       # store in a table specifying pastoral animal production by country, commodity, and year
       L107.an_Prod_Mt_ctry_C_past_Y
 
@@ -134,11 +134,9 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     L107.an_Prod_Mt_ctry_C_Sys_Y %>%
       # add a column containing the feed types from the IMAGE feed fraction table, L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y and
       # repeat the entire animal production for each unique country, commodity, system, year combo dataframe for each feed type:
-      repeat_add_columns( tibble::tibble(unique(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y$input)))%>%
-      # rename the added column to something more sensible:
-      rename(feed = `unique(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y$input)`) %>%
+      repeat_add_columns( tibble::tibble(feed = unique(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y$input)))%>%
       # bring in the feed fraction for each country, commodity, system, year as value.y:
-      left_join(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y,by = c("iso","year",  "GCAM_commodity" = "commodity", "system", "feed"="input"))%>%
+      left_join(L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y,by = c("iso", "year", "GCAM_commodity" = "commodity", "system", "feed"="input"))%>%
       # calculate feed type animal production = total animal production * fraction feed type for each country, commodity, system, year:
       mutate(value = value.x *  value.y) %>%
       # drop columns don't care about:
@@ -156,7 +154,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # Take the animal production by country, commodity, system, feed type, and year table
     L107.an_Prod_Mt_ctry_C_Sys_Fd_Y %>%
       # add the country, commodity, system, year input output coefficient from IMAGE data:
-      left_join_error_no_match(L100.IMAGE_an_FeedIO_ctry_C_Sys_Y,by = c("iso","year",  "GCAM_commodity" = "commodity", "system"))%>%
+      left_join_error_no_match(L100.IMAGE_an_FeedIO_ctry_C_Sys_Y,by = c("iso", "year",  "GCAM_commodity" = "commodity", "system"))%>%
       # Calculate the country, commodity, system, feed type, year consumption = [country, commodity, system, feed type, year production] * [country, commodity, system, year IO from IMAGE]:
       mutate(value = value.x * value.y) %>%
       # drop columns don't care about:
@@ -173,9 +171,9 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
       # drop the country:
       select(-iso) %>%
-      #group unique identifiers:
+      # group unique identifiers:
       group_by(GCAM_region_ID, GCAM_commodity, year, system, feed) %>%
-      #sum over the actual values for each unique identifier:
+      # sum over the actual values for each unique identifier:
       summarise(value=sum(value)) ->
       # store in a table specifying animal production by region, commodity, system, feed type, and year:
       L107.an_Prod_Mt_R_C_Sys_Fd_Y
@@ -186,9 +184,9 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       mutate(GCAM_region_ID =  left_join_error_no_match(., iso_GCAM_regID, by = c("iso"))$GCAM_region_ID) %>%
       # drop the country:
       select(-iso) %>%
-      #group unique identifiers:
+      # group unique identifiers:
       group_by(GCAM_region_ID, GCAM_commodity, year, system, feed) %>%
-      #sum over the actual values for each unique identifier:
+      # sum over the actual values for each unique identifier:
       summarise(value=sum(value)) ->
       # store in a table specifying feed consumption by region, commodity, system, feed type, and year:
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
