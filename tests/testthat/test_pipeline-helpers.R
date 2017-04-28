@@ -66,3 +66,47 @@ test_that("protect and unprotect integer cols work", {
     unprotect_integer_cols -> d3
   expect_equal(names(d3), c("iso", "2050"))
 })
+
+
+test_that("left_join_keep_first_only works", {
+  x <- tibble(iso = c('gud', 'bad', 'ugy'),
+              year = c(2000, 2000, 2001),
+              value = c(1.1, 2.2, 3.3))
+  y <- tibble(iso = c('gud', 'bad', 'ugy', 'ugy'),
+              year = c(2000, 2000, 2000, 2001),
+              coef = c(1, 2, 3, 4))
+
+  ## test explicit by arg is required
+  expect_error(left_join_keep_first_only(x,y))
+
+  ## test matching on one column
+  r1 <- left_join_keep_first_only(x, y, by = 'iso')
+  expect_equal(r1,
+               tibble(iso = x$iso,
+                      year.x = x$year,
+                      value = x$value,
+                      year.y = c(2000, 2000, 2000),
+                      coef = c(1,2,3)
+               ))
+
+  ## test matching on two columns with only one match
+  r2 <- left_join_keep_first_only(x, y, by = c('iso', 'year'))
+  expect_equal(r2, mutate(x, coef = c(1, 2, 4)))
+
+  ## test matching on two columns with two matches
+  x2 <- bind_rows(x,
+                  tibble(iso = 'ugy',
+                         year = 2000,
+                         value = 4.4))
+  ## This case is weird.  Using it in practice is probably an error, but
+  ## nevertheless it works as advertised
+  r3 <- left_join_keep_first_only(x2, y, by = 'iso')
+  expect_equal(r3,
+               mutate(x2, year.x = year, year.y = rep(2000, 4), coef = c(1, 2, 3, 3)) %>%
+                 select(-year))
+  ## more sensible usage
+  r4 <- left_join_keep_first_only(x2, y, by = c('iso','year'))
+  expect_equal(r4,
+               mutate(x2, coef = c(1, 2, 4, 3)))
+
+})
