@@ -532,7 +532,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     L122.LC_bm2_R_ExtraCropLand_Yh_GLU %>%
       ungroup() %>%
       mutate(year = as.integer(year),
-             GCAM_region_ID = as.integer(GCAM_region_ID)) ->
+             GCAM_region_ID = as.integer(GCAM_region_ID),
+             value = format(value, digits = 12)) ->
       L122.LC_bm2_R_ExtraCropLand_Yh_GLU
 
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
@@ -549,24 +550,23 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
     # Produce outputs
     L122.ag_HA_to_CropLand_R_Y_GLU  %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_title("Harvested area to cropland ratio by GCAM region / year / GLU") %>%
+      add_units("Unitless ratio") %>%
+      add_comments("FAO harvested area, fallow area and land cover area, with Monfreda harvested area and Hyde") %>%
+      add_comments("land cover data are used to calculate harvested area:cropland for every GCAM region-GLU") %>%
       add_legacy_name("L122.ag_HA_to_CropLand_R_Y_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_fallowland_kha",
                      "L100.FAO_CL_kha",
                      "L100.FAO_harv_CL_kha",
                      "L103.ag_HA_bm2_R_C_Y_GLU",
-                     "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.ag_HA_to_CropLand_R_Y_GLU
 
     L122.ag_EcYield_kgm2_R_C_Y_GLU %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Economic yield by GCAM region / commodity / year / GLU") %>%
+      add_units("kilogram per meter squared (kg.m2)") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L122.ag_EcYield_kgm2_R_C_Y_GLU") %>%
