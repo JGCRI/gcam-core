@@ -1,4 +1,4 @@
-#' module_energy_LA1231.elec_tech
+#' module_water_L145.water.demand.municipal
 #'
 #' Briefly describe what this chunk does.
 #'
@@ -6,35 +6,39 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L1231.in_EJ_R_elec_F_tech_Yh}, \code{L1231.out_EJ_R_elec_F_tech_Yh}, \code{L1231.eff_R_elec_F_tech_Yh}. The corresponding file in the
-#' original data system was \code{LA1231.elec_tech.R} (energy level1).
+#' the generated outputs: \code{L145.municipal_water_R_W_Yh_km3}, \code{L145.municipal_water_cost_R_75USD_m3}, \code{L145.municipal_water_eff_R_Y}. The corresponding file in the
+#' original data system was \code{L145.water.demand.municipal.R} (water level1).
 #' @details Describe in detail what this chunk does.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
 #' @author YourInitials CurrentMonthName 2017
 #' @export
-module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
+module_water_L145.water.demand.municipal_DISABLED <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/A23.globaltech_eff",
-             FILE = "energy/calibrated_techs",
-             "L123.in_EJ_R_elec_F_Yh",
-             "L123.out_EJ_R_elec_F_Yh",
-             "L123.eff_R_elec_F_Yh"))
+    return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "common/GCAM_region_names",
+             FILE = "aglu/AGLU_ctry",
+             FILE = "water/FAO_municipal_water_AQUASTAT",
+             FILE = "water/IBNET_municipal_water_cost_USDm3",
+             FILE = "water/municipal_water_use_efficiency",
+             FILE = "water/manufacturing_water_mapping"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1231.in_EJ_R_elec_F_tech_Yh",
-             "L1231.out_EJ_R_elec_F_tech_Yh",
-             "L1231.eff_R_elec_F_tech_Yh"))
+    return(c("L145.municipal_water_R_W_Yh_km3",
+             "L145.municipal_water_cost_R_75USD_m3",
+             "L145.municipal_water_eff_R_Y"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
-    L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
-    L123.eff_R_elec_F_Yh <- get_data(all_data, "L123.eff_R_elec_F_Yh")
+    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
+    FAO_municipal_water_AQUASTAT <- get_data(all_data, "water/FAO_municipal_water_AQUASTAT")
+    IBNET_municipal_water_cost_USDm3 <- get_data(all_data, "water/IBNET_municipal_water_cost_USDm3")
+    municipal_water_use_efficiency <- get_data(all_data, "water/municipal_water_use_efficiency")
+    manufacturing_water_mapping <- get_data(all_data, "water/manufacturing_water_mapping")
 
     # ===================================================
     # TRANSLATED PROCESSING CODE GOES HERE...
@@ -51,10 +55,10 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
     # }
     #
     #
+    # NOTE: there are `merge` calls in this code. Be careful!
+    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
     # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
-    # NOTE: This code uses vecpaste
-    # This function can be removed; see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
     # ===================================================
 
     # Produce outputs
@@ -67,33 +71,33 @@ module_energy_LA1231.elec_tech_DISABLED <- function(command, ...) {
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.in_EJ_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L145.municipal_water_R_W_Yh_km3") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.in_EJ_R_elec_F_tech_Yh
+      L145.municipal_water_R_W_Yh_km3
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.out_EJ_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L145.municipal_water_cost_R_75USD_m3") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.out_EJ_R_elec_F_tech_Yh
+      L145.municipal_water_cost_R_75USD_m3
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
-      add_legacy_name("L1231.eff_R_elec_F_tech_Yh") %>%
+      add_legacy_name("L145.municipal_water_eff_R_Y") %>%
       add_precursors("precursor1", "precursor2", "etc") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
-      L1231.eff_R_elec_F_tech_Yh
+      L145.municipal_water_eff_R_Y
 
-    return_data(L1231.in_EJ_R_elec_F_tech_Yh, L1231.out_EJ_R_elec_F_tech_Yh, L1231.eff_R_elec_F_tech_Yh)
+    return_data(L145.municipal_water_R_W_Yh_km3, L145.municipal_water_cost_R_75USD_m3, L145.municipal_water_eff_R_Y)
   } else {
     stop("Unknown command")
   }
