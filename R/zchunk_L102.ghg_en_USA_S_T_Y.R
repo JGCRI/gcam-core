@@ -12,16 +12,16 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author HCM April 2017
 #' @export
-module_emissions_L102.ghg_en_USA_S_T_Y_DISABLED <- function(command, ...) {
+module_emissions_L102.ghg_en_USA_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "energy/IEA_flow_sector",
-             FILE = "energy/IEA_product_fuel",
+             FILE = "energy/mappings/IEA_flow_sector",
+             FILE = "energy/mappings/IEA_product_fuel",
              FILE = "emissions/EPA_ghg_tech",
              FILE = "emissions/GCAM_sector_tech",
-             FILE = "temp-data-inject/L101.in_EJ_R_en_Si_F_Yh",
+             FILE = "L101.in_EJ_R_en_Si_F_Yh",
              FILE = "emissions/EPA_FCCC_GHG_2005"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L102.ghg_tgej_USA_en_Sepa_F_2005"))
@@ -31,46 +31,77 @@ module_emissions_L102.ghg_en_USA_S_T_Y_DISABLED <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    IEA_flow_sector <- get_data(all_data, "energy/IEA_flow_sector")
-    IEA_product_fuel <- get_data(all_data, "energy/IEA_product_fuel")
+    IEA_flow_sector <- get_data(all_data, "energy/mappings/IEA_flow_sector")
+    IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
     EPA_ghg_tech <- get_data(all_data, "emissions/EPA_ghg_tech")
     GCAM_sector_tech <- get_data(all_data, "emissions/GCAM_sector_tech")
-    L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "temp-data-inject/L101.in_EJ_R_en_Si_F_Yh")
+    L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh")
     EPA_FCCC_GHG_2005 <- get_data(all_data, "emissions/EPA_FCCC_GHG_2005")
 
-    # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are `merge` and/or 'match' calls in this code. Be careful!
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Merge-and-Match
-    # ===================================================
+    # Convert EPA GHG emissions inventory to Tg and aggregate by sector and fuel
+    EPA_FCCC_GHG_2005 %>% # start from EPA GHG
+      left_join(EPA_ghg_tech, by = "Source_Category") %>% # define category
+      select(-CO2) %>% # non-CO2 only
+      group_by(sector, fuel) %>%
+      summarize_if(is.numeric, sum, na.rm = FALSE) %>% # sum by sector and fuel
+      filter(!is.na(sector), !is.na(fuel)) %>% # delete NA sectors and fuel
+      mutate_all( funs( replace(., is.na(.), 1))) %>% # placeholder values for existing sectors that has no value.
+      # NOTE: THIS IS A HACK. EPA DOESN'T HAVE EMISSIONS IN SOME SECTORS, WHEN EDGAR DOES. THIS WILL MAKE EMISSIONS PROPORTIONAL TO FUEL USE. NOT SURE IF THIS IS THE BEST STRATEGY.
+      mutate_if(is.numeric, funs(. * CONV_GG_TG)) ->  # Convert to Tg
+      L102.ghg_tg_USA_en_Sepa_F_2005 # GHG balance in 2005
+
+    if(OLD_DATA_SYSTEM_BEHAVIOR) {
+    # incorrect fuel name for transport from input mapping.
+    # organize energy balances in USA 2005
+        L101.in_EJ_R_en_Si_F_Yh %>% # start from energy balances
+        filter(GCAM_region_ID == gcam.USA_CODE) %>% # USA region only
+        select(-GCAM_region_ID) %>%
+        gather(variable, energy, -sector, -fuel, -technology) %>%
+        filter(variable == "X2005") %>%  # 2005 data only
+        left_join_keep_first_only( select(GCAM_sector_tech, sector, fuel, EPA_agg_sector, EPA_agg_fuel_ghg),
+                    by = c( "sector", "fuel" )) %>% # assign aggregate sector and fuel names
+        group_by(EPA_agg_sector, EPA_agg_fuel_ghg) %>%
+        summarize_if(is.numeric, sum) -> # sum by aggregate sector and fuel
+        L102.in_EJ_USA_en_Sepa_F_2005 # energy balance in 2005
+
+    } else {
+      # fool proof solution is to use both fuel and technology for categorization.
+      # organize energy balances in USA 2005
+      L101.in_EJ_R_en_Si_F_Yh %>% # start from energy balances
+        filter(GCAM_region_ID == gcam.USA_CODE) %>% # USA region only
+        select(-GCAM_region_ID) %>%
+        gather(variable, energy, -sector, -fuel, -technology) %>%
+        filter(variable == "X2005") %>%  # 2005 data only
+        left_join( select(GCAM_sector_tech, sector, fuel, technology, EPA_agg_sector, EPA_agg_fuel_ghg),
+                   by = c( "sector", "fuel", "technology" )) %>% # assign aggregate sector and fuel names
+        group_by(EPA_agg_sector, EPA_agg_fuel_ghg) %>%
+        summarize_if(is.numeric, sum) -> # sum by aggregate sector and fuel
+        L102.in_EJ_USA_en_Sepa_F_2005 # energy balance in 2005
+    }
+
+    # combine emissions and energy to get emission factors
+    L102.ghg_tg_USA_en_Sepa_F_2005 %>%
+      left_join(L102.in_EJ_USA_en_Sepa_F_2005, by = c( "sector" = "EPA_agg_sector", "fuel" = "EPA_agg_fuel_ghg" )) %>% # energy data and emission data joined
+      mutate(ch4_em_factor = CH4/energy) %>% # emission factor calculated
+      mutate(n2o_em_factor = N2O/energy) %>% # emission factor calculated
+      select(-CH4, -N2O, -energy) %>% # delete orignal data
+      arrange(fuel) %>%
+      mutate_all( funs( replace(., is.na(.), 0))) %>% # zero out NA
+      mutate_all( funs( replace(., is.infinite(.), 0))) -> # zero out infinity
+      L102.ghg_tgej_USA_en_Sepa_F_2005
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
-    tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+    L102.ghg_tgej_USA_en_Sepa_F_2005 %>%
+      add_title("GHG emissions factors for the USA energy sector by sector / fuel / 2005") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("CH4 and N2O emission factors derived from EPA GHG inventory and GCAM energy balances for the US in 2005") %>%
       add_legacy_name("L102.ghg_tgej_USA_en_Sepa_F_2005") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_NO_TEST, FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_precursors("common/iso_GCAM_regID",
+                     "energy/mappings/IEA_flow_sector",
+                     "energy/mappings/IEA_product_fuel",
+                     "emissions/EPA_ghg_tech",
+                     "emissions/GCAM_sector_tech",
+                     "emissions/EPA_FCCC_GHG_2005") ->
       L102.ghg_tgej_USA_en_Sepa_F_2005
 
     return_data(L102.ghg_tgej_USA_en_Sepa_F_2005)
