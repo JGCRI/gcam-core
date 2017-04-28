@@ -46,10 +46,10 @@ module_energy_LA116.geo <- function(command, ...) {
     # is the standard in GCAM as long as the model has existed, but still this needs to be
     # confirmed in this initial check
 
-    if( n_distinct(A16.geo_curves[ c("grade", "extractioncost")]) > n_distinct(A16.geo_curves$grade)){
+    if(n_distinct(A16.geo_curves[ c("grade", "extractioncost")]) > n_distinct(A16.geo_curves$grade)){
       stop( "The geothermal (hydrothermal) supply curves have regionally differentiated price points" )
     }
-    if( n_distinct(A16.EGS_curves[ c("grade", "extractioncost")]) > n_distinct( A16.EGS_curves$grade)){
+    if(n_distinct(A16.EGS_curves[ c("grade", "extractioncost")]) > n_distinct( A16.EGS_curves$grade)){
       stop( "The geothermal (EGS) supply curves have regionally differentiated price points" )
     }
 
@@ -84,8 +84,8 @@ module_energy_LA116.geo <- function(command, ...) {
     # Repeat land area shares by the number of grades in the hydrothermal geothermal resource assumptions
     # and multiply by the available resource quantities
     L116.land_share_ctry_rg3 %>%
-      repeat_add_columns(unique(A16.geo_curves["grade"] ) ) %>%
-      left_join_error_no_match(A16.geo_curves, by = c( "region_GCAM3", "grade" ) ) %>%
+      repeat_add_columns(unique(A16.geo_curves["grade"])) %>%
+      left_join_error_no_match(A16.geo_curves, by = c("region_GCAM3", "grade")) %>%
       mutate(available = share * available) ->
       L116.geothermal_ctry
 
@@ -111,8 +111,8 @@ module_energy_LA116.geo <- function(command, ...) {
     # Repeat land area shares by the number of grades in the EGS geothermal resource assumptions
     # and multiply by the available resource quantities
     L116.land_share_ctry_rg3 %>%
-      repeat_add_columns(unique(A16.EGS_curves["grade"] ) ) %>%
-      left_join_error_no_match(A16.EGS_curves, by = c( "region_GCAM3", "grade" ) ) %>%
+      repeat_add_columns(unique(A16.EGS_curves["grade"])) %>%
+      left_join_error_no_match(A16.EGS_curves, by = c( "region_GCAM3", "grade")) %>%
       mutate(available = share * available) ->
       L116.EGS_ctry
 
