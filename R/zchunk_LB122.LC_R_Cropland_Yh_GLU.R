@@ -552,10 +552,6 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       L122.LC_bm2_R_HarvCropLand_Yh_GLU
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     L122.ag_HA_to_CropLand_R_Y_GLU  %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -569,9 +565,9 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.ag_HA_to_CropLand_R_Y_GLU
+
     L122.ag_EcYield_kgm2_R_C_Y_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -585,9 +581,9 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L122.ag_EcYield_kgm2_R_C_Y_GLU
+
     L122.LC_bm2_R_OtherArableLand_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -601,9 +597,9 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_OtherArableLand_Yh_GLU
+
     L122.LC_bm2_R_ExtraCropLand_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -617,9 +613,9 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_ExtraCropLand_Yh_GLU
+
     L122.LC_bm2_R_HarvCropLand_C_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -633,9 +629,9 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_PROTECT_FLOAT, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
+
     L122.LC_bm2_R_HarvCropLand_Yh_GLU %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
@@ -649,8 +645,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                      "L103.ag_HA_bm2_R_C_Y_GLU",
                      "L103.ag_Prod_Mt_R_C_Y_GLU",
                      "L120.LC_bm2_R_LT_Yh_GLU") %>%
-      # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR, FLAG_SUM_TEST) ->
       L122.LC_bm2_R_HarvCropLand_Yh_GLU
 
     return_data(L122.ag_HA_to_CropLand_R_Y_GLU, L122.ag_EcYield_kgm2_R_C_Y_GLU, L122.LC_bm2_R_OtherArableLand_Yh_GLU, L122.LC_bm2_R_ExtraCropLand_Yh_GLU, L122.LC_bm2_R_HarvCropLand_C_Yh_GLU, L122.LC_bm2_R_HarvCropLand_Yh_GLU)

@@ -18,7 +18,7 @@ the generated outputs: \code{L122.ag_HA_to_CropLand_R_Y_GLU}, \code{L122.ag_EcYi
 original data system was \code{LB122.LC_R_Cropland_Yh_GLU.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+This chunk integrates disparate data sources in order to calculate OtherArableLand
 }
 \details{
 Describe in detail what this chunk does.
