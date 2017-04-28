@@ -236,10 +236,6 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
         L112.agBio_YieldRate
     }
 
-    # Complete across all years between 2010-2050 for each region-commodity-GLU combination
-    L112.agBio_YieldRate %>%
-      complete(year, nesting(GCAM_region_ID, GCAM_commodity, GLU)) -> L112.agBio_YieldRate
-
     # Fill out yield change rates to all future years to 2100 and all crops with base-year production
     # Build a table with all future year, prepare for interpolation
     A_defaultYieldRate %>%
@@ -257,89 +253,101 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       # Interpolate for each GCAM commodity
       group_by(GCAM_commodity) %>%
       # Interpolate to all future years from 2005 to 2100 by five-year step.
-      mutate(value = approx_fun(year, value, rule = 2)) -> L112.defaultYieldRate
+      mutate(value = approx_fun(year, value, rule = 2)) ->
+      L112.defaultYieldRate
 
-    # Fill out missing years / commodity / region, using the default ag productivity change assumptions
-    # Match these annual improvement rates into a table of existing crop yields, get all GCAM region x commodity x GLU combinations in the production table
+    # Next fill out missing years / commodity / region, using the default ag productivity change assumptions
+    # For 2010-2050, there are a number of region-commodity-GLU combinations missing the FAO estimates entirely;
+    #                and also 4 other cases missing 2030 beyond;
+    #                for these incomplete cases, we use default yield change rates to fill out all years 2010-2050.
+    # For 2050 beyond, all region-commodity-GLU combinations use the default yield rates assumptions
+
+    # First, incomplete cases of ag commodities, use default yield change rates across 2010-2100
+    # Get all GCAM region x commodity x GLU combinations in the production table
+    L103.ag_Prod_Mt_R_C_Y_GLU %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      unique() %>%
+      # Join the yield change rates of all specified ag productivity years 2010-2050 (this creates NAs, use left_join instead of left_join_error_no_match)
+      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      # Find the missing cases
+      filter(is.na(value)) %>%
+      # Identify the imcomplete cases, will use the default yield rates across 2010-2100
+      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      unique() %>%
+      # Join the default ag producivity improvement assumptions
+      left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
+      # Keep future years (2015-2100) and 2010
+      filter(year %in% FUTURE_YEARS | year %in% SPEC_AG_PROD_YEARS) %>%
+      mutate(year = as.integer(year)) ->
+      ag_YieldRate_incomplete.cases
+
+    # Second, complete cases of ag commodities, yield change rates based on FAO estimates for 2010-2050
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
       unique() %>%
       # Join the yield change rates for all specified ag productivity years from 2010 to 2050 (this creates NAs, use left_join instead of left_join_error_no_match)
       left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
-      # Convert to long format for calculation
-      #gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
-      # Find the missing cases
-      filter(is.na(value)) %>%
-      # Identify the imcomplete cases, will use the default yields across all specified ag productivity years and beyond
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
-      unique() %>%
-      # Join the default ag producivity improvement assumptions for specified ag prod years
-      left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
-      # Keep future years (2015-2100) and 2010
-      filter(year %in% FUTURE_YEARS | year %in% SPEC_AG_PROD_YEARS) %>%
-      mutate(year = as.integer(year)) -> ag_YieldRate_incomplete.cases
-
-    # For complete cases, use the default yields beyond 2050 only
-    # For complete cases across all futuer years beyond specified ag productivity years, use the default yield
-      L103.ag_Prod_Mt_R_C_Y_GLU %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
-      unique() %>%
-      # Join the yield change rates for all specified ag productivity years from 2010 to 2050 (this creates NAs, use left_join instead of left_join_error_no_match)
-      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
-      #gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
       # Drop all the incomplete region-commodity-GLU combinations
       anti_join(ag_YieldRate_incomplete.cases, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
-      mutate(year = as.integer(year)) ->  ag_YieldRate_complete.cases
+      mutate(year = as.integer(year)) ->
+      ag_YieldRate_complete.cases
 
-    # Use default yields for complete cases beyond 2050
+    # Third, complete cases of ag commodities, use default yield rates beyond 2050 only
     ag_YieldRate_complete.cases %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
       unique() %>%
-      # Join the default ag producivity improvement assumptions for non specified ag prod years
+      # Join the default ag producivity improvement assumptions for 2050 beyond
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
       # Keep future years (2055-2100)
       filter(year %in% FUTURE_YEARS & (!(year %in% SPEC_AG_PROD_YEARS))) %>%
+      # Combine complete cases 2010-2050, and imcomplete cases of ag commodities
       bind_rows(ag_YieldRate_complete.cases, ag_YieldRate_incomplete.cases) %>%
       mutate(year = as.integer(year)) %>%
       ungroup() ->
       L112.ag_YieldRate_R_C_Y_GLU
 
-    # Biomass yield change rate
+    # Do the same for biomass yield change rates
+    # First, incomplete cases of biomass, use default yield change rates across 2010-2100
+    # Get all combinations of region-GLU in ag production table
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
       select(GCAM_region_ID, GLU) %>%
       unique() %>%
       mutate(GCAM_commodity = "biomass") %>%
       # Join the yield change rates for all specified ag productivity years from 2010 to 2050 (this creates NAs, use left_join instead of left_join_error_no_match)
       left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
-      #gather(year, value, -GCAM_region_ID, -GCAM_commodity, -GLU) %>%
+      # Find the missing cases
       filter(is.na(value)) %>%
+      # Identify the imcomplete cases, will use the default yield rates across 2010-2100
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
       unique() %>%
-      # For imcomplete cases across all specified ag productivity years, use the default yield
-      # Join the default ag producivity improvement assumptions for specified ag prod years
+      # Join the default ag producivity improvement assumptions
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
       # Keep future years (2015-2100) and 2010
       filter(year %in% FUTURE_YEARS | year %in% SPEC_AG_PROD_YEARS) %>%
-      mutate(year = as.integer(year)) -> bio_YieldRate_incomplete.cases
+      mutate(year = as.integer(year)) ->
+      bio_YieldRate_incomplete.cases
 
-    # For complete cases
+    # Second, complete cases of biomass, yield change rates based on FAO estimates for 2010-2050
     L103.ag_Prod_Mt_R_C_Y_GLU %>%
       select(GCAM_region_ID, GLU) %>%
       unique() %>%
       mutate(GCAM_commodity = "biomass") %>%
       # Join the yield change rates for all specified ag productivity years from 2010 to 2050 (this creates NAs, use left_join instead of left_join_error_no_match)
       left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      # Drop all the incomplete region-commodity-GLU combinations
       anti_join(bio_YieldRate_incomplete.cases, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
-      mutate(year = as.integer(year)) -> bio_YieldRate_complete.cases
+      mutate(year = as.integer(year)) ->
+      bio_YieldRate_complete.cases
 
+    # Third, complete cases of biomass, use default yield rates beyond 2050 only
     bio_YieldRate_complete.cases %>%
       select(GCAM_region_ID, GCAM_commodity, GLU) %>%
       unique() %>%
-      # For complete cases across all futuer years beyond specified ag productivity years, use the default yield
-      # Join the default ag producivity improvement assumptions for non specified ag prod years
+      # Join the default ag producivity improvement assumptions for 2050 beyond
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
       # Keep future years (2055-2100)
       filter(year %in% FUTURE_YEARS & (!(year %in% SPEC_AG_PROD_YEARS))) %>%
+      # Combine complete cases 2010-2050, and imcomplete cases of ag commodities
       bind_rows(bio_YieldRate_complete.cases, bio_YieldRate_incomplete.cases) %>%
       mutate(year = as.integer(year)) %>%
       ungroup() ->
@@ -363,7 +371,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       add_title("Yield change rates by GCAM region / commodity / future year") %>%
       add_units("Annual rate") %>%
       add_comments("Annual productivity change rates in each time period up to 2050 are translated from the yield ratios based on FAO estimates.") %>%
-      add_comments("Change rates beyond 2050 to 2100 are based on default agriculture productivity change assumptions.") %>%
+      add_comments("Change rates beyond 2050 to 2100 (or when FAO estimates are missing) are based on default agriculture productivity change assumptions.") %>%
       add_legacy_name("L112.ag_YieldRate_R_C_Y_GLU") %>%
       add_precursors("aglu/A_defaultYieldRate",
                      "L103.ag_Prod_Mt_R_C_Y_GLU") %>%
@@ -374,7 +382,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       add_title("Biomass yield change rates by GCAM region / future year") %>%
       add_units("Annual rate") %>%
       add_comments("Annual productivity change rates in each time period up to 2050 are translated from the average yield ratios across all crops.") %>%
-      add_comments("Change rates beyond 2050 to 2100 are based on default agriculture productivity change assumptions.") %>%
+      add_comments("Change rates beyond 2050 to 2100 (or when FAO estimates are missing) are based on default agriculture productivity change assumptions.") %>%
       add_legacy_name("L112.bio_YieldRate_R_Y_GLU") %>%
       add_precursors("aglu/A_defaultYieldRate",
                      "L103.ag_Prod_Mt_R_C_Y_GLU") %>%
