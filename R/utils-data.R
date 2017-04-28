@@ -147,8 +147,7 @@ same_attributes_as <- function(x, y) {
 #' @param ... One or more flags (that can be coerced to character)
 #' @return \code{x} with flags appended to any existing flags
 add_flags <- function(x, ...) {
-  flags <- paste(..., collapse = " ")
-  attr(x, "flags") <- c(attr(x, "flags"), flags)
+  attr(x, "flags") <- c(attr(x, "flags"), ...)
   x
 }
 
