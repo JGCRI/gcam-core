@@ -117,11 +117,11 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       # extremely high water demand coefficients. In the case of Barley in Iraq it is clearly an
       # error in the M+H gridded inventory, but for others it could be a simple mis-match in
       # estimates of crop production by region, and share of irrigated production by region.
-      ctry_GLU_max_adder <- 2
+      CTRY_GLU_MAX_ADDER <- 2
       L165.Mekonnen_Hoekstra_Rep47_A2 %>%
         group_by(FAO_crop) %>%
-        summarise(Blue = max(Blue + ctry_GLU_max_adder),
-                  Green = max(Green + ctry_GLU_max_adder)) %>%
+        summarise(Blue = max(Blue + CTRY_GLU_MAX_ADDER),
+                  Green = max(Green + CTRY_GLU_MAX_ADDER)) %>%
         left_join(select(FAO_ag_items_PRODSTAT, item, MH_crop), by = c("FAO_crop" = "item")) ->
         L165.MaxWaterCoefs_m3kg
 
@@ -152,17 +152,197 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
                green_thousm3 = Prod_t * green_m3kg) ->
         L165.ag_Water_ctry_MHcrop_GLU
 
-      # Match in the irrigated production to calculate the blue water coef for irrigated crops (original lines 124-128)
+      # Match in the irrigated production to calculate the blue water coef for irrigated crops (original lines 124-147)
       L165.ag_Water_ctry_MHcrop_GLU %>%
         left_join_error_no_match(L151.ag_irrProd_t_ctry_crop, by = c("iso", "GTAP_crop", "GLU")) %>%
-        mutate(BlueIrr_m3kg = blue_thousm3 / irrProd_t)
+        rename(irrProd_t = irrProd) %>%
+        mutate(BlueIrr_m3kg = blue_thousm3 / irrProd_t) %>%
+        # Set the coefs to zero wherever irrigated production is zero (these couldn't have any water consumption in GCAM anyway)
+        mutate(BlueIrr_m3kg = if_else(irrProd_t == 0, 0, BlueIrr_m3kg),
+               # Cap blue water coefficients at the total biophysical quantity
+               BlueIrr_m3kg = pmin(BlueIrr_m3kg, total_m3kg),
+               # Green water coefs of irrigated crops = total biophysical coef - calculated blue water coef
+               GreenIrr_m3kg = total_m3kg - BlueIrr_m3kg,
+               # Green water quantities for rainfed crops = total green water - green water on irrigated
+               GreenIrr_thousm3 = GreenIrr_m3kg * irrProd_t,
+               GreenRfd_thousm3 = green_thousm3 - GreenIrr_thousm3) %>%
+        left_join_error_no_match(L151.ag_rfdProd_t_ctry_crop, by = c("iso", "GTAP_crop", "GLU")) %>%
+        rename(rfdProd_t = rfdProd) %>%
+        # Green water coef on rainfed = green water on rainfed divided by rainfed production
+        mutate(GreenRfd_m3kg = if_else(rfdProd_t != 0, GreenRfd_thousm3 / rfdProd_t, 0)) ->
+        L165.ag_Water_ctry_MHcrop_GLU
 
+      # Original lines 149-155
+      # This table needs to be expanded to the more complete list of crops in the MH2011 inventory
+      # The expanded set only includes crops not already accounted in the gridded inventory
+      # Increase the data set in countries and crops in the country-level inventory, and where production is non-zero
+      GTAP_addl_crops <- FAO_ag_items_PRODSTAT$GTAP_crop[is.na(FAO_ag_items_PRODSTAT$MH_crop)]
+      L165.ag_Prod_t_ctry_crop_GLU %>%
+        filter(iso %in% L165.Mekonnen_Hoekstra_Rep47_A2$iso,
+               GTAP_crop %in% GTAP_addl_crops) ->
+        L165.ag_Water_ctry_MHcropX_GLU
+
+      # Original lines 157-164
+      # We don't want to multiply each GLU's total production by the nation-level blue and green coefs,
+      # as this will do a poor job of allocating blue water to the GLUs with the most irrigated production.
+      # The method followed here is similar to the method followed above for gridded crops, but here it is
+      # performed without any GLU-level detail.
+      # Drop the GLU from the first stage of calculations for the additional country-level crops
+      L165.ag_Water_ctry_MHcropX_GLU %>%
+        group_by(iso, GTAP_crop) %>%
+        summarise(Prod_t = sum(Prod_t)) %>%
+        left_join_keep_first_only(select(FAO_ag_items_PRODSTAT, GTAP_crop, item), by = "GTAP_crop") %>%
+        rename(FAO_crop = item) ->
+        L165.ag_Water_ctry_MHcropX
+
+      # Original lines 166-179
+      # A number of crops that are not in the MH country-level inventory--mostly the fodder crops--will
+      # instead inherit their water consumption coefficients from a proxy crop, indicated in the
+      # FAO_ag_items_PRODSTAT mapping file
+      crops_to_substitute <- FAO_ag_items_PRODSTAT$item[!is.na( FAO_ag_items_PRODSTAT$MH2014_proxy)]
+      tibble(item = crops_to_substitute) %>%
+        left_join_keep_first_only(FAO_ag_items_PRODSTAT, by = "item") %>%
+        select(item, MH2014_proxy) ->
+        proxy_crops
+
+      L165.ag_Water_ctry_MHcropX %>%
+        filter(FAO_crop %in% crops_to_substitute) %>%
+        left_join_error_no_match(proxy_crops, c("FAO_crop" = "item")) %>%
+        select(-FAO_crop) %>%
+        rename(FAO_crop = MH2014_proxy) %>%
+        # combine with the non-substituted crops
+        bind_rows(filter(L165.ag_Water_ctry_MHcropX, ! FAO_crop %in% crops_to_substitute)) %>%
+        # match in the water contents
+        left_join_keep_first_only(L165.Mekonnen_Hoekstra_Rep47_A2, by = c("iso", "FAO_crop")) %>%
+        # drop the crops that aren't assigned to anything, which will return missing values here
+        na.omit() ->
+        L165.ag_Water_ctry_MHcropX
+
+      # --- TODO: PICK UP HERE
+
+      # Origina lines 181-203
+      # See below for note on fodder crops - this method over-states the water coefs of fodder crops, and it is adjusted later
+      # The next steps follow the 5-step method described above for assigning blue and green water to irrigated and rainfed production
+      L165.ag_Water_ctry_MHcropX %>%
+        mutate(total_m3kg = blue_m3kg + green_m3kg,
+               blue_thousm3 = Prod_t * blue_m3kg,
+               green_thousm3 = Prod_t * green_m3kg) ->
+        L165.ag_Water_ctry_MHcropX
+
+      # Match in the irrigated production to calculate the blue water coef for irrigated crops
+      L165.ag_Water_ctry_MHcropX %>%
+        group_by(iso, GTAP_crop) %>%
+        summarise(irrProd = sum(irrProd)) ->
+        L165.irrProd_t_ctry_crop
+
+      L165.ag_Water_ctry_MHcropX %>%
+        left_join_error_no_match(L165.irrProd_t_ctry_crop, by = c("iso", "GTAP_crop")) %>%
+        rename(irrProd_t = irrProd) %>%
+        mutate(BlueIrr_m3kg = if_else(irrProd_t != 0, blue_thousm3 / irrProd_t, 0),
+               BlueIrr_m3kg = pmin(BlueIrr_m3kg, total_m3kg),
+               # green water coefs of irrigated crops = total biophysical coef minus calculated blue water coef
+               GreenIrr_m3kg = total_m3kg - BlueIrr_m3kg,
+               # green water coefs of rainfed crops = total green water minus green water on irrigated" )
+               GreenIrr_thousm3 = GreenIrr_m3kg * irrProd_t,
+               GreenRfd_thousm3 = green_thousm3 - GreenIrr_thousm3) ->
+        L165.ag_Water_ctry_MHcropX
+
+      # Original lines 204-210
+      L151.ag_rfdProd_t_ctry_crop %>%
+        group_by(iso, GTAP_crop) %>%
+        summarise(rfdProd_t = sum(rfdProd)) ->
+        L165.rfdProd_t_ctry_crop
+
+      L165.ag_Water_ctry_MHcropX %>%
+        left_join_error_no_match(L165.rfdProd_t_ctry_crop, by = c("iso", "GTAP_crop")) %>%
+        summarise(GreenRfd_m3kg = if_else(rfdProd_t != 0, GreenRfd_thousm3 / rfdProd_t, 0))
+
+      # The grid-based and nation-based tables of green and blue water coefs and volumes for irrigated
+      # and rainfed crops can now be combined to provide estimates of green and blue water coefs for all
+      # available countries, crops, and GLUs (original lines 212-229)
+      # First we need to write out the MH2014 coefficients to all applicable GLUs
+      L165.ag_Prod_t_ctry_crop_GLU %>%
+        filter(iso %in% L165.Mekonnen_Hoekstra_Rep47_A2$iso,
+               GTAP_crop %in% L165.ag_Water_ctry_MHcropX$GTAP_crop ) %>%
+        select(iso, GTAP_crop, GLU) %>%
+        left_join_error_no_match(select(L151.ag_irrProd_t_ctry_crop, iso, GTAP_crop, GLU, irrProd, rfdProd),
+                                 by = c("iso", "GTAP_crop", "GLU")) %>%
+        rename(irrProd_t = irrProd, rfdProd_t = rfdProd) %>%
+        left_join_error_no_match(select(L165.ag_Water_ctry_MHcropX, BlueIrr_m3kg, GreenIrr_m3kg, GreenRfd_m3kg),
+                                 by = c("iso", "GTAP_crop")) ->
+        L165.ag_Water_ctry_MHcropX_GLU
+
+      # Dombine with the grid-based estimates (original lines 231-241)
+      L165.ag_Water_ctry_MHcropX_GLU %>%
+        bind_rows(L165.ag_Water_ctry_MHcrop_GLU) %>%
+        # calculate green and blue water quantities by all available countries, crops, GLUs, and irrigated/rainfed
+        mutate(BlueIrr_thousm3 = BlueIrr_m3kg * irrProd_t,
+               GreenIrr_thousm3 = GreenIrr_m3kg * irrProd_t,
+               GreenRfd_thousm3 = GreenRfd_m3kg * rfdProd_t) %>%
+        # match in GCAM regions and commodities for aggregation
+        left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+        left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") ->
+        L165.ag_Water_ctry_crop_GLU
+
+      # Original lines 243-265
+      # NOTE: Fodder crops are not in the M+H inventories. They instead have been assigned a
+      # corresponding crop that is in the M+H inventories and at this point are multiplied by
+      # an exogenous fodder:crop adjustment factor. This factor is designed to reflect that
+      # fodder crop masses include the whole plant, often harvested green (~70% water). As such,
+      # their water coefficients will tend to be a good deal lower than the corresponding crop
+      # to which they are assigned. The specific number is based on analysis of a virtual water
+      # content dataset (Chapagain 2004) that included fodder crops.
+      # The "corresponding" crops are assigned in the mapping file (FAO_ag_items_PRODSTAT), based on species (e.g., maize) or family (e.g., alfalfa)
+      CONV_CROP_FODDER <- 0.2
+      FODDER_CROPS <- c("FodderGrass", "FodderHerb")
+      L165.ag_Water_ctry_crop_GLU %>%
+        filter(GCAM_commodity %in% FODDER_CROPS) %>%
+        mutate(BlueIrr_thousm3 = BlueIrr_thousm3 * CONV_CROP_FODDER,
+               GreenIrr_thousm3 = GreenIrr_thousm3 * CONV_CROP_FODDER,
+               GreenRfd_thousm3 = GreenRfd_thousm3 * CONV_CROP_FODDER) %>%
+        bind_rows(! GCAM_commodity %in% FODDER_CROPS) %>%
+
+        # at this point, the crops are ready for aggregation by GCAM region and commodity
+        group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
+        summarise_at(vars(irrProd_t, rfdProd_t, BlueIrr_thousm3, GreenIrr_thousm3, GreenRfd_thousm3), sum) %>%
+        mutate(BlueIrr_m3kg = BlueIrr_thousm3 / irrProd_t,
+               GreenIrr_m3kg = GreenIrr_thousm3 / irrProd_t,
+               GreenRfd_m3kg = GreenRfd_thousm3 / rfdProd_t,
+               TotIrr_m3kg = BlueIrr_m3kg + GreenIrr_m3kg) ->
+        L165.ag_Water_R_C_GLU
+
+      # Re-set missing values (NaN) to zero
+      L165.ag_Water_R_C_GLU[is.na( L165.ag_Water_R_C_GLU)] <- 0
+
+      # Create the final tables to be written out (original lines 267-270)
+      L165.BlueIrr_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GLU, BlueIrr_m3kg)
+      L165.TotIrr_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GLU, TotIrr_m3kg)
+      L165.GreenRfd_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GLU, GreenRfd_m3kg)
+
+      # Original lines 272-290
+      # Irrigation Efficiency: Compile country-level data to GCAM regions, weighted by total irrigated harvested area
+      # NOTE: Using application and management efficiencies to define whole-system efficiencies (not conveyance)
+      Rohwer_2007_IrrigationEff <- mutate(Rohwer_2007_IrrigationEff, field.eff = application.eff * management.eff)
+
+      L151.ag_irrHA_ha_ctry_crop %>%
+        group_by(iso) %>%
+        summarise(irrHA = sum(irrHA)) %>%
+        left_join_error_no_match(select(Rohwer_2007_IrrigationEff, iso, field.eff, conveyance.eff), by = "iso") %>%
+        filter(irrHA > 0) %>%
+        na.omit %>%
+        left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+
+        # weighted (irrHA) mean by iso
+        group_by(GCAM_region_ID) %>%
+        summarise(field.eff = weighted.mean(field.eff, irrHA),
+                  conveyance.eff = weighted.mean(conveyance.eff, irrHA)) ->
+        L165.ag_IrrEff_R
     }
 
     # Produce outputs
     tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Blue water consumption coefficients for irrigated crops by GCAM region / commodity / GLU") %>%
+      add_units("m3/kg") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L165.BlueIrr_m3kg_R_C_GLU") %>%
@@ -179,8 +359,8 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       L165.BlueIrr_m3kg_R_C_GLU
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Total biophysical water consumption coefficients for irrigated crops by GCAM region / commodity / GLU") %>%
+      add_units("m3/kg") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L165.TotIrr_m3kg_R_C_GLU") %>%
@@ -189,8 +369,8 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       L165.TotIrr_m3kg_R_C_GLU
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Green water consumption coefficients for rainfed crops by GCAM region / commodity / GLU") %>%
+      add_units("m3/kg") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L165.GreenRfd_m3kg_R_C_GLU") %>%
@@ -199,8 +379,8 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       L165.GreenRfd_m3kg_R_C_GLU
 
     tibble() %>%
-      add_title("descriptive title of data") %>%
-      add_units("units") %>%
+      add_title("Irrigation efficiency by GCAM region") %>%
+      add_units("Unitless efficiency") %>%
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L165.ag_IrrEff_R") %>%
