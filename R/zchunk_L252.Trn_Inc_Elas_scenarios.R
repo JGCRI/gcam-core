@@ -12,16 +12,16 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author YourInitials CurrentMonthName 2017
+#' @author RH May 2017
 #' @export
-module_socioeconomics_L252.Trn_Inc_Elas_scenarios_DISABLED <- function(command, ...) {
+module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/A52.demand",
              FILE = "socioeconomics/A52.inc_elas",
              "L101.Pop_thous_GCAM3_R_Y",
-             "L102.gdp_mil90usd_GCAM3_R_Y",
-             "L102.pcgdp_thous90USD_Scen_R_Y"))
+             "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y",
+             "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L252.IncomeElasticity_trn_GCAM3",
              "object"))
@@ -67,7 +67,8 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios_DISABLED <- function(command, 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("L252.IncomeElasticity_trn_GCAM3") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "energy/A52.demand", "socioeconomics/A52.inc_elas",
+                     "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y", "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L252.IncomeElasticity_trn_GCAM3
@@ -77,7 +78,8 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios_DISABLED <- function(command, 
       add_comments("comments describing how data generated") %>%
       add_comments("can be multiple lines") %>%
       add_legacy_name("object") %>%
-      add_precursors("precursor1", "precursor2", "etc") %>%
+      add_precursors("common/GCAM_region_names", "energy/A52.demand",
+                     "socioeconomics/A52.inc_elas","L101.Pop_thous_GCAM3_R_Y") %>%
       # typical flags, but there are others--see `constants.R`
       add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       object
