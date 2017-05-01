@@ -292,7 +292,7 @@ protect_float <- function(df) {
 
     df[[col]] <- if_else(abs(df[[col]]) < 1e-4 | abs(df[[col]]) > 1e6,
                          sprintf("%e", df[[col]]),
-                         sprintf("%f", df[[col]]))
+                         sprintf("%.10f", df[[col]]))
   }
   df
 }
