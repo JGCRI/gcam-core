@@ -1,6 +1,6 @@
 #' module_aglu_LB165.ag_water_R_C_Y_GLU_irr
 #'
-#' Briefly describe what this chunk does.
+#' Compute irrigation efficiency (by GCAM region) and blue, green, and total consumption coefficients (by region, commodity, and GLU).
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,13 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L165.BlueIrr_m3kg_R_C_GLU}, \code{L165.TotIrr_m3kg_R_C_GLU}, \code{L165.GreenRfd_m3kg_R_C_GLU}, \code{L165.ag_IrrEff_R}. The corresponding file in the
 #' original data system was \code{LB165.ag_water_R_C_Y_GLU_irr.R} (aglu level1).
-#' @details Describe in detail what this chunk does.
+#' @details Use inventory estimates of either water demand coefficients by country and crop,
+#' or aggregated gridded volumes of water use by country, GLU, and crop, to calculate average
+#' water consumption coefficients by GCAM region, crop, GLU, and irrigation level.
+#' Blue water is assigned to only irrigated production, but green water applies to both
+#' irrigated and rainfed production, as the two management technologies are not disaggregated
+#' in the inventory data. For rainfed crops, total biophysical = green, and for irrigated crops,
+#' total biophysical = blue + green.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -48,7 +54,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
 
     # Perform computations
 
-    # The method here is simple in principle (only)--we are taking inventory
+    # The method here is simple in principle: we are taking inventory
     # estimates of either water demand coefficients by country and crop, or aggregated
     # gridded volumes of water use by country, GLU, and crop, and using these estimates to
     # calculate average water consumption coefficients by GCAM region, crop, GLU, and
@@ -87,7 +93,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       spread(water_type, coef_m3kg) ->
       L165.Mekonnen_Hoekstra_Rep47_A2
 
-    # Building inventory of water use by country, crop, and GLU for the 18 gridded crops (lines 66-74 in original)
+    # Build inventory of water use by country, crop, and GLU for the 18 gridded crops (lines 66-74 in original)
     # We give precedence to the aggregated gridded data for the 18 crops that are mapped,
     # and fill in nation-level inventory data for the remainder
     L165.ag_Prod_t_ctry_crop_GLU <- rename(L100.LDS_ag_prod_t, Prod_t = value)
@@ -268,7 +274,10 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       left_join_error_no_match(select(L151.ag_irrProd_t_ctry_crop, iso, GTAP_crop, GLU, irrProd),
                                by = c("iso", "GTAP_crop", "GLU")) %>%
       rename(irrProd_t = irrProd) %>%
-      left_join_error_no_match(select(L165.ag_Water_ctry_MHcropX, iso, GTAP_crop, BlueIrr_m3kg, GreenIrr_m3kg, GreenRfd_m3kg, rfdProd_t),
+      left_join_error_no_match(select(L151.ag_rfdProd_t_ctry_crop, iso, GTAP_crop, GLU, rfdProd),
+                               by = c("iso", "GTAP_crop", "GLU")) %>%
+      rename(rfdProd_t = rfdProd) %>%
+      left_join_error_no_match(select(L165.ag_Water_ctry_MHcropX, iso, GTAP_crop, BlueIrr_m3kg, GreenIrr_m3kg, GreenRfd_m3kg),
                                by = c("iso", "GTAP_crop")) ->
       L165.ag_Water_ctry_MHcropX_GLU
 
@@ -313,8 +322,8 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              TotIrr_m3kg = BlueIrr_m3kg + GreenIrr_m3kg) ->
       L165.ag_Water_R_C_GLU
 
-    # Re-set missing values (NaN) to zero
-    L165.ag_Water_R_C_GLU[is.na( L165.ag_Water_R_C_GLU)] <- 0
+    # Re-set missing values to zero
+    L165.ag_Water_R_C_GLU[is.na(L165.ag_Water_R_C_GLU)] <- 0
 
     # Create the final tables to be written out (original lines 267-270)
     L165.BlueIrr_m3kg_R_C_GLU <- select(L165.ag_Water_R_C_GLU, GCAM_region_ID, GCAM_commodity, GLU, BlueIrr_m3kg)
@@ -344,8 +353,9 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     L165.BlueIrr_m3kg_R_C_GLU %>%
       add_title("Blue water consumption coefficients for irrigated crops by GCAM region / commodity / GLU") %>%
       add_units("m3/kg") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Calculated from the total biophysical (green + blue) water quantities and coefficients;") %>%
+      add_comments("the blue water coef for irrigated; the green water coef for irrigated crops; ") %>%
+      add_comments("the total volume of green water on rainfed crops; and the green water coef for rainfed crops") %>%
       add_legacy_name("L165.BlueIrr_m3kg_R_C_GLU") %>%
       add_precursors("common/iso_GCAM_regID",
                      "aglu/FAO_ag_items_PRODSTAT",
@@ -361,8 +371,9 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     L165.TotIrr_m3kg_R_C_GLU %>%
       add_title("Total biophysical water consumption coefficients for irrigated crops by GCAM region / commodity / GLU") %>%
       add_units("m3/kg") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Calculated from the total biophysical (green + blue) water quantities and coefficients;") %>%
+      add_comments("the blue water coef for irrigated; the green water coef for irrigated crops; ") %>%
+      add_comments("the total volume of green water on rainfed crops; and the green water coef for rainfed crops") %>%
       add_legacy_name("L165.TotIrr_m3kg_R_C_GLU") %>%
       same_precursors_as(L165.BlueIrr_m3kg_R_C_GLU) ->
       L165.TotIrr_m3kg_R_C_GLU
@@ -370,8 +381,9 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     L165.GreenRfd_m3kg_R_C_GLU %>%
       add_title("Green water consumption coefficients for rainfed crops by GCAM region / commodity / GLU") %>%
       add_units("m3/kg") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Calculated from the total biophysical (green + blue) water quantities and coefficients;") %>%
+      add_comments("the blue water coef for irrigated; the green water coef for irrigated crops; ") %>%
+      add_comments("the total volume of green water on rainfed crops; and the green water coef for rainfed crops") %>%
       add_legacy_name("L165.GreenRfd_m3kg_R_C_GLU") %>%
       same_precursors_as(L165.BlueIrr_m3kg_R_C_GLU) ->
       L165.GreenRfd_m3kg_R_C_GLU
@@ -379,10 +391,13 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     L165.ag_IrrEff_R %>%
       add_title("Irrigation efficiency by GCAM region") %>%
       add_units("Unitless efficiency") %>%
-      add_comments("comments describing how data generated") %>%
-      add_comments("can be multiple lines") %>%
+      add_comments("Calculated from the total biophysical (green + blue) water quantities and coefficients;") %>%
+      add_comments("the blue water coef for irrigated; the green water coef for irrigated crops; ") %>%
+      add_comments("the total volume of green water on rainfed crops; and the green water coef for rainfed crops") %>%
       add_legacy_name("L165.ag_IrrEff_R") %>%
-      same_precursors_as(L165.BlueIrr_m3kg_R_C_GLU) ->
+      add_precursors("common/iso_GCAM_regID",
+                     "aglu/Rohwer_2007_IrrigationEff",
+                     "L151.ag_irrHA_ha_ctry_crop") ->
       L165.ag_IrrEff_R
 
     return_data(L165.BlueIrr_m3kg_R_C_GLU, L165.TotIrr_m3kg_R_C_GLU, L165.GreenRfd_m3kg_R_C_GLU, L165.ag_IrrEff_R)
