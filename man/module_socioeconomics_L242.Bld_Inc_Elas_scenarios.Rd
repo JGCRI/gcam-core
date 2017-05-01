@@ -18,10 +18,11 @@ the generated outputs: \code{L242.IncomeElasticity_bld_GCAM3}, \code{object}. Th
 original data system was \code{L242.Bld_Inc_Elas_scenarios.R} (socioeconomics level2).
 }
 \description{
-Briefly describe what this chunk does.
+Calculates building income elasticity for each GCAM region by linear interpolation of assumption data
 }
 \details{
-Describe in detail what this chunk does.
+Takes per-capita GDP from SSP/gSSP/GCAM3 scenarios in each region.
+Then calculates building income elasticity for each region by linear interpolation of assumption data.
 }
 \author{
 RH April 2017
