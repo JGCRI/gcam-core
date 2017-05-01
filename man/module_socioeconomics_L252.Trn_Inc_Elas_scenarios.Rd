@@ -18,11 +18,12 @@ the generated outputs: \code{L252.IncomeElasticity_trn_GCAM3}, \code{object}. Th
 original data system was \code{L252.Trn_Inc_Elas_scenarios.R} (socioeconomics level2).
 }
 \description{
-Briefly describe what this chunk does.
+Calculates transportation income elasticity for GCAM3 & SSP scenarios using linear interpolation of assumption data
 }
 \details{
-Describe in detail what this chunk does.
+Calculates per-capita GDP for GCAM3. Uses that calculation and per-capita GDP data for SSP scenarios to
+generate transportation income elasticity for GCAM3 & SSP scenarios using linear interpolation of assumption data.
 }
 \author{
-YourInitials CurrentMonthName 2017
+RH May 2017
 }
