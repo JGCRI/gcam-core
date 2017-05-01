@@ -20,7 +20,7 @@
 #' total cropland (Hyde) - known fallow (FAO) - harvested crops (FAO/Monfreda).
 #' The harvested area : cropland ratio (HA:CL) is computed as (sum of harvested area) / (cropland - fallow land).
 #' Where HA:CL < 1, HA:CL is set to 1, and the balance (the "residual" above) is added to OtherArableLand.
-#' Where HA:CL > 2.5, HA:CL is set to 2.5, and additional cropland (ExtraCropLand) is written out, to be taken from
+#' Where HA:CL > 3, HA:CL is set to 3, and additional cropland (ExtraCropLand) is written out, to be taken from
 #' other land use types (determined in different code chunks).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -160,8 +160,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
 
     # Lines 55-74 in original file
+    # Calculating the average percent of cropland that is not in active crop rotations in each region
     # make table with cropped land compared to total arable land
-    # printlog ( "Calculating the average percent of cropland that is not in active crop rotations in each region" )
     # FAO harvested area data, L100.FAO_harv_CL_kha, is appended to the FAO cropland data table. Quantities are aggregated
     # from iso to GCAM region and the fraction of cropped land is calculated.
     #
@@ -386,8 +386,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
     # second step to execute max/min comments above is to process the residuals
     # Lines 150-161 in original file
+    # Calculating unused cropland; this is added with fallow land to calculate other arable land
     # Where residuals are negative, this is "unused" cropland that will be mapped to other arable land
-    # printlog( "Calculating unused cropland; this is added with fallow land to calculate other arable land" )
     # Take the residual cropland by region-glu-year:
     L122.LC_bm2_R_ResidualCropLand_Y_GLU %>%
       # update the Land_Type identifier
@@ -401,8 +401,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # store in a table of UnusedCropLand by region-glu-year
       L122.LC_bm2_R_UnusedCropLand_Y_GLU
 
+    # Calculating extra cropland; this will be balanced by a deduction from unmanaged lands
     # Where residuals are positive, this is "extra" land that will later be deducted from other categories.
-    # printlog( "Calculating extra cropland; this will be balanced by a deduction from unmanaged lands" )
     # Take the residual cropland by region-glu-year:
     L122.LC_bm2_R_ResidualCropLand_Y_GLU %>%
       # update the Land_Type identifier
@@ -437,7 +437,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       left_join(L122.LC_bm2_R_CropLand_Y_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
       # value.x = OtherArableLand value
       # value.y = Cropland value
-      # printlog( "Assigning cropland to other arable land wherever harvested area is zero" )
+      # Assigning cropland to other arable land wherever harvested area is zero
       # If there are any land use regions with 0 harvested area (Monfreda) but positive cropland cover (Hyde), these are missing
       # values in the above table, and all of this cropland should be assigned to other arable land.
       # for NA values in OtherArableLand (value.x), replace with the cropland value (value.y):

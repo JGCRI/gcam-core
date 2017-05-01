@@ -61,6 +61,8 @@ aglu.CCONTENT_CELLULOSE <- 0.45
 
 # Minimum and maximum harvested:cropped ratios
 MIN_HA_TO_CROPLAND <- 1
+# Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
+# Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
 MAX_HA_TO_CROPLAND <- 3
 
 # ======================================================================

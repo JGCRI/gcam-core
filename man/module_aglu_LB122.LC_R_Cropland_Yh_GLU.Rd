@@ -33,7 +33,7 @@ the country level to the region level, and used to calculate the "residual" crop
 total cropland (Hyde) - known fallow (FAO) - harvested crops (FAO/Monfreda).
 The harvested area : cropland ratio (HA:CL) is computed as (sum of harvested area) / (cropland - fallow land).
 Where HA:CL < 1, HA:CL is set to 1, and the balance (the "residual" above) is added to OtherArableLand.
-Where HA:CL > 2.5, HA:CL is set to 2.5, and additional cropland (ExtraCropLand) is written out, to be taken from
+Where HA:CL > 3, HA:CL is set to 3, and additional cropland (ExtraCropLand) is written out, to be taken from
 other land use types (determined in different code chunks).
 }
 \author{
