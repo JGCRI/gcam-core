@@ -1,19 +1,27 @@
 #' module_aglu_LB122.LC_R_Cropland_Yh_GLU
 #'
-#' This chunk integrates disparate data sources for landcover and harvested area from FAO, Monfreda, and Hyde in order to calculate OtherArableLand
-#' at the GCAM region-GLU level for each year, including historical years.
+#' This chunk integrates disparate data sources for land cover and harvested area from FAO, Monfreda, and Hyde in
+#' order to calculate cropland cover by specific crop type, other arable land, harvested:cropped ratio, economic
+#' yield (i.e., production per unit cropland area per year, rather than production per unit area per harvest), and
+#' "extra" cropland that needs to be taken from other land use types. All data tables are written out
+#' at the GCAM region-GLU level for each historical year, including carbon cycle model spinup years.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L122.ag_HA_to_CropLand_R_Y_GLU}, \code{L122.ag_EcYield_kgm2_R_C_Y_GLU}, \code{L122.LC_bm2_R_OtherArableLand_Yh_GLU}, \code{L122.LC_bm2_R_ExtraCropLand_Yh_GLU}, \code{L122.LC_bm2_R_HarvCropLand_C_Yh_GLU}, \code{L122.LC_bm2_R_HarvCropLand_Yh_GLU}. The corresponding file in the
-#' original data system was \code{LB122.LC_R_Cropland_Yh_GLU.R} (aglu level1).
-#' @details First, Hyde land cover data is aggregated to the region-GLU level in each year, and supplemented with Monfreda harvested area
-#' information when necessary. Second, FAO fallowland, cropland, and harvested areadata is aggregated from the country level to the region
-#' level. These processed data sources are used to calculate harvested area and available cropland area in each region-GLU in each year.
-#' Finally, fallowland information at the region-GLU level is combined with the residual area = harvested area - available cropland area
-#' at the region-GLU level to calculate OtherArableLand quantities, along with available ExtraCropLand quantities.
+#' the generated outputs: \code{L122.ag_HA_to_CropLand_R_Y_GLU}, \code{L122.ag_EcYield_kgm2_R_C_Y_GLU},
+#'                        \code{L122.LC_bm2_R_OtherArableLand_Yh_GLU}, \code{L122.LC_bm2_R_ExtraCropLand_Yh_GLU},
+#'                        \code{L122.LC_bm2_R_HarvCropLand_C_Yh_GLU}, \code{L122.LC_bm2_R_HarvCropLand_Yh_GLU}.
+#' The corresponding file in the original data system was \code{LB122.LC_R_Cropland_Yh_GLU.R} (aglu level1).
+#' @details First, Hyde cropland cover is aggregated to the region-GLU level in each year, and supplemented with Monfreda
+#' harvested area information when necessary. Second, FAO fallowland, cropland, and harvested area are aggregated from
+#' the country level to the region level, and used to calculate the "residual" cropland in each land use region:
+#' total cropland (Hyde) - known fallow (FAO) - harvested crops (FAO/Monfreda).
+#' The harvested area : cropland ratio (HA:CL) is computed as (sum of harvested area) / (cropland - fallow land).
+#' Where HA:CL < 1, HA:CL is set to 1, and the balance (the "residual" above) is added to OtherArableLand.
+#' Where HA:CL > 2.5, HA:CL is set to 2.5, and additional cropland (ExtraCropLand) is written out, to be taken from
+#' other land use types (determined in different code chunks).
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
@@ -48,7 +56,6 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
 
 
-    # 2. Perform computations
     # Line 36 in original file
     # take a subset of the land cover table L120.LC_bm2_R_LT_YH_GLU: cropland, and only in aglu historical years
     L120.LC_bm2_R_LT_Yh_GLU %>%
@@ -60,8 +67,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       L122.LC_bm2_R_CropLand_Y_GLU
 
     # Lines 40-45 in original file
-    # The harvested area/production tables L103.ag.X (from Monfreda) may have R_GLUs not in the cropland table L122.LC_bm2_R_CropLand_Y_GLU (from Hyde),
-    # and vice versa.
+    # The harvested area/production tables L103.ag.X (from Monfreda) may have R_GLUs not in the cropland table
+    # L122.LC_bm2_R_CropLand_Y_GLU (from Hyde), and vice versa.
     # Fill out the cropland table to include all R_GLUs in Monfreda:
     L122.LC_bm2_R_CropLand_Y_GLU %>%
       # find the region-GLU combos in the Monfreda harvested area table L103.ag_HA_bm2_R_C_Y_GLU NOT contained
@@ -70,7 +77,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
                 by = c("GCAM_region_ID", "GLU", "year")) %>%
       # save only the unique combinations:
       unique() %>%
-      # arrange so rows occur in more sensible order order:
+      # arrange so rows occur in more sensible order:
       arrange(GCAM_region_ID, GLU, year) %>%
       # add values of 0 everywhere for now:
       mutate(value = 0) %>%
@@ -96,20 +103,19 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
 
     # Lines 51-64 in original file
-    # old comment: Calculate the average cropland, fallow land, and land in temporary crops from FAO RESOURCESTAT
-    # old comment: The time series is unreliable, so only using the last available year (and applying to all historical years)
+    # Calculating the average percent of cropland that is fallow in each region
+    # using the average cropland, fallow land, and land in temporary crops from FAO RESOURCESTAT
+    # The time series is unreliable, so only using the last available year (and applying to all historical years)
     # based on above old comment, get the last available year and set as fallowland_year:
-    fallowland_year <- AGLU_HISTORICAL_YEARS[length(AGLU_HISTORICAL_YEARS)]
+    fallowland_year <- max(AGLU_HISTORICAL_YEARS)
     # And continue with calculating average crop land, fallow land, land in temporary crops:
-    # old comment: compile the ratio of "temporary crops" to total arable land in each region
-    # old comment: make table with fallow land compared to total arable land
-    # printlog ( "Calculating the average percent of cropland that is fallow in each region" )
+    # compile the ratio of "temporary crops" to total arable land in each region
+    # make table with fallow land compared to total arable land
     # FAO fallow land data, L100.FAO_fallowland_kha, is appended to the FAO cropland data table. Quantities are aggregated
     # from iso to GCAM region and the fraction of fallowland is calculated.
     #
-    # The old data sytem uses match to append FAO fallow land data to FAO cropland data by iso. This was absolutely correct when the
-    # code was originally written (2010). However, since then, Ethiopia and Sudan and Belgium-Luxembourg have each split into two
-    # distinct countries and FAO produces data for each.
+    # The old data sytem uses match to append FAO fallow land data to FAO cropland data by iso. However, Ethiopia,
+    # Sudan, and Belgium-Luxembourg have all split into two distinct countries and FAO produces data for each.
     # Specifically, there are two rows with iso = "eth" and two rows with iso = "sdn" and two rows with iso = "bel" in some FAO data.
     # Because match only pulls the first value when there are multiple potential matches, both "eth" cropland rows get the first
     # "eth" fallowland row, rather than their correct value. The same occurs for the two "sdn" and "bel" rows. The solution is simple:
@@ -150,13 +156,11 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
         mutate(fallow = if_else(GCAM_region_ID == 2, 1881.7000, if_else(GCAM_region_ID == 13, 5060.2225, fallow))) %>%
         mutate(fallow_frac = if_else(GCAM_region_ID == 2, 0.057756913, if_else(GCAM_region_ID == 13, 0.072119754, fallow_frac)))->
         L122.cropland_fallow_R
-    } else {
-      # do nothing, the above code is correct
     }
 
 
     # Lines 55-74 in original file
-    # old comment: make table with cropped land compared to total arable land
+    # make table with cropped land compared to total arable land
     # printlog ( "Calculating the average percent of cropland that is not in active crop rotations in each region" )
     # FAO harvested area data, L100.FAO_harv_CL_kha, is appended to the FAO cropland data table. Quantities are aggregated
     # from iso to GCAM region and the fraction of cropped land is calculated.
@@ -199,14 +203,12 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
         mutate(cropped = if_else(GCAM_region_ID == 2, 31746.925, if_else(GCAM_region_ID == 13, 42484.390, cropped))) %>%
         mutate(cropped_frac = if_else(GCAM_region_ID == 2, 0.8347940, if_else(GCAM_region_ID == 13, 0.6195761, cropped_frac))) ->
         L122.cropland_cropped_R
-    } else {
-      # do nothing, the above code is correct
     }
 
-
     # Lines 76-89 in original file
-    # old comment: calculate the average amount of cropland that is not in production as the fallow land fraction, where available, or else the non-cropped cropland
-    # printlog ( "NOTE: based on availability, using (1) fallow land fraction, (2) land not in crop rotations, or (3) 0" )
+    # calculate the average amount of cropland that is not in production as the fallow land fraction,
+    # where available, or else the non-cropped cropland
+    # based on availability, using (1) fallow land fraction, (2) fraction of cropland not in crop rotations, or (3) 0
     # Calculating cropland not in production is done via a series of nested if statements.
 
     # take the unique GCAM regions
@@ -237,9 +239,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
 
     # Lines 91-99 in original file
-    # old comment: make a table with fallow land, and the remaining cropland that is "available" for harvest, by region, year, and GLU
-    # printlog( "NOTE: applying regional average fallow fractions to all GLUs within each region" )
-    # Actually making two tables: the fallow land table and then, using the fallow land table, the available cropland table
+    # applying regional average fallow fractions to all GLUs within each region
+    # making two tables: the fallow land table and then, using the fallow land table, the available cropland table
 
     # take cropland table with region, landtype and glu information for each year:
     L122.LC_bm2_R_CropLand_Y_GLU %>%
@@ -279,10 +280,10 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
 
     # Lines 101-114 in original file
-    # old comment: Calculate the harvested to cropped land ratio for all crops, by region, year, and GLU
-    # printlog( "NOTE: applying minimum and maximum harvested:cropped ratios" )
-    # old comment: Maximum harvested:cropped ratio may cause cropland to expand
-    # old comment: This additional cropland will need to be balanced by a deduction from other land types later on, so it is tracked below
+    # Calculate the harvested to cropped land ratio for all crops, by region, year, and GLU
+    # applying minimum and maximum harvested:cropped ratios
+    # Maximum harvested:cropped ratio may cause cropland to expand
+    # This additional cropland will need to be balanced by a deduction from other land types later on, so it is tracked below
     # take harvested area by region-glu-year:
     L122.ag_HA_bm2_R_Y_GLU %>%
       # join the available cropland by region-glu-year
@@ -302,22 +303,16 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # store in a table of HA to cropland ratios by region-glu-year
       L122.ag_HA_to_CropLand_R_Y_GLU
 
-    ### double check wording of old comments in above section with Page; in general, make sure understanding what all
-    ### tables actually mean so comments accurate
-    ### also, find out about printlogs for sure
-
     # Lines 116-126 in original file
-    # old comment: The ag_HA_to_CropLand ratio is assumed to be a property of the region and GLU ( not individual crops ), as individual sites are planted with different crops
-    # old comment: Calculate cropland requirements of each crop as harvested area divided by regional ag_HA_to_CropLand ratio
-    # printlog( "Calculating cropland requirements of each crop as harvested area divided by HA:CL" )
-    # old comment: Calculate land cover as harvested area divided by HA:CL
+    # The ag_HA_to_CropLand ratio is assumed to be a property of the region and GLU (not specific to individual crops)
+    # Calculate cropland requirements of each crop as harvested area divided by regional ag_HA_to_CropLand ratio
     # Take input harvested area by region-commodity-glu-year:
     L103.ag_HA_bm2_R_C_Y_GLU %>%
       # join the harvested area to cropland ratios, L122.ag_HA_to_CropLand_R_Y_GLU:
       left_join_error_no_match(L122.ag_HA_to_CropLand_R_Y_GLU, by = c("GCAM_region_ID", "GLU", "year")) %>%
       # value.x = original harvested area info for each GCAM_commodity from L103.ag_HA_bm2_R_C_GLU
       # value.y = HA:CL ratio from L122.ag_HA_to_CropLand_R_Y_GLU just joined
-      # calcualte the harvested cropland for each commodity as value = value.x/value.y:
+      # calculate the harvested cropland for each commodity as value = value.x/value.y:
       mutate(value = value.x/value.y) %>%
       # removed unnecessary columns:
       select(-value.x, -value.y) %>%
@@ -327,8 +322,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       L122.LC_bm2_R_HarvCropLand_C_Y_GLU
 
     # Lines 125:128 in original file
-    # old comment: aggregate across crops to get harvested cropland area, by region/GLU/year
-    # The harvested cropland area by region-commodity-glu-year table, L122.Lc_bm2_R_HarvCropLand_C_Y_GLU,
+    # Aggregate across crops to get harvested cropland area, by region/GLU/year
+    # The harvested cropland area by region-commodity-glu-year table, L122.LC_bm2_R_HarvCropLand_C_Y_GLU,
     # is used for other calculations below. That is why this is not part of the previous pipeline
     # Take harvested cropland area by region-commodity-glu-year:
     L122.LC_bm2_R_HarvCropLand_C_Y_GLU %>%
@@ -344,7 +339,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
 
     # Lines 130-136 in original file
-    # old comment: Calculate economic yield by each crop as production divided by cropland. Write out this preliminary table.
+    # Calculate economic yield by each crop as production divided by cropland. Write out this preliminary table.
     # Production by region-glu-commodity-year comes from input data L103.ag_Prod_Mt_R_C_Y_GLU.
     # Cropland area by region-glu-commodity-year was calculated as table L122.LC_bm2_R_HarvCropLand_C_Y_GLU
     # Take cropland by region-glu-commodity-year:
@@ -368,11 +363,11 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
     # Calculating OtherArableLand:
 
     # Lines 138:148 in original file
-    # old comment: The minimum threshold on HA:CL means that some cropland in Hyde will not be assigned to a crop. This is mapped to "other arable land"
-    # old comment: The maximum threshold on HA:CL means that cropland in Hyde in some ag regions may be less than cropland in GCAM
-    # old comment: In the latter case, land needs to be mapped to cropland from other uses.
-    # The first step in executing the three above lines of comment is:
-    # old comment: Calculate the residual land cover that is cropland (may be positive or negative)
+    # The minimum threshold on HA:CL means that some cropland in Hyde will not be assigned to a crop. This is mapped to "other arable land"
+    # The maximum threshold on HA:CL means that cropland in Hyde in some ag regions may be less than cropland in GCAM
+    # In the latter case, land needs to be mapped to cropland from other uses.
+    # The first step in executing the three above lines of comment is to calculate the residual land cover that is
+    # cropland (may be positive or negative): residual = cropland - fallow land - harvested area by crop type
     # Take harvested cropland by region-glu-year:
     L122.LC_bm2_R_HarvCropLand_Y_GLU %>%
       # update the landtype to be residual cropland
@@ -418,10 +413,9 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # store in a table of ExtraCropLand by region-glu-year:
       L122.LC_bm2_R_ExtraCropLand_Y_GLU
 
-    # Finally, calculate OtherArableLand
     # Lines 163-178 in original file
-    # printlog( "Calculating other arable land: known fallow plus discrepancy between sum of harvested area and cropland" )
-    # printlog( "Assigning cropland to other arable land wherever harvested area is zero" )
+    # Calculating other arable land: known fallow plus discrepancy between sum of harvested area and cropland
+    # Assigning all cropland to other arable land wherever harvested area is zero
     # If there are any land use regions with 0 harvested area (Monfreda) but positive cropland cover (Hyde), these are missing
     # values in the above table, and all of this cropland should be assigned to other arable land.
     #
@@ -444,8 +438,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       # value.x = OtherArableLand value
       # value.y = Cropland value
       # printlog( "Assigning cropland to other arable land wherever harvested area is zero" )
-      # old comment: If there are any land use regions with 0 harvested area (Monfreda) but positive cropland cover (Hyde), these are missing
-      # old comment: values in the above table, and all of this cropland should be assigned to other arable land.
+      # If there are any land use regions with 0 harvested area (Monfreda) but positive cropland cover (Hyde), these are missing
+      # values in the above table, and all of this cropland should be assigned to other arable land.
       # for NA values in OtherArableLand (value.x), replace with the cropland value (value.y):
       mutate(value = if_else(is.na(value.x), value.y, value.x)) %>%
       # remove unnecessary columns
@@ -457,13 +451,13 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
     # Land use history
     # Lines 181 - 200 in original file
-    # printlog( "Cropland quantities prior to the first AGLU historical year, for spinup of simple carbon cycle model" )
-    # printlog( "NOTE: Simply assigning this to other arable land" )
-    # old comment: This method differs from what we had done in the past, where 1971 land cover quantities were rolled back on the basis of the cropland ratios
-    # old comment: between each land history year and 1971. The problem with this method is that zero values in 1971 can not match non-zero values in prior years.
-    # old comment: The current method instead will have apparent land use change in going from the land history years to the model base years, but due to equal
-    # old comment: soil carbon contents, and similar/small vegetative carbon contents, the net emissions signal should be negligible.
-    # old comment: First, make a table with cropland in the pre-aglu years
+    # Cropland quantities prior to the first AGLU historical year, for spinup of simple carbon cycle model
+    # NOTE: Simply assigning this to other arable land
+    # This method differs from prior versions of GCAM, where 1971 land cover quantities were rolled back on the basis of the cropland ratios
+    # between each land history year and 1971. The problem with this method is that zero values in 1971 can not match non-zero values in prior years.
+    # The current method instead will have apparent land use change in going from the land history years to the model base years, but due to equal
+    # soil carbon contents, and similar/small vegetative carbon contents, the net emissions signal should be negligible.
+    # First, make a table with cropland in the pre-aglu years
     L120.LC_bm2_R_LT_Yh_GLU %>%
       # only save the years in pre-AGLU years:
       filter(year %in% PREAGLU_YEARS) %>%
@@ -487,8 +481,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
 
     # Lines 202-205 in original file
-    # printlog( "All other cropland uses are zero in the pre-aglu years" )
-    # Specifically, ExtraCropLand is expanded to include historical years in each region-glu, with a value of 0.
+    # All other cropland uses are zero in the pre-aglu years
+    # ExtraCropLand is expanded to include historical years in each region-glu, with a value of 0.
     # Take ExtraCropLand by region-glu-year:
     L122.LC_bm2_R_ExtraCropLand_Y_GLU %>%
       # expand to include history years and fill in those values to be 0:
@@ -500,8 +494,8 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
 
 
     # Lines 207-210 in original file
-    # old comment: Harvested cropland history
-    # HarvCropLand is expanded to include historical years for each region-glu-commodity, with a vlaue of 0.
+    # Harvested cropland history
+    # HarvCropLand is expanded to include historical years for each region-glu-commodity, with a value of 0.
     # Take HarvCropLand by region-commodity-glu-year:
     L122.LC_bm2_R_HarvCropLand_C_Y_GLU %>%
       # expand to include history years and fill in those values to be 0:
@@ -512,7 +506,7 @@ module_aglu_LB122.LC_R_Cropland_Yh_GLU <- function(command, ...) {
       L122.LC_bm2_R_HarvCropLand_C_Yh_GLU
 
     # Lines 212-217 in original file
-    # old comment: Combine crop types to get land use history by all harvested cropland.
+    # Combine crop types to get land use history by all harvested cropland.
     # Use the table of HarvCropland by region-commodity-glu-year, including historical years, L122.LC_bm2_R_HarvCropLand_C_Yh_GLU,
     # and aggregate across commodity to arrive at a table of All Harvested Cropland by region-glu-year, including historical years.
     # Take HarvCropland by region-commodity-glu-year:
