@@ -20,8 +20,8 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
              FILE = "energy/A52.demand",
              FILE = "socioeconomics/A52.inc_elas",
              "L101.Pop_thous_GCAM3_R_Y",
-             "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y",
-             "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y"))
+             FILE = "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y",
+             FILE = "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L252.IncomeElasticity_trn_GCAM3",
              "object"))
@@ -33,34 +33,40 @@ module_socioeconomics_L252.Trn_Inc_Elas_scenarios <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A52.demand <- get_data(all_data, "energy/A52.demand")
     A52.inc_elas <- get_data(all_data, "socioeconomics/A52.inc_elas")
-    L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
-    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
-    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
+    L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y") %>%
+      rename(pop = value)
+    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "temp-data-inject/L102.gdp_mil90usd_GCAM3_R_Y") %>%
+      # Temporary for temp-data-inject data
+      gather(year, gdp, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
+    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "temp-data-inject/L102.pcgdp_thous90USD_Scen_R_Y") %>%
+      # Temporary for temp-data-inject data
+      gather(year, pcgdp, starts_with("X")) %>%
+      mutate(year = as.integer(substr(year, 2, 5)))
 
     # ===================================================
-    # TRANSLATED PROCESSING CODE GOES HERE...
-    #
-    # If you find a mistake/thing to update in the old code and
-    # fixing it will change the output data, causing the tests to fail,
-    # (i) open an issue on GitHub, (ii) consult with colleagues, and
-    # then (iii) code a fix:
-    #
-    # if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    #   ... code that replicates old, incorrect behavior
-    # } else {
-    #   ... new code with a fix
-    # }
-    #
-    #
-    # NOTE: there are 'match' calls in this code. You probably want to use left_join_error_no_match
-    # For more information, see https://github.com/JGCRI/gcamdata/wiki/Name-That-Function
+    # For the GCAM 3.0 scenario, calculate the per-capita GDP
+    L252.pcgdp_GCAM3_R_Y <- left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, L102.gdp_mil90usd_GCAM3_R_Y, by = c("GCAM_region_ID", "year")) %>%
+      mutate(pcgdp_90thousUSD = gdp/pop) %>%
+      select(-pop, -gdp)
+
+    # Linearly interpolate income elasticity at each level of per-capita GDP
+    L252.IncomeElasticity_trn_GCAM3 <- L252.pcgdp_GCAM3_R_Y %>%
+      mutate(income.elasticity = approx(x = A52.inc_elas$pcgdp_90thousUSD, y = A52.inc_elas$inc_elas,
+                                        # Rule 2 info
+                                        xout = pcgdp_90thousUSD, rule = 2 )$y,
+             energy.final.demand = A52.demand$energy.final.demand) %>%
+      # Add in region names
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      ungroup(GCAM_region_ID) %>%
+      select(-pcgdp_90thousUSD, -GCAM_region_ID)
+
+    # For SSP scenarios, linearly interpolate income elasticity at each level of per-capita GDP
+    #L102.pcgdp_thous90USD_Scen_R_Y
+
     # ===================================================
 
     # Produce outputs
-    # Temporary code below sends back empty data frames marked "don't test"
-    # Note that all precursor names (in `add_precursor`) must be in this chunk's inputs
-    # There's also a `same_precursors_as(x)` you can use
-    # If no precursors (very rare) don't call `add_precursor` at all
     tibble() %>%
       add_title("descriptive title of data") %>%
       add_units("units") %>%
