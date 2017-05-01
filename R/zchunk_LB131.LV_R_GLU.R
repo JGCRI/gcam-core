@@ -28,11 +28,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     L100.GTAP_LV_milUSD <- get_data(all_data, "L100.GTAP_LV_milUSD")
-    L122.LC_bm2_R_HarvCropLand_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_Yh_GLU") # %>%
-      # # Two temporary lines for data injection
-      # gather(year, value, -GCAM_region_ID, -Land_Type, -GLU) %>%
-      # mutate(year = as.integer(substr(year, 2, 5))) ->
-      # L122.LC_bm2_R_HarvCropLand_Yh_GLU
+    L122.LC_bm2_R_HarvCropLand_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_Yh_GLU")
 
     # Calculate the total value of each geographic land unit (GLU)
     L100.GTAP_LV_milUSD %>%
