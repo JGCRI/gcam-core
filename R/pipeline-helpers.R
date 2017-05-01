@@ -61,7 +61,9 @@ left_join_error_no_match <- function(d, ...) {
 left_join_keep_first_only <- function(x, y, by) {
     ## Our strategy is to use "distinct" to filter y to a single element for
     ## each match category, then join that to x.
-    do.call(distinct_, c(list(y), as.list(by), list(.keep_all = TRUE))) %>%
+    ll <- as.list(by)
+    names(ll) <- NULL
+    do.call(distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
       left_join(x, ., by = by)
 }
 
