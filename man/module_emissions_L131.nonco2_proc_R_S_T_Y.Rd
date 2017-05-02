@@ -18,7 +18,7 @@ the generated outputs: \code{L131.nonco2_tg_R_prc_S_S_Yh}. The corresponding fil
 original data system was \code{L131.nonco2_proc_R_S_T_Y.R} (emissions level1).
 }
 \description{
-Calculate historical emissions from the processing sector by GCAM technology,computed from EDGAR emissions data and EPA emissions factors.
+Calculate historical emissions from the processing sector by GCAM technology, computed from EDGAR emissions data and EPA emissions factors.
 }
 \details{
 This chunck calculated the historical emissions from the processing sector by GCAM technology,
