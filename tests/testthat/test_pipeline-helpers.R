@@ -109,4 +109,9 @@ test_that("left_join_keep_first_only works", {
   expect_equal(r4,
                mutate(x2, coef = c(1, 2, 4, 3)))
 
+  ## test named vector to rename columns
+  y2 <- rename(y, country = iso)
+  expect_silent(r5 <- left_join_keep_first_only(x2, y2, by = c(iso = 'country', 'year')))
+  expect_equal(r4, r5)
+
 })
