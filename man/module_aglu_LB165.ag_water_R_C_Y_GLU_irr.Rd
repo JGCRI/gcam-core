@@ -18,11 +18,17 @@ the generated outputs: \code{L165.BlueIrr_m3kg_R_C_GLU}, \code{L165.TotIrr_m3kg_
 original data system was \code{LB165.ag_water_R_C_Y_GLU_irr.R} (aglu level1).
 }
 \description{
-Briefly describe what this chunk does.
+Compute irrigation efficiency (by GCAM region) and blue, green, and total consumption coefficients (by region, commodity, and GLU).
 }
 \details{
-Describe in detail what this chunk does.
+Use inventory estimates of either water demand coefficients by country and crop,
+or aggregated gridded volumes of water use by country, GLU, and crop, to calculate average
+water consumption coefficients by GCAM region, crop, GLU, and irrigation level.
+Blue water is assigned to only irrigated production, but green water applies to both
+irrigated and rainfed production, as the two management technologies are not disaggregated
+in the inventory data. For rainfed crops, total biophysical = green, and for irrigated crops,
+total biophysical = blue + green.
 }
 \author{
-YourInitials CurrentMonthName 2017
+BBL April 2017
 }

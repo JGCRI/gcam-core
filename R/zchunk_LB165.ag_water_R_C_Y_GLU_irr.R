@@ -224,7 +224,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       na.omit() ->
       L165.ag_Water_ctry_MHcropX
 
-    # Origina lines 181-203
+    # Original lines 181-203
     # See below for note on fodder crops - this method over-states the water coefs of fodder crops,
     # and it is adjusted later. The next steps follow the 5-step method described above for
     # assigning blue and green water to irrigated and rainfed production
@@ -281,7 +281,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
                                by = c("iso", "GTAP_crop")) ->
       L165.ag_Water_ctry_MHcropX_GLU
 
-    # Dombine with the grid-based estimates (original lines 231-241)
+    # Combine with the grid-based estimates (original lines 231-241)
     L165.ag_Water_ctry_MHcropX_GLU %>%
       bind_rows(L165.ag_Water_ctry_MHcrop_GLU) %>%
       select(iso, GTAP_crop, GLU, irrProd_t, rfdProd_t, BlueIrr_m3kg, GreenIrr_m3kg, GreenRfd_m3kg) %>%
@@ -291,7 +291,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
              GreenRfd_thousm3 = GreenRfd_m3kg * rfdProd_t) %>%
       # match in GCAM regions and commodities for aggregation
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-      left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") ->
+      left_join_keep_first_only(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") ->
       L165.ag_Water_ctry_crop_GLU
 
     # Original lines 243-265
@@ -314,6 +314,7 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       bind_rows(filter(L165.ag_Water_ctry_crop_GLU, ! GCAM_commodity %in% FODDER_CROPS)) %>%
 
       # at this point, the crops are ready for aggregation by GCAM region and commodity
+      filter(!is.na(GCAM_commodity)) %>%   # to replicate `aggregate` behavior
       group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
       summarise_at(vars(irrProd_t, rfdProd_t, BlueIrr_thousm3, GreenIrr_thousm3, GreenRfd_thousm3), sum) %>%
       mutate(BlueIrr_m3kg = BlueIrr_thousm3 / irrProd_t,
@@ -342,7 +343,6 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       filter(irrHA > 0) %>%
       na.omit %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-
       # weighted (irrHA) mean by iso
       group_by(GCAM_region_ID) %>%
       summarise(field.eff = weighted.mean(field.eff, irrHA),
