@@ -30,6 +30,7 @@ AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 MODEL_PRICE_YEARS <- 2001:2005
 LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
+PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
@@ -57,6 +58,12 @@ aglu.DIGITS_CALOUTPUT <- 7 # production
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
+
+# Minimum and maximum harvested:cropped ratios
+MIN_HA_TO_CROPLAND <- 1
+# Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
+# Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
+MAX_HA_TO_CROPLAND <- 3
 
 # ======================================================================
 # energy constants
