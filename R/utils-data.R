@@ -42,6 +42,7 @@ get_title <- function(x) { attr(x, ATTR_TITLE) }
 #' @return \code{x} with comments appended to any existing comments.
 add_comments <- function(x, comments) {
   assertthat::assert_that(is.character(comments) | is.null(comments))
+  comments <- gsub("[\r\n]", " ", comments)  # remove any line breaks (h/t CH)
   attr(x, ATTR_COMMENTS) <- c(attr(x, ATTR_COMMENTS), comments)
   x
 }
@@ -146,8 +147,7 @@ same_attributes_as <- function(x, y) {
 #' @param ... One or more flags (that can be coerced to character)
 #' @return \code{x} with flags appended to any existing flags
 add_flags <- function(x, ...) {
-  flags <- paste(..., collapse = " ")
-  attr(x, "flags") <- c(attr(x, "flags"), flags)
+  attr(x, "flags") <- c(attr(x, "flags"), ...)
   x
 }
 

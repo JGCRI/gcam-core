@@ -13,11 +13,13 @@ FLAG_NO_OUTPUT  <- "NO_OUTPUT"
 FLAG_NO_XYEAR   <- "NO_XYEAR"
 FLAG_NO_TEST    <- "NO_TEST"
 FLAG_SUM_TEST   <- "FLAG_SUM_TEST"
+FLAG_PROTECT_FLOAT <- "FLAG_PROTECT_FLOAT"
 
 # ======================================================================
 # Time constants
 HISTORICAL_YEARS <- 1971:2010
-FUTURE_YEARS <- seq( 2015, 2100, 5 )
+FUTURE_YEARS <- seq(2015, 2100, 5)
+IMF_GDP_YEARS <- 2010:2020
 
 # ======================================================================
 # GCAM constants
@@ -29,9 +31,15 @@ AGLU_HISTORICAL_YEARS <- 1971:2010
 FAO_HISTORICAL_YEARS <- 1961:2011
 MODEL_PRICE_YEARS <- 2001:2005
 LAND_HISTORY_YEARS <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
+PREAGLU_YEARS <- c(1700, 1750,1800, 1850, 1900, 1950)
 aglu.LAND_COVER_YEARS <- sort(unique(c(LAND_HISTORY_YEARS, AGLU_HISTORICAL_YEARS)))
 GTAP_HISTORICAL_YEAR <- 2000
 CROSIT_HISTORICAL_YEAR <- 2005
+
+# ======================================================================
+# socioeconomics constants
+BASE_POP_SCENARIO <- "SSP2"
+BASE_GDP_SCENARIO <- "SSP2"
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -52,9 +60,16 @@ PRICERATIO_GRASS_ALFALFA <- 0.7
 
 # NUMBERS OF DIGITS FOR MODEL INPUT DATA
 aglu.DIGITS_CALPRICE <- 4 # prices and costs
+aglu.DIGITS_CALOUTPUT <- 7 # production
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE <- 0.45
+
+# Minimum and maximum harvested:cropped ratios
+MIN_HA_TO_CROPLAND <- 1
+# Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
+# Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
+MAX_HA_TO_CROPLAND <- 3
 
 # ======================================================================
 # energy constants
@@ -63,9 +78,10 @@ aglu.CCONTENT_CELLULOSE <- 0.45
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010]
 
 
-# ======================================================================
-# Conversion constants
+## ======================================================================
+## Conversion constants.  The naming convention is CONV_(FROM-UNIT)_(TO-UNIT).
 CONV_BIL_MIL <- 1000
+CONV_MIL_BIL <- 0.001
 CONV_MIL_THOUS <- 1000
 CONV_ONES_THOUS <- 0.001
 CONV_TON_MEGATON <- 1e-6
@@ -131,6 +147,13 @@ socioeconomics.UN_HISTORICAL_YEARS <- c(1950, 1971:2010) # Years for which to us
 
 socioeconomics.BASE_POP_SCEN <- "SSP2"
 
+# ======================================================================
+# water constants
+
+IRRIGATION <- "Irrigation"
+MAPPED_WATER_TYPES <- c("water consumption", "water withdrawals")
+MAPPED_WATER_TYPES_SHORT <- c("C", "W")
+names(MAPPED_WATER_TYPES_SHORT) <- MAPPED_WATER_TYPES
 
 # ======================================================================
 # emissions constants

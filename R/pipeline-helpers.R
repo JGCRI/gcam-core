@@ -35,6 +35,38 @@ left_join_error_no_match <- function(d, ...) {
   d
 }
 
+#' Compute a left join, taking only the first match.
+#'
+#' In an ordinary \code{\link{left_join}}, if a row in the left operand has
+#' multiple matches in the right operand, you get a copy of the row for each
+#' match in the right operand.  Sometimes you want just one arbitrary member of
+#' the matching set.  This could be because the right operand is a one-to-many
+#' mapping, and you don't care which one you get (but you want only one), or it
+#' could be that you're trying to reproduce the behavior of legacy code that
+#' uses \code{\link{match}}, which has this behavior.  This function performs
+#' such a join.
+#'
+#' This function performs a left join, except that if the right operand has
+#' multiple matches for a row in the left operand, \emph{only} the first match
+#' is kept.  \strong{Use this function with caution.}  The results will depend
+#' on the order of the rows in the right operand, meaning that seemingly
+#' innocuous changes can produce changes in output.  Consider yourself warned.
+#'
+#' @param x Left table to join
+#' @param y Right table to join
+#' @param by Vector of id columns.  Unlike in other join variants, these must be
+#' supplied explicitly.
+#' @return Joined table.  In case of multiple matches, only the first will be
+#' included.
+left_join_keep_first_only <- function(x, y, by) {
+    ## Our strategy is to use "distinct" to filter y to a single element for
+    ## each match category, then join that to x.
+    ll <- as.list(by)
+    names(ll) <- NULL
+    do.call(distinct_, c(list(y), ll, list(.keep_all = TRUE))) %>%
+      left_join(x, ., by = by)
+}
+
 
 #' approx_fun
 #'
@@ -169,41 +201,52 @@ unprotect_integer_cols <- function(d) {
 }
 
 
-#' gdp_deflator
-#'
 #' Calculate a gross domestic product (GDP) implicit price deflator between two years.
 #'
-#' @param year Year for which to calculate deflator
-#' @param base_year Base year in deflator calculation
-#' @details The GDP deflator is a measure of price inflation/deflation with respect to a specific base year.
+#' The GDP deflator is a measure of price inflation with respect to a
+#' specific base year; it allows us to back out the effects of inflation when we
+#' compare prices over time.  This function calculates a deflator given a base
+#' year (the year to convert from) and a conversion year (the year to convert
+#' to).  To use the deflator, multiply prices in base-year dollars by the deflator; the
+#' result will be prices in the converted dollar year.
+#'
+#' @param year Year to convert TO.
+#' @param base_year Year to convert FROM.
 #' @note This returns slightly different values if \code{OLD_DATA_SYSTEM_BEHAVIOR} is TRUE.
-#' @return Deflator (GDP in \code{year} divided by GDP in \code{base_year}).
-#' @source U.S. Bureau of Economic Analysis, Gross domestic product (implicit price deflator) [A191RD3A086NBEA], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/A191RD3A086NBEA, April 12, 2017
+#' @return GDP Deflator.  Multiply to convert FROM \code{base_year} dollars TO
+#' \code{year} dollars.
+#' @source U.S. Bureau of Economic Analysis, Gross domestic product (implicit
+#' price deflator) [A191RD3A086NBEA], retrieved from FRED, Federal Reserve Bank
+#' of St. Louis; https://fred.stlouisfed.org/series/A191RD3A086NBEA, April 12,
+#' 2017
 #' @author BBL
 #' @export
 #' @examples
-#' gdp_deflator(2010, base_year = 1990)
+#' gdp_bil_1990USD <- c(4770, 4779, 4937)
+#' gdp_bil_2010USD <- gdp_bil_1990USD * gdp_deflator(2010, base_year = 1990)
 gdp_deflator <- function(year, base_year) {
 
   if(OLD_DATA_SYSTEM_BEHAVIOR) {
-    if(year == 2010 & base_year == 1990) return(1.510)   # conv_1990_2010_USD
-    if(year == 2007 & base_year == 1990) return(1.470)   # conv_1990_2007_USD
-    if(year == 2005 & base_year == 1990) return(1.383)   # conv_1990_2005_USD
-    if(year == 1975 & base_year == 1990) return(0.4649)  # conv_1990_1975_USD
-    if(year == 1975 & base_year == 1996) return(0.4049)  # conv_1996_1975_USD
-    if(year == 1975 & base_year == 1997) return(0.3983)  # conv_1997_1975_USD
-    if(year == 1975 & base_year == 1998) return(0.3939)  # conv_1998_1975_USD
-    if(year == 1975 & base_year == 1999) return(0.3883)  # conv_1999_1975_USD
-    if(year == 1975 & base_year == 2000) return(0.380)   # conv_2000_1975_USD
-    if(year == 1975 & base_year == 2001) return(0.3711)  # conv_2001_1975_USD
-    if(year == 1975 & base_year == 2002) return(0.3647)  # conv_2002_1975_USD
-    if(year == 1975 & base_year == 2003) return(0.3571)  # conv_2003_1975_USD
-    if(year == 1975 & base_year == 2004) return(0.3472)  # conv_2004_1975_USD
-    if(year == 1975 & base_year == 2005) return(0.3362)  # conv_2005_1975_USD
-    if(year == 1975 & base_year == 2006) return(0.3257)  # conv_2006_1975_USD
-    if(year == 1975 & base_year == 2007) return(0.317)   # conv_2007_1975_USD
-    if(year == 1975 & base_year == 2008) return(0.3104)  # conv_2008_1975_USD
-    if(year == 1975 & base_year == 2009) return(0.3104)  # conv_2009_1975_USD
+    if(year == 2010 && base_year == 1990) return(1.510)   # conv_1990_2010_USD
+    if(year == 2007 && base_year == 1990) return(1.470)   # conv_1990_2007_USD
+    if(year == 2005 && base_year == 1990) return(1.383)   # conv_1990_2005_USD
+    if(year == 1975 && base_year == 1990) return(0.4649)  # conv_1990_1975_USD
+    if(year == 1975 && base_year == 1996) return(0.4049)  # conv_1996_1975_USD
+    if(year == 1975 && base_year == 1997) return(0.3983)  # conv_1997_1975_USD
+    if(year == 1975 && base_year == 1998) return(0.3939)  # conv_1998_1975_USD
+    if(year == 1975 && base_year == 1999) return(0.3883)  # conv_1999_1975_USD
+    if(year == 1975 && base_year == 2000) return(0.380)   # conv_2000_1975_USD
+    if(year == 1975 && base_year == 2001) return(0.3711)  # conv_2001_1975_USD
+    if(year == 1975 && base_year == 2002) return(0.3647)  # conv_2002_1975_USD
+    if(year == 1975 && base_year == 2003) return(0.3571)  # conv_2003_1975_USD
+    if(year == 1975 && base_year == 2004) return(0.3472)  # conv_2004_1975_USD
+    if(year == 1975 && base_year == 2005) return(0.3362)  # conv_2005_1975_USD
+    if(year == 1975 && base_year == 2006) return(0.3257)  # conv_2006_1975_USD
+    if(year == 1975 && base_year == 2007) return(0.317)   # conv_2007_1975_USD
+    if(year == 1975 && base_year == 2008) return(0.3104)  # conv_2008_1975_USD
+    if(year == 1975 && base_year == 2009) return(0.3104)  # conv_2009_1975_USD
+    if(year == 1990 && base_year == 2010) return(1.0/gdp_deflator(2010, 1990))
+                                        # conv_2010_1990_USD
   }
 
   # This time series is the BEA "A191RD3A086NBEA" product

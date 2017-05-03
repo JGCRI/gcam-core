@@ -2,32 +2,39 @@
 % Please edit documentation in R/pipeline-helpers.R
 \name{gdp_deflator}
 \alias{gdp_deflator}
-\title{gdp_deflator}
+\title{Calculate a gross domestic product (GDP) implicit price deflator between two years.}
 \source{
-U.S. Bureau of Economic Analysis, Gross domestic product (implicit price deflator) [A191RD3A086NBEA], retrieved from FRED, Federal Reserve Bank of St. Louis; https://fred.stlouisfed.org/series/A191RD3A086NBEA, April 12, 2017
+U.S. Bureau of Economic Analysis, Gross domestic product (implicit
+price deflator) [A191RD3A086NBEA], retrieved from FRED, Federal Reserve Bank
+of St. Louis; https://fred.stlouisfed.org/series/A191RD3A086NBEA, April 12,
+2017
 }
 \usage{
 gdp_deflator(year, base_year)
 }
 \arguments{
-\item{year}{Year for which to calculate deflator}
+\item{year}{Year to convert TO.}
 
-\item{base_year}{Base year in deflator calculation}
+\item{base_year}{Year to convert FROM.}
 }
 \value{
-Deflator (GDP in \code{year} divided by GDP in \code{base_year}).
+GDP Deflator.  Multiply to convert FROM \code{base_year} dollars TO
+\code{year} dollars.
 }
 \description{
-Calculate a gross domestic product (GDP) implicit price deflator between two years.
-}
-\details{
-The GDP deflator is a measure of price inflation/deflation with respect to a specific base year.
+The GDP deflator is a measure of price inflation with respect to a
+specific base year; it allows us to back out the effects of inflation when we
+compare prices over time.  This function calculates a deflator given a base
+year (the year to convert from) and a conversion year (the year to convert
+to).  To use the deflator, multiply prices in base-year dollars by the deflator; the
+result will be prices in the converted dollar year.
 }
 \note{
 This returns slightly different values if \code{OLD_DATA_SYSTEM_BEHAVIOR} is TRUE.
 }
 \examples{
-gdp_deflator(2010, base_year = 1990)
+gdp_bil_1990USD <- c(4770, 4779, 4937)
+gdp_bil_2010USD <- gdp_bil_1990USD * gdp_deflator(2010, base_year = 1990)
 }
 \author{
 BBL
