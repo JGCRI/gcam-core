@@ -21,7 +21,7 @@ original data system was \code{L242.Bld_Inc_Elas_scenarios.R} (socioeconomics le
 Calculates building income elasticity for each GCAM region by linear interpolation of assumption data
 }
 \details{
-Takes per-capita GDP from SSP/gSSP/GCAM3 scenarios in each region.
+Takes per-capita GDP from SSP scenarios in each region.
 Then calculates building income elasticity for each region by linear interpolation of assumption data.
 }
 \author{
