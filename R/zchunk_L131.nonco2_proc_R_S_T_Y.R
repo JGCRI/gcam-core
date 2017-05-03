@@ -142,7 +142,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
        filter(EDGAR_agg_sector %in% c("industry_processes", "chemicals", "landfills", "wastewater","aerosols",
                                 "metals","foams","solvents", "semiconductors")) %>%
        select(year,value, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
-       na.omit()  %>%  # delete rows with NAs
+       na.omit()  %>%  # delete rows with NA's
        group_by(year, Non.CO2, EDGAR_agg_sector, GCAM_region_ID) %>%
        summarise(EDGAR_emissions = sum(value)) %>%
        mutate(EDGAR_emissions = EDGAR_emissions * CONV_GG_TG) -> # convert from gg to tg
@@ -164,11 +164,20 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
        repeat_add_columns(tibble::tibble(GCAM_region_ID = c(GCAM_region_names$GCAM_region_ID))) %>%
        group_by(GCAM_region_ID, EDGAR_agg_sector, Non.CO2, year) %>%
        left_join(L131.EDGAR.mlt, by = c("GCAM_region_ID","EDGAR_agg_sector","Non.CO2", "year")) %>%
-       na.omit() %>%  # delete rows with NAs
+       na.omit() %>%  # delete rows with NA's
        mutate(input.emissions = EDGAR_emissions * tech_share) %>%
        select(-sector_emissions, -tech_emissions) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2, year) %>%
-       summarise(value = sum(input.emissions)) %>%
+       summarise(value = sum(input.emissions)) ->
+       L131.nonco2_tg_R_prc_S_S_Yh
+
+     # in order to match old data we have to turn the data in wide format
+     # which introduces NA's that are converted to 0. Then we can convert back to long format.
+
+     L131.nonco2_tg_R_prc_S_S_Yh %>%
+       spread(year, value) %>%
+       gather( year, value, -GCAM_region_ID, -supplysector, -subsector, -stub.technology, -Non.CO2) %>%
+       mutate(value = if_else(is.na(value),0,value)) %>%
 
       # Produce outputs\
       add_title("GHG emissions by GCAM region / sector / technology / historical year") %>%
@@ -191,7 +200,7 @@ module_emissions_L131.nonco2_proc_R_S_T_Y <- function(command, ...) {
                      "emissions/EDGAR_CO",
                      "emissions/EPA_FCCC_IndProc_2005") %>%
       # typical flags, but there are others--see `constants.R`
-      add_flags(FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
+      add_flags(FLAG_SUM_TEST,FLAG_LONG_YEAR_FORM, FLAG_NO_XYEAR) ->
       L131.nonco2_tg_R_prc_S_S_Yh
 
     return_data(L131.nonco2_tg_R_prc_S_S_Yh)
