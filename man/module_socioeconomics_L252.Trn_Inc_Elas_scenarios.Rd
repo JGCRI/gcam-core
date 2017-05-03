@@ -18,11 +18,10 @@ the generated outputs: \code{L252.IncomeElasticity_trn_GCAM3}, \code{object}. Th
 original data system was \code{L252.Trn_Inc_Elas_scenarios.R} (socioeconomics level2).
 }
 \description{
-Calculates transportation income elasticity for GCAM3 & SSP scenarios using linear interpolation of assumption data
+Calculates transportation income elasticity for SSP scenarios using linear interpolation of assumption data
 }
 \details{
-Calculates per-capita GDP for GCAM3. Uses that calculation and per-capita GDP data for SSP scenarios to
-generate transportation income elasticity for GCAM3 & SSP scenarios using linear interpolation of assumption data.
+Uses per-capita GDP data for SSP scenarios to generate transportation income elasticity using linear interpolation of assumption data.
 }
 \author{
 RH May 2017
