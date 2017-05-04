@@ -1,6 +1,6 @@
 #' module_water_L102.water.supply.unlimited
 #'
-#' Briefly describe what this chunk does.
+#' This file summarizes the water price values by water type and GCAM region.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -8,7 +8,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L102.unlimited_water_price_R_W_Y_75USDm3}. The corresponding file in the
 #' original data system was \code{L102.water.supply.unlimited.R} (water level1).
-#' @details Describe in detail what this chunk does.
+#' @details  We generate all the possible combinations between the 32 GCAM regions, 4 water types, and all the defined years.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
